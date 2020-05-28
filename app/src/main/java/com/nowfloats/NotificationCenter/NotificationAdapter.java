@@ -6,7 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,14 +24,15 @@ import com.nowfloats.NotificationCenter.Model.AlertModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import retrofit.Callback;
@@ -41,15 +43,15 @@ import retrofit.client.Response;
 /**
  * Created by guru on 27-04-2015.
  */
-public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>{
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     private SimpleDateFormat format;
-    private PorterDuffColorFilter primaryColorFilter,defaultColorFilter;
+    private PorterDuffColorFilter primaryColorFilter, defaultColorFilter;
     private int imageId;
     Activity appContext;
     View displayView;
     ArrayList<AlertModel> alertData;
     private LayoutInflater mInflater;
-    private HashMap<String,Integer> alertImageMap;
+    private HashMap<String, Integer> alertImageMap;
     DeepLinkInterface linkInterface;
     NotificationInterface alertInterface;
     UserSessionManager session;
@@ -57,7 +59,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private String currentUrl;
     private String ruleId;
 
-    public NotificationAdapter(Activity appContext, ArrayList<AlertModel> alertData, NotificationInterface alertInterface, UserSessionManager session,Bus bus) {
+    public NotificationAdapter(Activity appContext, ArrayList<AlertModel> alertData, NotificationInterface alertInterface, UserSessionManager session, Bus bus) {
         loadImages();
         this.appContext = appContext;
         this.alertData = alertData;
@@ -67,37 +69,28 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         primaryColorFilter = new PorterDuffColorFilter(appContext.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         defaultColorFilter = new PorterDuffColorFilter(appContext.getResources().getColor(R.color.inactive_text), PorterDuff.Mode.SRC_IN);
-        format = new SimpleDateFormat("MMM dd, hh:mm aa");
+        format = new SimpleDateFormat("MMM dd, hh:mm aa", Locale.ENGLISH);
         format.setTimeZone(TimeZone.getDefault());
         imageId = R.drawable.alert_default;
-        linkInterface = (DeepLinkInterface)appContext;
+        linkInterface = (DeepLinkInterface) appContext;
     }
 
-    public void addAlerts(ArrayList<AlertModel> data){
-        try {
-            for (int i = 0; i < data.size(); i++) {
-                if (!alertData.contains(data.get(i)))
-                    alertData.add(data.get(i));
-            }
-            notifyDataSetChanged();
-
-        }catch(Exception e) {e.printStackTrace();}
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public ImageView imageView;
-        public TextView titleText,descText,date;
+        public TextView titleText, descText, date;
         public Button alertBtn;
         public LinearLayout full_layout;
+
         public ViewHolder(View v) {
             super(v);
-            imageView = (ImageView)itemView.findViewById(R.id.storeDataIcon);
-            titleText = (TextView)itemView.findViewById(R.id.titleText);
-            descText = (TextView)itemView.findViewById(R.id.descText);
-            date = (TextView)itemView.findViewById(R.id.created_date);
-            alertBtn = (Button)itemView.findViewById(R.id.alert_btn);
-            full_layout = (LinearLayout)itemView.findViewById(R.id.full_layout);
+            imageView = (ImageView) itemView.findViewById(R.id.storeDataIcon);
+            titleText = (TextView) itemView.findViewById(R.id.titleText);
+            descText = (TextView) itemView.findViewById(R.id.descText);
+            date = (TextView) itemView.findViewById(R.id.created_date);
+            alertBtn = (Button) itemView.findViewById(R.id.alert_btn);
+            full_layout = (LinearLayout) itemView.findViewById(R.id.full_layout);
         }
     }
 
@@ -110,8 +103,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @SuppressLint("NewApi")
     @Override
-    public void onBindViewHolder(final ViewHolder holder,final int position) {
-        if (alertData.size() > 0){
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        if (alertData.size() > 0) {
             holder.alertBtn.setVisibility(View.GONE);
             holder.imageView.setImageResource(imageId);
             holder.descText.setText(alertData.get(position).Message);
@@ -150,36 +143,32 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 }
             }
 
-    //        String url = Constants.NOW_FLOATS_API_URL+alertData.get(position).PrimaryImageUri;
-    //        Picasso.with(appContext).load(url).into(holder.imageView);
+            //        String url = Constants.NOW_FLOATS_API_URL+alertData.get(position).PrimaryImageUri;
+            //        Picasso.with(appContext).load(url).into(holder.imageView);
 
-                try {
-                    String dateString = alertData.get(position).CreatedOn;
-                    dateString = dateString.replace("/Date(", "").replace(")/", "");
-                    Long epochTime = Long.parseLong(dateString);
-                    Date date = new Date(epochTime);
-                    if (date != null)
-                        holder.date.setText(format.format(date));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                //HashMap<String, String> eventKey = new HashMap<String, String>();
-                //eventKey.put(EventKeysWL.SEARCH_QUERIES, "Clicked on Alert tab");
-                //ContextSdk.tagEvent(NotificationAdapter.class.getCanonicalName(),eventKey);
+            try {
+                String dateString = alertData.get(position).CreatedOn;
+                holder.date.setText(Methods.getFormattedDate(dateString));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //HashMap<String, String> eventKey = new HashMap<String, String>();
+            //eventKey.put(EventKeysWL.SEARCH_QUERIES, "Clicked on Alert tab");
+            //ContextSdk.tagEvent(NotificationAdapter.class.getCanonicalName(),eventKey);
 
-                if (alertData.get(position).isRead.equalsIgnoreCase("true")) {
-                    holder.titleText.setTextColor(appContext.getResources().getColor(R.color.inactive_text));
-                    holder.descText.setTextColor(appContext.getResources().getColor(R.color.inactive_text));
-                    holder.alertBtn.setBackground(appContext.getResources().getDrawable(R.drawable.corner_grey_backgrnd));
-                    holder.imageView.setColorFilter(defaultColorFilter);
-                } else {
-                    holder.imageView.setColorFilter(primaryColorFilter);
-                    holder.titleText.setTextColor(appContext.getResources().getColor(R.color.primaryColor));
-                    holder.descText.setTextColor(appContext.getResources().getColor(R.color.main_text_color));
-                    holder.alertBtn.setBackground(appContext.getResources().getDrawable(R.drawable.selector));
-                }
+            if (alertData.get(position).isRead.equalsIgnoreCase("true")) {
+                holder.titleText.setTextColor(ContextCompat.getColor(appContext, R.color.inactive_text));
+                holder.descText.setTextColor(ContextCompat.getColor(appContext, R.color.inactive_text));
+                holder.alertBtn.setBackgroundResource(R.drawable.corner_grey_backgrnd);
+                holder.imageView.setColorFilter(defaultColorFilter);
+            } else {
+                holder.imageView.setColorFilter(primaryColorFilter);
+                holder.titleText.setTextColor(ContextCompat.getColor(appContext, R.color.primaryColor));
+                holder.descText.setTextColor(ContextCompat.getColor(appContext, R.color.main_text_color));
+                holder.alertBtn.setBackgroundResource(R.drawable.selector);
+            }
 
-                holder.alertBtn.setOnClickListener(new View.OnClickListener() {
+            holder.alertBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
                     onClickMethod(v, position);
@@ -188,7 +177,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
     }
 
-    private void onClickMethod(View v,int position) {
+    private void onClickMethod(View v, int position) {
         boolean blogChk = false;
         try {
             final int pos = Integer.parseInt(v.getTag().toString());
@@ -197,7 +186,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 if (key.equals("notificationType") || key.equals("Type")) {
                     String alertType = alertData.get(pos).NotificationData.get(i).Value;
                     if (alertType != null && alertType.trim().length() > 0) {
-                        MixPanelController.track("AlertType-" + alertType, null);
                         if (alertType.equals("BLOG")) {
                             blogChk = true;
                         }
@@ -219,11 +207,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 value.put("clientId", Constants.clientId);
                 value.put("notificationId", alertData.get(pos)._id);
                 value.put("isRead", "true");
-                alertInterface.setRead(value, new Callback<String>() {
+                alertInterface.setRead(new JSONObject(), value, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
                         Log.i("setRead  Success---", "" + s);
-                        alertData.get(pos).isRead = "true";
+                        if (alertData.get(pos) != null)
+                            alertData.get(pos).isRead = "true";
                         notifyDataSetChanged();
                         //google analytics
                         updateGoogleAnalytics(ruleId);
@@ -231,7 +220,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                         NotificationFragment.getAlertCount(session, alertInterface, bus);
                         //deep linking
                         if (currentUrl != null && currentUrl.trim().length() > 0)
-                            linkInterface.deepLink(currentUrl);
+                            if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                                Methods.showFeatureNotAvailDialog(appContext);
+                            } else {
+                                linkInterface.deepLink(currentUrl);
+                            }
                     }
 
                     @Override
@@ -240,51 +233,58 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     }
                 });
             }
-        }catch (Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateGoogleAnalytics(String ruleId) {
-        try{
+        try {
             String appName = appContext.getPackageName();
             //http://www.google-analytics.com/collect?
             // v=1&tid=UA-35051129-20&cid="+appName+"&t=event&ec="+ruleId+"&ea=open&el="+fptag+"&cs=newsletter&cm=notification&cn="+appName+"&cm1=1
             String url = "http://www.google-analytics.com/collect?v=1&tid=UA-35051129-20&cid="
-                    +appName+"&t=event&ec="+ruleId+"&ea=open&el="+
-                    session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)+"&cs=newsletter&cm=notification&cn="+appName+"&cm1=1";
-            new GAalerttAsyncTask(appContext,url).execute();
-        }catch(Exception e){e.printStackTrace();}
+                    + appName + "&t=event&ec=" + ruleId + "&ea=open&el=" +
+                    session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) + "&cs=newsletter&cm=notification&cn=" + appName + "&cm1=1";
+            new GAalerttAsyncTask(appContext, url).execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public int getItemCount() {
-        return alertData.size();
+
+        if (alertData != null && alertData.size() > 0)
+            return alertData.size();
+        return 0;
     }
 
     public void loadImages() {
-        if (alertImageMap==null || alertImageMap.size()==0){
+        if (alertImageMap == null || alertImageMap.size() == 0) {
             alertImageMap = new HashMap<>();
-            alertImageMap.put("TOPUPDATES",R.drawable.alert_category_bestupdates);
-            alertImageMap.put("BLOG",R.drawable.alert_blog);
-            alertImageMap.put("TESTIMONIALS",R.drawable.alert_testimonial);
-            alertImageMap.put("MAINTENANCE",R.drawable.alert_error);
-            alertImageMap.put("SOCIAL",R.drawable.alert_facbook);
-            alertImageMap.put("PRODUCTUDPDATE",R.drawable.alert_product_gallery);
-            alertImageMap.put("LOGO",R.drawable.alert_logo);
-            alertImageMap.put("SEARCHQUERIES",R.drawable.alert_search);
-            alertImageMap.put("SHARE",R.drawable.alert_share);
-            alertImageMap.put("ENQUIRIES",R.drawable.alert_enq);
-            alertImageMap.put("UPDATE",R.drawable.alert_update);
-            alertImageMap.put("ACCOUNTINFO",R.drawable.alert_info);
-            alertImageMap.put("STORE",R.drawable.alert_store);
-            alertImageMap.put("VISITS",R.drawable.alert_visit);
-            alertImageMap.put("PROFILE",R.drawable.alert_business_description);
-            alertImageMap.put("TOPSITES",R.drawable.alert_category_bestupdates);
-            alertImageMap.put("KEYWORDS",R.drawable.alert_keyword);
-            alertImageMap.put("TIMELINE",R.drawable.alert_default);
-            alertImageMap.put("FEATUREDIMAGE",R.drawable.alert_logo);
-            alertImageMap.put("REFER",R.drawable.alert_refer);
-            alertImageMap.put("DOTCOM",R.drawable.alert_dot_com);
-            alertImageMap.put("BIZAROUNDYOU",R.drawable.alert_store);
+            alertImageMap.put("TOPUPDATES", R.drawable.alert_category_bestupdates);
+            alertImageMap.put("BLOG", R.drawable.alert_blog);
+            alertImageMap.put("TESTIMONIALS", R.drawable.alert_testimonial);
+            alertImageMap.put("MAINTENANCE", R.drawable.alert_error);
+            alertImageMap.put("SOCIAL", R.drawable.alert_facbook);
+            alertImageMap.put("PRODUCTUDPDATE", R.drawable.alert_product_gallery);
+            alertImageMap.put("LOGO", R.drawable.alert_logo);
+            alertImageMap.put("SEARCHQUERIES", R.drawable.alert_search);
+            alertImageMap.put("SHARE", R.drawable.alert_share);
+            alertImageMap.put("ENQUIRIES", R.drawable.alert_enq);
+            alertImageMap.put("UPDATE", R.drawable.alert_update);
+            alertImageMap.put("ACCOUNTINFO", R.drawable.alert_info);
+            alertImageMap.put("STORE", R.drawable.alert_store);
+            alertImageMap.put("VISITS", R.drawable.alert_visit);
+            alertImageMap.put("PROFILE", R.drawable.alert_business_description);
+            alertImageMap.put("TOPSITES", R.drawable.alert_category_bestupdates);
+            alertImageMap.put("KEYWORDS", R.drawable.alert_keyword);
+            alertImageMap.put("TIMELINE", R.drawable.alert_default);
+            alertImageMap.put("FEATUREDIMAGE", R.drawable.alert_logo);
+            alertImageMap.put("REFER", R.drawable.alert_refer);
+            alertImageMap.put("DOTCOM", R.drawable.alert_dot_com);
+            alertImageMap.put("BIZAROUNDYOU", R.drawable.alert_store);
         }
     }
 }

@@ -63,13 +63,13 @@ public class PageDeleteAsyncTaask extends AsyncTask<String,String,String>{
     @Override
     protected String doInBackground(String... params) {
         try {
-            for (int i = 0; i < CustomPageActivity.posList.size(); i++) {
-                int n = Integer.parseInt(CustomPageActivity.posList.get(i).toString());
+            for (int i = 0; i < CustomPageFragment.posList.size(); i++) {
+                int n = Integer.parseInt(CustomPageFragment.posList.get(i).toString());
                 final JSONObject map = new JSONObject();
-                map.put("PageId", CustomPageActivity.dataModel.get(n).PageId);
+                map.put("PageId", CustomPageFragment.dataModel.get(n).PageId);
                 map.put("Tag", "" + tag);
                 map.put("clientId", "" + Constants.clientId);
-                if (CustomPageActivity.posList.size()-1 == i){
+                if (CustomPageFragment.posList.size()-1 == i){
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -123,28 +123,28 @@ public class PageDeleteAsyncTaask extends AsyncTask<String,String,String>{
                         if (materialProgress!=null)
                             materialProgress.dismiss();
                         if (flag){
-//                            if (CustomPageActivity.dataModel!=null && CustomPageActivity.dataModel.size()>0){
-//                        for (int i = 0; i < CustomPageActivity.posList.size(); i++) {
-//                            int n = Integer.parseInt(CustomPageActivity.posList.get(i).toString());
-//                            CustomPageActivity.dataModel.remove(n);
+//                            if (CustomPageFragment.dataModel!=null && CustomPageFragment.dataModel.size()>0){
+//                        for (int i = 0; i < CustomPageFragment.posList.size(); i++) {
+//                            int n = Integer.parseInt(CustomPageFragment.posList.get(i).toString());
+//                            CustomPageFragment.dataModel.remove(n);
 //                        }
 
-                            new CustomPageService().GetPages(activity,tag,Constants.clientId,pageInterface,bus);
-                            CustomPageActivity.posList = new ArrayList<>();
+                            new CustomPageService().GetPages(tag,Constants.clientId,pageInterface,bus);
+                            CustomPageFragment.posList = new ArrayList<>();
 
-//                        CustomPageActivity.custompageAdapter.notifyDataSetChanged();
+//                        CustomPageFragment.custompageAdapter.notifyDataSetChanged();
 //                            }
-//                    if (CustomPageActivity.recyclerView!=null){
-//                        CustomPageActivity.recyclerView.invalidate();
+//                    if (CustomPageFragment.recyclerView!=null){
+//                        CustomPageFragment.recyclerView.invalidate();
 //                    }
                             Methods.showSnackBarPositive(activity, activity.getString(R.string.page_removed));
                         }else{
                             Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
-                            if (CustomPageActivity.custompageAdapter!=null)
-                                CustomPageActivity.custompageAdapter.notifyDataSetChanged();
-                            if (CustomPageActivity.recyclerView!=null)
-                                CustomPageActivity.recyclerView.invalidate();
-                            CustomPageActivity.posList = new ArrayList<>();
+                            if (CustomPageFragment.custompageAdapter!=null)
+                                CustomPageFragment.custompageAdapter.notifyDataSetChanged();
+                            if (CustomPageFragment.recyclerView!=null)
+                                CustomPageFragment.recyclerView.invalidate();
+                            CustomPageFragment.posList = new ArrayList<>();
                         }
                     }
                 }

@@ -28,9 +28,10 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ViewConfigurationCompat;
-import android.support.v4.view.ViewPager;
+import androidx.core.view.MotionEventCompat;
+import androidx.core.view.ViewConfigurationCompat;
+import androidx.viewpager.widget.ViewPager;
+
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -162,7 +163,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         //Load defaults from resources
         final Resources res = getResources();
-        final int defaultFooterColor = res.getColor(R.color.default_title_indicator_footer_color);
+        // int defaultFooterColor = res.getColor(R.color.default_title_indicator_footer_color);
         final float defaultFooterLineHeight = res.getDimension(R.dimen.default_title_indicator_footer_line_height);
         final int defaultFooterIndicatorStyle = res.getInteger(R.integer.default_title_indicator_footer_indicator_style);
         final float defaultFooterIndicatorHeight = res.getDimension(R.dimen.default_title_indicator_footer_indicator_height);
@@ -195,14 +196,14 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mBoldText = a.getBoolean(R.styleable.TitlePageIndicator_selectedBold, defaultSelectedBold);
 
         final float textSize = a.getDimension(R.styleable.TitlePageIndicator_android_textSize, defaultTextSize);
-        final int footerColor = a.getColor(R.styleable.TitlePageIndicator_footerColor, defaultFooterColor);
+        //final int footerColor = a.getColor(R.styleable.TitlePageIndicator_footerColor, defaultFooterColor);
         mPaintText.setTextSize(textSize);
         mPaintText.setAntiAlias(true);
         mPaintFooterLine.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaintFooterLine.setStrokeWidth(mFooterLineHeight);
-        mPaintFooterLine.setColor(footerColor);
+        //mPaintFooterLine.setColor(footerColor);
         mPaintFooterIndicator.setStyle(Paint.Style.FILL_AND_STROKE);
-        mPaintFooterIndicator.setColor(footerColor);
+        //mPaintFooterIndicator.setColor(footerColor);
 
         Drawable background = a.getDrawable(R.styleable.TitlePageIndicator_android_background);
         if (background != null) {

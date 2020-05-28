@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_10"
+    android:paddingRight="@dimen/margin_10"
+    android:paddingTop="@dimen/margin_10"
+    android:paddingBottom="@dimen/margin_10"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            android:id="@+id/layout_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/label_payment_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Assured Purchase"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryTextColor" />
+
+            <TextView
+                android:id="@+id/label_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A Boost service which ensures a secure payment and safe delivery of this product"
+                android:textSize="14sp"
+                android:paddingTop="3dp"
+                android:textColor="@color/secondaryTextColor" />
+
+        </LinearLayout>
+
+</LinearLayout>

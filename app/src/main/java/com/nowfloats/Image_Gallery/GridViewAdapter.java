@@ -3,7 +3,7 @@ package com.nowfloats.Image_Gallery;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v4.util.LruCache;
+import androidx.collection.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +72,7 @@ public class GridViewAdapter extends BaseAdapter {
 
             //imageCache.put(1,imageView);
 
-            //imageView.setImageUrl(imageURI,imgLoader);
+            //imageView.setImageUrl(picimageURI,imgLoader);
 
         } else {
             grid = (View) convertView;

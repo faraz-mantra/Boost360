@@ -18,12 +18,35 @@ public class NfxGetTokensResponse  {
         @SerializedName("nowfloats_id")
         @Expose
         private String nowfloatsId;
+        @SerializedName("callLogTimeInterval")
+        @Expose
+        private String callLogTimeInterval;
+        @SerializedName("smsRegex")
+        @Expose
+        private List<String> smsRegex;
         @SerializedName("NFXAccessTokens")
         @Expose
         private List<NFXAccessToken> nFXAccessTokens = new ArrayList<NFXAccessToken>();
 
+        public List<String> getSmsRegex() {
+            return smsRegex;
+        }
+
+    public String getCallLogTimeInterval() {
+        return callLogTimeInterval;
+    }
+
+    public void setCallLogTimeInterval(String callLogTimeInterval) {
+        this.callLogTimeInterval = callLogTimeInterval;
+    }
+
+    public void setSmsRegex(List<String> smsRegex) {
+            this.smsRegex = smsRegex;
+        }
+
         /**
          *
+
          * @return
          * The message
          */

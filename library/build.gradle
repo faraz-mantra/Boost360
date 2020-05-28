@@ -1,14 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 16
-    buildToolsVersion '19.1.0'
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 4
-        targetSdkVersion 4
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -18,5 +17,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:18.+'
+
+    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
 }

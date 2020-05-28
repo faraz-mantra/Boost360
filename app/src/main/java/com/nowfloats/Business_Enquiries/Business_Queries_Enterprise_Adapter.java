@@ -6,7 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,6 +104,9 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
                 fromTextView.setText("+"+Constants.StoreCountryCode+data.Phone);
             }
             dateTextView.setText(data.CreatedDate);
+
+            Log.d("DATE_FORMAT_CHECK", data.CreatedDate);
+
             queryTextView.setText("\""+data.Message+"\"");
             holder.setIsRecyclable(false);
 

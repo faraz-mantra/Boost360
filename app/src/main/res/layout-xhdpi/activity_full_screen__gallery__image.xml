@@ -14,32 +14,32 @@
 
         <ImageView
             android:id="@+id/galleryCancel"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/gallery_cancel"
             android:layout_marginLeft="10dp"
             android:padding="7dp"
             />
-            <ImageView
-                android:id="@+id/deleteGalleryImage"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/delete_dustbin_button"
-                android:layout_gravity="right"
-                android:padding="6dp"
-                android:layout_marginRight="10dp"
-                />
+        <ImageView
+            android:id="@+id/deleteGalleryImage"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_menu_delete"
+            android:layout_gravity="right"
+            android:padding="6dp"
+            android:layout_marginRight="10dp"
+            />
     </FrameLayout>
 
 
 
-    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.viewpager.widget.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/galleryImageViewpager"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_margin="10dp"
         android:layout_weight="1">
-    </android.support.v4.view.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 
     <LinearLayout
         android:layout_width="match_parent"

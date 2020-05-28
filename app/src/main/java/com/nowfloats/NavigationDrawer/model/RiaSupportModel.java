@@ -1,10 +1,11 @@
 package com.nowfloats.NavigationDrawer.model;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RiaSupportModel {
+import java.util.List;
+
+public class RiaSupportModel{
 
     @SerializedName("_id")
     @Expose
@@ -23,19 +24,37 @@ public class RiaSupportModel {
     private String phoneNumber;
     @SerializedName("ClientId")
     @Expose
-    private Object clientId;
+    private String clientId;
     @SerializedName("IsActive")
     @Expose
     private Boolean isActive;
     @SerializedName("ActiveHours")
     @Expose
     private List<ActiveHour> activeHours = null;
+    @SerializedName("VideoCallLink")
+    @Expose
+    private String videoCallLink;
+    @SerializedName("ConcurrentMeetingsCount")
+    @Expose
+    private Integer concurrentMeetingsCount;
+    @SerializedName("PartnerUsername")
+    @Expose
+    private String partnerUsername;
+    @SerializedName("SupportTicketConfig")
+    @Expose
+    private Object supportTicketConfig;
     @SerializedName("CreatedOn")
     @Expose
     private String createdOn;
     @SerializedName("UpdatedOn")
     @Expose
     private String updatedOn;
+    @SerializedName("Type")
+    @Expose
+    private String type;
+    @SerializedName("City")
+    @Expose
+    private Object city;
 
     public String getId() {
         return id;
@@ -77,11 +96,11 @@ public class RiaSupportModel {
         this.phoneNumber = phoneNumber;
     }
 
-    public Object getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
-    public void setClientId(Object clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 
@@ -101,6 +120,38 @@ public class RiaSupportModel {
         this.activeHours = activeHours;
     }
 
+    public String getVideoCallLink() {
+        return videoCallLink;
+    }
+
+    public void setVideoCallLink(String videoCallLink) {
+        this.videoCallLink = videoCallLink;
+    }
+
+    public Integer getConcurrentMeetingsCount() {
+        return concurrentMeetingsCount;
+    }
+
+    public void setConcurrentMeetingsCount(Integer concurrentMeetingsCount) {
+        this.concurrentMeetingsCount = concurrentMeetingsCount;
+    }
+
+    public String getPartnerUsername() {
+        return partnerUsername;
+    }
+
+    public void setPartnerUsername(String partnerUsername) {
+        this.partnerUsername = partnerUsername;
+    }
+
+    public Object getSupportTicketConfig() {
+        return supportTicketConfig;
+    }
+
+    public void setSupportTicketConfig(Object supportTicketConfig) {
+        this.supportTicketConfig = supportTicketConfig;
+    }
+
     public String getCreatedOn() {
         return createdOn;
     }
@@ -117,7 +168,23 @@ public class RiaSupportModel {
         this.updatedOn = updatedOn;
     }
 
-    public class ActiveHour {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Object getCity() {
+        return city;
+    }
+
+    public void setCity(Object city) {
+        this.city = city;
+    }
+
+    public static class ActiveHour {
 
         @SerializedName("From")
         @Expose
@@ -156,4 +223,6 @@ public class RiaSupportModel {
     }
 
 }
+
+
 

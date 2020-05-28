@@ -2,7 +2,7 @@ package com.nowfloats.NavigationDrawer.SiteMeter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +69,7 @@ public class SiteMeterAdapter extends RecyclerView.Adapter<SiteMeterAdapter.View
             @Override
             public void onClick(View v) {
                 int pos = Integer.parseInt(v.getTag().toString());
+                //Log.v("ggg",siteData.get(pos).position+" "+siteData.get(pos).status);
             if (!siteData.get(pos).status)
                 fragment.SiteMeterOnClick(siteData.get(pos).position);
             }

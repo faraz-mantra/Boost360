@@ -1,12 +1,13 @@
 apply plugin: 'android-library'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+    implementation fileTree(dir: 'libs', include: '*.jar')
 }
 
 android {
-    compileSdkVersion 17
-    buildToolsVersion '21.1.1'
+    useLibrary 'org.apache.http.legacy'
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     sourceSets {
         main {
@@ -20,7 +21,7 @@ android {
         }
 
         // Move the tests to tests/java, tests/res, etc...
-        instrumentTest.setRoot('tests')
+        androidTest.setRoot('tests')
 
         // Move the build types to build-types/<type>
         // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...

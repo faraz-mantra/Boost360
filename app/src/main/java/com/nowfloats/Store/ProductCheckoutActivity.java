@@ -4,22 +4,31 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.os.Handler;
+import android.os.Looper;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.ItemsRecyclerViewAdapter;
+import com.nowfloats.Store.Model.AllPackage;
+import com.nowfloats.Store.Model.OPCModels.UpdateDraftInvoiceModel;
+import com.nowfloats.Store.Model.PackageDetails;
 import com.nowfloats.Store.Model.PaymentTokenResult;
+import com.nowfloats.Store.Model.PricingPlansModel;
 import com.nowfloats.Store.Model.PurchaseDetail;
 import com.nowfloats.Store.Model.ReceiveDraftInvoiceModel;
 import com.nowfloats.Store.Model.ReceivedDraftInvoice;
@@ -32,9 +41,8 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.romeo.mylibrary.Models.OrderDataModel;
-import com.romeo.mylibrary.ui.InstaMojoMainActivity;
 import com.thinksity.R;
+import com.thinksity.Specific;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -51,22 +59,27 @@ import retrofit.client.Response;
 public class ProductCheckoutActivity extends AppCompatActivity {
 
     private UserSessionManager mSessionManager;
-    private OrderDataModel mOrderData;
+//    private OrderDataModel mOrderData;
 
     private String mNewPackage, mFinalAmount, mInvoiceId;
 
     Toolbar toolbar;
     MaterialDialog materialProgress;
-    TextView headerText, tvUserName, tvUserEmail, tvPhoneNumber, tvNetTotal, tvTaxes, tvAmountToBePaid;
+    TextView headerText, tvUserName, tvUserEmail, tvPhoneNumber, tvNetTotal, tvTaxes,
+             tvAmountToBePaid, tvTanNo, tvTdsAmount,btnPayNow, btnOpcApply;
     RecyclerView rvItems;
-    Button btnPayNow, btnOpcApply;
     EditText etOpc;
+    LinearLayout llOpcInputLayout;
+
+    TableRow trTanNo, trTdsAmount;
 
     ArrayList<ReceiveDraftInvoiceModel.KeyValuePair> mOpcDetails;
 
-
-    private final int DIRECT_REQUEST_CODE = 1;
+    private List<PackageDetails> mPurchasePlans;
+    private final int DIRECT_REQUEST_CODE = 2013;
     private final int OPC_REQUEST_CODE = 2;
+    private final int PADDLE_REQUEST_CODE = 3;
+    private String[] mPackageIds;
     
 
     @Override
@@ -81,16 +94,18 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        mPackageIds = getIntent().getExtras().getStringArray("package_ids");
+        mSessionManager = new UserSessionManager(this, this);
+
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
         headerText.setText(getResources().getString(R.string.product_checkout));
-
-        mSessionManager = new UserSessionManager(getApplicationContext(), this);
 
         materialProgress = new MaterialDialog.Builder(this)
                 .widgetColorRes(R.color.accentColor)
                 .content("Please Wait...")
                 .progress(true, 0)
-                .cancelable(false).build();
+                .cancelable(false)
+                .show();
 
         etOpc = (EditText) findViewById(R.id.etOpcCode);
 
@@ -100,32 +115,45 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         tvNetTotal = (TextView) findViewById(R.id.tv_net_total);
         tvTaxes = (TextView) findViewById(R.id.tv_taxes);
         tvAmountToBePaid = (TextView) findViewById(R.id.tv_amount_to_be_paid);
+        tvTanNo = (TextView) findViewById(R.id.tv_user_tan_no);
+        tvTdsAmount = (TextView) findViewById(R.id.tv_tds_amount);
 
         rvItems = (RecyclerView) findViewById(R.id.rv_store_items);
+        trTanNo = (TableRow) findViewById(R.id.tr_tan_no);
+        trTdsAmount = (TableRow) findViewById(R.id.tr_tds_amount);
 
-        btnPayNow = (Button) findViewById(R.id.btn_pay_now);
-        btnOpcApply = (Button) findViewById(R.id.btnOpcApply);
+        btnPayNow = findViewById(R.id.btn_pay_now);
+        btnOpcApply = findViewById(R.id.btnOpcApply);
+        llOpcInputLayout = findViewById(R.id.llOpcInputLayout);
+        if (Specific.PACKAGE_NAME.equalsIgnoreCase("com.biz2.nowfloats")) {
+            llOpcInputLayout.setVisibility(View.VISIBLE);
+        } else {
+            llOpcInputLayout.setVisibility(View.GONE);
+        }
         btnPayNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //startActivity(new Intent(ProductCheckoutActivity.this, PaymentOptionsActivity.class));
+
                 if(!Util.isNullOrEmpty(mNewPackage) && !Util.isNullOrEmpty(mFinalAmount)) {
-                    Intent i = new Intent(ProductCheckoutActivity.this, InstaMojoMainActivity.class);
-                    mOrderData = new OrderDataModel(mSessionManager.getFpTag(), mSessionManager.getFpTag(),
-                            mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
-                            mFinalAmount , mNewPackage.substring(0, mNewPackage.length() - 4),
-                            mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
-                            "NowFloats Package", StoreDataActivity.product.CurrencyCode);
-                    i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
-                    //write logic for with and without opc cases
-                    if(!etOpc.isEnabled()) {
-                        if(mOpcDetails==null) {
-                            initiatePaymentProcess(i, mInvoiceId);
-                        }else {
-                            showConfirmationDialog(i, mInvoiceId);
-                        }
-                    }else {
-                        createDraftInvoice();
-                    }
+//                    Intent i = new Intent(ProductCheckoutActivity.this, InstaMojoMainActivity.class);
+//                    mOrderData = new OrderDataModel(mSessionManager.getFpTag(), mSessionManager.getFpTag(),
+//                            mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
+//                            mFinalAmount , mNewPackage.substring(0, mNewPackage.length() - 4),
+//                            mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
+//                            "NowFloats Package", mPurchasePlans.get(0).getCurrencyCode());
+//                    i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
+//                    i.putExtra("packageList",new Gson().toJson(mPurchasePlans));
+//                    //write logic for with and without opc cases
+//                    if(!etOpc.isEnabled()) {
+//                        if(mOpcDetails==null) {
+//                            initiatePaymentProcess(i, mInvoiceId);
+//                        }else {
+//                            showConfirmationDialog(i, mInvoiceId);
+//                        }
+//                    }else {
+//                        initiatePaymentProcess(i, mInvoiceId);
+//                    }
                 }else {
                     Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error in processing Amount");
                 }
@@ -136,11 +164,13 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                createOpcDraftInvoice(etOpc.getText().toString().trim());
+                updateDraftInvoice(etOpc.getText().toString().trim());
             }
         });
 
-        PurchaseDetail purchaseDetail = new PurchaseDetail();
+        getPricingPlanDetails();
+
+        /*PurchaseDetail purchaseDetail = new PurchaseDetail();
         String clientId;
         if (!Util.isNullOrEmpty(mSessionManager.getSourceClientId())) {
             clientId = mSessionManager.getSourceClientId();
@@ -148,8 +178,10 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             clientId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
         }
         double totalTax = 0;
-        for(TaxDetail taxData : StoreDataActivity.product.Taxes/*taxes*/){
-            totalTax+=taxData.getValue();
+        if(StoreDataActivity.product.Taxes != null) {
+            for (TaxDetail taxData : StoreDataActivity.product.Taxes*//*taxes*//*) {
+                totalTax += taxData.getValue();
+            }
         }
         purchaseDetail.setBasePrice(Double.parseDouble(StoreDataActivity.product.Price));
         purchaseDetail.setClientId(clientId);
@@ -159,14 +191,106 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         purchaseDetail.setMRPCurrencyCode(StoreDataActivity.product.CurrencyCode);
         purchaseDetail.setPackageId(StoreDataActivity.product._id);
         purchaseDetail.setPackageName(StoreDataActivity.product.Name);
-        purchaseDetail.setTaxDetails(StoreDataActivity.product.Taxes/*taxes*/);
+        purchaseDetail.setTaxDetails(StoreDataActivity.product.Taxes*//*taxes*//*);
         List<PurchaseDetail> purchaseDetailList = new ArrayList<PurchaseDetail>();
         purchaseDetailList.add(purchaseDetail);
 
         ReceiveDraftInvoiceModel receiveDraftInvoiceModel = new ReceiveDraftInvoiceModel();
-        receiveDraftInvoiceModel.setPurchaseDetails(purchaseDetailList);
+        receiveDraftInvoiceModel.setPurchaseDetails(purchaseDetailList);*/
 
-        initializeVal(receiveDraftInvoiceModel, false);
+        //initializeVal(receiveDraftInvoiceModel, false);
+        //createDraftInvoice();
+    }
+
+    private void getPricingPlanDetails() {
+
+        String accId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
+        String appId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID);
+        String country = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
+        Map<String, String> params = new HashMap<>();
+        if (accId.length()>0){
+            params.put("identifier", accId);
+        }else{
+            params.put("identifier", appId);
+        }
+        params.put("clientId", Constants.clientId);
+        params.put("fpId", mSessionManager.getFPID());
+        params.put("country",country.toLowerCase());
+        params.put("fpCategory", mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toUpperCase());
+
+        Constants.restAdapter.create(StoreInterface.class).getStoreList(params, new Callback<PricingPlansModel>() {
+            @Override
+            public void success(PricingPlansModel storeMainModel, Response response) {
+                if(storeMainModel != null){
+                    preProcessAndDispatchPlans(storeMainModel);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Test", error.getMessage());
+            }
+        });
+
+    }
+
+    private void preProcessAndDispatchPlans(final PricingPlansModel storeMainModel){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<PackageDetails> packageDetailsList = new ArrayList<>();
+                if(mPackageIds == null)
+                    return;
+                for(AllPackage packageType : storeMainModel.allPackages){
+                    for(PackageDetails packDetail : packageType.getValue()){
+                        for (String item : mPackageIds) {
+                            if (packDetail.getId().equalsIgnoreCase(item)) {
+                                packageDetailsList.add(packDetail);
+                                break; // No need to look further.
+                            }
+                        }
+                    }
+                }
+                mPurchasePlans = packageDetailsList;
+                List<PurchaseDetail> purchaseDetailList = new ArrayList<PurchaseDetail>();
+                for(PackageDetails packageDetail : mPurchasePlans) {
+                    PurchaseDetail purchaseDetail = new PurchaseDetail();
+                    String clientId;
+                    if (!Util.isNullOrEmpty(mSessionManager.getSourceClientId())) {
+                        clientId = mSessionManager.getSourceClientId();
+                    } else {
+                        clientId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
+                    }
+                    double totalTax = 0;
+                    if(packageDetail.getTaxes() != null) {
+                        for (TaxDetail taxData : packageDetail.getTaxes()) {
+                            totalTax += taxData.getValue();
+                        }
+                    }
+                    purchaseDetail.setBasePrice(packageDetail.getPrice());
+                    purchaseDetail.setClientId(clientId);
+                    purchaseDetail.setDurationInMnths(packageDetail.getValidityInMths());
+                    purchaseDetail.setFPId(mSessionManager.getFPID());
+                    purchaseDetail.setMRP(packageDetail.getPrice() + (packageDetail.getPrice()*totalTax)/100);
+                    purchaseDetail.setMRPCurrencyCode(packageDetail.getCurrencyCode());
+                    purchaseDetail.setPackageId(packageDetail.getId());
+                    purchaseDetail.setPackageName(packageDetail.getName());
+                    purchaseDetail.setTaxDetails(packageDetail.getTaxes());
+                    purchaseDetailList.add(purchaseDetail);
+                }
+                final ReceiveDraftInvoiceModel receiveDraftInvoiceModel = new ReceiveDraftInvoiceModel();
+                receiveDraftInvoiceModel.setPurchaseDetails(purchaseDetailList);
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        initializeVal(receiveDraftInvoiceModel, false);
+                        createDraftInvoice();
+                    }
+                });
+            }
+        }).start();
+
     }
 
     private void showConfirmationDialog(final Intent i, final String mInvoiceId) {
@@ -209,42 +333,48 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         }
     }
 
-    private void createOpcDraftInvoice(String OPCCode) {
+    private void updateDraftInvoice(String OPCCode) {
         if(Util.isNullOrEmpty(OPCCode)){
             Methods.showSnackBarNegative(this, "Online Voucher can't be empty");
             return;
         }
         try {
-            SendDraftInvoiceModel sendDraftInvoiceModel = new SendDraftInvoiceModel();
-            //PurchaseDetail purchaseDetail = new PurchaseDetail();
-            DataBase dataBase = new DataBase(this);
-
+            DataBase dataBase = new DataBase(ProductCheckoutActivity.this);
             Cursor cursor = dataBase.getLoginStatus();
-            if (cursor!=null && cursor.moveToFirst()){
-                //System.out.println(cursor.getString(cursor.getColumnIndex("title"));
-                sendDraftInvoiceModel.setFpUserProfileId(cursor.getString(cursor.getColumnIndex(DataBase.colloginId)));
-                sendDraftInvoiceModel.setOpc(OPCCode);
+            String fpUserProfileId;
+            if (cursor.moveToFirst()){
+                fpUserProfileId = cursor.getString(cursor.getColumnIndex(DataBase.colloginId));
             }else {
-                Toast.makeText(this, R.string.login_status_error, Toast.LENGTH_SHORT).show();
+                showDialog("Alert!", "This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.");
                 return;
             }
-            sendDraftInvoiceModel.setPurchaseDetails(null);
+            UpdateDraftInvoiceModel updateDraftInvoiceModel;
+            if(mInvoiceId!=null && fpUserProfileId!=null) {
+                updateDraftInvoiceModel = new UpdateDraftInvoiceModel(fpUserProfileId, OPCCode, mInvoiceId);
+            }else {
+                Methods.showSnackBarNegative(this, "Unable to create Draft Invoice");
+                return;
+            }
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
-            if(materialProgress!=null){
+            if(materialProgress!=null && !materialProgress.isShowing()){
                 materialProgress.show();
             }
+            if(updateDraftInvoiceModel==null){
+                Methods.showSnackBarNegative(this, "Unable to apply Coupon");
+                return;
+            }
             StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
-            storeInterface.createDraftInvoice(params, sendDraftInvoiceModel, new Callback<ReceivedDraftInvoice>() {
+            storeInterface.updateDraftInvoice(params, updateDraftInvoiceModel, new Callback<ReceivedDraftInvoice>() {
                 @Override
                 public void success(ReceivedDraftInvoice receiveDraftInvoice, Response response) {
                     if(receiveDraftInvoice!=null){
-                        if(materialProgress!=null){
+                        if(materialProgress!=null && materialProgress.isShowing()){
                             materialProgress.dismiss();
                         }
                         if(receiveDraftInvoice.getError().getErrorList()==null || receiveDraftInvoice.getStatusCode()==200) {
-                            if(receiveDraftInvoice.getResult().getPurchaseDetails().get(0).getPackageId().equals(StoreDataActivity.product._id)) {
+                            if(receiveDraftInvoice.getResult().getPurchaseDetails().get(0).getPackageId().equals(mPurchasePlans.get(0).getId())) {
                                 etOpc.setEnabled(false);
                                 btnOpcApply.setEnabled(false);
                                 mInvoiceId = receiveDraftInvoice.getResult().getInvoiceId();
@@ -259,7 +389,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                             //layout.setError(;
                         }
                     }else {
-                        if(materialProgress!=null){
+                        if(materialProgress!=null && materialProgress.isShowing()){
                             materialProgress.dismiss();
                         }
                         Methods.showSnackBarNegative(ProductCheckoutActivity.this, getResources().getString(R.string.error_invoice));
@@ -269,7 +399,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if(materialProgress!=null){
+                    if(materialProgress!=null && materialProgress.isShowing()){
                         materialProgress.dismiss();
                     }
                     Methods.showSnackBarNegative(ProductCheckoutActivity.this, getResources().getString(R.string.error_invoice));
@@ -277,7 +407,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             });
         }catch (Exception e){
             e.printStackTrace();
-            if(materialProgress!=null){
+            if(materialProgress!=null && materialProgress.isShowing()){
                 materialProgress.dismiss();
             }
             Toast.makeText(this, "Error while generating Invoice", Toast.LENGTH_SHORT).show();
@@ -287,8 +417,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==DIRECT_REQUEST_CODE || requestCode==OPC_REQUEST_CODE && resultCode==RESULT_OK) {
+        if(requestCode==DIRECT_REQUEST_CODE || requestCode==OPC_REQUEST_CODE || requestCode == PADDLE_REQUEST_CODE && resultCode==RESULT_OK) {
             if (data == null) {
                 return;
             }
@@ -301,6 +430,8 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             setResult(RESULT_OK, data);
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        }else{
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -315,80 +446,106 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         params.put("invoiceId", invoiceId);
 
         SupportedPaymentMethods method = null;
-        for (SupportedPaymentMethods paymentMethod : StoreDataActivity.product.SupportedPaymentMethods){
-            if(paymentMethod.Type==1){
-                method = paymentMethod;
+        if(mPurchasePlans!=null &&
+                mPurchasePlans.get(0).getSupportedPaymentMethods()!=null
+                && mPurchasePlans.get(0).getSupportedPaymentMethods().size()>0){
+            for (SupportedPaymentMethods paymentMethod : mPurchasePlans.get(0).getSupportedPaymentMethods()){
+                if(paymentMethod.Type==1){
+                    method = paymentMethod;
+                }
             }
-        }
-        if (materialProgress!=null){
-            materialProgress.show();
-        }
-        storeInterface.initiatePaymentProcess(params, method, new Callback<PaymentTokenResult>() {
-            @Override
-            public void success(PaymentTokenResult paymentTokenResult, Response response) {
-                if(paymentTokenResult!=null && paymentTokenResult.getResult()!=null) {
-                    i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
-                    i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
-                    i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId="+Constants.clientId);//change this later
+            if(materialProgress!=null && !materialProgress.isShowing()){
+                materialProgress.show();
+            }
+            if(method != null)
+            {
+                method.RedirectUri = "https://hello.nowfloats.com";
+            }
+
+            storeInterface.initiatePaymentProcess(params, method, new Callback<PaymentTokenResult>() {
+                @Override
+                public void success(PaymentTokenResult paymentTokenResult, Response response) {
                     if (materialProgress!=null){
                         materialProgress.dismiss();
                     }
-                    startActivityForResult(i, OPC_REQUEST_CODE);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }else {
-                    if (materialProgress!=null){
+                    if(paymentTokenResult!=null && paymentTokenResult.getResult()!=null) {
+                        switch (paymentTokenResult.getResult().getPaymentMethodType())
+                        {
+                            case "INSTAMOJO":
+//                                i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
+//                                i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
+//                                i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId="+Constants.clientId);//change this later
+
+                                startActivityForResult(i, OPC_REQUEST_CODE);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                break;
+                            case "PADDLE":
+                                Intent paddleIntent = new Intent(ProductCheckoutActivity.this, PaddleCheckoutActivity.class);
+                                paddleIntent.putExtra("paymentUrl", paymentTokenResult.getResult().getTargetPaymentCollectionUri());
+                                startActivityForResult(paddleIntent, PADDLE_REQUEST_CODE);
+                                break;
+                            default:
+                                Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
+                        }
+
+                    }else {
+                        Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    if(materialProgress!=null && materialProgress.isShowing()){
                         materialProgress.dismiss();
                     }
                     Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
                 }
-            }
+            });
+        }
 
-            @Override
-            public void failure(RetrofitError error) {
-                if (materialProgress!=null){
-                    materialProgress.dismiss();
-                }
-                Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
-            }
-        });
     }
 
     private void createDraftInvoice() {
         try {
             SendDraftInvoiceModel sendDraftInvoiceModel = new SendDraftInvoiceModel();
-            PurchaseDetail purchaseDetail = new PurchaseDetail();
-            String clientId;
-
-            if (!Util.isNullOrEmpty(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID))) {
-                clientId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
-            } else {
-                Methods.showSnackBarNegative(this, "Can't Proceed for Payment");
-                return;
-            }
-
-            double totalTax = 0;
-
-            for(TaxDetail taxData : StoreDataActivity.product.Taxes/*taxes*/){
-                totalTax+=taxData.getValue();
-            }
-
-            purchaseDetail.setBasePrice(Double.parseDouble(StoreDataActivity.product.Price));
-            purchaseDetail.setClientId(clientId);
-            purchaseDetail.setDurationInMnths(StoreDataActivity.product.ValidityInMths);
-            purchaseDetail.setFPId(mSessionManager.getFPID());
-            purchaseDetail.setMRP(Double.parseDouble(StoreDataActivity.product.Price) + (Double.parseDouble(StoreDataActivity.product.Price)*totalTax)/100);
-            purchaseDetail.setMRPCurrencyCode(StoreDataActivity.product.CurrencyCode);
-            purchaseDetail.setPackageId(StoreDataActivity.product._id);
-            purchaseDetail.setPackageName(StoreDataActivity.product.Name);
-            purchaseDetail.setTaxDetails(StoreDataActivity.product.Taxes/*taxes*/);
-
             List<PurchaseDetail> purchaseDetailList = new ArrayList<PurchaseDetail>();
-            purchaseDetailList.add(purchaseDetail);
+            for(PackageDetails packageDetail : mPurchasePlans) {
+                PurchaseDetail purchaseDetail = new PurchaseDetail();
+                String clientId;
+
+                if (!Util.isNullOrEmpty(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID))) {
+                    clientId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
+                } else if (!Util.isNullOrEmpty(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID))) {
+                    clientId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID);
+                } else if (!Util.isNullOrEmpty(mSessionManager.getSourceClientId())) {
+                    clientId = mSessionManager.getSourceClientId();
+                } else {
+                    Methods.showSnackBarNegative(this, "Can't Proceed for Payment");
+                    return;
+                }
+
+                double totalTax = 0;
+                if (packageDetail.getTaxes() != null) {
+                    for (TaxDetail taxData : packageDetail.getTaxes()) {
+                        totalTax += taxData.getValue();
+                    }
+                }
+                purchaseDetail.setBasePrice(packageDetail.getPrice());
+                purchaseDetail.setClientId(clientId);
+                purchaseDetail.setDurationInMnths(packageDetail.getValidityInMths());
+                purchaseDetail.setFPId(mSessionManager.getFPID());
+                purchaseDetail.setMRP(packageDetail.getPrice() + (packageDetail.getPrice() * totalTax) / 100);
+                purchaseDetail.setMRPCurrencyCode(packageDetail.getCurrencyCode());
+                purchaseDetail.setPackageId(packageDetail.getId());
+                purchaseDetail.setPackageName(packageDetail.getName());
+                purchaseDetail.setTaxDetails(packageDetail.getTaxes());
+                purchaseDetailList.add(purchaseDetail);
+            }
 
             sendDraftInvoiceModel.setPurchaseDetails(purchaseDetailList);
             DataBase dataBase = new DataBase(ProductCheckoutActivity.this);
             Cursor cursor = dataBase.getLoginStatus();
-            if (cursor.moveToFirst()){
+            if (cursor.moveToFirst() && !cursor.getString(cursor.getColumnIndex(DataBase.colloginId)).equals("0")){
                 sendDraftInvoiceModel.setFpUserProfileId(cursor.getString(cursor.getColumnIndex(DataBase.colloginId)));
                 sendDraftInvoiceModel.setOpc(null);
             }else {
@@ -398,7 +555,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
-            if(materialProgress!=null){
+            if(materialProgress!=null && !materialProgress.isShowing()){
                 materialProgress.show();
             }
             StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
@@ -406,24 +563,13 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                 @Override
                 public void success(ReceivedDraftInvoice receiveDraftInvoice, Response response) {
                     if(receiveDraftInvoice!=null && receiveDraftInvoice.getStatusCode()==200){
-                        if(materialProgress!=null){
+                        if(materialProgress!=null && materialProgress.isShowing()){
                             materialProgress.dismiss();
                         }
                         initializeVal(receiveDraftInvoice.getResult(), false);
                         mInvoiceId = receiveDraftInvoice.getResult().getInvoiceId();
-                        if(!Util.isNullOrEmpty(mNewPackage) && !Util.isNullOrEmpty(mFinalAmount)) {
-                            Intent i = new Intent(ProductCheckoutActivity.this, InstaMojoMainActivity.class);
-                            mOrderData = new OrderDataModel(mSessionManager.getFpTag(), mSessionManager.getFpTag(),
-                                    mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
-                                    mFinalAmount, mNewPackage.substring(0, mNewPackage.length() - 4),
-                                    mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
-                                    "NowFloats Package", StoreDataActivity.product.CurrencyCode);
-                            i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
-                            initiatePaymentProcess(i, mInvoiceId);
-                        }
-
                     }else {
-                        if(materialProgress!=null){
+                        if(materialProgress!=null && materialProgress.isShowing()){
                             materialProgress.dismiss();
                         }
                         Methods.showSnackBarNegative(ProductCheckoutActivity.this, getResources().getString(R.string.error_invoice));
@@ -433,7 +579,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if(materialProgress!=null){
+                    if(materialProgress!=null && materialProgress.isShowing()){
                         materialProgress.dismiss();
                     }
                     Methods.showSnackBarNegative(ProductCheckoutActivity.this, getResources().getString(R.string.error_invoice));
@@ -441,7 +587,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             });
         }catch (Exception e){
             e.printStackTrace();
-            if(materialProgress!=null){
+            if(materialProgress!=null && materialProgress.isShowing()){
                 materialProgress.dismiss();
             }
             Toast.makeText(ProductCheckoutActivity.this, "Error while generating Invoice", Toast.LENGTH_SHORT).show();
@@ -450,58 +596,70 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
     // showing list of products with discount, if opc added
     private void initializeVal(final ReceiveDraftInvoiceModel invoiceData, boolean showDiscount) {
-        if(invoiceData==null){
+        if(invoiceData==null || mPurchasePlans == null){
             return;
         }
         tvUserName.setText(mSessionManager.getFpTag().toLowerCase());
         tvUserEmail.setText(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
         tvPhoneNumber.setText(mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
+        if(showDiscount) {
+            trTanNo.setVisibility(View.VISIBLE);
+            tvTanNo.setText(invoiceData.getTanNumber() + "");
+        }
         double netAmount = 0;
-        for(PurchaseDetail data : invoiceData.getPurchaseDetails()){
-            if(data.getDiscount()==null) {
-                netAmount += data.getBasePrice();
-            }else {
-                netAmount += (data.getBasePrice()-(data.getBasePrice()*data.getDiscount().value/100.0));
+        if (invoiceData.getPurchaseDetails() != null && invoiceData.getPurchaseDetails().size() != 0) {
+            for (PurchaseDetail data : invoiceData.getPurchaseDetails()) {
+                if (data.getDiscount() == null) {
+                    netAmount += data.getBasePrice();
+                } else {
+                    netAmount += (data.getBasePrice() - (data.getBasePrice() * data.getDiscount().value / 100.0));
+                }
             }
-        }
-        netAmount = Math.round((netAmount * 100) / 100.0);
-        tvNetTotal.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
-                NumberFormat.getIntegerInstance(Locale.US).format(netAmount)+ " /-");
-        float taxVal = 0;
-        StringBuilder taxNames= new StringBuilder();
-        //double taxAmount = 0;
-        for(TaxDetail taxData : invoiceData.getPurchaseDetails().get(0).getTaxDetails()){
-            taxVal+=taxData.getValue();
-            taxNames.append(taxData.getKey() + "-" + taxData.getValue() +"%,\n ");
-        }
-        double taxAmount = 0;
-        if(invoiceData.getPurchaseDetails().get(0).getTaxDetails().get(0).getAmountType()==0) {
-            taxAmount = (netAmount * taxVal) / 100.0;
-        }else {
-            taxAmount =(int) taxVal;
-        }
-        taxAmount = Math.round((taxAmount * 100) / 100.0);
-        tvTaxes.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
-                NumberFormat.getIntegerInstance(Locale.US).format(taxAmount) + " /-\n" + "( " + taxNames.substring(0, taxNames.length() - 3) + " )");
+            netAmount = Math.round((netAmount * 100) / 100.0);
+            tvNetTotal.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
+                    NumberFormat.getIntegerInstance(Locale.US).format(netAmount) + " /-");
 
-        tvAmountToBePaid.setText(StoreDataActivity.product.CurrencyCode + " " +
-                NumberFormat.getIntegerInstance(Locale.US).format(Math.round((netAmount + taxAmount) * 100) / 100) + " /-");
-        String packages="";
-        for(int i=0; i<invoiceData.getPurchaseDetails().size(); i++){
-            packages+=invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";
+            float taxVal = 0;
+            StringBuilder taxNames = new StringBuilder();
+
+            for (TaxDetail taxData : invoiceData.getPurchaseDetails().get(0).getTaxDetails()) {
+                taxVal += taxData.getValue();
+                taxNames.append(taxData.getKey() + "-" + taxData.getValue() + "%,\n ");
+            }
+
+            double taxAmount = 0;
+            if (invoiceData.getPurchaseDetails().get(0).getTaxDetails().get(0).getAmountType() == 0) {
+                taxAmount = (netAmount * taxVal) / 100.0;
+            } else {
+                taxAmount = (int) taxVal;
+            }
+            taxAmount = Math.round((taxAmount * 100) / 100.0);
+            tvTaxes.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
+                    NumberFormat.getIntegerInstance(Locale.US).format(taxAmount) + " /-\n" + "( " + taxNames.substring(0, taxNames.length() - 3) + " )");
+            if (showDiscount) {
+                trTdsAmount.setVisibility(View.VISIBLE);
+                tvTdsAmount.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " + invoiceData.getTdsAmount());
+            }
+
+            tvAmountToBePaid.setText(mPurchasePlans.get(0).getCurrencyCode() + " " +
+                    NumberFormat.getIntegerInstance(Locale.US).format(Math.round((netAmount + taxAmount - invoiceData.getTdsAmount()) * 100) / 100) + " /-");
+            String packages = "";
+            for (int i = 0; i < invoiceData.getPurchaseDetails().size(); i++) {
+                packages += invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";
+            }
+            mNewPackage = packages;
+            mFinalAmount = String.valueOf(Math.round((netAmount + taxAmount - invoiceData.getTdsAmount()) * 100) / 100);
+
+
+            rvItems.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            ItemsRecyclerViewAdapter adapter = new ItemsRecyclerViewAdapter(invoiceData.getPurchaseDetails(), mPurchasePlans.get(0).getCurrencyCode(), showDiscount);
+            rvItems.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
-        mNewPackage = packages;
-        mFinalAmount = String.valueOf(Math.round((netAmount + taxAmount) * 100) / 100);
-
-
-        rvItems.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        ItemsRecyclerViewAdapter adapter = new ItemsRecyclerViewAdapter(invoiceData.getPurchaseDetails(), StoreDataActivity.product.CurrencyCode, showDiscount);
-        rvItems.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
     private void showDialog(String title, String msg){
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
         builder.setTitle(title).setMessage(msg).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -514,8 +672,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==android.R.id.home){
-            super.onBackPressed();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

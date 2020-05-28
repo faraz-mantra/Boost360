@@ -3,11 +3,11 @@ package com.nowfloats.AccountDetails;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -96,7 +96,7 @@ public class AccountInfoActivity extends AppCompatActivity {
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     progressLayout.setVisibility(View.GONE);
-                    if (accountDetailModels.size()==0){
+                    if (accountDetailModels == null ||accountDetailModels.size()==0){
                         zerothLayout.setVisibility(View.VISIBLE);
                     }
                 }
@@ -125,8 +125,8 @@ public class AccountInfoActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id==android.R.id.home ){
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            onBackPressed();
+           return true;
         }
         return super.onOptionsItemSelected(item);
     }

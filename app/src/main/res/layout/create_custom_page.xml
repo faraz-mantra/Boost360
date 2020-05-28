@@ -26,9 +26,10 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
                 android:hint="@string/write_page_title"
-                android:textColorHint="#d1d1d1"
-                android:textSize="14dp"
-                android:singleLine="true"
+                android:textColorHint="@color/hintTextColor"
+                android:textSize="13sp"
+                android:maxLines="1"
+                android:inputType="textCapWords"
                 android:background="@null"
                 fontPath = "Roboto-Medium.ttf"
                 tools:ignore="MissingPrefix" />
@@ -49,9 +50,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="17dp"
-                android:hint="@string/describe_in_detail"
-                android:textColorHint="#bcbcbc"
-                android:textSize="14dp" />
+                android:hint="@string/custom_page_details"
+                android:textColorHint="@color/hintTextColor"
+                android:textSize="13sp" />
+
         </LinearLayout>
 
         <HorizontalScrollView

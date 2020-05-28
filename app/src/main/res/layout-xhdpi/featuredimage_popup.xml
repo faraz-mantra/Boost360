@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:text="@string/upload_featured_image"
+        android:text="@string/upload_image"
         android:layout_marginTop="26dp"
         android:layout_marginLeft="26dp"
         android:textColor="#878787"
@@ -43,7 +43,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center"
-                android:src="@drawable/featured_camera"
+                app:srcCompat="@drawable/ic_camera"
                 />
         </FrameLayout>
         <com.nowfloats.CustomWidget.roboto_lt_24_212121

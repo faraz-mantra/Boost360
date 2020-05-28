@@ -5,13 +5,11 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
-
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
-import com.thinksity.R;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -30,16 +28,8 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 
 import javax.net.ssl.HostnameVerifier;
-
-import twitter4j.StatusUpdate;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.auth.AccessToken;
-import twitter4j.conf.ConfigurationBuilder;
 
 
 public final class PostImageTweetInBackgroundAsyncTask extends
@@ -69,13 +59,13 @@ public final class PostImageTweetInBackgroundAsyncTask extends
         this.session = session;
         if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) != null && path != null)
             mesgUrl = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) + ".nowfloats.com/bizFloat/" + id;
-        prefs = appContext.getSharedPreferences(TwitterConstants.PREF_NAME, Activity.MODE_PRIVATE);
+        prefs = appContext.getSharedPreferences(TwitterConnection.PREF_NAME, Activity.MODE_PRIVATE);
 
     }
 
     public PostImageTweetInBackgroundAsyncTask(Activity context, UserSessionManager session) {
         this.appContext = context;
-        prefs = appContext.getSharedPreferences(TwitterConstants.PREF_NAME, Activity.MODE_PRIVATE);
+        prefs = appContext.getSharedPreferences(TwitterConnection.PREF_NAME, Activity.MODE_PRIVATE);
         this.session = session;
     }
 
@@ -108,54 +98,7 @@ public final class PostImageTweetInBackgroundAsyncTask extends
             shortUrl = messageUrl;
         }
 
-
         //tweetMessage = shareText.substring(0, tlen)+separator+shortUrl;
-
-
-
-        if (prefs.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN,false)) {
-            ConfigurationBuilder builder = new ConfigurationBuilder();
-            builder.setOAuthConsumerKey(appContext.getResources().getString(R.string.twitter_consumer_key));
-            builder.setOAuthConsumerSecret(appContext.getResources().getString(R.string.twitter_consumer_secret));
-
-            //SharedPreferences mSharedPreferences = null;
-            String access_token = prefs.getString(TwitterConstants.PREF_KEY_OAUTH_TOKEN, "");
-            String access_token_secret = prefs.getString(TwitterConstants.PREF_KEY_OAUTH_SECRET, "");
-
-            AccessToken accessToken = new AccessToken(access_token, access_token_secret);
-            Twitter twitter = new TwitterFactory(builder.build()).getInstance(accessToken);
-            twitter.setOAuthAccessToken(accessToken);
-            File file = null;
-            boolean imgPresent = false;
-            if(mTweetImage !=null&& mTweetImage !="" && mTweetImage.length()>0) {
-               file = new File(mTweetImage);
-                imgPresent = true;
-            }
-            len = shareText.length();
-            separator = " ... ";
-           /* if (!Util.isNullOrEmpty(mTweetImage) && shareText.length() > 30) {
-                shareText = shortUrl(shareText);
-            }*/
-            if(imgPresent){
-                mlen = 140 - (((shortUrl!=null)?shortUrl.length() + 8:8));
-                if(len>68){
-                    mlen = mlen-24;
-                }
-            }else{
-                mlen = 140 - ((shortUrl!=null)?shortUrl.length() + 8:8);
-            }
-            tlen = Math.min(len, mlen);
-            tweetMessage = shareText.substring(0,tlen-1) + separator + shortUrl;
-            StatusUpdate update = new StatusUpdate(tweetMessage);
-            try {
-                if(imgPresent) {
-                    update.setMedia(file);
-                }
-                twitter.updateStatus(update);
-            } catch (TwitterException e) {
-                e.printStackTrace();
-            }
-        }
 
         return response;
     }

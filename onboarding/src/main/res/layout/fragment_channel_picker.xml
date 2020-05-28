@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+          <com.framework.views.customViews.CustomCardView
+              android:id="@+id/view_channel"
+              style="@style/Onboarding.ChannelCardStyle"
+              android:layout_marginTop="@dimen/size_18"
+              android:layout_marginBottom="@dimen/size_2"
+              android:alpha="0"
+              tools:alpha="1">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/size_16"
+                android:paddingTop="@dimen/size_16"
+                android:paddingEnd="@dimen/size_16"
+                android:paddingBottom="@dimen/size_16">
+
+              <androidx.appcompat.widget.LinearLayoutCompat
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_18"
+                    android:layout_height="@dimen/size_18"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_share" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/channelPresence"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_8"
+                    android:layout_marginBottom="@dimen/size_2"
+                    android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:maxLines="2"
+                    android:textColor="@color/dodger_blue_two"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="SUBHEADING_1"
+                    tools:text="@string/presence_on" />
+
+              </androidx.appcompat.widget.LinearLayoutCompat>
+
+              <com.framework.views.viewgroups.BaseRecyclerView
+                  android:id="@+id/channelList"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="@dimen/size_12"
+                  android:layout_marginEnd="@dimen/size_32"
+                  android:overScrollMode="never"
+                  android:translationX="-4dp"
+                  app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                  tools:itemCount="4"
+                  tools:listitem="@layout/item_channel"
+                  tools:spanCount="4" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="@dimen/size_16"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/size_4">
+
+              <com.framework.views.customViews.CustomImageView
+                  android:layout_width="@dimen/size_16"
+                  android:layout_height="@dimen/size_16"
+                  app:srcCompat="@drawable/ic_pencil2" />
+
+              <com.framework.views.customViews.CustomTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/edit"
+                  app:fontFamily="@font/semi_bold"
+                  app:textType="OVERLINE" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/editContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true" />
+
+          </com.framework.views.customViews.CustomCardView>
+
+
+          <com.framework.views.viewgroups.BaseRecyclerView
+              android:id="@+id/featureList"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:overScrollMode="never"
+              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+              tools:itemCount="3"
+              tools:listitem="@layout/item_channel_feature" />
+
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:gravity="center_horizontal"
+              android:layout_marginTop="@dimen/size_10"
+              android:layout_marginBottom="@dimen/size_68"
+              android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="@dimen/size_160"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_combined_shape_top" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/boost_features_mentioned_above"
+                android:textColor="@color/greyish"
+                app:fontFamily="@font/semi_bold"
+                app:textType="BODY_1" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
+                android:layout_marginBottom="-8dp"
+                android:includeFontPadding="false"
+                android:text="@string/free_forever"
+                android:textColor="@color/pinkish_grey_two"
+                app:fontFamily="@font/bold_italic"
+                app:textType="HEADING_TEXT_3" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/categorySelectedDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:textColor="@color/greyish"
+                app:fontFamily="@font/semi_bold"
+                app:textType="BODY_1"
+                tools:text="@string/doctors_amp_clinic_business" />
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="@dimen/size_160"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:layout_marginTop="@dimen/size_4"
+                app:srcCompat="@drawable/ic_combined_shape_bottom" />
+          </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+      </FrameLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.framework.views.customViews.CustomButton
+        android:id="@+id/next"
+        style="@style/FooterButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:alpha="0"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:drawableEnd="@null"
+        android:text="@string/confirm_caps"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:textType="HEADING_6"
+        tools:alpha="1" />
+
+
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

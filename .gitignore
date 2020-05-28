@@ -1,8 +1,52 @@
 .gradle
-/*/local.properties
-/.idea/workspace.xml
-/.idea/libraries
+local.properties
 .DS_Store
 /*/build
+.idea
+.navigation
 /*/library/build
 /*/mobihelp_sdk_android_v1.3.1/build
+
+.DS_Store
+ername or password. If you log in via a third party service you must ensure you have an account password set in your account profile.
+# built application files
+*.apk
+*.iml
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+
+
+# Eclipse project files
+.classpath
+.project
+
+# Android Studio
+
+.gradle
+gradle
+
+/*/out
+/*/*/build
+build
+/*/*/production
+
+*.iws
+*.ipr
+*~
+*.swp
+bubblebutton/
+mobihelp_sdk_android_v1.5.4/
+mixpanel/
+local.properties
+/captures/

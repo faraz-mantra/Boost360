@@ -4,14 +4,26 @@
     android:id="@+id/activity_site_appearance"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
     android:orientation="vertical"
     tools:context="com.nowfloats.SiteAppearance.SiteAppearanceActivity">
+
+
     <include
         android:id="@+id/app_bar_site_appearance"
-        layout="@layout/new_app_bar" />
-    <FrameLayout
+        layout="@layout/fragment_app_bar" />
+
+    <include
+        android:id="@+id/theme_picker"
+        layout="@layout/adapter_theme_picker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fm_site_appearance"/>
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/fm_site_appearance"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
 </LinearLayout>

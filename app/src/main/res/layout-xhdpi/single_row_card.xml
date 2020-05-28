@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-
-    >
+    android:layout_height="fill_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,406 +12,495 @@
         android:background="@color/cell_background_color"
         android:orientation="vertical">
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:visibility="visible"
+            android:background="#cccccc" />
+
         <LinearLayout
             android:id="@+id/firstRow_Layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidepanel_cell_height"
-
-            android:orientation="horizontal"
+            android:background="@color/cell_background_color"
             android:gravity="center_vertical"
-            android:background="@color/cell_background_color">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/firstrow_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:layout_height="@dimen/icon_size"
-                android:padding="5dp"
-                android:src="@drawable/sidepanel_dashboard"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin" />
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_nav_dashboard" />
 
             <TextView
                 android:id="@+id/firstrow_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
+                android:text="@string/side_panel_row_one"
                 android:textColor="@color/cell_text_color"
-                android:text="@string/side_panel_row_one" />
+                android:textSize="@dimen/cell_text_size" />
 
         </LinearLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:visibility="visible"
+            android:background="#cccccc" />
+
         <LinearLayout
-            android:id="@+id/secondRow_Layout"
+            android:id="@+id/analytics_row_Layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidepanel_cell_height"
             android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:id="@+id/secondRow_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:padding="5dp"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/sidepanel_business"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin" />
-
-            <TextView
-                android:id="@+id/secondRow_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/side_panel_row_two" />
-
-        </LinearLayout>
-
-        <!--<LinearLayout
-            android:id="@+id/ll_site_appearance"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sidepanel_cell_height"
-            android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:id="@+id/iv_site_appearance"
-                android:layout_width="33dp"
-                android:scaleType="fitXY"
-                android:padding="5dp"
-                android:layout_height="33dp"
-                android:src="@drawable/site_appearance"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="29dp" />
-
-            <TextView
-                android:id="@+id/tv_site_appearance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/side_panel_site_appearance" />
-
-        </LinearLayout>-->
-
-
-
-        <!--<LinearLayout
-            android:id="@+id/thirdRow_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sidepanel_cell_height"
-            android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:id="@+id/thirdRow_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:layout_height="@dimen/icon_size"
-                android:padding="5dp"
-                android:src="@drawable/sidepanel_enquiry"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin" />
-
-            <TextView
-                android:id="@+id/thirdRow_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/side_panel_row_three" />
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="right">
-
-                <ImageView
-                    android:id="@+id/lock_widget_business_enquiries"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitXY"
-                    android:layout_height="@dimen/icon_size"
-                    android:padding="5dp"
-                    android:visibility="gone"
-                    android:src="@drawable/lock_widget"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin" />
-                <TextView
-                    android:id="@+id/enquiry_count_textview"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:background="@drawable/alert_count_bg"
-                    android:layout_centerVertical="true"
-                    android:padding="2dp"
-                    android:text=""
-                    android:gravity="center"
-                    android:layout_marginRight="32dp"
-                    android:layout_alignParentRight="true"
-                    android:textSize="10sp"
-                    android:visibility="gone"
-                    android:textColor="@color/white"
-                    fontPath="Roboto-Bold.ttf"
-                    tools:ignore="MissingPrefix" />
-
-            </RelativeLayout>
-
-        </LinearLayout>-->
-        <LinearLayout
-            android:id="@+id/product_gal_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sidepanel_cell_height"
-            android:background="@color/cell_background_color"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
-
-            >
-
-            <ImageView
-                android:id="@+id/Product_Gal_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:layout_height="@dimen/icon_size"
-                android:padding="5dp"
-                android:src="@drawable/catalog"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin" />
-
-            <TextView
-                android:id="@+id/Product_Gal_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/product_gallery" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="right">
-
-                <ImageView
-                    android:id="@+id/lock_product_gal"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitXY"
-                    android:layout_height="@dimen/icon_size"
-                    android:padding="5dp"
-                    android:visibility="gone"
-                    android:src="@drawable/lock_widget"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/fourthRow_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sidepanel_cell_height"
-
-            android:background="@color/cell_background_color"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
-            >
+            android:visibility="gone">
 
             <ImageView
-                android:id="@+id/fourthRow_ImageView"
+                android:id="@+id/analytics_row_ImageView"
                 android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
                 android:layout_height="@dimen/icon_size"
-                android:padding="5dp"
-                android:src="@drawable/sidepanel_gallery"
                 android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin" />
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/seller_analytics"
+                android:tint="#808080" />
 
             <TextView
-                android:id="@+id/fourthRow_TextView"
+                android:id="@+id/analytics_row_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
+                android:text="@string/analylitcs"
                 android:textColor="@color/cell_text_color"
-                android:text="@string/side_panel_row_four" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="right">
-
-                <ImageView
-                    android:id="@+id/lock_widget"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitXY"
-                    android:layout_height="@dimen/icon_size"
-                    android:padding="5dp"
-                    android:visibility="gone"
-                    android:src="@drawable/lock_widget"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/csp_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sidepanel_cell_height"
-            android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:id="@+id/csp_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:padding="5dp"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/custom_page_icon"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin" />
-
-            <TextView
-                android:id="@+id/csp_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/side_panel_row_csp" />
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="right">
-
-                <ImageView
-                    android:id="@+id/lock_widget_csp"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitXY"
-                    android:layout_height="@dimen/icon_size"
-                    android:padding="5dp"
-                    android:visibility="gone"
-                    android:src="@drawable/lock_widget"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/storeRow_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sidepanel_cell_height"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="@color/cell_background_color">
-
-            <ImageView
-                android:id="@+id/storeRow_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:layout_height="@dimen/icon_size"
-                android:padding="5dp"
-                android:src="@drawable/sidepanel_store"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin" />
-
-            <TextView
-                android:id="@+id/storeRow_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/store" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:gravity="right">
-
-                <Button
-                    android:layout_width="80dp"
-                    android:layout_height="27dp"
-                    android:padding="3dp"
-                    android:layout_gravity="right"
-                    android:textColor="@color/white"
-                    android:text="@string/single_row_card_upgrade_text"
-                    android:clickable="false"
-                    android:textSize="12sp"
-                    fontPath="Roboto-Regular.ttf"
-                    android:background="@drawable/corner_white_backgrnd_yellow"
-                    tools:ignore="MissingPrefix" />
-            </LinearLayout>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/fifthRow_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sidepanel_cell_height"
-            android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:id="@+id/fifthRow_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:layout_height="@dimen/icon_size"
-                android:padding="5dp"
-                android:src="@drawable/sidepanel_settings"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin" />
-
-            <TextView
-                android:id="@+id/fifthRow_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/side_panel_row_five" />
+                android:textSize="@dimen/cell_text_size" />
 
         </LinearLayout>
 
 
         <View
             android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@color/light_gray" />
+            android:layout_height="0.5dp"
+            android:visibility="gone"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:id="@+id/tenth_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:visibility="gone"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/tenthRow_ImageView"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_customers" />
+
+            <TextView
+                android:id="@+id/tvManageCustomers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/side_panel_row_tenth"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_manage_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_manage_content"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_nav_content" />
+
+            <TextView
+                android:id="@+id/tvManageContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/manage_content"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_content_sharing_settings"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_content_sharing"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_nav_content_sharing" />
+
+            <TextView
+                android:id="@+id/tvContentSharing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/content_sharing_settings"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:visibility="visible"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:id="@+id/layout_customer_calls"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_customer_calls"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_nav_calls" />
+
+            <TextView
+                android:id="@+id/tvCustomerCalls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/manage_customer_calls"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_flag_mask" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="6dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="PREMIUM"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_8ssp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/thirteen_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/thirteen_ImageView"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_nav_enquiries" />
+
+            <TextView
+                android:id="@+id/tvInbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/manage_inbox"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/twelveth_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/twelveth_ImageView"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_nav_orders" />
+
+            <TextView
+                android:id="@+id/tvManageInventory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/manage_inventory"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:visibility="gone"
+            android:background="#cccccc"/>
+
+<!--        The following code is to show LOCK icon-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="fill_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="right"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/lock_product_gal"-->
+<!--                android:layout_width="@dimen/icon_size"-->
+<!--                android:layout_height="@dimen/icon_size"-->
+<!--                android:layout_marginLeft="@dimen/icon_left_margin"-->
+<!--                android:layout_marginRight="@dimen/icon_right_margin"-->
+<!--                android:padding="5dp"-->
+<!--                android:scaleType="fitXY"-->
+<!--                android:src="@drawable/lock_widget"-->
+<!--                android:visibility="gone" />-->
+<!--        </LinearLayout>-->
+
+
+        <LinearLayout
+            android:id="@+id/subscriptions_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/subscriptions_imageView"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_nav_inbox" />
+
+            <TextView
+                android:id="@+id/tvSubscriptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subscriptions"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:visibility="visible"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:id="@+id/marketplace_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/marketplace_ImageView"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_addons_store" />
+
+            <TextView
+                android:id="@+id/marketplace_TextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/addon_marketplace"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
+
+            <TextView
+                fontPath="Roboto-Regular.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="27dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/addons_store_new_bg"
+                android:clickable="false"
+                android:elevation="2dp"
+                android:gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:text="NEW"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:visibility="visible"
+                tools:ignore="MissingPrefix" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/keyboard_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/keyboard_ImageView"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_nav_keyboard" />
+
+            <TextView
+                android:id="@+id/keyboard_TextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Boost Keyboard"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
+
+            <TextView
+                fontPath="Roboto-Regular.ttf"
+                android:layout_width="50dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/corner_white_backgrnd_yellow"
+                android:clickable="false"
+                android:elevation="2dp"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="@string/get_in_capital"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:visibility="gone"
+                tools:ignore="MissingPrefix" />
+            <ImageView
+                android:id="@+id/keyboard_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_expiry_lock"
+                android:visibility="visible"
+                android:paddingRight="30dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:visibility="visible"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:id="@+id/fifthRow_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/fifthRow_ImageView"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_nav_settings" />
+
+            <TextView
+                android:id="@+id/fifthRow_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/account_settings"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/sixthRow_Layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidepanel_cell_height"
             android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-
-            android:gravity="center_vertical">
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/sixthRow_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:layout_height="@dimen/icon_size"
-                android:padding="5dp"
-                android:src="@drawable/sidepanel_chat"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin" />
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:padding="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/sidepanel_chat" />
 
             <TextView
                 android:id="@+id/sixthRow_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
+                android:text="@string/side_panel_row_six"
                 android:textColor="@color/cell_text_color"
-                android:text="@string/side_panel_row_six" />
+                android:textSize="@dimen/cell_text_size" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -429,14 +517,14 @@
                     android:id="@+id/tv_write_to_ria_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/write_to_ria_info_bg"
-                    android:text="i"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="35dp"
-                    android:textSize="16sp"
-                    android:textColor="#ffffff"
+                    android:background="@drawable/write_to_ria_info_bg"
                     android:gravity="center"
-                    android:textStyle="bold"/>
+                    android:text="i"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -447,29 +535,29 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidepanel_cell_height"
             android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:visibility="gone"
-            android:gravity="center_vertical">
+            android:visibility="gone">
 
             <ImageView
-                android:tint="#808080"
                 android:id="@+id/iv_get_in_touch"
                 android:layout_width="30dp"
-                android:scaleType="fitXY"
                 android:layout_height="30dp"
-                android:padding="5dp"
-                android:src="@drawable/icon_feedback"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="@dimen/icon_right_margin" />
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:padding="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_feedback"
+                app:tint="#808080" />
 
             <TextView
                 android:id="@+id/tv_get_in_touch"
-                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
+                android:layout_marginLeft="5dp"
+                android:text="@string/feedback"
                 android:textColor="@color/cell_text_color"
-                android:text="@string/feedback" />
+                android:textSize="@dimen/cell_text_size" />
 
         </LinearLayout>
 
@@ -478,28 +566,58 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidepanel_cell_height"
             android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/seventhRow_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:layout_height="@dimen/icon_size"
-                android:padding="10dp"
-                android:tint="#808080"
-                android:src="@drawable/ic_help_and_support"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin" />
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_nav_help_support" />
 
             <TextView
                 android:id="@+id/seventhRow_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
+                android:text="@string/help_and_support"
                 android:textColor="@color/cell_text_color"
-                android:text="@string/help_and_support" />
+                android:textSize="@dimen/cell_text_size" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:visibility="visible"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:id="@+id/layout_about"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_about"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_nav_about" />
+
+            <TextView
+                android:id="@+id/tv_about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
 
         </LinearLayout>
 
@@ -508,30 +626,28 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidepanel_cell_height"
             android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-
-            android:gravity="center_vertical">
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/eigthRow_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:layout_height="@dimen/icon_size"
-                android:padding="5dp"
-                android:src="@drawable/sidepanel_share"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin" />
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_nav_share_site" />
 
             <TextView
                 android:id="@+id/eighthRow_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
+                android:text="@string/side_panel_row_eight"
                 android:textColor="@color/cell_text_color"
-                android:text="@string/side_panel_row_eight" />
+                android:textSize="@dimen/cell_text_size" />
 
         </LinearLayout>
-
 
     </LinearLayout>
 </ScrollView>

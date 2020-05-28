@@ -5,18 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -24,12 +25,11 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.github.clans.fab.FloatingActionMenu;
+import com.melnykov.fab.FloatingActionButton;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
@@ -44,6 +44,7 @@ import com.nowfloats.NavigationDrawer.model.Welcome_Card_Model;
 import com.nowfloats.NavigationDrawer.model.WhatsNewDataModel;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.sync.model.Updates;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.ButteryProgressBar;
@@ -52,17 +53,13 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.widget.WidgetKey;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,10 +67,10 @@ import java.util.List;
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
 
-public class Home_Main_Fragment extends Fragment implements
-        Fetch_Home_Data.Fetch_Home_Data_Interface {
+public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetch_Home_Data_Interface {
+
     public static LinearLayout retryLayout,emptyMsgLayout;
-    public static ButteryProgressBar progressBar;
+    public ButteryProgressBar progressBar;
     public static CardView progressCrd;
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -82,18 +79,14 @@ public class Home_Main_Fragment extends Fragment implements
     private static ArrayList<Integer> removedItems;
     static View.OnClickListener myOnClickListener;
     Fetch_Home_Data fetch_home_data ;
-    FloatingActionMenu fabButton ;
-
+    FloatingActionButton fabButton ;
+    private int maxSyncCall = 2;
     UserSessionManager session;
     private static final String DATA_ARG_KEY = "HomeFragment.DATA_ARG_KEY";
     public static CardAdapter_V3 cAdapter;
     JSONObject data;
-    String msg = "", date = "";
-    String imageUri = "";
-
     public static Bus bus;
     OnRenewPlanClickListener mCallback = null;
-
     private ArrayList<Object> mNewWelcomeTextImageList = new ArrayList<Object>();
     private int visibilityFlag = 1;
     public static UploadPostEvent recentPostEvent = null;
@@ -102,9 +95,7 @@ public class Home_Main_Fragment extends Fragment implements
     public Activity current_Activity;
     private SharedPreferences mPref;
     private boolean mIsNewMsg = false;
-
     private DbController mDbController;
-
     public Home_Main_Fragment() {}
 
     @Override
@@ -116,6 +107,7 @@ public class Home_Main_Fragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
+
         MixPanelController.track(EventKeysWL.HOME_SCREEN, null);
         BoostLog.d("Home_Main_Fragment","onResume : "+session.getFPName());
         getActivity().setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
@@ -192,10 +184,12 @@ public class Home_Main_Fragment extends Fragment implements
     @Subscribe
     public void ImageUploadCheck(PostImageSuccessEvent event){
         ImageResponseID = event.imageResponseId;
-        BoostLog.i("IMAGE---","Image UpLoAd Check Triggered");
+        BoostLog.i("IMAGE---","Image UpLoAd sent_check Triggered");
         mIsNewMsg = true;
         getNewAvailableUpdates();
-        
+        mPref.edit().putString("msg_post","").apply();
+        mPref.edit().putInt("quikrStatus",0).apply();
+        mPref.edit().putString("image_post","").apply();
     }
 
     @Subscribe
@@ -203,11 +197,15 @@ public class Home_Main_Fragment extends Fragment implements
         if (event.status){
             event.status = false;
             mIsNewMsg = true;
-            BoostLog.i("TEXT---","TeXt UpLoAd Check Triggered");
+            BoostLog.i("TEXT---","TeXt UpLoAd sent_check Triggered");
             getNewAvailableUpdates();
             Create_Message_Activity.path = "";
 
             Constants.createMsg =false;
+            mPref.edit().putString("msg_post","").apply();
+            mPref.edit().putInt("quikrStatus",0).apply();
+            mPref.edit().putString("image_post","").apply();
+            //path = pref.getString("image_post",null);
         }
     }
 
@@ -227,10 +225,19 @@ public class Home_Main_Fragment extends Fragment implements
         bus = BusProvider.getInstance().getBus();
         bus.register(this);
         current_Activity = getActivity();
+        session = new UserSessionManager(getActivity(),getActivity());
+
         mPref = current_Activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         mDbController = DbController.getDbController(current_Activity);
         HomeActivity.StorebizFloats.clear();
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -238,7 +245,6 @@ public class Home_Main_Fragment extends Fragment implements
         View mainView ;
         mainView =  inflater.inflate(R.layout.fragment_home__main_, container, false);
         fetch_home_data = new Fetch_Home_Data(getActivity(),0);
-        session = new UserSessionManager(getActivity().getApplicationContext(),getActivity());
 
         HomeActivity.StorebizFloats.clear();
         progressCrd = (CardView)mainView.findViewById(R.id.progressCard);
@@ -246,8 +252,6 @@ public class Home_Main_Fragment extends Fragment implements
         retryLayout = (LinearLayout)mainView.findViewById(R.id.postRetryLayout);
         emptyMsgLayout = (LinearLayout)mainView.findViewById(R.id.emptymsglayout);
         emptyMsgLayout.setVisibility(View.GONE);
-
-
 
 
         ImageView retryPost = (ImageView)mainView.findViewById(R.id.retryPost);
@@ -333,7 +337,7 @@ public class Home_Main_Fragment extends Fragment implements
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new FadeInUpAnimator());
         myOnClickListener = new MyOnClickListener(getActivity());
-        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
                 if (scrollState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -359,7 +363,7 @@ public class Home_Main_Fragment extends Fragment implements
                     if(!loadDataFromDb(skipVal, false)){
                         fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
                         fetch_home_data.getMessages(session.getFPID(), String.valueOf(skipVal));
-                        progressBar.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
                     }
 
 
@@ -367,25 +371,8 @@ public class Home_Main_Fragment extends Fragment implements
             }
         });
 
-        fabButton = (FloatingActionMenu) mainView.findViewById(R.id.fab);
-
-
-
-
-        fabButton.setOnMenuButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                    mCallback.onRenewPlanSelected();
-                }
-                else {
-                    Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
-                    startActivity(webIntent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
-            }
-        });
-
+        fabButton = mainView.findViewById(R.id.fab);
+        fabButton.setOnClickListener(v -> addUpdate());
 
         return mainView;
     }
@@ -394,12 +381,16 @@ public class Home_Main_Fragment extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         BoostLog.d("Home_Main_Fragment","onViewCreated");
-        
 
+        /**
+         * Call this API to get visitsCount list and display in Analytics
+         */
+        //new Fetch_Home_Data(getActivity(),session).getVisitors();
     }
 
     private void startSync() {
 
+        progressBar.setVisibility(View.VISIBLE);
         fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
         fetch_home_data.getMessages(session.getFPID(), "0");
     }
@@ -422,9 +413,21 @@ public class Home_Main_Fragment extends Fragment implements
             recyclerView.setAdapter(cAdapter);
             Constants.createMsg = false;
         }
-
-        List<Updates> updates = mDbController.getAllUpdates(skip);
-        if(updates.isEmpty()){
+        List<Updates> updates = null;
+        try {
+            updates = mDbController.getAllUpdates(skip);
+        }catch (Exception e){
+            MixPanelController.track(MixPanelController.UPDATE_DB_CRASH,null);
+            mPref.edit().putBoolean(com.nowfloats.util.Constants.SYNCED,false).apply();
+            mDbController.deleteDataBase();
+            startSync();
+            return true;
+        }
+        if(updates == null || updates.isEmpty()){
+            if (skip == 0 && maxSyncCall>0){
+                maxSyncCall--;
+                startSync();
+            }
             return false;
         }
         if(emptyMsgLayout.getVisibility()==View.VISIBLE){
@@ -441,7 +444,7 @@ public class Home_Main_Fragment extends Fragment implements
 
         SharedPreferences.Editor editor = mPref.edit();
         editor.putBoolean(Constants.SYNCED, true);
-        editor.commit();
+        editor.apply();
 
         cAdapter.notifyDataSetChanged();
         progressBar.setVisibility(View.GONE);
@@ -452,13 +455,13 @@ public class Home_Main_Fragment extends Fragment implements
     @Override
     public void onPause() {
         super.onPause();
-        
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        
+
     }
 
     private void sendIsInterested(FragmentActivity activity, String fpid, String planType, final Bus bus) {
@@ -472,10 +475,13 @@ public class Home_Main_Fragment extends Fragment implements
 
     @Override
     public void dataFetched(int skip, boolean isNewMessage) {
-        
+
         Create_Message_Activity.path = "";
         Constants.createMsg = false;
         loadDataFromDb(skip, isNewMessage);
+        bus.post(new UpdateFetchAfterPost());
+
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -517,7 +523,7 @@ public class Home_Main_Fragment extends Fragment implements
     }
 
 
-    
+
 
 
     public class MyOnClickListener implements View.OnClickListener {
@@ -528,7 +534,7 @@ public class Home_Main_Fragment extends Fragment implements
 
         @Override
         public void onClick(View v) {
-            BoostLog.d("Click Listener", " Listener : "+v.getId());
+            Log.d("Click Listener", " Listener : "+v.getId());
             int selectedItemPosition = recyclerView.getChildPosition(v);
             Intent webIntent = new Intent(context, Card_Full_View_MainActivity.class);
             webIntent.putExtra("POSITION",selectedItemPosition);
@@ -538,7 +544,7 @@ public class Home_Main_Fragment extends Fragment implements
         }
 
 
-        private void removeItem(View v) {
+       /* private void removeItem(View v) {
             int selectedItemPosition = recyclerView.getChildPosition(v);
             RecyclerView.ViewHolder viewHolder
                     = recyclerView.findViewHolderForPosition(selectedItemPosition);
@@ -554,7 +560,7 @@ public class Home_Main_Fragment extends Fragment implements
             removedItems.add(selectedItemId);
             card.remove(selectedItemPosition);
             adapter.notifyItemRemoved(selectedItemPosition);
-        }
+        }*/
     }
 
 
@@ -579,10 +585,16 @@ public class Home_Main_Fragment extends Fragment implements
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        PostTaskModel task = new PostTaskModel(Constants.clientId,msg, socialShare,Create_Message_Activity.imageIconButtonSelected,
-                merchantId,parentId,Create_Message_Activity.tosubscribers);
+        PostTaskModel task;
+        if (!Util.isNullOrEmpty(path) && path.length() > 1){
+            task = new PostTaskModel(Constants.clientId, msg, socialShare, Create_Message_Activity.imageIconButtonSelected,
+                    merchantId, parentId, false);
+        }else {
+            task = new PostTaskModel(Constants.clientId, msg, socialShare, Create_Message_Activity.imageIconButtonSelected,
+                    merchantId, parentId, Create_Message_Activity.tosubscribers);
+        }
 
-        if (facebookPostCount==0) {
+      /*  if (facebookPostCount==0) {
             if (Constants.fbShareEnabled) {
                 Create_Message_Activity.postUser = new com.nowfloats.NavigationDrawer.API.PostModel(msg);
             }
@@ -593,54 +605,62 @@ public class Home_Main_Fragment extends Fragment implements
                 }
             }
 
-            
-        }
+
+        }*/
         UploadMessageTask upa =new UploadMessageTask(act, path, task,session);
         upa.UploadPostService();
     }
 
-    
+
 
      interface OnRenewPlanClickListener {
          void onRenewPlanSelected();
     }
 
 
+    private void openAddUpdateActivity()
+    {
+        Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
+        startActivity(webIntent);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 
+    private void addUpdate()
+    {
+        /**
+         * If not new pricing plan
+         */
+        if(!WidgetKey.isNewPricingPlan)
+        {
+            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
+            {
+                Methods.showFeatureNotAvailDialog(getContext());
+            }
 
+            else
+            {
+                openAddUpdateActivity();
+            }
+        }
 
+        else
+        {
+            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_LATEST_UPDATES, WidgetKey.WIDGET_PROPERTY_MAX);
 
+            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+            {
+                Methods.showFeatureNotAvailDialog(getContext());
+            }
 
+            else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && cAdapter.getItemCount() >= Integer.parseInt(value))
+            {
+                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_add_update_limit)), Toast.LENGTH_LONG).show();
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            else
+            {
+                openAddUpdateActivity();
+            }
+        }
+    }
 }

@@ -87,6 +87,7 @@ public class Util {
         DataOutputStream outputStream = null;
         try {
 
+
             Thread.sleep(1000);
             URL new_url = new URL(serverUrl);
             HttpURLConnection connection = (HttpURLConnection) new_url
@@ -689,17 +690,17 @@ public class Util {
         if (originalDay.startsWith("0"))
             originalDay = originalDay.replace("0", "");
 
-        if (originalDay.equals("01") || originalDay.equals("1")
-                || originalDay.equals("21") || originalDay.equals("31"))
-            day = originalDay + "";
-        else if (originalDay.equals("02") || originalDay.equals("2")
-                || originalDay.equals("22"))
-            day = originalDay + "";
-        else if (originalDay.equals("03") || originalDay.equals("3")
-                || originalDay.equals("23"))
-            day = originalDay + "";
-
-        else
+//        if (originalDay.equals("01") || originalDay.equals("1")
+//                || originalDay.equals("21") || originalDay.equals("31"))
+//            day = originalDay + "";
+//        else if (originalDay.equals("02") || originalDay.equals("2")
+//                || originalDay.equals("22"))
+//            day = originalDay + "";
+//        else if (originalDay.equals("03") || originalDay.equals("3")
+//                || originalDay.equals("23"))
+//            day = originalDay + "";
+//
+//        else
             day = originalDay + "";
 
         return day;
@@ -953,6 +954,9 @@ public class Util {
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
     public static Bitmap getBitmap(String path, Activity app, int mWidth) {
+        if(path == null){
+            return null;
+        }
         Uri uri = Uri.fromFile(new File(path));
         float rotation = Util.rotationForImage(app, uri);
         Matrix matrix = new Matrix();
@@ -986,8 +990,10 @@ public class Util {
             if (rotation != 0f) {
                 matrix.preRotate(rotation);
             }
-            b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(),
-                    matrix, true);
+            if(b!=null) {
+                b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(),
+                        matrix, true);
+            }
             System.gc();
             in.close();
             return b;
@@ -999,4 +1005,5 @@ public class Util {
             return null;
         }
     }
+
 }

@@ -1,20 +1,20 @@
 package com.nowfloats.BusinessProfile.UI.UI.FAQ;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
 import com.thinksity.R;
 
 
-public class FAQMainAcivity extends ActionBarActivity {
+public class FAQMainAcivity extends AppCompatActivity {
 
     private ListView lv_faq_main;
     private Toolbar toolbar;
@@ -23,7 +23,6 @@ public class FAQMainAcivity extends ActionBarActivity {
     private String[] main_lv_faq_values;
 
     private ArrayAdapter<String> adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +36,9 @@ public class FAQMainAcivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        Intent intent = getIntent();
+        main_lv_faq_values = intent.getStringArrayExtra("array");
         lv_faq_main = (ListView)findViewById(R.id.lv_faq_main);
-        main_lv_faq_values = getResources().getStringArray(R.array.faqmain);
 
         adapter = new ArrayAdapter<String>(this, R.layout.faq_row_layout, main_lv_faq_values);
 

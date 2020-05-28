@@ -1,15 +1,18 @@
 package com.nowfloats.Business_Enquiries;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,7 @@ import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.GetStoreFrontImageAsyncTask;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.lang.ref.SoftReference;
@@ -48,11 +52,11 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
         TextView queryTextView;
         TextView contactText;
 //        ImageView contactIcon;
-        TextView entityTexView;
-        LinearLayout entityLayout;
+        TextView entityTexView, samTextView;
+        LinearLayout entityLayout, sentByLinearLayout;
         FrameLayout contactButton;
 
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(View itemView, final Context appContext) {
             super(itemView);
             this.fromTextView = (TextView) itemView.findViewById(R.id.fromTextView);
             this.dateTextView = (TextView) itemView.findViewById(R.id.enquiry_dateTextView);
@@ -62,6 +66,20 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
 //            this.contactIcon = (ImageView)itemView.findViewById(R.id.contact_icon);
             this.contactButton = (FrameLayout) itemView.findViewById(R.id.contactButton);
             this.entityLayout = (LinearLayout) itemView.findViewById(R.id.entity_layout);
+            this.samTextView = itemView.findViewById(R.id.samTextView);
+            sentByLinearLayout = itemView.findViewById(R.id.sent_byLinearLayout);
+            samTextView.setText(Html.fromHtml("<u>Sam</u>"));
+            samTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Dialog dialog = new Dialog(appContext);
+                    dialog.setContentView(R.layout.dialog_sam);
+                    dialog.setTitle("");
+
+                    dialog.show();
+                }
+            });
         }
     }
 
@@ -75,7 +93,7 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.business_enquires_cards_layout, parent, false);
 
-      MyViewHolder myViewHolder = new MyViewHolder(view);
+      MyViewHolder myViewHolder = new MyViewHolder(view, appContext);
       return myViewHolder;
     }
 
@@ -86,6 +104,7 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
         TextView queryTextView = holder.queryTextView;
         TextView contactText = holder.contactText;
         TextView entityText = holder.entityTexView;
+        LinearLayout sentByLinear = holder.sentByLinearLayout;
         holder.entityLayout.setVisibility(View.GONE);
         holder.entityLayout.setTag(listPosition+"");
 //        Typeface myCustomFont = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Medium.ttf");
@@ -119,7 +138,15 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
                 fromTextView.setText(data.contact);
             }
             dateTextView.setText(data.createdOn);
+
+            Log.d("DATE_FORMAT_CHECK", data.createdOn);
+
             queryTextView.setText("\""+data.message+"\"");
+            if (data.entityType.equalsIgnoreCase("CHATBOTENQUIRY")) {
+                sentByLinear.setVisibility(View.VISIBLE);
+            } else {
+                sentByLinear.setVisibility(View.GONE);
+            }
             try{
                 if (data.entityMessage!=null && !data.entityMessage.equals("null") && data.entityMessage.trim().length()>0){
                     holder.entityLayout.setVisibility(View.VISIBLE);
@@ -166,10 +193,12 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
                         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                 "mailto", headerValue, null));
                         appContext.startActivity(Intent.createChooser(emailIntent, appContext.getResources().getString(R.string.send_email)));
+                        WebEngageController.trackEvent("BUSINESS ENQUIRIES - EMAIL","Clicked: reply as email",null);
                     }else{
                         Intent call = new Intent(Intent.ACTION_DIAL);
                     call.setData(Uri.parse("tel:"+headerValue));
                       appContext.startActivity(call);
+                        WebEngageController.trackEvent("BUSINESS ENQUIRIES - CALL","Clicked: reply as Call",null);
                     }
                 }
             });

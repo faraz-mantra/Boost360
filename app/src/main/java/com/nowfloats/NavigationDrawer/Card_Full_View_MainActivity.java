@@ -2,9 +2,9 @@ package com.nowfloats.NavigationDrawer;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,16 +12,21 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.NavigationDrawer.API.Home_View_Card_Delete;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Card_Full_View_MainActivity extends AppCompatActivity implements Home_View_Card_Delete.CardRefresh {
 
@@ -68,6 +73,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
                             @Override
                             public void onPositive(MaterialDialog dialog) {
                             MixPanelController.track(EventKeysWL.MESSAGE_FULL_VIEW_DELETE, null);
+                                WebEngageController.trackEvent("DELETE AN UPDATE","null",null);
 
                                 try {
                                     cardId = HomeActivity.StorebizFloats.get(viewPager.getCurrentItem())._id;
@@ -99,10 +105,11 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
                         .show();
             }
         });
-
-        pageAdapter = new PageAdapter(getSupportFragmentManager(),Card_Full_View_MainActivity.this);
+        List<FloatsMessageModel> floatsMessageModels = new ArrayList<>(HomeActivity.StorebizFloats);
+        pageAdapter = new PageAdapter(getSupportFragmentManager(), floatsMessageModels,Card_Full_View_MainActivity.this);
         //  Log.d("View Pager", "View Pager  :"+viewPager+" , "+pageAdapter);
         viewPager.setAdapter(pageAdapter);
+        pageAdapter.notifyDataSetChanged();
         viewPager.setCurrentItem(position);
     }
 
@@ -111,6 +118,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
         MixPanelController.track(EventKeysWL.MESSAGE_FULL_VIEW,null);
         super.onResume();
     }
+
 
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
@@ -131,7 +139,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
         int id = item.getItemId();
         if(id==android.R.id.home){
             finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

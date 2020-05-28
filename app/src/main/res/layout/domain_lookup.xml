@@ -11,64 +11,66 @@
     <include
         android:id="@+id/store_data_action_bar"
         layout="@layout/store_data_action_bar" />
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:gravity="center"
-            android:background="@android:color/white">
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
-            <EditText
-                fontPath="Roboto-Light.ttf"
-                android:textColor="@color/text_color_roboto_lt_30_edittext"
-                android:textColorHint="@color/hint_color_roboto_lt_30_edittext"
-                android:textSize="@dimen/large_text_size"
-                android:id="@+id/domainNameEditText"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:gravity="center"
-                android:inputType="text"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:hint="@string/enter_domain_name"
-                tools:ignore="MissingPrefix" />
-        </LinearLayout>
+                android:background="@android:color/white">
+
+                <EditText
+                    fontPath="Roboto-Light.ttf"
+                    android:textColor="@color/text_color_roboto_lt_30_edittext"
+                    android:textColorHint="@color/hint_color_roboto_lt_30_edittext"
+                    android:textSize="@dimen/large_text_size"
+                    android:id="@+id/domainNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:inputType="text"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/enter_domain_name"
+                    tools:ignore="MissingPrefix" />
+            </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:gravity="center"
-            android:background="@android:color/white">
-            <!--<com.gc.materialdesign.views.Switch
-                android:id="@+id/domainTypeSwitchView"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primaryColor"
-                materialdesign:check="false" />-->
-            <org.honorato.multistatetogglebutton.MultiStateToggleButton
-                xmlns:mstb="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/domainTypeSwitchView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                mstb:values="@array/domain_array"
-                mstb:mstbPrimaryColor="@color/gray"
-                mstb:mstbSecondaryColor="@color/blue"/>
-        </LinearLayout>
+                android:padding="8dp"
+                android:gravity="center"
+                android:background="@android:color/white">
+                <!--<com.gc.materialdesign.views.Switch
+                    android:id="@+id/domainTypeSwitchView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primaryColor"
+                    materialdesign:check="false" />-->
+                <org.honorato.multistatetogglebutton.MultiStateToggleButton
+                    xmlns:mstb="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/domainTypeSwitchView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    mstb:values="@array/domain_array"
+                    mstb:mstbPrimaryColor="@color/gray"
+                    mstb:mstbSecondaryColor="@color/blue"/>
+            </LinearLayout>
 
-    </LinearLayout>
-</ScrollView>
+        </LinearLayout>
+    </ScrollView>
+
     <Button
         android:id="@+id/search_domain"
         android:layout_width="200dp"

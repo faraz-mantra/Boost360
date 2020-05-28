@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="colorAccent">#ffb900</color>
+  <color name="colorPrimary">#ffb900</color>
+  <color name="colorPrimaryDark">#d99d00</color>
+  <color name="colorPrimaryVariant">#5092F5</color>
+  <color name="statusBarColor">@color/colorPrimaryVariant</color>
+  <color name="colorOnPrimary">#FFFFFF</color>
+  <color name="colorSecondary">#2962FF</color>
+  <color name="colorSecondaryVariant">#0039CB</color>
+  <color name="colorOnSecondary">#FFFFFF</color>
+  <color name="colorError">#F44336</color>
+  <color name="colorOnError">#FFFFFF</color>
+  <color name="colorSurface">#FFFFFF</color>
+  <color name="colorOnSurface">#212121</color>
+  <color name="colorBackground">#FAFAFA</color>
+  <color name="colorOnBackground">#212121</color>
+  <color name="primary_text">#4a4a4a</color>
+  <color name="secondary_text">#747474</color>
+
+  <color name="white">#FFFFFF</color>
+  <color name="white_0">#00ffffff</color>
+  <color name="black">#000000</color>
+  <color name="transparent">#00000000</color>
+  <color name="shadow">#33000000</color>
+  <color name="color_dialog_bg">#FDFDFE</color>
+
+  <!-- fab-->
+  <color name="colorFabText">#F5F5F5</color>
+  <color name="colorFabIcon">#F5F5F5</color>
+  <color name="colorShadowStart">#5e5e5e</color>
+  <color name="colorShadowEnd">#c7c7c7</color>
+
+</resources>

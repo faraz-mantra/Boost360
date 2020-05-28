@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/tv_serial_number"
+        android:layout_width="50dip"
+        android:layout_height="match_parent"
+        android:background="@drawable/plan_order_border"
+        android:gravity="center"
+        android:padding="@dimen/margin_10"
+        android:text="SNo"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_payment_date"
+        android:layout_width="150dip"
+        android:layout_height="match_parent"
+        android:background="@drawable/plan_order_border"
+        android:gravity="center"
+        android:padding="@dimen/margin_10"
+        android:text="Payment Date"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <TextView
+        android:id="@+id/tv_order_confirmation_id"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/plan_order_border"
+        android:gravity="center"
+        android:padding="@dimen/margin_10"
+        android:text="Order Confirmation Id"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="97dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <TextView
+        android:id="@+id/tv_package_name"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/plan_order_border"
+        android:gravity="center"
+        android:padding="@dimen/margin_10"
+        android:text="Package Name"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="81dp"
+        tools:layout_editor_absoluteY="80dp" />
+
+    <TextView
+        android:id="@+id/tv_total_amount"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/plan_order_border"
+        android:gravity="center"
+        android:padding="@dimen/margin_10"
+        android:text="Total Amount (including taxes)"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="81dp"
+        tools:layout_editor_absoluteY="80dp" />
+
+    <TextView
+        android:id="@+id/tv_claim_id"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/plan_order_border"
+        android:gravity="center"
+        android:padding="@dimen/margin_10"
+        android:text="Claim Id"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="81dp"
+        tools:layout_editor_absoluteY="80dp" />
+
+    <TextView
+        android:id="@+id/tv_payment_status"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/plan_order_border"
+        android:gravity="center"
+        android:padding="@dimen/margin_10"
+        android:text="Payment Status"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="81dp"
+        tools:layout_editor_absoluteY="80dp" />
+
+</LinearLayout>

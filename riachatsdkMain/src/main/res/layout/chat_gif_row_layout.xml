@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="left"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_marginLeft="15dp"
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chat_layout_bg">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxWidth="250dp"
+            android:singleLine="true"/>
+        <ImageView
+            android:id="@+id/iv_main_row_image"
+            android:scaleType="fitXY"
+            android:layout_width="250dp"
+            android:layout_height="150dp" />
+        <TextView
+            android:id="@+id/tv_caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="250dp"
+            android:singleLine="true"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_date_time"
+        android:textSize="10sp"
+        android:textColor="#B0B0B0"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

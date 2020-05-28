@@ -1,31 +1,26 @@
 package com.nowfloats.NavigationDrawer;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.thinksity.R;
 
 public class TabPagerAdapter extends FragmentPagerAdapter {
     Home_Main_Fragment homeFragment;
-    NotificationFragment alertFragment;
     Analytics_Fragment analyticsFragment ;
     Context appContext;
-    int currentItem ;
+    private int currentItem ;
     private FragmentManager mFragmentManager;
 
     private CharSequence mTitles[];
     public TabPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
-        Log.d("Tap Pager Adapter"," Tab Pager Adapter ");
-        homeFragment = new Home_Main_Fragment();
-        alertFragment = new NotificationFragment();
-        analyticsFragment = new Analytics_Fragment();
+        //Log.d("Tap Pager Adapter"," Tab Pager Adapter ");
+
         appContext = context ;
-        mFragmentManager = fm;
         mTitles = appContext.getResources().getStringArray(R.array.dashboard_tabs);
     }
 
@@ -38,21 +33,21 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
         currentItem = index;
         // String name = makeFragmentName(R.id.pager, index);
         // Fragment selectedFragment = mFragmentManager.findFragmentByTag(name);
-        Log.d("Index","Index : "+index);
+        //Log.d("Index","Index : "+index);
         Fragment selectedFragment = null;
         // if(selectedFragment == null) {
         switch (index) {
             case 0:
-                selectedFragment = homeFragment;
+                selectedFragment  = new Home_Main_Fragment();
                 currentItem = 0;
                 break;
             case 1:
-                selectedFragment = analyticsFragment;
+                selectedFragment =  new Analytics_Fragment();
                 /*selectedFragment = OffersFragment.newInstance();*/
                 currentItem = 1;
                 break;
             case 2:
-                selectedFragment = alertFragment;
+                selectedFragment = new NotificationFragment();
                 currentItem = 2;
                 break;
         }
@@ -79,6 +74,12 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         // Log.d("TabPagerAdapter","getCount ");
         return 3;
+    }
+
+
+    public int getCurrentItem()
+    {
+        return this.currentItem;
     }
 
 }

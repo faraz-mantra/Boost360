@@ -26,8 +26,8 @@ public interface EventKeysWL
     String HOME_SCREEN = "Home";
     //String CONTENT_CREATION_BUTTON = "";
     String ANALYTICS_FRAGMENT = "Analytics";
-    //String ANALYTICS_FRAGMENT_SEARCH_QUERIES = "SearchQueries";
-    String SEARCH_QUERIES = "SearchQueries";
+    //String ANALYTICS_FRAGMENT_SEARCH_QUERIES = "SearchQueriesActivity";
+    String SEARCH_QUERIES = "SearchQueriesActivity";
     String STORE_FRAGMENT = "Store";
     String CREATE_MESSAGE_ACTIVITY = "PostAnUpdate";
     //String CREATE_MESSAGE_ACTIVITY_TEXT = "PostAnUpdateScreenT";
@@ -42,10 +42,24 @@ public interface EventKeysWL
     String MESSAGE_FULL_VIEW_DELETE = "DeleteMessage";
     String SIDE_PANEL_DASHBOARD = "Dashboard";
     String SIDE_PANEL_BUSINESS_PROFILE = "BusinessProfile";
+    String SIDE_PANEL_THIRD_PARTY_INTEGRATIONS = "ThirdPartyIntegrations";
     String SIDE_PANEL_BUSINESS_ENQUIRIES = "BusinessEnquiries";
+    String SIDE_PANEL_SUBSCRIBERS = "Subscribers";
+    String SIDE_PANEL_PAYMENT_SETTING = "PaymentSetting";
+    String SIDE_PANEL_SELLER_ANALYTICS = "SellerAnalytics";
+    String SIDE_PANEL_FACEBOOK_PAGE_CHATS = "FacebookPageChats";
+    String FACEBOOK_PAGE_CHATS_DETAILS = "FacebookPageChatsDetails";
+    String SIDE_PANEL_WHATSAPP_BUBBLE = "WhatsAppBubble";
+    String SIDE_PANEL_WHATSAPP_BUBBLE_OFF = "WhatsAppBubbleOff";
+    String SIDE_PANEL_CUSTOMER_ASSISTANT = "CustomerAssistant";
+    String SIDE_PANEL_CUSTOMER_ASSISTANT_OFF = "CustomerAssistantOff";
     String SIDE_PANEL_IMAGE_GALLERY = "ImageGallery";
+    String SIDE_PANEL_MANAGE_CUSTOMERS = "ManageCustomers";
+    String SIDE_PANEL_MANAGE_INVENTORY = "ManageInventory";
+    String SIDE_PANEL_UPGRADE = "SidePanelUpgrade";
+    String SIDE_PANEL_ADD_ONS = "SidePanelAddOn";
     String SIDE_PANEL_PRODUCT_GALLERY = "ProductGallery";
-    String SIDE_PANEL_SETTINGS = "Settings";
+    String SIDE_PANEL_SETTINGS = "ic_settings";
     String SIDE_PANEL_CHANGE_BACKGROUND_GALLERY = "ChangeBackgroundGallery";
     String SIDE_PANEL_CHANGE_BACKGROUND_CAMERA = "ChangeBackgroundCamera";
     String IMAGE_GALLERY_DELETE_IMAGE = "ImageGalleryDelete";
@@ -53,9 +67,12 @@ public interface EventKeysWL
     String IMAGE_GALLERY_IMAGE_CAMERA = "ImageGalleryFromCamera";
     //String FULL_SCREEN_IMAGE = "FullScreenImage";
     String BUSINESS_ADDRESS = "BusinessAddress";
+    String SITE_APPEARANCE = "SiteAppearance";
+    String PRODUCT_GALLERY = "ProductGallery";
     String CONTACT_INFO = "ContactInformation";
     String LOGO = "BusinessLogo";
     String SOCIAL_SHARING = "SocialSharing";
+    String MANAGE_INVENTORY = "ManageInventory";
     String SAVE_BUSINESS_ADDRESS = "SaveBusinessAddress";
     String SAVE_CONTACT_INFO = "SaveContactInfo";
     String UPDATE_LOGO_CAMERA = "UpdateLogoFromCamera";
@@ -91,6 +108,7 @@ public interface EventKeysWL
     String STORE_IN_APP_PURCHASE_INITIATION = "InAppPurchaseInitiation";
     String STORE_IN_APP_PURCHASE_SUCCESS = "InAppPurchaseSuccess";
     String STORE_IN_APP_PURCHASE_FAILURE = "InAppPurchaseFailure";
+    String GET_FP_FAILURE_EVENT = "GetFPFail";
     String STORE_IN_APP_PURCHASE_PACKAGE_ACTIVATION = "InAppPurchasePackageActivation";
 
     String PRODUCT_GALLERY_ADD ="AddProduct";
@@ -100,6 +118,24 @@ public interface EventKeysWL
 
     String BUY_NOW_STORE_CLICKED = "InitiatePayment";
     String PAYMENT_SUCCESSFULL  = "PaymentSuccess";
+    String NOTIFICATION_CLICKED = "NotificationClicked";
+    String SIDE_PANEL_ABOUT = "SidePanelAbout";
+    String SIDE_PANEL_MANAGE_CONTENT = "SidePanelManageContent";
+    String SIDE_PANEL_ACCOUNT_SETTINGS = "SidePanelAccountSettings";
+    String EVENT_PRIVACY_POLICY = "PrivacyPolicyClicked";
+    String EVENT_TERM_OF_USE = "Terms&ConditionClicked";
+    String EVENT_RATE_ON_TWITTER = "RateOnTwitter";
+    String EVENT_RATE_US_ON_FACEBOOK = "RateOnFacebook";
+    String EVENT_RATE_US_ON_PLAYSTORE = "RateOnPlayStore";
+    String EVENT_ABOUT_US = "AboutUsClicked";
+    String EVENT_FAQs = "FaqsClicked";
+    String SIDE_PANEL_KEYBOARD = "BoostKeyboard";
+    String KEYBOARD_SWITCH_CLICKED = "KeyboardSwitchClicked";
+    String STORAGE_SWITCH_CLICKED = "StoragePermissionSwitchClicked";
+    String MICROPHONE_SWITCH_CLICKED = "MicrophonePermissionSwitchClicked";
+    String ALLOW_ACCESS_SWITCH_CLICKED = "AllowPermissionSwitchClicked";
+    String MERCHANT_EDUCATION_BOOST_KEYBOARD = "MerchantEducationBoostKeyboard";
+    String MERCHANT_EDUCATION_MANAGE_CUSTOMERS = "MerchantEducationManageCustomers";
 
     // PRODUCT_GALLERY_
 
@@ -108,7 +144,7 @@ public interface EventKeysWL
 
 
     // String SELECT_FACEBOOK_
-    // Settings , Social Sharing
+    // ic_settings , Social Sharing
 
 
 }

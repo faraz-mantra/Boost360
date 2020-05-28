@@ -15,9 +15,10 @@ public class StoreModel {
     public ArrayList<Screenshots> Screenshots;
     public ArrayList<ProductId> ExternalApplicationDetails;
     public String Type;
-    public int ValidityInMths;
+    public float ValidityInMths;
     public ArrayList<WidgetPacks> WidgetPacks;
     public String CreatedOn;
+    public String ToBeActivatedOn;
     public String ExpiryInMths;
     public String Identifier;
     public String IsArchived;
@@ -25,4 +26,10 @@ public class StoreModel {
     public List<SupportedPaymentMethods> SupportedPaymentMethods;
     public List<TaxDetail> Taxes;
     public String packType;
+    public String ClientId;
+    public String ClientProductId;
+    public Double Discount;
+    public Double PaidAmount;
+    public String FloatingPointId;
+    public Float TotalMonthsValidity;
 }

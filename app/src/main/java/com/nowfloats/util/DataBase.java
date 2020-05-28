@@ -40,23 +40,23 @@ public class DataBase extends SQLiteOpenHelper {
     Context context;
     String createLoginTable="CREATE TABLE IF NOT EXISTS "+ tableLogin
             +" ( "+colLoginStatus+" TEXT PRIMARY KEY , "
-            +colFPID+" TEXT DEFAULT '0', "
-            +colFacebookName+" TEXT DEFAULT ' ', "
-            +colFacebookPage+" TEXT DEFAULT ' ', "
-            +colFacebookAccessToken+" TEXT DEFAULT '0', "
-            +colFacebookPageAccessToken+" TEXT DEFAULT '0', "
-            +colFacebookPageId+" TEXT DEFAULT '0' , "
-            +colaccessType+" TEXT DEFAULT '0', "
-            +colisEnterprise+" TEXT DEFAULT '0', "
-            +colisRestricted+" TEXT DEFAULT 'false', "
-            +colloginId+" TEXT DEFAULT '0', "
-            +colsocialShareTokens+" TEXT DEFAULT '0', "
-            +colsourceClientId+" TEXT DEFAULT '0')";
+            +colFPID+" TEXT PAYMENT_OPTIONS '0', "
+            +colFacebookName+" TEXT PAYMENT_OPTIONS ' ', "
+            +colFacebookPage+" TEXT PAYMENT_OPTIONS ' ', "
+            +colFacebookAccessToken+" TEXT PAYMENT_OPTIONS '0', "
+            +colFacebookPageAccessToken+" TEXT PAYMENT_OPTIONS '0', "
+            +colFacebookPageId+" TEXT PAYMENT_OPTIONS '0' , "
+            +colaccessType+" TEXT PAYMENT_OPTIONS '0', "
+            +colisEnterprise+" TEXT PAYMENT_OPTIONS '0', "
+            +colisRestricted+" TEXT PAYMENT_OPTIONS 'false', "
+            +colloginId+" TEXT PAYMENT_OPTIONS '0', "
+            +colsocialShareTokens+" TEXT PAYMENT_OPTIONS '0', "
+            +colsourceClientId+" TEXT PAYMENT_OPTIONS '0')";
     String createFPIDsTable="CREATE TABLE IF NOT EXISTS "+ tableFPIds +" ( "+colFPID+" TEXT PRIMARY KEY )";
 
     public DataBase(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-        this.context = context;
+        this.context = context.getApplicationContext();
     }
 
     @Override

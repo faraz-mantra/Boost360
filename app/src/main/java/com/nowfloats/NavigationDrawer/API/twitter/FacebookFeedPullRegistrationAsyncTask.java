@@ -3,6 +3,7 @@ package com.nowfloats.NavigationDrawer.API.twitter;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -26,23 +27,23 @@ import retrofit.http.POST;
 
 public class FacebookFeedPullRegistrationAsyncTask {
 
-	private SharedPreferences pref = null;
-	private Activity appContext = null;
-	ProgressDialog pd = null;
-	TextView fromPage;
-	CheckBox checkBox;
-	UserSessionManager sessionManager;
-	ImageView ivFbPageAutoPull;
+    private SharedPreferences pref = null;
+    private Activity appContext = null;
+    ProgressDialog pd = null;
+    TextView fromPage;
+    CheckBox checkBox;
+    UserSessionManager sessionManager;
+    ImageView ivFbPageAutoPull;
 
 
-	public FacebookFeedPullRegistrationAsyncTask(Activity context, TextView FromPage, ImageView ivFbPageAutoPull, CheckBox Checkbox, UserSessionManager sessionManager) {
-		this.appContext = context;
-		this.fromPage = FromPage;
-		this.checkBox = Checkbox;
-		this.sessionManager = sessionManager;
-		this.ivFbPageAutoPull = ivFbPageAutoPull;
-	}
-	public void autoRegister(final FacebookFeedPullModel.Registration obj) {
+    public FacebookFeedPullRegistrationAsyncTask(Activity context, TextView FromPage, ImageView ivFbPageAutoPull, CheckBox Checkbox, UserSessionManager sessionManager) {
+        this.appContext = context;
+        this.fromPage = FromPage;
+        this.checkBox = Checkbox;
+        this.sessionManager = sessionManager;
+        this.ivFbPageAutoPull = ivFbPageAutoPull;
+    }
+    public void autoRegister(final FacebookFeedPullModel.Registration obj) {
         pd = ProgressDialog.show(appContext, null, "Please wait");
         pd.setCancelable(true);
         pd.show();
@@ -110,13 +111,15 @@ public class FacebookFeedPullRegistrationAsyncTask {
                     if(!obj.getAutoPublish()){
                         fromPage.setVisibility(View.GONE);
                         Toast.makeText(appContext, "Auto Pull for Updates will be turned OFF", Toast.LENGTH_SHORT).show();
-                        ivFbPageAutoPull.setImageResource(R.drawable.facebookpage_icon_inactive);
+                        ivFbPageAutoPull.setImageDrawable(ContextCompat.getDrawable(appContext, R.drawable.facebookpage_icon_inactive));
+                        ivFbPageAutoPull.setColorFilter(ContextCompat.getColor(appContext, R.color.light_gray));
                     }
                     else{
                         fromPage.setVisibility(View.VISIBLE);
                         fromPage.setText(obj.getFacebookPageName());
                         Toast.makeText(appContext, "Auto Pull for Updates will be turned ON", Toast.LENGTH_SHORT).show();
-                        ivFbPageAutoPull.setImageResource(R.drawable.facebook_page);
+                        ivFbPageAutoPull.setImageDrawable(ContextCompat.getDrawable(appContext, R.drawable.facebook_page));
+                        ivFbPageAutoPull.setColorFilter(ContextCompat.getColor(appContext, R.color.primaryColor));
                     }
 
                     pref.edit().putBoolean("FBFeedPullAutoPublish", obj.getAutoPublish()).apply();
@@ -139,14 +142,14 @@ public class FacebookFeedPullRegistrationAsyncTask {
             }
         });
 
-	}
+    }
 
-	interface pullRegistration{
-		@POST("/Discover/v1/FloatingPoint/AutoPublishMessages")
-		void autoRegistration(@Body FacebookFeedPullModel.Registration obj, Callback<String> response);
+    interface pullRegistration{
+        @POST("/Discover/v1/FloatingPoint/AutoPublishMessages")
+        void autoRegistration(@Body FacebookFeedPullModel.Registration obj, Callback<String> response);
 
         @POST("/Discover/v1/FloatingPoint/UpdateFacebookPullRegistration/")
-		void autoUpdate(@Body FacebookFeedPullModel.Update obj, Callback<String> response);
-	}
+        void autoUpdate(@Body FacebookFeedPullModel.Update obj, Callback<String> response);
+    }
 
 }

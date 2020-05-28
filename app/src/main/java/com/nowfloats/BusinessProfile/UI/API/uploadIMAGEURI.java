@@ -5,9 +5,11 @@ import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
+import com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
@@ -73,9 +75,27 @@ public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
                         try {
                             Bitmap bmp = Util.getBitmap(path, appContext);
                             bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);
-                            Edit_Profile_Activity.editProfileImageView.setImageBitmap(bmp);
-                            SidePanelFragment.iconImage.setImageBitmap(bmp);
-                            Business_Profile_Fragment_V2.businessProfileImageView.setImageBitmap(bmp);
+
+                            if(Edit_Profile_Activity.editProfileImageView != null)
+                            {
+                                Edit_Profile_Activity.editProfileImageView.setImageBitmap(bmp);
+                            }
+
+                            if(SidePanelFragment.iconImage != null)
+                            {
+                                SidePanelFragment.iconImage.setImageBitmap(bmp);
+                            }
+
+                            if(Business_Profile_Fragment_V2.businessProfileImageView != null)
+                            {
+                                Business_Profile_Fragment_V2.businessProfileImageView.setImageBitmap(bmp);
+                            }
+
+                            if(FeaturedImageActivity.logoimageView != null)
+                            {
+                                FeaturedImageActivity.logoimageView.setImageBitmap(bmp);
+                            }
+
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -106,6 +126,9 @@ public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
 
 
     public void uploadImage(String imagePath){
+        if(imagePath==null){
+            return;
+        }
         FileInputStream fileInputStream = null;
         File img = new File(imagePath);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -120,11 +143,13 @@ public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         Bitmap bmp = BitmapFactory.decodeFile(imagePath,options);
-        if((f.length()/1024)>100){
-            bmp.compress(Bitmap.CompressFormat.JPEG, 70, bos);}else{
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        if(bmp != null) {
+            if ((f.length() / 1024) > 100) {
+                bmp.compress(Bitmap.CompressFormat.JPEG, 70, bos);
+            } else {
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            }
         }
-
         byte[] bitmapdata = bos.toByteArray();
 
         try {
@@ -165,10 +190,12 @@ public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
 
 
 
-        }
+    }
 
 
     public void sendDataToServer(String url, byte[] BytesToBeSent){
+
+        Log.d("IMAGE_URI", "" + url);
         DataOutputStream outputStream = null;
 
         try {

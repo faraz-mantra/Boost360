@@ -3,26 +3,36 @@ package com.nowfloats.BusinessProfile.UI.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.text.style.StyleSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.AutocompletePredictionBuffer;
 import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.BusinessProfile.UI.API.BusinessAddressUpdateApi;
@@ -32,11 +42,16 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
-public class Business_Address_Activity extends AppCompatActivity {
+
+public class Business_Address_Activity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private Toolbar toolbar;
     //public static GoogleMap googleMap;
@@ -46,13 +61,19 @@ public class Business_Address_Activity extends AppCompatActivity {
     private TextView addressText,cityText,provinceText,pincodeText,stateText,countryText;
     public static String adresslinetext , citytext , pincodetext , countrytext,statetext ;
     boolean streetaddressflag = false, cityflag = false, pincodeflag = false, geolocationflag = false,stateflag=false;
-    public static EditText businessAddress,city,state,areaCode,country;
+    public static EditText businessAddress,state,areaCode,country;
+    public static AutoCompleteTextView cityAutoText;
     public static String text1,text2,text3,text4;
     String[] profilesattr =new String[20];
     UserSessionManager session;
     public static ImageView ivMap;
     public static final int PLACE_PICKER_REQUEST = 23;
-    private boolean mUpdatingPositionFromMap = false,saveAddressFlag=false;;
+    private boolean mUpdatingPositionFromMap = false,saveAddressFlag=false;
+    ArrayAdapter<String> adapter;
+    private List<String> citys =new ArrayList<>();
+    private GoogleApiClient mGoogleApiClient;
+    AutocompleteFilter filter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +81,12 @@ public class Business_Address_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_business_address);
         Methods.isOnline(Business_Address_Activity.this);
         //loadData();
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(this, this)
+                .build();
 
         session = new UserSessionManager(getApplicationContext(),Business_Address_Activity.this);
 
@@ -101,11 +128,12 @@ public class Business_Address_Activity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         businessAddress = (EditText) findViewById(R.id.addressLine);
-        city = (EditText) findViewById(R.id.businessAddress_cityEditText);
+        cityAutoText = (AutoCompleteTextView) findViewById(R.id.businessAddress_cityEditText);
         state = (EditText) findViewById(R.id.businessAddress_stateEditText);
         areaCode = (EditText) findViewById(R.id.businessAddress_pinCodeEditText);
         country = (EditText) findViewById(R.id.businessAddress_countryEditText);
-
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line,citys);
+        cityAutoText.setAdapter(adapter);
         country.setKeyListener(null);
 
 
@@ -116,7 +144,18 @@ public class Business_Address_Activity extends AppCompatActivity {
         countryText = (TextView) findViewById(R.id.business_address_countrytext);
 
         initializeData();
-
+        country.setOnClickListener(v -> {
+            WebEngageController.trackEvent("COUNTRY","COUNTRY",null);
+        });
+        cityText.setOnClickListener(v -> {
+            WebEngageController.trackEvent("CITY","CITY",null);
+        });
+        pincodeText.setOnClickListener(v -> {
+            WebEngageController.trackEvent("PINCODE","PINCODE",null);
+        });
+        addressText.setOnClickListener(v -> {
+            WebEngageController.trackEvent("ADDRESS","ADDRESS",null);
+        });
         businessAddress.addTextChangedListener(new TextWatcher() {
 
 
@@ -186,27 +225,24 @@ public class Business_Address_Activity extends AppCompatActivity {
 
 
 
-
-        city.addTextChangedListener(new TextWatcher() {
+        cityAutoText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                citytext = adapter.getItem(position);
+            }
+        });
+        cityAutoText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                cityAutoText.setText(citytext);
+            }
+        });
+        cityAutoText.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
 
-
-                try {
-                    citytext = city.getText().toString().trim();
-
-                    int len = citytext.length();
-                    if (len > 0) {
-                        cityflag= true;
-                        saveTextView.setVisibility(View.VISIBLE);
-                    } else {
-                        saveTextView.setVisibility(View.GONE);
-
-                    }
-                } catch (Exception e) {
-                }
             }
 
             @Override
@@ -216,6 +252,57 @@ public class Business_Address_Activity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                try {
+                    String citytext = cityAutoText.getText().toString().trim();
+
+                    int len = citytext.length();
+                    if (len > 0) {
+                        cityflag= true;
+                        saveTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        saveTextView.setVisibility(View.GONE);
+
+                    }
+
+                    final PendingResult<AutocompletePredictionBuffer> result =
+                            Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, cityAutoText.getText().toString().trim(),
+                                    null, filter );
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AutocompletePredictionBuffer a=result.await();
+                            //Log.v("ggg","ok");
+                            citys.clear();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+                            for (int i=0;i<a.getCount();i++){
+                                //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
+                                citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
+                            }
+
+                            a.release();
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter = new ArrayAdapter<>(Business_Address_Activity.this,
+                                            android.R.layout.simple_dropdown_item_1line, citys);
+                                    if (!isFinishing()) {
+                                        cityAutoText.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }
+                    }).start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -225,6 +312,15 @@ public class Business_Address_Activity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
                 try {
                     pincodetext = areaCode.getText()
                             .toString().trim();
@@ -238,29 +334,39 @@ public class Business_Address_Activity extends AppCompatActivity {
                 } catch (Exception e) {
                 }
             }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
         });
+        makeAutoCompleteFilter(countryCode());
+    }
+    private void makeAutoCompleteFilter(String country_code){
+        //Log.v("filter",country_code);
+        filter =null;
+        AutocompleteFilter.Builder builder = new AutocompleteFilter.Builder()
+                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES);
+
+        if(country_code!=null){
+            builder.setCountry(country_code.toUpperCase());
+        }
+        filter= builder.build();
 
     }
-
     private void initializeData() {
 
         businessAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS));
-        city.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY));
+        cityAutoText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY));
+        citytext = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY);
         country.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
         areaCode.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE));
-
         saveTextView.setVisibility(View.GONE);
     }
-
+    private String countryCode(){
+        String[] locales = Locale.getISOCountries();
+        for (String countryCode : locales) {
+            Locale obj = new Locale("", countryCode);
+            if(obj.getDisplayCountry().trim().toLowerCase().equals(country.getText().toString().toLowerCase().trim()))
+                return obj.getCountry();
+        }
+        return null;
+    }
     private void uploadBussinessAddress() {
         int i = 0;
         if (streetaddressflag) {
@@ -268,17 +374,17 @@ public class Business_Address_Activity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(state.getWindowToken(), 0);
             text1 = adresslinetext;
             profilesattr[i] = "ADDRESS";
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS, text1);
+            //session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS, text1);
             i++;
         } else {
             text1 = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS);
         }
         if (cityflag) {
             InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(city.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(cityAutoText.getWindowToken(), 0);
             text2 = citytext;
             profilesattr[i] = "CITY";
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CITY, text2);
+            //session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CITY, text2);
             i++;
         } else {
             text2 = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY);
@@ -287,7 +393,7 @@ public class Business_Address_Activity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(areaCode.getWindowToken(), 0);
             text3 = pincodetext;
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE, text3);
+            //session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE, text3);
             i++;
         } else {
             text3 = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE);
@@ -313,11 +419,11 @@ public class Business_Address_Activity extends AppCompatActivity {
 
     private void initilizeMap() {
 
-        String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
+        String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" +getString(R.string.google_map_key); //AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg
         //holderItem.chatImage.setVisibility(View.VISIBLE);
-        Log.d("Map Urlggg:", url);
+        // Log.d("Map Urlggg:", url);
         try {
-            Picasso.with(this)
+            Picasso.get()
                     .load(url)
                     .placeholder(R.drawable.default_product_image)
                     .error(R.drawable.default_product_image)
@@ -347,18 +453,16 @@ public class Business_Address_Activity extends AppCompatActivity {
 
         if(id==android.R.id.home ){
 
-
-            // Log.d("Back","Back Pressed");
-
-            Business_Profile_Fragment_V2 f1 = (Business_Profile_Fragment_V2) getSupportFragmentManager().findFragmentByTag("A");
+            /*Business_Profile_Fragment_V2 f1 = (Business_Profile_Fragment_V2) getSupportFragmentManager().findFragmentByTag("A");
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             if(f1 != null) {
                 transaction.attach(f1);
                 transaction.addToBackStack("Profile");
                 transaction.commit();
-            }
+            }*/
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            return true;
             //getSupportFragmentManager().popBackStack();
 
             //  NavUtils.navigateUpFromSameTask(this);
@@ -399,10 +503,10 @@ public class Business_Address_Activity extends AppCompatActivity {
                 LatLng latLng = place.getLatLng();
                 Constants.latitude = latLng.latitude;
                 Constants.longitude = latLng.longitude;
-                String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
+                String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + getString(R.string.google_map_key);
                 //holderItem.chatImage.setVisibility(View.VISIBLE);
                 try {
-                    Picasso.with(this)
+                    Picasso.get()
                             .load(url)
                             .placeholder(R.drawable.default_product_image)
                             .into(ivMap);
@@ -411,7 +515,7 @@ public class Business_Address_Activity extends AppCompatActivity {
                 }
 
                 BusinessAddressUpdateApi Task = new BusinessAddressUpdateApi( Constants.latitude,
-                        Constants.longitude, Business_Address_Activity.this,city.getText().toString()
+                        Constants.longitude, Business_Address_Activity.this,citytext
                         ,areaCode.getText().toString(),businessAddress.getText().toString(),
                         saveAddressFlag,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
                 Task.update();
@@ -430,4 +534,8 @@ public class Business_Address_Activity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
 }

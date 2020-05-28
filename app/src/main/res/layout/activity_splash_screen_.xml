@@ -1,11 +1,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/black">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/splash"
         android:scaleType="centerCrop"
-        android:src="@drawable/splash_screen_image" />
+        android:alpha="0.5"
+        android:src="@drawable/splash_screen_v2" />
+
+    <TextView
+        android:id="@+id/btn_request_callback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="@string/loading_boost_dashboard_for_logged_in_user"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

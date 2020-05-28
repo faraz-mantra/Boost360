@@ -1,5 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@color/screen_bg">
@@ -8,182 +8,334 @@
         android:id="@+id/app_bar"
         layout="@layout/tool_bar_business_profile" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:layout_marginLeft="2dp">
+        android:layout_below="@+id/app_bar">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:orientation="vertical"
-            android:gravity="bottom">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:focusable="false"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/primary_number"
-                android:layout_marginLeft="5dp"
-                android:textSize="10sp"
-                android:textColor="#BDBDBD"/>
-
-            <EditText
-                android:id="@+id/primaryNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:cursorVisible="false"
-                android:textSize="14sp"
-                android:textColor="#BDBDBD">
-                </EditText>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:orientation="vertical"
-            android:gravity="bottom">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/alternate_number1"
-                android:textSize="10sp"
-                android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"/>
-
-            <EditText
-                android:id="@+id/alternateNumber_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:textSize="14sp"
-                android:inputType="number"
-                android:textColor="#575757"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:orientation="vertical"
-            android:gravity="bottom"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/alternate_number2"
-                android:textSize="10sp"
-                android:inputType="number"
-                android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"/>
-
-            <EditText
-                android:id="@+id/alternateNumber_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:inputType="number"
-                android:textSize="14sp"
-                android:textColor="#575757"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:orientation="vertical"
-            android:gravity="bottom"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_activity_web_site_address"
-                android:textSize="10sp"
-                android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"/>
-
-            <EditText
-                android:id="@+id/websiteAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:textSize="14sp"
-                android:textColor="#575757"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:orientation="vertical"
-            android:gravity="bottom"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/email_address"
-                android:textSize="10sp"
-                android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"/>
-
-            <EditText
-                android:id="@+id/contactInfo_emailId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:textSize="14sp"
-                android:textColor="#575757"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:orientation="vertical"
-            android:gravity="bottom">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/facebook_page_name"
-                android:textSize="10sp"
-                android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"/>
+                android:background="@color/screen_bg"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="Phone Numbers" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="12dp"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
                 <TextView
+                    android:id="@+id/tv_primary"
+                    fontPath="Roboto-Regular.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="https://facebook.com/"/>
+                    android:text="@string/primary_number"
+                    android:textSize="12sp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    tools:ignore="MissingPrefix" />
+
                 <EditText
-                    android:id="@+id/facebookPage"
+                    android:id="@+id/primaryNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="bottom"
-                    android:textSize="14sp"
-                    android:inputType="text"
-                    android:textColor="#575757"/>
+                    android:textColor="#575757"
+                    android:textSize="14sp" />
+
             </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_alternate1"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alternate_number1"
+                    android:textSize="12sp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    tools:ignore="MissingPrefix" />
+
+                <EditText
+                    android:id="@+id/alternateNumber_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:inputType="number"
+                    android:textColor="#575757"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_alternate2"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alternate_number2"
+                    android:textSize="12sp"
+                    android:inputType="text"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    tools:ignore="MissingPrefix" />
+
+                <EditText
+                    android:id="@+id/alternateNumber_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:inputType="number"
+                    android:textColor="#575757"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_alternate3"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alternate_number3"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:textSize="12sp"
+                    android:inputType="text"
+                    tools:ignore="MissingPrefix" />
+
+                <EditText
+                    android:id="@+id/alternateNumber_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:inputType="number"
+                    android:textColor="#575757"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/screen_bg"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="Other Information" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:padding="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_activity_web_site_address"
+                    android:textSize="12sp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    tools:ignore="MissingPrefix" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_protocol_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:scaleX=".75"
+                        android:scaleY=".75"
+                        android:src="@drawable/ic__drop_down" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/sp_web_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_spinner">
+
+                    </androidx.appcompat.widget.AppCompatSpinner>
+
+                    <!--
+                    <Spinner
+                        android:background="@drawable/bg_spinner"
+                        android:gravity="right"
+                        android:id="@+id/sp_web_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    </Spinner>
+                    -->
+
+                    <EditText
+                        android:id="@+id/websiteAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:textColor="#575757"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email_address"
+                    android:textSize="12sp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    tools:ignore="MissingPrefix" />
+
+                <EditText
+                    android:id="@+id/contactInfo_emailId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:enabled="false"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:inputType="textEmailAddress"
+                    android:textColor="#828282"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/email_change_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="If you wish to change email address, please contact ria@nowfloats.com"
+                    android:textSize="12sp"
+                    android:textStyle="italic"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:textColor="#828282" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:padding="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/facebook_page_name"
+                    android:textSize="12sp"
+                    tools:ignore="MissingPrefix" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="https://facebook.com/" />
+
+                    <EditText
+                        android:id="@+id/facebookPage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="#575757"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                fontPath="Roboto-Regular.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/facebook_url_message"
+                android:textStyle="italic"
+                android:textSize="12sp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="12dp"
+                tools:ignore="MissingPrefix" />
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-
-
-
-
-
-</LinearLayout>
+</RelativeLayout>

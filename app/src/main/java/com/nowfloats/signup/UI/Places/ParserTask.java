@@ -3,9 +3,7 @@ package com.nowfloats.signup.UI.Places;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 
-import com.nowfloats.signup.UI.UI.PreSignUpActivity;
 import com.thinksity.R;
 
 import org.json.JSONObject;
@@ -61,7 +59,7 @@ public class ParserTask extends AsyncTask<String, Integer, ArrayList<String>> {
 //        SimpleAdapter adapter = new SimpleAdapter(activity, result, android.R.layout.simple_list_item_1, from, to);
 
         // Setting the adapter
-        PreSignUpActivity.cityEditText.setAdapter(autoCompleteAdapter);
-        PreSignUpActivity.cityProgress.setVisibility(View.GONE);
+        //PreSignUpActivity.cityEditText.setAdapter(autoCompleteAdapter);
+        //PreSignUpActivity.cityProgress.setVisibility(View.GONE);
     }
 }

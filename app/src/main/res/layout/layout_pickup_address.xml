@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        android:background="#747474"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin_20"
+            android:paddingRight="@dimen/margin_20"
+            android:paddingTop="@dimen/margin_10"
+            android:paddingBottom="@dimen/margin_10" >
+
+            <TextView
+                android:id="@+id/label_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add new Address"
+                android:textSize="18sp"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/label_warehouse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#1 Banjara Warehouse"
+                android:textSize="14sp"
+                android:paddingRight="10dp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                android:layout_below="@+id/label_title"
+                android:textColor="@android:color/white" />
+
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_20"
+                android:paddingRight="@dimen/margin_20"
+                android:paddingTop="@dimen/margin_10"
+                android:paddingBottom="@dimen/margin_20"
+                android:background="@android:color/white" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:text="Warehouse/Shop area name"/>
+
+                    <ImageButton
+                        android:visibility="invisible"
+                        style="@style/ProductHelpButtonStyle"/>
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edit_warehouse_name"
+                    android:gravity="top"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:hint="e.g Banjara warehouse"
+                    style="@style/ProductEditTextStyle" />
+
+                <!--
+                <Spinner
+                    android:id="@+id/spinner_pickup_address"
+                    style="@style/ProductSpinnerStyle"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:background="@drawable/input_background"
+                    android:entries="@array/stock_options" />
+                 -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:text="Warehouse contact number" />
+
+                    <ImageButton
+                        android:visibility="invisible"
+                        style="@style/ProductHelpButtonStyle" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edit_contact_number"
+                    android:gravity="top"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:hint="XXXXXXXXXX"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:maxLength="13"
+                    style="@style/ProductEditTextStyle" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:text="Pickup address proof (jpeg/png/pdf 1mb)" />
+
+                    <ImageButton
+                        android:visibility="invisible"
+                        style="@style/ProductHelpButtonStyle" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_add_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:background="@drawable/white_rectangle_background"
+                    android:padding="8dp"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/btn_file_chooser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:text="Select address proof"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"
+                        android:padding="5dp"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/ic_file_address_proof"
+                        android:textColor="@color/secondaryTextColor"
+                        android:background="@drawable/button_pick_image"/>
+
+                    <LinearLayout
+                        android:id="@+id/layout_file_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/label_file_name"
+                            style="@style/ProductLabelTextStyle"
+                            android:layout_weight="1"
+                            android:paddingRight="5dp"
+                            android:paddingLeft="5dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text=""/>
+
+                        <ImageButton
+                            android:id="@+id/ib_remove"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="end|center_vertical"
+                            app:srcCompat="@drawable/ic_remove"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:text="Building/Plot No. and street address" />
+
+                    <ImageButton
+                        android:visibility="invisible"
+                        style="@style/ProductHelpButtonStyle" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edit_building_name"
+                    android:gravity="top"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:hint="e.g. D-234/K-4B, Road No 10, Banjara Hills"
+                    style="@style/ProductEditTextStyle" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:text="City" />
+
+                    <ImageButton
+                        android:visibility="invisible"
+                        style="@style/ProductHelpButtonStyle" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edit_city"
+                    android:gravity="top"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:hint="e.g. Hyderabad"
+                    style="@style/ProductEditTextStyle" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:text="State/Province" />
+
+                    <ImageButton
+                        android:visibility="invisible"
+                        style="@style/ProductHelpButtonStyle" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edit_state"
+                    android:gravity="top"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:hint="e.g. Telangana"
+                    style="@style/ProductEditTextStyle" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/ProductLabelTextStyle"
+                        android:text="Country" />
+
+                    <ImageButton
+                        android:visibility="invisible"
+                        style="@style/ProductHelpButtonStyle" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edit_country"
+                    android:gravity="top"
+                    android:editable="false"
+                    android:layout_marginTop="@dimen/margin_5"
+                    style="@style/ProductEditTextStyle"
+                    android:background="@drawable/white_rectangle_background"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:layerType="software"
+                    android:background="@drawable/dotted_line"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <CheckBox
+                        android:id="@+id/check_address_acceptance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/tv_address_acceptance_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        android:layout_gravity="center_vertical"
+                        android:text="I confirm the details entered above are correct"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_marginBottom="@dimen/margin_15"
+                    android:layerType="software"
+                    android:background="@drawable/dotted_line"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btn_cancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:minWidth="100dp"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/secondaryTextColor"
+                        android:layout_toLeftOf="@+id/btn_save"
+                        android:textSize="14sp"
+                        android:text="CANCEL" />
+
+                    <Button
+                        android:id="@+id/btn_save"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:minWidth="130dp"
+                        android:background="@drawable/rounded_button_enabled"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:textColor="@android:color/white"
+                        android:layout_alignParentRight="true"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:text="SAVE ADDRESS" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</layout>

@@ -4,34 +4,68 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main_analytics"
     android:layout_width="match_parent"
-    android:background="#DDDDDD"
+    android:background="#FAFAFA"
     android:layout_height="match_parent"
     tools:context="com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity">
     <include android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
-    <com.astuetz.PagerSlidingTabStrip
+
+    <LinearLayout
+        android:id="@+id/ll_wmy_wrapper"
         android:layout_width="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:id="@+id/vpagertabstrip_main"
-        android:gravity="top"
-        android:background="@color/primaryColor"
-        app:pstsIndicatorColor="@android:color/white"
-        app:pstsShouldExpand="true"
-        app:pstsTextAllCaps="true"
-        android:layout_height="48dp"/>
-    <android.support.v4.view.ViewPager
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/vpagertabstrip_main"
-        android:id="@+id/viewpager_main"
-        android:layout_height="match_parent">
-    </android.support.v4.view.ViewPager>
-    <android.support.v4.widget.ContentLoadingProgressBar
+        android:layout_height="35dp"
+        android:background="@drawable/rounded_corner_dark_gray_padded"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <TextView
+            android:id="@+id/tv_week_tab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/week"
+            android:background="#fafafa"
+            android:gravity="center"
+            android:textColor="@color/dark_grey"/>
+        <TextView
+            android:id="@+id/tv_month_tab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:text="@string/Month"
+            android:background="#fafafa"
+            android:gravity="center"
+            android:textColor="@color/dark_grey"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_year_tab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/Year"
+            android:gravity="center"
+            android:paddingRight="7dp"
+            android:background="@color/dark_grey"
+            android:textColor="#fafafa" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_analytics_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_wmy_wrapper">
+
+    </FrameLayout>
+
+    <androidx.core.widget.ContentLoadingProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:id="@+id/progressBar_analytic" />
 </RelativeLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="@dimen/margin_10"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Account Number"
+            android:textColor="#383838"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/edtAccountNumber"
+            style="@style/SignUp_EditText_Style_Ria"
+            fontPath="Roboto-Regular.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#383838"
+            android:ellipsize="end"
+            android:hint="Account Number"
+            android:inputType="textNoSuggestions"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5"
+        android:orientation="vertical">
+
+        <TextView
+            fontPath="Roboto-Regular.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Bank Name"
+            android:textColor="#383838"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/edtBankName"
+            style="@style/SignUp_EditText_Style_Ria"
+            fontPath="Roboto-Regular.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#383838"
+            android:ellipsize="end"
+            android:hint="Bank Name"
+            android:inputType="textNoSuggestions"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5"
+        android:hint="IFSC Code"
+        android:orientation="vertical">
+
+        <TextView
+            fontPath="Roboto-Regular.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="IFSC Code"
+            android:textColor="#383838"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/edtIFSCCode"
+            style="@style/SignUp_EditText_Style_Ria"
+            fontPath="Roboto-Regular.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#383838"
+            android:ellipsize="end"
+            android:hint="IFSC Code"
+            android:inputType="textNoSuggestions"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textAllCaps="true"
+            android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

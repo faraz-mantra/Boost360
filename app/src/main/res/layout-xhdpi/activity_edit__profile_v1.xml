@@ -1,0 +1,277 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/tool_bar_business_profile_v2" />
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:background="@color/screen_bg"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/editbusinessprofileimage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="center"
+                        android:src="@drawable/featured_photo_default" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/margin_20"
+                    android:paddingTop="15dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout_profile_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5" >
+
+                        <EditText
+                            android:id="@+id/profileName"
+                            style="@style/CustomEditTextStyle"
+                            fontPath="Roboto-Light.ttf"
+                            android:hint="@string/your_name"
+                            android:inputType="textCapWords"
+                            android:minLines="1"
+                            tools:ignore="MissingPrefix" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout_business_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="40"
+                        android:layout_marginTop="@dimen/margin_10" >
+
+                        <EditText
+                            android:id="@+id/businessName"
+                            style="@style/CustomEditTextStyle"
+                            fontPath="Roboto-Light.ttf"
+                            android:hint="@string/business_name"
+                            android:inputType="textCapWords"
+                            android:maxLength="40"
+                            android:minLines="1"
+                            tools:ignore="MissingPrefix" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/businessName_textline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Business Category"
+                        android:textSize="12sp"
+                        android:layout_marginLeft="3dp"
+                        android:textColor="#BDBDBD" />
+
+                    <LinearLayout
+                        android:layout_height="58dp"
+                        style="@style/SignUp_LinearLayout_Style">
+
+                        <EditText
+                            android:id="@+id/businessCategory"
+                            style="@style/CustomEditTextStyle"
+                            fontPath="Roboto-Light.ttf"
+                            android:editable="true"
+                            android:clickable="true"
+                            android:focusableInTouchMode="false"
+                            android:focusable="false"
+                            android:imeOptions="flagNoExtractUi"
+                            android:hint="@string/business_category"
+                            android:inputType="textCapWords"
+                            android:textColor="#BDBDBD"
+                            tools:ignore="MissingPrefix" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/business_category_change_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="If you wish to change business category, please contact ria@nowfloats.com"
+                        android:textSize="12sp"
+                        android:textStyle="italic"
+                        android:visibility="gone"
+                        android:layout_marginLeft="3dp"
+                        android:textColor="#828282" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/margin_20" >
+
+                        <TextView
+                            android:id="@+id/productCategory_textline"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Product Category"
+                            android:textSize="12sp"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="3dp"
+                            android:textColor="#BDBDBD" />
+
+                        <ImageView
+                            android:id="@+id/ib_product_category_edit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:onClick="onProductCategoryEdit"
+                            android:src="@drawable/ic_lead_pencil_grey600_18dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        style="@style/SignUp_LinearLayout_Style">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/linear_product_category"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <RadioGroup
+                                    android:id="@+id/rbgroup"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:orientation="horizontal">
+
+                                    <RadioButton
+                                        android:id="@+id/rb_products"
+                                        android:layout_width="wrap_content"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/light_gray"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginRight="10dp"
+                                        android:text="Products" />
+
+                                    <RadioButton
+                                        android:layout_marginRight="10dp"
+                                        android:id="@+id/rb_services"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/light_gray"
+                                        android:text="Services" />
+
+                                    <RadioButton
+                                        android:layout_marginLeft="10dp"
+                                        android:id="@+id/rb_custom"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:buttonTint="@color/light_gray"  />
+
+                                </RadioGroup>
+
+                                <EditText
+                                    android:background="@android:color/transparent"
+                                    android:textSize="15dp"
+                                    android:gravity="bottom"
+                                    android:id="@+id/et_customCategory"
+                                    android:hint="Custom"
+                                    android:maxLength="15"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_layout_business_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10" >
+
+                        <EditText
+                            android:id="@+id/businessDesciption"
+                            style="@style/CustomEditTextStyle"
+                            android:layout_height="wrap_content"
+                            fontPath="Roboto-Light.ttf"
+                            android:hint="@string/business_description"
+                            android:inputType="textCapSentences|textMultiLine"
+                            android:maxLines="4"
+                            tools:ignore="MissingPrefix" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="155dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:tint="@color/primaryColor"
+                    android:src="@drawable/circle_bakground" />
+
+                <ImageView
+                    android:id="@+id/select_businessprofileimage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="155dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentTop="true"
+                    android:padding="16dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    app:srcCompat="@drawable/ic_camera" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+    </ScrollView>
+
+</LinearLayout>

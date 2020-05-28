@@ -1,8 +1,8 @@
 package com.nowfloats.signup.UI.Places;
 
 import android.content.Context;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import android.util.AttributeSet;
-import android.widget.AutoCompleteTextView;
 
 import com.nowfloats.signup.UI.Model.PlacesModel;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /** Customizing AutoCompleteTextView to return Place Description   
  *  corresponding to the selected item
  */
-public class CustomAutoCompleteTextView extends AutoCompleteTextView {
+public class CustomAutoCompleteTextView extends AppCompatAutoCompleteTextView {
     ArrayList<PlacesModel> Places = new ArrayList<>();
 	public CustomAutoCompleteTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -19,7 +19,7 @@ public class CustomAutoCompleteTextView extends AutoCompleteTextView {
 	/** Returns the place description corresponding to the selected item */
 	/*@Override
 	protected CharSequence convertSelectionToString(Object selectedItem) {
-		*//** Each item in the autocompetetextview suggestion list is a hashmap object *//*
+		*//** Each item in the autocompetetextview suggestionList list is a hashmap object *//*
         Places.clear();
         String result = " ";
         try {
@@ -37,7 +37,7 @@ public class CustomAutoCompleteTextView extends AutoCompleteTextView {
 
    /* @Override
     protected CharSequence convertSelectionToString(Object selectedItem) {
-        *//** Each item in the autocompetetextview suggestion list is a hashmap object *//*
+        *//** Each item in the autocompetetextview suggestionList list is a hashmap object *//*
         HashMap<String, ArrayList<PlacesModel>> hm = (HashMap<String, ArrayList<PlacesModel>>) selectedItem;
         String result = " ";
         try {

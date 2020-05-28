@@ -4,21 +4,31 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
+import android.os.Handler;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.NetworkResponse;
@@ -27,74 +37,163 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
+import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
+import com.boost.presignup.datamodel.userprofile.Result;
+import com.boost.presignup.datamodel.userprofile.UserProfileResponse;
+import com.boost.presignup.datamodel.userprofile.VerificationRequestResult;
+import com.boost.presignup.utils.CustomFirebaseAuthHelpers;
+import com.boost.presignup.utils.CustomFirebaseAuthListeners;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.facebook.CallbackManager;
+import com.facebook.login.widget.LoginButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 import com.nowfloats.Login.Model.FloatsMessageModel;
+import com.nowfloats.Login.Model.Login_Data_Model;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.helper.ui.KeyboardUtil;
+import com.nowfloats.on_boarding.OnBoardingActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.DataBase;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.thinksity.Specific;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
+import com.thinksity.Specific;
 
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import jp.wasabeef.richeditor.RichEditor;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Login_MainActivity extends AppCompatActivity implements
-        API_Login.API_Login_Interface,View.OnClickListener{
+        API_Login.API_Login_Interface, View.OnClickListener {
     Bus bus;
-    EditText userName, password ;
-    CardView loginButton ;
+    EditText userName, password;
+    CardView loginButton;
+    View line1,line2;
 
     UserSessionManager session;
-    String userNameText,passwordText ;
-    ProgressDialog progressDialog ;
+    String userNameText, passwordText;
+    public static ProgressDialog progressDialog;
+    String currentProvider = "";
 
-    private Toolbar toolbar;
+    //private Toolbar toolbar;
     private TextView forgotPassword;
     boolean isUpdatedOnServer = true;
-    private TextView headerText;
+    //private TextView headerText;
     private Intent dashboardIntent;
     private RichEditor mEditor;
-    private TextView mPreview;
+    private TextView mPreview, tvHeadingText;
+    private CardView cvFacebookLogin, cvGoogleLogin, cvOtpVerification;
+    private LoginButton loginFacebookButton;
+    private CustomFirebaseAuthHelpers customFirebaseAuthHelpers;
+    private CallbackManager callbackManager;
+    /*private String[] permission = new String[]{Manifest.permission.READ_SMS,
+            Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_PHONE_STATE};*/
+    private final static int READ_MESSAGES_ID = 221;
+    LinearLayout parent_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_main);
+
+        // Make activity full screen
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        setContentView(R.layout.activity_login_main_v2);
         Methods.isOnline(Login_MainActivity.this);
 
+        new KeyboardUtil(this, findViewById(R.id.fl_parent_layout));
+
+//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//        if(mAuth != null && mAuth.getCurrentUser() != null){
+//            mAuth.signOut();
+//        }
+
         bus = BusProvider.getInstance().getBus();
-        session = new UserSessionManager(getApplicationContext(),Login_MainActivity.this);
+        session = new UserSessionManager(getApplicationContext(), Login_MainActivity.this);
         dashboardIntent = new Intent(Login_MainActivity.this, HomeActivity.class);
+        dashboardIntent.putExtras(getIntent());
+        parent_layout = (LinearLayout) findViewById(R.id.parent_layout);
+        cvFacebookLogin = findViewById(R.id.cv_facebook_login);
+        loginFacebookButton = findViewById(R.id.facebook_login_button);
+        cvGoogleLogin = findViewById(R.id.cv_google_login);
+        cvOtpVerification = findViewById(R.id.cv_otp);
 
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
-        headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText(getString(R.string.welcome_back));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        line1 = findViewById(R.id.fl_line_1);
+        line2 = findViewById(R.id.fl_line_2);
 
+
+
+
+
+        //toolbar = (Toolbar) findViewById(R.id.app_bar);
+        // headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
+        //headerText.setText(getString(R.string.welcome_back));
+        // setSupportActionBar(toolbar);
+//        getSupportActionBar().setHomeButtonEnabled(true);
+        //      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        WebEngageController.trackEvent("LOGIN", "Login", session.getFpTag());
         userName = (EditText) findViewById(R.id.userNameEditText);
         password = (EditText) findViewById(R.id.passwordEditText);
+
+        new Handler().postDelayed(() -> {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.showSoftInput(userName, InputMethodManager.SHOW_IMPLICIT);
+        }, 500);
+
+        userName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                ViewGroup.LayoutParams lp = line1.getLayoutParams();
+                if (hasFocus) {
+                    lp.height = 5;
+                } else {
+                    lp.height = 2;
+                }
+                lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                line1.setLayoutParams(lp);
+            }
+        });
+
+        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                ViewGroup.LayoutParams lp = line2.getLayoutParams();
+                if (hasFocus) {
+                    lp.height = 5;
+                } else {
+                    lp.height = 2;
+                }
+                lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                line2.setLayoutParams(lp);
+            }
+        });
 
         password.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent arg1) {
-                if (arg1.getAction()== MotionEvent.ACTION_DOWN) {
+                if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
                     int tot_width = password.getWidth();
                     float cur_x = arg1.getX();
                     float res = (cur_x / Float.parseFloat(tot_width + "") * (Float.parseFloat("100")));
@@ -103,30 +202,77 @@ public class Login_MainActivity extends AppCompatActivity implements
                         if (d.equals("pwd")) {
                             password.setTag("show");
                             password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                            password.setCompoundDrawablesWithIntrinsicBounds(0, 0,R.drawable.pwd_hide, 0);
-                        }else {
+                            password.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.pwd_hide, 0);
+                        } else {
                             password.setTag("pwd");
                             password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                            password.setCompoundDrawablesWithIntrinsicBounds(0, 0,R.drawable.pwd_show, 0);
+                            password.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.pwd_show, 0);
                         }
                     }
                 }
                 return false;
             }
         });
+
+        findViewById(R.id.im_back_button).setOnClickListener(v -> {
+            Login_MainActivity.this.onBackPressed();
+        });
+
         forgotPassword = (TextView) findViewById(R.id.forgotPwdTextView);
+        forgotPassword.setPaintFlags(forgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
         forgotPassword.setOnClickListener(this);
 
         ImageView userNameIcon = (ImageView) findViewById(R.id.userNameIcon);
         ImageView passwordIcon = (ImageView) findViewById(R.id.passwordIcon);
 
         userName.requestFocus();
-        InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInputFromWindow(userName.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
 
         PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         userNameIcon.setColorFilter(whiteLabelFilter);
         passwordIcon.setColorFilter(whiteLabelFilter);
+
+
+        CustomFirebaseAuthListeners customFirebaseAuthListeners = new CustomFirebaseAuthListeners() {
+            @Override
+            public void onSuccess(@Nullable VerificationRequestResult response) {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+                if (response != null)
+                    processLoginSuccessRequest(response);
+                else
+                    Methods.showSnackBarNegative(Login_MainActivity.this, "Error occurred while processing your login request. Please get in touch with Boost Support team");
+            }
+
+            @Override
+            public void onSuccess(@Nullable ConnectUserProfileResponse response) {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable UserProfileResponse response, String uniqueId) {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+                if (response != null) {
+                    loginSuccess(response);
+                } else {
+                    Methods.showSnackBarNegative(Login_MainActivity.this, "Error occurred while processing your login request. Please get in touch with Boost Support team");
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+                Toast.makeText(Login_MainActivity.this, "Error occurred while processing your login request. Please get in touch with Boost Support team", Toast.LENGTH_LONG).show();
+
+            }
+        };
 
         loginButton = (CardView) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -136,17 +282,67 @@ public class Login_MainActivity extends AppCompatActivity implements
                 passwordText = password.getText().toString().trim();
 
                 if (userNameText.length() > 0 && passwordText.length() > 0) {
-                    progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.loading));
+                    userName.clearFocus();
+                    progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.processing_request));
                     progressDialog.setCancelable(true);
-                    API_Login apiLogin = new API_Login(Login_MainActivity.this,session,bus);
-                    apiLogin.authenticate(userName.getText().toString(), password.getText().toString(), Specific.clientId2);
+                    Methods.hideKeyboard(Login_MainActivity.this);
+                    currentProvider = "";
+                    customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(Login_MainActivity.this, customFirebaseAuthListeners, "");
+                    customFirebaseAuthHelpers.verifyUserProfileAPI(userNameText, passwordText, "");
                 } else {
                     YoYo.with(Techniques.Shake).playOn(userName);
                     YoYo.with(Techniques.Shake).playOn(password);
-                    Methods.showSnackBarNegative(Login_MainActivity.this,getString(R.string.enter_valid_username_or_password));
+                    Toast.makeText(Login_MainActivity.this, getString(R.string.enter_valid_login_details), Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        cvFacebookLogin.setOnClickListener(v -> {
+            currentProvider = "Facebook";
+
+            loginFacebookButton.performClick();
+            callbackManager = CallbackManager.Factory.create();
+            customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(Login_MainActivity.this, customFirebaseAuthListeners, "");
+            customFirebaseAuthHelpers.disableAutoUserProfileCreationMode();
+            customFirebaseAuthHelpers.startFacebookLogin(loginFacebookButton, callbackManager);
+        });
+
+        cvGoogleLogin.setOnClickListener(v -> {
+            progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.loading));
+            progressDialog.setCancelable(true);
+            currentProvider = "Google";
+            customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(Login_MainActivity.this, customFirebaseAuthListeners, "");
+            customFirebaseAuthHelpers.disableAutoUserProfileCreationMode();
+            customFirebaseAuthHelpers.startGoogleLogin();
+        });
+
+        cvOtpVerification.setOnClickListener(v -> {
+            gotoMobileOtpVerificationFragment();
+        });
+
+        findViewById(R.id.ll_2).setOnClickListener(v -> {
+            password.requestFocus();
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (customFirebaseAuthHelpers != null) {
+            if (callbackManager != null) {
+                callbackManager.onActivityResult(requestCode, resultCode, data);
+            } else {
+                if (resultCode != RESULT_OK) {
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
+                    Methods.showSnackBar(this, "Login failed. Please try again");
+                    return;
+                }
+                customFirebaseAuthHelpers.disableAutoUserProfileCreationMode();
+                customFirebaseAuthHelpers.googleLoginActivityResult(requestCode, data);
+            }
+        }
     }
 
     @Override
@@ -169,7 +365,7 @@ public class Login_MainActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.forgotPwdTextView   ){
+        if (v.getId() == R.id.forgotPwdTextView) {
             new MaterialDialog.Builder(this)
                     .title(getString(R.string.forgot_password))
                     .inputType(InputType.TYPE_CLASS_TEXT)
@@ -183,8 +379,8 @@ public class Login_MainActivity extends AppCompatActivity implements
                                     sendPasswordToEmail(enteredText);
                                     dialog.dismiss();
                                 } else {
-                                     YoYo.with(Techniques.Shake).playOn(dialog.getInputEditText());
-                                     Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.enter_correct_user_name));
+                                    YoYo.with(Techniques.Shake).playOn(dialog.getInputEditText());
+                                    Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.enter_correct_user_name));
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -201,33 +397,39 @@ public class Login_MainActivity extends AppCompatActivity implements
 
     @Override
     public void authenticationStatus(String value) {
-        if(value.equals("Success"))
-        {
+        if (value.equals("Success")) {
+            session.setUserLogin(true);
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("message", new ArrayList<FloatsMessageModel>());
+            dashboardIntent.putExtras(bundle);
 
             Date date = new Date(System.currentTimeMillis());
             String dateString = date.toString();
 
-            MixPanelController.setProperties("LastLoginDate", dateString);
-            MixPanelController.setProperties("LoggedIn", "True");
+//            MixPanelController.setProperties("LastLoginDate", dateString);
+//            MixPanelController.setProperties("LoggedIn", "True");
 
             getFPDetails(Login_MainActivity.this, session.getFPID(), Constants.clientId, bus);
             HomeActivity.registerChat(session.getFPID());
         } else {
-            if(progressDialog != null) {
+            if (progressDialog != null) {
                 progressDialog.dismiss();
-                progressDialog = null ;
+                progressDialog = null;
+            }
+            if (value.equals("Partial")) {
+                session.setUserLogin(true);
+                showBusinessProfileCreationStartScreen(session.getUserProfileId());
             }
         }
     }
 
 
     private void getFPDetails(Activity activity, String fpId, String clientId, Bus bus) {
-        new Get_FP_Details_Service(activity,fpId,clientId,bus);
+        new Get_FP_Details_Service(activity, fpId, clientId, bus);
     }
 
     @Subscribe
-    public void post_getFPDetails(Get_FP_Details_Event response)
-    {
+    public void post_getFPDetails(Get_FP_Details_Event response) {
         // Close of Progress Bar
 
 //        API_Business_enquiries businessEnquiries = new API_Business_enquiries(null,session);
@@ -235,38 +437,30 @@ public class Login_MainActivity extends AppCompatActivity implements
 
 
         //VISITOR and SUBSCRIBER COUNT API
-        GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this,session);
+        GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this, session);
         visit_subcribersCountAsyncTask.execute();
 
-        if(progressDialog != null) {
+        if (progressDialog != null) {
             progressDialog.dismiss();
-            progressDialog = null ;
+            progressDialog = null;
         }
 
-        dashboardIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        dashboardIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dashboardIntent);
         finish();
     }
 
     @Override
     public void authenticationFailure(String value) {
-        if(progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
-            progressDialog = null ;
+            progressDialog = null;
         }
-    }
-
-
-    @Subscribe
-    public void getMessages(ArrayList<FloatsMessageModel> floats){
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("message",floats);
-        dashboardIntent.putExtras(bundle);
-        authenticationStatus("Success");
+        Toast.makeText(Login_MainActivity.this, "Sorry, no Boost account was found for the given login details. Please try again.", Toast.LENGTH_SHORT).show();
     }
 
     protected void sendPasswordToEmail(String enteredText) {
-        // TODO Auto-generated method stub
+        final ProgressDialog dialog = ProgressDialog.show(this, "", getString(R.string.processing_request), true);
         JSONObject obj = new JSONObject();
         try {
             obj.put("clientId", Constants.clientId);
@@ -276,7 +470,7 @@ public class Login_MainActivity extends AppCompatActivity implements
             e.printStackTrace();
         }
 
-        String url = Constants.NOW_FLOATS_API_URL+"/Discover/v1/floatingpoint/forgotPassword";
+        String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/forgotPassword";
 
         com.android.volley.Response.Listener<String> listener = new com.android.volley.Response.Listener<String>() {
             public void onResponse(String response) {
@@ -287,11 +481,14 @@ public class Login_MainActivity extends AppCompatActivity implements
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                if (!isFinishing() && dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 if (!isUpdatedOnServer) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Methods.showSnackBarNegative(Login_MainActivity.this,getString(R.string.enter_correct_user_name));
+                            Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.enter_correct_user_name));
                         }
                     });
                 }
@@ -304,6 +501,9 @@ public class Login_MainActivity extends AppCompatActivity implements
             @Override
             protected com.android.volley.Response<String> parseNetworkResponse(
                     NetworkResponse response) {
+                if (!isFinishing() && dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 if (response.statusCode == 200) {
                     isUpdatedOnServer = true;
                     try {
@@ -312,14 +512,16 @@ public class Login_MainActivity extends AppCompatActivity implements
                             public void run() {
 //                                Methods.showSnackBarPositive(Login_MainActivity.this,"\n" +
 //                                        "We’ve sent you an email with your login details");
-                                new MaterialDialog.Builder(Login_MainActivity.this)
-                                        .title(getString(R.string.check_your_email))
-                                        .content(getString(R.string.we_sent_email_with_password))
-                                        .positiveText(getString(R.string.ok))
-                                        .show();
+                                if (!isFinishing()) {
+                                    new MaterialDialog.Builder(Login_MainActivity.this)
+                                            .title(getString(R.string.check_your_email))
+                                            .content(getString(R.string.we_sent_email_with_password))
+                                            .positiveText(getString(R.string.ok))
+                                            .show();
+                                }
                             }
                         });
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.getCause();
                     }
                 } else {
@@ -327,7 +529,7 @@ public class Login_MainActivity extends AppCompatActivity implements
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Methods.showSnackBarNegative(Login_MainActivity.this,getString(R.string.enter_correct_user_name));
+                            Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.enter_correct_user_name));
                         }
                     });
                 }
@@ -368,13 +570,226 @@ public class Login_MainActivity extends AppCompatActivity implements
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id==android.R.id.home){
+        if (id == android.R.id.home) {
             //NavUtils.navigateUpFromSameTask(this);
-
-//
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+//    private void getPermission(){
+//        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)== PackageManager.PERMISSION_GRANTED
+//                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)== PackageManager.PERMISSION_GRANTED){
+//
+//            // start the service to send data to firebase
+//        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+//        {
+//            // if user deny the permissions
+//           /* if(shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS)||
+//                    shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE)){
+//
+//                Snackbar.make(parent_layout, com.nfx.leadmessages.R.string.required_permission_to_show, Snackbar.LENGTH_INDEFINITE)
+//                        .setAction(com.nfx.leadmessages.R.string.enable, new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                Intent intent = new Intent();
+//                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                                intent.addCategory(Intent.CATEGORY_DEFAULT);
+//                                intent.setData(Uri.parse("package:" + getPackageName()));
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+//                                startActivity(intent);
+//                            }
+//                        })  // action text on the right side of snackbar
+//                        .setActionTextColor(ContextCompat.getColor(this,android.R.color.holo_green_light))
+//                        .show();
+//            }
+//            else{*/
+//            //requestPermissions(permission,READ_MESSAGES_ID);
+//            // }
+//
+//        }
+//
+//    }
+
+    // this method called when user react on permissions
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case READ_MESSAGES_ID:
+                //getPermission();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void processLoginSuccessRequest(VerificationRequestResult response) {
+        session.setUserLogin(true);
+        session.setUserProfileId(response.getLoginId());
+        try {
+            session.setUserProfileEmail(response.getProfileProperties().getUserEmail());
+            session.setUserProfileName(response.getProfileProperties().getUserName());
+            session.setUserProfileMobile(response.getProfileProperties().getUserMobile());
+        } catch (Exception e){}
+
+        if (response.getValidFPIds() == null || response.getValidFPIds().length == 0) {
+            showBusinessProfileCreationStartScreen(response.getLoginId());
+        } else {
+            progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
+
+            session.storeISEnterprise(response.isEnterprise() + "");
+            session.storeIsThinksity((response.getSourceClientId() != null &&
+                    response.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
+            session.storeFPID(response.getValidFPIds()[0]);
+            authenticationStatus("Success");
+        }
+
+        if (response.getLoginId() != null || response.getLoginId().length() >= 0) {
+            session.setUserProfileId(response.getLoginId());
+        }
+    }
+
+    private void startPhoneNumberAuth(String phoneNumber, boolean gotoNextPage) {
+        progressDialog = ProgressDialog.show(this, "", "Loading");
+
+        customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(this, new CustomFirebaseAuthListeners() {
+            @Override
+            public void onSuccess(@Nullable VerificationRequestResult response) {
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+
+                if (response != null)
+                    processLoginSuccessRequest(response);
+                else
+                    Methods.showSnackBarNegative(Login_MainActivity.this, "Unable to validate your phone number with Boost.");
+            }
+
+            @Override
+            public void onSuccess(@Nullable ConnectUserProfileResponse response) {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable UserProfileResponse response, String uniqueId) {
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                if (response != null) {
+                    loginSuccess(response);
+                } else {
+                    Methods.showSnackBarNegative(Login_MainActivity.this, "Error occurred processing your mobile number. Please get in touch with Boost support to resolve your login issue.");
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                if (progressDialog != null && progressDialog.isShowing())
+                    progressDialog.dismiss();
+                Methods.showSnackBarNegative(Login_MainActivity.this, "Unable to validate your phone number with Boost.");
+            }
+        }, "");
+
+        customFirebaseAuthHelpers.disableAutoUserProfileCreationMode();
+        customFirebaseAuthHelpers.startPhoneAuth(phoneNumber, () -> {
+            if (progressDialog != null && progressDialog.isShowing())
+                progressDialog.dismiss();
+            if (gotoNextPage)
+                gotoOtpVerificationFragment(phoneNumber);
+        });
+    }
+
+    private void gotoMobileOtpVerificationFragment() {
+
+        MobileOtpFragment.OnMobileProvidedListener onMobileProvidedListener = mobileNumber -> startPhoneNumberAuth(mobileNumber, true);
+
+        MobileOtpFragment mobileOtpFragment = new MobileOtpFragment(onMobileProvidedListener);
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).add(R.id.fl_parent_layout, mobileOtpFragment).commit();
+    }
+
+
+    private void gotoOtpVerificationFragment(String phoneNumber) {
+        MobileOtpVerificationFragment.OnOTPProvidedListener onOTPProvidedListener = new MobileOtpVerificationFragment.OnOTPProvidedListener() {
+
+            @Override
+            public void onOTPProvided(String otp) {
+                submitUserOtp(otp);
+            }
+
+            @Override
+            public void onResend(String phoneNumber) {
+                startPhoneNumberAuth(phoneNumber, false);
+            }
+
+            @Override
+            public String getMobileEntered() {
+                return phoneNumber;
+            }
+        };
+
+        MobileOtpVerificationFragment otpVerificationFragment = new MobileOtpVerificationFragment(onOTPProvidedListener);
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.fl_parent_layout, otpVerificationFragment).commit();
+    }
+
+    private void submitUserOtp(String otp) {
+        progressDialog = ProgressDialog.show(this, "", "Loading");
+        customFirebaseAuthHelpers.phoneAuthVerification(otp);
+    }
+
+    private void processUserProfile(UserProfileResponse userProfileResponse) {
+        if (userProfileResponse == null) {
+            Methods.showSnackBarNegative(this, "Login failed");
+        } else if (userProfileResponse.getResult().getFpIds() == null || userProfileResponse.getResult().getFpIds().length == 0) {
+            session.setUserLogin(true);
+            try {
+                session.setUserProfileEmail(userProfileResponse.getResult().getProfileProperties().getUserEmail());
+                session.setUserProfileName(userProfileResponse.getResult().getProfileProperties().getUserName());
+                session.setUserProfileMobile(userProfileResponse.getResult().getProfileProperties().getUserMobile());
+            } catch (Exception e){}
+            showBusinessProfileCreationStartScreen(userProfileResponse.getResult().getLoginId());
+        } else {
+            progressDialog = ProgressDialog.show(this, "", "Loading");
+
+            Result result = userProfileResponse.getResult();
+            session.storeISEnterprise(result.getIsEnterprise() + "");
+            session.storeIsThinksity((result.getSourceClientId() != null &&
+                    result.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
+            session.storeFPID(userProfileResponse.getResult().getFpIds()[0]);
+            authenticationStatus("Success");
+        }
+    }
+
+    private void showBusinessProfileCreationStartScreen(String userProfileId) {
+        WebEngageController.initiateUserLogin(userProfileId);
+        WebEngageController.setUserContactInfoProperties(session);
+
+        Intent signupConfirmationPage = new Intent(Login_MainActivity.this, com.boost.presignup.SignUpConfirmation.class);
+        signupConfirmationPage.putExtra("profileUrl", "");
+        signupConfirmationPage.putExtra("person_name", "");
+        signupConfirmationPage.putExtra("profile_id", userProfileId);
+        startActivity(signupConfirmationPage);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    private void loginSuccess(UserProfileResponse userProfileResponse) {
+        if (userProfileResponse != null && userProfileResponse.getResult() != null) {
+            if (userProfileResponse.getResult().getFpIds() == null || userProfileResponse.getResult().getFpIds().length == 0)
+                return;
+
+            Login_Data_Model response_Data = new Login_Data_Model();
+            Result result = userProfileResponse.getResult();
+
+            response_Data.accessType = result.getProfileAccessType() + "";
+            response_Data.sourceClientId = result.getSourceClientId();
+            response_Data.isEnterprise = result.getIsEnterprise() + "";
+            response_Data.isRestricted = false + "";
+            response_Data.ValidFPIds = new ArrayList<>();
+            session.storeFPID(result.getFpIds()[0]);
+            response_Data.ValidFPIds.addAll(Arrays.asList(result.getFpIds()));
+            DataBase dataBase = new DataBase(this);
+            dataBase.insertLoginStatus(response_Data, session.getFPID());
+
+            processUserProfile(userProfileResponse);
+        }
     }
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    app:theme="@style/CustomToolbarTheme"
-    android:background="?attr/colorPrimary">
+    android:background="?attr/colorPrimary"
+    app:theme="@style/MyCustomThemeLight">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -15,20 +15,20 @@
 
         <TextView
             android:id="@+id/titleTextView"
+            fontPath="Roboto-Medium.ttf"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:layout_weight="1"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:singleLine="true"
-            android:lines="1"
             android:layout_marginRight="5dp"
+            android:layout_weight="1"
             android:ellipsize="marquee"
-            fontPath="Roboto-Medium.ttf"
             android:fadingEdge="horizontal"
+            android:lines="1"
             android:marqueeRepeatLimit="1"
             android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
             tools:ignore="MissingPrefix" />
 
         <LinearLayout
@@ -40,25 +40,24 @@
                 android:id="@+id/image_gallery_add_image_button"
                 android:layout_width="50dp"
                 android:layout_height="fill_parent"
-                android:padding="10dp"
-                android:background="@drawable/button_click_effect"
-                android:src="@drawable/ic_action_new"
                 android:layout_gravity="right"
-                android:visibility="gone"
-                />
+                android:background="@drawable/button_click_effect"
+                android:padding="10dp"
+                android:src="@drawable/ic_action_new"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/business_profile_share_button"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
+                android:background="@drawable/button_click_effect"
                 android:padding="10dp"
                 android:src="@drawable/share_with_apps"
                 android:visibility="gone"
-                android:background="@drawable/button_click_effect"
 
                 />
         </LinearLayout>
 
     </LinearLayout>
-</android.support.v7.widget.Toolbar>
+</androidx.appcompat.widget.Toolbar>
 

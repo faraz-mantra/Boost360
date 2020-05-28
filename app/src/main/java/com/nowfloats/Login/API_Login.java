@@ -9,6 +9,7 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
@@ -37,7 +38,7 @@ public class API_Login {
     }
 
     API_Login_Interface apiInterface ;
-    public API_Login(Activity context,UserSessionManager currentSession,Bus bus)
+    public API_Login(Activity context, UserSessionManager currentSession, Bus bus)
     {
         appContext = context ;
         session = currentSession;
@@ -47,11 +48,10 @@ public class API_Login {
 
     public void authenticate(String userName, String password, final String clientId)
     {
-    BoostLog.d("AUthenticate","Usrname : "+userName+" , Pwd : "+password+" Client Id : "+clientId);
-    HashMap<String, String> params = new HashMap<String, String>();
-    params.put("loginKey", userName);
-    params.put("loginSecret", password);
-
+        BoostLog.d("AUthenticate","Usrname : "+userName+" , Pwd : "+password+" Client Id : "+clientId);
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("loginKey", userName);
+        params.put("loginSecret", password);
         params.put("clientId", clientId);
        /* try {
             Constants.restAdapter = Methods.createAdapter(appContext,Constants.NOW_FLOATS_API_URL);
@@ -72,6 +72,7 @@ public class API_Login {
                             if(response_Data.sourceClientId!=null && response_Data.sourceClientId.trim().length()>0
                                     && response_Data.sourceClientId.equals(Constants.clientIdThinksity))
                             {
+
                                 session.storeIsThinksity("true");
 //                                session.storeIsRestricted(response_Data.isRestricted);
                                 session.storeISEnterprise(response_Data.isEnterprise);
@@ -83,11 +84,13 @@ public class API_Login {
                             }else{
                                 apiInterface.authenticationFailure("true");
                                 Methods.showSnackBarNegative(appContext,appContext.getString(R.string.check_your_crediential));
+
                             }
                         }
                         else{
                             //BOost Login
                             session.storeIsThinksity("false");
+                            WebEngageController.trackEvent("LOGIN_SUCCESSFUL","Logged in",fpId);
 //                            session.storeIsRestricted(response_Data.isRestricted);
                             session.storeISEnterprise(response_Data.isEnterprise);
                             DataBase dataBase = new DataBase(appContext);
@@ -97,15 +100,21 @@ public class API_Login {
                             bus.post(new ArrayList<FloatsMessageModel>());
                         }
                         BoostLog.d("FPID: ", fpId);
+                        apiInterface.authenticationStatus("Success");
+                    }
+                    else if(response_Data.loginId != null) {
+                        WebEngageController.trackEvent("Login Without Business Profile","Login Without Business Profile",appContext.getString(R.string.check_your_crediential));
+                        session.setUserProfileId(response_Data.loginId);
+                        apiInterface.authenticationStatus("Partial");
                     } else {
                         apiInterface.authenticationFailure("true");
-                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.check_your_crediential));
+                        WebEngageController.trackEvent("LOGIN_FAILED","Account not found","");
                     }
                 } catch (Exception e) {
                     apiInterface.authenticationFailure("true");
                     e.printStackTrace();
+                    WebEngageController.trackEvent("LOGIN_FAILED","Login error",e.toString());
                 }
-
             }
 
             @Override
@@ -116,6 +125,7 @@ public class API_Login {
                 }
                 apiInterface.authenticationFailure("true");
                 Methods.showSnackBarNegative(appContext, networkError.toString());
+                WebEngageController.trackEvent("LOGIN_FAILED","Login error",networkError.toString());
             }
         });
     }

@@ -1,7 +1,7 @@
 package com.nowfloats.AccountDetails;
 
 import android.app.Activity;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,8 +59,8 @@ public class AccountInfoAdapter extends RecyclerView.Adapter<AccountInfoAdapter.
             AccountDetailModel detail = detailModels.get(position);
             try {
                 holder.purchase.setVisibility(View.GONE);
-                detail.CreatedOn = detail.CreatedOn.replace("/Date(", "").replace(")/", "");
-                Long epochTime = Long.parseLong(detail.CreatedOn);
+                detail.ToBeActivatedOn = detail.ToBeActivatedOn.replace("/Date(", "").replace(")/", "");
+                Long epochTime = Long.parseLong(detail.ToBeActivatedOn);
                 Date date = new Date(epochTime),date1 = null;
                 holder.name.setText(detail.NameOfWidget);
                 String value = dateFormat.format(date);

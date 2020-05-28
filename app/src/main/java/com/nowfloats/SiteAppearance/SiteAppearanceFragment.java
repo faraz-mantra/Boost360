@@ -1,13 +1,13 @@
 package com.nowfloats.SiteAppearance;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
+import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +15,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -54,6 +54,8 @@ public class SiteAppearanceFragment extends Fragment {
     private JustifyTextView tvHelpBody;
     private CardView cvKitsuneSwitch, cvRevertBack;
     private ImageView ivKitsuneSwitch;
+    private LinearLayout linearLayout;
+    private Context mContext;
     //private OnFragmentInteractionListener mListener;
 
     /*public SiteAppearanceFragment() {
@@ -72,12 +74,23 @@ public class SiteAppearanceFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,32 +105,32 @@ public class SiteAppearanceFragment extends Fragment {
         tvHelpHeader = (TextView)view.findViewById(R.id.tv_help_header);
         tvHelpBody = (JustifyTextView) view.findViewById(R.id.tv_help_body);
         tvHelpFooter = (TextView) view.findViewById(R.id.tv_help_footer);
+        linearLayout = (LinearLayout) view.findViewById(R.id.child_layout);
         //btnLearnMore = (Button)view.findViewById(R.id.btn_learn_kitsune);
         ivKitsuneSwitch = (ImageView)view.findViewById(R.id.iv_kitsune_switch);
-        if(session.getWebTemplateType().equals("6")){
+      /*  if(session.getWebTemplateType().equals("6")){
             tvHelpHeader.setText(getResources().getString(R.string.conv_sa_title));
             tvHelpBody.setText(getResources().getString(R.string.conv_sa_body));
             tvHelpFooter.setVisibility(View.GONE);
-            /*svKitsune.setChecked(true);
+            *//*svKitsune.setChecked(true);
             btnLearnMore.setVisibility(View.VISIBLE);
-            tvKitsune.setText("REVERT TO OLD VERSION");*/
-            setOldDesignVisibility();
+            tvKitsune.setText("REVERT TO OLD VERSION");*//*
+
             tvKitsuneSwitch.setText(getString(R.string.learn_more_about_version));
             tvKitsuneSwitch.setTextColor(Color.parseColor("#808080"));
             ivKitsuneSwitch.setBackgroundColor(Color.parseColor("#00000000"));
             ivKitsuneSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_learn_more));
 
-        }
+        }*/
         cvKitsuneSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(session.getWebTemplateType().equals("6")){
+             /*   if(session.getWebTemplateType().equals("6")){
                     String url = "https://nowfloats.com/whychange";
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse(url));
                     startActivity(i);
-                }else {
-                    if (checkExpiry()) {
+                }else {*/
                         final ProgressDialog pg = ProgressDialog.show(getActivity(), "", getString(R.string.wait_for_new_look));
                         new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
                             @Override
@@ -128,21 +141,17 @@ public class SiteAppearanceFragment extends Fragment {
                                     tvHelpHeader.setText(getResources().getString(R.string.conv_sa_title));
                                     tvHelpBody.setText(getResources().getString(R.string.conv_sa_body));
                                     tvHelpFooter.setVisibility(View.GONE);
+                                    cvKitsuneSwitch.setVisibility(View.GONE);
                                     tvKitsuneSwitch.setText(getString(R.string.learn_more_about_version));
                                     tvKitsuneSwitch.setTextColor(Color.parseColor("#808080"));
                                     ivKitsuneSwitch.setBackgroundColor(Color.parseColor("#00000000"));
                                     ivKitsuneSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_learn_more));
-                                    setOldDesignVisibility();
                                     session.storeFpWebTempalteType("6");
                                 } else {
                                     Methods.showSnackBarNegative(getActivity(), getString(R.string.can_not_change_appearance));
                                 }
                             }
                         }).enableKitsune();
-                        Methods.showSnackBarNegative(getActivity(), getString(R.string.renew_to_use_feature));
-                    }else {
-                    }
-                }
             }
         });
         cvRevertBack.setOnClickListener(new View.OnClickListener() {
@@ -155,18 +164,19 @@ public class SiteAppearanceFragment extends Fragment {
         return view;
     }
 
-    private void setOldDesignVisibility() {
+ /*   private void setOldDesignVisibility() {
         if(Long.parseLong(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON).split("\\(")[1].split("\\)")[0])/1000 > 1470614400){
             cvRevertBack.setVisibility(View.GONE);
         }else {
             cvRevertBack.setVisibility(View.VISIBLE);
         }
-    }
+    }*/
 
     @Override
     public void onResume() {
         super.onResume();
-        HomeActivity.headerText.setText(getResources().getString(R.string.side_panel_site_appearance));
+        if(HomeActivity.headerText != null)
+            HomeActivity.headerText.setText(getResources().getString(R.string.side_panel_site_appearance));
     }
 
     private void showFeedBackDialog(){
@@ -290,19 +300,6 @@ public class SiteAppearanceFragment extends Fragment {
 
     }
 
-    private boolean checkExpiry() {
-        boolean flag = false;
-        String strExpiryTime = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE);
-        long expiryTime = -1;
-        if(strExpiryTime!=null){
-            expiryTime = Long.parseLong(strExpiryTime.split("\\(")[1].split("\\)")[0]);
-        }
-        if(expiryTime!=-1 && ((expiryTime - System.currentTimeMillis())/86400000>=180) && !session.getWebTemplateType().equals("6")){
-            flag = true;
-        }
-        return flag;
-    }
-
     // TODO: Rename method, update argument and hook method into UI event
 
     /*@Override
@@ -322,18 +319,4 @@ public class SiteAppearanceFragment extends Fragment {
         //mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    /*public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }*/
 }

@@ -1,49 +1,71 @@
 package com.nowfloats.Volley;
 
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.StrictMode;
 import android.provider.Settings;
-import android.support.multidex.MultiDexApplication;
 import android.util.Log;
+
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.appsflyer.AppsFlyerLib;
+import com.apxor.androidsdk.core.ApxorSDK;
+import com.boost.presignup.locale.LocaleManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.inventoryorder.BaseOrderApplication;
 import com.nowfloats.util.Constants;
+import com.onboarding.nowfloats.BaseBoardingApplication;
+import com.thinksity.BuildConfig;
+import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
+import com.webengage.sdk.android.WebEngageConfig;
 
 import java.io.File;
 import java.lang.reflect.Method;
 
 public class AppController extends MultiDexApplication/* implements IAviaryClientCredentials*/ {
-	 
+
     public static final String TAG = AppController.class.getSimpleName();
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static AppController mInstance;
+    String webEngageKey="~10a5cad2d";
+    private LocaleManager localeManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
-
+        BaseOrderApplication.instance = this;
+        BaseOrderApplication.initModule(this);
+        BaseBoardingApplication.instance = this;
+        BaseBoardingApplication.initModule(this);
+        initWebEngage();
 //        ContextApplication.initSdk(this, this);
 
         //AppIce SDk
- //       ContextApplication.initSdk(getApplicationContext(), this);
+        //       ContextApplication.initSdk(getApplicationContext(), this);
 
-        AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
+        //AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
         try {
             //Fabric.with(this, new Crashlytics());
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        if (BuildConfig.DEBUG) {
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        String deviceId = Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID);
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        ApxorSDK.initialize(BuildConfig.APXOR_BUNDLED_ID, getApplicationContext());
+        String deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         //Log.d("Device ID","Device ID : "+deviceId);
 
@@ -52,31 +74,52 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
                 .setFontAttrId(R.attr.fontPath)
                 .build());*/
         FacebookSdk.sdkInitialize(getApplicationContext());
+        registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this));
+        //WebEngage.registerPushNotificationCallback(new PushNotificationCallbacksImpl());
         AppEventsLogger.activateApp(this);
 
         mInstance = this;
-        try{
+        try {
           /*  MobihelpConfig config = new MobihelpConfig("https://nowfloats.freshdesk.com",
                     "nowfloatsboost-1-eb43cfea648e2fd8a088c756519cb4d6",
                     "e13c031f28ba356a76110e8d1e2c4543c84670d5");
             Mobihelp.init(this, config);*/
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "open_sans_hebrew_bold.ttf");
     }
 
+    void initWebEngage(){
+        WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
+                .setWebEngageKey(webEngageKey)
+                .setDebugMode(true)
+                .build();
+        registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
+
+
+    }
 
 
     public static synchronized AppController getInstance() {
         return mInstance;
     }
- 
+
+    public static String getApplicationName(Context context) {
+        ApplicationInfo applicationInfo = context.getApplicationInfo();
+        int stringId = applicationInfo.labelRes;
+        return stringId == 0 ? applicationInfo.nonLocalizedLabel.toString() : context.getString(stringId);
+    }
+
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
- 
+
         return mRequestQueue;
     }
- 
+
     public ImageLoader getImageLoader() {
         getRequestQueue();
         if (mImageLoader == null) {
@@ -89,7 +132,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     public void clearApplicationData() {
         deleteCACHE();
 
-       // com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
+        // com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
 //   mImageLoader.clearDiskCache();
 //        mImageLoader.clearMemoryCache();
 
@@ -99,24 +142,57 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
         File pictureDir = new File(sdcard, dir);
 
-       // File cache = getCacheDir();
-       // File appDir = new File(cache.getParent());
-        if(pictureDir.exists()){
+        // File cache = getCacheDir();
+        // File appDir = new File(cache.getParent());
+        if (pictureDir.exists()) {
             String[] children = pictureDir.list();
-            for(String s : children){
-                if(!s.equals("lib")){
+            for (String s : children) {
+                if (!s.equals("lib")) {
                     deleteDir(new File(pictureDir, s));
-                    Log.i("TAG", "File /data/data/com.thinksity/ :"+pictureDir+" , " + s + " DELETED");
+                    Log.i("TAG", "File /data/data/com.thinksity/ :" + pictureDir + " , " + s + " DELETED");
                 }
             }
         }
     }
+
+    /*public class PushNotificationCallbacksImpl implements PushNotificationCallbacks {
+
+        private static final String TAG = "PushNotificationCallbacksImpl";
+
+        @Override
+        public PushNotificationData onPushNotificationReceived(Context context, PushNotificationData pushNotificationData) {
+            //Log.d(TAG, "Received Push Notification , Experiment Id : " + pushNotificationData.getExperimentId());
+            return pushNotificationData;
+        }
+
+        @Override
+        public void onPushNotificationShown(Context context, PushNotificationData pushNotificationData) {
+            //Log.d(TAG, "Push Notification Shown , Experiment Id : " + pushNotificationData.getExperimentId());
+        }
+
+        @Override
+        public boolean onPushNotificationClicked(Context context, PushNotificationData pushNotificationData) {
+            //Log.d(TAG, "User clicked Push Notification , Experiment Id : " + pushNotificationData.getExperimentId());
+            return false;
+        }
+
+        @Override
+        public void onPushNotificationDismissed(Context context, PushNotificationData pushNotificationData) {
+            //Log.d(TAG, "Push notification dismissed , Experiment Id : " + pushNotificationData.getExperimentId());
+        }
+
+        @Override
+        public boolean onPushNotificationActionClicked(Context context, PushNotificationData pushNotificationData, String buttonId) {
+            //Log.d(TAG, "User clicked push notification action button , Experiment Id : " + pushNotificationData.getExperimentId() + " button Id : " + buttonId);
+            return false;
+        }
+    }*/
     public static boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
             for (int i = 0; i < children.length; i++) {
                 boolean success = deleteDir(new File(dir, children[i]));
-                Log.d("AppController","Success : "+dir);
+                Log.d("AppController", "Success : " + dir);
                 if (!success) {
                     return false;
                 }
@@ -127,7 +203,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     }
 
 
-    public void deleteCACHE () {
+    public void deleteCACHE() {
         PackageManager pm = getPackageManager();
         // Get all methods on the PackageManager
 
@@ -146,7 +222,10 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         }
     }
 
-    public void addToRequstQueue(Request request){
+    public void addToRequstQueue(Request request) {
+        if (mRequestQueue == null) {
+            getRequestQueue();
+        }
         mRequestQueue.add(request);
     }
 
@@ -166,4 +245,26 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         return "e916fce1-97ca-4dd7-9f95-7a58f6ce42cf";
     }*/
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        localeManager = new LocaleManager(base);
+        Log.e("getLanguage",">>>>>>>>>>>>>>" + localeManager.getLanguage());
+        try {
+            localeManager.setNewLocale(base, localeManager.getLanguage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        super.attachBaseContext(localeManager.setLocale(base));
+//        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        localeManager.setLocale(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Log.d("onConfigurationChanged" , ""+ newConfig.getLocales().toLanguageTags());
+        }
+    }
 }

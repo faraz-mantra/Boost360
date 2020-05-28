@@ -9,8 +9,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.nowfloats.util.Constants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,80 +20,73 @@ import org.json.JSONObject;
  */
 public class API_Layer_Signup {
 
-    static String tag = null ;
-   public interface SignUp_Interface{
+    static String tag = null;
+
+    public interface SignUp_Interface {
 
         public void tagStatus(String status, String tag);
 
         public void CheckUniqueNumber_preExecute(String value);
 
-        public void CheckUniqueNumber_postExecute(String value) ;
+        public void CheckUniqueNumber_postExecute(String value);
 
+        public void CheckUniqueNumber_postExecute(String value, String phoneNumber);
 
     }
 
 
-    public static String getTag(final Context context,String name,String country,String city,String category)
-    {
+    public static String getTag(final Context context, String name, String country, String city, String category) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
         JSONObject obj = new JSONObject();
         final SignUp_Interface signUp = (SignUp_Interface) context;
-        try
-        {
+        try {
             obj.put("name", name);
             obj.put("city", city);
             obj.put("country", country);
             obj.put("category", category);
             obj.put("clientId", Constants.clientId);
-        }
-        catch(JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
-        String url =	Constants.NOW_FLOATS_API_URL+"/Discover/v1/floatingPoint/suggestTag";
+        String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/suggestTag";
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, obj,
                 new Response.Listener<JSONObject>() {
 
-            @Override
-            public void onResponse(JSONObject response)
-            {
-                // TODO Auto-generated method stub
-                try
-                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // TODO Auto-generated method stub
+                        try {
 
-                   //signUp.tagStatus("Success");
-                    tag = response.toString();
-                    signUp.tagStatus("Success", tag);
+                            //signUp.tagStatus("Success");
+                            tag = response.toString();
+                            signUp.tagStatus("Success", tag);
 
-                }
-                catch(Exception e)
-                 {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
                 // TODO Auto-generated method stub
 
-               // pd.cancel();
-               try {
-                   String mesg = error.getMessage();
-                   //signUp.tagStatus(mesg);
-                   if (mesg.contains("of type java.lang.String cannot be converted to JSONObject")) {
-                       //org.json.JSONException: Value SAI of type java.lang.String cannot be converted to JSONObject
-                       mesg = mesg.replace("org.json.JSONException: Value ", "");
-                       mesg = mesg.replace(" of type java.lang.String cannot be converted to JSONObject", "");
-                       mesg = mesg.trim();
-                       tag = mesg;
-                       signUp.tagStatus("Success", tag);
-                   }
-               } catch (Exception e)
-               {
+                // pd.cancel();
+                try {
+                    String mesg = error.getMessage();
+                    //signUp.tagStatus(mesg);
+                    if (mesg.contains("of type java.lang.String cannot be converted to JSONObject")) {
+                        //org.json.JSONException: Value SAI of type java.lang.String cannot be converted to JSONObject
+                        mesg = mesg.replace("org.json.JSONException: Value ", "");
+                        mesg = mesg.replace(" of type java.lang.String cannot be converted to JSONObject", "");
+                        mesg = mesg.trim();
+                        tag = mesg;
+                        signUp.tagStatus("Success", tag);
+                    }
+                } catch (Exception e) {
 
-               }
+                }
             }
         });
 
@@ -103,9 +96,9 @@ public class API_Layer_Signup {
     }
 
 
-    public static void checkUniqueNumber(Context context, final String mobileNumber) {
+    public static void checkUniqueNumber(Context context, final String mobileNumber,final String countryCode) {
 
-        final  SignUp_Interface checkUniqueNumberInterface = (SignUp_Interface)context;
+        final SignUp_Interface checkUniqueNumberInterface = (SignUp_Interface) context;
 
 
         new AsyncTask<Void, String, String>() {
@@ -124,11 +117,16 @@ public class API_Layer_Signup {
                 if (!Util.isNullOrEmpty(result)) {
                     if (result.equals("false")) {
                         checkUniqueNumberInterface.CheckUniqueNumber_postExecute("Success");
+                        checkUniqueNumberInterface.CheckUniqueNumber_postExecute("Success", mobileNumber);
 
                     } else {
                         checkUniqueNumberInterface.CheckUniqueNumber_postExecute("Failure");
+                        checkUniqueNumberInterface.CheckUniqueNumber_postExecute(result, mobileNumber);
                     }
 
+                } else {
+                    checkUniqueNumberInterface.CheckUniqueNumber_postExecute("Failure");
+                    checkUniqueNumberInterface.CheckUniqueNumber_postExecute("Error", mobileNumber);
                 }
             }
 
@@ -141,6 +139,7 @@ public class API_Layer_Signup {
                 try {
                     obj.put("clientId", Constants.clientId);
                     obj.put("mobile", mobileNumber);
+                    obj.put("countryCode", countryCode);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -157,7 +156,6 @@ public class API_Layer_Signup {
 
 
     }
-
 
 
 }

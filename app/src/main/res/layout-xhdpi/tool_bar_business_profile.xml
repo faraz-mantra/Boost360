@@ -1,41 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    app:theme="@style/CustomToolbarTheme"
-    android:background="?attr/colorPrimary">
+    android:background="?attr/colorPrimary"
+    app:theme="@style/CustomToolbarTheme">
 
     <com.nowfloats.CustomWidget.roboto_md_48_white
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="text"
         android:textColor="@color/white"
-        android:textSize="18sp"
-        android:gravity="center_horizontal"
-        />
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:orientation="horizontal"
         android:gravity="right"
-        >
+        android:orientation="horizontal">
 
-
-
-    <com.nowfloats.CustomWidget.roboto_md_size_a1a1a1
-        android:id="@+id/saveTextView"
-        android:layout_width="50dp"
-        android:layout_height="fill_parent"
-        android:text="@string/tool_bar_save_text"
-        android:layout_gravity="right"
-        android:gravity="center_vertical|center"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/button_click_effect"
-        />
+        <com.nowfloats.CustomWidget.roboto_md_size_a1a1a1
+            android:id="@+id/saveTextView"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right"
+            android:background="@drawable/button_click_effect"
+            android:gravity="center_vertical|center"
+            android:text="@string/tool_bar_save_text"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
-</android.support.v7.widget.Toolbar>
+</androidx.appcompat.widget.Toolbar>
 

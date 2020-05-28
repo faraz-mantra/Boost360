@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:gravity="left"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chat_layout_bg">
+        <TextView
+            android:id="@+id/tv_title"
+            android:singleLine="true"
+            android:maxWidth="250dp"
+            android:ellipsize="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <WebView
+            android:id="@+id/wv_embedded_html"
+            android:layout_width="250dp"
+            android:layout_height="250dp">
+
+        </WebView>
+        <TextView
+            android:id="@+id/tv_open_in_browser"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open in Browser"
+            android:layout_gravity="end"/>
+        <TextView
+            android:id="@+id/tv_caption"
+            android:maxWidth="250dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+</LinearLayout>

@@ -3,12 +3,11 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_bg"
-    tools:context="recycle.card.com.cardview.mainpackage.tab_Home_Fragment">
+    android:background="@color/screen_bg">
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/screen_bg"
         android:orientation="vertical">
         <com.nowfloats.util.ButteryProgressBar
@@ -18,7 +17,7 @@
             android:visibility="visible">
         </com.nowfloats.util.ButteryProgressBar>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/progressCard"
             android:layout_width="match_parent"
             android:visibility="gone"
@@ -39,6 +38,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:tint="@color/primary"
                         android:src="@drawable/retry_post"/>
                     <TextView
                         android:layout_width="match_parent"
@@ -60,6 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="0dp"
+                    android:tint="@color/primary"
                     android:src="@drawable/cancel_post" />
                 <TextView
                     fontPath="Roboto-Medium.ttf"
@@ -73,9 +74,9 @@
             </LinearLayout>
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/my_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -94,6 +95,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:src="@drawable/home_zerothicon" />
 
         <TextView
@@ -114,85 +116,16 @@
             android:text="@string/Message_empty"/>
     </LinearLayout>
 
-    <!--<com.melnykov.fab.FloatingActionButton
+    <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_add_white_24dp"
         android:scaleType="fitCenter"
+        android:src="@drawable/ic_add_white_24dp"
         fab:fab_colorNormal="@color/primaryColor"
-        fab:fab_colorPressed="#fddc80"
-        fab:fab_colorRipple="@color/primaryColor" />-->
-    <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/fab"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom|right"
-        android:src="@drawable/ic_add_white_24dp"
-        android:scaleType="fitCenter"
-        android:elevation="2dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="16dp"
-        fab:menu_backgroundColor="#cc404040"
-        fab:menu_labels_colorNormal="#404040"
-        fab:menu_labels_textColor="#ffffff"
-        fab:menu_labels_showAnimation="@anim/fab_scale_up"
-        fab:menu_labels_hideAnimation="@anim/fab_scale_down"
-        fab:menu_animationDelayPerItem="40"
-        fab:menu_shadowColor="#444"
-        fab:menu_colorNormal="@color/primaryColor"
-        fab:menu_colorRipple="#fddc80"
-        fab:menu_colorPressed="@color/primaryColor">
-
-        <!--<com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_event"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_email"
-            fab:fab_label="Event"
-            style="@style/MenuButtonsStyle" />-->
-
-        <!--<com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_offer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_email"
-            fab:fab_label="Create Offer"
-            style="@style/MenuButtonsStyle" />-->
-
-        <!--<com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_product_launch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_email"
-            fab:fab_label="Product Launch"
-            style="@style/MenuButtonsStyle" />
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_job_alert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_email"
-            fab:fab_label="Job Alert"
-            style="@style/MenuButtonsStyle" />
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_custom_review"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_email"
-            fab:fab_label="Customer Review"
-            style="@style/MenuButtonsStyle" />-->
-        <!--<com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_update"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_email"
-            fab:fab_label="Create Update"
-            style="@style/MenuButtonsStyle" />-->
-
-
-        </com.github.clans.fab.FloatingActionMenu>
-
+        fab:fab_colorPressed="@color/tabOnclickColor"
+        fab:fab_colorRipple="@color/primaryColor" />
 
 </FrameLayout>

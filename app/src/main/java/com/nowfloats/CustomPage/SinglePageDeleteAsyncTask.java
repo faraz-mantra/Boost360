@@ -9,6 +9,7 @@ import com.nowfloats.CustomWidget.HttpDeleteWithBody;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import org.apache.http.HttpResponse;
@@ -89,12 +90,14 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
             if (status.getStatusCode() == 200) {
                 MixPanelController.track("DeleteCustomPage", null);
                 Log.i("Delete page...","Success");
+                WebEngageController.trackEvent("DELETE CUSTOMPAGE","Delete Custompage",pageId);
                 flag = true;
             }else{
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
+                        WebEngageController.trackEvent("DELETE CUSTOMPAGE","Failed to Delete Custompage",pageId);
                     }
                 });
             }
@@ -105,18 +108,18 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
                         materialProgress.dismiss();
                     if (flag){
                         activity.finish();
-                        CustomPageActivity.dataModel.remove(position);
+                        CustomPageFragment.dataModel.remove(position);
                         Methods.showSnackBarPositive(activity, activity.getString(R.string.page_removed));
-                        if (CustomPageActivity.custompageAdapter!=null)
-                            CustomPageActivity.custompageAdapter.notifyDataSetChanged();
-                        if (CustomPageActivity.recyclerView!=null)
-                            CustomPageActivity.recyclerView.invalidate();
+                        if (CustomPageFragment.custompageAdapter!=null)
+                            CustomPageFragment.custompageAdapter.notifyDataSetChanged();
+                        if (CustomPageFragment.recyclerView!=null)
+                            CustomPageFragment.recyclerView.invalidate();
                     }else{
                         Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
-                        if (CustomPageActivity.custompageAdapter!=null)
-                            CustomPageActivity.custompageAdapter.notifyDataSetChanged();
-                        if (CustomPageActivity.recyclerView!=null)
-                            CustomPageActivity.recyclerView.invalidate();
+                        if (CustomPageFragment.custompageAdapter!=null)
+                            CustomPageFragment.custompageAdapter.notifyDataSetChanged();
+                        if (CustomPageFragment.recyclerView!=null)
+                            CustomPageFragment.recyclerView.invalidate();
                     }
                 }
             });

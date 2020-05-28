@@ -22,7 +22,7 @@ public class DataMap implements Map<String, Object>{
     public void clear() {
         // TODO Auto-generated method stub
         map.clear();
-    };
+    }
 
     @Override
     public boolean containsKey(Object key) {

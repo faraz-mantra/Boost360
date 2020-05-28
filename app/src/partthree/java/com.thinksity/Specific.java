@@ -22,7 +22,6 @@ public class Specific {
     public static String client_ID_14 = "A91B82DE3E93446A8141A52F288F69EFA1B09B1D13BB4E55BE743AB547B3489E";
 
     public static String access_level = "20";
-
     public static final String FACEBOOK_API_KEY 	= "613958438805430";  // Boost
 
 //    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
@@ -33,10 +32,13 @@ public class Specific {
 
     public static String PACKAGE_NAME = "com.kitsune.biz";
     public static String FACEBOOK_URL = "https://www.facebook.com/getkitsune";
-    public static String FACEBOOK_PAGEID = "fb://page/713199095512917";
+    public static String FACEBOOK_PAGE_ID = "fb://page/713199095512917";
     public static String CONTACT_EMAIL_ID = "assist@getkitsune.com";
+    public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "user_friends", "read_insights", "business_management"};
+    public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = {"publish_actions", "publish_pages", "manage_pages"};
     public static final String TWITTER_URL = "https://twitter.com/getkitsune";
     public static final String TWITTER_ID_URL = "twitter://user?screen_name=getkitsune";
 
+    public static final String TWILIO_AUTHY_API_KEY = "";
 
 }

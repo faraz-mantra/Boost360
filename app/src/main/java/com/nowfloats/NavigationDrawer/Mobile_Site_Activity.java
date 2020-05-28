@@ -2,17 +2,21 @@ package com.nowfloats.NavigationDrawer;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -22,7 +26,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class Mobile_Site_Activity extends AppCompatActivity {
 
     private WebView webView;
-    String url ;
+
+    String url;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -36,19 +41,35 @@ public class Mobile_Site_Activity extends AppCompatActivity {
         Methods.isOnline(Mobile_Site_Activity.this);
         PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+        if (extras != null)
+        {
             url = extras.getString("WEBSITE_NAME");
+
+            if (!TextUtils.isEmpty(url) && !url.startsWith("http://") && !url.startsWith("https://"))
+            {
+                url = "http://".concat(url);
+            }
         }
 
-        /*TextView close = (TextView)findViewById(R.id.close_web);
+        TextView close = (TextView) findViewById(R.id.close_web);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-            }
-        });*/
 
-        ImageView back = (ImageView)findViewById(R.id.back_web);
+                Uri webpage = Uri.parse(url);
+
+                /*if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                    webpage = Uri.parse("http://" + url);
+                }*/
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, webpage);
+                if (browserIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(browserIntent);
+                }
+            }
+        });
+
+        ImageView back = (ImageView) findViewById(R.id.back_web);
         back.setColorFilter(whiteLabelFilter);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,16 +77,18 @@ public class Mobile_Site_Activity extends AppCompatActivity {
                 finish();
             }
         });
-        webView = (WebView)findViewById(R.id.webView1);
+        webView = (WebView) findViewById(R.id.webView1);
+
         startWebView(url);
     }
+
 
     private void startWebView(String url) {
         //Create new webview Client to show progress dialog
         //When opening a url or click on link
-
         webView.setWebViewClient(new WebViewClient() {
             ProgressDialog progressDialog;
+
             //If you will not use this method url links are opeen in new brower not in webview
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -75,12 +98,13 @@ public class Mobile_Site_Activity extends AppCompatActivity {
 
             //Show loader on url load
             @Override
-            public void onLoadResource (WebView view, String url) {}
+            public void onLoadResource(WebView view, String url) {
+            }
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                try{
+                try {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -88,28 +112,28 @@ public class Mobile_Site_Activity extends AppCompatActivity {
                                 // in standard case YourActivity.this
                                 progressDialog = new ProgressDialog(Mobile_Site_Activity.this);
                                 progressDialog.setMessage(getString(R.string.loading));
-                                progressDialog.show();
                             }
+                            progressDialog.show();
                         }
                     });
-                }catch(Exception exception){
+                } catch (Exception exception) {
                     exception.printStackTrace();
                 }
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                try{
+                try {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (progressDialog!=null) {
+                            if (progressDialog != null) {
                                 progressDialog.dismiss();
                                 progressDialog = null;
                             }
                         }
                     });
-                }catch(Exception exception){
+                } catch (Exception exception) {
                     exception.printStackTrace();
                 }
             }
@@ -141,7 +165,7 @@ public class Mobile_Site_Activity extends AppCompatActivity {
     @Override
     // Detect when the back button is pressed
     public void onBackPressed() {
-        if(webView.canGoBack()) {
+        if (webView.canGoBack()) {
             webView.goBack();
         } else {
             // Let the system handle the back button
@@ -171,4 +195,5 @@ public class Mobile_Site_Activity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

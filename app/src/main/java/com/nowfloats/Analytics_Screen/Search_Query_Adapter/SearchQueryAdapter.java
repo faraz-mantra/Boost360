@@ -3,157 +3,98 @@ package com.nowfloats.Analytics_Screen.Search_Query_Adapter;
 import android.app.Activity;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nowfloats.Analytics_Screen.API.Get_Search_Queries_Async_Task;
-import com.nowfloats.Analytics_Screen.DataMap;
-import com.nowfloats.util.BoostLog;
-import com.nowfloats.util.Constants;
+import com.nowfloats.Analytics_Screen.model.SearchAnalytics;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
-import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 
 /**
  * Created by Kamal on 17-02-2015.
  */
 public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.MyViewHolder>{
 
-    Activity activity;
-    DataMap list;
-    int size;
-    String msg = "mesg",date = "date", time = "time", timef = "timef";
-    PorterDuffColorFilter porterDuffColorFilter;
+    private ArrayList<SearchAnalytics> queryList;
+    private Activity activity;
 
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView search_query_header_text;
         TextView search_query_date_text;
         ImageView search_query_image_icon;
 
-
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(View itemView)
+        {
             super(itemView);
-            //  BoostLog.d("CardAdapter_v2","MyViewHolder");
-            this.search_query_header_text = (TextView) itemView.findViewById(R.id.search_query_header_text_1);
-            this.search_query_date_text = (TextView) itemView.findViewById(R.id.search_query_header_text_2);
-            this.search_query_image_icon = (ImageView) itemView.findViewById(R.id.search_query_image);
+
+            this.search_query_header_text = itemView.findViewById(R.id.search_query_header_text_1);
+            this.search_query_date_text = itemView.findViewById(R.id.search_query_header_text_2);
+            this.search_query_image_icon = itemView.findViewById(R.id.search_query_image);
         }
     }
-    public SearchQueryAdapter(Activity activity){
+
+    public SearchQueryAdapter(Activity activity, ArrayList<SearchAnalytics> list)
+    {
         this.activity = activity;
-        list = Constants.StoreUserSearch;
-
-        if(list != null)
-            size = list.size();
-        if(size == 0)
-            initialiseList();
-        this.notifyDataSetChanged();
-
-    }
-
-    public void initialiseList() {
-        Get_Search_Queries_Async_Task gsf = new Get_Search_Queries_Async_Task(activity,this);
-        gsf.execute();
-
+        queryList = list;
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
 
        View view = LayoutInflater.from(parent.getContext())
                .inflate(R.layout.search_query_adapter, parent, false);
-        MyViewHolder myViewHolder = new MyViewHolder(view);
-        return myViewHolder;
+       return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        TextView query = holder.search_query_header_text;
-        TextView date1 = holder.search_query_date_text;
-        ImageView imageView = holder.search_query_image_icon;
+        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(activity.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 
-        query.setTypeface(null, Typeface.ITALIC);
+        SearchAnalytics response = queryList.get(position);
 
+        /*try
+        {
+            String sDate = queryList.get(position).getCreatedOn().replace("/Date(", "").replace("+0530)/", "");;
+            holder.search_query_date_text.setText(Methods.getFormattedDate(sDate));
+        }
 
-        porterDuffColorFilter = new PorterDuffColorFilter(activity.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }*/
 
-
-//        Typeface myCustomFont = Typeface.createFromAsset(activity.getAssets(),"Roboto-Light.ttf");
-//        textViewName.setTypeface(myCustomFont);
-//        textViewEmail.setTypeface(myCustomFont);
-
-        // textViewName.setTextSize(24);
-        // textViewEmail.setTextSize(18);
-
-//        textViewName.setTextColor(appContext.getResources().getColor(R.color.home_view_card_main_text_color));
-//        textViewEmail.setTextColor(appContext.getResources().getColor(R.color.home_view_card_date_text_color));
-
-         BoostLog.d("Search Query Adapter ", "Constants. : " + list.get(position));
-
-        JSONObject obj = (JSONObject) list.get(position);
         try
         {
-            msg =  obj.getString("keyword");
-            date = obj.getString("createdOn");
-            time = obj.getString("key");
-            String sDate = time.replace("/Date(", "").replace(")/", "");
-            String[] splitDate = sDate.split("\\+");
-            Long epochTime = Long.parseLong(splitDate[0]);
-            Date date = new Date(epochTime);
-            String strDateFormat = "hh:mm a";
-            SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
-            timef = sdf.format(epochTime);
-
+            String dateTime = Methods.getISO8601FormattedDate(response.getDate());
+            holder.search_query_date_text.setText(dateTime);
         }
-        catch(Exception ex)
+
+        catch (Exception e)
         {
-            ex.getMessage();
+            e.printStackTrace();
         }
 
-
-        holder.search_query_header_text.setText(msg);
-        holder.search_query_date_text.setText(date);
+        holder.search_query_header_text.setText(response.getKeyword());
+        //holder.search_query_date_text.setTypeface(null, Typeface.ITALIC);
         holder.search_query_image_icon.setColorFilter(porterDuffColorFilter);
-        //holder.search_query_image_icon.setImageBitmap(timef);
-
-
-
-
     }
 
     @Override
-    public int getItemCount() {
-        return Constants.StoreUserSearch.size();
+    public int getItemCount()
+    {
+        return queryList.size();
     }
-
-
-
-
-
-    public void setList(DataMap list){
-        try {
-            this.list = list;
-            if(list != null)
-                size = list.size();
-            this.notifyDataSetChanged();
-            //this.notifyDataSetInvalidated();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
 }

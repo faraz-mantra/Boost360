@@ -15,10 +15,19 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-optimizationpasses 5
+#-allowaccessmodification
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
+-dontpreverify
+-verbose
+
 -keep class twitter4j.** { *; }
-
+-dontwarn com.darsh.multipleimageselect.adapters.**
 -dontwarn twitter4j.**
-
+-dontwarn com.apxor.**
 -dontwarn org.apache.commons.codec.binary.Base64
 
 #-dontwarn com.demach.konotor
@@ -26,12 +35,6 @@
 #-dontwarn com.demach.konotor.service.model.GetAllConversationResponse
 -dontwarn com.viewpagerindicator.LinePageIndicator
 -dontwarn jp.wasabeef.recyclerview.animators.BaseItemAnimator
-
-# Demach GSON files
--keep class com.google.gson.demach.** {
-    <fields>;
-    <methods>;
-}
 
 #-keep class com.demach.konotor.** { *; }
 
@@ -54,7 +57,6 @@
 -keep class org.lucasr.twowayview.** { *; }
 -dontwarn okio.**
 -dontwarn retrofit.**
--dontwarn com.freshdesk.hotline.**
 -dontwarn uk.co.chrishenx.calligraphy.**
 -keep class retrofit.** { *; }
 -keepattributes Signature
@@ -65,7 +67,9 @@
     @com.squareup.otto.Subscribe public *;
     @com.squareup.otto.Produce public *;
 }
+-keep class com.webengage.sdk.android.**{*;}
 
+-dontwarn com.webengage.sdk.android.**
 -dontwarn rx.*
 -keep class com.nowfloats.Store.Model.** { *; }
 -keep class com.nowfloats.NavigationDrawer.model.** { *; }
@@ -81,10 +85,10 @@
 -keep class sun.misc.Unsafe { *; }
 -keepattributes Signature
 
--keep class com.google.gson.demach.** {
-    <fields>;
-    <methods>;
-}
+#-keep class com.google.gson.demach.** {
+#    <fields>;
+#    <methods>;
+#}
 
 # Demach model
 -keep class com.demach.** {
@@ -277,3 +281,153 @@
 -keepclassmembers class com.google.android.gms.R$styleable {*;}
 -dontwarn com.semusi.sdksample**
 -dontwarn semusi.ruleengine.pushmanager**
+
+
+# Twilio Client
+-keep class com.twilio.** { *; }
+
+# Apache HttpClient
+-dontwarn org.apache.http.**
+
+-keepattributes *Annotation*,EnclosingMethod
+
+-keepnames class org.codehaus.jackson.** { *; }
+
+-dontwarn javax.xml.**
+-dontwarn org.slf4j.**
+-dontwarn com.jayway.jsonpath.**
+-dontwarn javax.xml.stream.events.**
+-dontwarn com.fasterxml.jackson.databind.**
+
+##----------AnaChat sdk rules--------------##
+-keep class com.j256.**
+-keepclassmembers class com.j256.** { *; }
+-keep enum com.j256.**
+-keepclassmembers enum com.j256.** { *; }
+-keep interface com.j256.**
+-keepclassmembers interface com.j256.** { *; }
+-keepclassmembers class * {
+  public <init>(android.content.Context);
+}
+
+-keepclassmembers class com.anachat.chatsdk.internal.model.** {
+   @com.j256.ormlite.field.DatabaseField <fields>;
+   @com.j256.ormlite.field.ForeignCollectionField <fields>;
+}
+-keepclassmembers class com.anachat.chatsdk.internal.model.inputdata.** {
+   @com.j256.ormlite.field.DatabaseField <fields>;
+   @com.j256.ormlite.field.ForeignCollectionField <fields>;
+}
+-dontwarn org.slf4j.**
+-dontwarn org.apache.log4j.**
+-dontwarn org.apache.commons.logging.**
+-dontwarn org.apache.commons.codec.binary.**
+-dontwarn javax.persistence.**
+-dontwarn javax.lang.**
+-dontwarn javax.annotation.**
+-dontwarn javax.tools.**
+
+-dontwarn com.j256.ormlite.android.**
+-dontwarn com.j256.ormlite.logger.**
+-dontwarn com.j256.ormlite.misc.**
+
+
+
+#Glide
+-dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+##onboarding progard rule
+-keeppackagenames com.onboarding
+-keeppackagenames com.framework
+-keeppackagenames com.resources
+-keeppackagenames com.inventoryorder
+
+-keep class com.onboarding.** { *; }
+-keep class com.framework.** { *; }
+-keep class com.resources.** { *; }
+-keep class com.inventoryorder.** { *; }
+-keep class com.onboarding.nowfloats.model.** { <fields>; }
+-keep class com.inventoryorder.model.** { <fields>; }
+
+##onboarding progard rule
+
+##---------------Begin: proguard configuration for Gson  ----------
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+
+# Gson specific classes
+-dontwarn sun.misc.**
+-keep class com.google.gson.stream.** { *; }
+# Application classes that will be serialized/deserialized over Gson
+-keep class com.google.gson.examples.android.model.** { *; }
+
+# Prevent proguard from stripping interface information from TypeAdapterFactory,
+# JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
+-keep class * implements com.google.gson.TypeAdapterFactory
+-keep class * implements com.google.gson.JsonSerializer
+-keep class * implements com.google.gson.JsonDeserializer
+
+##---------------End: proguard configuration for Gson  ----------
+
+-keepnames class com.anachat.chatsdk.internal.model.** { *; }
+-keepnames class com.anachat.chatsdk.internal.model.inputdata.** { *; }
+-keepnames class com.anachat.chatsdk.** { *; }
+-dontwarn com.anachat.chatsdk.uimodule.**
+-keepclassmembers class com.anachat.chatsdk.** { *; }
+
+-dontwarn org.apache.http.**
+
+##------keyboard---------##
+-dontnote retrofit2.Platform
+-dontwarn retrofit2.Platform$Java8
+-keepattributes Signature
+-keepattributes Exceptions
+-keepattributes *Annotation*,EnclosingMethod,Signature
+-keepnames class com.fasterxml.jackson.** { *;  }
+-dontwarn com.fasterxml.jackson.databind.**
+-keep class org.codehaus.** { *;  }
+-keepclassmembers public final enum org.codehaus.jackson.annotate.JsonAutoDetect$Visibility { public static final org.codehaus.jackson.annotate.JsonAutoDetect$Visibility *; }
+-keep public class com.android.inputmethod.keyboard.top.services.tenor.** { public void set*(***); public *** get*(); }
+-keep public class io.separ.neural.inputmethod.slash.** { public void set*(***); public *** get*(); }
+
+# Keep classes and methods that have the @UsedForTesting annotation
+-keep @io.separ.neural.inputmethod.annotations.UsedForTesting class *
+-keepclassmembers class * {
+    @io.separ.neural.inputmethod.annotations.UsedForTesting *;
+}
+
+# Keep classes and methods that have the @ExternallyReferenced annotation
+-keep @io.separ.neural.inputmethod.annotations.ExternallyReferenced class *
+-keepclassmembers class * {
+    @io.separ.neural.inputmethod.annotations.ExternallyReferenced *;
+}
+
+# Keep native methods
+-keepclassmembers class * {
+    native <methods>;
+}
+
+# Keep classes that are used as a parameter type of methods that are also marked as keep
+# to preserve changing those methods' signature.
+-keep class io.separ.neural.inputmethod.indic.AssetFileAddress
+-keep class io.separ.neural.inputmethod.indic.Dictionary
+-keep class com.android.inputmethod.latin.PrevWordsInfo
+-keep class com.android.inputmethod.latin.makedict.ProbabilityInfo
+-keep class com.android.inputmethod.latin.utils.LanguageModelParam
+
+#-dontwarn com.google.android.libraries.places.internal.iz
+#-dontwarn com.google.android.libraries.places.internal.jb
+
+##------Upgrades---------##
+-keep class com.boost.upgrades.** {*;}
+-dontwarn com.boost.upgrades.**

@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -37,12 +38,13 @@ public class BoostContentProvider extends ContentProvider {
     private static final int PHOTO_GALLERY_ID = 10;
     private static final int PRODUCT_GALLERY_ID = 11;
     private static final int ALERT_DATA_MODEL = 12;
+    private static final int SAM_BUBBLE = 13;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sUriMatcher.addURI(Constants.AUTHORITY, DbConstants.Iupdates.tableName, UPDATES);
-        sUriMatcher.addURI(Constants.AUTHORITY, DbConstants.Ialerts.tableName, ALERTS );
+        sUriMatcher.addURI(Constants.AUTHORITY, DbConstants.Ialerts.tableName, ALERTS);
         sUriMatcher.addURI(Constants.AUTHORITY, DbConstants.IcustomPages.tableName, CUSTOM_PAGES);
         sUriMatcher.addURI(Constants.AUTHORITY, DbConstants.IphotoGallery.tableName, PHOTO_GALLERY);
         sUriMatcher.addURI(Constants.AUTHORITY, DbConstants.IproductGallery.tableName, PRODUCT_GALLERY);
@@ -53,6 +55,7 @@ public class BoostContentProvider extends ContentProvider {
         sUriMatcher.addURI(Constants.AUTHORITY, DbConstants.IphotoGallery.tableName + "/#", PHOTO_GALLERY_ID);
         sUriMatcher.addURI(Constants.AUTHORITY, DbConstants.IproductGallery.tableName + "/#", PRODUCT_GALLERY_ID);
         sUriMatcher.addURI(Constants.AUTHORITY, DbConstants.Ialerts.IalertData.tableDataName, ALERT_DATA_MODEL);
+        sUriMatcher.addURI(Constants.AUTHORITY, DbConstants.IsamBubble.tableName, SAM_BUBBLE);
     }
 
 
@@ -85,20 +88,19 @@ public class BoostContentProvider extends ContentProvider {
         }else{
             dbName = "BoostDefault.db";
         }*/
-        boostDatabaseHelper = new BoostDatabaseOpenHelper(context, dbName, null, 1);
+        boostDatabaseHelper = new BoostDatabaseOpenHelper(context, dbName, null, 3);
         return true;
     }
 
 
-
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder){
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
         db = boostDatabaseHelper.getReadableDatabase();
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
         int match = sUriMatcher.match(uri);
-        switch (match){
+        switch (match) {
             case UPDATES:
                 builder.setTables(DbConstants.Iupdates.tableName);
                 break;
@@ -126,6 +128,9 @@ public class BoostContentProvider extends ContentProvider {
             case ALERT_DATA_MODEL:
                 builder.setTables(DbConstants.Ialerts.IalertData.tableDataName);
                 break;
+            case SAM_BUBBLE:
+                builder.setTables(DbConstants.IsamBubble.tableName);
+                break;
             default:
                 Log.d(TAG, "Unmatched URI, It may cause Exception");
 
@@ -147,43 +152,46 @@ public class BoostContentProvider extends ContentProvider {
 
         int match = sUriMatcher.match(uri);
         long id = 0;
-        switch (match){
+        switch (match) {
             case UPDATES:
-                id =db.insert(DbConstants.Iupdates.tableName, null, values);
+                id = db.insert(DbConstants.Iupdates.tableName, null, values);
                 break;
             case ALERTS:
-                id =db.insert(DbConstants.Ialerts.tableName, null, values);
+                id = db.insert(DbConstants.Ialerts.tableName, null, values);
                 break;
             case CUSTOM_PAGES:
-                id =db.insert(DbConstants.IcustomPages.tableName, null, values);
+                id = db.insert(DbConstants.IcustomPages.tableName, null, values);
                 break;
             case PHOTO_GALLERY:
-                id =db.insert(DbConstants.IphotoGallery.tableName, null, values);
+                id = db.insert(DbConstants.IphotoGallery.tableName, null, values);
                 break;
             case PRODUCT_GALLERY:
-                id =db.insert(DbConstants.IproductGallery.tableName, null, values);
+                id = db.insert(DbConstants.IproductGallery.tableName, null, values);
                 break;
             case SEARCH_QUERIES:
-                id =db.insert(DbConstants.Isearch_queries.tableName, null, values);
+                id = db.insert(DbConstants.Isearch_queries.tableName, null, values);
                 break;
             case STORE_ACTIVE_PLANS:
-                id =db.insert(DbConstants.IstoreActivePlans.tableName, null, values);
+                id = db.insert(DbConstants.IstoreActivePlans.tableName, null, values);
                 break;
             case ACTIVE_PLANS_IMAGES:
-                id =db.insert(DbConstants.IstoreActivePlans.tableName, null, values);
+                id = db.insert(DbConstants.IstoreActivePlans.tableName, null, values);
                 break;
             case ALERT_DATA_MODEL:
-                id =db.insert(DbConstants.Ialerts.IalertData.tableDataName, null, values);
+                id = db.insert(DbConstants.Ialerts.IalertData.tableDataName, null, values);
                 break;
-                //builder.setTables(DbConstants.Ialerts.IalertData.tableName);
+            case SAM_BUBBLE:
+                id = db.insert(DbConstants.IsamBubble.tableName, null, values);
+                break;
+            //builder.setTables(DbConstants.Ialerts.IalertData.tableName);
 
         }
 
         try {
             return getUriForId(id, uri);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             //db.close();
         }
         return null;
@@ -195,7 +203,7 @@ public class BoostContentProvider extends ContentProvider {
 
         int match = sUriMatcher.match(uri);
         int id = 0;
-        switch (match){
+        switch (match) {
             case UPDATES:
                 id = db.delete(DbConstants.Iupdates.tableName, selection, selectionArgs);
                 break;
@@ -223,6 +231,9 @@ public class BoostContentProvider extends ContentProvider {
             case ALERT_DATA_MODEL:
                 id = db.delete(DbConstants.Isearch_queries.tableName, selection, selectionArgs);
                 break;
+            case SAM_BUBBLE:
+                id = db.delete(DbConstants.IsamBubble.tableName, selection, selectionArgs);
+                break;
 
         }
         return id;
@@ -233,7 +244,7 @@ public class BoostContentProvider extends ContentProvider {
 
         int updateCount = 0;
         db = boostDatabaseHelper.getWritableDatabase();
-        switch (sUriMatcher.match(uri)){
+        switch (sUriMatcher.match(uri)) {
             case UPDATES:
                 updateCount = db.update(DbConstants.Iupdates.tableName, values, selection, selectionArgs);
                 break;
@@ -243,8 +254,11 @@ public class BoostContentProvider extends ContentProvider {
             case PRODUCT_GALLERY:
                 updateCount = db.update(DbConstants.IproductGallery.tableName, values, selection, selectionArgs);
                 break;
+            case SAM_BUBBLE:
+                updateCount = db.update(DbConstants.IsamBubble.tableName, values, selection, selectionArgs);
+                break;
         }
-        if(updateCount>0){
+        if (updateCount > 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
         //db.close();
@@ -254,14 +268,14 @@ public class BoostContentProvider extends ContentProvider {
     private Uri getUriForId(long id, Uri uri) {
         if (id > 0) {
             Uri itemUri = ContentUris.withAppendedId(uri, id);
-                getContext().getContentResolver().notifyChange(itemUri, null);
+            getContext().getContentResolver().notifyChange(itemUri, null);
             return itemUri;
         }
         throw new SQLException("Problem while inserting into uri: " + uri);
     }
 
 
-    protected static final class BoostDatabaseOpenHelper extends SQLiteOpenHelper{
+    protected final class BoostDatabaseOpenHelper extends SQLiteOpenHelper {
 
         public BoostDatabaseOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
@@ -269,23 +283,43 @@ public class BoostContentProvider extends ContentProvider {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(DbConstants.Iupdates.CREATE_UPDATES_TABLE);
-            db.execSQL(DbConstants.Ialerts.CREATE_ALERT_TABLE);
-            db.execSQL(DbConstants.Ialerts.IalertData.CREATE_ALERT_DATA_TABLE);
-            db.execSQL(DbConstants.IproductGallery.CREATE_PRODUCT_GALLERY_TABLE);
-            db.execSQL(DbConstants.IphotoGallery.CREATE_PHOTO_GALLERY_TABLE);
-            db.execSQL(DbConstants.IcustomPages.CREATE_CUSTOM_PAGES_TABLE);
-            db.execSQL(DbConstants.Isearch_queries.CREATE_SEARCH_QUERIES_TABLE);
-            db.execSQL(DbConstants.IstoreActivePlans.CREATE_ACTIVE_PLANS_TABLE);
-            db.execSQL(DbConstants.IstoreImages.CREATE_STORE_IMAGES_TABLE);
+            try{
+                db.execSQL(DbConstants.Iupdates.CREATE_UPDATES_TABLE);
+                db.execSQL(DbConstants.Ialerts.CREATE_ALERT_TABLE);
+                db.execSQL(DbConstants.Ialerts.IalertData.CREATE_ALERT_DATA_TABLE);
+                db.execSQL(DbConstants.IproductGallery.CREATE_PRODUCT_GALLERY_TABLE);
+                db.execSQL(DbConstants.IphotoGallery.CREATE_PHOTO_GALLERY_TABLE);
+                db.execSQL(DbConstants.IcustomPages.CREATE_CUSTOM_PAGES_TABLE);
+                db.execSQL(DbConstants.Isearch_queries.CREATE_SEARCH_QUERIES_TABLE);
+                db.execSQL(DbConstants.IstoreActivePlans.CREATE_ACTIVE_PLANS_TABLE);
+                db.execSQL(DbConstants.IstoreImages.CREATE_STORE_IMAGES_TABLE);
+                db.execSQL(DbConstants.IsamBubble.CREATE_SAM_BUBBLE_TABLE);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+            try {
+                db.execSQL(DbConstants.Iupdates.DROP_UPDATES_TABLE);
+                db.execSQL(DbConstants.IcustomPages.DROP_CUSTOM_PAGES_TABLE);
+                db.execSQL(DbConstants.Ialerts.DROP_ALERT_TABLE);
+                db.execSQL(DbConstants.Ialerts.IalertData.DROP_ALERT_DATA_TABLE);
+                db.execSQL(DbConstants.IphotoGallery.DROP_PHOTO_GALLERY_TABLE);
+                db.execSQL(DbConstants.IproductGallery.DROP_PRODUCT_GALLERY_TABLE);
+                db.execSQL(DbConstants.IsamBubble.DROP_SAM_BUBBLE_TABLE);
+                db.execSQL(DbConstants.Isearch_queries.DROP_SEARCH_QUERIES_TABLE);
+                db.execSQL(DbConstants.IstoreActivePlans.DROP_ACTIVE_PLANS_TABLE);
+                db.execSQL(DbConstants.IstoreImages.DROP_STORE_IMAGES_TABLE);
+                onCreate(db);
+               SharedPreferences pref =  context.getSharedPreferences(com.nowfloats.util.Constants.PREF_NAME,Context.MODE_PRIVATE);
+                pref.edit().putBoolean(com.nowfloats.util.Constants.SYNCED,false).apply();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
 
         }
     }
-
 
 }

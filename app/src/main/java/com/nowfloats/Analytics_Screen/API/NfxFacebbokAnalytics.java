@@ -16,8 +16,8 @@ import retrofit.http.Query;
 
 public class NfxFacebbokAnalytics {
     public static nfxFacebookApis getAdapter(){
-        RestAdapter adapter = new RestAdapter.Builder()/*
-                .setLog(new AndroidLog("ggg"))
+        RestAdapter adapter = new RestAdapter.Builder()
+               /* .setLog(new AndroidLog("ggg"))
                 .setLogLevel(RestAdapter.LogLevel.FULL)*/
                 .setEndpoint(Constants.NFX_WITH_NOWFLOATS)
                 .build();
@@ -28,14 +28,17 @@ public class NfxFacebbokAnalytics {
 
         @Headers({
                 "key:78234i249123102398",
-                "pwd:JYUYTJH*(*&BKJ787686876bbbhl)"})
+                "pwd:JYUYTJH*(*&BKJ787686876bbbhl)",
+                "Content-Type:application/json"})
         @GET("/dataexchange/v1/fetch/analytics")
         void nfxFetchFacebookData(@Query("nowfloats_id") String id, @Query("identifier") String facebook, Callback<GetFacebookAnalyticsData> response);
 
         @Headers({
                 "key:78234i249123102398",
-                "pwd:JYUYTJH*(*&BKJ787686876bbbhl)"})
+                "pwd:JYUYTJH*(*&BKJ787686876bbbhl)",
+                "Content-Type:application/json"})
         @GET("/dataexchange/v1/getAccessTokens")
         void nfxGetSocialTokens(@Query("nowfloats_id") String id, Callback<NfxGetTokensResponse> callback);
+
     }
 }

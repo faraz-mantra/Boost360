@@ -1,14 +1,29 @@
 package com.nowfloats.CustomPage;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.provider.MediaStore;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,18 +38,30 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
+import com.nowfloats.CustomPage.Model.PageDetail;
+import com.nowfloats.CustomPage.Model.UploadImageToS3Model;
+import com.nowfloats.CustomPage.Model.UploadImageToS3ResponseModel;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.RiaEventLogger;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
+
 
 import jp.wasabeef.richeditor.RichEditor;
 import retrofit.Callback;
+import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -49,14 +76,21 @@ public class CreateCustomPageActivity extends AppCompatActivity{
     Activity activity;
     EditText titleTxt;
     RichEditor richText;
-    private String mHtmlFormat = "";
+    private String mHtmlFormat = "" ;
+    private Uri picUri;
     private HorizontalScrollView editor;
     private boolean editCheck = false;
     String curName,curHtml,curPageid;
-    int curPos;
+    private int curPos;
     private ImageView deletePage;
 
+    String imageTagName = "CustomePage";
+    
     private int GALLERY_PHOTO =5;
+    private RiaNodeDataModel mRiaNodedata;
+
+    private final int gallery_req_id = 6;
+    private final int media_req_id = 5;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -68,6 +102,10 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_custom_page);
 
+        curPos = getIntent().getIntExtra("position", -1);
+
+        mRiaNodedata = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
+
         toolbar = (Toolbar) findViewById(R.id.tool_bar_product_detail);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -77,9 +115,9 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         save = (ImageView) toolbar.findViewById(R.id.home_view_delete_card);
         deletePage = (ImageView) toolbar.findViewById(R.id.delete_page);
         deletePage.setVisibility(View.GONE);
-        TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
+        final TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
         title.setVisibility(View.VISIBLE);
-        title.setText(getString(R.string.new_page));
+        title.setText("New page");
         save.setImageResource(R.drawable.checkmark_icon);
         session = new UserSessionManager(getApplicationContext(),activity);
 
@@ -87,19 +125,65 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         titleTxt = (EditText)findViewById(R.id.titleEdit);
         richText = (RichEditor)findViewById(R.id.subtextEdit);
         richText.setPlaceholder(getString(R.string.custom_page_details));
+        richText.setFontSize(13);
 
-        if(getIntent().hasExtra("name")){
-            curName = getIntent().getStringExtra("name");
-            curHtml = getIntent().getStringExtra("html");
-            curPageid = getIntent().getStringExtra("pageid");
-            curPos = Integer.parseInt(getIntent().getStringExtra("pos"));
-            titleTxt.setText(curName);
-            title.setText(curName);
-            richText.setHtml(curHtml);
-            mHtmlFormat = curHtml;
-            editCheck = true;
-            deletePage.setVisibility(View.VISIBLE);
+        if(getIntent().hasExtra("pageid")) {
+            final MaterialDialog materialProgress = new MaterialDialog.Builder(this)
+                    .widgetColorRes(R.color.accentColor)
+                    .content(getString(R.string.loading))
+                    .progress(true, 0)
+                    .show();
+            materialProgress.setCancelable(false);
+
+
+
+
+
+
+
+
+            try {
+                CustomPageInterface pageInterface = Constants.restAdapter.create(CustomPageInterface.class);
+                pageInterface.getPageDetail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
+                        getIntent().getStringExtra("pageid"), Constants.clientId, new Callback<List<PageDetail>>() {
+                            @Override
+                            public void success(List<PageDetail> pageDetail, Response response) {
+                                materialProgress.dismiss();
+                                //Intent intent = new Intent(CreateCustomPageActivity, CreateCustomPageActivity.class);
+                                if (pageDetail.size() > 0) {
+                                    curName = pageDetail.get(0).DisplayName;
+                                    curHtml = pageDetail.get(0).HtmlCode;
+                                    curPageid = pageDetail.get(0)._id;
+                                    titleTxt.setText(curName);
+                                    title.setText(curName);
+                                    richText.setHtml(curHtml);
+                                    mHtmlFormat = curHtml;
+                                    editCheck = true;
+                                    deletePage.setVisibility(View.VISIBLE);
+                                } else {
+                                    Methods.showSnackBarNegative(CreateCustomPageActivity.this, "Page Detail not found");
+                                }
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                materialProgress.dismiss();
+                                Log.d("page detail error-", "" + error.getMessage());
+                                Methods.showSnackBarNegative(CreateCustomPageActivity.this, "Page Detail not found");
+                            }
+                        });
+            } catch (Exception e) {
+                e.printStackTrace();
+                Methods.showSnackBarNegative(this, getString(R.string.something_went_wrong_try_again));
+                materialProgress.dismiss();
+            }
         }
+
+
+
+
+
+
 
         titleTxt.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -130,85 +214,108 @@ public class CreateCustomPageActivity extends AppCompatActivity{
             public void onClick(View v) {
                 String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/custompage/delete";
                 new SinglePageDeleteAsyncTask(url,CreateCustomPageActivity.this,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
-                        CustomPageActivity.dataModel.get(curPos).PageId,curPos).execute();
+                        CustomPageFragment.dataModel.get(curPos).PageId,curPos).execute();
             }
         });
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean flag = true;
-                final String name = titleTxt.getText().toString(),html = mHtmlFormat;
-                if (!(titleTxt.getText().toString().trim().length()>0)){
-                    flag = false;
-                    Methods.showSnackBarNegative(activity,getString(R.string.enter_the_title));
-                }else if(!(html.trim().length()>0)){
-                    flag = false;
-                    Methods.showSnackBarNegative(activity,getString(R.string.enter_the_description));
-                }
-                CustomPageInterface anInterface = Constants.restAdapter.create(CustomPageInterface.class);
-                if (flag){
-                    final MaterialDialog materialProgress = new MaterialDialog.Builder(activity)
-                            .widgetColorRes(R.color.accentColor)
-                            .content(getString(R.string.loading))
-                            .progress(true, 0)
-                            .show();
-                    materialProgress.setCancelable(false);
-                    try {
-                        if (!editCheck) {
-                            CreatePageModel pageModel = new CreatePageModel(name, html,
-                                    session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId);
-                            anInterface.createPage(pageModel, new Callback<String>() {
-                                @Override
-                                public void success(String s, Response response) {
-                                    materialProgress.dismiss();
-                                    if (s!=null &&s.toString().trim().length()>0){
-                                        //Log.d("Create page success", "");
-                                        MixPanelController.track("CreateCustomPage", null);
-                                        long time = System.currentTimeMillis();
-                                        CustomPageActivity.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
-                                        Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
-                                        finish();
-                                    }else{
-                                        Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
-                                        //Log.d("Create page Fail", "");
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                    Methods.showFeatureNotAvailDialog(CreateCustomPageActivity.this);
+                }else {
+                    if (mRiaNodedata != null) {
+                        RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                                mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                                mRiaNodedata.getButtonLabel(),
+                                RiaEventLogger.EventStatus.COMPLETED.getValue());
+                        mRiaNodedata = null;
+                    }
+                    boolean flag = true;
+                    final String name = titleTxt.getText().toString(), html = mHtmlFormat;
+                    if (!(titleTxt.getText().toString().trim().length() > 0)) {
+                        flag = false;
+                        Methods.showSnackBarNegative(activity, getString(R.string.enter_the_title));
+                    } else if (!(html.trim().length() > 0)) {
+                        flag = false;
+                        Methods.showSnackBarNegative(activity, getString(R.string.enter_the_description));
+                    }
+                    CustomPageInterface anInterface = Constants.restAdapter.create(CustomPageInterface.class);
+                    if (flag) {
+                        final MaterialDialog materialProgress = new MaterialDialog.Builder(activity)
+                                .widgetColorRes(R.color.accentColor)
+                                .content(getString(R.string.loading))
+                                .progress(true, 0)
+                                .show();
+                        materialProgress.setCancelable(false);
+                        try {
+                            if (!editCheck) {
+                                CreatePageModel pageModel = new CreatePageModel(name, html,
+                                        session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId);
+                                anInterface.createPage(pageModel, new Callback<String>() {
+                                    @Override
+                                    public void success(String s, Response response) {
+
+                                        Log.d("CUSTOM_PAGE_CHECK", "" + s);
+
+                                        materialProgress.dismiss();
+                                        if (s != null && s.toString().trim().length() > 0) {
+                                            //Log.d("Create page success", "");
+                                            MixPanelController.track("CreateCustomPage", null);
+                                            long time = System.currentTimeMillis();
+                                            CustomPageFragment.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
+                                            WebEngageController.trackEvent("POST A CUSTOMPAGE","Successfully added custompage",session.getFpTag());
+                                            Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
+                                            finish();
+                                        } else {
+                                            Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
+                                            WebEngageController.trackEvent("POST A CUSTOMPAGE",getString(R.string.enter_different_title_try_again),session.getFpTag());
+                                            //Log.d("Create page Fail", "");
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void failure(RetrofitError error) {
-                                    materialProgress.dismiss();
-                                    Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
-                                    //Log.d("Create page Fail", "" + error.getMessage());
-                                }
-                            });
-                        } else {
-                            HashMap<String, String> map = new HashMap<String, String>();
-                            map.put("DisplayName", name);
-                            map.put("HtmlCode", html);
-                            map.put("PageId", "" + curPageid);
-                            map.put("Tag", "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-                            map.put("clientId", Constants.clientId);
-                            anInterface.updatePage(map, new Callback<String>() {
-                                @Override
-                                public void success(String s, Response response) {
-                                    materialProgress.dismiss();
-                                    MixPanelController.track("UpdateCustomPage", null);
-                                    //Log.d("Update page success", "");
-                                    CustomPageActivity.dataModel.get(curPos).DisplayName = name;
-                                    Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
-                                    finish();
-                                }
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        materialProgress.dismiss();
+                                        Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                        WebEngageController.trackEvent("POST A CUSTOMPAGE",getString(R.string.something_went_wrong_try_again),session.getFpTag());
+                                        //Log.d("Create page Fail", "" + error.getMessage());
+                                    }
+                                });
+                            } else {
+                                HashMap<String, String> map = new HashMap<String, String>();
+                                map.put("DisplayName", name);
+                                map.put("HtmlCode", html);
+                                map.put("PageId", "" + curPageid);
+                                map.put("Tag", "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+                                map.put("clientId", Constants.clientId);
+                                anInterface.updatePage(map, new Callback<String>() {
+                                    @Override
+                                    public void success(String s, Response response) {
+                                        materialProgress.dismiss();
+                                        MixPanelController.track("UpdateCustomPage", null);
+                                        WebEngageController.trackEvent("UPDATE CUSTOMPAGE","Update a Custompage",session.getFpTag());
+                                        //Log.d("Update page success", "");
+                                        CustomPageFragment.dataModel.get(curPos).DisplayName = name;
+                                        Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
+                                        finish();
+                                    }
 
-                                @Override
-                                public void failure(RetrofitError error) {
-                                    materialProgress.dismiss();
-                                    Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
-                                    //Log.d("Update page Fail", "" + error.getMessage());
-                                }
-                            });
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        materialProgress.dismiss();
+                                        Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                        WebEngageController.trackEvent("UPDATE CUSTOMPAGE","Failed to update custompage",session.getFpTag());
+                                        //Log.d("Update page Fail", "" + error.getMessage());
+                                    }
+                                });
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                            materialProgress.dismiss();
                         }
-                    }catch(Exception e){e.printStackTrace(); Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again)); materialProgress.dismiss();}
+                    }
                 }
             }
         });
@@ -383,12 +490,12 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showUrlDialog(getString(R.string.enter_image_url), 1);
-
+               // showUrlDialog(getString(R.string.enter_image_url), 1);
+                choosePicture();
             }
         });
 
-       findViewById(R.id.action_insert_link).setOnClickListener(new View.OnClickListener() {
+         findViewById(R.id.action_insert_link).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showUrlDialog(getString(R.string.enter_hyperlink_url), 2);
@@ -490,5 +597,224 @@ public class CreateCustomPageActivity extends AppCompatActivity{
 //        }
 //        return null;
 //    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        
+        
+        if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
+            
+            Bitmap CameraBitmap = null;
+            String path = null;
+            if (data != null) {
+                picUri = data.getData();
+                if (picUri == null) {
+                     CameraBitmap = (Bitmap) data.getExtras().get("data");
+                     path = Util.saveBitmap(CameraBitmap, activity, imageTagName + System.currentTimeMillis());
+                    picUri = Uri.parse(path);
+                } else {
+                     path = Methods.getRealPathFromURI(picUri , this);
+                     CameraBitmap = Util.getBitmap(path, activity);
+                    
+                }
+            }
+            if(CameraBitmap != null ) {
+                uploadImageToS3(new File(path).getName() ,Methods.convertBitmapToString(Methods.scaleBitmap(CameraBitmap , .5f)));
+            }
+            
+        } else if (resultCode == RESULT_OK && (Constants.CAMERA_PHOTO == requestCode)) {
+            
+            Bitmap CameraBitmap = null ;
+            String path = null;
+            
+            try {
+                if (picUri == null) {
+                    if (data != null) {
+                        picUri = data.getData();
+                        if (picUri == null) {
+                             CameraBitmap = (Bitmap) data.getExtras().get("data");
+                             path = Util.saveCameraBitmap(CameraBitmap, activity, imageTagName + System.currentTimeMillis());
+                            picUri = Uri.parse(path);
+                            
+                        } else {
+                             path = Methods.getRealPathFromURI(picUri , this);
+                             CameraBitmap = Util.getBitmap(path, activity);
+            
+                        }
+                    } else {
+                        Methods.showSnackBar(activity, getString(R.string.try_again));
+                    }
+                } else {
+                     path = Methods.getRealPathFromURI(picUri , this);
+                    CameraBitmap = Util.getBitmap(path, activity);
+              
+                }
+
+                if(CameraBitmap != null ) {
+                    uploadImageToS3(new File(path).getName() ,Methods.convertBitmapToString(Methods.scaleBitmap(CameraBitmap , .5f)));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } catch (OutOfMemoryError E) {
+                E.printStackTrace();
+                CameraBitmap.recycle();
+                System.gc();
+                Methods.showSnackBar(activity, getString(R.string.try_again));
+            }
+        }
+    }
+
+    public void choosePicture() {
+        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                .customView(R.layout.featuredimage_popup, true)
+                .show();
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+
+        View view = dialog.getCustomView();
+        TextView header = (TextView) view.findViewById(R.id.textview_heading);
+        header.setText(R.string.upload_image);
+        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
+        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
+
+        takeCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraIntent();
+                dialog.dismiss();
+            }
+        });
+
+        takeGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                galleryIntent();
+                dialog.dismiss();
+
+            }
+        });
+    }
+
+    public void cameraIntent() {
+        try {
+            // use standard intent to capture an image
+            if (ActivityCompat.checkSelfPermission(CreateCustomPageActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(CreateCustomPageActivity.this, Manifest.permission.CAMERA) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                        ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA)) {
+                    Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", CreateCustomPageActivity.this);
+                } else {
+                    ActivityCompat.requestPermissions(CreateCustomPageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, media_req_id);
+                }
+
+            } else {
+
+                ContentValues Cvalues = new ContentValues();
+                Intent captureIntent;
+                Cvalues.put(MediaStore.Images.Media.TITLE, "New Picture");
+                Cvalues.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                picUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Cvalues);
+                captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, picUri);
+                startActivityForResult(captureIntent, Constants.CAMERA_PHOTO);
+            }
+        } catch (ActivityNotFoundException anfe) {
+            // display an error message
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
+            Methods.showSnackBarNegative(activity, errorMessage);
+        }
+    }
+
+    public void galleryIntent() {
+        try {
+            if (ActivityCompat.checkSelfPermission(CreateCustomPageActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED) {
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    Methods.showApplicationPermissions("Storage Permission", "We need this permission to enable image upload", CreateCustomPageActivity.this);
+                } else {
+                    ActivityCompat.requestPermissions(CreateCustomPageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, gallery_req_id);
+                }
+
+            } else {
+
+                Intent i = new Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, Constants.GALLERY_PHOTO);
+            }
+        } catch (ActivityNotFoundException anfe) {
+            // display an error message
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
+            Methods.showSnackBarNegative(activity, errorMessage);
+        }
+    }
+
+
+    private void uploadImageToS3(String fileName , String fileContent ) {
+
+        final MaterialDialog materialProgress = new MaterialDialog.Builder(this)
+                .widgetColorRes(R.color.accentColor)
+                .content(getString(R.string.loading))
+                .progress(true, 0)
+                .show();
+
+        final UploadImageToS3Model uploadImageToS3Model = new UploadImageToS3Model();
+        uploadImageToS3Model.setFileName(fileName);
+        uploadImageToS3Model.setFileData(fileContent);
+        uploadImageToS3Model.setFileCategory(1);
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(Constants.UPLOAD_TO_S3_ENDPOINT)
+                //.setClient(Methods.getHttpclient(60))
+                .setLog(new AndroidLog(CreateCustomPageActivity.class.getName()))
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .build();
+
+        Callback<UploadImageToS3ResponseModel> callback = new Callback<UploadImageToS3ResponseModel>() {
+            @Override
+            public void success(UploadImageToS3ResponseModel uploadImageToS3ResponseModel, Response response) {
+
+                materialProgress.dismiss();
+
+                if(response.getStatus() == 200 && uploadImageToS3ResponseModel != null  ) {
+                    if(uploadImageToS3ResponseModel.getBody() != null ){
+                        richText.insertImage(uploadImageToS3ResponseModel.getBody().getResult() , getString(R.string.no_image));
+                    }else{
+                        Methods.showSnackBarNegative(CreateCustomPageActivity.this, getString(R.string.upload_image_err));
+                    }
+                }else{
+                    Methods.showSnackBarNegative(CreateCustomPageActivity.this, getString(R.string.upload_image_err));
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                materialProgress.dismiss();
+                Methods.showSnackBarNegative(CreateCustomPageActivity.this, getString(R.string.upload_image_err));
+            }
+        };
+        
+        restAdapter.create(CustomPageInterface.class).uploadImageToS3(uploadImageToS3Model , callback);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mRiaNodedata!=null){
+            RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                    mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                    mRiaNodedata.getButtonLabel(),
+                    RiaEventLogger.EventStatus.DROPPED.getValue());
+            mRiaNodedata = null;
+        }
+    }
 
 }

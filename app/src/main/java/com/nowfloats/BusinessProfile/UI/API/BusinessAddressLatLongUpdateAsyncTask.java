@@ -11,7 +11,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -134,7 +133,7 @@ public class BusinessAddressLatLongUpdateAsyncTask extends AsyncTask<Void,String
 					{
 						if (arr[i] == "PINCODE") {Business_Address_Activity.areaCode.setText(Business_Address_Activity.pincodetext);
 						}
-						if (arr[i] == "CITY") {Business_Address_Activity.city.setText(Business_Address_Activity.citytext);
+						if (arr[i] == "CITY") {Business_Address_Activity.cityAutoText.setText(Business_Address_Activity.citytext);
 						}
 
 					}
@@ -150,7 +149,7 @@ public class BusinessAddressLatLongUpdateAsyncTask extends AsyncTask<Void,String
 					String url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&zoom=15&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + lat + "," + lng + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
 					//holderItem.chatImage.setVisibility(View.VISIBLE);
 					try {
-						Picasso.with(appcontext)
+						Picasso.get()
 								.load(url)
 								.placeholder(R.drawable.default_product_image)
 								.into(Business_Address_Activity.ivMap);

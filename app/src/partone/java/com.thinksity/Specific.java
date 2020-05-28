@@ -21,10 +21,10 @@ public class Specific {
     public static String client_ID_13_enterprizeonboardingservice = "BFB1A9D329204D25AF5423A58E21EB8349FAFE9752DD49F780F7680521DC33E1";
     public static String client_ID_14 = "A91B82DE3E93446A8141A52F288F69EFA1B09B1D13BB4E55BE743AB547B3489E";
 
-
     public static String access_level = "20";
     public static final String CONTACT_EMAIL_ID = "ria@nowfloats.com";
     public static final String FACEBOOK_API_KEY 	= "539836972828386";  // Boost
+    public static final String RIA_FIREBASE_COLLECTION_NAME 	= "RIAUserActivityLog";  // Boost
 
 //    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
 //    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
@@ -33,8 +33,11 @@ public class Specific {
     public static final String TWITTER_SEC 				= "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9";
     public static final String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
     public static final String PACKAGE_NAME = "com.biz2.nowfloats";
-    public static final String FACEBOOK_PAGEID = "fb://page/277931445614143";
+    public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "read_insights", "business_management"};
+    public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = {"publish_pages", "manage_pages"};
+    public static final String FACEBOOK_PAGE_ID = "fb://page/277931445614143";
     public static final String TWITTER_URL = "https://twitter.com/Nowfloats";
     public static final String TWITTER_ID_URL = "twitter://user?screen_name=nowfloats";
+    public static final String TWILIO_AUTHY_API_KEY = "gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5";
 
 }

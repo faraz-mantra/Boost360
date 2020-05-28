@@ -3,12 +3,15 @@
 
     <string name="twitter_consumer_key">5HNCg1Sx1dJMmUt1NuFXMiSST</string>
     <string name="twitter_consumer_secret">MfMT1qgmmCQ22irEXmUGzHL9aE1bgCo3hlrAekZ1rX5kMKr6WD</string>
-
+    <string name="website_domain_name">.sibername.com</string>
     <string name="package_name_aviary">com.sibername.AviaryCdsProvider</string>
     <string name="app_name">Sibername Boost</string>
+    <string name="title_activity_splash_screen_">Sibername Boost</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="next">Next</string>
+    <string name="allow_boost_to_read_your">Please allow Sibername Boost to read your Facebook Page insights.</string>
+    <string name="facebook_url_message">If your Facebook page URL is facebook.com/sibername; then your username is sibername</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_web_site_address">Website Address</string>
     <string name="title_activity_login">Welcome Back</string>
@@ -24,6 +27,8 @@
     <string name="title_activity_social__sharing_">Social Sharing</string>
     <string name="title_activity_login__main">Welcome Back</string>
     <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
+    <string name="primary_number">Primary Number (To communicate with Sibername)</string>
+    <string name="to_communicate_with_nowfloats">To communicate with Sibername</string>
     <string name="ps_create_lbl">CREATE</string>
     <string name="ps_login_lbl">LOG IN</string>
     <string name="ps_create_lbl_tag">a website with Sibername</string>
@@ -76,13 +81,13 @@
 
     <string name="facebook_app_id">849017471893722</string>
 
-
     <string name="title_activity_image__gallery__main">Image Gallery</string>
     <string name="title_activity_home__main">Home_MainActivity</string>
     <string name="title_activity_card__full__view__main">Home</string>
     <string name="title_activity_create__message_">Post an Update</string>
     <string name="side_panel_row_one">Dashboard</string>
-    <string name="side_panel_row_two">Business Profile</string>
+    <string name="side_panel_row_two">Manage Website</string>
+    <string name="side_panel_row_tenth">Manage Customers</string>
     <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_three">Business Enquiries</string>
     <string name="side_panel_row_four">Photo Gallery</string>
@@ -375,7 +380,6 @@
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="business_profile_title">Business Profile</string>
     <string name="tag_for_partners">.canadian.website</string>
-    <string name="title_activity_splash_screen_">Boost</string>
     <string name="title_activity_edit__profile_">Edit_Profile_Activity</string>
     <string name="pre_signup_screen_one_text">Now Create, Manage and Update A Business website that draws more Customers</string>
     <string name="pre_signup_screen_two_text">Get a business website \nthat is instantly created and \neasily managed using this app</string>
@@ -403,7 +407,8 @@
     <string name="settings_facebook_like_link">https://www.facebook.com/Sibername</string>
     <string name="settings_about_us_link">http://Sibername.com/</string>
     <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.sibername</string>
-
+    <string name="settings_tou_url">https://www.sibername.com/en/docs/terms.html</string>
+    <string name="settings_privacy_url">https://www.sibername.com/company/privacy.php</string>
     <!--this part is for FAQ harcoded strings -->
     <string-array name="faqmain">
         <item>WELCOME TO THE ONLINE WORLD</item>
@@ -536,6 +541,22 @@
     <!--FAQ hardcoded string end-->
 
 
+    <string name="kitsune_pre_signup_text1">manage and update your</string>
+    <string name="kitsune_pre_signup_text2">kitsune powered website</string>
+    <string name="renew_light_house_plan">Renew your plan to get all the features</string>
+    <string name="light_house_plan_expired_some_features_visible">Your subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
+    <string name="buy_light_house_plan">Subscribe now get all the features</string>
+    <string name="buy_in_capital">BUY</string>
+    <string name="later_in_capital">LATER</string>
+    <string name="renew_wildfire_plan">Renew Wildfire plan</string>
+    <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
+    <string name="renew_in_capital">RENEW</string>
+    <string name="ignore_in_capital">IGNORE</string>
+     <string name="demo_plan_expired">Your Demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
+    <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+    <string name="light_house_pla_will_expire"><Data><![CDATA[Your Lighthouse plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+
+    <string name="email_id_to_request_plans">support@sibername.com</string>
 
     <string name="fb_login_protocol_scheme">fb1641508162754092</string>
 
