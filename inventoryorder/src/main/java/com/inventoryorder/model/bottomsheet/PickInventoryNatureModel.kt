@@ -18,6 +18,10 @@ class PickInventoryNatureModel(var inventoryTypeIcon: Int? = null,
         return takeIf { isInventorySelected }?.let { R.drawable.ic_selected } ?: R.drawable.ic_option_unselected
     }
 
+    fun setColor() : Int {
+        return takeIf { isInventorySelected }?.let { R.color.primary_grey_dark } ?: R.color.primary_grey
+    }
+
     fun getData(): ArrayList<PickInventoryNatureModel> {
         val list = ArrayList<PickInventoryNatureModel>()
         list.add(PickInventoryNatureModel(R.drawable.ic_physical_product, "Physical product",

@@ -12,19 +12,19 @@ class PickInventoryNatureViewHolder( binding : ItemBottomSheetPickInventoryNatur
         super.bind(position, item)
 
         val data = item as PickInventoryNatureModel
-        setData(data)
+//        setData(data)
     }
 
-    private fun setData( data : PickInventoryNatureModel?){
-        data?.setIcon()?.let { binding.inventorySelectedOrUnselectedIcon.setImageResource(it) }
-        binding.tvInventoryName.text = data?.inventoryName
-        binding.tvInventoryDescription.text = data?.inventoryDescription
-        data?.inventoryTypeIcon?.let { binding.ivInventoryType.setImageResource(it) }
-        binding?.mainView.setOnClickListener {
-            listener?.onItemClick(adapterPosition,data,RecyclerViewActionType.PICK_INVENTORY_NATURE.ordinal)
-        }
-
-    }
+//    private fun setData( data : PickInventoryNatureModel?){
+//        data?.setIcon()?.let { binding.inventorySelectedOrUnselectedIcon.setImageResource(it) }
+//        binding.tvInventoryName.text = data?.inventoryName
+//        binding.tvInventoryDescription.text = data?.inventoryDescription
+//        data?.inventoryTypeIcon?.let { binding.ivInventoryType.setImageResource(it) }
+//        binding?.mainView.setOnClickListener {
+//            listener?.onItemClick(adapterPosition,data,RecyclerViewActionType.PICK_INVENTORY_NATURE.ordinal)
+//        }
+//
+//    }
 
 
 
