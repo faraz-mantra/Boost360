@@ -68,7 +68,7 @@ class SplashFragment : DialogFragment() {
                     viewModel.createCustomerInfo(CreateCustomerInfoRequest(
                             AddressDetails(
                                     if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
-                                    "+91",
+                                    "india",
                                     null,
                                     null,
                                     null,
@@ -99,7 +99,7 @@ class SplashFragment : DialogFragment() {
                     viewModel.updateCustomerInfo(CreateCustomerInfoRequest(
                             AddressDetails(
                                     if (business_city_name.text.isEmpty()) null else business_city_name.text.toString(),
-                                    "+91",
+                                    "india",
                                     null,
                                     null,
                                     null,

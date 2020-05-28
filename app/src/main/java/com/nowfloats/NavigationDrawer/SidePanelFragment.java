@@ -36,10 +36,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles;
 import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
+import com.nowfloats.NavigationDrawer.popup.PurchaseFeaturesPopup;
 import com.nowfloats.on_boarding.OnBoardingApiCalls;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
@@ -114,9 +116,11 @@ public class SidePanelFragment extends Fragment {
 
     private ImageView shareImageView, keyboardImageView, marketplaceImageView, subscriptionsImageView, analyticsImageView, dasbBoardImageView, helpAndSupportImageView,
             accountSettingsImageView, manageCustomerImageView, manageContentImageView, aboutImageView, cotnentSharingImageView, callsImageView,
-            manageInventoryImageView, inboxImageView;
+            manageInventoryImageView, inboxImageView, keyboardLock;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
     private SharedPreferences pref, mSharedPreferences;
+
+    private PurchaseFeaturesPopup purchaseFeaturesPopup = new PurchaseFeaturesPopup();
 
 
     public interface OnItemClickListener {
@@ -306,10 +310,11 @@ public class SidePanelFragment extends Fragment {
         manageInventoryLayout = card.findViewById(R.id.twelveth_Layout);
         inboxLayout = card.findViewById(R.id.thirteen_Layout);
         keyboardLayout = (LinearLayout) card.findViewById(R.id.keyboard_layout);
+        keyboardLock = (ImageView) card.findViewById(R.id.keyboard_lock);
         if (Constants.StoreWidgets.contains("BOOSTKEYBOARD"))
-            keyboardLayout.setVisibility(View.VISIBLE);
+            keyboardLock.setVisibility(View.GONE);
         else
-            keyboardLayout.setVisibility(View.GONE);
+            keyboardLock.setVisibility(View.VISIBLE);
 
         marketplaceLayout = (LinearLayout) card.findViewById(R.id.marketplace_layout);
         accountSettingsLayout = card.findViewById(R.id.fifthRow_Layout);
@@ -472,8 +477,17 @@ public class SidePanelFragment extends Fragment {
         keyboardLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((OnItemClickListener) mainActivity).onClick(getString(R.string.keyboard));
-                onclickColorChange(keyboardImageView, keyboardTextView, keyboardLayout);
+                if(Constants.StoreWidgets.contains("BOOSTKEYBOARD")) {
+                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.keyboard));
+                    onclickColorChange(keyboardImageView, keyboardTextView, keyboardLayout);
+                }else{
+                    mDrawerLayout.closeDrawers();
+                    // show popup to user to Purchase this item.
+                    Bundle bundle = new Bundle();
+                    bundle.putString("buyItemKey","BOOSTKEYBOARD");
+                    purchaseFeaturesPopup.setArguments(bundle);
+                    purchaseFeaturesPopup.show(requireActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
+                }
             }
         });
 
