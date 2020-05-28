@@ -59,11 +59,11 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
             e.printStackTrace();
         }
 
-        if (!BuildConfig.DEBUG) {
-
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
+//        if (!BuildConfig.DEBUG) {
+//
+//            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//            StrictMode.setThreadPolicy(policy);
+//        }
         ApxorSDK.initialize(BuildConfig.APXOR_BUNDLED_ID, getApplicationContext());
         String deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
