@@ -430,6 +430,13 @@
                 android:textSize="12sp"
                 android:visibility="gone"
                 tools:ignore="MissingPrefix" />
+            <ImageView
+                android:id="@+id/keyboard_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_expiry_lock"
+                android:visibility="visible"
+                android:paddingRight="30dp"/>
 
         </LinearLayout>
 
@@ -541,7 +548,7 @@
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon_feedback"
-                android:tint="#808080" />
+                app:tint="#808080" />
 
             <TextView
                 android:id="@+id/tv_get_in_touch"

@@ -40,6 +40,7 @@ import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.HomeListener
 import com.boost.upgrades.ui.cart.CartFragment
+import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
@@ -101,7 +102,7 @@ class HomeFragment : BaseFragment(), HomeListener {
 
         upgradeAdapter = UpgradeAdapter((activity as UpgradeActivity), ArrayList())
         packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), (activity as UpgradeActivity), this)
-        featureDealsAdapter = FeatureDealsAdapter(ArrayList(),ArrayList(), (activity as UpgradeActivity), this)
+        featureDealsAdapter = FeatureDealsAdapter(ArrayList(), ArrayList(), (activity as UpgradeActivity), this)
 
         //request retrofit instance
         ApiService = getRetrofit()
@@ -358,7 +359,7 @@ class HomeFragment : BaseFragment(), HomeListener {
 
         viewModel.getAllFeatureDeals().observe(this, androidx.lifecycle.Observer {
             if (it.size > 0) {
-                var cartItems:List<CartModel> = arrayListOf()
+                var cartItems: List<CartModel> = arrayListOf()
                 if (viewModel.cartResult.value != null) {
                     cartItems = viewModel.cartResult.value!!
                 }
@@ -392,12 +393,12 @@ class HomeFragment : BaseFragment(), HomeListener {
                 badge.visibility = View.GONE
             }
             //refresh FeatureDeals adaptor when cart is updated
-                if (viewModel.allFeatureDealsResult.value != null) {
-                    val list = viewModel.allFeatureDealsResult.value!!
-                    if (list.size > 0) {
-                        updateFeatureDealsViewPager(list, it)
-                    }
+            if (viewModel.allFeatureDealsResult.value != null) {
+                val list = viewModel.allFeatureDealsResult.value!!
+                if (list.size > 0) {
+                    updateFeatureDealsViewPager(list, it)
                 }
+            }
         })
     }
 
@@ -427,21 +428,21 @@ class HomeFragment : BaseFragment(), HomeListener {
         packageViewPagerAdapter.addupdates(list)
         packageViewPagerAdapter.notifyDataSetChanged()
         //show dot indicator only when the (list.size > 2)
-        if(list.size>1) {
+        if (list.size > 1) {
             dots_indicator.visibility = View.VISIBLE
-        }else {
+        } else {
             dots_indicator.visibility = View.INVISIBLE
         }
     }
 
-    fun updateFeatureDealsViewPager(list: List<FeatureDeals>,cartList: List<CartModel>) {
+    fun updateFeatureDealsViewPager(list: List<FeatureDeals>, cartList: List<CartModel>) {
         feature_deals_layout.visibility = View.VISIBLE
         feature_deals_viewpager.offscreenPageLimit = if (list.size > 0) list.size else 1
         featureDealsAdapter.addupdates(list, cartList)
         featureDealsAdapter.notifyDataSetChanged()
-        if(list.size > 1){
+        if (list.size > 1) {
             feature_deals_indicator.visibility = View.VISIBLE
-        }else{
+        } else {
             feature_deals_indicator.visibility = View.INVISIBLE
         }
     }
