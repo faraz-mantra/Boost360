@@ -267,15 +267,15 @@ public class ManageInventoryFragment extends Fragment {
 
     public static int getExperienceType(String fp_appExperienceCode) {
         switch (fp_appExperienceCode) {
-            case "SVC":
+            case "SVC": /* TODO for Booking */
             case "HOS":
             case "SPA":
             case "SAL":
             case "EDU":
                 return 1;
-            case "DOC":
+            case "DOC": /* TODO for video consultation */
                 return 2;
-            default:
+            default: /* TODO for order */
                 return 3;
         }
     }
