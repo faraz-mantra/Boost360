@@ -1,6 +1,5 @@
 package com.boost.upgrades
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
@@ -10,10 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
+import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.splash.SplashFragment
+import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.HOME_FRAGMENT
@@ -44,6 +45,7 @@ class UpgradeActivity : AppCompatActivity() {
     var mobileNo: String? = null
     var profileUrl: String? = null
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
+    private var buyItemWidgetkey: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +58,8 @@ class UpgradeActivity : AppCompatActivity() {
         email = intent.getStringExtra("email")
         mobileNo = intent.getStringExtra("mobileNo")
         profileUrl = intent.getStringExtra("profileUrl")
+        //user buying item directly
+        buyItemWidgetkey = intent.getStringExtra("buyItemKey")
 
         prefs = SharedPrefs(this)
         initView()
@@ -66,9 +70,16 @@ class UpgradeActivity : AppCompatActivity() {
         if (fpid != null) {
             addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
 
+            if (buyItemWidgetkey != null) {
+                val details = DetailsFragment.newInstance()
+                val args = Bundle()
+                args.putString("itemId", buyItemWidgetkey)
+                details.arguments = args
+                addFragment(details, Constants.DETAILS_FRAGMENT)
+            }
             //turn this on when you want to show Welcome Market Screen all the time
-//            prefs.storeInitialLoadMarketPlace(true)
-            if (prefs.getInitialLoadMarketPlace()) {
+            //prefs.storeInitialLoadMarketPlace(true)
+            else if (prefs.getInitialLoadMarketPlace()) {
                 splashFragment.show(
                         supportFragmentManager,
                         SPLASH_FRAGMENT
