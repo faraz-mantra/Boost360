@@ -72,7 +72,7 @@ public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFrag
         super.onViewCreated(view, savedInstanceState);
         setRecyclerViewPickInventoryNature();
         binding.buttonDone.setOnClickListener(v -> {
-            listener.onClickInventory(item, list);
+            listener.onClickInventory(item);
             dismiss();
         });
         binding.tvCancel.setOnClickListener(v -> dismiss());
@@ -85,9 +85,6 @@ public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFrag
     }
 
     private void onClickItemGet(int position, PickInventoryNatureModel item, int actionType) {
-
-
-
         this.item = item;
         for (PickInventoryNatureModel it : list) {
             it.setSelected(Objects.requireNonNull(it.getInventoryName()).equalsIgnoreCase(item.getInventoryName()));
@@ -98,6 +95,6 @@ public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFrag
 
 
     public interface Listener {
-        void onClickInventory(PickInventoryNatureModel item, ArrayList<PickInventoryNatureModel> list);
+        void onClickInventory(PickInventoryNatureModel item);
     }
 }
