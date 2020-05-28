@@ -162,9 +162,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
         return productType;
     }
 
-    private void pickInventory(PickInventoryNatureModel item, ArrayList<PickInventoryNatureModel> listNew) {
-        this.list.clear();
-        this.list.addAll(listNew);
+    private void pickInventory(PickInventoryNatureModel item) {
         if (item.getIconType() != null) binding.ivIcon.setImageResource(item.getIconType());
         binding.labelItemType.setText(item.getInventoryName());
         binding.labelItemDescription.setText(item.getInventoryDescription());
