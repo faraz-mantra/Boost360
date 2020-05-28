@@ -1,9 +1,6 @@
 package com.inventoryorder.holders
 
 import android.graphics.Paint
-import com.framework.extensions.gone
-import com.framework.glide.util.glideLoad
-import com.inventoryorder.R
 import com.inventoryorder.databinding.ItemVideoConsultDetailsBinding
 import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
@@ -18,16 +15,15 @@ class VideoConsultDetailsViewHolder(binding: ItemVideoConsultDetailsBinding) : A
   }
 
   private fun setDataResponseForOrderDetails(item: ItemN) {
-    binding.tvDishName.text = item.Product?.Name?.trim()
-    binding.tvDishQuantity.text = "Qty: ${item.Quantity}"
-    binding.tvDishQuantity.gone()
+    binding.tvDishName.text = item.Product?.extraItemProductConsultation()?.detailsConsultation()
+    binding.tvDishQuantity.text = item.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
     val currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     binding.tvDishAmount.text = "$currency ${item.SalePrice ?: 0}"
     binding.tvActualPrice.paintFlags = binding.tvActualPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
     binding.tvActualPrice.text = "$currency ${item.ActualPrice ?: 0}"
-    val url: String? = item.Product?.ImageUri?.trim()
-    url?.let { activity?.glideLoad(binding.ivDishItem, it, R.drawable.placeholder_image) }
-        ?: (binding.ivDishItem.setImageResource(R.drawable.placeholder_image))
+//    val url: String? = item.Product?.ImageUri?.trim()
+//    url?.let { activity?.glideLoad(binding.ivDishItem, it, R.drawable.placeholder_image) }
+//        ?: (binding.ivDishItem.setImageResource(R.drawable.placeholder_image))
 
   }
 }
