@@ -70,7 +70,7 @@
         {
           "title": "Your digital clinic",
           "desc": "",
-          "icon": "/icons/digital_compliance.svg",
+          "icon": "/icons/digital_clinic.svg",
           "boost_widget_key": "STOREFRONT",
           "details": [
             {
@@ -78,8 +78,8 @@
               "desc": "The internet is the first place that people go to when they want to explore treatment options. A detailed and well-structured website helps in establishing trust in your practice. Boost can help you create an attractive and well-designed website to impress patients and visitors. The site is mobile responsive, which means that people can read it both on their smartphones as well as laptops."
             },
             {
-              "title": "Appointment bookings, enquiries & video consulting",
-              "desc": "Boost has many useful features such as end-to-end appointment bookings, enquiry facility, video consulting etc. to assist your business. Doctors and healthcare specialists can use these features to see more patients and increase their efficiency."
+              "title": "Appointment bookings & enquiries",
+              "desc": "Boost has many useful features such as end-to-end appointment bookings, enquiry facility etc. to assist your business. Doctors and healthcare specialists can use these features to see more patients and increase their efficiency."
             },
             {
               "title": "Pre-installed payment gateway",
@@ -247,18 +247,26 @@
           ]
         },
         {
-          "title": "Faculty profiles",
+          "title": "Website Customised for Educational Insitutes",
           "desc": "",
-          "icon": "/icons/digital_profiles.svg",
-          "boost_widget_key": "FACULTY",
+          "icon": "/icons/digital_storefront.svg",
+          "boost_widget_key": "STOREFRONT",
           "details": [
             {
-              "title": "Listing Lecturer Profiles",
-              "desc": "Tell people why they should rely on your faculty. Share details such as lecturers’ qualifications, experience, papers written, awards received etc. It is important to convince your students that the lecturers who will be teaching them are competent in their field and come with a proven track record."
+              "title": "Automatic optimisation for search",
+              "desc": "The business website enabled via Boost, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
             },
             {
-              "title": "Online Lectures",
-              "desc": "Our online classrooms are the next best thing to physical coaching. Ensure that classes don’t come to a standstill due to pandemics, public health emergencies, natural disasters etc. Share notes, assign homework, perform corrections and do much more in the safety of our secure and modern digital classrooms."
+              "title": "Pre-installed payment gateway for online admissions",
+              "desc": "Thinking of offering your classes or admissions online? Go right ahead! Now your students can make online payments using any method they choose through a pre-installed payment system. Offer your classes and admission online and receive cash digitally via a fast and reliable payments gateway."
+            },
+            {
+              "title": "Upgrade to a custom domain",
+              "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
+            },
+            {
+              "title": "High speed & secure website",
+              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to assist your retail business."
             }
           ]
         },
@@ -604,6 +612,30 @@
           ]
         },
         {
+          "title": "Website Customised for Spa",
+          "desc": "",
+          "icon": "/icons/digital_storefront.svg",
+          "boost_widget_key": "STOREFRONT",
+          "details": [
+            {
+              "title": "Automatic optimisation for search",
+              "desc": "The business website enabled via Boost, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
+            },
+            {
+              "title": "Pre-installed payment gateway for paid appointments",
+              "desc": "Thinking of offering your spa appointments online? Go right ahead! Now your customers can make online payments using any method they choose through a pre-installed payment system. Offer your appointment booking online and receive cash digitally via a fast and reliable payments gateway."
+            },
+            {
+              "title": "Upgrade to a custom domain",
+              "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
+            },
+            {
+              "title": "High speed & secure website",
+              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to assist your retail business."
+            }
+          ]
+        },
+        {
           "title": "Secure digital payments",
           "desc": "",
           "icon": "/icons/digital_payment.svg",
@@ -751,18 +783,22 @@
           ]
         },
         {
-          "title": "Showcase customer reviews",
+          "title": "Website Customised for Hotels",
           "desc": "",
-          "icon": "/icons/customer_reviews.svg",
-          "boost_widget_key": "TESTIMONIALS",
+          "icon": "/icons/digital_storefront.svg",
+          "boost_widget_key": "STOREFRONT",
           "details": [
             {
-              "title": "Capture & Showcase customer testimonials",
-              "desc": "Your customers are your best salespeople. Use their testimonials to clinch the next booking. With Boost, you can upload customer reviews to the website within minutes. Showcase your excellence through credible testimonials to enhance your brand image and reputation."
+              "title": "Automatic optimisation for search",
+              "desc": "The business website enabled via Boost, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
             },
             {
-              "title": "Display Tripadvisor reviews",
-              "desc": "Boost allows you to integrate your website with TripAdvisor to display their reviews. TripAdvisor’s reputation as a leading travel portal hosting genuine reviews brings credibility to your business. Reviews from a trustworthy site are a great way to advertise your business and improve your brand image."
+              "title": "Upgrade to a custom domain",
+              "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
+            },
+            {
+              "title": "High speed & secure website",
+              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to assist your retail business."
             }
           ]
         },
@@ -897,6 +933,30 @@
             {
               "title": "Reply to customer enquiries instantly",
               "desc": "The system will inform you immediately after a visitor drops a query. You can use the details provided by them in the message to reply back. Responding promptly to customer queries increases their chance of choosing you over your competitors. It provides you with a golden opportunity to increase market share."
+            }
+          ]
+        },
+        {
+          "title": "Website Customised for Restaurants",
+          "desc": "",
+          "icon": "/icons/digital_storefront.svg",
+          "boost_widget_key": "STOREFRONT",
+          "details": [
+            {
+              "title": "Automatic optimisation for search",
+              "desc": "The business website enabled via Boost, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
+            },
+            {
+              "title": "Pre-installed payment gateway for online orders",
+              "desc": "Thinking of offering your menu online? Go right ahead! Now your customers can make online payments using any method they choose through a pre-installed payment system. Offer online food ordering and receive cash digitally via a fast and reliable payments gateway."
+            },
+            {
+              "title": "Upgrade to a custom domain",
+              "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
+            },
+            {
+              "title": "High speed & secure website",
+              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to assist your retail business."
             }
           ]
         },
@@ -1040,6 +1100,30 @@
           ]
         },
         {
+          "title": "Website Customised for Salon",
+          "desc": "",
+          "icon": "/icons/digital_storefront.svg",
+          "boost_widget_key": "STOREFRONT",
+          "details": [
+            {
+              "title": "Automatic optimisation for search",
+              "desc": "The business website enabled via Boost, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
+            },
+            {
+              "title": "Pre-installed payment gateway for paid appointments",
+              "desc": "Thinking of offering your appointments online? Go right ahead! Now your customers can make online payments using any method they choose through a pre-installed payment system. Offer appointment booking online and receive cash digitally via a fast and reliable payments gateway."
+            },
+            {
+              "title": "Upgrade to a custom domain",
+              "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
+            },
+            {
+              "title": "High speed & secure website",
+              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to assist your retail business."
+            }
+          ]
+        },
+        {
           "title": "Secure digital payments",
           "desc": "",
           "icon": "/icons/digital_payment.svg",
@@ -1178,6 +1262,26 @@
             {
               "title": "Reply to customer enquiries instantly",
               "desc": "The system will inform you immediately after a visitor drops a query. You can use the details provided by them in the message to reply back. Responding promptly to customer queries increases their chance of choosing you over your competitors. It provides you with a golden opportunity to increase market share."
+            }
+          ]
+        },
+        {
+          "title": "Website Customised for Manufacturers",
+          "desc": "",
+          "icon": "/icons/digital_storefront.svg",
+          "boost_widget_key": "STOREFRONT",
+          "details": [
+            {
+              "title": "Automatic optimisation for search",
+              "desc": "The business website enabled via Boost, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
+            },
+            {
+              "title": "Upgrade to a custom domain",
+              "desc": "When you create a Boost website, it is built using our domain name. But you also have the chance to create your own custom domain. Having a website with a custom domain name increases customer trust and makes your business look more professional. All you need to do to get your own domain name is let us know that you want to upgrade!"
+            },
+            {
+              "title": "High speed & secure website",
+              "desc": "All our websites are equipped with top-grade security features such as SSL certificates. SSL certificates ensure that the information you send on the internet is completely encrypted. Websites without SSL certificates run the risk of having their data/information stolen. There is no such risk with Boost which comes with a reliable SSL certificate and other important safety features to assist your retail business."
             }
           ]
         },
@@ -1328,7 +1432,7 @@
           "details": [
             {
               "title": "Automatic optimisation for search",
-              "desc": "The business website enabled via Boost, automatically optimises the digtial content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
+              "desc": "The business website enabled via Boost, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
             },
             {
               "title": "Pre-installed payment gateway for online orders",
@@ -1466,7 +1570,7 @@
           "details": [
             {
               "title": "Automatic optimisation for search",
-              "desc": "The business website enabled via Boost, automatically optimises the digtial content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
+              "desc": "The business website enabled via Boost, automatically optimises the digital content for it to get organically discovered on search engines. This let's you focus on your content quality, and not worry about any search engine optimisations."
             },
             {
               "title": "Pre-installed payment gateway for online orders",
