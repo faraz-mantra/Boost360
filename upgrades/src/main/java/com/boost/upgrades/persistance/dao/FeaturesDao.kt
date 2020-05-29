@@ -18,6 +18,9 @@ interface FeaturesDao {
     @Query("SELECT * FROM Features WHERE boost_widget_key=:item_id")
     fun getFeaturesItemById(item_id: String): Single<FeaturesModel>
 
+    @Query("SELECT EXISTS(SELECT * FROM Features)")
+    fun checkEmptyFeatureTable(): Single<Int>
+
 
     //true for premium type
     //false for non-premium type
