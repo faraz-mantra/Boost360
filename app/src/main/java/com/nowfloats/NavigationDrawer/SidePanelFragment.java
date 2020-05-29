@@ -116,7 +116,7 @@ public class SidePanelFragment extends Fragment {
 
     private ImageView shareImageView, keyboardImageView, marketplaceImageView, subscriptionsImageView, analyticsImageView, dasbBoardImageView, helpAndSupportImageView,
             accountSettingsImageView, manageCustomerImageView, manageContentImageView, aboutImageView, cotnentSharingImageView, callsImageView,
-            manageInventoryImageView, inboxImageView, keyboardLock;
+            manageInventoryImageView, inboxImageView, keyboardLock, callLock;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
     private SharedPreferences pref, mSharedPreferences;
 
@@ -311,10 +311,17 @@ public class SidePanelFragment extends Fragment {
         inboxLayout = card.findViewById(R.id.thirteen_Layout);
         keyboardLayout = (LinearLayout) card.findViewById(R.id.keyboard_layout);
         keyboardLock = (ImageView) card.findViewById(R.id.keyboard_lock);
+        callLock = (ImageView) card.findViewById(R.id.call_lock);
         if (Constants.StoreWidgets.contains("BOOSTKEYBOARD"))
             keyboardLock.setVisibility(View.GONE);
         else
             keyboardLock.setVisibility(View.VISIBLE);
+        //calltracker
+        if (Constants.StoreWidgets.contains("CALLTRACKER"))
+            callLock.setVisibility(View.GONE);
+        else
+            callLock.setVisibility(View.VISIBLE);
+
 
         marketplaceLayout = (LinearLayout) card.findViewById(R.id.marketplace_layout);
         accountSettingsLayout = card.findViewById(R.id.fifthRow_Layout);
@@ -484,6 +491,7 @@ public class SidePanelFragment extends Fragment {
                     mDrawerLayout.closeDrawers();
                     // show popup to user to Purchase this item.
                     Bundle bundle = new Bundle();
+                    bundle.putString("itemName", "Boost Keyboard");
                     bundle.putString("buyItemKey","BOOSTKEYBOARD");
                     purchaseFeaturesPopup.setArguments(bundle);
                     purchaseFeaturesPopup.show(requireActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
@@ -524,8 +532,18 @@ public class SidePanelFragment extends Fragment {
         manageCalls.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onclickColorChange(callsImageView, tvCalls, manageCalls);
-                ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_customer_calls));
+                if(Constants.StoreWidgets.contains("CALLTRACKER")) {
+                    onclickColorChange(callsImageView, tvCalls, manageCalls);
+                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_customer_calls));
+                }else{
+                    mDrawerLayout.closeDrawers();
+                    // show popup to user to Purchase this item.
+                    Bundle bundle = new Bundle();
+                    bundle.putString("itemName", "Customer Call Tracking");
+                    bundle.putString("buyItemKey","CALLTRACKER");
+                    purchaseFeaturesPopup.setArguments(bundle);
+                    purchaseFeaturesPopup.show(requireActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
+                }
             }
         });
         analyticsLayout.setOnClickListener(new View.OnClickListener() {
