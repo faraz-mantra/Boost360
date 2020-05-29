@@ -23,10 +23,11 @@ public class PurchaseFeaturesPopup extends DialogFragment {
 
     LinearLayout mainLayout;
     RelativeLayout secondaryLayout;
-    TextView buyItemButton;
+    TextView buyItemButton, featureName;
 
     UserSessionManager session;
 
+    String itemName = "";
     String buyItemKey = "";
 
 
@@ -45,6 +46,7 @@ public class PurchaseFeaturesPopup extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.purchase_feature_popup, container, false);
         session = new UserSessionManager(requireActivity().getApplicationContext(), (HomeActivity) requireActivity());
+        itemName = getArguments().getString("itemName");
         buyItemKey = getArguments().getString("buyItemKey");
         return layout;
     }
@@ -53,9 +55,13 @@ public class PurchaseFeaturesPopup extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         mainLayout = (LinearLayout) view.findViewById(R.id.main_layout);
         secondaryLayout = (RelativeLayout) view.findViewById(R.id.secondary_layout);
         buyItemButton = (TextView) view.findViewById(R.id.buy_item);
+        featureName = (TextView) view.findViewById(R.id.feature_name);
+
+        featureName.setText(itemName);
 
         mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override

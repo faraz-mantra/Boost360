@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:clickable="true"
     android:focusable="true"
     android:gravity="center"
@@ -44,9 +45,10 @@
             android:paddingBottom="@dimen/_20sdp"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/feature_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Boost Keyboard"
+                tools:text="Boost Keyboard"
                 android:fontFamily="@font/open_sans_semibold"
                 android:textColor="@color/common_text_color"
                 android:textSize="@dimen/_16sdp"/>
