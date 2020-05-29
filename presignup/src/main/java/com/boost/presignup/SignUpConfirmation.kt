@@ -3,6 +3,7 @@ package com.boost.presignup
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignup.utils.WebEngageController
 import com.google.firebase.auth.FirebaseAuth
@@ -35,11 +36,17 @@ class SignUpConfirmation : AppCompatActivity() {
       profileUrl = currentFirebaseUser.photoUrl?.toString()
     } else
       if (!profileUrl.isEmpty()) {
-        val url = URL(profileUrl)
-        val bmp: Bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-        userProfileImage.setImageBitmap(bmp)
+
+       Thread {
+         val url = URL(profileUrl)
+         val bmp: Bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+         Handler().post{
+           userProfileImage.setImageBitmap(bmp)
+         }
+       }
       }
-    set_up_business_profile.setOnClickListener {
+
+      set_up_business_profile.setOnClickListener {
       WebEngageController.trackEvent("PS_Business Creation Initiated", "Business Creation Initiated", "")
 
 //      val intent = Intent(applicationContext, Class.forName("com.nowfloats.signup.UI.UI.PreSignUpActivityRia"))
