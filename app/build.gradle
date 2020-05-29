@@ -133,13 +133,13 @@ android {
         nowfloats_us {
             versionName "1.0.11"
             applicationId "com.redtim"
-            versionCode 2018070027
+            versionCode 2018070028
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"0092e23d-20a6-49b9-82f9-afdc2d4872d3"'
         }
         partone {
 
-            versionName "5.3.14"
+            versionName "5.3.15"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
