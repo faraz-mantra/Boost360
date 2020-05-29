@@ -1,6 +1,8 @@
 package com.boost.upgrades
 
+import android.app.ProgressDialog
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
@@ -9,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
+import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.home.HomeFragment
@@ -27,6 +30,9 @@ import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 
 class UpgradeActivity : AppCompatActivity() {
@@ -47,6 +53,10 @@ class UpgradeActivity : AppCompatActivity() {
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
     private var buyItemWidgetkey: String? = null
 
+    private var initialLoadUpgradeActivity: Int = 0
+    lateinit var progressDialog: ProgressDialog
+    private var loadingStatus:Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upgrade)
@@ -61,6 +71,8 @@ class UpgradeActivity : AppCompatActivity() {
         //user buying item directly
         buyItemWidgetkey = intent.getStringExtra("buyItemKey")
 
+        progressDialog = ProgressDialog(this)
+
         prefs = SharedPrefs(this)
         initView()
         initRazorPay()
@@ -69,22 +81,9 @@ class UpgradeActivity : AppCompatActivity() {
     fun initView() {
         if (fpid != null) {
             addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
+            //update userdetails and buyitem
+            showingPopUp()
 
-            if (buyItemWidgetkey != null) {
-                val details = DetailsFragment.newInstance()
-                val args = Bundle()
-                args.putString("itemId", buyItemWidgetkey)
-                details.arguments = args
-                addFragment(details, Constants.DETAILS_FRAGMENT)
-            }
-            //turn this on when you want to show Welcome Market Screen all the time
-            //prefs.storeInitialLoadMarketPlace(true)
-            else if (prefs.getInitialLoadMarketPlace()) {
-                splashFragment.show(
-                        supportFragmentManager,
-                        SPLASH_FRAGMENT
-                )
-            }
             supportFragmentManager.addOnBackStackChangedListener {
                 val currentFragment =
                         supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
@@ -201,6 +200,71 @@ class UpgradeActivity : AppCompatActivity() {
 
     fun adjustScreenForKeyboard() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+    }
+
+    fun showingPopUp() {
+        if(loadingStatus && initialLoadUpgradeActivity == 0) {
+            loaderStatus(true)
+        }
+        CompositeDisposable().add(
+                AppDatabase.getInstance(getApplication())!!
+                        .featuresDao()
+                        .checkEmptyFeatureTable()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            if (it == 1) {
+                                loaderStatus(false)
+                                if (buyItemWidgetkey != null) {
+//                Handler().postDelayed({
+                                    val details = DetailsFragment.newInstance()
+                                    val args = Bundle()
+                                    args.putString("itemId", buyItemWidgetkey)
+                                    details.arguments = args
+                                    addFragment(details, Constants.DETAILS_FRAGMENT)
+//                }, 1000)
+                                }
+                                //turn this on when you want to show Welcome Market Screen all the time
+                                //prefs.storeInitialLoadMarketPlace(true)
+                                else if (prefs.getInitialLoadMarketPlace()) {
+//                Handler().postDelayed({
+                                    splashFragment.show(
+                                            supportFragmentManager,
+                                            SPLASH_FRAGMENT
+                                    )
+//                }, 1000)
+                                }
+                            } else {
+                                //recall after 1 second
+                                Handler().postDelayed({
+                                    if (initialLoadUpgradeActivity < 3) {
+                                        initialLoadUpgradeActivity += 1
+                                        showingPopUp()
+                                    } else {
+                                        loaderStatus(false)
+                                        Toasty.error(this, "Not able to Fetch data from database. Try Later..", Toast.LENGTH_LONG).show()
+                                    }
+                                }, 1000)
+                            }
+                        }, {
+                            loaderStatus(false)
+                            Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                        })
+        )
+
+    }
+
+    fun loaderStatus(status:Boolean){
+        if(status){
+            loadingStatus = true
+            val status = "Loading. Please wait..."
+            progressDialog.setMessage(status)
+            progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+            progressDialog.show()
+        }else{
+            loadingStatus = false
+            progressDialog.dismiss()
+        }
     }
 
 }
