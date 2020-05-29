@@ -22,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.popup.PurchaseFeaturesPopup;
 import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
@@ -56,6 +57,8 @@ public class ManageInboxFragment extends Fragment {
     private Activity activity;
     private boolean mIsAPEnabled = false;
     private String mTransactionCharge = "9%";
+
+    private PurchaseFeaturesPopup purchaseFeaturesPopup = new PurchaseFeaturesPopup();
 
 
     @Override
@@ -170,10 +173,18 @@ public class ManageInboxFragment extends Fragment {
             });
 
             tvBusinessCalls.setOnClickListener(v -> {
-
-                Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                if(Constants.StoreWidgets.contains("CALLTRACKER")) {
+                    Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }else{
+                    // show popup to user to Purchase this item.
+                    Bundle bundle = new Bundle();
+                    bundle.putString("itemName", "Customer Call Tracking");
+                    bundle.putString("buyItemKey","CALLTRACKER");
+                    purchaseFeaturesPopup.setArguments(bundle);
+                    purchaseFeaturesPopup.show(requireActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
+                }
             });
 
             tvPaymentSetting.setOnClickListener(new View.OnClickListener() {
