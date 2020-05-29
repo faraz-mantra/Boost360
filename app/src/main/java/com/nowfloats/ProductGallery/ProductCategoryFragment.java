@@ -19,6 +19,7 @@ import com.nowfloats.ProductGallery.Model.Product;
 import com.nowfloats.ProductGallery.Service.ProductGalleryInterface;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentProductCategoryBinding;
 
@@ -84,18 +85,22 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             if(!TextUtils.isEmpty(product.productType) && (product.productType.equalsIgnoreCase("services") || product.productType.equalsIgnoreCase("products")))
             {
                 productType = product.productType;
-                setProductType(productType, "Editing ".concat(productType.equalsIgnoreCase("products") ? "Product" : "Service"));
+                setProductType(productType,
+                        "Editing ".concat(Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode())));
             }
 
             else
             {
-                productType = setProductType("products", "Editing ".concat(productType.equalsIgnoreCase("products") ? "Product" : "Service"));
+                productType = setProductType("products",
+                        "Editing ".concat(Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode())));
             }
         }
 
         else
         {
-            productType = setProductType(/*session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)*/ "products", "Adding to Catalogue");
+            productType = setProductType(/*session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)*/
+                    "products",
+                    "Adding to Catalogue");
         }
 
         binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));

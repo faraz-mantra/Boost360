@@ -716,6 +716,6 @@ public class ContactInformationActivity extends BaseActivity {
      */
     private void addInfoButtonListener()
     {
-        binding.ibInfoWhatsapp.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "This is your WhatsApp for business number.", binding.ibInfoWhatsapp));
+        binding.ibInfoWhatsapp.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "This is your WhatsApp number.", binding.ibInfoWhatsapp));
     }
 }

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.se.omapi.Session;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -37,7 +36,7 @@ public class ManageInventoryActivity extends AppCompatActivity {
         UserSessionManager session = new UserSessionManager(getApplicationContext(), this);
         category_code = session.getFP_AppExperienceCode();
         if (getSupportActionBar() != null) {
-            setTitle(Utils.getDefaultOrderROIType(category_code));
+            setTitle(Utils.getDefaultTrasactionsTaxonomyFromServiceCode(category_code));
             getSupportActionBar().setDisplayShowHomeEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

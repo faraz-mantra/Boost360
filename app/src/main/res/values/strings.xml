@@ -1745,7 +1745,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="upload_image_err">Failed to upload image</string>
 
     <string-array name="manage_content_tab_items">
-        <item>Catalogue</item>
+        <item>[Catalogue]</item>
         <item>Latest Updates</item>
         <item>All Images</item>
         <item>Business Profile</item>

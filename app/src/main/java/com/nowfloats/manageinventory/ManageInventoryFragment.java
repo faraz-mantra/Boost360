@@ -8,7 +8,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,18 +22,13 @@ import com.google.gson.reflect.TypeToken;
 import com.inventoryorder.constant.FragmentType;
 import com.inventoryorder.constant.IntentConstant;
 import com.inventoryorder.model.PreferenceData;
-import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
-import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
-import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 
 import java.io.IOException;
@@ -52,7 +46,7 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  * A simple {@link Fragment} subclass.
  */
 public class ManageInventoryFragment extends Fragment {
-    TextView tvPaymentSetting, tvProductGallery, tvTotalNoOfOrders, tvTotalRevenue, tvSellerAnalytics, tvBusinessInquiries, tvBusinessCalls;
+    TextView tvPaymentSetting, tvTransactionType_1, tvTransactionType_2;
     ImageView ivLockWidget, ivPaymentIcon;
     //Typeface robotoLight;
     private SharedPreferences pref = null;
@@ -77,12 +71,13 @@ public class ManageInventoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View mainView = inflater.inflate(R.layout.fragment_manage_inventory, container, false);
         ivLockWidget = mainView.findViewById(R.id.lock_widget);
+        ivLockWidget.setVisibility(View.GONE);
         ivPaymentIcon = mainView.findViewById(R.id.secondrow_ImageView_ProfileV2);
 
         session = new UserSessionManager(getContext(), activity);
         pref = activity.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
-        getPaymentSettings();
+        //getPaymentSettings();
         return mainView;
     }
 
@@ -154,32 +149,20 @@ public class ManageInventoryFragment extends Fragment {
             tvPaymentSetting = mainView.findViewById(R.id.tvPaymentSetting);
             //tvPaymentSetting.setTypeface(robotoMedium);
 
-            tvProductGallery = mainView.findViewById(R.id.tvProductGallery);
-            tvProductGallery.setText(TextUtils.isEmpty(session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)) ? getString(R.string.product_gallery) : session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY) + " Gallery");
-            //tvProductGallery.setTypeface(robotoMedium);
+            String svc_code = session.getFP_AppExperienceCode();
+            tvTransactionType_1 = mainView.findViewById(R.id.transactions_type_1);
+            tvTransactionType_1.setText(Utils.getDefaultTrasactionsTaxonomyFromServiceCode(svc_code));
+            if("DOC".equalsIgnoreCase(svc_code) || "HOS".equalsIgnoreCase(svc_code))
+                tvTransactionType_1.setText("Appointments at Clinic");
 
-            tvSellerAnalytics = mainView.findViewById(R.id.tvSellerAnalytics);
-            //tvSellerAnalytics.setTypeface(robotoMedium);
+            tvTransactionType_2 = mainView.findViewById(R.id.transactions_type_2);
+            String secondTransactionType = Utils.getSecondTypeTrasactionsTaxonomyFromServiceCode(svc_code);
+            tvTransactionType_2.setText(secondTransactionType);
+            if(secondTransactionType != null && secondTransactionType.length() > 1)
+                tvTransactionType_2.setVisibility(View.VISIBLE);
+            else
+                tvTransactionType_2.setVisibility(View.GONE);
 
-            tvBusinessCalls = mainView.findViewById(R.id.tvBusinessCalls);
-            //tvBusinessCalls.setTypeface(robotoMedium);
-
-            tvBusinessInquiries = mainView.findViewById(R.id.tvBusinessInquiries);
-            //tvBusinessInquiries.setTypeface(robotoMedium);
-
-            tvBusinessInquiries.setOnClickListener(v -> {
-
-                Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            });
-
-            tvBusinessCalls.setOnClickListener(v -> {
-
-                Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            });
 
             tvPaymentSetting.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -190,18 +173,8 @@ public class ManageInventoryFragment extends Fragment {
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
-            tvProductGallery.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
-                    //Intent i = new Intent(getActivity(), ProductGalleryActivity.class);
-                    Intent i = new Intent(getActivity(), ProductCatalogActivity.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
-            });
 
-            tvSellerAnalytics.setOnClickListener(new View.OnClickListener() {
+            tvTransactionType_1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -237,9 +210,12 @@ public class ManageInventoryFragment extends Fragment {
                 }
             });
 
-            String category = session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY);
-            tvProductGallery.setText("Catalogue");
-
+            tvTransactionType_2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getActivity(), "Coming Soon. Drop an email to ria@getboost360.com in case of urgency.", Toast.LENGTH_LONG).show();
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -262,10 +238,10 @@ public class ManageInventoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (headerText != null)
-            headerText.setText(Utils.getDefaultOrderROIType(category_code));
+            headerText.setText(Utils.getDefaultTrasactionsTaxonomyFromServiceCode(category_code));
     }
 
-    private void openSellerAnalyticsActivity() {
+    private void openPrimaryTransactionTypeOrdes() {
         Bundle bundle = new Bundle();
         PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
@@ -273,12 +249,8 @@ public class ManageInventoryFragment extends Fragment {
 
         if (getAppointmentType(session.getFP_AppExperienceCode())) {
             startFragmentActivityNew(activity, FragmentType.ALL_BOOKING_VIEW, bundle, false);
-        } else startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
-
-//        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
-//        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
-//        startActivity(i);
-//        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        } else
+            startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
     }
 
     public static boolean getAppointmentType(String fp_appExperienceCode) {
@@ -296,12 +268,13 @@ public class ManageInventoryFragment extends Fragment {
     }
 
     private void startOrdersActivity() {
-        if (!WidgetKey.isNewPricingPlan) openSellerAnalyticsActivity();
-        else {
-            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SHOPPING_CART, WidgetKey.WIDGET_PROPERTY_CART);
-            if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
-                Toast.makeText(getContext(), getString(R.string.message_feature_not_available), Toast.LENGTH_LONG).show();
-            } else openSellerAnalyticsActivity();
-        }
+        openPrimaryTransactionTypeOrdes();
+//        if (!WidgetKey.isNewPricingPlan) openSellerAnalyticsActivity();
+//        else {
+//            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SHOPPING_CART, WidgetKey.WIDGET_PROPERTY_CART);
+//            if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
+//                Toast.makeText(getContext(), getString(R.string.message_feature_not_available), Toast.LENGTH_LONG).show();
+//            } else openSellerAnalyticsActivity();
+//        }
     }
 }
