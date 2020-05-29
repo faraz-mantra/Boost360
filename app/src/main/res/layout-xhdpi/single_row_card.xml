@@ -224,6 +224,15 @@
                     android:textSize="@dimen/_8ssp" />
             </RelativeLayout>
 
+
+            <ImageView
+                android:id="@+id/call_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_expiry_lock"
+                android:visibility="visible"
+                android:paddingRight="30dp"/>
+
         </LinearLayout>
 
         <LinearLayout
