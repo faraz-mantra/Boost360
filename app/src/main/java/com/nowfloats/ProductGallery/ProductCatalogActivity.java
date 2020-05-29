@@ -20,6 +20,7 @@ import com.nowfloats.ProductGallery.Service.ProductGalleryInterface;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.nowfloats.widget.WidgetKey;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityProductCatalogBinding;
@@ -59,9 +60,9 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
             getSupportActionBar().setTitle("");
 
-            String category = session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY);
-            binding.layoutToolbar.toolbarTitle.setText("Catalogue");
-            binding.tvMessage.setText(String.format(getString(R.string.product_empty_view_message), category.toLowerCase()));
+            binding.layoutToolbar.toolbarTitle.setText(Utils.getProductCatalogTaxonomyFromServiceCode(session.getFP_AppExperienceCode()));
+            binding.tvMessage.setText(String.format(getString(R.string.product_empty_view_message),
+                    Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase()));
         }
 
         this.initProductRecyclerView();
@@ -149,10 +150,9 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         binding.productList.setLayoutManager(layoutManager);
         binding.productList.setAdapter(adapter);
 
-        adapter.SetOnItemClickListener(product -> {
-
+        adapter.SetOnItemClickListener(selected_product -> {
                     Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
-                    intent.putExtra("PRODUCT", product);
+                    intent.putExtra("PRODUCT", selected_product);
                     startActivityForResult(intent, 300);
                 }
         );

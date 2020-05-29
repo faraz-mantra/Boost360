@@ -66,15 +66,16 @@ public class Utils {
 		return (int)(dp * context.getResources().getDisplayMetrics().density);
 	}
 
-	public static String getDefaultOrderROIType(String category_code){
+	public static String getDefaultTrasactionsTaxonomyFromServiceCode(String category_code){
 		switch (category_code){
 			case "SVC":
 			case "DOC":
 			case "HOS":
 			case "SPA":
 			case "SAL":
-			case "EDU":
 				return "Appointments";
+			case "EDU":
+				return "Admission Requests";
 			case "HOT":
 				return "Room Bookings";
 			case "RTL":
@@ -84,6 +85,60 @@ public class Utils {
 				return "Food Orders";
 			default:
 				return "Orders";
+		}
+	}
+
+	public static String getSecondTypeTrasactionsTaxonomyFromServiceCode(String category_code){
+		switch (category_code){
+			case "DOC":
+			case "HOS":
+				return "Video Consultations";
+			default:
+				return "";
+		}
+	}
+
+	public static String getProductCatalogTaxonomyFromServiceCode(String category_code){
+		switch (category_code){
+			case "SVC":
+			case "DOC":
+			case "HOS":
+			case "SPA":
+			case "SAL":
+				return "Service Catalogue";
+			case "EDU":
+				return "Course Catalogue";
+			case "HOT":
+				return "Room Inventory";
+			case "RTL":
+			case "MFG":
+				return "Products Catalogue";
+			case "CAF":
+				return "Digital Food Menu";
+			default:
+				return "Catalogue";
+		}
+	}
+
+	public static String getSingleProductTaxonomyFromServiceCode(String category_code){
+		switch (category_code){
+			case "SVC":
+			case "DOC":
+			case "HOS":
+			case "SPA":
+			case "SAL":
+				return "Service";
+			case "EDU":
+				return "Course";
+			case "HOT":
+				return "Room";
+			case "RTL":
+			case "MFG":
+				return "Product";
+			case "CAF":
+				return "Food Item";
+			default:
+				return "Catalogue";
 		}
 	}
 }

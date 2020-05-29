@@ -36,7 +36,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles;
 import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
@@ -346,30 +345,7 @@ public class SidePanelFragment extends Fragment {
 
 
         if (category_code != null) {
-            switch (category_code) {
-                case "SVC":
-                case "DOC":
-                case "HOS":
-                case "SPA":
-                case "SAL":
-                case "EDU":
-                    tvManageInventory.setText("Appointments");
-                    break;
-                case "HOT":
-                    tvManageInventory.setText("Room Bookings");
-                    break;
-                case "RTL":
-                case "MFG":
-                    tvManageInventory.setText("Orders");
-                    break;
-                case "CAF":
-                    tvManageInventory.setText("Food Orders");
-                    break;
-                default:
-                    tvManageInventory.setText("Orders");
-                    break;
-            }
-            tvManageInventory.setText(Utils.getDefaultOrderROIType(category_code));
+            tvManageInventory.setText(Utils.getDefaultTrasactionsTaxonomyFromServiceCode(category_code));
             tvInbox = inboxLayout.findViewById(R.id.tvInbox);
             switch (category_code) {
                 case "MFG":

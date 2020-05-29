@@ -93,7 +93,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         @Override
         public void run() {
             try {
-                Thread.sleep(1200);
+                Thread.sleep(800);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -102,15 +102,6 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
                 public void run() {
                     try {
                         displayHomeScreen();
-                        // This method will be executed once the timer is over Start your app main activity
-//                        MixPanelController.setMixPanel(SplashScreen_Activity.this, MixPanelController.mainActivity);
-//                        if (session.checkLogin()) {
-//                            loginCheck = "true";
-//
-//                        } else {
-//                            loginCheck = "false";
-//                            displayPreSignUpScreens();
-//                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -120,11 +111,22 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private void Start() {
-
         if (mThread == null) {
             mThread = new Thread(new DataRunnable());
             mThread.start();
+        } else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        displayHomeScreen();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
+
     }
 
     private void displayHomeScreen() {

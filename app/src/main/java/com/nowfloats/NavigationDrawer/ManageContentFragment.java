@@ -14,10 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nowfloats.CustomPage.CustomPageActivity;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
 import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 /**
@@ -43,7 +45,11 @@ public class ManageContentFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
 
+        UserSessionManager session = new UserSessionManager(getContext(), getActivity());
+
         final String[] adapterTexts = getResources().getStringArray(R.array.manage_content_tab_items);
+        adapterTexts[0] = Utils.getProductCatalogTaxonomyFromServiceCode(session.getFP_AppExperienceCode());
+
         final TypedArray imagesArray = getResources().obtainTypedArray(R.array.manage_content_sidepanel);
         int[] adapterImages = new int[adapterTexts.length];
         for (int i = 0; i<adapterTexts.length;i++){
@@ -57,21 +63,21 @@ public class ManageContentFragment extends Fragment{
             @Override
             public void onItemClick(int pos) {
                 Intent intent = null;
-                switch(adapterTexts[pos]){
-                    case "Catalogue":
+                switch(pos){
+                    case 0:
                         intent = new Intent(mContext, ProductCatalogActivity.class);
                         break;
-                    case "Business Profile":
+                    case 1:
+                        ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.update));
+                        return;
+                    case 2:
+                        intent = new Intent(mContext, ImageMenuActivity.class);
+                        break;
+                    case 3:
                         intent = new Intent(mContext,FragmentsFactoryActivity.class);
                         intent.putExtra("fragmentName","Business_Profile_Fragment_V2");
                         break;
-                    case "Latest Updates":
-                        ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.update));
-                        return;
-                    case "All Images":
-                        intent = new Intent(mContext, ImageMenuActivity.class);
-                        break;
-                    case "Custom Pages":
+                    case 4:
                        intent = new Intent(mContext, CustomPageActivity.class);
                         break;
                     default:

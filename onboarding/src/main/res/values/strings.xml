@@ -30,7 +30,7 @@
   <string name="fb_page">Facebook Page</string>
   <string name="google_maps">Google Maps</string>
   <string name="fb_shop">Facebook Shop</string>
-  <string name="whatsapp_business">WhatsApp Business</string>
+  <string name="whatsapp_business">WhatsApp</string>
   <string name="twitter_profile">Twitter Profile</string>
   <string name="google_business">Google Business</string>
   <string name="important">Important</string>
@@ -71,7 +71,7 @@
   <string name="business_digitally_desc">It’s time to start creating engaging and meaningfull content to make people aware about business. Content plays a vital role into giving strength to your business digitally.</string>
 
   <string name="enter_whatsapp_business_contact">Is there a WhatsApp number for your business?</string>
-  <string name="whatsApp_number_customers_to_reach_you_easily">In case you don’t have it, you can use your personal WhatsApp contact number to allow customers to start chatting with you right away.</string>
+  <string name="whatsApp_number_customers_to_reach_you_easily">In case you don’t have it, you can use your personal WhatsApp contact number to allow customers to start chatting with you directly on WhatsApp.</string>
   <string name="confirm_and_proceed">Confirm and Proceed</string>
   <string name="processing_your_business_information">Setting up your business\non Boost...</string>
   <string name="business_information_completed">Your business information\nsetup is completed!</string>
