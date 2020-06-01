@@ -19,7 +19,6 @@ import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class NewBookingFragmentOne : BaseInventoryFragment<FragmentNewBookingOneBinding>(), RecyclerItemClickListener {
 
@@ -27,7 +26,7 @@ class NewBookingFragmentOne : BaseInventoryFragment<FragmentNewBookingOneBinding
     private var selectAppointmentList = AppointMentTypeModel().getData()
     private var choosePurposeBottomSheetDialog: ChoosePurposeBottomSheetDialog? = null
     private var selectAppointmentTypeBottomSheetDialog: AppointmentTypeBottomSheetDialog? = null
-    private var list = ArrayList<AppointmentScheduleModel>()
+    private var appointMeantScheduleList = AppointmentScheduleModel().getData()
     private var adapterAppointmentSchedule: AppBaseRecyclerViewAdapter<AppointmentScheduleModel>? = null
     var onDoneClicked : ( appointmentScheduleModel : AppointmentScheduleModel?) -> Unit = {}
 
@@ -60,7 +59,7 @@ class NewBookingFragmentOne : BaseInventoryFragment<FragmentNewBookingOneBinding
 
     private fun setAdapterForAppointmentSchedule() {
         binding?.recyclerViewAppointmentSchedule?.post {
-            adapterAppointmentSchedule = AppBaseRecyclerViewAdapter(baseActivity, AppointmentScheduleModel().getData(), this)
+            adapterAppointmentSchedule = AppBaseRecyclerViewAdapter(baseActivity, appointMeantScheduleList, this)
             binding?.recyclerViewAppointmentSchedule?.layoutManager = LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL, false)
             binding?.recyclerViewAppointmentSchedule?.adapter = adapterAppointmentSchedule
         }
@@ -99,13 +98,13 @@ class NewBookingFragmentOne : BaseInventoryFragment<FragmentNewBookingOneBinding
     }
 
     fun setList(list: ArrayList<AppointmentScheduleModel>) {
-        this.list.clear()
-        this.list.addAll(list)
+        this.appointMeantScheduleList.clear()
+        this.appointMeantScheduleList.addAll(list)
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         val selectedItem = item as AppointmentScheduleModel
-        list.forEach { it.isSelected = (it.appointMeantSchedule == selectedItem.appointMeantSchedule) }
+        appointMeantScheduleList.forEach { it.isSelected = (it.appointMeantSchedule == selectedItem.appointMeantSchedule) }
         onDoneClicked(selectedItem)
         adapterAppointmentSchedule?.notifyDataSetChanged()
 
