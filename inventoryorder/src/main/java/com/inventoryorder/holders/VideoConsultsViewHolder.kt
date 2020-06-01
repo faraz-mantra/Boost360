@@ -73,13 +73,13 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
         OrderSummaryModel.OrderType.DELIVERY_DELAYED,
         OrderSummaryModel.OrderType.DELIVERY_FAILED,
         OrderSummaryModel.OrderType.DELIVERY_COMPLETED -> {
-          if (todayDate == itemDate) {
+//          if (todayDate == itemDate) {
             checkPaymentConfirm(order)
             changeBackground(View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light, R.color.light_green)
-          } else {
-            buttonVisibility(false)
-            backgroundGrey(View.VISIBLE, View.GONE, R.drawable.cancel_order_bg, R.color.primary_grey)
-          }
+//          } else {
+//            buttonVisibility(false)
+//            backgroundGrey(View.VISIBLE, View.GONE, R.drawable.cancel_order_bg, R.color.primary_grey)
+//          }
         }
         OrderSummaryModel.OrderType.ABANDONED,
         OrderSummaryModel.OrderType.CANCELLED -> {

@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFragment  {
+public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFragment {
 
     private ArrayList<PickInventoryNatureModel> list;
     private Listener listener;
@@ -91,7 +91,6 @@ public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFrag
         }
         adapter.notifyDataSetChanged();
     }
-
 
 
     public interface Listener {
