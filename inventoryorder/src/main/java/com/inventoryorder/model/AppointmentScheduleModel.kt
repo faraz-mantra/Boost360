@@ -5,7 +5,9 @@ import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 
 class AppointmentScheduleModel(var appointMeantSchedule: String? = null,
-                               var isSelected: Boolean = false
+                               var isSelected: Boolean = false,
+                               var isLastItem: Boolean = false
+
 ) : AppBaseRecyclerViewItem {
 
     override fun getViewType(): Int {
@@ -13,8 +15,8 @@ class AppointmentScheduleModel(var appointMeantSchedule: String? = null,
     }
 
     fun setSelectedItemBackground() : Int{
-        return takeIf { isSelected }?.let { R.color.light_grey } ?: R.color.black
-//                drawable.item_appointment_schedule_background_2  // R.color.white
+        return takeIf { isSelected }?.let { R.color.light_grey }
+                ?: R.drawable.item_appointment_schedule_background_2
     }
 
     fun setSelectedItemColor() : Int{
@@ -23,13 +25,16 @@ class AppointmentScheduleModel(var appointMeantSchedule: String? = null,
 
     fun getData(): ArrayList<AppointmentScheduleModel> {
         val list = ArrayList<AppointmentScheduleModel>()
-        list.add(AppointmentScheduleModel("Today", true))
+        list.add(AppointmentScheduleModel("Today", true, true))
         list.add(AppointmentScheduleModel("Tomorrow"))
         list.add(AppointmentScheduleModel("28-MAY"))
         list.add(AppointmentScheduleModel("29-MAY"))
         list.add(AppointmentScheduleModel("30-MAY"))
         list.add(AppointmentScheduleModel("31-MAY"))
         list.add(AppointmentScheduleModel("01-June"))
+
+        list.lastOrNull()?.isLastItem = true
+
         return list
     }
 

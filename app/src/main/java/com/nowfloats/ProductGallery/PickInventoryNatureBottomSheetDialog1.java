@@ -30,7 +30,7 @@ public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFrag
     private Listener listener;
     private BottomSheetPickInventoryNatureBinding binding;
     private BottomSheetDialog dialog;
-    private PickInventoryNatureModel item;
+    private PickInventoryNatureModel item = null;
     private InventoryPickAdapter adapter;
 
     PickInventoryNatureBottomSheetDialog1(ArrayList<PickInventoryNatureModel> list, Listener listener) {
@@ -72,7 +72,7 @@ public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFrag
         super.onViewCreated(view, savedInstanceState);
         setRecyclerViewPickInventoryNature();
         binding.buttonDone.setOnClickListener(v -> {
-            listener.onClickInventory(item);
+            if (item != null) listener.onClickInventory(item);
             dismiss();
         });
         binding.tvCancel.setOnClickListener(v -> dismiss());
