@@ -27,11 +27,14 @@ class AppointmentScheduleModel(var appointMeantSchedule: String? = null,
         val list = ArrayList<AppointmentScheduleModel>()
         list.add(AppointmentScheduleModel("Today", true, true))
         list.add(AppointmentScheduleModel("Tomorrow"))
-        list.add(AppointmentScheduleModel("28-MAY"))
-        list.add(AppointmentScheduleModel("29-MAY"))
-        list.add(AppointmentScheduleModel("30-MAY"))
-        list.add(AppointmentScheduleModel("31-MAY"))
         list.add(AppointmentScheduleModel("01-June"))
+        list.add(AppointmentScheduleModel("02-June"))
+        list.add(AppointmentScheduleModel("03-June"))
+        list.add(AppointmentScheduleModel("04-June"))
+        list.add(AppointmentScheduleModel("05-June"))
+        list.add(AppointmentScheduleModel("06-June"))
+        list.add(AppointmentScheduleModel("07-June"))
+        list.add(AppointmentScheduleModel("08-June"))
 
         list.lastOrNull()?.isLastItem = true
 
