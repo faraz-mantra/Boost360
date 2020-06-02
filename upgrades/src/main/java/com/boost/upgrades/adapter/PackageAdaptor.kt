@@ -13,6 +13,9 @@ import com.boost.upgrades.R
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.FeaturesModel
 import com.bumptech.glide.Glide
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class PackageAdaptor(cryptoCurrencies: List<FeaturesModel>?, bundleData: Bundles) : RecyclerView.Adapter<PackageAdaptor.upgradeViewHolder>() {
@@ -75,9 +78,9 @@ class PackageAdaptor(cryptoCurrencies: List<FeaturesModel>?, bundleData: Bundles
         for (item in bundleData.included_features){
             if (item.feature_code.equals(upgradeList.get(position).boost_widget_key)){
                 var mrpPrice = 0.0
-                var grandTotal = 0.0
+                var grandTotal = 0
                 val total = (upgradeList.get(position).price - ((upgradeList.get(position).price * item.feature_price_discount_percent) / 100.0))
-                grandTotal += total * minMonth
+                grandTotal += total.toInt() * minMonth
                 mrpPrice += upgradeList.get(position).price * minMonth
                 if(item.feature_price_discount_percent > 0){
                     holder.discount.setText(item.feature_price_discount_percent.toString()+"%")
@@ -86,15 +89,25 @@ class PackageAdaptor(cryptoCurrencies: List<FeaturesModel>?, bundleData: Bundles
                     holder.discount.visibility = View.GONE
                 }
                 if(minMonth > 1){
-                    holder.price.setText("₹"+grandTotal+"/"+minMonth+"month")
+                    holder.price.setText("₹"+
+                            NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)+
+                            "/"+minMonth+"months")
                 }else{
-                    holder.price.setText("₹"+grandTotal+"/month")
+                    if(grandTotal > 0)
+                        holder.price.setText("₹"+
+                                NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)+
+                                "/month")
+                    else
+                        holder.price.visibility = View.GONE
                 }
-                if (grandTotal != mrpPrice) {
+                if (grandTotal != mrpPrice.toInt()) {
                     spannableString(holder, mrpPrice)
                     holder.origCost.visibility = View.VISIBLE
                 } else {
                     holder.origCost.visibility = View.GONE
+                }
+                if(grandTotal == 0){
+                    holder.price.visibility = View.GONE
                 }
                 break
             }
