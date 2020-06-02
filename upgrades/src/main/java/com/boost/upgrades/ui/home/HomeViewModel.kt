@@ -331,4 +331,20 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 .subscribe()
     }
 
+    fun emptyCouponTable() {
+        Completable.fromAction {
+            AppDatabase.getInstance(getApplication())!!
+                    .couponsDao()
+                    .emptyCoupons()
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    Log.i("emptyCouponTable", "Successfull")
+                }.doOnError {
+                    Log.i("emptyCouponTable", "Failure")
+                }
+                .subscribe()
+    }
+
 }
