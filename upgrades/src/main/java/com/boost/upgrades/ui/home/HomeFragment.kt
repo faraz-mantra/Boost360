@@ -120,6 +120,9 @@ class HomeFragment : BaseFragment(), HomeListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        //emptyCouponTable everytime for new coupon code
+        viewModel.emptyCouponTable()
+
         setSpannableStrings()
         loadData()
         initMvvm()
