@@ -3,7 +3,6 @@ package nfkeyboard.util;
 import android.content.Context;
 import android.util.Log;
 
-import com.apxor.androidsdk.core.ApxorSDK;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import org.json.JSONArray;
@@ -93,7 +92,7 @@ public class MixPanelUtils {
 
     public static void track(String event, JSONObject props) {
         try {
-            ApxorSDK.logAppEvent(event, (HashMap<String, String>) jsonToMap(props));
+//            ApxorSDK.logAppEvent(event, (HashMap<String, String>) jsonToMap(props));
             /*if (mixPanel != null)
                 mixPanel.track(event, props);*/
         } catch (Exception e) {
@@ -152,7 +151,7 @@ public class MixPanelUtils {
 
 
     public static void identify(String id, JSONObject param, String fpid) {
-        Log.v("mixpanel", id);
+//        Log.v("mixpanel", id);
         try {
 //            if (mixPanel == null) return;
 //            mixPanel.identify(id);
@@ -166,8 +165,8 @@ public class MixPanelUtils {
             // people.initPushHandling("276987746927");
             //people.set("Notification", fpid);
 
-            ApxorSDK.setUserIdentifier(id);
-            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(param));
+//            ApxorSDK.setUserIdentifier(id);
+//            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(param));
 
         } catch (Exception e) {
             e.printStackTrace();

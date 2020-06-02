@@ -3,8 +3,6 @@ package com.nowfloats.util;
 import android.app.Activity;
 import android.util.Log;
 
-import com.apxor.androidsdk.core.ApxorSDK;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -170,7 +168,7 @@ public class MixPanelController {
 
     public static void track(String event, JSONObject props) {
         try {
-            ApxorSDK.logAppEvent(event, (HashMap<String, String>) jsonToMap(props));
+//            ApxorSDK.logAppEvent(event, (HashMap<String, String>) jsonToMap(props));
 //            if (mixPanel != null)n
 //                mixPanel.track(event, props);
         } catch (Exception e) {
@@ -229,11 +227,11 @@ public class MixPanelController {
 
 
     public static void identify(String id, JSONObject param, String fpid) {
-        Log.v("mixpanel", id);
+//        Log.v("mixpanel", id);
         try {
 
-            ApxorSDK.setUserIdentifier(id);
-            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(param));
+//            ApxorSDK.setUserIdentifier(id);
+//            ApxorSDK.setUserCustomInfo((HashMap<String, String>) toMap(param));
 
 //            if (mixPanel == null) return;
 //            mixPanel.identify(id);

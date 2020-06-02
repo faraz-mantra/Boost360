@@ -234,7 +234,8 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
           orderAdapter?.removeLoadingFooter()
           isLoadingD = false
           orderAdapter?.addItems(list)
-        } else setAdapterOrderList(list)
+        } else
+          setAdapterOrderList(list)
       } else {
         binding?.orderRecycler?.gone()
         showShortToast(it.message)

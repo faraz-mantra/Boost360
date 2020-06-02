@@ -1357,7 +1357,7 @@
     {
       "category_key": "OTHER RETAIL",
       "experience_code": "RTL",
-      "webTemplateId" : "5a952f3dac626704fc9b6d86",
+      "webTemplateId" : "5b864dd931bfd4054774ec1b",
       "category_Name": "Other\n& Retail Business",
       "category_descriptor": "your retail business",
       "icon": "/icons/rtl.svg",
@@ -1497,7 +1497,7 @@
     {
       "category_key": "OTHER SERVICES",
       "experience_code": "SVC",
-      "webTemplateId" : "5a952f3dac626704fc9b6d86",
+      "webTemplateId" : "5b7c65a512416106678dfbe7",
       "category_Name": "Other\n& Service Business",
       "category_descriptor": "your services business",
       "icon": "/icons/svc.svg",

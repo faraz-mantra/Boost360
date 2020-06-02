@@ -198,7 +198,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                     if (item.min_purchase_months != null && item.min_purchase_months > 1) item.min_purchase_months else 1,
                                                     item.overall_discount_percent,
                                                     if (item.primary_image != null) item.primary_image.url else null,
-                                                    Gson().toJson(item.included_features)
+                                                    Gson().toJson(item.included_features),
+                                                    item.target_business_usecase,
+                                                    Gson().toJson(item.exclusive_to_categories)
                                             ))
                                         }
                                         Completable.fromAction {

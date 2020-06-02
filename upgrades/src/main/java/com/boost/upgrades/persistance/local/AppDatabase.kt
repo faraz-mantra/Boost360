@@ -10,7 +10,7 @@ import com.boost.upgrades.data.model.*
 
 import com.boost.upgrades.utils.Constants
 
-@Database(entities = [FeaturesModel::class, WidgetModel::class, BundlesModel::class, CartModel::class, CouponsModel::class], version = 8, exportSchema = false)
+@Database(entities = [FeaturesModel::class, WidgetModel::class, BundlesModel::class, CartModel::class, CouponsModel::class], version = 9, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {

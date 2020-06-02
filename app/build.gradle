@@ -243,7 +243,7 @@ dependencies {
     //wenengage analytics
     implementation 'com.webengage:android-sdk:3.+'
 
-    implementation 'com.apxor.android:apxor-android-sdk-core:2.5.1@aar'
+//    implementation 'com.apxor.android:apxor-android-sdk-core:2.5.1@aar'
     implementation project(':keyboard')
     implementation project(':imagepicker')
     implementation 'com.edmodo:cropper:1.0.1'
