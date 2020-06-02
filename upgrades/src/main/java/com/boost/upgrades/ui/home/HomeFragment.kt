@@ -350,7 +350,9 @@ class HomeFragment : BaseFragment(), HomeListener {
                         item.min_purchase_months,
                         item.name,
                         item.overall_discount_percent,
-                        PrimaryImage(item.primary_image)
+                        PrimaryImage(item.primary_image),
+                        item.target_business_usecase,
+                        Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type)
                 ))
             }
             if (list.size > 0)

@@ -4,6 +4,7 @@ import android.text.SpannableString
 import android.text.style.StrikethroughSpan
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
@@ -18,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.package_item.view.*
+import java.text.NumberFormat
 import java.util.*
 
 class PackageViewPagerAdapter(
@@ -61,6 +63,8 @@ class PackageViewPagerAdapter(
         val name = itemView.findViewById<TextView>(R.id.package_name)
         val offerPrice = itemView.findViewById<TextView>(R.id.offer_price)
         val origCost = itemView.findViewById<TextView>(R.id.orig_cost)
+        val bundleUsecase = itemView.findViewById<TextView>(R.id.package_flag_tag)
+        val tagHolder = itemView.findViewById<RelativeLayout>(R.id.premium_account_flag_2)
     }
 
     fun getPackageInfoFromDB(holder: PagerViewHolder, bundles: Bundles) {
@@ -69,7 +73,7 @@ class PackageViewPagerAdapter(
             itemsIds.add(item.feature_code)
         }
         var mrpPrice = 0.0
-        var grandTotal = 0.0
+        var grandTotal = 0
         val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1) bundles.min_purchase_months else 1
         CompositeDisposable().add(
                 AppDatabase.getInstance(activity.application)!!
@@ -83,22 +87,31 @@ class PackageViewPagerAdapter(
                                         for (item in bundles.included_features) {
                                             if (singleItem.boost_widget_key == item.feature_code) {
                                                 val total = (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0))
-                                                grandTotal += total * minMonth
+                                                grandTotal += total.toInt() * minMonth
                                                 mrpPrice += singleItem.price * minMonth
                                             }
                                         }
                                     }
+                                    if(bundles.target_business_usecase.isNullOrEmpty())
+                                        holder.tagHolder.visibility = View.GONE
+                                    else
+                                        holder.bundleUsecase.setText(bundles.target_business_usecase)
+
                                     if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1){
-                                        holder.offerPrice.setText("₹" + grandTotal+"/"+bundles.min_purchase_months+"month")
-                                        if (grandTotal != mrpPrice) {
+                                        holder.offerPrice.setText("₹" +
+                                                NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)+
+                                                "/" + bundles.min_purchase_months + "months")
+                                        if (grandTotal != mrpPrice.toInt()) {
                                             spannableString(holder, mrpPrice, bundles.min_purchase_months)
                                             holder.origCost.visibility = View.VISIBLE
                                         } else {
                                             holder.origCost.visibility = View.GONE
                                         }
                                     }else{
-                                        holder.offerPrice.setText("₹" + grandTotal+"/month")
-                                        if (grandTotal != mrpPrice) {
+                                        holder.offerPrice.setText("₹" +
+                                                NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+                                                + "/month")
+                                        if (grandTotal != mrpPrice.toInt()) {
                                             spannableString(holder, mrpPrice, 1)
                                             holder.origCost.visibility = View.VISIBLE
                                         } else {
@@ -116,9 +129,9 @@ class PackageViewPagerAdapter(
     fun spannableString(holder: PagerViewHolder, value: Double, minMonth: Int) {
         val origCost: SpannableString
         if(minMonth > 1){
-            origCost = SpannableString("₹" + value+"/"+minMonth+"month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth+"months")
         }else{
-            origCost = SpannableString("₹" + value+"/month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
         }
 
         origCost.setSpan(

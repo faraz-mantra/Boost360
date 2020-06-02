@@ -21,10 +21,15 @@ data class BundlesModel(
         @ColumnInfo(name = "overall_discount_percent")
         var overall_discount_percent: Int = 0,
 
-
         @ColumnInfo(name = "primary_image")
         var primary_image: String? = null,
 
         @ColumnInfo(name = "included_features")
-        var included_features: String? = null
+        var included_features: String? = null,
+
+        @ColumnInfo(name = "target_business_usecase")
+        var target_business_usecase: String? = null,
+
+        @ColumnInfo(name = "exclusive_to_categories")
+        var exclusive_to_categories: String? = null
 )

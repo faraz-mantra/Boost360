@@ -45,7 +45,7 @@ class OrderSummaryModel(
     RECEIVED("Received", OrderStatus.ORDER_CONFIRMED.name),
     PAYMENT_CONFIRM("Received", OrderStatus.PAYMENT_CONFIRMED.name),
 
-    SUCCESSFUL("Successful", OrderStatus.ORDER_COMPLETED.name),
+    SUCCESSFUL("Completed", OrderStatus.ORDER_COMPLETED.name),
 
     ESCALATED("Escalated", OrderStatus.ESCALATED.name),
 
@@ -53,8 +53,8 @@ class OrderSummaryModel(
     ABANDONED("Abandoned", OrderStatus.ORDER_CANCELLED.name), /* with Payment Status == CANCELLED */
 
     ORDER_INITIATED("Initiated", OrderStatus.ORDER_INITIATED.name),
-    PAYMENT_MODE_VERIFIED("Payment verify", OrderStatus.PAYMENT_MODE_VERIFIED.name),
-    DELIVERY_IN_PROGRESS("Delivery progress", OrderStatus.DELIVERY_IN_PROGRESS.name),
+    PAYMENT_MODE_VERIFIED("Payment complete", OrderStatus.PAYMENT_MODE_VERIFIED.name),
+    DELIVERY_IN_PROGRESS("Delivery in-progress", OrderStatus.DELIVERY_IN_PROGRESS.name),
     FEEDBACK_PENDING("Feedback pending", OrderStatus.FEEDBACK_PENDING.name),
     FEEDBACK_RECEIVED("Feedback received", OrderStatus.FEEDBACK_RECEIVED.name),
     DELIVERY_DELAYED("Delivery delayed", OrderStatus.DELIVERY_DELAYED.name),
