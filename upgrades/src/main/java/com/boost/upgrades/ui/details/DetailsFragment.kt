@@ -59,6 +59,9 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.details_fragment.*
 import retrofit2.Retrofit
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class DetailsFragment : BaseFragment(), DetailsFragmentListener {
@@ -238,14 +241,14 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
             add_item_to_cart.setTextColor(Color.WHITE)
             val discount = 100 - addonDetails!!.discount_percent
             val paymentPrice = (discount * addonDetails!!.price) / 100
-            money.text = "₹" + paymentPrice + "/month"
+            money.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/month"
             if (discount > 0) {
                 orig_cost.visibility = View.VISIBLE
                 spannableString(addonDetails!!.price)
             } else {
                 orig_cost.visibility = View.INVISIBLE
             }
-            add_item_to_cart.text = "Add for ₹" + paymentPrice + "/Month"
+            add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Month"
             havent_bought_the_feature.visibility = View.VISIBLE
         } else {
             add_item_to_cart.visibility = View.GONE
@@ -255,7 +258,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     }
 
     fun spannableString(value: Int) {
-        val origCost = SpannableString("Original cost ₹" + value + "/month")
+        val origCost = SpannableString("Original cost ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
 
         origCost.setSpan(
                 StrikethroughSpan(),

@@ -5,9 +5,7 @@ import android.graphics.Color
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.text.style.StrikethroughSpan
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,11 +24,12 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.utils.Constants
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.package_fragment.*
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PackageFragment : BaseFragment() {
 
@@ -42,9 +41,9 @@ class PackageFragment : BaseFragment() {
     var featuresList: List<FeaturesModel>? = null
     var cartList: List<CartModel>? = null
 
-    var mrpPrice = 0.0
-    var grandTotal = 0.0
     var badgeNumber = 0
+    var offeredBundlePrice = 0
+    var originalBundlePrice = 0
 
     var packageInCartStatus = false
 
@@ -63,7 +62,7 @@ class PackageFragment : BaseFragment() {
         val jsonString = arguments!!.getString("bundleData")
         bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
 
-        packageAdaptor = PackageAdaptor(ArrayList(), Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type))
+        packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type))
 
         return root
     }
@@ -78,9 +77,11 @@ class PackageFragment : BaseFragment() {
 
         package_title.setText(bundleData!!.name)
 
-//        Glide.with(this).load(R.drawable.back_beau)
-//                .apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3)))
-//                .into(back_image)
+        if(bundleData!!.primary_image != null && !bundleData!!.primary_image!!.url.isNullOrEmpty()){
+            Glide.with(this).load(bundleData!!.primary_image!!.url).into(package_profile_image)
+        } else {
+            package_profile_image.setImageResource(R.drawable.scissor)
+        }
 
         package_back.setOnClickListener {
             (activity as UpgradeActivity).popFragmentFromBackStack()
@@ -101,8 +102,8 @@ class PackageFragment : BaseFragment() {
                             bundleData!!.name,
                             "",
                             bundleData!!.primary_image!!.url,
-                            grandTotal,
-                            mrpPrice,
+                            offeredBundlePrice.toDouble(),
+                            originalBundlePrice.toDouble(),
                             bundleData!!.overall_discount_percent,
                             1,
                             if (bundleData!!.min_purchase_months != null) bundleData!!.min_purchase_months!! else 1,
@@ -126,11 +127,17 @@ class PackageFragment : BaseFragment() {
     }
 
     private fun loadData() {
-        val itemIds = arrayListOf<String>()
-        for (item in bundleData!!.included_features) {
-            itemIds.add(item.feature_code)
+        if(bundleData!!.included_features != null) {
+            val itemIds = arrayListOf<String>()
+            for (item in bundleData!!.included_features) {
+                itemIds.add(item.feature_code)
+            }
+            viewModel.loadUpdates(itemIds)
+        } else {
+            //TODO: Load the widget_keys associated with Bundle from db
+            viewModel.getAssociatedWidgetKeys(bundleData!!._kid)
         }
-        viewModel.loadUpdates(itemIds)
+
         viewModel.getCartItems()
     }
 
@@ -139,30 +146,37 @@ class PackageFragment : BaseFragment() {
         viewModel.getUpgradeResult().observe(this, Observer {
             if (it.size > 0) {
                 featuresList = it
+                var bundleMonthlyMRP = 0
                 val minMonth:Int = if (bundleData!!.min_purchase_months != null && bundleData!!.min_purchase_months!! > 1) bundleData!!.min_purchase_months!! else 1
                 for (singleItem in it) {
                     for (item in bundleData!!.included_features) {
                         if (singleItem.boost_widget_key == item.feature_code) {
-                            val total = (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0))
-                            grandTotal += total
-                            mrpPrice += singleItem.price
+                            bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
                         }
                     }
                 }
+
+                offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+                originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
+
+                if(bundleData!!.overall_discount_percent > 0)
+                    offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundleData!!.overall_discount_percent/100)
+                else
+                    offeredBundlePrice = originalBundlePrice
+
                 if (minMonth > 1) {
-                    val offeredPrice = grandTotal * minMonth
-                    offer_price.setText("₹" + offeredPrice + "/" + bundleData!!.min_purchase_months + "month")
-                    if (grandTotal != mrpPrice) {
-                        spannableString(mrpPrice, minMonth)
+                    offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/" + bundleData!!.min_purchase_months + "mths")
+                    if (offeredBundlePrice != originalBundlePrice) {
+                        spannableString(originalBundlePrice, minMonth)
                         orig_cost.visibility = View.VISIBLE
                     } else {
                         orig_cost.visibility = View.GONE
                     }
                     updateRecycler(it,bundleData!!.min_purchase_months!!)
                 } else {
-                    offer_price.setText("₹" + grandTotal + "/month")
-                    if (grandTotal != mrpPrice) {
-                        spannableString(mrpPrice, 1)
+                    offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice) + "/mth")
+                    if (offeredBundlePrice != originalBundlePrice) {
+                        spannableString(originalBundlePrice, 1)
                         orig_cost.visibility = View.VISIBLE
                     } else {
                         orig_cost.visibility = View.GONE
@@ -172,6 +186,7 @@ class PackageFragment : BaseFragment() {
                 package_count.setText(featuresList!!.size.toString())
             }
         })
+
         viewModel.cartResult().observe(this, Observer {
             cartList = it
             packageInCartStatus = false
@@ -217,6 +232,16 @@ class PackageFragment : BaseFragment() {
                 package_submit.setText("Add Package to cart")
             }
         })
+
+        viewModel.getBundleWidgetKeys().observe(this, Observer {
+            if(it != null){
+                val itemIds = arrayListOf<String>()
+                for (item in it) {
+                    itemIds.add(item)
+                }
+                viewModel.loadUpdates(itemIds)
+            }
+        })
     }
 
     override fun onBackPressed() {
@@ -225,13 +250,12 @@ class PackageFragment : BaseFragment() {
         }
     }
 
-    fun spannableString(value: Double, minMonth: Int) {
+    fun spannableString(value: Int, minMonth: Int) {
         val origCost: SpannableString
         if (minMonth > 1) {
-            val originalCost = value * minMonth
-            origCost = SpannableString("₹" + originalCost + "/" + minMonth + "month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
         } else {
-            origCost = SpannableString("₹" + value + "/month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
         }
         origCost.setSpan(
                 StrikethroughSpan(),

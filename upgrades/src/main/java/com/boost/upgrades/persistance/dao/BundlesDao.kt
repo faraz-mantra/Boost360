@@ -16,6 +16,9 @@ interface BundlesDao {
     @Query("SELECT COUNT(*) from Bundles")
     fun countBundlesItems(): Single<Int>
 
+    @Query("SELECT included_features from Bundles where bundle_key=:item_id")
+    fun getIncludedKeysInBundle(item_id: String): Single<String?>
+
     @Query("DELETE FROM Bundles")
     fun emptyBundles()
 
