@@ -250,7 +250,11 @@
               android:background="@color/view_background_color" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_140" />
       </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     </androidx.core.widget.NestedScrollView>
 

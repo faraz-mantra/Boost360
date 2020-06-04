@@ -129,19 +129,21 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_140" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.core.widget.NestedScrollView>
 
         <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvHome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_10"
-            android:layout_marginBottom="@dimen/size_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_50"
             android:text="Home"
             android:textColor="@color/colorPrimary"
             app:fontFamily="@font/bold"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
