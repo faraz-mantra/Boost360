@@ -19,6 +19,9 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.bumptech.glide.Glide
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AllFeatureAdaptor(
@@ -99,11 +102,11 @@ class AllFeatureAdaptor(
             val price = (discount * updateModel.price) / 100
             upgradeTitle.text = updateModel.target_business_usecase
             upgradeDetails.text = updateModel.name
-            upgradePrice.text = "₹" + price + "/month"
+            upgradePrice.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
             if(updateModel.discount_percent>0){
                 upgradeDiscount.visibility = View.VISIBLE
                 upgradeDiscount.text = ""+ updateModel.discount_percent+"%"
-                upgradeMRP.text = "₹" + updateModel.price + "/month"
+                upgradeMRP.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(updateModel.price) + "/month"
                 upgradeMRP.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
             }else{
                 upgradeDiscount.visibility = View.GONE

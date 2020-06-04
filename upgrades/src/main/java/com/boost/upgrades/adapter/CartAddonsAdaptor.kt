@@ -14,6 +14,9 @@ import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.interfaces.CartFragmentListener
 import com.bumptech.glide.Glide
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentListener) :
@@ -44,7 +47,7 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
         holder.title.setText(list.get(position).item_name)
         val price = list.get(position).price * list.get(position).min_purchase_months
         val MRPPrice = list.get(position).MRPPrice * list.get(position).min_purchase_months
-        holder.price.setText("₹"+price+"/month")
+        holder.price.setText("₹"+ NumberFormat.getNumberInstance(Locale.ENGLISH).format(price)+"/month")
         if(price!=MRPPrice) {
             spannableString(holder, MRPPrice, list.get(position).min_purchase_months)
             holder.MRPPrice.visibility = View.VISIBLE
@@ -92,9 +95,9 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
         val origCost: SpannableString
         if (minMonth > 1) {
             val originalCost = value
-            origCost = SpannableString("₹" + originalCost + "/" + minMonth + "month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(originalCost) + "/" + minMonth + "months")
         } else {
-            origCost = SpannableString("₹" + value + "/month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
         }
 
         origCost.setSpan(
