@@ -20,8 +20,10 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CartAddonsAdaptor
 import com.boost.upgrades.adapter.CartPackageAdaptor
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.ExtendedProperty
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.PrimaryImage
 //import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.*
 import com.boost.upgrades.data.model.BundlesModel
@@ -30,6 +32,7 @@ import com.boost.upgrades.data.model.CouponsModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
+import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.payment.PaymentFragment
 import com.boost.upgrades.ui.popup.CouponPopUpFragment
 import com.boost.upgrades.ui.popup.GSTINPopUpFragment
@@ -105,7 +108,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         progressDialog = ProgressDialog(requireContext())
 
-        cartPackageAdaptor = CartPackageAdaptor((activity as UpgradeActivity), ArrayList(), this)
+        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this)
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Cart Initialised", "ADDONS_MARKETPLACE Cart", "")
@@ -536,6 +539,36 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     override fun deleteCartAddonsItem(itemID: String) {
         viewModel.deleteCartItems(itemID)
+    }
+
+    override fun showBundleDetails(itemID: String) {
+        var selectedBundle: Bundles? = null
+        for(item in bundlesList){
+            if(item.bundle_key == itemID){
+                val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                selectedBundle = Bundles(
+                        item.bundle_key,
+                        temp,
+                        item.min_purchase_months,
+                        item.name,
+                        item.overall_discount_percent,
+                        PrimaryImage(item.primary_image),
+                        item.target_business_usecase,
+                        Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type)
+                )
+                break
+            }
+        }
+        if(selectedBundle!=null) {
+            val packageFragment = PackageFragment.newInstance()
+            val args = Bundle()
+            args.putString("bundleData", Gson().toJson(selectedBundle))
+            args.putBoolean("showCartIcon", false)
+            packageFragment.arguments = args
+            (activity as UpgradeActivity).addFragment(packageFragment, Constants.PACKAGE_FRAGMENT)
+        }else{
+            Toasty.info(requireContext(),"Something went wrong!! Try Later...").show()
+        }
     }
 
 }

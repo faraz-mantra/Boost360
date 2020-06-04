@@ -24,7 +24,6 @@ import kotlin.collections.ArrayList
 
 
 class CartPackageAdaptor(
-        val activity: UpgradeActivity,
         list: List<CartModel>?,
         val listener: CartFragmentListener) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
 
@@ -78,12 +77,9 @@ class CartPackageAdaptor(
             holder.view.visibility = View.GONE
         }
 
+        //showing package details
         holder.itemView.setOnClickListener {
-            val packageFragment = PackageFragment.newInstance()
-            val args = Bundle()
-            args.putString("bundleData", Gson().toJson(selectedBundle))
-            packageFragment.arguments = args
-            activity.addFragment(packageFragment, Constants.PACKAGE_FRAGMENT)
+            listener.showBundleDetails(bundlesList.get(position).boost_widget_key)
         }
     }
 
