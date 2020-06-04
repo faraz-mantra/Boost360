@@ -286,7 +286,7 @@ public class ManageInventoryFragment extends Fragment {
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
         bundle.putString(IntentConstant.INVENTORY_TYPE.name(), session.getFP_AppExperienceCode());
         int experienceType = getExperienceType(session.getFP_AppExperienceCode());
-        if (experienceType == 1) startFragmentActivityNew(activity, FragmentType.ALL_BOOKING_VIEW, bundle, false);
+        if (experienceType == 1) startFragmentActivityNew(activity, FragmentType.ALL_APPOINTMENT_VIEW, bundle, false);
         else if (experienceType == 2) startFragmentActivityNew(activity, FragmentType.ALL_VIDEO_CONSULT_VIEW, bundle, false);
         else startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
 

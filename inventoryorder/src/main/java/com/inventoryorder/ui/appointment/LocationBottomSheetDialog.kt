@@ -1,4 +1,4 @@
-package com.inventoryorder.ui.booking
+package com.inventoryorder.ui.appointment
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.base.BaseBottomSheetDialog

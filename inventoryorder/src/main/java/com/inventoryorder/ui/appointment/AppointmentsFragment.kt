@@ -1,4 +1,4 @@
-package com.inventoryorder.ui.booking
+package com.inventoryorder.ui.appointment
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -19,7 +19,7 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.constant.RecyclerViewItemType
-import com.inventoryorder.databinding.FragmentInventoryAllBookingsBinding
+import com.inventoryorder.databinding.FragmentAppointmentsBinding
 import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
@@ -36,7 +36,7 @@ import com.inventoryorder.ui.startFragmentActivity
 import java.util.*
 import kotlin.collections.ArrayList
 
-class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBinding>(), RecyclerItemClickListener {
+class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(), RecyclerItemClickListener {
 
   private var request: OrderSummaryRequest? = null
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
@@ -51,8 +51,8 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
   private var isLastPageD = false
 
   companion object {
-    fun newInstance(bundle: Bundle? = null): BookingsFragment {
-      val fragment = BookingsFragment()
+    fun newInstance(bundle: Bundle? = null): AppointmentsFragment {
+      val fragment = AppointmentsFragment()
       fragment.arguments = bundle
       return fragment
     }
@@ -76,7 +76,7 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
 
   private fun apiSellerOrderList(request: OrderSummaryRequest, isFirst: Boolean = false) {
     if (isFirst) binding?.progress?.visible()
-    viewModel?.getSellerAllOrder(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getSellerOrders(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
       binding?.progress?.gone()
       if (it.error is NoNetworkException) {
         showShortToast(resources.getString(R.string.internet_connection_not_available))
@@ -206,7 +206,7 @@ class BookingsFragment : BaseInventoryFragment<FragmentInventoryAllBookingsBindi
         val bundle = Bundle()
         bundle.putString(IntentConstant.ORDER_ID.name, orderItem?._id)
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
-        startFragmentActivity(FragmentType.BOOKING_DETAIL_VIEW, bundle, isResult = true)
+        startFragmentActivity(FragmentType.APPOINTMENT_DETAIL_VIEW, bundle, isResult = true)
       }
       RecyclerViewActionType.BOOKING_CONFIRM_CLICKED.ordinal -> apiConfirmOrder(position, (item as? OrderItem))
     }

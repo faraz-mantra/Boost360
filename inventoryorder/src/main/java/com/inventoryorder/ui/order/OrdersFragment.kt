@@ -19,7 +19,7 @@ import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
-import com.inventoryorder.databinding.FragmentInventoryAllOrderBinding
+import com.inventoryorder.databinding.FragmentOrdersBinding
 import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
@@ -36,7 +36,7 @@ import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
 
-class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>(), RecyclerItemClickListener {
+class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener {
 
   private var request: OrderSummaryRequest? = null
   private var typeAdapter: AppBaseRecyclerViewAdapter<OrderSummaryModel>? = null
@@ -213,7 +213,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
   }
 
   private fun apiOrderList(request: OrderSummaryRequest, isFirst: Boolean = false) {
-    viewModel?.getSellerAllOrder(auth, request)?.observeOnce(viewLifecycleOwner, Observer { res -> res?.let { responseOrderList(isFirst, it) } })
+    viewModel?.getSellerOrders(auth, request)?.observeOnce(viewLifecycleOwner, Observer { res -> res?.let { responseOrderList(isFirst, it) } })
   }
 
   private fun apiAssureOrder(request: OrderSummaryRequest, isFirst: Boolean = false) {
