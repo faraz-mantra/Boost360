@@ -16,6 +16,9 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.utils.Constants
 import com.bumptech.glide.Glide
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class UpgradeAdapter(
@@ -92,7 +95,7 @@ class UpgradeAdapter(
                 upgradeTitle.visibility = View.GONE
             }
             upgradeDetails.text = updateModel.name
-            upgradePrice.text = "₹" + price + "/month"
+            upgradePrice.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
             if(updateModel.discount_percent>0){
                 upgradeDiscount.visibility = View.VISIBLE
                 upgradeDiscount.text = ""+updateModel.discount_percent+"%"
@@ -108,7 +111,7 @@ class UpgradeAdapter(
         }
 
         fun spannableString(value: Int) {
-            val origCost = SpannableString("₹" + value + "/month")
+            val origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
 
             origCost.setSpan(
                     StrikethroughSpan(),

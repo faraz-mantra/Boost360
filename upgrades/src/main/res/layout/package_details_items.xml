@@ -19,8 +19,8 @@
 
         <RelativeLayout
             android:id="@+id/imageLayout"
-            android:layout_width="70dp"
-            android:layout_height="67dp"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
             android:layout_marginStart="13dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/backgroundwhite"
-                android:padding="@dimen/_6sdp"
                 android:scaleType="fitCenter"
                 tools:src="@drawable/rectangle_copy_18" />
 

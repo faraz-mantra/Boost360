@@ -1,6 +1,7 @@
 package com.boost.upgrades.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
@@ -10,15 +11,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
+import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.FeaturesModel
+import com.boost.upgrades.ui.details.DetailsFragment
+import com.boost.upgrades.utils.Constants
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class PackageAdaptor(cryptoCurrencies: List<FeaturesModel>?, bundleData: Bundles) : RecyclerView.Adapter<PackageAdaptor.upgradeViewHolder>() {
+class PackageAdaptor(
+        val activity: UpgradeActivity,
+        cryptoCurrencies: List<FeaturesModel>?,
+        bundleData: Bundles) : RecyclerView.Adapter<PackageAdaptor.upgradeViewHolder>() {
 
     private var upgradeList = ArrayList<FeaturesModel>()
     var bundleData: Bundles
@@ -52,6 +59,15 @@ class PackageAdaptor(cryptoCurrencies: List<FeaturesModel>?, bundleData: Bundles
         holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         if (position == upgradeList.size - 1) {
             holder.view.visibility = View.INVISIBLE
+        }
+
+        holder.itemView.setOnClickListener {
+            val details = DetailsFragment.newInstance()
+            val args = Bundle()
+            args.putString("itemId", upgradeList.get(position).boost_widget_key)
+            details.arguments = args
+
+            activity.addFragment(details, Constants.DETAILS_FRAGMENT)
         }
     }
 
@@ -91,12 +107,12 @@ class PackageAdaptor(cryptoCurrencies: List<FeaturesModel>?, bundleData: Bundles
                 if(minMonth > 1){
                     holder.price.setText("₹"+
                             NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)+
-                            "/"+minMonth+"months")
+                            "/"+minMonth+"mths")
                 }else{
                     if(grandTotal > 0)
                         holder.price.setText("₹"+
                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)+
-                                "/month")
+                                "/mth")
                     else
                         holder.price.visibility = View.GONE
                 }
@@ -117,9 +133,9 @@ class PackageAdaptor(cryptoCurrencies: List<FeaturesModel>?, bundleData: Bundles
     fun spannableString(holder: upgradeViewHolder, value: Double) {
         val origCost: SpannableString
         if(minMonth > 1){
-            origCost = SpannableString("₹" + value+"/"+minMonth+"month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value)+"/"+minMonth+"months")
         }else{
-            origCost = SpannableString("₹" + value+"/month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value)+"/month")
         }
 
 
