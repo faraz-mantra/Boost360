@@ -19,8 +19,8 @@ import com.inventoryorder.R
 import com.inventoryorder.base.AppBaseActivity
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
-import com.inventoryorder.ui.booking.BookingDetailsFragment
-import com.inventoryorder.ui.booking.BookingsFragment
+import com.inventoryorder.ui.appointment.AppointmentDetailsFragment
+import com.inventoryorder.ui.appointment.AppointmentsFragment
 import com.inventoryorder.ui.consultation.VideoConsultDetailsFragment
 import com.inventoryorder.ui.consultation.VideoConsultFragment
 import com.inventoryorder.ui.createappointment.BookingSuccessfulFragment
@@ -34,8 +34,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   private var type: FragmentType? = null
   private var ordersFragment: OrdersFragment? = null
   private var orderDetailFragment: OrderDetailFragment? = null
-  private var bookingDetails: BookingDetailsFragment? = null
-  private var bookingsFragment: BookingsFragment? = null
+  private var appointmentDetails: AppointmentDetailsFragment? = null
+  private var appointmentsFragment: AppointmentsFragment? = null
   private var newBookingFragmentOne: NewBookingFragmentOne? = null
   private var newBookingFragmentTwo: NewBookingFragmentTwo? = null
   private var bookingSuccessfulFragment: BookingSuccessfulFragment? = null
@@ -77,8 +77,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return when (type) {
       FragmentType.ALL_ORDER_VIEW,
       FragmentType.ORDER_DETAIL_VIEW,
-      FragmentType.BOOKING_DETAIL_VIEW,
-      FragmentType.ALL_BOOKING_VIEW,
+      FragmentType.APPOINTMENT_DETAIL_VIEW,
+      FragmentType.ALL_APPOINTMENT_VIEW,
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2,
       FragmentType.ALL_VIDEO_CONSULT_VIEW,
@@ -91,8 +91,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return when (type) {
       FragmentType.ALL_ORDER_VIEW,
       FragmentType.ORDER_DETAIL_VIEW,
-      FragmentType.BOOKING_DETAIL_VIEW,
-      FragmentType.ALL_BOOKING_VIEW,
+      FragmentType.APPOINTMENT_DETAIL_VIEW,
+      FragmentType.ALL_APPOINTMENT_VIEW,
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2,
       FragmentType.ALL_VIDEO_CONSULT_VIEW,
@@ -112,8 +112,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return when (type) {
       FragmentType.ALL_ORDER_VIEW -> resources.getString(R.string.orders)
       FragmentType.ORDER_DETAIL_VIEW -> "# XXXXXXX"
-      FragmentType.ALL_BOOKING_VIEW -> resources.getString(R.string.bookings)
-      FragmentType.BOOKING_DETAIL_VIEW -> "# XXXXXXX"
+      FragmentType.ALL_APPOINTMENT_VIEW -> resources.getString(R.string.appointments)
+      FragmentType.APPOINTMENT_DETAIL_VIEW -> "# XXXXXXX"
       FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking)
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> resources.getString(R.string.new_booking)
       FragmentType.ALL_VIDEO_CONSULT_VIEW -> resources.getString(R.string.video_consultation)
@@ -127,8 +127,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return when (type) {
       FragmentType.ALL_ORDER_VIEW,
       FragmentType.ORDER_DETAIL_VIEW,
-      FragmentType.BOOKING_DETAIL_VIEW,
-      FragmentType.ALL_BOOKING_VIEW,
+      FragmentType.APPOINTMENT_DETAIL_VIEW,
+      FragmentType.ALL_APPOINTMENT_VIEW,
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2,
       FragmentType.ALL_VIDEO_CONSULT_VIEW,
@@ -173,13 +173,13 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
         orderDetailFragment = OrderDetailFragment.newInstance()
         orderDetailFragment
       }
-      FragmentType.ALL_BOOKING_VIEW -> {
-        bookingsFragment = BookingsFragment.newInstance()
-        bookingsFragment
+      FragmentType.ALL_APPOINTMENT_VIEW -> {
+        appointmentsFragment = AppointmentsFragment.newInstance()
+        appointmentsFragment
       }
-      FragmentType.BOOKING_DETAIL_VIEW -> {
-        bookingDetails = BookingDetailsFragment.newInstance()
-        bookingDetails
+      FragmentType.APPOINTMENT_DETAIL_VIEW -> {
+        appointmentDetails = AppointmentDetailsFragment.newInstance()
+        appointmentDetails
       }
       FragmentType.CREATE_NEW_BOOKING -> {
         newBookingFragmentOne = NewBookingFragmentOne.newInstance()
@@ -208,7 +208,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     ordersFragment?.onActivityResult(requestCode, resultCode, data)
-    bookingsFragment?.onActivityResult(requestCode, resultCode, data)
+    appointmentsFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -222,7 +222,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 
   override fun onBackPressed() {
-    val bundle = bookingDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData()
+    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData()
     bundle?.let {
       val intent = Intent()
       intent.putExtra(IntentConstant.RESULT_DATA.name, it)

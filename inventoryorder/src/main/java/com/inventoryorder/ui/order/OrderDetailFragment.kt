@@ -20,7 +20,7 @@ import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
 import com.framework.views.customViews.CustomButton
 import com.inventoryorder.R
 import com.inventoryorder.constant.IntentConstant
-import com.inventoryorder.databinding.FragmentInventoryOrderDetailBinding
+import com.inventoryorder.databinding.FragmentOrderDetailBinding
 import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.bottomsheet.DeliveryModel
 import com.inventoryorder.model.ordersdetails.ItemN
@@ -32,7 +32,7 @@ import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import java.util.*
 
-class OrderDetailFragment : BaseInventoryFragment<FragmentInventoryOrderDetailBinding>() {
+class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() {
 
   private var deliverySheetDialog: DeliveryBottomSheetDialog? = null
   private var orderItem: OrderItem? = null

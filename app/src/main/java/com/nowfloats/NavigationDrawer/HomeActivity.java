@@ -436,7 +436,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 bundle.putString(IntentConstant.INVENTORY_TYPE.name(), session.getFP_AppExperienceCode());
                 bundle.putString(IntentConstant.ORDER_ID.name(), mPayload);
                 int experienceType = getExperienceType(session.getFP_AppExperienceCode());
-                if (experienceType == 1) startFragmentActivityNew(this, FragmentType.BOOKING_DETAIL_VIEW, bundle, false);
+                if (experienceType == 1) startFragmentActivityNew(this, FragmentType.APPOINTMENT_DETAIL_VIEW, bundle, false);
                 else if (experienceType == 2) startFragmentActivityNew(this, FragmentType.ALL_VIDEO_CONSULT_VIEW, bundle, false);
                 else startFragmentActivityNew(this, FragmentType.ORDER_DETAIL_VIEW, bundle, false);
 //                Intent orderDetail = new Intent(HomeActivity.this, OrderDetailsActivity.class);

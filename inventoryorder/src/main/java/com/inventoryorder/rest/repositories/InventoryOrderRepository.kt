@@ -24,8 +24,8 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
     return makeRemoteRequest(remoteDataSource.getSellerSummary(clientId, sellerId), TaskCode.GET_SELLER_SUMMARY)
   }
 
-  fun getSellerAllOrder(auth: String, request: OrderSummaryRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getListOrder(auth, request.clientId, request.sellerId, request.orderStatus, request.paymentStatus, request.skip, request.limit), TaskCode.GET_LIST_ORDER)
+  fun getSellerOrders(auth: String, request: OrderSummaryRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getSellerOrders(auth, request.clientId, request.sellerId, request.orderStatus, request.paymentStatus, request.skip, request.limit), TaskCode.GET_LIST_ORDER)
   }
 
   fun getAssurePurchaseOrders(request: OrderSummaryRequest): Observable<BaseResponse> {
@@ -45,11 +45,11 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
   }
 
   fun confirmOrder(clientId: String?, orderId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getConfirmOrder(clientId, orderId), TaskCode.CONFIRM_ORDER_TASK)
+    return makeRemoteRequest(remoteDataSource.confirmOrder(clientId, orderId), TaskCode.CONFIRM_ORDER_TASK)
   }
 
   fun cancelOrder(clientId: String?, orderId: String?, cancellingEntity: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getCancelOrder(clientId, orderId, cancellingEntity), TaskCode.CANCEL_ORDER_TASK)
+    return makeRemoteRequest(remoteDataSource.cancelOrder(clientId, orderId, cancellingEntity), TaskCode.CANCEL_ORDER_TASK)
   }
 
   override fun getApiClient(): Retrofit {

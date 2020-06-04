@@ -66,7 +66,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   private fun apiSellerOrderList(request: OrderSummaryRequest, isFirst: Boolean = false) {
     if (isFirst) binding?.progress?.visible()
-    viewModel?.getSellerAllOrder(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.getSellerOrders(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
       binding?.progress?.gone()
       if (it.error is NoNetworkException) {
         showShortToast(resources.getString(R.string.internet_connection_not_available))

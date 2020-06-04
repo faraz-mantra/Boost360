@@ -11,7 +11,7 @@ import com.framework.utils.DateUtils.parseDate
 import com.framework.views.customViews.CustomTextView
 import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewActionType
-import com.inventoryorder.databinding.ItemBookingsOrderBinding
+import com.inventoryorder.databinding.ItemAppointmentsOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
@@ -19,7 +19,7 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import java.util.*
 
-class BookingsViewHolder(binding: ItemBookingsOrderBinding) : AppBaseRecyclerViewHolder<ItemBookingsOrderBinding>(binding) {
+class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRecyclerViewHolder<ItemAppointmentsOrderBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -71,11 +71,10 @@ class BookingsViewHolder(binding: ItemBookingsOrderBinding) : AppBaseRecyclerVie
         OrderSummaryModel.OrderType.DELIVERY_DELAYED,
         OrderSummaryModel.OrderType.DELIVERY_FAILED,
         OrderSummaryModel.OrderType.DELIVERY_COMPLETED -> {
-          if (todayDate == itemDate) {
+//          if (todayDate == itemDate) {
             checkPaymentConfirm(order)
             changeBackground(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light, R.color.light_green)
-            binding.btnConfirm.paintFlags = 0
-          } else backgroundGrey(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.cancel_order_bg, R.color.primary_grey)
+//          } else backgroundGrey(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.cancel_order_bg, R.color.primary_grey)
         }
         OrderSummaryModel.OrderType.ABANDONED,
         OrderSummaryModel.OrderType.CANCELLED -> {

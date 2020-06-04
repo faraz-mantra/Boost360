@@ -1,4 +1,4 @@
-package com.inventoryorder.ui.booking
+package com.inventoryorder.ui.appointment
 
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
@@ -19,7 +19,7 @@ import com.framework.views.customViews.CustomButton
 import com.inventoryorder.R
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewItemType
-import com.inventoryorder.databinding.FragmentInventoryBookingDetailsBinding
+import com.inventoryorder.databinding.FragmentAppointmentDetailsBinding
 import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.bottomsheet.LocationsModel
 import com.inventoryorder.model.ordersdetails.ItemN
@@ -29,10 +29,9 @@ import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
-import com.inventoryorder.ui.order.DeliveryBottomSheetDialog
 import java.util.*
 
-class BookingDetailsFragment : BaseInventoryFragment<FragmentInventoryBookingDetailsBinding>() {
+class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDetailsBinding>() {
 
   private var locationsBottomSheetDialog: LocationBottomSheetDialog? = null
   private var orderItem: OrderItem? = null
@@ -41,8 +40,8 @@ class BookingDetailsFragment : BaseInventoryFragment<FragmentInventoryBookingDet
 
   companion object {
     @JvmStatic
-    fun newInstance(bundle: Bundle? = null): BookingDetailsFragment {
-      val fragment = BookingDetailsFragment()
+    fun newInstance(bundle: Bundle? = null): AppointmentDetailsFragment {
+      val fragment = AppointmentDetailsFragment()
       fragment.arguments = bundle
       return fragment
     }

@@ -29,7 +29,7 @@ enum class RecyclerViewItemType {
       INVENTORY_ORDER_ITEM -> R.layout.item_order
       ITEM_ORDER_DETAILS -> R.layout.item_order_details
       ITEM_DELIVERY_OPTIONS -> R.layout.item_bottom_sheet_pick_up_delivery_option
-      BOOKINGS_ITEM_TYPE -> R.layout.item_bookings_order
+      BOOKINGS_ITEM_TYPE -> R.layout.item_appointments_order
       BOOKING_DETAILS -> R.layout.item_booking_details
       ITEM_SERVICE_LOCATIONS -> R.layout.item_bottom_sheet_service_locations
       ITEM_CHOOSE_PURPOSE -> R.layout.item_bottom_sheet_choose_purpose

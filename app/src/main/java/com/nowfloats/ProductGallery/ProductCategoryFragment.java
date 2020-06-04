@@ -96,7 +96,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
     private String setProductType(String productType, String title) {
 
         //If product
-        if (!productType.equalsIgnoreCase("products")) {
+        if (productType.equalsIgnoreCase("products")) {
             binding.layoutPhysicalProduct.setVisibility(View.VISIBLE);
             binding.arrowBtn.setVisibility(View.GONE);
             binding.layoutServiceOffering.setVisibility(View.GONE);

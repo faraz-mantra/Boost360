@@ -8,6 +8,7 @@
   <string name="cancel_order"><u>Cancel Order</u></string>
 
   <string name="bookings">Bookings</string>
+  <string name="appointments">Appointments</string>
   <string name="location">"Location:"</string>
   <string name="duration">"Duration:"</string>
   <string name="queryHintOrder">Search by order Id</string>
