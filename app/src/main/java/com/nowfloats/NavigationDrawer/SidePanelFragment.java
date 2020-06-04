@@ -460,18 +460,18 @@ public class SidePanelFragment extends Fragment {
         keyboardLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Constants.StoreWidgets.contains("BOOSTKEYBOARD")) {
+//                if(Constants.StoreWidgets.contains("BOOSTKEYBOARD")) {
                     ((OnItemClickListener) mainActivity).onClick(getString(R.string.keyboard));
                     onclickColorChange(keyboardImageView, keyboardTextView, keyboardLayout);
-                }else{
-                    mDrawerLayout.closeDrawers();
-                    // show popup to user to Purchase this item.
-                    Bundle bundle = new Bundle();
-                    bundle.putString("itemName", "Boost Keyboard");
-                    bundle.putString("buyItemKey","BOOSTKEYBOARD");
-                    purchaseFeaturesPopup.setArguments(bundle);
-                    purchaseFeaturesPopup.show(requireActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
-                }
+//                }else{
+//                    mDrawerLayout.closeDrawers();
+//                    // show popup to user to Purchase this item.
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("itemName", "Boost Keyboard");
+//                    bundle.putString("buyItemKey","BOOSTKEYBOARD");
+//                    purchaseFeaturesPopup.setArguments(bundle);
+//                    purchaseFeaturesPopup.show(requireActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
+//                }
             }
         });
 
@@ -508,18 +508,18 @@ public class SidePanelFragment extends Fragment {
         manageCalls.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Constants.StoreWidgets.contains("CALLTRACKER")) {
+//                if(Constants.StoreWidgets.contains("CALLTRACKER")) {
                     onclickColorChange(callsImageView, tvCalls, manageCalls);
                     ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_customer_calls));
-                }else{
-                    mDrawerLayout.closeDrawers();
-                    // show popup to user to Purchase this item.
-                    Bundle bundle = new Bundle();
-                    bundle.putString("itemName", "Customer Call Tracking");
-                    bundle.putString("buyItemKey","CALLTRACKER");
-                    purchaseFeaturesPopup.setArguments(bundle);
-                    purchaseFeaturesPopup.show(requireActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
-                }
+//                }else{
+//                    mDrawerLayout.closeDrawers();
+//                    // show popup to user to Purchase this item.
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("itemName", "Customer Call Tracking");
+//                    bundle.putString("buyItemKey","CALLTRACKER");
+//                    purchaseFeaturesPopup.setArguments(bundle);
+//                    purchaseFeaturesPopup.show(requireActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
+//                }
             }
         });
         analyticsLayout.setOnClickListener(new View.OnClickListener() {
