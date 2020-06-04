@@ -554,7 +554,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                         item.overall_discount_percent,
                         PrimaryImage(item.primary_image),
                         item.target_business_usecase,
-                        Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type)
+                        Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                        null
                 )
                 break
             }
