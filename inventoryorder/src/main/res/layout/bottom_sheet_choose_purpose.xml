@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
+      android:id="@+id/coordinatorLayoutBottomSheet"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingStart="@dimen/size_16"
+          android:paddingTop="@dimen/size_20">
+
+        <com.framework.views.customViews.CustomImageView
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            app:srcCompat="@drawable/ic_choose_purpose" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_12"
+            android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:includeFontPadding="false"
+              android:text="Choose purpose"
+              android:textColor="@color/grey_text_color"
+              app:fontFamily="@font/bold"
+              app:textType="HEADING_4" />
+
+          <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_2"
+              android:layout_marginTop="@dimen/size_2"
+              android:includeFontPadding="false"
+              android:text="Pick a service from the options below"
+              android:textColor="@color/primary_grey"
+              app:textType="BODY_1" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_20"
+          android:background="@color/view_background_color" />
+
+      <com.framework.views.viewgroups.BaseRecyclerView
+          android:id="@+id/recyclerViewBottomSheetChoosePurpose"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          tools:itemCount="6"
+          tools:listitem="@layout/item_bottom_sheet_choose_purpose" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

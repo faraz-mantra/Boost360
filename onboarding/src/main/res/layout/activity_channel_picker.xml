@@ -58,7 +58,8 @@
             android:id="@+id/category_image"
             android:layout_width="@dimen/size_30"
             android:layout_height="@dimen/size_30"
-            app:srcCompat="@drawable/ic_doctors_pro" />
+            android:tint="@color/white"
+            tools:srcCompat="@drawable/ic_doctors_pro" />
       </LinearLayout>
 
     </com.framework.views.shadowview.ShadowLayout>
@@ -94,7 +95,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/white_two"
-        android:visibility="gone"
+        android:alpha="1"
+        tools:alpha="0"
         app:layout_constraintBottom_toBottomOf="@id/image_riya"
         app:layout_constraintTop_toTopOf="@id/image_riya" />
 

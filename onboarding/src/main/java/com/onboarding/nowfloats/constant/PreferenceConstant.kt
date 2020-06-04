@@ -11,4 +11,6 @@ object PreferenceConstant {
   const val GET_FP_EXPERIENCE_CODE = "GET_FP_EXPERIENCE_CODE"
   const val IS_USER_LOGIN = "IsUserLoggedIn"
   const val IS_USER_SIGN_UP = "IsSignUpComplete"
+  const val IS_UPDATE = "IsUpdate"
+  const val GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG"
 }

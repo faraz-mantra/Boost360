@@ -61,6 +61,7 @@
             android:textColor="@color/warm_grey"
             app:fontFamily="@font/regular"
             app:textType="CAPTION"
+            android:visibility="invisible"
             tools:text="Qty: 2" />
       </androidx.appcompat.widget.LinearLayoutCompat>
     </LinearLayout>

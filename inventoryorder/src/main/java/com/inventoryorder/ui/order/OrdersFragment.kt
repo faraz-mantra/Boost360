@@ -1,5 +1,7 @@
 package com.inventoryorder.ui.order
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -17,7 +19,7 @@ import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
-import com.inventoryorder.databinding.FragmentInventoryAllOrderBinding
+import com.inventoryorder.databinding.FragmentOrdersBinding
 import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
@@ -34,7 +36,7 @@ import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
 
-class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>(), RecyclerItemClickListener {
+class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener {
 
   private var request: OrderSummaryRequest? = null
   private var typeAdapter: AppBaseRecyclerViewAdapter<OrderSummaryModel>? = null
@@ -62,10 +64,18 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
 
   override fun onCreateView() {
     super.onCreateView()
+    setOnClickListener(binding?.btnAdd)
     apiSellerSummary()
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
-    binding?.btnAdd?.setOnClickListener { showLongToast("Coming soon..") }
+    setOnClickListener(binding?.btnAdd)
+  }
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.btnAdd -> startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
+    }
   }
 
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
@@ -139,7 +149,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
         val bundle = Bundle()
         bundle.putString(IntentConstant.ORDER_ID.name, orderItem?._id)
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
-        startFragmentActivity(FragmentType.ORDER_DETAIL_VIEW, bundle)
+        startFragmentActivity(FragmentType.ORDER_DETAIL_VIEW, bundle, isResult = true)
       }
       RecyclerViewActionType.ORDER_SUMMARY_CLICKED.ordinal -> {
         val orderItem = item as? OrderSummaryModel
@@ -203,7 +213,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
   }
 
   private fun apiOrderList(request: OrderSummaryRequest, isFirst: Boolean = false) {
-    viewModel?.getSellerAllOrder(auth, request)?.observeOnce(viewLifecycleOwner, Observer { res -> res?.let { responseOrderList(isFirst, it) } })
+    viewModel?.getSellerOrders(auth, request)?.observeOnce(viewLifecycleOwner, Observer { res -> res?.let { responseOrderList(isFirst, it) } })
   }
 
   private fun apiAssureOrder(request: OrderSummaryRequest, isFirst: Boolean = false) {
@@ -280,10 +290,31 @@ class OrdersFragment : BaseInventoryFragment<FragmentInventoryAllOrderBinding>()
     return request!!
   }
 
+
   private fun errorOnSummary(message: String?) {
     binding?.typeRecycler?.gone()
     binding?.viewShadow?.gone()
     binding?.progress?.gone()
     message?.let { showShortToast(it) }
   }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == 101 && resultCode == RESULT_OK) {
+      val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
+      val isRefresh = bundle?.getBoolean(IntentConstant.IS_REFRESH.name)
+      if (isRefresh != null && isRefresh) loadNewData()
+    }
+  }
 }
+
+//private var pickInventoryNatureBottomSheetDialog : PickInventoryNatureBottomSheetDialog ? = null
+//private var selectPickInventoryNatureList = PickInventoryNatureModel().getData()
+
+//private fun showBottomSheetDialogPickInventoryNature(){
+//  pickInventoryNatureBottomSheetDialog = PickInventoryNatureBottomSheetDialog()
+//  pickInventoryNatureBottomSheetDialog?.onDoneClicked = { selectPickInventoryNatureList (it)}
+//  pickInventoryNatureBottomSheetDialog?.setList( selectPickInventoryNatureList )
+//  pickInventoryNatureBottomSheetDialog?.show(this.parentFragmentManager, PickInventoryNatureBottomSheetDialog::class.java.name)
+//
+//}

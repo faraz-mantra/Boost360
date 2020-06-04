@@ -6,6 +6,7 @@ package com.nowfloats.util;
 public class Key_Preferences {
 
 
+    public static final String AUTHORIZATION = "Authorization";
     public static final String EVENT_WILDFIRE_BUY = "eventWildfireBuy";
     public static final String INTENT_BUBBLE_CLASS = "com.intent.bubbleService";
     public static final String GET_EVENT_PACKAGE_NAME = "com.nowfloats.NavigationDrawer";

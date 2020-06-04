@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <style name="AppTheme" parent="AppTheme.Base">
         <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
@@ -137,7 +137,17 @@
         <item name="android:windowBackground">@color/background_material_light</item>
     </style>
 
-    <style name="MyTheme" parent="Base.MyTheme" />
+    <style name="MyTheme" parent="Base.MyTheme">
+      <item name="bottomSheetDialogTheme">@style/BottomSheetThemeInventory</item>
+    </style>
+
+  <style name="BottomSheetInventory" parent="Theme.MaterialComponents.BottomSheetDialog">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+  <style name="BottomSheetThemeInventory" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+    <item name="bottomSheetStyle">@style/BottomSheetInventory</item>
+    </style>
 
     <style name="Base.MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#747474</item>

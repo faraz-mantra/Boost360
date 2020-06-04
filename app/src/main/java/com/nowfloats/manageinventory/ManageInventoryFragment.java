@@ -8,6 +8,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +23,15 @@ import com.google.gson.reflect.TypeToken;
 import com.inventoryorder.constant.FragmentType;
 import com.inventoryorder.constant.IntentConstant;
 import com.inventoryorder.model.PreferenceData;
+import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
+import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
@@ -241,30 +246,35 @@ public class ManageInventoryFragment extends Fragment {
             headerText.setText(Utils.getDefaultTrasactionsTaxonomyFromServiceCode(category_code));
     }
 
+    public static int getExperienceType(String fp_appExperienceCode) {
+        switch (fp_appExperienceCode) {
+            case "SVC": /* TODO for Booking */
+            case "HOS":
+            case "SPA":
+            case "SAL":
+            case "EDU":
+                return 1;
+            case "DOC": /* TODO for video consultation */
+                return 2;
+            default: /* TODO for order */
+                return 3;
+        }
+    }
+
     private void openPrimaryTransactionTypeOrdes() {
         Bundle bundle = new Bundle();
         PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
         bundle.putString(IntentConstant.INVENTORY_TYPE.name(), session.getFP_AppExperienceCode());
+        int experienceType = getExperienceType(session.getFP_AppExperienceCode());
+        if (experienceType == 1) startFragmentActivityNew(activity, FragmentType.ALL_APPOINTMENT_VIEW, bundle, false);
+        else if (experienceType == 2) startFragmentActivityNew(activity, FragmentType.ALL_VIDEO_CONSULT_VIEW, bundle, false);
+        else startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
 
-        if (getAppointmentType(session.getFP_AppExperienceCode())) {
-            startFragmentActivityNew(activity, FragmentType.ALL_BOOKING_VIEW, bundle, false);
-        } else
-            startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
-    }
-
-    public static boolean getAppointmentType(String fp_appExperienceCode) {
-        switch (fp_appExperienceCode) {
-            case "SVC":
-            case "DOC":
-            case "HOS":
-            case "SPA":
-            case "SAL":
-            case "EDU":
-                return true;
-            default:
-                return false;
-        }
+//        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
+//        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
+//        startActivity(i);
+//        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void startOrdersActivity() {
