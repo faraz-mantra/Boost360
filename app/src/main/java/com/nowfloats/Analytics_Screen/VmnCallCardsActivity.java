@@ -7,14 +7,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.boost.upgrades.UpgradeActivity;
 import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -34,9 +40,11 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
     UserSessionManager sessionManager;
     CardView viewCallLogCard;
-    TextView missedCount, receivedCount,totalCount, virtualNumber;
+    TextView missedCount, receivedCount,totalCount, virtualNumber, buyItemButton;
     Toolbar toolbar;
     ProgressDialog vmnProgressBar;
+    private LinearLayout mainLayout, secondaryLayout;
+    private UserSessionManager session;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +70,28 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         virtualNumber = (TextView) findViewById(R.id.tv_virtual_number);
         viewCallLogCard = (CardView) findViewById(R.id.card_view_view_calllog);
         virtualNumber.setText(sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
-        setVmnTotalCallCount();
+
+        //show or hide if feature is available to user
+        session = new UserSessionManager(getApplicationContext(), this);
+        mainLayout = (LinearLayout) findViewById(R.id.main_layout);
+        secondaryLayout= (LinearLayout) findViewById(R.id.secondary_layout);
+        buyItemButton = (TextView) findViewById(R.id.buy_item);
+        if(Constants.StoreWidgets.contains("CALLTRACKER")) {
+            setVmnTotalCallCount();
+            mainLayout.setVisibility(View.VISIBLE);
+            secondaryLayout.setVisibility(View.GONE);
+        }else{
+            mainLayout.setVisibility(View.GONE);
+            secondaryLayout.setVisibility(View.VISIBLE);
+        }
+
+        buyItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initiateBuyFromMarketplace();
+            }
+        });
+
     }
 
     private void showEmptyScreen(){
@@ -161,5 +190,36 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }
+    }
+
+
+    private void initiateBuyFromMarketplace() {
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        String status = "Loading. Please wait...";
+        progressDialog.setMessage(status);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Intent intent = new Intent(this, UpgradeActivity.class);
+        intent.putExtra("expCode", session.getFP_AppExperienceCode());
+        intent.putExtra("fpName", session.getFPName());
+        intent.putExtra("fpid", session.getFPID());
+        intent.putExtra("loginid", session.getUserProfileId());
+        if (session.getFPEmail() != null) {
+            intent.putExtra("email", session.getFPEmail());
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com");
+        }
+        if (session.getFPPrimaryContactNumber() != null) {
+            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        } else {
+            intent.putExtra("mobileNo", "9160004303");
+        }
+        intent.putExtra("profileUrl", session.getFPLogo());
+        intent.putExtra("buyItemKey", "CALLTRACKER");
+        startActivity(intent);
+        new Handler().postDelayed(() -> {
+            progressDialog.dismiss();
+            finish();
+        },1000);
     }
 }

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,11 +31,16 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.boost.upgrades.UpgradeActivity;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
@@ -70,6 +77,10 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     private RevealFrameLayout overLayout1;
     private RecyclerView rvKeyboardThemes;
     private KeyboardThemesAdapter keyboardThemesAdapter;
+    private ScrollView mainLayout;
+    private LinearLayout secondaryLayout;
+    private TextView buyItemButton;
+    private UserSessionManager session;
 
     @Nullable
     @Override
@@ -89,6 +100,27 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        session = new UserSessionManager(requireActivity().getApplicationContext(), (HomeActivity) requireActivity());
+
+        //show or hide if feature is available to user
+        mainLayout = (ScrollView) view.findViewById(R.id.main_layout);
+        secondaryLayout= (LinearLayout) view.findViewById(R.id.secondary_layout);
+        buyItemButton = (TextView) view.findViewById(R.id.buy_item);
+        if(Constants.StoreWidgets.contains("BOOSTKEYBOARD")) {
+            mainLayout.setVisibility(View.VISIBLE);
+            secondaryLayout.setVisibility(View.GONE);
+        }else{
+            mainLayout.setVisibility(View.GONE);
+            secondaryLayout.setVisibility(View.VISIBLE);
+        }
+        buyItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initiateBuyFromMarketplace();
+            }
+        });
+
         MixPanelController.track(EventKeysWL.SIDE_PANEL_KEYBOARD, null);
         if (!isAdded() && isDetached()) return;
         view.findViewById(R.id.keyboard_info).setOnClickListener(this);
@@ -384,5 +416,34 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
                 /* You can check the package name of current IME here.*/
             }
         }
+    }
+
+    private void initiateBuyFromMarketplace() {
+        ProgressDialog progressDialog = new ProgressDialog(requireContext());
+        String status = "Loading. Please wait...";
+        progressDialog.setMessage(status);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Intent intent = new Intent((HomeActivity) requireActivity(), UpgradeActivity.class);
+        intent.putExtra("expCode", session.getFP_AppExperienceCode());
+        intent.putExtra("fpName", session.getFPName());
+        intent.putExtra("fpid", session.getFPID());
+        intent.putExtra("loginid", session.getUserProfileId());
+        if (session.getFPEmail() != null) {
+            intent.putExtra("email", session.getFPEmail());
+        } else {
+            intent.putExtra("email", "ria@nowfloats.com");
+        }
+        if (session.getFPPrimaryContactNumber() != null) {
+            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+        } else {
+            intent.putExtra("mobileNo", "9160004303");
+        }
+        intent.putExtra("profileUrl", session.getFPLogo());
+        intent.putExtra("buyItemKey", "BOOSTKEYBOARD");
+        startActivity(intent);
+        new Handler().postDelayed(() -> {
+            progressDialog.dismiss();
+        },1000);
     }
 }
