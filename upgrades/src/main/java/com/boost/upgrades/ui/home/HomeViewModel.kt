@@ -192,6 +192,15 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                         //saving bundle info in bundle table
                                         val bundles = arrayListOf<BundlesModel>()
                                         for (item in it.Data[0].bundles) {
+                                            if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) {
+                                                var applicableToCurrentExpCode = false
+                                                for (code in item.exclusive_to_categories) {
+                                                    if (code.equals(experienceCode, true))
+                                                        applicableToCurrentExpCode = true
+                                                }
+                                                if (!applicableToCurrentExpCode)
+                                                    continue;
+                                            }
                                             bundles.add(BundlesModel(
                                                     item._kid,
                                                     item.name,

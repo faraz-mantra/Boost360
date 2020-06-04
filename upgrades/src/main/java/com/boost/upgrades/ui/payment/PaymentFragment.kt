@@ -34,6 +34,10 @@ import com.google.gson.reflect.TypeToken
 import com.razorpay.Razorpay
 import kotlinx.android.synthetic.main.payment_fragment.*
 import org.json.JSONObject
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class PaymentFragment : BaseFragment(), PaymentListener {
@@ -328,7 +332,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
 
         //cartOriginalPrice
         val cartOriginalPrice = prefs.getCartOriginalAmount()
-        payment_amount_value.setText("₹" +cartOriginalPrice)
+        payment_amount_value.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(cartOriginalPrice))
 
         //coupon discount percentage
         val couponDiscountPercentage = prefs.getCouponDiscountPercentage()
@@ -336,16 +340,16 @@ class PaymentFragment : BaseFragment(), PaymentListener {
 
         //coupon discount amount
         val couponDiscountAmount = cartOriginalPrice * couponDiscountPercentage / 100
-        coupon_discount_value.setText("-₹"+couponDiscountAmount.toString())
+        coupon_discount_value.setText("-₹"+ NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount))
 
         //igsttin value
         val temp = ((cartOriginalPrice-couponDiscountAmount) * 18) / 100
         val taxValue = Math.round(temp * 100) / 100.0
-        igst_value.setText("+₹" + taxValue)
+        igst_value.setText("+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
 
-        order_total_value.setText("₹" + totalAmount)
-        payment_total_value.setText("₹" + totalAmount)
-        items_cost.setText("₹" + totalAmount)
+        order_total_value.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
+        payment_total_value.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
+        items_cost.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(totalAmount))
     }
 
 }

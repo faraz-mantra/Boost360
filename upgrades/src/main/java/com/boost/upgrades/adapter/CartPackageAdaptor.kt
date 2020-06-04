@@ -1,6 +1,7 @@
 package com.boost.upgrades.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
@@ -10,11 +11,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
+import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.interfaces.CartFragmentListener
+import com.boost.upgrades.ui.details.DetailsFragment
+import com.boost.upgrades.ui.packages.PackageFragment
+import com.boost.upgrades.utils.Constants
+import com.google.gson.Gson
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class CartPackageAdaptor(list: List<CartModel>?, val listener: CartFragmentListener) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
+class CartPackageAdaptor(
+        val activity: UpgradeActivity,
+        list: List<CartModel>?,
+        val listener: CartFragmentListener) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
 
     private var bundlesList = ArrayList<CartModel>()
     private lateinit var context: Context
@@ -36,22 +48,24 @@ class CartPackageAdaptor(list: List<CartModel>?, val listener: CartFragmentListe
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-        holder.name.setText(bundlesList.get(position).item_name)
-        val price = bundlesList.get(position).price * bundlesList.get(position).min_purchase_months
-        val MRPPrice = bundlesList.get(position).MRPPrice * bundlesList.get(position).min_purchase_months
-        if (bundlesList.get(position).min_purchase_months > 1) {
-            holder.price.setText("₹" + price.toString() + "/" + bundlesList.get(position).min_purchase_months + "month")
+        val selectedBundle = bundlesList.get(position)
+
+        holder.name.setText(selectedBundle.item_name)
+        val price = selectedBundle.price
+        val MRPPrice = selectedBundle.MRPPrice
+        if (selectedBundle.min_purchase_months > 1) {
+            holder.price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/" + selectedBundle.min_purchase_months + "mths")
         } else {
-            holder.price.setText("₹" + price.toString() + "/month")
+            holder.price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/mth")
         }
         if(price != MRPPrice) {
-            spannableString(holder, MRPPrice, bundlesList.get(position).min_purchase_months)
+            spannableString(holder, MRPPrice, selectedBundle.min_purchase_months)
             holder.orig_cost.visibility = View.VISIBLE
         }else{
             holder.orig_cost.visibility = View.GONE
         }
-        if (bundlesList.get(position).discount > 0) {
-            holder.discount.setText(bundlesList.get(position).discount.toString() + "%")
+        if (selectedBundle.discount > 0) {
+            holder.discount.setText(selectedBundle.discount.toString() + "%")
             holder.discount.visibility = View.VISIBLE
         } else {
             holder.discount.visibility = View.GONE
@@ -62,6 +76,14 @@ class CartPackageAdaptor(list: List<CartModel>?, val listener: CartFragmentListe
         holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         if(bundlesList.size - 1 == position) {
             holder.view.visibility = View.GONE
+        }
+
+        holder.itemView.setOnClickListener {
+            val packageFragment = PackageFragment.newInstance()
+            val args = Bundle()
+            args.putString("bundleData", Gson().toJson(selectedBundle))
+            packageFragment.arguments = args
+            activity.addFragment(packageFragment, Constants.PACKAGE_FRAGMENT)
         }
     }
 
@@ -85,10 +107,9 @@ class CartPackageAdaptor(list: List<CartModel>?, val listener: CartFragmentListe
     fun spannableString(holder: upgradeViewHolder, value: Double, minMonth: Int) {
         val origCost: SpannableString
         if (minMonth > 1) {
-            val originalCost = value
-            origCost = SpannableString("₹" + originalCost + "/" + minMonth + "month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
         } else {
-            origCost = SpannableString("₹" + value + "/month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
         }
 
         origCost.setSpan(

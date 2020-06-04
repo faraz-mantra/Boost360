@@ -46,6 +46,7 @@ import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.cart_fragment.*
 import java.text.DateFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -104,7 +105,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         progressDialog = ProgressDialog(requireContext())
 
-        cartPackageAdaptor = CartPackageAdaptor(ArrayList(), this)
+        cartPackageAdaptor = CartPackageAdaptor((activity as UpgradeActivity), ArrayList(), this)
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Cart Initialised", "ADDONS_MARKETPLACE Cart", "")
@@ -516,19 +517,19 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         }
         if (cartList != null && cartList.size > 0) {
             for (item in cartList) {
-                total += item.price * item.min_purchase_months
+                total += item.price
             }
-            cart_amount_value.setText("₹" + total.toString())
+            cart_amount_value.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total))
             couponDiscountAmount = total * couponDisount / 100
-            coupon_discount_value.setText("-₹" + couponDiscountAmount.toString())
+            coupon_discount_value.setText("-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount))
             total -= couponDiscountAmount
             val temp = (total * 18) / 100
             taxValue = Math.round(temp * 100) / 100.0
             grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
-            igst_value.setText("+₹" + taxValue)
-            order_total_value.setText("₹" + grandTotal.toString())
-            cart_grand_total.setText("₹" + grandTotal.toString())
-            footer_grand_total.setText("₹" + grandTotal.toString())
+            igst_value.setText("+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
+            order_total_value.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal))
+            cart_grand_total.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal))
+            footer_grand_total.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal))
         }
     }
 
