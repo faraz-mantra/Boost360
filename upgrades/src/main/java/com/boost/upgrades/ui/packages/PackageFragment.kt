@@ -77,6 +77,11 @@ class PackageFragment : BaseFragment() {
 
         package_title.setText(bundleData!!.name)
 
+        if(arguments!!.containsKey("showCartIcon")){
+            package_cart_icon.visibility = View.INVISIBLE
+            package_submit.visibility = View.INVISIBLE
+        }
+
         if(bundleData!!.primary_image != null && !bundleData!!.primary_image!!.url.isNullOrEmpty()){
             Glide.with(this).load(bundleData!!.primary_image!!.url).into(package_profile_image)
         } else {
