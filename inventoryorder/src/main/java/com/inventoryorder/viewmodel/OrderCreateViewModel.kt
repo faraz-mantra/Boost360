@@ -13,8 +13,8 @@ class OrderCreateViewModel : BaseViewModel() {
     return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
   }
 
-  fun getSellerAllOrder(auth: String, request: OrderSummaryRequest): LiveData<BaseResponse> {
-    return InventoryOrderRepository.getSellerAllOrder(auth, request).toLiveData()
+  fun getSellerOrders(auth: String, request: OrderSummaryRequest): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getSellerOrders(auth, request).toLiveData()
   }
 
   fun getAssurePurchaseOrder(request: OrderSummaryRequest): LiveData<BaseResponse> {

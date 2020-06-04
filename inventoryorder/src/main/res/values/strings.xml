@@ -8,9 +8,12 @@
   <string name="cancel_order"><u>Cancel Order</u></string>
 
   <string name="bookings">Bookings</string>
+  <string name="appointments">Appointments</string>
   <string name="location">"Location:"</string>
+  <string name="duration">"Duration:"</string>
   <string name="queryHintOrder">Search by order Id</string>
   <string name="queryHintBooking">Search by booking Id</string>
+  <string name="queryHintVideo">Search by video consulting Id</string>
   <string name="create">CREATE&#160;&#160;</string>
   <string name="status_n">Status:</string>
   <string name="service_location">Service Location</string>
@@ -25,5 +28,10 @@
   <string name="delivery_partner">Delivery Partner</string>
   <string name="customer_details">Customer details</string>
   <string name="order_details">Order details</string>
+  <string name="new_booking">New Booking</string>
+  <string name="video_consultation">Video Consultation</string>
+  <string name="start_call">START CALL</string>
+  <string name="payment_reminder">PAYMENT REMINDER</string>
+  <string name="call_could_not_happen">Call couldn\'t happen</string>
 
 </resources>

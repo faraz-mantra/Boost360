@@ -40,18 +40,11 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
       confirmButtonAlpha = 1f
     }
     binding?.whatsappChannels?.post {
-      //      (binding?.whatsappChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn(0L)))
-//          ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-//          ?.andThen(binding?.edtView?.fadeIn(100L)?.mergeWith(binding?.confirmBtn?.fadeIn(50L, confirmButtonAlpha))
-//          )?.andThen(binding?.skip?.fadeIn(0L))?.doOnComplete {
-//            baseActivity.showKeyBoard(binding?.number)
-//          }?.subscribe()
-
       (binding?.whatsappChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn())
           ?.doOnComplete { setSetSelectedWhatsAppChannel(channels) })
           ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-          ?.andThen(binding?.edtView?.fadeIn(100)?.mergeWith(binding?.confirmBtn?.fadeIn(500L, confirmButtonAlpha)))
-          ?.andThen(binding?.skip?.fadeIn(100L))?.doOnComplete {
+          ?.andThen(binding?.edtView?.fadeIn(100)?.mergeWith(binding?.confirmBtn?.fadeIn(400L, confirmButtonAlpha)))
+          ?.andThen(binding?.skip?.fadeIn(50L))?.doOnComplete {
             baseActivity.showKeyBoard(binding?.number)
           }?.subscribe()
     }
@@ -63,27 +56,24 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
 
   override fun setSavedData() {
     val whatsAppData = requestFloatsModel?.channelActionDatas?.firstOrNull() ?: return
-
     requestFloatsModel?.channelActionDatas?.remove(whatsAppData)
     this.whatsAppData = whatsAppData
-
     binding?.number?.setText(whatsAppData.active_whatsapp_number)
     binding?.confirmBtn?.post {
-      onNumberValid(ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString() ?: ""))
+      onNumberValid(ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString() ?: ""), 0F)
     }
   }
 
   private fun checkValidNumber(phoneNumber: String?) {
     val number = phoneNumber ?: return
     val isNumberValid = ValidationUtils.isMobileNumberValid(number)
-
     onNumberValid(isNumberValid)
   }
 
-  private fun onNumberValid(isNumberValid: Boolean) {
+  private fun onNumberValid(isNumberValid: Boolean, alpha: Float = 1F) {
     if (isNumberValid) {
       binding?.number?.drawableEnd = resources.getDrawable(baseActivity, R.drawable.ic_valid)
-      binding?.confirmBtn?.alpha = 1f
+      binding?.confirmBtn?.alpha = alpha
       binding?.skip?.text = resources.getString(R.string.skip)
       whatsAppData.active_whatsapp_number = binding?.number?.text?.toString()
     } else {
@@ -112,16 +102,14 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
         if (binding?.number?.length() == 10) gotoBusinessApiCallDetails()
       }
       binding?.skip -> {
-        binding?.number?.setText("")
+        updateInfo()
         gotoBusinessApiCallDetails()
       }
     }
   }
 
   override fun gotoBusinessApiCallDetails() {
-    if (whatsAppData.isLinked()) {
-      requestFloatsModel?.channelActionDatas?.add(whatsAppData)
-    }
+    if (whatsAppData.isLinked()) requestFloatsModel?.channelActionDatas?.add(whatsAppData)
     super.gotoBusinessApiCallDetails()
   }
 

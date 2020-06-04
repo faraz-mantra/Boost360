@@ -213,24 +213,32 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
 
   private fun onChannelConfirmed() {
     val bundle = Bundle()
-    var totalPages = 2
+    var totalPages = if (requestFloatsModel?.isUpdate == true) 0 else 2
     selectedChannels.let { channels ->
       if (channels.haveFacebookShop()) totalPages++
       if (channels.haveFacebookPage()) totalPages++
       if (channels.haveTwitterChannels()) totalPages++
       if (channels.haveWhatsAppChannels()) totalPages++
     }
-
     requestFloatsModel?.channels = ArrayList(selectedChannels)
     NavigatorManager.pushToStackAndSaveRequest(ScreenModel(CHANNEL_SELECT, getToolbarTitle()), requestFloatsModel)
-    bundle.addInt(IntentConstant.TOTAL_PAGES, totalPages)
-        .addInt(IntentConstant.CURRENT_PAGES, 1)
-    startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS, bundle)
+    bundle.addInt(IntentConstant.TOTAL_PAGES, totalPages).addInt(IntentConstant.CURRENT_PAGES, 1)
+    if (requestFloatsModel?.isUpdate == false) {
+      startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS, bundle)
+    } else {
+      val channels = requestFloatsModel?.channels ?: return
+      when {
+        channels.haveFacebookPage() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, bundle)
+        channels.haveFacebookShop() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP, bundle)
+        channels.haveTwitterChannels() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS, bundle)
+        channels.haveWhatsAppChannels() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WHATSAPP, bundle)
+      }
+    }
   }
 
 
   fun startAnimationChannelFragment() {
-    for (channel in requestFloatsModel?.channels ?: ArrayList()) {
+    for (channel in categoryDataModel?.channels ?: ArrayList()) {
       channelList.firstOrNull { it.getName() == channel.getName() }?.isSelected = true
     }
     binding?.viewChannel?.post {
