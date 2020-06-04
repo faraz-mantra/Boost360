@@ -20,6 +20,7 @@ import com.nowfloats.ProductGallery.Model.Product;
 import com.nowfloats.ProductGallery.Service.ProductGalleryInterface;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 import com.thinksity.databinding.FragmentProductCategoryBinding;
 
@@ -66,22 +67,22 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         session = new UserSessionManager(getContext(), getActivity());
-
         if (product != null && product.productId != null) {
             binding.editCategory.setText(product.category != null ? product.category : "");
-
             if (!TextUtils.isEmpty(product.productType) && (product.productType.equalsIgnoreCase("services") || product.productType.equalsIgnoreCase("products"))) {
                 productType = product.productType;
-                setProductType(productType, "Editing ".concat(productType.equalsIgnoreCase("products") ? "Product" : "Service"));
+                setProductType(productType,
+                        "Editing ".concat(Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode())));
             } else {
-                productType = setProductType("products", "Editing ".concat(productType.equalsIgnoreCase("products") ? "Product" : "Service"));
+                productType = setProductType("products",
+                        "Editing ".concat(Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode())));
             }
         } else {
-            productType = setProductType(/*session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)*/ "products", "Adding to Catalogue");
+            productType = setProductType(/*session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)*/
+                    "products",
+                    "Adding to Catalogue");
         }
-
         binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
         addInfoButtonListener();
         getCategoryList();
