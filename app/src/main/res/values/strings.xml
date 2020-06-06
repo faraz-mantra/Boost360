@@ -1218,6 +1218,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="medium_text">Medium Text</string>
     <string name="current_password">Current Password</string>
     <string name="change_password">Change Password</string>
+    <string name="wordpress_plugin_script">Your wordpress-plugin script</string>
     <string name="new_password">New Password</string>
     <string name="confirmed_password">Confirm Password</string>
     <string name="search_here">Search Here</string>
@@ -1758,15 +1759,19 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     </string-array>
 
     <string-array name="account_setting_tab_items">
-        <!--<item>Seller Profile</item>-->
-        <!--<item>Site Appearance</item>-->
-        <item>Account Info</item>
+        <item>My Account</item>
+        <item>My Boost Plans</item>
+        <item>Boost360 Extensions</item>
         <item>Domain and Email</item>
-        <!--  <item>Your Plans</item>-->
         <item>Change Password</item>
         <item>Log out</item>
+<!--        <item>Site Appearance</item>-->
     </string-array>
 
+    <string-array name="boost_extensions">
+        <item>Wordpress</item>
+        <item>Static Website</item>
+    </string-array>
     <string-array name="upgrade_tab_items">
         <item>Plan Details</item>
         <item>Subscription History</item>
@@ -1843,5 +1848,5 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="message_2">is not authorized to support faster login to your Boost account.</string>
     <string name="how_to_use_boost">Learn How-To-Use Boost</string>
     <string name="view_support_tickets">View My Support Tickets</string>
-    <string name="loading_boost_dashboard_for_logged_in_user">Loading your Digital Business Dashboard ...</string>
+    <string name="loading_boost_dashboard_for_logged_in_user">Loading your business dashboard ...</string>
 </resources>

@@ -109,8 +109,14 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     /*case "Seller Profile":
                         intent = new Intent(mContext, SellerProfileActivity.class);
                         break;*/
-                    case "Account Info":
+                    case "My Account":
                         intent = new Intent(mContext, AccountInfoActivity.class);
+                        break;
+                    case "My Boost Plans":
+                        intent = new Intent(mContext, YourPurchasedPlansActivity.class);
+                        break;
+                    case "Boost360 Extensions":
+                        intent = new Intent(mContext, Boost360ExtensionsActivity.class);
                         break;
                     case "Site Appearance":
                         intent = new Intent(mContext, SiteAppearanceActivity.class);
@@ -136,14 +142,6 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                                 builder.show();
                             }
                         }
-
-//                        else if (sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")) {
-//                            showExpiryDialog(DEMO);
-//                        } else if (sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
-//                                sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")) {
-//                            showExpiryDialog(DEMO_EXPIRED);
-//                        }
-
                         else if (Methods.isOnline(getActivity())) {
                             showLoader(getString(R.string.please_wait));
                             domainApiService.getDomainDetails(mContext, sessionManager.getFpTag(), getDomainDetailsParam());
@@ -151,9 +149,6 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                             Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                         }
                         return;
-                    case "Your Plans":
-                        intent = new Intent(mContext, YourPurchasedPlansActivity.class);
-                        break;
                     case "Change Password":
                         changePassword();
                         WebEngageController.trackEvent("CHANGEPASSWORD","CHANGEPASSWORD", null);
@@ -164,7 +159,9 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     default:
                         return;
                 }
-                startActivity(intent);
+                if(intent != null)
+                    startActivity(intent);
+
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
