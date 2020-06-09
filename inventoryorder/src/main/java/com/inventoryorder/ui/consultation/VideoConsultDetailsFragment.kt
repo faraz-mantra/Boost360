@@ -26,6 +26,8 @@ import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.utils.copyClipBoard
+import com.inventoryorder.utils.openWebPage
 import java.util.*
 
 class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDetailsBinding>() {
@@ -116,12 +118,11 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun setOrderDetails(order: OrderItem) {
     binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(order.status()), order.PaymentDetails)
-    binding?.tvOrderStatus?.text = order.PaymentDetails?.Status?.trim()
-    binding?.tvPaymentMode?.text = order.PaymentDetails?.Method?.trim()
-    binding?.tvDeliveryPaymentStatus?.text = "Status: ${order.PaymentDetails?.Status?.trim()}"
+    binding?.tvOrderStatus?.text = order.PaymentDetails?.status()
+    binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
+    binding?.tvDeliveryPaymentStatus?.text = "Status: ${order.PaymentDetails?.status()}"
     order.BillingDetails?.let { bill ->
-      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() }
-          ?: "INR"
+      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
     binding?.bookingDate?.text = DateUtils.parseDate(order.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)
@@ -163,12 +164,21 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       binding?.btnPaymentReminder -> paymentReminder()
       binding?.btnOpenConsult -> apiOpenConsultationWindow()
       binding?.tvCancelOrder -> apiCancelOrder()
-      binding?.btnCopyLink -> showLongToast("Coming soon..")
+      binding?.btnCopyLink -> videoConsultCopy()
+    }
+  }
+
+  private fun videoConsultCopy() {
+    orderItem?.consultationJoiningUrl()?.let {
+      if (baseActivity.copyClipBoard(it)) showLongToast(resources.getString(R.string.copied_patient_url))
+      else showLongToast(resources.getString(R.string.error_copied_patient_url))
     }
   }
 
   private fun apiOpenConsultationWindow() {
-    showLongToast("Coming soon..")
+    orderItem?.consultationWindowUrl()?.let {
+      if (baseActivity.openWebPage(it).not()) showLongToast(resources.getString(R.string.error_opening_consultation_window))
+    }
   }
 
   private fun apiCancelOrder() {

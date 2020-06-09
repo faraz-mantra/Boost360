@@ -1,5 +1,13 @@
 package com.inventoryorder.utils
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import kotlin.math.floor
 
 inline fun <reified T : Any> Any.cast(): T? {
@@ -37,4 +45,32 @@ fun convertMinutesToDays(minutes: Double): String {
     val m = restMinutes.takeIf { it > 1 }?.let { "$restMinutes Minutes" } ?: "$restMinutes Minute"
     "$d $h $m"
   }
+}
+
+fun Context.openWebPage(url: String): Boolean {
+  return try {
+    val webpage: Uri = Uri.parse(url)
+    val intent = Intent(Intent.ACTION_VIEW, webpage)
+    if (intent.resolveActivity(packageManager) != null) startActivity(intent)
+    true
+  } catch (e: Exception) {
+    false
+  }
+}
+
+fun Context.copyClipBoard(selectedText: String): Boolean {
+  val clipboard: ClipboardManager? = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+  val clip = ClipData.newPlainText("label", selectedText)
+  if (clipboard == null || clip == null) return false
+  clipboard.primaryClip = clip
+  return true
+}
+
+fun String.capitalizeUtil(): String {
+  val capBuffer = StringBuffer()
+  val capMatcher: Matcher = Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(this)
+  while (capMatcher.find()) {
+    capMatcher.appendReplacement(capBuffer, capMatcher.group(1).toUpperCase(Locale.getDefault()) + capMatcher.group(2).toLowerCase(Locale.getDefault()))
+  }
+  return capMatcher.appendTail(capBuffer).toString()
 }

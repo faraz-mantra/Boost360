@@ -43,6 +43,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private var orderList = ArrayList<OrderItem>()
   private var orderListFilter = ArrayList<OrderItem>()
   private var layoutManager: LinearLayoutManager? = null
+  private var experienceCode: String? = null
 
   /* Paging */
   private var isLoadingD = false
@@ -60,6 +61,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
+    experienceCode = arguments?.getString(IntentConstant.EXPERIENCE_CODE.name)?.trim()
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
@@ -133,7 +135,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
 
-
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
     binding?.bookingRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
       override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -195,7 +196,9 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   private fun getRequestData(): OrderSummaryRequest {
-    request = OrderSummaryRequest(clientId, fpTag, skip = currentPage, limit = PAGE_SIZE)
+    request = OrderSummaryRequest(clientId = clientId, sellerId = fpTag, skip = currentPage,
+        limit = PAGE_SIZE, orderMode = OrderSummaryRequest.OrderMode.APPOINTMENT.name)
+    if (experienceCode == "DOC" || experienceCode == "HOS") request?.deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name
     return request!!
   }
 

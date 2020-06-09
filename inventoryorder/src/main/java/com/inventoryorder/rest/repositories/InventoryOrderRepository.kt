@@ -25,7 +25,7 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
   }
 
   fun getSellerOrders(auth: String, request: OrderSummaryRequest): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getSellerOrders(auth, request.clientId, request.sellerId, request.orderStatus, request.paymentStatus, request.skip, request.limit), TaskCode.GET_LIST_ORDER)
+    return makeRemoteRequest(remoteDataSource.getSellerOrders(auth, request.clientId, request.sellerId, request.orderMode, request.deliveryMode, request.orderStatus, request.paymentStatus, request.skip, request.limit), TaskCode.GET_LIST_ORDER)
   }
 
   fun getAssurePurchaseOrders(request: OrderSummaryRequest): Observable<BaseResponse> {

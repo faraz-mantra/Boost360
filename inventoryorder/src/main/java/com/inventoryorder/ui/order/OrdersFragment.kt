@@ -286,7 +286,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
   }
 
   private fun getRequestData(): OrderSummaryRequest {
-    request = OrderSummaryRequest(clientId, fpTag, skip = currentPage, limit = PAGE_SIZE)
+    request = OrderSummaryRequest(clientId = clientId, sellerId = fpTag, skip = currentPage, limit = PAGE_SIZE, orderMode = OrderSummaryRequest.OrderMode.DELIVERY.name)
     return request!!
   }
 

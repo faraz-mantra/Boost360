@@ -8,14 +8,8 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.os.Handler;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -29,6 +23,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.NetworkResponse;
@@ -47,15 +45,11 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.gson.Gson;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Model.Login_Data_Model;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.helper.ui.KeyboardUtil;
-import com.nowfloats.on_boarding.OnBoardingActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.util.BusProvider;
@@ -68,7 +62,6 @@ import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
-import com.thinksity.Specific;
 
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONException;
@@ -86,7 +79,7 @@ public class Login_MainActivity extends AppCompatActivity implements
     Bus bus;
     EditText userName, password;
     CardView loginButton;
-    View line1,line2;
+    View line1, line2;
 
     UserSessionManager session;
     String userNameText, passwordText;
@@ -134,7 +127,7 @@ public class Login_MainActivity extends AppCompatActivity implements
         session = new UserSessionManager(getApplicationContext(), Login_MainActivity.this);
         dashboardIntent = new Intent(Login_MainActivity.this, HomeActivity.class);
         dashboardIntent.putExtras(getIntent());
-        parent_layout = (LinearLayout) findViewById(R.id.parent_layout);
+        parent_layout = findViewById(R.id.parent_layout);
         cvFacebookLogin = findViewById(R.id.cv_facebook_login);
         loginFacebookButton = findViewById(R.id.facebook_login_button);
         cvGoogleLogin = findViewById(R.id.cv_google_login);
@@ -144,9 +137,6 @@ public class Login_MainActivity extends AppCompatActivity implements
         line2 = findViewById(R.id.fl_line_2);
 
 
-
-
-
         //toolbar = (Toolbar) findViewById(R.id.app_bar);
         // headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
         //headerText.setText(getString(R.string.welcome_back));
@@ -154,8 +144,8 @@ public class Login_MainActivity extends AppCompatActivity implements
 //        getSupportActionBar().setHomeButtonEnabled(true);
         //      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         WebEngageController.trackEvent("LOGIN", "Login", session.getFpTag());
-        userName = (EditText) findViewById(R.id.userNameEditText);
-        password = (EditText) findViewById(R.id.passwordEditText);
+        userName = findViewById(R.id.userNameEditText);
+        password = findViewById(R.id.passwordEditText);
 
         new Handler().postDelayed(() -> {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -218,13 +208,13 @@ public class Login_MainActivity extends AppCompatActivity implements
             Login_MainActivity.this.onBackPressed();
         });
 
-        forgotPassword = (TextView) findViewById(R.id.forgotPwdTextView);
+        forgotPassword = findViewById(R.id.forgotPwdTextView);
         forgotPassword.setPaintFlags(forgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         forgotPassword.setOnClickListener(this);
 
-        ImageView userNameIcon = (ImageView) findViewById(R.id.userNameIcon);
-        ImageView passwordIcon = (ImageView) findViewById(R.id.passwordIcon);
+        ImageView userNameIcon = findViewById(R.id.userNameIcon);
+        ImageView passwordIcon = findViewById(R.id.passwordIcon);
 
         userName.requestFocus();
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -274,7 +264,7 @@ public class Login_MainActivity extends AppCompatActivity implements
             }
         };
 
-        loginButton = (CardView) findViewById(R.id.loginButton);
+        loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -626,22 +616,22 @@ public class Login_MainActivity extends AppCompatActivity implements
     }
 
     private void processLoginSuccessRequest(VerificationRequestResult response) {
-        session.setUserLogin(true);
-        session.setUserProfileId(response.getLoginId());
         try {
+            session.setUserProfileId(response.getLoginId());
             session.setUserProfileEmail(response.getProfileProperties().getUserEmail());
             session.setUserProfileName(response.getProfileProperties().getUserName());
             session.setUserProfileMobile(response.getProfileProperties().getUserMobile());
-        } catch (Exception e){}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (response.getValidFPIds() == null || response.getValidFPIds().length == 0) {
             showBusinessProfileCreationStartScreen(response.getLoginId());
         } else {
+            session.setUserLogin(true);
             progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
-
             session.storeISEnterprise(response.isEnterprise() + "");
-            session.storeIsThinksity((response.getSourceClientId() != null &&
-                    response.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
+            session.storeIsThinksity((response.getSourceClientId() != null && response.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
             session.storeFPID(response.getValidFPIds()[0]);
             authenticationStatus("Success");
         }
@@ -745,7 +735,8 @@ public class Login_MainActivity extends AppCompatActivity implements
                 session.setUserProfileEmail(userProfileResponse.getResult().getProfileProperties().getUserEmail());
                 session.setUserProfileName(userProfileResponse.getResult().getProfileProperties().getUserName());
                 session.setUserProfileMobile(userProfileResponse.getResult().getProfileProperties().getUserMobile());
-            } catch (Exception e){}
+            } catch (Exception e) {
+            }
             showBusinessProfileCreationStartScreen(userProfileResponse.getResult().getLoginId());
         } else {
             progressDialog = ProgressDialog.show(this, "", "Loading");

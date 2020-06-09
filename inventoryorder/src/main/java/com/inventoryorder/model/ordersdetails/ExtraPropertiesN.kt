@@ -37,8 +37,9 @@ data class ExtraPropertiesN(
   }
 
   fun detailsConsultation(): String {
-    val d = takeIf { doctorName.isNullOrEmpty().not() }?.let { "$doctorName," } ?: ""
+    val ds = takeIf { doctorSpeciality.isNullOrEmpty().not() }?.let { "($doctorSpeciality)" } ?: ""
+    val dn = takeIf { doctorName.isNullOrEmpty().not() }?.let { "$doctorName$ds," } ?: ""
     val c = takeIf { consultationFor.isNullOrEmpty().not() }?.let { " $consultationFor" } ?: ""
-    return "$d$c"
+    return "$dn$c"
   }
 }
