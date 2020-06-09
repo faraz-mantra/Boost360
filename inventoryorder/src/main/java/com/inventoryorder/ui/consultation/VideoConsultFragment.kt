@@ -31,6 +31,8 @@ import com.inventoryorder.recyclerView.RecyclerItemClickListener
 import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
+import com.inventoryorder.utils.copyClipBoard
+import com.inventoryorder.utils.openWebPage
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -190,7 +192,8 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   }
 
   private fun getRequestData(): OrderSummaryRequest {
-    request = OrderSummaryRequest(clientId, fpTag, skip = currentPage, limit = PAGE_SIZE)
+    request = OrderSummaryRequest(clientId = clientId, sellerId = fpTag, skip = currentPage, limit = PAGE_SIZE,
+        orderMode = OrderSummaryRequest.OrderMode.APPOINTMENT.name, deliveryMode = OrderSummaryRequest.DeliveryMode.ONLINE.name)
     return request!!
   }
 
@@ -203,17 +206,22 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         startFragmentActivity(FragmentType.VIDEO_CONSULT_DETAIL_VIEW, bundle, isResult = true)
       }
-      RecyclerViewActionType.VIDEO_CONSULT_CALL_CLICKED.ordinal -> videoConsultCall(position, (item as? OrderItem))
-      RecyclerViewActionType.VIDEO_CONSULT_COPY_CLICKED.ordinal -> videoConsultCopy(position, (item as? OrderItem))
+      RecyclerViewActionType.VIDEO_CONSULT_CALL_CLICKED.ordinal -> videoConsultCall((item as? OrderItem))
+      RecyclerViewActionType.VIDEO_CONSULT_COPY_CLICKED.ordinal -> videoConsultCopy((item as? OrderItem))
     }
   }
 
-  private fun videoConsultCall(position: Int, order: OrderItem?) {
-    showShortToast("Coming soon...")
+  private fun videoConsultCall(order: OrderItem?) {
+    order?.consultationWindowUrl()?.let {
+      if (baseActivity.openWebPage(it).not()) showLongToast(resources.getString(R.string.error_opening_consultation_window))
+    }
   }
 
-  private fun videoConsultCopy(position: Int, order: OrderItem?) {
-    showShortToast("Coming soon...")
+  private fun videoConsultCopy(order: OrderItem?) {
+    order?.consultationJoiningUrl()?.let {
+      if (baseActivity.copyClipBoard(it)) showLongToast(resources.getString(R.string.copied_patient_url))
+      else showLongToast(resources.getString(R.string.error_copied_patient_url))
+    }
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

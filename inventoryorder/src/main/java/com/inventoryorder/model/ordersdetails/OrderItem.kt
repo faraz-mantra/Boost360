@@ -36,7 +36,7 @@ data class OrderItem(
   }
 
   fun status(): String {
-    return Status?.toLowerCase() ?: ""
+    return Status ?: ""
   }
 
   fun stringToDate(format: String = DateUtils.FORMAT_DD_MM_YYYY): Date? {
@@ -84,24 +84,33 @@ data class OrderItem(
     }
   }
 
+  fun consultationWindowUrl(): String {
+    return "http://d.nflo.at/consult?appt=$_id"
+  }
+
+  fun consultationJoiningUrl(): String {
+    return "http://DOCTORS.GETBOOST360.COM/consult/$_id"
+  }
+
   fun isConfirmConsulting(): Boolean {
-    return (OrderSummaryModel.OrderType.fromValue(status()) != OrderSummaryModel.OrderType.CANCELLED &&
-        PaymentDetails != null && PaymentDetailsN.METHOD.from(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
-        PaymentDetailsN.STATUS.from(PaymentDetails.status()) == PaymentDetailsN.STATUS.SUCCESS)
+    return (OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.PAYMENT_MODE_VERIFIED
+        || OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.PAYMENT_CONFIRM
+        || OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.ORDER_CONFIRMED)
   }
 
   fun isConfirmBooking(): Boolean {
-    return (OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.PAYMENT_CONFIRM &&
-        PaymentDetails != null && PaymentDetailsN.METHOD.from(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
+    return ((OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.PAYMENT_MODE_VERIFIED
+        || OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.PAYMENT_CONFIRM) &&
+        PaymentDetails != null && ((PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
         PaymentDetailsN.STATUS.from(PaymentDetails.status()) == PaymentDetailsN.STATUS.SUCCESS)
+        || (PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.COD)))
   }
 
   fun isCancelBooking(): Boolean {
-    return ((OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_INITIATED ||
+    return ((OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.PAYMENT_MODE_VERIFIED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED) &&
         LogisticsDetails != null && LogisticsDetailsN.STSTUS.from(LogisticsDetails.status()) == LogisticsDetailsN.STSTUS.NOT_INITIATED)
-    //PaymentDetails != null && PaymentDetailsN.STSTUS.from(PaymentDetails.status()) == PaymentDetailsN.STSTUS.SUCCESS
   }
 
   fun firstItemForConsultation(): ItemN? {

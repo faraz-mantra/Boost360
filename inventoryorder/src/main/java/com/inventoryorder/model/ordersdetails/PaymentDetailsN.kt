@@ -1,5 +1,7 @@
 package com.inventoryorder.model.ordersdetails
 
+
+import com.inventoryorder.utils.capitalizeUtil
 import java.io.Serializable
 import java.util.*
 
@@ -12,22 +14,26 @@ data class PaymentDetailsN(
 ) : Serializable {
 
   fun status(): String {
-    return Status ?: ""
+    return (Status ?: "").capitalizeUtil()
   }
 
   fun method(): String {
     return Method ?: ""
   }
 
-  fun payment(): String {
-    return if (method().isNotEmpty() && status().isNotEmpty()) "${method()}, ${status()}" else method()
+  fun methodValue(): String {
+    return METHOD.fromType(method())?.value ?: ""
   }
 
-  enum class METHOD {
-    COD, ONLINEPAYMENT;
+  fun payment(): String {
+    return if (methodValue().isNotEmpty() && status().isNotEmpty()) "${methodValue()}, ${status()}" else methodValue()
+  }
+
+  enum class METHOD(val value: String, val type: String) {
+    COD("Offline", "COD"), ONLINEPAYMENT("Online", "ONLINEPAYMENT");
 
     companion object {
-      fun from(value: String): METHOD? = values().firstOrNull { it.name.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+      fun fromType(type: String): METHOD? = values().firstOrNull { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
     }
   }
 

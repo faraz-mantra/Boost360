@@ -135,13 +135,14 @@ public class ManageInventoryFragment extends Fragment {
 
     public static int getExperienceType(String fp_appExperienceCode) {
         switch (fp_appExperienceCode) {
-            case "SVC": /* TODO for Booking */
-            case "HOS":
+            case "SVC": /* TODO for Appointment (delivery mode offline)*/
             case "SPA":
             case "SAL":
             case "EDU":
+            case "DOC": /* TODO for Appointment (delivery mode offline) && consultation (delivery mode online)*/
+            case "HOS":
                 return 1;
-            case "DOC": /* TODO for video consultation */
+            case "HOT": /* TODO for booking */
                 return 2;
             default: /* TODO for order */
                 return 3;
@@ -157,19 +158,23 @@ public class ManageInventoryFragment extends Fragment {
     }
 
     private void openPrimaryTransactionTypeOrdes() {
-        Bundle bundle = new Bundle();
-        PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
-        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
-        bundle.putString(IntentConstant.INVENTORY_TYPE.name(), session.getFP_AppExperienceCode());
         int experienceType = getExperienceType(session.getFP_AppExperienceCode());
-        if (experienceType == 1) startFragmentActivityNew(activity, FragmentType.ALL_APPOINTMENT_VIEW, bundle, false);
-        else if (experienceType == 2) startFragmentActivityNew(activity, FragmentType.ALL_VIDEO_CONSULT_VIEW, bundle, false);
-        else startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
-
+        if (experienceType == 1) startFragmentActivityNew(activity, FragmentType.ALL_APPOINTMENT_VIEW, getBundleData(), false);
+        else if (experienceType == 3) startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, getBundleData(), false);
+        else Toast.makeText(activity, "Coming soon..", Toast.LENGTH_SHORT).show();
 //        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
 //        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
 //        startActivity(i);
 //        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    private Bundle getBundleData() {
+        Bundle bundle = new Bundle();
+        PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
+        bundle.putString(IntentConstant.EXPERIENCE_CODE.name(), session.getFP_AppExperienceCode());
+        return bundle;
+
     }
 
     @Override
@@ -195,13 +200,18 @@ public class ManageInventoryFragment extends Fragment {
                 tvTransactionType_1.setText("Appointments at Clinic");
 
             tvTransactionType_2 = mainView.findViewById(R.id.transactions_type_2);
-            String secondTransactionType = Utils.getSecondTypeTrasactionsTaxonomyFromServiceCode(svc_code);
+            ImageView tranType2Image = mainView.findViewById(R.id.transactions_type_2_image);
+            String secondTransactionType;
+            if (Utils.isRoomBooking(svc_code)) secondTransactionType = "Orders";
+            else secondTransactionType = Utils.getSecondTypeTrasactionsTaxonomyFromServiceCode(svc_code);
             tvTransactionType_2.setText(secondTransactionType);
-            if (secondTransactionType != null && secondTransactionType.length() > 1)
+            if (secondTransactionType.length() > 1) {
                 tvTransactionType_2.setVisibility(View.VISIBLE);
-            else
+                tranType2Image.setVisibility(View.VISIBLE);
+            } else {
                 tvTransactionType_2.setVisibility(View.GONE);
-
+                tranType2Image.setVisibility(View.GONE);
+            }
 
             tvPaymentSetting.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -252,7 +262,12 @@ public class ManageInventoryFragment extends Fragment {
             tvTransactionType_2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "Coming Soon. Drop an email to ria@getboost360.com in case of urgency.", Toast.LENGTH_LONG).show();
+                    if (Utils.isRoomBooking(svc_code)) {
+                        startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, getBundleData(), false);
+                    } else {
+                        startFragmentActivityNew(activity, FragmentType.ALL_VIDEO_CONSULT_VIEW, getBundleData(), false);
+                    }
+//                    Toast.makeText(getActivity(), "Coming Soon. Drop an email to ria@getboost360.com in case of urgency.", Toast.LENGTH_LONG).show();
                 }
             });
         } catch (Exception e) {

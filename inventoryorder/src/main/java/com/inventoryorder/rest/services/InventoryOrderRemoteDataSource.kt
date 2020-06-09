@@ -21,6 +21,8 @@ interface InventoryOrderRemoteDataSource {
   fun getSellerOrders(@Header("Authorization") auth: String,
                       @Query("clientId") clientId: String?,
                       @Query("sellerId") sellerId: String?,
+                      @Query("orderMode") orderMode: String?,
+                      @Query("deliveryMode") deliveryMode: String?,
                       @Query("orderStatus") orderStatus: String?,
                       @Query("paymentStatus") paymentStatus: String?,
                       @Query("skip") skip: Int?,

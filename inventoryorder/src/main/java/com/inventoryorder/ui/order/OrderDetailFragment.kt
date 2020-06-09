@@ -141,9 +141,9 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun setOrderDetails(order: OrderItem) {
     binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(order.status()), order.PaymentDetails)
-    binding?.tvOrderStatus?.text = order.PaymentDetails?.Status?.trim()
-    binding?.tvPaymentMode?.text = order.PaymentDetails?.Method?.trim()
-    binding?.tvDeliveryPaymentStatus?.text = "Status: ${order.PaymentDetails?.Status?.trim()}"
+    binding?.tvOrderStatus?.text = order.PaymentDetails?.status()
+    binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
+    binding?.tvDeliveryPaymentStatus?.text = "Status: ${order.PaymentDetails?.status()}"
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() }
           ?: "INR"
