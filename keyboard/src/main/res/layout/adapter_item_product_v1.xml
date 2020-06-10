@@ -77,7 +77,7 @@
                 android:textColor="@color/primaryTextColor"
                 android:textSize="13sp"
                 android:layout_below="@+id/tv_name"
-                android:text="0.0"
+                android:text="--"
                 android:layout_gravity="center_vertical" />
 
             <TextView
@@ -92,7 +92,7 @@
                 android:paddingRight="0dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="0.0"
+                android:text="--"
                 android:gravity="center_vertical" />
 
         </RelativeLayout>
@@ -186,19 +186,18 @@
                 android:layout_gravity="center"
                 android:textSize="@dimen/adapter_item_product_flipped_text_size"
                 android:text="CREATE OFFER"
-                android:background="#dddddd"
-                android:visibility="gone"
-                android:textColor="@android:color/tab_indicator_text" />
+                android:background="@color/primaryColor"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/buttonCopy"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_weight="1"
-                android:text="SHARE NOW"
+                android:text="SHARE LINK"
                 android:textColor="@color/white"
                 android:textSize="@dimen/adapter_item_product_flipped_text_size"
-                android:background="@color/primaryColor" />
+                android:background="@color/primaryColorDark" />
 
         </LinearLayout>
 

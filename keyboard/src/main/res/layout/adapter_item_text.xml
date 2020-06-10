@@ -7,15 +7,43 @@
     app:cardElevation="2dp"
     app:contentPadding="12dp"
     app:cardBackgroundColor="@color/white">
-
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:maxLines="10"
         android:gravity="center"
-        android:ellipsize="end"
-        android:text="text" />
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="12dp"
+            android:layout_marginBottom="2dp"
+            android:layout_gravity="center"
+            android:maxLines="10"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:ellipsize="end"
+            android:text="text" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <Button
+                android:id="@+id/text_share_button"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:text="SHARE LINK"
+                android:textColor="@color/white"
+                android:textSize="@dimen/adapter_item_product_flipped_text_size"
+                android:background="@color/primaryColorDark" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

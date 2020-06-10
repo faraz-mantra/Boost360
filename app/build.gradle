@@ -40,6 +40,9 @@ allprojects {
         maven {
             url "https://s3-ap-southeast-1.amazonaws.com/godel-release/godel/"
         }
+        flatDir {
+            dirs 'libs'
+        }
         maven { url "https://maven.google.com" }
         maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
         google()
@@ -66,7 +69,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020036
+        versionCode 2020020039
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -139,7 +142,7 @@ android {
         }
         partone {
 
-            versionName "5.3.14"
+            versionName "5.3.19"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
@@ -243,7 +246,7 @@ dependencies {
     //wenengage analytics
     implementation 'com.webengage:android-sdk:3.+'
 
-    implementation 'com.apxor.android:apxor-android-sdk-core:2.5.1@aar'
+//    implementation 'com.apxor.android:apxor-android-sdk-core:2.5.1@aar'
     implementation project(':keyboard')
     implementation project(':imagepicker')
     implementation 'com.edmodo:cropper:1.0.1'

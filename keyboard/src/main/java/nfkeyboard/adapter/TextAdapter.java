@@ -36,14 +36,15 @@ public class TextAdapter extends BaseAdapter<AllSuggestionModel> {
     }
 
     class TextHolder extends RecyclerView.ViewHolder {
-        TextView suggestionTv;
+        TextView suggestionTv, shareLink;
         AllSuggestionModel dataModel;
 
         public TextHolder(View itemView) {
             super(itemView);
             setViewLayoutSize(itemView);
             suggestionTv = itemView.findViewById(R.id.textView);
-            itemView.setOnClickListener(new View.OnClickListener() {
+            shareLink = itemView.findViewById(R.id.text_share_button);
+            shareLink.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     onItemClicked(dataModel);
@@ -53,7 +54,8 @@ public class TextAdapter extends BaseAdapter<AllSuggestionModel> {
 
         void setModelData(AllSuggestionModel model) {
             dataModel = model;
-            suggestionTv.setText(model.getText());
+            String textBody = model.getText();
+            suggestionTv.setText(textBody.trim());
         }
     }
 }

@@ -238,6 +238,9 @@ public class AllSuggestionModel {
     }
 
     public void setUrl(String url) {
+        if(url != null && !url.toUpperCase().contains("HTTP"))
+            url = "http://"+url;
+        url = url.toLowerCase();
         this.url = url;
     }
 

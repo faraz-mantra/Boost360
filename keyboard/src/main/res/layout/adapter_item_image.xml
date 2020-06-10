@@ -25,11 +25,33 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text=""
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
             android:ellipsize="end"
+            android:fontFamily="sans-serif"
             android:gravity="center"
-            android:maxLines="3"/>
+            android:maxLines="2"
+            android:textSize="12dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent">
+            <Button
+                android:id="@+id/buttonCopy"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:text="SHARE LINK"
+                android:textColor="@color/white"
+                android:textSize="@dimen/adapter_item_product_flipped_text_size"
+                android:background="@color/primaryColorDark" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

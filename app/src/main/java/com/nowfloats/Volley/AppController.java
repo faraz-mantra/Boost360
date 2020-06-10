@@ -16,7 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.apxor.androidsdk.core.ApxorSDK;
+//import com.apxor.androidsdk.core.ApxorSDK;
 import com.boost.presignup.locale.LocaleManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -64,7 +64,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        ApxorSDK.initialize(BuildConfig.APXOR_BUNDLED_ID, getApplicationContext());
+//        ApxorSDK.initialize(BuildConfig.APXOR_BUNDLED_ID, getApplicationContext());
         String deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         //Log.d("Device ID","Device ID : "+deviceId);

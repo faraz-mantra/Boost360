@@ -330,6 +330,10 @@ public class ImePresenterImpl implements ItemClickListener,
 
         finally
         {
+            if(Url != null && !Url.toUpperCase().contains("HTTP"))
+                Url = "http://"+Url;
+            Url = Url.toLowerCase();
+
             doCommitContent("Offer on: " + name /*+ "\nPrice: " + currency + " " + df.format(oldPrice)*/ + "\n\nOffer Price: "
                     + currency + " " + df.format(newPrice) + "\nExpires in \"" + diffHours + "\" Hours!\n\n" +
                     "Click to Buy: " + appendedUrl(Url), "text/plain", null);
@@ -1133,6 +1137,10 @@ public class ImePresenterImpl implements ItemClickListener,
 
                 finally
                 {
+                    if(shareUrl != null && !shareUrl.toUpperCase().contains("HTTP"))
+                        shareUrl = "http://"+shareUrl;
+                    shareUrl = shareUrl.toLowerCase();
+
                     builder.append("\n\nClick to Buy: ");
                     builder.append(shareUrl);
                 }

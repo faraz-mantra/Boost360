@@ -19,7 +19,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
-import com.apxor.androidsdk.core.ApxorSDK;
+//import com.apxor.androidsdk.core.ApxorSDK;
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -53,9 +53,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
-import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
-import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
+//import static com.nowfloats.util.Constants.PREF_NOTI_CALL_LOGS;
+//import static com.nowfloats.util.Constants.PREF_NOTI_ENQUIRIES;
+//import static com.nowfloats.util.Constants.PREF_NOTI_ORDERS;
 
 /**
  * Created by NowFloats on 05-10-2016.
@@ -220,7 +220,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                                 new TypeToken<VmnCallModel>() {
                                 }.getType());
 
-                        String oldData = pref.getString(PREF_NOTI_CALL_LOGS, "");
+                        String oldData = pref.getString(Constants.PREF_NOTI_CALL_LOGS, "");
 
                         if (!TextUtils.isEmpty(oldData)) {
                             Type type = new TypeToken<List<VmnCallModel>>() {
@@ -241,7 +241,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText("" + vmnCallModel.getCallerNumber()));
 
                         String json = gson.toJson(vmnList);
-                        pref.edit().putString(PREF_NOTI_CALL_LOGS, json).commit();
+                        pref.edit().putString(Constants.PREF_NOTI_CALL_LOGS, json).commit();
                         BoostLog.e("deepLinkUrl", jsonData);
 
 
@@ -253,7 +253,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                                 new TypeToken<Business_Enquiry_Model>() {
                                 }.getType());
 
-                        String oldData = pref.getString(PREF_NOTI_ENQUIRIES, "");
+                        String oldData = pref.getString(Constants.PREF_NOTI_ENQUIRIES, "");
 
                         if (!TextUtils.isEmpty(oldData)) {
                             Type type = new TypeToken<List<Business_Enquiry_Model>>() {
@@ -264,7 +264,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         eqList.add(entity_model);
 
                         String json = gson.toJson(eqList);
-                        pref.edit().putString(PREF_NOTI_ENQUIRIES, json).commit();
+                        pref.edit().putString(Constants.PREF_NOTI_ENQUIRIES, json).commit();
                         BoostLog.e("deepLinkUrl", jsonData);
 
                         notificationBuilder.setContentTitle("Business Enquiry");
@@ -278,7 +278,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                                 new TypeToken<OrderModel>() {
                                 }.getType());
 
-                        String oldData = pref.getString(PREF_NOTI_ORDERS, "");
+                        String oldData = pref.getString(Constants.PREF_NOTI_ORDERS, "");
 
                         if (!TextUtils.isEmpty(oldData)) {
                             Type type = new TypeToken<List<OrderModel>>() {
@@ -289,7 +289,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         orderList.add(entity_model);
 
                         String json = gson.toJson(orderList);
-                        pref.edit().putString(PREF_NOTI_ORDERS, json).commit();
+                        pref.edit().putString(Constants.PREF_NOTI_ORDERS, json).commit();
                         BoostLog.e("deepLinkUrl", jsonData);
                     }
 
