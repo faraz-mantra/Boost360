@@ -65,9 +65,9 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
     when (this) {
       is OrdersFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
       is OrderDetailFragment -> inflater.inflate(R.menu.menu_share_button, menu)
-      is AppointmentsFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
+      is AppointmentsFragment -> inflater.inflate(R.menu.menu_search_filter_icon, menu)
       is AppointmentDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
-      is VideoConsultFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
+      is VideoConsultFragment -> inflater.inflate(R.menu.menu_search_filter_icon, menu)
       is VideoConsultDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
       is NewBookingFragmentOne -> inflater.inflate(R.menu.menu_toolbar, menu)
       is NewBookingFragmentTwo -> inflater.inflate(R.menu.menu_toolbar, menu)
