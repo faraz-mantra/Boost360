@@ -191,12 +191,17 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
-        isRefresh = true
         data?.let { d -> showLongToast(d.Message as String?) }
-        orderItem?.Status = OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name
-        orderItem?.let { it1 -> checkStatusConsultation(it1) }
+        refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CANCELLED)
       } else showLongToast(it.message())
     })
+  }
+
+  private fun refreshStatus(statusOrder: OrderSummaryModel.OrderStatus) {
+    isRefresh = true
+    orderItem?.Status = statusOrder.name
+    orderItem?.let { binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(it.status()), it.PaymentDetails) }
+    orderItem?.let { checkStatusConsultation(it) }
   }
 
 
