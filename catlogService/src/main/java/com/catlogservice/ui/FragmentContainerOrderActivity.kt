@@ -56,35 +56,20 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
 
     override fun getToolbarBackgroundColor(): Int? {
         return when (type) {
-            FragmentType.ALL_ORDER_VIEW,
-            FragmentType.ORDER_DETAIL_VIEW,
-            FragmentType.APPOINTMENT_DETAIL_VIEW,
-            FragmentType.ALL_APPOINTMENT_VIEW,
-            FragmentType.CREATE_NEW_BOOKING,
-            FragmentType.CREATE_NEW_BOOKING_PAGE_2,
-            FragmentType.ALL_VIDEO_CONSULT_VIEW,
-            FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.colorPrimary)
+            FragmentType.ALL_ORDER_VIEW -> ContextCompat.getColor(this, R.color.colorPrimary)
             else -> super.getToolbarBackgroundColor()
         }
     }
 
     override fun getToolbarTitleColor(): Int? {
         return when (type) {
-            FragmentType.ALL_ORDER_VIEW,
-            FragmentType.ORDER_DETAIL_VIEW,
-            FragmentType.APPOINTMENT_DETAIL_VIEW,
-            FragmentType.ALL_APPOINTMENT_VIEW,
-            FragmentType.CREATE_NEW_BOOKING,
-            FragmentType.CREATE_NEW_BOOKING_PAGE_2,
-            FragmentType.ALL_VIDEO_CONSULT_VIEW,
-            FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.white)
+            FragmentType.ALL_ORDER_VIEW -> ContextCompat.getColor(this, R.color.white)
             else -> super.getToolbarTitleColor()
         }
     }
 
     override fun isHideToolbar(): Boolean {
         return when (type) {
-            FragmentType.BOOKING_SUCCESSFUL -> true
             else -> super.isHideToolbar()
         }
     }
@@ -99,14 +84,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
 
     override fun getNavigationIcon(): Drawable? {
         return when (type) {
-            FragmentType.ALL_ORDER_VIEW,
-            FragmentType.ORDER_DETAIL_VIEW,
-            FragmentType.APPOINTMENT_DETAIL_VIEW,
-            FragmentType.ALL_APPOINTMENT_VIEW,
-            FragmentType.CREATE_NEW_BOOKING,
-            FragmentType.CREATE_NEW_BOOKING_PAGE_2,
-            FragmentType.ALL_VIDEO_CONSULT_VIEW,
-            FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+            FragmentType.ALL_ORDER_VIEW -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
             else -> super.getNavigationIcon()
         }
     }
