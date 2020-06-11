@@ -3,6 +3,7 @@ package com.inventoryorder.rest.repositories
 import com.framework.base.BaseResponse
 import com.inventoryorder.base.rest.AppBaseLocalService
 import com.inventoryorder.base.rest.AppBaseRepository
+import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.rest.TaskCode
 import com.inventoryorder.rest.apiClients.WithFloatsApiClient
@@ -26,6 +27,10 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
 
   fun getSellerOrders(auth: String, request: OrderSummaryRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getSellerOrders(auth, request.clientId, request.sellerId, request.orderMode, request.deliveryMode, request.orderStatus, request.paymentStatus, request.skip, request.limit), TaskCode.GET_LIST_ORDER)
+  }
+
+  fun getSellerOrdersFilter(auth: String, request: OrderFilterRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getSellerOrdersFiler(auth, request.clientId, request), TaskCode.GET_LIST_ORDER_FILTER)
   }
 
   fun getAssurePurchaseOrders(request: OrderSummaryRequest): Observable<BaseResponse> {

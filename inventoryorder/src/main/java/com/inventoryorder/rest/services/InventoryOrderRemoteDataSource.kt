@@ -1,15 +1,14 @@
 package com.inventoryorder.rest.services
 
 import com.inventoryorder.model.OrderConfirmStatus
+import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.rest.EndPoints
 import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import io.reactivex.Observable
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface InventoryOrderRemoteDataSource {
 
@@ -27,6 +26,11 @@ interface InventoryOrderRemoteDataSource {
                       @Query("paymentStatus") paymentStatus: String?,
                       @Query("skip") skip: Int?,
                       @Query("limit") limit: Int?): Observable<Response<InventoryOrderListResponse>>
+
+  @POST(EndPoints.GET_LIST_ORDER_FILTER_URL)
+  fun getSellerOrdersFiler(@Header("Authorization") auth: String,
+                           @Query("clientId") clientId: String?,
+                           @Body request: OrderFilterRequest): Observable<Response<InventoryOrderListResponse>>
 
   @GET(EndPoints.GET_LIST_ASSURE_PURCHASE_ORDER)
   fun getAssurePurchaseOrders(@Query("clientId") clientId: String?,
