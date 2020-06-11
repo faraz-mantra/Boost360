@@ -1,8 +1,8 @@
-package com.inventoryorder.base.rest
+package com.catlogservice.base.rest
 
+import com.catlogservice.rest.TaskCode
 import com.framework.base.BaseLocalService
 import com.framework.base.BaseResponse
-import com.inventoryorder.rest.TaskCode
 
 open class AppBaseLocalService : BaseLocalService() {
 

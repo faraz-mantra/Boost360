@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.catlogservice.R
+import com.catlogservice.constant.FragmentType
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
@@ -17,7 +18,6 @@ import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 import com.inventoryorder.base.AppBaseActivity
-import com.inventoryorder.constant.FragmentType
 
 
 open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
@@ -143,11 +143,6 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -158,10 +153,6 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackPressed() {
-
-        super.onBackPressed()
-    }
 }
 
 fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {

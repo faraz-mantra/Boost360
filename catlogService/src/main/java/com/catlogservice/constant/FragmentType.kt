@@ -1,13 +1,5 @@
-package com.inventoryorder.constant
+package com.catlogservice.constant
 
 enum class FragmentType {
-  ALL_ORDER_VIEW,
-  ORDER_DETAIL_VIEW,
-  ALL_APPOINTMENT_VIEW,
-  APPOINTMENT_DETAIL_VIEW,
-  CREATE_NEW_BOOKING,
-  CREATE_NEW_BOOKING_PAGE_2,
-  BOOKING_SUCCESSFUL,
-  ALL_VIDEO_CONSULT_VIEW,
-  VIDEO_CONSULT_DETAIL_VIEW
+  ALL_ORDER_VIEW
 }

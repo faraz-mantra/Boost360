@@ -1,4 +1,4 @@
-package com.inventoryorder.rest.apiClients
+package com.catlogservice.rest.apiClients
 
 import com.framework.rest.BaseApiClient
 

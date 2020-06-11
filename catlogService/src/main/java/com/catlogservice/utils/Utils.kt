@@ -1,4 +1,4 @@
-package com.inventoryorder.utils
+package com.catlogservice.utils
 
 import android.content.ClipData
 import android.content.ClipboardManager
