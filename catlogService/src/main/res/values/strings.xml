@@ -1,0 +1,7 @@
+<resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="jpeg_png">JPEG/PNG</string>
+    <string name="_800x800px">(800x800px)</string>
+    <string name="add_service_image">Add Service Image</string>
+</resources>
