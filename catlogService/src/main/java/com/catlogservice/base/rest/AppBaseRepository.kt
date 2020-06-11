@@ -1,9 +1,9 @@
-package com.inventoryorder.base.rest
+package com.catlogservice.base.rest
 
+import com.catlogservice.rest.TaskCode
+import com.catlogservice.rest.apiClients.WithFloatsApiClient
 import com.framework.base.BaseRepository
 import com.framework.base.BaseResponse
-import com.inventoryorder.rest.TaskCode
-import com.inventoryorder.rest.apiClients.WithFloatsApiClient
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.Retrofit

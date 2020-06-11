@@ -1,13 +1,6 @@
-package com.inventoryorder.rest
+package com.catlogservice.rest
 
 enum class TaskCode {
-  GET_SELLER_SUMMARY,
-  GET_LIST_ORDER,
-  GET_ASSURE_PURCHASE_ORDER,
-  GET_LIST_CANCELLED_ORDER,
-  GET_ORDER_DETAILS,
-  GET_LIST_IN_COMPLETE_ORDER,
-  CONFIRM_ORDER_TASK,
-  CANCEL_ORDER_TASK
+  GET_SELLER_SUMMARY
 
 }

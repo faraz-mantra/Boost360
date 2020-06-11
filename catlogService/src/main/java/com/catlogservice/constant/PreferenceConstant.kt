@@ -1,4 +1,4 @@
-package com.inventoryorder.constant
+package com.catlogservice.constant
 
 object PreferenceConstant {
   const val NOW_FLOATS_PREFS = "nowfloatsPrefs"
