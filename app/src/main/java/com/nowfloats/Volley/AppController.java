@@ -5,7 +5,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
-import android.os.StrictMode;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -17,12 +16,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.boost.presignup.locale.LocaleManager;
+import com.catlogservice.BaseCatalogApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.inventoryorder.BaseOrderApplication;
 import com.nowfloats.util.Constants;
 import com.onboarding.nowfloats.BaseBoardingApplication;
-import com.thinksity.BuildConfig;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
 import com.webengage.sdk.android.WebEngageConfig;
 
@@ -45,6 +44,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         BaseOrderApplication.initModule(this);
         BaseBoardingApplication.instance = this;
         BaseBoardingApplication.initModule(this);
+        BaseCatalogApplication.instance = this;
+        BaseCatalogApplication.initModule(this);
         initWebEngage();
 //        ContextApplication.initSdk(this, this);
 
