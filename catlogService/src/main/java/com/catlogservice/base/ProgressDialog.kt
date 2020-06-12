@@ -1,12 +1,12 @@
-package com.inventoryorder.base
+package com.catlogservice.base
 
 import androidx.fragment.app.FragmentManager
+import com.catlogservice.R
+import com.catlogservice.databinding.ProgressDialogBinding
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
-import com.inventoryorder.R
-import com.inventoryorder.databinding.ProgressDialogBinding
 
 class ProgressDialog : BaseDialogFragment<ProgressDialogBinding, BaseViewModel>() {
   private var title: CharSequence? = null

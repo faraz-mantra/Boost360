@@ -10,19 +10,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.catlogservice.R
+import com.catlogservice.base.AppBaseActivity
 import com.catlogservice.constant.FragmentType
+import com.catlogservice.ui.service.ServiceDetailFragment
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
-import com.inventoryorder.base.AppBaseActivity
 
 
-open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
     private var type: FragmentType? = null
+
+    private var serviceDetailFragment: ServiceDetailFragment? = null
 
 
     override fun getLayout(): Int {
@@ -85,6 +88,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     override fun getNavigationIcon(): Drawable? {
         return when (type) {
             FragmentType.ALL_ORDER_VIEW -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+            FragmentType.SERVICE_DETAIL_VIEW -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
             else -> super.getNavigationIcon()
         }
     }
@@ -116,7 +120,10 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
 
     private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
         return when (type) {
-
+            FragmentType.SERVICE_DETAIL_VIEW -> {
+                serviceDetailFragment = ServiceDetailFragment.newInstance()
+                serviceDetailFragment
+            }
             else -> throw IllegalFragmentTypeException()
         }
     }
@@ -134,7 +141,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
 }
 
 fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
-    val intent = Intent(activity, FragmentContainerOrderActivity::class.java)
+    val intent = Intent(activity, FragmentContainerServiceActivity::class.java)
     intent.putExtras(bundle)
     intent.setFragmentType(type)
     if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -142,7 +149,7 @@ fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle()
 }
 
 fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
-    val intent = Intent(activity, FragmentContainerOrderActivity::class.java)
+    val intent = Intent(activity, FragmentContainerServiceActivity::class.java)
     intent.putExtras(bundle)
     intent.setFragmentType(type)
     if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -150,7 +157,7 @@ fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bun
 }
 
 fun AppCompatActivity.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
-    val intent = Intent(this, FragmentContainerOrderActivity::class.java)
+    val intent = Intent(this, FragmentContainerServiceActivity::class.java)
     intent.putExtras(bundle)
     intent.setFragmentType(type)
     if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

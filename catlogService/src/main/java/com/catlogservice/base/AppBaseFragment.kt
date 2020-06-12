@@ -1,4 +1,4 @@
-package com.inventoryorder.base
+package com.catlogservice.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
