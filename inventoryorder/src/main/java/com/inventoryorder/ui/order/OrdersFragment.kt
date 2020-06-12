@@ -51,7 +51,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
   private var TOTAL_ELEMENTS = 0
   private var currentPage = PAGE_START
   private var isLastPageD = false
-  private var orderItemType = OrderSummaryModel.OrderType.TOTAL.type
+  private var orderItemType = OrderSummaryModel.OrderSummaryType.TOTAL.type
 
   companion object {
     @JvmStatic
@@ -155,7 +155,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
         val orderItem = item as? OrderSummaryModel
         typeList?.forEach { it.isSelected = (it.type == orderItem?.type) }
         typeAdapter?.notifyDataSetChanged()
-        orderItemType = orderItem?.type ?: OrderSummaryModel.OrderType.TOTAL.type
+        orderItemType = orderItem?.type ?: OrderSummaryModel.OrderSummaryType.TOTAL.type
         loadNewData()
       }
       RecyclerViewActionType.ORDER_CONFIRM_CLICKED.ordinal -> apiConfirmOrder(position, (item as? OrderItem))
@@ -188,7 +188,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
     isLastPageD = false
     currentPage = PAGE_START
     orderAdapter?.clear()
-    request?.orderStatus = OrderSummaryModel.OrderType.fromType(orderItemType)?.value
+    request?.orderStatus = OrderSummaryModel.OrderSummaryType.fromType(orderItemType)?.value
     request?.paymentStatus = null
     request?.skip = currentPage
     orderList.clear()
@@ -198,11 +198,11 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
 
   private fun apiOrderListCall() {
     request?.let {
-      when (OrderSummaryModel.OrderType.fromType(orderItemType)) {
-        OrderSummaryModel.OrderType.RECEIVED -> apiAssureOrder(it)
+      when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {
+        OrderSummaryModel.OrderSummaryType.RECEIVED -> apiAssureOrder(it)
 //        OrderSummaryModel.OrderType.SUCCESSFUL -> apiInCompleteOrder(it)
-        OrderSummaryModel.OrderType.CANCELLED -> apiCancelOrder(it)
-        OrderSummaryModel.OrderType.ABANDONED -> {
+        OrderSummaryModel.OrderSummaryType.CANCELLED -> apiCancelOrder(it)
+        OrderSummaryModel.OrderSummaryType.ABANDONED -> {
           request?.paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name
           apiOrderList(it)
         }

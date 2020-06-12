@@ -3,6 +3,8 @@ package com.inventoryorder.holders
 import android.graphics.Paint
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
@@ -14,6 +16,7 @@ import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.ItemAppointmentsOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersummary.OrderStatusValue
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
@@ -36,13 +39,19 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
   }
 
   private fun setDataResponse(order: OrderItem) {
-    binding.orderType.text = OrderSummaryModel.OrderType.fromValue(order.status())?.type
+    val statusValue = OrderStatusValue.fromStatusAppointment(order.status())?.value
+    if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT)) {
+      if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
+        binding.orderType.text = OrderStatusValue.ESCALATED_2.value
+      } else binding.orderType.text = statusValue.plus(order.cancelledText())
+    } else binding.orderType.text = statusValue
+
     binding.bookingId.text = "# ${order.ReferenceNumber}"
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding.bookingDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
+    binding.bookingDate.value.text = parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
     binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
     binding.location.value.text = order.SellerDetails?.Address?.City?.capitalize()
     val sizeItem = order.Items?.size ?: 0
@@ -57,46 +66,26 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     val todayDate = getCurrentDate().parseDate(FORMAT_DD_MM_YYYY) ?: ""
     val itemDate = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_DD_MM_YYYY) ?: ""
 
-    OrderSummaryModel.OrderType.fromValue(order.status())?.let {
+    OrderSummaryModel.OrderStatus.from(order.status())?.let {
       when (it) {
-        OrderSummaryModel.OrderType.RECEIVED, OrderSummaryModel.OrderType.PAYMENT_CONFIRM,
-        OrderSummaryModel.OrderType.SUCCESSFUL,
-        OrderSummaryModel.OrderType.ESCALATED,
-
-        OrderSummaryModel.OrderType.ORDER_INITIATED,
-        OrderSummaryModel.OrderType.PAYMENT_MODE_VERIFIED,
-        OrderSummaryModel.OrderType.DELIVERY_IN_PROGRESS,
-        OrderSummaryModel.OrderType.FEEDBACK_PENDING,
-        OrderSummaryModel.OrderType.FEEDBACK_RECEIVED,
-        OrderSummaryModel.OrderType.DELIVERY_DELAYED,
-        OrderSummaryModel.OrderType.DELIVERY_FAILED,
-        OrderSummaryModel.OrderType.DELIVERY_COMPLETED -> {
-//          if (todayDate == itemDate) {
-            checkPaymentConfirm(order)
-            changeBackground(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light, R.color.light_green)
-//          } else backgroundGrey(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.cancel_order_bg, R.color.primary_grey)
+        OrderSummaryModel.OrderStatus.ORDER_CANCELLED -> {
+          changeBackground(View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey, R.color.primary_grey)
+          binding.btnConfirm.gone()
         }
-        OrderSummaryModel.OrderType.ABANDONED,
-        OrderSummaryModel.OrderType.CANCELLED -> {
-          if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-            binding.orderType.text = OrderSummaryModel.OrderType.ABANDONED.type
-          }
-          changeBackground(View.GONE, View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey, R.color.primary_grey)
+        else -> {
+          changeBackground(View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light, R.color.light_green)
+          checkConfirmBtn(order)
         }
       }
     }
     binding.itemMore.paintFlags.or(Paint.UNDERLINE_TEXT_FLAG).let { binding.itemMore.paintFlags = it }
   }
 
-  private fun checkPaymentConfirm(order: OrderItem) {
-    if (order.isConfirmBooking()) {
-      buttonDisable(R.color.colorAccent, R.drawable.btn_rounded_orange_border)
+  private fun checkConfirmBtn(order: OrderItem) {
+    if (order.isConfirmActionBtn()) {
+      binding.btnConfirm.visible()
       binding.btnConfirm.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.BOOKING_CONFIRM_CLICKED.ordinal) }
-      binding.btnConfirm.paintFlags = 0
-    } else {
-      buttonDisable(R.color.primary_grey, R.drawable.btn_rounded_grey_border)
-      binding.btnConfirm.paintFlags = binding.btnConfirm.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-    }
+    } else binding.btnConfirm.gone()
   }
 
   private fun buttonDisable(color: Int, border: Int) {
@@ -107,10 +96,8 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
   }
 
   private fun backgroundGrey(confirm: Int, detail: Int, btn: Int, orderBg: Int, primaryGrey: Int) {
-    binding.btnConfirm.visibility = confirm
     binding.detailsOrder.visibility = detail
     binding.next2.visibility = btn
-    binding.elapsedView.visibility = View.GONE
     setColorView(primaryGrey, binding.bookingDate.title, binding.payment.title, binding.location.title, binding.bookingId,
         binding.txtRupees, binding.bookingDate.value, binding.payment.value, binding.location.value, binding.itemCount,
         binding.itemDesc, binding.itemMore)
@@ -126,8 +113,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     activity?.let { ac -> view.forEach { it.setTextColor(ContextCompat.getColor(ac, color)) } }
   }
 
-  private fun changeBackground(confirm: Int, detail: Int, btn: Int, orderBg: Int, rupeesColor: Int, dateColor: Int) {
-    binding.btnConfirm.visibility = confirm
+  private fun changeBackground(detail: Int, btn: Int, orderBg: Int, rupeesColor: Int, dateColor: Int) {
     binding.detailsOrder.visibility = detail
     binding.next2.visibility = btn
     activity?.let {

@@ -87,7 +87,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   }
 
   private fun checkStatusOrder(order: OrderItem) {
-    if (order.isConfirmBooking()) {
+    if (order.isConfirmActionBtn()) {
       buttonDisable(R.color.colorAccent)
       binding?.buttonConfirmOrder?.setOnClickListener(this)
     } else {
@@ -95,7 +95,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       binding?.let { it.buttonConfirmOrder.paintFlags = it.buttonConfirmOrder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG }
       binding?.buttonConfirmOrder?.setOnClickListener(null)
     }
-    if (order.isCancelBooking()) {
+    if (order.isCancelActionBtn()) {
       binding?.tvCancelOrder?.visible()
       binding?.tvCancelOrder?.setOnClickListener(this)
     } else binding?.tvCancelOrder?.gone()
@@ -135,7 +135,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   }
 
   private fun setOrderDetails(order: OrderItem) {
-    binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(order.status()), order.PaymentDetails)
+    binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderSummaryType.fromValue(order.status()), order.PaymentDetails)
     binding?.tvOrderStatus?.text = order.PaymentDetails?.status()
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
     binding?.tvDeliveryPaymentStatus?.text = "Status: ${order.PaymentDetails?.status()}"
@@ -170,11 +170,11 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   }
 
-  private fun getStatusText(orderType: OrderSummaryModel.OrderType?, paymentDetails: PaymentDetailsN?): String? {
-    return if (orderType == OrderSummaryModel.OrderType.CANCELLED
+  private fun getStatusText(orderSummaryType: OrderSummaryModel.OrderSummaryType?, paymentDetails: PaymentDetailsN?): String? {
+    return if (orderSummaryType == OrderSummaryModel.OrderSummaryType.CANCELLED
         && paymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-      OrderSummaryModel.OrderType.ABANDONED.type
-    } else orderType?.type
+      OrderSummaryModel.OrderSummaryType.ABANDONED.type
+    } else orderSummaryType?.type
   }
 
   override fun onClick(v: View) {
@@ -222,7 +222,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private fun refreshStatus(statusOrder: OrderSummaryModel.OrderStatus) {
     isRefresh = true
     orderItem?.Status = statusOrder.name
-    orderItem?.let { binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(it.status()), it.PaymentDetails) }
+    orderItem?.let { binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderSummaryType.fromValue(it.status()), it.PaymentDetails) }
     orderItem?.let { checkStatusOrder(it) }
   }
 

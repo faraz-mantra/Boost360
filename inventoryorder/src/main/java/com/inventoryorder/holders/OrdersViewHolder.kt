@@ -35,7 +35,7 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
 
   private fun setDataResponse(order: OrderItem) {
     checkPaymentConfirm(order)
-    binding.orderType.text = OrderSummaryModel.OrderType.fromValue(order.status())?.type
+    binding.orderType.text = OrderSummaryModel.OrderSummaryType.fromValue(order.status())?.type
     binding.orderId.text = "# ${order.ReferenceNumber}"
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
@@ -52,26 +52,26 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
       binding.itemMore.text = "${sizeItem - 3} more"
       View.VISIBLE
     } ?: View.GONE
-    OrderSummaryModel.OrderType.fromValue(order.status())?.let {
+    OrderSummaryModel.OrderSummaryType.fromValue(order.status())?.let {
       when (it) {
-        OrderSummaryModel.OrderType.RECEIVED, OrderSummaryModel.OrderType.PAYMENT_CONFIRM,
-        OrderSummaryModel.OrderType.SUCCESSFUL,
-        OrderSummaryModel.OrderType.ESCALATED,
+        OrderSummaryModel.OrderSummaryType.RECEIVED, OrderSummaryModel.OrderSummaryType.PAYMENT_CONFIRM,
+        OrderSummaryModel.OrderSummaryType.SUCCESSFUL,
+        OrderSummaryModel.OrderSummaryType.ESCALATED,
 
-        OrderSummaryModel.OrderType.ORDER_INITIATED,
-        OrderSummaryModel.OrderType.PAYMENT_MODE_VERIFIED,
-        OrderSummaryModel.OrderType.DELIVERY_IN_PROGRESS,
-        OrderSummaryModel.OrderType.FEEDBACK_PENDING,
-        OrderSummaryModel.OrderType.FEEDBACK_RECEIVED,
-        OrderSummaryModel.OrderType.DELIVERY_DELAYED,
-        OrderSummaryModel.OrderType.DELIVERY_FAILED,
-        OrderSummaryModel.OrderType.DELIVERY_COMPLETED -> {
+        OrderSummaryModel.OrderSummaryType.ORDER_INITIATED,
+        OrderSummaryModel.OrderSummaryType.PAYMENT_MODE_VERIFIED,
+        OrderSummaryModel.OrderSummaryType.DELIVERY_IN_PROGRESS,
+        OrderSummaryModel.OrderSummaryType.FEEDBACK_PENDING,
+        OrderSummaryModel.OrderSummaryType.FEEDBACK_RECEIVED,
+        OrderSummaryModel.OrderSummaryType.DELIVERY_DELAYED,
+        OrderSummaryModel.OrderSummaryType.DELIVERY_FAILED,
+        OrderSummaryModel.OrderSummaryType.DELIVERY_COMPLETED -> {
           changeBackground(View.VISIBLE, View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light)
         }
-        OrderSummaryModel.OrderType.ABANDONED,
-        OrderSummaryModel.OrderType.CANCELLED -> {
+        OrderSummaryModel.OrderSummaryType.ABANDONED,
+        OrderSummaryModel.OrderSummaryType.CANCELLED -> {
           if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-            binding.orderType.text = OrderSummaryModel.OrderType.ABANDONED.type
+            binding.orderType.text = OrderSummaryModel.OrderSummaryType.ABANDONED.type
           }
           changeBackground(View.GONE, View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey)
         }
@@ -81,7 +81,7 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
   }
 
   private fun checkPaymentConfirm(order: OrderItem) {
-    if (order.isConfirmBooking()) {
+    if (order.isConfirmActionBtn()) {
       buttonDisable(R.color.colorAccent, R.drawable.btn_rounded_orange_border)
       binding.btnConfirm.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.ORDER_CONFIRM_CLICKED.ordinal) }
       binding.btnConfirm.paintFlags = 0

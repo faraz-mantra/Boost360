@@ -6,4 +6,9 @@ data class CancellationDetailsN(
     val CancelledBy: String? = null,
     val CancelledOn: String? = null,
     val ExtraProperties: ExtraPropertiesN? = null
-) : Serializable
+) : Serializable {
+
+  fun cancelledBy(): String {
+    return CancelledBy ?: ""
+  }
+}
