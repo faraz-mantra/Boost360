@@ -214,7 +214,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                                 //adding bundle netPrice
                                                 bundleNetPrice += netPrice * singleBundle.min_purchase_months
                                                 widgetList.add(Widget(
-                                                        "CLINICS",
+                                                        "",
                                                         ConsumptionConstraint(
                                                                 "DAYS",
                                                                 30 * singleBundle.min_purchase_months
@@ -235,7 +235,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                                         if (outputExtendedProps.size > 0) outputExtendedProps else null,
                                                         1,
                                                         "MONTHLY",
-                                                        item.boost_widget_key
+                                                        singleFeature.boost_widget_key
                                                 ))
                                                 break
                                             }
