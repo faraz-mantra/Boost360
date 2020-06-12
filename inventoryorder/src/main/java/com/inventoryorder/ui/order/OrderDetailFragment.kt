@@ -81,10 +81,24 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun setDetails(order: OrderItem) {
     setToolbarTitle("# ${order.ReferenceNumber}")
-    checkPaymentConfirm(order)
-    checkCancelConfirm(order)
+    checkStatusOrder(order)
     setOrderDetails(order)
     order.Items?.let { setAdapter(it) }
+  }
+
+  private fun checkStatusOrder(order: OrderItem) {
+    if (order.isConfirmBooking()) {
+      buttonDisable(R.color.colorAccent)
+      binding?.buttonConfirmOrder?.setOnClickListener(this)
+    } else {
+      buttonDisable(R.color.primary_grey)
+      binding?.let { it.buttonConfirmOrder.paintFlags = it.buttonConfirmOrder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG }
+      binding?.buttonConfirmOrder?.setOnClickListener(null)
+    }
+    if (order.isCancelBooking()) {
+      binding?.tvCancelOrder?.visible()
+      binding?.tvCancelOrder?.setOnClickListener(this)
+    } else binding?.tvCancelOrder?.gone()
   }
 
 
@@ -103,17 +117,6 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     }
   }
 
-  private fun checkPaymentConfirm(order: OrderItem) {
-    if (order.isConfirmBooking()) {
-      buttonDisable(R.color.colorAccent)
-      binding?.buttonConfirmOrder?.setOnClickListener(this)
-    } else {
-      buttonDisable(R.color.primary_grey)
-      binding?.let { it.buttonConfirmOrder.paintFlags = it.buttonConfirmOrder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG }
-      binding?.buttonConfirmOrder?.setOnClickListener(null)
-    }
-  }
-
   fun getBundleData(): Bundle? {
     isRefresh?.let {
       val bundle = Bundle()
@@ -129,14 +132,6 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       newDrawable?.let { it1 -> DrawableCompat.setTint(it1, ContextCompat.getColor(it, color)) }
       binding?.buttonConfirmOrder?.background = newDrawable
     }
-  }
-
-  private fun checkCancelConfirm(order: OrderItem) {
-    if (order.isCancelBooking()) {
-      binding?.tvCancelOrder?.visible()
-      binding?.tvCancelOrder?.setOnClickListener(this)
-    } else binding?.tvCancelOrder?.gone()
-
   }
 
   private fun setOrderDetails(order: OrderItem) {
@@ -202,10 +197,8 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
-        isRefresh = true
         data?.let { d -> showLongToast(d.Message as String?) }
-        orderItem?.Status = OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name
-        orderItem?.let { it1 -> checkCancelConfirm(it1) }
+        refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CANCELLED)
       } else showLongToast(it.message())
     })
   }
@@ -220,12 +213,17 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
-        isRefresh = true
         data?.let { d -> showLongToast(d.Message as String?) }
-        orderItem?.Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
-        orderItem?.let { it1 -> checkPaymentConfirm(it1) }
+        refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED)
       } else showLongToast(it.message())
     })
+  }
+
+  private fun refreshStatus(statusOrder: OrderSummaryModel.OrderStatus) {
+    isRefresh = true
+    orderItem?.Status = statusOrder.name
+    orderItem?.let { binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(it.status()), it.PaymentDetails) }
+    orderItem?.let { checkStatusOrder(it) }
   }
 
   private fun showBottomSheetDialog() {

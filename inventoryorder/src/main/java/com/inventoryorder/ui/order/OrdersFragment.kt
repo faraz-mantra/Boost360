@@ -307,14 +307,3 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
     }
   }
 }
-
-//private var pickInventoryNatureBottomSheetDialog : PickInventoryNatureBottomSheetDialog ? = null
-//private var selectPickInventoryNatureList = PickInventoryNatureModel().getData()
-
-//private fun showBottomSheetDialogPickInventoryNature(){
-//  pickInventoryNatureBottomSheetDialog = PickInventoryNatureBottomSheetDialog()
-//  pickInventoryNatureBottomSheetDialog?.onDoneClicked = { selectPickInventoryNatureList (it)}
-//  pickInventoryNatureBottomSheetDialog?.setList( selectPickInventoryNatureList )
-//  pickInventoryNatureBottomSheetDialog?.show(this.parentFragmentManager, PickInventoryNatureBottomSheetDialog::class.java.name)
-//
-//}
