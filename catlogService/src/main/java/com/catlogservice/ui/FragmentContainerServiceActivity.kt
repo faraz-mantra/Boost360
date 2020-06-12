@@ -75,8 +75,8 @@ open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentCo
 
   override fun getToolbarTitle(): String? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION -> "Service Details"
-      FragmentType.SERVICE_DETAIL_VIEW -> "Other Information"
+      FragmentType.SERVICE_INFORMATION -> "Other Information"
+      FragmentType.SERVICE_DETAIL_VIEW -> "Service Details"
       else -> super.getToolbarTitle()
     }
   }

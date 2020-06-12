@@ -30,7 +30,8 @@
                     android:drawablePadding="@dimen/size_4"
                     android:includeFontPadding="false"
                     android:text="Service delivery at"
-                    android:textColor="@color/black_4a4a4a"
+                    android:textColor="@color/white"
+                    tools:textColor="@color/black_4a4a4a"
                     app:fontFamily="@font/semi_bold"
                     app:textType="HEADING_4" />
 
@@ -40,7 +41,8 @@
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     android:text="Select, where you will be providing this service to your clients."
-                    android:textColor="@color/warm_grey"
+                    android:textColor="@color/white"
+                    tools:textColor="@color/warm_grey"
                     android:textSize="12sp"
                     app:fontFamily="@font/regular" />
 
