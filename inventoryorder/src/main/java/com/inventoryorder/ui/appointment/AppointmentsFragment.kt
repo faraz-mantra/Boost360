@@ -195,11 +195,11 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private fun clickFilterItem(item: FilterModel?) {
     this.filterItem = item
     when (this.filterItem?.type?.let { FilterModel.FilterType.fromType(it) }) {
-      FilterModel.FilterType.ALL_APPOINTMENTS -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isRefresh = true)
-      FilterModel.FilterType.CONFIRM -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name)), isRefresh = true)
-      FilterModel.FilterType.DELIVERED -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name)), isRefresh = true)
-      FilterModel.FilterType.CANCELLED -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name)), isRefresh = true)
-      else -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isRefresh = true)
+      FilterModel.FilterType.ALL_APPOINTMENTS -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isFirst = true, isRefresh = true)
+      FilterModel.FilterType.CONFIRM -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name)), isFirst = true, isRefresh = true)
+      FilterModel.FilterType.DELIVERED -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name)), isFirst = true, isRefresh = true)
+      FilterModel.FilterType.CANCELLED -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name)), isFirst = true, isRefresh = true)
+      else -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isFirst = true, isRefresh = true)
     }
   }
 

@@ -192,14 +192,14 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   private fun clickFilterItem(item: FilterModel?) {
     this.filterItem = item
     when (this.filterItem?.type?.let { FilterModel.FilterType.fromType(it) }) {
-      FilterModel.FilterType.ALL_CONSULTATIONS -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isRefresh = true)
+      FilterModel.FilterType.ALL_CONSULTATIONS -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isFirst = true, isRefresh = true)
       FilterModel.FilterType.COMPLETED_CONSULTATIONS -> {
         val status = arrayListOf(OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name,
             OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name, OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name)
-        getSellerOrdersFilterApi(getRequestFilterData(status), isRefresh = true)
+        getSellerOrdersFilterApi(getRequestFilterData(status), isFirst = true, isRefresh = true)
       }
-      FilterModel.FilterType.CANCEL_CONSULTATIONS -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name)), isRefresh = true)
-      else -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isRefresh = true)
+      FilterModel.FilterType.CANCEL_CONSULTATIONS -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name)), isFirst = true, isRefresh = true)
+      else -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isFirst = true, isRefresh = true)
     }
   }
 
