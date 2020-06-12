@@ -80,12 +80,25 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
   private fun setDetails(order: OrderItem) {
     setToolbarTitle("# ${order.ReferenceNumber}")
-    checkPaymentConfirm(order)
-    checkCancelConfirm(order)
+    checkStatusOrder(order)
     setOrderDetails(order)
     (order.Items?.map {
       it.recyclerViewType = RecyclerViewItemType.BOOKING_DETAILS.getLayout();it
     } as? ArrayList<ItemN>)?.let { setAdapter(it) }
+  }
+
+  private fun checkStatusOrder(order: OrderItem) {
+    if (order.isConfirmBooking()) {
+      buttonDisable(R.color.colorAccent)
+      binding?.buttonConfirmOrder?.setOnClickListener(this)
+    } else {
+      buttonDisable(R.color.primary_grey)
+      binding?.let { it.buttonConfirmOrder.paintFlags = it.buttonConfirmOrder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG }
+    }
+    if (order.isCancelBooking()) {
+      binding?.tvCancelOrder?.visible()
+      binding?.tvCancelOrder?.setOnClickListener(this)
+    } else binding?.tvCancelOrder?.gone()
   }
 
   private fun setAdapter(orderItems: ArrayList<ItemN>) {
@@ -95,15 +108,6 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     }
   }
 
-  private fun checkPaymentConfirm(order: OrderItem) {
-    if (order.isConfirmBooking()) {
-      buttonDisable(R.color.colorAccent)
-      binding?.buttonConfirmOrder?.setOnClickListener(this)
-    } else {
-      buttonDisable(R.color.primary_grey)
-      binding?.let { it.buttonConfirmOrder.paintFlags = it.buttonConfirmOrder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG }
-    }
-  }
 
   private fun buttonDisable(color: Int) {
     activity?.let {
@@ -122,12 +126,6 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     return null
   }
 
-  private fun checkCancelConfirm(order: OrderItem) {
-    if (order.isCancelBooking()) {
-      binding?.tvCancelOrder?.visible()
-      binding?.tvCancelOrder?.setOnClickListener(this)
-    } else binding?.tvCancelOrder?.gone()
-  }
 
   private fun setOrderDetails(order: OrderItem) {
     binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(order.status()), order.PaymentDetails)
@@ -191,10 +189,8 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
-        isRefresh = true
         data?.let { d -> showLongToast(d.Message as String?) }
-        orderItem?.Status = OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name
-        orderItem?.let { it1 -> checkCancelConfirm(it1) }
+        refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CANCELLED)
       } else showLongToast(it.message())
     })
   }
@@ -209,12 +205,17 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
-        isRefresh = true
         data?.let { d -> showLongToast(d.Message as String?) }
-        orderItem?.Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
-        orderItem?.let { it1 -> checkPaymentConfirm(it1) }
+        refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED)
       } else showLongToast(it.message())
     })
+  }
+
+  private fun refreshStatus(statusOrder: OrderSummaryModel.OrderStatus) {
+    isRefresh = true
+    orderItem?.Status = statusOrder.name
+    orderItem?.let { binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(it.status()), it.PaymentDetails) }
+    orderItem?.let { checkStatusOrder(it) }
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

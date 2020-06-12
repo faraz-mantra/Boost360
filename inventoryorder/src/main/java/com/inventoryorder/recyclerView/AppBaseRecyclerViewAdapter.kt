@@ -38,6 +38,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       GENDER_SELECTION -> GenderSelectionViewHolder(binding as ItemBottomSheetSelectGenderBinding)
       APPOINTMENT_TYPE -> AppointmentTypeViewHolder(binding as ItemBottomSheetAppointmentTypeBinding)
       PICK_INVENTORY_NATURE -> PickInventoryNatureViewHolder(binding as ItemBottomSheetPickInventoryNatureBinding)
+      FILTER_ORDER_ITEM -> FilterOrderViewHolder(binding as ItemBottomSheetFilterBinding)
     }
   }
 

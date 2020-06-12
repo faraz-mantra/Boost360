@@ -43,7 +43,7 @@ class OrderSummaryModel(
   enum class OrderType(val type: String, val value: String) {
     TOTAL("All", ""),
     RECEIVED("Received", OrderStatus.ORDER_CONFIRMED.name),
-    PAYMENT_CONFIRM("Received", OrderStatus.PAYMENT_CONFIRMED.name),
+    PAYMENT_CONFIRM("Payment confirmed", OrderStatus.PAYMENT_CONFIRMED.name),
 
 
     SUCCESSFUL("Completed", OrderStatus.ORDER_COMPLETED.name),
@@ -54,7 +54,7 @@ class OrderSummaryModel(
     ABANDONED("Abandoned", OrderStatus.ORDER_CANCELLED.name), /* with Payment Status == CANCELLED */
 
     ORDER_INITIATED("Initiated", OrderStatus.ORDER_INITIATED.name),
-    PAYMENT_MODE_VERIFIED("Payment complete", OrderStatus.PAYMENT_MODE_VERIFIED.name),
+    PAYMENT_MODE_VERIFIED("Payment verified", OrderStatus.PAYMENT_MODE_VERIFIED.name),
     ORDER_CONFIRMED("Order confirm", OrderStatus.ORDER_CONFIRMED.name),
     DELIVERY_IN_PROGRESS("Delivery in-progress", OrderStatus.DELIVERY_IN_PROGRESS.name),
     FEEDBACK_PENDING("Feedback pending", OrderStatus.FEEDBACK_PENDING.name),

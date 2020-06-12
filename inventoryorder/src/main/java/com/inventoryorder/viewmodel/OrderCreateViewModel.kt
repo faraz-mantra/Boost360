@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.rest.repositories.InventoryOrderRepository
 
@@ -15,6 +16,10 @@ class OrderCreateViewModel : BaseViewModel() {
 
   fun getSellerOrders(auth: String, request: OrderSummaryRequest): LiveData<BaseResponse> {
     return InventoryOrderRepository.getSellerOrders(auth, request).toLiveData()
+  }
+
+  fun getSellerOrdersFilter(auth: String, request: OrderFilterRequest): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getSellerOrdersFilter(auth, request).toLiveData()
   }
 
   fun getAssurePurchaseOrder(request: OrderSummaryRequest): LiveData<BaseResponse> {
