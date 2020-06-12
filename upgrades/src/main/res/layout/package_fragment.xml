@@ -200,7 +200,7 @@
                         android:textSize="@dimen/_35sdp"
                         android:textColor="@color/common_text_color"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/package_blossom_pack_layout"
+                        app:layout_constraintTop_toBottomOf="@id/package_use_case_flag_layout"
                         android:text="6"/>
 
                     <TextView
@@ -208,12 +208,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:text="Exciting \nAdd-ons"
-                        android:layout_marginStart="@dimen/_10sdp"
+                        android:text="Professional Identity Pack and other details"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:textColor="@color/common_text_color"
                         android:textSize="@dimen/_12sdp"
+                        android:lines="2"
+                        app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintStart_toEndOf="@id/package_count"
-                        app:layout_constraintTop_toBottomOf="@id/package_blossom_pack_layout"
+                        app:layout_constraintTop_toBottomOf="@id/package_use_case_flag_layout"
                         app:layout_constraintBottom_toTopOf="@id/package_amount_layout"/>
 
                     <LinearLayout
@@ -225,13 +227,15 @@
                         app:layout_constraintTop_toBottomOf="@id/package_count">
 
                         <TextView
+                            android:id="@+id/bundle_discount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingStart="0dp"
-                            android:paddingEnd="@dimen/_5sdp"
-                            android:text="Just for"
-                            android:textColor="#9b9b9b"
-                            android:textSize="@dimen/_8sdp" />
+                            android:background="@drawable/all_side_curve_percentage_bg"
+                            tools:text="0%"
+                            android:textColor="@color/common_text_color"
+                            android:textSize="@dimen/_8sdp"
+                            android:visibility="gone"
+                            android:layout_marginEnd="@dimen/_7sdp"/>
 
                         <TextView
                             android:id="@+id/offer_price"

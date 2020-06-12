@@ -5,6 +5,7 @@ import android.text.style.StrikethroughSpan
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
@@ -66,6 +67,8 @@ class PackageViewPagerAdapter(
         val offerPrice = itemView.findViewById<TextView>(R.id.offer_price)
         val origCost = itemView.findViewById<TextView>(R.id.orig_cost)
         val primaryImage = itemView.findViewById<ImageView>(R.id.bundle_primary_image)
+        val use_case_holder = itemView.findViewById<RelativeLayout>(R.id.bunlde_use_case_flag_1)
+        val use_case = itemView.findViewById<TextView>(R.id.bunlde_use_case_1)
     }
 
     fun getPackageInfoFromDB(holder: PagerViewHolder, bundles: Bundles) {
@@ -94,7 +97,7 @@ class PackageViewPagerAdapter(
                                         }
                                     }
                                     if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1){
-                                        holder.offerPrice.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)+"/"+bundles.min_purchase_months+"months")
+                                        holder.offerPrice.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)+"/"+bundles.min_purchase_months+"mths")
                                         if (grandTotal != mrpPrice) {
                                             spannableString(holder, mrpPrice, bundles.min_purchase_months)
                                             holder.origCost.visibility = View.VISIBLE
@@ -102,7 +105,7 @@ class PackageViewPagerAdapter(
                                             holder.origCost.visibility = View.GONE
                                         }
                                     }else{
-                                        holder.offerPrice.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)+"/month")
+                                        holder.offerPrice.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)+"/mth")
                                         if (grandTotal != mrpPrice) {
                                             spannableString(holder, mrpPrice, 1)
                                             holder.origCost.visibility = View.VISIBLE
@@ -111,6 +114,12 @@ class PackageViewPagerAdapter(
                                         }
                                     }
                                     Glide.with(activity as UpgradeActivity).load(bundles.primary_image!!.url).into(holder.primaryImage)
+                                    if(bundles.target_business_usecase.isNullOrEmpty()){
+                                        holder.use_case_holder.visibility = View.GONE
+                                    } else{
+                                        holder.use_case_holder.visibility = View.VISIBLE
+                                        holder.use_case.setText(bundles.target_business_usecase)
+                                    }
                                 },
                                 {
                                     it.printStackTrace()
@@ -122,9 +131,9 @@ class PackageViewPagerAdapter(
     fun spannableString(holder: PagerViewHolder, value: Double, minMonth: Int) {
         val origCost: SpannableString
         if(minMonth > 1){
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value)+"/"+minMonth+"months")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value)+"/"+minMonth+"mths")
         }else{
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value)+"/month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value)+"/mth")
         }
 
         origCost.setSpan(

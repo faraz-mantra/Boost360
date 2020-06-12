@@ -99,6 +99,11 @@ class PackageAdaptor(cryptoCurrencies: List<FeaturesModel>?, bundleData: Bundles
                 } else {
                     holder.origCost.visibility = View.GONE
                 }
+                if(grandTotal == 0.0){
+                    holder.price.visibility = View.GONE
+                    holder.origCost.visibility = View.VISIBLE
+                    holder.origCost.setText("FREE")
+                }
                 break
             }
         }

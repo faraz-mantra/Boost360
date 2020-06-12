@@ -5,9 +5,7 @@ import android.graphics.Color
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.text.style.StrikethroughSpan
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,10 +24,8 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.utils.Constants
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.package_fragment.*
 import java.text.NumberFormat
 import java.util.*
@@ -46,7 +42,7 @@ class PackageFragment : BaseFragment() {
     var cartList: List<CartModel>? = null
 
     var mrpPrice = 0.0
-    var grandTotal = 0.0
+    var finalBundleMonthlyPrice = 0.0
     var badgeNumber = 0
 
     var packageInCartStatus = false
@@ -104,7 +100,7 @@ class PackageFragment : BaseFragment() {
                             bundleData!!.name,
                             "",
                             bundleData!!.primary_image!!.url,
-                            grandTotal,
+                            finalBundleMonthlyPrice,
                             mrpPrice,
                             bundleData!!.overall_discount_percent,
                             1,
@@ -147,25 +143,45 @@ class PackageFragment : BaseFragment() {
                     for (item in bundleData!!.included_features) {
                         if (singleItem.boost_widget_key == item.feature_code) {
                             val total = (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0))
-                            grandTotal += total
+                            finalBundleMonthlyPrice += total
                             mrpPrice += singleItem.price
                         }
                     }
                 }
+                var originalBundlePrice = finalBundleMonthlyPrice
                 if (minMonth > 1) {
-                    val offeredPrice = grandTotal * minMonth
-                    offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredPrice) + "/" + bundleData!!.min_purchase_months + "months")
-                    if (grandTotal != mrpPrice) {
-                        spannableString(mrpPrice, minMonth)
+                    originalBundlePrice = finalBundleMonthlyPrice * minMonth
+                    var discountedBunlePrice = originalBundlePrice
+                    if(bundleData!!.overall_discount_percent > 0){
+                        bundle_discount.visibility = View.VISIBLE
+                        bundle_discount.setText(bundleData!!.overall_discount_percent.toString() + "%")
+                        discountedBunlePrice = originalBundlePrice - originalBundlePrice * bundleData!!.overall_discount_percent/100
+                    } else{
+                        bundle_discount.visibility = View.GONE
+                    }
+                    offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(discountedBunlePrice) + "/" + bundleData!!.min_purchase_months + "mths")
+
+                    if (discountedBunlePrice != originalBundlePrice) {
+                        spannableString(originalBundlePrice, minMonth)
                         orig_cost.visibility = View.VISIBLE
                     } else {
                         orig_cost.visibility = View.GONE
                     }
                     updateRecycler(it,bundleData!!.min_purchase_months!!)
                 } else {
-                    offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal) + "/month")
-                    if (grandTotal != mrpPrice) {
-                        spannableString(mrpPrice, 1)
+                    originalBundlePrice = finalBundleMonthlyPrice
+                    var discountedBunlePrice = originalBundlePrice
+                    if(bundleData!!.overall_discount_percent > 0){
+                        bundle_discount.visibility = View.VISIBLE
+                        bundle_discount.setText(bundleData!!.overall_discount_percent.toString() + "%")
+                        discountedBunlePrice = originalBundlePrice - originalBundlePrice * bundleData!!.overall_discount_percent/100
+                    } else {
+                        bundle_discount.visibility = View.GONE
+                    }
+
+                    offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(discountedBunlePrice) + "/mth")
+                    if (discountedBunlePrice != originalBundlePrice) {
+                        spannableString(originalBundlePrice, 1)
                         orig_cost.visibility = View.VISIBLE
                     } else {
                         orig_cost.visibility = View.GONE
@@ -240,10 +256,9 @@ class PackageFragment : BaseFragment() {
     fun spannableString(value: Double, minMonth: Int) {
         val origCost: SpannableString
         if (minMonth > 1) {
-            val originalCost = value * minMonth
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(originalCost) + "/" + minMonth + "months")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
         } else {
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
         }
         origCost.setSpan(
                 StrikethroughSpan(),
