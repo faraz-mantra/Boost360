@@ -208,9 +208,11 @@ public class ManageInventoryFragment extends Fragment {
             if (secondTransactionType.length() > 1) {
                 tvTransactionType_2.setVisibility(View.VISIBLE);
                 tranType2Image.setVisibility(View.VISIBLE);
+                mainView.findViewById(R.id.line_view2).setVisibility(View.VISIBLE);
             } else {
                 tvTransactionType_2.setVisibility(View.GONE);
                 tranType2Image.setVisibility(View.GONE);
+                mainView.findViewById(R.id.line_view2).setVisibility(View.GONE);
             }
 
             tvPaymentSetting.setOnClickListener(new View.OnClickListener() {

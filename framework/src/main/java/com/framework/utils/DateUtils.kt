@@ -50,7 +50,11 @@ object DateUtils {
   }
 
   fun String.parseDate(format: String, locale: Locale = Locale.getDefault()): Date? {
-    return SimpleDateFormat(format, locale).parse(this)
+    return try {
+      SimpleDateFormat(format, locale).parse(this)
+    } catch (e: Exception) {
+      null
+    }
   }
 
   fun getCurrentDate(): Date {

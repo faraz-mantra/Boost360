@@ -15,6 +15,7 @@ import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.ItemVideoConsultOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersummary.OrderStatusValue
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
@@ -38,13 +39,20 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
   }
 
   private fun setDataResponse(order: OrderItem) {
-    binding.orderType.text = OrderSummaryModel.OrderType.fromValue(order.status())?.type
+    val statusValue = OrderStatusValue.fromStatusAppointment(order.status())?.value
+    if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT)) {
+      if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
+        binding.orderType.text = OrderStatusValue.ESCALATED_2.value
+      } else binding.orderType.text = statusValue.plus(order.cancelledTextVideo())
+    } else if (order.isConfirmConsultingBtn()) binding.orderType.text = "Upcoming Consult"
+    else binding.orderType.text = statusValue
+
     binding.bookingId.text = "# ${order.ReferenceNumber}"
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding.bookingDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
+    binding.bookingDate.value.text = parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
     binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
     binding.duration.value.text = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
     val sizeItem = if (order.firstItemForConsultation() != null) 1 else 0
@@ -59,44 +67,24 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
     val todayDate = getCurrentDate().parseDate(FORMAT_DD_MM_YYYY) ?: ""
     val itemDate = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_DD_MM_YYYY) ?: ""
 
-    OrderSummaryModel.OrderType.fromValue(order.status())?.let {
+    OrderSummaryModel.OrderStatus.from(order.status())?.let {
       when (it) {
-        OrderSummaryModel.OrderType.RECEIVED, OrderSummaryModel.OrderType.PAYMENT_CONFIRM,
-        OrderSummaryModel.OrderType.SUCCESSFUL,
-        OrderSummaryModel.OrderType.ESCALATED,
-
-        OrderSummaryModel.OrderType.ORDER_INITIATED,
-        OrderSummaryModel.OrderType.PAYMENT_MODE_VERIFIED,
-        OrderSummaryModel.OrderType.DELIVERY_IN_PROGRESS,
-        OrderSummaryModel.OrderType.FEEDBACK_PENDING,
-        OrderSummaryModel.OrderType.FEEDBACK_RECEIVED,
-        OrderSummaryModel.OrderType.DELIVERY_DELAYED,
-        OrderSummaryModel.OrderType.DELIVERY_FAILED,
-        OrderSummaryModel.OrderType.DELIVERY_COMPLETED -> {
-//          if (todayDate == itemDate) {
-            checkPaymentConfirm(order)
-            changeBackground(View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light, R.color.light_green)
-//          } else {
-//            buttonVisibility(false)
-//            backgroundGrey(View.VISIBLE, View.GONE, R.drawable.cancel_order_bg, R.color.primary_grey)
-//          }
-        }
-        OrderSummaryModel.OrderType.ABANDONED,
-        OrderSummaryModel.OrderType.CANCELLED -> {
-          if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-            binding.orderType.text = OrderSummaryModel.OrderType.ABANDONED.type
-          }
+        OrderSummaryModel.OrderStatus.ORDER_CANCELLED -> {
           binding.textErrorCall.gone()
           binding.btnCall.gone()
           changeBackground(View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey, R.color.primary_grey)
+        }
+        else -> {
+          checkConfirmBtn(order)
+          changeBackground(View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.watermelon_light, R.color.light_green)
         }
       }
     }
     binding.itemMore.paintFlags.or(Paint.UNDERLINE_TEXT_FLAG).let { binding.itemMore.paintFlags = it }
   }
 
-  private fun checkPaymentConfirm(order: OrderItem) {
-    if (order.isConfirmConsulting()) {
+  private fun checkConfirmBtn(order: OrderItem) {
+    if (order.isConfirmConsultingBtn()) {
       buttonVisibility(true)
       binding.btnCall.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.VIDEO_CONSULT_CALL_CLICKED.ordinal) }
       binding.btnCopyLink.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.VIDEO_CONSULT_COPY_CLICKED.ordinal) }

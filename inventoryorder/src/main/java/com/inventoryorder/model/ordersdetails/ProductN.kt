@@ -20,4 +20,9 @@ data class ProductN(
   fun extraItemProductConsultation(): ExtraPropertiesN? {
     return ExtraProperties
   }
+
+  fun isAvailable(): Boolean {
+    return IsAvailable ?: false
+  }
+
 }

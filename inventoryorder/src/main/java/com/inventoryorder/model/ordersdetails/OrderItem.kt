@@ -31,6 +31,7 @@ data class OrderItem(
 
   var dateKey: Date? = null
   var recyclerViewType = RecyclerViewItemType.INVENTORY_ORDER_ITEM.getLayout()
+
   override fun getViewType(): Int {
     return recyclerViewType
   }
@@ -45,6 +46,18 @@ data class OrderItem(
 
   fun referenceNumber(): String {
     return ReferenceNumber?.trim()?.toLowerCase() ?: ""
+  }
+
+  fun cancelledText(): String {
+    return if (CancellationDetails != null) {
+      takeIf { CancellationDetails.cancelledBy().toUpperCase(Locale.ROOT) == CancellingEntity.SELLER.name }?.let { " You" } ?: " " + CancellationDetails.cancelledBy()
+    } else ""
+  }
+
+  fun cancelledTextVideo(): String {
+    val str = CancellationDetails?.cancelledBy()?.trim()?.toUpperCase(Locale.ROOT) ?: ""
+    return if (str == CancellingEntity.BUYER.name || str == CancellingEntity.NF.name) " Patient"
+    else cancelledText()
   }
 
   fun getTitles(): String {
@@ -92,22 +105,20 @@ data class OrderItem(
     return "http://DOCTORS.GETBOOST360.COM/consult/$_id"
   }
 
-  fun isConfirmConsulting(): Boolean {
-    return (OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.PAYMENT_MODE_VERIFIED
-        || OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.PAYMENT_CONFIRM
-        || OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.ORDER_CONFIRMED)
+  fun isConfirmConsultingBtn(): Boolean {
+    return (OrderSummaryModel.OrderSummaryType.fromValue(status()) == OrderSummaryModel.OrderSummaryType.PAYMENT_MODE_VERIFIED && firstItemForConsultation()?.Product?.isAvailable() ?: false)
   }
 
-  fun isConfirmBooking(): Boolean {
-    return ((OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.PAYMENT_MODE_VERIFIED
-        || OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.PAYMENT_CONFIRM) &&
+  fun isConfirmActionBtn(): Boolean {
+    return ((OrderSummaryModel.OrderSummaryType.fromValue(status()) == OrderSummaryModel.OrderSummaryType.PAYMENT_MODE_VERIFIED
+        || OrderSummaryModel.OrderSummaryType.fromValue(status()) == OrderSummaryModel.OrderSummaryType.PAYMENT_CONFIRM) &&
         PaymentDetails != null && ((PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
         PaymentDetailsN.STATUS.from(PaymentDetails.status()) == PaymentDetailsN.STATUS.SUCCESS)
         || (PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.COD)))
   }
 
-  fun isCancelBooking(): Boolean {
-    return ((OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.PAYMENT_MODE_VERIFIED ||
+  fun isCancelActionBtn(): Boolean {
+    return ((OrderSummaryModel.OrderSummaryType.fromValue(status()) == OrderSummaryModel.OrderSummaryType.PAYMENT_MODE_VERIFIED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED) &&
         LogisticsDetails != null && LogisticsDetailsN.STSTUS.from(LogisticsDetails.status()) == LogisticsDetailsN.STSTUS.NOT_INITIATED)

@@ -139,6 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:visibility="visible"
+                android:id="@+id/line_view2"
                 android:background="#d3d3d3" />
 
             <TextView

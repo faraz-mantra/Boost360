@@ -208,7 +208,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     val searchItem = menu.findItem(R.id.menu_item_search)
     if (searchItem != null) {
       val searchView = searchItem.actionView as SearchView
-      searchView.queryHint = resources.getString(R.string.queryHintBooking)
+      searchView.queryHint = resources.getString(R.string.queryHintAppointment)
       searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
           return false
@@ -262,7 +262,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         data?.let { d -> showLongToast(d.Message as String?) }
         val itemList = orderAdapter?.list() as ArrayList<OrderItem>
         if (itemList.size > position) {
-          itemList[position].Status = OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name
+          itemList[position].Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
           orderAdapter?.notifyItemChanged(position)
         } else showLongToast(it.message())
       }
