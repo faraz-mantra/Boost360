@@ -770,7 +770,11 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
             if (model.getTypeEnum() == BaseAdapterManager.SectionTypeEnum.ImageShare) {
                 MixPanelUtils.getInstance().track(MixPanelUtils.KEYBOARD_UPDATE_IMAGE_SHARE, object);
-                MethodUtils.onGlideBitmapMultipleReady(urlToBitmapInterface, model.getImageUri(), model.getId(), selectedImages.size(), i);
+                try {
+                    MethodUtils.onGlideBitmapMultipleReady(urlToBitmapInterface, model.getImageUri(), model.getId(), selectedImages.size(), i);
+                } catch (Exception e){
+                    Toast.makeText(mThemeContext, "There seems to be issue with one of the images which you have selected for share. Retry with one image at a time.\n\nIf the issue persists, please get in touch with Boost Care Team.", Toast.LENGTH_LONG).show();
+                }
             }
 
         }

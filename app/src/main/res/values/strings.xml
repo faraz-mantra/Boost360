@@ -1193,9 +1193,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="facebook_url_message">If your Facebook page URL is facebook.com/nowfloats; then your user name is nowfloats</string>
     <string name="forgot_your_password">Forgot password?</string>
     <string name="open_in_browser">OPEN IN BROWSER</string>
-    <string name="auto_share_to_social_networks">Auto Share\nTo Social Networks</string>
+    <string name="auto_share_to_social_networks">Automatically share your website content\nto multiple digital channels</string>
     <string name="pick_up_address">Pickup Address</string>
-    <string name="website_posts">Website\nPosts</string>
+    <string name="website_posts">Latest Updates\nOffers</string>
     <string name="to">to</string>
     <string name="facebook">Facebook</string>
     <string name="twitter">Twitter</string>
@@ -1708,7 +1708,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="support_name">Support</string>
     <string name="wildfire_analytics">Inorganic</string>
     <string name="manage_content">Manage Content</string>
-    <string name="content_sharing_settings">Content Sharing Settings</string>
+    <string name="content_sharing_settings">My Digital Channels</string>
     <string name="account_settings">Account Settings</string>
     <string name="about">About Boost</string>
     <string name="upgrades">Upgrades</string>
@@ -1850,5 +1850,5 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="message_2">is not authorized to support faster login to your Boost account.</string>
     <string name="how_to_use_boost">Learn How-To-Use Boost</string>
     <string name="view_support_tickets">View My Support Tickets</string>
-    <string name="loading_boost_dashboard_for_logged_in_user">Loading your Digital Business Dashboard ...</string>
+    <string name="loading_boost_dashboard_for_logged_in_user">Loading your business dashboard . . .</string>
 </resources>

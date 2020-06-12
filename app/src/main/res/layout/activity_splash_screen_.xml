@@ -1,25 +1,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="#ffffff">
 
-    <ImageView
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view_pre_dashboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/splash"
-        android:scaleType="centerCrop"
-        android:alpha="0.5"
-        android:src="@drawable/splash_screen_v2" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true" />
 
     <TextView
         android:id="@+id/btn_request_callback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray"
+        android:background="@color/white"
         android:gravity="center"
         android:padding="15dp"
         android:text="@string/loading_boost_dashboard_for_logged_in_user"
-        android:textColor="@color/white"
+        android:textColor="@color/gray"
         android:textSize="14sp"
         android:layout_alignParentBottom="true"/>
 

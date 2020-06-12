@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
@@ -311,9 +312,10 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     fun loadData() {
+        val pref: SharedPreferences = (activity as UpgradeActivity).getSharedPreferences("nowfloatsPrefs", 0);
         var code: String = (activity as UpgradeActivity).experienceCode!!;
         if (!code.equals("null", true)) {
-            viewModel.setCurrentExperienceCode(code)
+            viewModel.setCurrentExperienceCode(code, pref.getString("GET_FP_DETAILS_TAG", ""))
         }
 
         viewModel.loadUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
@@ -350,7 +352,9 @@ class HomeFragment : BaseFragment(), HomeListener {
                         item.min_purchase_months,
                         item.name,
                         item.overall_discount_percent,
-                        PrimaryImage(item.primary_image)
+                        PrimaryImage(item.primary_image),
+                        null,
+                        null
                 ))
             }
             if (list.size > 0)

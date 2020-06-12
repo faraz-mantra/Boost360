@@ -600,7 +600,7 @@
                                 android:paddingBottom="8dp"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="8dp"
-                                android:text="Auto-Sync\nBusiness Profile"
+                                android:text="Automatically share your business profile\nwith Google My Business"
                                 android:textColor="#ffffff"
                                 android:textSize="16dp" />
 
@@ -728,7 +728,7 @@
                                 android:paddingBottom="8dp"
                                 android:paddingLeft="10dp"
                                 android:paddingTop="8dp"
-                                android:text="Customer Engagement\nvia Chat"
+                                android:text="Enable customer chat on website\nvia WhatsApp"
                                 android:textColor="#ffffff"
                                 android:textSize="16dp" />
 
@@ -745,7 +745,7 @@
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                app:srcCompat="@drawable/ic_whatsapp_for_business"
+                                app:srcCompat="@drawable/ic_whatsapp_business"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="15dp" />
 
@@ -762,7 +762,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginLeft="5dp"
-                                    android:text="WhatsApp for Business"
+                                    android:text="WhatsApp number for your business"
                                     android:textSize="13sp" />
 
                                 <TextView

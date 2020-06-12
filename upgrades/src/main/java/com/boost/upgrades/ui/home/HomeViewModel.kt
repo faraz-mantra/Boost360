@@ -1,18 +1,19 @@
 package com.boost.upgrades.ui.home
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.FeatureDeals
 import com.boost.upgrades.data.model.*
 import com.boost.upgrades.utils.Utils
 import com.google.gson.Gson
 import com.luminaire.apolloar.base_class.BaseViewModel
-import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -33,6 +34,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
 
     var experienceCode: String = "SVC"
+    var fpTag: String = ""
 
     fun upgradeResult(): LiveData<List<WidgetModel>> {
         return updatesResult
@@ -66,8 +68,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         return updatesLoader
     }
 
-    fun setCurrentExperienceCode(code: String) {
+    fun setCurrentExperienceCode(code: String, tag: String) {
         experienceCode = code
+        fpTag = tag
     }
 
     fun loadUpdates(fpid: String, clientId: String) {
@@ -192,6 +195,26 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                         //saving bundle info in bundle table
                                         val bundles = arrayListOf<BundlesModel>()
                                         for (item in it.Data[0].bundles) {
+
+                                            if (item.exclusive_for_customers != null && item.exclusive_for_customers.size > 0) {
+                                                var applicableToCurrentExpCode = false
+                                                for (code in item.exclusive_for_customers) {
+                                                    if (code.equals(experienceCode, true))
+                                                        applicableToCurrentExpCode = true
+                                                }
+                                                if (!applicableToCurrentExpCode)
+                                                    continue;
+                                            }
+
+                                            if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) {
+                                                var applicableToCurrentExpCode = false
+                                                for (code in item.exclusive_to_categories) {
+                                                    if (code.equals(experienceCode, true))
+                                                        applicableToCurrentExpCode = true
+                                                }
+                                                if (!applicableToCurrentExpCode)
+                                                    continue;
+                                            }
                                             bundles.add(BundlesModel(
                                                     item._kid,
                                                     item.name,

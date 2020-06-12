@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.boost.presignup.SignUpActivity;
 import com.boost.presignup.utils.PresignupManager;
 import com.bumptech.glide.Glide;
@@ -44,6 +45,7 @@ import retrofit.client.Response;
 public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface , PresignupManager.SignUpLoginHandler {
     UserSessionManager session;
     Bus bus;
+    LottieAnimationView animationView;
     public static ProgressDialog pd;
     private String loginCheck = null, deepLink;
 
@@ -52,28 +54,22 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen_);
         Methods.isOnline(SplashScreen_Activity.this);
-//        Log.d("Splash Screen", "Splash Screen");
-//        PresignupManager.INSTANCE.setListener(this);
-
-       /* try {
-            Constants.restAdapter = Methods.createAdapter(this,Constants.NOW_FLOATS_API_URL);
-            Constants.validEmailAdapter = Methods.createAdapter(this,"https://bpi.briteverify.com");
-            Constants.alertInterface = Constants.restAdapter.create(NotificationInterface.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
 
         if (getIntent() != null && getIntent().getStringExtra("from") != null) {
             MixPanelController.track(EventKeysWL.NOTIFICATION_CLICKED, null);
             deepLink = getIntent().getStringExtra("url");
         }
 
-
-//        Constants.deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-//        Log.d("Device ID", "Device ID : " + Constants.deviceId);
-
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(), SplashScreen_Activity.this);
+
+        initLottieAnimation();
+    }
+
+    private void initLottieAnimation(){
+        animationView = findViewById(R.id.animation_view_pre_dashboard);
+        animationView.setAnimation(R.raw.pre_dashboard_lottie);
+        animationView.playAnimation();
     }
 
     private Thread mThread;
@@ -93,7 +89,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         @Override
         public void run() {
             try {
-                Thread.sleep(1200);
+                Thread.sleep(1500);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -128,19 +124,12 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private void displayHomeScreen() {
-       /* pd = ProgressDialog.show(SplashScreen_Activity.this, "", getString(R.string.getting_details));
-        pd.setCancelable(false);*/
         fetchData();
     }
 
     private void fetchData() {
         try {
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-                    Util.addBackgroundImages();
-//                }
-//            }).start();
+            Util.addBackgroundImages();
             getFPDetails_retrofit(SplashScreen_Activity.this, session.getFPID(), Constants.clientId, bus);
         } catch (Exception e) {
             e.printStackTrace();
@@ -178,6 +167,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     @Override
     protected void onResume() {
         super.onResume();
+        if(animationView != null)
+            animationView.playAnimation();
         Start();
         bus.register(this);
     }
@@ -186,6 +177,17 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     protected void onPause() {
         super.onPause();
         bus.unregister(this);
+        if(animationView != null)
+            animationView.pauseAnimation();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(animationView != null){
+            animationView.cancelAnimation();
+            animationView = null;
+        }
     }
 
     @Subscribe

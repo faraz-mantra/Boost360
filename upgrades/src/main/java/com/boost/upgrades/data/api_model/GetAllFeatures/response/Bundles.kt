@@ -6,5 +6,7 @@ data class Bundles(
         val min_purchase_months: Int?,
         val name: String?,
         val overall_discount_percent: Int,
-        val primary_image: PrimaryImage?
+        val primary_image: PrimaryImage?,
+        val exclusive_to_categories: List<String>?,
+        val exclusive_for_customers: List<String>?
 )
