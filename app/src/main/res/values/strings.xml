@@ -1706,7 +1706,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="upgrade_base_plan_description"><Data><![CDATA[BOOST Lite, BOOST Pro, BOOST Custom]]></Data></string>
     <string name="Year">Year</string>
     <string name="support_name">Support</string>
-    <string name="wildfire_analytics">Inorganic</string>
+    <string name="wildfire_analytics">Wildfire</string>
     <string name="manage_content">Manage Content</string>
     <string name="content_sharing_settings">Content Sharing Settings</string>
     <string name="account_settings">Account Settings</string>
@@ -1727,6 +1727,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Privacy Policy</item>
     </string-array>
     <string name="keyboard">Keyboard</string>
+    <string name="facebook_leads">Facebook Leads</string>
+    <string name="website_domain">Website Domain</string>
+    <string name="testimonials">Testimonials</string>
     <!--<string name="keyboard_message">The Boost Keyboard allows you to share your products and updates without leaving a chat.We do not store, send or share any data that is typed on the Boost Keyboard.</string>
     -->
     <string name="keyboard_message">The Boost Keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
@@ -1750,6 +1753,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>All Images</item>
         <item>Business Profile</item>
         <item>Custom Pages</item>
+        <item>Testimonials</item>
     </string-array>
 
     <string-array name="order_analytics_tab_items">
@@ -1844,4 +1848,5 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="how_to_use_boost">Learn How-To-Use Boost</string>
     <string name="view_support_tickets">View My Support Tickets</string>
     <string name="loading_boost_dashboard_for_logged_in_user">Loading your Digital Business Dashboard ...</string>
+    <string name="custome_domain_instruction">We strongly recommend that you use an existing domain (if you have one) for your Boost website. Online discovery will be better as search engines already recognize your domain.</string>
 </resources>

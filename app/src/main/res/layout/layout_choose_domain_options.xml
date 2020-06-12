@@ -1,57 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="15dp"
     android:background="@color/white"
-    android:paddingRight="15dp"
-    android:gravity="center">
+    android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_margin="30dp"
-        android:src="@drawable/domain_www"/>
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="You haven't linked a domain to your website yet. Please link a domain to your website to engage more traffic and get more customers."/>
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp">
-        <RadioButton
-            android:id="@+id/rb_book_a_domain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            android:checked="true"
-            android:text="@string/book_a_new_domain_included"/>
-        <RadioButton
-            android:id="@+id/rb_link_a_domain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/gray"
-            android:text="Link a existing domain"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    </RadioGroup>
-    <TextView
-        android:id="@+id/btn_proceed"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:padding="8dp"
-        android:background="@drawable/rounded_corner_button"
-        android:layout_marginTop="15dp"
-        android:textColor="@drawable/yellow_btn_hover_text_color"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        android:text="@string/proceed"/>
-</LinearLayout>
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="30dp"
+            android:src="@drawable/domain_www" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="You haven't linked a domain to your website yet. Please link a domain to your website to engage more traffic and get more customers." />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+
+            <RadioButton
+                android:id="@+id/rb_book_a_domain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/book_a_new_domain_included"
+                android:textColor="@color/gray" />
+
+            <RadioButton
+                android:id="@+id/rb_link_a_domain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Link a existing domain"
+                android:textColor="@color/gray" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/btn_proceed"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_corner_button"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/proceed"
+            android:textAllCaps="false"
+            android:textColor="@drawable/yellow_btn_hover_text_color"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="visible">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/secondary_layout_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_15sdp"
+            android:background="@drawable/all_side_curve_bg"
+            android:elevation="@dimen/_2sdp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/_30sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                app:srcCompat="@drawable/ic_custome_domain" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center"
+                android:text="Domain is a great first step towards building your brand on web."
+                android:textSize="@dimen/_15sdp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/dummy_inst"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_30sdp"
+            android:text="@string/custome_domain_instruction"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/secondary_layout_one" />
+
+        <TextView
+            android:id="@+id/existdomain_btn_proceed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:background="@drawable/rounded_corner_button"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="have an existing domain"
+            android:textAllCaps="true"
+            android:textColor="@drawable/yellow_btn_hover_text_color"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dummy_inst" />
+
+        <LinearLayout
+            android:id="@+id/or_dummy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/existdomain_btn_proceed">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:layout_marginEnd="@dimen/_1sdp"
+                android:layout_weight="1"
+                android:background="@drawable/dotted_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--- or ---"
+                android:textSize="@dimen/_15sdp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_3sdp"
+                android:layout_marginStart="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:layout_weight="1"
+                android:background="@drawable/dotted_line" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/newdomain_btn_proceed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:background="@drawable/feature_deals_click_effect"
+            android:fontFamily="@font/open_sans_semibold"
+            android:gravity="center"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:text="book a new domain"
+            android:textAllCaps="true"
+            android:textColor="@color/app_text_yellow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/or_dummy" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

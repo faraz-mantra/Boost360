@@ -80,7 +80,7 @@ public class SidePanelFragment extends Fragment {
     public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private Activity mainActivity;
     TextView dashBoardTextView, analyticsTextView, tvManageCustomers, tvManageInventory, tvInbox, tvManageContent,
-            accountSettingsText, tvSubscriptions, keyboardTextView, marketplaceTextView, helpAndSupportText, shareText, aboutText,
+            accountSettingsText, tvSubscriptions, keyboardTextView, facebookTextView, marketplaceTextView, helpAndSupportText, shareText, aboutText,
             tvContentSharing, tvCalls;
     public static TextView fpNameTextView;
     UserSessionManager session;
@@ -98,7 +98,7 @@ public class SidePanelFragment extends Fragment {
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
 
-    LinearLayout homeLayout, analyticsLayout, subscriptionsLayout, accountSettingsLayout, keyboardLayout, marketplaceLayout, aboutLayout, helpAndSupportLayout, shareLayout,
+    LinearLayout homeLayout, analyticsLayout, subscriptionsLayout, accountSettingsLayout, keyboardLayout, facebookLayout, marketplaceLayout, aboutLayout, helpAndSupportLayout, shareLayout,
             manageContentLayout, manageContentSharing, manageCalls, manageCustomersLayout, manageInventoryLayout, inboxLayout;
 
     private RelativeLayout siteMeter;
@@ -113,9 +113,9 @@ public class SidePanelFragment extends Fragment {
 
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
 
-    private ImageView shareImageView, keyboardImageView, marketplaceImageView, subscriptionsImageView, analyticsImageView, dasbBoardImageView, helpAndSupportImageView,
+    private ImageView shareImageView, keyboardImageView, facebookImageView, marketplaceImageView, subscriptionsImageView, analyticsImageView, dasbBoardImageView, helpAndSupportImageView,
             accountSettingsImageView, manageCustomerImageView, manageContentImageView, aboutImageView, cotnentSharingImageView, callsImageView,
-            manageInventoryImageView, inboxImageView, keyboardLock, callLock;
+            manageInventoryImageView, inboxImageView, keyboardLock, callLock, facebookLock;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
     private SharedPreferences pref, mSharedPreferences;
 
@@ -309,8 +309,10 @@ public class SidePanelFragment extends Fragment {
         manageInventoryLayout = card.findViewById(R.id.twelveth_Layout);
         inboxLayout = card.findViewById(R.id.thirteen_Layout);
         keyboardLayout = (LinearLayout) card.findViewById(R.id.keyboard_layout);
+        facebookLayout = (LinearLayout) card.findViewById(R.id.facebook_layout);
         keyboardLock = (ImageView) card.findViewById(R.id.keyboard_lock);
         callLock = (ImageView) card.findViewById(R.id.call_lock);
+        facebookLock = (ImageView) card.findViewById(R.id.facebook_lock);
         if (Constants.StoreWidgets.contains("BOOSTKEYBOARD"))
             keyboardLock.setVisibility(View.GONE);
         else
@@ -320,6 +322,13 @@ public class SidePanelFragment extends Fragment {
             callLock.setVisibility(View.GONE);
         else
             callLock.setVisibility(View.VISIBLE);
+        //facebookleads
+        if(Constants.StoreWidgets.contains("WILDFIRE_FB_LEAD_ADS")) {
+            facebookLayout.setVisibility(View.GONE);
+            facebookLock.setVisibility(View.GONE);
+        }else {
+            facebookLock.setVisibility(View.VISIBLE);
+        }
 
 
         marketplaceLayout = (LinearLayout) card.findViewById(R.id.marketplace_layout);
@@ -361,6 +370,7 @@ public class SidePanelFragment extends Fragment {
         helpAndSupportText = (TextView) helpAndSupportLayout.findViewById(R.id.seventhRow_TextView);
         aboutText = (TextView) aboutLayout.findViewById(R.id.tv_about);
         keyboardTextView = (TextView) keyboardLayout.findViewById(R.id.keyboard_TextView);
+        facebookTextView = (TextView) facebookLayout.findViewById(R.id.facebook_TextView);
         marketplaceTextView = (TextView) marketplaceLayout.findViewById(R.id.marketplace_TextView);
         if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
             keyboardTextView.setText("RedTim Keyboard");
@@ -419,6 +429,7 @@ public class SidePanelFragment extends Fragment {
 //        });
         dasbBoardImageView = (ImageView) homeLayout.findViewById(R.id.firstrow_ImageView);
         keyboardImageView = (ImageView) keyboardLayout.findViewById(R.id.keyboard_ImageView);
+        facebookImageView = (ImageView) facebookLayout.findViewById(R.id.facebook_ImageView);
         manageCustomerImageView = (ImageView) manageCustomersLayout.findViewById(R.id.tenthRow_ImageView);
         manageInventoryImageView = (ImageView) manageInventoryLayout.findViewById(R.id.twelveth_ImageView);
         inboxImageView = (ImageView) inboxLayout.findViewById(R.id.thirteen_ImageView);
@@ -472,6 +483,15 @@ public class SidePanelFragment extends Fragment {
 //                    purchaseFeaturesPopup.setArguments(bundle);
 //                    purchaseFeaturesPopup.show(requireActivity().getSupportFragmentManager(), "PURCHASE_FEATURE_POPUP");
 //                }
+            }
+        });
+
+        facebookTextView.setTypeface(robotoMedium);
+        facebookLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.facebook_leads));
+                onclickColorChange(facebookImageView, facebookTextView, facebookLayout);
             }
         });
 
@@ -920,6 +940,7 @@ public class SidePanelFragment extends Fragment {
         dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         analyticsTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         keyboardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        facebookTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageCustomers.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageContent.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvContentSharing.setTextColor(getResources().getColor(R.color.cell_text_color));
@@ -937,6 +958,7 @@ public class SidePanelFragment extends Fragment {
         analyticsImageView.setColorFilter(defaultLabelFilter);
         manageCustomerImageView.setColorFilter(defaultLabelFilter);
         keyboardImageView.setColorFilter(defaultLabelFilter);
+        facebookImageView.setColorFilter(defaultLabelFilter);
         manageContentImageView.setColorFilter(defaultLabelFilter);
         cotnentSharingImageView.setColorFilter(defaultLabelFilter);
         callsImageView.setColorFilter(defaultLabelFilter);
@@ -953,6 +975,7 @@ public class SidePanelFragment extends Fragment {
         analyticsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageCustomersLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         keyboardLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        facebookLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageContentLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageContentSharing.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         manageCalls.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
