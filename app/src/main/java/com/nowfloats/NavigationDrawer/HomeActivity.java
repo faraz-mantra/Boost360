@@ -85,6 +85,7 @@ import com.nowfloats.CustomPage.CustomPageDeleteInterface;
 import com.nowfloats.CustomPage.CustomPageFragment;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
+import com.nowfloats.FacebookLeads.FacebookLeadsFragment;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.API_Login;
 import com.nowfloats.Login.Login_Interface;
@@ -174,6 +175,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     SidePanelFragment drawerFragment;
     Home_Fragment_Tab homeFragment;
     KeyboardFragment keyboardFragment;
+    FacebookLeadsFragment facebookLeadsFragment;
     Business_Profile_Fragment_V2 businessFragment;
     ManageCustomerFragment manageCustomerFragment;
     ManageInventoryFragment manageInventoryFragment;
@@ -1185,6 +1187,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     WebEngageController.trackEvent("NAV - BIZ_KEYBOARD", "BIZ_KEYBOARD", session.getFpTag());
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
                             .commit();
+                } else if (nextScreen.equals(getString(R.string.facebook_leads))) {
+                    Toast.makeText(getApplicationContext(), "Facebook Leads clicked", Toast.LENGTH_LONG).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, facebookLeadsFragment, "FacebookLeads")
+                            .commit();
                 } else if (nextScreen.equals(getString(R.string.business_profile))) {
                     //Intent businessProfileIntent = new Intent(HomeActivity.this, BusinessProfile_HomeActivity.class);
                     //startActivity(businessProfileIntent)
@@ -1616,6 +1622,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         businessFragment = new Business_Profile_Fragment_V2();
         manageCustomerFragment = new ManageCustomerFragment();
         keyboardFragment = new KeyboardFragment();
+        facebookLeadsFragment = new FacebookLeadsFragment();
         manageInventoryFragment = new ManageInventoryFragment();
         manageInboxFragment = new ManageInboxFragment();
         upgradesFragment = new UpgradesFragment();

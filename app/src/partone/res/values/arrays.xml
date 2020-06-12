@@ -35,6 +35,7 @@
         <item>@drawable/ic_image_gallery</item>
         <item>@drawable/ic_business_profile</item>
         <item>@drawable/ic_custom_page</item>
+        <item>@drawable/ic_testimonial</item>
     </array>
 
     <array name="order_analytics_img">

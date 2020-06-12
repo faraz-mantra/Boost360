@@ -267,4 +267,5 @@ dependencies {
 
     //sdp
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 }
