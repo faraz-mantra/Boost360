@@ -2,6 +2,7 @@ package com.catlogservice.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -62,6 +63,13 @@ open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentCo
     return when (type) {
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
+    }
+  }
+
+  override fun getNavigationIcon(): Drawable? {
+    return when (type) {
+      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+      else -> super.getNavigationIcon()
     }
   }
 
