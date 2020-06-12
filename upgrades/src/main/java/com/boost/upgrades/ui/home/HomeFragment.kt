@@ -354,7 +354,8 @@ class HomeFragment : BaseFragment(), HomeListener {
                         item.overall_discount_percent,
                         PrimaryImage(item.primary_image),
                         null,
-                        null
+                        null,
+                        item.target_business_usecase
                 ))
             }
             if (list.size > 0)

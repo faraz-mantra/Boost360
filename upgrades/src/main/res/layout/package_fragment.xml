@@ -169,7 +169,7 @@
                     app:layout_constraintBottom_toBottomOf="parent">
 
                     <RelativeLayout
-                        android:id="@+id/package_blossom_pack_layout"
+                        android:id="@+id/package_use_case_flag_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
@@ -179,9 +179,10 @@
                             android:layout_width="@dimen/_55sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/ic_flag_mask" />
+                            app:srcCompat="@drawable/ic_flag_mask" />
 
                         <TextView
+                            android:id="@+id/package_use_case_flag_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"

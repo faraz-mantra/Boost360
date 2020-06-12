@@ -26,6 +26,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.package_item.view.*
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -155,7 +156,7 @@ class FeatureDealsAdapter(
                                     grandTotal += total
                                     mrpPrice += it.price
 
-                                    holder.offerPrice.setText("₹" + grandTotal + "/month")
+                                    holder.offerPrice.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal) + "/month")
                                     if (grandTotal != mrpPrice) {
                                         spannableString(holder, mrpPrice)
                                         holder.origCost.visibility = View.VISIBLE
@@ -209,7 +210,7 @@ class FeatureDealsAdapter(
     }
 
     fun spannableString(holder: PagerViewHolder, value: Double) {
-        val origCost = SpannableString("₹" + value + "/month")
+        val origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
 
         origCost.setSpan(
                 StrikethroughSpan(),

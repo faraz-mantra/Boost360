@@ -26,5 +26,8 @@ data class BundlesModel(
         var primary_image: String? = null,
 
         @ColumnInfo(name = "included_features")
-        var included_features: String? = null
+        var included_features: String? = null,
+
+        @ColumnInfo(name = "target_business_usecase")
+        var target_business_usecase: String? = null
 )

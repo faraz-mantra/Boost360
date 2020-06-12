@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.interfaces.CartFragmentListener
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CartPackageAdaptor(list: List<CartModel>?, val listener: CartFragmentListener) : RecyclerView.Adapter<CartPackageAdaptor.upgradeViewHolder>() {
@@ -40,9 +43,9 @@ class CartPackageAdaptor(list: List<CartModel>?, val listener: CartFragmentListe
         val price = bundlesList.get(position).price * bundlesList.get(position).min_purchase_months
         val MRPPrice = bundlesList.get(position).MRPPrice * bundlesList.get(position).min_purchase_months
         if (bundlesList.get(position).min_purchase_months > 1) {
-            holder.price.setText("₹" + price.toString() + "/" + bundlesList.get(position).min_purchase_months + "month")
+            holder.price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/" + bundlesList.get(position).min_purchase_months + "months")
         } else {
-            holder.price.setText("₹" + price.toString() + "/month")
+            holder.price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month")
         }
         if(price != MRPPrice) {
             spannableString(holder, MRPPrice, bundlesList.get(position).min_purchase_months)
@@ -86,9 +89,9 @@ class CartPackageAdaptor(list: List<CartModel>?, val listener: CartFragmentListe
         val origCost: SpannableString
         if (minMonth > 1) {
             val originalCost = value
-            origCost = SpannableString("₹" + originalCost + "/" + minMonth + "month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(originalCost) + "/" + minMonth + "months")
         } else {
-            origCost = SpannableString("₹" + value + "/month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
         }
 
         origCost.setSpan(

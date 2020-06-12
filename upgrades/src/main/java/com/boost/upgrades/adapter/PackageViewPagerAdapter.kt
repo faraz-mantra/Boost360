@@ -4,6 +4,7 @@ import android.text.SpannableString
 import android.text.style.StrikethroughSpan
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
@@ -13,11 +14,14 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.interfaces.HomeListener
+import com.bumptech.glide.Glide
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.package_fragment.*
 import kotlinx.android.synthetic.main.package_item.view.*
+import java.text.NumberFormat
 import java.util.*
 
 class PackageViewPagerAdapter(
@@ -61,6 +65,7 @@ class PackageViewPagerAdapter(
         val name = itemView.findViewById<TextView>(R.id.package_name)
         val offerPrice = itemView.findViewById<TextView>(R.id.offer_price)
         val origCost = itemView.findViewById<TextView>(R.id.orig_cost)
+        val primaryImage = itemView.findViewById<ImageView>(R.id.bundle_primary_image)
     }
 
     fun getPackageInfoFromDB(holder: PagerViewHolder, bundles: Bundles) {
@@ -89,7 +94,7 @@ class PackageViewPagerAdapter(
                                         }
                                     }
                                     if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1){
-                                        holder.offerPrice.setText("₹" + grandTotal+"/"+bundles.min_purchase_months+"month")
+                                        holder.offerPrice.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)+"/"+bundles.min_purchase_months+"months")
                                         if (grandTotal != mrpPrice) {
                                             spannableString(holder, mrpPrice, bundles.min_purchase_months)
                                             holder.origCost.visibility = View.VISIBLE
@@ -97,7 +102,7 @@ class PackageViewPagerAdapter(
                                             holder.origCost.visibility = View.GONE
                                         }
                                     }else{
-                                        holder.offerPrice.setText("₹" + grandTotal+"/month")
+                                        holder.offerPrice.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)+"/month")
                                         if (grandTotal != mrpPrice) {
                                             spannableString(holder, mrpPrice, 1)
                                             holder.origCost.visibility = View.VISIBLE
@@ -105,6 +110,7 @@ class PackageViewPagerAdapter(
                                             holder.origCost.visibility = View.GONE
                                         }
                                     }
+                                    Glide.with(activity as UpgradeActivity).load(bundles.primary_image!!.url).into(holder.primaryImage)
                                 },
                                 {
                                     it.printStackTrace()
@@ -116,9 +122,9 @@ class PackageViewPagerAdapter(
     fun spannableString(holder: PagerViewHolder, value: Double, minMonth: Int) {
         val origCost: SpannableString
         if(minMonth > 1){
-            origCost = SpannableString("₹" + value+"/"+minMonth+"month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value)+"/"+minMonth+"months")
         }else{
-            origCost = SpannableString("₹" + value+"/month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value)+"/month")
         }
 
         origCost.setSpan(

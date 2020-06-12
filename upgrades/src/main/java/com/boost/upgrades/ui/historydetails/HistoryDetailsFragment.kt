@@ -19,6 +19,7 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.history_details_fragment.*
 import java.lang.Long
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -69,13 +70,13 @@ class HistoryDetailsFragment : BaseFragment() {
         layout1_date.setText(dateFormat.format(date))
         layout1_time.setText(timeFormat.format(date))
         val amountLayout1 = StringBuilder()
-        amountLayout1.append("₹" + data.paidAmount)
+        amountLayout1.append("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(data.paidAmount))
         if (data.purchasedPackageDetails.WidgetPacks.size > 1) {
             amountLayout1.append("(" + data.purchasedPackageDetails.WidgetPacks.size + "items)")
         }
         history_details_selling_price.setText(amountLayout1)
         val mrpPrice = (data.paidAmount*(100/(100-data.discount)))
-        history_details_MRPPrice.setText("₹"+mrpPrice.toString())
+        history_details_MRPPrice.setText("₹"+NumberFormat.getNumberInstance(Locale.ENGLISH).format(mrpPrice))
         val discountAmount = mrpPrice - data.paidAmount
         history_details_discount_amount.setText("- ₹" + discountAmount)
         if (data.PaymentMethod != null) {

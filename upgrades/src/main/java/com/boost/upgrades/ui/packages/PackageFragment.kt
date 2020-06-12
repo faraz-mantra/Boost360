@@ -31,6 +31,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.package_fragment.*
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PackageFragment : BaseFragment() {
 
@@ -151,7 +154,7 @@ class PackageFragment : BaseFragment() {
                 }
                 if (minMonth > 1) {
                     val offeredPrice = grandTotal * minMonth
-                    offer_price.setText("₹" + offeredPrice + "/" + bundleData!!.min_purchase_months + "month")
+                    offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredPrice) + "/" + bundleData!!.min_purchase_months + "months")
                     if (grandTotal != mrpPrice) {
                         spannableString(mrpPrice, minMonth)
                         orig_cost.visibility = View.VISIBLE
@@ -160,7 +163,7 @@ class PackageFragment : BaseFragment() {
                     }
                     updateRecycler(it,bundleData!!.min_purchase_months!!)
                 } else {
-                    offer_price.setText("₹" + grandTotal + "/month")
+                    offer_price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal) + "/month")
                     if (grandTotal != mrpPrice) {
                         spannableString(mrpPrice, 1)
                         orig_cost.visibility = View.VISIBLE
@@ -170,8 +173,17 @@ class PackageFragment : BaseFragment() {
                     updateRecycler(it,1)
                 }
                 package_count.setText(featuresList!!.size.toString())
+                if(!bundleData!!.target_business_usecase.isNullOrEmpty()){
+                    package_use_case_flag_layout.visibility = View.VISIBLE
+                    package_use_case_flag_text.setText(bundleData!!.target_business_usecase)
+                } else{
+                    package_use_case_flag_layout.visibility = View.GONE
+                }
+
+                Glide.with(activity as UpgradeActivity).load(bundleData!!.primary_image!!.url).into(package_profile_image)
             }
         })
+
         viewModel.cartResult().observe(this, Observer {
             cartList = it
             packageInCartStatus = false
@@ -229,9 +241,9 @@ class PackageFragment : BaseFragment() {
         val origCost: SpannableString
         if (minMonth > 1) {
             val originalCost = value * minMonth
-            origCost = SpannableString("₹" + originalCost + "/" + minMonth + "month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(originalCost) + "/" + minMonth + "months")
         } else {
-            origCost = SpannableString("₹" + value + "/month")
+            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
         }
         origCost.setSpan(
                 StrikethroughSpan(),

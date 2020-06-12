@@ -37,7 +37,7 @@ interface FeaturesDao {
     fun updateFeatures(vararg featuress: FeaturesModel?)
 
 //    @Query("SELECT * FROM Features Where boost_widget_key IN (:list) AND is_premium = :premiumType ORDER BY feature_importance DESC")
-    @Query("SELECT * FROM Features Where is_premium = :premiumType AND boost_widget_key IN (:list)")
+    @Query("SELECT * FROM Features Where is_premium = :premiumType AND boost_widget_key IN (:list) ORDER BY is_premium DESC, feature_importance DESC")
     fun getallActiveFeatures(list: List<String>, premiumType: Boolean): Single<List<FeaturesModel>>
 
     @Query("DELETE FROM Features WHERE boost_widget_key=:itemId")
@@ -46,7 +46,7 @@ interface FeaturesDao {
     @Query("SELECT COUNT(*) FROM Features Where boost_widget_key IN (:list)")
     fun getallActivefeatureCount(list: List<String>): Single<Int>
 
-    @Query("SELECT * FROM Features Where boost_widget_key IN (:list)")
+    @Query("SELECT * FROM Features Where boost_widget_key IN (:list) ORDER BY is_premium DESC, feature_importance DESC")
     fun getallFeaturesInList(list: List<String>): Single<List<FeaturesModel>>
 
 
