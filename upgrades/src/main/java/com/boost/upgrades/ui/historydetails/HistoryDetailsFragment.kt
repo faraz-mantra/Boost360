@@ -112,6 +112,7 @@ class HistoryDetailsFragment : BaseFragment() {
                 }
                 if(status){
                 list.add(FeaturesModel(
+                        feature_id = "",
                         boost_widget_key =  item.WidgetKey,
                         name = item.Name,
                         discount_percent = item.Discount,

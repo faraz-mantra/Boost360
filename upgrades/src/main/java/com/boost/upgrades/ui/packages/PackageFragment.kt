@@ -79,7 +79,7 @@ class PackageFragment : BaseFragment() {
 
         if(arguments!!.containsKey("showCartIcon")){
             package_cart_icon.visibility = View.INVISIBLE
-            package_submit.visibility = View.INVISIBLE
+            package_submit.visibility = View.GONE
         }
 
         if(bundleData!!.primary_image != null && !bundleData!!.primary_image!!.url.isNullOrEmpty()){
@@ -104,6 +104,7 @@ class PackageFragment : BaseFragment() {
                 if (bundleData != null) {
                     viewModel.addItemToCart(CartModel(
                             bundleData!!._kid,
+                            null,
                             bundleData!!.name,
                             "",
                             bundleData!!.primary_image!!.url,
@@ -198,7 +199,7 @@ class PackageFragment : BaseFragment() {
             if (cartList != null && cartList!!.size > 0) {
                 if (bundleData != null) {
                     for (item in it) {
-                        if (item.boost_widget_key.equals(bundleData!!._kid)) {
+                        if (item.item_id.equals(bundleData!!._kid)) {
                             packageInCartStatus = true
                             package_submit.background = ContextCompat.getDrawable(
                                     requireContext(),

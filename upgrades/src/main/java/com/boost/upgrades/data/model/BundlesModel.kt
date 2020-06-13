@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey
 data class BundlesModel(
 
         @PrimaryKey
-        @ColumnInfo(name = "bundle_key")
-        var bundle_key: String,
+        @ColumnInfo(name = "bundle_id")
+        var bundle_id: String,
 
         @ColumnInfo(name = "name")
         var name: String? = null,
