@@ -1709,8 +1709,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="support_name">Support</string>
     <string name="wildfire_analytics">Inorganic</string>
     <string name="manage_content">Manage Content</string>
-    <string name="content_sharing_settings">Content Sharing Settings</string>
-    <string name="account_settings">Account Settings</string>
+    <string name="content_sharing_settings">My Digital Channels</string>
+    <string name="account_settings">Settings</string>
     <string name="about">About Boost</string>
     <string name="upgrades">Upgrades</string>
     <string name="add_ons">Add-ons</string>
