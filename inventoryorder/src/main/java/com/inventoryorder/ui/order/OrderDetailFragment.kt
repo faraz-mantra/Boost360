@@ -26,6 +26,7 @@ import com.inventoryorder.model.bottomsheet.DeliveryModel
 import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersummary.OrderStatusValue
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
@@ -88,13 +89,9 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun checkStatusOrder(order: OrderItem) {
     if (order.isConfirmActionBtn()) {
-      buttonDisable(R.color.colorAccent)
+      binding?.bottomBtn?.visible()
       binding?.buttonConfirmOrder?.setOnClickListener(this)
-    } else {
-      buttonDisable(R.color.primary_grey)
-      binding?.let { it.buttonConfirmOrder.paintFlags = it.buttonConfirmOrder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG }
-      binding?.buttonConfirmOrder?.setOnClickListener(null)
-    }
+    } else binding?.bottomBtn?.gone()
     if (order.isCancelActionBtn()) {
       binding?.tvCancelOrder?.visible()
       binding?.tvCancelOrder?.setOnClickListener(this)
@@ -135,16 +132,16 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   }
 
   private fun setOrderDetails(order: OrderItem) {
-    binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderSummaryType.fromValue(order.status()), order.PaymentDetails)
+    binding?.orderType?.text = getStatusText(order)
     binding?.tvOrderStatus?.text = order.PaymentDetails?.status()
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
-    binding?.tvDeliveryPaymentStatus?.text = "Status: ${order.PaymentDetails?.status()}"
+    binding?.btnPickUp?.text = order.deliveryType()
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() }
           ?: "INR"
       binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding?.tvOrderPlacedDate?.text = DateUtils.parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2)
+    binding?.orderDate?.text = DateUtils.parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2)
 
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
@@ -170,11 +167,16 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   }
 
-  private fun getStatusText(orderSummaryType: OrderSummaryModel.OrderSummaryType?, paymentDetails: PaymentDetailsN?): String? {
-    return if (orderSummaryType == OrderSummaryModel.OrderSummaryType.CANCELLED
-        && paymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-      OrderSummaryModel.OrderSummaryType.ABANDONED.type
-    } else orderSummaryType?.type
+  private fun getStatusText(order: OrderItem): String? {
+    val statusValue = OrderStatusValue.fromStatusOrder(order.status())?.value
+    return when (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name) {
+      order.status().toUpperCase(Locale.ROOT) -> {
+        return if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
+          OrderStatusValue.ESCALATED_1.value
+        } else statusValue.plus(order.cancelledText())
+      }
+      else -> statusValue
+    }
   }
 
   override fun onClick(v: View) {
@@ -194,7 +196,6 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
         showShortToast(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
-
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
         data?.let { d -> showLongToast(d.Message as String?) }
@@ -222,7 +223,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private fun refreshStatus(statusOrder: OrderSummaryModel.OrderStatus) {
     isRefresh = true
     orderItem?.Status = statusOrder.name
-    orderItem?.let { binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderSummaryType.fromValue(it.status()), it.PaymentDetails) }
+    orderItem?.let { binding?.orderType?.text = getStatusText(it) }
     orderItem?.let { checkStatusOrder(it) }
   }
 

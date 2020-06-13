@@ -87,7 +87,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   }
 
   private fun isOpenForConsultation(order: OrderItem) {
-    val isOpen = order.isConfirmConsultingBtn()
+    val isOpen = order.isConfirmConsultBtn()
     binding?.bookingDate?.setTextColor(takeIf { isOpen }?.let { getColor(R.color.light_green) } ?: getColor(R.color.primary_grey))
     if (isOpen) isVisible(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
     else isGone(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
@@ -198,14 +198,14 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   }
 
   private fun getStatusText(order: OrderItem): String? {
-    val statusValue = OrderStatusValue.fromStatusAppointment(order.status())?.value
+    val statusValue = OrderStatusValue.fromStatusConsultation(order.status())?.value
     return when {
       OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT) -> {
         return if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-          OrderStatusValue.ESCALATED_2.value
+          OrderStatusValue.ESCALATED_3.value
         } else statusValue.plus(order.cancelledTextVideo())
       }
-      order.isConfirmConsultingBtn() -> "Upcoming Consult"
+      order.isConfirmConsultBtn() -> "Upcoming Consult"
       else -> statusValue
     }
   }

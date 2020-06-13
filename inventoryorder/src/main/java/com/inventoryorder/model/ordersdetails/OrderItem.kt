@@ -4,7 +4,9 @@ import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.parseDate
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
+import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
+import com.inventoryorder.utils.capitalizeUtil
 import java.io.Serializable
 import java.util.*
 
@@ -46,6 +48,14 @@ data class OrderItem(
 
   fun referenceNumber(): String {
     return ReferenceNumber?.trim()?.toLowerCase() ?: ""
+  }
+
+  fun deliveryType(): String? {
+    return when (Mode?.toUpperCase(Locale.ROOT)) {
+      OrderSummaryRequest.OrderMode.DELIVERY.name -> "Assured Purchase"
+      OrderSummaryRequest.OrderMode.PICKUP.name -> "Self Delivery"
+      else -> Mode?.capitalizeUtil()
+    }
   }
 
   fun cancelledText(): String {
@@ -105,20 +115,27 @@ data class OrderItem(
     return "http://DOCTORS.GETBOOST360.COM/consult/$_id"
   }
 
-  fun isConfirmConsultingBtn(): Boolean {
-    return (OrderSummaryModel.OrderSummaryType.fromValue(status()) == OrderSummaryModel.OrderSummaryType.PAYMENT_MODE_VERIFIED && firstItemForConsultation()?.Product?.isAvailable() ?: false)
+  fun isConfirmConsultBtn(): Boolean {
+    return (OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED && firstItemForConsultation()?.Product?.isAvailable() ?: false)
+  }
+
+  fun isConsultCallErrorText(): Boolean {
+    return (OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED ||
+        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.FEEDBACK_PENDING ||
+        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED ||
+        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_COMPLETED)
   }
 
   fun isConfirmActionBtn(): Boolean {
-    return ((OrderSummaryModel.OrderSummaryType.fromValue(status()) == OrderSummaryModel.OrderSummaryType.PAYMENT_MODE_VERIFIED
-        || OrderSummaryModel.OrderSummaryType.fromValue(status()) == OrderSummaryModel.OrderSummaryType.PAYMENT_CONFIRM) &&
+    return ((OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED
+        || OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED) &&
         PaymentDetails != null && ((PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
         PaymentDetailsN.STATUS.from(PaymentDetails.status()) == PaymentDetailsN.STATUS.SUCCESS)
         || (PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.COD)))
   }
 
   fun isCancelActionBtn(): Boolean {
-    return ((OrderSummaryModel.OrderSummaryType.fromValue(status()) == OrderSummaryModel.OrderSummaryType.PAYMENT_MODE_VERIFIED ||
+    return ((OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED) &&
         LogisticsDetails != null && LogisticsDetailsN.STSTUS.from(LogisticsDetails.status()) == LogisticsDetailsN.STSTUS.NOT_INITIATED)

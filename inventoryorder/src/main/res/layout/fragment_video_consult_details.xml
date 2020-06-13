@@ -275,6 +275,8 @@
                   android:layout_weight="1.2"
                   android:drawableStart="@drawable/ic_inbox"
                   android:drawablePadding="@dimen/size_4"
+                  android:ellipsize="end"
+                  android:maxLines="1"
                   android:includeFontPadding="false"
                   android:textColor="@color/greyish_brown"
                   app:fontFamily="@font/semi_bold"
@@ -435,6 +437,8 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_2"
               android:layout_weight="1"
+              android:visibility="invisible"
+              tools:visibility="visible"
               android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
