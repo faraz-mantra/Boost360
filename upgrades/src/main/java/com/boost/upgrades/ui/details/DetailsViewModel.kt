@@ -63,6 +63,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = (discount * updatesModel.price) / 100.0
         val cartItem = CartModel(
+                updatesModel.feature_id,
                 updatesModel.boost_widget_key,
                 updatesModel.name,
                 updatesModel.description,

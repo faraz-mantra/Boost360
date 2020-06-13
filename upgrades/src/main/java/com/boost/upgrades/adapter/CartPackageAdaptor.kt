@@ -17,7 +17,9 @@ import com.boost.upgrades.interfaces.CartFragmentListener
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.utils.Constants
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.package_fragment.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -57,6 +59,13 @@ class CartPackageAdaptor(
         } else {
             holder.price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/mth")
         }
+
+        if(selectedBundle.link != null){
+            Glide.with(context).load(selectedBundle.link!!).into(holder.image)
+        } else {
+            holder.image.setImageResource(R.drawable.scissor)
+        }
+        
         if(price != MRPPrice) {
             spannableString(holder, MRPPrice, selectedBundle.min_purchase_months)
             holder.orig_cost.visibility = View.VISIBLE
@@ -70,7 +79,7 @@ class CartPackageAdaptor(
             holder.discount.visibility = View.GONE
         }
         holder.removePackage.setOnClickListener {
-            listener.deleteCartAddonsItem(bundlesList.get(position).boost_widget_key)
+            listener.deleteCartAddonsItem(bundlesList.get(position).item_id)
         }
         holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         if(bundlesList.size - 1 == position) {
@@ -79,7 +88,7 @@ class CartPackageAdaptor(
 
         //showing package details
         holder.itemView.setOnClickListener {
-            listener.showBundleDetails(bundlesList.get(position).boost_widget_key)
+            listener.showBundleDetails(bundlesList.get(position).item_id)
         }
     }
 
