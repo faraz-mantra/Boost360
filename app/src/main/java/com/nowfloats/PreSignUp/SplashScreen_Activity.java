@@ -12,9 +12,11 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.boost.presignup.SignUpActivity;
 import com.boost.presignup.utils.PresignupManager;
 import com.bumptech.glide.Glide;
+import com.crashlytics.android.Crashlytics;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Login_MainActivity;
 import com.nowfloats.Login.Model.FloatsMessageModel;
@@ -67,9 +69,15 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private void initLottieAnimation(){
-        animationView = findViewById(R.id.animation_view_pre_dashboard);
-        animationView.setAnimation(R.raw.pre_dashboard_lottie);
-        animationView.playAnimation();
+        try {
+            if (animationView == null)
+                animationView = findViewById(R.id.animation_view_pre_dashboard);
+            animationView.setAnimation(R.raw.pre_dashboard_lottie);
+            animationView.setRepeatCount(LottieDrawable.INFINITE);
+            animationView.playAnimation();
+        } catch (Exception e){
+            Crashlytics.log("Exception in initLottieAnimation (PreDashboard) " + e.getMessage());
+        }
     }
 
     private Thread mThread;
@@ -85,11 +93,10 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private class DataRunnable implements Runnable {
-
         @Override
         public void run() {
             try {
-                Thread.sleep(1500);
+                Thread.sleep(3000);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -98,15 +105,6 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
                 public void run() {
                     try {
                         displayHomeScreen();
-                        // This method will be executed once the timer is over Start your app main activity
-//                        MixPanelController.setMixPanel(SplashScreen_Activity.this, MixPanelController.mainActivity);
-//                        if (session.checkLogin()) {
-//                            loginCheck = "true";
-//
-//                        } else {
-//                            loginCheck = "false";
-//                            displayPreSignUpScreens();
-//                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -116,11 +114,13 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private void Start() {
-
         if (mThread == null) {
             mThread = new Thread(new DataRunnable());
             mThread.start();
+        } else {
+
         }
+
     }
 
     private void displayHomeScreen() {
@@ -167,16 +167,17 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     @Override
     protected void onResume() {
         super.onResume();
-        if(animationView != null)
-            animationView.playAnimation();
         Start();
         bus.register(this);
+        if(animationView != null)
+            initLottieAnimation();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         bus.unregister(this);
+        mThread = null;
         if(animationView != null)
             animationView.pauseAnimation();
     }
@@ -184,6 +185,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mThread = null;
         if(animationView != null){
             animationView.cancelAnimation();
             animationView = null;
