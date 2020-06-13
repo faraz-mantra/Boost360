@@ -295,7 +295,7 @@
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="WhatsApp for Business Number"/>
+                            android:text="WhatsApp number for your business"/>
 
                         <ImageButton
                             android:id="@+id/ib_info_whatsapp"

@@ -301,19 +301,6 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                     var secondaryImages = Gson().fromJson<ArrayList<String>>(addonDetails!!.secondary_images, objectType)
                     if (secondaryImages != null && secondaryImages.count() > 0) {
                         addUpdateSecondaryImage(secondaryImages)
-//                        val imgSize: Int = 70 * requireContext().getResources().getDisplayMetrics().density.toInt()
-//                        val imgPadding: Int = 5 * requireContext().getResources().getDisplayMetrics().density.toInt()
-//                        for(img in secondaryImages){
-//                            val imageView = ImageView(requireContext())
-//                            imageView.layoutParams = LinearLayout.LayoutParams(imgSize, imgSize, 1f)
-//                            imageView.setPadding(imgPadding, imgPadding, imgPadding, imgPadding)
-//                            imageView.setBackgroundResource(R.drawable.background_image_fade)
-//
-//                            secondary_images_panel?.addView(imageView)
-//                            Glide.with(this).load(img)
-//                                    .fitCenter()
-//                                    .into(imageView)
-//                        }
                     }
                 }
 
