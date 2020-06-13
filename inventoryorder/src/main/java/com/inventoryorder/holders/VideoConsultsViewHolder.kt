@@ -4,6 +4,7 @@ import android.graphics.Paint
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
@@ -39,12 +40,12 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
   }
 
   private fun setDataResponse(order: OrderItem) {
-    val statusValue = OrderStatusValue.fromStatusAppointment(order.status())?.value
+    val statusValue = OrderStatusValue.fromStatusConsultation(order.status())?.value
     if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT)) {
       if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-        binding.orderType.text = OrderStatusValue.ESCALATED_2.value
+        binding.orderType.text = OrderStatusValue.ESCALATED_3.value
       } else binding.orderType.text = statusValue.plus(order.cancelledTextVideo())
-    } else if (order.isConfirmConsultingBtn()) binding.orderType.text = "Upcoming Consult"
+    } else if (order.isConfirmConsultBtn()) binding.orderType.text = "Upcoming Consult"
     else binding.orderType.text = statusValue
 
     binding.bookingId.text = "# ${order.ReferenceNumber}"
@@ -84,20 +85,16 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
   }
 
   private fun checkConfirmBtn(order: OrderItem) {
-    if (order.isConfirmConsultingBtn()) {
-      buttonVisibility(true)
+    if (order.isConfirmConsultBtn()) {
+      binding.btnCall.visible()
       binding.btnCall.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.VIDEO_CONSULT_CALL_CLICKED.ordinal) }
       binding.btnCopyLink.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.VIDEO_CONSULT_COPY_CLICKED.ordinal) }
       binding.btnCopyLink.visibility = View.VISIBLE
     } else {
-      buttonVisibility(false)
+      binding.btnCall.gone()
       binding.btnCopyLink.visibility = View.GONE
+      binding.textErrorCall.visibility = if (!order.isConsultCallErrorText()) View.VISIBLE else View.GONE
     }
-  }
-
-  private fun buttonVisibility(isVisibleCall: Boolean) {
-    binding.btnCall.visibility = if (isVisibleCall) View.VISIBLE else View.GONE
-    binding.textErrorCall.visibility = if (!isVisibleCall) View.VISIBLE else View.GONE
   }
 
   private fun backgroundGrey(detail: Int, btn: Int, orderBg: Int, primaryGrey: Int) {

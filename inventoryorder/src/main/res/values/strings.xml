@@ -17,7 +17,7 @@
   <string name="create">CREATE&#160;&#160;</string>
   <string name="status_n">Status:</string>
   <string name="service_location">Service Location</string>
-  <string name="business">BUSINESS</string>
+  <string name="business">Business</string>
   <string name="booking_details">Booking details</string>
   <string name="booking_requested">Booking requested</string>
 
@@ -29,7 +29,7 @@
   <string name="customer_details">Customer details</string>
   <string name="order_details">Order details</string>
   <string name="new_booking">New Booking</string>
-  <string name="video_consultation">Video Consult</string>
+  <string name="video_consultation">Consultations</string>
   <string name="start_call">START CALL</string>
   <string name="payment_reminder">PAYMENT REMINDER</string>
   <string name="call_could_not_happen">Call couldn\'t happen</string>

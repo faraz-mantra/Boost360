@@ -20,6 +20,7 @@ import com.inventoryorder.model.ordersummary.OrderStatusValue
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
+import com.inventoryorder.utils.capitalizeUtil
 import java.util.*
 
 class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRecyclerViewHolder<ItemAppointmentsOrderBinding>(binding) {
@@ -53,7 +54,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     }
     binding.bookingDate.value.text = parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
     binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
-    binding.location.value.text = order.SellerDetails?.Address?.City?.capitalize()
+    binding.location.value.text = order.SellerDetails?.Address?.City?.capitalizeUtil()
     val sizeItem = order.Items?.size ?: 0
     binding.itemCount.text = takeIf { sizeItem > 1 }?.let { "Services" } ?: "Service"
     binding.itemDesc.text = order.getTitlesBooking()

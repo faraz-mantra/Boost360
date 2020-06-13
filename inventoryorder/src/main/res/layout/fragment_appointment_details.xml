@@ -193,13 +193,16 @@
 
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btnBusiness"
-                    android:layout_width="@dimen/size_120"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/size_38"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="@dimen/size_4"
+                    android:drawablePadding="@dimen/size_6"
+                    android:paddingStart="@dimen/size_14"
+                    android:paddingEnd="@dimen/size_14"
                     android:background="@drawable/btn_rounded_black_border"
                     android:drawableEnd="@drawable/ic_arrow_drop_down_blue"
-                    android:paddingEnd="@dimen/size_14"
+                    android:textAllCaps="false"
                     android:text="@string/business"
                     android:textColor="@color/warm_grey_10"
                     app:textType="HEADING_6" />
@@ -283,6 +286,8 @@
                   android:layout_weight="1.2"
                   android:drawableStart="@drawable/ic_inbox"
                   android:drawablePadding="@dimen/size_4"
+                  android:ellipsize="end"
+                  android:maxLines="1"
                   android:includeFontPadding="false"
                   android:textColor="@color/greyish_brown"
                   app:fontFamily="@font/semi_bold"
