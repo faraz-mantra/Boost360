@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -77,7 +78,7 @@ public class BoostExtensionsFragment extends Fragment {
                         showWordpressScript();
                         break;
                     case "Static Website":
-
+                        showStaticWebsiteScript();
                         break;
                 }
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -96,6 +97,90 @@ public class BoostExtensionsFragment extends Fragment {
         UserSessionManager session = new UserSessionManager(mContext, getActivity());
         MaterialDialog dialog = new MaterialDialog.Builder(mContext)
                 .customView(R.layout.boostx_script_panel, true)
+                .title("Integration key")
+                .positiveText("COPY & SHARE")
+                .negativeText("LATER")
+                .positiveColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.gray_40)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("boostx_key", session.getFPID());
+                        clipboard.setPrimaryClip(clip);
+
+                        Methods.showSnackBarPositive(getActivity(),
+                                "The key has been copied to clipboard. Also you can share the key with your developer using the most appropriate share option.");
+
+                        /*Create an ACTION_SEND Intent*/
+                        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Boost360 Wordpress Integration key");
+                        intent.putExtra(android.content.Intent.EXTRA_TEXT, session.getFPID());
+                        /*Fire!*/
+                        startActivity(Intent.createChooser(intent, "Shared from Boost360"));
+                    }
+                }).build();
+        EditText scriptText = (EditText)dialog.getCustomView().findViewById(R.id.boostx_script_body);
+        scriptText.setText(session.getFPID());
+
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                MaterialDialog dialog2 = new MaterialDialog.Builder(mContext)
+                        .customView(R.layout.boostx_script_panel, true)
+                        .title("wordpress-plugin script")
+                        .positiveText("COPY & SHARE")
+                        .negativeText("LATER")
+                        .positiveColorRes(R.color.primaryColor)
+                        .negativeColorRes(R.color.gray_40)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onNegative(MaterialDialog dialog) {
+                                super.onNegative(dialog);
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                String script = Constants.boostx_script.replace("[[FPTAG]]", session.getFpTag());
+                                ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                                ClipData clip = ClipData.newPlainText("boostx_script", script);
+                                clipboard.setPrimaryClip(clip);
+
+                                Methods.showSnackBarPositive(getActivity(),
+                                        "The script has been copied to clipboard. Also you can share the script with your developer using the most appropriate option.");
+
+                                /*Create an ACTION_SEND Intent*/
+                                Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                                intent.setType("text/plain");
+                                /*Applying information Subject and Body.*/
+                                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Boost360 wordpress-plugin script");
+                                intent.putExtra(android.content.Intent.EXTRA_TEXT, script);
+                                /*Fire!*/
+                                startActivity(Intent.createChooser(intent, "Shared from Boost360"));
+                            }
+                        }).build();
+                EditText scriptText = (EditText)dialog2.getCustomView().findViewById(R.id.boostx_script_body);
+                scriptText.setText(Constants.boostx_script.replace("[[FPTAG]]", session.getFpTag()));
+                dialog2.show();
+            }
+        });
+        dialog.show();
+    }
+
+    private void showStaticWebsiteScript() {
+        if (getActivity() == null) return;
+        UserSessionManager session = new UserSessionManager(mContext, getActivity());
+        MaterialDialog dialog = new MaterialDialog.Builder(mContext)
+                .customView(R.layout.boostx_script_panel, true)
+                .title("website-plugin script")
                 .positiveText("COPY & SHARE")
                 .negativeText("LATER")
                 .positiveColorRes(R.color.primaryColor)
@@ -125,7 +210,7 @@ public class BoostExtensionsFragment extends Fragment {
                         /*The type of the content is text, obviously.*/
                         intent.setType("text/plain");
                         /*Applying information Subject and Body.*/
-                        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Boost360 wordpress-plugin script");
+                        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Boost360 website-plugin script");
                         intent.putExtra(android.content.Intent.EXTRA_TEXT, script);
                         /*Fire!*/
                         startActivity(Intent.createChooser(intent, "Shared from Boost360"));
