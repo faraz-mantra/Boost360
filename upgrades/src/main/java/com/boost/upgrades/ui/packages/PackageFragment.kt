@@ -189,6 +189,13 @@ class PackageFragment : BaseFragment() {
                     updateRecycler(it,1)
                 }
                 package_count.setText(featuresList!!.size.toString())
+                if(bundleData!!.target_business_usecase.isNullOrEmpty()){
+                    package_use_case_layout.visibility = View.GONE
+                } else{
+                    package_use_case_layout.visibility = View.VISIBLE
+                    package_use_case.setText(bundleData!!.target_business_usecase)
+
+                }
             }
         })
 

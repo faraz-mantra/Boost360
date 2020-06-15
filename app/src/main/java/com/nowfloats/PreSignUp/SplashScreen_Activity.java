@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.boost.presignup.SignUpActivity;
 import com.boost.presignup.utils.PresignupManager;
 import com.bumptech.glide.Glide;
@@ -44,6 +46,7 @@ import retrofit.client.Response;
 public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface , PresignupManager.SignUpLoginHandler {
     UserSessionManager session;
     Bus bus;
+    LottieAnimationView animationView;
     public static ProgressDialog pd;
     private String loginCheck = null, deepLink;
 
@@ -52,31 +55,25 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen_);
         Methods.isOnline(SplashScreen_Activity.this);
-//        Log.d("Splash Screen", "Splash Screen");
-//        PresignupManager.INSTANCE.setListener(this);
-
-       /* try {
-            Constants.restAdapter = Methods.createAdapter(this,Constants.NOW_FLOATS_API_URL);
-            Constants.validEmailAdapter = Methods.createAdapter(this,"https://bpi.briteverify.com");
-            Constants.alertInterface = Constants.restAdapter.create(NotificationInterface.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
 
         if (getIntent() != null && getIntent().getStringExtra("from") != null) {
             MixPanelController.track(EventKeysWL.NOTIFICATION_CLICKED, null);
             deepLink = getIntent().getStringExtra("url");
         }
-
-
-//        Constants.deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-//        Log.d("Device ID", "Device ID : " + Constants.deviceId);
-
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(), SplashScreen_Activity.this);
+        initLottieAnimation();
     }
 
     private Thread mThread;
+
+    private void initLottieAnimation(){
+        if(animationView == null)
+            animationView = findViewById(R.id.pre_dashboard_animation);
+        animationView.setAnimation(R.raw.pre_dashboard_lottie);
+        animationView.setRepeatCount(LottieDrawable.INFINITE);
+        animationView.playAnimation();
+    }
 
     @Override
     public void loginClicked(Activity activity) {
@@ -93,7 +90,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         @Override
         public void run() {
             try {
-                Thread.sleep(800);
+                Thread.sleep(3100);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -113,20 +110,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     private void Start() {
         if (mThread == null) {
             mThread = new Thread(new DataRunnable());
-            mThread.start();
-        } else {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        displayHomeScreen();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
         }
-
+        mThread.start();
     }
 
     private void displayHomeScreen() {
@@ -188,6 +173,16 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     protected void onPause() {
         super.onPause();
         bus.unregister(this);
+        mThread = null;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(animationView != null)
+            animationView.cancelAnimation();
+        animationView = null;
+        mThread = null;
     }
 
     @Subscribe
