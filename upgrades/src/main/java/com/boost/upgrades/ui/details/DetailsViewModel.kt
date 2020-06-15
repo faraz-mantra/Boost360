@@ -43,7 +43,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
         compositeDisposable.add(
                 AppDatabase.getInstance(getApplication())!!
                         .featuresDao()
-                        .getFeaturesItemById(boostKey)!!
+                        .getFeaturesItemByWidgetKey(boostKey)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSuccess {

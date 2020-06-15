@@ -55,7 +55,7 @@ class UpgradeAdapter(
         holder.itemView.setOnClickListener {
             val details = DetailsFragment.newInstance()
             val args = Bundle()
-            args.putString("itemId", upgradeList.get(position).feature_id)
+            args.putString("itemId", upgradeList.get(position).boost_widget_key)
             details.arguments = args
             activity.addFragment(details, Constants.DETAILS_FRAGMENT)
 

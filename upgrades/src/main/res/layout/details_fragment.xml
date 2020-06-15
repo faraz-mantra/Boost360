@@ -281,13 +281,14 @@
 
                         <TextView
                             android:id="@+id/title_top"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:text="@string/facebook_lead_ads_upto_75_leads"
                             android:textColor="#2a2a2a"
                             android:textSize="@dimen/_14sdp"
                             app:layout_constraintStart_toStartOf="@+id/title_top_1"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/title_top_1" />
 
 

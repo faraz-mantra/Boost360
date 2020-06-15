@@ -204,7 +204,7 @@
 
                     <TextView
                         android:id="@+id/package_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
                         android:text="Exciting \nAdd-ons"
@@ -212,6 +212,7 @@
                         android:textColor="@color/common_text_color"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintStart_toEndOf="@id/package_count"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/package_blossom_pack_layout"
                         app:layout_constraintBottom_toTopOf="@id/package_amount_layout"/>
 
