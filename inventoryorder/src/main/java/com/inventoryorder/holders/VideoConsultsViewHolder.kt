@@ -93,7 +93,7 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
     } else {
       binding.btnCall.gone()
       binding.btnCopyLink.visibility = View.GONE
-      binding.textErrorCall.visibility = if (!order.isConsultCallErrorText()) View.VISIBLE else View.GONE
+      binding.textErrorCall.visibility = if (!order.isConsultErrorText()) View.VISIBLE else View.GONE
     }
   }
 

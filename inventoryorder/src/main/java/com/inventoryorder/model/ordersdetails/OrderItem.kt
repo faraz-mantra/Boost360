@@ -1,6 +1,9 @@
 package com.inventoryorder.model.ordersdetails
 
 import com.framework.utils.DateUtils
+import com.framework.utils.DateUtils.FORMAT_SERVER_1_DATE
+import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
+import com.framework.utils.DateUtils.getCurrentDate
 import com.framework.utils.DateUtils.parseDate
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
@@ -116,10 +119,10 @@ data class OrderItem(
   }
 
   fun isConfirmConsultBtn(): Boolean {
-    return (OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED && firstItemForConsultation()?.Product?.isAvailable() ?: false)
+    return (OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED && (firstItemForConsultation()?.Product?.isAvailable() ?: false) && isUpcomingConsult())
   }
 
-  fun isConsultCallErrorText(): Boolean {
+  fun isConsultErrorText(): Boolean {
     return (OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.FEEDBACK_PENDING ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED ||
@@ -145,4 +148,12 @@ data class OrderItem(
     return Items?.firstOrNull()
   }
 
+  fun isUpcomingConsult(): Boolean {
+    val extraConsultation = firstItemForConsultation()?.Product?.extraItemProductConsultation()
+    return if (extraConsultation != null) {
+      var date = extraConsultation.scheduledDateTime?.parseDate(FORMAT_SERVER_DATE)
+      if (date == null) date = extraConsultation.scheduledDateTime?.parseDate(FORMAT_SERVER_1_DATE)
+      date?.after(getCurrentDate()) ?: false
+    } else false
+  }
 }
