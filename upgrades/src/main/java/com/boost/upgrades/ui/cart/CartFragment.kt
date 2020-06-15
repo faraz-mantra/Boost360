@@ -26,6 +26,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.PrimaryImage
 //import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.*
+import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.model.BundlesModel
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.CouponsModel
@@ -128,10 +129,18 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         initializePackageRecycler()
         initializeAddonsRecycler()
 
+        //show applyed coupon code
+        if(prefs.getApplyedCouponDetails()!=null){
+            validCouponCode = prefs.getApplyedCouponDetails()
+            discount_coupon_title.setText(validCouponCode!!.coupon_key)
+            cart_apply_coupon.visibility = View.GONE
+        }
+
         cart_continue_submit.setOnClickListener {
-            //customerId = viewModel.getCustomerId()
-//            customerId != null &&
-            if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized) {
+
+            if(prefs.getCartOrderInfo()!=null){
+                proceedToPayment(prefs.getCartOrderInfo()!!)
+            } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized) {
 
                 var couponCode: String? = null
                 var couponDiscountPercentage: Int = 0
@@ -275,6 +284,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
                 prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
+                //handling coupon discount
+//                var finalPayment: Double = 0.0
+//                if(couponDiscountPercentage>0){
+//                    finalPayment = grandTotal + couponDiscountAmount
+//                }else{
+//                    finalPayment = grandTotal
+//                }
+
                 viewModel.InitiatePurchaseOrder(
 //                        CreatePurchaseOrderRequest(
 //                                (activity as UpgradeActivity).clientid,
@@ -304,7 +321,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                                 0,
                                                 null,
                                                 18),
-                                        grandTotal), //[Double] Total price of the transaction (including discount, tax)
+                                        grandTotal),
                                 "NEW",
                                 purchaseOrders
                         )
@@ -414,6 +431,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 WebEngageController.trackEvent("ADDONS_MARKETPLACE Empty_Cart Loaded", "ADDONS_MARKETPLACE Empty_Cart Loaded", "")
                 empty_cart.visibility = View.VISIBLE
                 cart_main_layout.visibility = View.GONE
+
+
+                //remove saved orderdetails from prefs
+                prefs.storeCartOrderInfo(null)
+                prefs.storeApplyedCouponDetails(null)
             }
         })
 
@@ -426,19 +448,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 prefs.storeCartOriginalAmount((total + couponDiscountAmount).toFloat())
                 prefs.storeCouponDiscountPercentage(if (validCouponCode == null) 0 else validCouponCode!!.discount_percent)
 
-                val paymentFragment = PaymentFragment.newInstance()
-                val args = Bundle()
-                args.putString("customerId", customerId)
-                args.putDouble("amount", it.Result.TotalPrice)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
-                args.putString("order_id", it.Result.OrderId)
-                args.putString("email", (activity as UpgradeActivity).email)
-                args.putString("currency", "INR");
-                args.putString("contact", (activity as UpgradeActivity).mobileNo)
-                paymentFragment.arguments = args
-                (activity as UpgradeActivity).addFragment(
-                        paymentFragment,
-                        Constants.PAYMENT_FRAGMENT
-                )
+                //saving cartOrderInfo
+                prefs.storeCartOrderInfo(it)
+
+                proceedToPayment(it)
             }
         })
 
@@ -485,6 +498,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         //getting valid Coupon Code
         viewModel.updateValidCouponResult().observe(this, Observer {
+            //clear stored cartOrderInfo
+            prefs.storeCartOrderInfo(null)
+
+            //save coupon Details
+            prefs.storeApplyedCouponDetails(it)
+
             validCouponCode = it
             discount_coupon_title.setText(validCouponCode!!.coupon_key)
             cart_apply_coupon.visibility = View.GONE
@@ -524,33 +543,37 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
 
     fun totalCalculation() {
-        total = 0.0
-        var couponDisount = 0
-        if (validCouponCode != null) {
-            couponDisount = validCouponCode!!.discount_percent!!
-            coupon_discount_title.setText("Coupon discount(" + couponDisount.toString() + "%)")
-        }
-        if (cartList != null && cartList.size > 0) {
-            for (item in cartList) {
-                total += item.price
+        if(::cartList.isInitialized) {
+            total = 0.0
+            var couponDisount = 0
+            if (validCouponCode != null) {
+                couponDisount = validCouponCode!!.discount_percent!!
+                coupon_discount_title.setText("Coupon discount(" + couponDisount.toString() + "%)")
             }
-            cart_amount_value.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total))
-            couponDiscountAmount = total * couponDisount / 100
-            coupon_discount_value.setText("-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount))
-            total -= couponDiscountAmount
-            val temp = (total * 18) / 100
-            taxValue = Math.round(temp * 100) / 100.0
-            grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
-            igst_value.setText("+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
-            order_total_value.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal))
-            cart_grand_total.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal))
-            footer_grand_total.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal))
+            if (cartList != null && cartList.size > 0) {
+                for (item in cartList) {
+                    total += item.price
+                }
+                cart_amount_value.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total))
+                couponDiscountAmount = total * couponDisount / 100
+                coupon_discount_value.setText("-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount))
+                total -= couponDiscountAmount
+                val temp = (total * 18) / 100
+                taxValue = Math.round(temp * 100) / 100.0
+                grandTotal = (Math.round((total + taxValue) * 100) / 100.0)
+                igst_value.setText("+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
+                order_total_value.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal))
+                cart_grand_total.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal))
+                footer_grand_total.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal))
+            }
         }
     }
 
 
     override fun deleteCartAddonsItem(itemID: String) {
         viewModel.deleteCartItems(itemID)
+        //remove saved orderdetails from prefs
+        prefs.storeCartOrderInfo(null)
     }
 
     override fun showBundleDetails(itemID: String) {
@@ -582,6 +605,22 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         } else {
             Toasty.info(requireContext(), "Something went wrong!! Try Later...").show()
         }
+    }
+
+    fun proceedToPayment(result: CreatePurchaseOrderResponse){
+        val paymentFragment = PaymentFragment.newInstance()
+        val args = Bundle()
+        args.putString("customerId", customerId)
+        args.putDouble("amount", result.Result.TotalPrice)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
+        args.putString("order_id", result.Result.OrderId)
+        args.putString("email", (activity as UpgradeActivity).email)
+        args.putString("currency", "INR");
+        args.putString("contact", (activity as UpgradeActivity).mobileNo)
+        paymentFragment.arguments = args
+        (activity as UpgradeActivity).addFragment(
+                paymentFragment,
+                Constants.PAYMENT_FRAGMENT
+        )
     }
 
 }

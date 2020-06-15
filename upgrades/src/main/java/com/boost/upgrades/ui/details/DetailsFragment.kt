@@ -45,6 +45,7 @@ import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.IMAGE_PREVIEW_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.WEB_VIEW_FRAGMENT
 import com.boost.upgrades.utils.HorizontalMarginItemDecoration
+import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils.longToast
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
@@ -73,7 +74,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     lateinit var retrofit: Retrofit
     lateinit var ApiService: ApiInterface
     lateinit var localStorage: LocalStorage
-    var singleItemId: String? = null
+    var singleWidgetKey: String? = null
     var badgeNumber = 0
     var addonDetails: FeaturesModel? = null
     var cart_list: List<CartModel>? = null
@@ -86,6 +87,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     lateinit var secondaryImagesAdapter: SecondaryImagesAdapter
 
     val imagePreviewPopUpFragement = ImagePreviewPopUpFragement()
+
+    lateinit var prefs: SharedPrefs
 
     companion object {
         fun newInstance() = DetailsFragment()
@@ -108,7 +111,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         secondaryImagesAdapter = SecondaryImagesAdapter(ArrayList(), this)
         reviewAdaptor = ReviewViewPagerAdapter(ArrayList())
         localStorage = LocalStorage.getInstance(context!!)!!
-        singleItemId = arguments!!.getString("itemId")
+        singleWidgetKey = arguments!!.getString("itemId")
+        prefs = SharedPrefs(activity as UpgradeActivity)
 
 //        addons_list = localStorage.getInitialLoad()
 
@@ -124,7 +128,6 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         initializeSecondaryImage()
         initializeViewPager()
         initMvvM()
-
 
         app_bar_layout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (Math.abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
@@ -166,6 +169,9 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         add_item_to_cart.setOnClickListener {
             if (!itemInCartStatus) {
                 if (addonDetails != null) {
+                    //clear cartOrderInfo from SharedPref to requestAPI again
+                    prefs.storeCartOrderInfo(null)
+
                     viewModel.addItemToCart(addonDetails!!)
                     badgeNumber = badgeNumber + 1
                     badge121.setText(badgeNumber.toString())
@@ -211,6 +217,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                 Toasty.warning(requireContext(), "Failed to load the article.", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     override fun onResume() {
@@ -232,6 +239,24 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     }
 
     fun loadCostToButtons() {
+
+        //if the View is opened from package then hide button, price, discount and Cart icon
+        if(arguments!!.containsKey("packageView")){
+            imageViewCart121.visibility = View.INVISIBLE
+            money.visibility= View.GONE
+            orig_cost.visibility = View.GONE
+            details_discount.visibility = View.GONE
+            add_item_to_cart.background = ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.grey_button_click_effect
+            )
+            add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
+            add_item_to_cart.setText("ITEM BELONG TO PACKAGE")
+            add_item_to_cart.isEnabled = false
+            havent_bought_the_feature.visibility = View.INVISIBLE
+            return
+        }
+
         if (addonDetails!!.is_premium) {
             add_item_to_cart.visibility = View.VISIBLE
             add_item_to_cart.background = ContextCompat.getDrawable(
@@ -270,13 +295,17 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     }
 
     fun loadData() {
-        viewModel.loadAddonsFromDB(singleItemId!!)
+        viewModel.loadAddonsFromDB(singleWidgetKey!!)
     }
 
     @SuppressLint("FragmentLiveDataObserve")
     fun initMvvM() {
         viewModel.addonsResult().observe(this, Observer {
-            viewModel.getCartItems()
+
+            //if the View is from PackageView then No need to call getCartItems method
+            if(!arguments!!.containsKey("packageView")) {
+                viewModel.getCartItems()
+            }
             addonDetails = it
             if (addonDetails != null) {
                 val learnMoreLinkType = object : TypeToken<LearnMoreLink>() {}.type
@@ -375,7 +404,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
             if (cart_list != null && cart_list!!.size > 0) {
                 badge121.visibility = View.VISIBLE
                 for (item in cart_list!!) {
-                    if (item.boost_widget_key == singleItemId) {
+                    if (item.boost_widget_key == singleWidgetKey) {
                         add_item_to_cart.background = ContextCompat.getDrawable(
                                 requireContext(),
                                 R.drawable.added_to_cart_grey
@@ -398,6 +427,9 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                 badge121.visibility = View.GONE
                 itemInCartStatus = false
                 loadCostToButtons()
+
+                //clear coupon Applyed in cart if the cart is empty
+                prefs.storeApplyedCouponDetails(null)
             }
         })
 
@@ -452,7 +484,10 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
 
     override fun onBackPressed() {
         if (::viewModel.isInitialized) {
-            viewModel.getCartItems()
+            //if the View is from PackageView then No need to call getCartItems method
+            if(!arguments!!.containsKey("packageView")) {
+                viewModel.getCartItems()
+            }
         }
     }
 
