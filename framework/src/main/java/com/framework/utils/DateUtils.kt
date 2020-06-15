@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit
 object DateUtils {
 
   const val FORMAT_SERVER_DATE = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+  const val FORMAT_SERVER_1_DATE = "yyyy-MM-dd'T'HH:mm:ss'Z'"
   const val FORMAT_SERVER_TO_LOCAL = "dd-MM-yyyy HH:mm a"
   const val FORMAT_SERVER_TO_LOCAL_2 = "EEE dd-MMM-yyyy HH:mm a"
   const val FORMAT_DD_MM_YYYY = "dd-MM-yyyy"
