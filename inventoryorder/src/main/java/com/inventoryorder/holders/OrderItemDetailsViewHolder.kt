@@ -1,6 +1,8 @@
 package com.inventoryorder.holders
 
+import android.annotation.SuppressLint
 import android.graphics.Paint
+import android.view.View
 import com.framework.glide.util.glideLoad
 import com.inventoryorder.R
 import com.inventoryorder.databinding.ItemOrderDetailsBinding
@@ -17,14 +19,21 @@ class OrderItemDetailsViewHolder(binding: ItemOrderDetailsBinding) : AppBaseRecy
     setDataResponseForOrderDetails(data)
   }
 
+  @SuppressLint("SetTextI18n")
   private fun setDataResponseForOrderDetails(item: ItemN) {
     binding.tvDishName.text = item.Product?.Name?.trim()
     binding.tvDishQuantity.text = "Qty: ${item.Quantity}"
     val currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
-    binding.tvDishAmount.text = "$currency ${item.SalePrice ?: 0}"
-    binding.tvActualPrice.paintFlags = binding.tvActualPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-    binding.tvActualPrice.text = "$currency ${item.ActualPrice ?: 0}"
-    val url: String? = item.Product?.ImageUri?.trim()
+    val salePrice = item.SalePrice ?: 0.0
+    val actualPrice = item.ActualPrice ?: 0.0
+    binding.tvDishAmount.text = "$currency $salePrice"
+    if (actualPrice > salePrice) {
+      binding.tvActualPrice.paintFlags = binding.tvActualPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+      binding.tvActualPrice.text = "$currency $actualPrice"
+      binding.tvActualPrice.visibility = View.VISIBLE
+    } else binding.tvActualPrice.visibility = View.INVISIBLE
+    var url: String? = item.product_detail?.ImageUri?.trim()
+    if (url.isNullOrEmpty()) url = item.Product?.ImageUri?.trim()
     url?.let { activity?.glideLoad(binding.ivDishItem, it, R.drawable.placeholder_image) }
         ?: (binding.ivDishItem.setImageResource(R.drawable.placeholder_image))
   }

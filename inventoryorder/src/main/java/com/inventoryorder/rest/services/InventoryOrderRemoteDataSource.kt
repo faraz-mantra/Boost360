@@ -6,6 +6,7 @@ import com.inventoryorder.rest.EndPoints
 import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.rest.response.order.OrderDetailResponse
+import com.inventoryorder.rest.response.order.ProductResponse
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.*
@@ -47,6 +48,9 @@ interface InventoryOrderRemoteDataSource {
   @GET(EndPoints.GET_ORDER_DETAIL)
   fun getOrderDetails(@Query("clientId") clientId: String?,
                       @Query("orderId") orderId: String?): Observable<Response<OrderDetailResponse>>
+
+  @GET(EndPoints.GET_PRODUCT_DETAILS)
+  fun getProductDetails(@Query("productId") productId: String?): Observable<Response<ProductResponse>>
 
   @GET(EndPoints.GET_LIST_IN_COMPLETE_ORDER)
   fun getInCompleteOrders(@Query("clientId") clientId: String?,
