@@ -168,6 +168,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent">
 
+
                     <RelativeLayout
                         android:id="@+id/package_blossom_pack_layout"
                         android:layout_width="wrap_content"
@@ -187,7 +188,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/_4sdp"
                             android:fontFamily="@font/open_sans_semibold"
-                            android:text="30% Discount"
+                            android:text="Blossom Pack"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_6sdp" />
                     </RelativeLayout>
