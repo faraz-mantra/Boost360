@@ -17,8 +17,7 @@
             android:id="@+id/main_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            tools:context=".ui.InventoryOrderDetailActivity">
+            android:background="@color/white">
 
             <View
                 android:id="@+id/shadow1"
@@ -158,7 +157,7 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/size_16"
+                            android:layout_marginTop="@dimen/size_26"
                             android:drawableEnd="@drawable/ic_question_circular_blue"
                             android:drawablePadding="@dimen/size_4"
                             android:includeFontPadding="false"
@@ -184,11 +183,11 @@
                             android:background="@drawable/shape_grey_stroke_rect_bkg"
                             android:orientation="vertical">
 
+                            <!--android:background="@color/dodger_blue_ED73FE"-->
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="1dp"
-                                android:background="@color/dodger_blue_ED73FE"
+                                android:background="@drawable/shape_blue_stroke_rect_title_bkg"
                                 android:padding="@dimen/size_10">
 
                                 <com.framework.views.customViews.CustomTextView
@@ -253,7 +252,7 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/size_16"
+                            android:layout_marginTop="@dimen/size_26"
                             android:drawableEnd="@drawable/ic_question_circular_blue"
                             android:drawablePadding="@dimen/size_4"
                             android:includeFontPadding="false"
@@ -297,9 +296,9 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <Switch
-                                    android:backgroundTint="@color/dodger_blue_two"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:backgroundTint="@color/dodger_blue_two"
                                     android:checked="true"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintRight_toRightOf="parent"
@@ -312,18 +311,18 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:padding="@dimen/size_5">
+                                android:padding="@dimen/size_10">
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
+                                    android:layout_weight="1.2"
+                                    android:layout_marginEnd="3dp"
                                     android:orientation="vertical">
 
                                     <com.framework.views.customViews.CustomTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginStart="@dimen/size_3"
                                         android:text="Price incl. tax (INR)"
                                         android:textColor="@color/black_4a4a4a"
                                         android:textSize="12sp"
@@ -347,13 +346,13 @@
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
+                                    android:layout_weight="1.2"
+                                    android:layout_marginStart="3dp"
                                     android:orientation="vertical">
 
                                     <com.framework.views.customViews.CustomTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginStart="@dimen/size_3"
                                         android:text="Discount amt. (INR)"
                                         android:textColor="@color/black_4a4a4a"
                                         android:textSize="12sp"
@@ -405,7 +404,7 @@
                             <com.framework.views.customViews.CustomTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/size_5"
+                                android:layout_marginStart="@dimen/size_10"
                                 android:layout_marginTop="@dimen/size_14"
                                 android:includeFontPadding="false"
                                 android:text="Select, how do you want to receive money for yor bookings."
@@ -416,6 +415,9 @@
                             <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/size_10"
+                                android:layout_marginRight="@dimen/size_10"
+                                android:layout_marginBottom="@dimen/size_10"
                                 android:background="@drawable/shape_grey_stroke_rect_bkg"
                                 android:orientation="vertical">
 
@@ -423,7 +425,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/size_1"
-                                    android:background="@color/dodger_blue_ED73FE"
+                                    android:background="@drawable/shape_blue_stroke_rect_title_bkg"
                                     android:padding="@dimen/size_10">
 
                                     <com.framework.views.customViews.CustomTextView
@@ -489,7 +491,9 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/size_16">
+                            android:layout_marginTop="@dimen/size_16"
+                            android:background="@drawable/shape_grey_stroke_rect_bkg"
+                            android:padding="@dimen/size_10">
 
 
                             <LinearLayout
