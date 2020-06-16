@@ -1,12 +1,14 @@
 package com.inventoryorder.model.ordersdetails
 
 import com.inventoryorder.constant.RecyclerViewItemType
+import com.inventoryorder.model.product.Product
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 data class ItemN(
-    val ActualPrice: Double? = null,
-    val Product: ProductN? = null,
+    var ActualPrice: Double? = null,
+    var Product: ProductN? = null,
+    var product_detail: Product? = null,
     val Quantity: Int? = null,
     val SalePrice: Double? = null,
     val ShippingCost: Double? = null,

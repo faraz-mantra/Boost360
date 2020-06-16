@@ -53,7 +53,7 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding.bookingDate.value.text = parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
+    binding.bookingDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
     binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
     binding.duration.value.text = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
     val sizeItem = if (order.firstItemForConsultation() != null) 1 else 0
@@ -90,6 +90,7 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
       binding.btnCall.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.VIDEO_CONSULT_CALL_CLICKED.ordinal) }
       binding.btnCopyLink.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.VIDEO_CONSULT_COPY_CLICKED.ordinal) }
       binding.btnCopyLink.visibility = View.VISIBLE
+      binding.textErrorCall.gone()
     } else {
       binding.btnCall.gone()
       binding.btnCopyLink.visibility = View.GONE

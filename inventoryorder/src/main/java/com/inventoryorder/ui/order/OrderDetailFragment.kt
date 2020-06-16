@@ -30,8 +30,10 @@ import com.inventoryorder.model.ordersummary.OrderStatusValue
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
+import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import java.util.*
+import kotlin.collections.ArrayList
 
 class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() {
 
@@ -39,6 +41,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private var orderItem: OrderItem? = null
   private var deliveryList = DeliveryModel().getData()
   private var isRefresh: Boolean? = null
+  private var productList: ArrayList<ProductResponse>? = null
 
   companion object {
     @JvmStatic
@@ -58,23 +61,46 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private fun apiGetOrderDetails(orderId: String) {
     showProgress()
     viewModel?.getOrderDetails(clientId, orderId)?.observeOnce(viewLifecycleOwner, Observer {
-      hideProgress()
       if (it.error is NoNetworkException) {
         errorUi(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
-        binding?.mainView?.visible()
-        binding?.error?.gone()
         orderItem = (it as? OrderDetailResponse)?.Data
         if (orderItem != null) {
-          setDetails(orderItem!!)
+          getProductAllDetails()
         } else errorUi("Order item null.")
       } else errorUi(it.message())
     })
   }
 
+  private fun getProductAllDetails() {
+    productList = ArrayList()
+    var count = 0
+    if (orderItem?.Items.isNullOrEmpty().not()) {
+      orderItem?.Items?.forEach {
+        viewModel?.getProductDetails(it.Product?._id)?.observeOnce(viewLifecycleOwner, Observer { it1 ->
+          count += 1
+          val product = it1 as? ProductResponse
+          if (count == orderItem?.Items?.size) {
+            product?.let { it2 -> productList?.add(it2) }
+            addProductToOrder()
+          } else product?.let { it2 -> productList?.add(it2) }
+        })
+      }
+    } else addProductToOrder()
+  }
+
+  private fun addProductToOrder() {
+    productList?.forEach { orderItem?.Items?.firstOrNull { it1 -> it1.Product?._id?.trim() == it.Product?._id?.trim() }?.product_detail = it.Product }
+    hideProgress()
+    binding?.mainView?.visible()
+    binding?.error?.gone()
+    setDetails(orderItem!!)
+  }
+
   private fun errorUi(message: String) {
+    hideProgress()
     binding?.mainView?.gone()
     binding?.error?.visible()
     binding?.error?.text = message
@@ -157,13 +183,13 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     var salePrice = 0.0
     var currency = "INR"
     order.Items?.forEachIndexed { index, item ->
-      shippingCost += item.ShippingCost ?: 0.0
+      shippingCost += item.Product?.ShippingCost ?: 0.0
       salePrice += item.SalePrice ?: 0.0
       if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
           ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }
     binding?.tvShippingCost?.text = "Shipping Cost: $currency $shippingCost"
-    binding?.tvTotalOrderAmount?.text = "Total Amount: $currency $salePrice"
+    binding?.tvTotalOrderAmount?.text = "Total Amount: $currency ${salePrice + shippingCost}"
 
   }
 

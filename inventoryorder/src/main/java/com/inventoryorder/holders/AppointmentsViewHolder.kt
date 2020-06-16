@@ -52,7 +52,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding.bookingDate.value.text = parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
+    binding.bookingDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL)
     binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
     binding.location.value.text = order.SellerDetails?.Address?.City?.capitalizeUtil()
     val sizeItem = order.Items?.size ?: 0
