@@ -25,4 +25,13 @@ data class ProductN(
     return IsAvailable ?: false
   }
 
+  fun price(): Double {
+    return Price ?: 0.0
+  }
+
+  fun discountAmount(): Double {
+    return DiscountAmount ?: 0.0
+  }
+
+
 }

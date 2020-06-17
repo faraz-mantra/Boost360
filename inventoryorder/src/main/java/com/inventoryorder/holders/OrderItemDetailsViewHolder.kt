@@ -24,8 +24,8 @@ class OrderItemDetailsViewHolder(binding: ItemOrderDetailsBinding) : AppBaseRecy
     binding.tvDishName.text = item.Product?.Name?.trim()
     binding.tvDishQuantity.text = "Qty: ${item.Quantity}"
     val currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
-    val salePrice = item.SalePrice ?: 0.0
-    val actualPrice = item.ActualPrice ?: 0.0
+    val actualPrice = item.product().price()
+    val salePrice = actualPrice - item.product().discountAmount()
     binding.tvDishAmount.text = "$currency $salePrice"
     if (actualPrice > salePrice) {
       binding.tvActualPrice.paintFlags = binding.tvActualPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
