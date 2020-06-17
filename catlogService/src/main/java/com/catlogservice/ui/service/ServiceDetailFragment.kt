@@ -14,49 +14,49 @@ import com.catlogservice.viewmodel.ServiceViewModel
 
 class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, ServiceViewModel>() {
 
-  companion object {
-    fun newInstance(): ServiceDetailFragment {
-      return ServiceDetailFragment()
+    companion object {
+        fun newInstance(): ServiceDetailFragment {
+            return ServiceDetailFragment()
+        }
     }
-  }
 
 
-  override fun getLayout(): Int {
-    return R.layout.fragment_service_detail
-  }
-
-  override fun getViewModelClass(): Class<ServiceViewModel> {
-    return ServiceViewModel::class.java
-  }
-
-  override fun onCreateView() {
-    super.onCreateView()
-    setOnClickListener(binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation, binding?.vwPaymentConfig, binding?.buttonConfirmOrder)
-  }
-
-  override fun onClick(v: View) {
-    super.onClick(v)
-    when (v) {
-      binding?.vwChangeDeliverConfig -> showServiceDeliveryConfigBottomSheet()
-      binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
-      binding?.vwPaymentConfig -> showPaymentConfigBottomSheet()
-      binding?.buttonConfirmOrder -> startFragmentActivity(FragmentType.SERVICE_INFORMATION, Bundle())
+    override fun getLayout(): Int {
+        return R.layout.fragment_service_detail
     }
-  }
 
-  private fun showServiceDeliveryConfigBottomSheet() {
-    val dialog = ServiceDeliveryConfigBottomSheet()
-    dialog.show(parentFragmentManager, ServiceDeliveryConfigBottomSheet::class.java.name)
-  }
+    override fun getViewModelClass(): Class<ServiceViewModel> {
+        return ServiceViewModel::class.java
+    }
 
-  private fun showServiceDeliveryLocationBottomSheet() {
-    val dialog = ServiceDeliveryBottomSheet()
-    dialog.show(parentFragmentManager, ServiceDeliveryBottomSheet::class.java.name)
-  }
+    override fun onCreateView() {
+        super.onCreateView()
+        setOnClickListener(binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation, binding?.vwPaymentConfig, binding?.btnSavePublish)
+    }
 
-  private fun showPaymentConfigBottomSheet() {
-    val dialog = PaymentConfigBottomSheet()
-    dialog.show(parentFragmentManager, PaymentConfigBottomSheet::class.java.name)
-  }
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when (v) {
+            binding?.vwChangeDeliverConfig -> showServiceDeliveryConfigBottomSheet()
+            binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
+            binding?.vwPaymentConfig -> showPaymentConfigBottomSheet()
+            binding?.btnSavePublish -> startFragmentActivity(FragmentType.SERVICE_INFORMATION, Bundle())
+        }
+    }
+
+    private fun showServiceDeliveryConfigBottomSheet() {
+        val dialog = ServiceDeliveryConfigBottomSheet()
+        dialog.show(parentFragmentManager, ServiceDeliveryConfigBottomSheet::class.java.name)
+    }
+
+    private fun showServiceDeliveryLocationBottomSheet() {
+        val dialog = ServiceDeliveryBottomSheet()
+        dialog.show(parentFragmentManager, ServiceDeliveryBottomSheet::class.java.name)
+    }
+
+    private fun showPaymentConfigBottomSheet() {
+        val dialog = PaymentConfigBottomSheet()
+        dialog.show(parentFragmentManager, PaymentConfigBottomSheet::class.java.name)
+    }
 
 }
