@@ -392,7 +392,7 @@
 
 
             <LinearLayout
-                android:id="@+id/fb_layout"
+                android:id="@+id/artical_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/header"
@@ -433,7 +433,7 @@
                 android:id="@+id/offer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/fb_layout"
+                android:layout_below="@+id/artical_layout"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="20dp"

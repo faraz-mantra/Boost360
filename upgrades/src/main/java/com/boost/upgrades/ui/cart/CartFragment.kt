@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -436,6 +437,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 //remove saved orderdetails from prefs
                 prefs.storeCartOrderInfo(null)
                 prefs.storeApplyedCouponDetails(null)
+
+                //clear viewModel data
+                viewModel.clearValidCouponResult()
             }
         })
 
@@ -498,16 +502,18 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         //getting valid Coupon Code
         viewModel.updateValidCouponResult().observe(this, Observer {
-            //clear stored cartOrderInfo
-            prefs.storeCartOrderInfo(null)
+            if(it!=null) {
+                //clear stored cartOrderInfo
+                prefs.storeCartOrderInfo(null)
 
-            //save coupon Details
-            prefs.storeApplyedCouponDetails(it)
+                //save coupon Details
+                prefs.storeApplyedCouponDetails(it)
 
-            validCouponCode = it
-            discount_coupon_title.setText(validCouponCode!!.coupon_key)
-            cart_apply_coupon.visibility = View.GONE
-            totalCalculation()
+                validCouponCode = it
+                discount_coupon_title.setText(validCouponCode!!.coupon_key)
+                cart_apply_coupon.visibility = View.GONE
+                totalCalculation()
+            }
         })
     }
 

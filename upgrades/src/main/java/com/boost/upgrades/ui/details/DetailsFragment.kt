@@ -203,10 +203,11 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
             )
         }
 
-        fb_layout.setOnClickListener {
+        artical_layout.setOnClickListener {
             if (widgetLearnMoreLink != null && widgetLearnMoreLink!!.length > 0) {
                 val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
                 val args = Bundle()
+                args.putString("title", widgetLearnMore.text.toString())
                 args.putString("link", widgetLearnMoreLink)
                 webViewFragment.arguments = args
                 (activity as UpgradeActivity).addFragment(
@@ -384,9 +385,9 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                 if (learnMoreLink != null) {
                     widgetLearnMore.text = learnMoreLink.link_description
                     widgetLearnMoreLink = learnMoreLink.link
-                    fb_layout.visibility = View.VISIBLE
+                    artical_layout.visibility = View.VISIBLE
                 } else {
-                    fb_layout.visibility = View.GONE
+                    artical_layout.visibility = View.GONE
                 }
                 xheader.text = addonDetails!!.description_title
                 abcText.text = addonDetails!!.description

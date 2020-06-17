@@ -42,6 +42,10 @@ class WebViewFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(WebViewViewModel::class.java)
 
+        if(arguments !=null && arguments!!.containsKey("title")){
+            browser_title.setText(arguments!!.getString("title"))
+        }
+
         if (link != null) {
             webview.loadUrl(link)
         } else {
