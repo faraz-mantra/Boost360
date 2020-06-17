@@ -91,13 +91,14 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
           if (response != null && response.Items.isNullOrEmpty().not()) {
             binding?.bookingRecycler?.visible()
             binding?.errorTxt?.gone()
+            removeLoader()
             val list = response.Items?.map { item ->
               item.recyclerViewType = RecyclerViewItemType.VIDEO_CONSULT_ITEM_TYPE.getLayout();item
             } as ArrayList<OrderItem>
             TOTAL_ELEMENTS = response.total()
             orderList.addAll(list)
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
-            setAdapterNotify(orderList, isFirst)
+            setAdapterNotify(orderList)
           } else errorView("No consultation available.")
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
@@ -110,12 +111,15 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     })
   }
 
-  private fun setAdapterNotify(items: ArrayList<OrderItem>, isFirst: Boolean = false) {
-    if (isFirst.not() && orderAdapter != null) {
-      if (isLoadingD) {
-        orderAdapter?.removeLoadingFooter()
-        isLoadingD = false
-      }
+  private fun removeLoader() {
+    if (isLoadingD) {
+      orderAdapter?.removeLoadingFooter()
+      isLoadingD = false
+    }
+  }
+
+  private fun setAdapterNotify(items: ArrayList<OrderItem>) {
+    if (orderAdapter != null) {
       orderAdapter?.notify(getDateWiseFilter(items))
     } else setAdapterAppointmentList(getDateWiseFilter(items))
   }
@@ -253,7 +257,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   private fun startFilter(query: String) {
     if (query.isEmpty().not() && query.length > 2) {
       getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = true)
-    } else orderAdapter?.notify(getDateWiseFilter(orderList))
+    } else setAdapterNotify(orderList)
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {

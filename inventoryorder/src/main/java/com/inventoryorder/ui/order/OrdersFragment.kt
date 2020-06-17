@@ -10,7 +10,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -44,7 +43,6 @@ import kotlin.collections.ArrayList
 class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener {
 
   private lateinit var requestFilter: OrderFilterRequest
-  private var request: OrderSummaryRequest? = null
   private var typeAdapter: AppBaseRecyclerViewAdapter<OrderSummaryModel>? = null
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
   private var typeList: ArrayList<OrderSummaryModel>? = null
@@ -95,10 +93,10 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
       override fun loadMoreItems() {
         if (!isLastPageD) {
           isLoadingD = true
-          currentPage += request?.limit ?: 0
+          currentPage += requestFilter.limit ?: 0
           orderAdapter?.addLoadingFooter(OrderItem().getLoaderItem())
-          request?.skip = currentPage
-          apiOrderListCall()
+          requestFilter.skip = currentPage
+          getSellerOrdersFilterApi(requestFilter)
         }
       }
 
@@ -139,7 +137,8 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
     binding?.typeRecycler?.visible()
     binding?.viewShadow?.visible()
     orderList.clear()
-    apiOrderList(getRequestData(), true)
+    requestFilter = getRequestFilterData(arrayListOf())
+    getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.typeRecycler?.post {
       typeAdapter = AppBaseRecyclerViewAdapter(baseActivity, typeList, this)
       binding?.typeRecycler?.layoutManager = LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL, false)
@@ -192,67 +191,94 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
   private fun loadNewData() {
     isLoadingD = false
     isLastPageD = false
-    currentPage = PAGE_START
     orderAdapter?.clear()
-    request?.orderStatus = OrderSummaryModel.OrderSummaryType.fromType(orderItemType)?.value
-    request?.paymentStatus = null
-    request?.skip = currentPage
     orderList.clear()
-    binding?.progress?.visible()
     apiOrderListCall()
   }
 
   private fun apiOrderListCall() {
-    request?.let {
-      when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {
-        OrderSummaryModel.OrderSummaryType.RECEIVED -> apiAssureOrder(it)
-//        OrderSummaryModel.OrderType.SUCCESSFUL -> apiInCompleteOrder(it)
-        OrderSummaryModel.OrderSummaryType.CANCELLED -> apiCancelOrder(it)
-        OrderSummaryModel.OrderSummaryType.ABANDONED -> {
-          request?.paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name
-          apiOrderList(it)
-        }
-        else -> apiOrderList(it)
+    when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {
+      OrderSummaryModel.OrderSummaryType.RECEIVED -> {
+        val statusList = arrayListOf(OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name, OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name)
+        requestFilter = getRequestFilterData(statusList)
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+      OrderSummaryModel.OrderSummaryType.SUCCESSFUL -> {
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+      OrderSummaryModel.OrderSummaryType.CANCELLED -> {
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
+            paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name, operatorType = QueryObject.Operator.NE.name)
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+      OrderSummaryModel.OrderSummaryType.ABANDONED -> {
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
+            paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name)
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+      OrderSummaryModel.OrderSummaryType.ESCALATED -> {
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ESCALATED.name))
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+      else -> {
+        requestFilter = getRequestFilterData(arrayListOf())
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
     }
 
   }
 
-  private fun apiOrderList(request: OrderSummaryRequest, isFirst: Boolean = false) {
-    viewModel?.getSellerOrders(auth, request)?.observeOnce(viewLifecycleOwner, Observer { res -> res?.let { responseOrderList(isFirst, it) } })
-  }
-
-  private fun apiAssureOrder(request: OrderSummaryRequest, isFirst: Boolean = false) {
-    viewModel?.getAssurePurchaseOrder(request)?.observeOnce(viewLifecycleOwner, Observer { res -> res?.let { responseOrderList(isFirst, it) } })
-  }
-
-  private fun apiCancelOrder(request: OrderSummaryRequest, isFirst: Boolean = false) {
-    viewModel?.getCancelledOrders(request)?.observeOnce(viewLifecycleOwner, Observer { res -> res?.let { responseOrderList(isFirst, it) } })
-  }
-
-  private fun responseOrderList(isFirst: Boolean, it: BaseResponse) {
-    binding?.progress?.gone()
-    if (it.error is NoNetworkException) {
-      showShortToast(resources.getString(R.string.internet_connection_not_available))
-    } else {
+  private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
+    if (isFirst || isSearch) binding?.progress?.visible()
+    viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
+      binding?.progress?.gone()
+      if (it.error is NoNetworkException) {
+        errorView(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val response = (it as? InventoryOrderListResponse)?.Data ?: return
-        binding?.orderRecycler?.visible()
-        val list = response.Items ?: ArrayList()
-        TOTAL_ELEMENTS = response.total()
-        orderList.addAll(list)
-        isLastPageD = (orderList.size == TOTAL_ELEMENTS)
-        if (isFirst.not() && orderAdapter != null) {
-          orderAdapter?.removeLoadingFooter()
-          isLoadingD = false
-          orderAdapter?.addItems(list)
-        } else
-          setAdapterOrderList(list)
-      } else {
-        binding?.orderRecycler?.gone()
-        showShortToast(it.message)
-      }
+        val response = (it as? InventoryOrderListResponse)?.Data
+        if (isSearch.not()) {
+          if (isRefresh) orderList.clear()
+          if (response != null && response.Items.isNullOrEmpty().not()) {
+            binding?.orderRecycler?.visible()
+            binding?.errorTxt?.gone()
+            removeLoader()
+            val list = response.Items ?: ArrayList()
+            TOTAL_ELEMENTS = response.total()
+            orderList.addAll(list)
+            isLastPageD = (orderList.size == TOTAL_ELEMENTS)
+            setAdapterNotify(orderList)
+          } else errorView("No order available.")
+        } else {
+          if (response != null && response.Items.isNullOrEmpty().not()) {
+            binding?.orderRecycler?.visible()
+            setAdapterNotify(response.Items!!)
+          } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
+          else errorView("No order available.")
+        }
+      } else errorView(it.message ?: "No order available.")
+    })
+  }
+
+  private fun removeLoader() {
+    if (isLoadingD) {
+      orderAdapter?.removeLoadingFooter()
+      isLoadingD = false
     }
+  }
+
+  private fun setAdapterNotify(items: ArrayList<OrderItem>) {
+    if (orderAdapter != null) {
+      orderAdapter?.notify(getNewList(items))
+    } else setAdapterOrderList(getNewList(items))
+  }
+
+  private fun getNewList(items: ArrayList<OrderItem>): ArrayList<OrderItem> {
+    val list = ArrayList<OrderItem>()
+    list.addAll(items)
+    return list
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -276,15 +302,9 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
 
   private fun startFilter(query: String) {
     if (query.isNotEmpty() && query.length > 2) {
-      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query))
-    } else orderAdapter?.notify(orderList)
+      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = true)
+    } else setAdapterNotify(orderList)
   }
-
-  private fun getRequestData(): OrderSummaryRequest {
-    request = OrderSummaryRequest(clientId = clientId, sellerId = fpTag, skip = currentPage, limit = PAGE_SIZE, orderMode = OrderSummaryRequest.OrderMode.DELIVERY.name)
-    return request!!
-  }
-
 
   private fun errorOnSummary(message: String?) {
     binding?.typeRecycler?.gone()
@@ -302,61 +322,19 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
     }
   }
 
-  private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
-    if (isFirst || isSearch) binding?.progress?.visible()
-    viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
-      binding?.progress?.gone()
-      if (it.error is NoNetworkException) {
-        errorView(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val response = (it as? InventoryOrderListResponse)?.Data
-        if (isSearch.not()) {
-          if (isRefresh) orderList.clear()
-          if (response != null && response.Items.isNullOrEmpty().not()) {
-            binding?.orderRecycler?.visible()
-            binding?.errorTxt?.gone()
-            val list = response.Items ?: ArrayList()
-            TOTAL_ELEMENTS = response.total()
-            orderList.addAll(list)
-            isLastPageD = (orderList.size == TOTAL_ELEMENTS)
-            setAdapterNotify(orderList, isFirst)
-          } else errorView("No order available.")
-        } else {
-          if (response != null && response.Items.isNullOrEmpty().not()) {
-            binding?.orderRecycler?.visible()
-            setAdapterNotify(response.Items!!)
-          } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
-          else errorView("No order available.")
-        }
-      } else errorView(it.message ?: "No order available.")
-    })
-  }
-
-  private fun setAdapterNotify(items: java.util.ArrayList<OrderItem>, isFirst: Boolean = false) {
-    if (isFirst.not() && orderAdapter != null) {
-      if (isLoadingD) {
-        orderAdapter?.removeLoadingFooter()
-        isLoadingD = false
-      }
-      orderAdapter?.notify(items)
-    } else setAdapterOrderList(items)
-  }
-
   private fun errorView(error: String) {
     binding?.orderRecycler?.gone()
     binding?.errorTxt?.visible()
     binding?.errorTxt?.text = error
   }
 
-  private fun getRequestFilterData(statusList: ArrayList<String>, searchTxt: String = ""): OrderFilterRequest {
+  private fun getRequestFilterData(statusList: ArrayList<String>, paymentStatus: String? = null, operatorType: String = QueryObject.Operator.EQ.name, searchTxt: String = ""): OrderFilterRequest {
     val requestFil: OrderFilterRequest?
     if (searchTxt.isEmpty()) {
       currentPage = PAGE_START
       requestFil = OrderFilterRequest(clientId = clientId, skip = currentPage, limit = PAGE_SIZE)
     } else requestFil = OrderFilterRequest(clientId = clientId)
-    requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.AND.name, QueryObject = getQueryList()))
+    requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.AND.name, QueryObject = getQueryList(paymentStatus, operatorType)))
     if (statusList.isNullOrEmpty().not()) {
       requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryStatusList(statusList)))
     }
@@ -366,10 +344,11 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
     return requestFil
   }
 
-  private fun getQueryList(): ArrayList<QueryObject> {
+  private fun getQueryList(paymentStatus: String? = null, operatorType: String): ArrayList<QueryObject> {
     val queryList = ArrayList<QueryObject>()
     queryList.add(QueryObject(QueryObject.QueryKey.Identifier.value, fpTag, QueryObject.Operator.EQ.name))
     queryList.add(QueryObject(QueryObject.QueryKey.Mode.value, OrderSummaryRequest.OrderMode.DELIVERY.name, QueryObject.Operator.EQ.name))
+    paymentStatus?.let { queryList.add(QueryObject(QueryObject.QueryKey.PaymentStatus.value, paymentStatus, operatorType)) }
     return queryList
   }
 
