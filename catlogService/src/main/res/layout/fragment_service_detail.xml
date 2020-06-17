@@ -81,7 +81,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/size_20"
                                 android:text="@string/add_service_image"
-                                android:textColor="@color/greyish_brown"
+                                android:textColor="@color/dodger_blue_two"
                                 app:fontFamily="@font/semi_bold"
                                 app:textAllCaps="true"
                                 app:textType="BODY_1" />
@@ -295,14 +295,17 @@
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
-                                <Switch
+                                <com.catlogservice.ui.customviews.toggle.widget.LabeledSwitch
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:backgroundTint="@color/dodger_blue_two"
-                                    android:checked="true"
+                                    app:colorBorder="@color/greyish"
+                                    app:colorOn="#0DC920"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintRight_toRightOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:on="false"
+                                    app:textOff="NO"
+                                    app:textOn="YES" />
 
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -316,8 +319,8 @@
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1.2"
                                     android:layout_marginEnd="3dp"
+                                    android:layout_weight="1.2"
                                     android:orientation="vertical">
 
                                     <com.framework.views.customViews.CustomTextView
@@ -346,8 +349,8 @@
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1.2"
                                     android:layout_marginStart="3dp"
+                                    android:layout_weight="1.2"
                                     android:orientation="vertical">
 
                                     <com.framework.views.customViews.CustomTextView
@@ -537,7 +540,7 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <androidx.appcompat.widget.LinearLayoutCompat
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginTop="@dimen/size_20"
@@ -546,7 +549,7 @@
                             android:paddingBottom="@dimen/size_16">
 
                             <com.framework.views.customViews.CustomButton
-                                android:id="@+id/buttonConfirmOrder"
+                                android:id="@+id/btn_savePublish"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
@@ -557,8 +560,22 @@
                                 android:text="Save &amp; Publish"
                                 android:textAllCaps="true"
                                 android:textColor="@color/white"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
                                 app:textType="HEADING_6" />
-                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <com.framework.views.customViews.CustomImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintHorizontal_bias="0.7"
+                                app:srcCompat="@drawable/ic_arrow_right_white" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
