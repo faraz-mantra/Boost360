@@ -16,6 +16,7 @@ data class QueryObject(
     DeliveryMode("LogisticsDetails.DeliveryMode"),
     DeliveryProvider("LogisticsDetails.DeliveryProvider"),
     Status("Status"),
+    PaymentStatus("PaymentDetails.Status"),
     ReferenceNumber("ReferenceNumber")
   }
 
