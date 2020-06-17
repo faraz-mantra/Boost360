@@ -70,6 +70,10 @@ class CartViewModel(application: Application) : BaseViewModel(application){
         return validCouponCode
     }
 
+    fun clearValidCouponResult(){
+        validCouponCode.postValue(null)
+    }
+
     fun getCustomerId(): String? {
         return customerId
     }
