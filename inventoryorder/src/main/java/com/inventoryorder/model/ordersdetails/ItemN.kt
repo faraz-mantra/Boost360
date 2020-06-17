@@ -19,4 +19,9 @@ data class ItemN(
   override fun getViewType(): Int {
     return recyclerViewType
   }
+
+  fun product(): ProductN {
+    return Product ?: ProductN()
+  }
+
 }

@@ -72,41 +72,58 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
-    getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isFirst = true)
+    requestFilter = getRequestFilterData(arrayListOf())
+    getSellerOrdersFilterApi(requestFilter, isFirst = true)
   }
 
-  private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false) {
-    if (isFirst) binding?.progress?.visible()
+  private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
+    if (isFirst || isSearch) binding?.progress?.visible()
     viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
       binding?.progress?.gone()
       if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        errorView(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val response = (it as? InventoryOrderListResponse)?.Data
-        if (isRefresh) orderList.clear()
-        if (response == null) {
-          orderAdapter?.notify(ArrayList())
-          return@Observer
+        if (isSearch.not()) {
+          if (isRefresh) orderList.clear()
+          if (response != null && response.Items.isNullOrEmpty().not()) {
+            binding?.bookingRecycler?.visible()
+            binding?.errorTxt?.gone()
+            val list = response.Items?.map { item ->
+              item.recyclerViewType = RecyclerViewItemType.VIDEO_CONSULT_ITEM_TYPE.getLayout();item
+            } as ArrayList<OrderItem>
+            TOTAL_ELEMENTS = response.total()
+            orderList.addAll(list)
+            isLastPageD = (orderList.size == TOTAL_ELEMENTS)
+            setAdapterNotify(orderList, isFirst)
+          } else errorView("No consultation available.")
+        } else {
+          if (response != null && response.Items.isNullOrEmpty().not()) {
+            binding?.bookingRecycler?.visible()
+            setAdapterNotify(response.Items!!)
+          } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
+          else errorView("No consultation available.")
         }
-        binding?.bookingRecycler?.visible()
-        val list = (response.Items ?: ArrayList()).map { item ->
-          item.recyclerViewType = RecyclerViewItemType.VIDEO_CONSULT_ITEM_TYPE.getLayout();item
-        } as ArrayList<OrderItem>
-        TOTAL_ELEMENTS = response.total()
-        orderList.addAll(list)
-        isLastPageD = (orderList.size == TOTAL_ELEMENTS)
-        if (isFirst.not() && orderAdapter != null) {
-          orderAdapter?.removeLoadingFooter()
-          isLoadingD = false
-          orderAdapter?.notify(getDateWiseFilter(orderList))
-        } else setAdapterBookingList(getDateWiseFilter(orderList))
-      } else {
-        binding?.bookingRecycler?.gone()
-        showShortToast(it.message)
-      }
+      } else errorView(it.message ?: "No consultation available.")
     })
+  }
+
+  private fun setAdapterNotify(items: ArrayList<OrderItem>, isFirst: Boolean = false) {
+    if (isFirst.not() && orderAdapter != null) {
+      if (isLoadingD) {
+        orderAdapter?.removeLoadingFooter()
+        isLoadingD = false
+      }
+      orderAdapter?.notify(getDateWiseFilter(items))
+    } else setAdapterAppointmentList(getDateWiseFilter(items))
+  }
+
+  private fun errorView(error: String) {
+    binding?.bookingRecycler?.gone()
+    binding?.errorTxt?.visible()
+    binding?.errorTxt?.text = error
   }
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {
@@ -129,7 +146,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     }
   }
 
-  private fun setAdapterBookingList(list: ArrayList<OrderItem>) {
+  private fun setAdapterAppointmentList(list: ArrayList<OrderItem>) {
     binding?.bookingRecycler?.post {
       orderAdapter = AppBaseRecyclerViewAdapter(baseActivity, list, this)
       binding?.bookingRecycler?.layoutManager = layoutManager
@@ -192,14 +209,24 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   private fun clickFilterItem(item: FilterModel?) {
     this.filterItem = item
     when (this.filterItem?.type?.let { FilterModel.FilterType.fromType(it) }) {
-      FilterModel.FilterType.ALL_CONSULTATIONS -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isFirst = true, isRefresh = true)
+      FilterModel.FilterType.ALL_CONSULTATIONS -> {
+        requestFilter = getRequestFilterData(arrayListOf())
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
       FilterModel.FilterType.COMPLETED_CONSULTATIONS -> {
         val status = arrayListOf(OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name,
             OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name, OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name)
-        getSellerOrdersFilterApi(getRequestFilterData(status), isFirst = true, isRefresh = true)
+        requestFilter = getRequestFilterData(status)
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
-      FilterModel.FilterType.CANCEL_CONSULTATIONS -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name)), isFirst = true, isRefresh = true)
-      else -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isFirst = true, isRefresh = true)
+      FilterModel.FilterType.CANCEL_CONSULTATIONS -> {
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name))
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+      else -> {
+        requestFilter = getRequestFilterData(arrayListOf())
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
     }
   }
 
@@ -215,7 +242,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
         }
 
         override fun onQueryTextChange(newText: String?): Boolean {
-          newText?.let { startFilter(it.trim().toLowerCase()) }
+          newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
           return false
         }
       })
@@ -224,15 +251,8 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
 
   private fun startFilter(query: String) {
-    if (query.isEmpty().not()) {
-      orderListFilter.clear()
-      orderListFilter.addAll(orderList)
-      orderListFilter.let { it1 ->
-        val list = it1.filter {
-          it.referenceNumber().startsWith(query) || it.referenceNumber().contains(query) || it.referenceNumber().startsWith(query) || it.referenceNumber().contains(query)
-        } as ArrayList<OrderItem>
-        orderAdapter?.notify(getDateWiseFilter(list))
-      }
+    if (query.isEmpty().not() && query.length > 2) {
+      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = true)
     } else orderAdapter?.notify(getDateWiseFilter(orderList))
   }
 
@@ -273,12 +293,20 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   }
 
 
-  private fun getRequestFilterData(statusList: ArrayList<String>): OrderFilterRequest {
-    currentPage = PAGE_START
-    requestFilter = OrderFilterRequest(clientId = clientId, skip = currentPage, limit = PAGE_SIZE)
-    requestFilter.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.AND.name, QueryObject = getQueryList()))
-    requestFilter.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryStatusList(statusList)))
-    return requestFilter
+  private fun getRequestFilterData(statusList: ArrayList<String>, searchTxt: String = ""): OrderFilterRequest {
+    val requestFil: OrderFilterRequest?
+    if (searchTxt.isEmpty()) {
+      currentPage = PAGE_START
+      requestFil = OrderFilterRequest(clientId = clientId, skip = currentPage, limit = PAGE_SIZE)
+    } else requestFil = OrderFilterRequest(clientId = clientId)
+    requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.AND.name, QueryObject = getQueryList()))
+    if (statusList.isNullOrEmpty().not()) {
+      requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryStatusList(statusList)))
+    }
+    if (searchTxt.isNotEmpty()) {
+      requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryFilter(searchTxt)))
+    }
+    return requestFil
   }
 
   private fun getQueryList(): ArrayList<QueryObject> {
@@ -287,6 +315,12 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     queryList.add(QueryObject(QueryObject.QueryKey.Mode.value, OrderSummaryRequest.OrderMode.APPOINTMENT.name, QueryObject.Operator.EQ.name))
     queryList.add(QueryObject(QueryObject.QueryKey.DeliveryMode.value, OrderSummaryRequest.DeliveryMode.ONLINE.name, QueryObject.Operator.EQ.name))
     queryList.add(QueryObject(QueryObject.QueryKey.DeliveryProvider.value, QueryObject.QueryValue.NF_VIDEO_CONSULATION.name, QueryObject.Operator.EQ.name))
+    return queryList
+  }
+
+  private fun getQueryFilter(searchTxt: String): ArrayList<QueryObject> {
+    val queryList = ArrayList<QueryObject>()
+    queryList.add(QueryObject(QueryObject.QueryKey.ReferenceNumber.value, searchTxt, QueryObject.Operator.EQ.name))
     return queryList
   }
 

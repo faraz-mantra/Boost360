@@ -15,7 +15,8 @@ data class QueryObject(
     Mode("Mode"),
     DeliveryMode("LogisticsDetails.DeliveryMode"),
     DeliveryProvider("LogisticsDetails.DeliveryProvider"),
-    Status("Status")
+    Status("Status"),
+    ReferenceNumber("ReferenceNumber")
   }
 
   enum class QueryValue {
