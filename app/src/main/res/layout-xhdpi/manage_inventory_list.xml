@@ -69,8 +69,7 @@
                 android:layout_height="@dimen/icon_size_55"
                 android:padding="15dp"
                 android:scaleType="fitCenter"
-                android:visibility="gone"
-                android:src="@drawable/payment_setting" />
+                android:src="@drawable/ic_order_summary_new" />
 
             <View
                 android:layout_width="match_parent"
@@ -143,15 +142,21 @@
                 android:background="#d3d3d3" />
 
             <TextView
-                android:id="@+id/tvPaymentSetting"
+                android:id="@+id/tvOrderSummary"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/cell_height"
-                android:visibility="gone"
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
-                android:text="@string/payment_setting"
+                android:text="Order Analytics"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:visibility="visible"
+                android:id="@+id/line_view3"
+                android:background="#d3d3d3" />
 
         </LinearLayout>
 
