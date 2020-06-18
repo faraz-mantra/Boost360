@@ -347,7 +347,7 @@ class HomeFragment : BaseFragment(), HomeListener {
             for (item in it) {
                 val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
                 list.add(Bundles(
-                        item.bundle_key,
+                        item.bundle_id,
                         temp,
                         item.min_purchase_months,
                         item.name,

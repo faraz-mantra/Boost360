@@ -26,6 +26,8 @@ import java.util.*
 
 class OrderConfirmationFragment : BaseFragment() {
 
+    lateinit var prefs: SharedPrefs
+
     companion object {
         fun newInstance() = OrderConfirmationFragment()
     }
@@ -36,6 +38,7 @@ class OrderConfirmationFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        prefs = SharedPrefs(activity as UpgradeActivity)
         return inflater.inflate(R.layout.order_confirmation_fragment, container, false)
     }
 
@@ -44,9 +47,11 @@ class OrderConfirmationFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(this).get(OrderConfirmationViewModel::class.java)
         viewModel.emptyCurrentCart((activity as UpgradeActivity).application);
 
-        try {
-            val prefs = SharedPrefs(activity as UpgradeActivity)
+        //clear CartRelatedInfo
+        prefs.storeCartOrderInfo(null)
+        prefs.storeApplyedCouponDetails(null)
 
+        try {
             order_details_feature_count.setText("Your have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month.")
             paymentBanner.setText("Order #"+prefs.getLatestPurchaseOrderId())
             val date = Calendar.getInstance().time

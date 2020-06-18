@@ -23,6 +23,7 @@ import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.utils.Constants
+import com.boost.upgrades.utils.SharedPrefs
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -46,12 +47,12 @@ class PackageFragment : BaseFragment() {
     var originalBundlePrice = 0
 
     var packageInCartStatus = false
+    lateinit var prefs: SharedPrefs
 
+    private lateinit var viewModel: PackageViewModel
     companion object {
         fun newInstance() = PackageFragment()
     }
-
-    private lateinit var viewModel: PackageViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -63,7 +64,7 @@ class PackageFragment : BaseFragment() {
         bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
 
         packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type))
-
+        prefs = SharedPrefs(activity as UpgradeActivity)
         return root
     }
 
@@ -79,7 +80,7 @@ class PackageFragment : BaseFragment() {
 
         if(arguments!!.containsKey("showCartIcon")){
             package_cart_icon.visibility = View.INVISIBLE
-            package_submit.visibility = View.INVISIBLE
+            package_submit.visibility = View.GONE
         }
 
         if(bundleData!!.primary_image != null && !bundleData!!.primary_image!!.url.isNullOrEmpty()){
@@ -102,8 +103,13 @@ class PackageFragment : BaseFragment() {
         package_submit.setOnClickListener {
             if (!packageInCartStatus) {
                 if (bundleData != null) {
+
+                    //clear cartOrderInfo from SharedPref to requestAPI again
+                    prefs.storeCartOrderInfo(null)
+
                     viewModel.addItemToCart(CartModel(
                             bundleData!!._kid,
+                            null,
                             bundleData!!.name,
                             "",
                             bundleData!!.primary_image!!.url,
@@ -205,7 +211,7 @@ class PackageFragment : BaseFragment() {
             if (cartList != null && cartList!!.size > 0) {
                 if (bundleData != null) {
                     for (item in it) {
-                        if (item.boost_widget_key.equals(bundleData!!._kid)) {
+                        if (item.item_id.equals(bundleData!!._kid)) {
                             packageInCartStatus = true
                             package_submit.background = ContextCompat.getDrawable(
                                     requireContext(),
