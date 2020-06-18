@@ -166,6 +166,7 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+
         <include
             android:id="@+id/duration"
             layout="@layout/text_item"

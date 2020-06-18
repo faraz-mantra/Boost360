@@ -1,7 +1,6 @@
 package com.inventoryorder.model.ordersdetails
 
 import com.framework.utils.DateUtils
-import com.framework.utils.DateUtils.FORMAT_SERVER_1_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.getCurrentDate
 import com.framework.utils.DateUtils.parseDate
@@ -119,7 +118,11 @@ data class OrderItem(
   }
 
   fun isConfirmConsultBtn(): Boolean {
-    return (OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED && (firstItemForConsultation()?.Product?.isAvailable() ?: false) && isUpcomingConsult())
+    return ((OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED ||
+        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED ||
+        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_INITIATED ||
+        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED) &&
+        (firstItemForConsultation()?.Product?.isAvailable() ?: false) && isUpComingConsult())
   }
 
   fun isConsultErrorText(): Boolean {
@@ -148,12 +151,9 @@ data class OrderItem(
     return Items?.firstOrNull()
   }
 
-  fun isUpcomingConsult(): Boolean {
-    val extraConsultation = firstItemForConsultation()?.Product?.extraItemProductConsultation()
-    return if (extraConsultation != null) {
-      var date = extraConsultation.scheduledDateTime?.parseDate(FORMAT_SERVER_DATE)
-      if (date == null) date = extraConsultation.scheduledDateTime?.parseDate(FORMAT_SERVER_1_DATE)
-      date?.after(getCurrentDate()) ?: false
-    } else false
+
+  fun isUpComingConsult(): Boolean {
+    val date = firstItemForConsultation()?.scheduledEndDate()?.parseDate(FORMAT_SERVER_DATE)
+    return date?.after(getCurrentDate()) ?: false
   }
 }
