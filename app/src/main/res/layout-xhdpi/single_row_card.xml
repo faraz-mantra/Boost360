@@ -193,6 +193,7 @@
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:scaleType="fitXY"
+                android:alpha="0.85"
                 app:srcCompat="@drawable/ic_nav_calls" />
 
             <TextView
@@ -252,6 +253,7 @@
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:scaleType="fitXY"
+                android:alpha="0.85"
                 app:srcCompat="@drawable/ic_nav_enquiries" />
 
             <TextView
@@ -280,6 +282,7 @@
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:scaleType="fitXY"
+                android:alpha="0.85"
                 app:srcCompat="@drawable/ic_nav_orders" />
 
             <TextView
@@ -334,6 +337,7 @@
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:scaleType="fitXY"
+                android:alpha="0.85"
                 app:srcCompat="@drawable/ic_nav_inbox" />
 
             <TextView
@@ -414,6 +418,7 @@
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:scaleType="fitXY"
+                android:alpha="0.85"
                 app:srcCompat="@drawable/ic_nav_keyboard" />
 
             <TextView
@@ -464,6 +469,7 @@
                 android:layout_height="@dimen/nav_icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
+                android:alpha="0.8"
                 android:scaleType="fitXY"
                 app:srcCompat="@drawable/ic_facebook_menu" />
 
@@ -472,7 +478,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Facebook Lead Ads"
+                android:text="Online Advertising"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
 
@@ -524,6 +530,7 @@
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:scaleType="fitXY"
+                android:alpha="0.85"
                 app:srcCompat="@drawable/ic_nav_settings" />
 
             <TextView
@@ -638,6 +645,7 @@
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:scaleType="fitXY"
+                android:alpha="0.95"
                 app:srcCompat="@drawable/ic_nav_help_support" />
 
             <TextView
@@ -671,6 +679,7 @@
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:scaleType="fitXY"
+                android:alpha="0.85"
                 app:srcCompat="@drawable/ic_nav_about" />
 
             <TextView

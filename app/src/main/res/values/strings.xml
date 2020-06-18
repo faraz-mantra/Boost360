@@ -1846,7 +1846,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="message_2">is not authorized to support faster login to your Boost account.</string>
     <string name="how_to_use_boost">Learn How-To-Use Boost</string>
     <string name="view_support_tickets">View My Support Tickets</string>
-    <string name="loading_boost_dashboard_for_logged_in_user">Loading your business dashboard . . .</string>
+    <string name="loading_boost_dashboard_for_logged_in_user">Loading your business dashboard...</string>
     <string name="custome_domain_instruction">We strongly recommend that you use an existing domain (if you have one) for your Boost website. Online discovery will be better as search engines already recognize your domain.</string>
     <string-array name="boost_extensions">
         <item>Wordpress</item>
