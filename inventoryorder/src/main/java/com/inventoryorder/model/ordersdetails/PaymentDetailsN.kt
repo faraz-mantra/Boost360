@@ -30,7 +30,7 @@ data class PaymentDetailsN(
   }
 
   enum class METHOD(val value: String, val type: String) {
-    COD("Offline", "COD"), ONLINEPAYMENT("Online", "ONLINEPAYMENT");
+    COD("Offline", "COD"), ONLINEPAYMENT("Online", "ONLINEPAYMENT"), FREE("Free", "FREE"), ONLINE("Online", "ONLINE");
 
     companion object {
       fun fromType(type: String): METHOD? = values().firstOrNull { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
