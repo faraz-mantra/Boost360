@@ -168,15 +168,17 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
                             if (extendProps != null) {
                                 for (prop in extendProps) {
-                                    outputExtendedProps.add(Property(
-                                            Key = prop.key!!,
-                                            Value = prop.value!!
-                                    ))
+                                    if(prop.key!=null && prop.value!=null) {
+                                        outputExtendedProps.add(Property(
+                                                Key = prop.key!!,
+                                                Value = prop.value!!
+                                        ))
+                                    }
                                 }
 
                             }
                         } catch (ex: Exception) {
-                            Log.e("FAILED", ex.message)
+                            ex.printStackTrace()
                         }
                     }
 

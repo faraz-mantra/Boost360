@@ -77,7 +77,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         totalAmount = arguments!!.getDouble("amount")
 
         cartCheckoutData.put("customerId", arguments!!.getString("customerId"))
-        cartCheckoutData.put("amount", totalAmount * 100)
+        cartCheckoutData.put("amount", (totalAmount * 100).toInt())
         cartCheckoutData.put("order_id", arguments!!.getString("order_id"))
 //        cartCheckoutData.put("amount", 211*100)
 //        cartCheckoutData.put("order_id", "order_ETcdJ4Cuh9yIQq")
