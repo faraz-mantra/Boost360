@@ -32,6 +32,7 @@ import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import java.util.*
+import kotlin.math.abs
 
 class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDetailsBinding>() {
 
@@ -175,7 +176,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     var currency = "INR"
     order.Items?.forEachIndexed { index, item ->
       shippingCost += item.Product?.ShippingCost ?: 0.0
-      salePrice += item.SalePrice ?: 0.0
+      salePrice += abs(item.product().price() - item.product().discountAmount())
       if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
           ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }

@@ -242,8 +242,6 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
         if (isSearch.not()) {
           if (isRefresh) orderList.clear()
           if (response != null && response.Items.isNullOrEmpty().not()) {
-            binding?.orderRecycler?.visible()
-            binding?.errorTxt?.gone()
             removeLoader()
             val list = response.Items ?: ArrayList()
             TOTAL_ELEMENTS = response.total()
@@ -253,7 +251,6 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
           } else errorView("No order available.")
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
-            binding?.orderRecycler?.visible()
             setAdapterNotify(response.Items!!)
           } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
           else errorView("No order available.")
@@ -270,6 +267,8 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
   }
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
+    binding?.orderRecycler?.visible()
+    binding?.errorTxt?.gone()
     if (orderAdapter != null) {
       orderAdapter?.notify(getNewList(items))
     } else setAdapterOrderList(getNewList(items))
