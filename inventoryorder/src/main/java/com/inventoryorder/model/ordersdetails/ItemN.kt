@@ -1,5 +1,6 @@
 package com.inventoryorder.model.ordersdetails
 
+import com.framework.utils.DateUtils
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.model.product.Product
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
@@ -24,4 +25,26 @@ data class ItemN(
     return Product ?: ProductN()
   }
 
+  fun scheduledStartDate(): String? {
+    val scheduledDate = getScheduledDate()
+    return if (scheduledDate.isNullOrEmpty().not()) {
+      return "${scheduledDate}T${Product?.extraItemProductConsultation()?.startTime()}:00.000Z"
+    } else ""
+  }
+
+  fun scheduledEndDate(): String? {
+    val scheduledDate = getScheduledDate()
+    return if (scheduledDate.isNullOrEmpty().not()) {
+      return "${scheduledDate}T${Product?.extraItemProductConsultation()?.endTime()}:00.000Z"
+    } else ""
+  }
+
+  private fun getScheduledDate(): String? {
+    val extraConsultation = Product?.extraItemProductConsultation()
+    return if (extraConsultation != null) {
+      var dateString = DateUtils.parseDate(extraConsultation.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_YYYY_MM_DD)
+      if (dateString.isNullOrEmpty()) dateString = DateUtils.parseDate(extraConsultation.scheduledDateTime, DateUtils.FORMAT_SERVER_1_DATE, DateUtils.FORMAT_YYYY_MM_DD)
+      dateString ?: ""
+    } else ""
+  }
 }

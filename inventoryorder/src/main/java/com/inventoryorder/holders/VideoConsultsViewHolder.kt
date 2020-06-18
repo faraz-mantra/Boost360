@@ -8,6 +8,7 @@ import com.framework.extensions.visible
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
+import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
 import com.framework.utils.DateUtils.getCurrentDate
 import com.framework.utils.DateUtils.parseDate
 import com.framework.views.customViews.CustomTextView
@@ -58,7 +59,11 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
     binding.duration.value.text = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
     val sizeItem = if (order.firstItemForConsultation() != null) 1 else 0
     binding.itemCount.text = takeIf { sizeItem > 1 }?.let { "Details" } ?: "Detail"
-    binding.itemDesc.text = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.detailsConsultation() ?: ""
+    val details = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.detailsConsultation()
+    val scheduleDate = order.firstItemForConsultation()?.scheduledStartDate()
+    binding.itemDesc.text = if (details.isNullOrEmpty().not() && scheduleDate.isNullOrEmpty().not()) {
+      "$details\n${activity?.resources?.getString(R.string.schedule)}${parseDate(scheduleDate, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2)}"
+    } else details
 
     binding.itemMore.visibility = takeIf { (sizeItem > 1) }?.let {
       binding.itemMore.text = "+${sizeItem - 1} more"

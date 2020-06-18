@@ -54,14 +54,28 @@
             tools:text="Dr. Sameer Lohia, Opthalmology" />
 
         <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tvScheduleDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_1"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:textColor="@color/greyish_brown"
+            app:fontFamily="@font/semi_bold"
+            app:textType="CAPTION"
+            tools:text="Thu, 18 June, 05:10 AM" />
+
+        <com.framework.views.customViews.CustomTextView
             android:id="@+id/tvDishQuantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_1"
             android:gravity="start"
             android:includeFontPadding="false"
             android:textColor="@color/warm_grey"
             app:fontFamily="@font/regular"
-            app:textType="CAPTION"
+            app:textType="OVERLINE"
             tools:text="15 mins" />
       </androidx.appcompat.widget.LinearLayoutCompat>
     </LinearLayout>

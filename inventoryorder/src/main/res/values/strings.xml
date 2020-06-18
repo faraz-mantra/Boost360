@@ -12,6 +12,7 @@
   <string name="appointments">Appointments</string>
   <string name="location">"Location:"</string>
   <string name="duration">"Duration:"</string>
+  <string name="schedule">""</string>
   <string name="queryHintOrder">Search order by Id</string>
   <string name="queryHintAppointment">Search appointment by Id</string>
   <string name="queryHintVideo">Search consultation by Id</string>
