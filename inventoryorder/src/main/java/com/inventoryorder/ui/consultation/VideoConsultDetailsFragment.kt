@@ -30,6 +30,7 @@ import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.utils.copyClipBoard
 import com.inventoryorder.utils.openWebPage
 import java.util.*
+import kotlin.math.abs
 
 class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDetailsBinding>() {
 
@@ -142,7 +143,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     var currency = "INR"
     order.Items?.forEachIndexed { index, item ->
       shippingCost += item.Product?.ShippingCost ?: 0.0
-      salePrice += item.SalePrice ?: 0.0
+      salePrice += abs(item.product().price() - item.product().discountAmount())
       if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
           ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }

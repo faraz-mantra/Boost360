@@ -98,8 +98,6 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         if (isSearch.not()) {
           if (isRefresh) orderList.clear()
           if (response != null && response.Items.isNullOrEmpty().not()) {
-            binding?.bookingRecycler?.visible()
-            binding?.errorTxt?.gone()
             removeLoader()
             val list = response.Items?.map { item ->
               item.recyclerViewType = RecyclerViewItemType.BOOKINGS_ITEM_TYPE.getLayout();item
@@ -111,8 +109,10 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
           } else errorView("No appointment available.")
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
-            binding?.bookingRecycler?.visible()
-            setAdapterNotify(response.Items!!)
+            val list = response.Items?.map { item ->
+              item.recyclerViewType = RecyclerViewItemType.BOOKINGS_ITEM_TYPE.getLayout();item
+            } as ArrayList<OrderItem>
+            setAdapterNotify(list)
           } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
           else errorView("No appointment available.")
         }
@@ -128,6 +128,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
+    binding?.bookingRecycler?.visible()
+    binding?.errorTxt?.gone()
     if (orderAdapter != null) {
       orderAdapter?.notify(getDateWiseFilter(items))
     } else setAdapterAppointmentList(getDateWiseFilter(items))

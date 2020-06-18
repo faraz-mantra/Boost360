@@ -89,8 +89,6 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
         if (isSearch.not()) {
           if (isRefresh) orderList.clear()
           if (response != null && response.Items.isNullOrEmpty().not()) {
-            binding?.bookingRecycler?.visible()
-            binding?.errorTxt?.gone()
             removeLoader()
             val list = response.Items?.map { item ->
               item.recyclerViewType = RecyclerViewItemType.VIDEO_CONSULT_ITEM_TYPE.getLayout();item
@@ -102,8 +100,10 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
           } else errorView("No consultation available.")
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
-            binding?.bookingRecycler?.visible()
-            setAdapterNotify(response.Items!!)
+            val list = response.Items?.map { item ->
+              item.recyclerViewType = RecyclerViewItemType.VIDEO_CONSULT_ITEM_TYPE.getLayout();item
+            } as ArrayList<OrderItem>
+            setAdapterNotify(list)
           } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
           else errorView("No consultation available.")
         }
@@ -119,6 +119,8 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   }
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
+    binding?.bookingRecycler?.visible()
+    binding?.errorTxt?.gone()
     if (orderAdapter != null) {
       orderAdapter?.notify(getDateWiseFilter(items))
     } else setAdapterAppointmentList(getDateWiseFilter(items))
