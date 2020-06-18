@@ -7,7 +7,6 @@ import com.inventoryorder.databinding.ItemVideoConsultDetailsBinding
 import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
-import kotlin.math.abs
 
 class VideoConsultDetailsViewHolder(binding: ItemVideoConsultDetailsBinding) : AppBaseRecyclerViewHolder<ItemVideoConsultDetailsBinding>(binding) {
 
@@ -22,8 +21,8 @@ class VideoConsultDetailsViewHolder(binding: ItemVideoConsultDetailsBinding) : A
     binding.tvDishName.text = item.Product?.extraItemProductConsultation()?.detailsConsultation()
     binding.tvDishQuantity.text = item.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
     val currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
-    val actualPrice = abs(item.product().price())
-    val salePrice = abs(actualPrice - item.product().discountAmount())
+    val actualPrice = item.product().price()
+    val salePrice = actualPrice - item.product().discountAmount()
     binding.tvDishAmount.text = "$currency $salePrice"
     if (actualPrice > 0.0 && actualPrice > salePrice) {
       binding.tvActualPrice.paintFlags = binding.tvActualPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG

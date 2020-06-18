@@ -34,7 +34,6 @@ import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.abs
 
 class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() {
 
@@ -168,7 +167,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
           ?: "INR"
       binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding?.orderDate?.text = DateUtils.parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2)
+    binding?.orderDate?.text = DateUtils.parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
 
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
@@ -185,7 +184,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     var currency = "INR"
     order.Items?.forEachIndexed { index, item ->
       shippingCost += item.Product?.ShippingCost ?: 0.0
-      salePrice += abs(item.product().price() - item.product().discountAmount())
+      salePrice += item.product().price() - item.product().discountAmount()
       if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
           ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }
