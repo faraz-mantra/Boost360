@@ -22,6 +22,7 @@ import com.inventoryorder.model.bottomsheet.LocationsModel
 import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersummary.OrderStatusValue
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
@@ -86,7 +87,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   }
 
   private fun isOpenForConsultation(order: OrderItem) {
-    val isOpen = order.isConfirmConsulting()
+    val isOpen = order.isConfirmConsultBtn()
     binding?.bookingDate?.setTextColor(takeIf { isOpen }?.let { getColor(R.color.light_green) } ?: getColor(R.color.primary_grey))
     if (isOpen) isVisible(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
     else isGone(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
@@ -110,22 +111,21 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun checkStatusConsultation(order: OrderItem) {
     isOpenForConsultation(order)
-    if (order.isCancelBooking()) {
+    if (order.isCancelActionBtn()) {
       binding?.tvCancelOrder?.visible()
       binding?.tvCancelOrder?.setOnClickListener(this)
     } else binding?.tvCancelOrder?.gone()
   }
 
   private fun setOrderDetails(order: OrderItem) {
-    binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(order.status()), order.PaymentDetails)
-    binding?.tvOrderStatus?.text = order.PaymentDetails?.status()
+    binding?.orderType?.text = getStatusText(order)
+    binding?.tvStatus?.text = order.PaymentDetails?.status()
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
-    binding?.tvDeliveryPaymentStatus?.text = "Status: ${order.PaymentDetails?.status()}"
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding?.bookingDate?.text = DateUtils.parseDate(order.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)
+    binding?.bookingDate?.text = DateUtils.parseDate(order.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
 
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
@@ -141,22 +141,15 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     var salePrice = 0.0
     var currency = "INR"
     order.Items?.forEachIndexed { index, item ->
-      shippingCost += item.ShippingCost ?: 0.0
-      salePrice += item.SalePrice ?: 0.0
+      shippingCost += item.Product?.ShippingCost ?: 0.0
+      salePrice += item.product().price() - item.product().discountAmount()
       if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
           ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }
-    binding?.tvShippingCost?.text = "Shipping Cost: $currency $shippingCost"
     binding?.tvTotalOrderAmount?.text = "Total Amount: $currency $salePrice"
 
   }
 
-  private fun getStatusText(orderType: OrderSummaryModel.OrderType?, paymentDetails: PaymentDetailsN?): String? {
-    return if (orderType == OrderSummaryModel.OrderType.CANCELLED
-        && paymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-      OrderSummaryModel.OrderType.ABANDONED.type
-    } else orderType?.type
-  }
 
   override fun onClick(v: View) {
     super.onClick(v)
@@ -200,8 +193,21 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   private fun refreshStatus(statusOrder: OrderSummaryModel.OrderStatus) {
     isRefresh = true
     orderItem?.Status = statusOrder.name
-    orderItem?.let { binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(it.status()), it.PaymentDetails) }
+    orderItem?.let { binding?.orderType?.text = getStatusText(it) }
     orderItem?.let { checkStatusConsultation(it) }
+  }
+
+  private fun getStatusText(order: OrderItem): String? {
+    val statusValue = OrderStatusValue.fromStatusConsultation(order.status())?.value
+    return when {
+      OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT) -> {
+        return if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
+          OrderStatusValue.ESCALATED_3.value
+        } else statusValue.plus(order.cancelledTextVideo())
+      }
+      order.isConfirmConsultBtn() -> "Upcoming Consult"
+      else -> statusValue
+    }
   }
 
 

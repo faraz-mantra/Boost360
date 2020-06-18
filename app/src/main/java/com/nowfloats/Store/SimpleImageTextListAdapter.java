@@ -1,7 +1,9 @@
 package com.nowfloats.Store;
 
 import android.content.Context;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nowfloats.Store.Model.OnItemClickCallback;
+import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
 /**
@@ -22,13 +25,14 @@ public class SimpleImageTextListAdapter extends RecyclerView.Adapter<SimpleImage
     private int[] myImagesIds;
     private OnItemClickCallback onItemClickCallback;
 
-    public SimpleImageTextListAdapter(Context context, OnItemClickCallback itemClickCallback){
+    public SimpleImageTextListAdapter(Context context, OnItemClickCallback itemClickCallback) {
         mContext = context;
         onItemClickCallback = itemClickCallback;
     }
+
     @Override
     public MyListItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_simple_image_text,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_item_simple_image_text, parent, false);
         return new MyListItemHolder(view);
     }
 
@@ -36,9 +40,15 @@ public class SimpleImageTextListAdapter extends RecyclerView.Adapter<SimpleImage
     public void onBindViewHolder(MyListItemHolder holder, int position) {
         holder.image1.setImageResource(myImagesIds[position]);
         holder.text1.setText(myTextStrings[position]);
+        if (myTextStrings[position].equals("Domain and Email") && !Constants.StoreWidgets.contains("DOMAINPURCHASE")
+        || myTextStrings[position].equals("Testimonials") && !Constants.StoreWidgets.contains("TESTIMONIALS")){
+            holder.featureLock.setVisibility(View.VISIBLE);
+        }else{
+            holder.featureLock.setVisibility(View.GONE);
+        }
     }
 
-    public void setItems(int[] myImagesIds, String[] strings){
+    public void setItems(int[] myImagesIds, String[] strings) {
         myTextStrings = strings;
         this.myImagesIds = myImagesIds;
     }
@@ -48,20 +58,22 @@ public class SimpleImageTextListAdapter extends RecyclerView.Adapter<SimpleImage
         return myTextStrings.length;
     }
 
-    class MyListItemHolder extends RecyclerView.ViewHolder{
+    class MyListItemHolder extends RecyclerView.ViewHolder {
 
         TextView text1;
-        ImageView image1;
+        ImageView image1, featureLock;
+
         public MyListItemHolder(View itemView) {
             super(itemView);
 
             image1 = itemView.findViewById(R.id.image1);
             text1 = itemView.findViewById(R.id.text1);
+            featureLock = itemView.findViewById(R.id.feature_lock);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(onItemClickCallback != null){
+                    if (onItemClickCallback != null) {
                         onItemClickCallback.onItemClick(getAdapterPosition());
                     }
                 }

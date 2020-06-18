@@ -26,11 +26,14 @@ import com.inventoryorder.model.bottomsheet.DeliveryModel
 import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersummary.OrderStatusValue
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
+import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import java.util.*
+import kotlin.collections.ArrayList
 
 class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() {
 
@@ -38,6 +41,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private var orderItem: OrderItem? = null
   private var deliveryList = DeliveryModel().getData()
   private var isRefresh: Boolean? = null
+  private var productList: ArrayList<ProductResponse>? = null
 
   companion object {
     @JvmStatic
@@ -57,23 +61,46 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private fun apiGetOrderDetails(orderId: String) {
     showProgress()
     viewModel?.getOrderDetails(clientId, orderId)?.observeOnce(viewLifecycleOwner, Observer {
-      hideProgress()
       if (it.error is NoNetworkException) {
         errorUi(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
-        binding?.mainView?.visible()
-        binding?.error?.gone()
         orderItem = (it as? OrderDetailResponse)?.Data
         if (orderItem != null) {
-          setDetails(orderItem!!)
+          getProductAllDetails()
         } else errorUi("Order item null.")
       } else errorUi(it.message())
     })
   }
 
+  private fun getProductAllDetails() {
+    productList = ArrayList()
+    var count = 0
+    if (orderItem?.Items.isNullOrEmpty().not()) {
+      orderItem?.Items?.forEach {
+        viewModel?.getProductDetails(it.Product?._id)?.observeOnce(viewLifecycleOwner, Observer { it1 ->
+          count += 1
+          val product = it1 as? ProductResponse
+          if (count == orderItem?.Items?.size) {
+            product?.let { it2 -> productList?.add(it2) }
+            addProductToOrder()
+          } else product?.let { it2 -> productList?.add(it2) }
+        })
+      }
+    } else addProductToOrder()
+  }
+
+  private fun addProductToOrder() {
+    productList?.forEach { orderItem?.Items?.firstOrNull { it1 -> it1.Product?._id?.trim() == it.Product?._id?.trim() }?.product_detail = it.Product }
+    hideProgress()
+    binding?.mainView?.visible()
+    binding?.error?.gone()
+    setDetails(orderItem!!)
+  }
+
   private fun errorUi(message: String) {
+    hideProgress()
     binding?.mainView?.gone()
     binding?.error?.visible()
     binding?.error?.text = message
@@ -87,15 +114,11 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   }
 
   private fun checkStatusOrder(order: OrderItem) {
-    if (order.isConfirmBooking()) {
-      buttonDisable(R.color.colorAccent)
+    if (order.isConfirmActionBtn()) {
+      binding?.bottomBtn?.visible()
       binding?.buttonConfirmOrder?.setOnClickListener(this)
-    } else {
-      buttonDisable(R.color.primary_grey)
-      binding?.let { it.buttonConfirmOrder.paintFlags = it.buttonConfirmOrder.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG }
-      binding?.buttonConfirmOrder?.setOnClickListener(null)
-    }
-    if (order.isCancelBooking()) {
+    } else binding?.bottomBtn?.gone()
+    if (order.isCancelActionBtn()) {
       binding?.tvCancelOrder?.visible()
       binding?.tvCancelOrder?.setOnClickListener(this)
     } else binding?.tvCancelOrder?.gone()
@@ -135,16 +158,16 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   }
 
   private fun setOrderDetails(order: OrderItem) {
-    binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(order.status()), order.PaymentDetails)
+    binding?.orderType?.text = getStatusText(order)
     binding?.tvOrderStatus?.text = order.PaymentDetails?.status()
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
-    binding?.tvDeliveryPaymentStatus?.text = "Status: ${order.PaymentDetails?.status()}"
+    binding?.btnPickUp?.text = order.deliveryType()
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() }
           ?: "INR"
       binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding?.tvOrderPlacedDate?.text = DateUtils.parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2)
+    binding?.orderDate?.text = DateUtils.parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
 
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
@@ -160,21 +183,26 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     var salePrice = 0.0
     var currency = "INR"
     order.Items?.forEachIndexed { index, item ->
-      shippingCost += item.ShippingCost ?: 0.0
-      salePrice += item.SalePrice ?: 0.0
+      shippingCost += item.Product?.ShippingCost ?: 0.0
+      salePrice += item.product().price() - item.product().discountAmount()
       if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
           ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }
     binding?.tvShippingCost?.text = "Shipping Cost: $currency $shippingCost"
-    binding?.tvTotalOrderAmount?.text = "Total Amount: $currency $salePrice"
+    binding?.tvTotalOrderAmount?.text = "Total Amount: $currency ${salePrice + shippingCost}"
 
   }
 
-  private fun getStatusText(orderType: OrderSummaryModel.OrderType?, paymentDetails: PaymentDetailsN?): String? {
-    return if (orderType == OrderSummaryModel.OrderType.CANCELLED
-        && paymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-      OrderSummaryModel.OrderType.ABANDONED.type
-    } else orderType?.type
+  private fun getStatusText(order: OrderItem): String? {
+    val statusValue = OrderStatusValue.fromStatusOrder(order.status())?.value
+    return when (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name) {
+      order.status().toUpperCase(Locale.ROOT) -> {
+        return if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
+          OrderStatusValue.ESCALATED_1.value
+        } else statusValue.plus(order.cancelledText())
+      }
+      else -> statusValue
+    }
   }
 
   override fun onClick(v: View) {
@@ -194,7 +222,6 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
         showShortToast(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
-
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
         data?.let { d -> showLongToast(d.Message as String?) }
@@ -222,7 +249,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private fun refreshStatus(statusOrder: OrderSummaryModel.OrderStatus) {
     isRefresh = true
     orderItem?.Status = statusOrder.name
-    orderItem?.let { binding?.orderType?.text = getStatusText(OrderSummaryModel.OrderType.fromValue(it.status()), it.PaymentDetails) }
+    orderItem?.let { binding?.orderType?.text = getStatusText(it) }
     orderItem?.let { checkStatusOrder(it) }
   }
 

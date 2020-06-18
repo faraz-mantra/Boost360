@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/wildfire_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,6 +16,7 @@
         android:layout_height="@dimen/nav_icon_size"
         android:layout_marginLeft="@dimen/icon_left_margin"
         android:scaleType="fitXY"
+        tools:src="@drawable/ic_nav_keyboard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,9 +28,23 @@
         android:layout_marginLeft="@dimen/icon_right_margin"
         android:textColor="@color/cell_text_color"
         android:textSize="@dimen/cell_text_size"
+        tools:text="@string/facebook_leads"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image1"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/feature_lock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_expiry_lock"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:paddingRight="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <!--
     <LinearLayout

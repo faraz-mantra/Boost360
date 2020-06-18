@@ -38,6 +38,7 @@ import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
+import com.nowfloats.domain.DomainEmailActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -106,49 +107,29 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
             public void onItemClick(int pos) {
                 Intent intent = null;
                 switch (adapterTexts[pos]) {
-                    /*case "Seller Profile":
-                        intent = new Intent(mContext, SellerProfileActivity.class);
-                        break;*/
-                    case "My Account":
-                        intent = new Intent(mContext, AccountInfoActivity.class);
-                        break;
-                    case "My Boost Plans":
-                        intent = new Intent(mContext, YourPurchasedPlansActivity.class);
-                        break;
-                    case "Boost360 Extensions":
+//                    case "Account Info":
+//                        intent = new Intent(mContext, AccountInfoActivity.class);
+//                        break;
+                    case "Boost Extensions":
                         intent = new Intent(mContext, Boost360ExtensionsActivity.class);
                         break;
-                    case "Site Appearance":
-                        intent = new Intent(mContext, SiteAppearanceActivity.class);
-                        break;
+//                    case "Site Appearance":
+//                        intent = new Intent(mContext, SiteAppearanceActivity.class);
+//                        break;
                     case "Domain and Email":
                         isAlreadyCalled = false;
                         MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
                         WebEngageController.trackEvent("DOMAIN-EMAIL",null,sessionManager.getFpTag());
-                        if (!BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-                            MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
-                                    .title("Get A Domain")
-                                    .customView(R.layout.dialog_link_layout, false)
-                                    .positiveText(getString(R.string.ok))
-                                    .positiveColorRes(R.color.primaryColor)
-                                    .callback(new MaterialDialog.ButtonCallback() {
-                                        @Override
-                                        public void onPositive(MaterialDialog dialog) {
-                                            super.onPositive(dialog);
-                                        }
-
-                                    });
-                            if (!getActivity().isFinishing()) {
-                                builder.show();
-                            }
-                        }
-                        else if (Methods.isOnline(getActivity())) {
+                            if (Methods.isOnline(getActivity())) {
                             showLoader(getString(R.string.please_wait));
                             domainApiService.getDomainDetails(mContext, sessionManager.getFpTag(), getDomainDetailsParam());
                         } else {
                             Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                         }
                         return;
+                    case "Subscription History":
+                        intent = new Intent(mContext, YourPurchasedPlansActivity.class);
+                        break;
                     case "Change Password":
                         changePassword();
                         WebEngageController.trackEvent("CHANGEPASSWORD","CHANGEPASSWORD", null);
@@ -159,9 +140,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     default:
                         return;
                 }
-                if(intent != null)
-                    startActivity(intent);
-
+                startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
@@ -481,31 +460,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         hideLoader();
         if (!isAdded() || getActivity() == null) return;
         if (!isAlreadyCalled) {
-            if (domainDetails == null && sessionManager.getRootAliasURI() != null) {
-                showCustomDialog(getString(R.string.domain_linking_success),
-                        getString(R.string.domain_linked),
-                        getString(R.string.ok), null, DialogFrom.DEFAULT);
-                return;
-            }
-            if (domainDetails == null) {
-                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
-            } else if (domainDetails.isFailed()) {
-                showCustomDialog(getString(R.string.domain_booking_failed),
-                        Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage()) ?
-                                getString(R.string.drop_us_contact) : domainDetails.getErrorMessage()).toString(),
-                        getString(R.string.ok), null, DialogFrom.DEFAULT);
-            } else if (domainDetails.isPending()) {
-
-                showCustomDialog(getString(R.string.domain_booking_process),
-                        getString(R.string.domain_booking_process_message),
-                        getString(R.string.ok), null, DialogFrom.DEFAULT);
-            } else if (!domainDetails.isHasDomain() && sessionManager.getRootAliasURI() != null) {
-                showCustomDialog(getString(R.string.domain_linking_success),
-                        getString(R.string.domain_linked),
-                        getString(R.string.ok), null, DialogFrom.DEFAULT);
-            } else {
                 showDomainDetails();
-            }
         }
     }
 
@@ -540,7 +495,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
 
     private void showDomainDetails() {
         isAlreadyCalled = true;
-        Intent domainIntent = new Intent(mContext, DomainDetailsActivity.class);
+//        Intent domainIntent = new Intent(mContext, DomainDetailsActivity.class);
+        Intent domainIntent = new Intent(mContext, DomainEmailActivity.class);
         startActivity(domainIntent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
