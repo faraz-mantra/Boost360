@@ -2,7 +2,9 @@ package com.boost.upgrades.ui.popup
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,7 @@ import com.boost.upgrades.ui.cart.CartViewModel
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.add_card_popup.*
 import kotlinx.android.synthetic.main.coupon_popup.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -54,6 +57,21 @@ class CouponPopUpFragment : DialogFragment() {
         initMvvm()
 
         entered_coupon_value.setFilters(entered_coupon_value.filters + InputFilter.AllCaps())
+
+        entered_coupon_value.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s!!.length<2){
+                    coupon_invalid.visibility = View.GONE
+                }
+            }
+
+        })
 
         coupon_popup_outer_layout.setOnClickListener {
             Utils.hideSoftKeyboard(requireActivity())
@@ -106,6 +124,16 @@ class CouponPopUpFragment : DialogFragment() {
             return false
         }
         return true
+    }
+
+    fun clearData(){
+        entered_coupon_value.text.clear()
+        coupon_invalid.visibility = View.GONE
+    }
+
+    override fun onStop() {
+        super.onStop()
+        clearData()
     }
 
 
