@@ -19,6 +19,7 @@ import com.framework.utils.NetworkUtils
 import com.framework.views.DotProgressBar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessApiBinding
+import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.ProcessApiSyncModel
 import com.onboarding.nowfloats.model.business.BusinessCreateRequest
 import com.onboarding.nowfloats.model.channel.ChannelModel
@@ -59,6 +60,9 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     setApiProcessAdapter(list)
     binding?.categoryImage?.setImageDrawable(requestFloatsModel?.categoryDataModel?.getImage(baseActivity))
     binding?.categoryImage?.setTintColor(ResourcesCompat.getColor(resources, R.color.white, baseActivity.theme))
+    if (requestFloatsModel?.isUpdate == true && requestFloatsModel?.floatingPointId.isNullOrEmpty().not()) {
+      floatingPointId = requestFloatsModel?.floatingPointId!!
+    }
     apiHitBusiness()
   }
 
@@ -90,11 +94,11 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     for (channel in channels) {
       val isSelected = when (channel.getType()) {
         ChannelType.G_SEARCH -> true
-        ChannelType.FB_PAGE -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.Facebookpage)
+        ChannelType.FB_PAGE -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.facebookpage)
         ChannelType.G_MAPS -> true
-        ChannelType.FB_SHOP -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.Facebookshop)
+        ChannelType.FB_SHOP -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.facebookshop)
         ChannelType.WAB -> connectedWhatsApp != null
-        ChannelType.T_FEED -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.Twitter)
+        ChannelType.T_FEED -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.twitter)
         ChannelType.G_BUSINESS -> true
         null -> false
       }
@@ -134,7 +138,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   private fun apiProcessChannelWhatsApp(dotProgressBar: DotProgressBar, floatingPointId: String) {
     if (requestFloatsModel?.channelActionDatas.isNullOrEmpty().not()) {
       val authorization = auth?.let { it } ?: ""
-      val dataRequest = UpdateChannelActionDataRequest(requestFloatsModel?.channelActionDatas!![0], requestFloatsModel?.contactInfo?.domainName)
+      val dataRequest = UpdateChannelActionDataRequest(requestFloatsModel?.channelActionDatas?.firstOrNull(), requestFloatsModel?.getWebSiteId())
       viewModel?.postUpdateWhatsappRequest(dataRequest, authorization)
           ?.observeOnce(viewLifecycleOwner, Observer {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -199,6 +203,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       dotProgressBar.removeAllViews()
       binding?.next?.alpha = 1F
       binding?.textBtn?.visibility = View.VISIBLE
+      if (requestFloatsModel?.isUpdate == true) binding?.textBtn?.text = resources.getString(R.string.home)
       binding?.container?.setBackgroundResource(R.drawable.bg_card_blue)
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         binding?.category?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, R.color.white)
@@ -224,7 +229,20 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.next -> if ((binding?.textBtn?.visibility == View.VISIBLE)) gotoRegistrationComplete()
+      binding?.next -> if ((binding?.textBtn?.visibility == View.VISIBLE)) {
+        //TODO check for update channels
+        if (binding?.textBtn?.text == resources.getString(R.string.home)) {
+          try {
+            val intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            baseActivity.startActivity(intent)
+            baseActivity.finish()
+            NavigatorManager.clearStackAndFormData()
+          } catch (e: ClassNotFoundException) {
+            e.printStackTrace()
+          }
+        } else gotoRegistrationComplete()
+      }
       binding?.supportCustomer -> {
         try {
           val intent = Intent(Intent.ACTION_CALL)
@@ -259,7 +277,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     createRequest.email = requestFloatsModel?.contactInfo?.email
     createRequest.primaryNumberCountryCode = "+91"
     createRequest.uri = ""
-    createRequest.fbPageName = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == ChannelAccessToken.AccessTokenType.Facebookpage }?.userAccountName
+    createRequest.fbPageName = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == ChannelAccessToken.AccessTokenType.facebookpage }?.userAccountName
     createRequest.primaryCategory = requestFloatsModel?.categoryDataModel?.category_key
     createRequest.appExperienceCode = requestFloatsModel?.categoryDataModel?.experience_code
     return createRequest

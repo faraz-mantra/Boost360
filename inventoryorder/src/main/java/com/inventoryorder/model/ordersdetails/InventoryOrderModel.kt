@@ -6,9 +6,8 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 class InventoryOrderModel(
     val delivery: String? = null,
     val orderType: String? = null,
-
-    val Count: Int? = null,
     val Items: ArrayList<OrderItem>? = null,
+    val Count: Int? = null,
     val Limit: Int? = null,
     val Skip: Int? = null,
     val Total: Int? = null

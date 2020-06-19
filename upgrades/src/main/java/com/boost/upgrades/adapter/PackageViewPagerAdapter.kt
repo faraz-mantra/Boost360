@@ -126,7 +126,7 @@ class PackageViewPagerAdapter(
                                     }else{
                                         holder.offerPrice.setText("₹" +
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
-                                                + "/month")
+                                                + "/mth")
                                         if (offeredBundlePrice != originalBundlePrice) {
                                             spannableString(holder, originalBundlePrice, 1)
                                             holder.origCost.visibility = View.VISIBLE

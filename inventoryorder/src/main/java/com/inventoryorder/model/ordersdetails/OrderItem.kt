@@ -1,13 +1,16 @@
 package com.inventoryorder.model.ordersdetails
 
 import com.framework.utils.DateUtils
+import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
+import com.framework.utils.DateUtils.getCurrentDate
 import com.framework.utils.DateUtils.parseDate
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
+import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
+import com.inventoryorder.utils.capitalizeUtil
 import java.io.Serializable
 import java.util.*
-import kotlin.collections.ArrayList
 
 data class OrderItem(
     val BillingDetails: BillingDetailsN? = null,
@@ -32,12 +35,13 @@ data class OrderItem(
 
   var dateKey: Date? = null
   var recyclerViewType = RecyclerViewItemType.INVENTORY_ORDER_ITEM.getLayout()
+
   override fun getViewType(): Int {
     return recyclerViewType
   }
 
   fun status(): String {
-    return Status?.toLowerCase() ?: ""
+    return Status ?: ""
   }
 
   fun stringToDate(format: String = DateUtils.FORMAT_DD_MM_YYYY): Date? {
@@ -46,6 +50,26 @@ data class OrderItem(
 
   fun referenceNumber(): String {
     return ReferenceNumber?.trim()?.toLowerCase() ?: ""
+  }
+
+  fun deliveryType(): String? {
+    return when (Mode?.toUpperCase(Locale.ROOT)) {
+      OrderSummaryRequest.OrderMode.DELIVERY.name -> "Assured Purchase"
+      OrderSummaryRequest.OrderMode.PICKUP.name -> "Self Delivery"
+      else -> Mode?.capitalizeUtil()
+    }
+  }
+
+  fun cancelledText(): String {
+    return if (CancellationDetails != null) {
+      takeIf { CancellationDetails.cancelledBy().toUpperCase(Locale.ROOT) == CancellingEntity.SELLER.name }?.let { " You" } ?: " " + CancellationDetails.cancelledBy()
+    } else ""
+  }
+
+  fun cancelledTextVideo(): String {
+    val str = CancellationDetails?.cancelledBy()?.trim()?.toUpperCase(Locale.ROOT) ?: ""
+    return if (str == CancellingEntity.BUYER.name || str == CancellingEntity.NF.name) " Patient"
+    else cancelledText()
   }
 
   fun getTitles(): String {
@@ -73,7 +97,7 @@ data class OrderItem(
   fun getDateObject(date: Date): OrderItem {
     val item = OrderItem()
     item.dateKey = date
-    item.recyclerViewType = RecyclerViewItemType.BOOKINGS_DATE_TYPE.getLayout()
+    item.recyclerViewType = RecyclerViewItemType.DATE_VIEW_TYPE.getLayout()
     return item
   }
 
@@ -85,17 +109,51 @@ data class OrderItem(
     }
   }
 
-  fun isConfirmBooking(): Boolean {
-    return (OrderSummaryModel.OrderType.fromValue(status()) == OrderSummaryModel.OrderType.PAYMENT_CONFIRM &&
-        PaymentDetails != null && PaymentDetailsN.METHOD.from(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
-        PaymentDetailsN.STATUS.from(PaymentDetails.status()) == PaymentDetailsN.STATUS.SUCCESS)
+  fun consultationWindowUrl(): String {
+    return "http://d.nflo.at/consult?appt=$_id"
   }
 
-  fun isCancelBooking(): Boolean {
-    return ((OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_INITIATED ||
+  fun consultationJoiningUrl(): String {
+    return "http://DOCTORS.GETBOOST360.COM/consult/$_id"
+  }
+
+  fun isConfirmConsultBtn(): Boolean {
+    return ((OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED ||
+        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED ||
+        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_INITIATED ||
+        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED) &&
+        (firstItemForConsultation()?.Product?.isAvailable() ?: false) && isUpComingConsult())
+  }
+
+  fun isConsultErrorText(): Boolean {
+    return (OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED ||
+        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.FEEDBACK_PENDING ||
+        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED ||
+        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_COMPLETED)
+  }
+
+  fun isConfirmActionBtn(): Boolean {
+    return ((OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED
+        || OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED) &&
+        PaymentDetails != null && ((PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
+        PaymentDetailsN.STATUS.from(PaymentDetails.status()) == PaymentDetailsN.STATUS.SUCCESS)
+        || (PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.COD)))
+  }
+
+  fun isCancelActionBtn(): Boolean {
+    return ((OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED) &&
         LogisticsDetails != null && LogisticsDetailsN.STSTUS.from(LogisticsDetails.status()) == LogisticsDetailsN.STSTUS.NOT_INITIATED)
-    //PaymentDetails != null && PaymentDetailsN.STSTUS.from(PaymentDetails.status()) == PaymentDetailsN.STSTUS.SUCCESS
+  }
+
+  fun firstItemForConsultation(): ItemN? {
+    return Items?.firstOrNull()
+  }
+
+
+  fun isUpComingConsult(): Boolean {
+    val date = firstItemForConsultation()?.scheduledEndDate()?.parseDate(FORMAT_SERVER_DATE)
+    return date?.after(getCurrentDate()) ?: false
   }
 }

@@ -22,6 +22,8 @@ import com.google.gson.reflect.TypeToken;
 import com.inventoryorder.constant.FragmentType;
 import com.inventoryorder.constant.IntentConstant;
 import com.inventoryorder.model.PreferenceData;
+import com.nowfloats.Analytics_Screen.OrderAnalyticsActivity;
+import com.nowfloats.Analytics_Screen.OrderSummaryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
@@ -46,7 +48,7 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  * A simple {@link Fragment} subclass.
  */
 public class ManageInventoryFragment extends Fragment {
-    TextView tvPaymentSetting, tvTransactionType_1, tvTransactionType_2;
+    TextView tvTransactionType_1, tvTransactionType_2, orderAnalytics;
     ImageView ivLockWidget, ivPaymentIcon;
     //Typeface robotoLight;
     private SharedPreferences pref = null;
@@ -133,104 +135,20 @@ public class ManageInventoryFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onViewCreated(final View mainView, Bundle savedInstanceState) {
-        super.onViewCreated(mainView, savedInstanceState);
-        if (!isAdded()) return;
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
-                .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
-
-
-        try {
-            ivLockWidget.setVisibility(View.GONE);
-            //Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
-            //robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
-
-            tvPaymentSetting = mainView.findViewById(R.id.tvPaymentSetting);
-            //tvPaymentSetting.setTypeface(robotoMedium);
-
-            String svc_code = session.getFP_AppExperienceCode();
-            tvTransactionType_1 = mainView.findViewById(R.id.transactions_type_1);
-            tvTransactionType_1.setText(Utils.getDefaultTrasactionsTaxonomyFromServiceCode(svc_code));
-            if("DOC".equalsIgnoreCase(svc_code) || "HOS".equalsIgnoreCase(svc_code))
-                tvTransactionType_1.setText("Appointments at Clinic");
-
-            tvTransactionType_2 = mainView.findViewById(R.id.transactions_type_2);
-            String secondTransactionType = Utils.getSecondTypeTrasactionsTaxonomyFromServiceCode(svc_code);
-            tvTransactionType_2.setText(secondTransactionType);
-            if(secondTransactionType != null && secondTransactionType.length() > 1)
-                tvTransactionType_2.setVisibility(View.VISIBLE);
-            else
-                tvTransactionType_2.setVisibility(View.GONE);
-
-
-            tvPaymentSetting.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_PAYMENT_SETTING, null);
-                    Intent i = new Intent(getActivity(), PaymentSettingsActivity.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
-            });
-
-            tvTransactionType_1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    startOrdersActivity();
-
-//                    if(mIsAPEnabled) {
-//                        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
-//                        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
-//                        startActivity(i);
-//                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//                    }else {
-//                        new AlertDialog.Builder(getActivity())
-//                                .setMessage("Enable Assured Purchase to view Seller Analytics")
-//                                .setPositiveButton("Payment Settings", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        dialog.dismiss();
-//                                        MixPanelController.track(EventKeysWL.SIDE_PANEL_PAYMENT_SETTING, null);
-//                                        Intent i = new Intent(getActivity(), PaymentSettingsActivity.class);
-//                                        startActivity(i);
-//                                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//                                    }
-//                                })
-//                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        dialog.dismiss();
-//                                    }
-//                                })
-//                                .show();
-//
-//                    }
-                }
-            });
-
-            tvTransactionType_2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getActivity(), "Coming Soon. Drop an email to ria@getboost360.com in case of urgency.", Toast.LENGTH_LONG).show();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static int getExperienceType(String fp_appExperienceCode) {
+        switch (fp_appExperienceCode) {
+            case "SVC": /* TODO for Appointment (delivery mode offline)*/
+            case "SPA":
+            case "SAL":
+            case "EDU":
+            case "DOC": /* TODO for Appointment (delivery mode offline) && consultation (delivery mode online)*/
+            case "HOS":
+                return 1;
+            case "HOT": /* TODO for booking */
+                return 2;
+            default: /* TODO for order */
+                return 3;
         }
-
-        /*if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
-        {
-            tvPaymentSetting.setVisibility(View.VISIBLE);
-            ivPaymentIcon.setVisibility(View.VISIBLE);
-        }
-
-        else
-        {
-            tvPaymentSetting.setVisibility(View.GONE);
-            ivPaymentIcon.setVisibility(View.GONE);
-        }*/
     }
 
 
@@ -242,28 +160,91 @@ public class ManageInventoryFragment extends Fragment {
     }
 
     private void openPrimaryTransactionTypeOrdes() {
+        int experienceType = getExperienceType(session.getFP_AppExperienceCode());
+        if (experienceType == 1) startFragmentActivityNew(activity, FragmentType.ALL_APPOINTMENT_VIEW, getBundleData(), false);
+        else if (experienceType == 3) startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, getBundleData(), false);
+        else Toast.makeText(activity, "Coming soon..", Toast.LENGTH_SHORT).show();
+//        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
+//        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
+//        startActivity(i);
+//        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    private Bundle getBundleData() {
         Bundle bundle = new Bundle();
         PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
-        bundle.putString(IntentConstant.INVENTORY_TYPE.name(), session.getFP_AppExperienceCode());
+        bundle.putString(IntentConstant.EXPERIENCE_CODE.name(), session.getFP_AppExperienceCode());
+        return bundle;
 
-        if (getAppointmentType(session.getFP_AppExperienceCode())) {
-            startFragmentActivityNew(activity, FragmentType.ALL_BOOKING_VIEW, bundle, false);
-        } else
-            startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, bundle, false);
     }
 
-    public static boolean getAppointmentType(String fp_appExperienceCode) {
-        switch (fp_appExperienceCode) {
-            case "SVC":
-            case "DOC":
-            case "HOS":
-            case "SPA":
-            case "SAL":
-            case "EDU":
-                return true;
-            default:
-                return false;
+    @Override
+    public void onViewCreated(final View mainView, Bundle savedInstanceState) {
+        super.onViewCreated(mainView, savedInstanceState);
+        if (!isAdded()) return;
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
+                .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
+
+
+        try {
+            ivLockWidget.setVisibility(View.GONE);
+
+            String svc_code = session.getFP_AppExperienceCode();
+            tvTransactionType_1 = mainView.findViewById(R.id.transactions_type_1);
+            tvTransactionType_1.setText(Utils.getDefaultTrasactionsTaxonomyFromServiceCode(svc_code));
+            if ("DOC".equalsIgnoreCase(svc_code) || "HOS".equalsIgnoreCase(svc_code))
+                tvTransactionType_1.setText("Appointments at Clinic");
+
+            tvTransactionType_2 = mainView.findViewById(R.id.transactions_type_2);
+            ImageView tranType2Image = mainView.findViewById(R.id.transactions_type_2_image);
+            String secondTransactionType;
+            if (Utils.isRoomBooking(svc_code))
+                secondTransactionType = "Orders";
+            else
+                secondTransactionType = Utils.getSecondTypeTrasactionsTaxonomyFromServiceCode(svc_code);
+            tvTransactionType_2.setText(secondTransactionType);
+            if (secondTransactionType.length() > 1) {
+                tvTransactionType_2.setVisibility(View.VISIBLE);
+                tranType2Image.setVisibility(View.VISIBLE);
+                mainView.findViewById(R.id.line_view2).setVisibility(View.VISIBLE);
+            } else {
+                tvTransactionType_2.setVisibility(View.GONE);
+                tranType2Image.setVisibility(View.GONE);
+                mainView.findViewById(R.id.line_view2).setVisibility(View.GONE);
+            }
+
+            tvTransactionType_1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startOrdersActivity();
+                }
+            });
+
+            tvTransactionType_2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (Utils.isRoomBooking(svc_code)) {
+                        startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, getBundleData(), false);
+                    } else {
+                        startFragmentActivityNew(activity, FragmentType.ALL_VIDEO_CONSULT_VIEW, getBundleData(), false);
+                    }
+                }
+            });
+
+            orderAnalytics = mainView.findViewById(R.id.tvOrderSummary);
+            orderAnalytics.setText(Utils.getOrderAnalyticsTaxonomyFromServiceCode(svc_code));
+            orderAnalytics.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(), OrderSummaryActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

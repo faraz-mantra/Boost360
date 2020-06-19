@@ -3,11 +3,12 @@ package com.boost.upgrades.ui.home
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
@@ -17,11 +18,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.boost.upgrades.R
@@ -40,7 +39,6 @@ import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.HomeListener
 import com.boost.upgrades.ui.cart.CartFragment
-import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
@@ -54,7 +52,6 @@ import com.boost.upgrades.utils.HorizontalMarginItemDecoration
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
 import com.boost.upgrades.utils.WebEngageController
-import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
@@ -314,9 +311,11 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     fun loadData() {
+        val pref = activity!!.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val fpTag = pref.getString("GET_FP_DETAILS_TAG", null);
         var code: String = (activity as UpgradeActivity).experienceCode!!;
         if (!code.equals("null", true)) {
-            viewModel.setCurrentExperienceCode(code)
+            viewModel.setCurrentExperienceCode(code, fpTag)
         }
 
         viewModel.loadUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
@@ -348,14 +347,15 @@ class HomeFragment : BaseFragment(), HomeListener {
             for (item in it) {
                 val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
                 list.add(Bundles(
-                        item.bundle_key,
+                        item.bundle_id,
                         temp,
                         item.min_purchase_months,
                         item.name,
                         item.overall_discount_percent,
                         PrimaryImage(item.primary_image),
                         item.target_business_usecase,
-                        Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type)
+                        Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                        null
                 ))
             }
             if (list.size > 0)

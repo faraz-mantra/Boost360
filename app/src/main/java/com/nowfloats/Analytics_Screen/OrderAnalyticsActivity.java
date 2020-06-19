@@ -11,26 +11,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.widget.TextView;
 
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 public class OrderAnalyticsActivity extends AppCompatActivity {
 
-
+    String svc_code;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_analytics);
         MixPanelController.track(MixPanelController.ORDER_ANALYTICS, null);
 
+        UserSessionManager session = new UserSessionManager(getApplicationContext(), OrderAnalyticsActivity.this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView title = (TextView) findViewById(R.id.title);
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            title.setText(getString(R.string.order_analytics));
+            title.setText(Utils.getOrderAnalyticsTaxonomyFromServiceCode(session.getFP_AppExperienceCode()));
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

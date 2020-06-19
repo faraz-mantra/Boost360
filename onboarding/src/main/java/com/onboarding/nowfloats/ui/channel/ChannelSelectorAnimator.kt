@@ -29,7 +29,7 @@ class ChannelSelectorAnimator {
     }
 
     fun startAnimation() {
-        titleForeground?.get()?.fadeOut(900L)?.andThen(subTitleForeground?.get()?.fadeOut())?.doOnComplete {
+      this.imageView?.get()?.fadeOut(200L)?.andThen(titleForeground?.get()?.fadeOut())?.andThen(subTitleForeground?.get()?.fadeOut(200L))?.doOnComplete {
             isAnimating = false
             listener?.onAnimationComplete()
         }?.subscribe()

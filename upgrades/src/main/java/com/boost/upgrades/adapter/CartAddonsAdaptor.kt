@@ -60,7 +60,7 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
             holder.discount.visibility = View.GONE
         }
         holder.remove_addons.setOnClickListener {
-            listener.deleteCartAddonsItem(list.get(position).boost_widget_key)
+            listener.deleteCartAddonsItem(list.get(position).item_id)
         }
         holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         if(list.size - 1 == position) {
