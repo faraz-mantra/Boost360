@@ -60,4 +60,5 @@
   <color name="view_background_color">#EBEBEB</color>
   <color name="khaki_light">#80FFB900</color>
   <color name="light_green">#189943</color>
+  <color name="bg_dark_grey">#4a4a4a</color>
 </resources>
