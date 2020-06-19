@@ -1,5 +1,6 @@
 package com.catlogservice.ui.service
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import com.catlogservice.R
@@ -31,7 +32,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
     override fun onCreateView() {
         super.onCreateView()
-        setOnClickListener(binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation, binding?.vwPaymentConfig, binding?.btnSavePublish)
+        binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        setOnClickListener(binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation, binding?.vwPaymentConfig, binding?.vwSavePublish)
     }
 
     override fun onClick(v: View) {
@@ -40,7 +43,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
             binding?.vwChangeDeliverConfig -> showServiceDeliveryConfigBottomSheet()
             binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
             binding?.vwPaymentConfig -> showPaymentConfigBottomSheet()
-            binding?.btnSavePublish -> startFragmentActivity(FragmentType.SERVICE_INFORMATION, Bundle())
+            binding?.vwSavePublish -> startFragmentActivity(FragmentType.SERVICE_INFORMATION, Bundle())
         }
     }
 

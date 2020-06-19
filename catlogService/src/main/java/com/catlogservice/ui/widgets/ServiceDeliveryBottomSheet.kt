@@ -24,14 +24,34 @@ class ServiceDeliveryBottomSheet() : BaseBottomSheetDialog<BottomSheetServiceDel
     }
 
     override fun onCreateView() {
+        setOnClickListener(binding?.vwMyBusinessLocation, binding?.vwClientLocation, binding?.vwOtherVenue)
         setOnClickListener(binding?.btnDone, binding?.btnCancel)
     }
 
     override fun onClick(v: View) {
         super.onClick(v)
-        when(v){
-            binding?.btnDone->{}
-            binding?.btnCancel->{dismiss()}
+        when (v) {
+            binding?.vwMyBusinessLocation -> {
+                binding?.rbMyBusinessLocation?.isChecked = true
+                binding?.rbClientLocation?.isChecked = false
+                binding?.rbOtherVenue?.isChecked = false
+            }
+            binding?.vwClientLocation -> {
+                binding?.rbMyBusinessLocation?.isChecked = false
+                binding?.rbClientLocation?.isChecked = true
+                binding?.rbOtherVenue?.isChecked = false
+            }
+            binding?.vwOtherVenue -> {
+                binding?.rbMyBusinessLocation?.isChecked = false
+                binding?.rbClientLocation?.isChecked = false
+                binding?.rbOtherVenue?.isChecked = true
+            }
+
+            binding?.btnDone -> {
+            }
+            binding?.btnCancel -> {
+                dismiss()
+            }
         }
     }
 

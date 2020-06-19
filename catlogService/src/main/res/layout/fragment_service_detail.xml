@@ -48,7 +48,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/size_200"
-                            android:background="#E9F0FB"
+                            android:background="@drawable/shape_blue_stroke_rect_title_bkg_no_boarder_radius"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -89,17 +89,12 @@
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/size_6"
-                            android:background="@color/lightest_grey" />
-
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_1"
-                        android:background="@color/view_background_color" />
+                        android:background="@color/dodger_blue_two" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
@@ -112,7 +107,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/size_3"
-                            android:layout_marginTop="@dimen/size_16"
+                            android:layout_marginTop="@dimen/size_36"
                             android:text="Service Name*"
                             android:textColor="@color/black_4a4a4a"
                             app:fontFamily="@font/semi_bold"
@@ -147,7 +142,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/size_5"
                             android:background="@drawable/bg_rect_edit_txt"
-                            android:hint="Describe this service in around 2000 character at max..."
+                            android:hint="Describe this service in around 2000 characters at max..."
                             android:inputType="textMultiLine"
                             android:padding="@dimen/size_12"
                             android:textColor="@color/warm_grey_10"
@@ -157,12 +152,12 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/size_26"
-                            android:drawableEnd="@drawable/ic_question_circular_blue"
+                            android:layout_marginTop="@dimen/size_36"
                             android:drawablePadding="@dimen/size_4"
                             android:includeFontPadding="false"
                             android:text="Service Delivery Configuration"
                             android:textColor="@color/black_4a4a4a"
+                            app:drawableEndCompat="@drawable/ic_question_circular_blue"
                             app:fontFamily="@font/semi_bold"
                             app:textType="BODY_3" />
 
@@ -205,7 +200,7 @@
                                     android:id="@+id/vw_changeDeliverConfig"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Change"
+                                    android:text="@string/change"
                                     android:textColor="@color/cerulean_blue"
                                     android:textSize="10sp"
                                     app:fontFamily="@font/semi_bold"
@@ -222,22 +217,39 @@
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/size_10">
 
-                                <com.framework.views.customViews.CustomTextView
-                                    android:layout_width="match_parent"
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:drawableStart="@drawable/ic_delivery_business_location"
-                                    android:drawablePadding="@dimen/size_4"
-                                    android:includeFontPadding="false"
-                                    android:text="Delivery at my business location"
-                                    android:textColor="@color/warm_grey"
-                                    android:textSize="12sp"
-                                    app:fontFamily="@font/regular"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintRight_toLeftOf="@+id/iv_dropDown"
+                                    app:layout_constraintTop_toTopOf="parent">
 
+                                    <com.framework.views.customViews.CustomTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:drawablePadding="@dimen/size_6"
+                                        android:includeFontPadding="false"
+                                        android:text="Service delivery at:"
+                                        android:textColor="@color/black"
+                                        android:textSize="12sp"
+                                        app:drawableStartCompat="@drawable/ic_delivery_business_location"
+                                        app:fontFamily="@font/regular" />
+
+                                    <com.framework.views.customViews.CustomTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/size_5"
+                                        android:includeFontPadding="false"
+                                        android:text="My business Location"
+                                        android:textColor="@color/warm_grey"
+                                        android:textSize="12sp"
+                                        app:fontFamily="@font/regular" />
+
+                                </androidx.appcompat.widget.LinearLayoutCompat>
 
                                 <com.framework.views.customViews.CustomImageView
+                                    android:id="@+id/iv_dropDown"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -252,12 +264,12 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/size_26"
-                            android:drawableEnd="@drawable/ic_question_circular_blue"
+                            android:layout_marginTop="@dimen/size_36"
                             android:drawablePadding="@dimen/size_4"
                             android:includeFontPadding="false"
                             android:text="Pricing &amp; payment info"
                             android:textColor="@color/black_4a4a4a"
+                            app:drawableEndCompat="@drawable/ic_question_circular_blue"
                             app:fontFamily="@font/semi_bold"
                             app:textType="BODY_3" />
 
@@ -281,11 +293,11 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="1dp"
-                                android:background="@color/dodger_blue_ED73FE"
+                                android:background="@drawable/shape_blue_rect_title_bkg"
                                 android:padding="@dimen/size_10">
 
                                 <com.framework.views.customViews.CustomTextView
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:text="Want your clients to pay for this service?"
                                     android:textColor="@color/black_4f4f4f"
@@ -293,9 +305,11 @@
                                     app:fontFamily="@font/semi_bold"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toLeftOf="@id/toggle_service"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <com.catlogservice.ui.customviews.toggle.widget.LabeledSwitch
+                                    android:id="@+id/toggle_service"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     app:colorBorder="@color/greyish"
@@ -314,13 +328,15 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:padding="@dimen/size_10">
+
+                                android:paddingLeft="@dimen/size_8"
+                                android:paddingTop="@dimen/size_10"
+                                android:paddingRight="@dimen/size_5"
+                                android:paddingBottom="@dimen/size_10">
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginEnd="3dp"
-                                    android:layout_weight="1.2"
                                     android:orientation="vertical">
 
                                     <com.framework.views.customViews.CustomTextView
@@ -332,72 +348,88 @@
                                         app:fontFamily="@font/light" />
 
                                     <com.framework.views.customViews.CustomTextField
-                                        android:layout_width="@dimen/size_115"
+                                        android:layout_width="@dimen/size_110"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/size_5"
                                         android:background="@drawable/bg_rect_edit_txt"
                                         android:hint="XX,XXX"
-                                        android:inputType="textCapWords"
-                                        android:padding="@dimen/size_12"
+                                        android:inputType="number"
+                                        android:padding="@dimen/size_8"
                                         android:singleLine="true"
                                         android:textColor="@color/warm_grey_10"
                                         android:textColorHint="@color/primary_grey"
+                                        android:textSize="13sp"
                                         tools:ignore="UnusedAttribute" />
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                                <View
+                                    android:layout_width="5dp"
+                                    android:layout_height="match_parent" />
+
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="3dp"
-                                    android:layout_weight="1.2"
                                     android:orientation="vertical">
 
                                     <com.framework.views.customViews.CustomTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:singleLine="true"
                                         android:text="Discount amt. (INR)"
                                         android:textColor="@color/black_4a4a4a"
                                         android:textSize="12sp"
                                         app:fontFamily="@font/light" />
 
                                     <com.framework.views.customViews.CustomTextField
-                                        android:layout_width="@dimen/size_115"
+                                        android:layout_width="@dimen/size_110"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/size_5"
                                         android:background="@drawable/bg_rect_edit_txt"
                                         android:hint="XX,XXX"
-                                        android:inputType="textCapWords"
-                                        android:padding="@dimen/size_12"
+                                        android:inputType="number"
+                                        android:padding="@dimen/size_8"
                                         android:singleLine="true"
                                         android:textColor="@color/warm_grey_10"
                                         android:textColorHint="@color/primary_grey"
+                                        android:textSize="13sp"
                                         tools:ignore="UnusedAttribute" />
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                                <View
+                                    android:layout_width="5dp"
+                                    android:layout_height="match_parent" />
+
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
+                                    android:layout_marginStart="3dp"
                                     android:orientation="vertical">
 
                                     <com.framework.views.customViews.CustomTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginStart="@dimen/size_3"
                                         android:text="Final Price"
                                         android:textColor="@color/black_4a4a4a"
                                         android:textSize="12sp"
                                         app:fontFamily="@font/light" />
 
-                                    <com.framework.views.customViews.CustomTextView
-                                        android:layout_width="@dimen/size_115"
+                                    <com.framework.views.customViews.CustomTextField
+                                        android:layout_width="@dimen/size_110"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/size_5"
-                                        android:padding="@dimen/size_12"
-                                        android:text="INR XX,XXX"
-                                        android:textColor="@color/primary_grey"
+                                        android:background="@null"
+                                        android:enabled="false"
+                                        android:hint="INR XX,XXX"
+                                        android:inputType="number"
+                                        android:paddingTop="@dimen/size_8"
+                                        android:paddingRight="@dimen/size_8"
+                                        android:paddingBottom="@dimen/size_8"
+                                        android:singleLine="true"
+                                        android:textColor="@color/warm_grey_10"
+                                        android:textColorHint="@color/primary_grey"
+                                        android:textSize="13sp"
                                         tools:ignore="UnusedAttribute" />
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
@@ -407,18 +439,18 @@
                             <com.framework.views.customViews.CustomTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/size_10"
-                                android:layout_marginTop="@dimen/size_14"
+                                android:layout_marginStart="@dimen/size_8"
+                                android:layout_marginTop="@dimen/size_10"
                                 android:includeFontPadding="false"
-                                android:text="Select, how do you want to receive money for yor bookings."
+                                android:text="Select, how you want to receive money for your bookings."
                                 android:textColor="@color/warm_grey"
-                                android:textSize="10sp"
+                                android:textSize="12sp"
                                 app:fontFamily="@font/regular" />
 
                             <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/size_10"
+                                android:layout_marginLeft="@dimen/size_8"
                                 android:layout_marginRight="@dimen/size_10"
                                 android:layout_marginBottom="@dimen/size_10"
                                 android:background="@drawable/shape_grey_stroke_rect_bkg"
@@ -427,14 +459,13 @@
                                 <androidx.constraintlayout.widget.ConstraintLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="@dimen/size_1"
                                     android:background="@drawable/shape_blue_stroke_rect_title_bkg"
                                     android:padding="@dimen/size_10">
 
                                     <com.framework.views.customViews.CustomTextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Boost Payment gateway"
+                                        android:text="Boost payment gateway"
                                         android:textColor="@color/black_4f4f4f"
                                         android:textSize="12sp"
                                         app:fontFamily="@font/semi_bold"
@@ -446,7 +477,7 @@
                                         android:id="@+id/vw_paymentConfig"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Change"
+                                        android:text="@string/change"
                                         android:textColor="@color/cerulean_blue"
                                         android:textSize="10sp"
                                         app:fontFamily="@font/semi_bold"
@@ -465,12 +496,12 @@
                                     <com.framework.views.customViews.CustomTextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:drawableStart="@drawable/ic_info_circular_orange"
                                         android:drawablePadding="@dimen/size_4"
                                         android:includeFontPadding="false"
-                                        android:text="Bank Account not added"
+                                        android:text="Bank account not added"
                                         android:textColor="@color/warm_grey"
                                         android:textSize="12sp"
+                                        app:drawableStartCompat="@drawable/ic_info_circular_orange"
                                         app:fontFamily="@font/regular"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintLeft_toLeftOf="parent"
@@ -500,21 +531,22 @@
 
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toLeftOf="@id/iv_otherInfo"
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <com.framework.views.customViews.CustomTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:drawableEnd="@drawable/ic_question_circular_blue"
                                     android:drawablePadding="@dimen/size_4"
                                     android:includeFontPadding="false"
                                     android:text="Other Information"
                                     android:textColor="@color/black_4a4a4a"
+                                    app:drawableEndCompat="@drawable/ic_question_circular_blue"
                                     app:fontFamily="@font/semi_bold"
                                     app:textType="BODY_3" />
 
@@ -522,7 +554,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:includeFontPadding="false"
-                                    android:text="Select, how do you want to give this service to your clients."
+                                    android:text="Channels, Service Specifications, Service category, etc."
                                     android:textColor="@color/warm_grey"
                                     android:textSize="12sp"
                                     app:fontFamily="@font/regular" />
@@ -530,6 +562,7 @@
                             </LinearLayout>
 
                             <com.framework.views.customViews.CustomImageView
+                                android:id="@+id/iv_otherInfo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:layout_constraintBottom_toBottomOf="parent"
@@ -541,41 +574,38 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/vw_savePublish"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/size_20"
-                            android:orientation="vertical"
-                            android:paddingTop="@dimen/size_16"
-                            android:paddingBottom="@dimen/size_16">
+                            android:background="@drawable/button_proceed"
+                            android:clickable="true"
+                            android:orientation="vertical">
 
                             <com.framework.views.customViews.CustomButton
-                                android:id="@+id/btn_savePublish"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:background="@drawable/button_proceed"
+                                android:background="@null"
+                                android:clickable="false"
+                                android:drawablePadding="@dimen/size_5"
                                 android:fontFamily="@font/semi_bold"
                                 android:gravity="center"
-                                android:padding="15dp"
-                                android:text="Save &amp; Publish"
+                                android:text="@string/save_amp_publish"
                                 android:textAllCaps="true"
                                 android:textColor="@color/white"
+                                app:drawableEndCompat="@drawable/ic_forward_arrow_white"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toRightOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:textType="HEADING_6" />
 
-                            <com.framework.views.customViews.CustomImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintHorizontal_bias="0.7"
-                                app:srcCompat="@drawable/ic_arrow_right_white" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp" />
 
 
                     </androidx.appcompat.widget.LinearLayoutCompat>

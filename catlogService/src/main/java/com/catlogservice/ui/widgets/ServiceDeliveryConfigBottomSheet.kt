@@ -24,14 +24,33 @@ class ServiceDeliveryConfigBottomSheet() : BaseBottomSheetDialog<BottomSheetServ
     }
 
     override fun onCreateView() {
+        setOnClickListener(binding?.vwOnlineOnly, binding?.vwInPersonaOnly, binding?.vwBothOnlineInPerson)
         setOnClickListener(binding?.btnDone, binding?.btnCancel)
     }
 
     override fun onClick(v: View) {
         super.onClick(v)
-        when(v){
-            binding?.btnDone->{}
-            binding?.btnCancel->{dismiss()}
+        when (v) {
+            binding?.vwOnlineOnly -> {
+                binding?.rbOnlineOnly?.isChecked = true
+                binding?.rbInPersonaOnly?.isChecked = false
+                binding?.rbBothOnlineInPerson?.isChecked = false
+            }
+            binding?.vwInPersonaOnly -> {
+                binding?.rbOnlineOnly?.isChecked = false
+                binding?.rbInPersonaOnly?.isChecked = true
+                binding?.rbBothOnlineInPerson?.isChecked = false
+            }
+            binding?.vwBothOnlineInPerson -> {
+                binding?.rbOnlineOnly?.isChecked = false
+                binding?.rbInPersonaOnly?.isChecked = false
+                binding?.rbBothOnlineInPerson?.isChecked = true
+            }
+            binding?.btnDone -> {
+            }
+            binding?.btnCancel -> {
+                dismiss()
+            }
         }
     }
 

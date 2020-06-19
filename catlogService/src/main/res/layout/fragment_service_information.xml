@@ -14,7 +14,8 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/content"
@@ -32,9 +33,12 @@
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/size_16"
-                        android:text="Configure the digital channels*"
+                        android:layout_marginTop="@dimen/size_36"
+                        android:drawablePadding="@dimen/size_4"
+                        android:includeFontPadding="false"
+                        android:text="Configure the digital channels"
                         android:textColor="@color/black_4a4a4a"
+                        app:drawableEndCompat="@drawable/ic_question_circular_blue"
                         app:fontFamily="@font/semi_bold"
                         app:textType="BODY_3" />
 
@@ -60,12 +64,12 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableLeft="@drawable/ic_facebook_flag"
                             android:drawablePadding="@dimen/size_10"
                             android:includeFontPadding="false"
                             android:text="Facebook Page Shop"
                             android:textColor="@color/warm_grey"
                             android:textSize="14sp"
+                            app:drawableLeftCompat="@drawable/ic_facebook_flag"
                             app:fontFamily="@font/regular"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
@@ -94,12 +98,12 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableLeft="@drawable/ic_facebook_flag"
                             android:drawablePadding="@dimen/size_10"
                             android:includeFontPadding="false"
                             android:text="Google Merchant Center"
                             android:textColor="@color/warm_grey"
                             android:textSize="14sp"
+                            app:drawableLeftCompat="@drawable/ic_facebook_flag"
                             app:fontFamily="@font/regular"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
@@ -128,12 +132,12 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableLeft="@drawable/ic_twiter_page"
                             android:drawablePadding="@dimen/size_10"
                             android:includeFontPadding="false"
                             android:text="Twitter Page"
                             android:textColor="@color/warm_grey"
                             android:textSize="14sp"
+                            app:drawableLeftCompat="@drawable/ic_twiter_page"
                             app:fontFamily="@font/regular"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
@@ -169,12 +173,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/size_2"
-                            android:drawableEnd="@drawable/ic_question_circular_blue"
                             android:drawablePadding="@dimen/size_4"
                             android:includeFontPadding="false"
                             android:text="(8 max, Jpeg, 800x800px)"
                             android:textColor="@color/warm_grey"
                             android:textSize="12sp"
+                            app:drawableEndCompat="@drawable/ic_question_circular_blue"
                             app:fontFamily="@font/regular" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -190,10 +194,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:drawableLeft="@drawable/ic_small_add_images"
                             android:gravity="center"
                             android:text="Add secondary images"
                             android:textColor="@color/dodger_blue_two"
+                            app:drawableLeftCompat="@drawable/ic_small_add_images"
                             app:fontFamily="@font/semi_bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
@@ -214,11 +218,11 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableEnd="@drawable/ic_question_circular_blue"
                             android:drawablePadding="@dimen/size_4"
                             android:includeFontPadding="false"
                             android:text="Secondary images"
                             android:textColor="@color/black_4a4a4a"
+                            app:drawableEndCompat="@drawable/ic_question_circular_blue"
                             app:fontFamily="@font/semi_bold"
                             app:textType="BODY_3" />
 
@@ -256,11 +260,11 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableEnd="@drawable/ic_question_circular_blue"
                             android:drawablePadding="@dimen/size_4"
                             android:includeFontPadding="false"
                             android:text="Service category"
                             android:textColor="@color/black_4a4a4a"
+                            app:drawableEndCompat="@drawable/ic_question_circular_blue"
                             app:fontFamily="@font/semi_bold"
                             app:textType="BODY_3" />
 
@@ -297,11 +301,11 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableEnd="@drawable/ic_question_circular_blue"
                             android:drawablePadding="@dimen/size_4"
                             android:includeFontPadding="false"
                             android:text="Brand Name"
                             android:textColor="@color/black_4a4a4a"
+                            app:drawableEndCompat="@drawable/ic_question_circular_blue"
                             app:fontFamily="@font/semi_bold"
                             app:textType="BODY_3" />
 
@@ -338,11 +342,11 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableEnd="@drawable/ic_question_circular_blue"
                             android:drawablePadding="@dimen/size_4"
                             android:includeFontPadding="false"
                             android:text="Service Tags"
                             android:textColor="@color/black_4a4a4a"
+                            app:drawableEndCompat="@drawable/ic_question_circular_blue"
                             app:fontFamily="@font/semi_bold"
                             app:textType="BODY_3" />
 
@@ -359,7 +363,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:background="@null"
-                            android:hint="Type a brand name"
+                            android:hint="Type a tag and press 'ADD'"
                             android:inputType="textCapWords"
                             android:maxEms="3"
                             android:padding="@dimen/size_12"
@@ -383,8 +387,8 @@
                             android:textColor="@color/dodger_blue_two"
                             app:fontFamily="@font/semi_bold"
                             app:layout_constraintBottom_toBottomOf="@id/edtTxt_addServiceTag"
-                            app:layout_constraintTop_toTopOf="@id/edtTxt_addServiceTag"
                             app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/edtTxt_addServiceTag"
                             app:textAllCaps="true"
                             app:textType="BODY_1" />
 
@@ -394,11 +398,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_26"
-                        android:drawableEnd="@drawable/ic_question_circular_blue"
                         android:drawablePadding="@dimen/size_4"
                         android:includeFontPadding="false"
                         android:text="Service specifications"
                         android:textColor="@color/black_4a4a4a"
+                        app:drawableEndCompat="@drawable/ic_question_circular_blue"
                         app:fontFamily="@font/semi_bold"
                         app:textType="BODY_3" />
 
@@ -443,11 +447,11 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableEnd="@drawable/ic_question_circular_blue"
                             android:drawablePadding="@dimen/size_4"
                             android:includeFontPadding="false"
                             android:text="Invoice GST details"
                             android:textColor="@color/black_4a4a4a"
+                            app:drawableEndCompat="@drawable/ic_question_circular_blue"
                             app:fontFamily="@font/semi_bold"
                             app:textType="BODY_3" />
 
@@ -516,6 +520,10 @@
                             android:textColor="@color/white"
                             app:textType="HEADING_6" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
