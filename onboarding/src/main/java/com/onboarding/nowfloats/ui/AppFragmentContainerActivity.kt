@@ -252,7 +252,6 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
 }
 
 fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
-
   val intent = Intent(activity, AppFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
