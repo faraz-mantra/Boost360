@@ -111,13 +111,13 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.ALL_ORDER_VIEW -> resources.getString(R.string.orders)
-      FragmentType.ORDER_DETAIL_VIEW -> "# XXXXXXX"
       FragmentType.ALL_APPOINTMENT_VIEW -> resources.getString(R.string.appointments)
-      FragmentType.APPOINTMENT_DETAIL_VIEW -> "# XXXXXXX"
+      FragmentType.ALL_VIDEO_CONSULT_VIEW -> resources.getString(R.string.video_consultation)
+      FragmentType.ORDER_DETAIL_VIEW,
+      FragmentType.APPOINTMENT_DETAIL_VIEW,
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> "# XXXXXXX"
       FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking)
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> resources.getString(R.string.new_booking)
-      FragmentType.ALL_VIDEO_CONSULT_VIEW -> resources.getString(R.string.video_consultation)
-      FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> "# XXXXXXX"
       else -> super.getToolbarTitle()
     }
   }

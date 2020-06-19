@@ -76,9 +76,9 @@ class HistoryDetailsFragment : BaseFragment() {
         }
         history_details_selling_price.setText(amountLayout1)
         val mrpPrice = (data.paidAmount*(100/(100-data.discount)))
-        history_details_MRPPrice.setText("₹"+mrpPrice.toString())
+        history_details_MRPPrice.setText("₹"+NumberFormat.getNumberInstance(Locale.ENGLISH).format(mrpPrice))
         val discountAmount = mrpPrice - data.paidAmount
-        history_details_discount_amount.setText("- ₹" + discountAmount)
+        history_details_discount_amount.setText("- ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(discountAmount))
         if (data.PaymentMethod != null) {
             history_details_payment_type.setText("Payment via "+data.PaymentMethod)
         }else{
@@ -112,6 +112,7 @@ class HistoryDetailsFragment : BaseFragment() {
                 }
                 if(status){
                 list.add(FeaturesModel(
+                        feature_id = "",
                         boost_widget_key =  item.WidgetKey,
                         name = item.Name,
                         discount_percent = item.Discount,

@@ -15,7 +15,7 @@ open class BaseResponse(
     val message = message ?: ""
     return try {
       val jsonObj = JSONObject(message)
-      jsonObj.getString("Message") ?: message
+      jsonObj.getString("Message") ?: jsonObj.getString("message") ?: message
     } catch (ex: JSONException) {
       message
     }

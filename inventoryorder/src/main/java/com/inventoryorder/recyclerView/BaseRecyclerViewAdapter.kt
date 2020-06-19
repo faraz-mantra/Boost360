@@ -33,9 +33,9 @@ abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(
 
   override fun getItemCount(): Int = list.size
 
-  fun updateList(list: ArrayList<T>) {
+  fun updateList(newList: ArrayList<T>) {
     this.list.clear()
-    this.list.addAll(list)
+    this.list.addAll(newList)
     notifyDataSetChanged()
   }
 

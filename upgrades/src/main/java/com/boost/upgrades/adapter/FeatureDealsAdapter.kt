@@ -182,7 +182,7 @@ class FeatureDealsAdapter(
                                         })
                                         var itemInCart = false
                                         for (cart in cartList) {
-                                            if (itemId.equals(cart.boost_widget_key)) {
+                                            if (itemId.equals(cart.item_id)) {
                                                 itemInCart = true
                                                 break
                                             }

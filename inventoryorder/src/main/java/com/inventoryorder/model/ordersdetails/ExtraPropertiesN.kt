@@ -42,4 +42,12 @@ data class ExtraPropertiesN(
     val c = takeIf { consultationFor.isNullOrEmpty().not() }?.let { " $consultationFor" } ?: ""
     return "$dn$c"
   }
+
+  fun startTime(): String {
+    return startTime ?: ""
+  }
+
+  fun endTime(): String {
+    return endTime ?: ""
+  }
 }

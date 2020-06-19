@@ -377,4 +377,6 @@
     <string name="payment_config_acceptance_message">I agree that Boost will charge %s of the total cart value as convenience fee(as part of your current boost plan)</string>
 
     <string name="link_marketplace">boost.nowfloats.com/home/marketplace</string>
+    <string name="wordpress_plugin_script">wordpress-plugin script</string>
+
 </resources>
