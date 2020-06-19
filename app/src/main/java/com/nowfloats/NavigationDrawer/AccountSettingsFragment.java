@@ -107,45 +107,19 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
             public void onItemClick(int pos) {
                 Intent intent = null;
                 switch (adapterTexts[pos]) {
-                    /*case "Seller Profile":
-                        intent = new Intent(mContext, SellerProfileActivity.class);
-                        break;*/
-                    case "Account Info":
-                        intent = new Intent(mContext, AccountInfoActivity.class);
+//                    case "Account Info":
+//                        intent = new Intent(mContext, AccountInfoActivity.class);
+//                        break;
+                    case "Boost Extensions":
+                        intent = new Intent(mContext, Boost360ExtensionsActivity.class);
                         break;
-                    case "Site Appearance":
-                        intent = new Intent(mContext, SiteAppearanceActivity.class);
-                        break;
+//                    case "Site Appearance":
+//                        intent = new Intent(mContext, SiteAppearanceActivity.class);
+//                        break;
                     case "Domain and Email":
                         isAlreadyCalled = false;
                         MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
                         WebEngageController.trackEvent("DOMAIN-EMAIL",null,sessionManager.getFpTag());
-//                        if (!BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-//                            MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
-//                                    .title("Get A Domain")
-//                                    .customView(R.layout.dialog_link_layout, false)
-//                                    .positiveText(getString(R.string.ok))
-//                                    .positiveColorRes(R.color.primaryColor)
-//                                    .callback(new MaterialDialog.ButtonCallback() {
-//                                        @Override
-//                                        public void onPositive(MaterialDialog dialog) {
-//                                            super.onPositive(dialog);
-//                                        }
-//
-//                                    });
-//                            if (!getActivity().isFinishing()) {
-//                                builder.show();
-//                            }
-//                        }
-
-//                        else if (sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")) {
-//                            showExpiryDialog(DEMO);
-//                        } else if (sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
-//                                sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")) {
-//                            showExpiryDialog(DEMO_EXPIRED);
-//                        }
-
-//                        else
                             if (Methods.isOnline(getActivity())) {
                             showLoader(getString(R.string.please_wait));
                             domainApiService.getDomainDetails(mContext, sessionManager.getFpTag(), getDomainDetailsParam());
@@ -153,7 +127,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                             Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                         }
                         return;
-                    case "Your Plans":
+                    case "Subscription History":
                         intent = new Intent(mContext, YourPurchasedPlansActivity.class);
                         break;
                     case "Change Password":

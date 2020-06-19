@@ -11,6 +11,7 @@ import com.boost.upgrades.data.api_model.GetPurchaseOrder.Result
 import com.boost.upgrades.interfaces.HistoryFragmentListener
 import com.google.gson.Gson
 import java.lang.Long
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -63,7 +64,7 @@ class HistoryAdapter(itemList: List<Result>?, val listener: HistoryFragmentListe
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
         val dateFormat = SimpleDateFormat("dd-MMM-yyyy (HH:mm)")
         holder.itemDate.setText(dateFormat.format(date))
-        holder.amount.setText("₹"+list.get(position).paidAmount)
+        holder.amount.setText("₹"+ NumberFormat.getNumberInstance(Locale.ENGLISH).format(list.get(position).paidAmount))
         holder.itemView.setOnClickListener {
             listener.viewHistoryItem(list.get(position))
         }

@@ -30,23 +30,23 @@ import java.util.concurrent.TimeUnit
 
 class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: CustomFirebaseAuthListeners, fpId: String = "") {
 
-    private var TAG = "CustomFirebaseAuthHelpers"
-    private var currentActivity: Activity
-    private var mAuth: FirebaseAuth
-    private var listener: CustomFirebaseAuthListeners
-    private var ApiService: Apis
-    private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
-    private lateinit var phoneVerificationId: String;
-    private lateinit var phoneVerificationTOken: String
-    private lateinit var phoneNumber: String
-    private var userFpId: String
+  private var TAG = "CustomFirebaseAuthHelpers"
+  private var currentActivity: Activity
+  private var mAuth: FirebaseAuth
+  private var listener: CustomFirebaseAuthListeners
+  private var ApiService: Apis
+  private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
+  private lateinit var phoneVerificationId: String
+  private lateinit var phoneVerificationTOken: String
+  private lateinit var phoneNumber: String
+  private var userFpId: String
 
-    private var autoUserProfileCreateMode = true
+  private var autoUserProfileCreateMode = true
 
-    val RC_SIGN_IN = 1
-    private var mGoogleSignInClient: GoogleSignInClient
+  val RC_SIGN_IN = 1
+  private var mGoogleSignInClient: GoogleSignInClient
 
-    private var retrofit: Retrofit
+  private var retrofit: Retrofit
 
     private fun FirebaseAuthHelpers() {}
 
@@ -141,24 +141,24 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
     }
 
     private fun AuthorizedGoogleUser(currentUser: FirebaseUser?) {
-        var acct = GoogleSignIn.getLastSignedInAccount(currentActivity);
-        if (acct != null) {
-            val personName = acct.displayName.toString()
-            val personFamilyName = acct.familyName.toString()
-            val personEmail = acct.email.toString()
-            val personIdToken = acct.idToken.toString()
-            val personPhoto = acct.photoUrl.toString()
+      var acct = GoogleSignIn.getLastSignedInAccount(currentActivity)
+      if (acct != null) {
+        val personName = acct.displayName.toString()
+        val personFamilyName = acct.familyName.toString()
+        val personEmail = acct.email.toString()
+        val personIdToken = acct.idToken.toString()
+        val personPhoto = acct.photoUrl.toString()
 
-            mGoogleSignInClient.signOut()
+        mGoogleSignInClient.signOut()
 
-            Log.d(TAG, "updateUI: photo = " + personPhoto);
+        Log.d(TAG, "updateUI: photo = " + personPhoto)
 
-            if(autoUserProfileCreateMode) {
-                requestUserProfileAPI(personIdToken,
-                        personEmail, "", "", personName, "GOOGLE", personEmail)
-            } else{
-                verifyUserProfileAPI(personEmail, "", "GOOGLE")
-            }
+        if (autoUserProfileCreateMode) {
+          requestUserProfileAPI(personIdToken,
+              personEmail, "", "", personName, "GOOGLE", personEmail)
+        } else {
+          verifyUserProfileAPI(personIdToken, "", "GOOGLE")
+        }
         }
     }
 
@@ -179,8 +179,8 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
                         Toast.makeText(currentActivity, "SignIn Failed: " + task.exception!!.message,
                                 Toast.LENGTH_LONG).show()
-                        mAuth.signOut()
-                        LoginManager.getInstance().logOut();
+                      mAuth.signOut()
+                      LoginManager.getInstance().logOut()
                     }
 
                     // ...
@@ -198,12 +198,12 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
 
 
             for (data in facebookData) {
-                if (data.providerId?.contains("facebook")) {
-                    uid = data.uid
+              if (data.providerId.contains("facebook")) {
+                uid = data.uid
 
-                    personName = data.displayName
-                    break
-                }
+                personName = data.displayName
+                break
+              }
             }
 
             if(autoUserProfileCreateMode) {

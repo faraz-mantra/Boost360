@@ -78,6 +78,14 @@ abstract class BaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewModel
     for (view in views) view?.setOnClickListener(this)
   }
 
+  fun isVisible(vararg views: View?) {
+    for (view in views) view?.visibility = View.VISIBLE
+  }
+
+  fun isGone(vararg views: View?) {
+    for (view in views) view?.visibility = View.GONE
+  }
+
   fun removeOnClickListener(vararg views: View) {
     for (view in views) view.setOnClickListener(null)
   }

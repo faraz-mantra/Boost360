@@ -27,10 +27,18 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       INVENTORY_ORDER_ITEM -> OrdersViewHolder(binding as ItemOrderBinding)
       ITEM_ORDER_DETAILS -> OrderItemDetailsViewHolder(binding as ItemOrderDetailsBinding)
       ITEM_DELIVERY_OPTIONS -> DeliveryViewHolder(binding as ItemBottomSheetPickUpDeliveryOptionBinding)
-      BOOKING_DETAILS -> BookingDetailsViewHolder(binding as ItemBookingDetailsBinding)
+      BOOKING_DETAILS -> AppointmentDetailsViewHolder(binding as ItemBookingDetailsBinding)
+      BOOKINGS_ITEM_TYPE -> AppointmentsViewHolder(binding as ItemAppointmentsOrderBinding)
       ITEM_SERVICE_LOCATIONS -> LocationsViewHolder(binding as ItemBottomSheetServiceLocationsBinding)
-      BOOKINGS_ITEM_TYPE -> BookingsViewHolder(binding as ItemBookingsAllOrderBinding)
-      BOOKINGS_DATE_TYPE -> BookingDateViewHolder(binding as ItemBookingsDateBinding)
+      ITEM_CHOOSE_PURPOSE -> ChoosePurposeViewHolder(binding as ItemBottomSheetChoosePurposeBinding)
+      VIDEO_CONSULT_ITEM_TYPE -> VideoConsultsViewHolder(binding as ItemVideoConsultOrderBinding)
+      VIDEO_CONSULT_DETAILS -> VideoConsultDetailsViewHolder(binding as ItemVideoConsultDetailsBinding)
+      DATE_VIEW_TYPE -> DateViewHolder(binding as ItemDateViewBinding)
+      APPOINTMENT_SCHEDULE -> AppointmentScheduleViewHolder(binding as ItemAppointmentScheduleBinding)
+      GENDER_SELECTION -> GenderSelectionViewHolder(binding as ItemBottomSheetSelectGenderBinding)
+      APPOINTMENT_TYPE -> AppointmentTypeViewHolder(binding as ItemBottomSheetAppointmentTypeBinding)
+      PICK_INVENTORY_NATURE -> PickInventoryNatureViewHolder(binding as ItemBottomSheetPickInventoryNatureBinding)
+      FILTER_ORDER_ITEM -> FilterOrderViewHolder(binding as ItemBottomSheetFilterBinding)
     }
   }
 

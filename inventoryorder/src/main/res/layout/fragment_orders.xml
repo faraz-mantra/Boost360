@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/lightest_grey"
+      android:orientation="vertical"
+      tools:context=".ui.FragmentContainerOrderActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_46"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+      <com.framework.views.viewgroups.BaseRecyclerView
+          android:id="@+id/type_recycler"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:overScrollMode="never"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          tools:itemCount="3"
+          tools:listitem="@layout/item_order_type" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_3"
+        android:background="@drawable/down_shadow" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+      <com.framework.views.viewgroups.BaseRecyclerView
+          android:id="@+id/order_recycler"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior"
+          tools:itemCount="10"
+          tools:listitem="@layout/item_order" />
+
+      <ProgressBar
+          android:id="@+id/progress"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:indeterminate="true"
+          android:theme="@style/progressBar" />
+
+      <com.framework.views.customViews.CustomTextView
+          android:id="@+id/error_txt"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:indeterminate="true"
+          android:text="Error"
+          android:textColor="@color/greyish_brown"
+          android:visibility="gone"
+          app:fontFamily="@font/semi_bold"
+          app:textType="HEADING_7" />
+
+      <com.framework.views.fabButton.FloatingActionButton
+          android:id="@+id/btn_add"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|center_horizontal"
+          android:layout_margin="16dp"
+          android:clickable="true"
+          android:focusable="true"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:text="@string/create"
+          android:textColor="@color/white"
+          app:fabBackground="@drawable/bg_button_rounded_orange"
+          app:fabIcon="@drawable/ic_add_white"
+          app:fabIconPosition="start"
+          app:fabSize="normal" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</layout>

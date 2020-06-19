@@ -23,10 +23,6 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
   }
 
-  override fun setTheme() {
-
-  }
-
   override fun getToolbarTitleTypeface(): Typeface? {
     return ResourcesCompat.getFont(this, R.font.semi_bold)
   }

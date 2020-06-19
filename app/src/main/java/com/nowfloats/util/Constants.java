@@ -35,6 +35,17 @@ import retrofit.converter.GsonConverter;
 
 
 public class Constants {
+    public static final String boostx_script = "<script type=\"text/javascript\" "+
+                                            " data-nf-clientId=\"8DB87D953727422DA36B4977BD12E37A92EEB23119DC4152AAEB6B22BDB578EF\" " +
+                                            " data-nf-fpTag=\"[[FPTAG]]\" " +
+                                            " src=\"//ext.boost360.app/nf-widget.js\"" +
+                                            " backgroundColor=\"#eaeaea\" " +
+                                            " secondaryColor=\"#2f2f2f\" " +
+                                            " activeColor=\"#FF5722\" " +
+                                            " buttonBackgroundColor=\"#ffd55a\" "+
+                                            " buttonTextColor=\"#790000\">" +
+                                            " </script> ";
+
     public static final boolean APK_MODE_RELEASE = true;
     public static final String APP_TAG = "Boost App";
     public static final String RIA_NODE_DATA = "riaNodeDatas";

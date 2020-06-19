@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.rest.repositories.InventoryOrderRepository
+import com.inventoryorder.rest.repositories.ProductOrderRepository
 
 class OrderCreateViewModel : BaseViewModel() {
 
@@ -13,8 +15,12 @@ class OrderCreateViewModel : BaseViewModel() {
     return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
   }
 
-  fun getSellerAllOrder(auth: String, request: OrderSummaryRequest): LiveData<BaseResponse> {
-    return InventoryOrderRepository.getSellerAllOrder(auth, request).toLiveData()
+  fun getSellerOrders(auth: String, request: OrderSummaryRequest): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getSellerOrders(auth, request).toLiveData()
+  }
+
+  fun getSellerOrdersFilter(auth: String, request: OrderFilterRequest): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getSellerOrdersFilter(auth, request).toLiveData()
   }
 
   fun getAssurePurchaseOrder(request: OrderSummaryRequest): LiveData<BaseResponse> {
@@ -39,6 +45,10 @@ class OrderCreateViewModel : BaseViewModel() {
 
   fun cancelOrder(clientId: String?, orderId: String?, cancellingEntity: String?): LiveData<BaseResponse> {
     return InventoryOrderRepository.cancelOrder(clientId, orderId, cancellingEntity).toLiveData()
+  }
+
+  fun getProductDetails(productId: String?): LiveData<BaseResponse> {
+    return ProductOrderRepository.getProductDetails(productId).toLiveData()
   }
 
 }

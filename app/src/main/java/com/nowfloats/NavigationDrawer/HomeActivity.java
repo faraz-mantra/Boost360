@@ -22,19 +22,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.view.GravityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -45,6 +32,18 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -57,7 +56,6 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
-//import com.nfx.leadmessages.ReadMessages;
 import com.google.firebase.iid.InstanceIdResult;
 import com.inventoryorder.constant.FragmentType;
 import com.inventoryorder.constant.IntentConstant;
@@ -112,7 +110,6 @@ import com.nowfloats.enablekeyboard.KeyboardFragment;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInboxFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
-import com.nowfloats.manageinventory.OrderDetailsActivity;
 import com.nowfloats.manageinventory.SellerAnalyticsActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
@@ -160,7 +157,9 @@ import static com.inventoryorder.ui.FragmentContainerOrderActivityKt.startFragme
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO_REMOVE;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_PAID;
-import static com.nowfloats.manageinventory.ManageInventoryFragment.getAppointmentType;
+import static com.nowfloats.manageinventory.ManageInventoryFragment.getExperienceType;
+
+//import com.nfx.leadmessages.ReadMessages;
 
 
 public class HomeActivity extends AppCompatActivity implements SidePanelFragment.OnItemClickListener
@@ -436,11 +435,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Bundle bundle = new Bundle();
                 PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
                 bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
-                bundle.putString(IntentConstant.INVENTORY_TYPE.name(), session.getFP_AppExperienceCode());
+                bundle.putString(IntentConstant.EXPERIENCE_CODE.name(), session.getFP_AppExperienceCode());
                 bundle.putString(IntentConstant.ORDER_ID.name(), mPayload);
-                if (getAppointmentType(session.getFP_AppExperienceCode())) {
-                    startFragmentActivityNew(this, FragmentType.BOOKING_DETAIL_VIEW, bundle, false);
-                } else startFragmentActivityNew(this, FragmentType.ORDER_DETAIL_VIEW, bundle, false);
+                int experienceType = getExperienceType(session.getFP_AppExperienceCode());
+
+                if (experienceType == 1) startFragmentActivityNew(this, FragmentType.APPOINTMENT_DETAIL_VIEW, bundle, false);
+                else if (experienceType == 3) startFragmentActivityNew(this, FragmentType.ORDER_DETAIL_VIEW, bundle, false);
 //                Intent orderDetail = new Intent(HomeActivity.this, OrderDetailsActivity.class);
 //                orderDetail.putExtra("orderId", mPayload);
 //                startActivity(orderDetail);
@@ -1178,36 +1178,19 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-/*<<<<<<< HEAD
-                if (nextScreen.equals(getString(R.string.keyboard))) {
-//                    Intent intent = new Intent(HomeActivity.this, PaymentOptionsActivity.class);
-//                    startActivity(intent);
-=======*/
                 if (nextScreen.equals(getString(R.string.keyboard))) {
                     WebEngageController.trackEvent("NAV - BIZ_KEYBOARD", "BIZ_KEYBOARD", session.getFpTag());
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.facebook_leads))) {
-                    Toast.makeText(getApplicationContext(), "Facebook Leads clicked", Toast.LENGTH_LONG).show();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, facebookLeadsFragment, "FacebookLeads")
+                    Toast.makeText(getApplicationContext(), "Facebook Lead Ads clicked", Toast.LENGTH_LONG).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, facebookLeadsFragment, "FacebookLeadAds")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.business_profile))) {
-                    //Intent businessProfileIntent = new Intent(HomeActivity.this, BusinessProfile_HomeActivity.class);
-                    //startActivity(businessProfileIntent)
-                    // ;
-                    //slidingTabLayout.setVisibility(View.GONE);
                     shareButton.setVisibility(View.VISIBLE);
                     plusAddButton.setVisibility(View.GONE);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessFragment, "Profile")
                             .commit();
-                    // getSupportFragmentManager().beginTransaction().
-                    //        replace(R.id.mainFrame, businessFragment).commit();
-
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.mainFrame, businessFragment)
-//                            // Add this transaction to the back stack
-//                    .addToBackStack("Profile")
-//                    .commit();
                 } else if (nextScreen.equals(getString(R.string.manage_customers))) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
                             .commit();
@@ -1324,7 +1307,20 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     WebEngageController.trackEvent("NAV - CONTENT_SHARING_SETTINGS", "CONTENT_SHARING_SETTINGS", null);
                     /*Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                     startActivity(socialSharingIntent);*/
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
+                    try {
+                        Bundle bundle = new Bundle();
+                        Intent channelIntent = new Intent(HomeActivity.this, Class.forName("com.onboarding.nowfloats.ui.channel.ChannelPickerActivity"));
+                        session.setHeader(Constants.WA_KEY);
+                        bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
+                        bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
+                        bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
+                        bundle.putBoolean("IsUpdate", true);
+                        channelIntent.putExtras(bundle);
+                        startActivity(channelIntent);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
                     WebEngageController.trackEvent("NAV - ORDERS", "ORDERS", null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
@@ -1333,10 +1329,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //                    startActivity(socialSharingIntent);
                 } else if (nextScreen.equals(getString(R.string.manage_inbox))) {
                     WebEngageController.trackEvent("NAV - ENQUIRIES", "ENQUIRIES", null);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInboxFragment, "ManageInbox")
-                            .commit();
-//                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
-//                    startActivity(socialSharingIntent);
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInboxFragment, "ManageInbox")
+//                            .commit();
+                    Intent queries = new Intent(HomeActivity.this, BusinessEnquiryActivity.class);
+                    startActivity(queries);
                 } else if (nextScreen.equals(getString(R.string.manage_customer_calls))) {
                     WebEngageController.trackEvent("NAV - CALLS", "CALLS", null);
                     Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);

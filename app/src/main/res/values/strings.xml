@@ -743,19 +743,19 @@
         <item>used cars</item>
     </string-array>
     <string-array name="on_boarding_description">
-        <item>Hey, this is your Boost360 dashboard. Let us tell you more about the product and how to use it to run your business. Visit our <a href="https://www.getboost360.com/FAQ">FAQ</a> section for more information.</item>
-        <item>Site health indicates readiness of your website for online discovery. These basic factors ensure that search engines take notice of your new website.</item>
-        <item>Now you are ready for getting discovered online, but your site is not optimized for website visitors. Your potential customers will lookout for more information. Take a look at these tips to add an "About Us" Page.</item>
-        <item>Your potential customers are looking for products or services. Showcase it to them to increase your revenues.</item>
-        <item>Manage your website on-the-go and get discovered online, real-time. Your business in your hands now.</item>
-        <item>Now your website experience is complete for website visitors to discover. Now, let us help you get 20 unique visitors. Why don\'t you broadcast your website on WhatsApp or share it with your Family and Friends group?</item>
+        <item>Hey, this is your Boost360 dashboard. Visit our <a href="https://www.getboost360.com/FAQ">FAQ</a> section for more information.</item>
+        <item>Site health indicates readiness of your account for online discovery. These basic factors ensure that your business is optimised to attract new customers online.</item>
+        <item>Now you are ready for getting discovered online. Your potential customers will lookout for more information. Take a look at these tips to add an "About Us".</item>
+        <item>Your potential customers are looking for your catalog online. Showcase it to them, to increase your revenues.</item>
+        <item>Manage your business on-the-go and get discovered online, real-time. Your digital success in your hands now.</item>
+        <item>Now your account experience is complete. Now, let us help you get 20 unique visitors to your new website. Why don\'t you broadcast your website on WhatsApp or share it with your existing customers?</item>
     </string-array>
     <string-array name="on_boarding_titles">
         <item>Welcome Aboard!</item>
         <item>Your Site Health Score is %s!</item>
         <item>Tell more about your Business!</item>
         <item>Add your products!</item>
-        <item>Awesome, you are using NowFloats Boost!</item>
+        <item>Awesome, your setup is now complete!</item>
         <item>Let\'s get some of your friends to see your site!</item>
     </string-array>
     <string-array name="on_boarding_btnTexts">
@@ -764,7 +764,7 @@
         <item>Add An \"About Us\" Page</item>
         <item>Add Products</item>
         <item>What\'s Next</item>
-        <item>Broadcast Your Website On WhatsApp</item>
+        <item>Broadcast Your Business On WhatsApp</item>
     </string-array>
     <string-array name="social_array">
         <item>Facebook</item>
@@ -1708,8 +1708,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="support_name">Support</string>
     <string name="wildfire_analytics">Wildfire</string>
     <string name="manage_content">Manage Content</string>
-    <string name="content_sharing_settings">Content Sharing Settings</string>
-    <string name="account_settings">Account Settings</string>
+    <string name="content_sharing_settings">My digital channels</string>
+    <string name="account_settings">Settings</string>
     <string name="about">About Boost</string>
     <string name="upgrades">Upgrades</string>
     <string name="add_ons">Add-ons</string>
@@ -1727,7 +1727,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Privacy Policy</item>
     </string-array>
     <string name="keyboard">Keyboard</string>
-    <string name="facebook_leads">Facebook Leads</string>
+    <string name="facebook_leads">Facebook Lead Ads</string>
     <string name="website_domain">Website Domain</string>
     <string name="testimonials">Testimonials</string>
     <!--<string name="keyboard_message">The Boost Keyboard allows you to share your products and updates without leaving a chat.We do not store, send or share any data that is typed on the Boost Keyboard.</string>
@@ -1763,10 +1763,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string-array name="account_setting_tab_items">
         <!--<item>Seller Profile</item>-->
-        <!--<item>Site Appearance</item>-->
-        <item>Account Info</item>
+        <item>Boost Extensions</item>
+        <item>Subscription History</item>
         <item>Domain and Email</item>
-        <!--  <item>Your Plans</item>-->
         <item>Change Password</item>
         <item>Log out</item>
     </string-array>
@@ -1847,6 +1846,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="message_2">is not authorized to support faster login to your Boost account.</string>
     <string name="how_to_use_boost">Learn How-To-Use Boost</string>
     <string name="view_support_tickets">View My Support Tickets</string>
-    <string name="loading_boost_dashboard_for_logged_in_user">Loading your Digital Business Dashboard ...</string>
+    <string name="loading_boost_dashboard_for_logged_in_user">Loading your business dashboard...</string>
     <string name="custome_domain_instruction">We strongly recommend that you use an existing domain (if you have one) for your Boost website. Online discovery will be better as search engines already recognize your domain.</string>
+    <string-array name="boost_extensions">
+        <item>Wordpress</item>
+        <item>Static Website</item>
+    </string-array>
 </resources>

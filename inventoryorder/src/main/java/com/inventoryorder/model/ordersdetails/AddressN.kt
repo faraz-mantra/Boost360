@@ -9,4 +9,8 @@ data class AddressN(
     val Country: String? = null,
     val Region: String? = null,
     val Zipcode: String? = null
-) : Serializable
+) : Serializable {
+  fun addressLine1(): String {
+    return AddressLine1 ?: ""
+  }
+}
