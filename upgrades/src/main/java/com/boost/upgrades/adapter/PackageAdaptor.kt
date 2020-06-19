@@ -65,6 +65,7 @@ class PackageAdaptor(
             val details = DetailsFragment.newInstance()
             val args = Bundle()
             args.putString("itemId", upgradeList.get(position).boost_widget_key)
+            args.putBoolean("packageView",true)
             details.arguments = args
 
             activity.addFragment(details, Constants.DETAILS_FRAGMENT)

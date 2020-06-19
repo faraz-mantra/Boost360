@@ -168,6 +168,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent">
 
+
                     <RelativeLayout
                         android:id="@+id/package_use_case_layout"
                         android:layout_width="wrap_content"
@@ -188,7 +189,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/_4sdp"
                             android:fontFamily="@font/open_sans_semibold"
-                            android:text="30% Discount"
+                            android:text="Blossom Pack"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_6sdp" />
                     </RelativeLayout>
@@ -205,7 +206,7 @@
 
                     <TextView
                         android:id="@+id/package_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
                         android:text="Exciting \nAdd-ons"
@@ -216,7 +217,8 @@
                         android:maxLines="3"
                         app:layout_constraintStart_toEndOf="@id/package_count"
                         app:layout_constraintTop_toBottomOf="@id/package_use_case_layout"
-                        app:layout_constraintBottom_toTopOf="@id/package_amount_layout"/>
+                        app:layout_constraintBottom_toTopOf="@id/package_amount_layout"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                     <LinearLayout
                         android:id="@+id/package_amount_layout"

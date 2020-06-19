@@ -3,6 +3,11 @@ package com.boost.upgrades.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.SharedPreferences
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
+import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.upgrades.data.model.CouponsModel
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 @SuppressLint("CommitPrefEdits")
 class SharedPrefs(activity: Activity) {
@@ -14,6 +19,9 @@ class SharedPrefs(activity: Activity) {
     private val pmt_id = "Last_Purchase_Order_Payment_Id"
     private val po_feature_count = "Last_Purchase_Order_Feature_Count"
     private val po_price = "Last_Purchase_Order_Price"
+
+    private val CART_ORDER_INFO = "CART_ORDER_INFO"
+    private val CART_COUPON_DETAILS = "CART_COUPON_DETAILS"
 
     private val temp_cartAmount = "Cart_Orig_Price"
     private val temp_couponDiscount = "Coupon_Discount"
@@ -93,6 +101,38 @@ class SharedPrefs(activity: Activity) {
     fun getCouponDiscountPercentage(): Int{
         return pref!!.getInt(temp_couponDiscount, 0)
     }
+
+    //storing orderInfo
+    fun storeCartOrderInfo(orderDetails: CreatePurchaseOrderResponse?){
+        val orderInfo = Gson().toJson(orderDetails)
+        editor!!.putString(CART_ORDER_INFO, orderInfo).apply()
+    }
+
+    fun getCartOrderInfo(): CreatePurchaseOrderResponse?{
+        val jsonString = pref!!.getString(CART_ORDER_INFO, null)
+        if(jsonString!=null) {
+            return Gson().fromJson<CreatePurchaseOrderResponse>(jsonString, object : TypeToken<CreatePurchaseOrderResponse>() {}.type)
+        }else{
+            return null
+        }
+    }
+
+    //storing couponDetails
+    fun storeApplyedCouponDetails(couponDetails: CouponsModel?){
+        val couponInfo = Gson().toJson(couponDetails)
+        editor!!.putString(CART_COUPON_DETAILS, couponInfo).apply()
+    }
+
+    fun getApplyedCouponDetails(): CouponsModel?{
+        val jsonString = pref!!.getString(CART_COUPON_DETAILS, null)
+        if(jsonString!=null) {
+            return Gson().fromJson<CouponsModel>(jsonString, object : TypeToken<CouponsModel>() {}.type)
+        }else{
+            return null
+        }
+    }
+
+
 
 
 }
