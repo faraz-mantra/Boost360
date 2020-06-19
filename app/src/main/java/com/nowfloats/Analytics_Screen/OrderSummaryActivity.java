@@ -103,7 +103,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            title.setText(getString(R.string.order_summary));
+            title.setText(com.nowfloats.util.Utils.getOrderAnalyticsTaxonomyFromServiceCode(mSession.getFP_AppExperienceCode()));
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

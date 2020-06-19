@@ -168,8 +168,9 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent">
 
+
                     <RelativeLayout
-                        android:id="@+id/package_blossom_pack_layout"
+                        android:id="@+id/package_use_case_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
@@ -179,15 +180,16 @@
                             android:layout_width="@dimen/_55sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/ic_flag_mask" />
+                            app:srcCompat="@drawable/ic_flag_mask" />
 
                         <TextView
+                            android:id="@+id/package_use_case"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/_4sdp"
                             android:fontFamily="@font/open_sans_semibold"
-                            android:text="30% Discount"
+                            android:text="Blossom Pack"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_6sdp" />
                     </RelativeLayout>
@@ -199,21 +201,24 @@
                         android:textSize="@dimen/_35sdp"
                         android:textColor="@color/common_text_color"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/package_blossom_pack_layout"
+                        app:layout_constraintTop_toBottomOf="@id/package_use_case_layout"
                         android:text="6"/>
 
                     <TextView
                         android:id="@+id/package_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
                         android:text="Exciting \nAdd-ons"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:textColor="@color/common_text_color"
                         android:textSize="@dimen/_12sdp"
+                        android:lines="2"
+                        android:maxLines="3"
                         app:layout_constraintStart_toEndOf="@id/package_count"
-                        app:layout_constraintTop_toBottomOf="@id/package_blossom_pack_layout"
-                        app:layout_constraintBottom_toTopOf="@id/package_amount_layout"/>
+                        app:layout_constraintTop_toBottomOf="@id/package_use_case_layout"
+                        app:layout_constraintBottom_toTopOf="@id/package_amount_layout"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                     <LinearLayout
                         android:id="@+id/package_amount_layout"

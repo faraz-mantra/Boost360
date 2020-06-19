@@ -15,8 +15,11 @@ interface FeaturesDao {
     @Query("SELECT * FROM Features WHERE is_premium = :premiumType ORDER BY feature_importance DESC")
     fun getFeaturesItems(premiumType: Boolean): Single<List<FeaturesModel>>
 
-    @Query("SELECT * FROM Features WHERE boost_widget_key=:item_id")
+    @Query("SELECT * FROM Features WHERE feature_id=:item_id")
     fun getFeaturesItemById(item_id: String): Single<FeaturesModel>
+
+    @Query("SELECT * FROM Features WHERE boost_widget_key=:widgetKey")
+    fun getFeaturesItemByWidgetKey(widgetKey: String): Single<FeaturesModel>
 
     @Query("SELECT EXISTS(SELECT * FROM Features)")
     fun checkEmptyFeatureTable(): Single<Int>
