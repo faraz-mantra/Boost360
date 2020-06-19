@@ -30,9 +30,9 @@
                     android:includeFontPadding="false"
                     android:text="Payment Configuration"
                     android:textColor="@color/white"
-                    tools:textColor="@color/black_4a4a4a"
                     app:fontFamily="@font/semi_bold"
-                    app:textType="HEADING_4" />
+                    app:textType="HEADING_4"
+                    tools:textColor="@color/black_4a4a4a" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvCustomerAddress"
@@ -41,18 +41,13 @@
                     android:includeFontPadding="false"
                     android:text="Select, how you want to receive money for your bookings."
                     android:textColor="@color/white"
-                    tools:textColor="@color/warm_grey"
                     android:textSize="12sp"
-                    app:fontFamily="@font/regular" />
+                    app:fontFamily="@font/italic"
+                    tools:textColor="@color/warm_grey" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <!-- <View
-             android:layout_width="match_parent"
-             android:layout_height="@dimen/size_1"
-             android:background="@color/view_background_color" />-->
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -67,14 +62,19 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/vw_boostPaymentGateway"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:orientation="horizontal"
                     android:padding="@dimen/size_20">
 
                     <com.framework.views.customViews.CustomRadioButton
+                        android:id="@+id/rb_boostPaymentGateway"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/dodger_blue_two"
+                        android:clickable="false" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
@@ -87,15 +87,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Boost payment gateway"
-                            android:textColor="@color/black"
+                            android:textColor="@color/black_2A2A2A"
                             android:textSize="19sp"
                             app:fontFamily="@font/semi_bold" />
 
                         <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/tv_boostPaymentGatewayDesc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:includeFontPadding="false"
-                            android:text="A premium service by Boost for secure payment collection (Learn more here)"
+                            android:text="@string/a_premium_service_by_boost_for_secure_payment_collection_learn_more_here"
                             android:textColor="@color/black_4a4a4a"
                             android:textSize="12sp"
                             app:fontFamily="@font/regular" />
@@ -112,14 +113,28 @@
                     android:background="@drawable/shape_grey_dotted_line" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/vw_customPaymentGateway"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:orientation="horizontal"
                     android:padding="@dimen/size_20">
 
                     <com.framework.views.customViews.CustomRadioButton
+                        android:id="@+id/rb_customPaymentGateway"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/dodger_blue_two"
+                        android:clickable="false"
+                        android:visibility="gone"/>
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_custom_payment_lock"
+                        android:visibility="visible"
+                        android:padding="@dimen/size_5"
+                        android:clickable="false" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
@@ -132,7 +147,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="My custom payment gateway"
-                            android:textColor="@color/black"
+                            android:textColor="@color/black_2A2A2A"
                             android:textSize="19sp"
                             app:fontFamily="@font/semi_bold" />
 
@@ -156,14 +171,19 @@
                     android:background="@drawable/shape_grey_dotted_line" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/vw_externalUrl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:orientation="horizontal"
                     android:padding="@dimen/size_20">
 
                     <com.framework.views.customViews.CustomRadioButton
+                        android:id="@+id/rb_externalUrl"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/dodger_blue_two"
+                        android:clickable="false" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
@@ -176,7 +196,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="External URL"
-                            android:textColor="@color/black"
+                            android:textColor="@color/black_2A2A2A"
                             android:textSize="19sp"
                             app:fontFamily="@font/semi_bold" />
 
