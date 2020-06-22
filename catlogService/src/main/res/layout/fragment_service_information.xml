@@ -498,38 +498,40 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/size_14"
-                        android:orientation="vertical"
-                        android:paddingTop="@dimen/size_16"
-                        android:paddingBottom="@dimen/size_16">
-
-                        <com.framework.views.customViews.CustomButton
-                            android:id="@+id/btn_confirm"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:background="@drawable/button_proceed"
-                            android:fontFamily="@font/semi_bold"
-                            android:gravity="center"
-                            android:padding="15dp"
-                            android:text="Confirm"
-                            android:textAllCaps="true"
-                            android:textColor="@color/white"
-                            app:textType="HEADING_6" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="10dp" />
+                        android:layout_height="@dimen/size_80" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.core.widget.NestedScrollView>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/size_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <com.framework.views.customViews.CustomButton
+                android:id="@+id/btn_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/button_proceed"
+                android:fontFamily="@font/semi_bold"
+                android:gravity="center"
+                android:padding="15dp"
+                android:text="Confirm"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                app:textType="HEADING_6" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
