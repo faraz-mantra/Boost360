@@ -118,7 +118,10 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:orientation="horizontal"
-                    android:padding="@dimen/size_20">
+                    android:paddingTop="@dimen/size_30"
+                    android:paddingBottom="@dimen/size_30"
+                    android:paddingLeft="@dimen/size_20"
+                    android:paddingRight="@dimen/size_20">
 
                     <com.framework.views.customViews.CustomRadioButton
                         android:id="@+id/rb_customPaymentGateway"
