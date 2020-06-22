@@ -97,6 +97,8 @@ class ChannelPickerActivity : AppBaseActivity<ActivityChannelPickerBinding, Cate
                 else if (it1.status == 200 || it1.status == 201 || it1.status == 202) {
                   val channelsAccessToken = (it1 as? ChannelsAccessTokenResponse)?.NFXAccessTokens
                   setDataRequestChannels(categoryData, channelsAccessToken, floatingPoint, fpTag)
+                } else if (it1.status == 404) {
+                  setDataRequestChannels(categoryData, ArrayList(), floatingPoint, fpTag)
                 } else errorMessage(it1.message())
               })
             } else errorMessage("${resources?.getString(R.string.error_getting_category_data)}")

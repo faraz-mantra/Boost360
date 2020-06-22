@@ -164,7 +164,10 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd -> startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
+      binding?.btnAdd -> {
+        showLongToast("Coming soon...")
+//        startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
+      }
     }
   }
 
