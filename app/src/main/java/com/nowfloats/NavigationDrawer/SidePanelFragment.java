@@ -486,6 +486,9 @@ public class SidePanelFragment extends Fragment {
             }
         });
 
+        //hide facebook layout option temp
+        facebookLayout.setVisibility(View.GONE);
+
         facebookTextView.setTypeface(robotoMedium);
         facebookLayout.setOnClickListener(new View.OnClickListener() {
             @Override
