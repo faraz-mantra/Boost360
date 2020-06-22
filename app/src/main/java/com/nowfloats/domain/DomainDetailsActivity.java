@@ -15,6 +15,7 @@ import com.boost.upgrades.UpgradeActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -103,8 +104,9 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     private boolean isDomainBookFailed = false;
     TextView domainNameTv, domainCreatedTv, domainExpiredTv, statusTv, expireMsgTv, bookedEmailTv;
     CardView domainDetailsCard, emailDetailsCard;
-    LinearLayout chooseDomainLayout, expiredLayout, emptyLayout, secondaryLayout;
+    LinearLayout expiredLayout, emptyLayout, secondaryLayout;
     TextView proceedBtn, confirmRequestTv, addEmail, buyItem, existingDomainProceed, newDomainProceed;
+    ConstraintLayout chooseDomainLayout;
 //    RadioButton chooseBtn;
     private MaterialDialog domainBookDialog;
 
@@ -154,7 +156,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         statusTv = (TextView) findViewById(R.id.tv_status);
         domainDetailsCard = (CardView) findViewById(R.id.cv_domain_details);
         emailDetailsCard = (CardView) findViewById(R.id.cv_email_details);
-        chooseDomainLayout = (LinearLayout) findViewById(R.id.ll_choose_domain);
+        chooseDomainLayout = (ConstraintLayout) findViewById(R.id.ll_choose_domain);
         emptyLayout = (LinearLayout) findViewById(R.id.ll_empty_view);
         expiredLayout = (LinearLayout) findViewById(R.id.ll_plan_expired);
         expireMsgTv = (TextView) expiredLayout.findViewById(R.id.tv_expire_msg);

@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_gravity="center"
         android:visibility="gone"
-        tools:visibility="visible"
+        tools:visibility="gone"
         layout="@layout/layout_choose_domain_options"/>
 
     <ScrollView
@@ -54,6 +54,7 @@
             <include
                 android:id="@+id/ll_empty_view"
                 android:visibility="gone"
+                tools:visiblity="visible"
                 layout="@layout/facebook_no_messages"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"/>
