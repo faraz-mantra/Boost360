@@ -412,11 +412,17 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <include layout="@layout/row_layout_added_specs" />
+                        <include
+                            android:id="@+id/server_by"
+                            layout="@layout/row_layout_added_specs" />
 
-                        <include layout="@layout/row_layout_added_specs" />
+                        <include
+                            android:id="@+id/duration"
+                            layout="@layout/row_layout_added_specs" />
 
-                        <include layout="@layout/row_layout_added_specs" />
+                        <include
+                            android:id="@+id/method"
+                            layout="@layout/row_layout_added_specs" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 

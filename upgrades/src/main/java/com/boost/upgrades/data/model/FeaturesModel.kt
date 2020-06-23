@@ -8,6 +8,9 @@ import androidx.room.PrimaryKey
 data class FeaturesModel (
 
     @PrimaryKey
+    @ColumnInfo(name = "feature_id")
+    var feature_id: String,
+
     @ColumnInfo(name = "boost_widget_key")
     var boost_widget_key: String,
 

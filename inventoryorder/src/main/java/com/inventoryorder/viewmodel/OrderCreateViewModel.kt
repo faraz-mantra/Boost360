@@ -7,6 +7,7 @@ import com.framework.models.toLiveData
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.rest.repositories.InventoryOrderRepository
+import com.inventoryorder.rest.repositories.ProductOrderRepository
 
 class OrderCreateViewModel : BaseViewModel() {
 
@@ -44,6 +45,10 @@ class OrderCreateViewModel : BaseViewModel() {
 
   fun cancelOrder(clientId: String?, orderId: String?, cancellingEntity: String?): LiveData<BaseResponse> {
     return InventoryOrderRepository.cancelOrder(clientId, orderId, cancellingEntity).toLiveData()
+  }
+
+  fun getProductDetails(productId: String?): LiveData<BaseResponse> {
+    return ProductOrderRepository.getProductDetails(productId).toLiveData()
   }
 
 }

@@ -22,6 +22,8 @@ import com.google.gson.reflect.TypeToken;
 import com.inventoryorder.constant.FragmentType;
 import com.inventoryorder.constant.IntentConstant;
 import com.inventoryorder.model.PreferenceData;
+import com.nowfloats.Analytics_Screen.OrderAnalyticsActivity;
+import com.nowfloats.Analytics_Screen.OrderSummaryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
@@ -46,7 +48,7 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  * A simple {@link Fragment} subclass.
  */
 public class ManageInventoryFragment extends Fragment {
-    TextView tvPaymentSetting, tvTransactionType_1, tvTransactionType_2;
+    TextView tvTransactionType_1, tvTransactionType_2, orderAnalytics;
     ImageView ivLockWidget, ivPaymentIcon;
     //Typeface robotoLight;
     private SharedPreferences pref = null;
@@ -187,11 +189,6 @@ public class ManageInventoryFragment extends Fragment {
 
         try {
             ivLockWidget.setVisibility(View.GONE);
-            //Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
-            //robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
-
-            tvPaymentSetting = mainView.findViewById(R.id.tvPaymentSetting);
-            //tvPaymentSetting.setTypeface(robotoMedium);
 
             String svc_code = session.getFP_AppExperienceCode();
             tvTransactionType_1 = mainView.findViewById(R.id.transactions_type_1);
@@ -202,60 +199,25 @@ public class ManageInventoryFragment extends Fragment {
             tvTransactionType_2 = mainView.findViewById(R.id.transactions_type_2);
             ImageView tranType2Image = mainView.findViewById(R.id.transactions_type_2_image);
             String secondTransactionType;
-            if (Utils.isRoomBooking(svc_code)) secondTransactionType = "Orders";
-            else secondTransactionType = Utils.getSecondTypeTrasactionsTaxonomyFromServiceCode(svc_code);
+            if (Utils.isRoomBooking(svc_code))
+                secondTransactionType = "Orders";
+            else
+                secondTransactionType = Utils.getSecondTypeTrasactionsTaxonomyFromServiceCode(svc_code);
             tvTransactionType_2.setText(secondTransactionType);
             if (secondTransactionType.length() > 1) {
                 tvTransactionType_2.setVisibility(View.VISIBLE);
                 tranType2Image.setVisibility(View.VISIBLE);
+                mainView.findViewById(R.id.line_view2).setVisibility(View.VISIBLE);
             } else {
                 tvTransactionType_2.setVisibility(View.GONE);
                 tranType2Image.setVisibility(View.GONE);
+                mainView.findViewById(R.id.line_view2).setVisibility(View.GONE);
             }
-
-            tvPaymentSetting.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_PAYMENT_SETTING, null);
-                    Intent i = new Intent(getActivity(), PaymentSettingsActivity.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
-            });
 
             tvTransactionType_1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     startOrdersActivity();
-
-//                    if(mIsAPEnabled) {
-//                        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
-//                        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
-//                        startActivity(i);
-//                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//                    }else {
-//                        new AlertDialog.Builder(getActivity())
-//                                .setMessage("Enable Assured Purchase to view Seller Analytics")
-//                                .setPositiveButton("Payment Settings", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        dialog.dismiss();
-//                                        MixPanelController.track(EventKeysWL.SIDE_PANEL_PAYMENT_SETTING, null);
-//                                        Intent i = new Intent(getActivity(), PaymentSettingsActivity.class);
-//                                        startActivity(i);
-//                                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//                                    }
-//                                })
-//                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        dialog.dismiss();
-//                                    }
-//                                })
-//                                .show();
-//
-//                    }
                 }
             });
 
@@ -267,23 +229,23 @@ public class ManageInventoryFragment extends Fragment {
                     } else {
                         startFragmentActivityNew(activity, FragmentType.ALL_VIDEO_CONSULT_VIEW, getBundleData(), false);
                     }
-//                    Toast.makeText(getActivity(), "Coming Soon. Drop an email to ria@getboost360.com in case of urgency.", Toast.LENGTH_LONG).show();
                 }
             });
+
+            orderAnalytics = mainView.findViewById(R.id.tvOrderSummary);
+            orderAnalytics.setText(Utils.getOrderAnalyticsTaxonomyFromServiceCode(svc_code));
+            orderAnalytics.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(), OrderSummaryActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        /*if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats"))
-        {
-            tvPaymentSetting.setVisibility(View.VISIBLE);
-            ivPaymentIcon.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-            tvPaymentSetting.setVisibility(View.GONE);
-            ivPaymentIcon.setVisibility(View.GONE);
-        }*/
     }
 
     private void startOrdersActivity() {

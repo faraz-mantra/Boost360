@@ -104,6 +104,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                 }
                                             }
                                             data.add(FeaturesModel(
+                                                    item._kid,
                                                     item.boost_widget_key,
                                                     item.name,
                                                     item.feature_code,
@@ -325,6 +326,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         val discount = 100 - updatesModel.discount_percent
         val paymentPrice = (discount * updatesModel.price) / 100.0
         val cartItem = CartModel(
+                updatesModel.feature_id,
                 updatesModel.boost_widget_key,
                 updatesModel.name,
                 updatesModel.description,

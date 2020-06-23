@@ -97,6 +97,27 @@ public class Utils {
         }
     }
 
+    public static String getOrderAnalyticsTaxonomyFromServiceCode(String category_code) {
+        switch (category_code) {
+            case "DOC":
+            case "HOS":
+            case "SVC":
+            case "SPA":
+            case "SAL":
+                return "Appointment Analytics";
+            case "EDU":
+                return "Admission Request Analytics";
+            case "HOT":
+                return "Booking Analytics";
+            case "RTL":
+            case "MFG":
+            case "CAF":
+                return "Order Analytics";
+            default:
+                return "Order Analytics";
+        }
+    }
+
     public static boolean isRoomBooking(String category_code) {
         return ("HOT".equals(category_code));
     }
@@ -142,6 +163,20 @@ public class Utils {
                 return "Food Item";
             default:
                 return "Catalogue";
+        }
+    }
+
+
+    public static String getProductType(String category_code) {
+        switch (category_code) {
+            case "SVC":
+            case "DOC":
+            case "HOS":
+            case "SPA":
+            case "SAL":
+                return "SERVICES";
+            default:
+                return "PRODUCTS";
         }
     }
 }

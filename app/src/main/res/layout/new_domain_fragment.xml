@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="#EFEFEF"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:orientation="vertical"
+        android:padding="@dimen/_20sdp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/white"
+            android:text="Enter the domain you want to be booked &amp; mapped to your Boost business website."/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/edittext_bg_elevated">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/_5sdp"
+                android:hint="Write a domain name..."
+                android:background="@null"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#7EADFD"
+                android:padding="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=".com"
+                    android:textColor="@color/white"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:textSize="@dimen/_15sdp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/main_spinner_bg"/>
+
+                <!--            <Spinner-->
+                <!--                android:id="@+id/expiry_month_value"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:background="@drawable/main_spinner_bg"-->
+                <!--                android:inputType="text"-->
+                <!--                android:paddingStart="@dimen/_10sdp"-->
+                <!--                android:paddingEnd="@dimen/_10sdp"-->
+                <!--                android:spinnerMode="dropdown"-->
+                <!--                android:text=".com"-->
+                <!--                android:textColor="@color/common_text_color"-->
+                <!--                android:textColorHint="@color/common_text_color"-->
+                <!--                app:layout_constraintStart_toStartOf="parent" />-->
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textColor="@color/white"
+            android:text="You’re getting this domain worth ₹600 for first year."/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/_50sdp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*Boost doesn’t buy any premium domain."/>
+            <TextView
+                android:id="@+id/confirm_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/orange_button_click_effect"
+                android:fontFamily="@font/open_sans_semibold"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:gravity="center"
+                android:text="Confirm"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:elevation="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+
+            <TextView
+                android:id="@+id/order_needs_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@drawable/order_grey_button_click_effect"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:text="back"
+                android:textAllCaps="true"
+                android:elevation="@dimen/_2sdp"
+                android:textColor="@color/common_text_color" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
