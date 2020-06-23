@@ -123,6 +123,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     if (result == null) return
     channelAccessToken.userAccountId = result.data?.id?.toString()
     channelAccessToken.userAccessTokenKey = result.data?.authToken?.token
+    channelAccessToken.userAccessTokenSecret = result.data?.authToken?.secret
     channelAccessToken.userAccountName = result.data?.userName
 
     getUserDetails(result.data) { userDetails, error ->

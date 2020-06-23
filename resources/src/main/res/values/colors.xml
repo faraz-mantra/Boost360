@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <color name="greyish_brown">#4a4a4a</color>
+  <color name="greyish_brown_light">#898A8D</color>
   <color name="greyish_brown_40">#664A4A4A</color>
   <color name="greyish_brown_80">#CC4A4A4A</color>
   <color name="cerulean_blue">#0068e0</color>
   <color name="dodger_blue">#53a0fd</color>
+  <color name="light_blue_one">#4889F8</color>
   <color name="dodger_blue_two">#4889f8</color>
   <color name="dodger_blue_two_70">#b34889f8</color>
   <color name="dodger_blue_two_10">#194889f8</color>
   <color name="dodger_blue_two_30">#504889f8</color>
   <color name="dodger_blue_light">#2f9cd9</color>
   <color name="white">#ffffff</color>
+  <color name="white_light">#F3F3F3</color>
   <color name="aliceblue">#e6f4fc</color>
   <color name="aliceblue_10">#ecf3fe</color>
   <color name="warm_light">#979797</color>

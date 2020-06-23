@@ -3,9 +3,11 @@ package com.onboarding.nowfloats.ui.updateChannel
 import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -20,6 +22,7 @@ import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyDigitalChannelFragment
+
 
 open class ContainerUpdateChannelActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
@@ -140,6 +143,15 @@ open class ContainerUpdateChannelActivity : AppBaseActivity<ActivityFragmentCont
       }
     }
     return super.onOptionsItemSelected(item)
+  }
+
+  fun changeTheme(color: Int) {
+    getToolbar()?.setBackgroundColor(ContextCompat.getColor(this, color))
+    window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+      window?.statusBarColor = ContextCompat.getColor(this, color)
+    }
   }
 
 }

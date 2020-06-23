@@ -23,7 +23,7 @@
     <activity
         android:name=".ui.updateChannel.ContainerUpdateChannelActivity"
         android:screenOrientation="portrait"
-        android:theme="@style/AppTheme.channel"
+        android:theme="@style/AppThemeChannel"
         android:windowSoftInputMode="adjustPan" />
     <activity
         android:name=".ui.channel.ChannelPickerActivity"

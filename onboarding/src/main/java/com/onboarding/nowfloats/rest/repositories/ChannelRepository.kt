@@ -27,7 +27,9 @@ object ChannelRepository : AppBaseRepository<ChannelRemoteDataSource, ChannelLoc
       AccessTokenType.facebookpage -> postUpdateFacebookPageAccessToken(request)
       AccessTokenType.facebookshop -> postUpdateFacebookShopAccessToken(request)
       AccessTokenType.twitter -> postUpdateTwitterAccessToken(request)
-      AccessTokenType.googlemybusiness -> postUpdateGoogleMyBusinessToken(request)
+      AccessTokenType.googlemybusiness,
+      AccessTokenType.googlesearch,
+      AccessTokenType.googlemap -> postUpdateGoogleMyBusinessToken(request)
     }
   }
 

@@ -26,6 +26,11 @@
           "isSelected": true
         },
         {
+          "type": "FB_SHOP",
+          "priority": "learn_more",
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
+        },
+        {
           "type": "WAB",
           "priority": "important",
           "moreDesc": "With 1.5 billion users, 1 billion of whom are active daily, it’s more than likely your audience will be using WhatsApp on a regular basis. With WhatsApp Business, you can be readily available to customers and quickly respond to messages and enquiries.",
