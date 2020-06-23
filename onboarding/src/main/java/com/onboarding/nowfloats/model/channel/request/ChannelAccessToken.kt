@@ -10,12 +10,22 @@ data class ChannelAccessToken(
     @SerializedName("UserAccessTokenKey")
     var userAccessTokenKey: String? = null,
     @SerializedName("UserAccessTokenSecret")
-    var userAccessTokenSecret: String? = null, // TODO Not sure what to send here
+    var userAccessTokenSecret: String? = null,
     @SerializedName("UserAccountId")
     var userAccountId: String? = null,
     @SerializedName("UserAccountName")
     var userAccountName: String? = null,
+    //TODO  for shop
+    @SerializedName("PixelId")
+    var pixelId: String? = null,
+    @SerializedName("CatalogId")
+    var catalogId: String? = null,
+    @SerializedName("MerchantSettingsId")
+    var merchantSettingsId: String? = null,
+    //TODO url
     var profilePicture: String? = null
+
+
 ) : Parcelable {
   constructor(parcel: Parcel) : this(
       parcel.readString(),
@@ -26,7 +36,7 @@ data class ChannelAccessToken(
       parcel.readString())
 
   enum class AccessTokenType {
-    facebookpage, facebookshop, googlemybusiness, twitter
+    facebookpage, facebookshop, googlemybusiness, twitter, googlesearch, googlemap
   }
 
   override fun writeToParcel(parcel: Parcel, flags: Int) {

@@ -2,13 +2,15 @@
 
   <style name="BusinessOnboardingTheme" parent="AppBaseTheme" />
 
-  <style name="AppTheme.channel" parent="@style/Theme.AppCompat.NoActionBar">
+  <style name="AppThemeChannel" parent="@style/Theme.AppCompat.NoActionBar">
     <item name="colorPrimary">@color/bg_dark_grey</item>
     <item name="colorPrimaryDark">@color/bg_dark_grey</item>
     <item name="colorAccent">@color/colorAccent</item>
-    <item name="android:windowAnimationStyle">@null</item>
+    <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+    <item name="android:windowBackground">@color/white</item>
     <item name="android:windowDisablePreview">true</item>
   </style>
+
 
   <style name="FooterButtonStyle">
     <item name="android:layout_width">0dp</item>
@@ -89,7 +91,7 @@
     <item name="android:layout_marginEnd">@dimen/size_16</item>
     <item name="android:layout_marginBottom">@dimen/size_16</item>
     <item name="cardCornerRadius">@dimen/size_10</item>
-    <item name="cardElevation">@dimen/size_3</item>
+    <item name="cardElevation">@dimen/size_2</item>
     <item name="cardUseCompatPadding">true</item>
   </style>
 

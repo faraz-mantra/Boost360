@@ -9,9 +9,9 @@
       <solid android:color="#F9BD16" />
       <padding
           android:bottom="@dimen/size_5"
-          android:left="@dimen/size_5"
-          android:right="@dimen/size_5"
-          android:top="@dimen/size_5" />
+          android:left="@dimen/size_4"
+          android:right="@dimen/size_4"
+          android:top="@dimen/size_4" />
     </shape>
   </item>
 </layer-list>
