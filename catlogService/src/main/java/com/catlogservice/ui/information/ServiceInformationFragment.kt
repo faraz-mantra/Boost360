@@ -13,7 +13,6 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     }
   }
 
-
   override fun getLayout(): Int {
     return R.layout.fragment_service_information
   }
@@ -22,4 +21,14 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     return ServiceViewModel::class.java
   }
 
+  override fun onCreateView() {
+    super.onCreateView()
+    binding?.serverBy?.type?.hint = "e.g. Served by"
+    binding?.serverBy?.value?.hint = "Mr. Shruti"
+    binding?.duration?.type?.hint = "e.g Duration"
+    binding?.duration?.value?.hint = "30 min"
+    binding?.method?.type?.hint = "e.g. Method"
+    binding?.method?.value?.hint = "Dry"
+
+  }
 }

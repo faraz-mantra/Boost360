@@ -36,6 +36,7 @@ import java.util.List;
 
 public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Context mContext;
+    private String experienceCode;
     private String[] titles, descriptions, buttonText;
     private LinearLayout.LayoutParams linearLayoutParams;
     private int leftSpace, topSpace;
@@ -56,6 +57,63 @@ public class OnBoardingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         descriptions = mContext.getResources().getStringArray(R.array.on_boarding_description);
         titles = mContext.getResources().getStringArray(R.array.on_boarding_titles);
         buttonText = mContext.getResources().getStringArray(R.array.on_boarding_btnTexts);
+        //customise "Business" to category specific word
+        experienceCode = sharedPreferences.getString(Key_Preferences.GET_FP_EXPERIENCE_CODE, null);
+        switch (experienceCode){
+            case "DOC":
+                titles[2] = titles[2].replace("Business", "Practise");
+                titles[3] = titles[3].replace("products", "services");
+                buttonText[3] = buttonText[3].replace("Products", "Services");
+                buttonText[5] = buttonText[5].replace("Business", "Practise");
+                break;
+            case "HOS":
+                titles[2] = titles[2].replace("Business", "Hospital");
+                titles[3] = titles[3].replace("products", "services");
+                buttonText[3] = buttonText[3].replace("Products", "Services");
+                buttonText[5] = buttonText[5].replace("Business", "Hospital");
+                break;
+            case "HOT":
+                titles[2] = titles[2].replace("Business", "Hotel");
+                titles[3] = titles[3].replace("products", "rooms");
+                buttonText[3] = buttonText[3].replace("Products", "Rooms");
+                buttonText[5] = buttonText[5].replace("Business", "Hotel");
+                break;
+            case "CAF":
+                titles[2] = titles[2].replace("Business", "Restaurant");
+                titles[3] = titles[3].replace("products", "food items");
+                buttonText[3] = buttonText[3].replace("Products", "Food Item");
+                buttonText[5] = buttonText[5].replace("Business", "Restaurant");
+                break;
+            case "EDU":
+                titles[2] = titles[2].replace("Business", "Institute");
+                titles[3] = titles[3].replace("products", "courses");
+                buttonText[3] = buttonText[3].replace("Products", "Courses");
+                buttonText[5] = buttonText[5].replace("Business", "Institute");
+                break;
+            case "SVC":
+                titles[3] = titles[3].replace("products", "services");
+                buttonText[3] = buttonText[3].replace("Products", "Services");
+                break;
+            case "RTL":
+                titles[2] = titles[2].replace("Business", "Shop");
+                break;
+            case "SPA":
+                titles[2] = titles[2].replace("Business", "Spa");
+                titles[3] = titles[3].replace("products", "services");
+                buttonText[3] = buttonText[3].replace("Products", "Services");
+                buttonText[5] = buttonText[5].replace("Business", "Spa");
+                break;
+            case "SAL":
+                titles[2] = titles[2].replace("Business", "Salon");
+                titles[3] = titles[3].replace("products", "services");
+                buttonText[3] = buttonText[3].replace("Products", "Services");
+                buttonText[5] = buttonText[5].replace("Business", "Salon");
+                break;
+            case "MFG":
+                titles[2] = titles[2].replace("Business", "Unit");
+                break;
+        }
+
 
         //addAuthScreens();
     }

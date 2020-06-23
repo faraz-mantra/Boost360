@@ -31,16 +31,16 @@ class OrderSummaryModel(
 
   fun getOrderType(): ArrayList<OrderSummaryModel> {
     val list = ArrayList<OrderSummaryModel>()
-    list.add(OrderSummaryModel(type = OrderType.TOTAL.type, count = TotalOrders, isSelected = true))
-    list.add(OrderSummaryModel(type = OrderType.RECEIVED.type, count = TotalOrdersInProgress))
-    list.add(OrderSummaryModel(type = OrderType.SUCCESSFUL.type, count = TotalOrdersCompleted))
-    list.add(OrderSummaryModel(type = OrderType.CANCELLED.type, count = TotalOrdersCancelled))
-    list.add(OrderSummaryModel(type = OrderType.ABANDONED.type, count = TotalOrdersAbandoned))
-    list.add(OrderSummaryModel(type = OrderType.ESCALATED.type, count = TotalOrdersEscalated))
+    list.add(OrderSummaryModel(type = OrderSummaryType.TOTAL.type, count = TotalOrders, isSelected = true))
+    list.add(OrderSummaryModel(type = OrderSummaryType.RECEIVED.type, count = TotalOrdersInProgress))
+    list.add(OrderSummaryModel(type = OrderSummaryType.SUCCESSFUL.type, count = TotalOrdersCompleted))
+    list.add(OrderSummaryModel(type = OrderSummaryType.CANCELLED.type, count = TotalOrdersCancelled))
+    list.add(OrderSummaryModel(type = OrderSummaryType.ABANDONED.type, count = TotalOrdersAbandoned))
+    list.add(OrderSummaryModel(type = OrderSummaryType.ESCALATED.type, count = TotalOrdersEscalated))
     return list
   }
 
-  enum class OrderType(val type: String, val value: String) {
+  enum class OrderSummaryType(val type: String, val value: String) {
     TOTAL("All", ""),
     RECEIVED("Received", OrderStatus.ORDER_CONFIRMED.name),
     PAYMENT_CONFIRM("Payment confirmed", OrderStatus.PAYMENT_CONFIRMED.name),
@@ -65,8 +65,8 @@ class OrderSummaryModel(
 
 
     companion object {
-      fun fromType(type: String): OrderType? = values().firstOrNull { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
-      fun fromValue(value: String): OrderType? = values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+      fun fromType(type: String): OrderSummaryType? = values().firstOrNull { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
+      fun fromValue(value: String): OrderSummaryType? = values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
     }
   }
 
@@ -77,6 +77,10 @@ class OrderSummaryModel(
     companion object {
       fun from(value: String): OrderStatus? = values().firstOrNull { it.name.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
     }
+  }
+
+  enum class OrderType {
+    ORDER, APPOINTMENT, VIDEO_CONSULTATION;
   }
 }
 

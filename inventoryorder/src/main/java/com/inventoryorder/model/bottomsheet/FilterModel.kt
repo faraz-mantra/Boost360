@@ -54,7 +54,7 @@ class FilterModel(val type: String? = null,
   enum class FilterType(val type: String, val value: String) {
     //TODO for Appointment
     ALL_APPOINTMENTS("All Appointments", ""),
-    CONFIRM("Confirm", OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name),
+    CONFIRM("Confirmed", OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name),
     DELIVERED("Delivered", OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name),
     CANCELLED("Cancelled", OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
 

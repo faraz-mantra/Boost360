@@ -62,7 +62,7 @@
               <com.framework.views.customViews.CustomTextView
                   android:id="@+id/order_type"
                   android:layout_width="wrap_content"
-                  android:layout_height="@dimen/size_26"
+                  android:layout_height="@dimen/size_30"
                   android:background="@drawable/ic_new_order"
                   android:gravity="center"
                   android:paddingStart="@dimen/size_12"
@@ -125,39 +125,10 @@
                   <com.framework.views.customViews.CustomTextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:drawableStart="@drawable/ic_order_status"
-                      android:drawablePadding="@dimen/size_4"
-                      android:includeFontPadding="false"
-                      android:text="@string/status_n"
-                      android:textColor="@color/greyish_brown"
-                      app:fontFamily="@font/semi_bold"
-                      app:textType="BODY_1" />
-
-                  <com.framework.views.customViews.CustomTextView
-                      android:id="@+id/tvOrderStatus"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_marginStart="@dimen/size_4"
-                      android:includeFontPadding="false"
-                      android:textColor="@color/orange"
-                      app:fontFamily="@font/bold"
-                      app:textType="BODY_1"
-                      tools:text="Order Placed" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_12"
-                    android:orientation="horizontal">
-
-                  <com.framework.views.customViews.CustomTextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
                       android:drawableStart="@drawable/ic_payment"
                       android:drawablePadding="@dimen/size_4"
                       android:includeFontPadding="false"
-                      android:text="@string/payment"
+                      android:text="@string/payment_type"
                       android:textColor="@color/greyish_brown"
                       app:fontFamily="@font/semi_bold"
                       app:textType="BODY_1" />
@@ -175,16 +146,36 @@
                       app:textType="BODY_1"
                       tools:text="COD" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tvDeliveryPaymentStatus"
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_16"
-                    android:textColor="@color/primary_grey"
-                    app:fontFamily="@font/regular"
-                    app:textType="CAPTION"
-                    tools:text="Status: Payment Pending" />
+                    android:layout_marginTop="@dimen/size_12"
+                    android:orientation="horizontal">
+
+                  <com.framework.views.customViews.CustomTextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:drawableStart="@drawable/ic_order_status"
+                      android:drawablePadding="@dimen/size_4"
+                      android:includeFontPadding="false"
+                      android:text="@string/status_payment_n"
+                      android:textColor="@color/greyish_brown"
+                      app:fontFamily="@font/semi_bold"
+                      app:textType="BODY_1" />
+
+                  <com.framework.views.customViews.CustomTextView
+                      android:id="@+id/tvOrderStatus"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginStart="@dimen/size_4"
+                      android:ellipsize="end"
+                      android:maxLines="1"
+                      android:includeFontPadding="false"
+                      android:textColor="@color/orange"
+                      app:fontFamily="@font/bold"
+                      app:textType="BODY_1"
+                      tools:text="Pending" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
               </LinearLayout>
 
               <LinearLayout
@@ -204,13 +195,16 @@
 
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btnBusiness"
-                    android:layout_width="@dimen/size_120"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/size_38"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="@dimen/size_4"
+                    android:drawablePadding="@dimen/size_6"
+                    android:paddingStart="@dimen/size_14"
+                    android:paddingEnd="@dimen/size_14"
                     android:background="@drawable/btn_rounded_black_border"
                     android:drawableEnd="@drawable/ic_arrow_drop_down_blue"
-                    android:paddingEnd="@dimen/size_14"
+                    android:textAllCaps="false"
                     android:text="@string/business"
                     android:textColor="@color/warm_grey_10"
                     app:textType="HEADING_6" />
@@ -294,6 +288,8 @@
                   android:layout_weight="1.2"
                   android:drawableStart="@drawable/ic_inbox"
                   android:drawablePadding="@dimen/size_4"
+                  android:ellipsize="end"
+                  android:maxLines="1"
                   android:includeFontPadding="false"
                   android:textColor="@color/greyish_brown"
                   app:fontFamily="@font/semi_bold"
@@ -375,12 +371,12 @@
                 android:orientation="vertical">
 
               <com.framework.views.customViews.CustomTextView
-                  android:id="@+id/tvShippingCost"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textColor="@color/warm_grey_10"
                   app:fontFamily="@font/regular"
                   app:textType="BODY_1"
+                  android:visibility="invisible"
                   tools:text="Shipping Cost: ₹0" />
 
               <com.framework.views.customViews.CustomTextView
@@ -409,6 +405,7 @@
           android:layout_height="wrap_content"
           android:background="@color/white"
           android:orientation="vertical"
+          android:id="@+id/bottom_btn"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent">
@@ -430,6 +427,8 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_2"
               android:layout_weight="1"
+              android:visibility="invisible"
+              tools:visibility="visible"
               android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView

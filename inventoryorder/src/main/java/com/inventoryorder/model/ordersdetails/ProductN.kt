@@ -20,4 +20,18 @@ data class ProductN(
   fun extraItemProductConsultation(): ExtraPropertiesN? {
     return ExtraProperties
   }
+
+  fun isAvailable(): Boolean {
+    return IsAvailable ?: false
+  }
+
+  fun price(): Double {
+    return Price ?: 0.0
+  }
+
+  fun discountAmount(): Double {
+    return DiscountAmount ?: 0.0
+  }
+
+
 }

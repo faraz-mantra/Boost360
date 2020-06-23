@@ -10,13 +10,13 @@ interface BundlesDao {
     @Query("SELECT * FROM Bundles")
     fun getBundleItems(): Single<List<BundlesModel>>
 
-    @Query("SELECT * FROM Bundles WHERE bundle_key=:item_id")
+    @Query("SELECT * FROM Bundles WHERE bundle_id=:item_id")
     fun getBundleItemById(item_id: String): Single<BundlesModel>
 
     @Query("SELECT COUNT(*) from Bundles")
     fun countBundlesItems(): Single<Int>
 
-    @Query("SELECT included_features from Bundles where bundle_key=:item_id")
+    @Query("SELECT included_features from Bundles where bundle_id=:item_id")
     fun getIncludedKeysInBundle(item_id: String): Single<String?>
 
     @Query("DELETE FROM Bundles")
@@ -31,7 +31,7 @@ interface BundlesDao {
     @Update
     fun updateBundles(vararg bundlesModel: BundlesModel?)
 
-    @Query("DELETE FROM Bundles WHERE bundle_key=:itemId")
+    @Query("DELETE FROM Bundles WHERE bundle_id=:itemId")
     fun deleteBundlesItem(vararg itemId: String)
 
 }

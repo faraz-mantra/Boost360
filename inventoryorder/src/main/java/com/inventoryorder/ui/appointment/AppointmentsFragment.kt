@@ -72,50 +72,76 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     experienceCode = arguments?.getString(IntentConstant.EXPERIENCE_CODE.name)?.trim()
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
-    layoutManager?.let { scrollPagingListener(it) }
-    getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isFirst = true)
     setOnClickListener(binding?.btnAdd)
+    layoutManager?.let { scrollPagingListener(it) }
+    requestFilter = getRequestFilterData(arrayListOf())
+    getSellerOrdersFilterApi(requestFilter, isFirst = true)
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd -> startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
+      binding?.btnAdd -> {
+        showLongToast("Coming soon...")
+//        startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
+      }
     }
   }
 
-  private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false) {
-    if (isFirst) binding?.progress?.visible()
+  private fun getSellerOrdersFilterApi(request: OrderFilterRequest, isFirst: Boolean = false, isRefresh: Boolean = false, isSearch: Boolean = false) {
+    if (isFirst || isSearch) binding?.progress?.visible()
     viewModel?.getSellerOrdersFilter(auth, request)?.observeOnce(viewLifecycleOwner, Observer {
       binding?.progress?.gone()
       if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        errorView(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val response = (it as? InventoryOrderListResponse)?.Data
-        if (isRefresh) orderList.clear()
-        if (response == null) {
-          orderAdapter?.notify(orderList)
-          return@Observer
+        if (isSearch.not()) {
+          if (isRefresh) orderList.clear()
+          if (response != null && response.Items.isNullOrEmpty().not()) {
+            removeLoader()
+            val list = response.Items?.map { item ->
+              item.recyclerViewType = RecyclerViewItemType.BOOKINGS_ITEM_TYPE.getLayout();item
+            } as ArrayList<OrderItem>
+            TOTAL_ELEMENTS = response.total()
+            orderList.addAll(list)
+            isLastPageD = (orderList.size == TOTAL_ELEMENTS)
+            setAdapterNotify(orderList)
+          } else errorView("No appointment available.")
+        } else {
+          if (response != null && response.Items.isNullOrEmpty().not()) {
+            val list = response.Items?.map { item ->
+              item.recyclerViewType = RecyclerViewItemType.BOOKINGS_ITEM_TYPE.getLayout();item
+            } as ArrayList<OrderItem>
+            setAdapterNotify(list)
+          } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
+          else errorView("No appointment available.")
         }
-        binding?.bookingRecycler?.visible()
-        val list = (response.Items ?: ArrayList()).map { item ->
-          item.recyclerViewType = RecyclerViewItemType.BOOKINGS_ITEM_TYPE.getLayout();item
-        } as ArrayList<OrderItem>
-        TOTAL_ELEMENTS = response.total()
-        orderList.addAll(list)
-        isLastPageD = (orderList.size == TOTAL_ELEMENTS)
-        if (isFirst.not() && orderAdapter != null) {
-          orderAdapter?.removeLoadingFooter()
-          isLoadingD = false
-          orderAdapter?.notify(getDateWiseFilter(orderList))
-        } else setAdapterBookingList(getDateWiseFilter(orderList))
-      } else {
-        binding?.bookingRecycler?.gone()
-        showShortToast(it.message)
-      }
+      } else errorView(it.message ?: "No appointment available.")
     })
+  }
+
+  private fun removeLoader() {
+    if (isLoadingD) {
+      orderAdapter?.removeLoadingFooter()
+      isLoadingD = false
+    }
+  }
+
+  private fun setAdapterNotify(items: ArrayList<OrderItem>) {
+    binding?.bookingRecycler?.visible()
+    binding?.errorTxt?.gone()
+    if (orderAdapter != null) {
+      orderAdapter?.notify(getDateWiseFilter(items))
+    } else setAdapterAppointmentList(getDateWiseFilter(items))
+  }
+
+  private fun errorView(error: String) {
+    binding?.bookingRecycler?.gone()
+    binding?.errorTxt?.visible()
+    binding?.errorTxt?.text = error
   }
 
   private fun getDateWiseFilter(orderList: ArrayList<OrderItem>): ArrayList<OrderItem> {
@@ -138,7 +164,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     }
   }
 
-  private fun setAdapterBookingList(list: ArrayList<OrderItem>) {
+  private fun setAdapterAppointmentList(list: ArrayList<OrderItem>) {
     binding?.bookingRecycler?.post {
       orderAdapter = AppBaseRecyclerViewAdapter(baseActivity, list, this)
       binding?.bookingRecycler?.layoutManager = layoutManager
@@ -195,11 +221,26 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private fun clickFilterItem(item: FilterModel?) {
     this.filterItem = item
     when (this.filterItem?.type?.let { FilterModel.FilterType.fromType(it) }) {
-      FilterModel.FilterType.ALL_APPOINTMENTS -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isFirst = true, isRefresh = true)
-      FilterModel.FilterType.CONFIRM -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name)), isFirst = true, isRefresh = true)
-      FilterModel.FilterType.DELIVERED -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name)), isFirst = true, isRefresh = true)
-      FilterModel.FilterType.CANCELLED -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name)), isFirst = true, isRefresh = true)
-      else -> getSellerOrdersFilterApi(getRequestFilterData(arrayListOf()), isFirst = true, isRefresh = true)
+      FilterModel.FilterType.ALL_APPOINTMENTS -> {
+        requestFilter = getRequestFilterData(arrayListOf())
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+      FilterModel.FilterType.CONFIRM -> {
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name))
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+      FilterModel.FilterType.DELIVERED -> {
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+      FilterModel.FilterType.CANCELLED -> {
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name))
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+      else -> {
+        requestFilter = getRequestFilterData(arrayListOf())
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
     }
   }
 
@@ -208,14 +249,14 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     val searchItem = menu.findItem(R.id.menu_item_search)
     if (searchItem != null) {
       val searchView = searchItem.actionView as SearchView
-      searchView.queryHint = resources.getString(R.string.queryHintBooking)
+      searchView.queryHint = resources.getString(R.string.queryHintAppointment)
       searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
           return false
         }
 
         override fun onQueryTextChange(newText: String?): Boolean {
-          newText?.let { startFilter(it.trim().toLowerCase()) }
+          newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
           return false
         }
       })
@@ -224,16 +265,9 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
 
   private fun startFilter(query: String) {
-    if (query.isEmpty().not()) {
-      orderListFilter.clear()
-      orderListFilter.addAll(orderList)
-      orderListFilter.let { it1 ->
-        val list = it1.filter {
-          it.referenceNumber().startsWith(query) || it.referenceNumber().contains(query) || it.referenceNumber().startsWith(query) || it.referenceNumber().contains(query)
-        } as ArrayList<OrderItem>
-        orderAdapter?.notify(getDateWiseFilter(list))
-      }
-    } else orderAdapter?.notify(getDateWiseFilter(orderList))
+    if (query.isNotEmpty() && query.length > 2) {
+      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = true)
+    } else setAdapterNotify(orderList)
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -262,7 +296,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         data?.let { d -> showLongToast(d.Message as String?) }
         val itemList = orderAdapter?.list() as ArrayList<OrderItem>
         if (itemList.size > position) {
-          itemList[position].Status = OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name
+          itemList[position].Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
           orderAdapter?.notifyItemChanged(position)
         } else showLongToast(it.message())
       }
@@ -279,12 +313,20 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
 
-  private fun getRequestFilterData(statusList: ArrayList<String>): OrderFilterRequest {
-    currentPage = PAGE_START
-    requestFilter = OrderFilterRequest(clientId = clientId, skip = currentPage, limit = PAGE_SIZE)
-    requestFilter.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.AND.name, QueryObject = getQueryList()))
-    requestFilter.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryStatusList(statusList)))
-    return requestFilter
+  private fun getRequestFilterData(statusList: ArrayList<String>, searchTxt: String = ""): OrderFilterRequest {
+    val requestFil: OrderFilterRequest?
+    if (searchTxt.isEmpty()) {
+      currentPage = PAGE_START
+      requestFil = OrderFilterRequest(clientId = clientId, skip = currentPage, limit = PAGE_SIZE)
+    } else requestFil = OrderFilterRequest(clientId = clientId)
+    requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.AND.name, QueryObject = getQueryList()))
+    if (statusList.isNullOrEmpty().not()) {
+      requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryStatusList(statusList)))
+    }
+    if (searchTxt.isNotEmpty()) {
+      requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryFilter(searchTxt)))
+    }
+    return requestFil
   }
 
   private fun getQueryList(): ArrayList<QueryObject> {
@@ -293,6 +335,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     queryList.add(QueryObject(QueryObject.QueryKey.Mode.value, OrderSummaryRequest.OrderMode.APPOINTMENT.name, QueryObject.Operator.EQ.name))
     queryList.add(QueryObject(QueryObject.QueryKey.DeliveryMode.value, OrderSummaryRequest.DeliveryMode.ONLINE.name, QueryObject.Operator.NE.name))
     queryList.add(QueryObject(QueryObject.QueryKey.DeliveryProvider.value, QueryObject.QueryValue.NF_VIDEO_CONSULATION.name, QueryObject.Operator.NE.name))
+    return queryList
+  }
+
+  private fun getQueryFilter(searchTxt: String): ArrayList<QueryObject> {
+    val queryList = ArrayList<QueryObject>()
+    queryList.add(QueryObject(QueryObject.QueryKey.ReferenceNumber.value, searchTxt, QueryObject.Operator.EQ.name))
     return queryList
   }
 
