@@ -13,4 +13,5 @@ object PreferenceConstant {
   const val IS_USER_SIGN_UP = "IsSignUpComplete"
   const val IS_UPDATE = "IsUpdate"
   const val GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG"
+  const val IS_START_ACTIVITY = "IsStartActivity"
 }

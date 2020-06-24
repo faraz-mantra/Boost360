@@ -21,6 +21,7 @@ import com.onboarding.nowfloats.ui.webview.WebViewActivity
 class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBinding, BaseViewModel>() {
 
   private var channelModel: ChannelModel? = null
+  var onClickedDisconnect: (channel: ChannelModel) -> Unit = { }
 
   override fun getLayout(): Int {
     return R.layout.dialog_digital_channel_info
@@ -63,7 +64,10 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
     super.onClick(v)
     when (v) {
       binding?.confirm -> this.dismiss()
-      binding?.disconnectBtn -> disConnectChannel()
+      binding?.disconnectBtn -> {
+        channelModel?.let { onClickedDisconnect(it) }
+        this.dismiss()
+      }
       binding?.title -> {
         openBrowser()
       }
@@ -87,9 +91,6 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
     }
   }
 
-  private fun disConnectChannel() {
-    showLongToast("Coming Soon...")
-  }
 
   override fun getTheme(): Int {
     return R.style.MaterialDialogTheme
