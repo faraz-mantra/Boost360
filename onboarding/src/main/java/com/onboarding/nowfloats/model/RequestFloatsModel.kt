@@ -56,6 +56,7 @@ class RequestFloatsModel(
     return 0
   }
 
+
   companion object CREATOR : Parcelable.Creator<RequestFloatsModel> {
     override fun createFromParcel(parcel: Parcel): RequestFloatsModel {
       return RequestFloatsModel(parcel)
@@ -66,3 +67,6 @@ class RequestFloatsModel(
     }
   }
 }
+
+
+

@@ -222,9 +222,11 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
       }
       FragmentType.REGISTRATION_BUSINESS_API_CALL -> {
         if (exitToast?.view?.windowToken != null) {
-          registrationBusinessApiFragment?.updateInfo()
-          NavigatorManager.popCurrentScreen(ScreenModel.Screen.REGISTERING)
-          super.onBackPressed()
+          if (registrationBusinessApiFragment?.isDigitalChannel() == false) {
+            registrationBusinessApiFragment?.updateInfo()
+            NavigatorManager.popCurrentScreen(ScreenModel.Screen.REGISTERING)
+            super.onBackPressed()
+          }
         } else exitToast?.show()
       }
       FragmentType.REGISTRATION_COMPLETE -> {
