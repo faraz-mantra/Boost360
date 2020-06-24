@@ -12,27 +12,25 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
-import com.onboarding.nowfloats.constant.PreferenceConstant
-import com.onboarding.nowfloats.constant.RecyclerViewActionType
-import com.onboarding.nowfloats.constant.RecyclerViewItemType
+import com.onboarding.nowfloats.constant.*
 import com.onboarding.nowfloats.databinding.FragmentDigitalChannelBinding
+import com.onboarding.nowfloats.extensions.addInt
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.RequestFloatsModel
 import com.onboarding.nowfloats.model.category.CategoryDataModel
-import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.model.channel.getAccessTokenType
-import com.onboarding.nowfloats.model.channel.getType
-import com.onboarding.nowfloats.model.channel.isWhatsAppChannel
+import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.model.channel.respose.NFXAccessToken
+import com.onboarding.nowfloats.model.navigator.ScreenModel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
 import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
+import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity
 import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 import io.reactivex.Completable
@@ -51,6 +49,11 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   private var adapterDisconnect: AppBaseRecyclerViewAdapter<ChannelModel>? = null
   private var listDisconnect: ArrayList<ChannelModel>? = null
   private var listConnect: ArrayList<ChannelModel>? = null
+
+  private val selectedChannels: ArrayList<ChannelModel>
+    get() {
+      return (listDisconnect?.filter { it -> it.isSelected == true } ?: ArrayList()) as ArrayList<ChannelModel>
+    }
 
   companion object {
     @JvmStatic
@@ -73,6 +76,30 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   override fun onCreateView() {
     super.onCreateView()
     updateRequestGetChannelData()
+    binding?.syncBtn?.setOnClickListener { syncChannels() }
+  }
+
+  private fun syncChannels() {
+    if (selectedChannels.isNullOrEmpty().not()) {
+      val bundle = Bundle()
+      var totalPages = if (requestFloatsModel?.isUpdate == true) 0 else 2
+      selectedChannels.let { channels ->
+        if (channels.haveFacebookShop()) totalPages++
+        if (channels.haveFacebookPage()) totalPages++
+        if (channels.haveTwitterChannels()) totalPages++
+        if (channels.haveWhatsAppChannels()) totalPages++
+      }
+      requestFloatsModel?.channels = ArrayList(selectedChannels)
+      NavigatorManager.pushToStackAndSaveRequest(ScreenModel(ScreenModel.Screen.CHANNEL_SELECT, getToolbarTitle()), requestFloatsModel)
+      bundle.addInt(IntentConstant.TOTAL_PAGES, totalPages).addInt(IntentConstant.CURRENT_PAGES, 1)
+      val channels = requestFloatsModel?.channels ?: return
+      when {
+        channels.haveFacebookPage() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, bundle)
+        channels.haveFacebookShop() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP, bundle)
+        channels.haveTwitterChannels() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS, bundle)
+        channels.haveWhatsAppChannels() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_WHATSAPP, bundle)
+      }
+    } else showShortToast(resources.getString(R.string.at_least_one_channel_selected))
   }
 
   private fun updateRequestGetChannelData() {

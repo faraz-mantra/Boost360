@@ -1,5 +1,6 @@
 package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 
+import android.os.Bundle
 import android.view.View
 import com.framework.base.BaseDialogFragment
 import com.framework.extensions.gone
@@ -11,9 +12,11 @@ import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
 import com.nowfloats.facebook.graph.FacebookGraphManager
 import com.onboarding.nowfloats.R
+import com.onboarding.nowfloats.constant.IntentConstant
 import com.onboarding.nowfloats.databinding.DialogDigitalChannelInfoBinding
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.model.channel.*
+import com.onboarding.nowfloats.ui.webview.WebViewActivity
 
 class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBinding, BaseViewModel>() {
 
@@ -61,7 +64,26 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
     when (v) {
       binding?.confirm -> this.dismiss()
       binding?.disconnectBtn -> disConnectChannel()
-      binding?.title -> disConnectChannel()
+      binding?.title -> {
+        openBrowser()
+      }
+    }
+  }
+
+  private fun openBrowser() {
+    var url: String? = null
+    if (channelModel != null) {
+      if (channelModel!!.isTwitterChannel() && channelModel?.channelAccessToken?.userAccountName.isNullOrEmpty().not()) {
+        url = "https://twitter.com/${channelModel?.channelAccessToken?.userAccountName?.trim()}"
+      } else if (channelModel!!.isFacebookPage() && channelModel?.channelAccessToken?.userAccountId.isNullOrEmpty().not()) {
+        url = "https://www.facebook.com/${channelModel?.channelAccessToken?.userAccountId}"
+      }
+    }
+    url?.let {
+      val bundle = Bundle()
+      bundle.putString(IntentConstant.DOMAIN_URL.name, url)
+      navigator?.startActivity(WebViewActivity::class.java, bundle)
+      this.dismiss()
     }
   }
 
