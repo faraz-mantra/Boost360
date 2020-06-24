@@ -73,6 +73,7 @@
                         android:id="@+id/rb_myBusinessLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:buttonTint="@color/dodger_blue_two"
                         android:clickable="false" />
 
@@ -133,6 +134,7 @@
                         android:id="@+id/rb_clientLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:buttonTint="@color/dodger_blue_two"
                         android:clickable="false" />
 
@@ -182,6 +184,7 @@
                         android:id="@+id/rb_otherVenue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:buttonTint="@color/dodger_blue_two"
                         android:clickable="false" />
 

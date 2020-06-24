@@ -70,6 +70,7 @@
                         android:id="@+id/rb_onlineOnly"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:buttonTint="@color/dodger_blue_two"
                         android:clickable="false" />
 
@@ -120,6 +121,7 @@
                         android:buttonTint="@color/dodger_blue_two"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:clickable="false" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -168,6 +170,7 @@
                         android:id="@+id/rb_bothOnlineInPerson"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:buttonTint="@color/dodger_blue_two"
                         android:clickable="false" />
 

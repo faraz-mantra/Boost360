@@ -73,6 +73,7 @@
                         android:id="@+id/rb_boostPaymentGateway"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:buttonTint="@color/dodger_blue_two"
                         android:clickable="false" />
 
@@ -81,7 +82,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/size_10"
                         android:orientation="vertical">
-
 
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="match_parent"
@@ -101,9 +101,7 @@
                             android:textSize="12sp"
                             app:fontFamily="@font/regular" />
 
-
                     </androidx.appcompat.widget.LinearLayoutCompat>
-
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -118,33 +116,22 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:orientation="horizontal"
-                    android:paddingTop="@dimen/size_30"
-                    android:paddingBottom="@dimen/size_30"
-                    android:paddingLeft="@dimen/size_20"
-                    android:paddingRight="@dimen/size_20">
-
-                    <com.framework.views.customViews.CustomRadioButton
-                        android:id="@+id/rb_customPaymentGateway"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/dodger_blue_two"
-                        android:clickable="false"
-                        android:visibility="gone"/>
+                    android:padding="@dimen/size_20">
 
                     <com.framework.views.customViews.CustomImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/size_4"
                         app:srcCompat="@drawable/ic_custom_payment_lock"
                         android:visibility="visible"
-                        android:padding="@dimen/size_5"
                         android:clickable="false" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_10"
+                        android:layout_marginStart="@dimen/size_32"
                         android:orientation="vertical">
-
 
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="match_parent"
@@ -165,7 +152,6 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <View
@@ -185,6 +171,7 @@
                         android:id="@+id/rb_externalUrl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:buttonTint="@color/dodger_blue_two"
                         android:clickable="false" />
 
@@ -193,7 +180,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/size_10"
                         android:orientation="vertical">
-
 
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="match_parent"
@@ -213,7 +199,6 @@
                             app:fontFamily="@font/regular" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
-
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -263,7 +248,6 @@
                     app:layout_constraintRight_toLeftOf="@id/btn_done"
                     app:layout_constraintTop_toTopOf="parent"
                     app:textType="HEADING_6" />
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -9,7 +9,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -95,7 +95,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingStart="@dimen/size_20"
+                        android:layout_marginStart="@dimen/size_20"
                         android:paddingEnd="@dimen/size_20">
 
                         <com.framework.views.customViews.CustomTextView
@@ -381,7 +381,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/size_5"
                                         android:background="@drawable/bg_rect_edit_txt"
-                                        android:hint="XX,XXX"
+                                        android:hint="XXX"
                                         android:inputType="number"
                                         android:padding="@dimen/size_8"
                                         android:singleLine="true"
@@ -585,11 +585,12 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_proceed"
                 android:clickable="true"
-                android:layout_margin="@dimen/size_10"
-                android:orientation="vertical"
+                android:layout_marginStart="@dimen/size_20"
+                android:layout_marginEnd="@dimen/size_20"
+                android:layout_marginBottom="@dimen/size_12"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <com.framework.views.customViews.CustomButton
                     android:layout_width="wrap_content"
@@ -597,18 +598,17 @@
                     android:layout_gravity="center_horizontal"
                     android:background="@null"
                     android:clickable="false"
-                    android:drawablePadding="@dimen/size_5"
                     android:fontFamily="@font/semi_bold"
                     android:gravity="center"
                     android:text="@string/save_amp_publish"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    app:drawableEndCompat="@drawable/ic_forward_arrow_white"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
+                    android:drawablePadding="@dimen/size_6"
+                    android:drawableEnd="@drawable/ic_forward_arrow_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:textType="HEADING_6" />
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
