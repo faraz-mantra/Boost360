@@ -41,17 +41,17 @@ class PaymentConfigBottomSheet() : BaseBottomSheetDialog<BottomShettPaymentConfi
         when (v) {
             binding?.vwBoostPaymentGateway -> {
                 binding?.rbBoostPaymentGateway?.isChecked = true
-                binding?.rbCustomPaymentGateway?.isChecked = false
+//                binding?.rbCustomPaymentGateway?.isChecked = false
                 binding?.rbExternalUrl?.isChecked = false
             }
             binding?.vwCustomPaymentGateway -> {
                 binding?.rbBoostPaymentGateway?.isChecked = false
-                binding?.rbCustomPaymentGateway?.isChecked = true
+//                binding?.rbCustomPaymentGateway?.isChecked = true
                 binding?.rbExternalUrl?.isChecked = false
             }
             binding?.vwExternalUrl -> {
                 binding?.rbBoostPaymentGateway?.isChecked = false
-                binding?.rbCustomPaymentGateway?.isChecked = false
+//                binding?.rbCustomPaymentGateway?.isChecked = false
                 binding?.rbExternalUrl?.isChecked = true
             }
             binding?.btnDone -> {
