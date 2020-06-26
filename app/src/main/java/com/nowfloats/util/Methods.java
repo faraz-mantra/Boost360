@@ -950,10 +950,11 @@ public class Methods {
 
     }
 
-    public static void sendEmail(Context context, String[] email) {
+    public static void sendEmail(Context context, String[] email, String subject) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:")); // only email apps should handle this
         intent.putExtra(Intent.EXTRA_EMAIL, email);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(intent);
         } else {
