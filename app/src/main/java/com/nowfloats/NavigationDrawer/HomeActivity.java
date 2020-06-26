@@ -817,8 +817,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             prefsEditor = pref.edit();
         }
 
+        Boolean isPaymentSuccess = pref.getBoolean("Last_payment_status", false);
         Set<String> keys = pref.getStringSet("Last_Purchase_Order_Feature_Keys", null);
-        if(keys != null){
+        if(keys != null && isPaymentSuccess){
             ArrayList<String> keys2 = new ArrayList<>();
             keys2.addAll(keys);
             Toast.makeText(HomeActivity.this, "Refreshing your business dashboard with the digital add-ons you just purchased.", Toast.LENGTH_LONG).show();
@@ -829,6 +830,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             }
         }
         prefsEditor.remove("Last_Purchase_Order_Feature_Keys");
+        prefsEditor.remove("Last_payment_status");
 
         if (!isCalled) {
             navigateView();
