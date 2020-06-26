@@ -96,7 +96,8 @@
           android:layout_marginEnd="0dp"
           android:layout_marginBottom="0dp"
           android:alpha="0"
-          android:text="@string/yes_link_my_existing_twitter_profile"
+          android:text="@string/yes_sync_my_twitter_profile"
+          android:gravity="center"
           app:textType="HEADING_6"
           tools:alpha="1" />
 

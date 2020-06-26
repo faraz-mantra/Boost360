@@ -199,7 +199,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_100" />
+            android:layout_height="@dimen/size_120" />
       </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 
@@ -207,15 +207,17 @@
         android:id="@+id/sync_btn"
         style="@style/FooterButtonStyle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_50"
+        android:layout_height="@dimen/size_80"
         android:layout_gravity="bottom"
         android:drawableEnd="@null"
         android:visibility="gone"
+        android:paddingBottom="@dimen/size_10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:textType="HEADING_6"
         tools:text="Continue Syncing 1 Channel"
+        android:textAllCaps="true"
         tools:visibility="visible" />
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
