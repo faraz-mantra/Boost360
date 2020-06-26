@@ -20,6 +20,7 @@ class SharedPrefs(activity: Activity) {
     private val po_feature_keys = "Last_Purchase_Order_Feature_Keys"
     private val po_feature_count = "Last_Purchase_Order_Feature_Count"
     private val po_price = "Last_Purchase_Order_Price"
+    private val po_payment_success = "Last_payment_status"
 
     private val CART_ORDER_INFO = "CART_ORDER_INFO"
     private val CART_COUPON_DETAILS = "CART_COUPON_DETAILS"
@@ -62,7 +63,7 @@ class SharedPrefs(activity: Activity) {
     }
 
     fun storeFeatureKeysInLastOrder(keys: Set<String>){
-        editor!!.putStringSet(po_feature_count, keys).apply()
+        editor!!.putStringSet(po_feature_keys, keys).apply()
     }
 
     fun storeFeaturesCountInLastOrder(count: Int){
@@ -120,6 +121,10 @@ class SharedPrefs(activity: Activity) {
         }else{
             return null
         }
+    }
+
+    fun storeOrderSuccessFlag(value: Boolean){
+        editor!!.putBoolean(po_payment_success, value).apply()
     }
 
     //storing couponDetails
