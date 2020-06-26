@@ -79,11 +79,12 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         cartCheckoutData.put("customerId", arguments!!.getString("customerId"))
         cartCheckoutData.put("amount", Math.round(totalAmount * 100).toInt())
         cartCheckoutData.put("order_id", arguments!!.getString("order_id"))
-//        cartCheckoutData.put("amount", 211*100)
-//        cartCheckoutData.put("order_id", "order_ETcdJ4Cuh9yIQq")
         cartCheckoutData.put("email", arguments!!.getString("email"))
         cartCheckoutData.put("currency", arguments!!.getString("currency"));
         cartCheckoutData.put("contact", arguments!!.getString("contact"))
+
+//        //this is a offer created from admin dashboard.
+//        cartCheckoutData.put("offer_id", arguments!!.getString("offer_F5hUaalR9tpSzn"))
 
         razorpay = (activity as UpgradeActivity).getRazorpayObject()
 
