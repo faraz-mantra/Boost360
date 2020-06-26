@@ -74,7 +74,7 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
   }
 
   override fun getWidth(): Int? {
-    return ScreenUtils.instance.getWidth(activity) - ConversionUtils.dp2px(32f)
+    return ScreenUtils.instance.getWidth(activity) - ConversionUtils.dp2px(36f)
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
