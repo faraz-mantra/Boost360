@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -92,14 +93,12 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
         EditText emailTv = view.findViewById(R.id.tv_person_email);
         EditText numberTv = view.findViewById(R.id.tv_person_number);
         EditText nameTv = view.findViewById(R.id.tv_person_name);
-        TextView descriptionTv = view.findViewById(R.id.tv_person_description);
-        TextView callActionBtn = view.findViewById(R.id.btn_call_action);
-        LinearLayout premium_options_container = view.findViewById(R.id.premium_support_options_container);
+        TextView slaTv = view.findViewById(R.id.sla_text);
+        RelativeLayout chatActionBtn = view.findViewById(R.id.btn_chat_action);
+        RelativeLayout callActionBtn = view.findViewById(R.id.btn_call_option);
 
         emailTv.setOnClickListener(this);
         numberTv.setOnClickListener(this);
-        TextView requestActionBtn = view.findViewById(R.id.btn_request_callback);
-
 
         view.findViewById(R.id.btn_faqs).setOnClickListener(this);
         view.findViewById(R.id.btn_my_tickets).setOnClickListener(this);
@@ -117,15 +116,15 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
         else
             emailTv.setText(riaSupportModel.getEmail());
 
+        chatActionBtn.setOnClickListener(this);
+        callActionBtn.setOnClickListener(this);
+
         if(is_premium_support){
-            premium_options_container.setAlpha(1f);
-            callActionBtn.setOnClickListener(this);
-            requestActionBtn.setOnClickListener(this);
-        } else {
-            premium_options_container.setAlpha(0.4f);
-            premium_options_container.setClickable(true);
-            premium_options_container.setOnClickListener(this);
-        }
+            (view.findViewById(R.id.chat_option_lock)).setVisibility(View.GONE);
+            (view.findViewById(R.id.call_option_lock)).setVisibility(View.GONE);
+            slaTv.setText("* Response time SLA - 1 hour *");
+        } else
+            slaTv.setText("* Response time SLA - 72 hours *");
     }
 
     private void showPremiumAddOnDialog() {
@@ -175,31 +174,30 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                     }
                 }).build();
         dialog.show();
-
-
-
-
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btn_call_action:
+            case R.id.btn_chat_action:
                 WebEngageController.trackEvent("SUPPORT - CHAT","Chat option in Account",null);
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                Date dateobj = new Date();
+                if(is_premium_support) {
+                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                    Date dateobj = new Date();
 
-                if(sessionManager != null) {
-                    VisitorInfo visitorInfo = new VisitorInfo.Builder()
-                            .name(sessionManager.getFPName())
-                            .email(sessionManager.getFPEmail())
-                            .phoneNumber(sessionManager.getFPPrimaryContactNumber())
-                            .note("FPTag: " + sessionManager.getFpTag() + "\n\nUserId: " + sessionManager.getUserProfileId() + "\nUserContact: " + sessionManager.getUserProfileMobile())
-                            .build();
-                    ZopimChat.setVisitorInfo(visitorInfo);
-                }
+                    if (sessionManager != null) {
+                        VisitorInfo visitorInfo = new VisitorInfo.Builder()
+                                .name(sessionManager.getFPName())
+                                .email(sessionManager.getFPEmail())
+                                .phoneNumber(sessionManager.getFPPrimaryContactNumber())
+                                .note("FPTag: " + sessionManager.getFpTag() + "\n\nUserId: " + sessionManager.getUserProfileId() + "\nUserContact: " + sessionManager.getUserProfileMobile())
+                                .build();
+                        ZopimChat.setVisitorInfo(visitorInfo);
+                    }
 
-                startActivity(new Intent(WebEngage.getApplicationContext(), ZopimChatActivity.class));
+                    startActivity(new Intent(WebEngage.getApplicationContext(), ZopimChatActivity.class));
+                } else
+                    showPremiumAddOnDialog();
                 break;
             case R.id.tv_person_email:
                 WebEngageController.trackEvent("SUPPORT - EMAIL","Email option in Account",null);
@@ -213,7 +211,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                     showPremiumAddOnDialog();
                 }
                 break;
-            case R.id.btn_request_callback:
+            case R.id.btn_call_option:
                 if(is_premium_support) {
                     WebEngageController.trackEvent("SUPPORT - CALL", "Call Support option in Account", null);
                     Methods.makeCall(mContext, riaSupportModel.getPhoneNumber());
@@ -230,9 +228,6 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                 WebEngageController.trackEvent("SUPPORT - LEARN","Learn How to use",null);
                 HelpCenterActivity.builder()
                         .show(mContext);
-                break;
-            case R.id.premium_support_options_container:
-                showPremiumAddOnDialog();
                 break;
         }
     }
