@@ -1183,7 +1183,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.facebook_leads))) {
-                    Toast.makeText(getApplicationContext(), "Facebook Lead Ads clicked", Toast.LENGTH_LONG).show();
+                    WebEngageController.trackEvent("NAV - ONLINE_ADVERTISING", "ONLINE_ADVERTISING", session.getFpTag());
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, facebookLeadsFragment, "FacebookLeadAds")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.business_profile))) {
