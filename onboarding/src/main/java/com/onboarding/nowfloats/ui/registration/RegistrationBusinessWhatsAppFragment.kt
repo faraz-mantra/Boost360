@@ -105,9 +105,7 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.confirmBtn -> {
-        if (binding?.number?.length() == 10) gotoBusinessApiCallDetails()
-      }
+      binding?.confirmBtn -> if (binding?.number?.length() == 10) gotoBusinessApiCallDetails()
       binding?.skip -> {
         updateInfo()
         gotoBusinessApiCallDetails()
@@ -123,5 +121,6 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
   override fun updateInfo() {
     super.updateInfo()
     requestFloatsModel?.channelActionDatas?.clear()
+    whatsAppData.active_whatsapp_number = ""
   }
 }

@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <item
-      android:id="@+id/menu_error"
+      android:id="@+id/menu_info"
       android:icon="@drawable/ic_round_error_white"
-      android:title="Error"
+      android:title="Info"
       app:showAsAction="ifRoom" />
 </menu>

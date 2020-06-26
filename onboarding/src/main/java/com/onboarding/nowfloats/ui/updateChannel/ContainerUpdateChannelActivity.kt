@@ -145,6 +145,24 @@ open class ContainerUpdateChannelActivity : AppBaseActivity<ActivityFragmentCont
     return super.onOptionsItemSelected(item)
   }
 
+
+  override fun onBackPressed() {
+    when (type) {
+      FragmentType.MY_DIGITAL_CHANNEL -> {
+        if (myDigitalChannelFragment?.isStartActivity == true) {
+          try {
+            val intent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
+            startActivity(intent)
+            finish()
+          } catch (e: Exception) {
+            super.onBackPressed()
+          }
+        } else super.onBackPressed()
+      }
+      else -> super.onBackPressed()
+    }
+  }
+
   fun changeTheme(color: Int) {
     getToolbar()?.setBackgroundColor(ContextCompat.getColor(this, color))
     window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
