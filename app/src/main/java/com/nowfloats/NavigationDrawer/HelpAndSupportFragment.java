@@ -99,17 +99,9 @@ public class HelpAndSupportFragment extends Fragment {
         if (!isAdded() || isDetached()) return;
         MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CLICK, null);
         mRiaSupportModelList = new ArrayList<>(2);
-        UserSessionManager manager = new UserSessionManager(mContext, getActivity());
-        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.redtim")) {
-            //HashMap<String, String> param = new HashMap<>();
-            //param.put("clientId", Constants.clientId);
-            //param.put("fpTag", manager.getFpTag());
-            //getRiaMembers(param, view);
-            new GetMembers(Constants.clientId, manager.getFpTag(), view).execute();
-        } else {
-            addDefaultRiaData();
-            setAdapterWithPager(view);
-        }
+
+        addDefaultRiaData();
+        setAdapterWithPager(view);
 //        TextView queryMessageText = view.findViewById(R.id.textView9);
 //        makeLinkClickable(queryMessageText);
 //        CharSequence charSequence = Methods.fromHtml("If your query is still unanswered, please contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\">" + getString(R.string.settings_feedback_link) + "</a> " +

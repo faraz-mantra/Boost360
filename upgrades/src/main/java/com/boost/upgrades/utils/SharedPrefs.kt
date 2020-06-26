@@ -17,6 +17,7 @@ class SharedPrefs(activity: Activity) {
     private val po_id = "Last_Purchase_Order_Created"
     private val po_status = "Last_Purchase_Order_Status"
     private val pmt_id = "Last_Purchase_Order_Payment_Id"
+    private val po_feature_keys = "Last_Purchase_Order_Feature_Keys"
     private val po_feature_count = "Last_Purchase_Order_Feature_Count"
     private val po_price = "Last_Purchase_Order_Price"
 
@@ -58,6 +59,10 @@ class SharedPrefs(activity: Activity) {
 
     fun storeLatestPaymentIdFromPG(payment_id: String){
         editor!!.putString(pmt_id, payment_id).apply()
+    }
+
+    fun storeFeatureKeysInLastOrder(keys: Set<String>){
+        editor!!.putStringSet(po_feature_count, keys).apply()
     }
 
     fun storeFeaturesCountInLastOrder(count: Int){
