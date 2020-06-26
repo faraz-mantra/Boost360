@@ -65,6 +65,34 @@ class ProcessApiSyncModel(
     return list
   }
 
+
+  //TODO  Update digital channel
+  fun getDataStartUpdate(channels: ArrayList<ChannelModel>?): ArrayList<ProcessApiSyncModel> {
+    val list = ArrayList<ProcessApiSyncModel>()
+    val selectedItems = channels?.map { it.recyclerViewType = RecyclerViewItemType.API_PROCESS_CHANNEL_ITEM.getLayout(); it }
+    list.add(ProcessApiSyncModel("Connecting your business to " + getChannelTxt(channels?.size), selectedItems, null))
+    return list
+  }
+
+  fun getDataErrorChannelsUpdate(channels: ArrayList<ChannelModel>?): ArrayList<ProcessApiSyncModel> {
+    val list = ArrayList<ProcessApiSyncModel>()
+    val selectedItems = channels?.map { it.recyclerViewType = RecyclerViewItemType.API_PROCESS_CHANNEL_ITEM.getLayout();it }
+    val count = channels?.filter { it.status == SyncStatus.ERROR.name }?.size
+    list.add(ProcessApiSyncModel("Error in connecting to " + getChannelTxt(count), selectedItems, null, status = SyncStatus.ERROR.name))
+    return list
+  }
+
+  fun getDataSuccessUpdate(channels: ArrayList<ChannelModel>?): ArrayList<ProcessApiSyncModel> {
+    val list = ArrayList<ProcessApiSyncModel>()
+    val selectedItems = channels?.map {
+      it.recyclerViewType = RecyclerViewItemType.API_PROCESS_CHANNEL_ITEM.getLayout()
+      it.status = SyncStatus.SUCCESS.name
+      it
+    }
+    list.add(ProcessApiSyncModel("Business connected to " + getChannelTxt(channels?.size), selectedItems, null, status = SyncStatus.SUCCESS.name))
+    return list
+  }
+
   private fun getChannelTxt(size: Int?): String {
     return takeIf { size == 1 }?.let { "$size channel..." } ?: "$size channels..."
   }

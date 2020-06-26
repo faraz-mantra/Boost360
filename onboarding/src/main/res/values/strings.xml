@@ -74,8 +74,10 @@
   <string name="enter_whatsapp_business_contact">Is there a WhatsApp number for your business?</string>
   <string name="whatsApp_number_customers_to_reach_you_easily">In case you don’t have it, you can use your personal WhatsApp contact number to allow customers to start chatting with you directly on WhatsApp.</string>
   <string name="confirm_and_proceed">Confirm and Proceed</string>
-  <string name="processing_your_business_information">Setting up your business\non Boost...</string>
-  <string name="business_information_completed">Your business information\nsetup is completed!</string>
+  <string name="processing_your_business_information">Setting up your business on Boost...</string>
+  <string name="processing_your_digital_channel">Setting up your digital channels on Boost...</string>
+  <string name="business_information_completed">Your business information setup is completed!</string>
+  <string name="digital_channel_completed">Your digital channels information setup is completed!</string>
   <string name="city_name">City name</string>
   <string name="logout">Logout</string>
   <string name="ok">OK</string>
@@ -126,6 +128,7 @@
   <string name="building_plan_for_your_business">Building a digital growth plan for your business…</string>
   <string name="error_getting_category_data">Error getting category data.</string>
   <string name="home">Home</string>
+  <string name="digital_channel">Go Digital Channel</string>
   <string name="invalid_experience_code">Invalid experience code.</string>
 
 </resources>
