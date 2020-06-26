@@ -285,6 +285,18 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     )
                 }
 
+                var keysToBeActivated = ArrayList<String>();
+
+                for(item in purchaseOrders){
+                    if(item.Widgets != null){
+                        for(widget in item.Widgets){
+                            if(!keysToBeActivated.contains(widget.WidgetKey)){
+                                keysToBeActivated.add(widget.WidgetKey)
+                            }
+                        }
+                    }
+                }
+                prefs.storeFeatureKeysInLastOrder(keysToBeActivated.toMutableSet());
                 prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
                 //handling coupon discount
