@@ -1,20 +1,29 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.boost.upgrades.UpgradeActivity;
 import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
@@ -41,6 +50,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
     private RiaSupportModel riaSupportModel;
     private UserSessionManager sessionManager;
     public static String RIA_MODEL_DATA = "ria_model_data";
+    private boolean is_premium_support = false;
 
     public static Fragment getInstance(Bundle b){
         HelpAndSupportCardItemFragment frag = new HelpAndSupportCardItemFragment();
@@ -73,69 +83,108 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
+
+        if (Constants.StoreWidgets.contains("CUSTOMERSUPPORT")){
+            is_premium_support = true;
+        }
+
         ImageView personImage =  view.findViewById(R.id.img_person);
         EditText emailTv = view.findViewById(R.id.tv_person_email);
         EditText numberTv = view.findViewById(R.id.tv_person_number);
         EditText nameTv = view.findViewById(R.id.tv_person_name);
         TextView descriptionTv = view.findViewById(R.id.tv_person_description);
         TextView callActionBtn = view.findViewById(R.id.btn_call_action);
-        callActionBtn.setOnClickListener(this);
+        LinearLayout premium_options_container = view.findViewById(R.id.premium_support_options_container);
+
         emailTv.setOnClickListener(this);
         numberTv.setOnClickListener(this);
         TextView requestActionBtn = view.findViewById(R.id.btn_request_callback);
-        requestActionBtn.setOnClickListener(this);
+
 
         view.findViewById(R.id.btn_faqs).setOnClickListener(this);
         view.findViewById(R.id.btn_my_tickets).setOnClickListener(this);
 
-        WebEngageController.trackEvent("SUPPORT - Viewed","Support Screen Loaded",null);
+        WebEngageController.trackEvent(is_premium_support ? "SUPPORT - Viewed Premium" : "SUPPORT - Viewed","Support Screen Loaded",null);
 
-
-        switch (HelpAndSupportFragment.MemberType.valueOf(riaSupportModel.getType())){
-            case CHC:
-                emailTv.setVisibility(View.GONE);
-                view.findViewById(R.id.tv_email).setVisibility(View.GONE);
-                //callActionBtn.setText("CALL NOW");
-                requestActionBtn.setVisibility(View.VISIBLE);
-                callActionBtn.setVisibility(View.GONE);
-                descriptionTv.setText("Your Digital Consultant");
-                personImage.setImageResource(riaSupportModel.getGender() == 1?R.drawable.ic_consultant_female:R.drawable.ic_consultant_male);
-                break;
-//            case WEB:
-//                //callActionBtn.setText("CHAT NOW");
-//                //personImage.setImageResource(riaSupportModel.getGender() == 1?R.drawable.ic_support_female:R.drawable.ic_support_male);
-//                //descriptionTv.setText("Your Web Consultant");
-//                descriptionTv.setText("Customer Support");
-//                personImage.setImageResource(R.drawable.ria_circle_image);
-//                break;
-//            case DEFAULT:
-//                //callActionBtn.setText("CALL NOW");
-//                //requestActionBtn.setVisibility(View.GONE);
-//                requestActionBtn.setVisibility(View.VISIBLE);
-//                callActionBtn.setVisibility(View.GONE);
-//                personImage.setImageResource(R.drawable.ria_circle_image);
-//                descriptionTv.setText("Customer Support");
-            default:
-                descriptionTv.setText("Your Digital Assistant");
-                personImage.setImageResource(R.drawable.ria);
-                break;
-        }
         nameTv.setText(riaSupportModel.getName());
-        numberTv.setText(riaSupportModel.getPhoneNumber());
-        emailTv.setText(riaSupportModel.getEmail());
+        if(is_premium_support)
+            numberTv.setText("1860-123-1233");
+        else
+            numberTv.setText("xxx-xxx-xxxx");
+
+        if(is_premium_support)
+            emailTv.setText("ria@boost360.app");
+        else
+            emailTv.setText(riaSupportModel.getEmail());
+
+        if(is_premium_support){
+            premium_options_container.setAlpha(1f);
+            callActionBtn.setOnClickListener(this);
+            requestActionBtn.setOnClickListener(this);
+        } else {
+            premium_options_container.setAlpha(0.4f);
+            premium_options_container.setClickable(true);
+            premium_options_container.setOnClickListener(this);
+        }
+    }
+
+    private void showPremiumAddOnDialog() {
+        MaterialDialog dialog = new MaterialDialog.Builder(mContext)
+                .title("Upgrade to Premium Support")
+                .content("You are currently on the default support plan. This gives you access to Boost Care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to Boost Care team by phone, email and chat,\nwith a promise of 1 hour SLA.")
+                .positiveText("View Details")
+                .negativeText("Later")
+                .positiveColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.gray_40)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        ProgressDialog progressDialog = new ProgressDialog(requireContext());
+                        String status = "Loading. Please wait...";
+                        progressDialog.setMessage(status);
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        UserSessionManager session = new UserSessionManager(getContext(), getActivity());
+                        Intent intent = new Intent((HomeActivity) requireActivity(), UpgradeActivity.class);
+                        intent.putExtra("expCode", session.getFP_AppExperienceCode());
+                        intent.putExtra("fpName", session.getFPName());
+                        intent.putExtra("fpid", session.getFPID());
+                        intent.putExtra("loginid", session.getUserProfileId());
+                        if (session.getFPEmail() != null) {
+                            intent.putExtra("email", session.getFPEmail());
+                        } else {
+                            intent.putExtra("email", "ria@nowfloats.com");
+                        }
+                        if (session.getFPPrimaryContactNumber() != null) {
+                            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+                        } else {
+                            intent.putExtra("mobileNo", "9160004303");
+                        }
+                        intent.putExtra("profileUrl", session.getFPLogo());
+                        intent.putExtra("buyItemKey", "CUSTOMERSUPPORT");
+                        startActivity(intent);
+                        new Handler().postDelayed(() -> {
+                            progressDialog.dismiss();
+                        },1000);
+                    }
+                }).build();
+        dialog.show();
+
+
+
+
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_call_action:
-                /*if (HelpAndSupportFragment.MemberType.valueOf(riaSupportModel.getType()) == HelpAndSupportFragment.MemberType.WEB){
-                    ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.chat));
-                }else{
-                    Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
-                    MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
-                }*/
-
                 WebEngageController.trackEvent("SUPPORT - CHAT","Chat option in Account",null);
                 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                 Date dateobj = new Date();
@@ -151,29 +200,26 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                 }
 
                 startActivity(new Intent(WebEngage.getApplicationContext(), ZopimChatActivity.class));
-
-//                RequestActivity.builder()
-//                            .withRequestSubject("Support required: " + df.format(dateobj))
-//                            .withTags("sdk", "android")
-//                            .show(mContext);
-
-                //Old Code - to trigger RIA chat sdk powered by ANA
-//                ((SidePanelFragment.OnItemClickListener)mContext).onClick(getString(R.string.chat));
                 break;
             case R.id.tv_person_email:
                 WebEngageController.trackEvent("SUPPORT - EMAIL","Email option in Account",null);
-//                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_EMAIL,null);
-                Methods.sendEmail(mContext,new String[]{riaSupportModel.getEmail()});
+                Methods.sendEmail(mContext,new String[]{riaSupportModel.getEmail()}, "Need help with Boost360 [" + sessionManager.getFpTag() + " , " + sessionManager.getFP_AppExperienceCode()+ "]");
                 break;
             case R.id.tv_person_number:
-                WebEngageController.trackEvent("SUPPORT - DIRECT_AGENT_CALL","Direct Agent Call option in Account",null);
-//                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
-                Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
+                if(is_premium_support) {
+                    WebEngageController.trackEvent("SUPPORT - DIRECT_AGENT_CALL","Direct Agent Call option in Account",null);
+                    Methods.makeCall(mContext, riaSupportModel.getPhoneNumber());
+                } else {
+                    showPremiumAddOnDialog();
+                }
                 break;
             case R.id.btn_request_callback:
-                WebEngageController.trackEvent("SUPPORT - CALL","Call Support option in Account",null);
-//                MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CALL,null);
-                Methods.makeCall(mContext,riaSupportModel.getPhoneNumber());
+                if(is_premium_support) {
+                    WebEngageController.trackEvent("SUPPORT - CALL", "Call Support option in Account", null);
+                    Methods.makeCall(mContext, riaSupportModel.getPhoneNumber());
+                } else {
+                    showPremiumAddOnDialog();
+                }
                 break;
             case R.id.btn_my_tickets:
                 WebEngageController.trackEvent("SUPPORT - VIEW_TICKETS","View My Support Tickets",null);
@@ -184,6 +230,9 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                 WebEngageController.trackEvent("SUPPORT - LEARN","Learn How to use",null);
                 HelpCenterActivity.builder()
                         .show(mContext);
+                break;
+            case R.id.premium_support_options_container:
+                showPremiumAddOnDialog();
                 break;
         }
     }

@@ -143,6 +143,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Set;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -784,8 +785,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 })
 
                 .show();
-
-
     }
 
     @Override
@@ -812,8 +811,24 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
             if (plusAddButton != null)
                 plusAddButton.setVisibility(View.GONE);
-
         }
+        if(pref == null || prefsEditor == null){
+            pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
+            prefsEditor = pref.edit();
+        }
+
+        Set<String> keys = pref.getStringSet("Last_Purchase_Order_Feature_Keys", null);
+        if(keys != null){
+            ArrayList<String> keys2 = new ArrayList<>();
+            keys2.addAll(keys);
+            Toast.makeText(HomeActivity.this, "Refreshing your business dashboard with the digital add-ons you just purchased.", Toast.LENGTH_LONG).show();
+            for(int i=0;i<keys2.size();i++){
+                if(!Constants.StoreWidgets.contains(keys2.get(i))){
+                    Constants.StoreWidgets.add(keys2.get(i));
+                }
+            }
+        }
+        prefsEditor.remove("Last_Purchase_Order_Feature_Keys");
 
         if (!isCalled) {
             navigateView();
@@ -1183,7 +1198,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.facebook_leads))) {
-                    Toast.makeText(getApplicationContext(), "Facebook Lead Ads clicked", Toast.LENGTH_LONG).show();
+                    WebEngageController.trackEvent("NAV - ONLINE_ADVERTISING", "ONLINE_ADVERTISING", session.getFpTag());
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, facebookLeadsFragment, "FacebookLeadAds")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.business_profile))) {
