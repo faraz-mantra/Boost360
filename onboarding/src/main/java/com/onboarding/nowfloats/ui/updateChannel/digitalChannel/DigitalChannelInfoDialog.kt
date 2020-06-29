@@ -2,6 +2,7 @@ package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import com.framework.base.BaseDialogFragment
 import com.framework.extensions.gone
 import com.framework.extensions.underlineText
@@ -34,10 +35,13 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
           ?.andThen(binding?.confirm?.fadeIn(50L))
       if (channelModel != null && channelModel!!.isGoogleChannel()) {
         binding?.disconnectBtn?.gone()
+        binding?.disableBtn?.gone()
         fabObservable?.subscribe()
       } else {
+        if (channelModel != null && channelModel!!.isWhatsAppChannel()) binding?.disableBtn?.visible()
+        else binding?.disableBtn?.gone()
         binding?.disconnectBtn?.visible()
-        fabObservable?.andThen(binding?.disconnectBtn?.fadeIn(50L))?.subscribe()
+        fabObservable?.andThen(binding?.btnViewChannel?.fadeIn(50L))?.subscribe()
       }
       if (channelModel != null && channelModel!!.isWhatsAppChannel()) {
         binding?.title?.text = channelModel?.channelActionData?.active_whatsapp_number?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
@@ -53,7 +57,7 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
       binding?.image?.setImageDrawable(channelModel?.getDrawable(activity))
       binding?.title?.underlineText(0, (binding?.title?.text ?: "").length - 1)
     }
-    setOnClickListener(binding?.confirm, binding?.disconnectBtn, binding?.title)
+    setOnClickListener(binding?.confirm, binding?.disconnectBtn, binding?.disableBtn, binding?.title, binding?.dismiss, binding?.clickHelp)
   }
 
   fun setChannels(channelModel: ChannelModel?) {
@@ -64,6 +68,9 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
     super.onClick(v)
     when (v) {
       binding?.confirm -> this.dismiss()
+      binding?.dismiss -> this.dismiss()
+      binding?.clickHelp,
+      binding?.disableBtn -> showLongToast("Coming soon...")
       binding?.disconnectBtn -> {
         channelModel?.let { onClickedDisconnect(it) }
         this.dismiss()
@@ -102,5 +109,9 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
 
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
+  }
+
+  override fun getHeight(): Int? {
+    return ViewGroup.LayoutParams.MATCH_PARENT
   }
 }

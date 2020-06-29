@@ -1,10 +1,7 @@
 package com.onboarding.nowfloats.ui.registration
 
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import com.framework.extensions.getDrawable
 import com.framework.utils.ValidationUtils
 import com.framework.utils.showKeyBoard
@@ -37,11 +34,6 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
 
   override fun onCreateView() {
     super.onCreateView()
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-      activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-      activity?.window?.statusBarColor = Color.parseColor("#EFEFEF")
-    }
     setSavedData()
     var confirmButtonAlpha = 0.3f
     if (ValidationUtils.isMobileNumberValid(binding?.number?.text?.toString() ?: "")) {

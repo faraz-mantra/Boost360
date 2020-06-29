@@ -130,5 +130,8 @@
   <string name="home">Home</string>
   <string name="digital_channel">Go Digital Channel</string>
   <string name="invalid_experience_code">Invalid experience code.</string>
+  <string name="channels_belong_to_respective_owners_boost_360_does_not_own_them"><![CDATA[Note: The Names and Logos of Google Search, Google Maps, Facebook Page, Facebook Shop, WhatsApp Business & Twitter belong to their respective owners. Boost 360 does not own them.]]></string>
+  <string name="in_case_you_need_any_help">In case you need any help,</string>
+  <string name="click_here"><u>Click here</u></string>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 
 import android.view.View
+import android.view.ViewGroup
 import com.framework.base.BaseDialogFragment
 import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
@@ -30,7 +31,7 @@ class DigitalChannelWhyDialog : BaseDialogFragment<DialogDigitalChannelWhyBindin
       binding?.image?.setImageDrawable(channelModel?.getDrawable(activity))
       binding?.image?.makeGreyscale()
     }
-    setOnClickListener(binding?.confirm)
+    setOnClickListener(binding?.confirm, binding?.dismiss, binding?.clickHelp)
   }
 
   fun setChannels(channelModel: ChannelModel?) {
@@ -40,6 +41,8 @@ class DigitalChannelWhyDialog : BaseDialogFragment<DialogDigitalChannelWhyBindin
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
+      binding?.dismiss -> this.dismiss()
+      binding?.clickHelp -> showLongToast("Coming soon...")
       binding?.confirm -> this.dismiss()
     }
   }
@@ -50,6 +53,10 @@ class DigitalChannelWhyDialog : BaseDialogFragment<DialogDigitalChannelWhyBindin
 
   override fun getWidth(): Int? {
     return ScreenUtils.instance.getWidth(activity) - ConversionUtils.dp2px(36f)
+  }
+
+  override fun getHeight(): Int? {
+    return ViewGroup.LayoutParams.MATCH_PARENT
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {

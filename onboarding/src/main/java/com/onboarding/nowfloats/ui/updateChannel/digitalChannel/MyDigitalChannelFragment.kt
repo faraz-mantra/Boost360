@@ -218,7 +218,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         changeView(false)
         binding?.viewDisconnect?.fadeIn(200L)?.doOnComplete { setAdapterDisconnected(listDisconnect) }?.andThen(binding?.viewConnect?.fadeIn(500L))
       }
-      animObserver?.doOnComplete { setAdapterConnected(listConnect) }?.subscribe()
+      animObserver?.doOnComplete { setAdapterConnected(listConnect) }?.andThen(binding?.noteTxt?.fadeIn(100L))?.subscribe()
     }
   }
 
