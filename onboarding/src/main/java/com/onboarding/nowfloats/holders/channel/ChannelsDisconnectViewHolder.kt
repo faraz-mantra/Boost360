@@ -26,10 +26,7 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding.card -> {
-        listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal)
-        binding?.title.setTextColor(R.color.bg_dark_grey)
-      }
+      binding.card -> listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal)
       binding.whysync -> listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_DISCONNECT_WHY_CLICKED.ordinal)
     }
   }
@@ -45,9 +42,14 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
   private fun setSelection(model: ChannelModel) {
     binding.image.setImageDrawable(model.getDrawable(activity))
     if (model.isSelected == false) {
+      getColor(R.color.greyish_brown_light)?.let { binding.title.setTextColor(it) }
       binding.image.makeGreyscale()
       binding.check.setImageResource(R.drawable.ic_unselected_blue)
-    } else binding.check.setImageResource(R.drawable.ic_selected_blue)
+    } else {
+      binding.image.removeGreyscale()
+      getColor(R.color.greyish_brown)?.let { binding.title.setTextColor(it) }
+      binding.check.setImageResource(R.drawable.ic_selected_blue)
+    }
   }
 
 

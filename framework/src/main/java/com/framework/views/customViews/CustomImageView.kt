@@ -21,9 +21,9 @@ class CustomImageView : AppCompatImageView {
   }
 
   constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-          context,
-          attrs,
-          defStyle
+      context,
+      attrs,
+      defStyle
   ) {
     setCustomAttrs(context, attrs)
   }
@@ -44,5 +44,9 @@ class CustomImageView : AppCompatImageView {
     matrix.setSaturation(0f)
     val filter = ColorMatrixColorFilter(matrix)
     this.colorFilter = filter
+  }
+
+  fun removeGreyscale() {
+    this.colorFilter = null
   }
 }
