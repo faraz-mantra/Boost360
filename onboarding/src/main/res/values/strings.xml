@@ -56,6 +56,7 @@
   <string name="do_you_already_have_a_twitter_profile">Does your business already have a Twitter profile?</string>
   <string name="setting_up_or_syncing_your_twitter_business_profile">Setting up or Syncing your Twitter business profile</string>
   <string name="yes_link_my_existing_twitter_profile">Yes, link my existing Twitter profile</string>
+  <string name="yes_sync_my_twitter_profile">Yes, Sync my Twitter profile</string>
 
   <string name="congratulations_new">Congratulations</string>
   <string name="business_cant_empty">Business name can\'t be empty</string>
@@ -86,7 +87,7 @@
   <string name="shop_section_on_your_fb_page">Have you already enabled the shop section on your Facebook page?</string>
   <string name="shop_section_facebook_page_desc">If you don’t have a ‘Shop’ section on your Facebook Page or if you want to connect it later, please tap ‘Skip’.</string>
   <string name="yes_sync_my_fb_page_shop">Yes, Sync my Fb Page shop</string>
-  <string name="twitter_account_business_Skip">If you don’t have a Twitter account for your business, or if you want to connect it later, please tap \'Skip\'.</string>
+  <string name="twitter_account_business_Skip">If you don’t have a Twitter account for your business, or if you want to connect it later; please tap \'Skip\'.</string>
   <string name="twitter_allows_digital_business_boost">Using Boost, you can now communicate with your followers on Twitter to build brand awareness and reach out to new customers.</string>
   <string name="facebook_page_allows_digital_business_boost">Using Boost, you can now directly communicate with your customers on Facebook and reach out to more potential users.</string>
   <string name="facebook_shop_allows_digital_business_boost">Using Boost, all your products and services will start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.</string>
