@@ -1,5 +1,6 @@
 package com.onboarding.nowfloats.holders.channel
 
+import android.annotation.SuppressLint
 import android.view.View
 import com.framework.extensions.underlineText
 import com.onboarding.nowfloats.R
@@ -21,10 +22,14 @@ class ChannelsDisconnectViewHolder constructor(binding: ItemChannelsDisconnectBi
     model?.let { setViews(it) }
   }
 
+  @SuppressLint("ResourceAsColor")
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding.card -> listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal)
+      binding.card -> {
+        listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal)
+        binding?.title.setTextColor(R.color.bg_dark_grey)
+      }
       binding.whysync -> listener?.onItemClick(adapterPosition, model, RecyclerViewActionType.CHANNEL_DISCONNECT_WHY_CLICKED.ordinal)
     }
   }
