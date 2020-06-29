@@ -831,6 +831,7 @@
     <string name="settings_feedback_link">ria@nowfloats.com</string>
     <string name="settings_facebook_like_link">https://www.facebook.com/nowfloats</string>
     <string name="settings_about_us_link">https://www.getboost360.com/about-us/</string>
+    <string name="product_training_link">https://calendly.com/boost360-ria/training</string>
     <string name="assured_purchase_link">http://www.assuredpurchase.com/</string>
     <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
     <string name="interest">I\'m interested</string>
@@ -1718,13 +1719,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="business_apps">Business Apps</string>
 
     <string-array name="about_tab_items">
-        <item>About NowFloats</item>
+        <item>Boost360 Training &amp; Certification Program</item>
         <item>FAQs</item>
         <item>Like us on Facebook</item>
         <item>Follow us on Twitter</item>
         <item>Rate us on Play Store</item>
-        <item>Terms of Use</item>
-        <item>Privacy Policy</item>
+        <item>Terms of use</item>
+        <item>Data privacy policy</item>
     </string-array>
     <string name="keyboard">Keyboard</string>
     <string name="facebook_leads">Facebook Lead Ads</string>
@@ -1852,4 +1853,5 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Wordpress</item>
         <item>Static Website</item>
     </string-array>
+    <string name="your_digital_assitant">Your digital assitant</string>
 </resources>

@@ -48,6 +48,7 @@ class OrderConfirmationFragment : BaseFragment() {
         viewModel.emptyCurrentCart((activity as UpgradeActivity).application);
 
         //clear CartRelatedInfo
+        prefs.storeOrderSuccessFlag(true)
         prefs.storeCartOrderInfo(null)
         prefs.storeApplyedCouponDetails(null)
 
