@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import com.boost.presignup.JioSignupActivity
 import com.boost.presignup.R
 import com.boost.presignup.SignUpActivity
 import com.boost.presignup.utils.WebEngageController
@@ -96,6 +97,10 @@ class PopUpDialogFragment : DialogFragment() {
         }
         root.email_button.setOnClickListener {
             createNewEmailSignUp()
+        }
+
+        root.jio_id_button.setOnClickListener {
+            createNewJioSecureIdSignUp()
         }
 
         root.popup_login_text.setOnClickListener {
@@ -292,6 +297,13 @@ class PopUpDialogFragment : DialogFragment() {
             dialog!!.dismiss()
 //            activity!!.finish();
         }
+    }
+
+    private fun createNewJioSecureIdSignUp(){
+        WebEngageController.trackEvent("PS_Auth Provider Success JIO_ID", "Provider Success JIO_ID", "")
+        val intent = Intent(requireContext(), JioSignupActivity::class.java)
+        startActivity(intent);
+        dialog!!.dismiss()
     }
 
     private fun createNewEmailSignUp(){
