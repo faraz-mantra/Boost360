@@ -6,6 +6,7 @@
     <string name="replay_intro">Replay Intro</string>
     <string name="create_account">create account</string>
     <string name="login">Login</string>
+    <string name="proceed">Proceed</string>
     <string name="skip">Skip</string>
     <string name="mute">Mute</string>
     <string name="english">English</string>
@@ -30,6 +31,7 @@
     <string name="signup_using_email">Signup using Email</string>
     <string name="signup_using_google">Signup using Google</string>
     <string name="signup_using_facebook">Signup using Facebook</string>
+    <string name="signup_using_jio_id">Signup using Jio SecureID</string>
     <string name="_00Seconds">00 Seconds</string>
     <string name="seconds">Seconds</string>
     <string name="loading">Loading...</string>
@@ -41,10 +43,13 @@
     <string name="create_a_password">create a password</string>
     <string name="you_email_com">you@email.com</string>
     <string name="your_name">Your name</string>
+    <string name="your_jio_id_mobile">Enter Jio SecureID Mobile Number</string>
     <string name="we_ll_never_share_your_number_with_any_third_party">We’ll never share your number with any third party.</string>
     <string name="welcome">Hi,</string>
     <string name="your_boost_profile_is_successfully_created">Your personal profile is successfully created.</string>
     <string name="hi_i_am_ria">Meet Ria.</string>
     <string name="setup_business_profile">Let’s start</string>
     <string name="forgot"><u>Forgot?</u></string>
+    <string name="dont_have_jio_id">Don’t have Jio SecureID?</string>
+    <string name="no_jio_id_description">Jio SecureID is the most convenient and secure way to log into any app or portal and sign documents digitally. Jio SecureID is using Aadhaar eSign for digital signatures.\n\nCreate Jio SecureID here</string>
 </resources>

@@ -47,6 +47,7 @@
   <string name="select_subdomain_business_desc">Select an appropriate address for your new business website. You can always map an existing domain or a new domain at a later point.</string>
   <string name="subdomain">subdomain</string>
   <string name="nowfloats_dot_com">.nowfloats.com</string>
+  <string name="whatsapp_consent_text">I want to receive regular updates about my digital growth on WhatsApp</string>
 
   <string name="create_my_business_website">Create my business website</string>
   <string name="do_you_already_have_a_facebook_page">Does your business already have a Facebook page?</string>
