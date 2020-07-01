@@ -73,14 +73,13 @@ public class AboutFragment extends Fragment {
                 switch(pos){
                     case 0:
                         WebEngageController.trackEvent("ABOUT BOOST - TRAINING","null",null);
-                        final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-                        if(paymentState == "1") {
+                        if(Constants.StoreWidgets.contains("MERCHANT_TRAINING")) {
                             intent = new Intent(mContext, Mobile_Site_Activity.class);
                             intent.putExtra("WEBSITE_NAME", getString(R.string.product_training_link));
                         } else {
                             MaterialDialog dialog = new MaterialDialog.Builder(mContext)
                                     .title("Restricted Access")
-                                    .content("The Boost360 training and certification program is only available for customers with active paid subscriptions.")
+                                    .content("You need to buy the one-time pack for Boost Training and Certification.")
                                     .build();
                             dialog.show();
                         }
