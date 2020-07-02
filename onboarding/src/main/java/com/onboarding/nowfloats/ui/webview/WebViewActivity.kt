@@ -1,5 +1,6 @@
 package com.onboarding.nowfloats.ui.webview
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.view.Gravity
 import android.view.MenuItem
@@ -18,6 +19,7 @@ import com.onboarding.nowfloats.extensions.checkIsFile
 class WebViewActivity : AppBaseActivity<ActivityWebViewBinding, BaseViewModel>() {
 
   private var domainUrl = ""
+
   override fun getLayout(): Int {
     return R.layout.activity_web_view
   }
@@ -32,6 +34,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewBinding, BaseViewModel>()
     loadData(domainUrl)
   }
 
+  @SuppressLint("SetJavaScriptEnabled")
   private fun loadData(urlData: String) {
     binding?.webview?.settings?.javaScriptEnabled = true
     binding?.webview?.settings?.loadWithOverviewMode = true
@@ -48,6 +51,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewBinding, BaseViewModel>()
 
       override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
+        url?.let { setToolbarSubTitle(it) }
         binding?.progressBar?.visible()
       }
 
@@ -71,6 +75,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewBinding, BaseViewModel>()
   override fun getToolbarSubTitle(): String? {
     return domainUrl.checkHttp()
   }
+
   override fun getToolbarTitleGravity(): Int {
     return Gravity.NO_GRAVITY
   }
@@ -87,6 +92,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewBinding, BaseViewModel>()
     finish()
     return false
   }
+
   override fun onBackPressed() {
     val b = binding?.webview?.canGoBack()
     if (b != null && b) binding?.webview?.goBack() else super.onBackPressed()

@@ -32,7 +32,7 @@
   <string name="fb_shop">Facebook Shop</string>
   <string name="whatsapp_business">WhatsApp</string>
   <string name="twitter_profile">Twitter Profile</string>
-  <string name="google_business">Google Business</string>
+  <string name="google_business">Google My Business and Google Maps</string>
   <string name="important">Important</string>
   <string name="recommended">Recommended</string>
 
@@ -57,6 +57,7 @@
   <string name="do_you_already_have_a_twitter_profile">Does your business already have a Twitter profile?</string>
   <string name="setting_up_or_syncing_your_twitter_business_profile">Setting up or Syncing your Twitter business profile</string>
   <string name="yes_link_my_existing_twitter_profile">Yes, link my existing Twitter profile</string>
+  <string name="yes_sync_my_twitter_profile">Yes, Sync my Twitter profile</string>
 
   <string name="congratulations_new">Congratulations</string>
   <string name="business_cant_empty">Business name can\'t be empty</string>
@@ -74,24 +75,32 @@
   <string name="enter_whatsapp_business_contact">Is there a WhatsApp number for your business?</string>
   <string name="whatsApp_number_customers_to_reach_you_easily">In case you don’t have it, you can use your personal WhatsApp contact number to allow customers to start chatting with you directly on WhatsApp.</string>
   <string name="confirm_and_proceed">Confirm and Proceed</string>
-  <string name="processing_your_business_information">Setting up your business\non Boost...</string>
-  <string name="business_information_completed">Your business information\nsetup is completed!</string>
+  <string name="processing_your_business_information">Setting up your business on Boost...</string>
+  <string name="processing_your_digital_channel">Setting up your digital channels on Boost...</string>
+  <string name="business_information_completed">Your business information setup is completed!</string>
+  <string name="digital_channel_completed">Your digital channels information setup is completed!</string>
   <string name="city_name">City name</string>
   <string name="logout">Logout</string>
   <string name="ok">OK</string>
+
   <string name="press_again_exit">Press again to exit!</string>
   <string name="facebook_page_connect_later_Skip">If you don\'t have a Facebook page for your business, or if you want to connect it later, please tap \'Skip\'</string>
+  <string name="does_your_business_already_have_a_google_page">Does your business already have a Google page?</string>
+  <string name="google_page_connect_later_Skip">If you don\'t have a Google page for your business, or if you want to connect it later, please tap \'Skip\'</string>
   <string name="sync_facebook_page">Connect my Facebook page</string>
+  <string name="sync_google_page">Connect my Google page</string>
   <string name="shop_section_on_your_fb_page">Have you already enabled the shop section on your Facebook page?</string>
   <string name="shop_section_facebook_page_desc">If you don’t have a ‘Shop’ section on your Facebook Page or if you want to connect it later, please tap ‘Skip’.</string>
   <string name="yes_sync_my_fb_page_shop">Yes, Sync my Fb Page shop</string>
-  <string name="twitter_account_business_Skip">If you don’t have a Twitter account for your business, or if you want to connect it later, please tap \'Skip\'.</string>
+  <string name="twitter_account_business_Skip">If you don’t have a Twitter account for your business, or if you want to connect it later; please tap \'Skip\'.</string>
   <string name="twitter_allows_digital_business_boost">Using Boost, you can now communicate with your followers on Twitter to build brand awareness and reach out to new customers.</string>
+  <string name="google_allows_digital_business_boost">Using Boost, you can now directly communicate with your customers on Google and reach out to more potential users.</string>
   <string name="facebook_page_allows_digital_business_boost">Using Boost, you can now directly communicate with your customers on Facebook and reach out to more potential users.</string>
   <string name="facebook_shop_allows_digital_business_boost">Using Boost, all your products and services will start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.</string>
   <string name="twitter_connected">Twitter Connected</string>
   <string name="facebook_shop_connected">Facebook Shop Connected</string>
   <string name="facebook_page_connected">Facebook Page Connected</string>
+  <string name="google_page_connected">Google Page Connected</string>
   <string name="save_continue">Save and continue</string>
   <string name="recommended_on_5_channels">Recommended on 5 channels</string>
   <string name="when_you_press_confirm_i_ll_take_you_to_business_setup_form_to_fill_your_business_info">When you press confirm, I’ll take you to business setup form to fill your business info.</string>
@@ -126,6 +135,12 @@
   <string name="building_plan_for_your_business">Building a digital growth plan for your business…</string>
   <string name="error_getting_category_data">Error getting category data.</string>
   <string name="home">Home</string>
+  <string name="digital_channel">Go Digital Channel</string>
   <string name="invalid_experience_code">Invalid experience code.</string>
+  <string name="channels_belong_to_respective_owners_boost_360_does_not_own_them"><![CDATA[Note: The Names and Logos of Google Search, Google Maps, Facebook Page, Facebook Shop, WhatsApp Business & Twitter belong to their respective owners. Boost 360 does not own them.]]></string>
+  <string name="in_case_you_need_any_help">In case you need any help,</string>
+  <string name="click_here"><u>Click here</u></string>
+  <string name="decline">Decline</string>
+  <string name="accept">Accept</string>
 
 </resources>

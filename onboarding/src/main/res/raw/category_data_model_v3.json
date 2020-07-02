@@ -15,7 +15,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "learn_more",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information."
         },
@@ -24,6 +24,11 @@
           "priority": "recommended",
           "moreDesc": "Marketing your business on Facebook can help you communicate with your customers directly and reach out to other users who are already on the platform.",
           "isSelected": true
+        },
+        {
+          "type": "FB_SHOP",
+          "priority": "learn_more",
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
         },
         {
           "type": "WAB",
@@ -192,7 +197,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -371,7 +376,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "recommended",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -554,7 +559,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -720,7 +725,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -887,7 +892,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -1045,7 +1050,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -1208,7 +1213,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "recommended",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -1221,8 +1226,7 @@
         {
           "type": "FB_SHOP",
           "priority": "recommended",
-          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.",
-          "isSelected": true
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
         },
         {
           "type": "WAB",
@@ -1369,7 +1373,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "recommended",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -1383,8 +1387,7 @@
         {
           "type": "FB_SHOP",
           "priority": "learn_more",
-          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.",
-          "isSelected": true
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
         },
         {
           "type": "WAB",
@@ -1509,7 +1512,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true

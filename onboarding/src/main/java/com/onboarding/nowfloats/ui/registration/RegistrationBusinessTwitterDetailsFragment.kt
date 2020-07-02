@@ -123,6 +123,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     if (result == null) return
     channelAccessToken.userAccountId = result.data?.id?.toString()
     channelAccessToken.userAccessTokenKey = result.data?.authToken?.token
+    channelAccessToken.userAccessTokenSecret = result.data?.authToken?.secret
     channelAccessToken.userAccountName = result.data?.userName
 
     getUserDetails(result.data) { userDetails, error ->
@@ -157,6 +158,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
   private fun disconnectTwitter(twitterSuccess: SuccessSocialLayoutBinding) {
     binding?.skip?.visible()
     twitterSuccess.maimView.gone()
+    this.binding?.title?.text = resources.getString(R.string.do_you_already_have_a_twitter_profile)
     binding?.subTitle?.text = resources.getString(R.string.twitter_account_business_Skip)
     binding?.linkTwitter?.text = resources.getString(R.string.do_you_already_have_a_twitter_profile)
     channelAccessToken.clear()
@@ -175,4 +177,5 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     requestFloatsModel?.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.twitter }
     super.updateInfo()
   }
+
 }

@@ -63,6 +63,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     return when (this) {
       is RegistrationBusinessContactInfoFragment -> R.layout.fragment_registration_business_contact_info
       is RegistrationBusinessWebsiteFragment -> R.layout.fragment_registration_business_website
+      is RegistrationBusinessGoogleBusinessFragment -> R.layout.fragment_registration_business_google
       is RegistrationBusinessFacebookPageFragment -> R.layout.fragment_registration_business_facebook_page
       is RegistrationBusinessFacebookShopFragment -> R.layout.fragment_registration_business_facebook_shop
       is RegistrationBusinessTwitterDetailsFragment -> R.layout.fragment_registration_business_twitter_details
@@ -129,6 +130,11 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, getBundle())
   }
 
+  protected fun gotoGoogleBusinessPage() {
+    NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+    startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE, getBundle())
+  }
+
   protected fun gotoTwitterDetails() {
     NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
     startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS, getBundle())
@@ -177,6 +183,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     return when (this) {
       is RegistrationBusinessContactInfoFragment -> BUSINESS_INFO
       is RegistrationBusinessWebsiteFragment -> Screen.BUSINESS_SUBDOMAIN
+      is RegistrationBusinessGoogleBusinessFragment -> Screen.BUSINESS_GOOGLE_PAGE
       is RegistrationBusinessFacebookPageFragment -> Screen.BUSINESS_FACEBOOK_PAGE
       is RegistrationBusinessFacebookShopFragment -> Screen.BUSINESS_FACEBOOK_SHOP
       is RegistrationBusinessTwitterDetailsFragment -> Screen.BUSINESS_TWITTER
@@ -200,4 +207,5 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     editor?.putBoolean(PreferenceConstant.IS_USER_SIGN_UP, false)
     editor?.apply()
   }
+
 }
