@@ -10,17 +10,43 @@
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.webview.WebViewActivity">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <include
+    <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/app_bar_layout"
-      layout="@layout/layout_toolbar"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="?android:attr/actionBarSize"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintTop_toTopOf="parent">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/back_btn"
+        android:layout_width="@dimen/size_36"
+        android:layout_height="@dimen/size_36"
+        android:layout_marginStart="@dimen/size_8"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/size_8"
+        app:srcCompat="@drawable/ic_toolbar_back" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:paddingEnd="@dimen/size_4"
+        android:text="@string/boost360_terms_conditions"
+        android:textAlignment="center"
+        android:textColor="@color/greyish_brown"
+        app:fontFamily="@font/semi_bold"
+        app:textType="BODY_2"
+        tools:ignore="RtlSymmetry" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     <ProgressBar
       android:id="@+id/progress_bar"
@@ -68,7 +94,7 @@
       <com.framework.views.customViews.CustomButton
         android:id="@+id/decline"
         style="@style/FooterButtonStyle"
-        android:layout_height="@dimen/size_50"
+        android:layout_height="@dimen/size_46"
         android:layout_gravity="bottom"
         android:layout_weight="1"
         android:background="@drawable/bg_corners_stroke"
@@ -83,7 +109,7 @@
       <com.framework.views.customViews.CustomButton
         android:id="@+id/accept"
         style="@style/FooterButtonStyle"
-        android:layout_height="@dimen/size_50"
+        android:layout_height="@dimen/size_46"
         android:layout_gravity="bottom"
         android:layout_weight="1"
         android:drawableEnd="@null"
