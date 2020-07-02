@@ -62,6 +62,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   private var listDisconnect: ArrayList<ChannelModel>? = null
   private var listConnect: ArrayList<ChannelModel>? = null
   var isStartActivity: Boolean = false
+  var websiteUrl: String = ""
   private lateinit var progress: ProgressChannelDialog
 
   private val selectedChannels: ArrayList<ChannelModel>
@@ -97,6 +98,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     val bundle = arguments
     isStartActivity = bundle?.getBoolean(PreferenceConstant.IS_START_ACTIVITY) ?: false
     val isUpdate = bundle?.getBoolean(PreferenceConstant.IS_UPDATE)
+    websiteUrl = bundle?.getString(PreferenceConstant.WEBSITE_URL) ?: ""
     if (isUpdate != null && isUpdate) {
       NavigatorManager.clearRequest()
       val experienceCode = bundle.getString(PreferenceConstant.GET_FP_EXPERIENCE_CODE)
@@ -136,6 +138,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     requestFloatsNew.isUpdate = true
     requestFloatsNew.floatingPointId = floatingPoint
     requestFloatsNew.fpTag = fpTag
+    requestFloatsNew.websiteUrl = websiteUrl
     requestFloatsNew.categoryDataModel?.resetIsSelect()
     if (channelsAccessToken.isNullOrEmpty().not()) {
       channelsAccessToken?.forEach {
@@ -170,6 +173,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
             it1.isSelected = true
             it1.channelAccessToken = data
           }
+          if (it1.isGoogleSearch()) it1.websiteUrl = websiteUrl
         }
       }
     }

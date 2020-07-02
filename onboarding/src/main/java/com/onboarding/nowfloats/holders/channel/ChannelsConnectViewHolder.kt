@@ -35,6 +35,9 @@ class ChannelsConnectViewHolder constructor(binding: ItemChannelsConnectedBindin
       model.isGoogleBusinessChannel() -> {
         binding.nameLink.text = model.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
       }
+      model.isGoogleSearch() -> {
+        binding.nameLink.text = model.websiteUrl?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
+      }
       else -> binding.nameLink.text = model.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
     }
   }
