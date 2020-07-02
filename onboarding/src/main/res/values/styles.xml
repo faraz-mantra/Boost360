@@ -245,7 +245,7 @@
     <item name="android:includeFontPadding">false</item>
   </style>
 
-  <style name="ProgressBarTheme" parent="ThemeOverlay.AppCompat.Light">
+  <style name="ActiveTheme" parent="Base.Theme.AppCompat">
     <item name="colorAccent">@color/colorPrimary</item>
   </style>
 </resources>
