@@ -2,16 +2,11 @@ package com.onboarding.nowfloats.ui.webview
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModel
@@ -44,13 +39,8 @@ class WebViewTNCDialog : DialogFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    isCancelable = false
     loadData(domainUrl)
-    binding.appBarLayout.toolbar.title = "Boost360 Terms & Conditions"
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) binding.appBarLayout.appbar.elevation = 1F
-    binding.appBarLayout.toolbar.getTitleTextView()?.let { it.setToolbarTitleGravity() }
-    binding.appBarLayout.toolbar.setNavigationOnClickListener { dismiss() }
-    activity?.let { ContextCompat.getColor(it, R.color.white) }?.let { binding.appBarLayout.toolbar.setBackgroundColor(it) }
+    binding.backBtn.setOnClickListener { dismiss() }
     binding.decline.setOnClickListener {
       dismiss()
       onClickType(DECLINE)
@@ -102,12 +92,6 @@ class WebViewTNCDialog : DialogFragment() {
       }
     }
     binding.webview.loadUrl(urlData.getUrl())
-  }
-
-  private fun TextView.setToolbarTitleGravity() {
-    textAlignment = TextView.TEXT_ALIGNMENT_GRAVITY
-    gravity = Gravity.CENTER_HORIZONTAL
-    (layoutParams as? Toolbar.LayoutParams)?.width = Toolbar.LayoutParams.MATCH_PARENT
   }
 }
 
