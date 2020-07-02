@@ -84,7 +84,12 @@ fun ChannelModel.getType(): ChannelType? {
 }
 
 fun ChannelModel.isGoogleChannel(): Boolean {
-  return getType() == ChannelType.G_MAPS || getType() == ChannelType.G_SEARCH || getType() == ChannelType.G_BUSINESS
+  return getType() == ChannelType.G_MAPS || getType() == ChannelType.G_SEARCH
+  //|| getType() == ChannelType.G_BUSINESS
+}
+
+fun ChannelModel.isGoogleBusinessChannel(): Boolean {
+  return getType() == ChannelType.G_BUSINESS
 }
 
 fun ChannelModel.isFacebookShop(): Boolean {
@@ -162,6 +167,10 @@ fun Iterable<ChannelModel>.isFbPageOrShop(channelType: ChannelType?): ChannelMod
 
 fun Iterable<ChannelModel>.haveTwitterChannels(): Boolean {
   return filterTo(ArrayList(), { it.isTwitterChannel() }).isNotEmpty()
+}
+
+fun Iterable<ChannelModel>.haveGoogleBusinessChannel(): Boolean {
+  return filterTo(ArrayList(), { it.isGoogleBusinessChannel() }).isNotEmpty()
 }
 
 fun Iterable<ChannelModel>.haveGoogleChannels(): Boolean {

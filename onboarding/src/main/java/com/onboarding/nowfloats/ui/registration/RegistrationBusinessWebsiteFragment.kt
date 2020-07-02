@@ -159,6 +159,9 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
                 it.removeAllViews()
                 binding?.textBtn?.visibility = View.VISIBLE
                 when {
+                  channels.haveGoogleBusinessChannel() -> {
+                    gotoGoogleBusinessPage()
+                  }
                   channels.haveFacebookPage() -> {
                     gotoFacebookPage()
                   }

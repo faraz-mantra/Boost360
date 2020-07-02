@@ -158,6 +158,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
   private fun disconnectTwitter(twitterSuccess: SuccessSocialLayoutBinding) {
     binding?.skip?.visible()
     twitterSuccess.maimView.gone()
+    this.binding?.title?.text = resources.getString(R.string.do_you_already_have_a_twitter_profile)
     binding?.subTitle?.text = resources.getString(R.string.twitter_account_business_Skip)
     binding?.linkTwitter?.text = resources.getString(R.string.do_you_already_have_a_twitter_profile)
     channelAccessToken.clear()
