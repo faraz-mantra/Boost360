@@ -46,7 +46,7 @@ class WebViewTNCDialog : DialogFragment() {
     super.onViewCreated(view, savedInstanceState)
     isCancelable = false
     loadData(domainUrl)
-    binding.appBarLayout.toolbar.title = "Boost"
+    binding.appBarLayout.toolbar.title = "Boost360 Terms & Conditions"
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) binding.appBarLayout.appbar.elevation = 1F
     binding.appBarLayout.toolbar.getTitleTextView()?.let { it.setToolbarTitleGravity() }
     binding.appBarLayout.toolbar.setNavigationOnClickListener { dismiss() }

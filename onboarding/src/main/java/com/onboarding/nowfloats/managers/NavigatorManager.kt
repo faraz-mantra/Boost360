@@ -78,6 +78,7 @@ object NavigatorManager {
       ScreenModel.Screen.CHANNEL_SELECT -> request.channels = null
       ScreenModel.Screen.BUSINESS_INFO -> request.contactInfo?.clearAllDomain()
       ScreenModel.Screen.BUSINESS_SUBDOMAIN -> request.contactInfo?.domainName = null
+      ScreenModel.Screen.BUSINESS_GOOGLE_PAGE -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.googlemybusiness }
       ScreenModel.Screen.BUSINESS_FACEBOOK_PAGE -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.facebookpage }
       ScreenModel.Screen.BUSINESS_FACEBOOK_SHOP -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.facebookshop }
       ScreenModel.Screen.BUSINESS_TWITTER -> request.channelAccessTokens?.removeAll { it.getType() == ChannelAccessToken.AccessTokenType.twitter }

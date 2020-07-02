@@ -163,6 +163,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
       if (response != null && response.access_token.isNullOrEmpty().not()) {
         viewModel?.getAccountListGMB(response.getAuth(), userId)?.observeOnce(viewLifecycleOwner, Observer {
           logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
+          hideProgress()
           showLongToast("Business location not found.")
 //          hideProgress()
 //          setProfileDetails(result?.displayName, result?.photoUrl?.toString())
