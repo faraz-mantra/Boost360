@@ -136,19 +136,23 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
       RecyclerViewActionType.CHANNEL_ITEM_WHY_CLICKED.ordinal -> openWhyChannelDialog(item as? ChannelModel)
       RecyclerViewActionType.CHANNEL_ITEM_CLICKED.ordinal -> {
         if (position != 0) {
+          if (list[position].isFacebookShop()) {
+            showLongToast("You can't connect to Facebook shop using app.")
+            return
+          }
           val isSelected = !list[position].isSelected!!
           list[position].isSelected = isSelected
-          if (list[position].isFacebookPage()) {
-            if (isSelected.not()) {
-              val isShop = list.isFbPageOrShop(ChannelType.FB_SHOP)
-              if (isShop != null && isShop.isSelected!!) isShop.isSelected = !isShop.isSelected!!
-            }
-          } else if (list[position].isFacebookShop()) {
-            if (isSelected) {
-              val isPage = list.isFbPageOrShop(ChannelType.FB_PAGE)
-              if (isPage != null && isPage.isSelected!!.not()) isPage.isSelected = !isPage.isSelected!!
-            }
-          }
+//          if (list[position].isFacebookPage()) {
+//            if (isSelected.not()) {
+//              val isShop = list.isFbPageOrShop(ChannelType.FB_SHOP)
+//              if (isShop != null && isShop.isSelected!!) isShop.isSelected = !isShop.isSelected!!
+//            }
+//          } else if (list[position].isFacebookShop()) {
+//            if (isSelected) {
+//              val isPage = list.isFbPageOrShop(ChannelType.FB_PAGE)
+//              if (isPage != null && isPage.isSelected!!.not()) isPage.isSelected = !isPage.isSelected!!
+//            }
+//          }
           channelList.clear()
           channelList.addAll(list)
           list.clear()
@@ -215,6 +219,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
     val bundle = Bundle()
     var totalPages = if (requestFloatsModel?.isUpdate == true) 0 else 2
     selectedChannels.let { channels ->
+      if (channels.haveGoogleBusinessChannel()) totalPages++
       if (channels.haveFacebookShop()) totalPages++
       if (channels.haveFacebookPage()) totalPages++
       if (channels.haveTwitterChannels()) totalPages++

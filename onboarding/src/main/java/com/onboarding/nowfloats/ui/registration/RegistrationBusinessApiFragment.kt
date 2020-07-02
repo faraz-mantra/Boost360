@@ -18,6 +18,8 @@ import com.framework.extensions.visible
 import com.framework.utils.NetworkUtils
 import com.framework.views.DotProgressBar
 import com.onboarding.nowfloats.R
+import com.onboarding.nowfloats.constant.FragmentType
+import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessApiBinding
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.ProcessApiSyncModel
@@ -33,6 +35,7 @@ import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
 import com.onboarding.nowfloats.ui.InternetErrorDialog
+import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 
 class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding>(), RecyclerItemClickListener {
@@ -56,13 +59,13 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding?.next, binding?.retry, binding?.supportCustomer)
-    setProcessApiSyncModel()
-    setApiProcessAdapter(list)
     binding?.categoryImage?.setImageDrawable(requestFloatsModel?.categoryDataModel?.getImage(baseActivity))
     binding?.categoryImage?.setTintColor(ResourcesCompat.getColor(resources, R.color.white, baseActivity.theme))
     if (requestFloatsModel?.isUpdate == true && requestFloatsModel?.floatingPointId.isNullOrEmpty().not()) {
       floatingPointId = requestFloatsModel?.floatingPointId!!
     }
+    setProcessApiSyncModel()
+    setApiProcessAdapter(list)
     apiHitBusiness()
   }
 
@@ -99,13 +102,23 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
         ChannelType.FB_SHOP -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.facebookshop)
         ChannelType.WAB -> connectedWhatsApp != null
         ChannelType.T_FEED -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.twitter)
-        ChannelType.G_BUSINESS -> true
+        ChannelType.G_BUSINESS -> connectedChannelsAccessTokens?.contains(ChannelAccessToken.AccessTokenType.googlemybusiness)
         null -> false
       }
       if (isSelected == true) connectedChannels.add(channel)
     }
     list.clear()
-    list.addAll(ProcessApiSyncModel().getDataStart(connectedChannels))
+    if (requestFloatsModel?.isUpdate == true) {
+      if (connectedChannels.isNullOrEmpty()) backToDigitalChannelUpdate()
+      else list.addAll(ProcessApiSyncModel().getDataStartUpdate(connectedChannels))
+    } else {
+      list.addAll(ProcessApiSyncModel().getDataStart(connectedChannels))
+    }
+    binding?.title?.text = resources.getString(
+        if (requestFloatsModel?.isUpdate == false)
+          R.string.processing_your_business_information
+        else R.string.processing_your_digital_channel
+    )
   }
 
   private fun putCreateBusinessOnboarding(dotProgressBar: DotProgressBar) {
@@ -185,7 +198,11 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     list.clear()
     when (type) {
       "CREATE" -> list.addAll(ProcessApiSyncModel().getDataErrorFP(connectedChannels))
-      "CHANNELS" -> list.addAll(ProcessApiSyncModel().getDataErrorChannels(connectedChannels))
+      "CHANNELS" -> {
+        if (requestFloatsModel?.isUpdate == true) {
+          list.addAll(ProcessApiSyncModel().getDataErrorChannelsUpdate(connectedChannels))
+        } else list.addAll(ProcessApiSyncModel().getDataErrorChannels(connectedChannels))
+      }
     }
     apiProcessAdapter?.notify(list)
     binding?.errorView?.visible()
@@ -198,17 +215,26 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       requestFloatsModel?.floatingPointId = floatingPointId
       updateInfo()
       list.clear()
-      list.addAll(ProcessApiSyncModel().getDataSuccess(connectedChannels))
+      if (requestFloatsModel?.isUpdate == true) {
+        list.addAll(ProcessApiSyncModel().getDataSuccessUpdate(connectedChannels))
+      } else list.addAll(ProcessApiSyncModel().getDataSuccess(connectedChannels))
       dotProgressBar.stopAnimation()
       dotProgressBar.removeAllViews()
       binding?.next?.alpha = 1F
       binding?.textBtn?.visibility = View.VISIBLE
-      if (requestFloatsModel?.isUpdate == true) binding?.textBtn?.text = resources.getString(R.string.home)
+
+      binding?.textBtn?.text = resources.getString(
+          if (requestFloatsModel?.isUpdate == true) R.string.digital_channel else R.string.start_your_digital_journey
+      )
       binding?.container?.setBackgroundResource(R.drawable.bg_card_blue)
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         binding?.category?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, R.color.white)
       binding?.title?.setTextColor(getColor(R.color.white))
-      binding?.title?.text = resources.getString(R.string.business_information_completed)
+      binding?.title?.text = resources.getString(
+          if (requestFloatsModel?.isUpdate == false)
+            R.string.business_information_completed
+          else R.string.digital_channel_completed
+      )
       binding?.categoryImage?.setTintColor(getColor(R.color.dodger_blue_two))
       apiProcessAdapter?.notify(list)
     }
@@ -231,16 +257,8 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     when (v) {
       binding?.next -> if ((binding?.textBtn?.visibility == View.VISIBLE)) {
         //TODO check for update channels
-        if (binding?.textBtn?.text == resources.getString(R.string.home)) {
-          try {
-            val intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            baseActivity.startActivity(intent)
-            baseActivity.finish()
-            NavigatorManager.clearStackAndFormData()
-          } catch (e: ClassNotFoundException) {
-            e.printStackTrace()
-          }
+        if (binding?.textBtn?.text == resources.getString(R.string.digital_channel)) {
+          backToDigitalChannelUpdate()
         } else gotoRegistrationComplete()
       }
       binding?.supportCustomer -> {
@@ -281,5 +299,23 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     createRequest.primaryCategory = requestFloatsModel?.categoryDataModel?.category_key
     createRequest.appExperienceCode = requestFloatsModel?.categoryDataModel?.experience_code
     return createRequest
+  }
+
+  private fun backToDigitalChannelUpdate() {
+    val bundle = Bundle()
+    bundle.putBoolean(PreferenceConstant.IS_UPDATE, true)
+    bundle.putBoolean(PreferenceConstant.IS_START_ACTIVITY, true)
+    bundle.putString(PreferenceConstant.GET_FP_EXPERIENCE_CODE, requestFloatsModel?.categoryDataModel?.experienceCode())
+    bundle.putString(PreferenceConstant.KEY_FP_ID, requestFloatsModel?.floatingPointId)
+    bundle.putString(PreferenceConstant.GET_FP_DETAILS_TAG, requestFloatsModel?.fpTag)
+    startFragmentActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle, clearTop = true)
+    NavigatorManager.clearStackAndFormData()
+  }
+
+  fun isDigitalChannel(): Boolean {
+    return if ((binding?.textBtn?.visibility == View.VISIBLE) && binding?.textBtn?.text == resources.getString(R.string.digital_channel)) {
+      backToDigitalChannelUpdate()
+      true
+    } else false
   }
 }

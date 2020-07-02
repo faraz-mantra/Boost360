@@ -1319,21 +1319,21 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equals(getString(R.string.business__address))) {
                     Intent businessAddressIntent = new Intent(HomeActivity.this, Business_Address_Activity.class);
                     startActivity(businessAddressIntent);
-                } else if (nextScreen.equals(getString(R.string.title_activity_social__sharing_)) ||
-                        nextScreen.equals(getString(R.string.content_sharing_settings))) {
+                } else if (nextScreen.equals(getString(R.string.title_activity_social__sharing_)) || nextScreen.equals(getString(R.string.content_sharing_settings))) {
                     WebEngageController.trackEvent("NAV - CONTENT_SHARING_SETTINGS", "CONTENT_SHARING_SETTINGS", null);
                     /*Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                     startActivity(socialSharingIntent);*/
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
                     try {
                         Bundle bundle = new Bundle();
-                        Intent channelIntent = new Intent(HomeActivity.this, Class.forName("com.onboarding.nowfloats.ui.channel.ChannelPickerActivity"));
+                        Intent channelIntent = new Intent(HomeActivity.this, Class.forName("com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity"));
                         session.setHeader(Constants.WA_KEY);
                         bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
                         bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
                         bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
                         bundle.putBoolean("IsUpdate", true);
                         channelIntent.putExtras(bundle);
+                        channelIntent.putExtra("FRAGMENT_TYPE", "MY_DIGITAL_CHANNEL");
                         startActivity(channelIntent);
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
