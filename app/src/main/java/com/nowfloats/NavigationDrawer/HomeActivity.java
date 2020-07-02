@@ -1327,13 +1327,15 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     try {
                         Bundle bundle = new Bundle();
                         Intent channelIntent = new Intent(HomeActivity.this, Class.forName("com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity"));
-                        String normalURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+                        String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+                        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + this.getString(R.string.tag_for_partners);
                         session.setHeader(Constants.WA_KEY);
                         bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
                         bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
                         bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
                         bundle.putBoolean("IsUpdate", true);
-                        bundle.putString("website_url", normalURI);
+                        if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) bundle.putString("website_url", rootAlisasURI);
+                        else bundle.putString("website_url", normalURI);
                         channelIntent.putExtras(bundle);
                         channelIntent.putExtra("FRAGMENT_TYPE", "MY_DIGITAL_CHANNEL");
                         startActivity(channelIntent);
