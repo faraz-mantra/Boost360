@@ -1328,7 +1328,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         Bundle bundle = new Bundle();
                         Intent channelIntent = new Intent(HomeActivity.this, Class.forName("com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity"));
                         String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + this.getString(R.string.tag_for_partners);
+                        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
                         session.setHeader(Constants.WA_KEY);
                         bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
                         bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());

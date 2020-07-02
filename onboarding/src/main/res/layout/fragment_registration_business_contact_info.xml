@@ -1,126 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/white">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fillViewport="true"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
 
       <androidx.appcompat.widget.LinearLayoutCompat
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
 
           <androidx.appcompat.widget.LinearLayoutCompat
-              android:id="@+id/view_business"
-              style="@style/Onboarding.Registration.FormStyle"
-              android:layout_height="match_parent"
+            android:id="@+id/view_business"
+            style="@style/Onboarding.Registration.FormStyle"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            tools:alpha="1">
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/title"
+              style="@style/Onboarding.Registration.HeaderTitleStyle"
               android:alpha="0"
-              tools:alpha="1">
+              android:text="@string/building_your_business_ncontact_info"
+              tools:alpha="1" />
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/title"
-                style="@style/Onboarding.Registration.HeaderTitleStyle"
-                android:alpha="0"
-                android:text="@string/building_your_business_ncontact_info"
-                tools:alpha="1" />
-
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/sub_title"
-                style="@style/Onboarding.Registration.HeaderDescriptionStyle"
-                android:alpha="0"
-                android:text="@string/this_info_will_be_used_to_onboard_sync_across_all_channels"
-                tools:alpha="1" />
+              android:id="@+id/sub_title"
+              style="@style/Onboarding.Registration.HeaderDescriptionStyle"
+              android:alpha="0"
+              android:text="@string/this_info_will_be_used_to_onboard_sync_across_all_channels"
+              tools:alpha="1" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/view_form"
-                style="@style/Onboarding.Registration.FormContainerStyle"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/size_16"
-                android:alpha="0"
-                android:paddingTop="@dimen/size_30"
-                tools:alpha="1">
+              android:id="@+id/view_form"
+              style="@style/Onboarding.Registration.FormContainerStyle"
+              android:layout_height="match_parent"
+              android:layout_marginTop="@dimen/size_16"
+              android:alpha="0"
+              android:paddingTop="@dimen/size_30"
+              tools:alpha="1">
 
               <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/form_main"
-                  android:alpha="0"
-                  android:paddingBottom="@dimen/size_30"
-                  tools:alpha="1"
-                  android:orientation="vertical">
+                android:id="@+id/form_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/size_30"
+                tools:alpha="1">
 
                 <com.framework.views.customViews.CustomTextField
-                    android:id="@+id/store_name"
-                    style="@style/Onboarding.TextFieldStyle"
-                    android:drawableStart="@drawable/ic_store_focusable"
-                    android:hint="@string/enter_your_business_name"
-                    android:inputType="textCapWords" />
+                  android:id="@+id/store_name"
+                  style="@style/Onboarding.TextFieldStyle"
+                  android:drawableStart="@drawable/ic_store_focusable"
+                  android:hint="@string/enter_your_business_name"
+                  android:inputType="textCapWords" />
 
                 <com.framework.views.customViews.CustomTextField
-                    android:id="@+id/address"
-                    style="@style/Onboarding.TextFieldStyle"
-                    android:drawableStart="@drawable/ic_location_focusable"
-                    android:drawablePadding="@dimen/size_6"
-                    android:focusable="false"
-                    android:hint="@string/city_name"
-                    android:inputType="textCapWords" />
+                  android:id="@+id/address"
+                  style="@style/Onboarding.TextFieldStyle"
+                  android:drawableStart="@drawable/ic_location_focusable"
+                  android:drawablePadding="@dimen/size_6"
+                  android:focusable="false"
+                  android:hint="@string/city_name"
+                  android:inputType="textCapWords" />
 
                 <com.framework.views.customViews.CustomTextField
-                    android:id="@+id/email"
-                    style="@style/Onboarding.TextFieldStyle"
-                    android:drawableStart="@drawable/ic_mail_focusable"
-                    android:hint="@string/enter_your_business_email"
-                    android:inputType="textEmailAddress" />
+                  android:id="@+id/email"
+                  style="@style/Onboarding.TextFieldStyle"
+                  android:drawableStart="@drawable/ic_mail_focusable"
+                  android:hint="@string/enter_your_business_email"
+                  android:inputType="textEmailAddress" />
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
 
                   <com.framework.views.customViews.CustomTextView
-                      android:id="@+id/country_code"
-                      style="@style/Onboarding.TextFieldStyle"
-                      android:layout_marginStart="@dimen/size_28"
-                      android:layout_marginTop="@dimen/size_10"
-                      android:text="+91"
-                      android:visibility="gone"
-                      tools:visibility="visible" />
+                    android:id="@+id/country_code"
+                    style="@style/Onboarding.TextFieldStyle"
+                    android:layout_marginStart="@dimen/size_28"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:text="+91"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
                   <com.framework.views.customViews.CustomTextField
-                      android:id="@+id/number"
-                      style="@style/Onboarding.TextFieldStyle"
-                      android:drawableStart="@drawable/ic_phone_focusable"
-                      android:hint="@string/business_contact_number"
-                      android:inputType="phone"
-                      android:maxLength="10"
-                      tools:drawablePadding="@dimen/size_36" />
+                    android:id="@+id/number"
+                    style="@style/Onboarding.TextFieldStyle"
+                    android:drawableStart="@drawable/ic_phone_focusable"
+                    android:hint="@string/business_contact_number"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    tools:drawablePadding="@dimen/size_36" />
                 </RelativeLayout>
+
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
                   <CheckBox
-                      android:id="@+id/whatsapp_communication"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/whatsapp_consent_text"
-                      app:layout_constraintStart_toStartOf="parent"
-                      android:textColor="@color/greyish_brown"
-                      app:layout_constraintTop_toTopOf="parent" />
+                    android:id="@+id/whatsapp_communication"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/whatsapp_consent_text"
+                    android:textColor="@color/greyish_brown"
+                    android:theme="@style/ActiveTheme"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
                 </RelativeLayout>
               </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -128,16 +131,16 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <com.framework.views.customViews.CustomCardView
-              android:id="@+id/view_image"
-              style="@style/Onboarding.Registration.FormHeaderCardStyle"
-              android:layout_gravity="center_horizontal"
-              android:layout_marginTop="@dimen/size_2"
-              android:alpha="0"
-              tools:alpha="1">
+            android:id="@+id/view_image"
+            style="@style/Onboarding.Registration.FormHeaderCardStyle"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size_2"
+            android:alpha="0"
+            tools:alpha="1">
 
             <com.framework.views.customViews.CustomImageView
-                style="@style/Onboarding.Registration.FormHeaderImageStyle"
-                app:srcCompat="@drawable/ic_ria_circle" />
+              style="@style/Onboarding.Registration.FormHeaderImageStyle"
+              app:srcCompat="@drawable/ic_ria_circle" />
 
           </com.framework.views.customViews.CustomCardView>
 
@@ -148,27 +151,27 @@
 
 
     <FrameLayout
-        android:id="@+id/next"
-        style="@style/ButtonStyle.Rounded"
-        android:layout_marginStart="@dimen/size_32"
-        android:layout_marginEnd="@dimen/size_32"
-        android:layout_marginBottom="@dimen/size_16"
-        android:alpha="0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:alpha="1">
+      android:id="@+id/next"
+      style="@style/ButtonStyle.Rounded"
+      android:layout_marginStart="@dimen/size_32"
+      android:layout_marginEnd="@dimen/size_32"
+      android:layout_marginBottom="@dimen/size_16"
+      android:alpha="0"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      tools:alpha="1">
 
       <com.framework.views.customViews.CustomTextView
-          android:id="@+id/text_btn"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:gravity="center"
-          android:text="@string/confirm"
-          android:textColor="@color/white"
-          app:fontFamily="@font/bold"
-          app:textType="HEADING_6" />
+        android:id="@+id/text_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/confirm"
+        android:textColor="@color/white"
+        app:fontFamily="@font/bold"
+        app:textType="HEADING_6" />
     </FrameLayout>
 
 
