@@ -45,6 +45,8 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
       }
       if (channelModel != null && channelModel!!.isWhatsAppChannel()) {
         binding?.title?.text = channelModel?.channelActionData?.active_whatsapp_number?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
+      } else if (channelModel != null && channelModel!!.isGoogleSearch()) {
+        binding?.title?.text = channelModel?.websiteUrl?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
       } else {
         binding?.title?.text = channelModel?.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
         if (channelModel != null && (channelModel!!.isFacebookShop() || channelModel!!.isFacebookPage())) {
