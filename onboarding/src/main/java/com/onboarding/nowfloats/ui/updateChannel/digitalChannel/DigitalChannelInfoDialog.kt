@@ -88,6 +88,8 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
         url = "https://twitter.com/${channelModel?.channelAccessToken?.userAccountName?.trim()}"
       } else if (channelModel!!.isFacebookPage() && channelModel?.channelAccessToken?.userAccountId.isNullOrEmpty().not()) {
         url = "https://www.facebook.com/${channelModel?.channelAccessToken?.userAccountId}"
+      } else if (channelModel!!.isGoogleSearch() && channelModel?.websiteUrl.isNullOrEmpty().not()) {
+        url = channelModel?.websiteUrl
       }
     }
     url?.let {

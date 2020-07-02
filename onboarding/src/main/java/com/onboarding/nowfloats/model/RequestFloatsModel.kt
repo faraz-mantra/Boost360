@@ -18,6 +18,7 @@ class RequestFloatsModel(
     var fpTag: String? = null,
     var isUpdate: Boolean? = false
 ) : Parcelable {
+  var websiteUrl: String? = ""
   var profileUrl: String? = null
   var businessUrl: String? = null
 

@@ -21,6 +21,8 @@ data class ChannelModel(
     var status: String? = ProcessApiSyncModel.SyncStatus.PROCESSING.name
 ) : AppBaseRecyclerViewItem, Parcelable {
 
+  var websiteUrl: String? = ""
+
   var channelAccessToken: ChannelAccessToken? = null
   var channelActionData: ChannelActionData? = null
 
@@ -86,6 +88,10 @@ fun ChannelModel.getType(): ChannelType? {
 fun ChannelModel.isGoogleChannel(): Boolean {
   return getType() == ChannelType.G_MAPS || getType() == ChannelType.G_SEARCH
   //|| getType() == ChannelType.G_BUSINESS
+}
+
+fun ChannelModel.isGoogleSearch(): Boolean {
+  return getType() == ChannelType.G_SEARCH
 }
 
 fun ChannelModel.isGoogleBusinessChannel(): Boolean {

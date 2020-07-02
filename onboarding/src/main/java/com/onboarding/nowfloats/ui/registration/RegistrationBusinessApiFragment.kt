@@ -308,6 +308,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     bundle.putString(PreferenceConstant.GET_FP_EXPERIENCE_CODE, requestFloatsModel?.categoryDataModel?.experienceCode())
     bundle.putString(PreferenceConstant.KEY_FP_ID, requestFloatsModel?.floatingPointId)
     bundle.putString(PreferenceConstant.GET_FP_DETAILS_TAG, requestFloatsModel?.fpTag)
+    bundle.putString(PreferenceConstant.WEBSITE_URL, requestFloatsModel?.websiteUrl)
     startFragmentActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle, clearTop = true)
     NavigatorManager.clearStackAndFormData()
   }
