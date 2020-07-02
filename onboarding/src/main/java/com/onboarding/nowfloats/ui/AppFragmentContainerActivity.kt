@@ -33,6 +33,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
   private var channelPickerFragment: ChannelPickerFragment? = null
   private var registrationBusinessContactInfoFragment: RegistrationBusinessContactInfoFragment? = null
   private var registrationBusinessWebsiteFragment: RegistrationBusinessWebsiteFragment? = null
+  private var registrationBusinessGoogleBusinessFragment: RegistrationBusinessGoogleBusinessFragment? = null
   private var registrationBusinessFacebookPageFragment: RegistrationBusinessFacebookPageFragment? = null
   private var registrationBusinessFacebookShopFragment: RegistrationBusinessFacebookShopFragment? = null
   private var registrationBusinessTwitterDetailsFragment: RegistrationBusinessTwitterDetailsFragment? = null
@@ -48,6 +49,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
       FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS -> ContextCompat.getColor(this, R.color.white)
       FragmentType.REGISTRATION_BUSINESS_WEBSITE,
       FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
+      FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE,
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
       FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS -> ContextCompat.getColor(this, R.color.white_two)
@@ -68,6 +70,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
     return when (type) {
       FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS,
       FragmentType.REGISTRATION_BUSINESS_WEBSITE,
+      FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE,
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
       FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
@@ -80,6 +83,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
     return when (type) {
       FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS,
       FragmentType.REGISTRATION_BUSINESS_WEBSITE,
+      FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE,
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP,
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE,
       FragmentType.REGISTRATION_BUSINESS_WHATSAPP,
@@ -160,6 +164,10 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
         registrationBusinessWebsiteFragment = RegistrationBusinessWebsiteFragment.newInstance()
         registrationBusinessWebsiteFragment
       }
+      FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE -> {
+        registrationBusinessGoogleBusinessFragment = RegistrationBusinessGoogleBusinessFragment.newInstance()
+        registrationBusinessGoogleBusinessFragment
+      }
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE -> {
         registrationBusinessFacebookPageFragment = RegistrationBusinessFacebookPageFragment.newInstance()
         registrationBusinessFacebookPageFragment
@@ -198,6 +206,11 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
       FragmentType.REGISTRATION_BUSINESS_WEBSITE -> {
         registrationBusinessWebsiteFragment?.updateInfo()
         NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_SUBDOMAIN)
+        super.onBackPressed()
+      }
+      FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE -> {
+        registrationBusinessGoogleBusinessFragment?.updateInfo()
+        NavigatorManager.popCurrentScreen(ScreenModel.Screen.BUSINESS_GOOGLE_PAGE)
         super.onBackPressed()
       }
       FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE -> {
@@ -247,6 +260,8 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     registrationCompleteFragment?.onActivityResult(requestCode, resultCode, data)
+    registrationCompleteFragment?.onActivityResult(requestCode, resultCode, data)
+    registrationBusinessGoogleBusinessFragment?.onActivityResult(requestCode, resultCode, data)
     registrationBusinessTwitterDetailsFragment?.onActivityResult(requestCode, resultCode, data)
     registrationBusinessContactInfoFragment?.onActivityResult(requestCode, resultCode, data)
   }

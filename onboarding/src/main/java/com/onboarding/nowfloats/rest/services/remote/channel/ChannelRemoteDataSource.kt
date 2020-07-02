@@ -2,6 +2,7 @@ package com.onboarding.nowfloats.rest.services.remote.channel
 
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
 import com.onboarding.nowfloats.model.channel.respose.UpdateChannelAccessTokenResponse
+import com.onboarding.nowfloats.model.nfxProcess.NFXProcessRequest
 import com.onboarding.nowfloats.rest.EndPoints
 import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
 import io.reactivex.Observable
@@ -19,5 +20,8 @@ interface ChannelRemoteDataSource {
 
   @GET(EndPoints.GET_CHANNELS_ACCESS_TOKEN)
   fun getChannelsAccessToken(@Query("nowfloats_id") nowfloatsId: String?): Observable<Response<ChannelsAccessTokenResponse>>
+
+  @POST(EndPoints.NFX_PROCESS_URL)
+  fun nfxProcess(@Body request: NFXProcessRequest?): Observable<Response<Any>>
 
 }

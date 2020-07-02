@@ -19,6 +19,7 @@ import com.onboarding.nowfloats.extensions.checkIsFile
 class WebViewActivity : AppBaseActivity<ActivityWebViewBinding, BaseViewModel>() {
 
   private var domainUrl = ""
+
   override fun getLayout(): Int {
     return R.layout.activity_web_view
   }

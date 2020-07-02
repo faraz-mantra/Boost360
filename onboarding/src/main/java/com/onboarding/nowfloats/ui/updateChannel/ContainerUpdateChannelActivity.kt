@@ -145,7 +145,6 @@ open class ContainerUpdateChannelActivity : AppBaseActivity<ActivityFragmentCont
     return super.onOptionsItemSelected(item)
   }
 
-
   override fun onBackPressed() {
     when (type) {
       FragmentType.MY_DIGITAL_CHANNEL -> {

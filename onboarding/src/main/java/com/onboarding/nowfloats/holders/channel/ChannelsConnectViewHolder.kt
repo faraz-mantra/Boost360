@@ -3,10 +3,7 @@ package com.onboarding.nowfloats.holders.channel
 import android.view.View
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
 import com.onboarding.nowfloats.databinding.ItemChannelsConnectedBinding
-import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.model.channel.getDrawable
-import com.onboarding.nowfloats.model.channel.getName
-import com.onboarding.nowfloats.model.channel.isWhatsAppChannel
+import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
@@ -31,11 +28,14 @@ class ChannelsConnectViewHolder constructor(binding: ItemChannelsConnectedBindin
     setClickListeners(binding.infoBtn)
     binding.title.text = model.getName()
     binding.image.setImageDrawable(model.getDrawable(activity))
-    if (model.isWhatsAppChannel()) {
-      binding.nameLink.text = model.channelActionData?.active_whatsapp_number?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
-    } else {
-      binding.nameLink.text = model.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
+    when {
+      model.isWhatsAppChannel() -> {
+        binding.nameLink.text = model.channelActionData?.active_whatsapp_number?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
+      }
+      model.isGoogleBusinessChannel() -> {
+        binding.nameLink.text = model.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
+      }
+      else -> binding.nameLink.text = model.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
     }
   }
-
 }

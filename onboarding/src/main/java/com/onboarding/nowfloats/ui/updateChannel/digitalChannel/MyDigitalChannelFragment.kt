@@ -158,8 +158,11 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
             }
           }
           ChannelAccessToken.AccessTokenType.googlemybusiness.name.toLowerCase(Locale.ROOT) -> {
-            data = ChannelAccessToken(type = it.type(), userAccessTokenKey = it.refresh_token,
-                userAccountId = it.account_id, userAccountName = it.account_name)
+            val tokenResponse = ChannelTokenResponse(it.token_response?.access_token, it.token_response?.token_type, it.token_response?.expires_in, it.token_response?.refresh_token)
+            data = ChannelAccessToken(type = it.type(), token_expiry = it.token_expiry, invalid = it.invalid,
+                token_response = tokenResponse, refresh_token = it.refresh_token, userAccountName = it.account_name, userAccountId = it.account_id,
+                LocationId = it.location_id, LocationName = it.location_name, verified_location = it.verified_location)
+            requestFloatsNew.channelAccessTokens?.add(data)
           }
         }
         requestFloatsNew.categoryDataModel?.channels?.forEach { it1 ->
@@ -282,25 +285,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     }
   }
 
-  private fun openInfoChannelDialog(channel: ChannelModel) {
-    DigitalChannelInfoDialog().apply {
-      setChannels(channel)
-      onClickedDisconnect = { disConnectChannel(it) }
-      show(this@MyDigitalChannelFragment.parentFragmentManager, "")
-    }
-  }
-
-  private fun disConnectChannel(channel: ChannelModel) {
-    showProgress("Disconnecting your channel...", false)
-    if (channel.isWhatsAppChannel()) {
-      val request = UpdateChannelActionDataRequest(ChannelActionData(), requestFloatsModel?.getWebSiteId())
-      viewModel?.postUpdateWhatsappRequest(request, auth!!)?.observeOnce(viewLifecycleOwner, Observer { responseManage(it) })
-    } else {
-      val request = UpdateChannelAccessTokenRequest(ChannelAccessToken(type = channel.getAccessTokenType()), clientId!!, requestFloatsModel?.floatingPointId!!)
-      viewModel?.updateChannelAccessToken(request)?.observeOnce(viewLifecycleOwner, Observer { responseManage(it) })
-    }
-  }
-
   private fun responseManage(it: BaseResponse) {
     if (it.status == 200 || it.status == 201 || it.status == 202) {
       getChannelAccessToken(requestFloatsModel?.categoryDataModel, requestFloatsModel?.floatingPointId, requestFloatsModel?.fpTag)
@@ -322,6 +306,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       val bundle = Bundle()
       var totalPages = if (requestFloatsModel?.isUpdate == true) 0 else 2
       selectedChannels.let { channels ->
+        if (channels.haveGoogleBusinessChannel()) totalPages++
         if (channels.haveFacebookShop()) totalPages++
         if (channels.haveFacebookPage()) totalPages++
         if (channels.haveTwitterChannels()) totalPages++
@@ -332,6 +317,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       bundle.addInt(IntentConstant.TOTAL_PAGES, totalPages).addInt(IntentConstant.CURRENT_PAGES, 1)
       val channels = requestFloatsModel?.channels ?: return
       when {
+        channels.haveGoogleBusinessChannel() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE, bundle)
         channels.haveFacebookPage() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE, bundle)
         channels.haveFacebookShop() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP, bundle)
         channels.haveTwitterChannels() -> startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS, bundle)
@@ -368,4 +354,24 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   private fun digitalChannelBottomSheet() {
     DigitalChannelSheetDialog().show(this.parentFragmentManager, DigitalChannelSheetDialog::class.java.name)
   }
+
+  private fun openInfoChannelDialog(channel: ChannelModel) {
+    DigitalChannelInfoDialog().apply {
+      setChannels(channel)
+      onClickedDisconnect = { disConnectChannel(it) }
+      show(this@MyDigitalChannelFragment.parentFragmentManager, "")
+    }
+  }
+
+  private fun disConnectChannel(channel: ChannelModel) {
+    showProgress("Disconnecting your channel...", false)
+    if (channel.isWhatsAppChannel()) {
+      val request = UpdateChannelActionDataRequest(ChannelActionData(), requestFloatsModel?.getWebSiteId())
+      viewModel?.postUpdateWhatsappRequest(request, auth!!)?.observeOnce(viewLifecycleOwner, Observer { responseManage(it) })
+    } else {
+      val request = UpdateChannelAccessTokenRequest(ChannelAccessToken(type = channel.getAccessTokenType()), clientId!!, requestFloatsModel?.floatingPointId!!)
+      viewModel?.updateChannelAccessToken(request)?.observeOnce(viewLifecycleOwner, Observer { responseManage(it) })
+    }
+  }
+
 }

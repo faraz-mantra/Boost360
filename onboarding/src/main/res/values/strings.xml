@@ -32,7 +32,7 @@
   <string name="fb_shop">Facebook Shop</string>
   <string name="whatsapp_business">WhatsApp</string>
   <string name="twitter_profile">Twitter Profile</string>
-  <string name="google_business">Google Business</string>
+  <string name="google_business">Google My Business and Google Maps</string>
   <string name="important">Important</string>
   <string name="recommended">Recommended</string>
 
@@ -81,19 +81,25 @@
   <string name="city_name">City name</string>
   <string name="logout">Logout</string>
   <string name="ok">OK</string>
+
   <string name="press_again_exit">Press again to exit!</string>
   <string name="facebook_page_connect_later_Skip">If you don\'t have a Facebook page for your business, or if you want to connect it later, please tap \'Skip\'</string>
+  <string name="does_your_business_already_have_a_google_page">Does your business already have a Google page?</string>
+  <string name="google_page_connect_later_Skip">If you don\'t have a Google page for your business, or if you want to connect it later, please tap \'Skip\'</string>
   <string name="sync_facebook_page">Connect my Facebook page</string>
+  <string name="sync_google_page">Connect my Google page</string>
   <string name="shop_section_on_your_fb_page">Have you already enabled the shop section on your Facebook page?</string>
   <string name="shop_section_facebook_page_desc">If you don’t have a ‘Shop’ section on your Facebook Page or if you want to connect it later, please tap ‘Skip’.</string>
   <string name="yes_sync_my_fb_page_shop">Yes, Sync my Fb Page shop</string>
   <string name="twitter_account_business_Skip">If you don’t have a Twitter account for your business, or if you want to connect it later; please tap \'Skip\'.</string>
   <string name="twitter_allows_digital_business_boost">Using Boost, you can now communicate with your followers on Twitter to build brand awareness and reach out to new customers.</string>
+  <string name="google_allows_digital_business_boost">Using Boost, you can now directly communicate with your customers on Google and reach out to more potential users.</string>
   <string name="facebook_page_allows_digital_business_boost">Using Boost, you can now directly communicate with your customers on Facebook and reach out to more potential users.</string>
   <string name="facebook_shop_allows_digital_business_boost">Using Boost, all your products and services will start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.</string>
   <string name="twitter_connected">Twitter Connected</string>
   <string name="facebook_shop_connected">Facebook Shop Connected</string>
   <string name="facebook_page_connected">Facebook Page Connected</string>
+  <string name="google_page_connected">Google Page Connected</string>
   <string name="save_continue">Save and continue</string>
   <string name="recommended_on_5_channels">Recommended on 5 channels</string>
   <string name="when_you_press_confirm_i_ll_take_you_to_business_setup_form_to_fill_your_business_info">When you press confirm, I’ll take you to business setup form to fill your business info.</string>
@@ -133,5 +139,7 @@
   <string name="channels_belong_to_respective_owners_boost_360_does_not_own_them"><![CDATA[Note: The Names and Logos of Google Search, Google Maps, Facebook Page, Facebook Shop, WhatsApp Business & Twitter belong to their respective owners. Boost 360 does not own them.]]></string>
   <string name="in_case_you_need_any_help">In case you need any help,</string>
   <string name="click_here"><u>Click here</u></string>
+  <string name="decline">Decline</string>
+  <string name="accept">Accept</string>
 
 </resources>
