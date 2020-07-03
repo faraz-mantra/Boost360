@@ -59,7 +59,8 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
           channelModel?.websiteUrl?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
         }
         channelModel!!.isGoogleBusinessChannel() -> {
-          channelModel?.channelAccessToken?.LocationName?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
+          channelModel?.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
+//          channelModel?.channelAccessToken?.LocationName?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
         }
         else -> {
           if ((channelModel!!.isFacebookShop() || channelModel!!.isFacebookPage())) {
