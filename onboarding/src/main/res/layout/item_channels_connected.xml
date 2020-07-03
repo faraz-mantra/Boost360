@@ -60,6 +60,8 @@
           android:textColor="@color/greyish_brown"
           app:fontFamily="@font/semi_bold"
           app:textType="HEADING_6"
+          android:ellipsize="end"
+          android:maxLines="1"
           tools:text="https://shantisalonspa.com/" />
 
       </androidx.appcompat.widget.LinearLayoutCompat>

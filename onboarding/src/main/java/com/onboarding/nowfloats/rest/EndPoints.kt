@@ -7,6 +7,10 @@ object EndPoints {
   const val POST_BUSINESS_DOMAIN_URL = "discover/v1/floatingPoint/verifyUniqueTag"
   const val POST_BUSINESS_DOMAIN_SUGGEST = "discover/v1/floatingPoint/suggestTag"
 
+  // Base With Floats APIs
+  const val RIA_WITH_FLOATS_BASE_URL = "https://ria.withfloats.com/"
+  const val RIA_WHATSAPP = "api/WhatsApp/OptIn"
+
   // NFX APIs
   const val NFX_BASE_URL = "https://nfx.withfloats.com/"
   const val POST_UPDATE_CHANNEL_ACCESS_TOKENS_URL = "dataexchange/v1/updateAccessTokens"
@@ -25,6 +29,8 @@ object EndPoints {
   //Google my business(GMB)
   const val GOOGLE_BASE_URL = "https://www.googleapis.com/"
   const val GMB_BASE_URL = "https://mybusiness.googleapis.com/"
-  const val GET_GMB_ACCOUNT_LIST = "v4/accounts/{user_id}/locations"
+  const val GET_GMB_ACCOUNT = "v4/accounts/{user_id}"
+  const val GET_GMB_ACCOUNT_LIST = "v4/accounts"
+  const val GET_GMB_ACCOUNT_LOCATIONS = "v4/accounts/{user_id}/locations"
   const val POST_GOOGLE_AUTH_TOKENS = "oauth2/v4/token"
 }
