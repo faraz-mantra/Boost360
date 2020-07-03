@@ -5,6 +5,7 @@ import com.framework.base.BaseRequest
 data class RiaWhatsappRequest(
     val client_id: String? = null,
     val optType: String? = null,
+    //TODO number with country code
     val whatsappNumber: String? = null,
     val notificationType: String? = null,
     val customerId: String? = null,
