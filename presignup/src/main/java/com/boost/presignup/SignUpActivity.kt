@@ -89,6 +89,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     create_account_button.isVisible = true
+    enableFormInput()
 
     retrofit = Retrofit.Builder()
         .baseUrl("https://api2.withfloats.com")
@@ -128,6 +129,7 @@ class SignUpActivity : AppCompatActivity() {
   private fun createUser() {
     Toast.makeText(applicationContext, "Processing...", Toast.LENGTH_SHORT).show()
     create_account_button.isVisible = false
+    disableFormInput()
     if (registerWithFirebaseEmailProvider) {
       mAuth.createUserWithEmailAndPassword(email, userPassword)
           .addOnCompleteListener {
@@ -136,6 +138,7 @@ class SignUpActivity : AppCompatActivity() {
               registerUserProfileAPI()
             } else {
               Log.d("createUserProfile", ">>>> Failure")
+              enableFormInput()
               create_account_button.isVisible = true
               Toast.makeText(applicationContext, "ERROR: " + it.exception!!.message, Toast.LENGTH_LONG).show()
               WebEngageController.trackEvent("PS_Account Creation Failed in Firebase " + provider, "Create User Failed in Firebase With " + provider, "")
@@ -144,6 +147,20 @@ class SignUpActivity : AppCompatActivity() {
     } else {
       registerUserProfileAPI()
     }
+  }
+
+  private fun disableFormInput() {
+    user_name.isEnabled = false
+    user_email.isEnabled = false
+    user_password.isEnabled = false
+    user_mobile.isEnabled = false
+  }
+
+  private fun enableFormInput() {
+    user_name.isEnabled = true
+    user_email.isEnabled = true
+    user_password.isEnabled = true
+    user_mobile.isEnabled = true
   }
 
   private fun validateInput(): Boolean {
@@ -193,6 +210,7 @@ class SignUpActivity : AppCompatActivity() {
         Toast.makeText(applicationContext, "error >>" + t.message, Toast.LENGTH_LONG).show()
         WebEngageController.trackEvent("PS_Account Creation Failed", "Account Creation Failed", "")
         create_account_button.isVisible = true
+        enableFormInput()
       }
 
       override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
@@ -213,7 +231,7 @@ class SignUpActivity : AppCompatActivity() {
 
   private fun openTNCDialog() {
     WebViewTNCDialog().apply {
-      setUrl("https://www.getboost360.com/tnc")
+      setUrl("https://www.getboost360.com/tnc?src=android&stage=user_account_create")
       onClickType = { btnClickType(it) }
       show(this@SignUpActivity.supportFragmentManager, "")
     }

@@ -143,7 +143,7 @@
   <string name="click_here"><u>Click here</u></string>
   <string name="decline">Decline</string>
   <string name="accept">Accept</string>
-  <string name="boost360_terms_conditions"><![CDATA[Boost360 Terms & Conditions]]></string>
+  <string name="boost360_terms_conditions"><![CDATA[Boost360 - Terms & Conditions]]></string>
   <string name="entransactional_updates_whatsapp_number">Allow Boost to send entransactional updates regarding you orders, invoices along with other promotional messages on this WhatsApp number.</string>
 
 </resources>

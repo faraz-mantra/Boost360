@@ -17,6 +17,7 @@ class PopUpWebViewFragment : DialogFragment() {
     lateinit var root: View
 
     var link: String? = null
+    var title: String? = "Web Link"
 
     companion object {
         fun newInstance() = PopUpWebViewFragment()
@@ -33,6 +34,7 @@ class PopUpWebViewFragment : DialogFragment() {
     ): View? {
         root = inflater.inflate(R.layout.pop_up_web_view_fragment, container, false)
         link = arguments!!.getString("link")
+        title = arguments!!.getString("title")
         return root
     }
 

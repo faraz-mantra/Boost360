@@ -25,13 +25,13 @@
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/back_btn"
-        android:layout_width="@dimen/size_36"
-        android:layout_height="@dimen/size_36"
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
         android:layout_marginStart="@dimen/size_8"
         android:clickable="true"
         android:focusable="true"
         android:padding="@dimen/size_8"
-        app:srcCompat="@drawable/ic_toolbar_back" />
+        app:srcCompat="@drawable/ic_close_round" />
 
       <com.framework.views.customViews.CustomTextView
         android:layout_width="0dp"
