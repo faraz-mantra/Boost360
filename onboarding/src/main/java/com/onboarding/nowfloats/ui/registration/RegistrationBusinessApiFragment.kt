@@ -160,7 +160,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
                 it1.status = takeIf { ChannelType.WAB == it1.getType() }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
               }
               val optType = (if (requestFloatsModel?.whatsappEntransactional == true) RiaWhatsappRequest.OptType.OPTIN else RiaWhatsappRequest.OptType.OPTOUT).name
-              val request = RiaWhatsappRequest(client_id = clientId, optType = optType, whatsappNumber = dataRequest.ActionData?.active_whatsapp_number,
+              val request = RiaWhatsappRequest(client_id = clientId, optType = optType, whatsappNumber = "+91${dataRequest.ActionData?.active_whatsapp_number}",
                   notificationType = RiaWhatsappRequest.NotificationType.RIANotificationType.name, customerId = requestFloatsModel?.getWebSiteId())
               viewModel?.updateRiaWhatsapp(request)?.observeOnce(viewLifecycleOwner, Observer {
                 apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
