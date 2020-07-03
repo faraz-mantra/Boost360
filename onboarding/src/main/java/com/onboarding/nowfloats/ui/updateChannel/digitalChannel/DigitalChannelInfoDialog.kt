@@ -1,8 +1,14 @@
 package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 
+import android.Manifest
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.framework.base.BaseDialogFragment
 import com.framework.extensions.gone
 import com.framework.extensions.underlineText
@@ -33,25 +39,34 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
       val fabObservable = (binding?.container?.fadeIn(300L)?.mergeWith(binding?.imageCard?.fadeIn(300L)))
           ?.andThen(binding?.title?.fadeIn(100L)?.mergeWith(binding?.desc?.fadeIn(100L)))
           ?.andThen(binding?.confirm?.fadeIn(50L))
-      if (channelModel != null && channelModel!!.isGoogleChannel()) {
+      if (channelModel == null) return@post
+      if (channelModel!!.isGoogleChannel()) {
         binding?.disconnectBtn?.gone()
         binding?.disableBtn?.gone()
         fabObservable?.subscribe()
       } else {
-        if (channelModel != null && channelModel!!.isWhatsAppChannel()) binding?.disableBtn?.visible()
+        if (channelModel!!.isWhatsAppChannel()) binding?.disableBtn?.visible()
         else binding?.disableBtn?.gone()
         binding?.disconnectBtn?.visible()
         fabObservable?.andThen(binding?.btnViewChannel?.fadeIn(50L))?.subscribe()
       }
-      if (channelModel != null && channelModel!!.isWhatsAppChannel()) {
-        binding?.title?.text = channelModel?.channelActionData?.active_whatsapp_number?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
-      } else if (channelModel != null && channelModel!!.isGoogleSearch()) {
-        binding?.title?.text = channelModel?.websiteUrl?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
-      } else {
-        binding?.title?.text = channelModel?.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
-        if (channelModel != null && (channelModel!!.isFacebookShop() || channelModel!!.isFacebookPage())) {
-          val profilePicture = FacebookGraphManager.getProfilePictureUrl(channelModel?.channelAccessToken?.userAccountId ?: "")
-          binding?.picture?.let { baseActivity.glideLoad(it, profilePicture, R.drawable.ic_user3) }
+
+      binding?.title?.text = when {
+        channelModel!!.isWhatsAppChannel() -> {
+          channelModel?.channelActionData?.active_whatsapp_number?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
+        }
+        channelModel!!.isGoogleSearch() -> {
+          channelModel?.websiteUrl?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
+        }
+        channelModel!!.isGoogleBusinessChannel() -> {
+          channelModel?.channelAccessToken?.LocationName?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
+        }
+        else -> {
+          if ((channelModel!!.isFacebookShop() || channelModel!!.isFacebookPage())) {
+            val profilePicture = FacebookGraphManager.getProfilePictureUrl(channelModel?.channelAccessToken?.userAccountId ?: "")
+            binding?.picture?.let { baseActivity.glideLoad(it, profilePicture, R.drawable.ic_user3) }
+          }
+          channelModel?.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() }?.let { it } ?: channelModel?.getName()
         }
       }
 
@@ -71,7 +86,7 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
     when (v) {
       binding?.confirm -> this.dismiss()
       binding?.dismiss -> this.dismiss()
-      binding?.clickHelp,
+      binding?.clickHelp -> callHelpLineNumber()
       binding?.disableBtn -> showLongToast("Coming soon...")
       binding?.disconnectBtn -> {
         channelModel?.let { onClickedDisconnect(it) }
@@ -80,6 +95,18 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
       binding?.title -> {
         openBrowser()
       }
+    }
+  }
+
+  private fun callHelpLineNumber() {
+    try {
+      val intent = Intent(Intent.ACTION_CALL)
+      intent.data = Uri.parse("tel:18601231233")
+      if (ContextCompat.checkSelfPermission(baseActivity, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+        baseActivity.startActivity(intent)
+      } else requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), 1)
+    } catch (e: ActivityNotFoundException) {
+      showLongToast("Error in your phone call!")
     }
   }
 

@@ -80,7 +80,11 @@ data class ChannelAccessToken(
 }
 
 fun ChannelAccessToken.isLinked(): Boolean {
-  return this.userAccessTokenKey != null && this.userAccountId != null
+  return this.userAccessTokenKey.isNullOrEmpty().not() && this.userAccountId.isNullOrEmpty().not()
+}
+
+fun ChannelAccessToken.isLinkedGoogleBusiness(): Boolean {
+  return this.userAccessTokenKey.isNullOrEmpty().not() && this.userAccountId.isNullOrEmpty().not() && this.LocationId.isNullOrEmpty().not()
 }
 
 fun ChannelAccessToken.clear() {
