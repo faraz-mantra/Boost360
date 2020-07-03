@@ -218,7 +218,8 @@ class PopUpDialogFragment : DialogFragment() {
                 // navigate to sign up fragment
 //                Toast.makeText(requireContext(),"Terms of process is clicked...",Toast.LENGTH_LONG).show()
                 val args = Bundle()
-                args.putString("link", "https://www.getboost360.com/tnc")
+                args.putString("link", "https://www.getboost360.com/tnc?src=android&stage=presignup")
+                args.putString("title", "Boost360 - Terms & Conditions")
                 popUpWebViewFragment.arguments =args
                 popUpWebViewFragment.show(requireActivity().supportFragmentManager, "popUpWebViewFragment_tag")
             }
@@ -233,7 +234,8 @@ class PopUpDialogFragment : DialogFragment() {
                 // navigate to sign up fragment
 //                Toast.makeText(requireContext(),"Privacy policy is clicked...",Toast.LENGTH_LONG).show()
                 val args = Bundle()
-                args.putString("link", "https://www.getboost360.com/privacy")
+                args.putString("link", "https://www.getboost360.com/privacy?src=android&stage=presignup")
+                args.putString("title", "Boost360 - Privacy Policy")
                 popUpWebViewFragment.arguments =args
                 popUpWebViewFragment.show(requireActivity().supportFragmentManager, "popUpWebViewFragment_tag")
             }
