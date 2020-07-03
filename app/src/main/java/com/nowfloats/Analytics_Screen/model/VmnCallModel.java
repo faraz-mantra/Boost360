@@ -52,6 +52,34 @@ public class VmnCallModel {
     @Expose
     private String virtualNumber;
 
+    private int audioPosition = 0;
+    private int audioLength = 0;
+    private boolean audioPlayState = false;
+
+    public boolean isAudioPlayState() {
+        return audioPlayState;
+    }
+
+    public void setAudioPlayState(boolean audioPlayState) {
+        this.audioPlayState = audioPlayState;
+    }
+
+    public int getAudioLength() {
+        return audioLength;
+    }
+
+    public void setAudioLength(int audioLength) {
+        this.audioLength = audioLength;
+    }
+
+    public int getAudioPosition() {
+        return audioPosition;
+    }
+
+    public void setAudioPosition(int audioPosition) {
+        this.audioPosition = audioPosition;
+    }
+
     public String getId() {
         return id;
     }
