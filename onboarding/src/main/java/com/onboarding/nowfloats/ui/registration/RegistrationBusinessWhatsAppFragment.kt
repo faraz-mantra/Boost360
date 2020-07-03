@@ -43,7 +43,8 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
       (binding?.whatsappChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn())
           ?.doOnComplete { setSetSelectedWhatsAppChannel(channels) })
           ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-          ?.andThen(binding?.edtView?.fadeIn(100)?.mergeWith(binding?.confirmBtn?.fadeIn(400L, confirmButtonAlpha)))
+          ?.andThen(binding?.edtView?.fadeIn(100))
+          ?.andThen(binding?.whatsappEntransactional?.fadeIn(100)?.mergeWith(binding?.confirmBtn?.fadeIn(400L, confirmButtonAlpha)))
           ?.andThen(binding?.skip?.fadeIn(50L))?.doOnComplete {
             baseActivity.showKeyBoard(binding?.number)
           }?.subscribe()
@@ -106,7 +107,10 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
   }
 
   override fun gotoBusinessApiCallDetails() {
-    if (whatsAppData.isLinked()) requestFloatsModel?.channelActionDatas?.add(whatsAppData)
+    if (whatsAppData.isLinked()) {
+      requestFloatsModel?.whatsappCommunication = binding?.whatsappEntransactional?.isChecked
+      requestFloatsModel?.channelActionDatas?.add(whatsAppData)
+    }
     super.gotoBusinessApiCallDetails()
   }
 
