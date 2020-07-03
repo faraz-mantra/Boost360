@@ -1,5 +1,6 @@
 package com.onboarding.nowfloats.ui.registration
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -13,19 +14,23 @@ import com.framework.glide.util.glideLoad
 import com.framework.utils.NetworkUtils
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.Status
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessGoogleBinding
+import com.onboarding.nowfloats.extensions.capitalizeWords
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.extensions.setGridRecyclerViewAdapter
 import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.clear
 import com.onboarding.nowfloats.model.channel.request.getType
-import com.onboarding.nowfloats.model.channel.request.isLinked
+import com.onboarding.nowfloats.model.channel.request.isLinkedGoogleBusiness
 import com.onboarding.nowfloats.model.googleAuth.GoogleAuthResponse
 import com.onboarding.nowfloats.model.googleAuth.GoogleAuthTokenRequest
+import com.onboarding.nowfloats.model.googleAuth.location.LocationNew
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
+import com.onboarding.nowfloats.rest.response.AccountLocationResponse
 import com.onboarding.nowfloats.ui.InternetErrorDialog
 
 class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<FragmentRegistrationBusinessGoogleBinding>(), GoogleLoginHelper {
@@ -90,7 +95,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
     when (v) {
       binding?.skip -> gotoNextScreen()
       binding?.linkGoogle -> {
-        if (channelAccessToken.isLinked()) {
+        if (channelAccessToken.isLinkedGoogleBusiness()) {
           gotoNextScreen()
         } else if (!NetworkUtils.isNetworkConnected()) {
           InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
@@ -100,7 +105,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
   }
 
   private fun gotoNextScreen() {
-    if (channelAccessToken.isLinked()) {
+    if (channelAccessToken.isLinkedGoogleBusiness()) {
       requestFloatsModel?.channelAccessTokens?.add(channelAccessToken)
     }
     when {
@@ -161,21 +166,56 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
     viewModel?.getGoogleAuthToken(request)?.observeOnce(viewLifecycleOwner, Observer {
       val response = it as? GoogleAuthResponse
       if (response != null && response.access_token.isNullOrEmpty().not()) {
-        viewModel?.getAccountListGMB(response.getAuth(), userId)?.observeOnce(viewLifecycleOwner, Observer {
-          logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
+        viewModel?.getAccountLocationsGMB(response.getAuth(), userId)?.observeOnce(viewLifecycleOwner, Observer { it1 ->
           hideProgress()
-          showLongToast("Business location not found.")
-//          hideProgress()
-//          setProfileDetails(result?.displayName, result?.photoUrl?.toString())
-
+          val responseLocation = it1 as? AccountLocationResponse
+          if ((it1.status == 200 || it1.status == 201 || it1.status == 202) && responseLocation?.locations.isNullOrEmpty().not()) {
+            selectLocation(result, response, responseLocation?.locations)
+          } else {
+            logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
+            showLongToast("Business location not found.")
+          }
         })
       } else {
         hideProgress()
-        showLongToast("Google login error.")
         logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
+        onGoogleLoginError(ApiException(Status(400, "Auth token getting error.")))
       }
     })
 
+  }
+
+  private fun selectLocation(result: GoogleSignInAccount?, responseAuth: GoogleAuthResponse?, locations: List<LocationNew>?) {
+    val singleItems = ArrayList<String>()
+    locations?.forEach { it.locationName?.let { it1 -> singleItems.add(it1) } }
+    var checkedItem = 0
+    AlertDialog.Builder(baseActivity, R.style.DialogTheme).setTitle("Select the location to map")
+        .setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
+          dialog.dismiss()
+          val data = locations?.firstOrNull { singleItems[checkedItem] == it.locationName }
+          setDataGoogle(result, responseAuth, data)
+          setProfileDetails(data?.locationName?.capitalizeWords(), result?.photoUrl?.toString())
+        }.setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+          logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
+          dialog.dismiss()
+        }
+        .setSingleChoiceItems(singleItems.toTypedArray(), checkedItem) { _, position ->
+          checkedItem = position
+        }.setCancelable(false).show()
+  }
+
+  private fun setDataGoogle(result: GoogleSignInAccount?, responseAuth: GoogleAuthResponse?, data: LocationNew?) {
+    val res = ChannelTokenResponse(responseAuth?.access_token, responseAuth?.token_type, responseAuth?.expires_in, responseAuth?.refresh_token)
+    channelAccessToken.token_expiry = responseAuth?.getExpiryDate()
+    channelAccessToken.invalid = false
+    channelAccessToken.token_response = res
+    channelAccessToken.refresh_token = responseAuth?.refresh_token
+    channelAccessToken.userAccessTokenKey = responseAuth?.access_token
+    channelAccessToken.userAccountId = result?.id
+    channelAccessToken.userAccountName = result?.displayName
+    channelAccessToken.LocationId = data?.name //TODO name refer location id
+    channelAccessToken.LocationName = data?.locationName
+    channelAccessToken.verified_location = null
   }
 
   override fun onGoogleLoginError(error: ApiException?) {

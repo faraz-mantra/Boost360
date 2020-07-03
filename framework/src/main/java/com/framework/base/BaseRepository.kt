@@ -32,7 +32,7 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
           is Array<*> -> BaseResponse(message = "Success", arrayResponse = it.body() as Array<*>)
           is String -> BaseResponse(message = "Success", stringResponse = it.body() as String)
           is BaseResponse -> (it.body() as T) as BaseResponse
-          else -> BaseResponse(message = "Success")
+          else -> BaseResponse(anyResponse = it.body(), message = "Success")
         }
         response.status = it.code()
         response.taskcode = taskcode
