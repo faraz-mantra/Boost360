@@ -932,7 +932,7 @@ public class SidePanelFragment extends Fragment {
         progressbar.setProgress(siteMeterTotalWeight);
         meterValue.setText(siteMeterTotalWeight + "%");
 
-        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight) {
+        if (session.getSiteHealth() != siteMeterTotalWeight) {
             session.setSiteHealth(siteMeterTotalWeight);
             OnBoardingApiCalls.updateData(session.getFpTag(), String.format("site_health:%s", siteMeterTotalWeight));
         }
