@@ -140,6 +140,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     requestFloatsNew.fpTag = fpTag
     requestFloatsNew.websiteUrl = websiteUrl
     requestFloatsNew.categoryDataModel?.resetIsSelect()
+    requestFloatsNew.categoryDataModel?.channels?.map { if (it.isGoogleSearch()) it.websiteUrl = websiteUrl }
     if (channelsAccessToken.isNullOrEmpty().not()) {
       channelsAccessToken?.forEach {
         var data: ChannelAccessToken? = null
@@ -164,7 +165,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
             val tokenResponse = ChannelTokenResponse(it.token_response?.access_token, it.token_response?.token_type, it.token_response?.expires_in, it.token_response?.refresh_token)
             data = ChannelAccessToken(type = it.type(), token_expiry = it.token_expiry, invalid = it.invalid,
                 token_response = tokenResponse, refresh_token = it.refresh_token, userAccountName = it.account_name, userAccountId = it.account_id,
-                LocationId = it.location_id, LocationName = it.location_name, verified_location = it.verified_location)
+                LocationId = it.location_id, LocationName = it.location_name, userAccessTokenKey = it.token_response?.access_token, verified_location = it.verified_location)
             requestFloatsNew.channelAccessTokens?.add(data)
           }
         }
@@ -173,7 +174,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
             it1.isSelected = true
             it1.channelAccessToken = data
           }
-          if (it1.isGoogleSearch()) it1.websiteUrl = websiteUrl
         }
       }
     }

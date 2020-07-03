@@ -19,8 +19,16 @@ object GMBRepository : AppBaseRepository<GMBRemoteDataSource, AppBaseLocalServic
     return AppBaseLocalService()
   }
 
-  fun getAccountList(auth: String?, userId: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getAccountList(auth, userId), Taskcode.GET_GMB_ACCOUNT_LIST)
+  fun getAccountLocations(auth: String?, userId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getAccountLocations(auth, userId), Taskcode.GET_GMB_ACCOUNT_LOCATIONS)
+  }
+
+  fun getAccounts(auth: String?, userId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getAccount(auth, userId), Taskcode.GET_GMB_ACCOUNT)
+  }
+
+  fun getAccountList(auth: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getAccountList(auth), Taskcode.GET_GMB_ACCOUNT_LIST)
   }
 
   override fun getApiClient(): Retrofit {
