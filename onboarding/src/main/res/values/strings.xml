@@ -82,6 +82,7 @@
   <string name="city_name">City name</string>
   <string name="logout">Logout</string>
   <string name="ok">OK</string>
+  <string name="cancel">CANCEL</string>
 
   <string name="press_again_exit">Press again to exit!</string>
   <string name="facebook_page_connect_later_Skip">If you don\'t have a Facebook page for your business, or if you want to connect it later, please tap \'Skip\'</string>
@@ -143,5 +144,6 @@
   <string name="decline">Decline</string>
   <string name="accept">Accept</string>
   <string name="boost360_terms_conditions"><![CDATA[Boost360 Terms & Conditions]]></string>
+  <string name="entransactional_updates_whatsapp_number">Allow Boost to send entransactional updates regarding you orders, invoices along with other promotional messages on this WhatsApp number.</string>
 
 </resources>
