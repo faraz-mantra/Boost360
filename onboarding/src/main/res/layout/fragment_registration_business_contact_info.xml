@@ -110,22 +110,6 @@
                     android:maxLength="10"
                     tools:drawablePadding="@dimen/size_36" />
                 </RelativeLayout>
-
-                <RelativeLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:visibility="gone">
-
-                  <CheckBox
-                    android:id="@+id/whatsapp_communication"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/whatsapp_consent_text"
-                    android:textColor="@color/greyish_brown"
-                    android:theme="@style/ActiveTheme"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-                </RelativeLayout>
               </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
