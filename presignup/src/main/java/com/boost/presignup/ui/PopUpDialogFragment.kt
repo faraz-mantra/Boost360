@@ -44,6 +44,7 @@ class PopUpDialogFragment : DialogFragment() {
     lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var callbackManager: CallbackManager
     lateinit var actionCodeSettings: ActionCodeSettings
+    lateinit var popUpWebViewFragment: PopUpWebViewFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +57,9 @@ class PopUpDialogFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.curve_popup_layout, container, false)
+
+        //webview
+        popUpWebViewFragment = PopUpWebViewFragment();
 
         //Login Spannable
         spannableString()
@@ -212,7 +216,12 @@ class PopUpDialogFragment : DialogFragment() {
         val termsOfUseClicked: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
                 // navigate to sign up fragment
-                Toast.makeText(requireContext(),"Terms of process is clicked...",Toast.LENGTH_LONG).show()
+//                Toast.makeText(requireContext(),"Terms of process is clicked...",Toast.LENGTH_LONG).show()
+                val args = Bundle()
+                args.putString("link", "https://www.getboost360.com/tnc?src=android&stage=presignup")
+                args.putString("title", "Boost360 - Terms & Conditions")
+                popUpWebViewFragment.arguments =args
+                popUpWebViewFragment.show(requireActivity().supportFragmentManager, "popUpWebViewFragment_tag")
             }
 
             override fun updateDrawState(ds: TextPaint) {
@@ -223,7 +232,12 @@ class PopUpDialogFragment : DialogFragment() {
         val privacyPolicyClicked: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
                 // navigate to sign up fragment
-                Toast.makeText(requireContext(),"Privacy policy is clicked...",Toast.LENGTH_LONG).show()
+//                Toast.makeText(requireContext(),"Privacy policy is clicked...",Toast.LENGTH_LONG).show()
+                val args = Bundle()
+                args.putString("link", "https://www.getboost360.com/privacy?src=android&stage=presignup")
+                args.putString("title", "Boost360 - Privacy Policy")
+                popUpWebViewFragment.arguments =args
+                popUpWebViewFragment.show(requireActivity().supportFragmentManager, "popUpWebViewFragment_tag")
             }
 
             override fun updateDrawState(ds: TextPaint) {

@@ -351,11 +351,10 @@ public class SidePanelFragment extends Fragment {
         tvContentSharing = manageContentSharing.findViewById(R.id.tvContentSharing);
         tvCalls = manageCalls.findViewById(R.id.tvCustomerCalls);
         tvManageInventory = (TextView) manageInventoryLayout.findViewById(R.id.tvManageInventory);
-
+        tvInbox = inboxLayout.findViewById(R.id.tvInbox);
 
         if (category_code != null) {
             tvManageInventory.setText(Utils.getDefaultTrasactionsTaxonomyFromServiceCode(category_code));
-            tvInbox = inboxLayout.findViewById(R.id.tvInbox);
             switch (category_code) {
                 case "MFG":
                     tvInbox.setText("Quotation Requests");
@@ -933,7 +932,7 @@ public class SidePanelFragment extends Fragment {
         progressbar.setProgress(siteMeterTotalWeight);
         meterValue.setText(siteMeterTotalWeight + "%");
 
-        if (!session.getOnBoardingStatus() && session.getSiteHealth() != siteMeterTotalWeight) {
+        if (session.getSiteHealth() != siteMeterTotalWeight) {
             session.setSiteHealth(siteMeterTotalWeight);
             OnBoardingApiCalls.updateData(session.getFpTag(), String.format("site_health:%s", siteMeterTotalWeight));
         }
