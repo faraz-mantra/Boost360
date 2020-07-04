@@ -17,7 +17,6 @@ class RequestFloatsModel(
     var floatingPointId: String? = null,
     var fpTag: String? = null,
     var isUpdate: Boolean? = false,
-    var whatsappCommunication: Boolean? = false,
     var whatsappEntransactional: Boolean? = false
 ) : Parcelable {
   var websiteUrl: String? = ""

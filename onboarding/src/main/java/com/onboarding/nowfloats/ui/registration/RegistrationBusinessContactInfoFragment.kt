@@ -79,7 +79,6 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     when (v) {
       binding?.next -> {
         requestFloatsModel?.contactInfo = businessInfoModel
-        requestFloatsModel?.whatsappCommunication = binding?.whatsappCommunication?.isChecked
         if (binding?.textBtn?.isVisible() == true && isValid()) {
           getDotProgress()?.let {
             binding?.textBtn?.visibility = GONE
