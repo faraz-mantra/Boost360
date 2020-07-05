@@ -31,7 +31,6 @@ import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelActionDataRequest
 import com.onboarding.nowfloats.model.channel.request.getType
-import com.onboarding.nowfloats.model.riaWhatsapp.RiaWhatsappRequest
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
@@ -159,12 +158,13 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
               connectedChannels.forEach { it1 ->
                 it1.status = takeIf { ChannelType.WAB == it1.getType() }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
               }
-              val optType = (if (requestFloatsModel?.whatsappEntransactional == true) RiaWhatsappRequest.OptType.OPTIN else RiaWhatsappRequest.OptType.OPTOUT).name
-              val request = RiaWhatsappRequest(client_id = clientId, optType = optType, whatsappNumber = "+91${dataRequest.ActionData?.active_whatsapp_number}",
-                  notificationType = RiaWhatsappRequest.NotificationType.RIANotificationType.name, customerId = requestFloatsModel?.getWebSiteId())
-              viewModel?.updateRiaWhatsapp(request)?.observeOnce(viewLifecycleOwner, Observer {
-                apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
-              })
+              apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
+//              val optType = (if (requestFloatsModel?.whatsappEntransactional == true) RiaWhatsappRequest.OptType.OPTIN else RiaWhatsappRequest.OptType.OPTOUT).name
+//              val request = RiaWhatsappRequest(client_id = clientId, optType = optType, whatsappNumber = "+91${dataRequest.ActionData?.active_whatsapp_number}",
+//                  notificationType = RiaWhatsappRequest.NotificationType.RIANotificationType.name, customerId = requestFloatsModel?.getWebSiteId())
+//              viewModel?.updateRiaWhatsapp(request)?.observeOnce(viewLifecycleOwner, Observer {
+//                apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
+//              })
             } else {
               connectedChannels.forEach { it1 ->
                 it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()).not() }?.let { ProcessApiSyncModel.SyncStatus.ERROR.name }
@@ -304,6 +304,8 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     createRequest.fbPageName = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == ChannelAccessToken.AccessTokenType.facebookpage }?.userAccountName
     createRequest.primaryCategory = requestFloatsModel?.categoryDataModel?.category_key
     createRequest.appExperienceCode = requestFloatsModel?.categoryDataModel?.experience_code
+    createRequest.whatsAppNumber = requestFloatsModel?.channelActionDatas?.firstOrNull()?.active_whatsapp_number ?: ""
+    createRequest.whatsAppNotificationOptIn = requestFloatsModel?.whatsappEntransactional
     //TODO: [Ronak] pass the widgetkeys (split by ,)
     return createRequest
   }
