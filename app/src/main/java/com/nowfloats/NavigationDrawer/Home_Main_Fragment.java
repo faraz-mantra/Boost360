@@ -25,11 +25,16 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.melnykov.fab.FloatingActionButton;
+import com.daimajia.easing.linear.Linear;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.nowfloats.CustomPage.CustomPageActivity;
+import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
@@ -42,6 +47,8 @@ import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NavigationDrawer.model.Welcome_Card_Model;
 import com.nowfloats.NavigationDrawer.model.WhatsNewDataModel;
+import com.nowfloats.ProductGallery.ProductCatalogActivity;
+import com.nowfloats.Testimonials.TestimonialsActivity;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.sync.model.Updates;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -53,6 +60,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.nowfloats.widget.WidgetKey;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -79,7 +87,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     private static ArrayList<Integer> removedItems;
     static View.OnClickListener myOnClickListener;
     Fetch_Home_Data fetch_home_data ;
-    FloatingActionButton fabButton ;
+    FloatingActionButton fabButton, addUpdateButton, addImageButton, addInventoryButton;
     private int maxSyncCall = 2;
     UserSessionManager session;
     private static final String DATA_ARG_KEY = "HomeFragment.DATA_ARG_KEY";
@@ -95,7 +103,20 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     public Activity current_Activity;
     private SharedPreferences mPref;
     private boolean mIsNewMsg = false;
+    private boolean isRotate = false;
     private DbController mDbController;
+    LinearLayout addProduct;
+    LinearLayout addImage;
+    LinearLayout addCustomPage;
+    LinearLayout addTestimonial;
+    LinearLayout addUpdate;
+    LinearLayout addOptions;
+    LinearLayout updatesLayout;
+    LinearLayout emptyLayout;
+
+    TextView addProductText;
+
+
     public Home_Main_Fragment() {}
 
     @Override
@@ -365,17 +386,66 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
                         fetch_home_data.getMessages(session.getFPID(), String.valueOf(skipVal));
                         progressBar.setVisibility(View.GONE);
                     }
-
-
                 }
             }
         });
 
         fabButton = mainView.findViewById(R.id.fab);
-        fabButton.setOnClickListener(v -> addUpdate());
+
+         addProduct = mainView.findViewById(R.id.addProduct);
+         addImage = mainView.findViewById(R.id.addImage);
+         addCustomPage = mainView.findViewById(R.id.addCustomPage);
+         addTestimonial = mainView.findViewById(R.id.addTestimonial);
+         addUpdate = mainView.findViewById(R.id.addUpdate);
+         addOptions = mainView.findViewById(R.id.addOptions);
+         updatesLayout = mainView.findViewById(R.id.updatesLayout);
+         emptyLayout = mainView.findViewById(R.id.emptymsglayout);
+
+         addProductText = mainView.findViewById(R.id.addProductText);
+
+        addProductText.setText("Add a " + Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()));
+
+        ViewAnimation.init(addOptions);
+
+        fabButton.setOnClickListener(v -> processOnClickOfFabButton());
+        addUpdate.setOnClickListener(v -> {
+            addUpdate();
+            processOnClickOfFabButton();
+        });
+        addImage.setOnClickListener(v -> {
+            addImage();
+            processOnClickOfFabButton();
+        });
+        addProduct.setOnClickListener(v -> {
+            addInventory();
+            processOnClickOfFabButton();
+        });
+        addCustomPage.setOnClickListener(v -> {
+            addCustomPage();
+            processOnClickOfFabButton();
+        });
+        addTestimonial.setOnClickListener(v -> {
+            addTestimonial();
+            processOnClickOfFabButton();
+        });
 
         return mainView;
     }
+
+    private void processOnClickOfFabButton(){
+        isRotate = ViewAnimation.rotateFab(fabButton, !isRotate);
+        if(isRotate){
+            updatesLayout.setAlpha(0.2f);
+            emptyLayout.setAlpha(0.2f);
+            ViewAnimation.showIn(addOptions);
+        }else{
+            updatesLayout.setAlpha(1f);
+            emptyLayout.setAlpha(1f);
+            ViewAnimation.showOut(addOptions);
+        }
+    }
+
+//    intent = new Intent(ImageMenuActivity.this, ImageGalleryActivity .class);
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -618,6 +688,18 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     }
 
 
+    private void addImage(){
+        Intent webIntent = new Intent(getActivity(), ImageGalleryActivity.class);
+        startActivity(webIntent);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    private void addInventory(){
+        Intent webIntent = new Intent(getActivity(), ProductCatalogActivity.class);
+        startActivity(webIntent);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
     private void openAddUpdateActivity()
     {
         Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
@@ -625,42 +707,57 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
+    private void addCustomPage(){
+        Intent webIntent = new Intent(getActivity(), CustomPageActivity.class);
+        startActivity(webIntent);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    private void addTestimonial(){
+        Intent webIntent = new Intent(getActivity(), TestimonialsActivity.class);
+        startActivity(webIntent);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
     private void addUpdate()
     {
-        /**
-         * If not new pricing plan
-         */
-        if(!WidgetKey.isNewPricingPlan)
-        {
-            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
-            {
-                Methods.showFeatureNotAvailDialog(getContext());
-            }
 
-            else
-            {
-                openAddUpdateActivity();
-            }
-        }
+        openAddUpdateActivity();
 
-        else
-        {
-            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_LATEST_UPDATES, WidgetKey.WIDGET_PROPERTY_MAX);
-
-            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
-            {
-                Methods.showFeatureNotAvailDialog(getContext());
-            }
-
-            else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && cAdapter.getItemCount() >= Integer.parseInt(value))
-            {
-                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_add_update_limit)), Toast.LENGTH_LONG).show();
-            }
-
-            else
-            {
-                openAddUpdateActivity();
-            }
-        }
+//        /**
+//         * If not new pricing plan
+//         */
+//        if(!WidgetKey.isNewPricingPlan)
+//        {
+//            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
+//            {
+//                Methods.showFeatureNotAvailDialog(getContext());
+//            }
+//
+//            else
+//            {
+//
+//            }
+//        }
+//
+//        else
+//        {
+//            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_LATEST_UPDATES, WidgetKey.WIDGET_PROPERTY_MAX);
+//
+//            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
+//            {
+//                Methods.showFeatureNotAvailDialog(getContext());
+//            }
+//
+//            else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && cAdapter.getItemCount() >= Integer.parseInt(value))
+//            {
+//                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_add_update_limit)), Toast.LENGTH_LONG).show();
+//            }
+//
+//            else
+//            {
+//                openAddUpdateActivity();
+//            }
+//        }
     }
 }

@@ -1,11 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screen_bg">
 
     <LinearLayout
+        android:id="@+id/updatesLayout"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:background="@color/screen_bg"
@@ -38,7 +40,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:tint="@color/primary"
+                        app:tint="@color/primary"
                         android:src="@drawable/retry_post"/>
                     <TextView
                         android:layout_width="match_parent"
@@ -60,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="0dp"
-                    android:tint="@color/primary"
+                    app:tint="@color/primary"
                     android:src="@drawable/cancel_post" />
                 <TextView
                     fontPath="Roboto-Medium.ttf"
@@ -116,16 +118,168 @@
             android:text="@string/Message_empty"/>
     </LinearLayout>
 
-    <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_add_white_24dp"
-        fab:fab_colorNormal="@color/primaryColor"
-        fab:fab_colorPressed="@color/tabOnclickColor"
-        fab:fab_colorRipple="@color/primaryColor" />
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_gravity="bottom|end|right">-->
+
+        <LinearLayout
+            android:id="@+id/addOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="@dimen/_65sdp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/addProduct"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/rounded_white_selector_bg"
+                android:layout_marginRight="@dimen/_6sdp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_gravity="center_vertical"
+                        app:srcCompat="@drawable/product_verb"/>
+                    <TextView
+                        android:id="@+id/addProductText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add a product"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/_11sdp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/addImage"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/rounded_white_selector_bg"
+                android:layout_marginRight="@dimen/_6sdp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_gravity="center_vertical"
+                        app:srcCompat="@drawable/gallery_image"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add an image"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/_11sdp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/addCustomPage"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/rounded_white_selector_bg"
+                android:layout_marginRight="@dimen/_6sdp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_gravity="center_vertical"
+                        app:srcCompat="@drawable/custom_page"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Create a custom page"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/_11sdp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/addTestimonial"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/rounded_white_selector_bg"
+                android:layout_marginRight="@dimen/_6sdp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_gravity="center_vertical"
+                        app:srcCompat="@drawable/testimonial"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add a testimonial"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/_11sdp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/addUpdate"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/rounded_corner_pre_signup"
+                android:layout_marginRight="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginRight="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        android:layout_gravity="center_vertical"
+                        app:srcCompat="@drawable/create_update"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Write an update"
+                        android:textColor="#fff"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/_11sdp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:elevation="@dimen/_25sdp"
+            app:backgroundTint="@color/primaryColor"
+            android:layout_gravity="bottom|right"
+            app:fabSize="normal"
+            app:rippleColor="@color/white"
+            app:srcCompat="@drawable/ic_add_white" />
+
+<!--    </LinearLayout>-->
 
 </FrameLayout>
