@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.melnykov.fab.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.Model.ProductListModel;
 import com.nowfloats.ProductGallery.Service.ProductAPIService;
