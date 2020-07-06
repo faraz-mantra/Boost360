@@ -109,6 +109,7 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
   override fun gotoBusinessApiCallDetails() {
     if (whatsAppData.isLinked()) {
       requestFloatsModel?.channelActionDatas?.add(whatsAppData)
+      requestFloatsModel?.whatsappEntransactional = binding?.whatsappEntransactional?.isChecked
     }
     super.gotoBusinessApiCallDetails()
   }
