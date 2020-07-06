@@ -305,7 +305,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     createRequest.primaryCategory = requestFloatsModel?.categoryDataModel?.category_key
     createRequest.appExperienceCode = requestFloatsModel?.categoryDataModel?.experience_code
     createRequest.whatsAppNumber = requestFloatsModel?.channelActionDatas?.firstOrNull()?.getNumberWithCode()
-    createRequest.whatsAppNotificationOptIn = requestFloatsModel?.whatsappEntransactional
+    createRequest.whatsAppNotificationOptIn = requestFloatsModel?.whatsappEntransactional ?: false
     //TODO: [Ronak] pass the widgetkeys (split by ,)
     return createRequest
   }
