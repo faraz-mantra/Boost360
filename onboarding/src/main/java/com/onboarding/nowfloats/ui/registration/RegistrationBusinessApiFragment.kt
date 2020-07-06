@@ -304,7 +304,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     createRequest.fbPageName = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == ChannelAccessToken.AccessTokenType.facebookpage }?.userAccountName
     createRequest.primaryCategory = requestFloatsModel?.categoryDataModel?.category_key
     createRequest.appExperienceCode = requestFloatsModel?.categoryDataModel?.experience_code
-    createRequest.whatsAppNumber = requestFloatsModel?.channelActionDatas?.firstOrNull()?.active_whatsapp_number ?: ""
+    createRequest.whatsAppNumber = requestFloatsModel?.channelActionDatas?.firstOrNull()?.getNumberWithCode()
     createRequest.whatsAppNotificationOptIn = requestFloatsModel?.whatsappEntransactional
     //TODO: [Ronak] pass the widgetkeys (split by ,)
     return createRequest
