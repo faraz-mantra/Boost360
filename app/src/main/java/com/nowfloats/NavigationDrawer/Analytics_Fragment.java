@@ -424,18 +424,14 @@ public class Analytics_Fragment extends Fragment {
         tvRiaCardHeader = (TextView) rootView.findViewById(R.id.tvRiaCardHeader);
         llRiaCardSections = (LinearLayout) rootView.findViewById(R.id.llRiaCardSections);
 
-        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.primaryColor), PorterDuff.Mode.SRC_IN);
-        ImageView galleryBack = (ImageView) rootView.findViewById(R.id.pop_up_gallery_img);
-        ImageView mapBack = (ImageView) rootView.findViewById(R.id.map_visits_img);
-        ImageView subsBack = (ImageView) rootView.findViewById(R.id.pop_up_subscribers_img);
-        ImageView searchBack = (ImageView) rootView.findViewById(R.id.pop_up_search_img);
-        ImageView businessEnqBg = (ImageView) rootView.findViewById(R.id.business_enq_bg);
-        ImageView ivFbAnalytics = (ImageView) rootView.findViewById(R.id.iv_fb_page_analytics);
-        ImageView vmnCallBack = (ImageView) rootView.findViewById(R.id.pop_up_vmn_call_img);
-        ImageView visitorsBack = (ImageView) rootView.findViewById(R.id.visitors_image_bg);
-        ImageView searchRankBack = (ImageView) rootView.findViewById(R.id.pop_up_search_ranking_img);
-        ImageView wildfireBack = (ImageView) rootView.findViewById(R.id.img_wildfire_back);
-        ImageView orderAnalyticsBack = rootView.findViewById(R.id.iv_order_analytics);
+//        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+//        ImageView galleryBack = (ImageView) rootView.findViewById(R.id.pop_up_gallery_img);
+//        ImageView mapBack = (ImageView) rootView.findViewById(R.id.map_visits_img);
+//        ImageView subsBack = (ImageView) rootView.findViewById(R.id.pop_up_subscribers_img);
+//        ImageView ivFbAnalytics = (ImageView) rootView.findViewById(R.id.iv_fb_page_analytics);
+//        ImageView visitorsBack = (ImageView) rootView.findViewById(R.id.visitors_image_bg);
+//        ImageView wildfireBack = (ImageView) rootView.findViewById(R.id.img_wildfire_back);
+//        ImageView orderAnalyticsBack = rootView.findViewById(R.id.iv_order_analytics);
 
 
         /*galleryBack.setColorFilter(porterDuffColorFilter);
@@ -485,6 +481,7 @@ public class Analytics_Fragment extends Fragment {
         String enquiryCount = session.getEnquiryCount();
         String orderCount = session.getOrderCount();
         String mapCount = session.getMapVisitsCount();
+        setVmnTotalCallCount();
 //        String Str_noOfSearchQueries = "";
 
         try {
