@@ -43,7 +43,8 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
       (binding?.whatsappChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn())
           ?.doOnComplete { setSetSelectedWhatsAppChannel(channels) })
           ?.andThen(binding?.title?.fadeIn(100L))?.andThen(binding?.subTitle?.fadeIn(100L))
-          ?.andThen(binding?.edtView?.fadeIn(100)?.mergeWith(binding?.confirmBtn?.fadeIn(400L, confirmButtonAlpha)))
+          ?.andThen(binding?.edtView?.fadeIn(100))
+          ?.andThen(binding?.whatsappEntransactional?.fadeIn(100)?.mergeWith(binding?.confirmBtn?.fadeIn(400L, confirmButtonAlpha)))
           ?.andThen(binding?.skip?.fadeIn(50L))?.doOnComplete {
             baseActivity.showKeyBoard(binding?.number)
           }?.subscribe()
@@ -52,7 +53,6 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
 
     binding?.number?.afterTextChanged { checkValidNumber(it) }
   }
-
 
   override fun setSavedData() {
     val whatsAppData = requestFloatsModel?.channelActionDatas?.firstOrNull() ?: return
@@ -98,9 +98,7 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
 
   override fun onClick(v: View) {
     when (v) {
-      binding?.confirmBtn -> {
-        if (binding?.number?.length() == 10) gotoBusinessApiCallDetails()
-      }
+      binding?.confirmBtn -> if (binding?.number?.length() == 10) gotoBusinessApiCallDetails()
       binding?.skip -> {
         updateInfo()
         gotoBusinessApiCallDetails()
@@ -109,12 +107,16 @@ class RegistrationBusinessWhatsAppFragment : BaseRegistrationFragment<FragmentRe
   }
 
   override fun gotoBusinessApiCallDetails() {
-    if (whatsAppData.isLinked()) requestFloatsModel?.channelActionDatas?.add(whatsAppData)
+    if (whatsAppData.isLinked()) {
+      requestFloatsModel?.channelActionDatas?.add(whatsAppData)
+      requestFloatsModel?.whatsappEntransactional = binding?.whatsappEntransactional?.isChecked
+    }
     super.gotoBusinessApiCallDetails()
   }
 
   override fun updateInfo() {
     super.updateInfo()
     requestFloatsModel?.channelActionDatas?.clear()
+    whatsAppData.active_whatsapp_number = ""
   }
 }

@@ -70,6 +70,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     lateinit var bundlesList: List<BundlesModel>
 
+    var bundles_in_cart = false
+    var default_validity_months = 1
+
     var total = 0.0
 
     var grandTotal = 0.0
@@ -299,31 +302,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 prefs.storeFeatureKeysInLastOrder(keysToBeActivated.toMutableSet());
                 prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
-                //handling coupon discount
-//                var finalPayment: Double = 0.0
-//                if(couponDiscountPercentage>0){
-//                    finalPayment = grandTotal + couponDiscountAmount
-//                }else{
-//                    finalPayment = grandTotal
-//                }
-
                 viewModel.InitiatePurchaseOrder(
-//                        CreatePurchaseOrderRequest(
-//                                (activity as UpgradeActivity).clientid,
-//                                (activity as UpgradeActivity).fpid!!,
-//                                PaymentDetails(
-//                                        "INR",
-//                                        0,
-//                                        "RAZORPAY",
-//                                        TaxDetails(
-//                                                GSTINNumber,
-//                                                0,
-//                                                null,
-//                                                18),
-//                                        grandTotal),
-//                                widgetsToBeBought,
-//                                null
-//                        )
                         CreatePurchaseOrderV2(
                                 (activity as UpgradeActivity).clientid,
                                 (activity as UpgradeActivity).fpid!!,
@@ -362,6 +341,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     COUPON_POPUP_FRAGEMENT
             )
         }
+
+        cart_apply_coupon.setOnClickListener {
+            couponPopUpFragment.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    COUPON_POPUP_FRAGEMENT
+            )
+        }
         enter_gst_number.setOnClickListener {
             gstinPopUpFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
@@ -387,26 +373,38 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             (activity as UpgradeActivity).goBackToRecommentedScreen()
         }
 
+        months_validity_edit_inc.setOnClickListener {
+            if(!bundles_in_cart) {
+                default_validity_months++
+                months_validity.text = default_validity_months.toString() + " months"
+
+                prefs.storeCartOrderInfo(null)
+                totalCalculation()
+
+                Toasty.success(requireContext(), "Validity increased by 1 month.", Toast.LENGTH_SHORT, true).show()
+            }
+        }
+
+        months_validity_edit_dsc.setOnClickListener {
+            if(!bundles_in_cart) {
+                if (default_validity_months > 1) {
+                    default_validity_months--
+
+                    prefs.storeCartOrderInfo(null)
+                    totalCalculation()
+
+                    Toasty.warning(requireContext(), "Validity reduced by 1 month.", Toast.LENGTH_SHORT, true).show()
+                }
+                if (default_validity_months > 1)
+                    months_validity.text = default_validity_months.toString() + " months"
+                else
+                    months_validity.text = default_validity_months.toString() + " month"
+            }
+        }
+
     }
 
     fun loadData() {
-//        viewModel.requestCustomerId(
-//                CustomerIDRequest(
-//                        (activity as UpgradeActivity).clientid,
-//                        "ANDROID",
-//                        (activity as UpgradeActivity).email!!,
-//                        (activity as UpgradeActivity).loginid!!,
-//                        (activity as UpgradeActivity).fpName!!,
-//                        (activity as UpgradeActivity).mobileNo!!,
-//                        "RAZORPAY",
-//                        com.boost.upgrades.data.api_model.customerId.create.TaxDetails(
-//                                null,
-//                                0,
-//                                null,
-//                                0
-//                        )
-//                )
-//        )
         viewModel.getCartItems()
         viewModel.getAllFeatures()
         viewModel.getAllBundles()
@@ -436,9 +434,25 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     addons_layout.visibility = View.GONE
                 }
                 if (bundles.size > 0) {
+                    bundles_in_cart = true
                     updatePackage(bundles)
+                    for(bundle in bundles){
+                        if(bundle.min_purchase_months > default_validity_months)
+                            default_validity_months = bundle.min_purchase_months
+                    }
+                    if(default_validity_months > 0)
+                        months_validity.text = default_validity_months.toString() + " months"
+                    else
+                        months_validity.text = default_validity_months.toString() + " month"
+                    months_validity_edit_inc.visibility = View.GONE
+                    months_validity_edit_dsc.visibility = View.GONE
                     package_layout.visibility = View.VISIBLE
                 } else {
+                    bundles_in_cart = false
+                    default_validity_months = 1
+                    months_validity.text = default_validity_months.toString() + " month"
+                    months_validity_edit_inc.visibility = View.VISIBLE
+                    months_validity_edit_dsc.visibility = View.VISIBLE
                     package_layout.visibility = View.GONE
                 }
                 totalCalculation()
@@ -447,6 +461,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 empty_cart.visibility = View.VISIBLE
                 cart_main_layout.visibility = View.GONE
 
+                months_validity_edit_inc.visibility = View.GONE
+                months_validity_edit_dsc.visibility = View.GONE
+                months_validity.text = "- -"
 
                 //remove saved orderdetails from prefs
                 prefs.storeCartOrderInfo(null)
@@ -572,7 +589,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             }
             if (cartList != null && cartList.size > 0) {
                 for (item in cartList) {
-                    total += item.price
+                    if(!bundles_in_cart && item.item_type.equals("features"))
+                        total += (item.price * default_validity_months)
+                    else
+                        total += item.price
                 }
                 cart_amount_value.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(total))
                 couponDiscountAmount = total * couponDisount / 100

@@ -192,6 +192,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     logoutFacebook()
     binding?.skip?.visible()
     binding?.facebookPageSuccess?.maimView?.gone()
+    this.binding?.title?.text = resources.getString(R.string.do_you_already_have_a_facebook_page)
     binding?.subTitle?.text = resources.getString(R.string.facebook_page_connect_later_Skip)
     binding?.linkFacebook?.text = resources.getString(R.string.sync_facebook_page)
     channelAccessToken.clear()

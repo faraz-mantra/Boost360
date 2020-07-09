@@ -154,8 +154,11 @@ public class OnBoardingManager implements OnBoardingCallback {
                         }
                     }
 
-                    onBoardingModel.setScreenDataArrayList(screenDataArrayList);
-                    startOnBoarding(onBoardingModel);
+                    Integer index = onBoardingModel.getToBeCompletePos();
+                    if(index >= 0) {
+                        onBoardingModel.setScreenDataArrayList(screenDataArrayList);
+                        startOnBoarding(onBoardingModel);
+                    }
                 }
             }
 

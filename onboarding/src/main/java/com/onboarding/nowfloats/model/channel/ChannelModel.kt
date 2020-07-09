@@ -10,6 +10,7 @@ import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.model.ProcessApiSyncModel
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
+import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
 
 data class ChannelModel(
@@ -19,6 +20,11 @@ data class ChannelModel(
     var isSelected: Boolean? = false,
     var status: String? = ProcessApiSyncModel.SyncStatus.PROCESSING.name
 ) : AppBaseRecyclerViewItem, Parcelable {
+
+  var websiteUrl: String? = ""
+
+  var channelAccessToken: ChannelAccessToken? = null
+  var channelActionData: ChannelActionData? = null
 
   var recyclerViewType = RecyclerViewItemType.CHANNEL_ITEM.getLayout()
 
@@ -57,6 +63,18 @@ data class ChannelModel(
       return arrayOfNulls(size)
     }
   }
+
+  fun dummyData(): ArrayList<ChannelModel> {
+    val list = ArrayList<ChannelModel>()
+    list.add(ChannelModel("", type = ChannelType.G_SEARCH.name, isSelected = true))
+    list.add(ChannelModel("", type = ChannelType.G_MAPS.name, isSelected = true))
+    list.add(ChannelModel("", type = ChannelType.FB_PAGE.name, isSelected = true))
+    list.add(ChannelModel("", type = ChannelType.FB_SHOP.name, isSelected = true))
+    list.add(ChannelModel("", type = ChannelType.WAB.name, isSelected = true))
+    list.add(ChannelModel("", type = ChannelType.T_FEED.name, isSelected = false))
+    list.add(ChannelModel("", type = ChannelType.G_BUSINESS.name, isSelected = false))
+    return list
+  }
 }
 
 fun ChannelModel.getPriority(): ChannelPriority? {
@@ -69,7 +87,15 @@ fun ChannelModel.getType(): ChannelType? {
 
 fun ChannelModel.isGoogleChannel(): Boolean {
   return getType() == ChannelType.G_MAPS || getType() == ChannelType.G_SEARCH
-      || getType() == ChannelType.G_BUSINESS
+  //|| getType() == ChannelType.G_BUSINESS
+}
+
+fun ChannelModel.isGoogleSearch(): Boolean {
+  return getType() == ChannelType.G_SEARCH
+}
+
+fun ChannelModel.isGoogleBusinessChannel(): Boolean {
+  return getType() == ChannelType.G_BUSINESS
 }
 
 fun ChannelModel.isFacebookShop(): Boolean {
@@ -82,7 +108,7 @@ fun ChannelModel.isFacebookPage(): Boolean {
 
 
 fun ChannelModel.isWhatsAppChannel(): Boolean {
-  return getType() == ChannelType.WAB || getType() == ChannelType.WAB
+  return getType() == ChannelType.WAB
 }
 
 fun ChannelModel.isTwitterChannel(): Boolean {
@@ -104,11 +130,11 @@ fun ChannelModel.getName(): String {
 
 fun ChannelModel.getAccessTokenType(): String {
   return when (getType()) {
-    ChannelType.G_SEARCH -> ChannelAccessToken.AccessTokenType.googlemybusiness.name
+    ChannelType.G_SEARCH -> ChannelAccessToken.AccessTokenType.googlesearch.name
     ChannelType.FB_PAGE -> ChannelAccessToken.AccessTokenType.facebookpage.name
-    ChannelType.G_MAPS -> ChannelAccessToken.AccessTokenType.googlemybusiness.name
+    ChannelType.G_MAPS -> ChannelAccessToken.AccessTokenType.googlemap.name
     ChannelType.FB_SHOP -> ChannelAccessToken.AccessTokenType.facebookshop.name
-    ChannelType.WAB -> ChannelAccessToken.AccessTokenType.googlemybusiness.name // TODO default select value so set type goggle business
+    ChannelType.WAB -> ""
     ChannelType.T_FEED -> ChannelAccessToken.AccessTokenType.twitter.name
     ChannelType.G_BUSINESS -> ChannelAccessToken.AccessTokenType.googlemybusiness.name
     null -> ""
@@ -147,6 +173,10 @@ fun Iterable<ChannelModel>.isFbPageOrShop(channelType: ChannelType?): ChannelMod
 
 fun Iterable<ChannelModel>.haveTwitterChannels(): Boolean {
   return filterTo(ArrayList(), { it.isTwitterChannel() }).isNotEmpty()
+}
+
+fun Iterable<ChannelModel>.haveGoogleBusinessChannel(): Boolean {
+  return filterTo(ArrayList(), { it.isGoogleBusinessChannel() }).isNotEmpty()
 }
 
 fun Iterable<ChannelModel>.haveGoogleChannels(): Boolean {

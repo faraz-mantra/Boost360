@@ -27,6 +27,7 @@ data class ScreenModel(
     CHANNEL_SELECT,
     BUSINESS_INFO,
     BUSINESS_SUBDOMAIN,
+    BUSINESS_GOOGLE_PAGE,
     BUSINESS_FACEBOOK_PAGE,
     BUSINESS_FACEBOOK_SHOP,
     BUSINESS_TWITTER,
@@ -41,6 +42,7 @@ data class ScreenModel(
       Screen.CHANNEL_SELECT -> Intent(context, ChannelPickerActivity::class.java)
       Screen.BUSINESS_INFO -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_BASIC_DETAILS)
       Screen.BUSINESS_SUBDOMAIN -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_WEBSITE)
+      Screen.BUSINESS_GOOGLE_PAGE -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_GOOGLE_PAGE)
       Screen.BUSINESS_FACEBOOK_PAGE -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_PAGE)
       Screen.BUSINESS_FACEBOOK_SHOP -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_FACEBOOK_SHOP)
       Screen.BUSINESS_TWITTER -> Intent(context, AppFragmentContainerActivity::class.java).setFragmentType(FragmentType.REGISTRATION_BUSINESS_TWITTER_DETAILS)

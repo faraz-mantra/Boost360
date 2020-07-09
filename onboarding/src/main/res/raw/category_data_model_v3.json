@@ -15,7 +15,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "learn_more",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information."
         },
@@ -24,6 +24,11 @@
           "priority": "recommended",
           "moreDesc": "Marketing your business on Facebook can help you communicate with your customers directly and reach out to other users who are already on the platform.",
           "isSelected": true
+        },
+        {
+          "type": "FB_SHOP",
+          "priority": "learn_more",
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
         },
         {
           "type": "WAB",
@@ -71,7 +76,7 @@
           "title": "Your digital clinic",
           "desc": "",
           "icon": "/icons/digital_clinic.svg",
-          "boost_widget_key": "STOREFRONT",
+          "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Website optimised for best experience of your patients",
@@ -111,7 +116,7 @@
           "title": "Secure digital payments",
           "desc": "",
           "icon": "/icons/digital_payment.svg",
-          "boost_widget_key": "PAYMENTGATEWAY",
+          "boost_widget_key": "PAYMENTGATEWAY,DIGITAL_COMMERCE",
           "details": [
             {
               "title": "Ready to use payment gateway",
@@ -135,7 +140,7 @@
           "title": "Manage your digital content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
-          "boost_widget_key": "LATESTUPDATES",
+          "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS",
           "details": [
             {
               "title": "Update your website & social media from any location",
@@ -159,7 +164,7 @@
           "title": "Ria — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
-          "boost_widget_key": "RIASUPPORTTEAM",
+          "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
@@ -192,7 +197,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -250,7 +255,7 @@
           "title": "Website Customised for Educational Insitutes",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
-          "boost_widget_key": "STOREFRONT",
+          "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Automatic optimisation for search",
@@ -274,7 +279,7 @@
           "title": "Secure digital payments",
           "desc": "",
           "icon": "/icons/digital_payment.svg",
-          "boost_widget_key": "PAYMENTGATEWAY",
+          "boost_widget_key": "PAYMENTGATEWAY,DIGITAL_COMMERCE",
           "details": [
             {
               "title": "Ready to use payment gateway",
@@ -298,7 +303,7 @@
           "title": "Manage your digital content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
-          "boost_widget_key": "LATESTUPDATES",
+          "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS",
           "details": [
             {
               "title": "Update your website & social media from any location",
@@ -322,7 +327,7 @@
           "title": "Ria — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
-          "boost_widget_key": "RIASUPPORTTEAM",
+          "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
@@ -371,7 +376,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "recommended",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -433,7 +438,7 @@
           "title": "Your digital clinic",
           "desc": "",
           "icon": "/icons/digital_clinic.svg",
-          "boost_widget_key": "STOREFRONT",
+          "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Best experience of your patients",
@@ -473,7 +478,7 @@
           "title": "Secure digital payments",
           "desc": "",
           "icon": "/icons/digital_payment.svg",
-          "boost_widget_key": "PAYMENTGATEWAY",
+          "boost_widget_key": "PAYMENTGATEWAY,DIGITAL_COMMERCE",
           "details": [
             {
               "title": "Ready to use payment gateway",
@@ -497,7 +502,7 @@
           "title": "Manage your digital content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
-          "boost_widget_key": "LATESTUPDATES",
+          "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS",
           "details": [
             {
               "title": "Update your website & social media from any location",
@@ -521,7 +526,7 @@
           "title": "Ria — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
-          "boost_widget_key": "RIASUPPORTTEAM",
+          "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
@@ -554,7 +559,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -615,7 +620,7 @@
           "title": "Website Customised for Spa",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
-          "boost_widget_key": "STOREFRONT",
+          "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Automatic optimisation for search",
@@ -639,7 +644,7 @@
           "title": "Secure digital payments",
           "desc": "",
           "icon": "/icons/digital_payment.svg",
-          "boost_widget_key": "PAYMENTGATEWAY",
+          "boost_widget_key": "PAYMENTGATEWAY,DIGITAL_COMMERCE",
           "details": [
             {
               "title": "Ready to use payment gateway",
@@ -663,7 +668,7 @@
           "title": "Manage Your Digital Content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
-          "boost_widget_key": "LATESTUPDATES",
+          "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS",
           "details": [
             {
               "title": "Update your website & social media from any location",
@@ -687,7 +692,7 @@
           "title": "Ria — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
-          "boost_widget_key": "RIASUPPORTTEAM",
+          "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
@@ -720,7 +725,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -786,7 +791,7 @@
           "title": "Website Customised for Hotels",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
-          "boost_widget_key": "STOREFRONT",
+          "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Automatic optimisation for search",
@@ -806,7 +811,7 @@
           "title": "Secure digital payments",
           "desc": "",
           "icon": "/icons/digital_payment.svg",
-          "boost_widget_key": "PAYMENTGATEWAY",
+          "boost_widget_key": "PAYMENTGATEWAY,DIGITAL_COMMERCE",
           "details": [
             {
               "title": "Ready to use payment gateway",
@@ -830,7 +835,7 @@
           "title": "Manage your digital content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
-          "boost_widget_key": "LATESTUPDATES",
+          "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS",
           "details": [
             {
               "title": "Update your website & social media from any location",
@@ -854,7 +859,7 @@
           "title": "Ria — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
-          "boost_widget_key": "RIASUPPORTTEAM",
+          "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
@@ -887,7 +892,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -920,7 +925,7 @@
           "title": "Online deliveries, reservations & enquiries",
           "desc": "",
           "icon": "/icons/digital_food_ordering.svg",
-          "boost_widget_key": "TOB",
+          "boost_widget_key": "TOB,ONLINEORDERING",
           "details": [
             {
               "title": "Online reservations",
@@ -940,7 +945,7 @@
           "title": "Website Customised for Restaurants",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
-          "boost_widget_key": "STOREFRONT",
+          "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Automatic optimisation for search",
@@ -988,7 +993,7 @@
           "title": "Manage your digital content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
-          "boost_widget_key": "LATESTUPDATES",
+          "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS,ABOUTUS",
           "details": [
             {
               "title": "Update your website & social media from any location",
@@ -1012,7 +1017,7 @@
           "title": "Ria — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
-          "boost_widget_key": "RIASUPPORTTEAM",
+          "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
@@ -1045,7 +1050,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -1103,7 +1108,7 @@
           "title": "Website Customised for Salon",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
-          "boost_widget_key": "STOREFRONT",
+          "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Automatic optimisation for search",
@@ -1127,7 +1132,7 @@
           "title": "Secure digital payments",
           "desc": "",
           "icon": "/icons/digital_payment.svg",
-          "boost_widget_key": "PAYMENTGATEWAY",
+          "boost_widget_key": "PAYMENTGATEWAY,DIGITAL_COMMERCE",
           "details": [
             {
               "title": "Ready to use payment gateway",
@@ -1151,7 +1156,7 @@
           "title": "Manage your digital content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
-          "boost_widget_key": "LATESTUPDATES",
+          "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS",
           "details": [
             {
               "title": "Update your website & social media from any location",
@@ -1175,7 +1180,7 @@
           "title": "Ria — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
-          "boost_widget_key": "RIASUPPORTTEAM",
+          "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
@@ -1208,7 +1213,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "recommended",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -1221,8 +1226,7 @@
         {
           "type": "FB_SHOP",
           "priority": "recommended",
-          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.",
-          "isSelected": true
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
         },
         {
           "type": "WAB",
@@ -1269,7 +1273,7 @@
           "title": "Website Customised for Manufacturers",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
-          "boost_widget_key": "STOREFRONT",
+          "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Automatic optimisation for search",
@@ -1289,7 +1293,7 @@
           "title": "Secure digital payments",
           "desc": "",
           "icon": "/icons/digital_payment.svg",
-          "boost_widget_key": "PAYMENTGATEWAY",
+          "boost_widget_key": "PAYMENTGATEWAY,DIGITAL_COMMERCE",
           "details": [
             {
               "title": "Ready to use payment gateway",
@@ -1313,7 +1317,7 @@
           "title": "Manage your digital content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
-          "boost_widget_key": "LATESTUPDATES",
+          "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS,PROJECTPORTFOLIO",
           "details": [
             {
               "title": "Update your website & social media from any location",
@@ -1337,7 +1341,7 @@
           "title": "Ria — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
-          "boost_widget_key": "RIASUPPORTTEAM",
+          "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
@@ -1369,7 +1373,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "recommended",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -1383,8 +1387,7 @@
         {
           "type": "FB_SHOP",
           "priority": "learn_more",
-          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.",
-          "isSelected": true
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
         },
         {
           "type": "WAB",
@@ -1404,7 +1407,7 @@
           "title": "Manage your Digital content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
-          "boost_widget_key": "LATESTUPDATES",
+          "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS",
           "details": [
             {
               "title": "Update your website & social media from any location",
@@ -1428,7 +1431,7 @@
           "title": "Website customised for retail businesses",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
-          "boost_widget_key": "STOREFRONT",
+          "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Automatic optimisation for search",
@@ -1452,7 +1455,7 @@
           "title": "Secure digital payments",
           "desc": "",
           "icon": "/icons/digital_payment.svg",
-          "boost_widget_key": "PAYMENTGATEWAY",
+          "boost_widget_key": "PAYMENTGATEWAY,DIGITAL_COMMERCE",
           "details": [
             {
               "title": "Ready to use payment gateway",
@@ -1476,7 +1479,7 @@
           "title": "Ria — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
-          "boost_widget_key": "RIASUPPORTTEAM",
+          "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",
@@ -1509,7 +1512,7 @@
           "isSelected": true
         },
         {
-          "type": "G_MAPS",
+          "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
           "isSelected": true
@@ -1542,7 +1545,7 @@
           "title": "Manage your digital content",
           "desc": "",
           "icon": "/icons/digital_content.svg",
-          "boost_widget_key": "LATESTUPDATES",
+          "boost_widget_key": "LATESTUPDATES,FEATUREDIMAGE,CUSTOMPAGES,IMAGEGALLERY,TIMINGS,PRODUCTCATALOGUE,SOCIALMEDIA,CONTACTDETAILS",
           "details": [
             {
               "title": "Update your website & social media from any location",
@@ -1566,7 +1569,7 @@
           "title": "Website Customised for Service Business",
           "desc": "",
           "icon": "/icons/digital_storefront.svg",
-          "boost_widget_key": "STOREFRONT",
+          "boost_widget_key": "STOREFRONT,SITESENSE,SOCIALSHARE,WEBSITEBANDWIDTH,FBLIKEBOX",
           "details": [
             {
               "title": "Automatic optimisation for search",
@@ -1590,7 +1593,7 @@
           "title": "Secure digital payments",
           "desc": "",
           "icon": "/icons/digital_payment.svg",
-          "boost_widget_key": "PAYMENTGATEWAY",
+          "boost_widget_key": "PAYMENTGATEWAY,DIGITAL_COMMERCE",
           "details": [
             {
               "title": "Ready to use payment gateway",
@@ -1614,7 +1617,7 @@
           "title": "Ria — your digital assistant",
           "desc": "",
           "icon": "/icons/digital_assistant_ria.svg",
-          "boost_widget_key": "RIASUPPORTTEAM",
+          "boost_widget_key": "RIASUPPORTTEAM,ANALYTICS",
           "details": [
             {
               "title": "Advice on digital growth strategy",

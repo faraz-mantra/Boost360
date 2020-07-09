@@ -9,6 +9,8 @@ import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRe
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelActionDataRequest
 import com.onboarding.nowfloats.model.domain.BusinessDomainRequest
 import com.onboarding.nowfloats.model.domain.BusinessDomainSuggestRequest
+import com.onboarding.nowfloats.model.googleAuth.GoogleAuthTokenRequest
+import com.onboarding.nowfloats.model.riaWhatsapp.RiaWhatsappRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileProfileRequest
 import com.onboarding.nowfloats.rest.repositories.*
@@ -48,6 +50,17 @@ class BusinessCreateViewModel : BaseViewModel() {
     return UploadImageRepository.putUploadImageProfile(request).toLiveData()
   }
 
+  fun getAccountLocationsGMB(auth: String?, userId: String?): LiveData<BaseResponse> {
+    return GMBRepository.getAccountLocations(auth, userId).toLiveData()
+  }
+
+  fun getGoogleAuthToken(req: GoogleAuthTokenRequest?): LiveData<BaseResponse> {
+    return GoogleAuthRepository.getGoogleAuthToken(req).toLiveData()
+  }
+
+  fun updateRiaWhatsapp(req: RiaWhatsappRequest?): LiveData<BaseResponse> {
+    return RiaFloatWhatsappRepository.updateRiaWhatsapp(req).toLiveData()
+  }
 }
 
 fun getJsonRequest(fpTag: String?): String {

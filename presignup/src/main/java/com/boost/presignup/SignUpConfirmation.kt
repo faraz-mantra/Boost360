@@ -61,4 +61,8 @@ class SignUpConfirmation : AppCompatActivity() {
       NavigatorManager.startActivities(this@SignUpConfirmation)
     }
   }
+
+  override fun onBackPressed() {
+    // do not let the user go back
+  }
 }

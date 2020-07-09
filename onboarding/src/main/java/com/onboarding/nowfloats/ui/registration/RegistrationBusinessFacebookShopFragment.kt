@@ -189,6 +189,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
     logoutFacebook()
     binding?.skip?.visible()
     binding?.facebookPageSuccess?.maimView?.gone()
+    this.binding?.title?.text = resources.getString(R.string.shop_section_on_your_fb_page)
     binding?.subTitle?.text = resources.getString(R.string.facebook_page_connect_later_Skip)
     binding?.linkFacebook?.text = resources.getString(R.string.sync_facebook_page)
     channelAccessToken.clear()
