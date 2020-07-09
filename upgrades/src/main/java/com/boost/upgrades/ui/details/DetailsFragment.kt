@@ -1,8 +1,8 @@
 package com.boost.upgrades.ui.details
 
+//import com.devs.readmoreoption.ReadMoreOption
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -12,8 +12,6 @@ import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -21,20 +19,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.ReviewViewPagerAdapter
 import com.boost.upgrades.adapter.SecondaryImagesAdapter
 import com.boost.upgrades.adapter.ZoomOutPageTransformer
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.ExtendedProperty
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.LearnMoreLink
-import com.boost.upgrades.data.api_model.GetAllWidgets.FeatureDetails
 import com.boost.upgrades.data.api_model.GetAllWidgets.Review
-import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.data.model.WidgetModel
+import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.DetailsFragmentListener
 import com.boost.upgrades.ui.cart.CartFragment
@@ -49,17 +43,13 @@ import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils.longToast
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestListener
-//import com.devs.readmoreoption.ReadMoreOption
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.google.android.material.appbar.AppBarLayout
 import com.google.gson.Gson
-import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.details_fragment.*
 import retrofit2.Retrofit
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -148,20 +138,20 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         }
         )
 
-        abcText.setText(getString(R.string.addons_description))
-        description_gradient1.visibility = View.VISIBLE
+      abcText.text = getString(R.string.addons_description)
+      description_gradient1.visibility = View.VISIBLE
         var readmoreState = false
         readmore.setOnClickListener {
             if (readmoreState) {
                 abcText.maxLines = 10
-                readmoreState = false
-                readmore.setText(getString(R.string.read_more))
-                description_gradient1.visibility = View.VISIBLE
+              readmoreState = false
+              readmore.text = getString(R.string.read_more)
+              description_gradient1.visibility = View.VISIBLE
             } else {
                 abcText.maxLines = 50
-                readmoreState = true
-                readmore.setText(getString(R.string.read_less))
-                description_gradient1.visibility = View.GONE
+              readmoreState = true
+              readmore.text = getString(R.string.read_less)
+              description_gradient1.visibility = View.GONE
             }
         }
 
@@ -185,8 +175,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                             R.drawable.grey_button_click_effect
                     )
                     add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
-                    add_item_to_cart.setText(getString(R.string.added_to_cart))
-                    havent_bought_the_feature.visibility = View.INVISIBLE
+                  add_item_to_cart.text = getString(R.string.added_to_cart)
+                  havent_bought_the_feature.visibility = View.INVISIBLE
                     itemInCartStatus = true
                 }
             }
@@ -224,7 +214,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     override fun onResume() {
         super.onResume()
         val pos = 2
-        reviewViewpager.postDelayed(Runnable { reviewViewpager.setCurrentItem(pos) }, 100)
+      reviewViewpager.postDelayed(Runnable { reviewViewpager.currentItem = pos }, 100)
         getLineCount()
     }
 
@@ -252,8 +242,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                     R.drawable.grey_button_click_effect
             )
             add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
-            add_item_to_cart.setText("ITEM BELONG TO PACKAGE")
-            add_item_to_cart.isEnabled = false
+          add_item_to_cart.text = "ITEM BELONG TO PACKAGE"
+          add_item_to_cart.isEnabled = false
             havent_bought_the_feature.visibility = View.INVISIBLE
             return
         }
@@ -292,7 +282,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                 origCost.length,
                 0
         )
-        orig_cost.setText(origCost)
+      orig_cost.text = origCost
     }
 
     fun loadData() {
@@ -411,8 +401,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                                 R.drawable.added_to_cart_grey
                         )
                         add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
-                        add_item_to_cart.setText(getString(R.string.added_to_cart))
-                        havent_bought_the_feature.visibility = View.INVISIBLE
+                      add_item_to_cart.text = getString(R.string.added_to_cart)
+                      havent_bought_the_feature.visibility = View.INVISIBLE
                         itemInCartStatus = true
                         break
                     }

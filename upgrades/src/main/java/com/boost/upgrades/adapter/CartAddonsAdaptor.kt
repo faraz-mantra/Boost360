@@ -30,7 +30,7 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
-        val itemView = LayoutInflater.from(parent?.context).inflate(
+        val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.cart_single_addons, parent, false
         )
         context = itemView.context
@@ -43,19 +43,19 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
-        Glide.with(context).load(list.get(position).link).into(holder.image)
-        holder.title.setText(list.get(position).item_name)
-        val price = list.get(position).price * list.get(position).min_purchase_months
-        val MRPPrice = list.get(position).MRPPrice * list.get(position).min_purchase_months
-        holder.price.setText("₹"+ NumberFormat.getNumberInstance(Locale.ENGLISH).format(price)+"/month")
-        if(price!=MRPPrice) {
-            spannableString(holder, MRPPrice, list.get(position).min_purchase_months)
-            holder.MRPPrice.visibility = View.VISIBLE
-        }else{
-            holder.MRPPrice.visibility = View.GONE
-        }
-        if(list.get(position).discount > 0) {
-            holder.discount.setText(list.get(position).discount.toString() + "%")
+      Glide.with(context).load(list.get(position).link).placeholder(R.drawable.boost_360_insignia).into(holder.image)
+      holder.title.text = list.get(position).item_name
+      val price = list.get(position).price * list.get(position).min_purchase_months
+      val MRPPrice = list.get(position).MRPPrice * list.get(position).min_purchase_months
+      holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
+      if (price != MRPPrice) {
+        spannableString(holder, MRPPrice, list.get(position).min_purchase_months)
+        holder.MRPPrice.visibility = View.VISIBLE
+      } else {
+        holder.MRPPrice.visibility = View.GONE
+      }
+      if (list.get(position).discount > 0) {
+        holder.discount.text = list.get(position).discount.toString() + "%"
         }else{
             holder.discount.visibility = View.GONE
         }
@@ -63,9 +63,7 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
             listener.deleteCartAddonsItem(list.get(position).item_id)
         }
         holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-        if(list.size - 1 == position) {
-            holder.view.visibility = View.GONE
-        }
+      holder.view.visibility = if (list.size - 1 == position) View.GONE else View.VISIBLE
     }
 
     fun addupdates(cardItems: List<CartModel>) {
@@ -106,6 +104,6 @@ class CartAddonsAdaptor(cardItems: List<CartModel>?, val listener: CartFragmentL
                 origCost.length,
                 0
         )
-        holder.MRPPrice.setText(origCost)
+      holder.MRPPrice.text = origCost
     }
 }
