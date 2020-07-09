@@ -61,6 +61,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
+import com.nowfloats.util.WebEngageController;
 import com.nowfloats.widget.WidgetKey;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -689,31 +690,35 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
 
 
     private void addImage(){
+        WebEngageController.trackEvent("DASHBOARD - Fab - Image","Fab",null);
         Intent webIntent = new Intent(getActivity(), ImageGalleryActivity.class);
         startActivity(webIntent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void addInventory(){
+        WebEngageController.trackEvent("DASHBOARD - Fab - Inventory","Fab",null);
         Intent webIntent = new Intent(getActivity(), ProductCatalogActivity.class);
         startActivity(webIntent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    private void openAddUpdateActivity()
-    {
+    private void openAddUpdateActivity(){
+        WebEngageController.trackEvent("DASHBOARD - Fab - Update","Fab",null);
         Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
         startActivity(webIntent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void addCustomPage(){
+        WebEngageController.trackEvent("DASHBOARD - Fab - CustomPage","Fab",null);
         Intent webIntent = new Intent(getActivity(), CustomPageActivity.class);
         startActivity(webIntent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void addTestimonial(){
+        WebEngageController.trackEvent("DASHBOARD - Fab - Testimonial","Fab",null);
         Intent webIntent = new Intent(getActivity(), TestimonialsActivity.class);
         startActivity(webIntent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
