@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.nowfloats.Testimonials.TestimonialsFeedbackActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_15sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Profile image"
+                android:layout_marginLeft="@dimen/_5sdp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_primary_image"
+                android:layout_width="180dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:padding="2dp"
+                android:clickable="true"
+                app:cardCornerRadius="4dp"
+                android:layout_marginLeft="@dimen/_5sdp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_image_placeholder">
+
+                    <ImageView
+                        android:id="@+id/iv_primary_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"/>
+
+                    <ImageButton
+                        android:id="@+id/ib_remove_product_image"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="@dimen/margin_5"
+                        android:layout_gravity="top|end"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_remove"/>
+
+                </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rank"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+            <EditText
+                android:id="@+id/user_rank"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:hint="Enter Rank"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/edittext_bg_elevated"
+                android:elevation="@dimen/_2sdp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+            <EditText
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:hint="Enter Name"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/edittext_bg_elevated"
+                android:elevation="@dimen/_2sdp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Course Name"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+            <EditText
+                android:id="@+id/user_course_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:hint="Enter Course Name"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/edittext_bg_elevated"
+                android:elevation="@dimen/_2sdp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Course Type"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+            <EditText
+                android:id="@+id/user_course_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:hint="Enter Course Type"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/edittext_bg_elevated"
+                android:elevation="@dimen/_2sdp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Testimonial image"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_5sdp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_secondary_image"
+                android:layout_width="180dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:padding="2dp"
+                android:clickable="true"
+                app:cardCornerRadius="4dp"
+                android:layout_marginLeft="@dimen/_5sdp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_image_placeholder">
+
+                    <ImageView
+                        android:id="@+id/iv_secondary_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"/>
+
+                    <ImageButton
+                        android:id="@+id/iv_remove_secondary_image"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="@dimen/margin_5"
+                        android:layout_gravity="top|end"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_remove"/>
+
+                </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Testimonial Description"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+
+            <EditText
+                android:id="@+id/review_description"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:hint="Enter Testimonial Text \n(200 Characters Max)"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/edittext_bg_elevated"
+                android:elevation="@dimen/_2sdp"
+                android:gravity="top"/>
+
+
+            <TextView
+                android:id="@+id/save_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/orange_button_click_effect"
+                android:fontFamily="@font/open_sans_semibold"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:gravity="center"
+                android:text="save"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:elevation="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_20sdp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

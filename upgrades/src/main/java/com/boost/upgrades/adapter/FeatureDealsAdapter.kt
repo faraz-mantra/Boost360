@@ -127,13 +127,13 @@ class FeatureDealsAdapter(
         val imageLayout = itemView.findViewById<CardView>(R.id.imageLayout)
     }
 
-    fun getFeatureInfoFromDB(holder: PagerViewHolder, itemId: String, remainingTime: Long) {
+    fun getFeatureInfoFromDB(holder: PagerViewHolder, widgetKey: String, remainingTime: Long) {
         var mrpPrice = 0.0
         var grandTotal = 0
         CompositeDisposable().add(
                 AppDatabase.getInstance(activity.application)!!
                         .featuresDao()
-                        .getFeaturesItemById(itemId)
+                        .getFeaturesItemByWidgetKey(widgetKey)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
@@ -182,7 +182,7 @@ class FeatureDealsAdapter(
                                         })
                                         var itemInCart = false
                                         for (cart in cartList) {
-                                            if (itemId.equals(cart.item_id)) {
+                                            if (widgetKey.equals(cart.boost_widget_key)) {
                                                 itemInCart = true
                                                 break
                                             }
