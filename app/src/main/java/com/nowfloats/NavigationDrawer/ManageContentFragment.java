@@ -20,6 +20,7 @@ import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.Testimonials.TestimonialsActivity;
+import com.nowfloats.manufacturing.projectandteams.ProjectAndTermsActivity;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
@@ -84,6 +85,9 @@ public class ManageContentFragment extends Fragment{
                     case 5:
                         intent = new Intent(mContext, TestimonialsActivity.class);
                         break;
+//                    case 6:
+//                        intent = new Intent(mContext, ProjectAndTermsActivity.class);
+//                        break;
                     default:
                         return;
                 }

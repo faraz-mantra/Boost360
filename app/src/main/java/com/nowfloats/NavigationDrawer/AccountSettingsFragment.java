@@ -495,9 +495,10 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
 
     private void showDomainDetails() {
         isAlreadyCalled = true;
+        //old design
         Intent domainIntent = new Intent(mContext, DomainDetailsActivity.class);
         //new design implementation work in progress
-        //Intent domainIntent = new Intent(mContext, DomainEmailActivity.class);
+//        Intent domainIntent = new Intent(mContext, DomainEmailActivity.class);
         startActivity(domainIntent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
