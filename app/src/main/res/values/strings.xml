@@ -804,7 +804,7 @@
         <item>YEARLY REPORT</item>
         <item>MONTHLY REPORT</item>
     </string-array>
-    <string name="business_enquiries_title">Business Enquiries</string>
+    <string name="business_enquiries_title">Customer Enquiries</string>
     <string name="enquiries_title">Enquiries</string>
     <string name="payment_setting">Payment Settings</string>
     <string name="tag_for_partners">.nowfloats.com</string>
@@ -877,7 +877,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="expired">EXPIRED</string>
     <string name="feching_search_detail">Fetching Search details&#8230;</string>
     <string name="week">Week</string>
-    <string name="unique_visitors">Unique Visitors</string>
+    <string name="unique_visitors">Website Visitors</string>
     <string name="no_products_avail">No products available.</string>
     <string name="no_updates_avail">No updates available.</string>
     <string name="visit_this_month">visits this month</string>
@@ -1164,7 +1164,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_the_reason">Enter other reason</string>
     <string name="submit">SUBMIT</string>
     <string name="no_alerts">No alerts!</string>
-    <string name="overall_visits">Total Visits</string>
+    <string name="overall_visits">Total Website Visits</string>
     <string name="address_line">Address Line</string>
     <string name="town_city">Town / City</string>
     <string name="pin_area_code">Pin/Area Code</string>
@@ -1557,7 +1557,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="screen_overlay_permission">Screen overlay permission</string>
     <string name="required_overlay_permission">Give us this permission to see our new features</string>
     <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
-    <string name="call_tracker">Call Tracker</string>
+    <string name="call_tracker">Customer Calls</string>
     <string name="deep_link_call_tracker">callTracker</string>
     <string name="successfully_downloaded">Successfully Downloaded</string>
     <string name="downloading">File downloading&#8230;</string>

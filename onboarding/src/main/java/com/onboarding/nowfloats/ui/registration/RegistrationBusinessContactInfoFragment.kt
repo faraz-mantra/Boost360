@@ -38,7 +38,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     binding?.viewImage?.post {
       (binding?.viewImage?.fadeIn(500L)?.mergeWith(binding?.viewBusiness?.fadeIn(400L))
           ?.mergeWith(binding?.viewForm?.fadeIn(400L)))?.andThen(binding?.title?.fadeIn(150L)
-          ?.mergeWith(binding?.subTitle?.fadeIn(150L)))?.andThen(binding?.formMain?.fadeIn(150L))
+              ?.mergeWith(binding?.subTitle?.fadeIn(150L)))?.andThen(binding?.formMain?.fadeIn(150L))
           ?.andThen(binding?.next?.fadeIn())?.subscribe()
     }
     setOnClickListener(binding?.next, binding?.address)

@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.melnykov.fab.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nowfloats.CustomPage.Model.CustomPageEvent;
 import com.nowfloats.CustomPage.Model.CustomPageLink;
 import com.nowfloats.CustomPage.Model.CustomPageModel;

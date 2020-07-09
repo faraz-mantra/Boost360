@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <com.framework.views.customViews.CustomCardView
+    android:id="@+id/card"
+    style="@style/Onboarding.ChannelCardStyle"
+    android:layout_marginStart="@dimen/size_14"
+    android:layout_marginEnd="@dimen/size_14"
+    android:layout_marginBottom="@dimen/size_0"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/white_light"
+    app:cardCornerRadius="@dimen/size_12">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/container"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_68"
+      android:layout_gravity="center_vertical"
+      android:orientation="horizontal">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/image"
+        android:layout_width="@dimen/size_38"
+        android:layout_height="@dimen/size_38"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/size_10"
+        app:srcCompat="@drawable/ic_google_n"
+        tools:srcCompat="@drawable/ic_google_n" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/size_8"
+        android:layout_marginEnd="@dimen/size_8"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/title"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:maxLines="1"
+          android:text="WhatsApp business"
+          android:textColor="@color/greyish_brown_light"
+          app:fontFamily="@font/semi_bold"
+          app:textType="HEADING_6"
+          tools:text="WhatsApp business" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/whysync"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:clickable="true"
+          android:ellipsize="end"
+          android:focusable="true"
+          android:includeFontPadding="false"
+          android:maxLines="1"
+          android:paddingBottom="@dimen/size_4"
+          android:text="Why sync on whatsapp"
+          android:textColor="@color/light_blue_one"
+          app:fontFamily="@font/regular"
+          app:textType="CAPTION"
+          tools:text="Why sync on whatsapp" />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/check"
+        android:layout_width="@dimen/size_20"
+        android:layout_height="@dimen/size_20"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/size_10"
+        app:srcCompat="@drawable/ic_unselected_blue" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </com.framework.views.customViews.CustomCardView>
+</layout>

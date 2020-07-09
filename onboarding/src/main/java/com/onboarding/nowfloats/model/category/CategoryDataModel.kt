@@ -11,6 +11,7 @@ import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.ChannelType
+import com.onboarding.nowfloats.model.channel.isGoogleChannel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
 
 class CategoryDataModel(
@@ -20,7 +21,7 @@ class CategoryDataModel(
     val category_Name: String? = null,
     val category_descriptor: String? = null,
     val icon: String? = null,
-    val channels: ArrayList<ChannelModel>? = null,
+    var channels: ArrayList<ChannelModel>? = null,
     val sections: ArrayList<SectionsFeature>? = null
 ) : BaseResponse(), AppBaseRecyclerViewItem, Parcelable {
   val sectionType: Boolean = false
@@ -31,7 +32,7 @@ class CategoryDataModel(
   }
 
   fun resetIsSelect() {
-    channels?.forEach { it.isSelected = false }
+    channels?.forEach { it.isSelected = it.isGoogleChannel() }
   }
 
   constructor(parcel: Parcel) : this(

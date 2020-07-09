@@ -31,4 +31,7 @@ data class NFXAccessToken(
     return (UserAccountId.isNullOrEmpty() && UserAccessTokenKey.isNullOrEmpty()).not()
   }
 
+  fun isValidTypeShop(): Boolean {
+    return (UserAccountId.isNullOrEmpty() && MerchantSettingsId.isNullOrEmpty()).not()
+  }
 }

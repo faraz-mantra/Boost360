@@ -16,8 +16,10 @@ class RequestFloatsModel(
     var channelActionDatas: ArrayList<ChannelActionData>? = ArrayList(),
     var floatingPointId: String? = null,
     var fpTag: String? = null,
-    var isUpdate: Boolean? = false
+    var isUpdate: Boolean? = false,
+    var whatsappEntransactional: Boolean? = null
 ) : Parcelable {
+  var websiteUrl: String? = ""
   var profileUrl: String? = null
   var businessUrl: String? = null
 
@@ -56,6 +58,7 @@ class RequestFloatsModel(
     return 0
   }
 
+
   companion object CREATOR : Parcelable.Creator<RequestFloatsModel> {
     override fun createFromParcel(parcel: Parcel): RequestFloatsModel {
       return RequestFloatsModel(parcel)
@@ -66,3 +69,6 @@ class RequestFloatsModel(
     }
   }
 }
+
+
+

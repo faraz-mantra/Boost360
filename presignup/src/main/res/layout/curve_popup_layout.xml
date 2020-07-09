@@ -103,6 +103,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/facebook_button" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/jio_id_button"
+            style="@style/JioButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:elevation="@dimen/_2sdp"
+            android:drawableStart="@drawable/ic_facebook"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingEnd="@dimen/_20sdp"
+            android:text="@string/signup_using_jio_id"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/facebook_button"
+            app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+            app:layout_constraintStart_toStartOf="@+id/startGuideline" />
+
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/facebook_login"

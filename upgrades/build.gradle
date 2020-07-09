@@ -106,7 +106,7 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.2.4'
 
     //razorpay
-//    implementation project(name: "razorpay-android-3.8.8", ext: 'aar')\
+//    implementation project(name: "razorpay-android-3.8.8", ext: 'aar')
     implementation files('libs/razorpay-android-3.8.8.aar')
 
     //wenengage analytics

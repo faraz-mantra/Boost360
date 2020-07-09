@@ -812,19 +812,19 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             if (plusAddButton != null)
                 plusAddButton.setVisibility(View.GONE);
         }
-        if(pref == null || prefsEditor == null){
+        if (pref == null || prefsEditor == null) {
             pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
             prefsEditor = pref.edit();
         }
 
         Boolean isPaymentSuccess = pref.getBoolean("Last_payment_status", false);
         Set<String> keys = pref.getStringSet("Last_Purchase_Order_Feature_Keys", null);
-        if(keys != null && isPaymentSuccess){
+        if (keys != null && isPaymentSuccess) {
             ArrayList<String> keys2 = new ArrayList<>();
             keys2.addAll(keys);
             Toast.makeText(HomeActivity.this, "Refreshing your business dashboard with the digital add-ons you just purchased.", Toast.LENGTH_LONG).show();
-            for(int i=0;i<keys2.size();i++){
-                if(!Constants.StoreWidgets.contains(keys2.get(i))){
+            for (int i = 0; i < keys2.size(); i++) {
+                if (!Constants.StoreWidgets.contains(keys2.get(i))) {
                     Constants.StoreWidgets.add(keys2.get(i));
                 }
             }
@@ -1319,21 +1319,25 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equals(getString(R.string.business__address))) {
                     Intent businessAddressIntent = new Intent(HomeActivity.this, Business_Address_Activity.class);
                     startActivity(businessAddressIntent);
-                } else if (nextScreen.equals(getString(R.string.title_activity_social__sharing_)) ||
-                        nextScreen.equals(getString(R.string.content_sharing_settings))) {
+                } else if (nextScreen.equals(getString(R.string.title_activity_social__sharing_)) || nextScreen.equals(getString(R.string.content_sharing_settings))) {
                     WebEngageController.trackEvent("NAV - CONTENT_SHARING_SETTINGS", "CONTENT_SHARING_SETTINGS", null);
                     /*Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                     startActivity(socialSharingIntent);*/
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
                     try {
                         Bundle bundle = new Bundle();
-                        Intent channelIntent = new Intent(HomeActivity.this, Class.forName("com.onboarding.nowfloats.ui.channel.ChannelPickerActivity"));
+                        Intent channelIntent = new Intent(HomeActivity.this, Class.forName("com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity"));
+                        String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+                        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
                         session.setHeader(Constants.WA_KEY);
                         bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
                         bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
                         bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
                         bundle.putBoolean("IsUpdate", true);
+                        if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) bundle.putString("website_url", rootAlisasURI);
+                        else bundle.putString("website_url", normalURI);
                         channelIntent.putExtras(bundle);
+                        channelIntent.putExtra("FRAGMENT_TYPE", "MY_DIGITAL_CHANNEL");
                         startActivity(channelIntent);
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();

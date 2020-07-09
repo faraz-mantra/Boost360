@@ -5,6 +5,7 @@ import com.onboarding.nowfloats.base.rest.AppBaseRepository
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken.AccessTokenType
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
 import com.onboarding.nowfloats.model.channel.request.getType
+import com.onboarding.nowfloats.model.nfxProcess.NFXProcessRequest
 import com.onboarding.nowfloats.rest.Taskcode
 import com.onboarding.nowfloats.rest.apiClients.NfxApiClient
 import com.onboarding.nowfloats.rest.services.local.channel.ChannelLocalDataSource
@@ -27,12 +28,18 @@ object ChannelRepository : AppBaseRepository<ChannelRemoteDataSource, ChannelLoc
       AccessTokenType.facebookpage -> postUpdateFacebookPageAccessToken(request)
       AccessTokenType.facebookshop -> postUpdateFacebookShopAccessToken(request)
       AccessTokenType.twitter -> postUpdateTwitterAccessToken(request)
+      AccessTokenType.googlemap,
+      AccessTokenType.googlesearch,
       AccessTokenType.googlemybusiness -> postUpdateGoogleMyBusinessToken(request)
     }
   }
 
   fun getChannelsAccessToken(nowfloatsId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getChannelsAccessToken(nowfloatsId), Taskcode.GET_CHANNELS_ACCESS_TOKEN)
+  }
+
+  fun nfxProcess(request: NFXProcessRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.nfxProcess(request), Taskcode.NFX_PROCESS_TASK)
   }
 
   fun postUpdateFacebookPageAccessToken(request: UpdateChannelAccessTokenRequest): Observable<BaseResponse> {

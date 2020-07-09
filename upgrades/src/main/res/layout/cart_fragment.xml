@@ -310,7 +310,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/coupon_layout"
+                android:id="@+id/total_months_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -324,6 +324,94 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/addons_layout">
+
+                <TextView
+                    android:id="@+id/total_months_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:text="SUBSCRIPTION VALIDITY"
+                    android:textAllCaps="true"
+                    android:textColor="@color/common_text_color"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/material_grey_400"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/total_months_title" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/total_months_title">
+
+                    <ImageView
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        app:srcCompat="@mipmap/ic_calendar" />
+
+                    <TextView
+                        android:id="@+id/months_validity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:text="2 months"
+                        android:textColor="@color/common_text_color"
+                        android:fontFamily="@font/open_sans_semibold"/>
+
+                    <TextView
+                        android:id="@+id/months_validity_edit_inc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:textSize="@dimen/_20sdp"
+                        android:text=" + "
+                        android:textColor="#009688" />
+
+                    <TextView
+                        android:id="@+id/months_validity_edit_dsc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:textSize="@dimen/_20sdp"
+                        android:text=" -- "
+                        android:textColor="#F44336" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/coupon_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:elevation="@dimen/_2sdp"
+                android:background="@drawable/all_side_curve_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/total_months_layout">
 
                 <TextView
                     android:id="@+id/cart_coupon_title"
@@ -364,7 +452,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/_4sdp"
-                        android:src="@drawable/ic_local_offer" />
+                        app:srcCompat="@drawable/ic_local_offer" />
 
                     <TextView
                         android:id="@+id/discount_coupon_title"
@@ -487,7 +575,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_10sdp"
-                        android:src="@drawable/ic_close"
+                        app:srcCompat="@drawable/ic_close"
                         app:layout_constraintBottom_toBottomOf="@id/cart_single_addons_bottom_view"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

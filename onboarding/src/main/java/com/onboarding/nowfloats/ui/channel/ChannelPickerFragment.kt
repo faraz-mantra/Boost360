@@ -136,6 +136,10 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
       RecyclerViewActionType.CHANNEL_ITEM_WHY_CLICKED.ordinal -> openWhyChannelDialog(item as? ChannelModel)
       RecyclerViewActionType.CHANNEL_ITEM_CLICKED.ordinal -> {
         if (position != 0) {
+//          if (list[position].isFacebookShop()) {
+//            showLongToast("You can't connect to Facebook shop using app.")
+//            return
+//          }
           val isSelected = !list[position].isSelected!!
           list[position].isSelected = isSelected
           if (list[position].isFacebookPage()) {
@@ -215,6 +219,7 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
     val bundle = Bundle()
     var totalPages = if (requestFloatsModel?.isUpdate == true) 0 else 2
     selectedChannels.let { channels ->
+      if (channels.haveGoogleBusinessChannel()) totalPages++
       if (channels.haveFacebookShop()) totalPages++
       if (channels.haveFacebookPage()) totalPages++
       if (channels.haveTwitterChannels()) totalPages++
