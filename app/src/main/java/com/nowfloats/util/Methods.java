@@ -791,6 +791,64 @@ public class Methods {
         return formatted;
     }
 
+    public static String getDateFormat(String Sdate) {
+        if (TextUtils.isEmpty(Sdate)) {
+            return "";
+        }
+        if (Sdate.contains("/Date")) {
+            Sdate = Sdate.replace("/Date(", "").replace(")/", "");
+        }
+
+        Long epochTime = null;
+        try {
+            epochTime = Long.parseLong(Sdate);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            UTC = TimeZone.getTimeZone("UTC");
+            final SimpleDateFormat sdf = new SimpleDateFormat(ISO_8601_24H_FULL_FORMAT);
+            sdf.setTimeZone(UTC);
+            try {
+                epochTime = sdf.parse(Sdate).getTime();
+            } catch (ParseException parseExecption) {
+                parseExecption.printStackTrace();
+            }
+        }
+        Date date = new Date(epochTime);
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
+        format.setTimeZone(TimeZone.getDefault());
+        return format.format(date);
+    }
+
+    public static String getTimeFormat(String Stime) {
+        if (TextUtils.isEmpty(Stime)) {
+            return "";
+        }
+        if (Stime.contains("/Date")) {
+            Stime = Stime.replace("/Date(", "").replace(")/", "");
+        }
+
+        Long epochTime = null;
+        try {
+            epochTime = Long.parseLong(Stime);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            UTC = TimeZone.getTimeZone("UTC");
+            final SimpleDateFormat sdf = new SimpleDateFormat(ISO_8601_24H_FULL_FORMAT);
+            sdf.setTimeZone(UTC);
+            try {
+                epochTime = sdf.parse(Stime).getTime();
+            } catch (ParseException parseExecption) {
+                parseExecption.printStackTrace();
+            }
+        }
+        Date date = new Date(epochTime);
+        DateFormat format = new SimpleDateFormat("hh:mm:ss a", Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
+        format.setTimeZone(TimeZone.getDefault());
+        return format.format(date);
+    }
+
     public static byte[] compressToByte(String path, Activity act) {
         File img = new File(path);
         File f = new File(img.getAbsolutePath() + File.separator);

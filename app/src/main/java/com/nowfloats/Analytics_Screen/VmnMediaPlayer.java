@@ -28,6 +28,7 @@ public class VmnMediaPlayer {
         }
         return vmnMediaPlayer;
     }
+
     public void setUpPlayer(VmnCall_v2Adapter.ConnectToVmnPlayer implementer){
         if(mediaPlayer == null){
             mediaPlayer = new MediaPlayer();

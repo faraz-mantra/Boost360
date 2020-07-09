@@ -22,6 +22,7 @@ import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
+import com.nowfloats.domain.ui.ActiveDomain.ActiveDomainFragment;
 import com.nowfloats.domain.ui.DomainNotPurchase.DomainNotPurchaseFragment;
 import com.nowfloats.domain.ui.DomainPurchased.DomainPurchasedFragment;
 import com.nowfloats.util.Constants;
@@ -36,6 +37,7 @@ import java.util.HashMap;
 public class DomainEmailActivity extends AppCompatActivity {
 
     private DomainNotPurchaseFragment domainNotPurchaseFragment;
+    private ActiveDomainFragment activeDomainFragment;
     private ProgressDialog progressDialog;
     private HashMap<String, Integer> hmPrices = new HashMap<>();
     public UserSessionManager session;
@@ -73,6 +75,7 @@ public class DomainEmailActivity extends AppCompatActivity {
     private void initializeView() {
 
         domainNotPurchaseFragment = new DomainNotPurchaseFragment();
+        activeDomainFragment = new ActiveDomainFragment();
         session = new UserSessionManager(this, this);
 
         toolbar = findViewById(R.id.app_bar);
@@ -88,7 +91,7 @@ public class DomainEmailActivity extends AppCompatActivity {
 
         //testingPurpos
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.mainFrame, new DomainPurchasedFragment())
+                .add(R.id.mainFrame, new ActiveDomainFragment())
                 // Add this transaction to the back stack
                 .addToBackStack("Profile")
                 .commit();
