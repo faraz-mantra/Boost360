@@ -9,7 +9,8 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.library.BuildConfig
+import com.boost.presignup.utils.FirebaseDynamicLinkParams
+import com.boost.presignup.utils.FirebaseDynamicLinksManager
 import com.onboarding.nowfloats.managers.NavigatorManager
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.security.MessageDigest
@@ -20,12 +21,19 @@ class SplashActivity : AppCompatActivity() {
 
   var isUserLoggedIn = false
   var isSignUpComplete = false
-
+  private var deepLinkViewType = ""
+  private var deepLinkFpId = ""
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_splash)
-    initLottieAnimation()
+    FirebaseDynamicLinksManager.instance.parseDeepLink(this) { _, deepHashMap ->
+      if (deepHashMap != null && deepHashMap.containsKey(FirebaseDynamicLinkParams.viewType)) {
+        deepLinkViewType = deepHashMap[FirebaseDynamicLinkParams.viewType].toString()
+        deepLinkFpId = deepHashMap[FirebaseDynamicLinkParams.fpId].toString()
+      }
+      onCreateView()
+    }
     val pref: SharedPreferences = this.getSharedPreferences("nowfloatsPrefs", 0)
     isUserLoggedIn = pref.getBoolean("IsUserLoggedIn", false)
     isSignUpComplete = pref.getBoolean("IsSignUpComplete", false)
@@ -34,10 +42,18 @@ class SplashActivity : AppCompatActivity() {
       val profileId = pref.getString("user_profile_id", null)
       isUserLoggedIn = profileId != null && profileId.trim().isNotEmpty()
     }
+//      if (BuildConfig.DEBUG) hashGeneration()
+  }
 
-    if (BuildConfig.DEBUG) {
-      hashGeneration()
-    }
+  private fun onCreateView() {
+    if (isUserLoggedIn && deepLinkViewType.isNotEmpty()) {
+      val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+      intent.putExtra("deepLinkViewType", deepLinkViewType)
+      intent.putExtra("deepLinkFpId", deepLinkFpId)
+      startActivity(intent)
+      overridePendingTransition(0, 0)
+      finish()
+    } else initLottieAnimation()
   }
 
   private fun initLottieAnimation() {

@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
+import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_SECREAT
 import com.boost.upgrades.utils.Utils
@@ -61,9 +61,9 @@ class PaymentViewModel : ViewModel() {
     fun loadpaymentMethods(razorpay: Razorpay) {
         razorpay.getPaymentMethods(object : BaseRazorpay.PaymentMethodsCallback {
             override fun onPaymentMethodsReceived(result: String?) {
-                val paymentMethods = JSONObject(result!!);
-                Log.i("onPaymentMethods :", paymentMethods.toString())
-                _paymentMethods.postValue(paymentMethods)
+              val paymentMethods = JSONObject(result!!)
+              Log.i("onPaymentMethods :", paymentMethods.toString())
+              _paymentMethods.postValue(paymentMethods)
             }
 
             override fun onError(e: String?) {
