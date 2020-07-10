@@ -4,22 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/_15sdp"
     tools:context="com.nowfloats.education.batches.ui.batchesdetails.BatchesDetailsFragment">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/new_custome_app_bar" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Course Name"
-        android:layout_marginStart="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_5sdp"/>
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
         android:hint="Enter Course Name"
         android:textSize="@dimen/_12sdp"
         android:background="@drawable/edittext_bg_elevated"
@@ -28,15 +31,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Course Timimgs"
-        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
         android:hint="00:00 to 00:00"
         android:textSize="@dimen/_12sdp"
         android:background="@drawable/edittext_bg_elevated"
@@ -46,15 +49,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Course Duration"
-        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
         android:hint="Days/Months/Weekly"
         android:textSize="@dimen/_12sdp"
         android:background="@drawable/edittext_bg_elevated"
@@ -64,15 +67,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Commencement Date"
-        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"/>
 
     <EditText
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
         android:hint="00-00-0000"
         android:drawableEnd="@drawable/ic_blue_calander"
         android:padding="@dimen/_10sdp"
