@@ -147,9 +147,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
               .subscribe({
                 Log.i("renewal purchased >>", it.toString())
                 val data = it as RenewalPurchasedResponse
-                if (data.result.isNullOrEmpty().not()) {
-                  renewalPurchaseList.postValue(data.result)
-                }
+                renewalPurchaseList.postValue(data.result ?: ArrayList())
                 updatesLoader.postValue(false)
               }, {
                 renewalPurchaseList.postValue(ArrayList())
