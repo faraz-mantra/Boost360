@@ -13,9 +13,7 @@ import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.CouponsModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.remote.ApiInterface
-import com.boost.upgrades.data.renewalcart.RenewalPurchasedRequest
-import com.boost.upgrades.data.renewalcart.RenewalPurchasedResponse
-import com.boost.upgrades.data.renewalcart.RenewalResult
+import com.boost.upgrades.data.renewalcart.*
 import com.boost.upgrades.utils.Utils
 import com.luminaire.apolloar.base_class.BaseViewModel
 import es.dmoral.toasty.Toasty
@@ -42,12 +40,17 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
   var allCoupons: MutableLiveData<List<CouponsModel>> = MutableLiveData()
   var validCouponCode: MutableLiveData<CouponsModel> = MutableLiveData()
+  var createCartResult: MutableLiveData<CreateCartResult> = MutableLiveData()
   var cartResultItems: MutableLiveData<List<CartModel>> = MutableLiveData()
 
   var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
 
   val compositeDisposable = CompositeDisposable()
 
+
+  fun updatesError(): LiveData<String> {
+    return updatesError
+  }
 
   fun cartResult(): LiveData<List<CartModel>> {
     return cartResult
@@ -76,6 +79,11 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   fun updateValidCouponResult(): LiveData<CouponsModel> {
     return validCouponCode
   }
+
+  fun createCartRenewalResult(): LiveData<CreateCartResult> {
+    return createCartResult
+  }
+
 
   fun clearValidCouponResult() {
     validCouponCode.postValue(null)
@@ -140,6 +148,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   fun allPurchasedWidgets(req: RenewalPurchasedRequest) {
     if (Utils.isConnectedToInternet(getApplication())) {
       updatesLoader.postValue(true)
+      APIRequestStatus = "Order registration in progress..."
       compositeDisposable.add(
           ApiService.allPurchasedWidgets(req.floatingPointId, req.clientId, req.nextWidgetStatus, req.widgetKey, req.nextWidgetStatus, req.dateFilter, req.startDate, req.endDate)
               .subscribeOn(Schedulers.io())
@@ -151,6 +160,28 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                 updatesLoader.postValue(false)
               }, {
                 renewalPurchaseList.postValue(ArrayList())
+                updatesLoader.postValue(false)
+              }))
+    } else {
+      updatesLoader.postValue(false)
+      Toasty.error(getApplication(), "No Internet Connection.", Toast.LENGTH_LONG).show()
+    }
+  }
+
+  fun createCartStateRenewal(request: CreateCartStateRequest) {
+    if (Utils.isConnectedToInternet(getApplication())) {
+      updatesLoader.postValue(true)
+      compositeDisposable.add(
+          ApiService.createCartStateRenewal(request).subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread()).subscribe({
+                if (it?.result != null && it.result?.cartStateId.isNullOrEmpty().not()) {
+                  createCartResult.postValue(it.result)
+                } else {
+                  updatesError.postValue(it.error?.errorList?.iNVALIDPARAMETERS ?: "Error creating cart state")
+                }
+                updatesLoader.postValue(false)
+              }, {
+                updatesError.postValue(it?.localizedMessage ?: "Error creating cart state")
                 updatesLoader.postValue(false)
               }))
     } else {

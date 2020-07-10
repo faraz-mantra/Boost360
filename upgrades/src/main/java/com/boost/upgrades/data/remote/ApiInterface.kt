@@ -9,6 +9,8 @@ import com.boost.upgrades.data.api_model.RazorpayToken.RazorpayTokenResponse
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
+import com.boost.upgrades.data.renewalcart.CreateCartResponse
+import com.boost.upgrades.data.renewalcart.CreateCartStateRequest
 import com.boost.upgrades.data.renewalcart.RenewalPurchasedResponse
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -62,4 +64,8 @@ interface ApiInterface {
                           @Query("dateFilter") dateFilter: String?,
                           @Query("startDate") startDate: String?,
                           @Query("endDate") endDate: String?): Observable<RenewalPurchasedResponse>
+
+  @Headers("Content-Type: application/json")
+  @POST("Payment/v9/floatingpoint/widgets/CartState")
+  fun createCartStateRenewal(@Body request: CreateCartStateRequest): Observable<CreateCartResponse>
 }
