@@ -35,7 +35,7 @@ public class TeamCategoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mViewModel = ViewModelProviders.of(this).get(TeamCategoryViewModel.class);
-        return inflater.inflate(R.layout.project_team_category_fragment, container, false);
+        return inflater.inflate(R.layout.team_category_fragment, container, false);
     }
 
     @Override

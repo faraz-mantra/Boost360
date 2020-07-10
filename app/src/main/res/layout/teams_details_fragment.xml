@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.nowfloats.Testimonials.TestimonialsFeedbackActivity">
+    android:background="#FBFBFB"
+    android:clickable="true"
+    android:focusable="true">
 
     <include
         android:id="@+id/app_bar"
-        layout="@layout/new_app_bar"
+        layout="@layout/new_custome_app_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -29,7 +31,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Profile image"
+                android:text="Add image"
                 android:layout_marginLeft="@dimen/_5sdp"/>
 
             <androidx.cardview.widget.CardView
@@ -107,19 +109,61 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Person Info"
+                android:text="Facebook Profile"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
 
             <EditText
-                android:id="@+id/review_description"
+                android:id="@+id/facebook_url_value"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp"
+                android:layout_height="@dimen/_70sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_marginRight="@dimen/_5sdp"
-                android:hint="Enter Review Description"
+                android:hint="Enter Facebook URL"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/edittext_bg_elevated"
+                android:elevation="@dimen/_2sdp"
+                android:gravity="top"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Twitter Profile"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+
+            <EditText
+                android:id="@+id/twitter_url_value"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:hint="Enter Twitter URL"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/edittext_bg_elevated"
+                android:elevation="@dimen/_2sdp"
+                android:gravity="top"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Skype Profile"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+
+            <EditText
+                android:id="@+id/skype_url_value"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:hint="Enter Skype URL"
                 android:textSize="@dimen/_12sdp"
                 android:background="@drawable/edittext_bg_elevated"
                 android:elevation="@dimen/_2sdp"

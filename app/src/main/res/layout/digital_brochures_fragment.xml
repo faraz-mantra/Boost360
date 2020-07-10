@@ -9,6 +9,10 @@
     android:focusable="true"
     android:gravity="center">
 
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/new_custome_app_bar" />
+
 
     <RelativeLayout
         android:id="@+id/info_layout"
@@ -16,7 +20,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/app_bar">
 
         <View
             android:layout_width="match_parent"
@@ -167,7 +171,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/digital_brochure_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:visibility="gone"
-        tools:visibility="gone"/>
+        tools:visibility="gone"
+        tools:listitem="@layout/item_digital_brochures"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
