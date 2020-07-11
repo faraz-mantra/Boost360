@@ -148,9 +148,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   fun allPurchasedWidgets(req: RenewalPurchasedRequest) {
     if (Utils.isConnectedToInternet(getApplication())) {
       updatesLoader.postValue(true)
-      APIRequestStatus = "Order registration in progress..."
+      APIRequestStatus = "Please wait..."
       compositeDisposable.add(
-          ApiService.allPurchasedWidgets(req.floatingPointId, req.clientId, req.nextWidgetStatus, req.widgetKey, req.nextWidgetStatus, req.dateFilter, req.startDate, req.endDate)
+          ApiService.allPurchasedWidgets(req.floatingPointId, req.clientId, req.widgetStatus, req.widgetKey, req.nextWidgetStatus, req.dateFilter, req.startDate, req.endDate)
               .subscribeOn(Schedulers.io())
               .observeOn(AndroidSchedulers.mainThread())
               .subscribe({
@@ -171,6 +171,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   fun createCartStateRenewal(request: CreateCartStateRequest) {
     if (Utils.isConnectedToInternet(getApplication())) {
       updatesLoader.postValue(true)
+      APIRequestStatus = "Order registration in progress..."
       compositeDisposable.add(
           ApiService.createCartStateRenewal(request).subscribeOn(Schedulers.io())
               .observeOn(AndroidSchedulers.mainThread()).subscribe({

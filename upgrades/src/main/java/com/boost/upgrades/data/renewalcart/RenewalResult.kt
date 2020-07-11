@@ -46,4 +46,8 @@ data class RenewalResult(
     var widgetKey: String? = null,
     @SerializedName("WidgetStatus")
     var widgetStatus: String? = null
-)
+) {
+    enum class RenewalStatus {
+        PENDING
+    }
+}

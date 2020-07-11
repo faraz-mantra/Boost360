@@ -704,7 +704,7 @@
         <category android:name="android.intent.category.BROWSABLE" />
 
         <data
-          android:host="nowfloat.page.link"
+          android:host="bj9jm.app.goo.gl"
           android:scheme="https" />
       </intent-filter>
     </activity>
