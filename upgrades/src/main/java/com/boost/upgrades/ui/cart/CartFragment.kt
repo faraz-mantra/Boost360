@@ -1,6 +1,5 @@
 package com.boost.upgrades.ui.cart
 
-//import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -57,7 +56,6 @@ import kotlinx.android.synthetic.main.cart_fragment.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.concurrent.schedule
 import kotlin.math.roundToInt
 
 class CartFragment : BaseFragment(), CartFragmentListener {
@@ -68,7 +66,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   var customerId: String = ""
 
-  lateinit var cartList: List<CartModel>
+  lateinit var cartList: ArrayList<CartModel>
 
   lateinit var featuresList: List<FeaturesModel>
   lateinit var bundlesList: List<BundlesModel>
@@ -129,8 +127,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     initializeRenewalRecycler()
     initializeErrorObserver()
     isDeepLinking = (activity as UpgradeActivity).isFirebaseDeepLink
-    checkRenewalItemDeepLinkClick()
     initMvvM()
+    checkRenewalItemDeepLinkClick()
     //show applyed coupon code
     if (prefs.getApplyedCouponDetails() != null) {
       validCouponCode = prefs.getApplyedCouponDetails()
@@ -199,7 +197,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   private fun createCartStateRenewal(renewalItems: List<CartModel>?) {
     val widgetList = arrayListOf<com.boost.upgrades.data.renewalcart.Widget>()
-    renewalItems?.forEach { widgetList.add(com.boost.upgrades.data.renewalcart.Widget(it.boost_widget_key, it.item_id)) }
+    renewalItems?.forEach { widgetList.add(com.boost.upgrades.data.renewalcart.Widget(it.item_id, it.boost_widget_key)) }
 
     val request = CreateCartStateRequest((activity as UpgradeActivity).clientid, (activity as UpgradeActivity).fpid, "RENEWAL", widgetList)
     viewModel.createCartStateRenewal(request)
@@ -210,153 +208,133 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     var couponCode: String? = null
     var couponDiscountPercentage: Int = 0
     if (validCouponCode != null) {
-      couponCode = validCouponCode!!.coupon_key
-      couponDiscountPercentage = validCouponCode!!.discount_percent
+      couponCode = validCouponCode?.coupon_key
+      couponDiscountPercentage = validCouponCode?.discount_percent ?: 0
     }
     val purchaseOrders = ArrayList<PurchaseOrder>()
-    for (item in cartList) {
+
+    val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
+    if (renewalItems.isNullOrEmpty().not()) {
       val widgetList = ArrayList<Widget>()
-      var extendProps: List<ExtendedProperty>? = null
-      val outputExtendedProps = ArrayList<Property>()
-      var extraPurchaseOrderDetails: ExtraPurchaseOrderDetails? = null
-      var bundleNetPrice = 0.0
-      var bundleDiscount = 0
-      if (item.extended_properties.isNullOrEmpty().not()) {
-        try {
-          val objectType = object : TypeToken<List<ExtendedProperty>>() {}.type
-          extendProps = Gson().fromJson<List<ExtendedProperty>>(item.extended_properties, objectType)
-
-          if (extendProps != null) {
-            for (prop in extendProps) {
-              if (prop.key != null && prop.value != null) {
-                outputExtendedProps.add(Property(
-                    Key = prop.key,
-                    Value = prop.value
-                ))
-              }
-            }
-
-          }
-        } catch (ex: Exception) {
-          ex.printStackTrace()
-        }
-      }
-
-      if (item.item_type == "renewals") {
+      renewalItems?.forEach { item ->
         val data = renewalList.firstOrNull { it.widgetId == item.item_id }
         val discount = 100 - item.discount
         val netPrice = (discount * item.MRPPrice) / 100
         val widget = Widget(data?.category ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
-            item.discount, Expiry("DAYS", 30), listOf(), true, true, item.item_name!!,
-            netPrice, item.MRPPrice, (if (outputExtendedProps.size > 0) outputExtendedProps else null), 1, "MONTHLY", item.boost_widget_key!!)
+            item.discount, Expiry("DAYS", 30), listOf(), true, true, item.item_name ?: "",
+            netPrice, item.MRPPrice, null, 1, "MONTHLY", item.boost_widget_key ?: "", item.item_id)
         widgetList.add(widget)
-      } else if (item.item_type == "features") {
-        renewalList
-        val discount = 100 - item.discount
-        val netPrice = (discount * item.MRPPrice) / 100
+      }
+      purchaseOrders.add(PurchaseOrder(couponCode, 0, null, 0.0, widgetList))
+    } else {
+      for (item in cartList) {
+        val widgetList = ArrayList<Widget>()
+        var extendProps: List<ExtendedProperty>? = null
+        val outputExtendedProps = ArrayList<Property>()
+        var extraPurchaseOrderDetails: ExtraPurchaseOrderDetails? = null
+        var bundleNetPrice = 0.0
+        var bundleDiscount = 0
+        if (item.extended_properties.isNullOrEmpty().not()) {
+          try {
+            val objectType = object : TypeToken<List<ExtendedProperty>>() {}.type
+            extendProps = Gson().fromJson<List<ExtendedProperty>>(item.extended_properties, objectType)
 
-        widgetList.add(Widget(
-            "",
-            ConsumptionConstraint(
-                "DAYS",
-                30
-            ),
-            "",
-            item.description_title,
-            item.discount,
-            Expiry(
-                "DAYS",
-                30
-            ),
-            listOf(),
-            true,
-            true,
-            item.item_name!!,
-            netPrice,
-            item.MRPPrice,
-            if (outputExtendedProps.size > 0) outputExtendedProps else null,
-            1,
-            "MONTHLY",
-            item.boost_widget_key!!
-        ))
-      } else if (item.item_type.equals("bundles")) {
-        if (::bundlesList.isInitialized && bundlesList.size > 0) {
-          for (singleBundle in bundlesList) {
-            if (singleBundle.bundle_id.equals(item.item_id)) {
-              val outputBundleProps: ArrayList<Property> = arrayListOf()
-              outputBundleProps.add(Property(
-                  Key = singleBundle.bundle_id,
-                  Value = singleBundle.name!!
-              ))
-              extraPurchaseOrderDetails = ExtraPurchaseOrderDetails(
-                  null,
-                  singleBundle.primary_image,
-                  singleBundle.name,
-                  outputBundleProps)
-              bundleDiscount = singleBundle.overall_discount_percent
-              val includedFeatures = Gson().fromJson<List<IncludedFeature>>(singleBundle.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-              for (singleIndludedFeature in includedFeatures) {
-                for (singleFeature in featuresList) {
-                  if (singleIndludedFeature.feature_code.equals(singleFeature.boost_widget_key)) {
-
-                    val netPrice = (singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100))
-
-                    //adding bundle netPrice
-                    bundleNetPrice += netPrice * singleBundle.min_purchase_months
-                    widgetList.add(Widget(
-                        "",
-                        ConsumptionConstraint(
-                            "DAYS",
-                            30 * singleBundle.min_purchase_months
-                        ),
-                        "",
-                        singleFeature.description_title,
-                        singleIndludedFeature.feature_price_discount_percent,
-                        Expiry(
-                            "DAYS",
-                            30 * singleBundle.min_purchase_months
-                        ),
-                        listOf(),
-                        true,
-                        true,
-                        singleFeature.name!!,
-                        netPrice.toDouble() * singleBundle.min_purchase_months,
-                        singleFeature.price.toDouble() * singleBundle.min_purchase_months,
-                        if (outputExtendedProps.size > 0) outputExtendedProps else null,
-                        1,
-                        "MONTHLY",
-                        singleFeature.boost_widget_key
-                    ))
-                    break
-                  }
+            if (extendProps != null) {
+              for (prop in extendProps) {
+                if (prop.key != null && prop.value != null) {
+                  outputExtendedProps.add(Property(
+                      Key = prop.key,
+                      Value = prop.value
+                  ))
                 }
               }
-              //bundle level discount
-              if (bundleDiscount > 0) {
-                bundleNetPrice = Math.round(bundleNetPrice - ((bundleNetPrice * bundleDiscount) / 100)).toDouble()
+            }
+          } catch (ex: Exception) {
+            ex.printStackTrace()
+          }
+        }
+        if (item.item_type == "features") {
+          val discount = 100 - item.discount
+          val netPrice = (discount * item.MRPPrice) / 100
+          widgetList.add(Widget("", ConsumptionConstraint("DAYS", 30), "",
+              item.description_title, item.discount,
+              Expiry("DAYS", 30), listOf(),
+              true, true,
+              item.item_name ?: "", netPrice, item.MRPPrice,
+              if (outputExtendedProps.size > 0) outputExtendedProps else null, 1,
+              "MONTHLY", item.boost_widget_key ?: "", item.item_id))
+        } else if (item.item_type == "bundles") {
+          if (::bundlesList.isInitialized && bundlesList.isNullOrEmpty().not()) {
+            for (singleBundle in bundlesList) {
+              if (singleBundle.bundle_id == item.item_id) {
+                val outputBundleProps: ArrayList<Property> = arrayListOf()
+                outputBundleProps.add(Property(
+                    Key = singleBundle.bundle_id,
+                    Value = singleBundle.name!!
+                ))
+                extraPurchaseOrderDetails = ExtraPurchaseOrderDetails(
+                    null,
+                    singleBundle.primary_image,
+                    singleBundle.name,
+                    outputBundleProps)
+                bundleDiscount = singleBundle.overall_discount_percent
+                val includedFeatures = Gson().fromJson<List<IncludedFeature>>(singleBundle.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                for (singleIndludedFeature in includedFeatures) {
+                  for (singleFeature in featuresList) {
+                    if (singleIndludedFeature.feature_code.equals(singleFeature.boost_widget_key)) {
+
+                      val netPrice = (singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100))
+
+                      //adding bundle netPrice
+                      bundleNetPrice += netPrice * singleBundle.min_purchase_months
+                      widgetList.add(Widget(
+                          "",
+                          ConsumptionConstraint(
+                              "DAYS",
+                              30 * singleBundle.min_purchase_months
+                          ),
+                          "",
+                          singleFeature.description_title,
+                          singleIndludedFeature.feature_price_discount_percent,
+                          Expiry(
+                              "DAYS",
+                              30 * singleBundle.min_purchase_months
+                          ),
+                          listOf(),
+                          true,
+                          true,
+                          singleFeature.name ?: "",
+                          netPrice.toDouble() * singleBundle.min_purchase_months,
+                          singleFeature.price.toDouble() * singleBundle.min_purchase_months,
+                          if (outputExtendedProps.size > 0) outputExtendedProps else null,
+                          1,
+                          "MONTHLY",
+                          singleFeature.boost_widget_key,
+                          singleFeature.feature_id
+                      ))
+                      break
+                    }
+                  }
+                }
+                //bundle level discount
+                if (bundleDiscount > 0) {
+                  bundleNetPrice = (bundleNetPrice - ((bundleNetPrice * bundleDiscount) / 100)).roundToInt().toDouble()
+                }
+                break
               }
-              break
             }
           }
         }
+        purchaseOrders.add(PurchaseOrder(couponCode, bundleDiscount, //Discount of the bundle/package/order without tax.
+            extraPurchaseOrderDetails, bundleNetPrice, widgetList))
       }
-
-
-      purchaseOrders.add(
-          PurchaseOrder(
-              couponCode,
-              bundleDiscount, //Discount of the bundle/package/order without tax.
-              extraPurchaseOrderDetails,
-              bundleNetPrice,
-              widgetList
-          )
-      )
     }
 
-    var keysToBeActivated = ArrayList<String>()
+
+    val keysToBeActivated = ArrayList<String>()
 
     for (item in purchaseOrders) {
-      if (item.Widgets != null) {
+      if (item.Widgets.isNotEmpty()) {
         for (widget in item.Widgets) {
           if (!keysToBeActivated.contains(widget.WidgetKey)) {
             keysToBeActivated.add(widget.WidgetKey)
@@ -367,7 +345,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     prefs.storeFeatureKeysInLastOrder(keysToBeActivated.toMutableSet())
     prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
-    //handling coupon discount
+//                handling coupon discount
 //                var finalPayment: Double = 0.0
 //                if(couponDiscountPercentage>0){
 //                    finalPayment = grandTotal + couponDiscountAmount
@@ -376,107 +354,77 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                }
 
     viewModel.InitiatePurchaseOrder(
-//                        CreatePurchaseOrderRequest(
-//                                (activity as UpgradeActivity).clientid,
-//                                (activity as UpgradeActivity).fpid!!,
-//                                PaymentDetails(
-//                                        "INR",
-//                                        0,
-//                                        "RAZORPAY",
-//                                        TaxDetails(
-//                                                GSTINNumber,
-//                                                0,
-//                                                null,
-//                                                18),
-//                                        grandTotal),
-//                                widgetsToBeBought,
-//                                null
-//                        )
-        CreatePurchaseOrderV2(
-            (activity as UpgradeActivity).clientid,
-            (activity as UpgradeActivity).fpid!!,
-            PaymentDetails(
-                "INR",
-                couponDiscountPercentage, //[Double] Discount Percentage of the the payment(Coupon code discount)
-                "RAZORPAY",
-                TaxDetails(
-                    GSTINNumber,
-                    0,
-                    null,
-                    18),
-                grandTotal),
-            "NEW",
-            purchaseOrders,
-            (cartStateId ?: "")
+//        CreatePurchaseOrderRequest((activity as UpgradeActivity).clientid, (activity as UpgradeActivity).fpid!!,
+//            PaymentDetails("INR", 0, "RAZORPAY",
+//                TaxDetails(GSTINNumber, 0, null, 18), grandTotal), widgetsToBeBought, null)
+        CreatePurchaseOrderV2((activity as UpgradeActivity).clientid, (activity as UpgradeActivity).fpid!!,
+            PaymentDetails("INR", couponDiscountPercentage, //[Double] Discount Percentage of the the payment(Coupon code discount)
+                "RAZORPAY", TaxDetails(GSTINNumber, 0, null, 18),
+                grandTotal), (if (cartStateId.isNullOrEmpty()) "NEW" else "RENEWAL"), purchaseOrders, (cartStateId ?: "")
         )
     )
+  }
+
+
+  private fun checkRenewalItemDeepLinkClick() {
+    if (isDeepLinking) {
+      val currentDate = getCurrentDate().parseDate(FORMAT_MM_DD_YYYY)
+      val sevenDayDate = getAmountDate(45).parseDate(FORMAT_MM_DD_YYYY)
+      viewModel.allPurchasedWidgets(RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
+          widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
+          dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = currentDate, endDate = sevenDayDate))
+      viewModel.renewalResult().observeOnce(Observer { result ->
+        renewalList = result?.filter { it.renewalStatus == RenewalResult.RenewalStatus.PENDING.name } ?: ArrayList()
+        if (renewalList.isNotEmpty()) {
+          val list = arrayListOf<CartModel>()
+          renewalList.forEach { renewal -> list.add(saveRenewalData(renewal)) }
+          cartList = list
+          renewal_layout.visibility = View.VISIBLE
+          addons_layout.visibility = View.GONE
+          package_layout.visibility = View.GONE
+          updateRenewal(cartList)
+          totalCalculation()
+        } else {
+          Toasty.info(requireContext(), "Renewal order not found").show()
+          loadData()
+        }
+      })
+    } else loadData()
+  }
+
+  private fun saveRenewalData(renewal: RenewalResult): CartModel {
+    var minMonth = 1
+    if (renewal.expiry?.key == "DAYS") minMonth = renewal.expiry?.valueDays()?.div(30) ?: 1
+    return CartModel(renewal.widgetId ?: "", renewal.widgetKey ?: "",
+        renewal.name ?: "", renewal.desc ?: "", renewal.images?.firstOrNull() ?: "",
+        renewal.netPrice ?: 0.0, renewal.price ?: 0.0, (renewal.discount ?: 0.0).toInt(),
+        1, minMonth, "renewals", null)
   }
 
   fun loadData() {
 //        viewModel.requestCustomerId(CustomerIDRequest((activity as UpgradeActivity).clientid, "ANDROID",
 //        (activity as UpgradeActivity).email!!, (activity as UpgradeActivity).loginid!!, (activity as UpgradeActivity).fpName!!,
 //        (activity as UpgradeActivity).mobileNo!!, "RAZORPAY", com.boost.upgrades.data.api_model.customerId.create.TaxDetails(null, 0, null, 0))
-
     viewModel.getCartItems()
     viewModel.getAllFeatures()
     viewModel.getAllBundles()
-  }
-
-  private fun checkRenewalItemDeepLinkClick() {
-    val currentDate = getCurrentDate().parseDate(FORMAT_MM_DD_YYYY)
-    val sevenDayDate = getAmountDate(45).parseDate(FORMAT_MM_DD_YYYY)
-    viewModel.allPurchasedWidgets(RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
-        widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
-        dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = currentDate, endDate = sevenDayDate))
-    viewModel.renewalResult().observeOnce(Observer { result ->
-      renewalList = result?.filter { it.renewalStatus == RenewalResult.RenewalStatus.PENDING.name } ?: ArrayList()
-      if (renewalList.isNotEmpty()) {
-        val idItems = arrayListOf<String>()
-        renewalList.forEach { res -> res.widgetId?.let { id -> idItems.add(id) } }
-        viewModel.getCartsByIds(idItems)
-        viewModel.cartResultItems().observeOnce(Observer { cartList ->
-          viewModel.loaderShow()
-          renewalList.forEach { renewal ->
-            if (isDeepLinking && cartList.isNullOrEmpty()) {
-              saveRenewalData(false, renewal)
-            } else if (cartList.isNotEmpty()) {
-              val data = cartList?.firstOrNull { it1 -> it1.item_id == renewal.widgetId }
-              if (data != null) saveRenewalData(true, renewal)
-            }
-          }
-          Timer().schedule(2000) { loadData() }
-        })
-      } else loadData()
-    })
-  }
-
-  private fun saveRenewalData(isUpdate: Boolean, renewal: RenewalResult) {
-    var minMonth = 1
-    if (renewal.expiry?.key == "DAYS") minMonth = renewal.expiry?.valueDays()?.div(30) ?: 1
-    val cartModel = CartModel(renewal.widgetId ?: "", renewal.widgetKey ?: "",
-        renewal.name ?: "", renewal.desc ?: "", renewal.images?.firstOrNull() ?: "",
-        renewal.netPrice ?: 0.0, renewal.price ?: 0.0, (renewal.discount ?: 0.0).toInt(),
-        1, minMonth, "renewals", null)
-    if (isUpdate) viewModel.updateItemToCart(cartModel)
-    else viewModel.addItemToCart(cartModel)
   }
 
   @SuppressLint("FragmentLiveDataObserve")
   fun initMvvM() {
     viewModel.cartResult().observe(this, Observer {
       if (it.isNullOrEmpty().not()) {
-        cartList = it
+        cartList = it as ArrayList<CartModel>
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", "Cart Size:" + it.size, "")
         empty_cart.visibility = View.GONE
         cart_main_layout.visibility = View.VISIBLE
+        renewal_layout.visibility = View.GONE
         val features = arrayListOf<CartModel>()
         val bundles = arrayListOf<CartModel>()
-        val renewals = arrayListOf<CartModel>()
         for (items in it) {
           when (items.item_type) {
             "features" -> features.add(items)
             "bundles" -> bundles.add(items)
-            "renewals" -> renewals.add(items)
           }
         }
         if (features.size > 0) {
@@ -490,12 +438,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           package_layout.visibility = View.VISIBLE
         } else {
           package_layout.visibility = View.GONE
-        }
-        if (renewals.size > 0) {
-          updateRenewal(renewals)
-          renewal_layout.visibility = View.VISIBLE
-        } else {
-          renewal_layout.visibility = View.GONE
         }
         totalCalculation()
       } else {
@@ -703,7 +645,19 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
   override fun actionClickRenewal(position: Int, renewalResult: CartModel, action: Int) {
     when (action) {
-      1 -> deleteCartAddonsItem(renewalResult.item_id)
+      1 -> {
+        if (cartList.size > position) {
+          cartList.removeAt(position)
+          cartRenewalAdaptor.renewalNotify(cartList)
+          cartRenewalAdaptor.notifyDataSetChanged()
+          totalCalculation()
+          prefs.storeCartOrderInfo(null)
+          if (cartList.isEmpty()) {
+            empty_cart.visibility = View.VISIBLE
+            cart_main_layout.visibility = View.GONE
+          }
+        }
+      }
     }
   }
 
@@ -717,10 +671,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     args.putString("currency", "INR")
     args.putString("contact", (activity as UpgradeActivity).mobileNo)
     paymentFragment.arguments = args
-    (activity as UpgradeActivity).addFragment(
-        paymentFragment,
-        Constants.PAYMENT_FRAGMENT
-    )
+    (activity as UpgradeActivity).addFragment(paymentFragment, Constants.PAYMENT_FRAGMENT)
+  }
+
+  fun isRenewalListNotEmpty(): Boolean {
+    return ::cartList.isInitialized && cartList.isNotEmpty()
   }
 
 }

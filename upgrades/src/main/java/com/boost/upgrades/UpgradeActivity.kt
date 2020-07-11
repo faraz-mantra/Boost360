@@ -1,11 +1,18 @@
 package com.boost.upgrades
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -40,6 +47,7 @@ import io.reactivex.schedulers.Schedulers
 class UpgradeActivity : AppCompatActivity() {
 
   private val splashFragment = SplashFragment()
+  private var cartFragment: CartFragment? = null
 
   lateinit var razorpay: Razorpay
 
@@ -82,8 +90,9 @@ class UpgradeActivity : AppCompatActivity() {
 
   fun initView() {
     if (fpid != null) {
-      if (isFirebaseDeepLink == true) {
-        addFragment(CartFragment.newInstance(), CART_FRAGMENT)
+      if (isFirebaseDeepLink) {
+        cartFragment = CartFragment.newInstance()
+        cartFragment?.let { addFragment(it, CART_FRAGMENT) }
       } else {
         addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
         //update userdetails and buyitem
@@ -133,18 +142,36 @@ class UpgradeActivity : AppCompatActivity() {
         Log.e("back pressed tag", ">>>$tag")
         if (tag != null) {
           if (tag == ORDER_CONFIRMATION_FRAGMENT) {
-            goToHomeFragment()
-          } else if (isFirebaseDeepLink == true && tag == CART_FRAGMENT) {
-            goHomeActivity()
+            if (isFirebaseDeepLink) goHomeActivity()
+            else goToHomeFragment()
+          } else if (isFirebaseDeepLink && tag == CART_FRAGMENT) {
+            if (cartFragment != null && cartFragment?.isRenewalListNotEmpty() == true) alertDialog()
+            else goHomeActivity()
           } else fragmentManager!!.popBackStack()
         }
       } else {
-        if (isFirebaseDeepLink == false) super.onBackPressed()
-        else goHomeActivity()
+        if (isFirebaseDeepLink) goHomeActivity()
+        else super.onBackPressed()
       }
     } catch (e: Exception) {
       e.printStackTrace()
     }
+  }
+
+  private fun alertDialog() {
+    val builder: AlertDialog.Builder = AlertDialog.Builder(this@UpgradeActivity)
+    val viewGroup = findViewById<ViewGroup>(android.R.id.content)
+    val dialogView: View = LayoutInflater.from(this).inflate(R.layout.alert_view, viewGroup, false)
+    builder.setView(dialogView)
+    val alertDialog: AlertDialog = builder.create()
+    dialogView.findViewById<TextView>(R.id.no_btn).setOnClickListener { alertDialog.dismiss() }
+    dialogView.findViewById<TextView>(R.id.yes_btn).setOnClickListener {
+      prefs.storeCartOrderInfo(null)
+      goHomeActivity()
+      alertDialog.dismiss()
+    }
+    alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    alertDialog.show()
   }
 
   private var currentFragment: Fragment? = null
