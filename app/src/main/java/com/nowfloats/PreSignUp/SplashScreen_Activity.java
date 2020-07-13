@@ -43,7 +43,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     LottieAnimationView animationView;
     public static ProgressDialog pd;
     private String loginCheck = null, deepLink;
-    private String deepLinkViewType = "", deepLinkFpId = "";
+    private String deepLinkViewType = "", deepLinkFpId = "", deepLinkDay = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         if (bundle != null) {
             deepLinkViewType = bundle.getString("deepLinkViewType");
             deepLinkFpId = bundle.getString("deepLinkFpId");
+            deepLinkDay = bundle.getString("deepLinkDay");
         }
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(), SplashScreen_Activity.this);
@@ -188,7 +189,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
             GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(SplashScreen_Activity.this, session);
             visit_subcribersCountAsyncTask.execute();
         }
-        if (!deepLinkViewType.isEmpty() && deepLinkViewType.equalsIgnoreCase("CART_FRAGMENT")) {
+        if (deepLinkViewType != null && deepLinkViewType.equalsIgnoreCase("CART_FRAGMENT")
+                && deepLinkFpId != null && deepLinkFpId.trim().equals(session.getFPID().trim())) {
             initiateAddonMarketplace();
         } else {
             Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
@@ -222,9 +224,10 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         Intent intent = new Intent(SplashScreen_Activity.this, UpgradeActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
-        intent.putExtra("fpid", session.getFPID());
+        intent.putExtra("fpid", session.getFPID().trim());
         intent.putExtra("isFirebaseDeepLink", true);
         intent.putExtra("deepLinkViewType", deepLinkViewType);
+        intent.putExtra("deepLinkDay", deepLinkDay);
         intent.putExtra("loginid", session.getUserProfileId());
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());

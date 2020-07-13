@@ -23,6 +23,7 @@ class SplashActivity : AppCompatActivity() {
   var isSignUpComplete = false
   private var deepLinkViewType = ""
   private var deepLinkFpId = ""
+  private var deepLinkDay = ""
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -31,6 +32,7 @@ class SplashActivity : AppCompatActivity() {
       if (deepHashMap != null && deepHashMap.containsKey(FirebaseDynamicLinkParams.viewType)) {
         deepLinkViewType = deepHashMap[FirebaseDynamicLinkParams.viewType].toString()
         deepLinkFpId = deepHashMap[FirebaseDynamicLinkParams.fpId].toString()
+        deepLinkDay = deepHashMap[FirebaseDynamicLinkParams.day].toString()
       }
       onCreateView()
     }
@@ -50,6 +52,7 @@ class SplashActivity : AppCompatActivity() {
       val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
       intent.putExtra("deepLinkViewType", deepLinkViewType)
       intent.putExtra("deepLinkFpId", deepLinkFpId)
+      intent.putExtra("deepLinkDay", deepLinkDay)
       startActivity(intent)
       overridePendingTransition(0, 0)
       finish()
