@@ -225,7 +225,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             netPrice, item.MRPPrice, null, 1, "MONTHLY", item.boost_widget_key ?: "", item.item_id)
         widgetList.add(widget)
       }
-      purchaseOrders.add(PurchaseOrder(couponCode, 0, null, 0.0, widgetList))
+      purchaseOrders.add(PurchaseOrder(couponCode, couponDiscountPercentage, null, grandTotal, widgetList))
     } else {
       for (item in cartList) {
         val widgetList = ArrayList<Widget>()
