@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,10 +20,12 @@ import com.boost.upgrades.adapter.WalletAdapter
 import com.boost.upgrades.datamodule.SingleNetBankData
 import com.boost.upgrades.interfaces.PaymentListener
 import com.boost.upgrades.ui.popup.AddCardPopUpFragement
+import com.boost.upgrades.ui.popup.ExternalEmailPopUpFragement
 import com.boost.upgrades.ui.popup.NetBankingPopUpFragement
 import com.boost.upgrades.ui.popup.UPIPopUpFragement
 import com.boost.upgrades.ui.razorpay.RazorPayWebView
 import com.boost.upgrades.utils.Constants.Companion.ADD_CARD_POPUP_FRAGMENT
+import com.boost.upgrades.utils.Constants.Companion.EXTERNAL_EMAIL_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.NETBANKING_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_WEBVIEW_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.UPI_POPUP_FRAGMENT
@@ -32,6 +35,7 @@ import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.razorpay.Razorpay
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.payment_fragment.*
 import org.json.JSONObject
 import java.text.NumberFormat
@@ -54,6 +58,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
     val addCardPopUpFragement = AddCardPopUpFragement()
     val netBankingPopUpFragement = NetBankingPopUpFragement()
     val upiPopUpFragement = UPIPopUpFragement()
+    val externalEmailPopUpFragement = ExternalEmailPopUpFragement()
     val razorPayWebView = RazorPayWebView()
 
     var cartCheckoutData = JSONObject()
@@ -156,6 +161,14 @@ class PaymentFragment : BaseFragment(), PaymentListener {
             )
         }
 
+        add_external_email.setOnClickListener {
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE PAYMENT_LINK Click", "ADDONS_MARKETPLACE PAYMENT_LINK", "")
+            externalEmailPopUpFragement.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    EXTERNAL_EMAIL_POPUP_FRAGMENT
+            )
+        }
+
         payment_view_details.setOnClickListener {
             payment_main_layout.post {
                 payment_main_layout.fullScroll(View.FOCUS_DOWN)
@@ -201,10 +214,23 @@ class PaymentFragment : BaseFragment(), PaymentListener {
             paymentData = it
             payThroughRazorPay()
         })
+        viewModel.externalEmailPaymentData().observe(this, Observer {
+            Log.i("emailPaymentObserver >", it.toString())
+            paymentData = it
+            payViaPaymentLink()
+        })
         viewModel.walletPaymentData().observe(this, Observer {
             Log.i("walletPaymentObserver >", it.toString())
             loadWallet(it)
         })
+    }
+
+    fun payViaPaymentLink(){
+        Toasty.warning(requireContext(), "This feature is coming soon. Try other payment methods", Toast.LENGTH_SHORT, true).show();
+        //TODO : Ronak - Call API to send email in the captured email address (give retry option to user)
+        //LINK - https://www.getboost360.com/subscriptions/ORDER_INVOICE_ID/pay-now
+        //TODO - Ronak - after email is sent, send to order_confirmation screen but with state as pending. The user should see that order is pending to be activated.
+        //Also the cart should get empty to avoid duplicate payments for the same order.
     }
 
     fun payThroughRazorPay() {

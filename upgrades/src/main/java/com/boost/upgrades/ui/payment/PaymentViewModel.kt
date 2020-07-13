@@ -19,6 +19,7 @@ import org.json.JSONObject
 class PaymentViewModel : ViewModel() {
     private var _paymentMethods: MutableLiveData<JSONObject> = MutableLiveData()
     private var _upiPayment: MutableLiveData<JSONObject> = MutableLiveData()
+    private var _externalEmailPayment: MutableLiveData<JSONObject> = MutableLiveData()
     private var _cardData: MutableLiveData<JSONObject> = MutableLiveData()
     private var _netBankingData: MutableLiveData<JSONObject> = MutableLiveData()
 
@@ -38,8 +39,16 @@ class PaymentViewModel : ViewModel() {
         return _upiPayment
     }
 
+    fun externalEmailPaymentData(): LiveData<JSONObject> {
+        return _externalEmailPayment
+    }
+
     fun UpdateUPIPaymentData(data: JSONObject) {
         _upiPayment.postValue(data)
+    }
+
+    fun UpdateExternalEmailPaymentData(data: JSONObject) {
+        _externalEmailPayment.postValue(data)
     }
 
     fun cardData(): LiveData<JSONObject> {
