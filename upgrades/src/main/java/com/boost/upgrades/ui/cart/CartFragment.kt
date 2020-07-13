@@ -369,7 +369,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   private fun checkRenewalItemDeepLinkClick() {
     if (isDeepLinking) {
       val currentDate = getCurrentDate().parseDate(FORMAT_MM_DD_YYYY)
-      val sevenDayDate = getAmountDate(45).parseDate(FORMAT_MM_DD_YYYY)
+      val sevenDayDate = getAmountDate((activity as UpgradeActivity).deepLinkDay).parseDate(FORMAT_MM_DD_YYYY)
       viewModel.allPurchasedWidgets(RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
           widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
           dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = currentDate, endDate = sevenDayDate))

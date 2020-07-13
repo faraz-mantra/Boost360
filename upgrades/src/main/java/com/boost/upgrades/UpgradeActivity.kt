@@ -61,6 +61,9 @@ class UpgradeActivity : AppCompatActivity() {
   var mobileNo: String? = null
   var profileUrl: String? = null
   var isFirebaseDeepLink: Boolean = false
+  var deepLinkViewType: String = ""
+  var deepLinkDay: Int = 7
+
   var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
   private var buyItemWidgetkey: String? = null
 
@@ -68,11 +71,15 @@ class UpgradeActivity : AppCompatActivity() {
   lateinit var progressDialog: ProgressDialog
   private var loadingStatus: Boolean = true
 
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_upgrade)
 
     isFirebaseDeepLink = intent.getBooleanExtra("isFirebaseDeepLink", false)
+    deepLinkViewType = intent.getStringExtra("deepLinkViewType")
+    deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
+
     experienceCode = intent.getStringExtra("expCode")
     fpName = intent.getStringExtra("fpName")
     fpid = intent.getStringExtra("fpid")
