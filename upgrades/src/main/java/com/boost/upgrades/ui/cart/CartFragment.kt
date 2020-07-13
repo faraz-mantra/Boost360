@@ -149,7 +149,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     }
 
     back_button12.setOnClickListener {
-      (activity as UpgradeActivity).popFragmentFromBackStack()
+      (activity as UpgradeActivity).onBackPressed()
     }
 
     cart_view_details.setOnClickListener {
@@ -216,16 +216,16 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
     if (renewalItems.isNullOrEmpty().not()) {
       val widgetList = ArrayList<Widget>()
+      var netAmount = 0.0
       renewalItems?.forEach { item ->
         val data = renewalList.firstOrNull { it.widgetId == item.item_id }
-        val discount = 100 - item.discount
-        val netPrice = (discount * item.MRPPrice) / 100
+        netAmount += item.price
         val widget = Widget(data?.category ?: "", ConsumptionConstraint("DAYS", 30), "", item.description_title,
             item.discount, Expiry("DAYS", 30), listOf(), true, true, item.item_name ?: "",
-            netPrice, item.MRPPrice, null, 1, "MONTHLY", item.boost_widget_key ?: "", item.item_id)
+            item.price, item.MRPPrice, null, 1, "MONTHLY", item.boost_widget_key ?: "", item.item_id)
         widgetList.add(widget)
       }
-      purchaseOrders.add(PurchaseOrder(couponCode, couponDiscountPercentage, null, grandTotal, widgetList))
+      purchaseOrders.add(PurchaseOrder(couponCode, couponDiscountPercentage, null, netAmount, widgetList))
     } else {
       for (item in cartList) {
         val widgetList = ArrayList<Widget>()
