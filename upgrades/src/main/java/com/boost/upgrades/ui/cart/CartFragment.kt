@@ -187,9 +187,20 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
 
                     if (item.item_type.equals("features")) {
+                        var mrp_price = item.MRPPrice
                         val discount = 100 - item.discount
-                        val netPrice = (discount * item.MRPPrice) / 100
+                        var netPrice = (discount * mrp_price) / 100
 
+                        var validity_days = 30
+                        var net_quantity = 1
+
+                        if(!bundles_in_cart && default_validity_months > 1){
+                            validity_days = 30*default_validity_months
+
+                            netPrice = netPrice * default_validity_months
+                            net_quantity = default_validity_months
+                            mrp_price = mrp_price * default_validity_months
+                        }
                         widgetList.add(Widget(
                                 "",
                                 ConsumptionConstraint(
@@ -201,16 +212,16 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                 item.discount,
                                 Expiry(
                                         "DAYS",
-                                        30
+                                        validity_days
                                 ),
                                 listOf(),
                                 true,
                                 true,
                                 item.item_name!!,
                                 netPrice,
-                                item.MRPPrice,
+                                mrp_price,
                                 if (outputExtendedProps.size > 0) outputExtendedProps else null,
-                                1,
+                                net_quantity,
                                 "MONTHLY",
                                 item.boost_widget_key!!
                         ))
