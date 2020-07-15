@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="View potential calls (6)" />
+                    android:text="View potential calls (0)" />
 
                 <ImageView
                     android:id="@+id/see_more_less_image"
@@ -143,10 +143,11 @@
                         app:srcCompat="@drawable/ic_computer_status" />
 
                     <TextView
+                        android:id="@+id/web_call_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:text="2"
+                        android:text="0"
                         android:textSize="@dimen/_30sdp" />
 
                     <ImageView
@@ -175,10 +176,11 @@
                         app:srcCompat="@drawable/ic_phone_call" />
 
                     <TextView
+                        android:id="@+id/phone_call_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:text="2"
+                        android:text="0"
                         android:textSize="@dimen/_30sdp" />
 
                     <ImageView

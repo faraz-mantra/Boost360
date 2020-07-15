@@ -405,7 +405,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
             if (cart_list != null && cart_list!!.size > 0) {
                 badge121.visibility = View.VISIBLE
                 for (item in cart_list!!) {
-                    if (item.boost_widget_key == singleWidgetKey) {
+                    if (item.feature_code == singleWidgetKey) {
                         add_item_to_cart.background = ContextCompat.getDrawable(
                                 requireContext(),
                                 R.drawable.added_to_cart_grey

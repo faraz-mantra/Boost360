@@ -51,7 +51,7 @@ class FreeAddonsAdapter(
         holder.itemView.setOnClickListener{
             val details = DetailsFragment.newInstance()
             val args = Bundle()
-            args.putString("itemId", list.get(position).boost_widget_key)
+            args.putString("itemId", list.get(position).feature_code)
             details.arguments = args
             activity.addFragment(details , Constants.DETAILS_FRAGMENT)
         }

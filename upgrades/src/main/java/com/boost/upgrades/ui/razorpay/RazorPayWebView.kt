@@ -111,7 +111,9 @@ class RazorPayWebView : DialogFragment() {
     fun redirectOrderConfirmation(paymentTransactionId: String) {
         var prefs = SharedPrefs(activity as UpgradeActivity)
         prefs.storeLatestOrderStatus(1)
-        prefs.storeLatestPaymentIdFromPG(paymentTransactionId)
+
+        //RAZORPAY payment ID IS NOT BEEN USED  ---> renamed to prefs.storeTransactionIdFromCart()
+//        prefs.storeLatestPaymentIdFromPG(paymentTransactionId)
 
         (activity as UpgradeActivity).replaceFragment(
             OrderConfirmationFragment.newInstance(),

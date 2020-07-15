@@ -328,6 +328,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         val cartItem = CartModel(
                 updatesModel.feature_id,
                 updatesModel.boost_widget_key,
+                updatesModel.feature_code,
                 updatesModel.name,
                 updatesModel.description,
                 updatesModel.primary_image,

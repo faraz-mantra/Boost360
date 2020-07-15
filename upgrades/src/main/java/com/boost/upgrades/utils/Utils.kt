@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.InputStream
 import java.lang.Integer.parseInt
 import java.util.*
@@ -25,20 +26,21 @@ object Utils {
     //getting retrofit instance
     fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
     }
 
     fun hideSoftKeyboard(activity: Activity) {
         try {
             val inputMethodManager =
-                activity.getSystemService(
-                    Activity.INPUT_METHOD_SERVICE
-                ) as InputMethodManager
+                    activity.getSystemService(
+                            Activity.INPUT_METHOD_SERVICE
+                    ) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(
-                activity.currentFocus!!.windowToken, 0
+                    activity.currentFocus!!.windowToken, 0
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -47,22 +49,22 @@ object Utils {
 
     fun isConnectedToInternet(context: Context): Boolean {
         val connectivity = context.getSystemService(
-            Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val info = connectivity.allNetworkInfo
         if (info != null)
             for (i in info.indices)
                 if (info[i].state == NetworkInfo.State.CONNECTED) {
                     return true
                 }
-        longToast(context,"No Internet Connection")
+        longToast(context, "No Internet Connection")
         return false
     }
 
-    fun toast(context: Context ,msg: Any){
+    fun toast(context: Context, msg: Any) {
         Toast.makeText(context, msg.toString(), Toast.LENGTH_SHORT).show()
     }
 
-    fun longToast(context: Context ,msg: Any){
+    fun longToast(context: Context, msg: Any) {
         Toast.makeText(context, msg.toString(), Toast.LENGTH_LONG).show()
     }
 
@@ -70,8 +72,8 @@ object Utils {
         val data: List<GetAllWidgets>
         var jsonString: String? = null
         try {
-            val  inputStream: InputStream = context.assets.open("initialLoad.json")
-            jsonString = inputStream.bufferedReader().use{it.readText()}
+            val inputStream: InputStream = context.assets.open("initialLoad.json")
+            jsonString = inputStream.bufferedReader().use { it.readText() }
             val gson = Gson()
             val listPersonType = object : TypeToken<List<GetAllWidgets>>() {}.type
 
@@ -83,7 +85,7 @@ object Utils {
         return data
     }
 
-    fun debitCreditCardPatterns(): ArrayList<String>{
+    fun debitCreditCardPatterns(): ArrayList<String> {
         val listOfPattern = ArrayList<String>();
 
         val ptVisa = "^4[0-9]{6,}$";
@@ -137,9 +139,9 @@ object Utils {
         val stop = 12
         val list: ArrayList<String> = ArrayList()
         while (start <= stop) {
-            if(start<10){
-                list.add("0"+start++.toString())
-            }else {
+            if (start < 10) {
+                list.add("0" + start++.toString())
+            } else {
                 list.add(start++.toString())
             }
         }
@@ -147,8 +149,8 @@ object Utils {
     }
 
     fun yearRange(
-        startYear: Int,
-        endYear: Int
+            startYear: Int,
+            endYear: Int
     ): ArrayList<String> {
         var cur = startYear
         val stop = endYear

@@ -14,6 +14,9 @@ data class CartModel (
     @ColumnInfo(name = "boost_widget_key")
     var boost_widget_key: String? = null,
 
+    @ColumnInfo(name = "feature_code")
+    var feature_code: String? = null,
+
     @ColumnInfo(name = "item_name")
     var item_name: String? = null,
 

@@ -21,6 +21,9 @@ interface FeaturesDao {
     @Query("SELECT * FROM Features WHERE boost_widget_key=:widgetKey")
     fun getFeaturesItemByWidgetKey(widgetKey: String): Single<FeaturesModel>
 
+    @Query("SELECT * FROM Features WHERE feature_code=:featureCode")
+    fun getFeaturesItemByFeatureCode(featureCode: String): Single<FeaturesModel>
+
     @Query("SELECT EXISTS(SELECT * FROM Features)")
     fun checkEmptyFeatureTable(): Single<Int>
 
@@ -52,7 +55,7 @@ interface FeaturesDao {
     @Query("SELECT COUNT(*) FROM Features Where boost_widget_key IN (:list)")
     fun getallActivefeatureCount(list: List<String>): Single<Int>
 
-    @Query("SELECT * FROM Features Where boost_widget_key IN (:list) ORDER BY is_premium DESC, feature_importance DESC")
+    @Query("SELECT * FROM Features Where feature_code IN (:list) ORDER BY is_premium DESC, feature_importance DESC")
     fun getallFeaturesInList(list: List<String>): Single<List<FeaturesModel>>
 
 

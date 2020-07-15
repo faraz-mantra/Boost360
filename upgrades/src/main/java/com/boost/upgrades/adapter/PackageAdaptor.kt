@@ -64,7 +64,7 @@ class PackageAdaptor(
         holder.itemView.setOnClickListener {
             val details = DetailsFragment.newInstance()
             val args = Bundle()
-            args.putString("itemId", upgradeList.get(position).boost_widget_key)
+            args.putString("itemId", upgradeList.get(position).feature_code)
             args.putBoolean("packageView",true)
             details.arguments = args
 
@@ -93,7 +93,7 @@ class PackageAdaptor(
 
     fun updateView(holder: upgradeViewHolder, position: Int){
         for (item in bundleData.included_features){
-            if (item.feature_code.equals(upgradeList.get(position).boost_widget_key)){
+            if (item.feature_code.equals(upgradeList.get(position).feature_code)){
                 var mrpPrice = 0.0
                 var grandTotal = 0
                 val total = (upgradeList.get(position).price - ((upgradeList.get(position).price * item.feature_price_discount_percent) / 100.0))
