@@ -17,13 +17,16 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CardPaymentAdapter
 import com.boost.upgrades.adapter.UPIAdapter
 import com.boost.upgrades.adapter.WalletAdapter
+import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.upgrades.datamodule.SingleNetBankData
 import com.boost.upgrades.interfaces.PaymentListener
+import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
 import com.boost.upgrades.ui.popup.AddCardPopUpFragement
 import com.boost.upgrades.ui.popup.ExternalEmailPopUpFragement
 import com.boost.upgrades.ui.popup.NetBankingPopUpFragement
 import com.boost.upgrades.ui.popup.UPIPopUpFragement
 import com.boost.upgrades.ui.razorpay.RazorPayWebView
+import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.ADD_CARD_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.EXTERNAL_EMAIL_POPUP_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.NETBANKING_POPUP_FRAGMENT
@@ -84,6 +87,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         cartCheckoutData.put("customerId", arguments!!.getString("customerId"))
         cartCheckoutData.put("amount", Math.round(totalAmount * 100).toInt())
         cartCheckoutData.put("order_id", arguments!!.getString("order_id"))
+        cartCheckoutData.put("transaction_id", arguments!!.getString("transaction_id"))
         cartCheckoutData.put("email", arguments!!.getString("email"))
         cartCheckoutData.put("currency", arguments!!.getString("currency"));
         cartCheckoutData.put("contact", arguments!!.getString("contact"))
@@ -223,20 +227,66 @@ class PaymentFragment : BaseFragment(), PaymentListener {
             Log.i("walletPaymentObserver >", it.toString())
             loadWallet(it)
         })
+        viewModel.getPamentUsingExternalLink().observe(this, Observer {
+            if (it != null && it.equals("SUCCESSFULLY ADDED TO QUEUE")) {
+                val orderConfirmationFragment = OrderConfirmationFragment.newInstance()
+                val args = Bundle()
+                args.putString("payment_type", "External_Link")
+                orderConfirmationFragment.arguments = args
+                (activity as UpgradeActivity).replaceFragment(
+                        orderConfirmationFragment,
+                        Constants.ORDER_CONFIRMATION_FRAGMENT
+                )
+            } else {
+                Toasty.error(requireContext(), "Unable To Send Link To Email. Try Later...", Toast.LENGTH_SHORT, true).show();
+            }
+        })
     }
 
-    fun payViaPaymentLink(){
-        Toasty.warning(requireContext(), "This feature is coming soon. Try other payment methods", Toast.LENGTH_SHORT, true).show();
+    fun payViaPaymentLink() {
+//        Toasty.warning(requireContext(), "This feature is coming soon. Try other payment methods", Toast.LENGTH_SHORT, true).show();
         //TODO : Ronak - Call API to send email in the captured email address (give retry option to user)
         //LINK - https://www.getboost360.com/subscriptions/ORDER_INVOICE_ID/pay-now
         //TODO - Ronak - after email is sent, send to order_confirmation screen but with state as pending. The user should see that order is pending to be activated.
         //Also the cart should get empty to avoid duplicate payments for the same order.
+
+//        //sample body
+//        {
+//            To: [clint.mail],
+//            Subject: `Payment link for order ID #${id}`,
+//            // TODO: Use an Email template
+//            EmailBody: `🕐 Awaiting your payment for online order ID #${order.id}
+//            for ${businessName}.<br/>
+//                    Please use following link to pay.<br/><br/>
+//            ${paymentLink}<br/>`,
+//        };
+
+        try {
+            val paymentLink = "https://www.getboost360.com/subscriptions/" + cartCheckoutData.get("transaction_id") + "/pay-now"
+            val emailBody = "\uD83D\uDD50 Awaiting your payment for online order ID #" + cartCheckoutData.get("order_id") +
+                    "<br/>for " + (activity as UpgradeActivity).fpName + ".\nPlease use following link to pay.<br/><br/>" + paymentLink + "<br/>"
+
+            val emailArrayList = ArrayList<String>()
+            emailArrayList.add(paymentData.get("userEmail").toString())
+
+
+            viewModel.loadPamentUsingExternalLink((activity as UpgradeActivity).clientid,
+                    PaymentThroughEmailRequestBody((activity as UpgradeActivity).clientid,
+                            emailBody,
+                            "alerts@nowfloats.com",
+                            "Payment link for order ID #" + cartCheckoutData.get("order_id"),
+                            emailArrayList,
+                            0
+                    ))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     fun payThroughRazorPay() {
         try {
             for (key in cartCheckoutData.keys()) {
-                if (key != "customerId") {
+                if (key != "customerId" || key != "transaction_id") {
                     paymentData.put(key, cartCheckoutData.get(key))
                 }
             }
@@ -354,7 +404,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         requireActivity().viewModelStore.clear()
     }
 
-    fun updateSubscriptionDetails(){
+    fun updateSubscriptionDetails() {
         var prefs = SharedPrefs(activity as UpgradeActivity)
 
         //cartOriginalPrice
@@ -367,10 +417,10 @@ class PaymentFragment : BaseFragment(), PaymentListener {
 
         //coupon discount amount
         val couponDiscountAmount = cartOriginalPrice * couponDiscountPercentage / 100
-        coupon_discount_value.setText("-₹"+ NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount))
+        coupon_discount_value.setText("-₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(couponDiscountAmount))
 
         //igsttin value
-        val temp = ((cartOriginalPrice-couponDiscountAmount) * 18) / 100
+        val temp = ((cartOriginalPrice - couponDiscountAmount) * 18) / 100
         val taxValue = Math.round(temp * 100) / 100.0
         igst_value.setText("+₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(taxValue))
 

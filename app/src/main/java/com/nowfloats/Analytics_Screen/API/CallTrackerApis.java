@@ -27,6 +27,9 @@ public interface CallTrackerApis {
     @GET("/WildFire/v1/calls/summary")
     void getVmnSummary(@Query("clientId") String clientId, @Query("fpid") String fpId, @Query("identifierType") String type, Callback<JsonObject> response);
 
+    @GET("/memory/api/fpactivity/countfpactivity")
+    void getCallCountByType(@Query("fptag") String fptag,@Query("eventType") String eventType,@Query("eventChannel") String eventChannel, Callback<JsonObject> response);
+
     @POST("/api/Service/EmailRIASupportTeamV2")
     void requestVmn(@Body Map<String,String> bodyMap, @Query("authClientId") String clientId, @Query("fpTag") String fpTag, Callback<Boolean> response);
 }

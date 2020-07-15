@@ -3,25 +3,18 @@ package com.boost.upgrades.ui.confirmation
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
 import es.dmoral.toasty.Toasty
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.order_confirmation_fragment.*
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import java.util.*
 
 class OrderConfirmationFragment : BaseFragment() {
@@ -53,13 +46,20 @@ class OrderConfirmationFragment : BaseFragment() {
         prefs.storeApplyedCouponDetails(null)
 
         try {
+            if(arguments!=null) {
+                if (arguments!!.containsKey("payment_type") && arguments!!.getString("payment_type").equals("External_Link")) {
+                    external_link_payment_status.visibility = View.VISIBLE
+                } else {
+                    external_link_payment_status.visibility = View.GONE
+                }
+            }
             order_details_feature_count.setText("Your have ordered " + prefs.getFeaturesCountInLastOrder() + " features for ₹" + prefs.getLatestPurchaseOrderTotalPrice() + "/month.")
             paymentBanner.setText("Order #"+prefs.getLatestPurchaseOrderId())
             val date = Calendar.getInstance().time
             val formatter = SimpleDateFormat("EEE, MMM d, yyyy 'at' hh:mm aaa")
             order_id_details.setText("Order placed on " + formatter.format(date) +
                     "\nOrder ID #" + prefs.getLatestPurchaseOrderId() +
-                    "\nTransaction ID #" + prefs.getLatestPaymentIdFromPG())
+                    "\nTransaction ID #" + prefs.getTransactionIdFromCart())
         } catch (e: Exception){
             Log.e("Error", e.message)
         }

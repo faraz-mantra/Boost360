@@ -2,16 +2,12 @@ package com.boost.upgrades.ui.cart
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.style.StyleSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -44,15 +40,12 @@ import com.boost.upgrades.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.SharedPrefs
-import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.cart_fragment.*
-import java.text.DateFormat
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -243,7 +236,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                     val includedFeatures = Gson().fromJson<List<IncludedFeature>>(singleBundle.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
                                     for (singleIndludedFeature in includedFeatures) {
                                         for (singleFeature in featuresList) {
-                                            if (singleIndludedFeature.feature_code.equals(singleFeature.boost_widget_key)) {
+                                            if (singleIndludedFeature.feature_code.equals(singleFeature.feature_code)) {
 
                                                 val netPrice = (singleFeature.price - ((singleFeature.price * singleIndludedFeature.feature_price_discount_percent) / 100))
 
@@ -497,6 +490,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 //saving cartOrderInfo
                 prefs.storeCartOrderInfo(it)
 
+                //store transaction id for cart
+                prefs.storeTransactionIdFromCart(it.Result.TransactionId)
+
                 proceedToPayment(it)
             }
         })
@@ -664,6 +660,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         args.putString("customerId", customerId)
         args.putDouble("amount", result.Result.TotalPrice)// pass in currency subunits. For example, paise. Amount: 1000 equals ₹10
         args.putString("order_id", result.Result.OrderId)
+        args.putString("transaction_id", result.Result.TransactionId)
         args.putString("email", (activity as UpgradeActivity).email)
         args.putString("currency", "INR");
         args.putString("contact", (activity as UpgradeActivity).mobileNo)
