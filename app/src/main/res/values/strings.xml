@@ -1758,8 +1758,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>All Images</item>
         <item>Business Profile</item>
         <item>Custom Pages</item>
-        <item>Testimonials</item>
-        <item>Projects &amp; teams</item>
+<!--        <item>Testimonials</item>-->
+<!--        <item>Projects &amp; teams</item>-->
     </string-array>
 
     <string-array name="order_analytics_tab_items">

@@ -82,12 +82,12 @@ public class ManageContentFragment extends Fragment{
                     case 4:
                        intent = new Intent(mContext, CustomPageActivity.class);
                         break;
-                    case 5:
-                        intent = new Intent(mContext, TestimonialsActivity.class);
-                        break;
-                    case 6:
-                        intent = new Intent(mContext, ProjectAndTermsActivity.class);
-                        break;
+//                    case 5:
+//                        intent = new Intent(mContext, TestimonialsActivity.class);
+//                        break;
+//                    case 6:
+//                        intent = new Intent(mContext, ProjectAndTermsActivity.class);
+//                        break;
                     default:
                         return;
                 }
