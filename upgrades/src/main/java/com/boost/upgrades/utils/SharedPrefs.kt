@@ -21,6 +21,8 @@ class SharedPrefs(activity: Activity) {
     private val po_price = "Last_Purchase_Order_Price"
     private val po_payment_success = "Last_payment_status"
 
+    private val fp_email = "GET_FP_DETAILS_EMAIL"
+
     private val CART_ORDER_INFO = "CART_ORDER_INFO"
     private val CART_COUPON_DETAILS = "CART_COUPON_DETAILS"
 
@@ -141,7 +143,9 @@ class SharedPrefs(activity: Activity) {
         }
     }
 
-
+    fun getFPEmail(): String{
+        return pref!!.getString(fp_email, "")
+    }
 
 
 }
