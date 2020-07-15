@@ -43,7 +43,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
         compositeDisposable.add(
                 AppDatabase.getInstance(getApplication())!!
                         .featuresDao()
-                        .getFeaturesItemByWidgetKey(boostKey)
+                        .getFeaturesItemByFeatureCode(boostKey)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSuccess {
@@ -65,6 +65,7 @@ class DetailsViewModel(application: Application) : BaseViewModel(application) {
         val cartItem = CartModel(
                 updatesModel.feature_id,
                 updatesModel.boost_widget_key,
+                updatesModel.feature_code,
                 updatesModel.name,
                 updatesModel.description,
                 updatesModel.primary_image,

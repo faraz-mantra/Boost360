@@ -17,6 +17,7 @@ import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.add_external_email_popup.*
 import kotlinx.android.synthetic.main.add_upi_popup.upi_popup_outer_layout
+import org.json.JSONArray
 import org.json.JSONObject
 
 class ExternalEmailPopUpFragement : DialogFragment() {
@@ -87,8 +88,7 @@ class ExternalEmailPopUpFragement : DialogFragment() {
 
     fun sendPaymentLinkEmail(){
         val data = JSONObject()
-        data.put("method", "email")
-        data.put("email", external_email_popup_value.text.toString())
+        data.put("userEmail", external_email_popup_value.text.toString())
         viewModel.UpdateExternalEmailPaymentData(data)
         dialog!!.dismiss()
         clearData()

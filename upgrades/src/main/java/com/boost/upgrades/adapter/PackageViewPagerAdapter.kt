@@ -97,7 +97,7 @@ class PackageViewPagerAdapter(
 
                                     for (singleItem in it) {
                                         for (item in bundles.included_features) {
-                                            if (singleItem.boost_widget_key == item.feature_code) {
+                                            if (singleItem.feature_code == item.feature_code) {
                                                 originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt() * minMonth
                                             }
                                         }

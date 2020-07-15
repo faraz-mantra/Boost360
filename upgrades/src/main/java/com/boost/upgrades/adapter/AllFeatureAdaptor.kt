@@ -51,12 +51,12 @@ class AllFeatureAdaptor(
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         val item = upgradeList[position]
-        holder?.upgradeListItem(item)
+        holder.upgradeListItem(item)
 
         holder.itemView.setOnClickListener {
             val details = DetailsFragment.newInstance()
             val args = Bundle()
-            args.putString("itemId", upgradeList.get(position).boost_widget_key)
+            args.putString("itemId", upgradeList.get(position).feature_code)
             details.arguments = args
             activity.addFragment(details, DETAILS_FRAGMENT)
 //            val intent = Intent(this.context, Details::class.java)
