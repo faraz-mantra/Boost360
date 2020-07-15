@@ -51,7 +51,7 @@ class UpgradeActivity : AppCompatActivity() {
     var mobileNo: String? = null
     var profileUrl: String? = null
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
-    private var buyItemWidgetkey: String? = null
+    private var widgetFeatureCode: String? = null
 
     private var initialLoadUpgradeActivity: Int = 0
     lateinit var progressDialog: ProgressDialog
@@ -69,7 +69,7 @@ class UpgradeActivity : AppCompatActivity() {
         mobileNo = intent.getStringExtra("mobileNo")
         profileUrl = intent.getStringExtra("profileUrl")
         //user buying item directly
-        buyItemWidgetkey = intent.getStringExtra("buyItemKey")
+        widgetFeatureCode = intent.getStringExtra("buyItemKey")
 
         progressDialog = ProgressDialog(this)
 
@@ -215,11 +215,11 @@ class UpgradeActivity : AppCompatActivity() {
                         .subscribe({
                             if (it == 1) {
                                 loaderStatus(false)
-                                if (buyItemWidgetkey != null) {
+                                if (widgetFeatureCode != null) {
 //                Handler().postDelayed({
                                     val details = DetailsFragment.newInstance()
                                     val args = Bundle()
-                                    args.putString("itemId", buyItemWidgetkey)
+                                    args.putString("itemId", widgetFeatureCode)
                                     details.arguments = args
                                     addFragment(details, Constants.DETAILS_FRAGMENT)
 //                }, 1000)

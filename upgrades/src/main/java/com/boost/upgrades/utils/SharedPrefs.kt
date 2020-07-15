@@ -3,7 +3,6 @@ package com.boost.upgrades.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.SharedPreferences
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.model.CouponsModel
 import com.google.gson.Gson
@@ -16,7 +15,7 @@ class SharedPrefs(activity: Activity) {
 
     private val po_id = "Last_Purchase_Order_Created"
     private val po_status = "Last_Purchase_Order_Status"
-    private val pmt_id = "Last_Purchase_Order_Payment_Id"
+    private val trn_id = "Last_Transaction_Id_From_Cart"
     private val po_feature_keys = "Last_Purchase_Order_Feature_Keys"
     private val po_feature_count = "Last_Purchase_Order_Feature_Count"
     private val po_price = "Last_Purchase_Order_Price"
@@ -58,8 +57,8 @@ class SharedPrefs(activity: Activity) {
         editor!!.putInt(po_status, status).apply()
     }
 
-    fun storeLatestPaymentIdFromPG(payment_id: String){
-        editor!!.putString(pmt_id, payment_id).apply()
+    fun storeTransactionIdFromCart(transaction_id: String){
+        editor!!.putString(trn_id, transaction_id).apply()
     }
 
     fun storeFeatureKeysInLastOrder(keys: Set<String>){
@@ -79,8 +78,8 @@ class SharedPrefs(activity: Activity) {
         return pref!!.getInt(po_status, 0)
     }
 
-    fun getLatestPaymentIdFromPG(): String?{
-        return pref!!.getString(pmt_id, null)
+    fun getTransactionIdFromCart(): String?{
+        return pref!!.getString(trn_id, null)
     }
 
     fun getFeaturesCountInLastOrder(): Int{

@@ -38,7 +38,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import retrofit.Callback;
+import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
 /**
@@ -49,7 +51,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
     UserSessionManager sessionManager;
     CardView viewCallLogCard;
-    TextView missedCountText, receivedCountText, allCountText, virtualNumberText, buyItemButton, potentialCallsText, trackAllCall, trackMissedCall, trackConnectedCall;
+    TextView missedCountText, receivedCountText, allCountText, virtualNumberText, buyItemButton, potentialCallsText, trackAllCall, trackMissedCall, trackConnectedCall, webCallCount, phoneCallCount;
     Toolbar toolbar;
     ProgressDialog vmnProgressBar;
     ImageView seeMoreLessImage;
@@ -59,6 +61,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     View backgroundLayout,dottedLine1,dottedLine2;
     boolean seeMoreLessStatus = false;
     int totalCallCount = 0;
+    int totalPotentialCallCount = 0;
     private int offset = 0;
     boolean stopApiCall;
     ArrayList<VmnCallModel> headerList = new ArrayList<>();
@@ -105,6 +108,8 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         dottedLine2 = findViewById(R.id.dotted_line2);
         dottedLine1.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         dottedLine2.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        webCallCount = findViewById(R.id.web_call_count);
+        phoneCallCount = findViewById(R.id.phone_call_count);
 
         //tracking calls
         showTrackedCalls();
@@ -196,7 +201,10 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
         buyItemButton = (TextView) findViewById(R.id.buy_item);
         if (Constants.StoreWidgets.contains("CALLTRACKER")) {
-            setVmnTotalCallCount();
+            //oldCode
+//            setVmnTotalCallCount();
+            //newCode
+            getWebsiteCallCount();
             //old design
 //            mainLayout.setVisibility(View.VISIBLE);
             //new design
@@ -379,42 +387,80 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    private void setVmnTotalCallCount() {
-        showProgress();
-        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
-        String type = sessionManager.getISEnterprise().equals("true") ? "MULTI" : "SINGLE";
+//    private void setVmnTotalCallCount() {
+//        showProgress();
+//        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
+//        String type = sessionManager.getISEnterprise().equals("true") ? "MULTI" : "SINGLE";
+//
+//        trackerApis.getVmnSummary(Constants.clientId, sessionManager.getFPID(), type, new Callback<JsonObject>() {
+//            @Override
+//            public void success(JsonObject jsonObject, Response response) {
+//                hideProgress();
+//
+//                if (jsonObject == null || response.getStatus() != 200) {
+//                    Methods.showSnackBarNegative(VmnCallCardsActivity.this, getString(R.string.something_went_wrong));
+//
+//                } else {
+//                    if (jsonObject.has("TotalCalls")) {
+//                        String vmnTotalCalls = jsonObject.get("TotalCalls").getAsString();
+//                        // oldcode
+////                        totalCount.setText(vmnTotalCalls != null && !"null".equalsIgnoreCase(vmnTotalCalls) ? vmnTotalCalls : "0");
+//                        if(vmnTotalCalls != null && !"null".equalsIgnoreCase(vmnTotalCalls)){
+//                            totalCallCount = Integer.parseInt(vmnTotalCalls);
+//                            allCountText.setText(vmnTotalCalls);
+//                            potentialCallsText.setText("View potential calls ("+totalCallCount+")");
+//                        }else{
+//                            allCountText.setText("0");
+//                        }
+//                    }
+//                    if (jsonObject.has("MissedCalls")) {
+//                        String vmnMissedCalls = jsonObject.get("MissedCalls").getAsString();
+//                        missedCountText.setText(vmnMissedCalls != null && !"null".equalsIgnoreCase(vmnMissedCalls) ? vmnMissedCalls : "0");
+//                    }
+//                    if (jsonObject.has("ReceivedCalls")) {
+//                        String vmnReceivedCalls = jsonObject.get("ReceivedCalls").getAsString();
+//                        receivedCountText.setText(vmnReceivedCalls != null && !"null".equalsIgnoreCase(vmnReceivedCalls) ? vmnReceivedCalls : "0");
+//                    }
+//                    getWebsiteCallCount();
+//                }
+//                showEmptyScreen();
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                hideProgress();
+//                showEmptyScreen();
+//                Methods.showSnackBarNegative(VmnCallCardsActivity.this, getString(R.string.something_went_wrong));
+//            }
+//        });
+//    }
 
-        trackerApis.getVmnSummary(Constants.clientId, sessionManager.getFPID(), type, new Callback<JsonObject>() {
+    private void getWebsiteCallCount() {
+        showProgress();
+
+        //oldcode
+//        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
+        CallTrackerApis trackerApis = new RestAdapter.Builder()
+                .setEndpoint("https://riamemory.withfloats.com")
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLog(new AndroidLog("ggg"))
+                .build()
+                .create(CallTrackerApis.class);
+
+        trackerApis.getCallCountByType(session.getFpTag(),"POTENTIAL_CALLS","WEB", new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 hideProgress();
 
                 if (jsonObject == null || response.getStatus() != 200) {
                     Methods.showSnackBarNegative(VmnCallCardsActivity.this, getString(R.string.something_went_wrong));
-
                 } else {
-                    if (jsonObject.has("TotalCalls")) {
-                        String vmnTotalCalls = jsonObject.get("TotalCalls").getAsString();
-                        // oldcode
-//                        totalCount.setText(vmnTotalCalls != null && !"null".equalsIgnoreCase(vmnTotalCalls) ? vmnTotalCalls : "0");
-                        if(vmnTotalCalls != null && !"null".equalsIgnoreCase(vmnTotalCalls)){
-                            totalCallCount = Integer.parseInt(vmnTotalCalls);
-                            allCountText.setText(vmnTotalCalls);
-                            potentialCallsText.setText("View potential calls ("+totalCallCount+")");
-                        }else{
-                            allCountText.setText("0");
-                        }
-                    }
-                    if (jsonObject.has("MissedCalls")) {
-                        String vmnMissedCalls = jsonObject.get("MissedCalls").getAsString();
-                        missedCountText.setText(vmnMissedCalls != null && !"null".equalsIgnoreCase(vmnMissedCalls) ? vmnMissedCalls : "0");
-                    }
-                    if (jsonObject.has("ReceivedCalls")) {
-                        String vmnReceivedCalls = jsonObject.get("ReceivedCalls").getAsString();
-                        receivedCountText.setText(vmnReceivedCalls != null && !"null".equalsIgnoreCase(vmnReceivedCalls) ? vmnReceivedCalls : "0");
-                    }
+                    String callCount = jsonObject.get("POTENTIAL_CALLS").getAsString();
+                    webCallCount.setText(callCount);
+                    totalPotentialCallCount += Integer.parseInt(callCount);
+                    potentialCallsText.setText("View potential calls ("+totalPotentialCallCount+")");
+                    getPhoneCallCount();
                 }
-                showEmptyScreen();
             }
 
             @Override
@@ -425,6 +471,44 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             }
         });
     }
+
+    private void getPhoneCallCount() {
+        showProgress();
+
+        //old code
+//        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
+        CallTrackerApis trackerApis = new RestAdapter.Builder()
+                .setEndpoint("https://riamemory.withfloats.com")
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLog(new AndroidLog("ggg"))
+                .build()
+                .create(CallTrackerApis.class);
+
+        trackerApis.getCallCountByType(session.getFpTag(),"POTENTIAL_CALLS","MOBILE", new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                hideProgress();
+
+                if (jsonObject == null || response.getStatus() != 200) {
+                    Methods.showSnackBarNegative(VmnCallCardsActivity.this, getString(R.string.something_went_wrong));
+                } else {
+                    String callCount = jsonObject.get("POTENTIAL_CALLS").getAsString();
+                    webCallCount.setText(callCount);
+                    totalPotentialCallCount += Integer.parseInt(callCount);
+                    potentialCallsText.setText("View potential calls ("+totalPotentialCallCount+")");
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                hideProgress();
+                showEmptyScreen();
+                Methods.showSnackBarNegative(VmnCallCardsActivity.this, getString(R.string.something_went_wrong));
+            }
+        });
+    }
+
+
 
 
     @Override

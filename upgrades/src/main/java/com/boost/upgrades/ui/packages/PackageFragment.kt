@@ -110,6 +110,7 @@ class PackageFragment : BaseFragment() {
                     viewModel.addItemToCart(CartModel(
                             bundleData!!._kid,
                             null,
+                            null,
                             bundleData!!.name,
                             "",
                             bundleData!!.primary_image!!.url,
@@ -161,7 +162,7 @@ class PackageFragment : BaseFragment() {
                 val minMonth:Int = if (bundleData!!.min_purchase_months != null && bundleData!!.min_purchase_months!! > 1) bundleData!!.min_purchase_months!! else 1
                 for (singleItem in it) {
                     for (item in bundleData!!.included_features) {
-                        if (singleItem.boost_widget_key == item.feature_code) {
+                        if (singleItem.feature_code == item.feature_code) {
                             bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
                         }
                     }

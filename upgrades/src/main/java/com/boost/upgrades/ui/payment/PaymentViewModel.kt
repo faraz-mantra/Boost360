@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
+import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_SECREAT
 import com.boost.upgrades.utils.Utils
@@ -22,6 +23,7 @@ class PaymentViewModel : ViewModel() {
     private var _externalEmailPayment: MutableLiveData<JSONObject> = MutableLiveData()
     private var _cardData: MutableLiveData<JSONObject> = MutableLiveData()
     private var _netBankingData: MutableLiveData<JSONObject> = MutableLiveData()
+    private var _paymentUsingExterLinkResponse: MutableLiveData<String?> = MutableLiveData()
 
 
     val compositeDisposable = CompositeDisposable()
@@ -67,6 +69,10 @@ class PaymentViewModel : ViewModel() {
         _netBankingData.postValue(data)
     }
 
+    fun getPamentUsingExternalLink(): LiveData<String?> {
+        return _paymentUsingExterLinkResponse
+    }
+
     fun loadpaymentMethods(razorpay: Razorpay) {
         razorpay.getPaymentMethods(object : BaseRazorpay.PaymentMethodsCallback {
             override fun onPaymentMethodsReceived(result: String?) {
@@ -89,9 +95,22 @@ class PaymentViewModel : ViewModel() {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
-                                Log.e("getRazorPayTokens",">> "+it.toString())
+                            Log.e("getRazorPayTokens", ">> " + it.toString())
                         }, {
-                                    it.printStackTrace()
+                            it.printStackTrace()
+                        })
+        )
+    }
+
+    fun loadPamentUsingExternalLink(clientId: String, data: PaymentThroughEmailRequestBody) {
+        CompositeDisposable().add(
+                ApiService.createPaymentThroughEmail(clientId, data)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            _paymentUsingExterLinkResponse.postValue(it)
+                        }, {
+                            it.printStackTrace()
                         })
         )
     }
