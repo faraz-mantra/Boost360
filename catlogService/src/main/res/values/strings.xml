@@ -1,0 +1,10 @@
+<resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="jpeg_png">JPEG/PNG</string>
+    <string name="_800x800px">(800x800px)</string>
+    <string name="add_service_image">Add Service Image</string>
+    <string name="save_amp_publish">Save &amp; Publish</string>
+    <string name="change">Change</string>
+    <string name="a_premium_service_by_boost_for_secure_payment_collection_learn_more_here">A premium service by Boost for secure payment collection (Learn more here)</string>
+</resources>

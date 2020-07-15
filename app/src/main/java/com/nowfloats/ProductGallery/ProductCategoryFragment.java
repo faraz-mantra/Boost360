@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.catlogservice.constant.FragmentType;
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.inventoryorder.model.bottomsheet.PickInventoryNatureModel;
 import com.nowfloats.Login.UserSessionManager;
@@ -32,8 +33,10 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.catlogservice.ui.FragmentContainerServiceActivityKt.startFragmentActivityNew;
 
-public class ProductCategoryFragment extends Fragment implements AdapterView.OnItemClickListener {
+
+public class ProductCategoryFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private String productType;
     private UserSessionManager session;
@@ -61,6 +64,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_category, container, false);
+        binding.btnStart.setOnClickListener(this);
         return binding.getRoot();
     }
 
@@ -83,7 +87,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
                     "products",
                     "Adding to Catalogue");
         }
-        binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
+//        binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
         addInfoButtonListener();
         getCategoryList();
     }
@@ -216,6 +220,15 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
     }
 
     @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_start:
+                startFragmentActivityNew(getActivity(), FragmentType.SERVICE_DETAIL_VIEW, new Bundle(), false);
+                break;
+        }
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
@@ -250,4 +263,6 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             }
         });
     }
+
+
 }
