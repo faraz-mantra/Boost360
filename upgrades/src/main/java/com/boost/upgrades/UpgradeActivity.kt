@@ -77,7 +77,7 @@ class UpgradeActivity : AppCompatActivity() {
     setContentView(R.layout.activity_upgrade)
 
     isFirebaseDeepLink = intent.getBooleanExtra("isFirebaseDeepLink", false)
-    deepLinkViewType = intent.getStringExtra("deepLinkViewType")
+    deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
     deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
 
     experienceCode = intent.getStringExtra("expCode")
