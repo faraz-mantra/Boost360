@@ -1,9 +1,6 @@
-include ':google'
 include ':app', ':instamojoLib', ':imagepicker', ':keyboard', ':presignup', ':framework', ':facebook', ':twitter', ':resources', ':onboarding',':inventoryorder', 'upgrades'
-
+include ':google'
+include ':catlogService'
 include ':messagelibrary'
-
-
 include ':app:libs:libraries:volley'
-
 include ':library'
