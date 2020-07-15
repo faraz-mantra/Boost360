@@ -43,7 +43,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     }
   protected val userProfileId: String?
     get() {
-      return pref?.getString(PreferenceConstant.USER_PROFILE_ID, "5e7dfd3d5a9ed3000146ca56")
+      return pref?.getString(PreferenceConstant.USER_PROFILE_ID, "")
     }
   protected val clientId: String?
     get() {
