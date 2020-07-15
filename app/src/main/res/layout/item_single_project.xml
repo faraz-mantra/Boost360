@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/curve_top_grey_bg"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -32,7 +33,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/single_item_menu_button"
@@ -67,25 +67,17 @@
                 app:srcCompat="@drawable/ic_dot_menu" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-            android:id="@+id/dummy_view"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_3sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:background="@drawable/dotted_line"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top_layout" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="vertical"
+            android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dummy_view">
+            app:layout_constraintTop_toBottomOf="@id/top_layout">
 
             <TextView
                 android:layout_width="match_parent"
@@ -172,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:visibility="gone"
-                    tools:visibility="visible">
+                    tools:visibility="gone">
 
                     <View
                         android:id="@+id/dummy_view2"
@@ -270,8 +262,9 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/image_recycler"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_100sdp"
-                        android:layout_marginBottom="@dimen/_15sdp"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        tools:listitem="@layout/item_project_image"/>
                 </LinearLayout>
             </LinearLayout>
 

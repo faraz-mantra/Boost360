@@ -7,10 +7,6 @@
     android:orientation="vertical"
     tools:context="com.nowfloats.domain.DomainEmailActivity">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/new_app_bar" />
-
     <FrameLayout
         android:id="@+id/mainFrame"
         android:layout_width="match_parent"

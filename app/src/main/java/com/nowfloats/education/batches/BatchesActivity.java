@@ -59,23 +59,8 @@ public class BatchesActivity extends AppCompatActivity {
 
         session = new UserSessionManager(this, this);
 
-        toolbar = findViewById(R.id.app_bar);
-        headerText = toolbar.findViewById(R.id.titleTextView);
-        setSupportActionBar(toolbar);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-
-
         //testingPurpos
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.mainFrame, new BatchesFragment())
-                // Add this transaction to the back stack
-                .addToBackStack("Profile")
-                .commit();
+        addFragment(new BatchesFragment(), "BATCHES_FRAGMENT");
 
     }
 

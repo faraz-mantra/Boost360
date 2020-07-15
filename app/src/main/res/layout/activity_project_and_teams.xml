@@ -5,16 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.nowfloats.domain.DomainEmailActivity">
-
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/new_app_bar" />
+    android:background="#FBFBFB">
 
     <FrameLayout
         android:id="@+id/mainFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
