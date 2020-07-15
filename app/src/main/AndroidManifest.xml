@@ -51,7 +51,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:name,android:theme,android:appComponentFactory">
-        <activity android:name="com.nowfloats.manufacturing.projectandteams.ProjectAndTermsActivity"></activity>
+        <activity android:name="com.nowfloats.hotel.HotelActivity"></activity>
+        <activity android:name="com.nowfloats.manufacturing.projectandteams.ProjectAndTermsActivity" />
         <activity android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresActivity" />
         <activity android:name="com.nowfloats.education.batches.BatchesActivity" />
         <activity android:name="com.nowfloats.education.toppers.ToppersActivity" />

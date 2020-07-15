@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.manufacturing.projectandteams.ui.projectandteams.ProjectAndTeamsFragment;
+import com.nowfloats.manufacturing.projectandteams.ui.projectandteamsdetails.ProjectDetailsFragment;
+import com.nowfloats.manufacturing.projectandteams.ui.projectandteamsdetails.TeamsDetailsFragment;
 import com.thinksity.R;
 
 import java.util.HashMap;
@@ -29,8 +31,6 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private HashMap<String, Integer> hmPrices = new HashMap<>();
     public UserSessionManager session;
-    public static TextView headerText;
-    private Toolbar toolbar;
 
     private Fragment currentFragment = null;
     private FragmentManager fragmentManager = null;
@@ -52,7 +52,6 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
                         getSupportFragmentManager().findFragmentById(R.id.mainFrame);
                 if (currentFragment != null) {
                     String tag = currentFragment.getTag();
-                    Log.e("tag", ">>>$tag");
                 } else {
                     finish();
                 }
@@ -64,21 +63,8 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
 
         session = new UserSessionManager(this, this);
 
-        toolbar = findViewById(R.id.app_bar);
-        headerText = toolbar.findViewById(R.id.titleTextView);
-        setSupportActionBar(toolbar);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         //testingPurpos
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.mainFrame, new ProjectAndTeamsFragment())
-                // Add this transaction to the back stack
-                .addToBackStack("Profile")
-                .commit();
+        addFragment(new ProjectAndTeamsFragment(), "PROJECT_AND_TEAMS_FRAGMENT");
     }
 
     @Override
@@ -87,34 +73,38 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            return true;
-        }else if(item.getItemId() == R.id.action_setting){
-            showPopup(findViewById(item.getItemId()));
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == android.R.id.home) {
+//            onBackPressed();
+//            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+//            return true;
+//        }else if(item.getItemId() == R.id.action_setting){
+//            showPopup(findViewById(item.getItemId()));
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     // custom method
-    private void showPopup(final View view) {
-        Context wrapper = new ContextThemeWrapper(this, R.style.MyPopupMenuStyleWhite);
-        PopupMenu popupMenu = new PopupMenu(wrapper, view);
-        popupMenu.getMenu().add(0, 0, Menu.NONE, "Add Project");
-        popupMenu.getMenu().add(0, 1, Menu.NONE, "Add Team");
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(view.getContext(), item.getTitle() + "clicked", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-        popupMenu.show();
-    }
+//    private void showPopup(final View view) {
+//        Context wrapper = new ContextThemeWrapper(this, R.style.MyPopupMenuStyleWhite);
+//        PopupMenu popupMenu = new PopupMenu(wrapper, view);
+//        popupMenu.getMenu().add(0, 0, Menu.NONE, "Add Project");
+//        popupMenu.getMenu().add(0, 1, Menu.NONE, "Add Team");
+//        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                if(item.getTitle().equals("Add Project")){
+//                    addFragment(new ProjectDetailsFragment(),"PROJECT_DETAILS_FRAGMENT");
+//                }else if(item.getTitle().equals("Add Team")){
+//                    addFragment(new TeamsDetailsFragment(),"TEAM_DETAILS_FRAGMENT");
+//                }
+//                return true;
+//            }
+//        });
+//        popupMenu.show();
+//    }
 
     private void showLoader(final String message) {
 
@@ -156,10 +146,6 @@ public class ProjectAndTermsActivity extends AppCompatActivity {
     public void replaceFragment(Fragment fragment, String fragmentTag) {
         popFragmentFromBackStack();
         addFragment(fragment, fragmentTag);
-    }
-
-    public void setHeaderText(String value){
-        headerText.setText(value);
     }
 
     public void popFragmentFromBackStack() {
