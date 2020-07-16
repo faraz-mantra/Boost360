@@ -57,9 +57,9 @@
         <activity android:name="com.nowfloats.education.batches.BatchesActivity" />
         <activity android:name="com.nowfloats.education.toppers.ToppersActivity" />
         <activity android:name="com.nowfloats.education.faculty.FacultyActivity" />
-        <activity android:name="com.nowfloats.domain.DomainEmailActivity" />
-        <activity android:name="com.nowfloats.Testimonials.TestimonialsFeedbackActivity" />
-        <activity android:name="com.nowfloats.Testimonials.TestimonialsActivity" />
+        <activity android:name="com.nowfloats.AccrossVerticals.domain.DomainEmailActivity" />
+        <activity android:name="com.nowfloats.AccrossVerticals.Testimonials.TestimonialsFeedbackActivity" />
+        <activity android:name="com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity" />
         <activity android:name="com.nowfloats.marketplace.BoostMarketPlaceActivity" />
 
         <meta-data
@@ -966,7 +966,7 @@
             android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.domain.DomainDetailsActivity"
+            android:name="com.nowfloats.AccrossVerticals.domain.DomainDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.ProductGallery.ProductGalleryActivity"

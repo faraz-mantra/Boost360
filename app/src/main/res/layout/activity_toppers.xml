@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.nowfloats.domain.DomainEmailActivity">
+    tools:context="com.nowfloats.AccrossVerticals.domain.DomainEmailActivity">
 
     <FrameLayout
         android:id="@+id/mainFrame"

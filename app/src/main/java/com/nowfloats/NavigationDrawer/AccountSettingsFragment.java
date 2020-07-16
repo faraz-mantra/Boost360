@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +24,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.nowfloats.BusinessProfile.UI.UI.changePasswordAsyncTask;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
@@ -32,13 +32,11 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
-import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
-import com.nowfloats.domain.DomainDetailsActivity;
-import com.nowfloats.domain.DomainEmailActivity;
+import com.nowfloats.AccrossVerticals.domain.DomainDetailsActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -46,7 +44,6 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
-import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.json.JSONException;
@@ -496,9 +493,9 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     private void showDomainDetails() {
         isAlreadyCalled = true;
         //old design
-        Intent domainIntent = new Intent(mContext, DomainDetailsActivity.class);
+//        Intent domainIntent = new Intent(mContext, DomainDetailsActivity.class);
         //new design implementation work in progress
-//        Intent domainIntent = new Intent(mContext, DomainEmailActivity.class);
+        Intent domainIntent = new Intent(mContext, DomainEmailActivity.class);
         startActivity(domainIntent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
