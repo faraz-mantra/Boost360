@@ -286,7 +286,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
     fun payThroughRazorPay() {
         try {
             for (key in cartCheckoutData.keys()) {
-                if (key != "customerId" || key != "transaction_id") {
+                if (key != "customerId" && key != "transaction_id") {
                     paymentData.put(key, cartCheckoutData.get(key))
                 }
             }
