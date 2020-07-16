@@ -189,8 +189,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
             GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(SplashScreen_Activity.this, session);
             visit_subcribersCountAsyncTask.execute();
         }
-        if (deepLinkViewType != null && deepLinkViewType.equalsIgnoreCase("CART_FRAGMENT")) {
-            //&& deepLinkFpId != null && deepLinkFpId.trim().equals(session.getFPID().trim())
+        if (deepLinkViewType != null && deepLinkViewType.equalsIgnoreCase("CART_FRAGMENT")
+                && deepLinkFpId != null && deepLinkFpId.trim().equals(session.getFPID().trim())) {
             initiateAddonMarketplace();
         } else {
             Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);

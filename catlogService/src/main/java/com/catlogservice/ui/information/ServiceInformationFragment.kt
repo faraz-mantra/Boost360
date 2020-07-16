@@ -4,11 +4,15 @@ import android.view.View
 import com.catlogservice.R
 import com.catlogservice.base.AppBaseFragment
 import com.catlogservice.databinding.FragmentServiceInformationBinding
+import com.catlogservice.model.KeySpecification
+import com.catlogservice.recyclerView.AppBaseRecyclerViewAdapter
+import com.catlogservice.recyclerView.BaseRecyclerViewItem
+import com.catlogservice.recyclerView.RecyclerItemClickListener
 import com.catlogservice.viewmodel.ServiceViewModel
 import com.google.android.material.chip.Chip
 
 
-class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModel>() {
+class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
   companion object {
     fun newInstance(): ServiceInformationFragment {
@@ -27,7 +31,15 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage)
-    serviceTagsSet(arrayListOf("Nowfloat", "Test 1", "Welcome","Boost", "Test 1", "Welcome"))
+    serviceTagsSet(arrayListOf("Nowfloat", "Test 1", "Welcome", "Boost", "Test 1", "Welcome"))
+    specificationAdapter()
+  }
+
+  private fun specificationAdapter() {
+    binding?.rvSpecification?.apply {
+      val adapterSpecification = AppBaseRecyclerViewAdapter(baseActivity, KeySpecification().data(), this@ServiceInformationFragment)
+      adapter = adapterSpecification
+    }
   }
 
   override fun onClick(v: View) {
@@ -46,6 +58,10 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
       }
       binding?.chipsService?.addView(mChip)
     }
+  }
+
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+
   }
 
 }

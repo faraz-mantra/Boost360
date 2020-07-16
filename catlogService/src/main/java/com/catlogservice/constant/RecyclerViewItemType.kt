@@ -4,12 +4,14 @@ import androidx.annotation.LayoutRes
 import com.catlogservice.R
 
 enum class RecyclerViewItemType {
-  PAGINATION_LOADER;
+  PAGINATION_LOADER,
+  SPECIFICATION_ITEM;
 
   @LayoutRes
   fun getLayout(): Int {
     return when (this) {
-      PAGINATION_LOADER -> R.layout.fragment_service_detail
+      PAGINATION_LOADER -> R.layout.pagination_loader
+      SPECIFICATION_ITEM -> R.layout.row_layout_added_specs
     }
   }
 }
