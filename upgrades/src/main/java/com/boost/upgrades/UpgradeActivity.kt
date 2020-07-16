@@ -60,7 +60,7 @@ class UpgradeActivity : AppCompatActivity() {
   var email: String? = null
   var mobileNo: String? = null
   var profileUrl: String? = null
-  var isFirebaseDeepLink: Boolean = false
+  var isDeepLink: Boolean = false
   var deepLinkViewType: String = ""
   var deepLinkDay: Int = 7
 
@@ -76,7 +76,7 @@ class UpgradeActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_upgrade)
 
-    isFirebaseDeepLink = intent.getBooleanExtra("isFirebaseDeepLink", false)
+    isDeepLink = intent.getBooleanExtra("isDeepLink", false)
     deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
     deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
 
@@ -97,7 +97,7 @@ class UpgradeActivity : AppCompatActivity() {
 
   fun initView() {
     if (fpid != null) {
-      if (isFirebaseDeepLink) {
+      if (isDeepLink) {
         cartFragment = CartFragment.newInstance()
         cartFragment?.let { addFragment(it, CART_FRAGMENT) }
       } else {
@@ -149,15 +149,15 @@ class UpgradeActivity : AppCompatActivity() {
         Log.e("back pressed tag", ">>>$tag")
         if (tag != null) {
           if (tag == ORDER_CONFIRMATION_FRAGMENT) {
-            if (isFirebaseDeepLink) goHomeActivity()
+            if (isDeepLink) goHomeActivity()
             else goToHomeFragment()
-          } else if (isFirebaseDeepLink && tag == CART_FRAGMENT) {
+          } else if (isDeepLink && (tag == CART_FRAGMENT || tag == VIEW_ALL_FEATURE)) {
             if (cartFragment != null && cartFragment?.isRenewalListNotEmpty() == true) alertDialog()
             else goHomeActivity()
           } else fragmentManager!!.popBackStack()
         }
       } else {
-        if (isFirebaseDeepLink) goHomeActivity()
+        if (isDeepLink) goHomeActivity()
         else super.onBackPressed()
       }
     } catch (e: Exception) {

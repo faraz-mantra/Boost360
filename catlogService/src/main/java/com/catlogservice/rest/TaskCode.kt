@@ -1,6 +1,7 @@
 package com.catlogservice.rest
 
 enum class TaskCode {
-  GET_SELLER_SUMMARY
+
+  POST_CREATE_SERVICE
 
 }

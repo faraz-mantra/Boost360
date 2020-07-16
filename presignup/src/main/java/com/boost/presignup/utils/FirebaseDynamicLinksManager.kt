@@ -10,7 +10,7 @@ import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 
 
-enum class FirebaseDynamicLinkParams {
+enum class DynamicLinkParams {
   fpId,
   viewType,
   day,
@@ -24,7 +24,7 @@ class FirebaseDynamicLinksManager {
     val instance = FirebaseDynamicLinksManager()
   }
 
-  fun parseDeepLink(activity: Activity, onResult: (Exception?, HashMap<FirebaseDynamicLinkParams, String>?) -> Unit) {
+  fun parseDeepLink(activity: Activity, onResult: (Exception?, HashMap<DynamicLinkParams, String>?) -> Unit) {
     FirebaseAnalytics.getInstance(activity)
     FirebaseDynamicLinks.getInstance()
         .getDynamicLink(activity.intent)
@@ -36,23 +36,26 @@ class FirebaseDynamicLinksManager {
         }
   }
 
-  private fun getDynamicLinkParams(link: PendingDynamicLinkData?): HashMap<FirebaseDynamicLinkParams, String> {
+  private fun getDynamicLinkParams(link: PendingDynamicLinkData?): HashMap<DynamicLinkParams, String> {
     val deepLink: Uri? = link?.link
     Log.d("TAG", deepLink.toString())
+    return getURILinkParams(deepLink)
+  }
 
-    val map = HashMap<FirebaseDynamicLinkParams, String>()
+  fun getURILinkParams(deepLink: Uri?): HashMap<DynamicLinkParams, String> {
+    val map = HashMap<DynamicLinkParams, String>()
     if (deepLink?.queryParameterNames == null) return map
 
     for (param in deepLink.queryParameterNames) {
       try {
-        val key = FirebaseDynamicLinkParams.valueOf(param)
+        val key = DynamicLinkParams.valueOf(param)
         val value = deepLink.getQueryParameter(param)
 
         if (value != null) {
-          if (key == FirebaseDynamicLinkParams.referrer) {
+          if (key == DynamicLinkParams.referrer) {
             for (keyValuePairString in deepLink.getQueryParameter(param)?.split("&") ?: ArrayList()) {
               val pair = keyValuePairString.split("=")
-              map[FirebaseDynamicLinkParams.valueOf(pair.first())] = pair.last()
+              map[DynamicLinkParams.valueOf(pair.first())] = pair.last()
             }
           } else {
             map[key] = value

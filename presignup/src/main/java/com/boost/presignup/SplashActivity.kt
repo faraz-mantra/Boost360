@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.boost.presignup.utils.FirebaseDynamicLinkParams
+import com.boost.presignup.utils.DynamicLinkParams
 import com.boost.presignup.utils.FirebaseDynamicLinksManager
 import com.onboarding.nowfloats.managers.NavigatorManager
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -28,13 +28,14 @@ class SplashActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_splash)
-    FirebaseDynamicLinksManager.instance.parseDeepLink(this) { _, deepHashMap ->
-      if (deepHashMap != null && deepHashMap.containsKey(FirebaseDynamicLinkParams.viewType)) {
-        deepLinkViewType = deepHashMap[FirebaseDynamicLinkParams.viewType].toString()
-        deepLinkFpId = deepHashMap[FirebaseDynamicLinkParams.fpId].toString()
-        deepLinkDay = deepHashMap[FirebaseDynamicLinkParams.day].toString()
+    if (intent != null) {
+      val uri = intent.data ?: null
+      val deepHashMap = FirebaseDynamicLinksManager().getURILinkParams(uri)
+      if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
+        deepLinkViewType = deepHashMap[DynamicLinkParams.viewType] ?: ""
+        deepLinkFpId = deepHashMap[DynamicLinkParams.fpId] ?: ""
+        deepLinkDay = deepHashMap[DynamicLinkParams.day] ?: ""
       }
-      onCreateView()
     }
     val pref: SharedPreferences = this.getSharedPreferences("nowfloatsPrefs", 0)
     isUserLoggedIn = pref.getBoolean("IsUserLoggedIn", false)
@@ -44,7 +45,7 @@ class SplashActivity : AppCompatActivity() {
       val profileId = pref.getString("user_profile_id", null)
       isUserLoggedIn = profileId != null && profileId.trim().isNotEmpty()
     }
-//      if (BuildConfig.DEBUG) hashGeneration()
+    onCreateView()
   }
 
   private fun onCreateView() {
