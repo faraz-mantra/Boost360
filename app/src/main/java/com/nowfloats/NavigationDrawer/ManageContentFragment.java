@@ -19,7 +19,7 @@ import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
 import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
-import com.nowfloats.Testimonials.TestimonialsActivity;
+import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity;
 import com.nowfloats.manufacturing.projectandteams.ProjectAndTermsActivity;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;

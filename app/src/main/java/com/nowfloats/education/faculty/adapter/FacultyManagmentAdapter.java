@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.nowfloats.Testimonials.TestimonialsListener;
+import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsListener;
 import com.thinksity.R;
 
 import org.jetbrains.annotations.NotNull;

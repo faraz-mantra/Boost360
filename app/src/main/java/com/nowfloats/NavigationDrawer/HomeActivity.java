@@ -83,7 +83,7 @@ import com.nowfloats.CustomPage.CustomPageDeleteInterface;
 import com.nowfloats.CustomPage.CustomPageFragment;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
-import com.nowfloats.FacebookLeads.FacebookLeadsFragment;
+import com.nowfloats.AccrossVerticals.FacebookLeads.FacebookLeadsFragment;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.API_Login;
 import com.nowfloats.Login.Login_Interface;
