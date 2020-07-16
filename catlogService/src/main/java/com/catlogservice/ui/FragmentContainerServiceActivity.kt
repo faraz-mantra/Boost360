@@ -121,16 +121,12 @@ open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentCo
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        serviceDetailFragment?.onActivityResult(requestCode, resultCode, data)
+        serviceInformationFragment?.onActivityResult(requestCode, resultCode, data)
+    }
 }
 
 fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {

@@ -126,7 +126,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     initializeAddonsRecycler()
     initializeRenewalRecycler()
     initializeErrorObserver()
-    isDeepLinking = (activity as UpgradeActivity).isFirebaseDeepLink
+    isDeepLinking = (activity as UpgradeActivity).isDeepLink
     initMvvM()
     checkRenewalItemDeepLinkClick()
     //show applyed coupon code
@@ -385,7 +385,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           updateRenewal(cartList)
           totalCalculation()
         } else {
-          Toasty.info(requireContext(), "Renewal order not found").show()
+          Toasty.warning(requireContext(), "Renewal order not found").show()
           loadData()
         }
       })

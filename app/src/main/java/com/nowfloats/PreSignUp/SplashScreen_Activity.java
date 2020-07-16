@@ -225,7 +225,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID().trim());
-        intent.putExtra("isFirebaseDeepLink", true);
+        intent.putExtra("isDeepLink", true);
         intent.putExtra("deepLinkViewType", deepLinkViewType);
         intent.putExtra("deepLinkDay", deepLinkDay);
         intent.putExtra("loginid", session.getUserProfileId());

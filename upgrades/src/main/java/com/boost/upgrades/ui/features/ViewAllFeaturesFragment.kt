@@ -75,7 +75,7 @@ class ViewAllFeaturesFragment : BaseFragment() {
 
 
         back_button2.setOnClickListener{
-            (activity as UpgradeActivity).popFragmentFromBackStack()
+            (activity as UpgradeActivity).onBackPressed()
         }
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE All_Features Loaded", "All_Features", "")
