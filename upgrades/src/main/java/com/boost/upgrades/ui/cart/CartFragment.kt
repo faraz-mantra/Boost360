@@ -100,8 +100,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     private lateinit var viewModel: CartViewModel
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         root = inflater.inflate(R.layout.cart_fragment, container, false)
         localStorage = LocalStorage.getInstance(context!!)!!
@@ -166,8 +166,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                 for (prop in extendProps) {
                                     if(prop.key!=null && prop.value!=null) {
                                         outputExtendedProps.add(Property(
-                                                Key = prop.key!!,
-                                                Value = prop.value!!
+                                            Key = prop.key!!,
+                                            Value = prop.value!!
                                         ))
                                     }
                                 }
@@ -195,28 +195,28 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                             mrp_price = mrp_price * default_validity_months
                         }
                         widgetList.add(Widget(
-                                "",
-                                ConsumptionConstraint(
-                                        "DAYS",
-                                        30
-                                ),
-                                "",
-                                item.description_title,
-                                item.discount,
-                                Expiry(
-                                        "DAYS",
-                                        validity_days
-                                ),
-                                listOf(),
-                                true,
-                                true,
-                                item.item_name!!,
-                                netPrice,
-                                mrp_price,
-                                if (outputExtendedProps.size > 0) outputExtendedProps else null,
-                                net_quantity,
-                                "MONTHLY",
-                                item.boost_widget_key!!
+                            "",
+                            ConsumptionConstraint(
+                                "DAYS",
+                                30
+                            ),
+                            "",
+                            item.description_title,
+                            item.discount,
+                            Expiry(
+                                "DAYS",
+                                validity_days
+                            ),
+                            listOf(),
+                            true,
+                            true,
+                            item.item_name!!,
+                            netPrice,
+                            mrp_price,
+                            if (outputExtendedProps.size > 0) outputExtendedProps else null,
+                            net_quantity,
+                            "MONTHLY",
+                            item.boost_widget_key!!
                         ))
                     } else if (item.item_type.equals("bundles")) {
                         if (::bundlesList.isInitialized && bundlesList.size > 0) {
@@ -224,14 +224,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                 if (singleBundle.bundle_id.equals(item.item_id)) {
                                     val outputBundleProps: ArrayList<Property> = arrayListOf()
                                     outputBundleProps.add(Property(
-                                            Key = singleBundle.bundle_id,
-                                            Value = singleBundle.name!!
+                                        Key = singleBundle.bundle_id,
+                                        Value = singleBundle.name!!
                                     ))
                                     extraPurchaseOrderDetails = ExtraPurchaseOrderDetails(
-                                            null,
-                                            singleBundle.primary_image,
-                                            singleBundle.name,
-                                            outputBundleProps)
+                                        null,
+                                        singleBundle.primary_image,
+                                        singleBundle.name,
+                                        outputBundleProps)
                                     bundleDiscount = singleBundle.overall_discount_percent
                                     val includedFeatures = Gson().fromJson<List<IncludedFeature>>(singleBundle.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
                                     for (singleIndludedFeature in includedFeatures) {
@@ -243,28 +243,28 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                                                 //adding bundle netPrice
                                                 bundleNetPrice += netPrice * singleBundle.min_purchase_months
                                                 widgetList.add(Widget(
-                                                        "",
-                                                        ConsumptionConstraint(
-                                                                "DAYS",
-                                                                30 * singleBundle.min_purchase_months
-                                                        ),
-                                                        "",
-                                                        singleFeature.description_title,
-                                                        singleIndludedFeature.feature_price_discount_percent,
-                                                        Expiry(
-                                                                "DAYS",
-                                                                30 * singleBundle.min_purchase_months
-                                                        ),
-                                                        listOf(),
-                                                        true,
-                                                        true,
-                                                        singleFeature.name!!,
-                                                        netPrice.toDouble() * singleBundle.min_purchase_months,
-                                                        singleFeature.price.toDouble() * singleBundle.min_purchase_months,
-                                                        if (outputExtendedProps.size > 0) outputExtendedProps else null,
-                                                        1,
-                                                        "MONTHLY",
-                                                        singleFeature.boost_widget_key
+                                                    "",
+                                                    ConsumptionConstraint(
+                                                        "DAYS",
+                                                        30 * singleBundle.min_purchase_months
+                                                    ),
+                                                    "",
+                                                    singleFeature.description_title,
+                                                    singleIndludedFeature.feature_price_discount_percent,
+                                                    Expiry(
+                                                        "DAYS",
+                                                        30 * singleBundle.min_purchase_months
+                                                    ),
+                                                    listOf(),
+                                                    true,
+                                                    true,
+                                                    singleFeature.name!!,
+                                                    netPrice.toDouble() * singleBundle.min_purchase_months,
+                                                    singleFeature.price.toDouble() * singleBundle.min_purchase_months,
+                                                    if (outputExtendedProps.size > 0) outputExtendedProps else null,
+                                                    1,
+                                                    "MONTHLY",
+                                                    singleFeature.boost_widget_key
                                                 ))
                                                 break
                                             }
@@ -282,13 +282,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
 
                     purchaseOrders.add(
-                            PurchaseOrder(
-                                    couponCode,
-                                    bundleDiscount, //Discount of the bundle/package/order without tax.
-                                    extraPurchaseOrderDetails,
-                                    bundleNetPrice,
-                                    widgetList
-                            )
+                        PurchaseOrder(
+                            couponCode,
+                            bundleDiscount, //Discount of the bundle/package/order without tax.
+                            extraPurchaseOrderDetails,
+                            bundleNetPrice,
+                            widgetList
+                        )
                     )
                 }
 
@@ -307,22 +307,22 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 prefs.storeFeaturesCountInLastOrder(purchaseOrders.count())
 
                 viewModel.InitiatePurchaseOrder(
-                        CreatePurchaseOrderV2(
-                                (activity as UpgradeActivity).clientid,
-                                (activity as UpgradeActivity).fpid!!,
-                                PaymentDetails(
-                                        "INR",
-                                        couponDiscountPercentage, //[Double] Discount Percentage of the the payment(Coupon code discount)
-                                        "RAZORPAY",
-                                        TaxDetails(
-                                                GSTINNumber,
-                                                0,
-                                                null,
-                                                18),
-                                        grandTotal),
-                                "NEW",
-                                purchaseOrders
-                        )
+                    CreatePurchaseOrderV2(
+                        (activity as UpgradeActivity).clientid,
+                        (activity as UpgradeActivity).fpid!!,
+                        PaymentDetails(
+                            "INR",
+                            couponDiscountPercentage, //[Double] Discount Percentage of the the payment(Coupon code discount)
+                            "RAZORPAY",
+                            TaxDetails(
+                                GSTINNumber,
+                                0,
+                                null,
+                                18),
+                            grandTotal),
+                        "NEW",
+                        purchaseOrders
+                    )
                 )
             } else {
                 Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
@@ -341,21 +341,21 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         cart_apply_coupon.setOnClickListener {
             couponPopUpFragment.show(
-                    (activity as UpgradeActivity).supportFragmentManager,
-                    COUPON_POPUP_FRAGEMENT
+                (activity as UpgradeActivity).supportFragmentManager,
+                COUPON_POPUP_FRAGEMENT
             )
         }
 
         cart_apply_coupon.setOnClickListener {
             couponPopUpFragment.show(
-                    (activity as UpgradeActivity).supportFragmentManager,
-                    COUPON_POPUP_FRAGEMENT
+                (activity as UpgradeActivity).supportFragmentManager,
+                COUPON_POPUP_FRAGEMENT
             )
         }
         enter_gst_number.setOnClickListener {
             gstinPopUpFragment.show(
-                    (activity as UpgradeActivity).supportFragmentManager,
-                    GSTIN_POPUP_FRAGEMENT
+                (activity as UpgradeActivity).supportFragmentManager,
+                GSTIN_POPUP_FRAGEMENT
             )
         }
 
@@ -368,8 +368,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         enter_tan_number.setOnClickListener {
             tanPopUpFragment.show(
-                    (activity as UpgradeActivity).supportFragmentManager,
-                    TAN_POPUP_FRAGEMENT
+                (activity as UpgradeActivity).supportFragmentManager,
+                TAN_POPUP_FRAGEMENT
             )
         }
 
@@ -629,15 +629,15 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             if (item.bundle_id == itemID) {
                 val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
                 selectedBundle = Bundles(
-                        item.bundle_id,
-                        temp,
-                        item.min_purchase_months,
-                        item.name,
-                        item.overall_discount_percent,
-                        PrimaryImage(item.primary_image),
-                        item.target_business_usecase,
-                        Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                        null
+                    item.bundle_id,
+                    temp,
+                    item.min_purchase_months,
+                    item.name,
+                    item.overall_discount_percent,
+                    PrimaryImage(item.primary_image),
+                    item.target_business_usecase,
+                    Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                    null
                 )
                 break
             }
@@ -666,8 +666,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         args.putString("contact", (activity as UpgradeActivity).mobileNo)
         paymentFragment.arguments = args
         (activity as UpgradeActivity).addFragment(
-                paymentFragment,
-                Constants.PAYMENT_FRAGMENT
+            paymentFragment,
+            Constants.PAYMENT_FRAGMENT
         )
     }
 

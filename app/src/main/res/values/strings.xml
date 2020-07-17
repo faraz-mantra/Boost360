@@ -1758,8 +1758,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>All Images</item>
         <item>Business Profile</item>
         <item>Custom Pages</item>
-<!--        <item>Testimonials</item>-->
-<!--        <item>Projects &amp; teams</item>-->
+        <!--        <item>Testimonials</item>-->
+        <!--        <item>Projects &amp; teams</item>-->
     </string-array>
 
     <string-array name="order_analytics_tab_items">
@@ -1859,4 +1859,5 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Static Website</item>
     </string-array>
     <string name="your_digital_assitant">Your digital assitant</string>
+    <string name="error_right_fptag">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right Boost account.</string>
 </resources>

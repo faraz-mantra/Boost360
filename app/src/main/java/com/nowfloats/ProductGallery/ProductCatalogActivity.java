@@ -1,17 +1,18 @@
 package com.nowfloats.ProductGallery;
 
 import android.content.Intent;
-import androidx.databinding.DataBindingUtil;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.Adapter.ProductCategoryRecyclerAdapter;
@@ -32,7 +33,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener{
+public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener {
 
     private ActivityProductCatalogBinding binding;
     private ProductCategoryRecyclerAdapter adapter;
@@ -217,11 +218,17 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         }
     }
 
-    private void openAddProductActivity()
-    {
-        Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
-        intent.putExtra("PRODUCT", new Product());
-        startActivityForResult(intent, 300);
+    private void openAddProductActivity() {
+        switch (Utils.getProductType(session.getFP_AppExperienceCode())) {
+//            case "SERVICES":
+//                startFragmentActivityNew(this, FragmentType.SERVICE_DETAIL_VIEW, new Bundle(), false);
+//                break;
+            default:
+                Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
+                intent.putExtra("PRODUCT", new Product());
+                startActivityForResult(intent, 300);
+                break;
+        }
     }
 
     private void addProduct()
@@ -252,12 +259,12 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
             if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
             {
-                Toast.makeText(getApplicationContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.message_feature_not_available), Toast.LENGTH_LONG).show();
             }
 
             else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && adapter.getItemCount() >= Integer.parseInt(value))
             {
-                Toast.makeText(getApplicationContext(), String.valueOf(getString(R.string.message_add_product_limit)), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.message_add_product_limit), Toast.LENGTH_LONG).show();
             }
 
             else
