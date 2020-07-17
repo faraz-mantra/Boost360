@@ -5,5 +5,6 @@ data class CreatePurchaseOrderV2(
     val FloatingPointId: String,
     val PaymentDetails: PaymentDetails,
     val PurchaseOrderType: String,
-    val PurchaseOrders: List<PurchaseOrder>
+    val PurchaseOrders: List<PurchaseOrder>,
+    val CartStateId: String
 )

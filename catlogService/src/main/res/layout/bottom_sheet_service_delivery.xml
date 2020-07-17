@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/size_10">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/size_4"
+                    android:includeFontPadding="false"
+                    android:text="Service delivery at"
+                    android:textColor="@color/white"
+                    app:fontFamily="@font/semi_bold"
+                    app:textType="HEADING_4"
+                    tools:textColor="@color/black_4a4a4a" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tvCustomerAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="Select, where you will be providing this service to your clients."
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/italic"
+                    tools:textColor="@color/warm_grey" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_top_white_2"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_10"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/vw_myBusinessLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_20">
+
+                    <com.framework.views.customViews.CustomRadioButton
+                        android:id="@+id/rb_myBusinessLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:buttonTint="@color/dodger_blue_two"
+                        android:clickable="false" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_10"
+                        android:orientation="vertical">
+
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="My Business Location"
+                            android:textColor="@color/black_2A2A2A"
+                            android:textSize="19sp"
+                            app:fontFamily="@font/semi_bold" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/regular"
+                            tools:text="244/5, Sector -5, Sukhdev Vihar, New Delhi - 100065" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_5"
+                            android:includeFontPadding="false"
+                            android:text="Edit Business profile"
+                            android:textColor="@color/dodger_blue_two"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/semi_bold"
+                            app:textAllCaps="true" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_5"
+                    app:srcCompat="@drawable/shape_grey_dotted_line" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/vw_clientLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_20">
+
+                    <com.framework.views.customViews.CustomRadioButton
+                        android:id="@+id/rb_clientLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:buttonTint="@color/dodger_blue_two"
+                        android:clickable="false" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_10"
+                        android:orientation="vertical">
+
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Client’s location"
+                            android:textColor="@color/black_2A2A2A"
+                            android:textSize="19sp"
+                            app:fontFamily="@font/semi_bold" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="Select, if this service can be offered at client’s location by any of your team member"
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/regular" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_5"
+                    app:srcCompat="@drawable/shape_grey_dotted_line" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/vw_otherVenue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_20">
+
+                    <com.framework.views.customViews.CustomRadioButton
+                        android:id="@+id/rb_otherVenue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:buttonTint="@color/dodger_blue_two"
+                        android:clickable="false" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_10"
+                        android:orientation="vertical">
+
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Other venue ()"
+                            android:textColor="@color/black_2A2A2A"
+                            android:textSize="19sp"
+                            app:fontFamily="@font/semi_bold" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="If you are running a "
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="12sp"
+                            app:fontFamily="@font/regular" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_5"
+                    app:srcCompat="@drawable/shape_grey_dotted_line" />
+
+            </RadioGroup>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:layout_marginBottom="@dimen/size_20"
+                android:paddingRight="@dimen/size_10">
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_done"
+                    android:layout_width="@dimen/size_110"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/button_proceed"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="Done"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textType="HEADING_6" />
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="@dimen/size_110"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="@dimen/size_20"
+                    android:background="@null"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:text="Cancel"
+                    android:textAllCaps="true"
+                    android:textColor="@color/pinkish_grey"
+                    app:layout_constraintRight_toLeftOf="@id/btn_done"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textType="HEADING_6" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

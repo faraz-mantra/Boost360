@@ -2,25 +2,22 @@ package com.boost.upgrades.ui.features
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
-
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.AllFeatureAdaptor
 import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.data.model.WidgetModel
+import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.database.LocalStorage
-import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import com.google.android.material.snackbar.Snackbar
 import es.dmoral.toasty.Toasty
@@ -78,7 +75,7 @@ class ViewAllFeaturesFragment : BaseFragment() {
 
 
         back_button2.setOnClickListener{
-            (activity as UpgradeActivity).popFragmentFromBackStack()
+            (activity as UpgradeActivity).onBackPressed()
         }
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE All_Features Loaded", "All_Features", "")
@@ -117,7 +114,7 @@ class ViewAllFeaturesFragment : BaseFragment() {
                 shimmer_view_container2.stopShimmer()
                 shimmer_view_container2.visibility = View.GONE
             }
-            Toasty.error(requireContext(), "onFailure: " + it, Toast.LENGTH_LONG).show();
+          Toasty.error(requireContext(), "onFailure: " + it, Toast.LENGTH_LONG).show()
         })
     }
 

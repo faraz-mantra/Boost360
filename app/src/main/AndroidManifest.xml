@@ -51,13 +51,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:name,android:theme,android:appComponentFactory">
-        <activity android:name="com.nowfloats.hotel.HotelActivity"></activity>
-        <activity android:name="com.nowfloats.manufacturing.projectandteams.ProjectAndTermsActivity" />
-        <activity android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresActivity" />
-        <activity android:name="com.nowfloats.education.batches.BatchesActivity" />
-        <activity android:name="com.nowfloats.education.toppers.ToppersActivity" />
-        <activity android:name="com.nowfloats.education.faculty.FacultyActivity" />
-        <activity android:name="com.nowfloats.domain.DomainEmailActivity" />
+        <activity android:name="com.nowfloats.domain.DomainEmailActivity"></activity>
         <activity android:name="com.nowfloats.Testimonials.TestimonialsFeedbackActivity" />
         <activity android:name="com.nowfloats.Testimonials.TestimonialsActivity" />
         <activity android:name="com.nowfloats.marketplace.BoostMarketPlaceActivity" />
@@ -696,11 +690,22 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash"
             tools:replace="android:theme">
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <data android:scheme="anton" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                  android:host="${applicationId}.UI.SplashActivity"
+                  android:pathPrefix="/"
+                  android:scheme="http" />
             </intent-filter>
         </activity>
         <activity
