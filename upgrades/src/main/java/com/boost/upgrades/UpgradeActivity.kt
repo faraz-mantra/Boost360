@@ -120,26 +120,6 @@ class UpgradeActivity : AppCompatActivity() {
             Toasty.error(this, "Invalid Business Profile ID. Please restart the marketplace.", Toast.LENGTH_LONG).show()
             finish()
         }
-//        if (fpid != null) {
-//            addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
-//            //update userdetails and buyitem
-//            showingPopUp()
-//
-//            supportFragmentManager.addOnBackStackChangedListener {
-//                val currentFragment =
-//                        supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
-//                if (currentFragment != null) {
-//                    val tag = currentFragment!!.tag
-//                    Log.e("tag", ">>>$tag")
-//                    tellFragments()
-//                } else {
-//                    finish()
-//                }
-//            }
-//        } else {
-//            Toasty.error(this, "Invalid Business Profile ID. Please restart the marketplace.", Toast.LENGTH_LONG).show()
-//            finish()
-//        }
     }
 
     private fun initRazorPay() {
@@ -185,26 +165,6 @@ class UpgradeActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-//        try {
-//            Utils.hideSoftKeyboard(this)
-//            if (supportFragmentManager.backStackEntryCount > 0) {
-//                val currentFragment =
-//                        supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
-//                val tag = currentFragment!!.tag
-//                Log.e("back pressed tag", ">>>$tag")
-//                if (tag != null) {
-//                    if (tag == ORDER_CONFIRMATION_FRAGMENT) {
-//                        goToHomeFragment()
-//                    } else {
-//                        fragmentManager!!.popBackStack()
-//                    }
-//                }
-//            } else {
-//                super.onBackPressed()
-//            }
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
     }
 
     private fun alertDialog() {
@@ -298,7 +258,7 @@ class UpgradeActivity : AppCompatActivity() {
             loaderStatus(true)
         }
         CompositeDisposable().add(
-                AppDatabase.getInstance(getApplication())!!
+                AppDatabase.getInstance(application)!!
                         .featuresDao()
                         .checkEmptyFeatureTable()
                         .subscribeOn(Schedulers.io())

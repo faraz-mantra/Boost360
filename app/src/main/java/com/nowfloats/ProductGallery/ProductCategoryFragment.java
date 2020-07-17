@@ -79,13 +79,14 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
                 setProductType(productType,
                         "Editing ".concat(Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode())));
             } else {
-                productType = setProductType("products",
-                        "Editing ".concat(Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode())));
+                productType = setProductType("products", "Editing ".concat(Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode())));
             }
         } else {
-            productType = setProductType(/*session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)*/
-                    "products",
-                    "Adding to Catalogue");
+            String type = "";
+            if (product != null && product.productType != null)
+                type = product.productType;
+            else type = "products";
+            productType = setProductType(/*session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)*/ type, "Adding to Catalogue");
         }
         binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
         addInfoButtonListener();
