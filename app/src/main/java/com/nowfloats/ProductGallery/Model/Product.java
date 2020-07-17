@@ -84,4 +84,8 @@ public class Product implements Serializable {
         public String key;
         public String value;
     }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
 }
