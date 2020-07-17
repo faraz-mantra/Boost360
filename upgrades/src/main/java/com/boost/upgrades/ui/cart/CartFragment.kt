@@ -675,7 +675,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   }
 
   fun isRenewalListNotEmpty(): Boolean {
-    return ::cartList.isInitialized && cartList.isNotEmpty()
+    return ::cartList.isInitialized && cartList.isNotEmpty() && ::renewalList.isInitialized && renewalList.isNotEmpty()
   }
 
 }
