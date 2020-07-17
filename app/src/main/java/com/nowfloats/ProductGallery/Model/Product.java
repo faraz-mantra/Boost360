@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Product implements Serializable {
 
+    @SerializedName(value = "currencycode", alternate = {"CurrencyCode"})
     public String CurrencyCode;
     @SerializedName(value="description", alternate={"Description"})
     public String Description;
@@ -32,7 +33,7 @@ public class Product implements Serializable {
     public ArrayList<String> _keywords;
     public List<String> tags;
     public String ApplicationId;
-    @SerializedName(value="fPTag", alternate={"TPTag"})
+    @SerializedName(value = "fpTag", alternate = {"FPTag"})
     public String FPTag;
     @SerializedName(value="clientId", alternate={"ClientId"})
     public String ClientId;
@@ -74,15 +75,17 @@ public class Product implements Serializable {
     public List<Specification> otherSpecification;
     public String pickupAddressReferenceId;
 
-    public static class BuyOnlineLink implements Serializable
-    {
+    public static class BuyOnlineLink implements Serializable {
         public String url;
         public String description;
     }
 
-    public static class Specification implements Serializable
-    {
+    public static class Specification implements Serializable {
         public String key;
         public String value;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 }

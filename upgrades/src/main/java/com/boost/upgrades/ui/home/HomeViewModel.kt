@@ -4,10 +4,10 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.biz2.nowfloats.boost.updates.data.remote.ApiInterface
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.FeatureDeals
 import com.boost.upgrades.data.model.*
+import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Utils
 import com.google.gson.Gson
 import com.luminaire.apolloar.base_class.BaseViewModel
@@ -91,7 +91,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                         applicableToCurrentExpCode = true
                                                 }
                                                 if (!applicableToCurrentExpCode)
-                                                    continue;
+                                                  continue
                                             }
 
                                             val primaryImage = if (item.primary_image == null) null else item.primary_image.url
@@ -203,7 +203,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                     }
                                                 }
                                                 if (!applicableToCurrentFPTag)
-                                                    continue;
+                                                  continue
                                             }
                                             if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) {
                                                 var applicableToCurrentExpCode = false
@@ -214,7 +214,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                                     }
                                                 }
                                                 if (!applicableToCurrentExpCode)
-                                                    continue;
+                                                  continue
                                             }
                                             bundles.add(BundlesModel(
                                                     item._kid,

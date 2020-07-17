@@ -37,16 +37,16 @@ class SignUpConfirmation : AppCompatActivity() {
     } else
       if (!profileUrl.isEmpty()) {
 
-       Thread {
-         val url = URL(profileUrl)
-         val bmp: Bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-         Handler().post{
-           userProfileImage.setImageBitmap(bmp)
-         }
-       }
+        Thread {
+          val url = URL(profileUrl)
+          val bmp: Bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+          Handler().post {
+            userProfileImage.setImageBitmap(bmp)
+          }
+        }
       }
 
-      set_up_business_profile.setOnClickListener {
+    set_up_business_profile.setOnClickListener {
       WebEngageController.trackEvent("PS_Business Creation Initiated", "Business Creation Initiated", "")
 
 //      val intent = Intent(applicationContext, Class.forName("com.nowfloats.signup.UI.UI.PreSignUpActivityRia"))
@@ -59,6 +59,7 @@ class SignUpConfirmation : AppCompatActivity() {
       editor?.putBoolean("IsSignUpComplete", true)
       editor?.apply()
       NavigatorManager.startActivities(this@SignUpConfirmation)
+
     }
   }
 

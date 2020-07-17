@@ -1,7 +1,6 @@
 package com.boost.upgrades.adapter
 
 import android.content.Context
-import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
@@ -11,15 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
-import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.interfaces.CartFragmentListener
-import com.boost.upgrades.ui.details.DetailsFragment
-import com.boost.upgrades.ui.packages.PackageFragment
-import com.boost.upgrades.utils.Constants
 import com.bumptech.glide.Glide
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.package_fragment.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -37,8 +30,8 @@ class CartPackageAdaptor(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
-        val itemView = LayoutInflater.from(parent?.context).inflate(
-                R.layout.cart_single_package, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(
+            R.layout.cart_single_package, parent, false)
         context = itemView.context
 
         return upgradeViewHolder(itemView)
@@ -51,17 +44,17 @@ class CartPackageAdaptor(
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         val selectedBundle = bundlesList.get(position)
 
-        holder.name.setText(selectedBundle.item_name)
+      holder.name.text = selectedBundle.item_name
         val price = selectedBundle.price
         val MRPPrice = selectedBundle.MRPPrice
         if (selectedBundle.min_purchase_months > 1) {
-            holder.price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/" + selectedBundle.min_purchase_months + "mths")
+          holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/" + selectedBundle.min_purchase_months + "mths"
         } else {
-            holder.price.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/mth")
+          holder.price.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/mth"
         }
 
         if(selectedBundle.link != null){
-            Glide.with(context).load(selectedBundle.link!!).into(holder.image)
+          Glide.with(context).load(selectedBundle.link!!).placeholder(R.drawable.boost_360_insignia).into(holder.image)
         } else {
             holder.image.setImageResource(R.drawable.scissor)
         }
@@ -73,8 +66,8 @@ class CartPackageAdaptor(
             holder.orig_cost.visibility = View.GONE
         }
         if (selectedBundle.discount > 0) {
-            holder.discount.setText(selectedBundle.discount.toString() + "%")
-            holder.discount.visibility = View.VISIBLE
+          holder.discount.text = selectedBundle.discount.toString() + "%"
+          holder.discount.visibility = View.VISIBLE
         } else {
             holder.discount.visibility = View.GONE
         }
@@ -123,6 +116,6 @@ class CartPackageAdaptor(
                 origCost.length,
                 0
         )
-        holder.orig_cost.setText(origCost)
+      holder.orig_cost.text = origCost
     }
 }

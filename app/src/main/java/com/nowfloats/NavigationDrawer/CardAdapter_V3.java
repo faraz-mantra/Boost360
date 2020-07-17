@@ -17,9 +17,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import androidx.core.app.ActivityCompat;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +25,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
@@ -208,7 +209,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             shareImageView.setOnClickListener(v -> {
 
 
-                shareContent("default",imageShare,position);
+                shareContent("default", imageShare, position);
 
 
             });
@@ -363,42 +364,23 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
     }
 
 
-    void shareContent(String type,String imageShare,int position)
-    {
+    void shareContent(String type, String imageShare, int position) {
         MixPanelController.track("SharePost", null);
         if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-
-
             Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.",
                     (dialog, which) -> ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
-
             return;
         }
         pd = ProgressDialog.show(appContext, "", "Sharing . . .");
-
-
-
-
         final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-
-
-        switch (type)
-        {
+        switch (type) {
             case "whatsapp":
-
                 shareIntent.setPackage("com.whatsapp");
                 break;
-
             case "facebook":
-
                 shareIntent.setPackage("com.facebook.katana");
-
                 break;
-
-
         }
-
-
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
             if (Methods.isOnline(appContext)) {
@@ -409,8 +391,6 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     url = imageShare;
                 }
                 Target target = new Target() {
-
-
                     @Override
                     public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
                         pd.dismiss();
@@ -426,8 +406,6 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                     HomeActivity.StorebizFloats.get(position).url);
                             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
                             shareIntent.setType("image/*");
-
-
                             if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
                                 appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
                             } else {
@@ -436,7 +414,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         } catch (OutOfMemoryError e) {
                             Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
-
+                            Toast.makeText(appContext, "Image not able to share", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -447,38 +425,25 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
                     }
 
-
-
                     @Override
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
-
                     }
                 };
                 targetMap = target;
-                Picasso.get()
-                        .load(url)
-                        .into(target);
-
-
+                Picasso.get().load(url).into(target);
             } else {
                 pd.dismiss();
                 Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
             }
-
-
         } else {
             pd.dismiss();
             shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                    HomeActivity.StorebizFloats.get(position).url);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " + HomeActivity.StorebizFloats.get(position).url);
             if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
                 appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
             } else {
                 Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
             }
-
         }
     }
-
-
 }

@@ -1,0 +1,3 @@
+package com.catlogservice.recyclerView
+
+interface AppBaseRecyclerViewItem : BaseRecyclerViewItem

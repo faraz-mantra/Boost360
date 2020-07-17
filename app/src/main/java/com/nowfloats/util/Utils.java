@@ -165,4 +165,18 @@ public class Utils {
                 return "Catalogue";
         }
     }
+
+
+    public static String getProductType(String category_code) {
+        switch (category_code) {
+            case "SVC":
+            case "DOC":
+            case "HOS":
+            case "SPA":
+            case "SAL":
+                return "SERVICES";
+            default:
+                return "PRODUCTS";
+        }
+    }
 }
