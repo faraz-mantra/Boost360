@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.thinksity.R;
 
@@ -32,6 +34,24 @@ public class ExistingDomainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        
+
+        //setheader
+        setHeader(view);
+    }
+
+    public void setHeader(View view){
+        LinearLayout backButton;
+        TextView title;
+
+        title = view.findViewById(R.id.title);
+        backButton = view.findViewById(R.id.back_button);
+        title.setText("Use Existing Domain");
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().onBackPressed();
+            }
+        });
     }
 }

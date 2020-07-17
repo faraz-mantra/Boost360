@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#EFEFEF"
     android:clickable="true"
     android:focusable="true"
-    android:background="#EFEFEF"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/new_custome_app_bar" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,55 +24,41 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="@dimen/_12sdp"
+            android:text="Enter the domain you want to be booked &amp; mapped to your Boost business website."
             android:textColor="@color/white"
-            android:text="Enter the domain you want to be booked &amp; mapped to your Boost business website."/>
+            android:textSize="@dimen/_12sdp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:background="@drawable/edittext_bg_elevated">
+            android:background="@drawable/edittext_bg_elevated"
+            android:gravity="center_vertical">
+
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="@dimen/_5sdp"
+                android:background="@null"
                 android:hint="Write a domain name..."
-                android:background="@null"/>
+                android:padding="@dimen/_5sdp" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#7EADFD"
-                android:padding="@dimen/_5sdp">
+                android:background="#7EADFD">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=".com"
+                <Spinner
+                    android:id="@+id/domain_support_type"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/domain_spinner_bg"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:spinnerMode="dropdown"
                     android:textColor="@color/white"
-                    android:paddingBottom="@dimen/_4sdp"
-                    android:textSize="@dimen/_15sdp"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/main_spinner_bg"/>
-
-                <!--            <Spinner-->
-                <!--                android:id="@+id/expiry_month_value"-->
-                <!--                android:layout_width="wrap_content"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:background="@drawable/main_spinner_bg"-->
-                <!--                android:inputType="text"-->
-                <!--                android:paddingStart="@dimen/_10sdp"-->
-                <!--                android:paddingEnd="@dimen/_10sdp"-->
-                <!--                android:spinnerMode="dropdown"-->
-                <!--                android:text=".com"-->
-                <!--                android:textColor="@color/common_text_color"-->
-                <!--                android:textColorHint="@color/common_text_color"-->
-                <!--                app:layout_constraintStart_toStartOf="parent" />-->
+                    app:layout_constraintStart_toStartOf="parent" />
             </LinearLayout>
         </LinearLayout>
 
@@ -74,8 +66,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:textColor="@color/white"
-            android:text="You’re getting this domain worth ₹600 for first year."/>
+            android:text="You’re getting this domain worth ₹600 for first year."
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <RelativeLayout
@@ -86,29 +78,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/_50sdp"
             android:gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/_50sdp">
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="*Boost doesn’t buy any premium domain."/>
+                android:text="*Boost doesn’t buy any premium domain." />
+
             <TextView
                 android:id="@+id/confirm_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/orange_button_click_effect"
-                android:fontFamily="@font/open_sans_semibold"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/orange_button_click_effect"
+                android:elevation="@dimen/_2sdp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:gravity="center"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
-                android:gravity="center"
                 android:text="Confirm"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:elevation="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_10sdp"/>
+                android:textColor="@color/white" />
 
 
             <TextView
@@ -117,12 +111,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
                 android:background="@drawable/order_grey_button_click_effect"
+                android:elevation="@dimen/_2sdp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
                 android:padding="@dimen/_10sdp"
                 android:text="back"
                 android:textAllCaps="true"
-                android:elevation="@dimen/_2sdp"
                 android:textColor="@color/common_text_color" />
         </LinearLayout>
 

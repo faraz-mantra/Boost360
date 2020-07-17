@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
@@ -30,13 +31,15 @@ public class DomainPurchasedFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        mViewModel = ViewModelProviders.of(this).get(DomainPurchasedViewModel.class);
         return inflater.inflate(R.layout.domain_purchased_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(DomainPurchasedViewModel.class);
+        //setheader
+        setHeader(view);
 
         existDomainButton = view.findViewById(R.id.existdomain_btn_proceed);
         newDomainButton = view.findViewById(R.id.newdomain_btn_proceed);
@@ -55,6 +58,23 @@ public class DomainPurchasedFragment extends Fragment {
             }
         });
 
+    }
+
+
+    public void setHeader(View view){
+        LinearLayout backButton;
+        TextView title;
+
+        title = view.findViewById(R.id.title);
+        backButton = view.findViewById(R.id.back_button);
+        title.setText("Website Domain");
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().onBackPressed();
+            }
+        });
     }
 
 }
