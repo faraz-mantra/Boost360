@@ -155,7 +155,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     }
 
     back_button12.setOnClickListener {
-      (activity as UpgradeActivity).popFragmentFromBackStack()
+      (activity as UpgradeActivity).onBackPressed()
     }
 
     cart_view_details.setOnClickListener {
