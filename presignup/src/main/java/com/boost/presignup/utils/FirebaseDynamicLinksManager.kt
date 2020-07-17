@@ -12,6 +12,7 @@ import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 
 enum class DynamicLinkParams {
   fpId,
+  fpTag,
   viewType,
   day,
   referrer

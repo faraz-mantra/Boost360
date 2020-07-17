@@ -14,7 +14,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.catlogservice.constant.FragmentType;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.Adapter.ProductCategoryRecyclerAdapter;
 import com.nowfloats.ProductGallery.Model.Product;
@@ -33,8 +32,6 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-
-import static com.catlogservice.ui.FragmentContainerServiceActivityKt.startFragmentActivityNew;
 
 public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener {
 
@@ -223,9 +220,9 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
     private void openAddProductActivity() {
         switch (Utils.getProductType(session.getFP_AppExperienceCode())) {
-            case "SERVICES":
-                startFragmentActivityNew(this, FragmentType.SERVICE_DETAIL_VIEW, new Bundle(), false);
-                break;
+//            case "SERVICES":
+//                startFragmentActivityNew(this, FragmentType.SERVICE_DETAIL_VIEW, new Bundle(), false);
+//                break;
             default:
                 Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
                 intent.putExtra("PRODUCT", new Product());

@@ -1,6 +1,7 @@
 package com.nowfloats.PreSignUp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,13 +38,15 @@ import java.util.ArrayList;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static java.lang.String.format;
+
 public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface, PresignupManager.SignUpLoginHandler {
     UserSessionManager session;
     Bus bus;
     LottieAnimationView animationView;
     public static ProgressDialog pd;
     private String loginCheck = null, deepLink;
-    private String deepLinkViewType = "", deepLinkFpId = "", deepLinkDay = "";
+    private String deepLinkViewType = "", deepLinkFpId = "", deepLinkDay = "", deepLinkFpTag = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         if (bundle != null) {
             deepLinkViewType = bundle.getString("deepLinkViewType");
             deepLinkFpId = bundle.getString("deepLinkFpId");
+            deepLinkFpTag = bundle.getString("deepLinkFpTag");
             deepLinkDay = bundle.getString("deepLinkDay");
         }
         bus = BusProvider.getInstance().getBus();
@@ -134,8 +138,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private void displayPreSignUpScreens() {
-        if (pd != null && pd.isShowing())
-            pd.dismiss();
+        if (pd != null && pd.isShowing()) pd.dismiss();
         HomeActivity.StorebizFloats = new ArrayList<>();
         // user is not logged in redirect him to Login Activity
 
@@ -193,31 +196,47 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
                 && deepLinkFpId != null && deepLinkFpId.trim().equals(session.getFPID().trim())) {
             initiateAddonMarketplace();
         } else {
-            Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            if (deepLink != null) {
-                if (!deepLink.contains("logout")) {
-                    i.putExtras(getIntent());
-                    startActivity(i);
-                    if (pd != null && pd.isShowing()) pd.dismiss();
-                    finish();
-                } else {
-                    session.logoutUser();
-                    DataBase db = new DataBase(this);
-                    DbController.getDbController(getApplicationContext()).deleteDataBase();
-                    db.deleteLoginStatus();
-                }
-            } else {
-                startActivity(i);
-                if (pd != null && pd.isShowing()) pd.dismiss();
-                finish();
-            }
+            if (deepLinkViewType != null && deepLinkViewType.equalsIgnoreCase("CART_FRAGMENT")) {
+                showAlertDialog();
+            } else goHomePage();
         }
         //Staring Login Activity
         /*Fetch_Home_Data fetch_home_data  = new Fetch_Home_Data(this,0);
         fetch_home_data.setFetchDataListener(SplashScreen_Activity.this);
         fetch_home_data.getMessages(session.getFPID(), "0");*/
+    }
+
+    private void goHomePage() {
+        Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        if (deepLink != null) {
+            if (!deepLink.contains("logout")) {
+                i.putExtras(getIntent());
+                startActivity(i);
+                if (pd != null && pd.isShowing()) pd.dismiss();
+                finish();
+            } else {
+                session.logoutUser();
+                DataBase db = new DataBase(this);
+                DbController.getDbController(getApplicationContext()).deleteDataBase();
+                db.deleteLoginStatus();
+            }
+        } else {
+            startActivity(i);
+            if (pd != null && pd.isShowing()) pd.dismiss();
+            finish();
+        }
+    }
+
+    private void showAlertDialog() {
+        String str = format(getResources().getString(R.string.error_right_fptag), deepLinkFpTag);
+        new AlertDialog.Builder(this).setMessage(str)
+                .setCancelable(false)
+                .setPositiveButton(R.string.ok, (dialog, i) -> {
+                    dialog.dismiss();
+                    goHomePage();
+                }).show();
     }
 
     private void initiateAddonMarketplace() {
