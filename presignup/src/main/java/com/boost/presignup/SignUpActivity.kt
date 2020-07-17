@@ -215,16 +215,19 @@ class SignUpActivity : AppCompatActivity() {
 
       override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
         val responseResult: UserProfileResponse? = response.body()
+        if (responseResult?.Result?.LoginId.isNullOrEmpty().not()) {
+          WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
+          WebEngageController.setUserContactAttributes(email, userMobile, personName)
+          WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
 
-        WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
-        WebEngageController.setUserContactAttributes(email, userMobile, personName)
-        WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
-
-        val intent = Intent(applicationContext, SignUpConfirmation::class.java)
-        intent.putExtra("profileUrl", profileUrl)
-        intent.putExtra("person_name", personName)
-        intent.putExtra("profile_id", responseResult?.Result?.LoginId)
-        startActivity(intent)
+          val intent = Intent(applicationContext, SignUpConfirmation::class.java)
+          intent.putExtra("profileUrl", profileUrl)
+          intent.putExtra("person_name", personName)
+          intent.putExtra("profile_id", responseResult?.Result?.LoginId)
+          startActivity(intent)
+        } else {
+          Toast.makeText(applicationContext, "Profile not created, please try again.", Toast.LENGTH_SHORT).show()
+        }
       }
     })
   }

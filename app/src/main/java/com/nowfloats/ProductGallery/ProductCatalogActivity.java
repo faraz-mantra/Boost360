@@ -1,17 +1,18 @@
 package com.nowfloats.ProductGallery;
 
 import android.content.Intent;
-import androidx.databinding.DataBindingUtil;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.Adapter.ProductCategoryRecyclerAdapter;
@@ -32,7 +33,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener{
+public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener {
 
     private ActivityProductCatalogBinding binding;
     private ProductCategoryRecyclerAdapter adapter;
@@ -44,8 +45,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     private int limit = WidgetKey.WidgetLimit.FEATURE_NOT_AVAILABLE.getValue();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_catalog);
 
@@ -53,8 +53,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
         session = new UserSessionManager(getApplicationContext(), this);
 
-        if (getSupportActionBar() != null)
-        {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -70,8 +69,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         getWidgetLimit();
     }
 
-    private void getWidgetLimit()
-    {
+    private void getWidgetLimit() {
         WidgetKey widget = new WidgetKey();
         widget.setWidgetListener(this);
         widget.getWidgetLimit(session, WidgetKey.WIDGET_PRODUCT_CATALOG);
@@ -79,12 +77,11 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
     /**
      * API call to get the list of products
+     *
      * @param flag
      */
-    private void getProducts(boolean flag)
-    {
-        if(!Methods.isOnline(ProductCatalogActivity.this))
-        {
+    private void getProducts(boolean flag) {
+        if (!Methods.isOnline(ProductCatalogActivity.this)) {
             return;
         }
 
@@ -110,17 +107,14 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
                 binding.pbLoading.setVisibility(View.GONE);
 
-                if(data != null && response.getStatus() == 200)
-                {
-                    if(data.size() > 0)
-                    {
+                if (data != null && response.getStatus() == 200) {
+                    if (data.size() > 0) {
                         binding.layoutEmptyView.setVisibility(View.GONE);
                         adapter.setData(data, flag);
                         return;
                     }
 
-                    if(adapter.getItemCount() == 0)
-                    {
+                    if (adapter.getItemCount() == 0) {
                         binding.layoutEmptyView.setVisibility(View.VISIBLE);
                     }
                 }
@@ -142,8 +136,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     /**
      * Initialize service/product adapter
      */
-    private void initProductRecyclerView()
-    {
+    private void initProductRecyclerView() {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         adapter = new ProductCategoryRecyclerAdapter(this);
@@ -151,9 +144,9 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         binding.productList.setAdapter(adapter);
 
         adapter.SetOnItemClickListener(selected_product -> {
-                    Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
-                    intent.putExtra("PRODUCT", selected_product);
-                    startActivityForResult(intent, 300);
+            Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
+            intent.putExtra("PRODUCT", selected_product);
+            startActivityForResult(intent, 300);
                 }
         );
 
@@ -165,8 +158,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                 int totalItemCount = layoutManager.getItemCount();
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
 
-                if(lastVisibleItem>=totalItemCount-1 && !stop && !isLoading)
-                {
+                if (lastVisibleItem >= totalItemCount - 1 && !stop && !isLoading) {
                     getProducts(false);
                 }
             }
@@ -174,24 +166,20 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
 
                 finish();
@@ -208,61 +196,52 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == 300 && resultCode == RESULT_OK)
-        {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 300 && resultCode == RESULT_OK) {
             boolean flag = data.getBooleanExtra("LOAD", true);
             getProducts(flag);
         }
     }
 
-    private void openAddProductActivity()
-    {
-        Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
-        intent.putExtra("PRODUCT", new Product());
-        startActivityForResult(intent, 300);
+    private void openAddProductActivity() {
+        Product p = new Product();
+        String type = Utils.getProductType(session.getFP_AppExperienceCode());
+        switch (type) {
+//            case "SERVICES":
+//                startFragmentActivityNew(this, FragmentType.SERVICE_DETAIL_VIEW, new Bundle(), false);
+//                break;
+            default:
+                p.setProductType(type);
+                Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
+                intent.putExtra("PRODUCT", p);
+                startActivityForResult(intent, 300);
+                break;
+        }
     }
 
-    private void addProduct()
-    {
+    private void addProduct() {
         /**
          * If not new pricing plan
          */
-        if(!WidgetKey.isNewPricingPlan)
-        {
-            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
-            {
+        if (!WidgetKey.isNewPricingPlan) {
+            if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                 Methods.showFeatureNotAvailDialog(this);
-            }
-
-            else
-            {
+            } else {
                 openAddProductActivity();
             }
 
             Log.d("WIDGET_LIMIT_RESPONSE", "EXISTING PRICING PLAN");
-        }
-
-        else
-        {
+        } else {
             Log.d("WIDGET_LIMIT_RESPONSE", "NEW PRICING PLAN");
 
             String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_PRODUCT_CATALOG, WidgetKey.WIDGET_PROPERTY_MAX);
 
-            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
-            {
-                Toast.makeText(getApplicationContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
-            }
-
-            else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && adapter.getItemCount() >= Integer.parseInt(value))
-            {
-                Toast.makeText(getApplicationContext(), String.valueOf(getString(R.string.message_add_product_limit)), Toast.LENGTH_LONG).show();
-            }
-
-            else
-            {
-               openAddProductActivity();
+            if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
+                Toast.makeText(getApplicationContext(), getString(R.string.message_feature_not_available), Toast.LENGTH_LONG).show();
+            } else if (!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && adapter.getItemCount() >= Integer.parseInt(value)) {
+                Toast.makeText(getApplicationContext(), getString(R.string.message_add_product_limit), Toast.LENGTH_LONG).show();
+            } else {
+                openAddProductActivity();
             }
 
             /*if(limit == WidgetKey.WidgetLimit.FEATURE_NOT_AVAILABLE.getValue())
@@ -289,8 +268,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         Log.d("WIDGET_LIMIT_RESPONSE", "SUCCESS " + limit);
     }
 
-    public void onAddNewProduct(View view)
-    {
+    public void onAddNewProduct(View view) {
         addProduct();
     }
 }

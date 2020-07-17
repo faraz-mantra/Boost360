@@ -244,37 +244,22 @@ class PaymentFragment : BaseFragment(), PaymentListener {
     }
 
     fun payViaPaymentLink() {
-//        Toasty.warning(requireContext(), "This feature is coming soon. Try other payment methods", Toast.LENGTH_SHORT, true).show();
-        //TODO : Ronak - Call API to send email in the captured email address (give retry option to user)
-        //LINK - https://www.getboost360.com/subscriptions/ORDER_INVOICE_ID/pay-now
-        //TODO - Ronak - after email is sent, send to order_confirmation screen but with state as pending. The user should see that order is pending to be activated.
-        //Also the cart should get empty to avoid duplicate payments for the same order.
-
-//        //sample body
-//        {
-//            To: [clint.mail],
-//            Subject: `Payment link for order ID #${id}`,
-//            // TODO: Use an Email template
-//            EmailBody: `🕐 Awaiting your payment for online order ID #${order.id}
-//            for ${businessName}.<br/>
-//                    Please use following link to pay.<br/><br/>
-//            ${paymentLink}<br/>`,
-//        };
 
         try {
             val paymentLink = "https://www.getboost360.com/subscriptions/" + cartCheckoutData.get("transaction_id") + "/pay-now"
-            val emailBody = "\uD83D\uDD50 Awaiting your payment for online order ID #" + cartCheckoutData.get("order_id") +
-                    "<br/>for " + (activity as UpgradeActivity).fpName + ".\nPlease use following link to pay.<br/><br/>" + paymentLink + "<br/>"
+            val emailBody = "You can securely pay for your Boost360 subscription (Order #" + cartCheckoutData.get("transaction_id") + ") using the link below." +
+                    "<br/>The subscription will be activated against the account of " + (activity as UpgradeActivity).fpName + ".<br/><br/>Payment Link: " + paymentLink
 
+            var prefs = SharedPrefs(activity as UpgradeActivity)
             val emailArrayList = ArrayList<String>()
             emailArrayList.add(paymentData.get("userEmail").toString())
-
+            emailArrayList.add(prefs.getFPEmail())
 
             viewModel.loadPamentUsingExternalLink((activity as UpgradeActivity).clientid,
                     PaymentThroughEmailRequestBody((activity as UpgradeActivity).clientid,
                             emailBody,
                             "alerts@nowfloats.com",
-                            "Payment link for order ID #" + cartCheckoutData.get("order_id"),
+                            "\uD83D\uDD50 Payment link for your Boost360 Subscription [Order #" + cartCheckoutData.get("transaction_id") + "]",
                             emailArrayList,
                             0
                     ))

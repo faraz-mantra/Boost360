@@ -40,8 +40,9 @@ data class Product(
     val otherSpecifications: List<Any>? = null,
     val paymentType: String? = null,
     val pickupAddressReferenceId: Any? = null,
-    val productType: String? = null,
+    var productType: String? = null,
     val tags: List<String>? = null,
     val uniquePaymentUrl: Any? = null,
     val variants: Boolean? = null
 )
+

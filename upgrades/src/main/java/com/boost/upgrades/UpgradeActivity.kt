@@ -1,10 +1,18 @@
 package com.boost.upgrades
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -12,6 +20,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
 import com.boost.upgrades.ui.home.HomeFragment
@@ -39,6 +48,8 @@ class UpgradeActivity : AppCompatActivity() {
 
     private val splashFragment = SplashFragment()
 
+    private var cartFragment: CartFragment? = null
+
     lateinit var razorpay: Razorpay
 
     lateinit var prefs: SharedPrefs
@@ -50,6 +61,10 @@ class UpgradeActivity : AppCompatActivity() {
     var email: String? = null
     var mobileNo: String? = null
     var profileUrl: String? = null
+    var isDeepLink: Boolean = false
+    var deepLinkViewType: String = ""
+    var deepLinkDay: Int = 7
+
     var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
     private var widgetFeatureCode: String? = null
 
@@ -60,6 +75,10 @@ class UpgradeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upgrade)
+
+        isDeepLink = intent.getBooleanExtra("isDeepLink", false)
+        deepLinkViewType = intent.getStringExtra("deepLinkViewType") ?: ""
+        deepLinkDay = intent.getStringExtra("deepLinkDay")?.toIntOrNull() ?: 7
 
         experienceCode = intent.getStringExtra("expCode")
         fpName = intent.getStringExtra("fpName")
@@ -80,19 +99,21 @@ class UpgradeActivity : AppCompatActivity() {
 
     fun initView() {
         if (fpid != null) {
-            addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
-            //update userdetails and buyitem
-            showingPopUp()
+            if (isDeepLink) {
+                cartFragment = CartFragment.newInstance()
+                cartFragment?.let { addFragment(it, CART_FRAGMENT) }
+            } else {
+                addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
+                //update userdetails and buyitem
+                showingPopUp()
+                supportFragmentManager.addOnBackStackChangedListener {
+                    val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
+                    if (currentFragment != null) {
+                        val tag = currentFragment.tag
+                        Log.e("Add tag", ">>>$tag")
+                        tellFragments()
+                    } else finish()
 
-            supportFragmentManager.addOnBackStackChangedListener {
-                val currentFragment =
-                        supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
-                if (currentFragment != null) {
-                    val tag = currentFragment!!.tag
-                    Log.e("tag", ">>>$tag")
-                    tellFragments()
-                } else {
-                    finish()
                 }
             }
         } else {
@@ -109,27 +130,57 @@ class UpgradeActivity : AppCompatActivity() {
         performBackPressed()
     }
 
+    private fun goHomeActivity() {
+        try {
+            val i = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(i)
+            overridePendingTransition(0, 0)
+            finish()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     private fun performBackPressed() {
         try {
             Utils.hideSoftKeyboard(this)
             if (supportFragmentManager.backStackEntryCount > 0) {
-                val currentFragment =
-                        supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
-                val tag = currentFragment!!.tag
+                val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
+                val tag = currentFragment?.tag
                 Log.e("back pressed tag", ">>>$tag")
                 if (tag != null) {
                     if (tag == ORDER_CONFIRMATION_FRAGMENT) {
-                        goToHomeFragment()
-                    } else {
-                        fragmentManager!!.popBackStack()
-                    }
+                        if (isDeepLink) goHomeActivity()
+                        else goToHomeFragment()
+                    } else if (isDeepLink && (tag == CART_FRAGMENT || tag == VIEW_ALL_FEATURE)) {
+                        if (cartFragment != null && cartFragment?.isRenewalListNotEmpty() == true) alertDialog()
+                        else goHomeActivity()
+                    } else fragmentManager!!.popBackStack()
                 }
             } else {
-                super.onBackPressed()
+                if (isDeepLink) goHomeActivity()
+                else super.onBackPressed()
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun alertDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this@UpgradeActivity)
+        val viewGroup = findViewById<ViewGroup>(android.R.id.content)
+        val dialogView: View = LayoutInflater.from(this).inflate(R.layout.alert_view, viewGroup, false)
+        builder.setView(dialogView)
+        val alertDialog: AlertDialog = builder.create()
+        dialogView.findViewById<TextView>(R.id.no_btn).setOnClickListener { alertDialog.dismiss() }
+        dialogView.findViewById<TextView>(R.id.yes_btn).setOnClickListener {
+            prefs.storeCartOrderInfo(null)
+            goHomeActivity()
+            alertDialog.dismiss()
+        }
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        alertDialog.show()
     }
 
     private var currentFragment: Fragment? = null
@@ -207,7 +258,7 @@ class UpgradeActivity : AppCompatActivity() {
             loaderStatus(true)
         }
         CompositeDisposable().add(
-                AppDatabase.getInstance(getApplication())!!
+                AppDatabase.getInstance(application)!!
                         .featuresDao()
                         .checkEmptyFeatureTable()
                         .subscribeOn(Schedulers.io())

@@ -1,13 +1,14 @@
 package com.nowfloats.ProductGallery;
 
 import android.content.Intent;
-import androidx.databinding.DataBindingUtil;
-import android.os.Handler;
-import androidx.fragment.app.Fragment;
 import android.os.Bundle;
-import androidx.fragment.app.FragmentTransaction;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.ProductGallery.Model.Product;
@@ -29,8 +30,7 @@ public class ManageProductActivity extends BaseActivity
 
         setSupportActionBar(binding.layoutToolbar.toolbar);
 
-        if (getSupportActionBar() != null)
-        {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -39,6 +39,7 @@ public class ManageProductActivity extends BaseActivity
 
         Product product = (Product) getIntent().getSerializableExtra("PRODUCT");
         loadFragment(ProductCategoryFragment.newInstance(product), "PRODUCT_CATEGORY");
+//        loadFragment(ManageProductFragment.newInstance("products", "", product), "MANAGE_PRODUCT");
 
         /*if(this.product == null)
         {
