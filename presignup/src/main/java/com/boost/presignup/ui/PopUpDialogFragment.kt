@@ -268,36 +268,29 @@ class PopUpDialogFragment : DialogFragment() {
     }
 
     fun AuthorizedGoogleUser(currentUser: FirebaseUser?) {
-        var acct = GoogleSignIn.getLastSignedInAccount(context);
-        if (acct != null) {
-            val personName = acct.displayName.toString()
-            val personFamilyName = acct.familyName.toString()
-            val personEmail = acct.email.toString()
-            val personIdToken = acct.idToken.toString()
-            val personPhoto = acct.photoUrl.toString()
-
-            Log.d(TAG, "updateUI: photo = " + personPhoto);
+        if (currentUser != null) {
+            val personName = currentUser.displayName
+            val personEmail = currentUser.email
+            val personIdToken = currentUser.getIdToken(true).toString()
+            val personPhoto = currentUser.photoUrl
 
             val intent = Intent(requireContext(), SignUpActivity::class.java)
             intent.putExtra("url", personPhoto)
             intent.putExtra("email", personEmail)
             intent.putExtra("person_name", personName)
-            intent.putExtra("personFamilyName", personFamilyName)
             intent.putExtra("personIdToken", personIdToken)
             intent.putExtra("provider", "GOOGLE")
             startActivity(intent);
-//            mGoogleSignInClient.signOut()
             dialog!!.dismiss()
-//            activity!!.finish();
         }
     }
 
     fun AuthorizedFacebookUser(currentUser: FirebaseUser?) {
         if (currentUser != null) {
             val personName = currentUser.displayName
-            val personEmail = currentUser.email.toString()
+            val personEmail = currentUser.email
             val personIdToken = currentUser.getIdToken(true).toString()
-            val personPhoto = currentUser.photoUrl.toString()
+            val personPhoto = currentUser.photoUrl
 
             Log.d(TAG, "updateUI: photo = " + personPhoto);
 
