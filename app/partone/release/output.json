@@ -11,10 +11,10 @@
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 2020020056,
-      "versionName": "2020020056",
+      "versionCode": 2020020057,
+      "versionName": "2020020057",
       "enabled": true,
-      "outputFile": "NF-Boost-partoneRelease-5.3.34.apk"
+      "outputFile": "NF-Boost-partoneRelease-5.3.35.apk"
     }
   ]
 }
