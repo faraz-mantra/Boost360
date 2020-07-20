@@ -82,7 +82,8 @@ class RazorPayWebView : DialogFragment() {
                     override fun onPaymentSuccess(razorpayPaymentId: String) {
                         // Razorpay payment ID is passed here after a successful payment
                         Log.i("onPaymentSuccess", razorpayPaymentId)
-
+                        val revenue = data["amount"] as Int
+                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment Success", "rev", revenue/100)
                         redirectOrderConfirmation(razorpayPaymentId)
                         dialog!!.dismiss()
                     }
@@ -96,7 +97,6 @@ class RazorPayWebView : DialogFragment() {
                         redirectTransactionFailure(data.toString())
                         dialog!!.dismiss()
                     }
-
                 })
             } catch (e: Exception) {
                 e.printStackTrace()
