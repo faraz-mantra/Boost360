@@ -24,7 +24,9 @@ import com.catlogservice.model.razor.RazorDataResponse
 import com.catlogservice.viewmodel.AccountViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.afterTextChanged
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 
 
 class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, AccountViewModel>() {
@@ -59,8 +61,8 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     setOnClickListener(binding?.submitBtn, binding?.whyBtn, binding?.verificationBtn)
     fpId = arguments?.getString(IntentConstant.FP_ID.name) ?: ""
     clientId = arguments?.getString(IntentConstant.CLIENT_ID.name) ?: ""
-    getUserDetails()
     binding?.edtIfsc?.afterTextChanged { isIfscValid(binding?.edtIfsc?.text.toString().trim()) }
+    getUserDetails()
   }
 
   private fun isIfscValid(ifsc: String) {
@@ -70,12 +72,21 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         if ((it.status == 200 || it.status == 201 || it.status == 202) && data != null) {
           isValidIfsc = true
           binding?.edtBankName?.setText(data.bANK ?: "")
-        } else {
-          isValidIfsc = false
-          binding?.edtBankName?.setText("")
-        }
+          if (data.bRANCH.isNullOrEmpty().not()) {
+            binding?.edtBankBranch?.setText(data.bRANCH)
+            binding?.txtBranch?.visible()
+            binding?.edtBankBranch?.visible()
+          }
+        } else ifscUiUpdate()
       })
-    } else isValidIfsc = false
+    } else ifscUiUpdate()
+  }
+
+  private fun ifscUiUpdate() {
+    isValidIfsc = false
+    binding?.edtBankName?.setText("")
+    binding?.txtBranch?.gone()
+    binding?.edtBankBranch?.gone()
   }
 
   private fun getUserDetails() {
@@ -164,6 +175,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       it?.isFocusable = isEditable
       it?.isFocusableInTouchMode = isEditable
     }
+    binding?.edtBankBranch?.background = ContextCompat.getDrawable(baseActivity, if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill)
 
     binding?.edtAccountName?.hint = if (isEditable) resources.getString(R.string.write_the_name_as_mentioned_in_bank_account) else ""
     binding?.edtAccountNumber?.hint = if (isEditable) resources.getString(R.string.xxxxxxxxxxxxxxxxxx) else ""
