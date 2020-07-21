@@ -1,6 +1,6 @@
 package com.nowfloats.Store.Service;
 
-import com.catlogservice.model.accountDetails.AccountDetailsResponse;
+import com.appservice.model.accountDetails.AccountDetailsResponse;
 import com.google.gson.JsonObject;
 import com.nowfloats.Store.DiscountCoupon;
 import com.nowfloats.Store.Model.ChequePaymentModel;
