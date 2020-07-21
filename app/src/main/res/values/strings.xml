@@ -1769,6 +1769,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string-array name="account_setting_tab_items">
         <!--<item>Seller Profile</item>-->
+        <item>My Bank Account</item>
         <item>Boost Extensions</item>
         <item>Subscription History</item>
         <item>Domain and Email</item>
@@ -1860,4 +1861,5 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     </string-array>
     <string name="your_digital_assitant">Your digital assitant</string>
     <string name="error_right_fptag">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right Boost account.</string>
+  <string name="bank_account_details">Bank Account Details</string>
 </resources>

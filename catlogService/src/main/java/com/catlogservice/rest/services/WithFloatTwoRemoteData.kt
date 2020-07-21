@@ -6,7 +6,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 
-interface ServiceCreateRemote {
+interface WithFloatTwoRemoteData {
 
   @GET(EndPoints.CREATE_SERVICE)
   fun createService(@Body request: Any): Observable<Response<Any>>

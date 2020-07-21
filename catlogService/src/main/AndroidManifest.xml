@@ -2,10 +2,16 @@
     package="com.catlogservice">
 
     <application>
-        <activity
-            android:name=".ui.FragmentContainerServiceActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.cataloge"
-            android:windowSoftInputMode="adjustPan" />
+      <activity
+        android:name=".ui.FragmentContainerServiceActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme.cataloge"
+        android:windowSoftInputMode="adjustPan" />
+
+      <activity
+        android:name=".ui.paymentcollect.AccountFragmentContainerActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme.account"
+        android:windowSoftInputMode="adjustPan" />
     </application>
 </manifest>

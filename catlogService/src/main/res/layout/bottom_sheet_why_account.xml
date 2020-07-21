@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/verification_ui"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rounded_top_strock"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/size_16">
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/text_verification"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_10"
+      android:layout_marginTop="@dimen/size_16"
+      android:layout_marginEnd="@dimen/size_10"
+      android:clickable="true"
+      android:focusable="true"
+      android:gravity="center"
+      android:text="Why do we need your bank account?"
+      android:textAlignment="gravity"
+      android:textColor="@color/greyish_brown"
+      app:textType="HEADING_5" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/text_desc"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_4"
+      android:layout_marginTop="@dimen/size_14"
+      android:layout_marginEnd="@dimen/size_4"
+      android:clickable="true"
+      android:focusable="true"
+      android:gravity="center"
+      android:text="This account is being used to send you money collected from your customers who are making payments on your Boost Business website."
+      android:textAlignment="gravity"
+      android:textColor="@color/greyish_brown"
+      app:fontFamily="@font/regular"
+      app:textType="CAPTION" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/understood_btn"
+      style="@style/ButtonStyle.Rounded"
+      android:layout_width="match_parent"
+      android:layout_marginStart="@dimen/size_30"
+      android:layout_marginTop="@dimen/size_24"
+      android:layout_marginEnd="@dimen/size_30"
+      android:layout_marginBottom="@dimen/size_16"
+      android:gravity="center"
+      android:text="@string/understood"
+      android:textAlignment="gravity"
+      android:textAllCaps="true"
+      android:textColor="@color/white"
+      app:fontFamily="@font/semi_bold" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

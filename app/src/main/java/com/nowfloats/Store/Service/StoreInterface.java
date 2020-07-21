@@ -1,5 +1,6 @@
 package com.nowfloats.Store.Service;
 
+import com.catlogservice.model.accountDetails.AccountDetailsResponse;
 import com.google.gson.JsonObject;
 import com.nowfloats.Store.DiscountCoupon;
 import com.nowfloats.Store.Model.ChequePaymentModel;
@@ -29,6 +30,7 @@ import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import retrofit.http.QueryMap;
 
 /**
@@ -107,4 +109,7 @@ public interface StoreInterface {
 
     @GET("/support/v1/floatingpoint/widgetLimit")
     void getWidgetLimit(@QueryMap Map<String, String> map, Callback<Object> callback);
+
+    @GET("/discover/v9/business/paymentProfile/{fpId}")
+    void userAccountDetail(@Path("fpId") String fpId, @Query("clientId") String clientId, Callback<AccountDetailsResponse> callback);
 }

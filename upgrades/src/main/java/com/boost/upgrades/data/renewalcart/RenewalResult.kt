@@ -2,6 +2,7 @@ package com.boost.upgrades.data.renewalcart
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class RenewalResult(
     @SerializedName("ActivationDate")
@@ -46,8 +47,21 @@ data class RenewalResult(
     var widgetKey: String? = null,
     @SerializedName("WidgetStatus")
     var widgetStatus: String? = null
-) {
-    enum class RenewalStatus {
-        PENDING
-    }
+) : Serializable {
+
+  fun renewalStatus(): String {
+    return renewalStatus ?: ""
+  }
+
+  fun nextWidgetStatus(): String {
+    return nextWidgetStatus ?: ""
+  }
+
+  fun widgetStatus(): String {
+    return widgetStatus ?: ""
+  }
+
+  enum class RenewalStatus {
+    PENDING
+  }
 }

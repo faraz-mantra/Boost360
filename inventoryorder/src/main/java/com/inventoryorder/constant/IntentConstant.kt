@@ -7,5 +7,5 @@ enum class IntentConstant {
   EXPERIENCE_CODE,
   BOOKING_ITEM,
   IS_REFRESH,
-  RESULT_DATA
+  RESULT_DATA,
 }
