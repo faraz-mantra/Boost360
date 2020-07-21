@@ -891,57 +891,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }
 
-    private void checkExpiry1() {
-        if (Constants.PACKAGE_NAME.equals("com.kitsune.biz")) {
-            return;
-        }
-        String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-        String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
-        if (TextUtils.isEmpty(paymentState) || TextUtils.isEmpty(paymentLevel)) {
-            return;
-        }
-        Calendar calendar = Calendar.getInstance();
-        Long currentTime = calendar.getTimeInMillis();
-
-        switch (Integer.parseInt(paymentState)) {
-
-            case -1:
-                if (Integer.parseInt(paymentLevel) > 10) {
-                    showDialog1(LIGHT_HOUSE_EXPIRE, -1);
-                } else {
-                    showDialog1(DEMO_EXPIRE, -1);
-                }
-                break;
-            /*case 0:
-                String fpCreatedDate = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON);
-                if(fpCreatedDate.contains("/Date")){
-                    fpCreatedDate = fpCreatedDate.replace("/Date(", "").replace(")/", "");
-                }
-                float days = ((currentTime-Long.valueOf(fpCreatedDate))/(float)(1000*60*60*24));
-
-                if( days <= 7){
-                    //seven days dialog ervery day
-                    showDialog1(DEMO_DAYS_LEFT,days);
-                }else if(days< 30){
-                    //once a week
-                    long prev = pref.getLong("expire_dialog",-1);
-                    if((currentTime-prev)/(60*60*24*1000) >= 7) {
-                        showDialog1(DEMO_DAYS_LEFT,days);
-                    }
-                }
-                break;
-            case 1:
-                if(!BuildConfig.APPLICATION_ID.equals("com.kitsune.biz")){
-                    if (checkExpiry() && !session.isSiteAppearanceShown()) {
-                        showSiteVisibilityDialog();
-                    }
-                }
-                getAccountDetails();
-                break;*/
-        }
-
-    }
-
     private void showOnBoardingScreens() {
         MixPanelController.track(EventKeysWL.WELCOME_SCREEN_1, null);
         final Dialog dialog = new Dialog(HomeActivity.this, android.R.style.Theme_Translucent);
@@ -1786,9 +1735,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //        } else {
 //            getCustomerAssistantSuggestions();
 //        }
-
-
-        checkExpiry1();
 
         Intent intent = getIntent();
         if (intent != null && intent.getData() != null) {
