@@ -184,7 +184,7 @@ dependencies {
     implementation project(path: ':upgrades')
 
     //Catlog Library
-    implementation project(path: ':catlogService')
+    implementation project(path: ':appService')
 
 //    implementation project(':riachatsdkMain')
     implementation('com.github.ozodrukh:CircularReveal:2.0.1@aar') {

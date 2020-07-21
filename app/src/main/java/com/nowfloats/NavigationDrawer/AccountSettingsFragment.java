@@ -25,9 +25,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.catlogservice.constant.FragmentType;
-import com.catlogservice.constant.IntentConstant;
-import com.catlogservice.model.accountDetails.AccountDetailsResponse;
+import com.appservice.constant.FragmentType;
+import com.appservice.constant.IntentConstant;
+import com.appservice.model.accountDetails.AccountDetailsResponse;
 import com.nowfloats.BusinessProfile.UI.UI.changePasswordAsyncTask;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
@@ -62,7 +62,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import static com.catlogservice.ui.paymentcollect.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
+import static com.appservice.ui.bankaccount.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
 
 /**
  * Created by Admin on 29-01-2018.
