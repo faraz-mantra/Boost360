@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.catlogservice.constant.FragmentType;
 import com.catlogservice.constant.IntentConstant;
+import com.catlogservice.model.accountDetails.AccountDetailsResponse;
 import com.nowfloats.BusinessProfile.UI.UI.changePasswordAsyncTask;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
@@ -36,10 +37,12 @@ import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -54,6 +57,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import static com.catlogservice.ui.paymentcollect.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
 
@@ -91,9 +98,9 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
             Methods.showSnackBar(view, getString(R.string.something_went_wrong_try_again), Color.RED);
             return;
         }
-
         domainApiService = new DomainApiService(this);
         sessionManager = new UserSessionManager(mContext, getActivity());
+        checkUserAccount();
         final String[] adapterTexts = getResources().getStringArray(R.array.account_setting_tab_items);
         final TypedArray imagesArray = getResources().obtainTypedArray(R.array.account_settings);
         int[] adapterImages = new int[adapterTexts.length];
@@ -163,6 +170,24 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setAdapter(adapter);
 
+    }
+
+    private void checkUserAccount() {
+        StoreInterface getAccountDetail = Constants.restAdapterWithFloat.create(StoreInterface.class);
+        getAccountDetail.userAccountDetail(sessionManager.getFPID(), Constants.clientId, new Callback<AccountDetailsResponse>() {
+            @Override
+            public void success(AccountDetailsResponse data, Response response) {
+                if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null)) {
+                    sessionManager.setAccountSave(false);
+                } else sessionManager.setAccountSave(true);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                sessionManager.setAccountSave(false);
+                BoostLog.d("Error account api", "message : " + error.getLocalizedMessage());
+            }
+        });
     }
 
 
