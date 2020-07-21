@@ -857,6 +857,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
         prefsEditor.remove("Last_Purchase_Order_Feature_Keys");
         prefsEditor.remove("Last_payment_status");
+        prefsEditor.apply();
 
         if (!isCalled) {
             navigateView();
