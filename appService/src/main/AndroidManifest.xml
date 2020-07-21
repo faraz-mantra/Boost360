@@ -1,0 +1,17 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.appservice">
+
+  <application>
+    <activity
+      android:name="com.appservice.ui.catlogService.FragmentContainerServiceActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.cataloge"
+      android:windowSoftInputMode="adjustPan" />
+
+    <activity
+      android:name="com.appservice.ui.bankaccount.AccountFragmentContainerActivity"
+      android:screenOrientation="portrait"
+        android:theme="@style/AppTheme.account"
+        android:windowSoftInputMode="adjustPan" />
+    </application>
+</manifest>
