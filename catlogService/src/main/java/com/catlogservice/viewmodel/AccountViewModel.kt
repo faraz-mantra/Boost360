@@ -3,6 +3,7 @@ package com.catlogservice.viewmodel
 import androidx.lifecycle.LiveData
 import com.catlogservice.model.account.AccountCreateRequest
 import com.catlogservice.model.account.BankAccountDetailsN
+import com.catlogservice.rest.repository.RazorRepository
 import com.catlogservice.rest.repository.WithFloatRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
@@ -22,4 +23,7 @@ class AccountViewModel : BaseViewModel() {
     return WithFloatRepository.updateAccount(fpId, clientId, request).toLiveData()
   }
 
+  fun ifscDetail(ifsc: String?): LiveData<BaseResponse> {
+    return RazorRepository.ifscDetail(ifsc).toLiveData()
+  }
 }

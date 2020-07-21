@@ -20,8 +20,10 @@ import com.catlogservice.model.accountDetails.AccountDetailsResponse
 import com.catlogservice.model.accountDetails.BankAccountDetails
 import com.catlogservice.model.accountDetails.KYCDetails
 import com.catlogservice.model.accountDetails.Result
+import com.catlogservice.model.razor.RazorDataResponse
 import com.catlogservice.viewmodel.AccountViewModel
 import com.framework.exceptions.NoNetworkException
+import com.framework.extensions.afterTextChanged
 import com.framework.extensions.observeOnce
 
 
@@ -32,6 +34,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
   private var menuClose: MenuItem? = null
   private var request: AccountCreateRequest? = null
   private var requestAccount: BankAccountDetailsN? = null
+  private var isValidIfsc: Boolean = false
 
   companion object {
     @JvmStatic
@@ -57,6 +60,22 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     fpId = arguments?.getString(IntentConstant.FP_ID.name) ?: ""
     clientId = arguments?.getString(IntentConstant.CLIENT_ID.name) ?: ""
     getUserDetails()
+    binding?.edtIfsc?.afterTextChanged { isIfscValid(binding?.edtIfsc?.text.toString().trim()) }
+  }
+
+  private fun isIfscValid(ifsc: String) {
+    if (ifsc.length == 11) {
+      viewModel?.ifscDetail(ifsc)?.observeOnce(viewLifecycleOwner, Observer {
+        val data = it as? RazorDataResponse
+        if ((it.status == 200 || it.status == 201 || it.status == 202) && data != null) {
+          isValidIfsc = true
+          binding?.edtBankName?.setText(data.bANK ?: "")
+        } else {
+          isValidIfsc = false
+          binding?.edtBankName?.setText("")
+        }
+      })
+    } else isValidIfsc = false
   }
 
   private fun getUserDetails() {
@@ -217,11 +236,14 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     } else if ((confirmNumber == accountNumber).not()) {
       showShortToast("Enter valid confirm account number.")
       return false
-    } else if (bankName.isNullOrEmpty()) {
-      showShortToast("Bank name can't empty.")
-      return false
     } else if (ifsc.isNullOrEmpty()) {
       showShortToast("Bank IFSC can't empty.")
+      return false
+    } else if (ifsc.length < 11 || !isValidIfsc) {
+      showLongToast("Please enter valid IFSC code")
+      return false
+    } else if (bankName.isNullOrEmpty()) {
+      showShortToast("Bank name can't empty.")
       return false
     }
     requestAccount = BankAccountDetailsN(accountName = nameAccount, accountNumber = accountNumber, iFSC = ifsc, bankName = bankName, accountAlias = alias, kYCDetails = BankAccountDetailsN().kycObj())

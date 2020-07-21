@@ -1,8 +1,24 @@
-@file:JvmName("ViewExtensionsKt")
-
 package com.framework.extensions
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import com.framework.views.customViews.CustomEditText
+
+
+fun CustomEditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
+  this.addTextChangedListener(object : TextWatcher {
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun afterTextChanged(editable: Editable?) {
+      afterTextChanged.invoke(editable.toString())
+    }
+  })
+}
 
 fun View.visible() {
   this.visibility = View.VISIBLE

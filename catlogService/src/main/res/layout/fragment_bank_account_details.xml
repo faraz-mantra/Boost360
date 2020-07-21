@@ -90,6 +90,28 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_1"
           android:layout_marginTop="@dimen/size_10"
+          android:text="Bank IFSC Code*"
+          android:textColor="@color/greyish_brown"
+          app:fontFamily="@font/regular"
+          app:textType="BODY_1" />
+
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_ifsc"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_2"
+          android:background="@drawable/rounded_edit_stroke"
+          android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+          android:hint="@string/type_ifsc_code"
+          android:inputType="textCapCharacters"
+          android:maxLength="11"
+          android:singleLine="true" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_10"
           android:text="Bank name*"
           android:textColor="@color/greyish_brown"
           app:fontFamily="@font/regular"
@@ -122,26 +144,6 @@
           android:layout_marginTop="@dimen/size_2"
           android:background="@drawable/rounded_edit_stroke"
           android:hint="@string/write_account_alias"
-          android:inputType="text"
-          android:singleLine="true" />
-
-        <com.framework.views.customViews.CustomTextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/size_1"
-          android:layout_marginTop="@dimen/size_10"
-          android:text="Bank IFSC Code*"
-          android:textColor="@color/greyish_brown"
-          app:fontFamily="@font/regular"
-          app:textType="BODY_1" />
-
-        <com.framework.views.customViews.CustomEditText
-          android:id="@+id/edt_ifsc"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_2"
-          android:background="@drawable/rounded_edit_stroke"
-          android:hint="@string/type_ifsc_code"
           android:inputType="text"
           android:singleLine="true" />
       </androidx.appcompat.widget.LinearLayoutCompat>

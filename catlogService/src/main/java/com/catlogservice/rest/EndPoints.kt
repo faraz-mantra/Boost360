@@ -13,6 +13,9 @@ object EndPoints {
   const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
   const val CREATE_SERVICE = "Product/v1/Create"
 
+  //TODO NFX API 2 WITH FLOAT
+  const val RAZOR_API_BASE = "https://ifsc.razorpay.com/"
+  const val RAZOR_IFSC_DETAIL = "{ifsc}"
 
 }
 
