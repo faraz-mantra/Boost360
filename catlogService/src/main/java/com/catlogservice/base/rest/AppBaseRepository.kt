@@ -1,7 +1,7 @@
 package com.catlogservice.base.rest
 
 import com.catlogservice.rest.TaskCode
-import com.catlogservice.rest.apiClients.WithFloatsApiClient
+import com.catlogservice.rest.apiClients.WithFloatsApiTwoClient
 import com.framework.base.BaseRepository
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
@@ -16,7 +16,7 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
   }
 
   override fun getApiClient(): Retrofit {
-    return WithFloatsApiClient.shared.retrofit
+    return WithFloatsApiTwoClient.shared.retrofit
   }
 
   fun makeLocalRequest(observable: Observable<BaseResponse>, taskCode: TaskCode): Observable<BaseResponse> {

@@ -52,6 +52,7 @@ import com.anachat.chatsdk.AnaCore;
 import com.anachat.chatsdk.internal.database.PreferencesManager;
 import com.android.inputmethod.latin.utils.JniUtils;
 import com.boost.upgrades.UpgradeActivity;
+import com.catlogservice.model.accountDetails.AccountDetailsResponse;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -103,6 +104,7 @@ import com.nowfloats.Store.AddOnFragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.Store.UpgradesFragment;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
@@ -154,6 +156,7 @@ import zendesk.core.Identity;
 import zendesk.core.Zendesk;
 import zendesk.support.Support;
 
+import static com.catlogservice.ui.paymentcollect.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
 import static com.inventoryorder.ui.FragmentContainerOrderActivityKt.startFragmentActivityNew;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO_REMOVE;
@@ -368,8 +371,31 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
 
         initialiseZendeskSupportSdk();
-
+        checkUserAccount();
         //WidgetKey.getWidgets(session, this);
+    }
+
+    private void checkUserAccount() {
+        StoreInterface getAccountDetail = Constants.restAdapterWithFloat.create(StoreInterface.class);
+        getAccountDetail.userAccountDetail(session.getFPID(), Constants.clientId, new Callback<AccountDetailsResponse>() {
+            @Override
+            public void success(AccountDetailsResponse data, Response response) {
+                if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null)) {
+                    session.setAccountSave(false);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(com.catlogservice.constant.IntentConstant.CLIENT_ID.name(), Constants.clientId);
+                    bundle.putString(com.catlogservice.constant.IntentConstant.USER_PROFILE_ID.name(), session.getUserProfileId());
+                    bundle.putString(com.catlogservice.constant.IntentConstant.FP_ID.name(), session.getFPID());
+                    startFragmentAccountActivityNew(HomeActivity.this, com.catlogservice.constant.FragmentType.ADD_BANK_ACCOUNT_START, bundle, false);
+                } else session.setAccountSave(true);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                session.setAccountSave(false);
+                BoostLog.d("Error account api", "message : " + error.getLocalizedMessage());
+            }
+        });
     }
 
     public void DeepLinkPage(String url, boolean isFromRia) {

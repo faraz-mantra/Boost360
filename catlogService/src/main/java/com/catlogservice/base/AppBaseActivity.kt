@@ -2,9 +2,12 @@ package com.catlogservice.base
 
 import android.graphics.Color
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
+import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.ViewDataBinding
 import com.catlogservice.R
@@ -52,14 +55,23 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
         when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
-                return true
+              return true
             }
         }
-        return super.onOptionsItemSelected(item)
+      return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+  override fun onBackPressed() {
+    super.onBackPressed()
+    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+  }
+
+  fun changeTheme(color: Int) {
+    getToolbar()?.setBackgroundColor(ContextCompat.getColor(this, color))
+    window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+      window?.statusBarColor = ContextCompat.getColor(this, color)
     }
+  }
 }
