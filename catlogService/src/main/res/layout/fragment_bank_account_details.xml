@@ -146,6 +146,32 @@
           android:hint="@string/write_account_alias"
           android:inputType="text"
           android:singleLine="true" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_branch"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_10"
+          android:text="Bank Branch*"
+          android:textColor="@color/greyish_brown"
+          android:visibility="gone"
+          app:fontFamily="@font/regular"
+          app:textType="BODY_1" />
+
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_bank_branch"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_2"
+          android:background="@drawable/rounded_edit_stroke"
+          android:focusable="false"
+          android:focusableInTouchMode="false"
+          android:hint="@string/write_the_name_of_your_bank"
+          android:inputType="text"
+          android:singleLine="true"
+          android:visibility="gone" />
+
       </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 
