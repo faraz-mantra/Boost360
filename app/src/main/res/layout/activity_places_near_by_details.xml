@@ -19,7 +19,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:overScrollMode="never"
         android:scrollbars="none">
 
         <LinearLayout
@@ -84,6 +83,7 @@
                 android:layout_marginRight="@dimen/_5sdp"
                 android:hint="Enter Name"
                 android:textSize="@dimen/_12sdp"
+                android:singleLine="true"
                 android:background="@drawable/edittext_bg_elevated"
                 android:elevation="@dimen/_2sdp"/>
 
@@ -102,8 +102,13 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_marginRight="@dimen/_5sdp"
-                android:hint="Alt tag is nothing but a description of this image that helps serach engines find this image. \n(200 Characters Max)"
+                android:hint="Alt tag is nothing but a description of this image that helps search engines find this image. \n(200 Characters Max)"
                 android:textSize="@dimen/_12sdp"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:maxLength="200"
+                android:maxLines="50"
                 android:background="@drawable/edittext_bg_elevated"
                 android:elevation="@dimen/_2sdp"
                 android:gravity="top"/>
@@ -125,6 +130,11 @@
                 android:layout_marginRight="@dimen/_5sdp"
                 android:hint="Enter Address \n(100 Characters Max)"
                 android:textSize="@dimen/_12sdp"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:maxLength="100"
+                android:maxLines="50"
                 android:background="@drawable/edittext_bg_elevated"
                 android:elevation="@dimen/_2sdp"
                 android:gravity="top"/>
@@ -145,6 +155,7 @@
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_marginRight="@dimen/_5sdp"
                 android:hint="Enter Distance in Mt/Km"
+                android:singleLine="true"
                 android:textSize="@dimen/_12sdp"
                 android:background="@drawable/edittext_bg_elevated"
                 android:elevation="@dimen/_2sdp"

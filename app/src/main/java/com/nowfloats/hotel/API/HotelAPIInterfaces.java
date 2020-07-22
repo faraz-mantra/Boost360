@@ -4,6 +4,7 @@ import com.nowfloats.AccrossVerticals.API.model.testimonials.TestimonialModel;
 import com.nowfloats.hotel.API.model.AddPlacesAround.AddPlacesAroundRequest;
 import com.nowfloats.hotel.API.model.DeletePlacesAround.DeletePlacesAroundRequest;
 import com.nowfloats.hotel.API.model.GetPlacesAround.GetPlacesAroundModel;
+import com.nowfloats.hotel.API.model.GetTripAdvisorData.GetTripAdvisorData;
 import com.nowfloats.hotel.API.model.UpdatePlacesAround.UpdatePlacesAroundRequest;
 
 import org.json.JSONObject;
@@ -35,5 +36,8 @@ public interface HotelAPIInterfaces {
     void updatePlacesAround(@Body UpdatePlacesAroundRequest body, Callback<String> response);
 
 
+    @Headers({"Authorization: 59c8add5dd304111404e7f04"})
+    @GET("/api/v1/trip_advisor/get-data")
+    void getTripAdvisorData(@Query("query") JSONObject query, @Query("skip") int skip, @Query("limit") int limit, Callback<GetTripAdvisorData> response);
 
 }

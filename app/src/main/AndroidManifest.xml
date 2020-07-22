@@ -51,7 +51,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:name,android:theme,android:appComponentFactory">
-        <activity android:name="com.nowfloats.hotel.HotelActivity"
+        <activity android:name="com.nowfloats.hotel.tripadvisor.TripAdvisorActivity"
             android:screenOrientation="portrait"/>
         <activity android:name="com.nowfloats.manufacturing.projectandteams.ProjectAndTermsActivity" />
         <activity android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresActivity" />
@@ -1231,6 +1231,7 @@
         <activity android:name="com.nowfloats.hotel.placesnearby.PlacesNearByActivity"
             android:screenOrientation="portrait"/>
         <activity android:name="com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"/>
 
         <provider
