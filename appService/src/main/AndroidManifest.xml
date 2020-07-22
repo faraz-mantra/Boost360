@@ -11,7 +11,13 @@
     <activity
       android:name="com.appservice.ui.bankaccount.AccountFragmentContainerActivity"
       android:screenOrientation="portrait"
-        android:theme="@style/AppTheme.account"
-        android:windowSoftInputMode="adjustPan" />
-    </application>
+      android:theme="@style/AppTheme.account"
+      android:windowSoftInputMode="adjustPan" />
+
+    <activity
+      android:name="com.appservice.ui.paymentgateway.PaymentGatewayContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.paymentt"
+      android:windowSoftInputMode="adjustPan" />
+  </application>
 </manifest>
