@@ -76,7 +76,7 @@
                 android:layout_marginTop="@dimen/_15sdp"/>
 
             <EditText
-                android:id="@+id/user_name"
+                android:id="@+id/place_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
@@ -90,19 +90,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Place Description"
+                android:text="ALT-tag"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
 
             <EditText
-                android:id="@+id/facebook_url_value"
+                android:id="@+id/place_description"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_marginRight="@dimen/_5sdp"
-                android:hint="Enter Description \n(200 Characters Max)"
+                android:hint="Alt tag is nothing but a description of this image that helps serach engines find this image. \n(200 Characters Max)"
                 android:textSize="@dimen/_12sdp"
                 android:background="@drawable/edittext_bg_elevated"
                 android:elevation="@dimen/_2sdp"
@@ -117,7 +117,7 @@
 
 
             <EditText
-                android:id="@+id/twitter_url_value"
+                android:id="@+id/place_address"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
                 android:layout_marginTop="@dimen/_5sdp"
@@ -138,7 +138,7 @@
 
 
             <EditText
-                android:id="@+id/skype_url_value"
+                android:id="@+id/place_distance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
@@ -159,6 +159,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:gravity="center"

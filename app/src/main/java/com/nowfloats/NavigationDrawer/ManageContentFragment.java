@@ -19,8 +19,7 @@ import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
 import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
-import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity;
-import com.nowfloats.manufacturing.projectandteams.ProjectAndTermsActivity;
+import com.nowfloats.hotel.placesnearby.PlacesNearByActivity;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
@@ -81,6 +80,9 @@ public class ManageContentFragment extends Fragment{
                         break;
                     case 4:
                        intent = new Intent(mContext, CustomPageActivity.class);
+                        break;
+                    case 5:
+                        intent = new Intent(mContext, PlacesNearByActivity.class);
                         break;
 //                    case 5:
 //                        intent = new Intent(mContext, TestimonialsActivity.class);
