@@ -70,7 +70,7 @@ class UpgradeActivity : AppCompatActivity() {
 
     private var initialLoadUpgradeActivity: Int = 0
     lateinit var progressDialog: ProgressDialog
-    private var loadingStatus:Boolean = true
+    private var loadingStatus: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -254,7 +254,7 @@ class UpgradeActivity : AppCompatActivity() {
     }
 
     fun showingPopUp() {
-        if(loadingStatus && initialLoadUpgradeActivity == 0) {
+        if (loadingStatus && initialLoadUpgradeActivity == 0) {
             loaderStatus(true)
         }
         CompositeDisposable().add(
@@ -267,13 +267,26 @@ class UpgradeActivity : AppCompatActivity() {
                             if (it == 1) {
                                 loaderStatus(false)
                                 if (widgetFeatureCode != null) {
-//                Handler().postDelayed({
-                                    val details = DetailsFragment.newInstance()
-                                    val args = Bundle()
-                                    args.putString("itemId", widgetFeatureCode)
-                                    details.arguments = args
-                                    addFragment(details, Constants.DETAILS_FRAGMENT)
-//                }, 1000)
+                                    CompositeDisposable().add(
+                                            AppDatabase.getInstance(application)!!
+                                                    .featuresDao()
+                                                    .checkFeatureTableKeyExist(widgetFeatureCode!!)
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe({
+                                                        if (it == 1) {
+                                                            val details = DetailsFragment.newInstance()
+                                                            val args = Bundle()
+                                                            args.putString("itemId", widgetFeatureCode)
+                                                            details.arguments = args
+                                                            addFragment(details, Constants.DETAILS_FRAGMENT)
+                                                        } else {
+                                                            Toasty.error(this, "This Add-ons Not Available to Your Account.", Toast.LENGTH_LONG).show()
+                                                        }
+                                                    }, {
+                                                        Toasty.error(this, "Something went wrong. Try Later..", Toast.LENGTH_LONG).show()
+                                                    })
+                                    )
                                 }
                                 //turn this on when you want to show Welcome Market Screen all the time
                                 //prefs.storeInitialLoadMarketPlace(true)
@@ -305,14 +318,14 @@ class UpgradeActivity : AppCompatActivity() {
 
     }
 
-    fun loaderStatus(status:Boolean){
-        if(status){
+    fun loaderStatus(status: Boolean) {
+        if (status) {
             loadingStatus = true
             val status = "Loading. Please wait..."
             progressDialog.setMessage(status)
             progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
             progressDialog.show()
-        }else{
+        } else {
             loadingStatus = false
             progressDialog.dismiss()
         }

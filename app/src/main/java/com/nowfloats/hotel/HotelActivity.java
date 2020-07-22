@@ -1,7 +1,6 @@
 package com.nowfloats.hotel;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -10,14 +9,14 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.education.faculty.ui.facultymanagement.FacultyManagementFragment;
 import com.nowfloats.hotel.tripadvisor.TripAdvisorFragment;
+import com.nowfloats.util.base_class.BaseFragment;
 import com.thinksity.R;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class HotelActivity extends AppCompatActivity {
 
@@ -26,7 +25,7 @@ public class HotelActivity extends AppCompatActivity {
     public UserSessionManager session;
 
     private Fragment currentFragment = null;
-    private FragmentManager fragmentManager = null;
+    public FragmentManager fragmentManager = null;
     private FragmentTransaction fragmentTransaction = null;
 
     @Override
@@ -46,6 +45,7 @@ public class HotelActivity extends AppCompatActivity {
                 if (currentFragment != null) {
                     String tag = currentFragment.getTag();
                     Log.e("tag", ">>>$tag");
+                    tellFragments();
                 } else {
                     finish();
                 }
@@ -58,7 +58,7 @@ public class HotelActivity extends AppCompatActivity {
         session = new UserSessionManager(this, this);
 
         //testingPurpos
-        addFragment(new TripAdvisorFragment(),"TRIP_ADVISOR_FRAGMENT");
+        addFragment(new TripAdvisorFragment(), "TRIP_ADVISOR_FRAGMENT");
 
     }
 
@@ -137,6 +137,15 @@ public class HotelActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void tellFragments() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        for (Fragment f : fragments) {
+            if (f != null && f instanceof BaseFragment) {
+                ((BaseFragment) f).onBackPressed();
+            }
         }
     }
 

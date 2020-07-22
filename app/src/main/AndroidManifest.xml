@@ -1228,6 +1228,10 @@
         <activity
             android:name="com.nowfloats.ProductGallery.MultipleProductImageActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
+        <activity android:name="com.nowfloats.hotel.placesnearby.PlacesNearByActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
