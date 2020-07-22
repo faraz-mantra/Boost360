@@ -133,6 +133,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/primary_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/_10sdp"
@@ -162,20 +163,20 @@
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:text="Widget Visiblity" />
 
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/keyboard_setting_switch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:padding="@dimen/_10sdp"
-                        android:gravity="center_vertical"
-                        android:src="@drawable/right_arrow"
-                        android:textOn="YES"
-                        android:textOff="NO"
-                        android:text="Show This Widget"
-                        android:textSize="@dimen/_13sdp"
-                        android:textColor="@color/gray"
-                        android:background="@drawable/edittext_bg_elevated"/>
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/setting_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:padding="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:src="@drawable/right_arrow"
+                    android:textOn="YES"
+                    android:textOff="NO"
+                    android:text="Show This Widget"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/gray"
+                    android:background="@drawable/edittext_bg_elevated"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -186,7 +187,7 @@
                     android:text="Widget Snippet" />
 
                 <EditText
-                    android:id="@+id/designation_value"
+                    android:id="@+id/widget_snippet"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_100sdp"
                     android:layout_marginStart="@dimen/_15sdp"

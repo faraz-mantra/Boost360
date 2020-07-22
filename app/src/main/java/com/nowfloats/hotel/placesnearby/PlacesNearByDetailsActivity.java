@@ -198,7 +198,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
         backButton = findViewById(R.id.back_button);
         rightButton = findViewById(R.id.right_icon_layout);
         rightIcon = findViewById(R.id.right_icon);
-        title.setText("Team Details");
+        title.setText("Place Details");
         rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
