@@ -51,22 +51,31 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:name,android:theme,android:appComponentFactory">
-        <activity android:name="com.nowfloats.hotel.tripadvisor.TripAdvisorActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.hotel.seasonalOffers.SeasonalOffersDetailsActivity"></activity>
+        <activity android:name="com.nowfloats.hotel.seasonalOffers.SeasonalOffersActivity" />
+        <activity
+            android:name="com.nowfloats.hotel.tripadvisor.TripAdvisorActivity"
+            android:screenOrientation="portrait" />
         <activity android:name="com.nowfloats.manufacturing.projectandteams.ProjectAndTermsActivity" />
         <activity android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresActivity" />
-        <activity android:name="com.nowfloats.education.batches.BatchesActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.education.toppers.ToppersActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.education.faculty.FacultyActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.AccrossVerticals.domain.DomainEmailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.AccrossVerticals.Testimonials.TestimonialsFeedbackActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.nowfloats.education.batches.BatchesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.education.toppers.ToppersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.education.faculty.FacultyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.AccrossVerticals.domain.DomainEmailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.AccrossVerticals.Testimonials.TestimonialsFeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"
+            android:screenOrientation="portrait" />
         <activity android:name="com.nowfloats.marketplace.BoostMarketPlaceActivity" />
 
         <meta-data
@@ -711,14 +720,16 @@
             </intent-filter>
             <intent-filter>
                 <data android:scheme="anton" />
+
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                  android:host="${applicationId}.UI.SplashActivity"
-                  android:pathPrefix="/"
-                  android:scheme="http" />
+                    android:host="${applicationId}.UI.SplashActivity"
+                    android:pathPrefix="/"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity
@@ -1228,11 +1239,13 @@
         <activity
             android:name="com.nowfloats.ProductGallery.MultipleProductImageActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
-        <activity android:name="com.nowfloats.hotel.placesnearby.PlacesNearByActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.nowfloats.hotel.placesnearby.PlacesNearByActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
