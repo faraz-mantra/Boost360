@@ -7,7 +7,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -15,11 +18,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.boost.upgrades.UpgradeActivity;
+import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.hotel.API.HotelAPIInterfaces;
-import com.nowfloats.hotel.API.model.GetPlacesAround.GetPlacesAroundModel;
+import com.nowfloats.hotel.API.model.AddPlacesAround.PlaceImage;
+import com.nowfloats.hotel.API.model.AddTripAdvisorData.ActionData;
+import com.nowfloats.hotel.API.model.AddTripAdvisorData.AddTripAdvisorDataRequest;
+import com.nowfloats.hotel.API.model.GetTripAdvisorData.Data;
 import com.nowfloats.hotel.API.model.GetTripAdvisorData.GetTripAdvisorData;
+import com.nowfloats.hotel.API.model.UpdatePlacesAround.UpdatePlacesAroundRequest;
+import com.nowfloats.hotel.API.model.UpdateTripAdvisorData.UpdateTripAdvisorDataRequest;
 import com.nowfloats.hotel.placesnearby.PlacesNearByActivity;
+import com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -37,11 +47,12 @@ public class TripAdvisorActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     public UserSessionManager session;
     RelativeLayout emptyLayout;
-    TextView buyItemButton;
+    TextView buyItemButton, saveButton;
     LinearLayout primaryLayout;
-    GetTripAdvisorData tripAdvisorData;
+    Data tripAdvisorData = null;
     SwitchCompat switchSetting;
     EditText widgetSnippet;
+    boolean editState = false;
 
 
     @Override
@@ -54,6 +65,8 @@ public class TripAdvisorActivity extends AppCompatActivity {
         primaryLayout = findViewById(R.id.primary_layout);
         switchSetting = findViewById(R.id.setting_switch);
         widgetSnippet = findViewById(R.id.widget_snippet);
+        saveButton = findViewById(R.id.save_button);
+        session = new UserSessionManager(this, this);
 
         buyItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,10 +75,68 @@ public class TripAdvisorActivity extends AppCompatActivity {
             }
         });
 
+        switchSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                editState = true;
+                saveButton.setVisibility(View.VISIBLE);
+                widgetSnippet.setTextColor(getResources().getColor(R.color.black));
+            }
+        });
+
+        widgetSnippet.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    editState = true;
+                    saveButton.setVisibility(View.VISIBLE);
+                    widgetSnippet.setText(tripAdvisorData.getWidgetSnippet());
+                }
+            }
+        });
+
+        widgetSnippet.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                editState = true;
+                saveButton.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(tripAdvisorData == null){
+                    //call addtripadvisor api
+                    addData();
+                }else{
+                    if(editState){
+                        //call updateTripAdvisor api
+                        updateData();
+                    }
+
+                }
+
+            }
+        });
+
+
+
         //setHeader
         setHeader();
 
-        if (!Constants.StoreWidgets.contains("TRIPADVISOR-REVIEWS")){
+        if (Constants.StoreWidgets.contains("TRIPADVISOR-REVIEWS")){
             emptyLayout.setVisibility(View.GONE);
             primaryLayout.setVisibility(View.VISIBLE);
             loadData();
@@ -79,7 +150,7 @@ public class TripAdvisorActivity extends AppCompatActivity {
     private void loadData() {
         try {
             JSONObject query = new JSONObject();
-            query.put("WebsiteId", "HOTELS");
+            query.put("WebsiteId", session.getFpTag());
             HotelAPIInterfaces APICalls = new RestAdapter.Builder()
                     .setEndpoint("https://webaction.api.boostkit.dev")
                     .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -94,8 +165,13 @@ public class TripAdvisorActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    tripAdvisorData = getTripAdvisorData;
-                    updateUIforTripAdvisor();
+                    if(getTripAdvisorData.getData().size()>0) {
+                        tripAdvisorData = getTripAdvisorData.getData().get(0);
+                        updateUIforTripAdvisor();
+                        saveButton.setVisibility(View.GONE);
+                    }else{
+                        saveButton.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 @Override
@@ -109,12 +185,103 @@ public class TripAdvisorActivity extends AppCompatActivity {
         }
     }
 
+    private void addData() {
+        try {
+            ActionData actionData = new ActionData();
+            actionData.setWidgetSnippet(widgetSnippet.getText().toString());
+            actionData.setShowWidget(switchSetting.isChecked());
+
+            AddTripAdvisorDataRequest requestBody = new AddTripAdvisorDataRequest();
+            requestBody.setWebsiteId(session.getFpTag());
+            requestBody.setActionData(actionData);
+
+            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
+                    .setEndpoint("https://webaction.api.boostkit.dev")
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setLog(new AndroidLog("ggg"))
+                    .build()
+                    .create(HotelAPIInterfaces.class);
+
+
+            APICalls.addTripAdvisorData(requestBody, new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    if (response.getStatus() != 200) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Methods.showSnackBarPositive(TripAdvisorActivity.this, "Successfully Added Trip Advisor Details");
+                    finish();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    if (error.getResponse().getStatus() == 200) {
+                        Methods.showSnackBarPositive(TripAdvisorActivity.this, "Successfully Added Trip Advisor Details");
+                        finish();
+                    } else {
+                        Methods.showSnackBarNegative(TripAdvisorActivity.this, getString(R.string.something_went_wrong));
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateData() {
+        try {
+            ActionData actionData = new ActionData();
+            actionData.setWidgetSnippet(widgetSnippet.getText().toString());
+            actionData.setShowWidget(switchSetting.isChecked());
+
+            UpdateTripAdvisorDataRequest requestBody = new UpdateTripAdvisorDataRequest();
+            requestBody.setQuery("{_id:'" + tripAdvisorData.getId() + "'}");
+            requestBody.setUpdateValue("{$set :" + new Gson().toJson(actionData) + "}");
+
+            HotelAPIInterfaces APICalls = new RestAdapter.Builder()
+                    .setEndpoint("https://webaction.api.boostkit.dev")
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setLog(new AndroidLog("ggg"))
+                    .build()
+                    .create(HotelAPIInterfaces.class);
+
+            APICalls.updateTripAdvisorData(requestBody, new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    if (response.getStatus() != 200) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Methods.showSnackBarPositive(TripAdvisorActivity.this, "Successfully Updated Trip Advisor Details");
+                    finish();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    if (error.getResponse().getStatus() == 200) {
+                        Methods.showSnackBarPositive(TripAdvisorActivity.this, "Successfully Updated Trip Advisor Details");
+                        finish();
+                    } else {
+                        Methods.showSnackBarNegative(TripAdvisorActivity.this, getString(R.string.something_went_wrong));
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     void updateUIforTripAdvisor(){
-        widgetSnippet.setText(tripAdvisorData.getData().get(0).getWidgetSnippet());
-        if(tripAdvisorData.getData().get(0).getShowWidget()){
-            switchSetting.setChecked(true);
-        }else{
-            switchSetting.setChecked(false);
+        if(tripAdvisorData!=null) {
+            widgetSnippet.setHint(tripAdvisorData.getWidgetSnippet());
+            if (tripAdvisorData.getShowWidget()) {
+                switchSetting.setChecked(true);
+            } else {
+                switchSetting.setChecked(false);
+            }
         }
     }
 

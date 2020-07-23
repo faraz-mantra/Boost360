@@ -144,7 +144,7 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
     void loadData() {
         try {
             JSONObject query = new JSONObject();
-            query.put("WebsiteId", "HOTELS");
+            query.put("WebsiteId", session.getFpTag());
             HotelAPIInterfaces APICalls = new RestAdapter.Builder()
                     .setEndpoint("https://webaction.api.boostkit.dev")
                     .setLogLevel(RestAdapter.LogLevel.FULL)
