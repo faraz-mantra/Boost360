@@ -11,15 +11,15 @@ import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
+import com.appservice.databinding.ActivityFragmentContainerAccountBinding
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
-import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
 
-open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerAccountBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
 
@@ -28,7 +28,7 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
 
 
   override fun getLayout(): Int {
-    return com.framework.R.layout.activity_fragment_container
+    return R.layout.activity_fragment_container_account
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
@@ -46,7 +46,7 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
   }
 
   override fun getToolbar(): CustomToolbar? {
-    return binding?.appBarLayout?.toolbar
+    return binding?.toolbar
   }
 
   override fun customTheme(): Int? {
@@ -77,11 +77,11 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
     }
   }
 
-  override fun getToolbarTitle(): String? {
-    return when (type) {
-      FragmentType.BANK_ACCOUNT_DETAILS -> resources.getString(R.string.adding_bank_account)
-      else -> super.getToolbarTitle()
-    }
+
+  fun setToolbarTitleNew(title: String, marginEnd: Int = 0) {
+    binding?.title?.text = title
+    getToolbarTitleColor()?.let { binding?.title?.setTextColor(it) }
+    binding?.title?.setPadding(0, 0, marginEnd, 0)
   }
 
   override fun isHideToolbar(): Boolean {

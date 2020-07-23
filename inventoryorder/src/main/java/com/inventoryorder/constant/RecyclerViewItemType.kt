@@ -25,7 +25,7 @@ enum class RecyclerViewItemType {
   @LayoutRes
   fun getLayout(): Int {
     return when (this) {
-      PAGINATION_LOADER -> R.layout.pagination_loader
+      PAGINATION_LOADER -> R.layout.pagination_order_loader
       ORDERS_ITEM_TYPE -> R.layout.item_order_type
       INVENTORY_ORDER_ITEM -> R.layout.item_order
       ITEM_ORDER_DETAILS -> R.layout.item_order_details

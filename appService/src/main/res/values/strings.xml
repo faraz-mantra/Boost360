@@ -27,6 +27,7 @@
   <string name="verification_underway">Verification underway...</string>
   <string name="how_it_works">How it works!</string>
   <string name="understood">Understood</string>
+  <string name="refresh_status">Refresh Status</string>
   <string name="link_your_account">Linked Bank Account</string>
   <string name="change_bank_detail">Change Bank details</string>
   <string name="submit_for_verification">Submit for Verification</string>
