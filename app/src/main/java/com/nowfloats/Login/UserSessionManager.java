@@ -168,7 +168,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.commit();
     }
 
-    public String getUserProfileId(){
+    public String getUserProfileId() {
         return pref.getString(PROFILE_ID, null);
     }
 
@@ -177,7 +177,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.commit();
     }
 
-    public String getUserProfileEmail(){
+    public String getUserProfileEmail() {
         return pref.getString(PROFILE_EMAIL, null);
     }
 
@@ -186,7 +186,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.commit();
     }
 
-    public String getUserProfileMobile(){
+    public String getUserProfileMobile() {
         return pref.getString(PROFILE_NUMBER, null);
     }
 
@@ -195,7 +195,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.commit();
     }
 
-    public String getUserProfileName(){
+    public String getUserProfileName() {
         return pref.getString(PROFILE_NAME, null);
     }
 
@@ -355,14 +355,14 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null);
     }
 
-    public String getFP_AppExperienceCode(){
+    public String getFP_AppExperienceCode() {
         return pref.getString(Key_Preferences.GET_FP_EXPERIENCE_CODE, null);
     }
 
-    public boolean isNonPhysicalProductExperienceCode(){
+    public boolean isNonPhysicalProductExperienceCode() {
         String code = pref.getString(Key_Preferences.GET_FP_EXPERIENCE_CODE, null);
-        if(code != null){
-            switch (code){
+        if (code != null) {
+            switch (code) {
                 case "RTL":
                 case "CAF":
                 case "MFG":
@@ -374,7 +374,11 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return false;
     }
 
-    public String getFPPrimaryContactNumber(){
+    public Boolean isLoginCheck() {
+        return (getFpTag() != null && getFPID() != null && getFP_AppExperienceCode() != null && getUserProfileId() != null);
+    }
+
+    public String getFPPrimaryContactNumber() {
         return pref.getString(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, null);
     }
 
@@ -619,7 +623,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public void storeFPID(String fpID) {
 
-        if(fpID == null) return;
+        if (fpID == null) return;
 
         String fpId = fpID.replaceAll("\"", "");
         // fpId = fpId.replace
@@ -640,6 +644,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.putBoolean("OTP", done);
         editor.apply();
     }
+
     public void isAuthdone(String key, boolean done) {
         editor.putBoolean(key, done);
         editor.apply();
@@ -727,8 +732,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public boolean getBooleanDetails(String key) {
         return pref.getBoolean(key, false);
     }
-    public void storeFPDetails(String key,String value)
-    {   try{
+
+    public void storeFPDetails(String key, String value) {
+        try {
             editor.putString(key.trim(), value == null ? "" : value.trim());
             editor.apply();
         } catch (Exception e) {
@@ -928,7 +934,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         final ProgressDialog pd;
         pd = ProgressDialog.show(activity, "", activity.getString(R.string.logging_out));
         pd.setCancelable(false);
-        if(fpID != null && fpID.length() > 2) {
+        if (fpID != null && fpID.length() > 2) {
             HashMap<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
             params.put("fpId", fpID);
@@ -957,7 +963,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         }
     }
 
-    private void processUserSessionDataClear(){
+    private void processUserSessionDataClear() {
         setUserLogin(false);
 
         DataBase db = new DataBase(activity);

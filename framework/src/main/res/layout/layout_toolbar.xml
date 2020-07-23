@@ -19,7 +19,6 @@
         android:hapticFeedbackEnabled="true"
         app:elevation="0dp"
         app:navigationIcon="@drawable/ic_toolbar_back"
-        app:titleMarginEnd="@dimen/toolbar_title_margin_end"
         tools:title="Home">
 
     </com.framework.views.customViews.CustomToolbar>

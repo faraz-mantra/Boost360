@@ -269,7 +269,7 @@
           android:layout_marginEnd="@dimen/size_30"
           android:layout_marginBottom="@dimen/size_16"
           android:gravity="center"
-          android:text="@string/understood"
+          android:text="@string/refresh_status"
           android:textAlignment="gravity"
           android:textAllCaps="true"
           android:textColor="@color/white"
