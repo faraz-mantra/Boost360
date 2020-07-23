@@ -88,7 +88,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     binding?.edtBankBranch?.gone()
   }
 
-  private fun getUserDetails() {
+  private fun getUserDetails(isPendingToastShow: Boolean = false) {
     showProgress()
     viewModel?.userAccountDetails(fpId, clientId)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
@@ -98,7 +98,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       }
       val response = it as? AccountDetailsResponse
       if ((it.status == 200 || it.status == 201 || it.status == 202) && response != null) {
-        checkBankAccountDetail(response.result)
+        checkBankAccountDetail(response.result, isPendingToastShow)
       } else {
         (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.adding_bank_account), resources.getDimensionPixelSize(R.dimen.size_36))
         isUpdated = false
@@ -106,7 +106,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     })
   }
 
-  private fun checkBankAccountDetail(result: Result?) {
+  private fun checkBankAccountDetail(result: Result?, isPendingToastShow: Boolean) {
     if (result?.bankAccountDetails != null) {
       isUpdated = true
       uiUpdate(false)
@@ -122,7 +122,10 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         binding?.textVerification?.text = resources.getString(R.string.how_it_works)
         binding?.textDesc?.text = resources.getString(R.string.verify_desc_account)
         (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
-      } else (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.my_bank_account), resources.getDimensionPixelSize(R.dimen.size_10))
+      } else {
+        if (isPendingToastShow) showLongToast(resources.getString(R.string.account_verification_pending))
+        (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.my_bank_account), resources.getDimensionPixelSize(R.dimen.size_10))
+      }
     } else {
       (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.adding_bank_account), resources.getDimensionPixelSize(R.dimen.size_36))
       uiUpdate(true)
@@ -151,7 +154,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         if (binding?.verificationBtn?.text?.toString()?.trim() != resources.getString(R.string.refresh_status).trim()) {
           uiUpdate(true)
           menuClose?.isVisible = false
-        } else getUserDetails()
+        } else getUserDetails(true)
       }
     }
   }
