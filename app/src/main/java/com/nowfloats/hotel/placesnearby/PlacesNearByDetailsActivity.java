@@ -34,6 +34,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.hotel.API.HotelAPIInterfaces;
 import com.nowfloats.hotel.API.UploadPlaceNearByImage;
 import com.nowfloats.hotel.API.model.AddPlacesAround.ActionData;
@@ -84,6 +85,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
     String uploadedImageURL = "";
     String ScreenType = "", itemId = "";
     Data existingItemData = null;
+    UserSessionManager session;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,6 +105,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
         placeImageLayout = findViewById(R.id.card_primary_image);
         placeImage = findViewById(R.id.iv_primary_image);
         removePlaceImage = findViewById(R.id.ib_remove_product_image);
+        session = new UserSessionManager(this, this);
 
         placeImageLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,7 +241,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
 
 
                 AddPlacesAroundRequest request = new AddPlacesAroundRequest();
-                request.setWebsiteId("HOTELS");
+                request.setWebsiteId(session.getFpTag());
                 request.setActionData(actionData);
 
                 HotelAPIInterfaces APICalls = new RestAdapter.Builder()

@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E5E5E5"
     android:clickable="true"
     android:focusable="true"
+    android:focusableInTouchMode="true"
     android:gravity="center">
 
     <include
@@ -168,15 +168,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
                     android:padding="@dimen/_10sdp"
                     android:gravity="center_vertical"
                     android:src="@drawable/right_arrow"
                     android:textOn="YES"
                     android:textOff="NO"
                     android:text="Show This Widget"
+                    android:showText="true"
+                    app:theme="@style/BrandedSwitch.control"
                     android:textSize="@dimen/_13sdp"
-                    android:textColor="@color/gray"
-                    android:background="@drawable/edittext_bg_elevated"/>
+                    android:background="@drawable/all_side_small_curve_bg"
+                    android:elevation="@dimen/_2sdp"/>
 
                 <TextView
                     android:layout_width="wrap_content"

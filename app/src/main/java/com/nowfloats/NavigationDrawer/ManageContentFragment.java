@@ -88,9 +88,9 @@ public class ManageContentFragment extends Fragment {
                     case 5:
                         intent = new Intent(mContext, PlacesNearByActivity.class);
                         break;
-//                    case 6:
-//                        intent = new Intent(mContext, TripAdvisorActivity.class);
-//                        break;
+                    case 6:
+                        intent = new Intent(mContext, TripAdvisorActivity.class);
+                        break;
 //                    case 5:
 //                        intent = new Intent(mContext, TestimonialsActivity.class);
 //                        break;

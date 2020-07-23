@@ -146,7 +146,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         try {
             showProgress();
             JSONObject query = new JSONObject();
-            query.put("WebsiteId", "DOCTORS");
+            query.put("WebsiteId", session.getFpTag());
             APIInterfaces APICalls = new RestAdapter.Builder()
                     .setEndpoint("https://webaction.api.boostkit.dev")
                     .setLogLevel(RestAdapter.LogLevel.FULL)
