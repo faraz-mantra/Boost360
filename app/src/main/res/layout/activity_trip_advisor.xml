@@ -50,6 +50,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:gravity="center"
+                android:fontFamily="@font/open_sans"
+                android:textColor="#747474"
                 android:text="Showcase Tripadvisor Ratings on your Boost business website."
                 android:textSize="@dimen/_15sdp" />
         </LinearLayout>
@@ -161,6 +163,8 @@
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
+                    android:textColor="#747474"
+                    android:fontFamily="@font/open_sans"
                     android:text="Widget Visiblity" />
 
                 <androidx.appcompat.widget.SwitchCompat
@@ -177,6 +181,7 @@
                     android:textOff="NO"
                     android:text="Show This Widget"
                     android:showText="true"
+                    android:fontFamily="@font/open_sans"
                     android:textColor="#747474"
                     app:theme="@style/BrandedSwitch.control"
                     android:textSize="@dimen/_13sdp"
@@ -189,6 +194,8 @@
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="#747474"
                     android:text="Widget Snippet" />
 
                 <EditText
@@ -201,6 +208,8 @@
                     android:background="@drawable/edittext_bg_elevated"
                     android:elevation="@dimen/_2sdp"
                     android:gravity="top"
+                    android:textColor="#747474"
+                    android:fontFamily="@font/open_sans"
                     android:hint="Paste Your Script Here"
                     android:textSize="@dimen/_12sdp" />
 
