@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -21,15 +22,11 @@ import com.boost.upgrades.UpgradeActivity;
 import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.hotel.API.HotelAPIInterfaces;
-import com.nowfloats.hotel.API.model.AddPlacesAround.PlaceImage;
 import com.nowfloats.hotel.API.model.AddTripAdvisorData.ActionData;
 import com.nowfloats.hotel.API.model.AddTripAdvisorData.AddTripAdvisorDataRequest;
 import com.nowfloats.hotel.API.model.GetTripAdvisorData.Data;
 import com.nowfloats.hotel.API.model.GetTripAdvisorData.GetTripAdvisorData;
-import com.nowfloats.hotel.API.model.UpdatePlacesAround.UpdatePlacesAroundRequest;
 import com.nowfloats.hotel.API.model.UpdateTripAdvisorData.UpdateTripAdvisorDataRequest;
-import com.nowfloats.hotel.placesnearby.PlacesNearByActivity;
-import com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -78,9 +75,15 @@ public class TripAdvisorActivity extends AppCompatActivity {
         switchSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    widgetSnippet.setTextColor(getResources().getColor(R.color.common_text_color));
+                }else{
+                    widgetSnippet.setTextColor(getResources().getColor(R.color.d9d9d9));
+                }
                 editState = true;
                 saveButton.setVisibility(View.VISIBLE);
-                widgetSnippet.setTextColor(getResources().getColor(R.color.black));
+                widgetSnippet.clearFocus();
+                Methods.hideKeyboard(TripAdvisorActivity.this);
             }
         });
 
@@ -90,7 +93,9 @@ public class TripAdvisorActivity extends AppCompatActivity {
                 if(hasFocus){
                     editState = true;
                     saveButton.setVisibility(View.VISIBLE);
-                    widgetSnippet.setText(tripAdvisorData.getWidgetSnippet());
+                    widgetSnippet.setTextColor(getResources().getColor(R.color.common_text_color));
+                }else{
+                    widgetSnippet.setTextColor(getResources().getColor(R.color.d9d9d9));
                 }
             }
         });
@@ -105,6 +110,9 @@ public class TripAdvisorActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 editState = true;
                 saveButton.setVisibility(View.VISIBLE);
+                if(s.length()==0){
+                    widgetSnippet.setText("Paste Your Script Here");
+                }
             }
 
             @Override
@@ -117,6 +125,8 @@ public class TripAdvisorActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                widgetSnippet.clearFocus();
+                Methods.hideKeyboard(TripAdvisorActivity.this);
                 if(tripAdvisorData == null){
                     //call addtripadvisor api
                     addData();
@@ -276,7 +286,8 @@ public class TripAdvisorActivity extends AppCompatActivity {
 
     void updateUIforTripAdvisor(){
         if(tripAdvisorData!=null) {
-            widgetSnippet.setHint(tripAdvisorData.getWidgetSnippet());
+            widgetSnippet.setText(tripAdvisorData.getWidgetSnippet());
+            widgetSnippet.setTextColor(getResources().getColor(R.color.d9d9d9));
             if (tripAdvisorData.getShowWidget()) {
                 switchSetting.setChecked(true);
             } else {
