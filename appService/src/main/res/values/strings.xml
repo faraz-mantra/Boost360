@@ -42,5 +42,6 @@
   <string name="add_bank_account">Add Bank Account</string>
   <string name="enabled_payments_reveived_bank">Once enabled, all payments from your customers will be received in this bank account</string>
   <string name="directly_designated_bank_account">Get payments in 48 hours, directly in your designated bank account</string>
+  <string name="account_verification_pending">Your account verification is pending</string>
 
 </resources>
