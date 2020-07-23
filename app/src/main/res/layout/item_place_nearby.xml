@@ -58,7 +58,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Mehrauli, New Delhi, Delhi 110030"
-            android:textColor="#747474"
+            android:fontFamily="@font/open_sans"
+            android:textColor="#4A4A4A"
             android:textSize="@dimen/_10sdp"/>
     </LinearLayout>
 
@@ -98,6 +99,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:text="At a height of 234 feet, this minaret is the tallest individual tower in the world and is a perfect display of Mughal architectural brilliance."
             android:fontFamily="@font/open_sans"
+            android:textColor="#747474"
             android:textSize="@dimen/_9sdp"/>
 
     </LinearLayout>
@@ -117,6 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="120 Mt from your place"
+            android:textColor="#4A4A4A"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dummy_view1"
@@ -144,6 +147,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
             android:text="Edit"
+            android:textColor="#979797"
             android:textSize="@dimen/_12sdp"/>
 
         <TextView

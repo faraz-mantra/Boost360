@@ -1,6 +1,9 @@
 package com.nowfloats.hotel.placesnearby.adapter;
 
 import android.content.Context;
+import android.text.SpannableString;
+import android.text.style.StrikethroughSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,7 +103,9 @@ public class PlaceNearByAdapter extends RecyclerView.Adapter<PlaceNearByAdapter.
         holder.placeName.setText(itemList.get(position).getPlaceName());
         holder.placeAddress.setText(itemList.get(position).getPlaceAddress());
         holder.placeDescription.setText(itemList.get(position).getPlaceImage().getDescription());
-        holder.placeDistance.setText(itemList.get(position).getDistance()+ " from your place");
+        SpannableString content = new SpannableString(itemList.get(position).getDistance());
+        content.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, itemList.get(position).getDistance().length(), 0);
+        holder.placeDistance.setText(content+ " from your place");
 
         Glide.with(context)
                 .load(itemList.get(position).getPlaceImage().getUrl())
