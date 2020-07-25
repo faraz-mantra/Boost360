@@ -8,5 +8,6 @@ enum class FacebookPermissions {
   read_insights,
   pages_messaging,
   catalog_management,
-  public_profile
+  public_profile,
+  email,
 }
