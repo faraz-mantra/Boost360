@@ -1,6 +1,8 @@
 <resources>
+
     <string name="facebook_app_id" translatable="false">539836972828386</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb539836972828386</string>
+    <string name="server_client_id" translatable="false">534180772998-29dvjja8u2lnaklmrdnne776i2gosi4c.apps.googleusercontent.com</string>
 
     <string name="app_name">My Library</string>
     <string name="replay_intro">Replay Intro</string>
@@ -52,4 +54,5 @@
     <string name="forgot"><u>Forgot?</u></string>
     <string name="dont_have_jio_id">Don’t have Jio SecureID?</string>
     <string name="no_jio_id_description">Jio SecureID is the most convenient and secure way to log into any app or portal and sign documents digitally. Jio SecureID is using Aadhaar eSign for digital signatures.\n\nCreate Jio SecureID here</string>
+    <string name="failed_create_user">Failed to create user, Please try again.</string>
 </resources>
