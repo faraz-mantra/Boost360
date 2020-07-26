@@ -73,23 +73,25 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
         //setHeader
         setHeader();
 
-        if (Constants.StoreWidgets.contains("OFFERS")){
+        //this feature is free to use
+//        if (Constants.StoreWidgets.contains("OFFERS")) {
             recyclerView.setVisibility(View.VISIBLE);
             secondaryLayout.setVisibility(View.GONE);
             initialiseRecycler();
-        }else{
-            recyclerView.setVisibility(View.GONE);
-            secondaryLayout.setVisibility(View.VISIBLE);
-            showSecondaryLayout();
-        }
+//        }else{
+//            recyclerView.setVisibility(View.GONE);
+//            secondaryLayout.setVisibility(View.VISIBLE);
+//            showSecondaryLayout();
+//        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (Constants.StoreWidgets.contains("OFFERS")) {
+        //this feature is free to use
+//        if (Constants.StoreWidgets.contains("OFFERS")) {
             loadData();
-        }
+//        }
     }
 
     void showSecondaryLayout(){
@@ -160,7 +162,8 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
         rightButton = findViewById(R.id.right_icon_layout);
         rightIcon = findViewById(R.id.right_icon);
         title.setText("Seasonal Offers");
-        if (Constants.StoreWidgets.contains("OFFERS")) {
+        //this feature is free to use
+//        if (Constants.StoreWidgets.contains("OFFERS")) {
             rightIcon.setImageResource(R.drawable.ic_add_white);
             rightButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -170,7 +173,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
                     startActivity(intent);
                 }
             });
-        }
+//        }
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
