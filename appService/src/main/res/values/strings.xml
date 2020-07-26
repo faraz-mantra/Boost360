@@ -21,10 +21,10 @@
   <string name="_111111111111111">111111111111111</string>
   <string name="save_n">save</string>
   <string name="please_wait_while_we_verify_your_account">Please Wait While We Verify Your Account</string>
-  <string name="verification_desc_account">We\'re currently verifying your bank account. This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to <u>ria@nowfloats.com</u> with this screenshot attached.</string>
-  <string name="verify_desc_account">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
+  <string name="verification_desc_account">We\'re currently verifying your bank account. This process usually takes 1 working day. Once verified we will notify you.</string>
+  <string name="verify_desc_account">This bank account is being used to send you money collected online from your customers.</string>
   <string name="internet_connection_not_available">Internet connection not available.</string>
-  <string name="verification_underway">Verification underway...</string>
+  <string name="verification_underway">Verification pending</string>
   <string name="how_it_works">How it works!</string>
   <string name="understood">Understood</string>
   <string name="refresh_status">Refresh Status</string>
