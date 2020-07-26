@@ -1,12 +1,15 @@
 package com.nowfloats.hotel.API;
 
 import com.nowfloats.AccrossVerticals.API.model.testimonials.TestimonialModel;
+import com.nowfloats.hotel.API.model.AddOffer.AddOfferRequest;
 import com.nowfloats.hotel.API.model.AddPlacesAround.AddPlacesAroundRequest;
 import com.nowfloats.hotel.API.model.AddTripAdvisorData.AddTripAdvisorDataRequest;
+import com.nowfloats.hotel.API.model.DeleteOffer.DeleteOfferRequest;
 import com.nowfloats.hotel.API.model.DeletePlacesAround.DeletePlacesAroundRequest;
 import com.nowfloats.hotel.API.model.GetOffers.GetOffersResponse;
 import com.nowfloats.hotel.API.model.GetPlacesAround.GetPlacesAroundModel;
 import com.nowfloats.hotel.API.model.GetTripAdvisorData.GetTripAdvisorData;
+import com.nowfloats.hotel.API.model.UpdateOffer.UpdateOfferRequest;
 import com.nowfloats.hotel.API.model.UpdatePlacesAround.UpdatePlacesAroundRequest;
 import com.nowfloats.hotel.API.model.UpdateTripAdvisorData.UpdateTripAdvisorDataRequest;
 
@@ -54,5 +57,18 @@ public interface HotelAPIInterfaces {
     @Headers({"Authorization: 59c8add5dd304111404e7f04"})
     @GET("/api/v1/offers/get-data")
     void getOffersList(@Query("query") JSONObject query, @Query("skip") int skip, @Query("limit") int limit, Callback<GetOffersResponse> response);
+
+
+    @Headers({"Authorization: 59c8add5dd304111404e7f04","Content-Type: application/json"})
+    @POST("/api/v1/offers/add-data")
+    void addOffer(@Body AddOfferRequest body, Callback<String> response);
+
+    @Headers({"Authorization: 59c8add5dd304111404e7f04","Content-Type: application/json"})
+    @POST("/api/v1/offers/update-data")
+    void updateOffer(@Body UpdateOfferRequest body, Callback<String> response);
+
+    @Headers({"Authorization: 59c8add5dd304111404e7f04","Content-Type: application/json"})
+    @POST("/api/v1/offers/update-data")
+    void deleteOffer(@Body DeleteOfferRequest body, Callback<String> response);
 
 }

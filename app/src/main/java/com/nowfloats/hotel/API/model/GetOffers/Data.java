@@ -19,10 +19,10 @@ public class Data {
     private String offerDescription;
     @SerializedName("orignalPrice")
     @Expose
-    private Integer orignalPrice;
+    private Double orignalPrice;
     @SerializedName("discountedPrice")
     @Expose
-    private Integer discountedPrice;
+    private Double discountedPrice;
     @SerializedName("UserId")
     @Expose
     private String userId;
@@ -74,19 +74,19 @@ public class Data {
         this.offerDescription = offerDescription;
     }
 
-    public Integer getOrignalPrice() {
+    public Double getOrignalPrice() {
         return orignalPrice;
     }
 
-    public void setOrignalPrice(Integer orignalPrice) {
+    public void setOrignalPrice(Double orignalPrice) {
         this.orignalPrice = orignalPrice;
     }
 
-    public Integer getDiscountedPrice() {
+    public Double getDiscountedPrice() {
         return discountedPrice;
     }
 
-    public void setDiscountedPrice(Integer discountedPrice) {
+    public void setDiscountedPrice(Double discountedPrice) {
         this.discountedPrice = discountedPrice;
     }
 

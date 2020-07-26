@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.hotel.API.HotelAPIInterfaces;
+import com.nowfloats.hotel.API.model.DeleteOffer.DeleteOfferRequest;
 import com.nowfloats.hotel.API.model.DeletePlacesAround.DeletePlacesAroundRequest;
 import com.nowfloats.hotel.API.model.GetOffers.Data;
 import com.nowfloats.hotel.API.model.GetOffers.GetOffersResponse;
@@ -72,7 +73,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
         //setHeader
         setHeader();
 
-        if (!Constants.StoreWidgets.contains("OFFERS")){
+        if (Constants.StoreWidgets.contains("OFFERS")){
             recyclerView.setVisibility(View.VISIBLE);
             secondaryLayout.setVisibility(View.GONE);
             initialiseRecycler();
@@ -86,7 +87,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
     @Override
     protected void onResume() {
         super.onResume();
-        if (!Constants.StoreWidgets.contains("OFFERS")) {
+        if (Constants.StoreWidgets.contains("OFFERS")) {
             loadData();
         }
     }
@@ -159,7 +160,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
         rightButton = findViewById(R.id.right_icon_layout);
         rightIcon = findViewById(R.id.right_icon);
         title.setText("Seasonal Offers");
-        if (!Constants.StoreWidgets.contains("OFFERS")) {
+        if (Constants.StoreWidgets.contains("OFFERS")) {
             rightIcon.setImageResource(R.drawable.ic_add_white);
             rightButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -188,7 +189,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
 
     @Override
     public void editOptionClicked(Data data) {
-        Intent intent = new Intent(getApplicationContext(), PlacesNearByDetailsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SeasonalOffersDetailsActivity.class);
         intent.putExtra("ScreenState", "edit");
         intent.putExtra("data", new Gson().toJson(data));
         startActivity(intent);
@@ -197,7 +198,7 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
     @Override
     public void deleteOptionClicked(Data data) {
         try {
-            DeletePlacesAroundRequest requestBody = new DeletePlacesAroundRequest();
+            DeleteOfferRequest requestBody = new DeleteOfferRequest();
             requestBody.setQuery("{_id:'" + data.getId() + "'}");
             requestBody.setUpdateValue("{$set : {IsArchived: true }}");
             requestBody.setMulti(true);
@@ -210,11 +211,12 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
                     .build()
                     .create(HotelAPIInterfaces.class);
 
-            APICalls.deletePlacesAround(requestBody, new Callback<String>() {
+            APICalls.deleteOffer(requestBody, new Callback<String>() {
                 @Override
-                public void success(String data, Response response) {
+                public void success(String s, Response response) {
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
+                        Methods.showSnackBarPositive(SeasonalOffersActivity.this, "Successfully Deleted.");
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(SeasonalOffersActivity.this, getString(R.string.something_went_wrong));
@@ -223,9 +225,10 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if(error.getResponse().getStatus() == 200){
+                    if (error.getResponse().getStatus() == 200) {
+                        Methods.showSnackBarPositive(SeasonalOffersActivity.this, "Successfully Deleted.");
                         loadData();
-                    }else {
+                    } else {
                         Methods.showSnackBarNegative(SeasonalOffersActivity.this, getString(R.string.something_went_wrong));
                     }
                 }
