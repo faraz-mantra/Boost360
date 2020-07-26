@@ -102,7 +102,7 @@ public class SeasonalOffersAdapter extends RecyclerView.Adapter<SeasonalOffersAd
         holder.offerTitle.setText(itemList.get(position).getOfferTitle());
         if(itemList.get(position).getDiscountedPrice() != itemList.get(position).getOrignalPrice()){
             SpannableString content = new SpannableString("RS."+ itemList.get(position).getOrignalPrice());
-            content.setSpan(new StrikethroughSpan(), 0, itemList.get(position).getOrignalPrice().toString().length(), 0);
+            content.setSpan(new StrikethroughSpan(), 0, itemList.get(position).getOrignalPrice().toString().length()+3, 0);
             holder.mrpPrice.setText(content);
             holder.mrpPrice.setVisibility(View.VISIBLE);
         }else{
