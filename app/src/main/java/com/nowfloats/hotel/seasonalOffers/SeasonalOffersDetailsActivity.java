@@ -216,6 +216,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 checkButtonClickStatus = false;
+                offerPriceText.setText("Rs.0");
             }
 
             @Override
@@ -233,6 +234,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 checkButtonClickStatus = false;
+                offerPriceText.setText("Rs.0");
             }
 
             @Override
@@ -396,7 +398,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
         }
 
         if (!checkButtonClickStatus) {
-            Methods.showSnackBar(SeasonalOffersDetailsActivity.this, "Click Check Button To Continue...");
+            Methods.showSnackBar(SeasonalOffersDetailsActivity.this, "Click CHECK Button To Continue...");
             return false;
         }
 
