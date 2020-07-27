@@ -75,9 +75,9 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
 
         //this feature is free to use
 //        if (Constants.StoreWidgets.contains("OFFERS")) {
-            recyclerView.setVisibility(View.VISIBLE);
-            secondaryLayout.setVisibility(View.GONE);
-            initialiseRecycler();
+        recyclerView.setVisibility(View.VISIBLE);
+        secondaryLayout.setVisibility(View.GONE);
+        initialiseRecycler();
 //        }else{
 //            recyclerView.setVisibility(View.GONE);
 //            secondaryLayout.setVisibility(View.VISIBLE);
@@ -90,11 +90,11 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
         super.onResume();
         //this feature is free to use
 //        if (Constants.StoreWidgets.contains("OFFERS")) {
-            loadData();
+        loadData();
 //        }
     }
 
-    void showSecondaryLayout(){
+    void showSecondaryLayout() {
         buyItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +123,14 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
                     }
 
                     dataList = getOffersResponse.getData();
-                    updateRecyclerView();
+                    if (dataList.size() > 0) {
+                        updateRecyclerView();
+                        recyclerView.setVisibility(View.VISIBLE);
+                        secondaryLayout.setVisibility(View.GONE);
+                    } else {
+                        recyclerView.setVisibility(View.GONE);
+                        secondaryLayout.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 @Override
@@ -164,15 +171,15 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
         title.setText("Seasonal Offers");
         //this feature is free to use
 //        if (Constants.StoreWidgets.contains("OFFERS")) {
-            rightIcon.setImageResource(R.drawable.ic_add_white);
-            rightButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), SeasonalOffersDetailsActivity.class);
-                    intent.putExtra("ScreenState", "new");
-                    startActivity(intent);
-                }
-            });
+        rightIcon.setImageResource(R.drawable.ic_add_white);
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SeasonalOffersDetailsActivity.class);
+                intent.putExtra("ScreenState", "new");
+                startActivity(intent);
+            }
+        });
 //        }
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -269,6 +276,6 @@ public class SeasonalOffersActivity extends AppCompatActivity implements Seasona
         new Handler().postDelayed(() -> {
             progressDialog.dismiss();
             finish();
-        },1000);
+        }, 1000);
     }
 }

@@ -82,22 +82,16 @@
                 android:id="@+id/offer_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:background="@drawable/edittext_bg_elevated"
+                style="@style/EditTextCustomeStyle"
                 android:elevation="@dimen/_2sdp"
-                android:fontFamily="@font/open_sans"
                 android:hint="Enter Offer Title"
-                android:singleLine="true"
-                android:textSize="@dimen/_11sdp" />
+                android:singleLine="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans"
                 android:text="Current Price"
                 android:textColor="#747474" />
@@ -106,17 +100,11 @@
                 android:id="@+id/current_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
                 android:inputType="number"
-                android:background="@drawable/edittext_bg_elevated"
+                style="@style/EditTextCustomeStyle"
                 android:elevation="@dimen/_2sdp"
-                android:fontFamily="@font/open_sans"
                 android:hint="Enter Current Price"
-                android:singleLine="true"
-                android:textSize="@dimen/_11sdp" />
+                android:singleLine="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -136,18 +124,12 @@
                     android:id="@+id/discount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:inputType="number"
-                    android:background="@drawable/edittext_bg_elevated"
-                    android:elevation="@dimen/_2sdp"
-                    android:fontFamily="@font/open_sans"
+                    style="@style/EditTextCustomeStyle"
+                android:elevation="@dimen/_2sdp"
                     android:hint="Enter Discount (%)"
-                    android:singleLine="true"
-                    android:textSize="@dimen/_11sdp" />
+                    android:singleLine="true" />
 
                 <TextView
                     android:id="@+id/check_button"
@@ -196,20 +178,15 @@
                 android:id="@+id/offer_description"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:background="@drawable/edittext_bg_elevated"
+                style="@style/EditTextCustomeStyle"
                 android:elevation="@dimen/_2sdp"
-                android:fontFamily="@font/open_sans"
                 android:gravity="top"
                 android:hint="Describe your offer..."
                 android:maxLength="100"
                 android:maxLines="50"
                 android:overScrollMode="always"
                 android:scrollbarStyle="insideInset"
-                android:scrollbars="vertical"
-                android:textSize="@dimen/_11sdp" />
+                android:scrollbars="vertical" />
 
 
             <TextView

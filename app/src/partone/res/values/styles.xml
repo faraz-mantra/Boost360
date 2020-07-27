@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppTheme" parent="AppTheme.Base">
 
@@ -74,6 +74,21 @@
         <!-- active thumb & track color (30% transparency) -->
         <item name="colorControlActivated">@color/green</item>
         <item name="colorSwitchThumbNormal">#cc0000</item>
+    </style>
+
+    <style name="EditTextCustomeStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/custome_edittext_selector</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:textSize">@dimen/_11sdp</item>
+        <item name="android:paddingStart">@dimen/_10sdp</item>
+        <item name="android:paddingEnd">@dimen/_8sdp</item>
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:layout_marginStart">@dimen/_15sdp</item>
+        <item name="android:layout_marginEnd">@dimen/_15sdp</item>
+        <item name="android:layout_marginTop">@dimen/_5sdp</item>
+        <item name="android:layout_marginBottom">@dimen/_5sdp</item>
+        <item name="android:textCursorDrawable">@drawable/color_cursor_orange</item>
     </style>
 
 </resources>
