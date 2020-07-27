@@ -60,6 +60,10 @@
     <item name="android:background">@drawable/bg_button_rounded_orange</item>
   </style>
 
+  <style name="RoundedRectangleWhite">
+    <item name="background">@drawable/bg_rounded_white</item>
+  </style>
+
   <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
     <item name="titleTextAppearance">@style/ToolbarStyle.TextAppearance</item>
     <item name="android:background">@color/transparent</item>

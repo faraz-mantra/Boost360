@@ -64,6 +64,7 @@
     <dimen name="size_115">115dp</dimen>
     <dimen name="size_120">120dp</dimen>
     <dimen name="size_124">124dp</dimen>
+    <dimen name="size_130">130dp</dimen>
     <dimen name="size_140">140dp</dimen>
     <dimen name="size_160">160dp</dimen>
     <dimen name="size_180">180dp</dimen>
