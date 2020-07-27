@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
@@ -14,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -48,6 +50,8 @@ import com.nowfloats.hotel.Interfaces.SeasonalOffersDetailsListener;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -148,11 +152,21 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
         //setheader
         setHeader();
 
+        setEditTextListeners();
+
         Bundle extra = getIntent().getExtras();
         ScreenType = extra.getString("ScreenState");
         if (ScreenType != null && ScreenType.equals("edit")) {
             displayData();
         }
+    }
+
+    private void setEditTextListeners() {
+//        offerTitleText.setOnFocusChangeListener(this);
+//        offerDescriptionText.setOnFocusChangeListener(this);
+//        offerPriceText.setOnFocusChangeListener(this);
+//        discountText.setOnFocusChangeListener(this);
+//        currentPriceText.setOnFocusChangeListener(this);
     }
 
     public void showDialogToGetImage() {
@@ -561,4 +575,25 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
         uploadedImageURL = url;
         updatePlaceProfileImage();
     }
+
+//    void elevationControllerEnable(View view){
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            view.setElevation(R.dimen._2sdp);
+//        }
+//    }
+//
+//    void elevationControllerDisable(View view){
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            view.setElevation(0);
+//        }
+//    }
+//
+//    @Override
+//    public void onFocusChange(View v, boolean hasFocus) {
+//        if(hasFocus){
+//            elevationControllerEnable(v);
+//        }else{
+//            elevationControllerDisable(v);
+//        }
+//    }
 }
