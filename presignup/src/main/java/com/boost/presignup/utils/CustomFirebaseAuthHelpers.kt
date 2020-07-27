@@ -7,10 +7,7 @@ import android.widget.Toast
 import com.boost.presignup.R
 import com.boost.presignup.datamodel.Apis
 import com.boost.presignup.datamodel.userprofile.*
-import com.facebook.AccessToken
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
+import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
@@ -192,13 +189,20 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
           break
         }
       }
-
+      logoutFacebook()
       if (autoUserProfileCreateMode) {
         requestUserProfileAPI(personIdToken, personEmail, "", "", personName as String, "FACEBOOK", uid)
       } else {
         verifyUserProfileAPI(uid, "", "FACEBOOK")
       }
     }
+  }
+
+  fun logoutFacebook() {
+    if (AccessToken.getCurrentAccessToken() == null) return
+    GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, GraphRequest.Callback {
+      LoginManager.getInstance().logOut()
+    }).executeAsync()
   }
 
   fun requestUserProfileAPI(personIdToken: String, email: String, userPassword: String, userMobile: String, personName: String,

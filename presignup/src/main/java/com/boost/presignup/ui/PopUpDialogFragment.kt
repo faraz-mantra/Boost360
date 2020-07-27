@@ -235,6 +235,7 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
       val personIdToken = if (token.isNotEmpty()) token else acct?.idToken
       val personPhoto = if (currentUser.photoUrl != null) currentUser.photoUrl else acct?.photoUrl
 
+      mGoogleSignInClient.signOut()
       val intent = Intent(requireContext(), SignUpActivity::class.java)
       intent.putExtra("url", personPhoto)
       intent.putExtra("email", personEmail)
@@ -248,6 +249,7 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
 
   fun AuthorizedFacebookUser(currentUser: FirebaseUser?) {
     if (currentUser != null) {
+      logoutFacebook()
       val userInfoList = currentUser.providerData
       var userInfo: UserInfo? = null
       if (userInfoList.isNullOrEmpty().not() && userInfoList.size >= 2) userInfo = userInfoList[1]
