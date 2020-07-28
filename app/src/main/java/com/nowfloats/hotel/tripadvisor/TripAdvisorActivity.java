@@ -124,15 +124,17 @@ public class TripAdvisorActivity extends AppCompatActivity {
             public void onClick(View v) {
                 widgetSnippet.clearFocus();
                 Methods.hideKeyboard(TripAdvisorActivity.this);
-                if(tripAdvisorData == null){
-                    //call addtripadvisor api
-                    addData();
-                }else{
-                    if(editState){
-                        //call updateTripAdvisor api
-                        updateData();
-                    }
+                if(validateData()) {
+                    if (tripAdvisorData == null) {
+                        //call addtripadvisor api
+                        addData();
+                    } else {
+                        if (editState) {
+                            //call updateTripAdvisor api
+                            updateData();
+                        }
 
+                    }
                 }
 
             }
@@ -152,6 +154,14 @@ public class TripAdvisorActivity extends AppCompatActivity {
             primaryLayout.setVisibility(View.GONE);
         }
 
+    }
+
+    private boolean validateData() {
+        if(widgetSnippet.getText().toString().isEmpty()){
+            Toast.makeText(getApplicationContext(), "Field is empty!!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     private void loadData() {

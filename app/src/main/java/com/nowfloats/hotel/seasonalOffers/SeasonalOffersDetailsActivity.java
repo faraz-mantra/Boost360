@@ -51,6 +51,7 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import retrofit.Callback;
@@ -221,7 +222,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
         currentPriceText.setText(String.valueOf(mrpPrice));
         double discount = (mrpPrice - offerPrice) / (double) mrpPrice;
         discount *= 100.0;
-        discountText.setText(String.valueOf(discount));
+        discountText.setText(new DecimalFormat("##.##").format(discount));
         offerPriceText.setText("Rs." + String.valueOf(offerPrice));
         offerDescriptionText.setText(existingItemData.getOfferDescription());
 
