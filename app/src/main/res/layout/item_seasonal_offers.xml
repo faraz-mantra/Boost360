@@ -70,7 +70,7 @@
                         android:textStyle="bold"
                         android:fontFamily="@font/open_sans"
                         android:textColor="#747474"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textSize="@dimen/_12sdp" />
 
                     <TextView
                         android:id="@+id/mrp_price"
@@ -121,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans"
+                android:textColor="#747474"
                 android:text="At a height of 234 feet, this minaret is the tallest individual tower in the world and is a perfect display of Mughal architectural brilliance."
                 android:textSize="@dimen/_9sdp" />
 

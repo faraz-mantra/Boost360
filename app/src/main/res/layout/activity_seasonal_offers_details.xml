@@ -155,6 +155,7 @@
                 android:layout_height="wrap_content"
                 android:text="Rs.0"
                 android:fontFamily="@font/open_sans"
+                android:textStyle="bold"
                 android:textColor="#9B9B9B"
                 android:layout_margin="@dimen/_15sdp"
                 android:textSize="@dimen/_25sdp"/>
@@ -182,8 +183,6 @@
                 android:elevation="@dimen/_2sdp"
                 android:gravity="top"
                 android:hint="Describe your offer..."
-                android:maxLength="100"
-                android:maxLines="50"
                 android:overScrollMode="always"
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical" />

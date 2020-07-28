@@ -101,14 +101,14 @@ public class SeasonalOffersAdapter extends RecyclerView.Adapter<SeasonalOffersAd
 
         holder.offerTitle.setText(itemList.get(position).getOfferTitle());
         if(itemList.get(position).getDiscountedPrice() != itemList.get(position).getOrignalPrice()){
-            SpannableString content = new SpannableString("RS."+ itemList.get(position).getOrignalPrice());
+            SpannableString content = new SpannableString("Rs."+ itemList.get(position).getOrignalPrice());
             content.setSpan(new StrikethroughSpan(), 0, itemList.get(position).getOrignalPrice().toString().length()+3, 0);
             holder.mrpPrice.setText(content);
             holder.mrpPrice.setVisibility(View.VISIBLE);
         }else{
             holder.mrpPrice.setVisibility(View.GONE);
         }
-        holder.offerPrice.setText( "RS."+ itemList.get(position).getDiscountedPrice());
+        holder.offerPrice.setText( "Rs."+ itemList.get(position).getDiscountedPrice());
         holder.offerDescription.setText(itemList.get(position).getOfferImage().getDescription());
         double discount = (itemList.get(position).getOrignalPrice() - itemList.get(position).getDiscountedPrice()) / (double)(itemList.get(position).getOrignalPrice());
         discount *= 100.0;
@@ -117,6 +117,9 @@ public class SeasonalOffersAdapter extends RecyclerView.Adapter<SeasonalOffersAd
         Glide.with(context)
                 .load(itemList.get(position).getOfferImage().getUrl())
                 .into(holder.offerImage);
+
+        holder.dummyView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        holder.dummyView1.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
     }
 
@@ -131,6 +134,7 @@ public class SeasonalOffersAdapter extends RecyclerView.Adapter<SeasonalOffersAd
         LinearLayout menuOptionLayout;
         ConstraintLayout mainLayout;
         TextView offerTitle, offerPrice, mrpPrice, offerDescription, offerDiscount, editOption, deleteOption;
+        View dummyView, dummyView1;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -146,6 +150,8 @@ public class SeasonalOffersAdapter extends RecyclerView.Adapter<SeasonalOffersAd
             mainLayout = (ConstraintLayout) itemView.findViewById(R.id.main_layout);
             editOption = itemView.findViewById(R.id.edit_option);
             deleteOption = itemView.findViewById(R.id.delete_option);
+            dummyView = itemView.findViewById(R.id.dummy_view);
+            dummyView1 = itemView.findViewById(R.id.dummy_view1);
         }
     }
 }

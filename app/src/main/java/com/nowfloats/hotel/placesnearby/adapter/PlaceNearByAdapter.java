@@ -112,6 +112,9 @@ public class PlaceNearByAdapter extends RecyclerView.Adapter<PlaceNearByAdapter.
                 .load(itemList.get(position).getPlaceImage().getUrl())
                 .into(holder.placeImage);
 
+        holder.dummyView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        holder.dummyView1.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
     }
 
     @Override
@@ -125,6 +128,7 @@ public class PlaceNearByAdapter extends RecyclerView.Adapter<PlaceNearByAdapter.
         LinearLayout menuOptionLayout;
         ConstraintLayout mainLayout;
         TextView placeName, placeAddress, placeDescription, placeDistance, editOption, deleteOption;
+        View dummyView, dummyView1;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -139,6 +143,8 @@ public class PlaceNearByAdapter extends RecyclerView.Adapter<PlaceNearByAdapter.
             mainLayout = (ConstraintLayout) itemView.findViewById(R.id.main_layout);
             editOption = itemView.findViewById(R.id.edit_option);
             deleteOption = itemView.findViewById(R.id.delete_option);
+            dummyView = itemView.findViewById(R.id.dummy_view);
+            dummyView1 = itemView.findViewById(R.id.dummy_view1);
         }
     }
 }
