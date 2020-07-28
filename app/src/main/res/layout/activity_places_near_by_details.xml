@@ -24,8 +24,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/_15sdp">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -33,7 +32,8 @@
                 android:text="Add image"
                 android:textColor="#747474"
                 android:fontFamily="@font/open_sans"
-                android:layout_marginLeft="@dimen/_5sdp"/>
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_15sdp"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_primary_image"
@@ -43,7 +43,7 @@
                 android:padding="2dp"
                 android:clickable="true"
                 app:cardCornerRadius="4dp"
-                android:layout_marginLeft="@dimen/_5sdp">
+                android:layout_marginStart="@dimen/_15sdp">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -75,19 +75,15 @@
                 android:text="Place Name"
                 android:textColor="#747474"
                 android:fontFamily="@font/open_sans"
-                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
             <EditText
                 android:id="@+id/place_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
                 android:hint="Enter Name"
-                android:fontFamily="@font/open_sans"
-                android:textSize="@dimen/_11sdp"
+                style="@style/EditTextCustomeStyle"
                 android:singleLine="true"
                 android:background="@drawable/edittext_bg_elevated"
                 android:elevation="@dimen/_2sdp"/>
@@ -98,7 +94,7 @@
                 android:text="ALT-tag"
                 android:textColor="#747474"
                 android:fontFamily="@font/open_sans"
-                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
 
@@ -106,12 +102,8 @@
                 android:id="@+id/place_description"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
                 android:hint="Alt tag is nothing but a description of this image that helps search engines find this image. \n(200 Characters Max)"
-                android:textSize="@dimen/_11sdp"
-                android:fontFamily="@font/open_sans"
+                style="@style/EditTextCustomeStyle"
                 android:overScrollMode="always"
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical"
@@ -127,7 +119,7 @@
                 android:text="Address"
                 android:textColor="#747474"
                 android:fontFamily="@font/open_sans"
-                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
 
@@ -135,12 +127,8 @@
                 android:id="@+id/place_address"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
                 android:hint="Enter Address \n(100 Characters Max)"
-                android:textSize="@dimen/_11sdp"
-                android:fontFamily="@font/open_sans"
+                style="@style/EditTextCustomeStyle"
                 android:overScrollMode="always"
                 android:scrollbarStyle="insideInset"
                 android:scrollbars="vertical"
@@ -156,7 +144,7 @@
                 android:text="Distance from Hotel"
                 android:textColor="#747474"
                 android:fontFamily="@font/open_sans"
-                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
 
@@ -164,16 +152,11 @@
                 android:id="@+id/place_distance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
                 android:hint="Enter Distance in Mt/Km"
-                android:fontFamily="@font/open_sans"
+                style="@style/EditTextCustomeStyle"
                 android:singleLine="true"
-                android:textSize="@dimen/_11sdp"
                 android:background="@drawable/edittext_bg_elevated"
-                android:elevation="@dimen/_2sdp"
-                android:gravity="top"/>
+                android:elevation="@dimen/_2sdp" />
 
 
             <TextView
@@ -184,7 +167,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:gravity="center"
