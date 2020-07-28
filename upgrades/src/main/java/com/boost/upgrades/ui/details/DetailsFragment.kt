@@ -230,46 +230,50 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
     }
 
     fun loadCostToButtons() {
+        try {
 
-        //if the View is opened from package then hide button, price, discount and Cart icon
-        if(arguments!!.containsKey("packageView")){
-            imageViewCart121.visibility = View.INVISIBLE
-            money.visibility= View.GONE
-            orig_cost.visibility = View.GONE
-            details_discount.visibility = View.GONE
-            add_item_to_cart.background = ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.grey_button_click_effect
-            )
-            add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
-          add_item_to_cart.text = "ITEM BELONG TO PACKAGE"
-          add_item_to_cart.isEnabled = false
-            havent_bought_the_feature.visibility = View.INVISIBLE
-            return
-        }
-
-        if (addonDetails!!.is_premium) {
-            add_item_to_cart.visibility = View.VISIBLE
-            add_item_to_cart.background = ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.orange_button_click_effect
-            )
-            add_item_to_cart.setTextColor(Color.WHITE)
-            val discount = 100 - addonDetails!!.discount_percent
-            val paymentPrice = (discount * addonDetails!!.price) / 100
-            money.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/month"
-            if (discount > 0) {
-                orig_cost.visibility = View.VISIBLE
-                spannableString(addonDetails!!.price)
-            } else {
-                orig_cost.visibility = View.INVISIBLE
+            //if the View is opened from package then hide button, price, discount and Cart icon
+            if (arguments!!.containsKey("packageView")) {
+                imageViewCart121.visibility = View.INVISIBLE
+                money.visibility = View.GONE
+                orig_cost.visibility = View.GONE
+                details_discount.visibility = View.GONE
+                add_item_to_cart.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.grey_button_click_effect
+                )
+                add_item_to_cart.setTextColor(Color.parseColor("#bbbbbb"))
+                add_item_to_cart.text = "ITEM BELONG TO PACKAGE"
+                add_item_to_cart.isEnabled = false
+                havent_bought_the_feature.visibility = View.INVISIBLE
+                return
             }
-            add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Month"
-            havent_bought_the_feature.visibility = View.VISIBLE
-        } else {
-            add_item_to_cart.visibility = View.GONE
-            orig_cost.visibility = View.GONE
-            money.text = "Free Forever"
+
+            if (addonDetails!!.is_premium) {
+                add_item_to_cart.visibility = View.VISIBLE
+                add_item_to_cart.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.orange_button_click_effect
+                )
+                add_item_to_cart.setTextColor(Color.WHITE)
+                val discount = 100 - addonDetails!!.discount_percent
+                val paymentPrice = (discount * addonDetails!!.price) / 100
+                money.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/month"
+                if (discount > 0) {
+                    orig_cost.visibility = View.VISIBLE
+                    spannableString(addonDetails!!.price)
+                } else {
+                    orig_cost.visibility = View.INVISIBLE
+                }
+                add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Month"
+                havent_bought_the_feature.visibility = View.VISIBLE
+            } else {
+                add_item_to_cart.visibility = View.GONE
+                orig_cost.visibility = View.GONE
+                money.text = "Free Forever"
+            }
+        } catch (e: Exception){
+            e.printStackTrace()
         }
     }
 
