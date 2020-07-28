@@ -114,16 +114,20 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Double.parseDouble(discountText.getText().toString()) > 100) {
-                    Methods.showSnackBarNegative(SeasonalOffersDetailsActivity.this, "Invalid Discount Percentage!!");
-                    checkButtonClickStatus = false;
-                } else {
-                    checkButtonClickStatus = true;
+                if (!discountText.getText().toString().isEmpty() && !currentPriceText.getText().toString().isEmpty()) {
+                    if (Double.parseDouble(discountText.getText().toString()) > 100) {
+                        Methods.showSnackBarNegative(SeasonalOffersDetailsActivity.this, "Invalid Discount Percentage!!");
+                        checkButtonClickStatus = false;
+                    } else {
+                        checkButtonClickStatus = true;
+                    }
+                    double discount = 100 - Double.parseDouble(discountText.getText().toString());
+                    mrpPrice = Double.parseDouble(currentPriceText.getText().toString());
+                    offerPrice = (discount * mrpPrice) / 100;
+                    offerPriceText.setText("Rs." + String.valueOf(offerPrice));
+                }else{
+                    Toast.makeText(getApplicationContext(), "Fields are Empty...", Toast.LENGTH_SHORT).show();
                 }
-                double discount = 100 - Double.parseDouble(discountText.getText().toString());
-                mrpPrice = Double.parseDouble(currentPriceText.getText().toString());
-                offerPrice = (discount * mrpPrice) / 100;
-                offerPriceText.setText("Rs." + String.valueOf(offerPrice));
             }
         });
 
