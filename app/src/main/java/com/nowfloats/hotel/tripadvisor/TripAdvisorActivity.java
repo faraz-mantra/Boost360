@@ -110,9 +110,6 @@ public class TripAdvisorActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 editState = true;
                 saveButton.setVisibility(View.VISIBLE);
-                if(s.length()==0){
-                    widgetSnippet.setText("Paste Your Script Here");
-                }
             }
 
             @Override
