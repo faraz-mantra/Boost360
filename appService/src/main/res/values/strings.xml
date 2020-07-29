@@ -110,4 +110,5 @@
   <string name="kotak_mahindra_bank_connaught_place_branch">Kotak Mahindra Bank - Connaught Place Branch</string>
   <string name="verification_underway_details">We\'re currently verifying your bank account. This process usually takes 1 working day. Once done, we will notify you. If you want to make any changes to the above account details, Please write now to ria@nowfloats.com with this screenshot attached.</string>
   <string name="kyc_information">KYC Information</string>
+    <string name="crop_and_proceed">Crop and Proceed</string>
 </resources>
