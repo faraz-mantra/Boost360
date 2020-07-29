@@ -49,24 +49,21 @@
             app:layout_constraintBottom_toTopOf="@id/btn_upload_pan_gallery_sheet"
             android:elevation="@dimen/size_4"/>
 
-        <io.fotoapparat.view.CameraView
+        <com.otaliastudios.cameraview.CameraView
             android:id="@+id/panCardScanCameraView"
+            android:keepScreenOn="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/warm_grey"
             android:layout_marginBottom="@dimen/size_90"/>
 
-<!--        <com.camerakit.CameraKitView-->
+<!--        <io.fotoapparat.view.CameraView-->
 <!--            android:id="@+id/panCardScanCameraView"-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="match_parent"-->
 <!--            android:background="@color/warm_grey"-->
-<!--            android:keepScreenOn="true"-->
-<!--            app:camera_flash="auto"-->
-<!--            app:camera_facing="back"-->
-<!--            app:camera_focus="continuous"-->
-<!--            app:camera_permissions="camera"-->
-<!--            />-->
+<!--            android:layout_marginBottom="@dimen/size_90"/>-->
+
 
         <com.framework.views.customViews.CustomCardView
             android:id="@+id/btn_click_photo"

@@ -32,6 +32,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
   private var paymentDocsVerificationFailedFragment: PaymentDocsVerificationFailedFragment? =  null
   private var paymentDocsVerificationSuccessfulFragment: PaymentDocsVerificationSuccessfulFragment? = null
   private var kycStatusFragment: KYCStatusFragment? = null
+  private var cropImageFragment: CropImageFragment? = null
 
 
   override fun getLayout(): Int {
@@ -61,7 +62,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.PAYMENT_GATEWAY,  FragmentType.KYC_DETAILS,FragmentType.PAYMENT_DOCS_SUBMITTED,
       FragmentType.PAYMENT_DOCS_UNDER_VERIFICATION, FragmentType.PAYMENT_DOCS_VERIFICATION_FAILED,
       FragmentType.PAYMENT_DOCS_VERIFICATION_SUCCESS, FragmentType.KYC_STATUS-> R.style.AppTheme_payment_gateway
-      FragmentType.SCAN_PAN_CARD -> R.style.AppTheme_account
+      FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> R.style.AppTheme_account
       else -> super.customTheme()
     }
   }
@@ -72,7 +73,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.PAYMENT_DOCS_SUBMITTED, FragmentType.PAYMENT_DOCS_UNDER_VERIFICATION,
       FragmentType.PAYMENT_DOCS_VERIFICATION_FAILED, FragmentType.PAYMENT_DOCS_VERIFICATION_SUCCESS,
       FragmentType.KYC_STATUS-> ContextCompat.getColor(this, R.color.orange)
-      FragmentType.SCAN_PAN_CARD -> ContextCompat.getColor(this, R.color.toolbar_grey)
+      FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE  -> ContextCompat.getColor(this, R.color.toolbar_grey)
 //      FragmentType.KYC_DETAILS -> ContextCompat.getColor(this, R.color.orange)
 //      FragmentType.PAYMENT_DOCS_SUBMITTED -> ContextCompat.getColor(this, R.color.orange)
 //      FragmentType.PAYMENT_DOCS_UNDER_VERIFICATION -> ContextCompat.getColor(this, R.color.orange)
@@ -84,7 +85,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
-      FragmentType.PAYMENT_GATEWAY, FragmentType.SCAN_PAN_CARD, FragmentType.KYC_DETAILS,
+      FragmentType.PAYMENT_GATEWAY, FragmentType.SCAN_PAN_CARD, FragmentType.KYC_DETAILS, FragmentType.CROP_IMAGE,
       FragmentType.PAYMENT_DOCS_SUBMITTED, FragmentType.PAYMENT_DOCS_UNDER_VERIFICATION, FragmentType.KYC_STATUS,
       FragmentType.PAYMENT_DOCS_VERIFICATION_FAILED, FragmentType.PAYMENT_DOCS_VERIFICATION_SUCCESS-> ContextCompat.getColor(this, R.color.white)
 //      FragmentType.SCAN_PAN_CARD -> ContextCompat.getColor(this, R.color.white)
@@ -95,7 +96,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.PAYMENT_GATEWAY, FragmentType.KYC_DETAILS,
+      FragmentType.PAYMENT_GATEWAY, FragmentType.KYC_DETAILS, FragmentType.CROP_IMAGE,
       FragmentType.PAYMENT_DOCS_SUBMITTED, FragmentType.PAYMENT_DOCS_UNDER_VERIFICATION, FragmentType.KYC_STATUS,
       FragmentType.PAYMENT_DOCS_VERIFICATION_FAILED, FragmentType.PAYMENT_DOCS_VERIFICATION_SUCCESS-> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
       FragmentType.SCAN_PAN_CARD -> ContextCompat.getDrawable(this, R.drawable.ic_round_close_white)
@@ -107,7 +108,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.PAYMENT_GATEWAY -> getString(R.string.self_branded_payment_gateway)
-      FragmentType.SCAN_PAN_CARD -> getString(R.string.take_photo_of_your_pan_card)
+      FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE  -> getString(R.string.take_photo_of_your_pan_card)
       FragmentType.PAYMENT_DOCS_SUBMITTED -> getString(R.string.custom_payment_gateway)
       FragmentType.PAYMENT_DOCS_UNDER_VERIFICATION, FragmentType.PAYMENT_DOCS_VERIFICATION_SUCCESS,
       FragmentType.PAYMENT_DOCS_VERIFICATION_FAILED -> getString(R.string.kyc_status_all_caps)
@@ -183,10 +184,20 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
         kycStatusFragment = KYCStatusFragment()
         kycStatusFragment
       }
+      FragmentType.CROP_IMAGE ->{
+        cropImageFragment = CropImageFragment()
+        cropImageFragment
+      }
 
       else -> throw IllegalFragmentTypeException()
     }
   }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    kycDetailsFragment?.onActivityResult(requestCode, resultCode, data)
+  }
+
 }
 
 fun Fragment.startFragmentPaymentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {

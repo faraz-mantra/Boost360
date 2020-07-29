@@ -38,7 +38,6 @@
                 android:layout_height="match_parent">
                 <ImageView
                     android:id="@+id/image_pan_card"
-                    android:background="@drawable/pan_card_dummy"
                     android:layout_width="@dimen/size_320"
                     android:layout_height="@dimen/size_200"
                     app:layout_constraintTop_toTopOf="parent"
@@ -46,8 +45,10 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_margin="@dimen/size_20"
+                    android:scaleType="centerCrop"
                     />
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_retake_pan_image"
                     app:cardBackgroundColor="@color/gray_e1e1e1"
                     android:layout_width="@dimen/size_40"
                     android:layout_height="@dimen/size_40"
@@ -66,7 +67,6 @@
                         app:srcCompat="@drawable/ic_camera_grey"
                         />
                     <com.framework.views.customViews.CustomCardView
-                        android:id="@+id/btn_change_pan_image"
                         android:layout_width="@dimen/size_6"
                         android:layout_height="@dimen/size_6"
                         android:layout_gravity="center"
@@ -338,21 +338,230 @@
                         </com.framework.views.customViews.CustomCardView>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+<!--                    Bank Statement Preview-->
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/bankStatementView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/iv_bank_statement"
+                            android:layout_width="@dimen/size_80"
+                            android:layout_height="@dimen/size_80"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_margin="@dimen/size_20"
+                            android:background="@color/grey_details_898989"
+                            />
+
+                        <com.framework.views.customViews.CustomCardView
+                            android:id="@+id/btn_clear_bank_statement_image"
+                            android:layout_width="@dimen/size_20"
+                            android:layout_height="@dimen/size_20"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/size_20"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_bank_statement"
+                            app:layout_constraintStart_toStartOf="@id/iv_bank_statement"
+                            android:layout_marginStart="@dimen/size_70"
+                            android:layout_marginBottom="@dimen/size_70"
+                            >
+                            <com.framework.views.customViews.CustomImageView
+                                android:layout_width="@dimen/size_20"
+                                android:layout_height="@dimen/size_20"
+                                android:layout_gravity="center"
+                                android:background="@drawable/ic_close_round"/>
+
+                        </com.framework.views.customViews.CustomCardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <com.framework.views.customViews.CustomTextView
                         android:id="@+id/btn_bank_statement_picker"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_4"
                         android:background="@drawable/bg_rounded_grey"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/size_10"
                         android:text="@string/add_file_jpg_png_pdf"
                         android:textAllCaps="true"
                         android:textColor="@color/greyish_brown"
                         app:fontFamily="@font/regular"
-                        app:textType="BODY_1"
+                        app:textType="BODY_1" />
+
+<!--                    Additional Documents Preview-->
+
+                    <GridView
+                        android:id="@+id/gv_additional_docs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:layout_marginTop="@dimen/size_4"
-                        android:paddingVertical="@dimen/size_10"
+                        android:numColumns="3"
                         />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/additionalDocsView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+<!--                    Docs 1-->
+                        <ImageView
+                            android:id="@+id/iv_docs_1"
+                            android:layout_width="@dimen/size_80"
+                            android:layout_height="@dimen/size_80"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_margin="@dimen/size_20"
+                            android:background="@color/grey_details_898989"
+                            />
+
+                        <com.framework.views.customViews.CustomCardView
+                            android:id="@+id/btn_clear_docs_1"
+                            android:layout_width="@dimen/size_20"
+                            android:layout_height="@dimen/size_20"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/size_20"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_docs_1"
+                            app:layout_constraintStart_toStartOf="@id/iv_docs_1"
+                            android:layout_marginStart="@dimen/size_70"
+                            android:layout_marginBottom="@dimen/size_70"
+                            >
+                            <com.framework.views.customViews.CustomImageView
+                                android:layout_width="@dimen/size_20"
+                                android:layout_height="@dimen/size_20"
+                                android:layout_gravity="center"
+                                android:background="@drawable/ic_close_round"/>
+
+                        </com.framework.views.customViews.CustomCardView>
+<!--                        Docs 2-->
+                        <ImageView
+                            android:id="@+id/iv_docs_2"
+                            android:layout_width="@dimen/size_80"
+                            android:layout_height="@dimen/size_80"
+                            app:layout_constraintStart_toEndOf="@id/iv_docs_1"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_margin="@dimen/size_20"
+                            android:background="@color/grey_details_898989"
+                            />
+
+                        <com.framework.views.customViews.CustomCardView
+                            android:id="@+id/btn_clear_docs_2"
+                            android:layout_width="@dimen/size_20"
+                            android:layout_height="@dimen/size_20"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/size_20"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_docs_2"
+                            app:layout_constraintStart_toStartOf="@id/iv_docs_2"
+                            android:layout_marginStart="@dimen/size_70"
+                            android:layout_marginBottom="@dimen/size_70"
+                            >
+                            <com.framework.views.customViews.CustomImageView
+                                android:layout_width="@dimen/size_20"
+                                android:layout_height="@dimen/size_20"
+                                android:layout_gravity="center"
+                                android:background="@drawable/ic_close_round"/>
+
+                        </com.framework.views.customViews.CustomCardView>
+
+<!--                        Docs 3-->
+
+                        <ImageView
+                            android:id="@+id/iv_docs_3"
+                            android:layout_width="@dimen/size_80"
+                            android:layout_height="@dimen/size_80"
+                            app:layout_constraintStart_toEndOf="@id/iv_docs_2"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_margin="@dimen/size_20"
+                            android:background="@color/grey_details_898989"
+                            />
+
+                        <com.framework.views.customViews.CustomCardView
+                            android:id="@+id/btn_clear_docs_3"
+                            android:layout_width="@dimen/size_20"
+                            android:layout_height="@dimen/size_20"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/size_20"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_docs_3"
+                            app:layout_constraintStart_toStartOf="@id/iv_docs_3"
+                            android:layout_marginStart="@dimen/size_70"
+                            android:layout_marginBottom="@dimen/size_70"
+                            >
+                            <com.framework.views.customViews.CustomImageView
+                                android:layout_width="@dimen/size_20"
+                                android:layout_height="@dimen/size_20"
+                                android:layout_gravity="center"
+                                android:background="@drawable/ic_close_round"/>
+
+                        </com.framework.views.customViews.CustomCardView>
+<!--                        Docs 4-->
+                        <ImageView
+                            android:id="@+id/iv_docs_4"
+                            android:layout_width="@dimen/size_80"
+                            android:layout_height="@dimen/size_80"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/iv_docs_1"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginHorizontal="@dimen/size_20"
+                            android:layout_marginTop="@dimen/size_20"
+                            android:background="@color/grey_details_898989"
+                            />
+
+                        <com.framework.views.customViews.CustomCardView
+                            android:id="@+id/btn_clear_docs_4"
+                            android:layout_width="@dimen/size_20"
+                            android:layout_height="@dimen/size_20"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/size_20"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_docs_4"
+                            app:layout_constraintStart_toStartOf="@id/iv_docs_4"
+                            android:layout_marginStart="@dimen/size_70"
+                            android:layout_marginBottom="@dimen/size_70"
+                            >
+                            <com.framework.views.customViews.CustomImageView
+                                android:layout_width="@dimen/size_20"
+                                android:layout_height="@dimen/size_20"
+                                android:layout_gravity="center"
+                                android:background="@drawable/ic_close_round"/>
+
+                        </com.framework.views.customViews.CustomCardView>
+<!--                        Docs 5-->
+                        <ImageView
+                            android:id="@+id/iv_docs_5"
+                            android:layout_width="@dimen/size_80"
+                            android:layout_height="@dimen/size_80"
+                            app:layout_constraintStart_toEndOf="@id/iv_docs_4"
+                            app:layout_constraintTop_toBottomOf="@id/iv_docs_2"
+                            android:layout_marginHorizontal="@dimen/size_20"
+                            android:layout_marginTop="@dimen/size_20"
+                            android:background="@color/grey_details_898989"
+                            />
+
+                        <com.framework.views.customViews.CustomCardView
+                            android:id="@+id/btn_clear_docs_5"
+                            android:layout_width="@dimen/size_20"
+                            android:layout_height="@dimen/size_20"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/size_20"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_docs_5"
+                            app:layout_constraintStart_toStartOf="@id/iv_docs_5"
+                            android:layout_marginStart="@dimen/size_70"
+                            android:layout_marginBottom="@dimen/size_70"
+                            >
+                            <com.framework.views.customViews.CustomImageView
+                                android:layout_width="@dimen/size_20"
+                                android:layout_height="@dimen/size_20"
+                                android:layout_gravity="center"
+                                android:background="@drawable/ic_close_round"/>
+
+                        </com.framework.views.customViews.CustomCardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -401,6 +610,7 @@
 
 
                     <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/btn_additional_docs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_rounded_grey"
