@@ -49,7 +49,7 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Bas
         }
         if(haveInstamojoAccount){
             when(v){
-                binding?.activePaymentBottomButton -> arguments?.let { startFragmentPaymentActivity(FragmentType.PAYMENT_DOCS_SUBMITTED, it)}
+                // Move to whatever fragment is required here
             }
         }else{
             when(v){
