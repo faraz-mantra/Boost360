@@ -16,6 +16,7 @@ import com.boost.presignup.utils.WebEngageController
 import com.google.firebase.auth.FirebaseAuth
 import com.onboarding.nowfloats.ui.webview.WebViewTNCDialog
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,11 +52,11 @@ class SignUpActivity : AppCompatActivity() {
       val intentProvider = intent.getStringExtra("provider") as String
 
       if (intentProvider.equals("GOOGLE")) {
-        profileUrl = intent.getStringExtra("url")
-        email = intent.getStringExtra("email")
-        personName = intent.getStringExtra("person_name")
-        personFamilyName = intent.getStringExtra("personFamilyName")
-        personIdToken = intent.getStringExtra("personIdToken")
+        profileUrl = intent.getStringExtra("url") ?: ""
+        email = intent.getStringExtra("email") ?: ""
+        personName = intent.getStringExtra("person_name") ?: ""
+        personFamilyName = intent.getStringExtra("personFamilyName") ?: ""
+        personIdToken = intent.getStringExtra("personIdToken") ?: ""
         provider = intentProvider
 
         if (!email.contains('@'))
@@ -66,10 +67,10 @@ class SignUpActivity : AppCompatActivity() {
         user_name.setText(personName)
         registerWithFirebaseEmailProvider = false
       } else if (intentProvider.equals("FACEBOOK")) {
-        profileUrl = intent.getStringExtra("url")
-        email = intent.getStringExtra("email")
-        personName = intent.getStringExtra("person_name")
-        personIdToken = intent.getStringExtra("personIdToken")
+        profileUrl = intent.getStringExtra("url") ?: ""
+        email = intent.getStringExtra("email") ?: ""
+        personName = intent.getStringExtra("person_name") ?: ""
+        personIdToken = intent.getStringExtra("personIdToken") ?: ""
         provider = intentProvider
 
         if (!email.contains('@'))
@@ -214,19 +215,33 @@ class SignUpActivity : AppCompatActivity() {
       }
 
       override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
-        val responseResult: UserProfileResponse? = response.body()
-        if (responseResult?.Result?.LoginId.isNullOrEmpty().not()) {
-          WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
-          WebEngageController.setUserContactAttributes(email, userMobile, personName)
-          WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
+        if (response.isSuccessful) {
+          val responseResult: UserProfileResponse? = response.body()
+          if (responseResult?.Result?.LoginId.isNullOrEmpty().not()) {
+            WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
+            WebEngageController.setUserContactAttributes(email, userMobile, personName)
+            WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
 
-          val intent = Intent(applicationContext, SignUpConfirmation::class.java)
-          intent.putExtra("profileUrl", profileUrl)
-          intent.putExtra("person_name", personName)
-          intent.putExtra("profile_id", responseResult?.Result?.LoginId)
-          startActivity(intent)
+            val intent = Intent(applicationContext, SignUpConfirmation::class.java)
+            intent.putExtra("profileUrl", profileUrl)
+            intent.putExtra("person_name", personName)
+            intent.putExtra("profile_id", responseResult?.Result?.LoginId)
+            startActivity(intent)
+          } else {
+            create_account_button.isVisible = true
+            Toast.makeText(applicationContext, applicationContext.getString(R.string.failed_create_user), Toast.LENGTH_SHORT).show()
+          }
         } else {
-          Toast.makeText(applicationContext, "Profile not created, please try again.", Toast.LENGTH_SHORT).show()
+          try {
+            val error: Throwable = PreSignUpException(response.errorBody()?.string() ?: "")
+            val reader = JSONObject(error.localizedMessage)
+            val message: String = reader.getJSONObject("Error")?.getJSONObject("ErrorList")
+                ?.getString("EXCEPTION") ?: applicationContext.getString(R.string.failed_create_user)
+            Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+          } catch (e: Exception) {
+            Toast.makeText(applicationContext, applicationContext.getString(R.string.failed_create_user), Toast.LENGTH_SHORT).show()
+          }
+          create_account_button.isVisible = true
         }
       }
     })

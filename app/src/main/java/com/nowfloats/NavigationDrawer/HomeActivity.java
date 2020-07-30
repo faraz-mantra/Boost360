@@ -336,8 +336,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         session = new UserSessionManager(getApplicationContext(), HomeActivity.this);
         Log.d("WEBSITE_ID", "ID : " + session.getFPID());
-
-
         WebEngageController.initiateUserLogin(session.getUserProfileId());
         WebEngageController.setUserContactInfoProperties(session);
         WebEngageController.setFPTag(session.getFpTag());
@@ -353,14 +351,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         WebEngageController.trackEvent("HOME", "pageview", null);
 
         Bundle bundle = getIntent().getExtras();
-
         if (bundle != null) {
-            if (bundle.containsKey("url")) {
-                mDeepLinkUrl = bundle.getString("url");
-            }
-            if (bundle.containsKey("payload")) {
-                mPayload = bundle.getString("payload");
-            }
+            if (bundle.containsKey("url")) mDeepLinkUrl = bundle.getString("url");
+            if (bundle.containsKey("payload")) mPayload = bundle.getString("payload");
         }
 
         if (bundle != null && bundle.containsKey("Username")) {
@@ -371,6 +364,16 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         initialiseZendeskSupportSdk();
         //WidgetKey.getWidgets(session, this);
+    }
+
+    private void startPreSignUpActivity() {
+        try {
+            Intent intent = new Intent(HomeActivity.this, Class.forName("com.boost.presignup.PreSignUpActivity"));
+            startActivity(intent);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        finish();
     }
 
     public void DeepLinkPage(String url, boolean isFromRia) {
@@ -434,18 +437,22 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent listOrder = new Intent(HomeActivity.this, SellerAnalyticsActivity.class);
                 startActivity(listOrder);
             } else if (url.contains("myorderdetail")) {
-                Bundle bundle = new Bundle();
-                PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
-                bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
-                bundle.putString(IntentConstant.EXPERIENCE_CODE.name(), session.getFP_AppExperienceCode());
-                bundle.putString(IntentConstant.ORDER_ID.name(), mPayload);
+                Bundle bundle = getBundleData();
                 int experienceType = getExperienceType(session.getFP_AppExperienceCode());
-
-                if (experienceType == 1) startFragmentActivityNew(this, FragmentType.APPOINTMENT_DETAIL_VIEW, bundle, false);
-                else if (experienceType == 3) startFragmentActivityNew(this, FragmentType.ORDER_DETAIL_VIEW, bundle, false);
-//                Intent orderDetail = new Intent(HomeActivity.this, OrderDetailsActivity.class);
-//                orderDetail.putExtra("orderId", mPayload);
-//                startActivity(orderDetail);
+                if (experienceType == 1) startFragmentActivityNew(this, FragmentType.ALL_APPOINTMENT_VIEW, bundle, false);
+                else if (experienceType == 3) startFragmentActivityNew(this, FragmentType.ALL_ORDER_VIEW, bundle, false);
+            } else if (url.contains("APPOINTMENT_FRAGMENT")) {
+                Bundle bundle = getBundleData();
+                int experienceType = getExperienceType(session.getFP_AppExperienceCode());
+                if (experienceType == 1) startFragmentActivityNew(this, FragmentType.ALL_APPOINTMENT_VIEW, bundle, false);
+            } else if (url.contains("ORDER_FRAGMENT")) {
+                Bundle bundle = getBundleData();
+                int experienceType = getExperienceType(session.getFP_AppExperienceCode());
+                if (experienceType == 3) startFragmentActivityNew(this, FragmentType.ALL_ORDER_VIEW, bundle, false);
+            } else if (url.contains("CONSULTATION_FRAGMENT")) {
+                Bundle bundle = getBundleData();
+                int experienceType = getExperienceType(session.getFP_AppExperienceCode());
+                if (experienceType == 1) startFragmentActivityNew(this, FragmentType.ALL_VIDEO_CONSULT_VIEW, bundle, false);
             } else if (url.contains(getResources().getString(R.string.deeplink_upgrade))) {
                 final String appPackageName = HomeActivity.this.getPackageName(); // getPackageName() from Context or Activity object
                 try {
@@ -557,6 +564,15 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         }
         mDeepLinkUrl = null;
+    }
+
+    private Bundle getBundleData() {
+        Bundle bundle = new Bundle();
+        PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
+        bundle.putString(IntentConstant.EXPERIENCE_CODE.name(), session.getFP_AppExperienceCode());
+        bundle.putString(IntentConstant.ORDER_ID.name(), mPayload);
+        return bundle;
     }
 
     private String getCountryCode() {
@@ -1434,7 +1450,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Override
     public void deepLink(String url) {
-
         DeepLinkPage(url, false);
     }
 
@@ -1759,11 +1774,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             String action = intent.getAction();
             String data = intent.getDataString();
             BoostLog.d("Data: ", data + "  " + action);
-            if (session.checkLogin()) {
+
+            if (session.isLoginCheck()) {
                 deepLink(data.substring(data.lastIndexOf("/") + 1));
-            } else {
-                finish();
-            }
+            } else startPreSignUpActivity();
         }
     }
 

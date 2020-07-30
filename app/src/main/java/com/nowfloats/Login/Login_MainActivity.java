@@ -35,6 +35,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
+import com.boost.presignup.PreSignUpActivity;
 import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
 import com.boost.presignup.datamodel.userprofile.Result;
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse;
@@ -74,8 +75,7 @@ import java.util.Date;
 import jp.wasabeef.richeditor.RichEditor;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class Login_MainActivity extends AppCompatActivity implements
-        API_Login.API_Login_Interface, View.OnClickListener {
+public class Login_MainActivity extends AppCompatActivity implements API_Login.API_Login_Interface, View.OnClickListener {
     Bus bus;
     EditText userName, password;
     CardView loginButton;
@@ -231,10 +231,8 @@ public class Login_MainActivity extends AppCompatActivity implements
                 if (progressDialog != null && progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
-                if (response != null)
-                    processLoginSuccessRequest(response);
-                else
-                    Methods.showSnackBarNegative(Login_MainActivity.this, "Error occurred while processing your login request. Please get in touch with Boost Support team");
+                if (response != null) processLoginSuccessRequest(response);
+                else Methods.showSnackBarNegative(Login_MainActivity.this, "Error occurred while processing your login request. Please get in touch with Boost Support team");
             }
 
             @Override
@@ -616,28 +614,33 @@ public class Login_MainActivity extends AppCompatActivity implements
     }
 
     private void processLoginSuccessRequest(VerificationRequestResult response) {
-        try {
-            session.setUserProfileId(response.getLoginId());
-            session.setUserProfileEmail(response.getProfileProperties().getUserEmail());
-            session.setUserProfileName(response.getProfileProperties().getUserName());
-            session.setUserProfileMobile(response.getProfileProperties().getUserMobile());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (response.getLoginId() != null && !response.getLoginId().isEmpty()) {
+            try {
+                session.setUserProfileId(response.getLoginId());
+                session.setUserProfileEmail(response.getProfileProperties().getUserEmail());
+                session.setUserProfileName(response.getProfileProperties().getUserName());
+                session.setUserProfileMobile(response.getProfileProperties().getUserMobile());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        if (response.getValidFPIds() == null || response.getValidFPIds().length == 0) {
-            showBusinessProfileCreationStartScreen(response.getLoginId());
+            if (response.getValidFPIds() == null || response.getValidFPIds().length == 0) {
+                showBusinessProfileCreationStartScreen(response.getLoginId());
+            } else {
+                session.setUserLogin(true);
+                progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
+                session.storeISEnterprise(response.isEnterprise() + "");
+                session.storeIsThinksity((response.getSourceClientId() != null && response.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
+                session.storeFPID(response.getValidFPIds()[0]);
+                authenticationStatus("Success");
+            }
         } else {
-            session.setUserLogin(true);
-            progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading");
-            session.storeISEnterprise(response.isEnterprise() + "");
-            session.storeIsThinksity((response.getSourceClientId() != null && response.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
-            session.storeFPID(response.getValidFPIds()[0]);
-            authenticationStatus("Success");
-        }
-
-        if (response.getLoginId() != null || response.getLoginId().length() >= 0) {
-            session.setUserProfileId(response.getLoginId());
+            Toast.makeText(this, R.string.signup_your_account, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(Login_MainActivity.this, PreSignUpActivity.class);
+            intent.putExtra("isSignUpBottomSheet", true);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(0, 0);
         }
     }
 
