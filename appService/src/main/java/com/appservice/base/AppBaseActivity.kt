@@ -61,17 +61,13 @@ abstract class AppBaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewMo
       return super.onOptionsItemSelected(item)
     }
 
-  override fun onBackPressed() {
-    super.onBackPressed()
-    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-  }
 
-  fun changeTheme(color: Int) {
+  fun changeTheme(color: Int, taskBarColor: Int) {
     getToolbar()?.setBackgroundColor(ContextCompat.getColor(this, color))
     window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-      window?.statusBarColor = ContextCompat.getColor(this, color)
+      window?.statusBarColor = ContextCompat.getColor(this, taskBarColor)
     }
   }
 }

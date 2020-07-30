@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.webkit.MimeTypeMap
 import java.io.File
 import java.util.*
 import java.util.regex.Matcher
@@ -71,13 +72,33 @@ fun Context.copyClipBoard(selectedText: String): Boolean {
 }
 
 fun String.capitalizeUtil(): String {
-    val capBuffer = StringBuffer()
-    val capMatcher: Matcher = Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(this)
-    while (capMatcher.find()) {
-        capMatcher.appendReplacement(capBuffer, capMatcher.group(1).toUpperCase(Locale.getDefault()) + capMatcher.group(2).toLowerCase(Locale.getDefault()))
-    }
-    return capMatcher.appendTail(capBuffer).toString()
+  val capBuffer = StringBuffer()
+  val capMatcher: Matcher = Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(this)
+  while (capMatcher.find()) {
+    capMatcher.appendReplacement(capBuffer, capMatcher.group(1).toUpperCase(Locale.getDefault()) + capMatcher.group(2).toLowerCase(Locale.getDefault()))
+  }
+  return capMatcher.appendTail(capBuffer).toString()
 }
+
 fun File.getBitmap(): Bitmap? {
-    return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this.path), 800, 800)
+  return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this.path), 600, 600)
 }
+
+fun String.getBitmap(): Bitmap? {
+  return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this), 600, 600)
+}
+
+fun File.getMimeType(): String? {
+  var mimeType: String? = null
+  val extension: String? = absolutePath?.getExtension()
+  if (MimeTypeMap.getSingleton().hasExtension(extension)) {
+    mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+  }
+  return mimeType
+}
+
+fun String.getExtension(): String? {
+  val strLength = lastIndexOf(".")
+  return if (strLength > 0) substring(strLength + 1).toLowerCase() else null
+}
+

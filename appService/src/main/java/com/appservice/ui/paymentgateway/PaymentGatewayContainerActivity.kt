@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -18,13 +19,11 @@ import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
-
 open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
 
-  private var inactivePaymentGatewayFragment: InactivePaymentGatewayFragment? = null
-  private var paymentGatewayFragment : PaymentGatewayFragment? = null
+  private var paymentGatewayFragment: PaymentGatewayFragment? = null
   private var scanPanCardFragment: ScanPanCardFragment? = null
   private var kycDetailsFragment: KYCDetailsFragment? = null
   private var kycStatusFragment: KYCStatusFragment? = null
@@ -49,23 +48,32 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
     setFragment()
   }
 
-  override fun getToolbar(): CustomToolbar? {
-    return binding?.appBarLayout?.toolbar
-  }
-
   override fun customTheme(): Int? {
     return when (type) {
-      FragmentType.PAYMENT_GATEWAY,  FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS-> R.style.AppTheme_payment_gateway
-      FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> R.style.AppTheme_account
+      FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> R.style.AppTheme_payment_dark
       else -> super.customTheme()
     }
   }
 
+  override fun getToolbarTitleGravity(): Int {
+    return when (type) {
+      FragmentType.KYC_STATUS, FragmentType.KYC_DETAILS -> Gravity.CENTER
+      else -> Gravity.START
+    }
+  }
+
+  override fun getToolbarTitleSize(): Float? {
+    return resources.getDimension(R.dimen.heading_7)
+  }
+
+  override fun getToolbar(): CustomToolbar? {
+    return binding?.appBarLayout?.toolbar
+  }
+
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.PAYMENT_GATEWAY, FragmentType.KYC_DETAILS,
-      FragmentType.KYC_STATUS-> ContextCompat.getColor(this, R.color.orange)
-      FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE  -> ContextCompat.getColor(this, R.color.toolbar_grey)
+      FragmentType.PAYMENT_GATEWAY, FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> ContextCompat.getColor(this, R.color.color_primary)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -80,26 +88,24 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.PAYMENT_GATEWAY, FragmentType.KYC_DETAILS, FragmentType.CROP_IMAGE,
-      FragmentType.KYC_STATUS-> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
-      FragmentType.SCAN_PAN_CARD -> ContextCompat.getDrawable(this, R.drawable.ic_round_close_white)
+      FragmentType.PAYMENT_GATEWAY, FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
       else -> super.getNavigationIcon()
+    }
+  }
+
+  override fun isVisibleBackButton(): Boolean {
+    return when (type) {
+      FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> false
+      else -> super.isVisibleBackButton()
     }
   }
 
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.PAYMENT_GATEWAY -> getString(R.string.self_branded_payment_gateway)
-      FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE  -> getString(R.string.take_photo_of_your_pan_card)
+      FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> getString(R.string.take_photo_of_your_pan_card)
       FragmentType.KYC_STATUS, FragmentType.KYC_DETAILS -> getString(R.string.kyc_information)
       else -> super.getToolbarTitle()
-    }
-  }
-
-  override fun isHideToolbar(): Boolean {
-    return when (type) {
-//      FragmentType.PAYMENT_GATEWAY -> false
-      else -> super.isHideToolbar()
     }
   }
 
@@ -143,15 +149,14 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
         kycDetailsFragment = KYCDetailsFragment()
         kycDetailsFragment
       }
-      FragmentType.KYC_STATUS ->{
+      FragmentType.KYC_STATUS -> {
         kycStatusFragment = KYCStatusFragment()
         kycStatusFragment
       }
-      FragmentType.CROP_IMAGE ->{
+      FragmentType.CROP_IMAGE -> {
         cropImageFragment = CropImageFragment()
         cropImageFragment
       }
-
       else -> throw IllegalFragmentTypeException()
     }
   }
@@ -161,6 +166,12 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
     kycDetailsFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
+  override fun onBackPressed() {
+    when (type) {
+      FragmentType.KYC_STATUS -> kycStatusFragment?.onNavPressed()
+      else -> finish()
+    }
+  }
 }
 
 fun Fragment.startFragmentPaymentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
@@ -190,3 +201,4 @@ fun AppCompatActivity.startFragmentPaymentActivity(type: FragmentType, bundle: B
 fun Intent.setFragmentType(type: FragmentType): Intent {
   return this.putExtra(FRAGMENT_TYPE, type.ordinal)
 }
+

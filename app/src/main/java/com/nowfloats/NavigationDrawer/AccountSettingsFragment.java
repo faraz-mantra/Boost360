@@ -63,7 +63,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static com.appservice.ui.bankaccount.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
-import static com.appservice.ui.paymentgateway.PaymentGatewayContainerActivityKt.startFragmentPaymentActivityNew;
 
 /**
  * Created by Admin on 29-01-2018.
@@ -128,9 +127,6 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                             startFragmentAccountActivityNew(Objects.requireNonNull(getActivity()), FragmentType.ADD_BANK_ACCOUNT_START, bundle, false);
                         }
 //                        intent = new Intent(mContext, AccountInfoActivity.class);
-                        break;
-                    case "Payment Gateway":
-                        startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), FragmentType.PAYMENT_GATEWAY, new Bundle(), false);
                         break;
                     case "Boost Extensions":
                         intent = new Intent(mContext, Boost360ExtensionsActivity.class);
