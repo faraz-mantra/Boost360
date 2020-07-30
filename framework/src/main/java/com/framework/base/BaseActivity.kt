@@ -183,10 +183,6 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
 
   }
 
-  override fun onBackPressed() {
-    onNavPressed()
-  }
-
   open fun onNavPressed() {
     this.hideKeyBoard()
     onBackPressed()
