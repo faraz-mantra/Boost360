@@ -57,6 +57,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   open fun customTheme(): Int? {
     return null
   }
+
   override fun onDestroy() {
     super.onDestroy()
     compositeDisposable.clear()
@@ -181,6 +182,9 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
 
   }
 
+  override fun onBackPressed() {
+    onNavPressed()
+  }
 
   open fun onNavPressed() {
     this.hideKeyBoard()

@@ -6,17 +6,15 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.appservice.R
 import com.appservice.constant.RecyclerViewItemType.*
+import com.appservice.databinding.ItemPreviewImageBinding
 import com.appservice.databinding.PaginationLoaderBinding
 import com.appservice.databinding.RowLayoutAddedSpecsBinding
+import com.appservice.holder.ImagePreviewViewHolder
 import com.appservice.holder.PagingViewHolder
 import com.appservice.holder.SpecificationViewHolder
 import com.framework.base.BaseActivity
 
-open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
-    activity: BaseActivity<*, *>,
-    list: ArrayList<T>,
-    itemClickListener: RecyclerItemClickListener? = null
-) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
+open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
 
   override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
     val inflater = LayoutInflater.from(parent.context)
@@ -25,6 +23,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     return when (recyclerViewItemType) {
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
       SPECIFICATION_ITEM -> SpecificationViewHolder(binding as RowLayoutAddedSpecsBinding)
+      IMAGE_PREVIEW -> ImagePreviewViewHolder(binding as ItemPreviewImageBinding)
     }
   }
 

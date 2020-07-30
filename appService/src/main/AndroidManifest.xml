@@ -21,7 +21,7 @@
     <activity
       android:name="com.appservice.ui.paymentgateway.PaymentGatewayContainerActivity"
       android:screenOrientation="portrait"
-      android:theme="@style/AppTheme.paymentt"
+      android:theme="@style/AppTheme.payment"
       android:windowSoftInputMode="adjustPan" />
 
   </application>

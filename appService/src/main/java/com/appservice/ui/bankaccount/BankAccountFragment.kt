@@ -128,7 +128,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         binding?.textVerification?.text = resources.getString(R.string.how_it_works)
         binding?.textDesc?.text = resources.getString(R.string.verify_desc_account)
         (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitle(resources.getString(R.string.link_your_account))
-        (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.colorAccent)
+        (baseActivity as? AccountFragmentContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
       } else setToolbarTitle(resources.getString(R.string.my_bank_account))
     } else {
       uiUpdate(true)

@@ -70,10 +70,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
 
   private fun openImagePicker(it: ClickType) {
-    val type = when (it) {
-      ClickType.CAMERA -> ImagePicker.Mode.CAMERA
-      ClickType.GALLERY -> ImagePicker.Mode.GALLERY
-    }
+    val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
     ImagePicker.Builder(baseActivity)
         .mode(type)
         .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)

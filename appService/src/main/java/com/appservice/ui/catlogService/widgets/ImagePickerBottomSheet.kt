@@ -7,7 +7,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
 enum class ClickType {
-  CAMERA, GALLERY
+  CAMERA, GALLERY, PGF
 }
 
 class ImagePickerBottomSheet : BaseBottomSheetDialog<BottomShettImagePickerBinding, BaseViewModel>() {
@@ -22,7 +22,7 @@ class ImagePickerBottomSheet : BaseBottomSheetDialog<BottomShettImagePickerBindi
   }
 
   override fun onCreateView() {
-    setOnClickListener(binding?.camera, binding?.gallery, binding?.close)
+    setOnClickListener(binding?.camera, binding?.gallery, binding?.close, binding?.pdf)
   }
 
   override fun onClick(v: View) {
@@ -30,6 +30,7 @@ class ImagePickerBottomSheet : BaseBottomSheetDialog<BottomShettImagePickerBindi
     when (v) {
       binding?.camera -> onClicked(ClickType.CAMERA)
       binding?.gallery -> onClicked(ClickType.GALLERY)
+      binding?.pdf -> onClicked(ClickType.PGF)
     }
     dismiss()
   }

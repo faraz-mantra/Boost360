@@ -14,6 +14,7 @@
   <color name="dodger_blue_light">#2f9cd9</color>
   <color name="white">#ffffff</color>
   <color name="white_light">#F3F3F3</color>
+  <color name="white_grey">#E5E5E5</color>
   <color name="white_one">#F2F2F2</color>
   <color name="aliceblue">#e6f4fc</color>
   <color name="aliceblue_10">#ecf3fe</color>
@@ -71,12 +72,13 @@
   <color name="black_4a4a4a">#4a4a4a</color>
   <color name="black_4f4f4f">#4f4f4f</color>
   <color name="toolbar_grey">#848484</color>
-  <color name="white_e5e5e5">#e5e5e5</color>
+  <color name="taskbar_dark_grey">#64625C</color>
+  <color name="white_3">#e5e5e5</color>
   <color name="gray_cecece">#cecece</color>
-  <color name="gray_d6d6d6">#d6d6d6</color>
-  <color name="gray_e1e1e1">#e1e1e1</color>
-  <color name="gray_a7a7a7">#a7a7a7</color>
-  <color name="gray_text_hint_c4c4c4">#c4c4c4</color>
-  <color name="grey_details_898989">#898989</color>
-  <color name="white_background_fbfbfb">#fbfbfb</color>
+  <color name="gray_light_1">#D8D8D8</color>
+  <color name="gray_ligh_3">#e1e1e1</color>
+  <color name="gray_light_4">#a7a7a7</color>
+  <color name="gray_text_hint">#c4c4c4</color>
+  <color name="grey_light_2">#898989</color>
+  <color name="white_4">#fbfbfb</color>
 </resources>

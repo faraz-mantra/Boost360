@@ -18,7 +18,7 @@ data class BankAccountDetails(
     @SerializedName("KYCDetails")
     var kYCDetails: KYCDetails? = null
 ) : Serializable {
-
+  var bankBranch: String? = null
   fun isValidAccount(): Boolean {
     return bankName.isNullOrEmpty().not() && iFSC.isNullOrEmpty().not() && accountNumber.isNullOrEmpty().not() && bankName.isNullOrEmpty().not()
   }

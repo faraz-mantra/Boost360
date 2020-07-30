@@ -17,7 +17,13 @@
     <item name="android:editTextColor">@color/black</item>
   </style>
 
-  <style name="AppTheme.paymentt" parent="AppTheme.cataloge">
+  <style name="AppTheme_payment_dark" parent="AppTheme.cataloge">
+    <item name="android:editTextColor">@color/black</item>
+  </style>
+
+  <style name="AppTheme.payment" parent="AppTheme.cataloge">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="android:editTextColor">@color/black</item>
   </style>
 
