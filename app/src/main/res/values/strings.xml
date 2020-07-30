@@ -1489,6 +1489,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="kitsune_pre_signup_text2">kitsune powered website</string>
     <string name="error_invoice">Error while creating invoice</string>
     <string name="allow_boost_to_read_your">Please allow Boost to read your Facebook Page insights.</string>
+    <string name="social_media_connect_prompt">Please allow Boost to connect with your social media accounts. You will be able to sync your content automatically across channels, and also track all the analytics / customer interactions here.</string>
     <string name="gathering_fcebook_analytics">Gathering Facebook Page analytics</string>
     <string name="please_wait_while_collecting_facebook_data">Please wait, as we are collecting statistics from your Facebook Page. It usually takes up to 24 hours to fetch data.</string>
     <string name="updates_not_found">Updates not found!</string>

@@ -24,6 +24,7 @@ import com.nowfloats.Analytics_Screen.API.NfxFacebbokAnalytics;
 import com.nowfloats.Analytics_Screen.Fragments.FacebookLoginFragment;
 import com.nowfloats.Analytics_Screen.Fragments.ProcessFacebookDataFragment;
 import com.nowfloats.Analytics_Screen.Fragments.PostFacebookUpdateFragment;
+import com.nowfloats.Analytics_Screen.Fragments.SocialMediaConnectPromptFragment;
 import com.nowfloats.Analytics_Screen.model.GetFacebookAnalyticsData;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.BoostLog;
@@ -89,6 +90,8 @@ public class SocialAnalytics extends AppCompatActivity implements FacebookLoginF
         //SpinnerAdapter adapter = new SpinnerAdapter(this,images);
         //spinner.setAdapter(adapter);
 
+        //TODO: Canbrand: Update these lines to check if any social media channel is connected
+        //                 For the time being only FB-flag is being checked, it needs to be changed
         Intent intent = getIntent();
         facebookStatus = intent.getIntExtra("GetStatus",0);
 
@@ -280,11 +283,11 @@ public class SocialAnalytics extends AppCompatActivity implements FacebookLoginF
                 transaction.replace(R.id.linearlayout,frag,"PostFacebookUpdate").commit();
                 break;
             case LOGIN_FACEBOOK:
-                frag = manager.findFragmentByTag("FacebookLoginFragment");
+                frag = manager.findFragmentByTag("SocialMediaConnectPromptFragment");
                 if(frag == null)
-                    frag = FacebookLoginFragment.getInstance(facebookStatus);
+                    frag = SocialMediaConnectPromptFragment.getInstance();
 
-                transaction.replace(R.id.linearlayout,frag,"FacebookLoginFragment").commit();
+                transaction.replace(R.id.linearlayout,frag,"SocialMediaConnectPromptFragment").commit();
                 break;
         }
     }
