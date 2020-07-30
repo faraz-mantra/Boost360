@@ -1863,4 +1863,5 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="your_digital_assitant">Your digital assitant</string>
     <string name="error_right_fptag">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right Boost account.</string>
   <string name="bank_account_details">Bank Account Details</string>
+  <string name="signup_your_account">Signup your account here.</string>
 </resources>

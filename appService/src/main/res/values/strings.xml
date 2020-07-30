@@ -8,7 +8,6 @@
   <string name="a_premium_service_by_boost_for_secure_payment_collection_learn_more_here">A premium service by Boost for secure payment collection (Learn more here)</string>
   <string name="gallery">Gallery</string>
   <string name="camera">Camera</string>
-  <string name="pdf">PDF</string>
   <string name="close">Close</string>
   <string name="choose_an_action">Choose an action</string>
   <string name="please_set_up_your_bank_account_to_proceed">Please set up your bank account to proceed</string>
@@ -22,12 +21,13 @@
   <string name="_111111111111111">111111111111111</string>
   <string name="save_n">save</string>
   <string name="please_wait_while_we_verify_your_account">Please Wait While We Verify Your Account</string>
-  <string name="verification_desc_account">We\'re currently verifying your bank account. This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to <u>ria@nowfloats.com</u> with this screenshot attached.</string>
-  <string name="verify_desc_account">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
+  <string name="verification_desc_account">We\'re currently verifying your bank account. This process usually takes 1 working day. Once verified we will notify you.</string>
+  <string name="verify_desc_account">This bank account is being used to send you money collected online from your customers.</string>
   <string name="internet_connection_not_available">Internet connection not available.</string>
-  <string name="verification_underway">Verification underway...</string>
+  <string name="verification_underway">Verification pending</string>
   <string name="how_it_works">How it works!</string>
   <string name="understood">Understood</string>
+  <string name="refresh_status">Refresh Status</string>
   <string name="link_your_account">Linked Bank Account</string>
   <string name="change_bank_detail">Change Bank details</string>
   <string name="submit_for_verification">Submit for Verification</string>
@@ -42,6 +42,8 @@
   <string name="add_bank_account">Add Bank Account</string>
   <string name="enabled_payments_reveived_bank">Once enabled, all payments from your customers will be received in this bank account</string>
   <string name="directly_designated_bank_account">Get payments in 48 hours, directly in your designated bank account</string>
+  <string name="account_verification_pending">Your account verification is pending</string>
+
   <string name="self_branded_payment_gateway">Self Branded Payment Gateway</string>
   <string name="about_this_add_on"> About this add-on</string>
   <string name="gateway_description">This payment gateway is powered by Instamojo, which allows you to collect your customers’ payment directly into your bank account without any delay, (unlike the default payment gateway provided by Boost). With this add-on acticvated on your Boost website your customers see that they are paying to your business and not to Boost.</string>

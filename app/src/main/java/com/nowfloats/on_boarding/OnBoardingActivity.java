@@ -4,18 +4,16 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import androidx.activity.OnBackPressedDispatcherOwner;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
 import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResult;
@@ -33,14 +31,12 @@ import com.nowfloats.Login.Login_MainActivity;
 import com.nowfloats.Login.MobileOtpFragment;
 import com.nowfloats.Login.MobileOtpVerificationFragment;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
 import com.nowfloats.ProductGallery.ProductGalleryActivity;
 import com.nowfloats.helper.ui.KeyboardUtil;
 import com.nowfloats.on_boarding.models.OnBoardingModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;

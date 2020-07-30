@@ -6,9 +6,9 @@ import com.framework.models.BaseViewModel
 import com.framework.utils.ConversionUtils
 import com.framework.utils.ScreenUtils
 import com.inventoryorder.R
-import com.inventoryorder.databinding.ProgressDialogBinding
+import com.inventoryorder.databinding.ProgressInventoryDialogBinding
 
-class ProgressDialog : BaseDialogFragment<ProgressDialogBinding, BaseViewModel>() {
+class ProgressDialog : BaseDialogFragment<ProgressInventoryDialogBinding, BaseViewModel>() {
   private var title: CharSequence? = null
 
   companion object {
@@ -23,7 +23,7 @@ class ProgressDialog : BaseDialogFragment<ProgressDialogBinding, BaseViewModel>(
   }
 
   override fun getLayout(): Int {
-    return R.layout.progress_dialog
+    return R.layout.progress_inventory_dialog
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
