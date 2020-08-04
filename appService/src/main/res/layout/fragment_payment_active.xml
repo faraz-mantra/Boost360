@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -231,10 +231,18 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/aboutPaymentGatewayCard">
 
-      <com.framework.views.customViews.CustomImageView
-        android:layout_width="@dimen/size_80"
-        android:layout_height="@dimen/size_80"
-        app:srcCompat="@drawable/ic_custom_payment_lock" />
+      <com.framework.views.customViews.CustomCardView
+        android:layout_width="@dimen/size_90"
+        android:layout_height="@dimen/size_90"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/size_45">
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/size_40"
+          android:layout_height="@dimen/size_40"
+          android:layout_gravity="center"
+          app:srcCompat="@drawable/ic_lock_grey" />
+      </com.framework.views.customViews.CustomCardView>
 
       <com.framework.views.customViews.CustomTextView
         android:layout_width="wrap_content"
