@@ -6,7 +6,8 @@ import com.appservice.R
 enum class RecyclerViewItemType {
   PAGINATION_LOADER,
   SPECIFICATION_ITEM,
-  IMAGE_PREVIEW;
+  IMAGE_PREVIEW,
+  ADDITIONAL_FILE_VIEW;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -14,6 +15,7 @@ enum class RecyclerViewItemType {
       PAGINATION_LOADER -> R.layout.pagination_loader
       SPECIFICATION_ITEM -> R.layout.row_layout_added_specs
       IMAGE_PREVIEW -> R.layout.item_preview_image
+      ADDITIONAL_FILE_VIEW -> R.layout.item_pdf_file
     }
   }
 }

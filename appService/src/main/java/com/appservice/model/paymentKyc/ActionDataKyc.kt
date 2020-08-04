@@ -30,5 +30,9 @@ data class ActionDataKyc(
     @SerializedName("panCardDocument")
     var panCardDocument: String? = null,
     @SerializedName("panNumber")
-    var panNumber: String? = null
+    var panNumber: String? = null,
+    @SerializedName("fpTag")
+    var fpTag: String? = null,
+    @SerializedName("isverified")
+    var isVerified: String? = null
 ) : Serializable

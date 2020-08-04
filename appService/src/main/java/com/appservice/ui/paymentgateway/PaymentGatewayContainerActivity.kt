@@ -28,6 +28,8 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
   private var kycDetailsFragment: KYCDetailsFragment? = null
   private var kycStatusFragment: KYCStatusFragment? = null
   private var cropImageFragment: CropImageFragment? = null
+  private var businessKycFragment: BusinessKycFragment? = null
+  private var detailKycFragment: DetailKycFragment? = null
 
 
   override fun getLayout(): Int {
@@ -48,6 +50,13 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
     setFragment()
   }
 
+  override fun getNavIconScale(): Float {
+    return when (type) {
+      FragmentType.BUSINESS_KYC_VIEW, FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> 1f
+      else -> super.getNavIconScale()
+    }
+  }
+
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> R.style.AppTheme_payment_dark
@@ -57,7 +66,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarTitleGravity(): Int {
     return when (type) {
-      FragmentType.KYC_STATUS, FragmentType.KYC_DETAILS -> Gravity.CENTER
+      FragmentType.KYC_STATUS, FragmentType.KYC_DETAILS, FragmentType.BUSINESS_KYC_VIEW -> Gravity.CENTER
       else -> Gravity.START
     }
   }
@@ -72,7 +81,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.PAYMENT_GATEWAY, FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.PAYMENT_GATEWAY, FragmentType.DETAIL_KYC_VIEW, FragmentType.BUSINESS_KYC_VIEW, FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS -> ContextCompat.getColor(this, R.color.colorPrimary)
       FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> ContextCompat.getColor(this, R.color.color_primary)
       else -> super.getToolbarBackgroundColor()
     }
@@ -80,7 +89,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
-      FragmentType.PAYMENT_GATEWAY, FragmentType.SCAN_PAN_CARD, FragmentType.KYC_DETAILS, FragmentType.CROP_IMAGE,
+      FragmentType.PAYMENT_GATEWAY, FragmentType.BUSINESS_KYC_VIEW, FragmentType.SCAN_PAN_CARD, FragmentType.KYC_DETAILS, FragmentType.CROP_IMAGE,
       FragmentType.KYC_STATUS -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
@@ -88,15 +97,9 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.PAYMENT_GATEWAY, FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
+      FragmentType.PAYMENT_GATEWAY, FragmentType.DETAIL_KYC_VIEW, FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
+      FragmentType.BUSINESS_KYC_VIEW, FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> ContextCompat.getDrawable(this, R.drawable.ic_round_close_white)
       else -> super.getNavigationIcon()
-    }
-  }
-
-  override fun isVisibleBackButton(): Boolean {
-    return when (type) {
-      FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> false
-      else -> super.isVisibleBackButton()
     }
   }
 
@@ -104,7 +107,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
     return when (type) {
       FragmentType.PAYMENT_GATEWAY -> getString(R.string.self_branded_payment_gateway)
       FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> getString(R.string.take_photo_of_your_pan_card)
-      FragmentType.KYC_STATUS, FragmentType.KYC_DETAILS -> getString(R.string.kyc_information)
+      FragmentType.KYC_STATUS, FragmentType.KYC_DETAILS, FragmentType.BUSINESS_KYC_VIEW -> getString(R.string.business_kyc)
       else -> super.getToolbarTitle()
     }
   }
@@ -137,9 +140,17 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
     return when (type) {
+      FragmentType.BUSINESS_KYC_VIEW -> {
+        businessKycFragment = BusinessKycFragment.newInstance()
+        businessKycFragment
+      }
       FragmentType.PAYMENT_GATEWAY -> {
         paymentGatewayFragment = PaymentGatewayFragment.newInstance()
         paymentGatewayFragment
+      }
+      FragmentType.DETAIL_KYC_VIEW -> {
+        detailKycFragment = DetailKycFragment.newInstance()
+        detailKycFragment
       }
       FragmentType.SCAN_PAN_CARD -> {
         scanPanCardFragment = ScanPanCardFragment.newInstance()

@@ -99,7 +99,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnSubmitDetails -> if (isValidAndGenerateRequest()) saveApiBankDetail()
+      binding?.btnSubmitDetails -> if (isValidAndGenerateRequest()) bottomSheetConfirm()
       binding?.btnRetakePanImage -> baseActivity.onNavPressed()
       binding?.btnBankStatementPicker -> openImagePicker(false)
       binding?.btnAdditionalDocs -> openImagePicker(true)
@@ -250,13 +250,13 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     request = if (this.isBankAssociated.not()) {
       val action = ActionDataKyc(panNumber = panNumber, nameOfPanHolder = panName, bankAccountNumber = accountNumber,
           nameOfBankAccountHolder = nameAccount, nameOfBank = bankName, ifsc = ifsc, bankBranchName = bankBranch,
-          hasexisistinginstamojoaccount = "true", instamojoEmail = "", instamojoPassword = "")
-      PaymentKycRequest(actionData = action, websiteId = session?.fpTag)
+          hasexisistinginstamojoaccount = "true", instamojoEmail = "", instamojoPassword = "", fpTag = session?.fpTag, isVerified = "no")
+      PaymentKycRequest(actionData = action, websiteId = session?.fpId)
     } else {
       val action = ActionDataKyc(panNumber = panNumber, nameOfPanHolder = panName, bankAccountNumber = bankDetail?.accountNumber,
           nameOfBankAccountHolder = bankDetail?.accountName, nameOfBank = bankDetail?.bankName, ifsc = bankDetail?.iFSC,
-          bankBranchName = bankDetail?.bankBranch, hasexisistinginstamojoaccount = "true", instamojoEmail = "", instamojoPassword = "")
-      PaymentKycRequest(actionData = action, websiteId = session?.fpTag)
+          bankBranchName = bankDetail?.bankBranch, hasexisistinginstamojoaccount = "true", instamojoEmail = "", instamojoPassword = "", fpTag = session?.fpTag, isVerified = "no")
+      PaymentKycRequest(actionData = action, websiteId = session?.fpId)
     }
     return true
   }
@@ -430,5 +430,12 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       binding?.edtBankBranch?.gone()
       showLongToast(resources.getString(R.string.invalid_ifsc))
     }
+  }
+
+  private fun bottomSheetConfirm() {
+    val sheet = ConfirmKycBottomSheet()
+    sheet.setData(request, panCarImage, bankStatementImage, additionalDocs)
+    sheet.onClicked = { saveApiBankDetail() }
+    sheet.show(this@KYCDetailsFragment.parentFragmentManager, ConfirmKycBottomSheet::class.java.name)
   }
 }

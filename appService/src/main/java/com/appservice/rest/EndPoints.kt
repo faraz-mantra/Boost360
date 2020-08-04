@@ -20,9 +20,9 @@ object EndPoints {
   //TODO NFX API 2 WITH FLOAT
   const val WEB_ACTION_BOOST_KIT_BASE = "https://webaction.api.boostkit.dev/"
   const val GET_ALL_KYC_DATA = "api/v1/List"
-  const val GET_DATA_KYC = "api/v1/selfbrandedpaymentgatewaykycdoc/get-data"
-  const val ADD_DATA_KYC = "api/v1/selfbrandedpaymentgatewaykycdoc/add-data"
-  const val UPDATE_DATA_KYC = "api/v1/selfbrandedpaymentgatewaykycdoc/update-data"
+  const val GET_DATA_KYC = "api/v1/kycdoc/get-data"
+  const val ADD_DATA_KYC = "api/v1/kycdoc/add-data"
+  const val UPDATE_DATA_KYC = "api/v1/kycdoc/update-data"
   const val UPLOAD_FILE = "api/v1/ourdoctors/upload-file"
 
 }

@@ -12,7 +12,7 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface WebActionBoostKitRemoteData {
-
+   //"query"={"fpTag": "nik(FpTag)"}
   @GET(EndPoints.GET_DATA_KYC)
   fun getKycData(@Header("Authorization") auth: String?, @Query("query") query: String?): Observable<Response<PaymentKycDataResponse>>
 

@@ -51,7 +51,6 @@ import com.anachat.chatsdk.AnaChatBuilder;
 import com.anachat.chatsdk.AnaCore;
 import com.anachat.chatsdk.internal.database.PreferencesManager;
 import com.android.inputmethod.latin.utils.JniUtils;
-import com.appservice.model.StatusKyc;
 import com.boost.upgrades.UpgradeActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -155,7 +154,6 @@ import zendesk.core.Identity;
 import zendesk.core.Zendesk;
 import zendesk.support.Support;
 
-import static com.appservice.ui.paymentgateway.PaymentGatewayContainerActivityKt.startFragmentPaymentActivityNew;
 import static com.inventoryorder.ui.FragmentContainerOrderActivityKt.startFragmentActivityNew;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO_REMOVE;
@@ -1163,21 +1161,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             @Override
             public void run() {
                 if (nextScreen.equals(getString(R.string.payment_gateway))) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(com.appservice.constant.IntentConstant.CLIENT_ID.name(), Constants.clientId);
-                    bundle.putString(com.appservice.constant.IntentConstant.USER_PROFILE_ID.name(), session.getUserProfileId());
-                    bundle.putString(com.appservice.constant.IntentConstant.FP_ID.name(), session.getFPID());
-                    bundle.putString(com.appservice.constant.IntentConstant.FP_TAG.name(), session.getFpTag());
-                    bundle.putString(com.appservice.constant.IntentConstant.EXPERIENCE_CODE.name(), session.getFP_AppExperienceCode());
-                    bundle.putString(com.appservice.constant.IntentConstant.FP_LOGO.name(), session.getFPLogo());
-                    bundle.putString(com.appservice.constant.IntentConstant.FP_USER_EMAIL.name(), session.getFPEmail());
-                    bundle.putString(com.appservice.constant.IntentConstant.FP_USER_NUMBER.name(), session.getFPPrimaryContactNumber());
-                    if (Constants.StoreWidgets.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name())) {
-                        bundle.putBoolean(com.appservice.constant.IntentConstant.CUSTOM_PAYMENT_GATEWAY.name(), true);
-                    } else {
-                        bundle.putBoolean(com.appservice.constant.IntentConstant.CUSTOM_PAYMENT_GATEWAY.name(), false);
-                    }
-                    startFragmentPaymentActivityNew(HomeActivity.this, com.appservice.constant.FragmentType.PAYMENT_GATEWAY, bundle, false);
+
                 } else if (nextScreen.equals(getString(R.string.keyboard))) {
                     WebEngageController.trackEvent("NAV - BIZ_KEYBOARD", "BIZ_KEYBOARD", session.getFpTag());
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")

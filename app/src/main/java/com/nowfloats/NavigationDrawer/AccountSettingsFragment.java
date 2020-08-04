@@ -27,7 +27,10 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
+import com.appservice.model.SessionData;
+import com.appservice.model.StatusKyc;
 import com.appservice.model.accountDetails.AccountDetailsResponse;
+import com.appservice.model.kycData.PaymentKycDataResponse;
 import com.nowfloats.BusinessProfile.UI.UI.changePasswordAsyncTask;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
@@ -63,6 +66,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static com.appservice.ui.bankaccount.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
+import static com.appservice.ui.paymentgateway.PaymentGatewayContainerActivityKt.startFragmentPaymentActivityNew;
 
 /**
  * Created by Admin on 29-01-2018.
@@ -100,6 +104,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         }
         domainApiService = new DomainApiService(this);
         sessionManager = new UserSessionManager(mContext, getActivity());
+        checkSelfBrandedKyc();
         checkUserAccount();
         final String[] adapterTexts = getResources().getStringArray(R.array.account_setting_tab_items);
         final TypedArray imagesArray = getResources().obtainTypedArray(R.array.account_settings);
@@ -127,6 +132,20 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                             startFragmentAccountActivityNew(Objects.requireNonNull(getActivity()), FragmentType.ADD_BANK_ACCOUNT_START, bundle, false);
                         }
 //                        intent = new Intent(mContext, AccountInfoActivity.class);
+                        break;
+                    case "Self Branded Payment Gateway":
+                        Bundle b = getBundleDataKyc();
+                        if (sessionManager.isSelfBrandedKycAdd()) {
+                            b.putBoolean(com.appservice.constant.IntentConstant.IS_SELF_BRANDED_KYC_ADDED.name(), true);
+                        }
+                        startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), com.appservice.constant.FragmentType.PAYMENT_GATEWAY, getBundleDataKyc(), false);
+                        break;
+                    case "KYC Verification":
+                        Bundle b1 = getBundleDataKyc();
+                        if (sessionManager.isSelfBrandedKycAdd()) {
+                            b1.putBoolean(com.appservice.constant.IntentConstant.IS_SELF_BRANDED_KYC_ADDED.name(), true);
+                            startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), com.appservice.constant.FragmentType.KYC_STATUS, getBundleDataKyc(), false);
+                        } else startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), FragmentType.BUSINESS_KYC_VIEW, b1, false);
                         break;
                     case "Boost Extensions":
                         intent = new Intent(mContext, Boost360ExtensionsActivity.class);
@@ -172,6 +191,45 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
 
     }
 
+    private Bundle getBundleDataKyc() {
+        SessionData session = new SessionData();
+        session.setClientId(Constants.clientId);
+        session.setUserProfileId(sessionManager.getUserProfileId());
+        session.setFpId(sessionManager.getFPID());
+        session.setFpTag(sessionManager.getFpTag());
+        session.setExperienceCode(sessionManager.getFP_AppExperienceCode());
+        session.setFpLogo(sessionManager.getFPLogo());
+        session.setFpEmail(sessionManager.getFPEmail());
+        session.setFpNumber(sessionManager.getFPPrimaryContactNumber());
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(com.appservice.constant.IntentConstant.SESSION_DATA.name(), session);
+        if (Constants.StoreWidgets.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name())) {
+            bundle.putBoolean(com.appservice.constant.IntentConstant.CUSTOM_PAYMENT_GATEWAY.name(), true);
+        } else bundle.putBoolean(com.appservice.constant.IntentConstant.CUSTOM_PAYMENT_GATEWAY.name(), false);
+        return bundle;
+    }
+
+    private void checkSelfBrandedKyc() {
+        showLoader("Please Wait...");
+        StoreInterface boostKit = Constants.restAdapterBoostKit.create(StoreInterface.class);
+        boostKit.getSelfBrandedKyc(getQuery(), new Callback<PaymentKycDataResponse>() {
+            @Override
+            public void success(PaymentKycDataResponse data, Response response) {
+                if (data.getData() != null && !data.getData().isEmpty()) {
+                    sessionManager.setSelfBrandedKycAdd(true);
+                } else sessionManager.setSelfBrandedKycAdd(false);
+                hideLoader();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                hideLoader();
+                sessionManager.setSelfBrandedKycAdd(false);
+                BoostLog.d("Error KYC api", "message : " + error.getLocalizedMessage());
+            }
+        });
+    }
+
     private void checkUserAccount() {
         StoreInterface getAccountDetail = Constants.restAdapterWithFloat.create(StoreInterface.class);
         getAccountDetail.userAccountDetail(sessionManager.getFPID(), Constants.clientId, new Callback<AccountDetailsResponse>() {
@@ -188,6 +246,16 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                 BoostLog.d("Error account api", "message : " + error.getLocalizedMessage());
             }
         });
+    }
+
+    private String getQuery() {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("fpTag", sessionManager.getFpTag());
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            return "";
+        }
     }
 
 
@@ -335,27 +403,21 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
 
         if (getActivity() == null) return;
 
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (progressDialog == null) {
-                    progressDialog = new ProgressDialog(getActivity());
-                    progressDialog.setCanceledOnTouchOutside(false);
-                }
-                progressDialog.setMessage(message);
-                progressDialog.show();
+        getActivity().runOnUiThread(() -> {
+            if (progressDialog == null) {
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setCanceledOnTouchOutside(false);
             }
+            progressDialog.setMessage(message);
+            progressDialog.show();
         });
     }
 
     private void hideLoader() {
         if (getActivity() == null) return;
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (progressDialog != null && progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
+        getActivity().runOnUiThread(() -> {
+            if (progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
             }
         });
     }

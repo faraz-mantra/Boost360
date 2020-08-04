@@ -16,6 +16,8 @@ data class DataKyc(
     var bankBranchName: String? = null,
     @SerializedName("CreatedOn")
     var createdOn: String? = null,
+    @SerializedName("fpTag")
+    var fpTag: String? = null,
     @SerializedName("hasexisistinginstamojoaccount?")
     var hasexisistinginstamojoaccount: String? = null,
     @SerializedName("_id")
@@ -28,6 +30,8 @@ data class DataKyc(
     var instamojoPassword: String? = null,
     @SerializedName("IsArchived")
     var isArchived: Boolean? = null,
+    @SerializedName("isverified")
+    var isverified: String? = null,
     @SerializedName("nameOfBank")
     var nameOfBank: String? = null,
     @SerializedName("nameOfBankAccountHolder")
