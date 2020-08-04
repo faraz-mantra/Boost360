@@ -1733,6 +1733,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Data privacy policy</item>
     </string-array>
     <string name="keyboard">Keyboard</string>
+    <string name="payment_gateway">Payment Gateway</string>
     <string name="facebook_leads">Facebook Lead Ads</string>
     <string name="website_domain">Website Domain</string>
     <string name="testimonials">Testimonials</string>
