@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
 import androidx.core.content.ContextCompat
+import com.airbnb.lottie.LottieDrawable
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -20,6 +21,7 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Bas
   private var isInstaMojoAccount: Boolean = false
   private var session: SessionData? = null
   private var isPaymentGateway: Boolean = false
+  private var isSelfBrandedAdd: Boolean = false
 
   companion object {
     @JvmStatic
@@ -32,32 +34,40 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Bas
 
   override fun onCreateView() {
     super.onCreateView()
-    val fpId = arguments?.getString(IntentConstant.FP_ID.name)
-    val clientId = arguments?.getString(IntentConstant.CLIENT_ID.name)
-    val fpTag = arguments?.getString(IntentConstant.FP_TAG.name)
-    val userProfileId = arguments?.getString(IntentConstant.USER_PROFILE_ID.name)
-    val expCode = arguments?.getString(IntentConstant.EXPERIENCE_CODE.name)
-    val fpEmail = arguments?.getString(IntentConstant.FP_USER_EMAIL.name)
-    val fpNumber = arguments?.getString(IntentConstant.FP_USER_NUMBER.name)
-    val fpLogo = arguments?.getString(IntentConstant.FP_LOGO.name)
-
-    if (fpId.isNullOrEmpty() || fpTag.isNullOrEmpty() || clientId.isNullOrEmpty()) return
-
-    session = SessionData(fpId = fpId, clientId = clientId, fpTag = fpTag, userProfileId = userProfileId,
-        experienceCode = expCode, fpEmail = fpEmail, fpNumber = fpNumber, fpLogo = fpLogo)
+    session = arguments?.getSerializable(IntentConstant.SESSION_DATA.name) as? SessionData ?: return
     isPaymentGateway = arguments?.getBoolean(IntentConstant.CUSTOM_PAYMENT_GATEWAY.name) ?: false
-    changeUi(isPaymentGateway)
-    setOnClickListener(binding?.paymentGatewayTermsToggle, binding?.activePaymentBottomButton, binding?.btnViewStore)
+    isSelfBrandedAdd = arguments?.getBoolean(IntentConstant.IS_SELF_BRANDED_KYC_ADDED.name) ?: false
+    changeUi()
+    setOnClickListener(binding?.paymentGatewayTermsToggle, binding?.activePaymentBottomButton, binding?.btnViewStore, binding?.selfBrandedKycAddView)
     radioButtonToggle()
   }
 
-  private fun changeUi(isPaymentGateway: Boolean) {
-    binding?.mainView?.setBackgroundColor(ContextCompat.getColor(baseActivity, if (isPaymentGateway) R.color.white else R.color.white_grey))
+  private fun changeUi() {
     binding?.viewBac?.setBackgroundColor(ContextCompat.getColor(baseActivity, if (isPaymentGateway) R.color.colorPrimary else R.color.color_primary))
-    binding?.paymentGatewayActivation?.visibility = if (isPaymentGateway) View.VISIBLE else View.GONE
+    binding?.paymentGatewayActivation?.visibility = if (isPaymentGateway && isSelfBrandedAdd.not()) View.VISIBLE else View.GONE
     binding?.addOnNotActive?.visibility = if (isPaymentGateway) View.GONE else View.VISIBLE
+    if (isPaymentGateway && isSelfBrandedAdd) {
+      binding?.selfBrandedKycAddView?.visibility = View.VISIBLE
+      initLottieAnimation()
+    } else {
+      binding?.selfBrandedKycAddView?.visibility = View.GONE
+    }
     if (isPaymentGateway) (baseActivity as? PaymentGatewayContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
     else (baseActivity as? PaymentGatewayContainerActivity)?.changeTheme(R.color.color_primary, R.color.color_primary_dark)
+
+  }
+
+  private fun initLottieAnimation() {
+    binding?.lottieAnimation?.setAnimation(R.raw.business_kyc_verification_gif)
+    binding?.lottieAnimation?.repeatCount = LottieDrawable.INFINITE
+    startCheckAnimation()
+  }
+
+  private fun startCheckAnimation() {
+    binding?.lottieAnimation?.let {
+      if (it.isAnimating) it.pauseAnimation()
+      else it.playAnimation()
+    }
   }
 
   override fun getLayout(): Int {
@@ -79,7 +89,14 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Bas
         startFragmentPaymentActivity(FragmentType.SCAN_PAN_CARD, bundle)
       }
       binding?.btnViewStore -> startStorePage()
+      binding?.selfBrandedKycAddView -> startDetailPage()
     }
+  }
+
+  private fun startDetailPage() {
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
+    startFragmentPaymentActivity(FragmentType.DETAIL_KYC_VIEW, bundle)
   }
 
   private fun bottomSheetWhy() {
@@ -91,13 +108,8 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Bas
     binding?.paymentGatewayToggleGroup?.setOnCheckedChangeListener { _, id ->
       val radio = binding?.paymentGatewayToggleGroup?.findViewById<RadioButton>(id)
       if (radio?.id == binding?.rbHaveInstaMojoAccount?.id) {
-        binding?.activePaymentBottomButton?.text = getString(R.string.get_started)
-        binding?.tvKeepDocsReady?.visibility = View.GONE
         isInstaMojoAccount = true
-
       } else if (radio?.id == binding?.rbNoInstamojoAccount?.id) {
-        binding?.activePaymentBottomButton?.text = getString(R.string.start_with_pan_card)
-        binding?.tvKeepDocsReady?.visibility = View.VISIBLE
         isInstaMojoAccount = false
       }
     }

@@ -10,9 +10,6 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -156,21 +153,6 @@ class ScanPanCardFragment : AppBaseFragment<FragmentScanPanCardBinding, BaseView
     }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_close, menu)
-  }
-
-
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    return when (item.itemId) {
-      R.id.menu_close -> {
-        baseActivity.onNavPressed()
-        true
-      }
-      else -> super.onOptionsItemSelected(item)
-    }
-  }
 }
 
 

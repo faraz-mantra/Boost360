@@ -6,14 +6,18 @@ import com.appservice.utils.getExtension
 import java.io.File
 import java.io.Serializable
 
-data class FileModel(var path: String) : AppBaseRecyclerViewItem, Serializable {
+data class FileModel(
+    var path: String? = null,
+    var recyclerViewItem: Int = RecyclerViewItemType.IMAGE_PREVIEW.getLayout()
+) : AppBaseRecyclerViewItem, Serializable {
+
   override fun getViewType(): Int {
-    return RecyclerViewItemType.IMAGE_PREVIEW.getLayout()
+    return recyclerViewItem
   }
 
 
   fun getExt(): String? {
-    return path.getExtension()
+    return path?.getExtension()
   }
 
   fun getFile(): File? {

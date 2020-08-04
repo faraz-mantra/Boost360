@@ -9,6 +9,7 @@
   <FrameLayout
     android:layout_width="@dimen/size_94"
     android:layout_height="@dimen/size_100"
+    android:background="@color/white_snow"
     android:layout_marginEnd="@dimen/size_6">
 
     <com.framework.views.customViews.CustomCardView

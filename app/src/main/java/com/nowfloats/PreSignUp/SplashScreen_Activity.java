@@ -332,7 +332,6 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
                 pd.dismiss();
             finish();
         }
-//        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
     @Override

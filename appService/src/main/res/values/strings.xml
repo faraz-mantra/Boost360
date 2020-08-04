@@ -46,7 +46,7 @@
 
   <string name="self_branded_payment_gateway">Self Branded Payment Gateway</string>
   <string name="about_this_add_on"> About this add-on</string>
-  <string name="gateway_description">This payment gateway is powered by Instamojo, which allows you to collect your customers’ payment directly into your bank account without any delay, (unlike the default payment gateway provided by Boost). With this add-on acticvated on your Boost website your customers see that they are paying to your business and not to Boost.</string>
+  <string name="gateway_description">This payment gateway is powered by <b>Instamojo</b>, which allows you to collect your customers’ payment directly into your bank account without any delay, (unlike the default payment gateway provided by Boost). With this add-on acticvated on your Boost website your customers see that they are paying to your business and not to Boost.</string>
   <string name="important_colon">Important:</string>
   <string name="add_on_terms_and_conditions">Addon Terms and Conditions</string>
   <string name="add_on_not_active">Add-on not active</string>
@@ -54,11 +54,10 @@
   <string name="view_in_add_on_store">View in Add-on Store</string>
   <string name="self_branded_payment_gateway_camel_case">Self Branded Payment Gateway</string>
   <string name="add_on_terms_and_condition">Add-on Terms and Condition</string>
-  <string name="payment_gateway_terms_content">\u2022\tBoost currently supports Instamojo as ONLY OPTION as a custom payment gateway. If you want to activate it, get this add-on from our marketplace, and then for it’s activation, we’ll ask you to either create Instamojo account yourself or else we will help you do KYC and help you setup this account.\n\n\u2022Please note that Boost just acts as a facilitator helping businesses like you to get most out of your Business website.\n\n\u2022Boost in no way is associated with Instamojo or claim any kind of responsibility related to the custom payment gateway.\n\n\u2022\Instamojo logo or brand name belongs to it’s respective owners.\n\n\u2022If you do not do the kyc, Instamojo has a monthly INR 10,000 limit. Once you complete the KYC this limit get’s removed.</string>
+  <string name="payment_gateway_terms_content">•Boost currently supports Instamojo as ONLY OPTION as a custom payment gateway. If you want to activate it, get this add-on from our marketplace, and then for it’s activation, we’ll ask you to either create Instamojo account yourself or else we will help you do KYC and help you setup this account.\n\n•Please note that Boost just acts as a facilitator helping businesses like you to get most out of your Business website.\n\n•Boost in no way is associated with Instamojo or claim any kind of responsibility related to the custom payment gateway.\n\n•Instamojo logo or brand name belongs to it’s respective owners.\n\n•If you do not do the kyc, Instamojo has a monthly INR 10,000 limit. Once you complete the KYC this limit get’s removed.</string>
   <string name="i_understand">I Understand</string>
   <string name="step_1">step 1</string>
   <string name="add_on_activation_camel_case">Add-on Activation</string>
-  <string name="paymentGatewayAddOnActivationSetupInstructions">To start using your ‘Branded custom payment gateway’ on your Boost website, you’ll need to have an instamojo account. If you already have it, it’s half job done. but if you dont have it, don’t worry, we’ll help you set it up real quick!</string>
   <string name="i_don_t_have_an_instamojo_account">I don\'t have an Instamojo account</string>
   <string name="i_have_an_instamojo_account">I have an Instamojo account</string>
   <string name="start_with_pan_card">Start with PAN Card</string>
@@ -103,16 +102,17 @@
   <string name="associated_bank_account">Associated Bank Account</string>
   <string name="add_a_different_bank_account">Add a different bank account</string>
   <string name="a_c_no_34565xxxxx45465">A/C No. 34565XXXXX45465</string>
-  <string name="add_file_jpg_png_pdf">Add File (JPG/PNG/PDF)</string>
+  <string name="add_file_jpg_png_pdf">ADD FILE (Jpg/png/pdf)</string>
   <string name="additional_documents_optional">Additional Documents (Optional)</string>
-  <string name="add_multiple_files_jpg_png_pdf">Add multiple files (JPG/PNG/PDF)</string>
+  <string name="add_multiple_files_jpg_png_pdf">Add Multiple Files (Jpg/png/pdf)</string>
   <string name="payment_gateway_docs_ready_note"><b>NOTE:</b> Keep your PAN card handy or a picture of it from your gallery would also do. Apart from this you should keep 1 month bank statement and establishment certificate to upload here (if applicable) for extended limit.</string>
   <string name="refresh_status_camel_case">Refresh Status</string>
   <string name="pan_number">PAN Number</string>
   <string name="propizio_real_estate_private_limited_all_caps">PROPIZIO REAL ESTATE PRIVATE LIMITED</string>
   <string name="kotak_mahindra_bank_connaught_place_branch">Kotak Mahindra Bank - Connaught Place Branch</string>
-  <string name="verification_underway_details">We\'re currently verifying your bank account. This process usually takes 1 working day. Once done, we will notify you. If you want to make any changes to the above account details, Please write now to <P>ria@nowfloats.com</P> with this screenshot attached.</string>
+  <string name="verification_underway_details">This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to <u>ria@nowfloats.com</u> with this screenshot attached..</string>
   <string name="kyc_information">KYC Information</string>
+  <string name="business_kyc">Business KYC</string>
   <string name="crop_and_proceed">Crop and Proceed</string>
   <string name="bank_branch">Bank Branch</string>
   <string name="invalid_ifsc">Please enter valid IFSC code</string>
@@ -123,4 +123,10 @@
   <string name="uploading_file_wait">Uploading file, please wait....</string>
   <string name="please_wait_">Please wait....</string>
   <string name="pdf">PDF</string>
+  <string name="kyc_not_done">KYC Not done!</string>
+  <string name="start_your_kyc">Start your KYC</string>
+  <string name="start_branded_payment_desc">To start using your \'Branded custom payment gateway\' on your Boost website, we\'ll need to verify your business details along with a bank account (if not provided already) using your business PAN card and 1-month bank statement respectively.</string>
+  <string name="view_details">View Details</string>
+  <string name="business_kyc_verification_underway">Business KYC\nVerification Underway...</string>
+  <string name="submit_verification">Submit for verification</string>
 </resources>

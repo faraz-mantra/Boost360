@@ -29,12 +29,4 @@ class WhyPaymentBottomSheet : BaseBottomSheetDialog<BottomSheetTermsPaymentGatew
             binding?.understoodBtnPaymentGateway -> dismiss()
         }
     }
-
-//    override fun getMarginStart(): Int {
-//        return resources.getDimensionPixelSize(R.dimen.size_20)
-//    }
-//
-//    override fun getMarginEnd(): Int {
-//        return resources.getDimensionPixelSize(R.dimen.size_20)
-//    }
 }

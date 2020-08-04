@@ -97,7 +97,7 @@ public class SidePanelFragment extends Fragment {
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
 
-    LinearLayout homeLayout, analyticsLayout, subscriptionsLayout, accountSettingsLayout, keyboardLayout, paymentKycLayout, facebookLayout, marketplaceLayout, aboutLayout, helpAndSupportLayout, shareLayout,
+    LinearLayout homeLayout, analyticsLayout, subscriptionsLayout, accountSettingsLayout, keyboardLayout, facebookLayout, marketplaceLayout, aboutLayout, helpAndSupportLayout, shareLayout,
             manageContentLayout, manageContentSharing, manageCalls, manageCustomersLayout, manageInventoryLayout, inboxLayout;
 
     private RelativeLayout siteMeter;
@@ -276,7 +276,6 @@ public class SidePanelFragment extends Fragment {
         manageInventoryLayout = card.findViewById(R.id.twelveth_Layout);
         inboxLayout = card.findViewById(R.id.thirteen_Layout);
         keyboardLayout = (LinearLayout) card.findViewById(R.id.keyboard_layout);
-        paymentKycLayout = (LinearLayout) card.findViewById(R.id.payment_kyc_layout);
         facebookLayout = (LinearLayout) card.findViewById(R.id.facebook_layout);
         keyboardLock = (ImageView) card.findViewById(R.id.keyboard_lock);
         callLock = (ImageView) card.findViewById(R.id.call_lock);
@@ -452,8 +451,6 @@ public class SidePanelFragment extends Fragment {
 //                }
             }
         });
-
-        paymentKycLayout.setOnClickListener(v -> ((OnItemClickListener) mainActivity).onClick(getString(R.string.payment_gateway)));
 
         //hide facebook layout option temp
         facebookLayout.setVisibility(View.GONE);

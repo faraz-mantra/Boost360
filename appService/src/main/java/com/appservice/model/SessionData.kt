@@ -15,6 +15,6 @@ data class SessionData(
     var fpLogo: String? = null,
     var fpEmail: String? = null,
     var fpNumber: String? = null,
-    val auth_1: String = "5efadf6c5905cc0001fba6b1",
+    val auth_1: String = "597ee93f5d64370820a6127c",
     val auth_2: String = "59ca26afdd30411900b6a8db"
 ) : Serializable

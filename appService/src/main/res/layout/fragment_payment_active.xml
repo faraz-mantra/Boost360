@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <data>
@@ -10,7 +11,7 @@
     android:id="@+id/main_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white_snow">
 
     <View
       android:id="@+id/view_bac"
@@ -138,7 +139,7 @@
       <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/size_18"
+        android:layout_marginStart="@dimen/size_14"
         android:layout_marginTop="@dimen/size_14"
         android:layout_marginEnd="@dimen/size_18">
 
@@ -152,8 +153,9 @@
             android:id="@+id/tvAddOnActivationHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_4"
             android:fontFamily="@font/regular"
-            android:text="@string/add_on_activation_camel_case"
+            android:text="@string/kyc_not_done"
             android:textColor="@color/bg_dark_grey"
             android:textStyle="bold"
             app:textType="HEADING_5" />
@@ -162,9 +164,10 @@
             android:id="@+id/tvAddOnActivationDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_4"
             android:layout_marginTop="@dimen/size_10"
             android:fontFamily="@font/regular"
-            android:text="@string/paymentGatewayAddOnActivationSetupInstructions"
+            android:text="@string/start_branded_payment_desc"
             android:textColor="@color/grey_text_color"
             app:textType="BODY_1" />
 
@@ -196,17 +199,6 @@
               android:textSize="12sp" />
           </RadioGroup>
 
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/tv_keep_docs_ready"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/size_14"
-            android:fontFamily="@font/regular"
-            android:text="@string/payment_gateway_docs_ready_note"
-            android:textColor="@color/grey_text_color"
-            android:visibility="visible"
-            app:textType="CAPTION" />
-
         </LinearLayout>
 
         <com.framework.views.customViews.CustomTextView
@@ -219,9 +211,10 @@
           android:gravity="center"
           android:paddingStart="@dimen/size_20"
           android:paddingEnd="@dimen/size_20"
-          android:text="@string/start_with_pan_card"
+          android:text="@string/start_your_kyc"
           android:textAllCaps="true"
-          android:textStyle="bold" />
+          android:textStyle="bold"
+          app:textAllCaps="false" />
       </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -276,6 +269,72 @@
         android:text="@string/view_in_add_on_store"
         android:textAllCaps="true" />
     </LinearLayout>
+
+    <RelativeLayout
+      android:id="@+id/self_branded_kyc_add_view"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:paddingHorizontal="@dimen/size_24"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/aboutPaymentGatewayCard">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/size_14"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomCardView
+          android:layout_width="@dimen/size_130"
+          android:layout_height="@dimen/size_130"
+          android:clipToPadding="false"
+          android:outlineSpotShadowColor="@color/gray_text_hint"
+          app:cardBackgroundColor="@color/white"
+          app:cardCornerRadius="@dimen/size_65"
+          app:cardPreventCornerOverlap="false"
+          app:contentPadding="-50dp"
+          tools:ignore="UnusedAttribute">
+
+          <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_animation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:repeatCount="infinite"
+            android:repeatMode="restart" />
+        </com.framework.views.customViews.CustomCardView>
+
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_20"
+          android:layout_marginBottom="@dimen/size_20"
+          android:fontFamily="@font/regular"
+          android:gravity="center"
+          android:text="@string/business_kyc_verification_underway"
+          android:textColor="@color/warm_grey"
+          app:textType="HEADING_4" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/btn_view_details"
+          style="@style/ButtonStyle.Rounded"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/rounded_refresh_btn"
+          android:gravity="center"
+          android:paddingVertical="@dimen/size_14"
+          android:text="@string/view_details"
+          android:textAllCaps="false"
+          android:textColor="@color/colorAccent"
+          android:textStyle="bold" />
+      </LinearLayout>
+    </RelativeLayout>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
