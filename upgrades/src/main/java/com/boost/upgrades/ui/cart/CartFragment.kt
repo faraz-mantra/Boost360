@@ -250,7 +250,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
           dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = currentDate, endDate = sevenDayDate))
       viewModel.renewalResult().observeOnce(Observer { result ->
-        renewalList = result?.filter { it.renewalStatus == RenewalResult.RenewalStatus.PENDING.name } ?: ArrayList()
+        renewalList = result?.filter { it.renewalStatus() == RenewalResult.RenewalStatus.PENDING.name } ?: ArrayList()
         if (renewalList.isNotEmpty()) {
           val list = arrayListOf<CartModel>()
           renewalList.forEach { renewal -> list.add(saveRenewalData(renewal)) }

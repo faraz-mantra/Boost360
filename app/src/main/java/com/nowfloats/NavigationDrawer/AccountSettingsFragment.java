@@ -6,13 +6,6 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -22,9 +15,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
+import com.appservice.constant.FragmentType;
+import com.appservice.constant.IntentConstant;
+import com.appservice.model.accountDetails.AccountDetailsResponse;
 import com.nowfloats.BusinessProfile.UI.UI.changePasswordAsyncTask;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
@@ -34,10 +38,12 @@ import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
 import com.nowfloats.AccrossVerticals.domain.DomainDetailsActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -51,6 +57,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+import static com.appservice.ui.bankaccount.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
 
 /**
  * Created by Admin on 29-01-2018.
@@ -86,9 +99,9 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
             Methods.showSnackBar(view, getString(R.string.something_went_wrong_try_again), Color.RED);
             return;
         }
-
         domainApiService = new DomainApiService(this);
         sessionManager = new UserSessionManager(mContext, getActivity());
+        checkUserAccount();
         final String[] adapterTexts = getResources().getStringArray(R.array.account_setting_tab_items);
         final TypedArray imagesArray = getResources().obtainTypedArray(R.array.account_settings);
         int[] adapterImages = new int[adapterTexts.length];
@@ -104,20 +117,33 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
             public void onItemClick(int pos) {
                 Intent intent = null;
                 switch (adapterTexts[pos]) {
-//                    case "Account Info":
+                    case "My Bank Account":
+                        Bundle bundle = new Bundle();
+                        bundle.putString(IntentConstant.CLIENT_ID.name(), Constants.clientId);
+                        bundle.putString(IntentConstant.USER_PROFILE_ID.name(), sessionManager.getUserProfileId());
+                        bundle.putString(IntentConstant.FP_ID.name(), sessionManager.getFPID());
+                        if (sessionManager.gisAccountSave()) {
+                            startFragmentAccountActivityNew(Objects.requireNonNull(getActivity()), FragmentType.BANK_ACCOUNT_DETAILS, bundle, false);
+                        } else {
+                            startFragmentAccountActivityNew(Objects.requireNonNull(getActivity()), FragmentType.ADD_BANK_ACCOUNT_START, bundle, false);
+                        }
 //                        intent = new Intent(mContext, AccountInfoActivity.class);
-//                        break;
+                        break;
                     case "Boost Extensions":
                         intent = new Intent(mContext, Boost360ExtensionsActivity.class);
+                        startActivity(intent);
+                        Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
 //                    case "Site Appearance":
 //                        intent = new Intent(mContext, SiteAppearanceActivity.class);
+//                        startActivity(intent);
+//                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                        break;
                     case "Domain and Email":
                         isAlreadyCalled = false;
                         MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
-                        WebEngageController.trackEvent("DOMAIN-EMAIL",null,sessionManager.getFpTag());
-                            if (Methods.isOnline(getActivity())) {
+                        WebEngageController.trackEvent("DOMAIN-EMAIL", null, sessionManager.getFpTag());
+                        if (Methods.isOnline(getActivity())) {
                             showLoader(getString(R.string.please_wait));
                             domainApiService.getDomainDetails(mContext, sessionManager.getFpTag(), getDomainDetailsParam());
                         } else {
@@ -126,10 +152,12 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         return;
                     case "Subscription History":
                         intent = new Intent(mContext, YourPurchasedPlansActivity.class);
+                        startActivity(intent);
+                        Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
                     case "Change Password":
                         changePassword();
-                        WebEngageController.trackEvent("CHANGEPASSWORD","CHANGEPASSWORD", null);
+                        WebEngageController.trackEvent("CHANGEPASSWORD", "CHANGEPASSWORD", null);
                         return;
                     case "Log out":
                         logoutAlertDialog_Material();
@@ -137,14 +165,30 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     default:
                         return;
                 }
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         adapter.setItems(adapterImages, adapterTexts);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setAdapter(adapter);
 
+    }
+
+    private void checkUserAccount() {
+        StoreInterface getAccountDetail = Constants.restAdapterWithFloat.create(StoreInterface.class);
+        getAccountDetail.userAccountDetail(sessionManager.getFPID(), Constants.clientId, new Callback<AccountDetailsResponse>() {
+            @Override
+            public void success(AccountDetailsResponse data, Response response) {
+                if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null)) {
+                    sessionManager.setAccountSave(false);
+                } else sessionManager.setAccountSave(true);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                sessionManager.setAccountSave(false);
+                BoostLog.d("Error account api", "message : " + error.getLocalizedMessage());
+            }
+        });
     }
 
 
@@ -373,7 +417,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         final MaterialDialog materialDialog = builder.show();
         View maView = materialDialog.getCustomView();
 
-        TextView tvMessage = (TextView) maView.findViewById(R.id.toast_message_to_contact);
+        TextView tvMessage = maView.findViewById(R.id.toast_message_to_contact);
         tvMessage.setText(message);
     }
 
@@ -440,14 +484,14 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
 
         View view = mExpireDailog.getCustomView();
 
-        roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
+        roboto_md_60_212121 title = view.findViewById(R.id.textView1);
         title.setText(dialogTitle);
 
-        ImageView expireImage = (ImageView) view.findViewById(R.id.img_warning);
+        ImageView expireImage = view.findViewById(R.id.img_warning);
         expireImage.setBackgroundColor(dialogImageBgColor);
         expireImage.setImageDrawable(ContextCompat.getDrawable(mContext, dialogImage));
 
-        roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
+        roboto_lt_24_212121 message = view.findViewById(R.id.pop_up_create_message_body);
         message.setText(Methods.fromHtml(dialogMessage));
     }
 
@@ -457,7 +501,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         hideLoader();
         if (!isAdded() || getActivity() == null) return;
         if (!isAlreadyCalled) {
-                showDomainDetails();
+            showDomainDetails();
         }
     }
 

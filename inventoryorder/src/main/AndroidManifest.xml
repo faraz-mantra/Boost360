@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.inventoryorder">
+  xmlns:tools="http://schemas.android.com/tools"
+  package="com.inventoryorder">
 
   <application>
     <activity
-        android:name=".ui.FragmentContainerOrderActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/AppTheme.Order"
-        android:windowSoftInputMode="adjustPan" />
+      android:name=".ui.FragmentContainerOrderActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.Order"
+      android:windowSoftInputMode="adjustPan">
+      <intent-filter
+        android:autoVerify="true"
+        tools:ignore="UnusedAttribute">
+        <data android:scheme="anton" />
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="${applicationId}.UI.OrderActivity"
+          android:pathPrefix="/"
+          android:scheme="http" />
+      </intent-filter>
+    </activity>
   </application>
 
 </manifest>

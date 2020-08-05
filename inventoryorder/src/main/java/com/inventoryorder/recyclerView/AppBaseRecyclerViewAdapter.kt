@@ -22,7 +22,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     val recyclerViewItemType = values().first { it.getLayout() == viewType }
     val binding = getViewDataBinding(inflater, recyclerViewItemType, parent)
     return when (recyclerViewItemType) {
-      PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
+      PAGINATION_LOADER -> PagingViewHolder(binding as PaginationOrderLoaderBinding)
       ORDERS_ITEM_TYPE -> OrderSummaryViewHolder(binding as ItemOrderTypeBinding)
       INVENTORY_ORDER_ITEM -> OrdersViewHolder(binding as ItemOrderBinding)
       ITEM_ORDER_DETAILS -> OrderItemDetailsViewHolder(binding as ItemOrderDetailsBinding)

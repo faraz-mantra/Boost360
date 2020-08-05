@@ -104,6 +104,15 @@ class PreSignUpActivity : AppCompatActivity() {
 
     setUpMvvm()
     languageButtonSelection()
+    checkIsBottomSheetSignUpOpen(intent.extras)
+
+  }
+
+  private fun checkIsBottomSheetSignUpOpen(extras: Bundle?) {
+    if (extras != null) {
+      val isSignUpBottomSheet = extras.getBoolean("isSignUpBottomSheet")
+      if (isSignUpBottomSheet) popUpDialogFragment.show(supportFragmentManager, "popUpDialogFragment_tag")
+    }
   }
 
   private fun getPopupWindow(): PopupWindow {
