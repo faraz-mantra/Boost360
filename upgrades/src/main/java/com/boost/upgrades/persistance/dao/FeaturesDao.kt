@@ -27,6 +27,8 @@ interface FeaturesDao {
     @Query("SELECT EXISTS(SELECT * FROM Features)")
     fun checkEmptyFeatureTable(): Single<Int>
 
+    @Query("SELECT EXISTS(SELECT * FROM Features WHERE feature_code=:featureCode )")
+    fun checkFeatureTableKeyExist(featureCode: String): Single<Int>
 
     //true for premium type
     //false for non-premium type

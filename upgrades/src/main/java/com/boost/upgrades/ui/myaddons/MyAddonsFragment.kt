@@ -151,10 +151,9 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         read_more_less_free_addons.setOnClickListener {
             if (add_remove_layout.visibility == View.VISIBLE) {
                 add_remove_layout.visibility = View.GONE
-                return@setOnClickListener
-            }
-            if (totalFreeItemList != null) {
-                if (freeaddonsSeeMoreStatus && totalFreeItemList!!.size > 6) {
+            } else {
+                if (totalFreeItemList != null) {
+                    if (freeaddonsSeeMoreStatus && totalFreeItemList!!.size > 6) {
                         val lessList = totalFreeItemList!!.subList(0, 6)
                         updateFreeAddonsRecycler(lessList)
                         freeaddonsSeeMoreStatus = false
@@ -165,14 +164,15 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                                 ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_down),
                                 null
                         )
-                } else {
-                    updateFreeAddonsRecycler(totalFreeItemList!!)
-                    freeaddonsSeeMoreStatus = true
-                    read_more_less_text_free_addons.setText("See less")
-                    read_more_less_text_free_addons.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_up), null)
+                    } else {
+                        updateFreeAddonsRecycler(totalFreeItemList!!)
+                        freeaddonsSeeMoreStatus = true
+                        read_more_less_text_free_addons.setText("See less")
+                        read_more_less_text_free_addons.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_up), null)
 
 
-                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Free_Addons See_More", "Free_Addons", "")
+                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Free_Addons See_More", "Free_Addons", "")
+                    }
                 }
             }
         }
@@ -181,25 +181,25 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         read_more_less_paid_addons.setOnClickListener {
             if (add_remove_layout.visibility == View.VISIBLE) {
                 add_remove_layout.visibility = View.GONE
-                return@setOnClickListener
-            }
-            if (totalPaidItemList != null) {
-                if (paidaddonsSeeMoreStatus && totalPaidItemList!!.size > 4) {
-                    val lessList = totalPaidItemList!!.subList(0, 4)
-                    updatePaidAddonsRecycler(lessList)
-                    paidaddonsSeeMoreStatus = false
-                    read_more_less_text_paid_addons.setText("See more")
-                    read_more_less_text_paid_addons.setCompoundDrawablesWithIntrinsicBounds(
-                            null,
-                            null,
-                            ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_down),
-                            null
-                    )
-                } else {
-                    updatePaidAddonsRecycler(totalPaidItemList!!)
-                    paidaddonsSeeMoreStatus = true
-                    read_more_less_text_paid_addons.setText("See less")
-                    read_more_less_text_paid_addons.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_up), null)
+            } else {
+                if (totalPaidItemList != null) {
+                    if (paidaddonsSeeMoreStatus && totalPaidItemList!!.size > 4) {
+                        val lessList = totalPaidItemList!!.subList(0, 4)
+                        updatePaidAddonsRecycler(lessList)
+                        paidaddonsSeeMoreStatus = false
+                        read_more_less_text_paid_addons.setText("See more")
+                        read_more_less_text_paid_addons.setCompoundDrawablesWithIntrinsicBounds(
+                                null,
+                                null,
+                                ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_down),
+                                null
+                        )
+                    } else {
+                        updatePaidAddonsRecycler(totalPaidItemList!!)
+                        paidaddonsSeeMoreStatus = true
+                        read_more_less_text_paid_addons.setText("See less")
+                        read_more_less_text_paid_addons.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(requireContext(), R.drawable.addons_arrow_up), null)
+                    }
                 }
             }
         }

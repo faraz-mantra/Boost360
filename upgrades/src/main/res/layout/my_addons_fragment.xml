@@ -113,7 +113,7 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scrollbars="none"
@@ -298,7 +298,6 @@
                 android:id="@+id/paidaddons_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/freeaddons_layout"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_5sdp"
@@ -353,7 +352,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_dot_menu" />
+                            app:srcCompat="@drawable/ic_dot_menu" />
                     </LinearLayout>
 
                     <View
@@ -402,7 +401,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_remove"/>
+                            app:srcCompat="@drawable/ic_remove"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -420,7 +419,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_add"/>
+                            app:srcCompat="@drawable/ic_add"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -501,5 +500,5 @@
                 android:textColor="@color/white"
                 android:fontFamily="@font/open_sans_semibold"/>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
