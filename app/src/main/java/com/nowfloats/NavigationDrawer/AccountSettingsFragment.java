@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
 import com.appservice.model.accountDetails.AccountDetailsResponse;
@@ -40,7 +41,7 @@ import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
-import com.nowfloats.domain.DomainDetailsActivity;
+import com.nowfloats.AccrossVerticals.domain.DomainDetailsActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;

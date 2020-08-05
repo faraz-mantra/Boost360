@@ -12,6 +12,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class Utils {
 
@@ -178,5 +181,11 @@ public class Utils {
             default:
                 return "PRODUCTS";
         }
+    }
+
+    public static String getPictureName() {
+        SimpleDateFormat tst = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String timestamp = tst.format(new Date());
+        return "Camera_"+ timestamp + ".jpg";
     }
 }

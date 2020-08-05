@@ -350,6 +350,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             net_quantity = default_validity_months
             mrp_price = mrp_price * default_validity_months
           }
+
+          //adding widget netprice to Bundle Netprice to get GrandTotal In netPrice.
+          bundleNetPrice += netPrice
+
           widgetList.add(Widget(
               "",
               ConsumptionConstraint(

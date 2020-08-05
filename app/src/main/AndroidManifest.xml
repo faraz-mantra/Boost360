@@ -51,9 +51,42 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:name,android:theme,android:appComponentFactory">
-        <activity android:name="com.nowfloats.domain.DomainEmailActivity"></activity>
-        <activity android:name="com.nowfloats.Testimonials.TestimonialsFeedbackActivity" />
-        <activity android:name="com.nowfloats.Testimonials.TestimonialsActivity" />
+        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.webview.WebViewActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.nowfloats.hotel.seasonalOffers.SeasonalOffersDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.nowfloats.hotel.seasonalOffers.SeasonalOffersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.hotel.tripadvisor.TripAdvisorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.education.batches.BatchesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.education.toppers.ToppersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.education.faculty.FacultyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.AccrossVerticals.domain.DomainEmailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.AccrossVerticals.Testimonials.TestimonialsFeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"
+            android:screenOrientation="portrait" />
         <activity android:name="com.nowfloats.marketplace.BoostMarketPlaceActivity" />
 
         <meta-data
@@ -974,7 +1007,7 @@
             android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.domain.DomainDetailsActivity"
+            android:name="com.nowfloats.AccrossVerticals.domain.DomainDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.ProductGallery.ProductGalleryActivity"
@@ -1218,6 +1251,23 @@
         <activity
             android:name="com.nowfloats.ProductGallery.MultipleProductImageActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
+        <activity
+            android:name="com.nowfloats.hotel.placesnearby.PlacesNearByActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.project.ProjectDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.project.ProjectActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

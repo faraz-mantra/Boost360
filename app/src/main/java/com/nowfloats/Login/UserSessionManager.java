@@ -964,23 +964,23 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
     private void processUserSessionDataClear() {
-        setUserLogin(false);
-
-        DataBase db = new DataBase(activity);
-        DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
-        db.deleteLoginStatus();
-
-        SharedPreferences.Editor editor = pref.edit();
-        editor.clear();
-        editor.apply();
-
-
-        SharedPreferences.Editor twitterEditor = _context.getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE).edit();
-        twitterEditor.clear();
-        twitterEditor.apply();
-
-
         try {
+            setUserLogin(false);
+
+            DataBase db = new DataBase(activity);
+            DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
+            db.deleteLoginStatus();
+
+            SharedPreferences.Editor editor = pref.edit();
+            editor.clear();
+            editor.apply();
+
+
+            SharedPreferences.Editor twitterEditor = _context.getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE).edit();
+            twitterEditor.clear();
+            twitterEditor.apply();
+
+
             WebEngage.get().user().logout();
 
             AnaCore.logoutUser(activity);
@@ -994,47 +994,49 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
             LoginManager.getInstance().logOut();
 
-        } catch (Exception e) {
-        }
 
+            // After logout redirect user to Login Activity
+            Constants.clearStore();
+            Constants.StorebizQueries = new ArrayList<>();
+            Constants.storeSecondaryImages = null;
+            Constants.storeActualSecondaryImages = new ArrayList<>();
+            Constants.StoreUserSearch = new DataMap();
+            Constants.StorebizEnterpriseQueries = new ArrayList<Entity_model>();
+            Constants.StorePackageIds = new ArrayList<>();
+            Constants.widgets = new HashSet<String>();
+            Constants.StoreWidgets = new ArrayList<>();
+            Constants.ImageGalleryWidget = false;
+            Constants.BusinessTimingsWidget = false;
+            Constants.BusinessEnquiryWidget = false;
 
-        // After logout redirect user to Login Activity
-        Constants.clearStore();
-        Constants.StorebizQueries = new ArrayList<>();
-        Constants.storeSecondaryImages = null;
-        Constants.storeActualSecondaryImages = new ArrayList<>();
-        Constants.StoreUserSearch = new DataMap();
-        Constants.StorebizEnterpriseQueries = new ArrayList<Entity_model>();
-        Constants.StorePackageIds = new ArrayList<>();
-        Constants.widgets = new HashSet<String>();
-        Constants.StoreWidgets = new ArrayList<>();
-        Constants.ImageGalleryWidget = false;
-        Constants.BusinessTimingsWidget = false;
-        Constants.BusinessEnquiryWidget = false;
+            if (HomeActivity.StorebizFloats != null) {
+                HomeActivity.StorebizFloats.clear();
+                HomeActivity.StorebizFloats = new ArrayList<FloatsMessageModel>();
+            }
 
-        if (HomeActivity.StorebizFloats != null) {
-            HomeActivity.StorebizFloats.clear();
-            HomeActivity.StorebizFloats = new ArrayList<FloatsMessageModel>();
-        }
-
-        //Analytics_Fragment.subscriberCount.setText("0");
-        //Analytics_Fragment.visitCount.setText("0");
-        if (_context != null)
-            _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
-        //Mobihelp.clearUserData(activity.getApplicationContext());
+            //Analytics_Fragment.subscriberCount.setText("0");
+            //Analytics_Fragment.visitCount.setText("0");
+            if (_context != null) {
+                _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
+                _context.deleteDatabase("updates_db");  //DELETE MARKETPLACE DB
+            }
+            //Mobihelp.clearUserData(activity.getApplicationContext());
 
 //                MixPanelController.track("LogoutSuccess", null);
-        //activity.finish();
+            //activity.finish();
 
-        Intent i = new Intent(activity, com.boost.presignup.SplashActivity.class);
-        // Closing all the Activities
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            Intent i = new Intent(activity, com.boost.presignup.SplashActivity.class);
+            // Closing all the Activities
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        // Staring Login Activity
-        activity.startActivity(i);
-        //activity.finish();
-        System.gc();
-        System.exit(0);
+            // Staring Login Activity
+            activity.startActivity(i);
+            //activity.finish();
+            System.gc();
+            System.exit(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean isSiteAppearanceShown() {

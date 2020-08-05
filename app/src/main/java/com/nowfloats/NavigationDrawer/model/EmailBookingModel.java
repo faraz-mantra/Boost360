@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.nowfloats.domain.DomainDetailsActivity;
+import com.nowfloats.AccrossVerticals.domain.DomainDetailsActivity;
 
 import java.util.List;
 /**
