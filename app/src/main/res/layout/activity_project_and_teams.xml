@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="visible"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -128,14 +128,14 @@
                     android:id="@+id/feature_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Places to look around"
+                    android:text="Projects &amp; Teams"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textColor="@color/common_text_color"
                     android:textSize="@dimen/_16sdp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Looks like this add-on is not added to your current plan. Add it now to start using it."
+                    android:text="Looks like this add-on is not added to your current plan. Add it now to start using it. Every project has an expert team, and your team can be highlighted individually in this section"
                     android:gravity="center"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textSize="@dimen/_11sdp"

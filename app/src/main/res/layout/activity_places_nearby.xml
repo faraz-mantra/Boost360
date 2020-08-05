@@ -64,7 +64,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Looks like this add-on is not added to your current plan. Add it now to start using it."
+                    android:text="Looks like this add-on is not added to your current plan. Add it now to start using it. With this feature Highlight what's near your hotel."
                     android:gravity="center"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textSize="@dimen/_11sdp"
