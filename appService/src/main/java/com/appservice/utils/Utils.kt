@@ -106,4 +106,9 @@ fun String.getFileName(): String? {
   return substring(lastIndexOf("/") + 1)
 }
 
+fun getExtensionUrl(url: String?): String {
+  val filenameArray = url?.split("\\.".toRegex())?.toTypedArray()
+  return filenameArray?.get(filenameArray.size - 1) ?: ""
+}
+
 

@@ -18,8 +18,13 @@ import com.appservice.model.FileModel
 import com.appservice.model.SessionData
 import com.appservice.model.accountDetails.AccountDetailsResponse
 import com.appservice.model.accountDetails.BankAccountDetails
+import com.appservice.model.kycData.DataKyc
+import com.appservice.model.kycData.PaymentKycDataResponse
 import com.appservice.model.paymentKyc.ActionDataKyc
 import com.appservice.model.paymentKyc.PaymentKycRequest
+import com.appservice.model.paymentKyc.update.KycSet
+import com.appservice.model.paymentKyc.update.UpdateKycValue
+import com.appservice.model.paymentKyc.update.UpdatePaymentKycRequest
 import com.appservice.model.razor.RazorDataResponse
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
@@ -28,6 +33,7 @@ import com.appservice.ui.catlogService.widgets.ClickType
 import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
 import com.appservice.utils.FileUtils
 import com.appservice.utils.getBitmap
+import com.appservice.utils.getExtensionUrl
 import com.appservice.utils.getMimeType
 import com.appservice.viewmodel.WebBoostKitViewModel
 import com.framework.exceptions.NoNetworkException
@@ -35,14 +41,17 @@ import com.framework.extensions.afterTextChanged
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.utils.convertListObjToString
+import com.framework.utils.convertStringToList
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import okio.Buffer
 import okio.BufferedSource
+import org.json.JSONObject
 import java.io.File
 import java.nio.charset.Charset
 import java.util.*
@@ -60,7 +69,9 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
   private var bankDetail: BankAccountDetails? = null
   private var panCarImage: File? = null
   private var isValidIfsc: Boolean = false
+  private var isEdit: Boolean = false
   private var request: PaymentKycRequest? = null
+  private var dataKyc: DataKyc? = null
 
   companion object {
     @JvmStatic
@@ -82,28 +93,40 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
   override fun onCreateView() {
     super.onCreateView()
     session = arguments?.getSerializable(IntentConstant.SESSION_DATA.name) as? SessionData
-    getUserDetails()
+    isEdit = arguments?.getBoolean(IntentConstant.IS_EDIT.name) ?: false
+    if (isEdit) {
+      getKycDetails()
+    } else getUserDetails()
     val panImagePath = arguments?.getString(IntentConstant.PAN_CARD_IMAGE.name)
-    val panImageUri = Uri.parse(panImagePath)
-    binding?.imagePanCard?.setImageURI(panImageUri)
-    panCarImage = File(FileUtils(baseActivity).getPath(panImageUri) ?: "")
-    setOnClickListener(binding?.btnSubmitDetails, binding?.btnRetakePanImage, binding?.btnBankStatementPicker,
-        binding?.btnAdditionalDocs, binding?.btnClearBankStatementImage, binding?.btnAnotherAccount, binding?.btnMyAccount)
-
+    if (panImagePath.isNullOrEmpty().not()) {
+      val panImageUri = Uri.parse(panImagePath)
+      binding?.imagePanCard?.setImageURI(panImageUri)
+      panCarImage = File(FileUtils(baseActivity).getPath(panImageUri) ?: "")
+    }
     binding?.edtBankIfscCode?.afterTextChanged {
       val ifsc = binding?.edtBankIfscCode?.text.toString().trim()
       if (ifsc.length == 11) apiGetIfscDetail(ifsc, true)
     }
+    setOnClickListener(binding?.btnSubmitDetails, binding?.btnRetakePanImage, binding?.btnBankStatementPicker,
+        binding?.btnAdditionalDocs, binding?.btnClearBankStatementImage, binding?.btnAnotherAccount, binding?.btnMyAccount)
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
       binding?.btnSubmitDetails -> if (isValidAndGenerateRequest()) bottomSheetConfirm()
-      binding?.btnRetakePanImage -> baseActivity.onNavPressed()
+      binding?.btnRetakePanImage -> {
+        if (isEdit) {
+          val bundle = Bundle()
+          bundle.putBoolean(IntentConstant.IS_EDIT.name, true)
+          bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
+          startFragmentPaymentActivity(FragmentType.SCAN_PAN_CARD, bundle, isResult = true)
+        } else baseActivity.onNavPressed()
+      }
       binding?.btnBankStatementPicker -> openImagePicker(false)
       binding?.btnAdditionalDocs -> openImagePicker(true)
       binding?.btnClearBankStatementImage -> {
+        dataKyc?.bankAccountStatement = ""
         binding?.bankStatementView?.gone()
         bankStatementImage = null
       }
@@ -111,6 +134,26 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       binding?.btnMyAccount -> bankAssociated(true)
     }
   }
+
+  private fun updateApiBankDetail() {
+    if (panCarImage != null) {
+      saveApiBankDetail()
+    } else if (bankStatementImage != null) {
+      uploadBankStatement()
+    } else if (additionalDocs.isNotEmpty() && isAddAdditionFile()) {
+      uploadAdditionalDocument()
+    } else {
+      val list = additionalDocs.map { it.pathUrl } as ArrayList<String>
+      addKycInformation(list)
+    }
+  }
+
+  fun isAddAdditionFile(): Boolean {
+    var b = false
+    additionalDocs.forEach { if (it.path.isNullOrEmpty().not()) b = true }
+    return b
+  }
+
 
   private fun saveApiBankDetail() {
     showProgress(resources.getString(R.string.uploading_file_wait))
@@ -122,7 +165,14 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           request?.actionData?.panCardDocument = getResponse(it.responseBody)
-          uploadBankStatement()
+          if (bankStatementImage != null) {
+            uploadBankStatement()
+          } else if (additionalDocs.isNotEmpty() && isAddAdditionFile()) {
+            uploadAdditionalDocument()
+          } else {
+            val list = additionalDocs.map { path -> path.pathUrl } as ArrayList<String>
+            addKycInformation(list)
+          }
         } else showError(resources.getString(R.string.failed_to_upload_pan_card))
       } else showError(resources.getString(R.string.internet_connection_not_available))
     })
@@ -139,7 +189,12 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           hideProgress()
           request?.actionData?.bankAccountStatement = getResponse(it.responseBody)
-          uploadAdditionalDocument()
+          if (additionalDocs.isNotEmpty() && isAddAdditionFile()) {
+            uploadAdditionalDocument()
+          } else {
+            val list = additionalDocs.map { path -> path.pathUrl } as ArrayList<String>
+            addKycInformation(list)
+          }
         } else showError(resources.getString(R.string.failed_to_upload_statement))
       } else showError(resources.getString(R.string.internet_connection_not_available))
     })
@@ -153,40 +208,88 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       var checkPosition = 0
       additionalDocs.forEach { fileData ->
         val file = fileData.getFile()
-        val fileAdditional = takeIf { file?.name.isNullOrEmpty().not() }?.let { file?.name } ?: "additional_doc_${Date()}.jpg"
-        val mimType = file?.getMimeType() ?: "multipart/form-data"
-        val requestBody = RequestBody.create(MediaType.parse(mimType), file)
-        val bodyAdditional = MultipartBody.Part.createFormData("file", fileAdditional, requestBody)
-        viewModel?.putUploadFile(session?.auth_2, bodyAdditional, fileAdditional)?.observeOnce(viewLifecycleOwner, Observer {
+        if (file == null) {
           checkPosition += 1
-          if ((it.error is NoNetworkException).not()) {
-            if (it.status == 200 || it.status == 201 || it.status == 202) {
-              getResponse(it.responseBody)?.let { it1 -> respFileList.add(it1) }
-            } else showError(resources.getString(R.string.failed_to_upload_additional_doc))
-          } else showError(resources.getString(R.string.internet_connection_not_available))
+          fileData.pathUrl?.let { respFileList.add(it) }
           if (checkPosition == additionalDocs.size) {
             hideProgress()
             addKycInformation(respFileList)
           }
-        })
+        } else {
+          val fileAdditional = takeIf { file.name.isNullOrEmpty().not() }?.let { file.name } ?: "additional_doc_${Date()}.jpg"
+          val mimType = file.getMimeType() ?: "multipart/form-data"
+          val requestBody = RequestBody.create(MediaType.parse(mimType), file)
+          val bodyAdditional = MultipartBody.Part.createFormData("file", fileAdditional, requestBody)
+          viewModel?.putUploadFile(session?.auth_2, bodyAdditional, fileAdditional)?.observeOnce(viewLifecycleOwner, Observer {
+            checkPosition += 1
+            if ((it.error is NoNetworkException).not()) {
+              if (it.status == 200 || it.status == 201 || it.status == 202) {
+                getResponse(it.responseBody)?.let { it1 -> respFileList.add(it1) }
+              } else showError(resources.getString(R.string.failed_to_upload_additional_doc))
+            } else showError(resources.getString(R.string.internet_connection_not_available))
+            if (checkPosition == additionalDocs.size) {
+              hideProgress()
+              addKycInformation(respFileList)
+            }
+          })
+        }
       }
-    } else addKycInformation(respFileList)
+    } else {
+      addKycInformation(respFileList)
+    }
   }
 
   private fun addKycInformation(additionFile: ArrayList<String>) {
-    showProgress(resources.getString(R.string.please_wait_))
     request?.actionData?.additionalDocument = convertListObjToString(additionFile)
-    viewModel?.addKycData(session?.auth_1, request)?.observeOnce(viewLifecycleOwner, Observer {
+    if (isEdit.not()) {
+      showProgress(resources.getString(R.string.please_wait_))
+      viewModel?.addKycData(session?.auth_1, request)?.observeOnce(viewLifecycleOwner, Observer {
+        hideProgress()
+        if ((it.error is NoNetworkException).not()) {
+          if (it.status == 200 || it.status == 201 || it.status == 202) {
+            val bundle = Bundle()
+            bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
+            bundle.putSerializable(IntentConstant.KYC_DETAIL.name, request)
+            startFragmentPaymentActivity(FragmentType.KYC_STATUS, bundle, clearTop = true)
+          } else showError(resources.getString(R.string.add_kyc_error))
+        } else showError(resources.getString(R.string.internet_connection_not_available))
+      })
+    } else updateKycInformation(getUpdateRequest(request))
+  }
+
+
+  private fun updateKycInformation(updateRequest: UpdatePaymentKycRequest) {
+    showProgress(resources.getString(R.string.please_wait_))
+    viewModel?.updateKycData(session?.auth_1, updateRequest)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
-          val bundle = Bundle()
-          bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
-          bundle.putSerializable(IntentConstant.KYC_DETAIL.name, request)
-          startFragmentPaymentActivity(FragmentType.KYC_STATUS, bundle, clearTop = true)
-        } else showError(resources.getString(R.string.add_kyc_error))
+          val output = Intent()
+          output.putExtra(IntentConstant.IS_EDIT.name, true)
+          baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
+          baseActivity.finish()
+        } else showError(resources.getString(R.string.update_kyc_error))
       } else showError(resources.getString(R.string.internet_connection_not_available))
     })
+  }
+
+  private fun getUpdateRequest(request: PaymentKycRequest?): UpdatePaymentKycRequest {
+    val requestUpdate = UpdatePaymentKycRequest(query = getQueryId())
+    val kycSet = KycSet(additionalDocument = request?.actionData?.additionalDocument, bankAccountNumber = request?.actionData?.bankAccountNumber,
+        bankAccountStatement = request?.actionData?.bankAccountStatement, bankBranchName = request?.actionData?.bankBranchName,
+        hasexisistinginstamojoaccount = request?.actionData?.hasexisistinginstamojoaccount, ifsc = request?.actionData?.ifsc,
+        instamojoEmail = request?.actionData?.instamojoEmail, instamojoPassword = request?.actionData?.instamojoPassword,
+        isArchived = dataKyc?.isArchived, nameOfBank = request?.actionData?.nameOfBank, nameOfBankAccountHolder = request?.actionData?.nameOfBankAccountHolder,
+        nameOfPanHolder = request?.actionData?.nameOfPanHolder, panCardDocument = request?.actionData?.panCardDocument, panNumber = request?.actionData?.panNumber)
+    val value = UpdateKycValue(set = kycSet)
+    requestUpdate.setUpdateValueKyc(value)
+    return requestUpdate
+  }
+
+  private fun getQueryId(): String? {
+    val jsonObject = JSONObject()
+    jsonObject.put("_id", dataKyc?.id)
+    return jsonObject.toString()
   }
 
   private fun showError(errorTxt: String) {
@@ -212,11 +315,11 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     val bankBranch = binding?.edtBankBranch?.text?.toString()
 
     when {
-      panCarImage == null -> {
+      panCarImage == null && dataKyc?.panCardDocument.isNullOrEmpty() -> {
         showShortToast("Please select valid pan card file")
         return false
       }
-      bankStatementImage == null -> {
+      bankStatementImage == null && dataKyc?.bankAccountStatement.isNullOrEmpty() -> {
         showShortToast("Please select valid bank statement file")
         return false
       }
@@ -228,7 +331,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         showShortToast("Pan name can't empty.")
         return false
       }
-      this.isBankAssociated.not() -> {
+      binding?.addDifferent?.isChecked == true -> {
         if (accountNumber.isNullOrEmpty()) {
           showShortToast("Bank account number can't empty.")
           return false
@@ -247,16 +350,18 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         }
       }
     }
-    request = if (this.isBankAssociated.not()) {
+    request = if (binding?.addDifferent?.isChecked == true) {
       val action = ActionDataKyc(panNumber = panNumber, nameOfPanHolder = panName, bankAccountNumber = accountNumber,
           nameOfBankAccountHolder = nameAccount, nameOfBank = bankName, ifsc = ifsc, bankBranchName = bankBranch,
-          hasexisistinginstamojoaccount = "true", instamojoEmail = "", instamojoPassword = "", fpTag = session?.fpTag, isVerified = "no")
-      PaymentKycRequest(actionData = action, websiteId = session?.fpId)
+          hasexisistinginstamojoaccount = dataKyc?.hasexisistinginstamojoaccount ?: "true", instamojoEmail = dataKyc?.instamojoEmail ?: "",
+          instamojoPassword = dataKyc?.instamojoPassword ?: "", fpTag = session?.fpTag, isVerified = dataKyc?.isVerified ?: "no")
+      PaymentKycRequest(actionData = action, websiteId = session?.websiteId)
     } else {
       val action = ActionDataKyc(panNumber = panNumber, nameOfPanHolder = panName, bankAccountNumber = bankDetail?.accountNumber,
           nameOfBankAccountHolder = bankDetail?.accountName, nameOfBank = bankDetail?.bankName, ifsc = bankDetail?.iFSC,
-          bankBranchName = bankDetail?.bankBranch, hasexisistinginstamojoaccount = "true", instamojoEmail = "", instamojoPassword = "", fpTag = session?.fpTag, isVerified = "no")
-      PaymentKycRequest(actionData = action, websiteId = session?.fpId)
+          bankBranchName = bankDetail?.bankBranch, hasexisistinginstamojoaccount = dataKyc?.hasexisistinginstamojoaccount ?: "true",
+          instamojoEmail = dataKyc?.instamojoEmail ?: "", instamojoPassword = dataKyc?.instamojoPassword ?: "", fpTag = session?.fpTag, isVerified = dataKyc?.isVerified ?: "no")
+      PaymentKycRequest(actionData = action, websiteId = session?.websiteId)
     }
     return true
   }
@@ -319,6 +424,11 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         binding?.bankStatementView?.visible()
         binding?.ivBankStatement?.setImageResource(R.drawable.ic_pdf_placholder)
       } else additionalDocsViewPopulation(arrayListOf(path))
+    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
+      val panImagePath = data?.getStringExtra(IntentConstant.PAN_CARD_IMAGE.name)
+      val panImageUri = Uri.parse(panImagePath)
+      binding?.imagePanCard?.setImageURI(panImageUri)
+      panCarImage = File(FileUtils(baseActivity).getPath(panImageUri) ?: "")
     }
   }
 
@@ -406,12 +516,20 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     hideProgress()
     this.isBankAssociated = isBankAssociated
     this.bankDetail = bankDetail
+    binding?.btnMyAccount?.visibility = if (this.isBankAssociated) View.VISIBLE else View.GONE
     if (this.isBankAssociated) {
       binding?.account?.text = "A/C No. ${bankDetail?.accountNumber}"
       binding?.bankDetail?.text = detail
     }
-    bankAssociated(this.isBankAssociated)
-    binding?.btnMyAccount?.visibility = if (this.isBankAssociated) View.VISIBLE else View.GONE
+    if (isEdit) {
+      if (dataKyc?.bankAccountNumber == bankDetail?.accountNumber) {
+        bankAssociated(this.isBankAssociated)
+        setPreviousData(this.isBankAssociated)
+      } else {
+        bankAssociated(false)
+        setPreviousData(false)
+      }
+    } else bankAssociated(this.isBankAssociated)
   }
 
   private fun responseValidateIfsc(data: RazorDataResponse?) {
@@ -434,8 +552,70 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
 
   private fun bottomSheetConfirm() {
     val sheet = ConfirmKycBottomSheet()
-    sheet.setData(request, panCarImage, bankStatementImage, additionalDocs)
-    sheet.onClicked = { saveApiBankDetail() }
+    sheet.setData(request, panCarImage, bankStatementImage, additionalDocs, dataKyc)
+    sheet.onClicked = {
+      if (isEdit) updateApiBankDetail()
+      else saveApiBankDetail()
+    }
     sheet.show(this@KYCDetailsFragment.parentFragmentManager, ConfirmKycBottomSheet::class.java.name)
+  }
+
+  private fun getKycDetails() {
+    showProgress()
+    viewModel?.getKycData(session?.auth_1, getQuery())?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
+      if ((it.error is NoNetworkException).not()) {
+        val resp = it as? PaymentKycDataResponse
+        if (it.status == 200 || it.status == 201 || it.status == 202) {
+          if (resp?.data.isNullOrEmpty().not()) {
+            dataKyc = resp!!.data!![0]
+            getUserDetails()
+          } else {
+            baseActivity.onNavPressed()
+            showLongToast("Kyc detail not found.")
+          }
+        } else {
+          baseActivity.onNavPressed()
+          showLongToast(if (it.message().isNotEmpty()) it.message() else "Kyc detail getting error.")
+        }
+      } else showLongToast(resources.getString(R.string.internet_connection_not_available))
+    })
+  }
+
+  private fun getQuery(): String? {
+    val json = JSONObject()
+    json.put("fpTag", session?.fpTag)
+    return json.toString()
+  }
+
+  private fun setPreviousData(isEditBankAssociate: Boolean) {
+    if (isEditBankAssociate.not()) {
+      binding?.edtBankAccountNumber?.setText(dataKyc?.bankAccountNumber)
+      binding?.edtBankAccountHolderName?.setText(dataKyc?.nameOfBankAccountHolder)
+      binding?.edtBankIfscCode?.setText(dataKyc?.ifsc)
+      binding?.edtBankName?.setText(dataKyc?.nameOfBank)
+      binding?.edtBankBranch?.setText(dataKyc?.nameOfBank)
+    }
+    binding?.edtPanNumber?.setText(dataKyc?.panNumber)
+    binding?.edtNameOnPanCard?.setText(dataKyc?.nameOfPanHolder)
+    dataKyc?.panCardDocument?.let { activity?.glideLoad(binding?.imagePanCard!!, it, R.drawable.placeholder_image) }
+    val exUrl = getExtensionUrl(dataKyc?.bankAccountStatement)
+    if (exUrl.toLowerCase(Locale.ROOT) == "jpg" || exUrl.toLowerCase(Locale.ROOT) == "png") {
+      binding?.bankStatementView?.visible()
+      dataKyc?.bankAccountStatement?.let { activity?.glideLoad(binding?.ivBankStatement!!, it, R.drawable.placeholder_image) }
+    } else {
+      binding?.bankStatementView?.visible()
+      binding?.ivBankStatement?.setImageResource(R.drawable.ic_pdf_placholder)
+    }
+
+    if (dataKyc?.additionalDocument.isNullOrEmpty().not()) {
+      val pathUrls: List<String>? = convertStringToList(dataKyc?.additionalDocument!!)
+      if (pathUrls.isNullOrEmpty().not()) {
+        pathUrls?.forEachIndexed { index, url ->
+          if (index <= 4) additionalDocs.add(FileModel(pathUrl = url))
+        }
+        setAdapter()
+      }
+    }
   }
 }

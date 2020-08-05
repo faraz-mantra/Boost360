@@ -2,7 +2,6 @@ package com.appservice.ui.paymentgateway
 
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -12,6 +11,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -36,6 +36,7 @@ class ScanPanCardFragment : AppBaseFragment<FragmentScanPanCardBinding, BaseView
   private var STORAGE_PERMISSIONS_CODE = 101
   private var IMAGE_PICK_CODE = 102
   private var session: SessionData? = null
+  private var isEdit: Boolean = false
 
   companion object {
     @JvmStatic
@@ -48,6 +49,7 @@ class ScanPanCardFragment : AppBaseFragment<FragmentScanPanCardBinding, BaseView
 
   override fun onCreateView() {
     super.onCreateView()
+    isEdit = arguments?.getBoolean(IntentConstant.IS_EDIT.name) ?: false
     session = arguments?.getSerializable(IntentConstant.SESSION_DATA.name) as? SessionData
     if (session == null) return
     checkAndAskPermissions()
@@ -67,7 +69,8 @@ class ScanPanCardFragment : AppBaseFragment<FragmentScanPanCardBinding, BaseView
           val bundle = Bundle()
           bundle.putBoolean("isInstaMojoAccount", arguments?.getBoolean("isInstaMojoAccount") ?: false)
           bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
-          startFragmentPaymentActivity(FragmentType.CROP_IMAGE, bundle)
+          bundle.putBoolean(IntentConstant.IS_EDIT.name, isEdit)
+          startFragmentPaymentActivity(FragmentType.CROP_IMAGE, bundle, isResult = isEdit)
         } catch (e: FileNotFoundException) {
           e.printStackTrace()
         } catch (e: IOException) {
@@ -122,12 +125,18 @@ class ScanPanCardFragment : AppBaseFragment<FragmentScanPanCardBinding, BaseView
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+    if (resultCode == AppCompatActivity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
       val bundle = Bundle()
       bundle.putBoolean("isInstaMojoAccount", arguments?.getBoolean("isInstaMojoAccount") ?: false)
       bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
       bundle.putString(IntentConstant.PAN_CARD_IMAGE.name, data?.data?.toString())
-      startFragmentPaymentActivity(FragmentType.CROP_IMAGE, bundle)
+      bundle.putBoolean(IntentConstant.IS_EDIT.name, isEdit)
+      startFragmentPaymentActivity(FragmentType.CROP_IMAGE, bundle, isResult = isEdit)
+    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
+      val output = Intent()
+      output.putExtra(IntentConstant.PAN_CARD_IMAGE.name, data?.getStringExtra(IntentConstant.PAN_CARD_IMAGE.name))
+      baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
+      baseActivity.finish()
     }
   }
 

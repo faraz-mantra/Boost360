@@ -820,6 +820,7 @@
     <string name="onboarding_screen_2_title">Content is King</string>
     <string name="feedback">Need Help? Get in touch with us</string>
     <string name="addon_marketplace">Add-Ons Marketplace</string>
+    <string name="addon_marketplace_link">ADD_ONS_MARKETPLACE</string>
     <string name="noInternet">No Internet Connection</string>
     <string name="inbox_empty">Inbox is empty!</string>
     <string name="business_enquiry_empty">We\'ll send you a\nnotification as soon as\nyou get a query.</string>

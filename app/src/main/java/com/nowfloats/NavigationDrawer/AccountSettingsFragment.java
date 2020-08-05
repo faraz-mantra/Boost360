@@ -54,6 +54,7 @@ import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -90,7 +91,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         mContext = context;
     }
@@ -135,16 +136,14 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         break;
                     case "Self Branded Payment Gateway":
                         Bundle b = getBundleDataKyc();
-                        if (sessionManager.isSelfBrandedKycAdd()) {
-                            b.putBoolean(com.appservice.constant.IntentConstant.IS_SELF_BRANDED_KYC_ADDED.name(), true);
-                        }
-                        startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), com.appservice.constant.FragmentType.PAYMENT_GATEWAY, getBundleDataKyc(), false);
+                        if (sessionManager.isSelfBrandedKycAdd()) b.putBoolean(com.appservice.constant.IntentConstant.IS_SELF_BRANDED_KYC_ADDED.name(), true);
+                        startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), com.appservice.constant.FragmentType.PAYMENT_GATEWAY, b, false);
                         break;
                     case "KYC Verification":
                         Bundle b1 = getBundleDataKyc();
                         if (sessionManager.isSelfBrandedKycAdd()) {
                             b1.putBoolean(com.appservice.constant.IntentConstant.IS_SELF_BRANDED_KYC_ADDED.name(), true);
-                            startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), com.appservice.constant.FragmentType.KYC_STATUS, getBundleDataKyc(), false);
+                            startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), com.appservice.constant.FragmentType.KYC_STATUS, b1, false);
                         } else startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), FragmentType.BUSINESS_KYC_VIEW, b1, false);
                         break;
                     case "Boost Extensions":
