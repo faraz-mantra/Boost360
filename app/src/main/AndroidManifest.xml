@@ -51,16 +51,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:name,android:theme,android:appComponentFactory">
-        <activity android:name="com.nowfloats.hotel.seasonalOffers.SeasonalOffersDetailsActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity android:name="com.nowfloats.hotel.seasonalOffers.SeasonalOffersActivity"
+        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.webview.WebViewActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.nowfloats.hotel.seasonalOffers.SeasonalOffersDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.nowfloats.hotel.seasonalOffers.SeasonalOffersActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.hotel.tripadvisor.TripAdvisorActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.nowfloats.manufacturing.projectandteams.ProjectAndTermsActivity" />
-        <activity android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresActivity" />
+        <activity
+            android:name="com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.education.batches.BatchesActivity"
             android:screenOrientation="portrait" />
@@ -1249,6 +1257,16 @@
             android:name="com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.project.ProjectDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.project.ProjectActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

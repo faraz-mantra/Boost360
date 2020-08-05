@@ -355,23 +355,6 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
             // we will handle the returned data in onActivityResult
             startActivityForResult(captureIntent, CAMERA_PHOTO);
 
-//            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            String pictureName = Utils.getPictureName();
-//            File pictureDirectory = Environment.getExternalStorageDirectory();
-//            File imageFile=  new File(pictureDirectory,"/Nowfloats");
-//            if (!imageFile.exists()) {
-//                imageFile.mkdir();
-//            }
-////            String imagePath = Environment.getExternalStorageDirectory() + "/Nowfloats/"+ pictureName;
-////            imageUri = Uri.parse(imagePath);
-////            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-//
-//            File output=new File(imageFile, pictureName);
-//            imageUri = Uri.parse(output.getAbsolutePath());
-//            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-
-//            startActivityForResult(intent, CAMERA_PHOTO);
-
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);

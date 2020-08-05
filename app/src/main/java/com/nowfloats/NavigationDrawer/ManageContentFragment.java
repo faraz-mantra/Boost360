@@ -24,6 +24,7 @@ import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.hotel.placesnearby.PlacesNearByActivity;
 import com.nowfloats.hotel.seasonalOffers.SeasonalOffersActivity;
 import com.nowfloats.hotel.tripadvisor.TripAdvisorActivity;
+import com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivity;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
@@ -95,11 +96,11 @@ public class ManageContentFragment extends Fragment {
                     case 7:
                         intent = new Intent(mContext, SeasonalOffersActivity.class);
                         break;
+                    case 8:
+                        intent = new Intent(mContext, ProjectAndTermsActivity.class);
+                        break;
 //                    case 5:
 //                        intent = new Intent(mContext, TestimonialsActivity.class);
-//                        break;
-//                    case 6:
-//                        intent = new Intent(mContext, ProjectAndTermsActivity.class);
 //                        break;
                     default:
                         return;

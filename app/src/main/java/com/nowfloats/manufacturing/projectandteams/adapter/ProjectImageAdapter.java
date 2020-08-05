@@ -1,34 +1,33 @@
 package com.nowfloats.manufacturing.projectandteams.adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.nowfloats.manufacturing.projectandteams.ProjectAndTermsActivity;
 import com.nowfloats.manufacturing.projectandteams.ui.imagepopup.ProjectImagePopUpFragment;
+import com.nowfloats.manufacturing.projectandteams.ui.project.ProjectActivity;
 import com.thinksity.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectImageAdapter extends RecyclerView.Adapter<ProjectImageAdapter.ViewHolder> {
 
-    private List<String> itemList;
+    private ArrayList<String> itemList;
     private int menuPosition = -1;
     private boolean menuStatus = false;
     private Context context;
-    private ProjectAndTermsActivity activity;
+    private ProjectActivity activity;
 
-    public ProjectImageAdapter(List<String> itemList, ProjectAndTermsActivity activity) {
+    public ProjectImageAdapter(ArrayList<String> itemList, ProjectActivity activity) {
         this.itemList = itemList;
         this.activity = activity;
     }
@@ -51,11 +50,15 @@ public class ProjectImageAdapter extends RecyclerView.Adapter<ProjectImageAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Glide.with(context).load("https://images.pexels.com/photos/1236701/pexels-photo-1236701.jpeg").into(holder.image);
+        Glide.with(context).load(itemList.get(position)).into(holder.image);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ProjectImagePopUpFragment projectImagePopUpFragment = new ProjectImagePopUpFragment();
+                Bundle args = new Bundle();
+                args.putStringArrayList("imageList", itemList);
+                args.putInt("pos", position);
+                projectImagePopUpFragment.setArguments(args);
                 projectImagePopUpFragment.show(activity.getSupportFragmentManager(), "PROJECT_IMAGE_POPUP");
             }
         });
@@ -63,7 +66,7 @@ public class ProjectImageAdapter extends RecyclerView.Adapter<ProjectImageAdapte
 
     @Override
     public int getItemCount() {
-        return 5;//itemList.size();
+        return itemList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
