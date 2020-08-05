@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#4D000000"
-    tools:context="com.nowfloats.manufacturing.projectandteams.ui.imagepopup.ProjectImagePopUpFragment">
+    android:background="#4D000000">
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,7 +16,9 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:textSize="@dimen/_15sdp"
         android:textColor="@color/white"/>
-    <androidx.recyclerview.widget.RecyclerView
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/preview_pager"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/back_button"

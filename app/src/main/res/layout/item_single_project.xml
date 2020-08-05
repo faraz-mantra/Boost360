@@ -40,14 +40,16 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/client_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:text="Robert"
-                    android:textColor="#4A4A4A"
+                    android:textColor="#747474"
                     android:textSize="@dimen/_15sdp" />
 
                 <TextView
+                    android:id="@+id/client_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="CFO"
@@ -80,6 +82,7 @@
             app:layout_constraintTop_toBottomOf="@id/top_layout">
 
             <TextView
+                android:id="@+id/project_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
@@ -90,6 +93,7 @@
                 android:textSize="@dimen/_15sdp" />
 
             <TextView
+                android:id="@+id/project_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
@@ -103,17 +107,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <View
-                    android:id="@+id/dummy_view1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/dotted_line"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/top_layout" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -125,6 +118,7 @@
                     android:paddingBottom="@dimen/_2sdp">
 
                     <LinearLayout
+                        android:id="@+id/project_result_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/primary_color"
@@ -137,6 +131,7 @@
                         app:layout_constraintBottom_toBottomOf="parent">
 
                         <TextView
+                            android:id="@+id/project_result"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
@@ -164,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:visibility="gone"
-                    tools:visibility="gone">
+                    tools:visibility="visible">
 
                     <View
                         android:id="@+id/dummy_view2"
@@ -187,6 +182,7 @@
                         android:textColor="#C4C4C4"/>
 
                     <TextView
+                        android:id="@+id/budget_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="1,00,000"
@@ -205,9 +201,10 @@
                         android:textColor="#C4C4C4"/>
 
                     <TextView
+                        android:id="@+id/completion_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="03.06.2017"
+                        tools:text="03.06.2017"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"/>
 
@@ -223,6 +220,7 @@
                         android:textColor="#C4C4C4"/>
 
                     <TextView
+                        android:id="@+id/project_client_requirement"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="To produce custom itvgems for commercial kitchen equipment fadvnasdkvsd nds dv..."
@@ -241,6 +239,7 @@
                         android:textColor="#C4C4C4"/>
 
                     <TextView
+                        android:id="@+id/our_approach"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="We designed kitchen equipment using our sheet metal technology gdbsfbs adgsdbvs..."
@@ -290,6 +289,7 @@
         tools:visibility="gone">
 
         <TextView
+            android:id="@+id/edit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
@@ -297,6 +297,7 @@
             android:textSize="@dimen/_12sdp" />
 
         <TextView
+            android:id="@+id/delete_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"

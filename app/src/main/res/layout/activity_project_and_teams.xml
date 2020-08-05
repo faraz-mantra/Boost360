@@ -7,9 +7,160 @@
     android:orientation="vertical"
     android:background="#FBFBFB">
 
-    <FrameLayout
-        android:id="@+id/mainFrame"
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/new_custome_app_bar"/>
+
+    <LinearLayout
+        android:id="@+id/primary_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans"
+            android:text="Every project has an expert team, and your team can be highlighted individually in this section"
+            android:textColor="#747474"
+            android:textSize="@dimen/_13sdp" />
+
+        <LinearLayout
+            android:id="@+id/project_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/all_side_small_curve_bg"
+            android:elevation="@dimen/_2sdp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/project_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/_10sdp"
+                android:text="Projects Listing (0)"
+                android:textColor="#787878"
+                android:textSize="@dimen/_14sdp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:padding="@dimen/_10sdp"
+                app:srcCompat="@drawable/ic_front_arrow_orange" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/team_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/all_side_small_curve_bg"
+            android:elevation="@dimen/_2sdp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/team_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/_10sdp"
+                android:text="Team Listing (0)"
+                android:textColor="#787878"
+                android:textSize="@dimen/_14sdp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:padding="@dimen/_10sdp"
+                app:srcCompat="@drawable/ic_front_arrow_orange" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/secondary_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="visible"
+        tools:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_20sdp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:elevation="@dimen/_2sdp"
+                android:background="@drawable/circle_feature_bg"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/ic_expiry_lock"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:paddingTop="70dp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_20sdp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/feature_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Places to look around"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textColor="@color/common_text_color"
+                    android:textSize="@dimen/_16sdp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Looks like this add-on is not added to your current plan. Add it now to start using it."
+                    android:gravity="center"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textSize="@dimen/_11sdp"
+                    android:layout_marginTop="@dimen/_20sdp"/>
+
+                <TextView
+                    android:id="@+id/buy_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/orange_button_click_effect"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:text="VIEW IN ADD-ON STORE"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/_20sdp"/>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -42,7 +42,7 @@ public class SimpleImageTextListAdapter extends RecyclerView.Adapter<SimpleImage
         holder.text1.setText(myTextStrings[position]);
         if (myTextStrings[position].equals("Domain and Email") && !Constants.StoreWidgets.contains("DOMAINPURCHASE")
                 || myTextStrings[position].equals("Testimonials") && !Constants.StoreWidgets.contains("TESTIMONIALS")
-                || myTextStrings[position].equals("Projects & teams") && !Constants.StoreWidgets.contains("PROJECTTEAM")
+                || myTextStrings[position].equals("Projects & Teams") && !Constants.StoreWidgets.contains("PROJECTTEAM")
                 || myTextStrings[position].equals("Places to look around") && !Constants.StoreWidgets.contains("PLACES-TO-LOOK-AROUND")
                 || myTextStrings[position].equals("Trip Advisors") && !Constants.StoreWidgets.contains("TRIPADVISOR-REVIEWS")
                 /*|| myTextStrings[position].equals("Seasonal Offers") && !Constants.StoreWidgets.contains("OFFERS")*/ //this is free widget
