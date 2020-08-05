@@ -265,7 +265,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_close_icon, menu)
+    inflater.inflate(R.menu.menu_edit, menu)
     menuClose = menu.findItem(R.id.menu_edit)
     menuClose?.isVisible = false
   }

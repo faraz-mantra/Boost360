@@ -15,4 +15,5 @@ enum class IntentConstant {
   IS_SELF_BRANDED_KYC_ADDED,
   PAN_CARD_IMAGE,
   KYC_DETAIL,
+  IS_EDIT,
 }

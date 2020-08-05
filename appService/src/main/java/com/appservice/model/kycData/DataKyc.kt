@@ -31,7 +31,7 @@ data class DataKyc(
     @SerializedName("IsArchived")
     var isArchived: Boolean? = null,
     @SerializedName("isverified")
-    var isverified: String? = null,
+    var isVerified: String? = null,
     @SerializedName("nameOfBank")
     var nameOfBank: String? = null,
     @SerializedName("nameOfBankAccountHolder")

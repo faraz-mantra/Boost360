@@ -14,6 +14,8 @@ import com.appservice.databinding.FragmentPaymentActiveBinding
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
 import com.appservice.ui.bankaccount.WhyBottomSheet
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 
 class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, BaseViewModel>() {
@@ -37,23 +39,30 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Bas
     session = arguments?.getSerializable(IntentConstant.SESSION_DATA.name) as? SessionData ?: return
     isPaymentGateway = arguments?.getBoolean(IntentConstant.CUSTOM_PAYMENT_GATEWAY.name) ?: false
     isSelfBrandedAdd = arguments?.getBoolean(IntentConstant.IS_SELF_BRANDED_KYC_ADDED.name) ?: false
-    changeUi()
     setOnClickListener(binding?.paymentGatewayTermsToggle, binding?.activePaymentBottomButton, binding?.btnViewStore, binding?.selfBrandedKycAddView)
     radioButtonToggle()
+    changeUi()
   }
 
   private fun changeUi() {
     binding?.viewBac?.setBackgroundColor(ContextCompat.getColor(baseActivity, if (isPaymentGateway) R.color.colorPrimary else R.color.color_primary))
-    binding?.paymentGatewayActivation?.visibility = if (isPaymentGateway && isSelfBrandedAdd.not()) View.VISIBLE else View.GONE
-    binding?.addOnNotActive?.visibility = if (isPaymentGateway) View.GONE else View.VISIBLE
-    if (isPaymentGateway && isSelfBrandedAdd) {
-      binding?.selfBrandedKycAddView?.visibility = View.VISIBLE
-      initLottieAnimation()
-    } else {
-      binding?.selfBrandedKycAddView?.visibility = View.GONE
-    }
     if (isPaymentGateway) (baseActivity as? PaymentGatewayContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
     else (baseActivity as? PaymentGatewayContainerActivity)?.changeTheme(R.color.color_primary, R.color.color_primary_dark)
+
+    if (isPaymentGateway && isSelfBrandedAdd) {
+      binding?.selfBrandedKycAddView?.visible()
+      binding?.paymentGatewayActivation?.gone()
+      binding?.addOnNotActive?.gone()
+      initLottieAnimation()
+    } else if (isPaymentGateway && isSelfBrandedAdd.not()) {
+      binding?.selfBrandedKycAddView?.gone()
+      binding?.paymentGatewayActivation?.visible()
+      binding?.addOnNotActive?.gone()
+    } else {
+      binding?.selfBrandedKycAddView?.gone()
+      binding?.paymentGatewayActivation?.gone()
+      binding?.addOnNotActive?.visible()
+    }
 
   }
 

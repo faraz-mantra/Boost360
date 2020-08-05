@@ -175,6 +175,9 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     kycDetailsFragment?.onActivityResult(requestCode, resultCode, data)
+    scanPanCardFragment?.onActivityResult(requestCode, resultCode, data)
+    cropImageFragment?.onActivityResult(requestCode, resultCode, data)
+    kycStatusFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onBackPressed() {

@@ -122,10 +122,8 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   fun adjustToolbarTitleMarginEnd(menu: Menu) {
-    if (menu.size() > 0 && this.getToolbarTitleGravity() == Gravity.CENTER_HORIZONTAL) {
-      this.getToolbar()?.titleMarginEnd = ConversionUtils.dp2px(16f)
-    } else {
-      this.getToolbar()?.titleMarginEnd = ConversionUtils.dp2px(72f)
+    if ((menu.size() > 0).not() && (this.getToolbarTitleGravity() == Gravity.CENTER_HORIZONTAL || this.getToolbarTitleGravity() == Gravity.CENTER)) {
+      this.getToolbar()?.titleMarginEnd = ConversionUtils.dp2px(70f)
     }
   }
 

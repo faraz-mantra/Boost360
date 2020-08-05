@@ -556,10 +556,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
                 accountInfo.putExtra("table_name", Constants.VISITORS_TABLE);
                 startActivity(accountInfo);
-            } else if (url.contains(getResources().getString(R.string.addon_marketplace))) {
+            } else if (url.contains(getResources().getString(R.string.addon_marketplace_link))) {
                 initiateAddonMarketplace();
             }
-
         }
         mDeepLinkUrl = null;
     }

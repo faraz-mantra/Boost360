@@ -2,11 +2,16 @@ package com.appservice.ui.paymentgateway
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.airbnb.lottie.LottieDrawable
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentKycStatusBinding
 import com.appservice.model.SessionData
@@ -123,5 +128,32 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
       baseActivity.startActivity(intent)
     }
     baseActivity.finish()
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+    inflater.inflate(R.menu.menu_edit, menu)
+  }
+
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    return when (item.itemId) {
+      R.id.menu_edit -> {
+        val bundle = Bundle()
+        bundle.putBoolean(IntentConstant.IS_EDIT.name, true)
+        bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
+        startFragmentPaymentActivity(FragmentType.KYC_DETAILS, bundle, isResult = true)
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
+    }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
+      val isEdit = data?.getBooleanExtra(IntentConstant.IS_EDIT.name, false)
+      if (isEdit == true) getKycDetails()
+    }
   }
 }

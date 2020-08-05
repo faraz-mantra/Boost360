@@ -20,6 +20,8 @@ data class KycSet(
     var instamojoEmail: String? = null,
     @SerializedName("instamojoPassword")
     var instamojoPassword: String? = null,
+    @SerializedName("IsArchived")
+    var isArchived: Boolean? = null,
     @SerializedName("nameOfBank")
     var nameOfBank: String? = null,
     @SerializedName("nameOfBankAccountHolder")

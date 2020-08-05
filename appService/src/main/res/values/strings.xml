@@ -120,6 +120,7 @@
   <string name="failed_to_upload_statement">Failed to upload bank statement, please try again</string>
   <string name="failed_to_upload_additional_doc">Failed to upload additional document, please try again</string>
   <string name="add_kyc_error">Add kyc error, please try again.</string>
+  <string name="update_kyc_error">Update kyc error, please try again.</string>
   <string name="uploading_file_wait">Uploading file, please wait....</string>
   <string name="please_wait_">Please wait....</string>
   <string name="pdf">PDF</string>

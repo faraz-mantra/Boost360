@@ -1,5 +1,6 @@
 package com.appservice.ui.paymentgateway
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -7,6 +8,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -23,6 +25,7 @@ class CropImageFragment : AppBaseFragment<FragmentImageCropBinding, BaseViewMode
 
   private var croppedImageFile: File = File(Environment.getExternalStorageDirectory(), "photo.jpg")
   private var session: SessionData? = null
+  private var isEdit: Boolean = false
 
   companion object {
     @JvmStatic
@@ -43,6 +46,7 @@ class CropImageFragment : AppBaseFragment<FragmentImageCropBinding, BaseViewMode
 
   override fun onCreateView() {
     super.onCreateView()
+    isEdit = arguments?.getBoolean(IntentConstant.IS_EDIT.name) ?: false
     session = arguments?.getSerializable(IntentConstant.SESSION_DATA.name) as? SessionData
     if (session == null) return
     setOnClickListener(binding?.btnCropDone)
@@ -81,15 +85,23 @@ class CropImageFragment : AppBaseFragment<FragmentImageCropBinding, BaseViewMode
 
   private fun handleCropResult(view: CropImageView?, result: CropImageView.CropResult?) {
     if (result?.error == null) {
-      Log.d("Cropped Image", result?.toString())
-      if (result?.uri != null) {
-        Log.d("Cropped Image URI", result.uri.toString())
-        val bundle = Bundle()
-        bundle.putBoolean("isInstaMojoAccount", arguments?.getBoolean("isInstaMojoAccount") ?: false)
-        bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
-        bundle.putString(IntentConstant.PAN_CARD_IMAGE.name, result.uri.toString())
-        startFragmentPaymentActivity(FragmentType.KYC_DETAILS, bundle)
+      if (isEdit) {
+        val output = Intent()
+        output.putExtra(IntentConstant.PAN_CARD_IMAGE.name, result?.uri.toString())
+        baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
+        baseActivity.finish()
+      } else {
+        Log.d("Cropped Image", result?.toString())
+        if (result?.uri != null) {
+          Log.d("Cropped Image URI", result.uri.toString())
+          val bundle = Bundle()
+          bundle.putBoolean("isInstaMojoAccount", arguments?.getBoolean("isInstaMojoAccount") ?: false)
+          bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
+          bundle.putString(IntentConstant.PAN_CARD_IMAGE.name, result.uri.toString())
+          startFragmentPaymentActivity(FragmentType.KYC_DETAILS, bundle)
+        }
       }
+
     } else result.error.printStackTrace()
   }
 
