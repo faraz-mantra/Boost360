@@ -159,6 +159,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     }
   }
 
+
   fun setToolbarSubTitle(subTitle: String) {
     val toolbar = getToolbar() ?: return
     toolbar.subtitle = subTitle

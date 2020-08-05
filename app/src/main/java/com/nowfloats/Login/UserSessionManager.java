@@ -122,6 +122,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_IS_AUTO_POST_ENABLED = "IsAutoPostEnabled";
     private String KEY_IS_SIGNUP_FROM_FACEBOOK = "SignUpFacebook";
     private String KEY_FACEBOOK_IMAGE_URL = "FacebookImageURL";
+    private String IS_ACCOUNT_SAVE = "isAccountSave";
     private String KEY_FACEBOOK_PROFILE_DESCRIPTION = "FacebookProfileDescription";
     private String KEY_IS_THINKSITY = "isThinksity";
     private String KEY_IS_FREE_DOMAIN = "isFreeDomain";
@@ -371,6 +372,10 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
             }
         }
         return false;
+    }
+
+    public Boolean isLoginCheck() {
+        return (getFpTag() != null && getFPID() != null && getFP_AppExperienceCode() != null && getUserProfileId() != null);
     }
 
     public String getFPPrimaryContactNumber() {
@@ -674,6 +679,17 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public String getFacebookPageURL() {
         return pref.getString(KEY_FACEBOOK_IMAGE_URL, "");
+    }
+
+
+    public void setAccountSave(Boolean b) {
+        editor.putBoolean(IS_ACCOUNT_SAVE, b);
+        editor.apply();
+
+    }
+
+    public Boolean gisAccountSave() {
+        return pref.getBoolean(IS_ACCOUNT_SAVE, false);
     }
 
     public void storeFacebookProfileDescription(String description) {

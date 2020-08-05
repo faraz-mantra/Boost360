@@ -9,9 +9,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +17,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -75,7 +76,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
 
     private GMBHandler GmbHandler;
 
-    private final static int LIGHT_HOUSE_EXPIRED =-1,DEMO =0,DEMO_EXPIRED=-2;
+    private final static int LIGHT_HOUSE_EXPIRED = -1, DEMO = 0, DEMO_EXPIRED = -2;
 
 
     private ProgressDialog progressDialog;
@@ -97,7 +98,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         prefsEditor = pref.edit();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         domainApiService = new DomainApiService(this);
-        GmbHandler = new GMBHandler(getContext(),session);
+        GmbHandler = new GMBHandler(getContext(), session);
 
         try {
             GmbHandler.sendDetailsToGMB(false);
@@ -109,15 +110,14 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
     }
 
 
-
     @Override
     public void onViewCreated(final View mainView, Bundle savedInstanceState) {
         super.onViewCreated(mainView, savedInstanceState);
         if (!isAdded()) return;
         final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
                 .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
-        final LinearLayout progressLayout = (LinearLayout) mainView.findViewById(R.id.progress_layout);
-        final LinearLayout profileLayout = (LinearLayout) mainView.findViewById(R.id.business_profile_layout);
+        final LinearLayout progressLayout = mainView.findViewById(R.id.progress_layout);
+        final LinearLayout profileLayout = mainView.findViewById(R.id.business_profile_layout);
         profileLayout.setVisibility(View.INVISIBLE);
         progressLayout.setVisibility(View.VISIBLE);
 //        if (shareButton != null) {
@@ -140,7 +140,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
 
                             Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
                             robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
-                            websiteTextView = (TextView) mainView.findViewById(R.id.websiteTitleTextView_ProfileV2);
+                            websiteTextView = mainView.findViewById(R.id.websiteTitleTextView_ProfileV2);
                             websiteTextView.setTypeface(robotoMedium);
                             websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
 //                            if (shareButton != null) {
@@ -165,7 +165,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
 //                                    }
 //                                });
 //                            }
-                            businessProfileImageView = (ImageView) mainView.findViewById(R.id.businessProfileIcon_ProfileV2);
+                            businessProfileImageView = mainView.findViewById(R.id.businessProfileIcon_ProfileV2);
                             //if (Constants.IMAGEURIUPLOADED == false) {
                             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
                             BoostLog.d("TAG", iconUrl);
@@ -192,15 +192,15 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                                         .into(businessProfileImageView);
                             }
 
-                            category = (TextView) mainView.findViewById(R.id.categoryTextView_ProfileV2);
+                            category = mainView.findViewById(R.id.categoryTextView_ProfileV2);
                             category.setTypeface(robotoLight);
                             category.setText(session.getFPDetails(GET_FP_DETAILS_CATEGORY));
 
-                            businessInfoTextView = (TextView) mainView.findViewById(R.id.businessInfoTextView_ProfileV2);
+                            businessInfoTextView = mainView.findViewById(R.id.businessInfoTextView_ProfileV2);
                             businessInfoTextView.setTypeface(robotoLight);
                             businessInfoTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION));
 
-                            TextView editTextView = (TextView) mainView.findViewById(R.id.tv_edit_profile);
+                            TextView editTextView = mainView.findViewById(R.id.tv_edit_profile);
 //                            editTextView.setOnClickListener(new View.OnClickListener() {
 //                                @Override
 //                                public void onClick(View v) {
@@ -220,48 +220,48 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
 
                             View businessProfileList = mainView.findViewById(R.id.businessProfile_List_ProfileV2);
 
-                            businessAddressLayout = (TextView) businessProfileList.findViewById(R.id.businessAddress_Layout_ProfileV2);
+                            businessAddressLayout = businessProfileList.findViewById(R.id.businessAddress_Layout_ProfileV2);
                             //TextView businessAddressTextView = (TextView) businessAddressLayout.findViewById(R.id.firstrow_TextView_ProfileV2);
                             //businessAddressLayout.setTypeface(robotoMedium);
 
-                            contactInformationLayout = (TextView) businessProfileList.findViewById(R.id.contactInformation_Layout_ProfileV2);
+                            contactInformationLayout = businessProfileList.findViewById(R.id.contactInformation_Layout_ProfileV2);
                             //TextView contactInfoTextView = (TextView) contactInformationLayout.findViewById(R.id.secondrow_TextView_ProfileV2);
                             //contactInformationLayout.setTypeface(robotoMedium);
 
-                            businessHoursLayout = (TextView) businessProfileList.findViewById(R.id.businessHours_Layout_ProfileV2);
+                            businessHoursLayout = businessProfileList.findViewById(R.id.businessHours_Layout_ProfileV2);
                             // TextView businessHoursText = (TextView) businessHoursLayout.findViewById(R.id.thirdrow_TextView_ProfileV2);
                             //businessHoursLayout.setTypeface(robotoMedium);
 
 
-                            ImageView businessHoursImageView = (ImageView) businessProfileList.findViewById(R.id.thirdrow_ImageView_ProfileV2);
-                            LinearLayout businessHoursLinearLayout = (LinearLayout) businessProfileList.findViewById(R.id.businessHoursLinearLayout);
+                            ImageView businessHoursImageView = businessProfileList.findViewById(R.id.thirdrow_ImageView_ProfileV2);
+                            LinearLayout businessHoursLinearLayout = businessProfileList.findViewById(R.id.businessHoursLinearLayout);
 
                             if (session.getIsThinksity().equals("true")) {
                                 businessHoursLayout.setVisibility(View.GONE);
                                 businessHoursLinearLayout.setVisibility(View.GONE);
                                 businessHoursImageView.setVisibility(View.GONE);
                             }
-                            ImageView lockWidgetImageView_BusinessEnq = (ImageView) businessProfileList.findViewById(R.id.lock_widget_business_hours);
+                            ImageView lockWidgetImageView_BusinessEnq = businessProfileList.findViewById(R.id.lock_widget_business_hours);
 
                             if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS).equals("TIMINGS")) {
                                 lockWidgetImageView_BusinessEnq.setVisibility(View.VISIBLE);
                             }
-                            businessLogoLayout = (TextView) businessProfileList.findViewById(R.id.businessLogo_Layout_ProfileV2);
+                            businessLogoLayout = businessProfileList.findViewById(R.id.businessLogo_Layout_ProfileV2);
                             //TextView businessLogoText = (TextView) businessLogoLayout.findViewById(R.id.fourth_TextView_ProfileV2);
                             //businessLogoLayout.setTypeface(robotoMedium);
 
-                            socialSharingLayout = (TextView) businessProfileList.findViewById(R.id.socialSharing_Layout_ProfileV2);
+                            socialSharingLayout = businessProfileList.findViewById(R.id.socialSharing_Layout_ProfileV2);
                             //TextView socialSharingTextView = (TextView) socialSharingLayout.findViewById(R.id.fifth_TextView_ProfileV2);
                             //socialSharingLayout.setTypeface(robotoMedium);
 
-                            tvCustomPages = (TextView) businessProfileList.findViewById(R.id.tvCustomPages);
+                            tvCustomPages = businessProfileList.findViewById(R.id.tvCustomPages);
                             tvCustomPages.setTypeface(robotoMedium);
 
-                            tvPhotoGallery = (TextView) businessProfileList.findViewById(R.id.tvPhotoGallery);
+                            tvPhotoGallery = businessProfileList.findViewById(R.id.tvPhotoGallery);
                             tvPhotoGallery.setTypeface(robotoMedium);
 
-                            tvSiteAppearance = (TextView) businessProfileList.findViewById(R.id.tvSiteAppearance);
-                            tvDomainDetails = (TextView) businessProfileList.findViewById(R.id.tvDomainDetails);
+                            tvSiteAppearance = businessProfileList.findViewById(R.id.tvSiteAppearance);
+                            tvDomainDetails = businessProfileList.findViewById(R.id.tvDomainDetails);
                             tvSiteAppearance.setTypeface(robotoMedium);
                             tvDomainDetails.setTypeface(robotoMedium);
                             if (TextUtils.isDigitsOnly(session.getWebTemplateType()) && Integer.parseInt(session.getWebTemplateType()) > 6) {
@@ -272,7 +272,6 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                             businessAddressLayout.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-
 
 
                                     MixPanelController.track(EventKeysWL.BUSINESS_ADDRESS, null);
@@ -343,14 +342,14 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                                         if (!activity.isFinishing()) {
                                             builder.show();
                                         }
-                                    } else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")){
+                                    } else if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")) {
                                         showExpiryDialog(DEMO);
-                                    }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
-                                            session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")){
+                                    } else if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
+                                            session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")) {
                                         showExpiryDialog(DEMO_EXPIRED);
                                     } else if (Methods.isOnline(getActivity())) {
                                         showLoader(getString(R.string.please_wait));
-                                        domainApiService.getDomainDetails(activity,session.getFpTag(), getDomainDetailsParam());
+                                        domainApiService.getDomainDetails(activity, session.getFpTag(), getDomainDetailsParam());
                                     } else {
                                         Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                                     }
@@ -376,7 +375,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                                         Intent businessHoursIntent = new Intent(activity, BusinessHoursActivity.class);
                                         startActivity(businessHoursIntent);
                                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                    } else  if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                                    } else if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                                         Methods.showFeatureNotAvailDialog(getContext());
                                     }
                                 }
@@ -410,7 +409,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                             e.printStackTrace();
                         } finally {
 
-                            final ScrollView scrollView = (ScrollView) mainView.findViewById(R.id.scrollView);
+                            final ScrollView scrollView = mainView.findViewById(R.id.scrollView);
                             scrollView.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -418,7 +417,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
                                     profileLayout.setVisibility(View.VISIBLE);
                                     scrollView.fullScroll(ScrollView.FOCUS_DOWN);
                                 }
-                            },500);
+                            }, 500);
 
                         }
                     }
@@ -489,20 +488,20 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
 //        domainDetails = null;
         hideLoader();
 
-        if(!isAlreadyCalled) {
-            if (domainDetails == null){
-                Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong));
-            } else if(domainDetails.isFailed()){
+        if (!isAlreadyCalled) {
+            if (domainDetails == null) {
+                Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong));
+            } else if (domainDetails.isFailed()) {
                 showCustomDialog(getString(R.string.domain_booking_failed),
-                        Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage())?
-                                getString(R.string.drop_us_contact):domainDetails.getErrorMessage()).toString(),
+                        Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage()) ?
+                                getString(R.string.drop_us_contact) : domainDetails.getErrorMessage()).toString(),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            }else if(domainDetails.isPending()){
+            } else if (domainDetails.isPending()) {
 
                 showCustomDialog(getString(R.string.domain_booking_process),
                         getString(R.string.domain_booking_process_message),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            }else{
+            } else {
                 showDomainDetails();
             }
         }
@@ -561,6 +560,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         offersParam.put("fpTag", session.getFpTag());
         return offersParam;
     }
+
     private void showExpiryDialog(int showDialog) {
 
         String callUsButtonText, cancelButtonText, dialogTitle, dialogMessage;
@@ -618,16 +618,17 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
 
         View view = mExpireDailog.getCustomView();
 
-        roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
+        roboto_md_60_212121 title = view.findViewById(R.id.textView1);
         title.setText(dialogTitle);
 
-        ImageView expireImage = (ImageView) view.findViewById(R.id.img_warning);
+        ImageView expireImage = view.findViewById(R.id.img_warning);
         expireImage.setBackgroundColor(dialogImageBgColor);
         expireImage.setImageDrawable(ContextCompat.getDrawable(activity, dialogImage));
 
-        roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
+        roboto_lt_24_212121 message = view.findViewById(R.id.pop_up_create_message_body);
         message.setText(Methods.fromHtml(dialogMessage));
     }
+
     private void showCustomDialog(String title, String message, String postiveBtn, String negativeBtn,
                                   final DialogFrom dialogFrom) {
 
@@ -684,10 +685,9 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         final MaterialDialog materialDialog = builder.show();
         View maView = materialDialog.getCustomView();
 
-        TextView tvMessage = (TextView) maView.findViewById(R.id.toast_message_to_contact);
+        TextView tvMessage = maView.findViewById(R.id.toast_message_to_contact);
         tvMessage.setText(message);
     }
-
 
 
     @Override
@@ -706,11 +706,7 @@ public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiS
         }
 
 
-
-
-        
     }
-
 
 
     @Override

@@ -51,7 +51,7 @@ import retrofit.client.Response;
  * Created by Admin on 17-08-2017.
  */
 
-public class FacebookChatActivity extends AppCompatActivity implements View.OnClickListener,FacebookLoginFragment.OpenNextScreen {
+public class FacebookChatActivity extends AppCompatActivity implements View.OnClickListener, FacebookLoginFragment.OpenNextScreen {
 
     private static final int NO_MESSAGES = 0,CONNECT_TO_PAGE = 1;
     private RecyclerView chatUserRecyclerView;

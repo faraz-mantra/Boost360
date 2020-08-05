@@ -1,0 +1,47 @@
+<resources>
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="jpeg_png">JPEG/PNG</string>
+  <string name="_800x800px">(800x800px)</string>
+  <string name="add_service_image">Add Service Image</string>
+  <string name="save_amp_publish">Save &amp; Publish</string>
+  <string name="change">Change</string>
+  <string name="a_premium_service_by_boost_for_secure_payment_collection_learn_more_here">A premium service by Boost for secure payment collection (Learn more here)</string>
+  <string name="gallery">Gallery</string>
+  <string name="camera">Camera</string>
+  <string name="close">Close</string>
+  <string name="choose_an_action">Choose an action</string>
+  <string name="please_set_up_your_bank_account_to_proceed">Please set up your bank account to proceed</string>
+  <string name="benificiary_name">Beneficiary Name</string>
+
+  <string name="sanjay_sharma">e.g. Sanjay Sharma</string>
+  <string name="bank_ifsc_number">Bank IFSC Number</string>
+  <string name="xxxxx_xxxxx">XXXXX XXXXX</string>
+
+  <string name="bank_account_number">Bank Account Number</string>
+  <string name="_111111111111111">111111111111111</string>
+  <string name="save_n">save</string>
+  <string name="please_wait_while_we_verify_your_account">Please Wait While We Verify Your Account</string>
+  <string name="verification_desc_account">We\'re currently verifying your bank account. This process usually takes 1 working day. Once verified we will notify you.</string>
+  <string name="verify_desc_account">This bank account is being used to send you money collected online from your customers.</string>
+  <string name="internet_connection_not_available">Internet connection not available.</string>
+  <string name="verification_underway">Verification pending</string>
+  <string name="how_it_works">How it works!</string>
+  <string name="understood">Understood</string>
+  <string name="refresh_status">Refresh Status</string>
+  <string name="link_your_account">Linked Bank Account</string>
+  <string name="change_bank_detail">Change Bank details</string>
+  <string name="submit_for_verification">Submit for Verification</string>
+  <string name="write_the_name_as_mentioned_in_bank_account">Write the Name as mentioned in Bank account</string>
+  <string name="xxxxxxxxxxxxxxxxxx">XXXXXXXXXXXXXXXXXX</string>
+  <string name="write_the_name_of_your_bank">Write the Name of your bank</string>
+  <string name="write_account_alias">Write Account Alias</string>
+  <string name="type_ifsc_code">Type IFSC Code</string>
+  <string name="my_bank_account">My Bank Account</string>
+  <string name="link_bank_account">Link Bank Account</string>
+  <string name="adding_bank_account">Adding Bank Account</string>
+  <string name="add_bank_account">Add Bank Account</string>
+  <string name="enabled_payments_reveived_bank">Once enabled, all payments from your customers will be received in this bank account</string>
+  <string name="directly_designated_bank_account">Get payments in 48 hours, directly in your designated bank account</string>
+  <string name="account_verification_pending">Your account verification is pending</string>
+
+</resources>

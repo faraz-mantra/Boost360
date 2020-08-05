@@ -22,14 +22,11 @@ import com.google.gson.reflect.TypeToken;
 import com.inventoryorder.constant.FragmentType;
 import com.inventoryorder.constant.IntentConstant;
 import com.inventoryorder.model.PreferenceData;
-import com.nowfloats.Analytics_Screen.OrderAnalyticsActivity;
 import com.nowfloats.Analytics_Screen.OrderSummaryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.EventKeysWL;
-import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
@@ -65,6 +62,7 @@ public class ManageInventoryFragment extends Fragment {
         super.onCreate(savedInstanceState);
         activity = getActivity();
         UserSessionManager session = new UserSessionManager(activity.getApplicationContext(), activity);
+
         category_code = session.getFP_AppExperienceCode();
     }
 

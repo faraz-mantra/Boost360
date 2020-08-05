@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import com.catlogservice.constant.FragmentType;
+import com.appservice.constant.FragmentType;
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.inventoryorder.model.bottomsheet.PickInventoryNatureModel;
 import com.nowfloats.Login.UserSessionManager;
@@ -33,7 +33,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import static com.catlogservice.ui.FragmentContainerServiceActivityKt.startFragmentActivityNew;
+import static com.appservice.ui.catlogService.CatlogServiceContainerActivityKt.startFragmentActivityNew;
 
 
 public class ProductCategoryFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {

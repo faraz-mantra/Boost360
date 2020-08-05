@@ -163,7 +163,7 @@ public class SidePanelFragment extends Fragment {
         progressbar = view.findViewById(R.id.ProgressBar);
         meterValue = view.findViewById(R.id.fragment_side_panel_progress_meter_value);
         containerImage = view.findViewById(R.id.backgroundImage);
-        siteMeterCalculation();
+        //siteMeterCalculation();
 
         String category_code = session.getFP_AppExperienceCode();
 

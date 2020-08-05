@@ -35,16 +35,16 @@ import retrofit.converter.GsonConverter;
 
 
 public class Constants {
-    public static final String boostx_script = "<script type=\"text/javascript\" "+
-                                            " data-nf-clientId=\"8DB87D953727422DA36B4977BD12E37A92EEB23119DC4152AAEB6B22BDB578EF\" " +
-                                            " data-nf-fpTag=\"[[FPTAG]]\" " +
-                                            " src=\"//ext.boost360.app/nf-widget.js\"" +
-                                            " backgroundColor=\"#eaeaea\" " +
-                                            " secondaryColor=\"#2f2f2f\" " +
-                                            " activeColor=\"#FF5722\" " +
-                                            " buttonBackgroundColor=\"#ffd55a\" "+
-                                            " buttonTextColor=\"#790000\">" +
-                                            " </script> ";
+    public static final String boostx_script = "<script type=\"text/javascript\" " +
+            " data-nf-clientId=\"8DB87D953727422DA36B4977BD12E37A92EEB23119DC4152AAEB6B22BDB578EF\" " +
+            " data-nf-fpTag=\"[[FPTAG]]\" " +
+            " src=\"//ext.boost360.app/nf-widget.js\"" +
+            " backgroundColor=\"#eaeaea\" " +
+            " secondaryColor=\"#2f2f2f\" " +
+            " activeColor=\"#FF5722\" " +
+            " buttonBackgroundColor=\"#ffd55a\" " +
+            " buttonTextColor=\"#790000\">" +
+            " </script> ";
 
     public static final boolean APK_MODE_RELEASE = true;
     public static final String APP_TAG = "Boost App";
@@ -118,7 +118,7 @@ public class Constants {
     //public final static String NOW_FLOATS_API_URL		=	"http://api.nowfloatsdev.com";
     public final static String NOW_FLOATS_API_URL = "https://api2.withfloats.com";
     public final static String NOW_FLOATS_API_URL_SALESMAN = "http://52.66.59.196";
-    //    public final static String NOW_FLOATS_API_URL = "https://api.withfloats.com";
+    public final static String WITH_FLOATS_API_URL = "https://api.withfloats.com/";
     public final static String NOW_FLOATS_API_URL_V2 = "https://api2.withfloats.com";
     public final static String TEST_API_URL = "http://api.nowfloatsdev.com";
     public final static String CREATE_MESSAGE_URL = "http://api.nowfloatsdev.com/akash";
@@ -160,6 +160,7 @@ public class Constants {
     //    public static RestAdapter restAdapter = null;
     public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter restAdapterV2 = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL_V2)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("gggv2")).build();
+    public static final RestAdapter restAdapterWithFloat = new RestAdapter.Builder().setEndpoint(Constants.WITH_FLOATS_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("with float")).build();
     public static final RestAdapter restAdapterSalesman = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL_SALESMAN)/*.setClient(getClient())*//*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
     public static final RestAdapter movingFloatsDevAdapter = new RestAdapter.Builder().setEndpoint("http://movingfloats_nds.nowfloatsdev.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter movingFloatsDev2Adapter = new RestAdapter.Builder().setEndpoint("http://withfloatsapi2-dev.ap-south-1.elasticbeanstalk.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
@@ -448,24 +449,20 @@ public class Constants {
         }
     }
 
-    public enum PaymentAndDeliveryMode
-    {
+    public enum PaymentAndDeliveryMode {
         ASSURED_PURCHASE("AssuredPurchase"), MY_PAYMENT_GATEWAY("MyPaymentGateWay"), UNIQUE_PAYMENT_URL("UniquePaymentUrl"), DONT_WANT_TO_SELL("None");
 
         private String value;
 
-        PaymentAndDeliveryMode(String value)
-        {
+        PaymentAndDeliveryMode(String value) {
             this.value = value;
         }
 
-        public String getValue()
-        {
+        public String getValue() {
             return this.value;
         }
 
-        public void setValue(String value)
-        {
+        public void setValue(String value) {
             this.value = value;
         }
     }
