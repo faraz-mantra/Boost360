@@ -59,10 +59,11 @@ fun Context.openWebPage(url: String): Boolean {
 }
 
 fun Context.copyClipBoard(selectedText: String): Boolean {
-  val clipboard: ClipboardManager? = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
-  val clip = ClipData.newPlainText("label", selectedText)
-  if (clipboard == null || clip == null) return false
-  clipboard.primaryClip = clip
+  var clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+  var clip = ClipData.newPlainText("label", selectedText)
+  if (clipboard == null || clip == null)
+    return false
+  clipboard.setPrimaryClip(clip)
   return true
 }
 

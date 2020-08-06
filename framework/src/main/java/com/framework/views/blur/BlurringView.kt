@@ -42,7 +42,7 @@ open class BlurringView @JvmOverloads constructor(context: Context, attrs: Attri
                 canvas.save()
                 canvas.translate(mBlurredView!!.x - x, mBlurredView!!.y - y)
                 canvas.scale(mDownsampleFactor.toFloat(), mDownsampleFactor.toFloat())
-                canvas.drawBitmap(mBlurredBitmap, 0f, 0f, null)
+                canvas.drawBitmap(mBlurredBitmap!!, 0f, 0f, null)
                 canvas.restore()
             }
             canvas.drawColor(mOverlayColor)
@@ -96,7 +96,7 @@ open class BlurringView @JvmOverloads constructor(context: Context, attrs: Attri
                     return false
                 }
             }
-            mBlurringCanvas = Canvas(mBitmapToBlur)
+            mBlurringCanvas = Canvas(mBitmapToBlur!!)
             mBlurringCanvas!!.scale(1f / mDownsampleFactor, 1f / mDownsampleFactor)
             mBlurInput = Allocation.createFromBitmap(mRenderScript, mBitmapToBlur,
                     Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT)

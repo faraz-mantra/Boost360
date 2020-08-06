@@ -51,11 +51,12 @@ object Utility {
         var cursor: Cursor? = null
         return try {
             val proj = arrayOf(MediaStore.Images.Media.DATA)
-            cursor = context.contentResolver.query(contentUri, proj, null, null, null)
+            cursor = context.contentResolver.query(contentUri!!, proj, null, null, null)
             assert(cursor != null)
-            val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            cursor.moveToFirst()
-            cursor.getString(column_index)
+
+            val column_index = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor!!.moveToFirst()
+            cursor!!.getString(column_index)
         } finally {
             cursor?.close()
         }
