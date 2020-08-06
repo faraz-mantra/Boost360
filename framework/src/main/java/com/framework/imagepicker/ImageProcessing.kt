@@ -16,10 +16,12 @@ internal object ImageProcessing {
     fun processMultiImage(context: Context?, data: Intent): List<String?> {
         val listOfImgs: MutableList<String?> = ArrayList()
         val clipdata = data.clipData
-        for (i in 0 until clipdata.itemCount) {
-            val selectedImage = clipdata.getItemAt(i).uri
-            val selectedImagePath = FileProcessing.getPath(context!!, selectedImage)
-            listOfImgs.add(selectedImagePath)
+        if(clipdata != null) {
+            for (i in 0 until clipdata.itemCount) {
+                val selectedImage = clipdata.getItemAt(i).uri
+                val selectedImagePath = FileProcessing.getPath(context!!, selectedImage)
+                listOfImgs.add(selectedImagePath)
+            }
         }
         return listOfImgs
     }

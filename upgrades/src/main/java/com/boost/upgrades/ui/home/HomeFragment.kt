@@ -276,7 +276,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
     var code: String = (activity as UpgradeActivity).experienceCode!!
     if (!code.equals("null", true)) {
-      viewModel.setCurrentExperienceCode(code, fpTag)
+      viewModel.setCurrentExperienceCode(code, fpTag!!)
     }
 
     viewModel.loadUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
