@@ -44,7 +44,7 @@ public class SimpleImageTextListAdapter extends RecyclerView.Adapter<SimpleImage
                 || myTextStrings[position].equals("Testimonials") && !Constants.StoreWidgets.contains("TESTIMONIALS")
                 || myTextStrings[position].equals("Projects & Teams") && !Constants.StoreWidgets.contains("PROJECTTEAM")
                 || myTextStrings[position].equals("Places to look around") && !Constants.StoreWidgets.contains("PLACES-TO-LOOK-AROUND")
-                || myTextStrings[position].equals("Trip Advisors") && !Constants.StoreWidgets.contains("TRIPADVISOR-REVIEWS")
+                || myTextStrings[position].equals("Tripadvisor Ratings") && !Constants.StoreWidgets.contains("TRIPADVISOR-REVIEWS")
                 /*|| myTextStrings[position].equals("Seasonal Offers") && !Constants.StoreWidgets.contains("OFFERS")*/ //this is free widget
         ) {
             holder.featureLock.setVisibility(View.VISIBLE);
