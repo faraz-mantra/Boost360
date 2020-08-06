@@ -72,6 +72,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
   private var isEdit: Boolean = false
   private var request: PaymentKycRequest? = null
   private var dataKyc: DataKyc? = null
+  private var isInstaMojoAccount: Boolean? = null
 
   companion object {
     @JvmStatic
@@ -94,6 +95,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     super.onCreateView()
     session = arguments?.getSerializable(IntentConstant.SESSION_DATA.name) as? SessionData
     isEdit = arguments?.getBoolean(IntentConstant.IS_EDIT.name) ?: false
+    isInstaMojoAccount = arguments?.getBoolean("isInstaMojoAccount")
     if (isEdit) {
       getKycDetails()
     } else getUserDetails()
@@ -350,17 +352,24 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         }
       }
     }
+    val hasexisistinginstamojoaccount = if (isEdit) {
+      dataKyc?.hasexisistinginstamojoaccount
+    } else if (isInstaMojoAccount != null) {
+      if (isInstaMojoAccount == true) DataKyc.HasInginstaMojo.YES.name else DataKyc.HasInginstaMojo.NO.name
+    } else {
+      if (session?.isPaymentGateway == true) DataKyc.HasInginstaMojo.PAID.name else DataKyc.HasInginstaMojo.UNPAID.name
+    }
     request = if (binding?.addDifferent?.isChecked == true) {
       val action = ActionDataKyc(panNumber = panNumber, nameOfPanHolder = panName, bankAccountNumber = accountNumber,
           nameOfBankAccountHolder = nameAccount, nameOfBank = bankName, ifsc = ifsc, bankBranchName = bankBranch,
-          hasexisistinginstamojoaccount = dataKyc?.hasexisistinginstamojoaccount ?: "true", instamojoEmail = dataKyc?.instamojoEmail ?: "",
-          instamojoPassword = dataKyc?.instamojoPassword ?: "", fpTag = session?.fpTag, isVerified = dataKyc?.isVerified ?: "no")
+          hasexisistinginstamojoaccount = hasexisistinginstamojoaccount, instamojoEmail = dataKyc?.instamojoEmail ?: "",
+          instamojoPassword = dataKyc?.instamojoPassword ?: "", fpTag = session?.fpTag, isVerified = dataKyc?.isVerified ?: DataKyc.Verify.NO.name)
       PaymentKycRequest(actionData = action, websiteId = session?.websiteId)
     } else {
       val action = ActionDataKyc(panNumber = panNumber, nameOfPanHolder = panName, bankAccountNumber = bankDetail?.accountNumber,
           nameOfBankAccountHolder = bankDetail?.accountName, nameOfBank = bankDetail?.bankName, ifsc = bankDetail?.iFSC,
-          bankBranchName = bankDetail?.bankBranch, hasexisistinginstamojoaccount = dataKyc?.hasexisistinginstamojoaccount ?: "true",
-          instamojoEmail = dataKyc?.instamojoEmail ?: "", instamojoPassword = dataKyc?.instamojoPassword ?: "", fpTag = session?.fpTag, isVerified = dataKyc?.isVerified ?: "no")
+          bankBranchName = bankDetail?.bankBranch, hasexisistinginstamojoaccount = hasexisistinginstamojoaccount,
+          instamojoEmail = dataKyc?.instamojoEmail ?: "", instamojoPassword = dataKyc?.instamojoPassword ?: "", fpTag = session?.fpTag, isVerified = dataKyc?.isVerified ?: DataKyc.Verify.NO.name)
       PaymentKycRequest(actionData = action, websiteId = session?.websiteId)
     }
     return true

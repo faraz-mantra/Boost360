@@ -126,8 +126,11 @@
   <string name="pdf">PDF</string>
   <string name="kyc_not_done">KYC Not done!</string>
   <string name="start_your_kyc">Start your KYC</string>
+  <string name="update_your_kyc">Update your KYC</string>
   <string name="start_branded_payment_desc">To start using your \'Branded custom payment gateway\' on your Boost website, we\'ll need to verify your business details along with a bank account (if not provided already) using your business PAN card and 1-month bank statement respectively.</string>
   <string name="view_details">View Details</string>
   <string name="business_kyc_verification_underway">Business KYC\nVerification Underway...</string>
+  <string name="business_kyc_verify">Business KYC verify</string>
   <string name="submit_verification">Submit for verification</string>
+  <string name="business_kyc_verification_underway_n">Business KYC Verification Underway</string>
 </resources>

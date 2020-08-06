@@ -30,6 +30,7 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
 
   private var session: SessionData? = null
   private var saveKycData: PaymentKycRequest? = null
+  private var menuEdit: MenuItem? = null
 
   companion object {
     @JvmStatic
@@ -77,11 +78,18 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
   }
 
   private fun setData(dataKyc: DataKyc) {
+    if (dataKyc.isVerified == DataKyc.Verify.ALLOW_EDIT.name) menuEdit?.isVisible = true
     dataKyc.panCardDocument?.let { activity?.glideLoad(binding?.ivPanCardImage!!, it, R.drawable.placeholder_image) }
     binding?.tvPanNumber?.text = dataKyc.panNumber
     binding?.tvPanName?.text = dataKyc.nameOfPanHolder
     binding?.tvBankAccNumber?.text = "A/C No. ${dataKyc.bankAccountNumber}"
     binding?.tvBankBranchDetails?.text = "${dataKyc.nameOfBank} - ${dataKyc.bankBranchName}"
+    if (dataKyc.isVerified == DataKyc.Verify.YES.name) {
+      binding?.txtVerification?.text = resources.getString(R.string.business_kyc_verify)
+      binding?.txtDescKyc?.gone()
+      binding?.btnKycStatusRefresh?.gone()
+
+    }
   }
 
   private fun getQuery(): String? {
@@ -133,6 +141,8 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_edit, menu)
+    menuEdit = menu.findItem(R.id.menu_edit)
+    menuEdit?.isVisible = false
   }
 
 

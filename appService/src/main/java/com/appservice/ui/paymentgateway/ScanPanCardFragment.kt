@@ -2,6 +2,7 @@ package com.appservice.ui.paymentgateway
 
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -56,6 +57,7 @@ class ScanPanCardFragment : AppBaseFragment<FragmentScanPanCardBinding, BaseView
     camera = binding?.panCardScanCameraView
     camera?.setLifecycleOwner(this)
     camera?.addCameraListener(object : CameraListener() {
+      @SuppressLint("WrongThread")
       override fun onPictureTaken(result: PictureResult) {
         super.onPictureTaken(result)
         val cacheDir: File? = context?.cacheDir

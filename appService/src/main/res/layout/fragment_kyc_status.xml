@@ -158,7 +158,8 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_20"
-          android:text="Business KYC Verification Underway"
+          android:id="@+id/txt_verification"
+          android:text="@string/business_kyc_verification_underway_n"
           android:textColor="@color/greyish_brown"
           app:fontFamily="@font/regular"
           app:textType="HEADING_6" />
@@ -169,6 +170,7 @@
           android:layout_marginTop="@dimen/size_10"
           android:fontFamily="@font/regular"
           android:gravity="center"
+          android:id="@+id/txt_desc_kyc"
           android:text="@string/verification_underway_details"
           android:textColor="@color/warm_grey"
           app:textType="CAPTION" />

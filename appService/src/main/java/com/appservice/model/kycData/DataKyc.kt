@@ -2,6 +2,7 @@ package com.appservice.model.kycData
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class DataKyc(
     @SerializedName("ActionId")
@@ -48,4 +49,13 @@ data class DataKyc(
     var userId: String? = null,
     @SerializedName("WebsiteId")
     var websiteId: String? = null
-)
+) : Serializable {
+
+  enum class HasInginstaMojo {
+    YES, NO, UNPAID, PAID
+  }
+
+  enum class Verify {
+    YES, NO, ALLOW_EDIT
+  }
+}

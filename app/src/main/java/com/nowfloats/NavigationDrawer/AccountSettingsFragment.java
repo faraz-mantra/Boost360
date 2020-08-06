@@ -136,13 +136,11 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         break;
                     case "Self Branded Payment Gateway":
                         Bundle b = getBundleDataKyc();
-                        if (sessionManager.isSelfBrandedKycAdd()) b.putBoolean(com.appservice.constant.IntentConstant.IS_SELF_BRANDED_KYC_ADDED.name(), true);
                         startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), com.appservice.constant.FragmentType.PAYMENT_GATEWAY, b, false);
                         break;
                     case "KYC Verification":
                         Bundle b1 = getBundleDataKyc();
                         if (sessionManager.isSelfBrandedKycAdd()) {
-                            b1.putBoolean(com.appservice.constant.IntentConstant.IS_SELF_BRANDED_KYC_ADDED.name(), true);
                             startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), com.appservice.constant.FragmentType.KYC_STATUS, b1, false);
                         } else startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), FragmentType.BUSINESS_KYC_VIEW, b1, false);
                         break;
@@ -200,11 +198,10 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         session.setFpLogo(sessionManager.getFPLogo());
         session.setFpEmail(sessionManager.getFPEmail());
         session.setFpNumber(sessionManager.getFPPrimaryContactNumber());
+        session.setSelfBrandedAdd(sessionManager.isSelfBrandedKycAdd());
+        session.setPaymentGateway(Constants.StoreWidgets.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name()));
         Bundle bundle = new Bundle();
         bundle.putSerializable(com.appservice.constant.IntentConstant.SESSION_DATA.name(), session);
-        if (Constants.StoreWidgets.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name())) {
-            bundle.putBoolean(com.appservice.constant.IntentConstant.CUSTOM_PAYMENT_GATEWAY.name(), true);
-        } else bundle.putBoolean(com.appservice.constant.IntentConstant.CUSTOM_PAYMENT_GATEWAY.name(), false);
         return bundle;
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.airbnb.lottie.LottieDrawable
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -13,17 +14,25 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentPaymentActiveBinding
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
+import com.appservice.model.kycData.DataKyc
+import com.appservice.model.kycData.PaymentKycDataResponse
+import com.appservice.model.paymentKyc.update.KycSet
+import com.appservice.model.paymentKyc.update.UpdateKycValue
+import com.appservice.model.paymentKyc.update.UpdatePaymentKycRequest
 import com.appservice.ui.bankaccount.WhyBottomSheet
+import com.appservice.viewmodel.WebBoostKitViewModel
+import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.models.BaseViewModel
+import org.json.JSONObject
+import java.util.*
 
-class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, BaseViewModel>() {
+class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, WebBoostKitViewModel>() {
 
   private var isInstaMojoAccount: Boolean = false
-  private var session: SessionData? = null
-  private var isPaymentGateway: Boolean = false
-  private var isSelfBrandedAdd: Boolean = false
+  private lateinit var session: SessionData
+  private var dataKyc: DataKyc? = null
 
   companion object {
     @JvmStatic
@@ -37,24 +46,20 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Bas
   override fun onCreateView() {
     super.onCreateView()
     session = arguments?.getSerializable(IntentConstant.SESSION_DATA.name) as? SessionData ?: return
-    isPaymentGateway = arguments?.getBoolean(IntentConstant.CUSTOM_PAYMENT_GATEWAY.name) ?: false
-    isSelfBrandedAdd = arguments?.getBoolean(IntentConstant.IS_SELF_BRANDED_KYC_ADDED.name) ?: false
-    setOnClickListener(binding?.paymentGatewayTermsToggle, binding?.activePaymentBottomButton, binding?.btnViewStore, binding?.selfBrandedKycAddView)
+    isInstaMojoAccount = arguments?.getBoolean("isInstaMojoAccount") ?: false
+    setOnClickListener(binding?.paymentGatewayTermsToggle, binding?.activePaymentBottomButton, binding?.btnViewStore, binding?.btnViewDetails)
     radioButtonToggle()
-    changeUi()
+    checkData()
   }
 
-  private fun changeUi() {
-    binding?.viewBac?.setBackgroundColor(ContextCompat.getColor(baseActivity, if (isPaymentGateway) R.color.colorPrimary else R.color.color_primary))
-    if (isPaymentGateway) (baseActivity as? PaymentGatewayContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
+  private fun checkData() {
+    binding?.viewBac?.setBackgroundColor(ContextCompat.getColor(baseActivity, if (session.isPaymentGateway) R.color.colorPrimary else R.color.color_primary))
+    if (session.isPaymentGateway) (baseActivity as? PaymentGatewayContainerActivity)?.changeTheme(R.color.colorPrimary, R.color.colorPrimaryDark)
     else (baseActivity as? PaymentGatewayContainerActivity)?.changeTheme(R.color.color_primary, R.color.color_primary_dark)
 
-    if (isPaymentGateway && isSelfBrandedAdd) {
-      binding?.selfBrandedKycAddView?.visible()
-      binding?.paymentGatewayActivation?.gone()
-      binding?.addOnNotActive?.gone()
-      initLottieAnimation()
-    } else if (isPaymentGateway && isSelfBrandedAdd.not()) {
+    if (session.isPaymentGateway && session.isSelfBrandedAdd) {
+      checkInstaMojo()
+    } else if (session.isPaymentGateway && session.isSelfBrandedAdd.not()) {
       binding?.selfBrandedKycAddView?.gone()
       binding?.paymentGatewayActivation?.visible()
       binding?.addOnNotActive?.gone()
@@ -63,7 +68,40 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Bas
       binding?.paymentGatewayActivation?.gone()
       binding?.addOnNotActive?.visible()
     }
+  }
 
+  private fun changeUi(verified: String) {
+    if (verified.toUpperCase(Locale.ROOT) == DataKyc.Verify.YES.name) binding?.verifyTxt?.text = resources.getString(R.string.business_kyc_verify)
+    binding?.selfBrandedKycAddView?.visible()
+    binding?.paymentGatewayActivation?.gone()
+    binding?.addOnNotActive?.gone()
+    initLottieAnimation()
+  }
+
+  private fun checkInstaMojo() {
+    showProgress()
+    viewModel?.getKycData(session.auth_1, getQuery())?.observeOnce(viewLifecycleOwner, Observer {
+      if ((it.error is NoNetworkException).not()) {
+        val resp = it as? PaymentKycDataResponse
+        if ((it.status == 200 || it.status == 201 || it.status == 202) && resp?.data.isNullOrEmpty().not()) {
+          dataKyc = resp?.data?.get(0)
+          if ((dataKyc?.hasexisistinginstamojoaccount?.toUpperCase(Locale.ROOT) == DataKyc.HasInginstaMojo.YES.name ||
+                  dataKyc?.hasexisistinginstamojoaccount?.toUpperCase(Locale.ROOT) == DataKyc.HasInginstaMojo.NO.name).not()) {
+            binding?.selfBrandedKycAddView?.gone()
+            binding?.paymentGatewayActivation?.visible()
+            binding?.addOnNotActive?.gone()
+            binding?.activePaymentBottomButton?.text = resources.getString(R.string.update_your_kyc)
+          } else changeUi(dataKyc?.isVerified ?: "")
+        } else changeUi("")
+      } else changeUi("")
+      hideProgress()
+    })
+  }
+
+  private fun getQuery(): String? {
+    val json = JSONObject()
+    json.put("fpTag", session.fpTag)
+    return json.toString()
   }
 
   private fun initLottieAnimation() {
@@ -83,8 +121,8 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Bas
     return R.layout.fragment_payment_active
   }
 
-  override fun getViewModelClass(): Class<BaseViewModel> {
-    return BaseViewModel::class.java
+  override fun getViewModelClass(): Class<WebBoostKitViewModel> {
+    return WebBoostKitViewModel::class.java
   }
 
   override fun onClick(v: View) {
@@ -92,15 +130,63 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Bas
     when (v) {
       binding?.paymentGatewayTermsToggle -> bottomSheetWhy()
       binding?.activePaymentBottomButton -> {
-        val bundle = Bundle()
-        bundle.putBoolean("isInstaMojoAccount", isInstaMojoAccount)
-        bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
-        startFragmentPaymentActivity(FragmentType.SCAN_PAN_CARD, bundle)
+        if (binding?.activePaymentBottomButton?.text == resources.getString(R.string.update_your_kyc) && dataKyc != null) {
+          updateKycData()
+        } else {
+          val bundle = Bundle()
+          bundle.putBoolean("isInstaMojoAccount", isInstaMojoAccount)
+          bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
+          startFragmentPaymentActivity(FragmentType.SCAN_PAN_CARD, bundle)
+        }
       }
       binding?.btnViewStore -> startStorePage()
-      binding?.selfBrandedKycAddView -> startDetailPage()
+      binding?.btnViewDetails -> {
+        if (dataKyc?.isVerified != DataKyc.Verify.YES.name) {
+          val bundle = Bundle()
+          bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
+          startFragmentPaymentActivity(FragmentType.KYC_STATUS, bundle)
+        } else startDetailPage()
+      }
     }
   }
+
+  private fun updateKycData() {
+    val updateRequest = getUpdateRequest(dataKyc)
+    showProgress()
+    viewModel?.updateKycData(session.auth_1, updateRequest)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
+      if ((it.error is NoNetworkException).not()) {
+        if (it.status == 200 || it.status == 201 || it.status == 202) {
+          checkInstaMojo()
+        } else showError(resources.getString(R.string.update_kyc_error))
+      } else showError(resources.getString(R.string.internet_connection_not_available))
+    })
+  }
+
+  private fun showError(errorTxt: String) {
+    hideProgress()
+    showLongToast(errorTxt)
+  }
+
+  private fun getUpdateRequest(request: DataKyc?): UpdatePaymentKycRequest {
+    val requestUpdate = UpdatePaymentKycRequest(query = getQueryId(request?.id))
+    val hasInstamojo = if (isInstaMojoAccount) DataKyc.HasInginstaMojo.YES.name else DataKyc.HasInginstaMojo.NO.name
+    val kycSet = KycSet(additionalDocument = request?.additionalDocument, bankAccountNumber = request?.bankAccountNumber,
+        bankAccountStatement = request?.bankAccountStatement, bankBranchName = request?.bankBranchName,
+        hasexisistinginstamojoaccount = hasInstamojo, ifsc = request?.ifsc, instamojoEmail = request?.instamojoEmail,
+        instamojoPassword = request?.instamojoPassword, isArchived = dataKyc?.isArchived, nameOfBank = request?.nameOfBank,
+        nameOfBankAccountHolder = request?.nameOfBankAccountHolder, nameOfPanHolder = request?.nameOfPanHolder, panCardDocument = request?.panCardDocument, panNumber = request?.panNumber)
+    val value = UpdateKycValue(set = kycSet)
+    requestUpdate.setUpdateValueKyc(value)
+    return requestUpdate
+  }
+
+  private fun getQueryId(id: String?): String? {
+    val jsonObject = JSONObject()
+    jsonObject.put("_id", id)
+    return jsonObject.toString()
+  }
+
 
   private fun startDetailPage() {
     val bundle = Bundle()
@@ -127,13 +213,13 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Bas
   fun startStorePage() {
     try {
       val intent = Intent(baseActivity, Class.forName("com.boost.upgrades.UpgradeActivity"))
-      intent.putExtra("expCode", session?.experienceCode)
-      intent.putExtra("fpName", session?.fpTag)
-      intent.putExtra("fpid", session?.fpId)
-      intent.putExtra("loginid", session?.userProfileId)
-      intent.putExtra("email", session?.fpEmail ?: "ria@nowfloats.com")
-      intent.putExtra("mobileNo", session?.fpNumber ?: "9160004303")
-      intent.putExtra("profileUrl", session?.fpLogo)
+      intent.putExtra("expCode", session.experienceCode)
+      intent.putExtra("fpName", session.fpTag)
+      intent.putExtra("fpid", session.fpId)
+      intent.putExtra("loginid", session.userProfileId)
+      intent.putExtra("email", session.fpEmail ?: "ria@nowfloats.com")
+      intent.putExtra("mobileNo", session.fpNumber ?: "9160004303")
+      intent.putExtra("profileUrl", session.fpLogo)
       intent.putExtra("buyItemKey", StatusKyc.CUSTOM_PAYMENTGATEWAY.name)
       baseActivity.startActivity(intent)
     } catch (e: Exception) {
