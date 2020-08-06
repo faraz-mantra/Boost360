@@ -325,6 +325,7 @@
           android:layout_marginBottom="@dimen/size_20"
           android:fontFamily="@font/regular"
           android:gravity="center"
+          android:id="@+id/verify_txt"
           android:text="@string/business_kyc_verification_underway"
           android:textColor="@color/warm_grey"
           app:textType="HEADING_4" />
