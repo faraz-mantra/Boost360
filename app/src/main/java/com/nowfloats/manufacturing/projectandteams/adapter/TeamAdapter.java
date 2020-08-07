@@ -2,6 +2,7 @@ package com.nowfloats.manufacturing.projectandteams.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.nowfloats.manufacturing.API.model.GetTeams.Data;
 
 import com.nowfloats.manufacturing.projectandteams.Interfaces.TeamsActivityListener;
-import com.nowfloats.manufacturing.projectandteams.ui.webview.WebViewActivity;
+import com.nowfloats.manufacturing.webview.WebViewActivity;
 import com.thinksity.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -109,12 +110,19 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
         holder.facebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!itemList.get(position).getFbURL().getUrl().isEmpty()) {
-                    Intent intent = new Intent(context, WebViewActivity.class);
-                    intent.putExtra("url", itemList.get(position).getFbURL().getUrl());
-                    context.startActivity(intent);
-                }else{
-                    Toast.makeText(context,"Facebook URL is Empty!!", Toast.LENGTH_LONG).show();
+                if (!itemList.get(position).getFbURL().getUrl().isEmpty()) {
+//                    Intent intent = new Intent(context, WebViewActivity.class);
+//                    intent.putExtra("url", itemList.get(position).getFbURL().getUrl());
+//                    context.startActivity(intent);
+                    try {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(itemList.get(position).getFbURL().getUrl()));
+                        context.startActivity(browserIntent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "Invalid Link Provided.", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(context, "Facebook URL is Empty!!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -122,12 +130,19 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
         holder.twitterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!itemList.get(position).getTwitterURL().getUrl().isEmpty()) {
-                    Intent intent = new Intent(context, WebViewActivity.class);
-                    intent.putExtra("url", itemList.get(position).getTwitterURL().getUrl());
-                    context.startActivity(intent);
-                }else{
-                    Toast.makeText(context,"Twitter URL is Empty!!", Toast.LENGTH_LONG).show();
+                if (!itemList.get(position).getTwitterURL().getUrl().isEmpty()) {
+//                    Intent intent = new Intent(context, WebViewActivity.class);
+//                    intent.putExtra("url", itemList.get(position).getTwitterURL().getUrl());
+//                    context.startActivity(intent);
+                    try {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(itemList.get(position).getTwitterURL().getUrl()));
+                        context.startActivity(browserIntent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "Invalid Link Provided.", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(context, "Twitter URL is Empty!!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -135,12 +150,19 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
         holder.skypeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!itemList.get(position).getSkypeHandle().getUrl().isEmpty()) {
-                    Intent intent = new Intent(context, WebViewActivity.class);
-                    intent.putExtra("url", itemList.get(position).getSkypeHandle().getUrl());
-                    context.startActivity(intent);
-                }else{
-                    Toast.makeText(context,"Skype URL is Empty!!", Toast.LENGTH_LONG).show();
+                if (!itemList.get(position).getSkypeHandle().getUrl().isEmpty()) {
+//                    Intent intent = new Intent(context, WebViewActivity.class);
+//                    intent.putExtra("url", itemList.get(position).getSkypeHandle().getUrl());
+//                    context.startActivity(intent);
+                    try {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(itemList.get(position).getSkypeHandle().getUrl()));
+                        context.startActivity(browserIntent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "Invalid Link Provided.", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(context, "Skype URL is Empty!!", Toast.LENGTH_LONG).show();
                 }
             }
         });

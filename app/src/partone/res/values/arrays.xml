@@ -42,6 +42,7 @@
         <item>@drawable/trip_advisor</item>
         <item>@drawable/ic_seasonal_offers</item>
         <item>@drawable/ic_project_teams</item>
+        <item>@drawable/ic_digital_brochures</item>
 <!--        <item>@drawable/ic_testimonial</item>-->
     </array>
 
