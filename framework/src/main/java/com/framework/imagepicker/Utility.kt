@@ -47,16 +47,14 @@ object Utility {
         }
     }
 
-    fun getRealPathFromURI(context: Context, contentUri: Uri?): String {
+    fun getRealPathFromURI(context: Context, contentUri: Uri): String {
         var cursor: Cursor? = null
         return try {
             val proj = arrayOf(MediaStore.Images.Media.DATA)
-            cursor = context.contentResolver.query(contentUri!!, proj, null, null, null)
-            assert(cursor != null)
-
-            val column_index = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            cursor!!.moveToFirst()
-            cursor!!.getString(column_index)
+            cursor = context.contentResolver.query(contentUri, proj, null, null, null)
+            val column_index = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor?.moveToFirst()
+            column_index?.let { cursor?.getString(it) } ?:""
         } finally {
             cursor?.close()
         }
