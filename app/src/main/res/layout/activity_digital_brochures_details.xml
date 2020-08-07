@@ -28,19 +28,15 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:text="Name" />
+                android:text="Brochure Name" />
 
             <EditText
-                android:id="@+id/user_name"
+                android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:background="@drawable/edittext_bg_elevated"
+                style="@style/EditTextCustomeStyle"
                 android:elevation="@dimen/_2sdp"
-                android:hint="Enter Name"
-                android:textSize="@dimen/_12sdp" />
+                android:hint="Enter Name" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,20 +44,16 @@
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:text="Brochure Designation" />
+                android:text="Basic Info" />
 
             <EditText
-                android:id="@+id/designation_value"
+                android:id="@+id/description"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:background="@drawable/edittext_bg_elevated"
+                android:layout_height="wrap_content"
+                style="@style/EditTextCustomeStyle"
                 android:elevation="@dimen/_2sdp"
                 android:gravity="top"
-                android:hint="Enter Description"
-                android:textSize="@dimen/_12sdp" />
+                android:hint="Enter Description" />
 
             <View
                 android:layout_width="match_parent"
@@ -86,17 +78,13 @@
                 tools:visibility="visible">
 
                 <EditText
-                    android:id="@+id/review_description"
+                    android:id="@+id/attached_url"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_100sdp"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    android:background="@drawable/edittext_bg_elevated"
+                    style="@style/EditTextCustomeStyle"
                     android:elevation="@dimen/_2sdp"
                     android:gravity="top"
-                    android:hint="Enter Brochure URL link"
-                    android:textSize="@dimen/_12sdp" />
+                    android:hint="Enter Brochure URL link" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -111,6 +99,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/upload_image_button"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_80sdp"
                     android:layout_marginStart="@dimen/_15sdp"
@@ -137,6 +126,7 @@
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/file_selected_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
@@ -146,7 +136,8 @@
                 android:gravity="center_vertical"
                 android:padding="@dimen/_5sdp"
                 android:elevation="@dimen/_2sdp"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -157,17 +148,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="UPLOAD FILE"
+                    android:text="Brochure.pdf"
                     android:textColor="@color/common_text_color"
                     android:textSize="@dimen/_12sdp" />
                 <LinearLayout
+                    android:id="@+id/remove_pdf"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:background="@drawable/all_side_curve_bg"
                     android:padding="@dimen/_8sdp"
                     android:gravity="center"
-                    android:elevation="@dimen/_5sdp"
-                    android:layout_margin="@dimen/_2sdp">
+                    android:elevation="@dimen/_2sdp"
+                    android:layout_margin="@dimen/_5sdp">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
