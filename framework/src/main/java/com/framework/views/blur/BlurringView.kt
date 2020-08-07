@@ -42,7 +42,7 @@ open class BlurringView @JvmOverloads constructor(context: Context, attrs: Attri
                 canvas.save()
                 canvas.translate(mBlurredView!!.x - x, mBlurredView!!.y - y)
                 canvas.scale(mDownsampleFactor.toFloat(), mDownsampleFactor.toFloat())
-                canvas.drawBitmap(mBlurredBitmap!!, 0f, 0f, null)
+                mBlurredBitmap?.let { canvas.drawBitmap(it, 0f, 0f, null) }
                 canvas.restore()
             }
             canvas.drawColor(mOverlayColor)
@@ -71,8 +71,8 @@ open class BlurringView @JvmOverloads constructor(context: Context, attrs: Attri
     }
 
     fun prepare(): Boolean {
-        val width = mBlurredView!!.width
-        val height = mBlurredView!!.height
+        val width = mBlurredView?.width?:0
+        val height = mBlurredView?.height?:0
         if (mBlurringCanvas == null || mDownsampleFactorChanged
                 || mBlurredViewWidth != width || mBlurredViewHeight != height) {
             mDownsampleFactorChanged = false
@@ -96,8 +96,8 @@ open class BlurringView @JvmOverloads constructor(context: Context, attrs: Attri
                     return false
                 }
             }
-            mBlurringCanvas = Canvas(mBitmapToBlur!!)
-            mBlurringCanvas!!.scale(1f / mDownsampleFactor, 1f / mDownsampleFactor)
+            mBlurringCanvas = mBitmapToBlur?.let { Canvas(it) }
+            mBlurringCanvas?.scale(1f / mDownsampleFactor, 1f / mDownsampleFactor)
             mBlurInput = Allocation.createFromBitmap(mRenderScript, mBitmapToBlur,
                     Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_SCRIPT)
             mBlurOutput = Allocation.createTyped(mRenderScript, this.mBlurInput?.type)

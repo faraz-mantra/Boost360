@@ -73,7 +73,7 @@ class BlockingBlurController(@param:NonNull val blurView: View, @param:NonNull p
         }
         blurView.setWillNotDraw(false)
         allocateBitmap(measuredWidth, measuredHeight)
-        internalCanvas = Canvas(internalBitmap!!)
+        internalCanvas = internalBitmap?.let { Canvas(it) }
         initialized = true
         if (hasFixedTransformationMatrix) {
             setupInternalCanvasMatrix()
@@ -89,17 +89,17 @@ class BlockingBlurController(@param:NonNull val blurView: View, @param:NonNull p
             return
         }
         if (frameClearDrawable == null) {
-            internalBitmap!!.eraseColor(Color.TRANSPARENT)
+            internalBitmap?.eraseColor(Color.TRANSPARENT)
         } else {
-            frameClearDrawable!!.draw(internalCanvas!!)
+            internalCanvas?.let { frameClearDrawable?.draw(it) }
         }
         if (hasFixedTransformationMatrix) {
             rootView.draw(internalCanvas)
         } else {
-            internalCanvas!!.save()
+            internalCanvas?.save()
             setupInternalCanvasMatrix()
             rootView.draw(internalCanvas)
-            internalCanvas!!.restore()
+            internalCanvas?.restore()
         }
         blurAndSave()
     }
@@ -133,7 +133,7 @@ class BlockingBlurController(@param:NonNull val blurView: View, @param:NonNull p
         val scaledHeight = roundSize(nonRoundedScaledHeight)
         roundingHeightScaleFactor = nonRoundedScaledHeight.toFloat() / scaledHeight
         roundingWidthScaleFactor = nonRoundedScaledWidth.toFloat() / scaledWidth
-        internalBitmap = Bitmap.createBitmap(scaledWidth, scaledHeight, blurAlgorithm!!.supportedBitmapConfig!!)
+        internalBitmap = blurAlgorithm?.supportedBitmapConfig?.let { Bitmap.createBitmap(scaledWidth, scaledHeight, it) }
     }
 
     /**
@@ -163,7 +163,7 @@ class BlockingBlurController(@param:NonNull val blurView: View, @param:NonNull p
         updateBlur()
         canvas!!.save()
         canvas.scale(scaleFactor * roundingWidthScaleFactor, scaleFactor * roundingHeightScaleFactor)
-        canvas.drawBitmap(internalBitmap!!, 0f, 0f, paint)
+        internalBitmap?.let { canvas.drawBitmap(it, 0f, 0f, paint) }
         canvas.restore()
         if (overlayColor != TRANSPARENT) {
             canvas.drawColor(overlayColor)
@@ -172,9 +172,9 @@ class BlockingBlurController(@param:NonNull val blurView: View, @param:NonNull p
     }
 
     private fun blurAndSave() {
-        internalBitmap = blurAlgorithm!!.blur(internalBitmap, blurRadius)
-        if (!blurAlgorithm!!.canModifyBitmap()) {
-            internalCanvas!!.setBitmap(internalBitmap)
+        internalBitmap = blurAlgorithm?.blur(internalBitmap, blurRadius)
+        if ((blurAlgorithm?.canModifyBitmap()==true).not()) {
+            internalCanvas?.setBitmap(internalBitmap)
         }
     }
 
