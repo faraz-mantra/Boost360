@@ -120,6 +120,8 @@ public class DigitalBrochuresAdapter extends RecyclerView.Adapter<DigitalBrochur
             }
         });
 
+        holder.dummyView1.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
     }
 
     @Override
@@ -133,6 +135,7 @@ public class DigitalBrochuresAdapter extends RecyclerView.Adapter<DigitalBrochur
         LinearLayout menuOptionLayout;
         ConstraintLayout mainLayout;
         TextView title, description, documentURL, editButton, deleteButton;
+        View dummyView1;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -147,6 +150,8 @@ public class DigitalBrochuresAdapter extends RecyclerView.Adapter<DigitalBrochur
 
             editButton = itemView.findViewById(R.id.edit_button);
             deleteButton = itemView.findViewById(R.id.delete_button);
+
+            dummyView1 = itemView.findViewById(R.id.dummy_view1);
         }
     }
 }

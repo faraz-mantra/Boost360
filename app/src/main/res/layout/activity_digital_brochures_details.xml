@@ -56,6 +56,7 @@
                 android:hint="Enter Description" />
 
             <View
+                android:id="@+id/dummy_view1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_3sdp"
                 android:layout_marginTop="@dimen/_15sdp"
@@ -173,10 +174,10 @@
                 android:id="@+id/save_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginBottom="@dimen/_30sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
                 android:background="@drawable/orange_button_click_effect"
                 android:elevation="@dimen/_2sdp"
                 android:fontFamily="@font/open_sans_semibold"

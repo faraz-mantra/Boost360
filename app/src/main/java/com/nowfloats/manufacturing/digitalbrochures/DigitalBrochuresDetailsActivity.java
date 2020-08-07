@@ -65,6 +65,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
     int SELECT_PDF = 123;
     private final int gallery_req_id = 0;
     private ProgressDialog progressDialog;
+    View dummyView1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,6 +86,10 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
 
         attachBrochureEmptyLayout = findViewById(R.id.attach_brochure_empty_layout);
         fileSelectedLayout = findViewById(R.id.file_selected_layout);
+
+        dummyView1 = findViewById(R.id.dummy_view1);
+
+        dummyView1.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         removePdfButton = findViewById(R.id.remove_pdf);
 
