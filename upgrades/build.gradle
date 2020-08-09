@@ -93,7 +93,7 @@ dependencies {
     //Log
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    //readmore
+    //readmo
 //    implementation 'com.github.devendroid:ReadMoreOption:1.0.2'
 
     //lottie

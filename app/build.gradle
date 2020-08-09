@@ -66,7 +66,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020061
+        versionCode 2020020062
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -138,7 +138,7 @@ android {
             buildConfigField "String", "APXOR_BUNDLED_ID", '"0092e23d-20a6-49b9-82f9-afdc2d4872d3"'
         }
         partone {
-            versionName "5.3.39"
+            versionName "5.3.40"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
@@ -219,7 +219,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.0.1'
     implementation 'com.google.firebase:firebase-database:19.2.0'
 
-    implementation 'uk.co.chrisjenx:calligraphy:2.2.0'
+//    implementation 'uk.co.chrisjenx:calligraphy:2.2.0'
+    implementation 'io.github.inflationx:calligraphy3:3.1.1'
+    implementation 'io.github.inflationx:viewpump:2.0.3'
     implementation 'com.kitsune:anachatsdk:1.18.11@aar'
     implementation 'com.j256.ormlite:ormlite-android:5.0'
     implementation 'com.google.code.gson:gson:2.8.5'

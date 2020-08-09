@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.thinksity.R;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 /**
  * Created by guru on 05-05-2015.
@@ -19,7 +19,7 @@ public class BusinessEnqUpdateDetails extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     @Override
