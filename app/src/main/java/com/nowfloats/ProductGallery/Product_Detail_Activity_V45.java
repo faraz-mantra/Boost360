@@ -98,10 +98,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by guru on 09-06-2015.
@@ -163,7 +163,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     @Override

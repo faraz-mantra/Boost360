@@ -135,7 +135,6 @@ import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.view.View.INVISIBLE;
 
@@ -2473,7 +2472,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     private CustomDialogFragment customDialogFragment;

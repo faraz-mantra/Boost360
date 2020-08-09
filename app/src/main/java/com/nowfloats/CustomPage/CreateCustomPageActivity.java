@@ -57,13 +57,13 @@ import java.util.HashMap;
 import java.util.List;
 
 
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import jp.wasabeef.richeditor.RichEditor;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 /**
@@ -94,7 +94,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     @Override

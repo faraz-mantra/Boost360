@@ -145,10 +145,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
 
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import zendesk.core.AnonymousIdentity;
 import zendesk.core.Identity;
 import zendesk.core.Zendesk;
@@ -225,7 +225,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     private static boolean newer_version_available(String local_version_string, String

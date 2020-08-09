@@ -62,8 +62,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 public class WebSiteAddressActivity extends AppCompatActivity  {
     private Toolbar toolbar;
@@ -283,7 +282,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     private void getEditTextBundle() {

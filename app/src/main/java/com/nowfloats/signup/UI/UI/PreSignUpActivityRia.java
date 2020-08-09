@@ -99,11 +99,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 
 public class PreSignUpActivityRia extends AppCompatActivity implements
         PreSignUpDialog.Dialog_Activity_Interface,
@@ -488,7 +487,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
 //    private void loadCountryCodeandCountryNameMap() {
