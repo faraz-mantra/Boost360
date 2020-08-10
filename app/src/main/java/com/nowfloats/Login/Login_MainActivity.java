@@ -72,8 +72,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import jp.wasabeef.richeditor.RichEditor;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Login_MainActivity extends AppCompatActivity implements API_Login.API_Login_Interface, View.OnClickListener {
     Bus bus;
@@ -335,7 +335,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     @Override

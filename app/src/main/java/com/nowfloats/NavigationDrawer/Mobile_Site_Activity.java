@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 public class Mobile_Site_Activity extends AppCompatActivity {
 
@@ -31,7 +31,7 @@ public class Mobile_Site_Activity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     @Override

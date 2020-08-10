@@ -154,6 +154,26 @@ public class Utils {
         }
     }
 
+    public static String getLatestUpdatesTaxonomyFromServiceCode(String category_code) {
+        switch (category_code) {
+            case "DOC":
+            case "HOS":
+                return "Latest Updates & Health Tips";
+            case "SPA":
+            case "SAL":
+                return "Latest Updates & Offers";
+            case "HOT":
+                return "Latest Updates, News & Events";
+            case "MFG":
+                return "Latest Updates & News";
+            case "CAF":
+            case "EDU":
+                return "Latest Updates & Tips";
+            default:
+                return "Latest Updates";
+        }
+    }
+
     public static String getSingleProductTaxonomyFromServiceCode(String category_code) {
         switch (category_code) {
             case "SVC":

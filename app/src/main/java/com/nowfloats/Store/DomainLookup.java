@@ -26,10 +26,10 @@ import org.honorato.multistatetogglebutton.ToggleButton;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by guru on 05-05-2015.
@@ -41,7 +41,7 @@ public class DomainLookup extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     @Override

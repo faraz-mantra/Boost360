@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
@@ -54,11 +55,28 @@ public class ManageContentFragment extends Fragment {
         if (!isAdded()) return;
 
         UserSessionManager session = new UserSessionManager(getContext(), getActivity());
+        String experience_code = session.getFP_AppExperienceCode();
 
-        final String[] adapterTexts = getResources().getStringArray(R.array.manage_content_tab_items);
+        int content_tabs_resource, image_tabs_resource;
+        switch (experience_code){
+            case "HOT":
+                content_tabs_resource = R.array.manage_content_tab_items_hot;
+                image_tabs_resource = R.array.manage_content_sidepanel_hot;
+                break;
+            case "MFG":
+                content_tabs_resource = R.array.manage_content_tab_items_mfg;
+                image_tabs_resource = R.array.manage_content_sidepanel_mfg;
+                break;
+            default:
+                content_tabs_resource = R.array.manage_content_tab_items;
+                image_tabs_resource = R.array.manage_content_sidepanel;
+                break;
+        }
+        final String[] adapterTexts = getResources().getStringArray(content_tabs_resource);
         adapterTexts[0] = Utils.getProductCatalogTaxonomyFromServiceCode(session.getFP_AppExperienceCode());
+        adapterTexts[1] = Utils.getLatestUpdatesTaxonomyFromServiceCode(session.getFP_AppExperienceCode());
 
-        final TypedArray imagesArray = getResources().obtainTypedArray(R.array.manage_content_sidepanel);
+        final TypedArray imagesArray = getResources().obtainTypedArray(image_tabs_resource);
         int[] adapterImages = new int[adapterTexts.length];
         for (int i = 0; i < adapterTexts.length; i++) {
             adapterImages[i] = imagesArray.getResourceId(i, -1);
@@ -71,6 +89,7 @@ public class ManageContentFragment extends Fragment {
             @Override
             public void onItemClick(int pos) {
                 Intent intent = null;
+
                 switch (pos) {
                     case 0:
                         intent = new Intent(mContext, ProductCatalogActivity.class);
@@ -85,32 +104,38 @@ public class ManageContentFragment extends Fragment {
                         intent = new Intent(mContext, FragmentsFactoryActivity.class);
                         intent.putExtra("fragmentName", "Business_Profile_Fragment_V2");
                         break;
+//                    case 4:
+//                        intent = new Intent(mContext, TestimonialsActivity.class);
+//                        break;
                     case 4:
                         intent = new Intent(mContext, CustomPageActivity.class);
                         break;
                     case 5:
-                        intent = new Intent(mContext, PlacesNearByActivity.class);
+                        if(experience_code.equals("HOT")) {
+                            intent = new Intent(mContext, PlacesNearByActivity.class);
+                        } else if(experience_code.equals("MFG")){
+                            intent = new Intent(mContext, ProjectAndTermsActivity.class);
+                        }
                         break;
                     case 6:
-                        intent = new Intent(mContext, TripAdvisorActivity.class);
+                        if(experience_code.equals("HOT")) {
+                            intent = new Intent(mContext, TripAdvisorActivity.class);
+                        } else if(experience_code.equals("MFG")){
+                            intent = new Intent(mContext, DigitalBrochuresActivity.class);
+                        }
                         break;
                     case 7:
-                        intent = new Intent(mContext, SeasonalOffersActivity.class);
+                        if(experience_code.equals("HOT")) {
+                            intent = new Intent(mContext, SeasonalOffersActivity.class);
+                        }
                         break;
-                    case 8:
-                        intent = new Intent(mContext, ProjectAndTermsActivity.class);
-                        break;
-                    case 9:
-                        intent = new Intent(mContext, DigitalBrochuresActivity.class);
-                        break;
-//                    case 5:
-//                        intent = new Intent(mContext, TestimonialsActivity.class);
-//                        break;
                     default:
                         return;
                 }
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                if(intent != null) {
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
             }
         });
         adapter.setItems(adapterImages, adapterTexts);

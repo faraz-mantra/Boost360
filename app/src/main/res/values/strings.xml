@@ -1755,18 +1755,34 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string-array name="manage_content_tab_items">
         <item>[Catalogue]</item>
-        <item>Latest Updates</item>
+        <item>[Updates]</item>
         <item>All Images</item>
         <item>Business Profile</item>
+<!--        <item>Testimonials</item>-->
+        <item>Custom Pages</item>
+    </string-array>
+    <string-array name="manage_content_tab_items_hot">
+        <item>[Catalogue]</item>
+        <item>[Updates]</item>
+        <item>All Images</item>
+        <item>Business Profile</item>
+<!--        <item>Testimonials</item>-->
         <item>Custom Pages</item>
         <item>Places to look around</item>
-        <item>Trip Advisors</item>
+        <item>Tripadvisor Ratings</item>
         <item>Seasonal Offers</item>
+    </string-array>
+    <string-array name="manage_content_tab_items_mfg">
+        <item>[Catalogue]</item>
+        <item>[Updates]</item>
+        <item>All Images</item>
+        <item>Business Profile</item>
+<!--        <item>Testimonials</item>-->
+        <item>Custom Pages</item>
         <item>Projects &amp; Teams</item>
         <item>Unlimited digital brochures</item>
-        <!--        <item>Testimonials</item>-->
-        <!--        <item>Projects &amp; teams</item>-->
     </string-array>
+
 
     <string-array name="order_analytics_tab_items">
         <item>Order Summary</item>
