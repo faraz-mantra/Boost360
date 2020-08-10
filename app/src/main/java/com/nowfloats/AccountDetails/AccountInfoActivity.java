@@ -23,12 +23,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.http.GET;
 import retrofit.http.QueryMap;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by guru on 06-07-2015.
@@ -41,7 +41,7 @@ public class AccountInfoActivity extends AppCompatActivity {
     Activity activity;
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     @Override

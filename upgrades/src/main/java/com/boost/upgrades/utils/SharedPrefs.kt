@@ -144,7 +144,8 @@ class SharedPrefs(activity: Activity) {
     }
 
     fun getFPEmail(): String{
-        return pref!!.getString(fp_email, "")
+        val email = pref!!.getString(fp_email, "")
+        return email!!
     }
 
 

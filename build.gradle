@@ -47,10 +47,10 @@ subprojects {
 }
 ext {
     // SDK and tools
-    compileSdkVersion = 28
+    compileSdkVersion = 29
     minSdkVersion = 19
-    targetSdkVersion = 28
-    buildToolsVersion = "28.0.3"
+    targetSdkVersion = 29
+    buildToolsVersion = "29.0.2"
 }
 
 task clean(type: Delete) {

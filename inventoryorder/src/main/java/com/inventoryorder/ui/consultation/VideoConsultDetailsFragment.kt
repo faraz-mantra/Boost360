@@ -122,7 +122,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     binding?.tvStatus?.text = order.PaymentDetails?.status()
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
     order.BillingDetails?.let { bill ->
-      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
+      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "₹"
       binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
     binding?.bookingDate?.text = DateUtils.parseDate(order.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))

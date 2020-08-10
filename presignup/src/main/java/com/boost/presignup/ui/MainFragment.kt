@@ -442,13 +442,17 @@ class MainFragment : Fragment() {
     }
 
     fun navToIntroScreen() {
-        root.video_layout.visibility = View.GONE
-        findNavController().navigate(R.id.action_videoPlayerFragment_to_introFragment)
-        root.videoPlayer.suspend()
-        if (::timer.isInitialized) {
-            timer.cancel()
+        try {
+            root.video_layout.visibility = View.GONE
+            findNavController().navigate(R.id.action_videoPlayerFragment_to_introFragment)
+            root.videoPlayer.suspend()
+            if (::timer.isInitialized) {
+                timer.cancel()
+            }
+            videoDuration = 0
+        } catch (e: Exception) {
+            root.video_layout.visibility = View.VISIBLE
         }
-        videoDuration = 0
     }
 
     fun setVideoURL(videoUrl: String, splashImageUrlResource: Int) {

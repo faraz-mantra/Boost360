@@ -63,7 +63,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 
 public class PreSignUp_MainActivity extends FragmentActivity implements LoadCountryData.LoadCountryData_Interface {
     LinearLayout loginTextView;
@@ -196,7 +196,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     @Override

@@ -63,9 +63,7 @@ object FileProcessing {
                     }
                 }
                 val selection = "_id=?"
-                val selectionArgs = arrayOf(
-                        split[1]
-                )
+                val selectionArgs = arrayOf(split[1])
                 return getDataColumn(context, contentUri, selection, selectionArgs)
             }
         } else if ("content".equals(uri.scheme, ignoreCase = true)) {
@@ -92,7 +90,7 @@ object FileProcessing {
         val column = "_data"
         val projection = arrayOf(column)
         try {
-            cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
+            cursor = uri?.let { context.contentResolver.query(it, projection, selection, selectionArgs, null) }
             if (cursor != null && cursor.moveToFirst()) {
                 val columnIndex = cursor.getColumnIndexOrThrow(column)
                 return cursor.getString(columnIndex)
