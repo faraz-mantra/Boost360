@@ -245,6 +245,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Maximum 3"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:textColor="@color/grey_400"
                     android:fontFamily="@font/open_sans"/>
 
@@ -253,6 +254,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Jpg/png (800x800px)"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:gravity="end"
                     android:textColor="@color/grey_400"
                     android:fontFamily="@font/open_sans"/>

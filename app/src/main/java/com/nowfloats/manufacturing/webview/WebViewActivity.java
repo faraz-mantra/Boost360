@@ -1,17 +1,14 @@
-package com.nowfloats.manufacturing.projectandteams.ui.webview;
+package com.nowfloats.manufacturing.webview;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.ImageView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity;
-import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
 public class WebViewActivity extends AppCompatActivity {
@@ -26,6 +23,8 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web_view);
 
         webView = findViewById(R.id.webview);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient());
 
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);

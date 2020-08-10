@@ -62,7 +62,6 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
         recyclerView = findViewById(R.id.recycler);
         adapter = new ProjectAdapter(new ArrayList(), this, this);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         recyclerView.setAdapter(adapter);
 

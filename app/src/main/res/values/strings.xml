@@ -1758,7 +1758,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>[Updates]</item>
         <item>All Images</item>
         <item>Business Profile</item>
-        <item>Testimonials</item>
+<!--        <item>Testimonials</item>-->
         <item>Custom Pages</item>
     </string-array>
     <string-array name="manage_content_tab_items_hot">
@@ -1766,7 +1766,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>[Updates]</item>
         <item>All Images</item>
         <item>Business Profile</item>
-        <item>Testimonials</item>
+<!--        <item>Testimonials</item>-->
         <item>Custom Pages</item>
         <item>Places to look around</item>
         <item>Tripadvisor Ratings</item>
@@ -1777,9 +1777,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>[Updates]</item>
         <item>All Images</item>
         <item>Business Profile</item>
-        <item>Testimonials</item>
+<!--        <item>Testimonials</item>-->
         <item>Custom Pages</item>
         <item>Projects &amp; Teams</item>
+        <item>Unlimited digital brochures</item>
     </string-array>
 
 
