@@ -56,6 +56,7 @@
                 android:layout_height="@dimen/size_180"
                 android:layout_marginTop="@dimen/size_1"
                 android:layout_marginBottom="@dimen/size_1"
+                android:scaleType="centerCrop"
                 android:visibility="gone"
                 app:srcCompat="@color/placeholder_bg" />
 
@@ -68,8 +69,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="@dimen/size_14"
-                android:visibility="gone"
                 android:tint="@color/dodger_blue_two"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_close_round" />
 
               <LinearLayout
@@ -139,7 +140,7 @@
               app:textType="BODY_3" />
 
             <com.framework.views.customViews.CustomTextField
-              android:id="@+id/eTName"
+              android:id="@+id/tv_service_name"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_5"
@@ -163,6 +164,7 @@
               app:textType="BODY_3" />
 
             <com.framework.views.customViews.CustomTextField
+              android:id="@+id/tv_desc"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_5"
@@ -349,201 +351,247 @@
 
               </androidx.constraintlayout.widget.ConstraintLayout>
 
-              <androidx.appcompat.widget.LinearLayoutCompat
+              <LinearLayout
+                android:id="@+id/pay_service_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-
-                android:paddingLeft="@dimen/size_8"
-                android:paddingTop="@dimen/size_10"
-                android:paddingRight="@dimen/size_5"
-                android:paddingBottom="@dimen/size_10">
+                android:orientation="vertical">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="wrap_content"
+                  android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:orientation="vertical">
+                  android:orientation="horizontal"
+                  android:paddingLeft="@dimen/size_8"
+                  android:paddingTop="@dimen/size_10"
+                  android:paddingRight="@dimen/size_5"
+                  android:paddingBottom="@dimen/size_10">
 
-                  <com.framework.views.customViews.CustomTextView
+                  <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Price incl. tax (INR)"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="12sp"
-                    app:fontFamily="@font/light" />
+                    android:orientation="vertical">
 
-                  <com.framework.views.customViews.CustomTextField
-                    android:layout_width="@dimen/size_110"
+                    <com.framework.views.customViews.CustomTextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Price incl. tax (INR)"
+                      android:textColor="@color/black_4a4a4a"
+                      android:textSize="12sp"
+                      app:fontFamily="@font/light" />
+
+                    <com.framework.views.customViews.CustomTextField
+                      android:id="@+id/amount_edt"
+                      android:layout_width="@dimen/size_110"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="@dimen/size_5"
+                      android:background="@drawable/bg_rect_edit_txt"
+                      android:hint="XX,XXX"
+                      android:inputType="number"
+                      android:maxLength="7"
+                      android:padding="@dimen/size_8"
+                      android:singleLine="true"
+                      android:textColor="@color/warm_grey_10"
+                      android:textColorHint="@color/primary_grey"
+                      android:textSize="13sp"
+                      tools:ignore="UnusedAttribute" />
+
+                  </androidx.appcompat.widget.LinearLayoutCompat>
+
+                  <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent" />
+
+                  <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_5"
-                    android:background="@drawable/bg_rect_edit_txt"
-                    android:hint="XX,XXX"
-                    android:inputType="number"
-                    android:padding="@dimen/size_8"
-                    android:singleLine="true"
-                    android:textColor="@color/warm_grey_10"
-                    android:textColorHint="@color/primary_grey"
-                    android:textSize="13sp"
-                    tools:ignore="UnusedAttribute" />
+                    android:orientation="vertical">
+
+                    <com.framework.views.customViews.CustomTextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:singleLine="true"
+                      android:text="Discount amt. (INR)"
+                      android:textColor="@color/black_4a4a4a"
+                      android:textSize="12sp"
+                      app:fontFamily="@font/light" />
+
+                    <com.framework.views.customViews.CustomTextField
+                      android:id="@+id/discount_edt"
+                      android:layout_width="@dimen/size_110"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="@dimen/size_5"
+                      android:background="@drawable/bg_rect_edit_txt"
+                      android:hint="XXX"
+                      android:inputType="number"
+                      android:maxLength="6"
+                      android:padding="@dimen/size_8"
+                      android:singleLine="true"
+                      android:textColor="@color/warm_grey_10"
+                      android:textColorHint="@color/primary_grey"
+                      android:textSize="13sp"
+                      tools:ignore="UnusedAttribute" />
+
+                  </androidx.appcompat.widget.LinearLayoutCompat>
+
+                  <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent" />
+
+                  <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:orientation="vertical">
+
+                    <com.framework.views.customViews.CustomTextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Final Price"
+                      android:textColor="@color/black_4a4a4a"
+                      android:textSize="12sp"
+                      app:fontFamily="@font/light" />
+
+                    <com.framework.views.customViews.CustomTextField
+                      android:id="@+id/final_price_txt"
+                      android:layout_width="@dimen/size_110"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="@dimen/size_5"
+                      android:background="@null"
+                      android:enabled="false"
+                      android:hint="INR XX,XXX"
+                      android:inputType="number"
+                      android:paddingTop="@dimen/size_8"
+                      android:paddingRight="@dimen/size_8"
+                      android:paddingBottom="@dimen/size_8"
+                      android:singleLine="true"
+                      android:textColor="@color/warm_grey_10"
+                      android:textColorHint="@color/primary_grey"
+                      android:textSize="13sp"
+                      tools:ignore="UnusedAttribute" />
+
+                  </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <View
-                  android:layout_width="5dp"
-                  android:layout_height="match_parent" />
+                <com.framework.views.customViews.CustomTextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="@dimen/size_8"
+                  android:layout_marginTop="@dimen/size_10"
+                  android:includeFontPadding="false"
+                  android:text="Select, how you want to receive money for your bookings."
+                  android:textColor="@color/warm_grey"
+                  android:textSize="12sp"
+                  app:fontFamily="@font/regular" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="wrap_content"
+                  android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/size_8"
+                  android:layout_marginRight="@dimen/size_10"
+                  android:layout_marginBottom="@dimen/size_10"
+                  android:background="@drawable/shape_grey_stroke_rect_bkg"
                   android:orientation="vertical">
 
-                  <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
+                  <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="Discount amt. (INR)"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="12sp"
-                    app:fontFamily="@font/light" />
+                    android:background="@drawable/shape_blue_stroke_rect_title_bkg"
+                    android:padding="@dimen/size_10">
 
-                  <com.framework.views.customViews.CustomTextField
-                    android:layout_width="@dimen/size_110"
+                    <com.framework.views.customViews.CustomTextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Boost payment gateway"
+                      android:textColor="@color/black_4f4f4f"
+                      android:textSize="12sp"
+                      app:fontFamily="@font/semi_bold"
+                      app:layout_constraintBottom_toBottomOf="parent"
+                      app:layout_constraintLeft_toLeftOf="parent"
+                      app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.framework.views.customViews.CustomTextView
+                      android:id="@+id/vw_paymentConfig"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@string/change"
+                      android:textColor="@color/cerulean_blue"
+                      android:textSize="10sp"
+                      app:fontFamily="@font/semi_bold"
+                      app:layout_constraintBottom_toBottomOf="parent"
+                      app:layout_constraintRight_toRightOf="parent"
+                      app:layout_constraintTop_toTopOf="parent"
+                      app:textAllCaps="true" />
+
+                  </androidx.constraintlayout.widget.ConstraintLayout>
+
+                  <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_5"
-                    android:background="@drawable/bg_rect_edit_txt"
-                    android:hint="XXX"
-                    android:inputType="number"
-                    android:padding="@dimen/size_8"
-                    android:singleLine="true"
-                    android:textColor="@color/warm_grey_10"
-                    android:textColorHint="@color/primary_grey"
-                    android:textSize="13sp"
-                    tools:ignore="UnusedAttribute" />
+                    android:padding="@dimen/size_10">
+
+                    <LinearLayout
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      app:layout_constraintBottom_toBottomOf="parent"
+                      app:layout_constraintLeft_toLeftOf="parent"
+                      app:layout_constraintTop_toTopOf="parent">
+
+                      <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/title_bank_added"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/size_4"
+                        android:includeFontPadding="false"
+                        android:text="@string/bank_account_not_added"
+                        android:textColor="@color/warm_grey"
+                        android:textSize="12sp"
+                        app:drawableStartCompat="@drawable/ic_info_circular_orange"
+                        app:fontFamily="@font/regular" />
+
+                      <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/bank_account_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_1"
+                        android:layout_marginTop="@dimen/size_3"
+                        android:drawablePadding="@dimen/size_4"
+                        android:includeFontPadding="false"
+                        android:text="Kotak Mahindra Bnak - 345547684878"
+                        android:textColor="@color/light_blue"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        app:fontFamily="@font/semi_bold"
+                        tools:visibility="visible" />
+                    </LinearLayout>
+
+                    <com.framework.views.customViews.CustomImageView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      app:layout_constraintBottom_toBottomOf="parent"
+                      app:layout_constraintRight_toRightOf="parent"
+                      app:layout_constraintTop_toTopOf="parent"
+                      app:srcCompat="@drawable/ic_arrow_right_grey" />
+
+                  </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <View
-                  android:layout_width="5dp"
-                  android:layout_height="match_parent" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginStart="3dp"
-                  android:orientation="vertical">
-
-                  <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Final Price"
-                    android:textColor="@color/black_4a4a4a"
-                    android:textSize="12sp"
-                    app:fontFamily="@font/light" />
-
-                  <com.framework.views.customViews.CustomTextField
-                    android:layout_width="@dimen/size_110"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_5"
-                    android:background="@null"
-                    android:enabled="false"
-                    android:hint="INR XX,XXX"
-                    android:inputType="number"
-                    android:paddingTop="@dimen/size_8"
-                    android:paddingRight="@dimen/size_8"
-                    android:paddingBottom="@dimen/size_8"
-                    android:singleLine="true"
-                    android:textColor="@color/warm_grey_10"
-                    android:textColorHint="@color/primary_grey"
-                    android:textSize="13sp"
-                    tools:ignore="UnusedAttribute" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-              </androidx.appcompat.widget.LinearLayoutCompat>
+              </LinearLayout>
 
               <com.framework.views.customViews.CustomTextView
+                android:id="@+id/free_service_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_8"
                 android:layout_marginTop="@dimen/size_10"
+                android:layout_marginBottom="@dimen/size_14"
                 android:includeFontPadding="false"
-                android:text="Select, how you want to receive money for your bookings."
+                android:text="Clients can book this service for FREE."
                 android:textColor="@color/warm_grey"
                 android:textSize="12sp"
+                android:visibility="gone"
                 app:fontFamily="@font/regular" />
-
-              <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_8"
-                android:layout_marginRight="@dimen/size_10"
-                android:layout_marginBottom="@dimen/size_10"
-                android:background="@drawable/shape_grey_stroke_rect_bkg"
-                android:orientation="vertical">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:background="@drawable/shape_blue_stroke_rect_title_bkg"
-                  android:padding="@dimen/size_10">
-
-                  <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Boost payment gateway"
-                    android:textColor="@color/black_4f4f4f"
-                    android:textSize="12sp"
-                    app:fontFamily="@font/semi_bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                  <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/vw_paymentConfig"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/change"
-                    android:textColor="@color/cerulean_blue"
-                    android:textSize="10sp"
-                    app:fontFamily="@font/semi_bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:textAllCaps="true" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:padding="@dimen/size_10">
-
-                  <com.framework.views.customViews.CustomTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/size_4"
-                    android:includeFontPadding="false"
-                    android:text="Bank account not added"
-                    android:textColor="@color/warm_grey"
-                    android:textSize="12sp"
-                    app:drawableStartCompat="@drawable/ic_info_circular_orange"
-                    app:fontFamily="@font/regular"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                  <com.framework.views.customViews.CustomImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_right_grey" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-              </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -556,8 +604,12 @@
 
 
               <LinearLayout
+                android:id="@+id/btn_other_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"

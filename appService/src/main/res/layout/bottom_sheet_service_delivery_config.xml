@@ -1,260 +1,299 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:color/transparent"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:padding="@dimen/size_10">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/size_10">
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:includeFontPadding="false"
+          android:text="Service Delivery Configuration"
+          android:textColor="@color/white"
+          app:fontFamily="@font/semi_bold"
+          app:textType="HEADING_4"
+          tools:textColor="@color/black_4a4a4a" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tvCustomerAddress"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:includeFontPadding="false"
+          android:text="Select, how do you want to give this service to your clients."
+          android:textColor="@color/white"
+          android:textSize="12sp"
+          app:fontFamily="@font/italic"
+          tools:textColor="@color/warm_grey" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:includeFontPadding="false"
-                    android:text="Service Delivery Configuration"
-                    android:textColor="@color/white"
-                    app:fontFamily="@font/semi_bold"
-                    app:textType="HEADING_4"
-                    tools:textColor="@color/black_4a4a4a" />
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tvCustomerAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:includeFontPadding="false"
-                    android:text="Select, how do you want to give this service to your clients."
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    app:fontFamily="@font/italic"
-                    tools:textColor="@color/warm_grey" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_rounded_top_white_2"
-            android:orientation="vertical">
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_10"
-                android:orientation="vertical">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/vw_onlineOnly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/size_20">
-
-                    <com.framework.views.customViews.CustomRadioButton
-                        android:id="@+id/rb_onlineOnly"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:buttonTint="@color/dodger_blue_two"
-                        android:clickable="false" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_10"
-                        android:orientation="vertical">
-
-
-                        <com.framework.views.customViews.CustomTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Online Only"
-                            android:textColor="@color/black_2A2A2A"
-                            android:textSize="19sp"
-                            app:fontFamily="@font/semi_bold" />
-
-                        <com.framework.views.customViews.CustomTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:includeFontPadding="false"
-                            android:text="e.g. through an online meeing such as video consultation"
-                            android:textColor="@color/black_4a4a4a"
-                            android:textSize="12sp"
-                            app:fontFamily="@font/regular" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_5"
-                    android:background="@drawable/shape_grey_dotted_line" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/vw_inPersonaOnly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/size_20">
-
-                    <com.framework.views.customViews.CustomRadioButton
-                        android:id="@+id/rb_inPersonaOnly"
-                        android:buttonTint="@color/dodger_blue_two"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:clickable="false" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_10"
-                        android:orientation="vertical">
-
-
-                        <com.framework.views.customViews.CustomTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="In-person only"
-                            android:textColor="@color/black_2A2A2A"
-                            android:textSize="19sp"
-                            app:fontFamily="@font/semi_bold" />
-
-                        <com.framework.views.customViews.CustomTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:includeFontPadding="false"
-                            android:text="Send your clients to an external URL to make payment"
-                            android:textColor="@color/black_4a4a4a"
-                            android:textSize="12sp"
-                            app:fontFamily="@font/regular" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_5"
-                    android:background="@drawable/shape_grey_dotted_line" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/vw_bothOnlineInPerson"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/size_20">
-
-                    <com.framework.views.customViews.CustomRadioButton
-                        android:id="@+id/rb_bothOnlineInPerson"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:buttonTint="@color/dodger_blue_two"
-                        android:clickable="false" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_10"
-                        android:orientation="vertical">
-
-
-                        <com.framework.views.customViews.CustomTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Both online and in-person"
-                            android:textColor="@color/black_2A2A2A"
-                            android:textSize="19sp"
-                            app:fontFamily="@font/semi_bold" />
-
-                        <com.framework.views.customViews.CustomTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:includeFontPadding="false"
-                            android:text="The service can be offered both ways (online and in person)"
-                            android:textColor="@color/black_4a4a4a"
-                            android:textSize="12sp"
-                            app:fontFamily="@font/regular" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_5"
-                    android:background="@drawable/shape_grey_dotted_line" />
-
-            </RadioGroup>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_20"
-                android:layout_marginBottom="@dimen/size_20"
-                android:padding="@dimen/size_10">
-
-                <com.framework.views.customViews.CustomButton
-                    android:id="@+id/btn_done"
-                    android:layout_width="@dimen/size_110"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/button_proceed"
-                    android:fontFamily="@font/semi_bold"
-                    android:gravity="center"
-                    android:padding="12dp"
-                    android:text="Done"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:textType="HEADING_6" />
-
-                <com.framework.views.customViews.CustomButton
-                    android:id="@id/btn_cancel"
-                    android:layout_width="@dimen/size_110"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginRight="@dimen/size_20"
-                    android:background="@null"
-                    android:fontFamily="@font/semi_bold"
-                    android:gravity="center"
-                    android:padding="15dp"
-                    android:text="Cancel"
-                    android:textAllCaps="true"
-                    android:textColor="@color/pinkish_grey"
-                    app:layout_constraintRight_toLeftOf="@id/btn_done"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:textType="HEADING_6" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/bg_rounded_top_white_2"
+      android:orientation="vertical">
+
+      <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/btn_online"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:padding="@dimen/size_20">
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/size_3"
+            android:clickable="false"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_lock_grey" />
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_24"
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Online Only"
+              android:textColor="@color/black_2A2A2A"
+              android:textSize="19sp"
+              app:fontFamily="@font/semi_bold" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:includeFontPadding="false"
+              android:text="e.g. through an online meeing such as video consultation"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="12sp"
+              app:fontFamily="@font/regular" />
+
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_5"
+          android:background="@drawable/shape_grey_dotted_line" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/btn_in_person"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:padding="@dimen/size_20">
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/size_3"
+            android:clickable="false"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_lock_grey" />
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_24"
+            android:orientation="vertical">
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="In-person only"
+              android:textColor="@color/black_2A2A2A"
+              android:textSize="19sp"
+              app:fontFamily="@font/semi_bold" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:includeFontPadding="false"
+              android:text="Send your clients to an external URL to make payment"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="12sp"
+              app:fontFamily="@font/regular" />
+
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_5"
+          android:background="@drawable/shape_grey_dotted_line" />
+
+        <!--        <androidx.appcompat.widget.LinearLayoutCompat-->
+        <!--          android:id="@+id/btn_online_in_person"-->
+        <!--          android:layout_width="match_parent"-->
+        <!--          android:layout_height="wrap_content"-->
+        <!--          android:orientation="horizontal"-->
+        <!--          android:padding="@dimen/size_20">-->
+
+        <!--          <com.framework.views.customViews.CustomImageView-->
+        <!--            android:layout_width="@dimen/size_24"-->
+        <!--            android:layout_height="@dimen/size_24"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:layout_marginStart="@dimen/size_3"-->
+        <!--            android:clickable="false"-->
+        <!--            android:visibility="visible"-->
+        <!--            app:srcCompat="@drawable/ic_lock_grey" />-->
+
+        <!--          <androidx.appcompat.widget.LinearLayoutCompat-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="@dimen/size_24"-->
+        <!--            android:orientation="vertical">-->
+
+        <!--            <com.framework.views.customViews.CustomTextView-->
+        <!--              android:layout_width="match_parent"-->
+        <!--              android:layout_height="wrap_content"-->
+        <!--              android:text="Both online and in-person"-->
+        <!--              android:textColor="@color/black_2A2A2A"-->
+        <!--              android:textSize="19sp"-->
+        <!--              app:fontFamily="@font/semi_bold" />-->
+
+        <!--            <com.framework.views.customViews.CustomTextView-->
+        <!--              android:layout_width="match_parent"-->
+        <!--              android:layout_height="wrap_content"-->
+        <!--              android:includeFontPadding="false"-->
+        <!--              android:text="The service can be offered both ways (online and in person)"-->
+        <!--              android:textColor="@color/black_4a4a4a"-->
+        <!--              android:textSize="12sp"-->
+        <!--              app:fontFamily="@font/regular" />-->
+
+        <!--          </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+        <!--        </androidx.appcompat.widget.LinearLayoutCompat>-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/vw_onlineOnly"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:clickable="true"
+          android:orientation="horizontal"
+          android:padding="@dimen/size_20">
+
+          <com.framework.views.customViews.CustomRadioButton
+            android:id="@+id/rb_onlineOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:buttonTint="@color/dodger_blue_two"
+            android:checked="true"
+            android:clickable="false" />
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_6"
+            android:orientation="vertical">
+
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Both online and in-person"
+              android:textColor="@color/black_2A2A2A"
+              android:textSize="19sp"
+              app:fontFamily="@font/semi_bold" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:includeFontPadding="false"
+              android:text="The service can be offered both ways (online and in person)"
+              android:textColor="@color/black_4a4a4a"
+              android:textSize="12sp"
+              app:fontFamily="@font/regular" />
+
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_5"
+          android:background="@drawable/shape_grey_dotted_line" />
+
+      </RadioGroup>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_20"
+        android:padding="@dimen/size_10">
+
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/btn_done"
+          android:layout_width="@dimen/size_110"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:background="@drawable/button_proceed"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:padding="12dp"
+          android:text="Done"
+          android:textAllCaps="true"
+          android:textColor="@color/white"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:textType="HEADING_6" />
+
+        <com.framework.views.customViews.CustomButton
+          android:id="@id/btn_cancel"
+          android:layout_width="@dimen/size_110"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginRight="@dimen/size_20"
+          android:background="@null"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:padding="15dp"
+          android:text="Cancel"
+          android:textAllCaps="true"
+          android:textColor="@color/pinkish_grey"
+          app:layout_constraintRight_toLeftOf="@id/btn_done"
+          app:layout_constraintTop_toTopOf="parent"
+          app:textType="HEADING_6" />
+
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>

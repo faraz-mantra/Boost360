@@ -133,4 +133,15 @@
   <string name="business_kyc_verify">Business KYC verify</string>
   <string name="submit_verification">Submit for verification</string>
   <string name="business_kyc_verification_underway_n">Business KYC Verification Underway</string>
+  <string name="bank_account_not_added">Bank account not added</string>
+  <string name="bank_account_added">Bank account added</string>
+  <string name="are_you_sure">Are you sure?</string>
+  <string name="cancel">Cancel</string>
+  <string name="delete">Delete</string>
+  <string name="enter_service_name">Enter service name</string>
+  <string name="enter_service_desc">Enter service description</string>
+  <string name="enter_valid_price">Enter valid price</string>
+  <string name="discount_amount_not_greater_than_price">Discount amount can\'t be greater than price</string>
+  <string name="please_fill_other_info">Please fill other information service.</string>
+  <string name="contact_support">Contact Support</string>
 </resources>

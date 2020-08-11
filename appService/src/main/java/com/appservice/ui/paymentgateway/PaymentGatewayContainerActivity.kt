@@ -30,6 +30,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
   private var cropImageFragment: CropImageFragment? = null
   private var businessKycFragment: BusinessKycFragment? = null
   private var detailKycFragment: DetailKycFragment? = null
+  private var kycDetailNewFragment: KycDetailNewFragment? = null
 
 
   override fun getLayout(): Int {
@@ -52,7 +53,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getNavIconScale(): Float {
     return when (type) {
-      FragmentType.BUSINESS_KYC_VIEW, FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> 1f
+      FragmentType.BUSINESS_KYC_VIEW, FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE, FragmentType.KYC_DETAIL_NEW -> 1f
       else -> super.getNavIconScale()
     }
   }
@@ -66,7 +67,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarTitleGravity(): Int {
     return when (type) {
-      FragmentType.KYC_STATUS, FragmentType.KYC_DETAILS, FragmentType.BUSINESS_KYC_VIEW -> Gravity.CENTER
+      FragmentType.KYC_STATUS, FragmentType.KYC_DETAILS, FragmentType.BUSINESS_KYC_VIEW, FragmentType.KYC_DETAIL_NEW -> Gravity.CENTER
       else -> Gravity.START
     }
   }
@@ -81,7 +82,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.PAYMENT_GATEWAY, FragmentType.DETAIL_KYC_VIEW, FragmentType.BUSINESS_KYC_VIEW, FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.KYC_DETAIL_NEW, FragmentType.PAYMENT_GATEWAY, FragmentType.DETAIL_KYC_VIEW, FragmentType.BUSINESS_KYC_VIEW, FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS -> ContextCompat.getColor(this, R.color.colorPrimary)
       FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> ContextCompat.getColor(this, R.color.color_primary)
       else -> super.getToolbarBackgroundColor()
     }
@@ -90,7 +91,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
       FragmentType.PAYMENT_GATEWAY, FragmentType.BUSINESS_KYC_VIEW, FragmentType.SCAN_PAN_CARD, FragmentType.KYC_DETAILS, FragmentType.CROP_IMAGE,
-      FragmentType.KYC_STATUS -> ContextCompat.getColor(this, R.color.white)
+      FragmentType.KYC_STATUS, FragmentType.KYC_DETAIL_NEW -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
   }
@@ -98,7 +99,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
       FragmentType.PAYMENT_GATEWAY, FragmentType.DETAIL_KYC_VIEW, FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
-      FragmentType.BUSINESS_KYC_VIEW, FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> ContextCompat.getDrawable(this, R.drawable.ic_round_close_white)
+      FragmentType.KYC_DETAIL_NEW, FragmentType.BUSINESS_KYC_VIEW, FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> ContextCompat.getDrawable(this, R.drawable.ic_round_close_white)
       else -> super.getNavigationIcon()
     }
   }
@@ -107,7 +108,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
     return when (type) {
       FragmentType.PAYMENT_GATEWAY -> getString(R.string.self_branded_payment_gateway)
       FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> getString(R.string.take_photo_of_your_pan_card)
-      FragmentType.KYC_STATUS, FragmentType.KYC_DETAILS, FragmentType.BUSINESS_KYC_VIEW -> getString(R.string.business_kyc)
+      FragmentType.KYC_STATUS, FragmentType.KYC_DETAILS, FragmentType.BUSINESS_KYC_VIEW, FragmentType.KYC_DETAIL_NEW -> getString(R.string.business_kyc)
       else -> super.getToolbarTitle()
     }
   }
@@ -167,6 +168,10 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.CROP_IMAGE -> {
         cropImageFragment = CropImageFragment()
         cropImageFragment
+      }
+      FragmentType.KYC_DETAIL_NEW -> {
+        kycDetailNewFragment = KycDetailNewFragment()
+        kycDetailNewFragment
       }
       else -> throw IllegalFragmentTypeException()
     }

@@ -81,11 +81,11 @@ fun String.capitalizeUtil(): String {
 }
 
 fun File.getBitmap(): Bitmap? {
-  return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this.path), 600, 600)
+  return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this.path), 400, 400)
 }
 
 fun String.getBitmap(): Bitmap? {
-  return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this), 600, 600)
+  return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this), 400, 400)
 }
 
 fun File.getMimeType(): String? {

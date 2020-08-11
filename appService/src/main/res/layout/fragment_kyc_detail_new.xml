@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_snow">
+
+    <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <com.framework.views.customViews.CustomCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_220"
+        android:layout_marginTop="@dimen/size_34"
+        android:layout_marginBottom="@dimen/size_4"
+        android:clipToPadding="false"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/size_30"
+        app:cardElevation="@dimen/size_4"
+        app:cardUseCompatPadding="false" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_220"
+        android:background="@color/white"
+        android:elevation="@dimen/size_4"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:ignore="UnusedAttribute">
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/size_60"
+          android:layout_height="@dimen/size_60"
+          android:layout_marginTop="@dimen/size_26"
+          app:srcCompat="@drawable/ic_real_state_kyc" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_20"
+          android:gravity="center"
+          android:text="Propizio Real Estate\nPrivate Limited"
+          android:textAlignment="gravity"
+          android:textColor="@color/greyish_brown"
+          app:fontFamily="@font/semi_bold"
+          app:textType="HEADING_4" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="@dimen/size_100"
+          android:layout_height="@dimen/size_40"
+          app:srcCompat="@drawable/ic_boost_verify" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </RelativeLayout>
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_20"
+      android:gravity="center"
+      android:text="Change any information?"
+      android:textAlignment="gravity"
+      android:textColor="@color/greyish_brown"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/btn_contact"
+      app:textType="HEADING_6" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/btn_contact"
+      style="@style/ButtonStyle.Rounded"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/size_20"
+      android:background="@drawable/rounded_refresh_btn"
+      android:gravity="center"
+      android:paddingVertical="@dimen/size_14"
+      android:text="@string/contact_support"
+      android:textAllCaps="false"
+      android:textColor="@color/colorAccent"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toBottomOf="parent" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

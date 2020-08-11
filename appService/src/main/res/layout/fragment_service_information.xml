@@ -181,7 +181,7 @@
               android:layout_marginStart="@dimen/size_2"
               android:drawablePadding="@dimen/size_4"
               android:includeFontPadding="false"
-              android:text="(8 max, Jpeg, 800x800px)"
+              android:text="(8 max, Jpeg/png, 800x800px)"
               android:textColor="@color/warm_grey"
               android:textSize="12sp"
               app:drawableEndCompat="@drawable/ic_question_circular_blue"
@@ -189,7 +189,18 @@
 
           </androidx.appcompat.widget.LinearLayoutCompat>
 
+          <com.framework.views.viewgroups.BaseRecyclerView
+            android:id="@+id/rvAdditionalDocs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_8"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_preview_image" />
+
           <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_click_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_8"
@@ -215,47 +226,6 @@
 
           </androidx.constraintlayout.widget.ConstraintLayout>
 
-          <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_36"
-            android:orientation="vertical">
-
-            <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:drawablePadding="@dimen/size_4"
-              android:includeFontPadding="false"
-              android:text="Secondary images"
-              android:textColor="@color/black_4a4a4a"
-              app:drawableEndCompat="@drawable/ic_question_circular_blue"
-              app:fontFamily="@font/semi_bold"
-              app:textType="BODY_3" />
-
-            <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:includeFontPadding="false"
-              android:text="Maximum 8 images, 800x800px, "
-              android:textColor="@color/warm_grey"
-              android:textSize="12sp"
-              app:fontFamily="@font/regular" />
-
-          </androidx.appcompat.widget.LinearLayoutCompat>
-
-          <com.framework.views.customViews.CustomTextField
-            android:id="@+id/eTName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_5"
-            android:background="@drawable/bg_rect_edit_txt"
-            android:hint="Type/select a service category"
-            android:inputType="textCapWords"
-            android:padding="@dimen/size_12"
-            android:singleLine="true"
-            android:textColor="@color/warm_grey_10"
-            android:textColorHint="@color/primary_grey"
-            tools:ignore="UnusedAttribute" />
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -286,6 +256,7 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <com.framework.views.customViews.CustomTextField
+            android:id="@+id/edt_service_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_5"
@@ -327,6 +298,7 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <com.framework.views.customViews.CustomTextField
+            android:id="@+id/edt_brand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_5"
@@ -375,7 +347,7 @@
             android:background="@drawable/bg_rect_edit_txt">
 
             <com.framework.views.customViews.CustomTextField
-              android:id="@+id/edtTxt_addServiceTag"
+              android:id="@+id/edt_service_tag"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:background="@null"
@@ -387,13 +359,13 @@
               android:textColor="@color/warm_grey_10"
               android:textColorHint="@color/primary_grey"
               app:layout_constraintLeft_toLeftOf="parent"
-              app:layout_constraintRight_toLeftOf="@id/vw_add"
+              app:layout_constraintRight_toLeftOf="@id/btn_add_tag"
               app:layout_constraintRight_toRightOf="parent"
               app:layout_constraintTop_toTopOf="parent"
               tools:ignore="UnusedAttribute" />
 
             <com.framework.views.customViews.CustomTextView
-              android:id="@+id/vw_add"
+              android:id="@+id/btn_add_tag"
               android:layout_width="@dimen/size_80"
               android:layout_height="0dp"
               android:background="@drawable/shape_blue_stroke_rect_title_bkg"
@@ -402,9 +374,9 @@
               android:text="Add"
               android:textColor="@color/dodger_blue_two"
               app:fontFamily="@font/semi_bold"
-              app:layout_constraintBottom_toBottomOf="@id/edtTxt_addServiceTag"
+              app:layout_constraintBottom_toBottomOf="@id/edt_service_tag"
               app:layout_constraintRight_toRightOf="parent"
-              app:layout_constraintTop_toTopOf="@id/edtTxt_addServiceTag"
+              app:layout_constraintTop_toTopOf="@id/edt_service_tag"
               app:textAllCaps="true"
               app:textType="BODY_1" />
 
@@ -426,13 +398,13 @@
             android:id="@+id/rvSpecification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:scrollbars="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:itemCount="6"
             android:layout_marginTop="@dimen/size_6"
+            android:clipToPadding="false"
             android:orientation="vertical"
+            android:scrollbars="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:itemCount="2"
             tools:listitem="@layout/row_layout_added_specs" />
 
           <com.framework.views.customViews.CustomTextView
@@ -443,13 +415,14 @@
             android:clickable="true"
             android:gravity="center"
             android:minWidth="@dimen/size_100"
+            android:id="@+id/btn_add_specification"
             android:padding="@dimen/size_10"
             android:text="Add specification"
             android:textColor="@color/dodger_blue_two"
             app:fontFamily="@font/semi_bold"
-            app:layout_constraintBottom_toBottomOf="@id/edtTxt_addServiceTag"
-            app:layout_constraintRight_toRightOf="@id/edtTxt_addServiceTag"
-            app:layout_constraintTop_toTopOf="@id/edtTxt_addServiceTag"
+            app:layout_constraintBottom_toBottomOf="@id/edt_service_tag"
+            app:layout_constraintRight_toRightOf="@id/edt_service_tag"
+            app:layout_constraintTop_toTopOf="@id/edt_service_tag"
             app:textAllCaps="true"
             app:textType="BODY_1" />
 
@@ -481,38 +454,19 @@
 
           </androidx.appcompat.widget.LinearLayoutCompat>
 
-          <androidx.constraintlayout.widget.ConstraintLayout
+          <com.framework.views.customViews.CustomTextField
+            android:id="@+id/edt_gst"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_5"
-            android:background="@drawable/shape_grey_stroke_rect_bkg"
-            android:padding="@dimen/size_10">
-
-            <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:clickable="true"
-              android:gravity="center"
-              android:text="18%"
-              android:textColor="@color/warm_grey"
-              android:textSize="15sp"
-              app:fontFamily="@font/semi_bold"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintLeft_toLeftOf="parent"
-              app:layout_constraintTop_toTopOf="parent"
-              app:textAllCaps="true"
-              app:textType="BODY_2" />
-
-            <com.framework.views.customViews.CustomImageView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              app:layout_constraintBottom_toBottomOf="parent"
-              app:layout_constraintRight_toRightOf="parent"
-              app:layout_constraintTop_toTopOf="parent"
-              app:srcCompat="@drawable/ic_grey_drop_down" />
-
-          </androidx.constraintlayout.widget.ConstraintLayout>
-
+            android:background="@drawable/bg_rect_edit_txt"
+            android:hint="XX"
+            android:inputType="number"
+            android:padding="@dimen/size_12"
+            android:singleLine="true"
+            android:textColor="@color/warm_grey_10"
+            android:textColorHint="@color/primary_grey"
+            tools:ignore="UnusedAttribute" />
 
           <View
             android:layout_width="match_parent"
