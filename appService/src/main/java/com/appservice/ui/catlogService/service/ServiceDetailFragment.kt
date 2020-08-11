@@ -78,7 +78,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private var externalSourceId: String? = null
   private var applicationId: String? = null
   private var pickUpDataAddress: ArrayList<PickUpData>? = null
-  private var pickUpAddressId: String? = null
+
   private var isEdit: Boolean? = null
   private var dataKyc: DataKyc? = null
   private var isAddPaymentGateway: Boolean = false
@@ -492,7 +492,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val dialog = ServiceDeliveryBottomSheet()
     dialog.setList(pickUpDataAddress, product?.pickupAddressReferenceId)
     dialog.onClicked = {
-      if (it != null && it.id.isNullOrEmpty().not()) pickUpAddressId = it.id
+      if (it != null && it.id.isNullOrEmpty().not()) {
+        product?.pickupAddressReferenceId = it.id
+      }
     }
     dialog.show(parentFragmentManager, ServiceDeliveryBottomSheet::class.java.name)
   }
