@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.inventoryorder.constant.IntentConstant;
 import com.inventoryorder.model.PreferenceData;
 import com.nowfloats.Analytics_Screen.OrderSummaryActivity;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.Restaurants.BookATable.BookATableActivity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
@@ -46,7 +48,8 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  */
 public class ManageInventoryFragment extends Fragment {
     TextView tvTransactionType_1, tvTransactionType_2, orderAnalytics;
-    ImageView ivLockWidget, ivPaymentIcon;
+    ImageView ivLockWidget, ivPaymentIcon, lockIcon;
+    LinearLayout bookTable;
     //Typeface robotoLight;
     private SharedPreferences pref = null;
     UserSessionManager session;
@@ -240,6 +243,23 @@ public class ManageInventoryFragment extends Fragment {
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
+
+            bookTable = mainView.findViewById(R.id.book_table);
+            bookTable.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(), BookATableActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            });
+
+            lockIcon = mainView.findViewById(R.id.feature_lock);
+            if (Constants.StoreWidgets.contains("BOOKTABLE")) {
+                lockIcon.setVisibility(View.GONE);
+            }else{
+                lockIcon.setVisibility(View.VISIBLE);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -39,8 +39,6 @@ class UpgradeAdapter(
         )
         context = itemView.context
 
-
-
         return upgradeViewHolder(itemView)
     }
 
