@@ -8,6 +8,8 @@ import com.framework.models.BaseViewModel
 
 class ServiceDeliveryConfigBottomSheet : BaseBottomSheetDialog<BottomSheetServiceDeliveryConfigBinding, BaseViewModel>() {
 
+  var onClicked: (deliveryConfig: Boolean) -> Unit = { }
+  var deliveryConfig: Boolean = true
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_service_delivery_config
   }
@@ -16,34 +18,25 @@ class ServiceDeliveryConfigBottomSheet : BaseBottomSheetDialog<BottomSheetServic
     return BaseViewModel::class.java
   }
 
+
+  fun isUpdate(deliveryConfig: Boolean) {
+    this.deliveryConfig = deliveryConfig
+  }
+
   override fun onCreateView() {
-    setOnClickListener(binding?.vwOnlineOnly, binding?.vwInPersonaOnly, binding?.vwBothOnlineInPerson)
+    setOnClickListener(binding?.vwOnlineOnly)
     setOnClickListener(binding?.btnDone, binding?.btnCancel)
+
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.vwOnlineOnly -> {
-        binding?.rbOnlineOnly?.isChecked = true
-        binding?.rbInPersonaOnly?.isChecked = false
-        binding?.rbBothOnlineInPerson?.isChecked = false
-      }
-      binding?.vwInPersonaOnly -> {
-        binding?.rbOnlineOnly?.isChecked = false
-        binding?.rbInPersonaOnly?.isChecked = true
-        binding?.rbBothOnlineInPerson?.isChecked = false
-      }
-      binding?.vwBothOnlineInPerson -> {
-        binding?.rbOnlineOnly?.isChecked = false
-        binding?.rbInPersonaOnly?.isChecked = false
-        binding?.rbBothOnlineInPerson?.isChecked = true
-      }
       binding?.btnDone -> {
-      }
-      binding?.btnCancel -> {
+        onClicked(deliveryConfig)
         dismiss()
       }
+      binding?.btnCancel -> dismiss()
     }
   }
 

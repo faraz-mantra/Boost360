@@ -11,5 +11,6 @@ enum class FragmentType {
   SCAN_PAN_CARD,
   KYC_DETAILS,
   KYC_STATUS,
-  CROP_IMAGE
+  CROP_IMAGE,
+  KYC_DETAIL_NEW,
 }

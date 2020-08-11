@@ -62,7 +62,6 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
         val resp = it as? PaymentKycDataResponse
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           if (resp?.data.isNullOrEmpty().not()) {
-            binding?.mainView?.visible()
             setData(resp!!.data!![0])
           } else {
             binding?.mainView?.gone()
@@ -85,11 +84,9 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
     binding?.tvBankAccNumber?.text = "A/C No. ${dataKyc.bankAccountNumber}"
     binding?.tvBankBranchDetails?.text = "${dataKyc.nameOfBank} - ${dataKyc.bankBranchName}"
     if (dataKyc.isVerified == DataKyc.Verify.YES.name) {
-      binding?.txtVerification?.text = resources.getString(R.string.business_kyc_verify)
-      binding?.txtDescKyc?.gone()
-      binding?.btnKycStatusRefresh?.gone()
-
-    }
+      startFragmentPaymentActivity(FragmentType.KYC_DETAIL_NEW, Bundle())
+      baseActivity.finish()
+    } else binding?.mainView?.visible()
   }
 
   private fun getQuery(): String? {
@@ -99,6 +96,7 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
   }
 
   private fun updateUiData() {
+    binding?.mainView?.visible()
     saveKycData?.actionData?.panCardDocument?.let { activity?.glideLoad(binding?.ivPanCardImage!!, it, R.drawable.placeholder_image) }
     binding?.tvPanNumber?.text = saveKycData?.actionData?.panNumber
     binding?.tvPanName?.text = saveKycData?.actionData?.nameOfPanHolder
@@ -139,10 +137,10 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_edit, menu)
     menuEdit = menu.findItem(R.id.menu_edit)
     menuEdit?.isVisible = false
+    super.onCreateOptionsMenu(menu, inflater)
   }
 
 

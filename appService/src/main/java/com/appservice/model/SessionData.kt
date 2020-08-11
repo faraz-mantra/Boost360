@@ -6,6 +6,9 @@ enum class StatusKyc {
   CUSTOM_PAYMENTGATEWAY
 }
 
+const val auth_3 = "58ede4d4ee786c1604f6c535"
+const val deviceId = "123456789"
+
 data class SessionData(
     var fpId: String? = null,
     var clientId: String? = null,

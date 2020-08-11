@@ -12,6 +12,8 @@
       android:id="@+id/main_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:visibility="gone"
+      tools:visibility="visible"
       android:paddingHorizontal="@dimen/size_30"
       android:paddingVertical="@dimen/size_10">
 

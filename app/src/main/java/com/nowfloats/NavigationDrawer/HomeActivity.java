@@ -1353,7 +1353,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
                     startActivity(subscribers);
                 }
-
             }
         }, 200);
 

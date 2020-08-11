@@ -1,5 +1,6 @@
 package com.appservice.base
 
+import android.util.Log
 import androidx.fragment.app.FragmentManager
 import com.appservice.R
 import com.appservice.databinding.ProgressDialogBinding
@@ -45,16 +46,16 @@ class ProgressDialog : BaseDialogFragment<ProgressDialogBinding, BaseViewModel>(
   fun showProgress(manager: FragmentManager) {
     try {
       if (this.isVisible.not()) show(manager, ProgressDialog::class.java.simpleName)
-    } catch (e: IllegalStateException) {
-      e.printStackTrace()
+    } catch (e: Exception) {
+      Log.e(ProgressDialog::class.java.name, e.localizedMessage)
     }
   }
 
   fun hideProgress() {
     try {
       if (isRemoving.not()) dismiss()
-    } catch (e: IllegalStateException) {
-      e.printStackTrace()
+    } catch (e: Exception) {
+      Log.e(ProgressDialog::class.java.name, e.localizedMessage)
     }
   }
 
