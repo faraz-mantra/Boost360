@@ -139,6 +139,27 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       validCouponCode = prefs.getApplyedCouponDetails()
       discount_coupon_title.text = validCouponCode!!.coupon_key
       cart_apply_coupon.visibility = View.GONE
+      discount_coupon_remove.visibility = View.VISIBLE
+    }else{
+      validCouponCode = null
+      discount_coupon_remove.visibility = View.GONE
+      cart_apply_coupon.visibility = View.VISIBLE
+      discount_coupon_title.text = "Discount coupon"
+    }
+
+    discount_coupon_remove.setOnClickListener {
+      discount_coupon_remove.visibility = View.GONE
+      cart_apply_coupon.visibility = View.VISIBLE
+      discount_coupon_title.text = "Discount coupon"
+
+      //clear coupon
+      validCouponCode = null
+
+      //remove saved orderdetails and coupondetails from prefs
+      prefs.storeCartOrderInfo(null)
+      prefs.storeApplyedCouponDetails(null)
+
+      totalCalculation()
     }
 
     cart_continue_submit.setOnClickListener {
@@ -575,6 +596,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         months_validity_edit_dsc.visibility = View.GONE
         months_validity.text = "- -"
 
+        //clear coupon
+        validCouponCode = null
+
         //remove saved orderdetails from prefs
         prefs.storeCartOrderInfo(null)
         prefs.storeApplyedCouponDetails(null)
@@ -656,7 +680,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         validCouponCode = it
         discount_coupon_title.text = validCouponCode!!.coupon_key
         cart_apply_coupon.visibility = View.GONE
+        discount_coupon_remove.visibility = View.VISIBLE
         totalCalculation()
+      }else{
+        validCouponCode = null
       }
     })
   }
@@ -712,6 +739,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       if (validCouponCode != null) {
         couponDisount = validCouponCode!!.discount_percent
         coupon_discount_title.text = "Coupon discount(" + couponDisount.toString() + "%)"
+      }else{
+        coupon_discount_title.text = "Coupon discount"
       }
       if (cartList != null && cartList.size > 0) {
         for (item in cartList) {
