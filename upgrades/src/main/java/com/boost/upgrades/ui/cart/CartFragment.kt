@@ -305,8 +305,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       }
       purchaseOrders.add(PurchaseOrder(couponCode, couponDiscountPercentage, null, netAmount, widgetList))
     } else {
+      val featureWidgetList = ArrayList<Widget>()
+      var featureNetPrice = 0.0
       for (item in cartList) {
-        val widgetList = ArrayList<Widget>()
+//        val widgetList = ArrayList<Widget>()
+        val bundleWidgetList = ArrayList<Widget>()
         var extendProps: List<ExtendedProperty>? = null
         var outputExtendedProps = ArrayList<Property>()
         var extraPurchaseOrderDetails: ExtraPurchaseOrderDetails? = null
@@ -351,10 +354,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             mrp_price = mrp_price * default_validity_months
           }
 
-          //adding widget netprice to Bundle Netprice to get GrandTotal In netPrice.
-          bundleNetPrice += netPrice
+          //adding widget netprice to featureNetprice to get GrandTotal In netPrice.
+          featureNetPrice += netPrice
 
-          widgetList.add(Widget(
+          featureWidgetList.add(Widget(
               "",
               ConsumptionConstraint(
                   "DAYS",
@@ -403,7 +406,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
                       //adding bundle netPrice
                       bundleNetPrice += netPrice * singleBundle.min_purchase_months
-                      widgetList.add(Widget(
+                      bundleWidgetList.add(Widget(
                           "",
                           ConsumptionConstraint(
                               "DAYS",
@@ -438,22 +441,43 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 }
                 break
               }
-            }
-          }
-        }
+            } //bundle forloop completion
 
-
-        purchaseOrders.add(
-            PurchaseOrder(
-                couponCode,
-                bundleDiscount, //Discount of the bundle/package/order without tax.
-                extraPurchaseOrderDetails,
-                bundleNetPrice,
-                widgetList
+            purchaseOrders.add(
+                    PurchaseOrder(
+                            couponCode,
+                            bundleDiscount, //Discount of the bundle/package/order without tax.
+                            extraPurchaseOrderDetails,
+                            bundleNetPrice,
+                            bundleWidgetList
+                    )
             )
-        )
-      }
-    }
+
+          }// bundle end
+        }//bundle type if end
+
+
+//        purchaseOrders.add(
+//            PurchaseOrder(
+//                couponCode,
+//                bundleDiscount, //Discount of the bundle/package/order without tax.
+//                extraPurchaseOrderDetails,
+//                bundleNetPrice,
+//                widgetList
+//            )
+//        )
+      }// end of cart item for loop
+
+      purchaseOrders.add(
+              PurchaseOrder(
+                      couponCode,
+                      0,
+                      null,
+                      featureNetPrice,
+                      featureWidgetList
+              )
+      )
+    } // if end of new order
 
     var keysToBeActivated = ArrayList<String>()
 
