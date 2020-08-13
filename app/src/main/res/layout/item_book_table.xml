@@ -70,6 +70,8 @@
                     android:text="+91-9999999999"
                     android:drawableStart="@drawable/ic_call_book_table"
                     android:drawablePadding="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
                     android:textColor="#9ABFFF"
                     android:textSize="@dimen/_10sdp" />
             </LinearLayout>

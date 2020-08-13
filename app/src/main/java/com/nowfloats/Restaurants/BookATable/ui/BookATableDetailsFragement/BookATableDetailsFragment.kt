@@ -38,7 +38,7 @@ class BookATableDetailsFragment : Fragment() {
 
     var ScreenType = ""
     var itemId = ""
-    val countList = arrayOf("1","2","3","4","5","6","7","8","9","10")
+    val countList = arrayOf("0","1","2","3","4","5","6","7","8","9","10")
     var session: UserSessionManager? = null
     lateinit var existingItemData: Data
     var totalPeople = "1"
@@ -81,9 +81,12 @@ class BookATableDetailsFragment : Fragment() {
         }
 
         date_value.setOnClickListener {
-            DatePickerDialog(requireContext(), date, myCalendar
+            Methods.hideKeyboard(requireContext())
+            val datePickerDialog = DatePickerDialog(requireContext(), date, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                    myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+                    myCalendar.get(Calendar.DAY_OF_MONTH))
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
+            datePickerDialog.show()
         }
 
         val time = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
@@ -95,6 +98,7 @@ class BookATableDetailsFragment : Fragment() {
         }
 
         time_value.setOnClickListener {
+            Methods.hideKeyboard(requireContext())
             TimePickerDialog(context, time, myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), false).show()
         }
 
@@ -124,7 +128,7 @@ class BookATableDetailsFragment : Fragment() {
 
         user_name.setText(existingItemData.name)
         contact_number.setText(existingItemData.number)
-        table_count.setSelection(Integer.parseInt(existingItemData.totalPeople)-1)
+        table_count.setSelection(Integer.parseInt(existingItemData.totalPeople))
         date_value.setText(existingItemData.date)
         time_value.setText(existingItemData.time)
         message_value.setText(existingItemData.message)
@@ -195,6 +199,11 @@ class BookATableDetailsFragment : Fragment() {
         if(user_name.text.toString().isEmpty() || contact_number.text.toString().isEmpty()
                 || date_value.text.toString().isEmpty() || time_value.text.toString().isEmpty()){
             Toast.makeText(requireContext(), "Fields are empty!!..", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if(contact_number.text.toString().length!=10){
+            Toast.makeText(requireContext(), "Please provide 10 digit Mobile Number.", Toast.LENGTH_SHORT).show()
             return false
         }
 

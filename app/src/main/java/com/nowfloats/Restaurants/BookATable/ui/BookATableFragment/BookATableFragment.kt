@@ -166,7 +166,6 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
     }
 
     override fun deleteOptionClicked(data: Data) {
-        Toast.makeText(requireContext(), "delete clicked", Toast.LENGTH_LONG).show()
         adapter.menuOption(-1, false)
         adapter.notifyDataSetChanged()
         try {
