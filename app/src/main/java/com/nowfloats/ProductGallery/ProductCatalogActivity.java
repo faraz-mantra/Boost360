@@ -208,15 +208,18 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     }
 
     private void openAddProductActivity(Product p) {
-        String type = Utils.getProductType(session.getFP_AppExperienceCode());
-        switch (type) {
+        String type = "";
+        if (p.productType != null && !p.productType.isEmpty()) {
+            type = p.productType;
+        } else type = Utils.getProductType(session.getFP_AppExperienceCode());
+        switch (type.toUpperCase()) {
             case "SERVICES":
                 p.setProductType(type);
                 Bundle bundle = getBundleData(p);
                 startFragmentActivityNew(this, FragmentType.SERVICE_DETAIL_VIEW, bundle, false, true);
                 break;
             default:
-                if (p.productType == null) p.setProductType(type);
+                p.setProductType(type);
                 Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
                 intent.putExtra("PRODUCT", p);
                 startActivityForResult(intent, 300);
@@ -241,6 +244,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         bundle.putString(IntentConstant.CURRENCY_TYPE.name(), currencyType);
         bundle.putString(IntentConstant.FP_ID.name(), session.getFPID());
         bundle.putString(IntentConstant.FP_TAG.name(), session.getFpTag());
+        bundle.putString(IntentConstant.USER_PROFILE_ID.name(), session.getUserProfileId());
         bundle.putString(IntentConstant.CLIENT_ID.name(), Constants.clientId);
         bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name(), session.getFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID));
         bundle.putString(IntentConstant.APPLICATION_ID.name(), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID));

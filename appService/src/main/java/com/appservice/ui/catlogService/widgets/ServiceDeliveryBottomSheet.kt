@@ -61,6 +61,7 @@ class ServiceDeliveryBottomSheet : BaseBottomSheetDialog<BottomSheetServiceDeliv
     if (this.pickUpDataAddress.isNullOrEmpty().not()) {
       val singleItems = this.pickUpDataAddress?.map { it.streetAddress }?.toTypedArray()
       MaterialAlertDialogBuilder(baseActivity).setTitle("Select one").setPositiveButton("Ok") { d, _ ->
+        if (selectPosition == -1) return@setPositiveButton
         pickUpData = this.pickUpDataAddress?.firstOrNull { it.streetAddress == singleItems?.get(selectPosition) }
         binding?.txtAddress?.text = pickUpData?.streetAddress ?: ""
         binding?.rbMyBusinessLocation?.isChecked = true

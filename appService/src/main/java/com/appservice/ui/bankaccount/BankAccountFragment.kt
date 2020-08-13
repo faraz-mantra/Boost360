@@ -1,11 +1,13 @@
 package com.appservice.ui.bankaccount
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.Observer
@@ -36,6 +38,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
   private var request: AccountCreateRequest? = null
   private var requestAccount: BankAccountDetailsN? = null
   private var isValidIfsc: Boolean = false
+  private var isServiceCreation: Boolean = false
 
   companion object {
     @JvmStatic
@@ -60,6 +63,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     setOnClickListener(binding?.submitBtn, binding?.whyBtn, binding?.verificationBtn)
     fpId = arguments?.getString(IntentConstant.FP_ID.name) ?: ""
     clientId = arguments?.getString(IntentConstant.CLIENT_ID.name) ?: ""
+    isServiceCreation = arguments?.getBoolean(IntentConstant.IS_SERVICE_CREATION.name) ?: false
     binding?.edtIfsc?.afterTextChanged { isIfscValid(binding?.edtIfsc?.text.toString().trim()) }
     getUserDetails()
   }
@@ -88,7 +92,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     binding?.edtBankBranch?.gone()
   }
 
-  private fun getUserDetails(isPendingToastShow: Boolean = false) {
+  private fun getUserDetails(isPendingToastShow: Boolean = false, isServiceCreation: Boolean = false) {
     showProgress()
     viewModel?.userAccountDetails(fpId, clientId)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
@@ -98,12 +102,21 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       }
       val response = it as? AccountDetailsResponse
       if ((it.status == 200 || it.status == 201 || it.status == 202) && response != null) {
-        checkBankAccountDetail(response.result, isPendingToastShow)
+        if (isServiceCreation && response.result?.bankAccountDetails != null) {
+          goBackFragment(response.result?.bankAccountDetails!!)
+        } else checkBankAccountDetail(response.result, isPendingToastShow)
       } else {
         (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.adding_bank_account), resources.getDimensionPixelSize(R.dimen.size_36))
         isUpdated = false
       }
     })
+  }
+
+  private fun goBackFragment(bankAccountDetails: BankAccountDetails) {
+    val output = Intent()
+    output.putExtra(IntentConstant.USER_BANK_DETAIL.name, bankAccountDetails)
+    baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
+    baseActivity.finish()
   }
 
   private fun checkBankAccountDetail(result: Result?, isPendingToastShow: Boolean) {
@@ -200,7 +213,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       }
       val response = it as? AccountCreateResponse
       if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
-        getUserDetails()
+        getUserDetails(isServiceCreation = isServiceCreation)
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())
@@ -218,7 +231,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       }
       val response = it as? AccountCreateResponse
       if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
-        getUserDetails()
+        getUserDetails(isServiceCreation = isServiceCreation)
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())

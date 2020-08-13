@@ -86,7 +86,7 @@
             <com.framework.views.customViews.CustomTextView
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:text="Boost payment gateway"
+              android:text="@string/boost_payment_gateway"
               android:textColor="@color/black_2A2A2A"
               android:textSize="19sp"
               app:fontFamily="@font/semi_bold" />
@@ -100,6 +100,21 @@
               android:textColor="@color/black_4a4a4a"
               android:textSize="12sp"
               app:fontFamily="@font/regular" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/change_bank_detail"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:clickable="true"
+              android:focusable="true"
+              android:includeFontPadding="false"
+              android:paddingTop="@dimen/size_6"
+              android:paddingBottom="@dimen/size_4"
+              android:text="@string/add_bank_detail"
+              android:textColor="@color/dodger_blue_two"
+              android:textSize="12sp"
+              app:fontFamily="@font/semi_bold"
+              app:textAllCaps="true" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -167,25 +182,24 @@
           android:orientation="horizontal"
           android:padding="@dimen/size_20">
 
-          <com.framework.views.customViews.CustomImageView
-            android:layout_width="@dimen/size_24"
-            android:layout_height="@dimen/size_24"
+          <com.framework.views.customViews.CustomRadioButton
+            android:id="@+id/rb_externalUrl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/size_3"
-            android:clickable="false"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_lock_grey" />
+            android:buttonTint="@color/dodger_blue_two"
+            android:clickable="false" />
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_24"
+            android:layout_marginStart="@dimen/size_6"
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:text="External URL"
+              android:text="@string/external_url"
               android:textColor="@color/black_2A2A2A"
               android:textSize="19sp"
               app:fontFamily="@font/semi_bold" />
@@ -194,7 +208,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:includeFontPadding="false"
-              android:text="The service can be offerred either at the business location or at client’s location."
+              android:text="@string/the_service_can_be_offered_either_at_the_business_location_or_at_client_s_location"
               android:textColor="@color/black_4a4a4a"
               android:textSize="12sp"
               app:fontFamily="@font/regular" />
