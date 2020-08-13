@@ -34,6 +34,7 @@ import com.boost.upgrades.data.renewalcart.RenewalPurchasedRequest
 import com.boost.upgrades.data.renewalcart.RenewalResult
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
+import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.payment.PaymentFragment
 import com.boost.upgrades.ui.popup.CouponPopUpFragment
@@ -245,10 +246,19 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   private fun checkRenewalItemDeepLinkClick() {
     if (isDeepLinking) {
       val currentDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY)
-      val sevenDayDate = DateUtils.getAmountDate((activity as UpgradeActivity).deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY)
-      viewModel.allPurchasedWidgets(RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
-          widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
-          dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = currentDate, endDate = sevenDayDate))
+      val deepLinkDay = (activity as UpgradeActivity).deepLinkDay
+      val dateAmount = DateUtils.getAmountDate(deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY)
+      val request = if (deepLinkDay <= -1) {
+        RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
+            widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
+            dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = currentDate, endDate = dateAmount)
+      } else {
+        RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
+            widgetStatus = RenewalPurchasedRequest.WidgetStatus.EXPIRED.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
+            dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = dateAmount , endDate = currentDate)
+      }
+
+      viewModel.allPurchasedWidgets(request)
       viewModel.renewalResult().observeOnce(Observer { result ->
         renewalList = result?.filter { it.renewalStatus() == RenewalResult.RenewalStatus.PENDING.name } ?: ArrayList()
         if (renewalList.isNotEmpty()) {
