@@ -10,7 +10,7 @@ import com.appservice.model.serviceProduct.gstProduct.update.ProductUpdateReques
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.rest.repository.AssuredWithFloatRepository
 import com.appservice.rest.repository.KitWebActionRepository
-import com.appservice.rest.repository.WebActionBoostKitRepository
+import com.appservice.rest.repository.WithFloatRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
@@ -70,7 +70,7 @@ class ServiceViewModel : BaseViewModel() {
     return AssuredWithFloatRepository.getPickUpAddress(fpId).toLiveData()
   }
 
-  fun getPaymentGatewayKycData(auth: String?, query: String?): LiveData<BaseResponse> {
-    return WebActionBoostKitRepository.getKycData(auth, query).toLiveData()
+  fun userAccountDetails(fpId: String?, clientId: String?): LiveData<BaseResponse> {
+    return WithFloatRepository.userAccountDetail(fpId, clientId).toLiveData()
   }
 }

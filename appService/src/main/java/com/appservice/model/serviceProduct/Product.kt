@@ -4,6 +4,7 @@ import android.net.Uri
 import com.appservice.model.KeySpecification
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.util.*
 
 class Product(
     @SerializedName(value = "currencycode", alternate = ["CurrencyCode"])
@@ -82,4 +83,13 @@ class Product(
     @SerializedName("otherSpecifications")
     var otherSpecification: ArrayList<KeySpecification>? = null,
     var pickupAddressReferenceId: String? = null
-) : Serializable
+) : Serializable {
+
+  enum class PaymentType(val value: String) {
+    ASSURED_PURCHASE("AssuredPurchase"), MY_PAYMENT_GATEWAY("MyPaymentGateWay"), UNIQUE_PAYMENT_URL("UniquePaymentUrl"), DONT_WANT_TO_SELL("None");
+
+    companion object {
+      fun fromValue(value: String): PaymentType? = values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+    }
+  }
+}

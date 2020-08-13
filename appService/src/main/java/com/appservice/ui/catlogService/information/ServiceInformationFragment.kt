@@ -133,37 +133,38 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun validateAnnGoBack() {
-    val serviceCategory = binding?.edtServiceCategory?.text?.toString()
-    val brand = binding?.edtBrand?.text?.toString()
-    val gst = binding?.edtGst?.text?.toString()
+    val serviceCategory = binding?.edtServiceCategory?.text?.toString() ?: ""
+    val brand = binding?.edtBrand?.text?.toString() ?: ""
+    val gst = binding?.edtGst?.text?.toString() ?: ""
+    val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>) ?: ArrayList()
     when {
-      secondaryImage.isNullOrEmpty() -> {
-        showLongToast("Please select at least one secondary image.")
-        return
-      }
+//      secondaryImage.isNullOrEmpty() -> {
+//        showLongToast("Please select at least one secondary image.")
+//        return
+//      }
       serviceCategory.isNullOrEmpty() -> {
         showLongToast("Service category field can't empty.")
         return
       }
-      brand.isNullOrEmpty() -> {
-        showLongToast("Brand name field can't empty.")
-        return
-      }
-      tagList.isNullOrEmpty() -> {
-        showLongToast("Please enter at least one service tag.")
-        return
-      }
-      specList.isNullOrEmpty() -> {
-        showLongToast("Please enter at least one service specification.")
-        return
-      }
+//      brand.isNullOrEmpty() -> {
+//        showLongToast("Brand name field can't empty.")
+//        return
+//      }
+//      tagList.isNullOrEmpty() -> {
+//        showLongToast("Please enter at least one service tag.")
+//        return
+//      }
+//      specList.isNullOrEmpty() -> {
+//        showLongToast("Please enter at least one service specification.")
+//        return
+//      }
       else -> {
         product?.category = serviceCategory
         product?.brandName = brand
         product?.tags = tagList
-        product?.otherSpecification = specList
+        product?.otherSpecification = otherSpec
         if (gstProductData == null) gstProductData = DataG()
-        gstProductData?.gstSlab = gst?.toDoubleOrNull() ?: 0.0
+        gstProductData?.gstSlab = gst.toDoubleOrNull() ?: 0.0
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)
         output.putExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
@@ -172,6 +173,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         baseActivity.finish()
       }
     }
+
   }
 
   private fun serviceTagsSet() {

@@ -502,9 +502,10 @@
                     <com.framework.views.customViews.CustomTextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="Boost payment gateway"
+                      android:id="@+id/txt_payment_type"
                       android:textColor="@color/black_4f4f4f"
                       android:textSize="12sp"
+                      android:text="@string/boost_payment_gateway"
                       app:fontFamily="@font/semi_bold"
                       app:layout_constraintBottom_toBottomOf="parent"
                       app:layout_constraintLeft_toLeftOf="parent"
@@ -525,56 +526,130 @@
 
                   </androidx.constraintlayout.widget.ConstraintLayout>
 
-                  <androidx.constraintlayout.widget.ConstraintLayout
+                  <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:padding="@dimen/size_10">
 
                     <LinearLayout
-                      android:layout_width="wrap_content"
+                      android:id="@+id/bank_account_view"
+                      android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:orientation="vertical"
-                      app:layout_constraintBottom_toBottomOf="parent"
-                      app:layout_constraintLeft_toLeftOf="parent"
-                      app:layout_constraintTop_toTopOf="parent">
+                      android:gravity="center_vertical"
+                      android:orientation="horizontal">
 
-                      <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/title_bank_added"
-                        android:layout_width="match_parent"
+                      <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/size_4"
-                        android:includeFontPadding="false"
-                        android:text="@string/bank_account_not_added"
-                        android:textColor="@color/warm_grey"
-                        android:textSize="12sp"
-                        app:drawableStartCompat="@drawable/ic_info_circular_orange"
-                        app:fontFamily="@font/regular" />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                      <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/bank_account_name"
-                        android:layout_width="match_parent"
+                        <com.framework.views.customViews.CustomTextView
+                          android:id="@+id/title_bank_added"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:drawablePadding="@dimen/size_4"
+                          android:includeFontPadding="false"
+                          android:text="@string/bank_account_not_added"
+                          android:textColor="@color/warm_grey"
+                          android:textSize="12sp"
+                          app:drawableStartCompat="@drawable/ic_info_circular_orange"
+                          app:fontFamily="@font/regular" />
+
+                        <com.framework.views.customViews.CustomTextView
+                          android:id="@+id/bank_account_name"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginStart="@dimen/size_1"
+                          android:layout_marginTop="@dimen/size_3"
+                          android:drawablePadding="@dimen/size_4"
+                          android:includeFontPadding="false"
+                          android:text="Kotak Mahindra Bnak - 345547684878"
+                          android:textColor="@color/light_blue"
+                          android:textSize="12sp"
+                          android:visibility="gone"
+                          app:fontFamily="@font/semi_bold"
+                          tools:visibility="visible" />
+                      </LinearLayout>
+
+                      <com.framework.views.customViews.CustomImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/size_1"
-                        android:layout_marginTop="@dimen/size_3"
-                        android:drawablePadding="@dimen/size_4"
-                        android:includeFontPadding="false"
-                        android:text="Kotak Mahindra Bnak - 345547684878"
-                        android:textColor="@color/light_blue"
-                        android:textSize="12sp"
-                        android:visibility="gone"
-                        app:fontFamily="@font/semi_bold"
-                        tools:visibility="visible" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_arrow_right_grey" />
                     </LinearLayout>
 
-                    <com.framework.views.customViews.CustomImageView
-                      android:layout_width="wrap_content"
+                    <LinearLayout
+                      android:id="@+id/external_url_view"
+                      android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      app:layout_constraintBottom_toBottomOf="parent"
-                      app:layout_constraintRight_toRightOf="parent"
-                      app:layout_constraintTop_toTopOf="parent"
-                      app:srcCompat="@drawable/ic_arrow_right_grey" />
+                      android:layout_marginTop="@dimen/size_6"
+                      android:orientation="vertical"
+                      android:visibility="gone"
+                      tools:visibility="visible">
 
-                  </androidx.constraintlayout.widget.ConstraintLayout>
+                      <com.framework.views.customViews.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/size_4"
+                        android:includeFontPadding="false"
+                        android:text="Add External URL"
+                        android:textColor="@color/warm_grey"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/regular" />
+
+                      <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_38"
+                        android:layout_marginTop="@dimen/size_5"
+                        android:layout_marginBottom="@dimen/size_5"
+                        android:background="@drawable/shape_grey_stroke_rect_bkg"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/btn_remove_view"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.framework.views.customViews.CustomEditText
+                          android:id="@+id/edt_name_desc"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.5"
+                          android:background="@android:color/transparent"
+                          android:hint="Website name"
+                          android:maxLines="1"
+                          android:paddingLeft="@dimen/size_8"
+                          android:singleLine="true"
+                          android:textColor="@color/greyish_brown"
+                          android:textColorHint="@color/warm_light" />
+
+                        <View
+                          android:layout_width="1dp"
+                          android:layout_height="match_parent"
+                          android:background="@color/placeholder_bg" />
+
+                        <com.framework.views.customViews.CustomEditText
+                          android:id="@+id/edt_url"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1"
+                          android:background="@android:color/transparent"
+                          android:hint="Paste your URL here"
+                          android:maxLines="1"
+                          android:paddingLeft="@dimen/size_8"
+                          android:singleLine="true"
+                          android:textColor="@color/greyish_brown"
+                          android:textColorHint="@color/warm_light" />
+
+                      </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </LinearLayout>
+
+                  </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
               </LinearLayout>

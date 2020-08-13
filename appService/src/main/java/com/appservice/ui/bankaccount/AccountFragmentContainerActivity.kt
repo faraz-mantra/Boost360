@@ -131,14 +131,20 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
     }
   }
 
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    bankAccountFragment?.onActivityResult(requestCode, resultCode, data)
+    addAccountStartFragment?.onActivityResult(requestCode, resultCode, data)
+  }
 }
 
-fun Fragment.startFragmentAccountActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+fun Fragment.startFragmentAccountActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false,
+                                          isResult: Boolean = false, requestCode: Int = 101) {
   val intent = Intent(activity, AccountFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
+  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, requestCode)
 }
 
 fun startFragmentAccountActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
