@@ -194,7 +194,8 @@
             android:name="com.webengage.sdk.android.accent_color"
             android:value="@color/primary" />
 
-        <receiver android:name="com.webengage.sdk.android.WebEngageReceiver">
+        <receiver android:name="com.webengage.sdk.android.WebEngageReceiver"
+          android:exported="true">
             <intent-filter>
                 <action android:name="com.webengage.sdk.android.intent.ACTION" />
 

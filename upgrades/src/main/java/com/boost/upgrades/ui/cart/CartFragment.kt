@@ -250,12 +250,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       val dateAmount = DateUtils.getAmountDate(deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY)
       val request = if (deepLinkDay <= -1) {
         RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
-            widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
-            dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = currentDate, endDate = dateAmount)
+            widgetStatus = RenewalPurchasedRequest.WidgetStatus.EXPIRED.name, dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name,
+            startDate = dateAmount, endDate = currentDate)
       } else {
         RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
-            widgetStatus = RenewalPurchasedRequest.WidgetStatus.EXPIRED.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
-            dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = dateAmount , endDate = currentDate)
+            widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
+            dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = currentDate, endDate = dateAmount)
       }
 
       viewModel.allPurchasedWidgets(request)
