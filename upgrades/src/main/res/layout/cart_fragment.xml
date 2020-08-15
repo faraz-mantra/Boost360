@@ -527,7 +527,15 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_5sdp"
                         android:text="Apply coupon"
-                        android:textColor="#0068e0" />
+                        android:textColor="#0068e0"
+                        tools:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/discount_coupon_remove"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp"
+                        app:srcCompat="@drawable/ic_close" />
 
                 </LinearLayout>
 
