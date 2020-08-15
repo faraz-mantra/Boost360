@@ -259,12 +259,15 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                 val discount = 100 - addonDetails!!.discount_percent
                 val paymentPrice = (discount * addonDetails!!.price) / 100
                 money.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/month"
-                if (discount > 0) {
+
+                //hide or show MRP price
+                if (paymentPrice != addonDetails!!.price) {
                     orig_cost.visibility = View.VISIBLE
                     spannableString(addonDetails!!.price)
                 } else {
                     orig_cost.visibility = View.INVISIBLE
                 }
+
                 add_item_to_cart.text = "Add for ₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(paymentPrice) + "/Month"
                 havent_bought_the_feature.visibility = View.VISIBLE
             } else {

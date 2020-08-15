@@ -140,6 +140,27 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       validCouponCode = prefs.getApplyedCouponDetails()
       discount_coupon_title.text = validCouponCode!!.coupon_key
       cart_apply_coupon.visibility = View.GONE
+      discount_coupon_remove.visibility = View.VISIBLE
+    }else{
+      validCouponCode = null
+      discount_coupon_remove.visibility = View.GONE
+      cart_apply_coupon.visibility = View.VISIBLE
+      discount_coupon_title.text = "Discount coupon"
+    }
+
+    discount_coupon_remove.setOnClickListener {
+      discount_coupon_remove.visibility = View.GONE
+      cart_apply_coupon.visibility = View.VISIBLE
+      discount_coupon_title.text = "Discount coupon"
+
+      //clear coupon
+      validCouponCode = null
+
+      //remove saved orderdetails and coupondetails from prefs
+      prefs.storeCartOrderInfo(null)
+      prefs.storeApplyedCouponDetails(null)
+
+      totalCalculation()
     }
 
     cart_continue_submit.setOnClickListener {
@@ -315,8 +336,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       }
       purchaseOrders.add(PurchaseOrder(couponCode, couponDiscountPercentage, null, netAmount, widgetList))
     } else {
+      val featureWidgetList = ArrayList<Widget>()
+      var featureNetPrice = 0.0
       for (item in cartList) {
-        val widgetList = ArrayList<Widget>()
+//        val widgetList = ArrayList<Widget>()
+        val bundleWidgetList = ArrayList<Widget>()
         var extendProps: List<ExtendedProperty>? = null
         var outputExtendedProps = ArrayList<Property>()
         var extraPurchaseOrderDetails: ExtraPurchaseOrderDetails? = null
@@ -361,10 +385,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             mrp_price = mrp_price * default_validity_months
           }
 
-          //adding widget netprice to Bundle Netprice to get GrandTotal In netPrice.
-          bundleNetPrice += netPrice
+          //adding widget netprice to featureNetprice to get GrandTotal In netPrice.
+          featureNetPrice += netPrice
 
-          widgetList.add(Widget(
+          featureWidgetList.add(Widget(
               "",
               ConsumptionConstraint(
                   "DAYS",
@@ -413,7 +437,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
                       //adding bundle netPrice
                       bundleNetPrice += netPrice * singleBundle.min_purchase_months
-                      widgetList.add(Widget(
+                      bundleWidgetList.add(Widget(
                           "",
                           ConsumptionConstraint(
                               "DAYS",
@@ -448,22 +472,43 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 }
                 break
               }
-            }
-          }
-        }
+            } //bundle forloop completion
 
-
-        purchaseOrders.add(
-            PurchaseOrder(
-                couponCode,
-                bundleDiscount, //Discount of the bundle/package/order without tax.
-                extraPurchaseOrderDetails,
-                bundleNetPrice,
-                widgetList
+            purchaseOrders.add(
+                    PurchaseOrder(
+                            couponCode,
+                            bundleDiscount, //Discount of the bundle/package/order without tax.
+                            extraPurchaseOrderDetails,
+                            bundleNetPrice,
+                            bundleWidgetList
+                    )
             )
-        )
-      }
-    }
+
+          }// bundle end
+        }//bundle type if end
+
+
+//        purchaseOrders.add(
+//            PurchaseOrder(
+//                couponCode,
+//                bundleDiscount, //Discount of the bundle/package/order without tax.
+//                extraPurchaseOrderDetails,
+//                bundleNetPrice,
+//                widgetList
+//            )
+//        )
+      }// end of cart item for loop
+
+      purchaseOrders.add(
+              PurchaseOrder(
+                      couponCode,
+                      0,
+                      null,
+                      featureNetPrice,
+                      featureWidgetList
+              )
+      )
+    } // if end of new order
 
     var keysToBeActivated = ArrayList<String>()
 
@@ -561,6 +606,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         months_validity_edit_dsc.visibility = View.GONE
         months_validity.text = "- -"
 
+        //clear coupon
+        validCouponCode = null
+
         //remove saved orderdetails from prefs
         prefs.storeCartOrderInfo(null)
         prefs.storeApplyedCouponDetails(null)
@@ -642,7 +690,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         validCouponCode = it
         discount_coupon_title.text = validCouponCode!!.coupon_key
         cart_apply_coupon.visibility = View.GONE
+        discount_coupon_remove.visibility = View.VISIBLE
         totalCalculation()
+      }else{
+        validCouponCode = null
       }
     })
   }
@@ -698,6 +749,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       if (validCouponCode != null) {
         couponDisount = validCouponCode!!.discount_percent
         coupon_discount_title.text = "Coupon discount(" + couponDisount.toString() + "%)"
+      }else{
+        coupon_discount_title.text = "Coupon discount"
       }
       if (cartList != null && cartList.size > 0) {
         for (item in cartList) {

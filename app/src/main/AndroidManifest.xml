@@ -51,8 +51,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:name,android:theme,android:appComponentFactory">
-        <activity android:name="com.nowfloats.manufacturing.webview.WebViewActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name="com.nowfloats.Restaurants.BookATable.BookATableActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.manufacturing.webview.WebViewActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.hotel.seasonalOffers.SeasonalOffersDetailsActivity"
             android:screenOrientation="portrait"
@@ -720,30 +723,31 @@
         </activity> <!-- PreSignUp module -->
         <activity
             android:name="com.boost.presignup.SplashActivity"
-          android:label="@string/title_activity_splash_screen_"
-          android:screenOrientation="portrait"
-          android:theme="@style/AppTheme.Splash"
-          tools:replace="android:theme">
-          <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:label="@string/title_activity_splash_screen_"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Splash"
+            tools:replace="android:theme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.LAUNCHER" />
-          </intent-filter>
-          <intent-filter
-            android:autoVerify="true"
-            tools:ignore="UnusedAttribute">
-            <data android:scheme="anton" />
-            <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter
+                android:autoVerify="true"
+                tools:ignore="UnusedAttribute">
+                <data android:scheme="anton" />
 
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
+                <action android:name="android.intent.action.VIEW" />
 
-            <data
-              android:host="${applicationId}.UI.SplashActivity"
-              android:pathPrefix="/"
-              android:scheme="http" />
-          </intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="${applicationId}.UI.SplashActivity"
+                    android:pathPrefix="/"
+                    android:scheme="http" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"
@@ -1259,18 +1263,23 @@
             android:name="com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.project.ProjectDetailsActivity"
+        <activity
+            android:name="com.nowfloats.manufacturing.projectandteams.ui.project.ProjectDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsDetailsActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.nowfloats.manufacturing.projectandteams.ui.project.ProjectActivity"
+        <activity
+            android:name="com.nowfloats.manufacturing.projectandteams.ui.project.ProjectActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresDetailsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresDetailsActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
