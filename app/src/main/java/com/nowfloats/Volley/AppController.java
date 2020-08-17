@@ -247,6 +247,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
     @Override
     protected void attachBaseContext(Context base) {
+        MultiDex.install(this);
         localeManager = new LocaleManager(base);
         Log.e("getLanguage",">>>>>>>>>>>>>>" + localeManager.getLanguage());
         try {
@@ -255,8 +256,6 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
             e.printStackTrace();
         }
         super.attachBaseContext(localeManager.setLocale(base));
-//        super.attachBaseContext(base);
-        MultiDex.install(this);
     }
 
     @Override
