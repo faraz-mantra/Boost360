@@ -1,5 +1,6 @@
 package com.boost.presignup.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.net.Uri
 import android.util.Log
@@ -62,8 +63,8 @@ class FirebaseDynamicLinksManager {
             map[key] = value
           }
         }
-      } catch (e: IllegalArgumentException) {
-        e.printStackTrace()
+      } catch (e: Exception) {
+        Log.e(FirebaseDynamicLinksManager::class.java.name, e.localizedMessage ?: "")
       }
     }
     return map
