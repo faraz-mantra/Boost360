@@ -62,9 +62,12 @@ class UpgradeActivity : AppCompatActivity() {
   var mobileNo: String? = null
   var profileUrl: String? = null
   var isDeepLink: Boolean = false
+  var isOpenCardFragment: Boolean = false
+  var isBackCart: Boolean = false
+
   var deepLinkViewType: String = ""
   var deepLinkDay: Int = 7
-  var isOpenCardFragment: Boolean = false
+
 
   var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
   private var widgetFeatureCode: String? = null
@@ -101,22 +104,20 @@ class UpgradeActivity : AppCompatActivity() {
 
   fun initView() {
     if (fpid != null) {
+      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
+      //update userdetails and buyitem
+      showingPopUp()
+      supportFragmentManager.addOnBackStackChangedListener {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
+        if (currentFragment != null) {
+          val tag = currentFragment.tag
+          Log.e("Add tag", ">>>$tag")
+          tellFragments()
+        } else finish()
+      }
       if (isDeepLink || isOpenCardFragment) {
         cartFragment = CartFragment.newInstance()
         cartFragment?.let { addFragment(it, CART_FRAGMENT) }
-      } else {
-        addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
-        //update userdetails and buyitem
-        showingPopUp()
-        supportFragmentManager.addOnBackStackChangedListener {
-          val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
-          if (currentFragment != null) {
-            val tag = currentFragment.tag
-            Log.e("Add tag", ">>>$tag")
-            tellFragments()
-          } else finish()
-
-        }
       }
     } else {
       Toasty.error(this, "Invalid Business Profile ID. Please restart the marketplace.", Toast.LENGTH_LONG).show()
@@ -155,14 +156,13 @@ class UpgradeActivity : AppCompatActivity() {
           if (tag == ORDER_CONFIRMATION_FRAGMENT) {
             if (isDeepLink) goHomeActivity()
             else goToHomeFragment()
-          } else if (isDeepLink && (tag == CART_FRAGMENT || tag == VIEW_ALL_FEATURE)) {
+          } else if ((isDeepLink || isOpenCardFragment) && (tag == HOME_FRAGMENT)) {
             if (cartFragment != null && cartFragment?.isRenewalListNotEmpty() == true) alertDialog()
             else goHomeActivity()
-          } else if (isOpenCardFragment) this.finish()
-          else fragmentManager!!.popBackStack()
+          } else fragmentManager!!.popBackStack()
         }
       } else {
-        if (isDeepLink) goHomeActivity()
+        if ((isDeepLink || isOpenCardFragment)) goHomeActivity()
         else super.onBackPressed()
       }
     } catch (e: Exception) {
