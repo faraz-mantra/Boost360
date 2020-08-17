@@ -68,7 +68,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   lateinit var bundlesList: List<BundlesModel>
 
   lateinit var renewalList: List<RenewalResult>
-  var isDeepLinking = false
 
   var bundles_in_cart = false
   var default_validity_months = 1
@@ -131,7 +130,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     initializeAddonsRecycler()
     initializeRenewalRecycler()
     initializeErrorObserver()
-    isDeepLinking = (activity as UpgradeActivity).isDeepLink
     initMvvM()
     checkRenewalItemDeepLinkClick()
 
@@ -141,7 +139,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       discount_coupon_title.text = validCouponCode!!.coupon_key
       cart_apply_coupon.visibility = View.GONE
       discount_coupon_remove.visibility = View.VISIBLE
-    }else{
+    } else {
       validCouponCode = null
       discount_coupon_remove.visibility = View.GONE
       cart_apply_coupon.visibility = View.VISIBLE
@@ -265,7 +263,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   }
 
   private fun checkRenewalItemDeepLinkClick() {
-    if (isDeepLinking) {
+    val ac = (activity as UpgradeActivity)
+    if (ac.isBackCart.not() && (ac.isDeepLink || ac.isOpenCardFragment)) {
       val currentDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY)
       val deepLinkDay = (activity as UpgradeActivity).deepLinkDay
       val dateAmount = DateUtils.getAmountDate(deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY)
@@ -294,7 +293,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           totalCalculation()
         } else {
           Toasty.warning(requireContext(), "Renewal order not found").show()
-          loadData()
+          ac.isBackCart = true
+          (activity as UpgradeActivity).onBackPressed()
         }
       })
     } else loadData()
@@ -475,13 +475,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             } //bundle forloop completion
 
             purchaseOrders.add(
-                    PurchaseOrder(
-                            couponCode,
-                            bundleDiscount, //Discount of the bundle/package/order without tax.
-                            extraPurchaseOrderDetails,
-                            bundleNetPrice,
-                            bundleWidgetList
-                    )
+                PurchaseOrder(
+                    couponCode,
+                    bundleDiscount, //Discount of the bundle/package/order without tax.
+                    extraPurchaseOrderDetails,
+                    bundleNetPrice,
+                    bundleWidgetList
+                )
             )
 
           }// bundle end
@@ -500,13 +500,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       }// end of cart item for loop
 
       purchaseOrders.add(
-              PurchaseOrder(
-                      couponCode,
-                      0,
-                      null,
-                      featureNetPrice,
-                      featureWidgetList
-              )
+          PurchaseOrder(
+              couponCode,
+              0,
+              null,
+              featureNetPrice,
+              featureWidgetList
+          )
       )
     } // if end of new order
 
@@ -692,7 +692,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cart_apply_coupon.visibility = View.GONE
         discount_coupon_remove.visibility = View.VISIBLE
         totalCalculation()
-      }else{
+      } else {
         validCouponCode = null
       }
     })
@@ -749,7 +749,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       if (validCouponCode != null) {
         couponDisount = validCouponCode!!.discount_percent
         coupon_discount_title.text = "Coupon discount(" + couponDisount.toString() + "%)"
-      }else{
+      } else {
         coupon_discount_title.text = "Coupon discount"
       }
       if (cartList != null && cartList.size > 0) {
