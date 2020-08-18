@@ -1400,6 +1400,20 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Dec</item>
     </string-array>
 
+    <string-array name="appointment_analytics">
+        <item>Successful\nAppointments</item>
+        <item>Received\nAppointments</item>
+        <item>Cancelled\nAppointments</item>
+        <item>Abandoned\nAppointments</item>
+    </string-array>
+
+    <string-array name="booking_analytics">
+        <item>Successful\nBookings</item>
+        <item>Received\nBookings</item>
+        <item>Cancelled\nBookings</item>
+        <item>Abandoned\nBookings</item>
+    </string-array>
+
     <string-array name="order_analytics">
         <item>Successful\nOrders</item>
         <item>Received\nOrders</item>
