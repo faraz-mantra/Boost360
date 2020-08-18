@@ -389,10 +389,16 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
               Log.d(ServiceDetailFragment::class.java.name, "$it")
             } else showLongToast("Add secondary image data error, please try again.")
           } else showError(resources.getString(R.string.internet_connection_not_available))
-          if (checkPosition == secondaryImageList.size) goBack()
+          if (checkPosition == secondaryImageList.size) {
+            showLongToast(if (isEdit == true) "Updated Service." else "Created Service.")
+            goBack()
+          }
         })
       }
-    } else goBack()
+    } else {
+      showLongToast(if (isEdit == true) "Updated Service." else "Created Service.")
+      goBack()
+    }
   }
 
   private fun goBack() {
