@@ -519,7 +519,6 @@
               android:layout_gravity="center_horizontal"
               android:gravity="center"
               android:text="@string/add_multiple_files_jpg_png"
-              android:textAllCaps="true"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/regular"
               app:textType="BODY_1" />
