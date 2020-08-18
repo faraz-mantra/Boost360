@@ -20,6 +20,10 @@ public class SellerSummary {
         @Expose
         private String totalRevenue;
 
+        @SerializedName("TotalNetAmount")
+        @Expose
+        private Integer totalNetAmount;
+
         @SerializedName("CurrencyCode")
         @Expose
         private String currencyCode;
@@ -47,6 +51,14 @@ public class SellerSummary {
         @SerializedName("TotalOrdersAbandoned")
         @Expose
         private Integer totalOrdersAbandoned;
+
+        public Integer getTotalNetAmount() {
+            return totalNetAmount;
+        }
+
+        public void setTotalNetAmount(Integer totalNetAmount) {
+            this.totalNetAmount = totalNetAmount;
+        }
 
         public String getTotalRevenue() {
             return totalRevenue;
