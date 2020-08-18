@@ -7,8 +7,10 @@
     <attr name="textOff" format="string" />
 
     <attr name="colorOff" format="color" />
+    <attr name="txtColorOff" format="color" />
 
     <attr name="colorOn" format="color" />
+    <attr name="txtColorOn" format="color" />
 
     <attr name="colorBorder" format="color" />
 

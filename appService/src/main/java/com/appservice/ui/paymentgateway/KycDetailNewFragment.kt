@@ -11,10 +11,13 @@ import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentKycDetailNewBinding
+import com.appservice.model.kycData.DataKyc
 import com.framework.models.BaseViewModel
 
 class KycDetailNewFragment : AppBaseFragment<FragmentKycDetailNewBinding, BaseViewModel>() {
+  private var dataKyc: DataKyc? = null
   override fun getLayout(): Int {
     return R.layout.fragment_kyc_detail_new
   }
@@ -25,6 +28,8 @@ class KycDetailNewFragment : AppBaseFragment<FragmentKycDetailNewBinding, BaseVi
 
   override fun onCreateView() {
     super.onCreateView()
+    dataKyc = arguments?.getSerializable(IntentConstant.KYC_DETAIL.name) as? DataKyc
+    dataKyc?.let { setUi(it) }
     binding?.btnContact?.setOnClickListener {
       try {
         val intent = Intent(Intent.ACTION_CALL)
@@ -36,6 +41,13 @@ class KycDetailNewFragment : AppBaseFragment<FragmentKycDetailNewBinding, BaseVi
         showLongToast("Error in your phone call!")
       }
     }
+  }
+
+  private fun setUi(dataKyc: DataKyc) {
+    binding?.tvPanNumber?.text = dataKyc.panNumber
+    binding?.namePanCard?.text = dataKyc.nameOfPanHolder
+    binding?.tvBankAccNumber?.text = "A/C No. ${dataKyc.bankAccountNumber}"
+    binding?.tvBankBranchDetails?.text = "${dataKyc.nameOfBank} - ${dataKyc.bankBranchName}"
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

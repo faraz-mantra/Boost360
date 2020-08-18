@@ -84,7 +84,7 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
     binding?.tvBankAccNumber?.text = "A/C No. ${dataKyc.bankAccountNumber}"
     binding?.tvBankBranchDetails?.text = "${dataKyc.nameOfBank} - ${dataKyc.bankBranchName}"
     if (dataKyc.isVerified == DataKyc.Verify.YES.name) {
-      startFragmentPaymentActivity(FragmentType.KYC_DETAIL_NEW, Bundle())
+      startFragmentPaymentActivity(FragmentType.KYC_DETAIL_NEW, Bundle().apply { putSerializable(IntentConstant.KYC_DETAIL.name, dataKyc) })
       baseActivity.finish()
     } else binding?.mainView?.visible()
   }

@@ -60,10 +60,12 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Web
     if (session.isPaymentGateway && session.isSelfBrandedAdd) {
       checkInstaMojo()
     } else if (session.isPaymentGateway && session.isSelfBrandedAdd.not()) {
+      binding?.mainView?.visible()
       binding?.selfBrandedKycAddView?.gone()
       binding?.paymentGatewayActivation?.visible()
       binding?.addOnNotActive?.gone()
     } else {
+      binding?.mainView?.visible()
       binding?.selfBrandedKycAddView?.gone()
       binding?.paymentGatewayActivation?.gone()
       binding?.addOnNotActive?.visible()
@@ -94,6 +96,7 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Web
           } else changeUi(dataKyc?.isVerified ?: "")
         } else changeUi("")
       } else changeUi("")
+      binding?.mainView?.visible()
       hideProgress()
     })
   }

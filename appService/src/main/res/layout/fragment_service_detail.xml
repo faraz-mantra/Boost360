@@ -339,14 +339,17 @@
                   android:id="@+id/toggle_service"
                   android:layout_width="@dimen/size_54"
                   android:layout_height="@dimen/size_24"
-                  app:colorBorder="@color/greyish"
-                  app:colorOn="#0DC920"
+                  app:colorBorder="@android:color/transparent"
+                  app:colorOff="@color/light_lemon"
+                  app:colorOn="@color/light_green_1"
                   app:layout_constraintBottom_toBottomOf="parent"
                   app:layout_constraintRight_toRightOf="parent"
                   app:layout_constraintTop_toTopOf="parent"
                   app:on="true"
                   app:textOff="NO"
-                  app:textOn="YES" />
+                  app:textOn="YES"
+                  app:txtColorOff="@color/white"
+                  app:txtColorOn="@color/white" />
 
 
               </androidx.constraintlayout.widget.ConstraintLayout>
@@ -500,12 +503,12 @@
                     android:padding="@dimen/size_10">
 
                     <com.framework.views.customViews.CustomTextView
+                      android:id="@+id/txt_payment_type"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:id="@+id/txt_payment_type"
+                      android:text="@string/boost_payment_gateway"
                       android:textColor="@color/black_4f4f4f"
                       android:textSize="12sp"
-                      android:text="@string/boost_payment_gateway"
                       app:fontFamily="@font/semi_bold"
                       app:layout_constraintBottom_toBottomOf="parent"
                       app:layout_constraintLeft_toLeftOf="parent"
@@ -625,7 +628,8 @@
                           android:paddingLeft="@dimen/size_8"
                           android:singleLine="true"
                           android:textColor="@color/greyish_brown"
-                          android:textColorHint="@color/warm_light" />
+                          android:textColorHint="@color/warm_light"
+                          android:textSize="14sp" />
 
                         <View
                           android:layout_width="1dp"
@@ -643,7 +647,8 @@
                           android:paddingLeft="@dimen/size_8"
                           android:singleLine="true"
                           android:textColor="@color/greyish_brown"
-                          android:textColorHint="@color/warm_light" />
+                          android:textColorHint="@color/warm_light"
+                          android:textSize="14sp" />
 
                       </androidx.appcompat.widget.LinearLayoutCompat>
 

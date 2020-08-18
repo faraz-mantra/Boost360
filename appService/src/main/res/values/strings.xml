@@ -102,9 +102,9 @@
   <string name="associated_bank_account">Associated Bank Account</string>
   <string name="add_a_different_bank_account">Add a different bank account</string>
   <string name="a_c_no_34565xxxxx45465">A/C No. 34565XXXXX45465</string>
-  <string name="add_file_jpg_png_pdf">ADD FILE (Jpg/png/pdf)</string>
+  <string name="add_file_jpg_png">ADD FILE (Jpg/png)</string>
   <string name="additional_documents_optional">Additional Documents (Optional)</string>
-  <string name="add_multiple_files_jpg_png_pdf">Add Multiple Files (Jpg/png/pdf)</string>
+  <string name="add_multiple_files_jpg_png">Add Multiple Files (Jpg/png)</string>
   <string name="payment_gateway_docs_ready_note"><b>NOTE:</b> Keep your PAN card handy or a picture of it from your gallery would also do. Apart from this you should keep 1 month bank statement and establishment certificate to upload here (if applicable) for extended limit.</string>
   <string name="refresh_status_camel_case">Refresh Status</string>
   <string name="pan_number">PAN Number</string>
@@ -151,4 +151,10 @@
   <string name="the_service_can_be_offered_either_at_the_business_location_or_at_client_s_location">The service can be offered either at the business location or at client’s location.</string>
   <string name="please_add_bank_detail">Please add bank account detail.</string>
   <string name="please_enter_valid_url_name">Please enter valid external url and name.</string>
+  <string name="need_change_information">Need to change any information in your Business KYC?</string>
+  <string name="business_verification_allows_your_customers_desc">Business verification allows your customers to have trust on you. We use this verification to also, provide you extension of limits for certain features going forward.</string>
+  <string name="business_verification_allows_customers_trust">Business verification allows your customers to have trust on you. We use this verification to also, provide you extension of limits for certain features going forward.</string>
+  <string name="with_business_kyc">With Business KYC,</string>
+  <string name="verify_business">verify your business</string>
+  <string name="on_boost360">on Boost360</string>
 </resources>

@@ -261,7 +261,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_5"
             android:background="@drawable/bg_rect_edit_txt"
-            android:hint="Type/select a service category"
+            android:hint="Type service category"
             android:inputType="textCapWords"
             android:padding="@dimen/size_12"
             android:singleLine="true"
