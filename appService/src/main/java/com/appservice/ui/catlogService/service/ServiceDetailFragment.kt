@@ -435,10 +435,10 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     } else if (tongle && (discount > amount)) {
       showLongToast(resources.getString(R.string.discount_amount_not_greater_than_price))
       return false
-    } else if (product?.paymentType.isNullOrEmpty() || (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null)) {
+    } else if (tongle && (product?.paymentType.isNullOrEmpty() || (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null))) {
       showLongToast(resources.getString(R.string.please_add_bank_detail))
       return false
-    } else if (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty())) {
+    } else if (tongle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty()))) {
       showLongToast(resources.getString(R.string.please_enter_valid_url_name))
       return false
     } else if (product?.category.isNullOrEmpty()) {
@@ -452,9 +452,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     product?.Description = serviceDesc
     product?.Price = if (tongle) amount else 0.0
     product?.DiscountAmount = if (tongle) discount else 0.0
-    if (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value) {
+    if (tongle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)) {
       product?.BuyOnlineLink = BuyOnlineLink(externalUrl, externalUrlName)
-    } else product?.BuyOnlineLink = null
+    } else product?.BuyOnlineLink = BuyOnlineLink()
 
     if (isEdit == false) {
       product?.category = product?.category ?: ""
