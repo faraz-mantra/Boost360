@@ -103,7 +103,8 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            title.setText(com.nowfloats.util.Utils.getOrderAnalyticsTaxonomyFromServiceCode(mSession.getFP_AppExperienceCode()));
+//            title.setText(com.nowfloats.util.Utils.getOrderAnalyticsTaxonomyFromServiceCode(mSession.getFP_AppExperienceCode()));
+            title.setText(com.nowfloats.util.Utils.getCustomerAppointmentTaxonomyFromServiceCode(mSession.getFP_AppExperienceCode()));
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

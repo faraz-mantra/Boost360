@@ -128,6 +128,23 @@ public class Utils {
         }
     }
 
+    public static String getCustomerAppointmentTaxonomyFromServiceCode(String category_code) {
+        //" Customer Appointments" for "SVC","DOC", "HOS","SPA", "SAL"  & "Customer Orders" for all others.
+        switch (category_code) {
+            case "DOC":
+            case "HOS":
+                return "Customer Appointments";
+            case "SVC":
+            case "SPA":
+            case "SAL":
+                return "Customer Bookings";
+            default:
+                return "Customer Orders";
+        }
+    }
+
+
+
     public static boolean isRoomBooking(String category_code) {
         return ("HOT".equals(category_code));
     }
