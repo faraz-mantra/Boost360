@@ -109,7 +109,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     getPickUpAddress()
     binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-    setOnClickListener(binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation, binding?.vwPaymentConfig, binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo)
+    setOnClickListener(binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation, binding?.vwPaymentConfig,
+        binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
     binding?.toggleService?.setOnToggledListener { _, isOn ->
       binding?.payServiceView?.visibility = if (isOn) View.VISIBLE else View.GONE
       binding?.freeServiceView?.visibility = if (isOn) View.GONE else View.VISIBLE
@@ -247,6 +248,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
+      binding?.bankAccountView -> {
+        if (binding?.bankAccountView?.visibility == View.VISIBLE) goAddBankView()
+      }
       binding?.imageAddBtn -> openImagePicker()
       binding?.clearImage -> clearImage()
       binding?.vwChangeDeliverConfig -> showServiceDeliveryConfigBottomSheet()
@@ -566,21 +570,23 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         }
       }
     }
-    dialog.onListenerChange = {
-      val bundle = Bundle()
-      bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
-      bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
-      bundle.putString(IntentConstant.FP_ID.name, fpId)
-      bundle.putBoolean(IntentConstant.IS_SERVICE_CREATION.name, true)
-      val fragment = if (bankAccountDetail != null) FragmentType.BANK_ACCOUNT_DETAILS else FragmentType.ADD_BANK_ACCOUNT_START
-      startFragmentAccountActivity(fragment, bundle, isResult = true, requestCode = 202)
-    }
+    dialog.onListenerChange = { goAddBankView() }
     if (((product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) ||
             (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)).not()) {
       product?.paymentType = ""
     }
     dialog.setDataPaymentGateway(bankAccountDetail, product?.paymentType)
     dialog.show(parentFragmentManager, PaymentConfigBottomSheet::class.java.name)
+  }
+
+  private fun goAddBankView() {
+    val bundle = Bundle()
+    bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
+    bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
+    bundle.putString(IntentConstant.FP_ID.name, fpId)
+    bundle.putBoolean(IntentConstant.IS_SERVICE_CREATION.name, true)
+    val fragment = if (bankAccountDetail != null) FragmentType.BANK_ACCOUNT_DETAILS else FragmentType.ADD_BANK_ACCOUNT_START
+    startFragmentAccountActivity(fragment, bundle, isResult = true, requestCode = 202)
   }
 
 

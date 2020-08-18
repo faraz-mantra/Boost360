@@ -162,9 +162,9 @@
               android:id="@+id/btn_my_account"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/size_14"
               android:clickable="true"
               android:focusable="true"
-              android:layout_marginBottom="@dimen/size_14"
               android:gravity="center_vertical"
               android:orientation="horizontal">
 
@@ -450,19 +450,32 @@
             </com.framework.views.customViews.CustomCardView>
           </FrameLayout>
 
-          <com.framework.views.customViews.CustomTextView
+          <FrameLayout
             android:id="@+id/btn_bank_statement_picker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_10"
             android:background="@drawable/bg_rounded_grey"
-            android:gravity="center"
-            android:paddingVertical="@dimen/size_10"
-            android:text="@string/add_file_jpg_png_pdf"
-            android:textAllCaps="true"
-            android:textColor="@color/greyish_brown"
-            app:fontFamily="@font/regular"
-            app:textType="BODY_1" />
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/size_10">
+
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:layout_marginStart="@dimen/size_20"
+              app:srcCompat="@drawable/ic_attachment" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:gravity="center"
+              android:text="@string/add_file_jpg_png"
+              android:textColor="@color/greyish_brown"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
+          </FrameLayout>
 
           <!--Additional Documents Preview-->
           <com.framework.views.customViews.CustomTextView
@@ -484,19 +497,33 @@
             tools:itemCount="6"
             tools:listitem="@layout/item_preview_image" />
 
-          <com.framework.views.customViews.CustomTextView
+          <FrameLayout
             android:id="@+id/btn_additional_docs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_4"
             android:background="@drawable/bg_rounded_grey"
-            android:gravity="center"
-            android:paddingVertical="@dimen/size_10"
-            android:text="@string/add_multiple_files_jpg_png_pdf"
-            android:textAllCaps="true"
-            android:textColor="@color/greyish_brown"
-            app:fontFamily="@font/regular"
-            app:textType="BODY_1" />
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/size_10">
+
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:layout_marginStart="@dimen/size_20"
+              app:srcCompat="@drawable/ic_attachment" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:gravity="center"
+              android:text="@string/add_multiple_files_jpg_png"
+              android:textAllCaps="true"
+              android:textColor="@color/greyish_brown"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
+          </FrameLayout>
 
 
         </LinearLayout>

@@ -389,6 +389,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
 
   private fun openImagePicker(allowMultiple: Boolean) {
     val filterSheet = ImagePickerBottomSheet()
+    filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it, allowMultiple) }
     filterSheet.show(this@KYCDetailsFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }

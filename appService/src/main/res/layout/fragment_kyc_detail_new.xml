@@ -10,7 +10,7 @@
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_snow">
+    android:background="@color/white">
 
     <RelativeLayout
       android:layout_width="match_parent"
@@ -20,19 +20,111 @@
       app:layout_constraintTop_toTopOf="parent">
 
       <com.framework.views.customViews.CustomCardView
+        android:id="@+id/view_top"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_220"
-        android:layout_marginTop="@dimen/size_34"
-        android:layout_marginBottom="@dimen/size_4"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_40"
+        android:layout_marginBottom="@dimen/size_2"
+        android:clipToPadding="false"
+        app:cardBackgroundColor="@color/white_five"
+        app:cardCornerRadius="@dimen/size_36"
+        app:cardUseCompatPadding="false">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_70"
+          android:layout_marginBottom="@dimen/size_30"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_30"
+            android:layout_marginTop="@dimen/size_20"
+            android:text="@string/name_as_mentioned_on_pan_card"
+            android:textColor="@color/warm_grey"
+            app:textType="BODY_1" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/name_pan_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_30"
+            android:textColor="@color/greyish_brown"
+            app:fontFamily="@font/semi_bold"
+            app:textType="HEADING_4"
+            tools:text="Propizio Real Estate\nPrivate Limited" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_30"
+            android:layout_marginTop="@dimen/size_10"
+            android:text="@string/associated_bank_account"
+            android:textColor="@color/warm_grey"
+            app:textType="BODY_1" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_bank_acc_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_30"
+            android:layout_marginTop="@dimen/size_4"
+            android:layout_marginEnd="@dimen/size_10"
+            android:textColor="@color/greyish_brown"
+            app:fontFamily="@font/regular"
+            app:textType="HEADING_5"
+            tools:text="@string/a_c_no_34565xxxxx45465" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_bank_branch_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_30"
+            android:layout_marginEnd="@dimen/size_10"
+            android:textColor="#0074ff"
+            app:fontFamily="@font/regular"
+            app:textType="CAPTION"
+            tools:text="@string/kotak_mahindra_bank_connaught_place_branch" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_30"
+            android:layout_marginTop="@dimen/size_10"
+            android:text="@string/pan_number"
+            android:textColor="@color/warm_grey"
+            app:textType="BODY_1" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_pan_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_30"
+            android:layout_marginEnd="@dimen/size_10"
+            android:includeFontPadding="false"
+            android:textColor="@color/greyish_brown"
+            app:fontFamily="@font/regular"
+            app:textType="HEADING_5"
+            tools:text="AAGCP768M" />
+        </LinearLayout>
+      </com.framework.views.customViews.CustomCardView>
+
+      <com.framework.views.customViews.CustomCardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_70"
+        android:layout_marginTop="@dimen/size_36"
+        android:layout_marginBottom="@dimen/size_2"
         android:clipToPadding="false"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="@dimen/size_30"
+        app:cardCornerRadius="@dimen/size_36"
         app:cardElevation="@dimen/size_4"
         app:cardUseCompatPadding="false" />
 
-      <androidx.appcompat.widget.LinearLayoutCompat
+      <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_220"
+        android:layout_height="@dimen/size_76"
         android:background="@color/white"
         android:elevation="@dimen/size_4"
         android:gravity="center_horizontal"
@@ -40,36 +132,45 @@
         tools:ignore="UnusedAttribute">
 
         <com.framework.views.customViews.CustomImageView
-          android:layout_width="@dimen/size_60"
-          android:layout_height="@dimen/size_60"
-          android:layout_marginTop="@dimen/size_26"
+          android:id="@+id/image_icon"
+          android:layout_width="@dimen/size_36"
+          android:layout_height="@dimen/size_36"
+          android:layout_marginTop="@dimen/size_30"
           app:srcCompat="@drawable/ic_real_state_kyc" />
 
-        <com.framework.views.customViews.CustomTextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_20"
-          android:gravity="center"
-          android:text="Propizio Real Estate\nPrivate Limited"
-          android:textAlignment="gravity"
-          android:textColor="@color/greyish_brown"
-          app:fontFamily="@font/semi_bold"
-          app:textType="HEADING_4" />
-
         <com.framework.views.customViews.CustomImageView
-          android:layout_width="@dimen/size_100"
-          android:layout_height="@dimen/size_40"
-          app:srcCompat="@drawable/ic_boost_verify" />
-      </androidx.appcompat.widget.LinearLayoutCompat>
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/size_30"
+          android:layout_marginStart="@dimen/size_6"
+          android:layout_marginTop="@dimen/size_32"
+          android:layout_toEndOf="@+id/image_icon"
+          app:srcCompat="@drawable/ic_verify_green" />
+
+      </RelativeLayout>
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_desc_kyc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_top"
+        android:layout_marginStart="@dimen/size_30"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginEnd="@dimen/size_10"
+        android:fontFamily="@font/regular"
+        android:text="@string/business_verification_allows_your_customers_desc"
+        android:textColor="@color/greyish_brown"
+        app:textType="BODY_1" />
     </RelativeLayout>
 
     <com.framework.views.customViews.CustomTextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_30"
       android:layout_marginTop="@dimen/size_20"
+      android:layout_marginEnd="@dimen/size_30"
       android:layout_marginBottom="@dimen/size_20"
       android:gravity="center"
-      android:text="Change any information?"
+      android:text="@string/need_change_information"
       android:textAlignment="gravity"
       android:textColor="@color/greyish_brown"
       app:layout_constraintBottom_toBottomOf="parent"
