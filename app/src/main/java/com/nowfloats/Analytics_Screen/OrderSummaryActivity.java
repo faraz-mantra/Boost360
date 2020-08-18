@@ -390,7 +390,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
         List<BarEntry> valueEntryList = new ArrayList<>();
         labels.clear();
-        final String[] months = getResources().getStringArray(R.array.order_analytics);
+        final String[] months = com.nowfloats.util.Utils.getCustomerAppointmentBarChartCode(this, mSession.getFP_AppExperienceCode());
 
         for (int i = 0; i < months.length; i++) {
             if (i == 0) {
