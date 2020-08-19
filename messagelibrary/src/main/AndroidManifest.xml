@@ -27,7 +27,9 @@
 
         </intent-filter>
     </receiver>-->
-    <receiver android:name=".PhoneStates">
+    <receiver android:name="com.nfx.leadmessages.PhoneStates"
+      android:exported="true"
+      android:enabled="true">
       <intent-filter>
         <action android:name="android.intent.action.PHONE_STATE" />
       </intent-filter>
