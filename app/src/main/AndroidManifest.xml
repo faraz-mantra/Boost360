@@ -40,6 +40,9 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
+<!--    requestLegacyExternalStorage="true" using this to access external storage
+in api 29 for ImagePicker library in ManageProductFragment-->
+
     <application
         android:name="com.nowfloats.Volley.AppController"
         android:allowBackup="true"
@@ -51,6 +54,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
+        android:requestLegacyExternalStorage="true"
         tools:replace="android:name,android:theme,android:appComponentFactory">
         <activity
             android:name="com.nowfloats.Restaurants.BookATable.BookATableActivity"
