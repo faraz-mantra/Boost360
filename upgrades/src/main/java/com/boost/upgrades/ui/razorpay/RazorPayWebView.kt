@@ -1,20 +1,15 @@
 package com.boost.upgrades.ui.razorpay
 
-import android.content.DialogInterface
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-
+import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.api_model.GetAllWidgets.GetAllWidgets
 import com.boost.upgrades.data.api_model.Razorpay.PaymentErrorModule
 import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
 import com.boost.upgrades.ui.payment.PaymentViewModel
@@ -22,6 +17,9 @@ import com.boost.upgrades.ui.popup.FailedTransactionPopUpFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.razorpay.PaymentResultListener
@@ -29,6 +27,7 @@ import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.razor_pay_web_view_fragment.*
 import org.json.JSONObject
+
 
 class RazorPayWebView : DialogFragment() {
 
@@ -84,6 +83,14 @@ class RazorPayWebView : DialogFragment() {
                         Log.i("onPaymentSuccess", razorpayPaymentId)
                         val revenue = data["amount"] as Int
                         WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment Success", "rev", revenue/100)
+
+                        var firebaseAnalytics = Firebase.analytics
+                        val bundle = Bundle()
+                        bundle.putDouble(FirebaseAnalytics.Param.VALUE, (revenue/100).toDouble())
+                        bundle.putString(FirebaseAnalytics.Param.TRANSACTION_ID, razorpayPaymentId)
+                        bundle.putString(FirebaseAnalytics.Param.CURRENCY, "INR")
+                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.PURCHASE, bundle)
+
                         redirectOrderConfirmation(razorpayPaymentId)
                         dialog!!.dismiss()
                     }
