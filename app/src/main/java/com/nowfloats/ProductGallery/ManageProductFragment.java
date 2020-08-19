@@ -2215,7 +2215,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         if (primaryUri != null) {
                             uploadProductImage(product.productId);
                         } else {
-                            Toast.makeText(getContext(), "Information updated successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Product updated successfully.", Toast.LENGTH_SHORT).show();
                             hideDialog();
 
                             if (getActivity() != null) {
@@ -2233,7 +2233,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         Log.d("PRODUCT_JSON", "Failed to Save Product");
 
                         hideDialog();
-                        Toast.makeText(getContext(), "Failed to update information", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Failed to update product.", Toast.LENGTH_LONG).show();
                         Log.d("PRODUCT_JSON", "FAIL " + error.getMessage());
                     }
                 });
@@ -2289,7 +2289,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         if (primaryUri != null) {
                             uploadProductImage(productId);
                         } else {
-                            Toast.makeText(getContext(), "Information saved successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Product saved successfully.", Toast.LENGTH_SHORT).show();
                             hideDialog();
 
                             if (getActivity() != null) {
@@ -2307,7 +2307,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         Log.d("PRODUCT_JSON", "Failed to Save Product");
 
                         hideDialog();
-                        Toast.makeText(getContext(), "Failed to save information", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Failed to save product.", Toast.LENGTH_LONG).show();
                         Log.d("PRODUCT_JSON", "FAIL " + error.getMessage());
                     }
                 });
@@ -2481,9 +2481,9 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         hideDialog();
 
         if (responseCode == 200 || responseCode == 202) {
-            Toast.makeText(getContext(), "Information saved successfully", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Product saved successfully.", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getContext(), "Failed to save information", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Failed to save product.", Toast.LENGTH_LONG).show();
         }
 
         /**
