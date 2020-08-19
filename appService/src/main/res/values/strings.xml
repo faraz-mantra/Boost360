@@ -157,4 +157,5 @@
   <string name="with_business_kyc">With Business KYC,</string>
   <string name="verify_business">verify your business</string>
   <string name="on_boost360">on Boost360</string>
+  <string name="delete_record_not_undone">Do you really want to delete these records? This process can not be undone.</string>
 </resources>

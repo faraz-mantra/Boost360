@@ -19,7 +19,12 @@ data class BankAccountDetails(
     var kYCDetails: KYCDetails? = null
 ) : Serializable {
   var bankBranch: String? = null
+
   fun isValidAccount(): Boolean {
     return bankName.isNullOrEmpty().not() && iFSC.isNullOrEmpty().not() && accountNumber.isNullOrEmpty().not() && bankName.isNullOrEmpty().not()
+  }
+
+  fun getVerifyText(): String {
+    return if (kYCDetails?.verificationStatus == KYCDetails.Status.PENDING.name) "unverified" else "verified"
   }
 }

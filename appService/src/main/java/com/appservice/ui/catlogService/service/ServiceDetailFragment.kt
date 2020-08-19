@@ -164,8 +164,25 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
           bankAccountDetail = response.result?.bankAccountDetails
         }
       }
-      if (isEdit == true) getAddPreviousData() else hideProgress()
+      if (isEdit == true) getAddPreviousData()
+      else {
+        setBankAccountData()
+        hideProgress()
+      }
     })
+  }
+
+  private fun setBankAccountData() {
+    if (bankAccountDetail != null) {
+      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
+      binding?.bankAccountView?.visible()
+      binding?.externalUrlView?.gone()
+      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
+      binding?.bankAccountName?.visible()
+      binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
+      binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
+      binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
+    }
   }
 
   private fun getAddPreviousData() {
@@ -201,7 +218,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       binding?.bankAccountName?.visible()
       binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
       binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-      binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_added)
+      binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
     } else if (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value) {
       binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
       binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
@@ -583,7 +600,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
           binding?.bankAccountName?.visible()
           binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
           binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-          binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_added)
+          binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
         }
         Product.PaymentType.UNIQUE_PAYMENT_URL.value -> {
           binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
@@ -629,7 +646,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.menu_delete -> {
-        MaterialAlertDialogBuilder(baseActivity).setMessage(resources.getString(R.string.are_you_sure))
+        MaterialAlertDialogBuilder(baseActivity).setTitle(resources.getString(R.string.are_you_sure))
+            .setMessage(resources.getString(R.string.delete_record_not_undone))
             .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete)) { d, _ ->
               d.dismiss()
               showProgress()
@@ -649,4 +667,5 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       else -> super.onOptionsItemSelected(item)
     }
   }
+
 }
