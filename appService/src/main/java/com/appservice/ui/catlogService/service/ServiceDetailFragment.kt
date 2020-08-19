@@ -89,6 +89,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private var secondaryDataImage: ArrayList<DataImage>? = null
   private var gstProductData: DataG? = null
 
+  private var productIdAdd: String? = null
+  private var errorType: String? = null
+
   companion object {
     fun newInstance(): ServiceDetailFragment {
       return ServiceDetailFragment()
@@ -271,14 +274,21 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private fun createUpdateApi() {
     showProgress()
     if (isEdit == false) {
-      viewModel?.createService(product)?.observeOnce(viewLifecycleOwner, Observer {
-        if ((it.error is NoNetworkException).not()) {
-          val productId = it.stringResponse
-          if ((it.status == 200 || it.status == 201 || it.status == 202) && productId.isNullOrEmpty().not()) {
-            addGstService(productId)
-          } else showError("Service adding error, please try again.")
-        } else showError(resources.getString(R.string.internet_connection_not_available))
-      })
+      if (productIdAdd.isNullOrEmpty().not() && errorType == "addGstService") {
+        addGstService(productIdAdd)
+      } else if (productIdAdd.isNullOrEmpty().not() && errorType == "uploadImageSingle") {
+        uploadImageSingle(productIdAdd)
+      } else {
+        viewModel?.createService(product)?.observeOnce(viewLifecycleOwner, Observer {
+          if ((it.error is NoNetworkException).not()) {
+            val productId = it.stringResponse
+            if ((it.status == 200 || it.status == 201 || it.status == 202) && productId.isNullOrEmpty().not()) {
+              productIdAdd = productId
+              addGstService(productId)
+            } else showError("Service adding error, please try again.")
+          } else showError(resources.getString(R.string.internet_connection_not_available))
+        })
+      }
     } else {
       val updates = ArrayList<UpdateValue>()
       val json = JSONObject(Gson().toJson(product))
@@ -323,8 +333,14 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {
           hideProgress()
           uploadImageSingle(productId)
-        } else showError("Service adding error, please try again.")
-      } else showError(resources.getString(R.string.internet_connection_not_available))
+        } else {
+          if (isEdit == false) errorType = "addGstService"
+          showError("Service adding error, please try again.")
+        }
+      } else {
+        if (isEdit == false) errorType = "addGstService"
+        showError(resources.getString(R.string.internet_connection_not_available))
+      }
     })
   }
 
@@ -339,8 +355,14 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           uploadSecondaryImage(productId)
-        } else showError("Service image uploading error, please try again.")
-      } else showError(resources.getString(R.string.internet_connection_not_available))
+        } else {
+          if (isEdit == false) errorType = "uploadImageSingle"
+          showError("Service image uploading error, please try again.")
+        }
+      } else {
+        if (isEdit == false) errorType = "uploadImageSingle"
+        showError(resources.getString(R.string.internet_connection_not_available))
+      }
     })
   }
 
@@ -390,13 +412,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
             } else showLongToast("Add secondary image data error, please try again.")
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == secondaryImageList.size) {
-            showLongToast(if (isEdit == true) "Updated Service." else "Created Service.")
+            showLongToast(if (isEdit == true) "Service updated successfully." else "Service saved successfully.")
             goBack()
           }
         })
       }
     } else {
-      showLongToast(if (isEdit == true) "Updated Service." else "Created Service.")
+      showLongToast(if (isEdit == true) "Service updated successfully." else "Service saved successfully.")
       goBack()
     }
   }
@@ -616,8 +638,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
                 hideProgress()
                 if ((it.error is NoNetworkException).not()) {
                   if ((it.status == 200 || it.status == 201 || it.status == 202)) {
+                    showLongToast("Service removed successfully.")
                     goBack()
-                  } else showError("Removing product failed, please try again.")
+                  } else showError("Removing service failed, please try again.")
                 } else showError(resources.getString(R.string.internet_connection_not_available))
               })
             }.show()
