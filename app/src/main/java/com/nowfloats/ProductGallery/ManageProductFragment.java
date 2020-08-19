@@ -2503,6 +2503,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     private void deleteConfirmation() {
         new MaterialDialog.Builder(getActivity())
                 .title(getString(R.string.are_you_sure_want_to_delete))
+                .content(R.string.delete_record_not_undone)
                 .positiveText(getString(R.string.delete))
                 .positiveColorRes(R.color.primaryColor)
                 .negativeText(getString(R.string.cancel))
