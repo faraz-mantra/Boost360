@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -11,17 +14,15 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
 import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
+import com.nowfloats.education.batches.BatchesActivity;
+import com.nowfloats.education.faculty.FacultyActivity;
+import com.nowfloats.education.toppers.ToppersActivity;
 import com.nowfloats.hotel.placesnearby.PlacesNearByActivity;
 import com.nowfloats.hotel.seasonalOffers.SeasonalOffersActivity;
 import com.nowfloats.hotel.tripadvisor.TripAdvisorActivity;
@@ -58,7 +59,7 @@ public class ManageContentFragment extends Fragment {
         String experience_code = session.getFP_AppExperienceCode();
 
         int content_tabs_resource, image_tabs_resource;
-        switch (experience_code){
+        switch (experience_code) {
             case "HOT":
                 content_tabs_resource = R.array.manage_content_tab_items_hot;
                 image_tabs_resource = R.array.manage_content_sidepanel_hot;
@@ -66,6 +67,10 @@ public class ManageContentFragment extends Fragment {
             case "MFG":
                 content_tabs_resource = R.array.manage_content_tab_items_mfg;
                 image_tabs_resource = R.array.manage_content_sidepanel_mfg;
+                break;
+            case "EDU":
+                content_tabs_resource = R.array.manage_content_tab_items_edu;
+                image_tabs_resource = R.array.manage_content_side_panel_edu;
                 break;
             default:
                 content_tabs_resource = R.array.manage_content_tab_items;
@@ -89,7 +94,6 @@ public class ManageContentFragment extends Fragment {
             @Override
             public void onItemClick(int pos) {
                 Intent intent = null;
-
                 switch (pos) {
                     case 0:
                         intent = new Intent(mContext, ProductCatalogActivity.class);
@@ -111,22 +115,28 @@ public class ManageContentFragment extends Fragment {
                         intent = new Intent(mContext, CustomPageActivity.class);
                         break;
                     case 5:
-                        if(experience_code.equals("HOT")) {
+                        if (experience_code.equals("HOT")) {
                             intent = new Intent(mContext, PlacesNearByActivity.class);
-                        } else if(experience_code.equals("MFG")){
+                        } else if (experience_code.equals("MFG")) {
                             intent = new Intent(mContext, ProjectAndTermsActivity.class);
+                        } else if (experience_code.equals("EDU")) {
+                            intent = new Intent(mContext, ToppersActivity.class);
                         }
                         break;
                     case 6:
-                        if(experience_code.equals("HOT")) {
+                        if (experience_code.equals("HOT")) {
                             intent = new Intent(mContext, TripAdvisorActivity.class);
-                        } else if(experience_code.equals("MFG")){
+                        } else if (experience_code.equals("MFG")) {
                             intent = new Intent(mContext, DigitalBrochuresActivity.class);
+                        } else if (experience_code.equals("EDU")) {
+                            intent = new Intent(mContext, BatchesActivity.class);
                         }
                         break;
                     case 7:
-                        if(experience_code.equals("HOT")) {
+                        if (experience_code.equals("HOT")) {
                             intent = new Intent(mContext, SeasonalOffersActivity.class);
+                        } else if (experience_code.equals("EDU")) {
+                            intent = new Intent(mContext, FacultyActivity.class);
                         }
                         break;
                     default:

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nowfloats.AccrossVerticals.API.model.testimonials.Data;
+import com.nowfloats.Testimonials.TestimonialsListener;
 import com.thinksity.R;
 
 import org.jetbrains.annotations.NotNull;
