@@ -1,18 +1,20 @@
 package com.nowfloats.Store;
 
 import android.content.Context;
-
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
+
+import static com.nowfloats.education.helper.Constants.FACULTY_MANAGEMENT_FEATURE;
+import static com.nowfloats.education.helper.Constants.TOPPER_FEATURE;
 
 /**
  * Created by Admin on 29-01-2018.
@@ -46,6 +48,8 @@ public class SimpleImageTextListAdapter extends RecyclerView.Adapter<SimpleImage
                 || myTextStrings[position].equals("Places to look around") && !Constants.StoreWidgets.contains("PLACES-TO-LOOK-AROUND")
                 || myTextStrings[position].equals("Unlimited digital brochures") && !Constants.StoreWidgets.contains("BROCHURE")
                 || myTextStrings[position].equals("Tripadvisor Ratings") && !Constants.StoreWidgets.contains("TRIPADVISOR-REVIEWS")
+                || myTextStrings[position].equals("Toppers of Institute") && !Constants.StoreWidgets.contains(TOPPER_FEATURE)
+                || myTextStrings[position].equals("Faculty Management") && !Constants.StoreWidgets.contains(FACULTY_MANAGEMENT_FEATURE)
                 /*|| myTextStrings[position].equals("Seasonal Offers") && !Constants.StoreWidgets.contains("OFFERS")*/ //this is free widget
         ) {
             holder.featureLock.setVisibility(View.VISIBLE);

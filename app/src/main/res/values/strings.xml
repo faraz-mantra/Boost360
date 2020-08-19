@@ -1783,7 +1783,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Unlimited digital brochures</item>
     </string-array>
 
-
     <string-array name="order_analytics_tab_items">
         <item>Order Summary</item>
         <item>Revenue Summary</item>
@@ -1885,4 +1884,24 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="error_right_fptag">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right Boost account.</string>
     <string name="bank_account_details">Bank Account Details</string>
     <string name="signup_your_account">Signup your account here.</string>
+
+    <string name="candidate_details">Candidate Details</string>
+    <string name="batch_details">Batch Details</string>
+    <string name="faculty_management">Faculty Management</string>
+    <string name="faculty_management_feature_description">Looks like this add-on is not added to your current plan. Add it now to share your lecturer’s expertise by including awards, papers they’ve written.</string>
+    <string name="faculty_details">Faculty Details</string>
+    <string name="our_toppers">Toppers</string>
+    <string name="our_toppers_feature_description">Looks like this add-on is not added to your current plan. Add it now to start using it.
+With this feature, you can show off your top rankers to help people gain trust in your coaching centre.</string>
+    <string name="course_name">Course Name <p><font color="red">*</font></p></string>
+    <string name="course_timings">Course Timings <p><font color="red">*</font></p></string>
+    <string name="course_duration">Course Duration <p><font color="red">*</font></p></string>
+    <string name="commencement_date">Commencement Date <p><font color="red">*</font></p></string>
+    <string name="name">Name <p><font color="red">*</font></p></string>
+    <string name="add_profile_image">Add Profile Image <p><font color="red">*</font></p></string>
+    <string name="course_type">Course Type <p><font color="red">*</font></p></string>
+    <string name="upcoming_batches">Upcoming Batches</string>
+    <string name="upcoming_batches_feature_description">Looks like this add-on is not added to your current plan. Add it now to start using it.
+With this feature, students and their parents can browse and learn about the upcoming batches you are offering their starting date etc and drop a question regarding that if they may have.</string>
+    <string name="designation">Designation <p><font color="red">*</font></p></string>
 </resources>

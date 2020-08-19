@@ -20,6 +20,7 @@ import com.boost.presignup.locale.LocaleManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.inventoryorder.BaseOrderApplication;
+import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.nowfloats.util.Constants;
 import com.onboarding.nowfloats.BaseBoardingApplication;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
@@ -47,6 +48,10 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         AppServiceApplication.instance = this;
         AppServiceApplication.initModule(this);
         initWebEngage();
+
+
+        //Koin
+        KoinBaseApplication.initModule(this);
 //        ContextApplication.initSdk(this, this);
 
         //AppIce SDk
@@ -58,6 +63,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
 //        if (!BuildConfig.DEBUG) {
 //
@@ -266,4 +272,5 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
             Log.d("onConfigurationChanged" , ""+ newConfig.getLocales().toLanguageTags());
         }
     }
+
 }
