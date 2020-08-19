@@ -43,7 +43,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_20sdp">
+                    android:padding="@dimen/_15sdp">
 
                     <ImageView
                         android:layout_width="@dimen/_60sdp"
@@ -53,19 +53,21 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/domain_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans_semibold"
                             android:gravity="center"
                             android:text="thinkwalls.net"
                             android:textColor="@color/common_text_color"
-                            android:textSize="@dimen/_15sdp" />
+                            android:textSize="@dimen/_13sdp" />
 
                         <ImageView
+                            android:id="@+id/domain_status"
                             android:layout_width="70dp"
                             android:layout_height="30dp"
                             android:layout_marginTop="@dimen/_10sdp"
@@ -232,9 +234,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone"
-                tools:visibility="gone">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -255,7 +255,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:text="Get your own business email, to match your custom domain. Custom email address give business authority. You can have upto 3 email addresses associated with your domain." />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="Coming Soon..."
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/_16sdp" />
 
                 <TextView
                     android:id="@+id/add_mail_button"
@@ -270,6 +280,7 @@
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp"
                     android:text="ADD MAIL"
+                    android:visibility="gone"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -282,6 +293,7 @@
                     android:gravity="center"
                     android:text="Business emails can be booked only if your domain is not more than 6 months old."
                     android:textSize="@dimen/_9sdp"
+                    android:visibility="gone"
                     android:textStyle="italic" />
             </LinearLayout>
 
@@ -289,7 +301,8 @@
                 android:id="@+id/purchase_email_stage_two"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"

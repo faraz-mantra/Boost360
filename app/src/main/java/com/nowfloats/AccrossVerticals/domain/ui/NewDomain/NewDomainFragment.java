@@ -20,14 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
-import com.nowfloats.AccrossVerticals.API.model.testimonials.TestimonialModel;
-import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity;
 import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -56,6 +51,7 @@ public class NewDomainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         vmnProgressBar = new ProgressDialog(requireContext());
         vmnProgressBar.setIndeterminate(true);
         vmnProgressBar.setMessage(getString(R.string.please_wait));
