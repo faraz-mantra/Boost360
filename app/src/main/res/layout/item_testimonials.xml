@@ -28,8 +28,8 @@
         app:layout_constraintTop_toTopOf="parent">
     <ImageView
         android:id="@+id/user_profile_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_margin="@dimen/_10sdp"
         app:srcCompat="@drawable/ic_facebook_menu"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +41,7 @@
         android:layout_marginStart="@dimen/_10sdp"
         app:layout_constraintStart_toEndOf="@id/user_profile_image"
         app:layout_constraintTop_toTopOf="@id/user_profile_image"
+        app:layout_constraintBottom_toBottomOf="@id/user_profile_image"
         app:layout_constraintEnd_toStartOf="@id/single_item_menu_button">
         <TextView
             android:id="@+id/username"
@@ -55,7 +56,8 @@
             android:layout_height="wrap_content"
             tools:text="Tata Motors"
             android:textColor="#747474"
-            android:textSize="@dimen/_10sdp"/>
+            android:textSize="@dimen/_10sdp"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <ImageView
@@ -87,14 +89,16 @@
         android:padding="@dimen/_20sdp">
 
         <TextView
+            android:id="@+id/review_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Best Product ever!"
             android:fontFamily="@font/open_sans"
             android:textColor="#4A4A4A"
-            android:textSize="@dimen/_15sdp"/>
+            android:textSize="@dimen/_15sdp" />
 
         <TextView
+            android:id="@+id/review_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"

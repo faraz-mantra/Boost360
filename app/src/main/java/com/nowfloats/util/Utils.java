@@ -138,6 +138,7 @@ public class Utils {
             case "SVC":
             case "SPA":
             case "SAL":
+            case "HOT":
                 return "Customer Bookings";
             default:
                 return "Customer Orders";
@@ -152,6 +153,7 @@ public class Utils {
             case "SVC":
             case "SPA":
             case "SAL":
+            case "HOT":
                 return context.getResources().getStringArray(R.array.booking_analytics);
             default:
                 return context.getResources().getStringArray(R.array.order_analytics);
@@ -167,6 +169,7 @@ public class Utils {
             case "SVC":
             case "SPA":
             case "SAL":
+            case "HOT":
                 return "Bookings";
             default:
                 return "Orders";

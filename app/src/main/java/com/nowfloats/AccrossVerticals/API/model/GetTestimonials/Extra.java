@@ -1,4 +1,4 @@
-package com.nowfloats.AccrossVerticals.API.model.testimonials;
+package com.nowfloats.AccrossVerticals.API.model.GetTestimonials;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
