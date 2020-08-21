@@ -16,7 +16,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsListener;
 import com.nowfloats.hotel.API.model.GetPlacesAround.Data;
 import com.nowfloats.hotel.Interfaces.PlaceNearByListener;
 import com.thinksity.R;

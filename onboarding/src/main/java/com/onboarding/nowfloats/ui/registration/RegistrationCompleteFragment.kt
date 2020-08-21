@@ -5,6 +5,7 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +40,8 @@ import com.onboarding.nowfloats.ui.webview.WebViewActivity
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrationCompleteBinding>() {
 
@@ -59,8 +62,8 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
   @ExperimentalStdlibApi
   override fun onCreateView() {
     super.onCreateView()
-    setSetSelectedChannels(channels)
     setOnClickListener(binding?.menuView, binding?.websiteBtnClick, binding?.skipDashboard, binding?.businessClick)
+    setSetSelectedChannels(channels)
     val personName = (pref?.getString(PreferenceConstant.PERSON_NAME, "") ?: "").capitalizeWords()
     binding?.congratsText?.text = resources.getString(R.string.congratulations_new).plus("\n$personName").trim()
     requestFloatsModel?.contactInfo?.businessName?.let {
@@ -120,7 +123,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
 
   private fun setSetSelectedChannels(list: ArrayList<ChannelModel>) {
     binding?.domainTxt?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.domainTxt?.setPaintFlags(it) }
-    binding?.domainTxt?.text = "www.${requestFloatsModel?.contactInfo?.domainName?.toLowerCase()}.nowfloats.com"
+    binding?.domainTxt?.text = "www.${requestFloatsModel?.contactInfo?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
     val itemSize = ConversionUtils.dp2px(48f)
     var spanCount = (ScreenUtils.instance.getWidth(baseActivity) - ConversionUtils.dp2px(96f)) / itemSize
     if (spanCount == 0) {
@@ -141,9 +144,13 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
       binding?.menuView -> showMenuLogout(v)
       binding?.businessClick -> openImagePicker(false)
       binding?.websiteBtnClick -> {
-        val bundle = Bundle()
-        bundle.putString(IntentConstant.DOMAIN_URL.name, "${requestFloatsModel?.contactInfo?.domainName?.toLowerCase()}.nowfloats.com")
-        navigator?.startActivity(WebViewActivity::class.java, bundle)
+        try {
+          val bundle = Bundle()
+          bundle.putString(IntentConstant.DOMAIN_URL.name, "${requestFloatsModel?.contactInfo?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com")
+          navigator?.startActivity(WebViewActivity::class.java, bundle)
+        } catch (e: Exception) {
+          Log.e(RegistrationCompleteFragment::class.java.name, e.localizedMessage)
+        }
       }
       binding?.skipDashboard -> {
         try {

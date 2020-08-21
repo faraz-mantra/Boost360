@@ -4,20 +4,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.MediaStore;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -47,27 +53,30 @@ public class MethodUtils {
     }
 
     public static Uri getImageUri(Context mContext, Bitmap inImage, String imageId) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(mContext.getContentResolver(), inImage, imageId + ".png", "drawing");
-        if (TextUtils.isEmpty(path)) {
+        try {
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            String path = MediaStore.Images.Media.insertImage(mContext.getContentResolver(), inImage, imageId + ".png", "drawing");
+            if (TextUtils.isEmpty(path)) return null;
+            return Uri.parse(path);
+        } catch (Exception e) {
+            Log.e(MethodUtils.class.getName(), e.getLocalizedMessage());
             return null;
         }
-        return Uri.parse(path);
     }
 
     public static void onGlideBitmapReady(final UrlToBitmapInterface listener, final String text, String imageUrl, final String imageId) {
-        Glide.with(listener.getContext())
-                .asBitmap()
-                .load(imageUrl)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-
-                        listener.onResourcesReady(resource, text, imageId);
-
-                    }
-                });
+        if (listener != null && !TextUtils.isEmpty(imageUrl)) {
+            Glide.with(listener.getContext())
+                    .asBitmap()
+                    .load(imageUrl)
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            listener.onResourcesReady(resource, text, imageId);
+                        }
+                    });
+        }
     }
 
     public static void onGlideBitmapMultipleReady(final UrlToBitmapInterface listener, final String imageUrl, final String imageId, final int size, final int current) {

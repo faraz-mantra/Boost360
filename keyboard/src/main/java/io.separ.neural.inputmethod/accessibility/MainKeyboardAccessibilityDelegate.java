@@ -124,9 +124,10 @@ public final class MainKeyboardAccessibilityDelegate
      * @param keyboard The new keyboard.
      */
     private void announceKeyboardLanguage(final Keyboard keyboard) {
-        final String languageText = SubtypeLocaleUtils.getSubtypeDisplayNameInSystemLocale(
-                keyboard.mId.mSubtype);
-        sendWindowStateChanged(languageText);
+        if (keyboard != null && keyboard.mId != null && keyboard.mId.mSubtype != null) {
+            final String languageText = SubtypeLocaleUtils.getSubtypeDisplayNameInSystemLocale(keyboard.mId.mSubtype);
+            if (languageText != null && !languageText.isEmpty()) sendWindowStateChanged(languageText);
+        }
     }
 
     /**

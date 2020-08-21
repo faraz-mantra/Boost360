@@ -176,7 +176,7 @@ public final class SubtypeLocaleUtils {
     }
 
     private static String getSubtypeLocaleDisplayNameInternal(final String localeString,
-            final Locale displayLocale) {
+                                                              final Locale displayLocale) {
         if (NO_LANGUAGE.equals(localeString)) {
             // No language subtype should be displayed in system locale.
             return sResources.getString(R.string.subtype_no_language);
@@ -217,7 +217,7 @@ public final class SubtypeLocaleUtils {
     //  zz    azerty  T  Alphabet (AZERTY)       in system locale
 
     private static String getReplacementString(final InputMethodSubtype subtype,
-            final Locale displayLocale) {
+                                               final Locale displayLocale) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN
                 && subtype.containsExtraValueKey(UNTRANSLATABLE_STRING_IN_SUBTYPE_NAME)) {
             return subtype.getExtraValueOf(UNTRANSLATABLE_STRING_IN_SUBTYPE_NAME);
@@ -227,8 +227,11 @@ public final class SubtypeLocaleUtils {
     }
 
     public static String getSubtypeDisplayNameInSystemLocale(final InputMethodSubtype subtype) {
-        final Locale displayLocale = sResources.getConfiguration().locale;
-        return getSubtypeDisplayNameInternal(subtype, displayLocale);
+        if (sResources != null) {
+            final Locale displayLocale = sResources.getConfiguration().locale;
+            if (displayLocale != null) return getSubtypeDisplayNameInternal(subtype, displayLocale);
+        }
+        return "";
     }
 
     public static String getSubtypeNameForLogging(final InputMethodSubtype subtype) {
@@ -238,8 +241,7 @@ public final class SubtypeLocaleUtils {
         return getSubtypeLocale(subtype) + "/" + getKeyboardLayoutSetName(subtype);
     }
 
-    private static String getSubtypeDisplayNameInternal(final InputMethodSubtype subtype,
-            final Locale displayLocale) {
+    private static String getSubtypeDisplayNameInternal(final InputMethodSubtype subtype, final Locale displayLocale) {
         final String replacementString = getReplacementString(subtype, displayLocale);
         final int nameResId = subtype.getNameResId();
         final RunInLocale<String> getSubtypeName = new RunInLocale<String>() {
@@ -304,10 +306,11 @@ public final class SubtypeLocaleUtils {
     // TODO: Get this information from the framework instead of maintaining here by ourselves.
     // Sorted list of known Right-To-Left language codes.
     private static final String[] SORTED_RTL_LANGUAGES = {
-        "ar", // Arabic
-        "fa", // Persian
-        "iw", // Hebrew
+            "ar", // Arabic
+            "fa", // Persian
+            "iw", // Hebrew
     };
+
     static {
         Arrays.sort(SORTED_RTL_LANGUAGES);
     }

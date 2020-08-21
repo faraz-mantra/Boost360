@@ -1,149 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.nowfloats.AccrossVerticals.Testimonials.TestimonialsFeedbackActivity">
+<layout>
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/new_app_bar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <data class="FacultyDetailsBinding">
 
-    <ScrollView
+        <variable
+            name="facultyData"
+            type="com.nowfloats.education.faculty.model.Data" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"
-        android:scrollbars="none">
+        android:layout_height="match_parent"
+        android:background="@color/app_background_dark_color"
+        android:orientation="vertical"
+        tools:context="com.nowfloats.Testimonials.TestimonialsFeedbackActivity">
 
-        <LinearLayout
+
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/new_custome_app_bar" />
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/_15sdp">
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add Profile image"
-                android:layout_marginLeft="@dimen/_5sdp"/>
+                android:orientation="vertical"
+                android:padding="@dimen/_15sdp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_primary_image"
-                android:layout_width="180dp"
-                android:layout_height="130dp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:padding="2dp"
-                android:clickable="true"
-                app:cardCornerRadius="4dp"
-                android:layout_marginLeft="@dimen/_5sdp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:text="@string/add_profile_image"
+                    android:textColor="#747474"
+                    android:textSize="@dimen/txt_12sp" />
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/ic_image_placeholder">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_primary_image"
+                    android:layout_width="180dp"
+                    android:layout_height="130dp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:clickable="true"
+                    android:padding="2dp"
+                    app:cardCornerRadius="4dp">
 
-                    <ImageView
-                        android:id="@+id/iv_primary_image"
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerCrop"/>
+                        android:background="@drawable/ic_image_placeholder">
 
-                    <ImageButton
-                        android:id="@+id/ib_remove_product_image"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_margin="@dimen/margin_5"
-                        android:layout_gravity="top|end"
-                        android:visibility="gone"
-                        app:srcCompat="@drawable/ic_remove"/>
+                        <ImageView
+                            android:focusable="false"
+                            android:id="@+id/faculty_profile_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src='@{facultyData.profileimage.url != null ? facultyData.profileimage.url : ""}' />
 
-                </FrameLayout>
+                        <ImageButton
+                            tools:visibility="visible"
+                            android:id="@+id/remove_faculty_profile_image"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="top|end"
+                            android:layout_margin="@dimen/margin_5"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/ic_remove" />
 
-            </androidx.cardview.widget.CardView>
+                    </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Name"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_15sdp"/>
+                </androidx.cardview.widget.CardView>
 
-            <EditText
-                android:id="@+id/user_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:hint="Enter Name"
-                android:textSize="@dimen/_12sdp"
-                android:background="@drawable/edittext_bg_elevated"
-                android:elevation="@dimen/_2sdp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/name"
+                    android:textColor="#747474"
+                    android:textSize="@dimen/txt_12sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Designation"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_15sdp"/>
+                <EditText
+                    android:id="@+id/faculty_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:background="@drawable/edit_text_bg_elevated_education"
+                    android:elevation="@dimen/_2sdp"
+                    android:hint="Enter Name"
+                    android:text="@={facultyData.name}"
+                    android:textSize="@dimen/txt_16sp" />
 
-            <EditText
-                android:id="@+id/designation_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:hint="Eg: Physics Teacher"
-                android:textSize="@dimen/_12sdp"
-                android:background="@drawable/edittext_bg_elevated"
-                android:elevation="@dimen/_2sdp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="@string/designation"
+                    android:textColor="#747474"
+                    android:textSize="@dimen/txt_12sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Person Info"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_15sdp"/>
+                <EditText
+                    android:id="@+id/faculty_designation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:background="@drawable/edit_text_bg_elevated_education"
+                    android:elevation="@dimen/_2sdp"
+                    android:hint="Eg: Physics Teacher"
+                    android:text="@={facultyData.title}"
+                    android:textSize="@dimen/_12sdp" />
 
-
-            <EditText
-                android:id="@+id/review_description"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:hint="Enter Review Description"
-                android:textSize="@dimen/_12sdp"
-                android:background="@drawable/edittext_bg_elevated"
-                android:elevation="@dimen/_2sdp"
-                android:gravity="top"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Person Info"
+                    android:textColor="#747474"
+                    android:textSize="@dimen/txt_12sp" />
 
 
-            <TextView
-                android:id="@+id/save_review"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/orange_button_click_effect"
-                android:fontFamily="@font/open_sans_semibold"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:paddingTop="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_10sdp"
-                android:gravity="center"
-                android:text="save"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:elevation="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_20sdp"/>
+                <EditText
+                    android:id="@+id/review_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:background="@drawable/edit_text_bg_elevated_education"
+                    android:elevation="@dimen/_2sdp"
+                    android:gravity="top"
+                    android:hint="Enter Review Description"
+                    android:text="@={facultyData.description}"
+                    android:textSize="@dimen/_12sdp" />
 
-        </LinearLayout>
-    </ScrollView>
 
-</LinearLayout>
+                <TextView
+                    android:layout_marginBottom="16dp"
+                    android:id="@+id/add_update_faculty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/orange_button_click_effect"
+                    android:elevation="@dimen/_2sdp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="save"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</layout>
