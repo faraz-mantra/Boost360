@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.utils.Utils
-import com.nowfloats.Testimonials.TestimonialsListener
+
 import com.nowfloats.education.batches.BatchesActivity
 import com.nowfloats.education.batches.adapter.BatchesAdapter
 import com.nowfloats.education.batches.model.Data
@@ -25,7 +25,7 @@ import com.nowfloats.education.helper.ItemClickEventListener
 import com.thinksity.R
 import org.koin.android.ext.android.inject
 
-class BatchesFragment : BaseFragment(), TestimonialsListener, ItemClickEventListener {
+class BatchesFragment : BaseFragment(), ItemClickEventListener {
 
     private val viewModel by inject<BatchesViewModel>()
     private val batchesAdapter: BatchesAdapter by lazy { BatchesAdapter(this) }

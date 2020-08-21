@@ -51,19 +51,25 @@ import com.nowfloats.Analytics_Screen.Graph.api.AnalyticsFetch;
 import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
 import com.nowfloats.Analytics_Screen.Graph.model.VisitsModel;
 import com.nowfloats.Analytics_Screen.OrderAnalyticsActivity;
+import com.nowfloats.Analytics_Screen.OrderSummaryActivity;
+import com.nowfloats.Analytics_Screen.RevenueSummaryActivity;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
+import com.nowfloats.Analytics_Screen.model.OrderStatusSummary;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomWidget.VerticalTextView;
+import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.CoordinateList;
 import com.nowfloats.NavigationDrawer.model.CoordinatesSet;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.Section;
+import com.nowfloats.manageinventory.interfaces.WebActionCallInterface;
+import com.nowfloats.manageinventory.models.SellerSummary;
 import com.nowfloats.on_boarding.OnBoardingManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
@@ -73,6 +79,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
+import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.nowfloats.widget.WidgetKey;
 import com.squareup.otto.Bus;
@@ -96,15 +103,15 @@ import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYP
  */
 public class Analytics_Fragment extends Fragment {
     View rootView = null;
-    public static TextView visitCount, mapVisitsCount, visitorsCount, subscriberCount, vmnTotalCallCount,
+    public static TextView visitCount, mapVisitsCount, visitorsCount, subscriberCount, vmnTotalCallCount, vmnTotalCustomerCount,
             searchQueriesCount, businessEnqCount, facebokImpressions, tvOrdersCount;
     private int noOfSearchQueries = 0;
-    public static ProgressBar visits_progressBar, map_progressbar, visitors_progressBar, vmnProgressBar,
+    public static ProgressBar visits_progressBar, map_progressbar, visitors_progressBar, vmnProgressBar, vmnCustomerProgressBar,
             subscriber_progress, search_query_progress, businessEnqProgress, pbOrders;
     UserSessionManager session;
     private Context context;
     private Bus bus;
-    CardView cvRiaCard, vmnCallCard;
+    CardView cvRiaCard, vmnCallCard, cvCustomerAppointment;
     Button btnRiaCardLeft, btnRiaCrdRight, btnSingleResponse;
     TextView tvRiaCardHeader;
     //LinearLayout mLockLayout;
@@ -114,6 +121,7 @@ public class Analytics_Fragment extends Fragment {
     private static final String BUTTON_TYPE_EXIT = "None";
     private static final String BUTTON_TYPE_OPEN_URL = "OpenUrl";
     LinearLayout llRiaCardSections;
+    roboto_lt_24_212121 customerAppointmentTitle;
 
     private enum SectionType {
         Text, Graph, Image
@@ -286,6 +294,8 @@ public class Analytics_Fragment extends Fragment {
         llSingleButtonLayout = (LinearLayout) rootView.findViewById(R.id.ll_single_button);
         btnSingleResponse = (Button) rootView.findViewById(R.id.btnSingleResponse);
         vmnCallCard = (CardView) rootView.findViewById(R.id.card_view_vmn_call);
+        cvCustomerAppointment = (CardView) rootView.findViewById(R.id.card_view_customer_appointment);
+        customerAppointmentTitle = rootView.findViewById(R.id.customer_appointment_title);
         //mLockLayout = rootView.findViewById(R.id.lock_analytics);
         //setAnalyticsLockScreen();
         queryLayout.setOnClickListener(new View.OnClickListener() {
@@ -383,8 +393,9 @@ public class Analytics_Fragment extends Fragment {
         orderLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("SALES ANALYTICS", "null", session.getFpTag());
-                Intent i = new Intent(getActivity(), OrderAnalyticsActivity.class);
+                WebEngageController.trackEvent("SALES ANALYTICS","null",session.getFpTag());
+//                Intent i = new Intent(getActivity(), OrderAnalyticsActivity.class);
+                Intent i = new Intent(getActivity(), RevenueSummaryActivity.class);
                 startActivity(i);
 
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -449,6 +460,7 @@ public class Analytics_Fragment extends Fragment {
         subscriberCount = (TextView) rootView.findViewById(R.id.analytics_screen_subscriber_count);
         searchQueriesCount = (TextView) rootView.findViewById(R.id.analytics_screen_search_queries_count);
         vmnTotalCallCount = (TextView) rootView.findViewById(R.id.analytics_screen_vmn_tracker_count);
+        vmnTotalCustomerCount = (TextView) rootView.findViewById(R.id.customer_appointment_total_count);
         businessEnqCount = (TextView) rootView.findViewById(R.id.analytics_screen_business_enq_count);
         tvOrdersCount = (TextView) rootView.findViewById(R.id.orders_count);
         facebokImpressions = (TextView) rootView.findViewById(R.id.analytics_screen_updates_count);
@@ -462,6 +474,7 @@ public class Analytics_Fragment extends Fragment {
         subscriber_progress = (ProgressBar) rootView.findViewById(R.id.subscriber_progressBar);
         subscriber_progress.setVisibility(View.VISIBLE);
         vmnProgressBar = (ProgressBar) rootView.findViewById(R.id.vmn_progressbar);
+        vmnCustomerProgressBar = (ProgressBar) rootView.findViewById(R.id.customer_appointment_progressbar);
         search_query_progress = (ProgressBar) rootView.findViewById(R.id.search_query_progressBar);
         search_query_progress.setVisibility(View.GONE);
         businessEnqProgress = (ProgressBar) rootView.findViewById(R.id.business_enq_progressBar);
@@ -478,6 +491,8 @@ public class Analytics_Fragment extends Fragment {
         String orderCount = session.getOrderCount();
         String mapCount = session.getMapVisitsCount();
         setVmnTotalCallCount();
+        setVmnTotalCustomerCount();         //calling customer Appointment
+        customerAppointmentTitle.setText(Utils.getCustomerAppointmentTaxonomyFromServiceCode(session.getFP_AppExperienceCode()));
 //        String Str_noOfSearchQueries = "";
 
         try {
@@ -599,6 +614,20 @@ public class Analytics_Fragment extends Fragment {
 //                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                }
 
+            }
+        });
+
+        cvCustomerAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (vmnTotalCustomerCount.getVisibility() == View.VISIBLE) {
+//                    Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                    Intent i = new Intent(getActivity(), OrderSummaryActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else {
+                    Toast.makeText(context, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -1044,6 +1073,38 @@ public class Analytics_Fragment extends Fragment {
             public void failure(RetrofitError error) {
                 vmnProgressBar.setVisibility(View.GONE);
                 vmnTotalCallCount.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void setVmnTotalCustomerCount() {
+        vmnCustomerProgressBar.setVisibility(View.VISIBLE);
+
+        WebActionCallInterface callInterface = Constants.apAdapter.create(WebActionCallInterface.class);
+        callInterface.getRevenueSummary(session.getFpTag(), new retrofit.Callback<SellerSummary>() {
+
+            @Override
+            public void success(SellerSummary sellerSummary, retrofit.client.Response response) {
+                vmnCustomerProgressBar.setVisibility(View.GONE);
+                vmnTotalCustomerCount.setVisibility(View.VISIBLE);
+                if (sellerSummary == null || response.getStatus() != 200) {
+                    return;
+                }
+                vmnTotalCustomerCount.setText(String.valueOf(sellerSummary.getData().getTotalOrders()));
+                if (sellerSummary != null && sellerSummary.getData().getTotalNetAmount() > 0) {
+                    pbOrders.setVisibility(View.GONE);
+                    tvOrdersCount.setVisibility(View.VISIBLE);
+                    tvOrdersCount.setText(sellerSummary.getData().getTotalNetAmount().toString());
+                } else {
+//                  pbOrders.setVisibility(View.VISIBLE);
+                    tvOrdersCount.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                vmnCustomerProgressBar.setVisibility(View.GONE);
+                vmnTotalCustomerCount.setVisibility(View.VISIBLE);
             }
         });
     }

@@ -4,12 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.nowfloats.Testimonials.TestimonialsListener
 import com.nowfloats.education.helper.ItemClickEventListener
 import com.nowfloats.education.toppers.model.Data
 import com.thinksity.databinding.ToppersRowBinding
 
-class TopperAdapter(private val listener: TestimonialsListener, private val eventListener: ItemClickEventListener) : RecyclerView.Adapter<TopperAdapter.ViewHolder>() {
+class TopperAdapter(private val eventListener: ItemClickEventListener) : RecyclerView.Adapter<TopperAdapter.ViewHolder>() {
     var items: List<Data> = emptyList()
     private var menuPosition = -1
     private var menuStatus = false
@@ -46,12 +45,12 @@ class TopperAdapter(private val listener: TestimonialsListener, private val even
                     binding.menuOptions.visibility = View.GONE
                 }
             }
-            binding.mainLayout.setOnClickListener { listener.itemMenuOptionStatus(position, false) }
+            binding.mainLayout.setOnClickListener { eventListener.itemMenuOptionStatus(position, false) }
             binding.singleItemMenuButton.setOnClickListener {
                 if (binding.menuOptions.visibility == View.GONE) {
-                    listener.itemMenuOptionStatus(position, true)
+                    eventListener.itemMenuOptionStatus(position, true)
                 } else {
-                    listener.itemMenuOptionStatus(position, false)
+                    eventListener.itemMenuOptionStatus(position, false)
                 }
             }
 

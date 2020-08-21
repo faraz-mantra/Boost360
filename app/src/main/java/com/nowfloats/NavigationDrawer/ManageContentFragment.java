@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
@@ -108,14 +109,14 @@ public class ManageContentFragment extends Fragment {
                         intent = new Intent(mContext, FragmentsFactoryActivity.class);
                         intent.putExtra("fragmentName", "Business_Profile_Fragment_V2");
                         break;
-//                    case 4:
-//                        intent = new Intent(mContext, TestimonialsActivity.class);
-//                        break;
                     case 4:
-                        intent = new Intent(mContext, CustomPageActivity.class);
+                        intent = new Intent(mContext, TestimonialsActivity.class);
                         break;
                     case 5:
-                        if (experience_code.equals("HOT")) {
+                        intent = new Intent(mContext, CustomPageActivity.class);
+                        break;
+                    case 6:
+                        if(experience_code.equals("HOT")) {
                             intent = new Intent(mContext, PlacesNearByActivity.class);
                         } else if (experience_code.equals("MFG")) {
                             intent = new Intent(mContext, ProjectAndTermsActivity.class);
@@ -123,8 +124,8 @@ public class ManageContentFragment extends Fragment {
                             intent = new Intent(mContext, ToppersActivity.class);
                         }
                         break;
-                    case 6:
-                        if (experience_code.equals("HOT")) {
+                    case 7:
+                        if(experience_code.equals("HOT")) {
                             intent = new Intent(mContext, TripAdvisorActivity.class);
                         } else if (experience_code.equals("MFG")) {
                             intent = new Intent(mContext, DigitalBrochuresActivity.class);
@@ -132,8 +133,8 @@ public class ManageContentFragment extends Fragment {
                             intent = new Intent(mContext, BatchesActivity.class);
                         }
                         break;
-                    case 7:
-                        if (experience_code.equals("HOT")) {
+                    case 8:
+                        if(experience_code.equals("HOT")) {
                             intent = new Intent(mContext, SeasonalOffersActivity.class);
                         } else if (experience_code.equals("EDU")) {
                             intent = new Intent(mContext, FacultyActivity.class);

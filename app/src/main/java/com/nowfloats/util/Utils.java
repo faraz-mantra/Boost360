@@ -18,6 +18,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.thinksity.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -127,6 +128,55 @@ public class Utils {
                 return "Order Analytics";
         }
     }
+
+    public static String getCustomerAppointmentTaxonomyFromServiceCode(String category_code) {
+        //" Customer Appointments" for "SVC","DOC", "HOS","SPA", "SAL"  & "Customer Orders" for all others.
+        switch (category_code) {
+            case "DOC":
+            case "HOS":
+                return "Customer Appointments";
+            case "SVC":
+            case "SPA":
+            case "SAL":
+            case "HOT":
+                return "Customer Bookings";
+            default:
+                return "Customer Orders";
+        }
+    }
+
+    public static String[] getCustomerAppointmentBarChartCode(Context context, String category_code) {
+        switch (category_code) {
+            case "DOC":
+            case "HOS":
+                return context.getResources().getStringArray(R.array.appointment_analytics);
+            case "SVC":
+            case "SPA":
+            case "SAL":
+            case "HOT":
+                return context.getResources().getStringArray(R.array.booking_analytics);
+            default:
+                return context.getResources().getStringArray(R.array.order_analytics);
+        }
+    }
+
+    public static String getCustomerTypeFromServiceCode(String category_code) {
+        //" Customer Appointments" for "SVC","DOC", "HOS","SPA", "SAL"  & "Customer Orders" for all others.
+        switch (category_code) {
+            case "DOC":
+            case "HOS":
+                return "Appointments";
+            case "SVC":
+            case "SPA":
+            case "SAL":
+            case "HOT":
+                return "Bookings";
+            default:
+                return "Orders";
+        }
+    }
+
+
 
     public static boolean isRoomBooking(String category_code) {
         return ("HOT".equals(category_code));

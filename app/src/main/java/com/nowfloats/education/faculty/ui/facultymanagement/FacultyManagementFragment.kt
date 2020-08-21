@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.nowfloats.Testimonials.TestimonialsListener
 import com.nowfloats.education.faculty.FacultyActivity
 import com.nowfloats.education.faculty.adapter.FacultyManagementAdapter
 import com.nowfloats.education.faculty.model.Data
@@ -25,7 +24,7 @@ import com.nowfloats.util.Utils
 import com.thinksity.R
 import org.koin.android.ext.android.inject
 
-class FacultyManagementFragment : BaseFragment(), TestimonialsListener, ItemClickEventListener {
+class FacultyManagementFragment : BaseFragment(), ItemClickEventListener {
 
     private val viewModel by inject<FacultyManagementViewModel>()
     private val facultyManagementAdapter: FacultyManagementAdapter by lazy { FacultyManagementAdapter(this) }
