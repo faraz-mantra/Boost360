@@ -44,11 +44,16 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
 
     private LinearLayout mainLayout, secondaryLayout;
     private UserSessionManager session;
+    TextView addTestimonialsButton;
 
     private TestimonialsAdapter testimonialsAdapter;
     private RecyclerView recyclerView;
     ProgressDialog vmnProgressBar;
     List<Data> dataList = new ArrayList<>();
+
+    LinearLayout rightButton, backButton;
+    ImageView rightIcon;
+    TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +78,8 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         vmnProgressBar.setMessage(getString(R.string.please_wait));
         vmnProgressBar.setCancelable(false);
 
+        addTestimonialsButton = findViewById(R.id.add_testimonials);
+
         session = new UserSessionManager(getApplicationContext(), this);
 
         recyclerView = (RecyclerView) findViewById(R.id.testimonials_recycler);
@@ -90,12 +97,18 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                 updateRecyclerMenuOption(-1, false);
             }
         });
+
+        addTestimonialsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
+                intent.putExtra("ScreenState", "new");
+                startActivity(intent);
+            }
+        });
     }
 
     public void setHeader() {
-        LinearLayout rightButton, backButton;
-        ImageView rightIcon;
-        TextView title;
 
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);
@@ -152,9 +165,11 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                         updateRecyclerView();
                         mainLayout.setVisibility(View.VISIBLE);
                         secondaryLayout.setVisibility(View.GONE);
+                        rightButton.setVisibility(View.VISIBLE);
                     }else{
                         mainLayout.setVisibility(View.GONE);
                         secondaryLayout.setVisibility(View.VISIBLE);
+                        rightButton.setVisibility(View.GONE);
                     }
                 }
 
@@ -211,6 +226,8 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deleteTestimonials ->", response.getBody().toString());
                         loadData();
+                        Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
+//                        Methods.showSnackBarPositive(TestimonialsActivity.this, "Successfully Deleted.");
                     } else {
                         Methods.showSnackBarNegative(TestimonialsActivity.this, getString(R.string.something_went_wrong));
                     }
@@ -220,6 +237,8 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                 public void failure(RetrofitError error) {
                     if (error.getResponse().getStatus() == 200) {
                         loadData();
+                        Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
+//                        Methods.showSnackBarPositive(TestimonialsActivity.this, "Successfully Deleted.");
                     } else {
                         Methods.showSnackBarNegative(TestimonialsActivity.this, getString(R.string.something_went_wrong));
                     }

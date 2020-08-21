@@ -43,18 +43,60 @@
             android:padding="@dimen/_20sdp">
 
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:elevation="@dimen/_2sdp"
+                android:background="@drawable/circle_feature_bg"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_testimonials_feature"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
                 android:gravity="center"
+                android:paddingTop="70dp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_20sdp"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/feature_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nothing to Show"
+                    android:text="@string/testimonials"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textColor="@color/common_text_color"
                     android:textSize="@dimen/_16sdp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="With the feature, you can showcase your customer reviews and highlight their experience on the homepage of your website."
+                    android:gravity="center"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textSize="@dimen/_11sdp"
+                    android:layout_marginTop="@dimen/_20sdp"/>
+
+                <TextView
+                    android:id="@+id/add_testimonials"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/orange_button_click_effect"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:text="ADD A TESTIMONIAL"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/_20sdp"/>
+
 
             </LinearLayout>
 
