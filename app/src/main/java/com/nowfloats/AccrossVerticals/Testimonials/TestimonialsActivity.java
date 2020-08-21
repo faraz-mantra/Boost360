@@ -1,7 +1,6 @@
 package com.nowfloats.AccrossVerticals.Testimonials;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,13 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.boost.upgrades.UpgradeActivity;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
-import com.nowfloats.AccrossVerticals.API.model.testimonials.Data;
-import com.nowfloats.AccrossVerticals.API.model.testimonials.TestimonialModel;
-import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
-import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
+import com.nowfloats.AccrossVerticals.API.model.DeleteTestimonials.DeleteTestimonialsData;
+import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
+import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.GetTestimonialData;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.Testimonials.TestimonialsListener;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -40,27 +38,37 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
+import retrofit.converter.GsonConverter;
 
 public class TestimonialsActivity extends AppCompatActivity implements TestimonialsListener {
 
     private LinearLayout mainLayout, secondaryLayout;
-    private TextView buyItemButton, headerText;
     private UserSessionManager session;
-    private ImageView addNewButton;
+    TextView addTestimonialsButton;
 
-    private Toolbar toolbar;
     private TestimonialsAdapter testimonialsAdapter;
     private RecyclerView recyclerView;
     ProgressDialog vmnProgressBar;
     List<Data> dataList = new ArrayList<>();
-    int currentIndex = 0;
+
+    LinearLayout rightButton, backButton;
+    ImageView rightIcon;
+    TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testimonials);
 
+        //setheaders
+        setHeader();
+
         initialization();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         loadData();
     }
 
@@ -70,20 +78,9 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         vmnProgressBar.setMessage(getString(R.string.please_wait));
         vmnProgressBar.setCancelable(false);
 
+        addTestimonialsButton = findViewById(R.id.add_testimonials);
+
         session = new UserSessionManager(getApplicationContext(), this);
-
-        toolbar = (Toolbar) findViewById(R.id.app_bar_site_appearance);
-
-        headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        addNewButton = (ImageView) findViewById(R.id.image_gallery_add_image_button);
-        setSupportActionBar(toolbar);
-        headerText.setText(getResources().getString(R.string.testimonials));
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
 
         recyclerView = (RecyclerView) findViewById(R.id.testimonials_recycler);
         testimonialsAdapter = new TestimonialsAdapter(new ArrayList(), this);
@@ -93,34 +90,45 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         //show or hide if feature is available to user
         mainLayout = (LinearLayout) findViewById(R.id.main_layout);
         secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
-        buyItemButton = (TextView) findViewById(R.id.buy_item);
-        if (!Constants.StoreWidgets.contains("TESTIMONIALS")) {
-            mainLayout.setVisibility(View.VISIBLE);
-            secondaryLayout.setVisibility(View.GONE);
-            addNewButton.setVisibility(View.VISIBLE);
-        } else {
-            mainLayout.setVisibility(View.GONE);
-            secondaryLayout.setVisibility(View.VISIBLE);
-        }
-        buyItemButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initiateBuyFromMarketplace();
-            }
-        });
-
-        addNewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
-                startActivity(intent);
-            }
-        });
 
         mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateRecyclerMenuOption(-1, false);
+            }
+        });
+
+        addTestimonialsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
+                intent.putExtra("ScreenState", "new");
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void setHeader() {
+
+        title = findViewById(R.id.title);
+        backButton = findViewById(R.id.back_button);
+        rightButton = findViewById(R.id.right_icon_layout);
+        rightIcon = findViewById(R.id.right_icon);
+        title.setText("Testimonials");
+        rightIcon.setImageResource(R.drawable.ic_add_white);
+        rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
+                intent.putExtra("ScreenState", "new");
+                startActivity(intent);
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }
@@ -130,17 +138,6 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setAdapter(testimonialsAdapter);
         recyclerView.setLayoutManager(gridLayoutManager);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     void loadData() {
@@ -155,16 +152,25 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                     .build()
                     .create(APIInterfaces.class);
 
-            APICalls.getTestimonialsList(query, currentIndex, new Callback<TestimonialModel>() {
+            APICalls.getTestimonialsList(query, 0, 1000, new Callback<GetTestimonialData>() {
                 @Override
-                public void success(TestimonialModel testimonialModel, Response response) {
+                public void success(GetTestimonialData testimonialModel, Response response) {
                     hideProgress();
                     if (testimonialModel == null || response.getStatus() != 200) {
                         Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    dataList.addAll(testimonialModel.getData());
-                    updateRecyclerView();
+                    if(testimonialModel.getData().size()>0) {
+                        dataList = testimonialModel.getData();
+                        updateRecyclerView();
+                        mainLayout.setVisibility(View.VISIBLE);
+                        secondaryLayout.setVisibility(View.GONE);
+                        rightButton.setVisibility(View.VISIBLE);
+                    }else{
+                        mainLayout.setVisibility(View.GONE);
+                        secondaryLayout.setVisibility(View.VISIBLE);
+                        rightButton.setVisibility(View.INVISIBLE);
+                    }
                 }
 
                 @Override
@@ -184,38 +190,64 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         testimonialsAdapter.notifyDataSetChanged();
     }
 
-    private void initiateBuyFromMarketplace() {
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        String status = "Loading. Please wait...";
-        progressDialog.setMessage(status);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        Intent intent = new Intent(this, UpgradeActivity.class);
-        intent.putExtra("expCode", session.getFP_AppExperienceCode());
-        intent.putExtra("fpName", session.getFPName());
-        intent.putExtra("fpid", session.getFPID());
-        intent.putExtra("loginid", session.getUserProfileId());
-        if (session.getFPEmail() != null) {
-            intent.putExtra("email", session.getFPEmail());
-        } else {
-            intent.putExtra("email", "ria@nowfloats.com");
-        }
-        if (session.getFPPrimaryContactNumber() != null) {
-            intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
-        } else {
-            intent.putExtra("mobileNo", "9160004303");
-        }
-        intent.putExtra("profileUrl", session.getFPLogo());
-        intent.putExtra("buyItemKey", "TESTIMONIALS");
-        startActivity(intent);
-        new Handler().postDelayed(() -> {
-            progressDialog.dismiss();
-        }, 1000);
-    }
 
     @Override
     public void itemMenuOptionStatus(int pos, boolean status) {
         updateRecyclerMenuOption(pos, status);
+    }
+
+    @Override
+    public void editOptionClicked(Data data) {
+        Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
+        intent.putExtra("ScreenState", "edit");
+        intent.putExtra("data", new Gson().toJson(data));
+        startActivity(intent);
+    }
+
+    @Override
+    public void deleteOptionClicked(Data data) {
+        try {
+            DeleteTestimonialsData requestBody = new DeleteTestimonialsData();
+            requestBody.setQuery("{_id:'" + data.getId() + "'}");
+            requestBody.setUpdateValue("{$set : {IsArchived: true }}");
+            requestBody.setMulti(true);
+
+            APIInterfaces APICalls = new RestAdapter.Builder()
+                    .setEndpoint("https://webaction.api.boostkit.dev")
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setLog(new AndroidLog("ggg"))
+                    .setConverter(new GsonConverter(new GsonBuilder().setLenient().create()))
+                    .build()
+                    .create(APIInterfaces.class);
+
+            APICalls.deleteTestimoinals(requestBody, new Callback<String>() {
+                @Override
+                public void success(String data, Response response) {
+                    if (response != null && response.getStatus() == 200) {
+                        Log.d("deleteTestimonials ->", response.getBody().toString());
+                        loadData();
+                        Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
+//                        Methods.showSnackBarPositive(TestimonialsActivity.this, "Successfully Deleted.");
+                    } else {
+                        Methods.showSnackBarNegative(TestimonialsActivity.this, getString(R.string.something_went_wrong));
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    if (error.getResponse().getStatus() == 200) {
+                        loadData();
+                        Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
+//                        Methods.showSnackBarPositive(TestimonialsActivity.this, "Successfully Deleted.");
+                    } else {
+                        Methods.showSnackBarNegative(TestimonialsActivity.this, getString(R.string.something_went_wrong));
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     void updateRecyclerMenuOption(int pos, boolean status) {

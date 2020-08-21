@@ -10,16 +10,28 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.nowfloats.AccrossVerticals.domain.ui.DomainPurchased.DomainPurchasedFragment;
-import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.AccrossVerticals.API.APIInterfaces;
+import com.nowfloats.AccrossVerticals.API.model.GetDomain.GetDomainData;
 import com.nowfloats.AccrossVerticals.domain.ui.ActiveDomain.ActiveDomainFragment;
+import com.nowfloats.AccrossVerticals.domain.ui.DomainPurchased.DomainPurchasedFragment;
+import com.nowfloats.AccrossVerticals.domain.ui.ExistingDomain.ExistingDomainFragment;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.AccrossVerticals.domain.ui.DomainNotPurchase.DomainNotPurchaseFragment;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
-import java.util.HashMap;
+import org.json.JSONObject;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.android.AndroidLog;
+import retrofit.client.Response;
 
 public class DomainEmailActivity extends AppCompatActivity {
 
@@ -68,7 +80,7 @@ public class DomainEmailActivity extends AppCompatActivity {
 
     private void createView() {
         if (Constants.StoreWidgets.contains("DOMAINPURCHASE")) {
-            addFragment(new DomainPurchasedFragment(), "DOMAIN_PURCHASE_FRAGMENT");
+            loadData();
         }else{
             addFragment(new DomainNotPurchaseFragment(), "DOMAIN_NOT_PURCHASE_FRAGMENT");
         }
@@ -123,6 +135,42 @@ public class DomainEmailActivity extends AppCompatActivity {
     private void hideProgress() {
         if (vmnProgressBar.isShowing() && !isFinishing()) {
             vmnProgressBar.dismiss();
+        }
+    }
+
+    private void loadData(){
+        try {
+            showProgress();
+            APIInterfaces APICalls = new RestAdapter.Builder()
+                    .setEndpoint("http://plugin.withfloats.com")
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setLog(new AndroidLog("ggg"))
+                    .build()
+                    .create(APIInterfaces.class);
+
+            APICalls.getDomainDetails(session.getFpTag(), Constants.clientId3, new Callback<GetDomainData>() {
+                @Override
+                public void success(GetDomainData domainData, Response response) {
+                    hideProgress();
+                    if (domainData == null || response.getStatus() != 200) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(domainData.getDomainName()!=null && !domainData.getDomainName().isEmpty()){
+                        addFragment(new ActiveDomainFragment(), "ACTIVE_DOMAIN_FRAGMENT");
+                    }else{
+                        addFragment(new DomainPurchasedFragment(), "DOMAIN_PURCHASE_FRAGMENT");
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    hideProgress();
+                    Methods.showSnackBarNegative(DomainEmailActivity.this, getString(R.string.something_went_wrong));
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

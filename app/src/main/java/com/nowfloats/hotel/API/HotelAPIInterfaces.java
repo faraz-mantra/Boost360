@@ -1,6 +1,5 @@
 package com.nowfloats.hotel.API;
 
-import com.nowfloats.AccrossVerticals.API.model.testimonials.TestimonialModel;
 import com.nowfloats.hotel.API.model.AddOffer.AddOfferRequest;
 import com.nowfloats.hotel.API.model.AddPlacesAround.AddPlacesAroundRequest;
 import com.nowfloats.hotel.API.model.AddTripAdvisorData.AddTripAdvisorDataRequest;
@@ -15,7 +14,6 @@ import com.nowfloats.hotel.API.model.UpdateTripAdvisorData.UpdateTripAdvisorData
 
 import org.json.JSONObject;
 
-import okhttp3.Response;
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;

@@ -43,7 +43,6 @@ public class SimpleImageTextListAdapter extends RecyclerView.Adapter<SimpleImage
         holder.image1.setImageResource(myImagesIds[position]);
         holder.text1.setText(myTextStrings[position]);
         if (myTextStrings[position].equals("Domain and Email") && !Constants.StoreWidgets.contains("DOMAINPURCHASE")
-                || myTextStrings[position].equals("Testimonials") && !Constants.StoreWidgets.contains("TESTIMONIALS")
                 || myTextStrings[position].equals("Projects & Teams") && !Constants.StoreWidgets.contains("PROJECTTEAM")
                 || myTextStrings[position].equals("Places to look around") && !Constants.StoreWidgets.contains("PLACES-TO-LOOK-AROUND")
                 || myTextStrings[position].equals("Unlimited digital brochures") && !Constants.StoreWidgets.contains("BROCHURE")
