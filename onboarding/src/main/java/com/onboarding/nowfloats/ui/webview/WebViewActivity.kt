@@ -13,15 +13,16 @@ import com.framework.views.customViews.CustomToolbar
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.constant.IntentConstant
-import com.onboarding.nowfloats.databinding.ActivityWebViewBinding
-import com.onboarding.nowfloats.extensions.checkIsFile
+import com.onboarding.nowfloats.databinding.ActivityWebViewNBinding
+import com.onboarding.nowfloats.utils.checkHttp
+import com.onboarding.nowfloats.utils.getWebViewUrl
 
-class WebViewActivity : AppBaseActivity<ActivityWebViewBinding, BaseViewModel>() {
+class WebViewActivity : AppBaseActivity<ActivityWebViewNBinding, BaseViewModel>() {
 
   private var domainUrl = ""
 
   override fun getLayout(): Int {
-    return R.layout.activity_web_view
+    return R.layout.activity_web_view_n
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
@@ -30,7 +31,11 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewBinding, BaseViewModel>()
 
   override fun onCreateView() {
     super.onCreateView()
-    intent?.extras?.getString(IntentConstant.DOMAIN_URL.name)?.let { domainUrl = it }
+    domainUrl = intent?.extras?.getString(IntentConstant.DOMAIN_URL.name) ?: ""
+    if (domainUrl.isEmpty()) {
+      showProgress("Invalid url.")
+      return
+    }
     loadData(domainUrl)
   }
 
@@ -65,7 +70,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewBinding, BaseViewModel>()
         binding?.progressBar?.gone()
       }
     }
-    binding?.webview?.loadUrl(urlData.getUrl())
+    binding?.webview?.loadUrl(urlData.getWebViewUrl())
   }
 
   override fun getToolbarTitleSize(): Float? {
@@ -85,7 +90,7 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewBinding, BaseViewModel>()
   }
 
   override fun getToolbar(): CustomToolbar? {
-    return findViewById(R.id.toolbar) as? CustomToolbar
+    return binding?.appBarLayout?.toolbar
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -99,10 +104,5 @@ class WebViewActivity : AppBaseActivity<ActivityWebViewBinding, BaseViewModel>()
   }
 }
 
-fun String.getUrl(): String {
-  return (takeIf { checkIsFile().not() }?.let { this } ?: "https://docs.google.com/viewer?url=$this").checkHttp()
-}
 
-fun String.checkHttp(): String {
-  return if ((this.startsWith("http://") || this.startsWith("https://")).not()) "http://$this" else this
-}
+

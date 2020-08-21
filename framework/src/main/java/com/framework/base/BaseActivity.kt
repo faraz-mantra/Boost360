@@ -42,12 +42,12 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
     binding?.lifecycleOwner = this
     viewModel = ViewModelProviders.of(this).get(getViewModelClass())
     navigator = Navigator(this)
-    onCreateView()
-    setToolbar()
     val observables = getObservables()
     for (observable in observables) {
       observable?.let { compositeDisposable.add(it) }
     }
+    onCreateView()
+    setToolbar()
   }
 
   protected open fun getObservables(): List<Disposable?> {
