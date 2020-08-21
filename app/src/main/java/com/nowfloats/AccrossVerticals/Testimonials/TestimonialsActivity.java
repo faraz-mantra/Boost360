@@ -169,7 +169,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                     }else{
                         mainLayout.setVisibility(View.GONE);
                         secondaryLayout.setVisibility(View.VISIBLE);
-                        rightButton.setVisibility(View.GONE);
+                        rightButton.setVisibility(View.INVISIBLE);
                     }
                 }
 
