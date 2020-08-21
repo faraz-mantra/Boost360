@@ -285,6 +285,9 @@ class PaymentFragment : BaseFragment(), PaymentListener {
                 }
             }
 
+            var firebaseAnalytics = Firebase.analytics
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_PAYMENT_INFO, null)
+
             val args = Bundle()
             args.putString("data", paymentData.toString())
             razorPayWebView.arguments = args
