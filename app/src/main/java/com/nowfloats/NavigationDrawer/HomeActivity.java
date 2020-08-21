@@ -556,8 +556,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
                 accountInfo.putExtra("table_name", Constants.VISITORS_TABLE);
                 startActivity(accountInfo);
-            } else if (url.contains(getResources().getString(R.string.addon_marketplace))) {
-                initiateAddonMarketplace();
+            } else if (url.contains(getResources().getString(R.string.addon_marketplace)) || url.contains("ADD_ONS_MARKETPLACE")) {
+                initiateAddonMarketplace(false);
+            } else if (url.contains("CART_FRAGMENR")) {
+                initiateAddonMarketplace(true);
             }
 
         }
@@ -1346,7 +1348,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.addon_marketplace))) {
                     WebEngageController.trackEvent("NAV - ADDONS_MARKETPLACE", "ADDONS_MARKETPLACE", null);
-                    initiateAddonMarketplace();
+                    initiateAddonMarketplace(false);
                 } else if (nextScreen.equals(getString(R.string.subscriptions))) {
                     WebEngageController.trackEvent("NAV - SUBSCRIPTIONS", "SUBSCRIPTIONS", null);
                     Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
@@ -1410,12 +1412,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
-    private void initiateAddonMarketplace() {
+    private void initiateAddonMarketplace(Boolean isOpenCardFragment) {
         Intent intent = new Intent(HomeActivity.this, UpgradeActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());
         intent.putExtra("loginid", session.getUserProfileId());
+        intent.putExtra("isOpenCardFragment", isOpenCardFragment);
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {

@@ -30,6 +30,8 @@
 -dontwarn com.apxor.**
 -dontwarn org.apache.commons.codec.binary.Base64
 
+-keep class androidx.core.app.CoreComponentFactory { *; }
+
 #-dontwarn com.demach.konotor
 #-dontwarn com.demach.konotor.KonotorFeedbackActivity
 #-dontwarn com.demach.konotor.service.model.GetAllConversationResponse

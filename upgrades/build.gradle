@@ -112,4 +112,6 @@ dependencies {
 
     //wenengage analytics
     implementation 'com.webengage:android-sdk:3.+'
+
+    implementation 'com.google.firebase:firebase-analytics-ktx:17.5.0'
 }

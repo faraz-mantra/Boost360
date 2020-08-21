@@ -34,6 +34,7 @@ import com.boost.upgrades.data.renewalcart.RenewalPurchasedRequest
 import com.boost.upgrades.data.renewalcart.RenewalResult
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
+import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.payment.PaymentFragment
 import com.boost.upgrades.ui.popup.CouponPopUpFragment
@@ -67,7 +68,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   lateinit var bundlesList: List<BundlesModel>
 
   lateinit var renewalList: List<RenewalResult>
-  var isDeepLinking = false
 
   var bundles_in_cart = false
   var default_validity_months = 1
@@ -130,7 +130,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     initializeAddonsRecycler()
     initializeRenewalRecycler()
     initializeErrorObserver()
-    isDeepLinking = (activity as UpgradeActivity).isDeepLink
     initMvvM()
     checkRenewalItemDeepLinkClick()
 
@@ -140,7 +139,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       discount_coupon_title.text = validCouponCode!!.coupon_key
       cart_apply_coupon.visibility = View.GONE
       discount_coupon_remove.visibility = View.VISIBLE
-    }else{
+    } else {
       validCouponCode = null
       discount_coupon_remove.visibility = View.GONE
       cart_apply_coupon.visibility = View.VISIBLE
@@ -264,12 +263,22 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   }
 
   private fun checkRenewalItemDeepLinkClick() {
-    if (isDeepLinking) {
+    val ac = (activity as UpgradeActivity)
+    if (ac.isBackCart.not() && (ac.isDeepLink || ac.isOpenCardFragment)) {
       val currentDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY)
-      val sevenDayDate = DateUtils.getAmountDate((activity as UpgradeActivity).deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY)
-      viewModel.allPurchasedWidgets(RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
-          widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
-          dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = currentDate, endDate = sevenDayDate))
+      val deepLinkDay = (activity as UpgradeActivity).deepLinkDay
+      val dateAmount = DateUtils.getAmountDate(deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY)
+      val request = if (deepLinkDay <= -1) {
+        RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
+            widgetStatus = RenewalPurchasedRequest.WidgetStatus.EXPIRED.name, dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name,
+            startDate = dateAmount, endDate = currentDate)
+      } else {
+        RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
+            widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
+            dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = currentDate, endDate = dateAmount)
+      }
+
+      viewModel.allPurchasedWidgets(request)
       viewModel.renewalResult().observeOnce(Observer { result ->
         renewalList = result?.filter { it.renewalStatus() == RenewalResult.RenewalStatus.PENDING.name } ?: ArrayList()
         if (renewalList.isNotEmpty()) {
@@ -284,7 +293,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           totalCalculation()
         } else {
           Toasty.warning(requireContext(), "Renewal order not found").show()
-          loadData()
+          ac.isBackCart = true
+          (activity as UpgradeActivity).onBackPressed()
         }
       })
     } else loadData()
@@ -465,13 +475,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             } //bundle forloop completion
 
             purchaseOrders.add(
-                    PurchaseOrder(
-                            couponCode,
-                            bundleDiscount, //Discount of the bundle/package/order without tax.
-                            extraPurchaseOrderDetails,
-                            bundleNetPrice,
-                            bundleWidgetList
-                    )
+                PurchaseOrder(
+                    couponCode,
+                    bundleDiscount, //Discount of the bundle/package/order without tax.
+                    extraPurchaseOrderDetails,
+                    bundleNetPrice,
+                    bundleWidgetList
+                )
             )
 
           }// bundle end
@@ -490,13 +500,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       }// end of cart item for loop
 
       purchaseOrders.add(
-              PurchaseOrder(
-                      couponCode,
-                      0,
-                      null,
-                      featureNetPrice,
-                      featureWidgetList
-              )
+          PurchaseOrder(
+              couponCode,
+              0,
+              null,
+              featureNetPrice,
+              featureWidgetList
+          )
       )
     } // if end of new order
 
@@ -682,7 +692,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cart_apply_coupon.visibility = View.GONE
         discount_coupon_remove.visibility = View.VISIBLE
         totalCalculation()
-      }else{
+      } else {
         validCouponCode = null
       }
     })
@@ -739,7 +749,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
       if (validCouponCode != null) {
         couponDisount = validCouponCode!!.discount_percent
         coupon_discount_title.text = "Coupon discount(" + couponDisount.toString() + "%)"
-      }else{
+      } else {
         coupon_discount_title.text = "Coupon discount"
       }
       if (cartList != null && cartList.size > 0) {

@@ -19,8 +19,8 @@ open class BaseApplication : MultiDexApplication() {
   }
 
   override fun attachBaseContext(base: Context) {
-    super.attachBaseContext(base)
     MultiDex.install(this)
+    super.attachBaseContext(base)
   }
 
 }

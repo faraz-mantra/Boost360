@@ -40,18 +40,24 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
+<!--    requestLegacyExternalStorage="true" using this to access external storage
+in api 29 for ImagePicker library in ManageProductFragment-->
+
     <application
         android:name="com.nowfloats.Volley.AppController"
         android:allowBackup="true"
-        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:hardwareAccelerated="true"
         android:icon="@drawable/app_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        tools:ignore="UnusedAttribute"
+        android:requestLegacyExternalStorage="true"
         tools:replace="android:name,android:theme,android:appComponentFactory">
-        <activity android:name="com.nowfloats.Restaurants.BookATable.BookATableActivity"
+        <activity
+            android:name="com.nowfloats.Restaurants.BookATable.BookATableActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.manufacturing.webview.WebViewActivity"
@@ -74,13 +80,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.education.batches.BatchesActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.nowfloats.education.toppers.ToppersActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.nowfloats.education.faculty.FacultyActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.nowfloats.AccrossVerticals.domain.DomainEmailActivity"
             android:screenOrientation="portrait" />
@@ -197,7 +206,9 @@
             android:name="com.webengage.sdk.android.accent_color"
             android:value="@color/primary" />
 
-        <receiver android:name="com.webengage.sdk.android.WebEngageReceiver">
+        <receiver
+            android:name="com.webengage.sdk.android.WebEngageReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.webengage.sdk.android.intent.ACTION" />
 

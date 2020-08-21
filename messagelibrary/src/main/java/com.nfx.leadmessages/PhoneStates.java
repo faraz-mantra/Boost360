@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.PowerManager;
 
 import androidx.core.app.ActivityCompat;
+
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
@@ -47,9 +49,14 @@ public class PhoneStates extends BroadcastReceiver {
         fpId = pref.getString(Constants.FP_ID, null);
         if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            if (tm != null) {
-                mobileId = tm.getDeviceId();
-            }
+            if (tm == null) return;
+            if (Build.VERSION.SDK_INT >= 26) {
+                if (tm.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA) {
+                    mobileId = tm.getMeid();
+                } else if (tm.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM) {
+                    mobileId = tm.getImei();
+                } else mobileId = ""; // default
+            } else mobileId = tm.getDeviceId();
         }
 
         if (mobileId == null || fpId == null) {
@@ -143,7 +150,7 @@ public class PhoneStates extends BroadcastReceiver {
                             }
                             try {
                                 onCallEnd(context);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }

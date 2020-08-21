@@ -35,6 +35,9 @@ import com.boost.upgrades.utils.Constants.Companion.UPI_POPUP_FRAGMENT
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.razorpay.Razorpay
@@ -130,6 +133,12 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         updateSubscriptionDetails()
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE PaymentScreen Initialised", "ADDONS_MARKETPLACE PaymentScreen", "")
+
+        var firebaseAnalytics = Firebase.analytics
+        val bundle = Bundle()
+        bundle.putDouble(FirebaseAnalytics.Param.VALUE, cartCheckoutData.getDouble("amount"))
+        bundle.putString(FirebaseAnalytics.Param.CURRENCY, "INR")
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundle)
 
         back_button.setOnClickListener {
             (activity as UpgradeActivity).popFragmentFromBackStack()
@@ -275,6 +284,9 @@ class PaymentFragment : BaseFragment(), PaymentListener {
                     paymentData.put(key, cartCheckoutData.get(key))
                 }
             }
+
+            var firebaseAnalytics = Firebase.analytics
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.ADD_PAYMENT_INFO, null)
 
             val args = Bundle()
             args.putString("data", paymentData.toString())

@@ -4,15 +4,8 @@ package com.nowfloats.NavigationDrawer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.cardview.widget.CardView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -29,6 +22,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -65,7 +63,6 @@ import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomWidget.VerticalTextView;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.CoordinateList;
 import com.nowfloats.NavigationDrawer.model.CoordinatesSet;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
@@ -94,7 +91,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -326,7 +322,7 @@ public class Analytics_Fragment extends Fragment {
         visitsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("WEBSITE visits - CHART DURATION CHANGED","null",session.getFpTag());
+                WebEngageController.trackEvent("WEBSITE visits - CHART DURATION CHANGED", "null", session.getFpTag());
                 MixPanelController.track("OverallVisitsDetailedView", null);
                 Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
                 q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.TOTAL);
@@ -350,7 +346,7 @@ public class Analytics_Fragment extends Fragment {
         mapVisitsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("ROI SUMMARY - ADDRESS VIEWS","null",session.getFpTag());
+                WebEngageController.trackEvent("ROI SUMMARY - ADDRESS VIEWS", "null", session.getFpTag());
                 MixPanelController.track("MapVisitsDetailedView", null);
                 Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
                 q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.MAP_VISITS);
@@ -367,7 +363,7 @@ public class Analytics_Fragment extends Fragment {
             public void onClick(View v) {
 
                 addSubscription();
-                WebEngageController.trackEvent("ROI SUMMARY - ADDRESS VIEWS","null",session.getFpTag());
+                WebEngageController.trackEvent("ROI SUMMARY - ADDRESS VIEWS", "null", session.getFpTag());
 
 //                Intent i = new Intent(getActivity(), SubscribersActivity.class);
 //                startActivity(i);
@@ -381,7 +377,7 @@ public class Analytics_Fragment extends Fragment {
                /* if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                     Toast.makeText(context, "This feature is coming soon", Toast.LENGTH_LONG).show();
                 } else {*/
-                WebEngageController.trackEvent("SOCIAL ANALYTICS - DETAILS FROM HOME","null",session.getFpTag());
+                WebEngageController.trackEvent("SOCIAL ANALYTICS - DETAILS FROM HOME", "null", session.getFpTag());
                 int status = pref.getInt("fbPageStatus", 0);
 
                 Intent i = new Intent(getActivity(), SocialAnalytics.class);
@@ -410,7 +406,7 @@ public class Analytics_Fragment extends Fragment {
         llSearchRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("SEARCH ANALYTICS","SEARCH RANKING",session.getFpTag());
+                WebEngageController.trackEvent("SEARCH ANALYTICS", "SEARCH RANKING", session.getFpTag());
                 Intent i = new Intent(getActivity(), SearchRankingActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -421,7 +417,7 @@ public class Analytics_Fragment extends Fragment {
         wildfireAnalytics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("WILDFIRE ANALYTICS","null",session.getFpTag());
+                WebEngageController.trackEvent("WILDFIRE ANALYTICS", "null", session.getFpTag());
                 Intent i = new Intent(getActivity(), WildFireAdsActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -1114,36 +1110,26 @@ public class Analytics_Fragment extends Fragment {
     }
 
 
-    private void openSubscriberActivity()
-    {
+    private void openSubscriberActivity() {
         Intent i = new Intent(getActivity(), SubscribersActivity.class);
         startActivity(i);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    private void addSubscription()
-    {
+    private void addSubscription() {
         /**
          * If not new pricing plan
          */
-        if(!WidgetKey.isNewPricingPlan)
-        {
-            WebEngageController.trackEvent("SUBSCRIBERS","null",session.getFpTag());
+        if (!WidgetKey.isNewPricingPlan) {
+            WebEngageController.trackEvent("SUBSCRIBERS", "null", session.getFpTag());
             openSubscriberActivity();
-        }
-
-        else
-        {
+        } else {
             String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SUBSCRIPTION, WidgetKey.WIDGET_PROPERTY_SUBSCRIPTION);
 
-            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
-            {
+            if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
                 Toast.makeText(getContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
-            }
-
-            else
-            {
-                WebEngageController.trackEvent("SUBSCRIBERS","null",session.getFpTag());
+            } else {
+                WebEngageController.trackEvent("SUBSCRIBERS", "null", session.getFpTag());
                 openSubscriberActivity();
             }
         }

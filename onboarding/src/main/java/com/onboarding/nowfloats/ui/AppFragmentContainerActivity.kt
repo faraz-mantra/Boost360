@@ -26,6 +26,12 @@ import com.onboarding.nowfloats.ui.registration.*
 
 open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
+  override fun onCreateView() {
+    super.onCreateView()
+    intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
+    exitToast = makeText(this, R.string.press_again_exit, Toast.LENGTH_SHORT)
+    setFragment()
+  }
   private var type: FragmentType? = null
   private var exitToast: Toast? = null
 
@@ -123,13 +129,6 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
 
   override fun getLayout(): Int {
     return com.framework.R.layout.activity_fragment_container
-  }
-
-  override fun onCreateView() {
-    super.onCreateView()
-    intent?.extras?.getInt(FRAGMENT_TYPE)?.let { type = FragmentType.values()[it] }
-    exitToast = makeText(this, R.string.press_again_exit, Toast.LENGTH_SHORT)
-    setFragment()
   }
 
   override fun getToolbar(): CustomToolbar? {

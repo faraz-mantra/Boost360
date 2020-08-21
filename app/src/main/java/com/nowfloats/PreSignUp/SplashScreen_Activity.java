@@ -176,11 +176,9 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        if (animationView != null)
-            animationView.cancelAnimation();
-        animationView = null;
+        if (animationView != null) animationView.cancelAnimation();
         mThread = null;
+        super.onDestroy();
     }
 
     @Subscribe

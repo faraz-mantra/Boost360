@@ -1,102 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.nowfloats.education.batches.ui.batchesdetails.BatchesDetailsFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/new_custome_app_bar" />
+    <data class="BatchesDetailsBinding">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Course Name"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"/>
+        <variable
+            name="batchedData"
+            type="com.nowfloats.education.batches.model.Data" />
 
-    <EditText
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:hint="Enter Course Name"
-        android:textSize="@dimen/_12sdp"
-        android:background="@drawable/edittext_bg_elevated"
-        android:elevation="@dimen/_2sdp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Course Timimgs"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"/>
+        android:layout_height="match_parent"
+        android:background="@color/app_background_dark_color"
+        android:orientation="vertical"
+        tools:context="com.nowfloats.education.batches.ui.batchesdetails.BatchesDetailsFragment">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:hint="00:00 to 00:00"
-        android:textSize="@dimen/_12sdp"
-        android:background="@drawable/edittext_bg_elevated"
-        android:elevation="@dimen/_2sdp"/>
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/new_custome_app_bar" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Course Duration"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="@string/course_name" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:hint="Days/Months/Weekly"
-        android:textSize="@dimen/_12sdp"
-        android:background="@drawable/edittext_bg_elevated"
-        android:elevation="@dimen/_2sdp"/>
+        <EditText
+            android:id="@+id/course_name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:background="@drawable/edit_text_bg_elevated_education"
+            android:elevation="@dimen/_2sdp"
+            android:hint="Enter Course Name"
+            android:text="@={batchedData.coursecategorytag}"
+            android:textSize="@dimen/_12sdp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Commencement Date"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_15sdp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="@string/course_timings" />
 
-    <EditText
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:hint="00-00-0000"
-        android:drawableEnd="@drawable/ic_blue_calander"
-        android:padding="@dimen/_10sdp"
-        android:textSize="@dimen/_12sdp"
-        android:background="@drawable/edittext_bg_elevated"
-        android:elevation="@dimen/_2sdp"/>
-    <TextView
-        android:id="@+id/save_review"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/orange_button_click_effect"
-        android:fontFamily="@font/open_sans_semibold"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp"
-        android:gravity="center"
-        android:text="save"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:elevation="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_50sdp"/>
+        <EditText
+            android:id="@+id/course_timing_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:background="@drawable/edit_text_bg_elevated_education"
+            android:elevation="@dimen/_2sdp"
+            android:focusable="false"
+            android:hint="00:00 to 00:00"
+            android:text="@={batchedData.batchtiming}"
+            android:textSize="@dimen/_12sdp" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="@string/course_duration" />
+
+        <EditText
+            android:id="@+id/course_duration_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:background="@drawable/edit_text_bg_elevated_education"
+            android:elevation="@dimen/_2sdp"
+            android:hint="Days/Months/Weekly"
+            android:text="@={batchedData.duration}"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="@string/commencement_date" />
+
+        <EditText
+            android:id="@+id/commencement_date"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:background="@drawable/edit_text_bg_elevated_education"
+            android:drawableEnd="@drawable/ic_blue_calander"
+            android:elevation="@dimen/_2sdp"
+            android:focusable="false"
+            android:hint="00/00/0000"
+            android:padding="@dimen/_10sdp"
+            android:text="@={batchedData.commencementdate}"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/add_update_batch_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/orange_button_click_effect"
+            android:elevation="@dimen/_2sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:gravity="center"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:text="save"
+            android:textAllCaps="true"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</layout>

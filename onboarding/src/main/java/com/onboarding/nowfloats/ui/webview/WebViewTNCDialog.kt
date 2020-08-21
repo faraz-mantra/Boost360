@@ -16,6 +16,7 @@ import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.DialogWebviewTncBinding
+import com.onboarding.nowfloats.utils.getWebViewUrl
 
 class WebViewTNCDialog : DialogFragment() {
 
@@ -91,7 +92,7 @@ class WebViewTNCDialog : DialogFragment() {
         binding.progressBar.gone()
       }
     }
-    binding.webview.loadUrl(urlData.getUrl())
+    binding.webview.loadUrl(urlData.getWebViewUrl())
   }
 }
 

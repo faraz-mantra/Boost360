@@ -67,30 +67,32 @@ class SplashActivity : AppCompatActivity() {
     animation_view.setAnimation(R.raw.boost_lottie2)
     animation_view.addAnimatorListener(object : Animator.AnimatorListener {
       override fun onAnimationRepeat(animation: Animator?) {
-//                Log.d("onAnimationRepeat", "")
       }
 
       override fun onAnimationEnd(animation: Animator?) {
-        if (isUserLoggedIn) {
-          val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
-          startActivity(intent)
-          finish()
-        } else if (isSignUpComplete) {
-          NavigatorManager.startActivities(this@SplashActivity)
-          finish()
-        } else {
-          val mainIntent = Intent(applicationContext, PreSignUpActivity::class.java)
-          startActivity(mainIntent)
-          finish()
+        animation_view?.cancelAnimation()
+        when {
+          isUserLoggedIn -> {
+            val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+            startActivity(intent)
+            finish()
+          }
+          isSignUpComplete -> {
+            NavigatorManager.startActivities(this@SplashActivity)
+            finish()
+          }
+          else -> {
+            val mainIntent = Intent(applicationContext, PreSignUpActivity::class.java)
+            startActivity(mainIntent)
+            finish()
+          }
         }
       }
 
       override fun onAnimationCancel(animation: Animator?) {
-//                Log.d("onAnimationCancel", "")
       }
 
       override fun onAnimationStart(animation: Animator?) {
-//                Log.d("onAnimationStart", "")
       }
 
     })
@@ -110,5 +112,10 @@ class SplashActivity : AppCompatActivity() {
     } catch (e: PackageManager.NameNotFoundException) {
     } catch (e: NoSuchAlgorithmException) {
     }
+  }
+
+  override fun onDestroy() {
+    animation_view?.cancelAnimation()
+    super.onDestroy()
   }
 }
