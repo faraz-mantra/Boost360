@@ -49,7 +49,7 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
         return new MyHolder(convertView);
     }
 
-    public void updateList(ArrayList<VmnCallModel> listItems){
+    public void updateList(ArrayList<VmnCallModel> listItems) {
         this.mList = listItems;
         notifyDataSetChanged();
     }
@@ -62,21 +62,21 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
 
         holder.seekBar.setProgress(mList.get(position).getAudioPosition());
 
-        if(mList.get(position).getAudioPosition() == 0 && mList.get(position).getAudioLength() == 0 && !mList.get(position).isAudioPlayState()){
+        if (mList.get(position).getAudioPosition() == 0 && mList.get(position).getAudioLength() == 0 && !mList.get(position).isAudioPlayState()) {
             holder.seekBar.setProgress(0);
             holder.audioStartTime.setText("0:00");
             holder.audioEndTime.setText(" / 0:00");
             holder.currentDuration = 0;
             holder.playPauseButton.setImageResource(R.drawable.ic_audio_play);
-        }else{
+        } else {
             holder.seekBar.setProgress(mList.get(position).getAudioPosition());
             holder.seekBar.setMax(mList.get(position).getAudioLength());
             holder.audioStartTime.setText(getTimeFromMilliSeconds(mList.get(position).getAudioPosition()));
             holder.audioEndTime.setText(" / " + getTimeFromMilliSeconds(mList.get(position).getAudioLength()));
             holder.currentDuration = mList.get(position).getAudioPosition();
-            if(mList.get(position).isAudioPlayState()){
+            if (mList.get(position).isAudioPlayState()) {
                 holder.playPauseButton.setImageResource(R.drawable.ic_pause_gray);
-            }else{
+            } else {
                 holder.playPauseButton.setImageResource(R.drawable.ic_audio_play);
             }
         }
@@ -103,15 +103,20 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
                         holder.playPauseButton.setImageResource(R.drawable.ic_pause_gray);
                         currentPlay = holder.getAdapterPosition();
                         if (!TextUtils.isEmpty(mList.get(position).getCallRecordingUri())) {
-                            if(holder.currentDuration>0){
+                            if (holder.currentDuration > 0) {
                                 holder.start();
                                 holder.handler.postDelayed(holder.updateSeekBar, 1000);
-                            }else {
+                            } else {
                                 try {
-                                    holder.mediaPlayer.setDataSource(mList.get(position).getCallRecordingUri());
-                                    holder.mediaPlayer.prepareAsync(); // might take long! (for buffering, etc)
-                                } catch (IOException e) {
-                                    Log.v("ggg", e.getMessage());
+                                    if (mList.size() > position) {
+                                        VmnCallModel callModel = mList.get(position);
+                                        if (callModel != null) {
+                                            holder.mediaPlayer.setDataSource(callModel.getCallRecordingUri());
+                                            holder.mediaPlayer.prepareAsync(); // might take long! (for buffering, etc)
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    Log.v("ggg", e.getLocalizedMessage());
                                 }
                             }
                         } else {
@@ -213,7 +218,7 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
         private VmnCallModel mediaData;
         boolean audioPlayState = false;
         String totaltime;
-        int currentDuration=0;
+        int currentDuration = 0;
         Runnable updateSeekBar;
         private Handler handler;
 
@@ -261,7 +266,7 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
         private void start() {
             audioPlayState = true;
             mediaPlayer.start();
-            if(currentDuration!=0){
+            if (currentDuration != 0) {
                 mediaPlayer.seekTo(seekBar.getProgress());
             }
         }
