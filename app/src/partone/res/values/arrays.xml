@@ -14,7 +14,6 @@
     <array name="about_sidepanel">
         <item>@drawable/ic_about_nf</item>
         <item>@drawable/ic_faqs</item>
-        <item>@drawable/ic_feedback</item>
         <item>@drawable/ic_like_facebook</item>
         <item>@drawable/ic_follow_twitter</item>
         <item>@drawable/ic_rate_on_playstore</item>
