@@ -179,7 +179,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                     deleteRecord(itemId);
                     return;
                 }
-                finish();
+                onBackPressed();
             }
         });
 
@@ -261,7 +261,8 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Methods.showSnackBarPositive(TestimonialsFeedbackActivity.this, "Successfully Added Testimonials");
+//                        Methods.showSnackBarPositive(TestimonialsFeedbackActivity.this, "Successfully Added Testimonials");
+                        Toast.makeText(getApplicationContext(), "Successfully Added Testimonials", Toast.LENGTH_LONG).show();
                         onBackPressed();
                     }
 
@@ -310,15 +311,17 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                     Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Methods.showSnackBarPositive(TestimonialsFeedbackActivity.this, "Successfully Updated Testimonials");
-                finish();
+//                Methods.showSnackBarPositive(TestimonialsFeedbackActivity.this, "Successfully Updated Testimonials");
+                Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
+                onBackPressed();
             }
 
             @Override
             public void failure(RetrofitError error) {
                 if (error.getResponse().getStatus() == 200) {
-                    Methods.showSnackBarPositive(TestimonialsFeedbackActivity.this, "Successfully Updated Testimonials");
-                    finish();
+//                    Methods.showSnackBarPositive(TestimonialsFeedbackActivity.this, "Successfully Updated Testimonials");
+                    Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
+                    onBackPressed();
                 } else {
                     Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
                 }
@@ -463,8 +466,9 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                 public void success(String data, Response response) {
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(TestimonialsFeedbackActivity.this, "Successfully Deleted.");
-                        finish();
+//                        Methods.showSnackBarPositive(TestimonialsFeedbackActivity.this, "Successfully Deleted.");
+                        Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
+                        onBackPressed();
                     } else {
                         Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
                     }
@@ -473,8 +477,9 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                 @Override
                 public void failure(RetrofitError error) {
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(TestimonialsFeedbackActivity.this, "Successfully Deleted.");
-                        finish();
+//                        Methods.showSnackBarPositive(TestimonialsFeedbackActivity.this, "Successfully Deleted.");
+                        Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
+                        onBackPressed();
                     } else {
                         Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
                     }

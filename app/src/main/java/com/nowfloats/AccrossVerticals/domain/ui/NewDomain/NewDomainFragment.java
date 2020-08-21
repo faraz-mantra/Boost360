@@ -64,17 +64,17 @@ public class NewDomainFragment extends Fragment {
 
 
         domainSupportTypeSpinneer = view.findViewById(R.id.domain_support_type);
-        domainSupportTypeSpinneer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(requireContext(),domainSupportType[position] , Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        domainSupportTypeSpinneer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(requireContext(),domainSupportType[position] , Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
     }
 
     public void setHeader(View view){
