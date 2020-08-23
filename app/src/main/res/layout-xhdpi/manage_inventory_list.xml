@@ -79,7 +79,7 @@
                 android:background="@null" />
 
             <ImageView
-                android:id="@+id/book_table_menu_icon"
+                android:id="@+id/book_a_table_icon"
                 android:layout_width="@dimen/icon_size_55"
                 android:layout_height="@dimen/icon_size_55"
                 android:padding="15dp"
