@@ -3,11 +3,11 @@ package com.inventoryorder.model.ordersummary
 import java.util.*
 
 enum class OrderStatusValue(val type: String, val status: String, val value: String) {
-  ORDER_INITIATED_1(OrderSummaryModel.OrderType.ORDER.name, OrderSummaryModel.OrderStatus.ORDER_INITIATED.name, "Order Confirmed"),
+  ORDER_INITIATED_1(OrderSummaryModel.OrderType.ORDER.name, OrderSummaryModel.OrderStatus.ORDER_INITIATED.name, "Order Initiated"),
   PAYMENT_MODE_VERIFIED_1(OrderSummaryModel.OrderType.ORDER.name, OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED.name, "Order Placed"),
   PAYMENT_CONFIRMED_1(OrderSummaryModel.OrderType.ORDER.name, OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name, "Order Placed"),
   ORDER_CONFIRMED_1(OrderSummaryModel.OrderType.ORDER.name, OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name, "Order Confirmed"),
-  DELIVERY_IN_PROGRESS_1(OrderSummaryModel.OrderType.ORDER.name, OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS.name, "Order Progress"),
+  DELIVERY_IN_PROGRESS_1(OrderSummaryModel.OrderType.ORDER.name, OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS.name, "Delivery In-Progress"),
   DELIVERY_COMPLETED_1(OrderSummaryModel.OrderType.ORDER.name, OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED.name, "Order Delivered"),
   FEEDBACK_PENDING_1(OrderSummaryModel.OrderType.ORDER.name, OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name, "Order Delivered"),
   FEEDBACK_RECEIVED_1(OrderSummaryModel.OrderType.ORDER.name, OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name, "Order Delivered"),
@@ -21,7 +21,7 @@ enum class OrderStatusValue(val type: String, val status: String, val value: Str
   PAYMENT_MODE_VERIFIED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED.name, "Apt Requested"),
   PAYMENT_CONFIRMED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name, "Apt Requested"),
   ORDER_CONFIRMED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name, "Apt Confirmed"),
-  DELIVERY_IN_PROGRESS_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS.name, "Apt Progress"),
+  DELIVERY_IN_PROGRESS_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS.name, "Apt In-Progress"),
   DELIVERY_COMPLETED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED.name, "Apt Completed"),
   FEEDBACK_PENDING_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name, "Apt Completed"),
   FEEDBACK_RECEIVED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name, "Apt Completed"),
@@ -35,7 +35,7 @@ enum class OrderStatusValue(val type: String, val status: String, val value: Str
   PAYMENT_MODE_VERIFIED_3(OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name, OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED.name, "Consult Requested"),
   PAYMENT_CONFIRMED_3(OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name, OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name, "Consult Requested"),
   ORDER_CONFIRMED_3(OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name, OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name, "Consult Confirmed"),
-  DELIVERY_IN_PROGRESS_3(OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name, OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS.name, "Consult Progress"),
+  DELIVERY_IN_PROGRESS_3(OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name, OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS.name, "Consult In-Progress"),
   DELIVERY_COMPLETED_3(OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name, OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED.name, "Consult Completed"),
   FEEDBACK_PENDING_3(OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name, OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name, "Consult Completed"),
   FEEDBACK_RECEIVED_3(OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name, OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name, "Consult Completed"),
