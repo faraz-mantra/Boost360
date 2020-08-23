@@ -48,7 +48,7 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  */
 public class ManageInventoryFragment extends Fragment {
     TextView tvTransactionType_1, tvTransactionType_2, orderAnalytics;
-    ImageView ivLockWidget, ivPaymentIcon, lockIcon;
+    ImageView ivLockWidget, ivPaymentIcon, lockIcon, bookTableMenuIcon;
     LinearLayout bookTable;
     //Typeface robotoLight;
     private SharedPreferences pref = null;
@@ -259,6 +259,16 @@ public class ManageInventoryFragment extends Fragment {
                 lockIcon.setVisibility(View.GONE);
             }else{
                 lockIcon.setVisibility(View.VISIBLE);
+            }
+
+            bookTableMenuIcon = mainView.findViewById(R.id.book_table_menu_icon);
+
+            if(session.getFP_AppExperienceCode().equals("CAF")){
+                bookTable.setVisibility(View.VISIBLE);
+                bookTableMenuIcon.setVisibility(View.VISIBLE);
+            }else{
+                bookTable.setVisibility(View.GONE);
+                bookTableMenuIcon.setVisibility(View.GONE);
             }
 
         } catch (Exception e) {
