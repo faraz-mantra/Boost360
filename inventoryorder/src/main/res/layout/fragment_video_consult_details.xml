@@ -397,9 +397,10 @@
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:padding="@dimen/size_4"
-                android:text="COPY VIDEO CALL LINK"
+                android:text="COPY PATIENT's CALL LINK"
                 android:textColor="@color/grey_text_color"
                 app:fontFamily="@font/semi_bold"
+                android:visibility="gone"
                 app:textType="BODY_1" />
           </LinearLayout>
 

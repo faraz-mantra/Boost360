@@ -110,19 +110,18 @@ data class OrderItem(
   }
 
   fun consultationWindowUrl(): String {
-    return "http://d.nflo.at/consult?appt=$_id"
+    return "https://d.nflo.at/consult?appt=$_id"
   }
 
   fun consultationJoiningUrl(): String {
-    return "http://DOCTORS.GETBOOST360.COM/consult/$_id"
+    return "https://DOCTORS.GETBOOST360.COM/consult/$_id"
   }
 
   fun isConfirmConsultBtn(): Boolean {
     return ((OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_INITIATED ||
-        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED) &&
-        (firstItemForConsultation()?.Product?.isAvailable() ?: false) && isUpComingConsult())
+        OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED))
   }
 
   fun isConsultErrorText(): Boolean {
