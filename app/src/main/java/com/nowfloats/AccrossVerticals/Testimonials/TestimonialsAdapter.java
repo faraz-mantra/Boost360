@@ -1,28 +1,24 @@
 package com.nowfloats.AccrossVerticals.Testimonials;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.nowfloats.AccrossVerticals.API.model.testimonials.Data;
-import com.nowfloats.Testimonials.TestimonialsListener;
+import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
 import com.thinksity.R;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-/**
- * Created by NowFloats on 02-08-2016.
- */
 public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapter.ViewHolder> {
 
     private List<Data> itemList;
@@ -86,10 +82,27 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
             }
         });
 
+        holder.editOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.editOptionClicked(itemList.get(position));
+            }
+        });
+
+        holder.deleteOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.deleteOptionClicked(itemList.get(position));
+            }
+        });
+
         Glide.with(context)
                 .load(itemList.get(position).getProfileimage().getUrl())
                 .into(holder.userProfileImage);
 
+        holder.userName.setText(itemList.get(position).getUsername());
+        holder.reviewTitle.setText(itemList.get(position).getTitle());
+        holder.reviewDescription.setText(itemList.get(position).getDescription());
 
     }
 
@@ -103,6 +116,7 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
         ImageView menuButton,userProfileImage;
         LinearLayout menuOptionLayout;
         ConstraintLayout mainLayout;
+        TextView userName, reviewTitle, reviewDescription, editOption, deleteOption;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -111,6 +125,11 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
             userProfileImage = (ImageView) itemView.findViewById(R.id.user_profile_image);
             menuOptionLayout = (LinearLayout) itemView.findViewById(R.id.menu_options);
             mainLayout = (ConstraintLayout) itemView.findViewById(R.id.main_layout);
+            userName = itemView.findViewById(R.id.username);
+            reviewTitle = itemView.findViewById(R.id.review_title);
+            reviewDescription = itemView.findViewById(R.id.review_description);
+            editOption = itemView.findViewById(R.id.edit_option);
+            deleteOption = itemView.findViewById(R.id.delete_option);
         }
     }
 }

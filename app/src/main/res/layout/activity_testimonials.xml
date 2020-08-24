@@ -8,14 +8,14 @@
     tools:context="com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity">
 
     <include
-        android:id="@+id/app_bar_site_appearance"
-        layout="@layout/fragment_app_bar" />
+        android:id="@+id/app_bar"
+        layout="@layout/new_custome_app_bar" />
     <LinearLayout
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/testimonials_recycler"
@@ -31,7 +31,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="gone"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -51,9 +51,9 @@
                 android:background="@drawable/circle_feature_bg"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    app:srcCompat="@drawable/ic_expiry_lock"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_testimonials_feature"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,14 +76,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Looks like this add-on is not added to your current plan. Add it now to start using it."
+                    android:text="With the feature, you can showcase your customer reviews and highlight their experience on the homepage of your website."
                     android:gravity="center"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textSize="@dimen/_11sdp"
                     android:layout_marginTop="@dimen/_20sdp"/>
 
                 <TextView
-                    android:id="@+id/buy_item"
+                    android:id="@+id/add_testimonials"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/orange_button_click_effect"
@@ -93,7 +93,7 @@
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp"
                     android:gravity="center"
-                    android:text="VIEW IN ADD-ON STORE"
+                    android:text="ADD A TESTIMONIAL"
                     android:textColor="@color/white"
                     android:layout_marginTop="@dimen/_20sdp"/>
 
