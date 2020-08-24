@@ -444,26 +444,66 @@
                 android:text="@string/get_in_capital"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                android:visibility="gone"
-                tools:ignore="MissingPrefix" />
-            <ImageView
-                android:id="@+id/keyboard_lock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_expiry_lock"
-                android:visibility="visible"
-                android:paddingRight="30dp"/>
+              android:visibility="gone"
+              tools:ignore="MissingPrefix" />
+
+          <ImageView
+            android:id="@+id/keyboard_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_expiry_lock"
+            android:visibility="visible"
+            android:paddingRight="30dp" />
 
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/facebook_layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sidepanel_cell_height"
-            android:background="@color/cell_background_color"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
 
-            <ImageView
+      <!--      <LinearLayout-->
+      <!--        android:id="@+id/payment_kyc_layout"-->
+      <!--        android:layout_width="match_parent"-->
+      <!--        android:layout_height="@dimen/sidepanel_cell_height"-->
+      <!--        android:background="@color/cell_background_color"-->
+      <!--        android:gravity="center_vertical"-->
+      <!--        android:orientation="horizontal">-->
+
+      <!--        <ImageView-->
+      <!--          android:id="@+id/payment_kyc_imageView"-->
+      <!--          android:layout_width="@dimen/nav_icon_size"-->
+      <!--          android:layout_height="@dimen/nav_icon_size"-->
+      <!--          android:layout_marginLeft="@dimen/icon_left_margin"-->
+      <!--          android:layout_marginRight="@dimen/icon_right_margin"-->
+      <!--          android:alpha="0.85"-->
+      <!--          android:scaleType="fitXY"-->
+      <!--          app:srcCompat="@drawable/ic_baseline_payment" />-->
+
+      <!--        <TextView-->
+      <!--          android:id="@+id/payment_kyc_textView"-->
+      <!--          android:layout_width="0dp"-->
+      <!--          android:layout_height="wrap_content"-->
+      <!--          android:layout_weight="1"-->
+      <!--          android:fontFamily="@font/roboto_medium"-->
+      <!--          android:text="Payment Gateway"-->
+      <!--          android:textColor="@color/cell_text_color"-->
+      <!--          android:textSize="@dimen/cell_text_size" />-->
+
+      <!--        <ImageView-->
+      <!--          android:id="@+id/payment_kyc_lock"-->
+      <!--          android:layout_width="wrap_content"-->
+      <!--          android:layout_height="wrap_content"-->
+      <!--          android:paddingRight="30dp"-->
+      <!--          android:visibility="visible"-->
+      <!--          app:srcCompat="@drawable/ic_expiry_lock" />-->
+
+      <!--      </LinearLayout>-->
+
+      <LinearLayout
+        android:id="@+id/facebook_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sidepanel_cell_height"
+        android:background="@color/cell_background_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
                 android:id="@+id/facebook_ImageView"
                 android:layout_width="@dimen/nav_icon_size"
                 android:layout_height="@dimen/nav_icon_size"

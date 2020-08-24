@@ -558,10 +558,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 startActivity(accountInfo);
             } else if (url.contains(getResources().getString(R.string.addon_marketplace)) || url.contains("ADD_ONS_MARKETPLACE")) {
                 initiateAddonMarketplace(false);
-            } else if (url.contains("CART_FRAGMENR")) {
+            } else if (url.contains("CART_FRAGMENT")) {
                 initiateAddonMarketplace(true);
             }
-
         }
         mDeepLinkUrl = null;
     }
@@ -1354,7 +1353,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
                     startActivity(subscribers);
                 }
-
             }
         }, 200);
 

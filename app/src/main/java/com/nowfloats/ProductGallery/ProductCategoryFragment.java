@@ -224,7 +224,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_start:
-                startFragmentActivityNew(getActivity(), FragmentType.SERVICE_DETAIL_VIEW, new Bundle(), false);
+                startFragmentActivityNew(getActivity(), FragmentType.SERVICE_DETAIL_VIEW, new Bundle(), false, true);
                 break;
         }
     }

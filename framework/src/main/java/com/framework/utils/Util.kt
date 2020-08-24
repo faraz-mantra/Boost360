@@ -20,3 +20,4 @@ fun Activity.showKeyBoard(view: View?) {
     imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
   }
 }
+

@@ -17,13 +17,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +27,12 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
@@ -120,38 +119,6 @@ public class SidePanelFragment extends Fragment {
     private SharedPreferences pref, mSharedPreferences;
 
     private PurchaseFeaturesPopup purchaseFeaturesPopup = new PurchaseFeaturesPopup();
-
-
-    public interface OnItemClickListener {
-        public void onClick(String nextScreen);
-    }
-
-    public SidePanelFragment() {
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        mainActivity = activity;
-//        imageLoader.init(ImageLoaderConfiguration.createDefault(mainActivity));
-        session = new UserSessionManager(activity.getApplicationContext(), activity);
-    }
-
-    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(preferenceName, preferenceValue);
-        editor.apply();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.fragment_side_panel2, container, false);
-        addBackgroundImages();
-        return layout;
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -613,6 +580,51 @@ public class SidePanelFragment extends Fragment {
         onclickColorChange(dasbBoardImageView, dashBoardTextView, homeLayout);
     }
 
+    public SidePanelFragment() {
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        mainActivity = activity;
+//        imageLoader.init(ImageLoaderConfiguration.createDefault(mainActivity));
+        session = new UserSessionManager(activity.getApplicationContext(), activity);
+    }
+
+    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(preferenceName, preferenceValue);
+        editor.apply();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View layout = inflater.inflate(R.layout.fragment_side_panel2, container, false);
+        addBackgroundImages();
+        return layout;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == media_req_id) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                cameraIntent();
+
+            }
+        } else if (requestCode == gallery_req_id) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                galleryIntent();
+
+            }
+
+        }
+    }
+
     private void showMailDetailDilaog() {
         new MaterialDialog.Builder(getActivity())
                 .title("Connect to Customer Support")
@@ -700,22 +712,8 @@ public class SidePanelFragment extends Fragment {
         }).start();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if (requestCode == media_req_id) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                cameraIntent();
-
-            }
-        } else if (requestCode == gallery_req_id) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                galleryIntent();
-
-            }
-
-        }
+    public interface OnItemClickListener {
+        void onClick(String nextScreen);
     }
 
 

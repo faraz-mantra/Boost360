@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.appservice">
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-feature android:name="android.hardware.camera" android:required="false" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
   <application>
     <activity
@@ -11,7 +15,14 @@
     <activity
       android:name="com.appservice.ui.bankaccount.AccountFragmentContainerActivity"
       android:screenOrientation="portrait"
-        android:theme="@style/AppTheme.account"
-        android:windowSoftInputMode="adjustPan" />
-    </application>
+      android:theme="@style/AppTheme.account"
+      android:windowSoftInputMode="adjustPan" />
+
+    <activity
+      android:name="com.appservice.ui.paymentgateway.PaymentGatewayContainerActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.payment"
+      android:windowSoftInputMode="adjustPan" />
+
+  </application>
 </manifest>
