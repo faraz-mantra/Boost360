@@ -1,5 +1,6 @@
 package com.framework.base
 
+import okhttp3.ResponseBody
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -8,9 +9,10 @@ open class BaseResponse(
     var status: Int? = null,
     var message: String? = null,
     var error: Throwable? = null,
-    var anyResponse: Any? = null,
     var stringResponse: String? = null,
-    var arrayResponse: Array<*>? = null
+    var arrayResponse: Array<*>? = null,
+    var anyResponse: Any? = null,
+    var responseBody: ResponseBody? = null
 ) {
   fun message(): String {
     val message = message ?: ""

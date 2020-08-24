@@ -118,6 +118,7 @@ public class Constants {
     public static final String[] FACEBOOK_READ_PERMISSIONS = Specific.FACEBOOK_READ_PERMISSIONS;
     public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = Specific.FACEBOOK_PUBLISH_PERMISSIONS;
     //public final static String NOW_FLOATS_API_URL		=	"http://api.nowfloatsdev.com";
+    public final static String WEB_ACTION_BOOST_KIT_API_URL = "https://webaction.api.boostkit.dev";
     public final static String NOW_FLOATS_API_URL = "https://api2.withfloats.com";
     public final static String NOW_FLOATS_API_URL_SALESMAN = "http://52.66.59.196";
     public final static String WITH_FLOATS_API_URL = "https://api.withfloats.com/";
@@ -163,6 +164,7 @@ public class Constants {
     public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter restAdapterV2 = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL_V2)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("gggv2")).build();
     public static final RestAdapter restAdapterWithFloat = new RestAdapter.Builder().setEndpoint(Constants.WITH_FLOATS_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("with float")).build();
+    public static final RestAdapter restAdapterBoostKit = new RestAdapter.Builder().setEndpoint(Constants.WEB_ACTION_BOOST_KIT_API_URL)/*.setClient(getClient())*/.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Boost Kit")).build();
     public static final RestAdapter restAdapterSalesman = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL_SALESMAN)/*.setClient(getClient())*//*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
     public static final RestAdapter movingFloatsDevAdapter = new RestAdapter.Builder().setEndpoint("http://movingfloats_nds.nowfloatsdev.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter movingFloatsDev2Adapter = new RestAdapter.Builder().setEndpoint("http://withfloatsapi2-dev.ap-south-1.elasticbeanstalk.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();

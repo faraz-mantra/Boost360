@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.webkit.MimeTypeMap
 import java.io.File
 import java.util.*
 import java.util.regex.Matcher
@@ -63,10 +64,9 @@ fun Context.openWebPage(url: String): Boolean {
 }
 
 fun Context.copyClipBoard(selectedText: String): Boolean {
-    var clipboard: ClipboardManager? = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
-    var clip = ClipData.newPlainText("label", selectedText)
-    if (clipboard == null || clip == null)
-        return false
+    val clipboard: ClipboardManager? = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+    val clip = ClipData.newPlainText("label", selectedText)
+    if (clipboard == null || clip == null) return false
     clipboard.setPrimaryClip(clip)
     return true
 }
@@ -79,6 +79,36 @@ fun String.capitalizeUtil(): String {
     }
     return capMatcher.appendTail(capBuffer).toString()
 }
+
 fun File.getBitmap(): Bitmap? {
-    return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this.path), 800, 800)
+    return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this.path), 400, 400)
 }
+
+fun String.getBitmap(): Bitmap? {
+    return ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(this), 400, 400)
+}
+
+fun File.getMimeType(): String? {
+    var mimeType: String? = null
+    val extension: String? = absolutePath?.getExtension()
+    if (MimeTypeMap.getSingleton().hasExtension(extension)) {
+        mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+    }
+    return mimeType
+}
+
+fun String.getExtension(): String? {
+    val strLength = lastIndexOf(".")
+    return if (strLength > 0) substring(strLength + 1).toLowerCase() else null
+}
+
+fun String.getFileName(): String? {
+    return substring(lastIndexOf("/") + 1)
+}
+
+fun getExtensionUrl(url: String?): String {
+    val filenameArray = url?.split("\\.".toRegex())?.toTypedArray()
+    return filenameArray?.get(filenameArray.size - 1) ?: ""
+}
+
+

@@ -36,4 +36,5 @@ class WhyBottomSheet : BaseBottomSheetDialog<BottomSheetWhyAccountBinding, BaseV
   override fun getMarginEnd(): Int {
     return resources.getDimensionPixelSize(R.dimen.size_20)
   }
+
 }
