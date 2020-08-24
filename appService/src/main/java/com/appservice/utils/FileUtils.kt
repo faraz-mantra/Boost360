@@ -65,7 +65,7 @@ class FileUtils(var context: Activity) {
                 getDataColumn(context, contentUri, null, null)
               } catch (e: NumberFormatException) {
                 //In Android 8 and Android P the id is not a number
-                uri.path.replaceFirst("^/document/raw:", "").replaceFirst("^raw:", "")
+                uri.path?.replaceFirst("^/document/raw:", "")?.replaceFirst("^raw:", "")
               }
             }
           }
@@ -128,8 +128,8 @@ class FileUtils(var context: Activity) {
         var cursor: Cursor? = null
         try {
           cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
-          val columnIndex: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-          if (cursor.moveToFirst()) {
+          val columnIndex: Int = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA) ?: 0
+          if (cursor?.moveToFirst()!!) {
             return cursor.getString(columnIndex)
           }
         } catch (e: Exception) {
@@ -179,33 +179,33 @@ class FileUtils(var context: Activity) {
 
   private fun getDriveFilePath(uri: Uri): String {
     val returnUri: Uri = uri
-    val returnCursor: Cursor = context.contentResolver.query(returnUri, null, null, null, null)
+    val returnCursor: Cursor? = context.contentResolver.query(returnUri, null, null, null, null)
     /*
          * Get the column indexes of the data in the Cursor,
          *     * move to the first row in the Cursor, get the data,
          *     * and display it.
          * */
-    val nameIndex: Int = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-    val sizeIndex: Int = returnCursor.getColumnIndex(OpenableColumns.SIZE)
-    returnCursor.moveToFirst()
-    val name: String = returnCursor.getString(nameIndex)
-    val size = returnCursor.getLong(sizeIndex).toString()
+    val nameIndex: Int = returnCursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME) ?: 0
+    val sizeIndex: Int = returnCursor?.getColumnIndex(OpenableColumns.SIZE) ?: 0
+    returnCursor?.moveToFirst()
+    val name: String = returnCursor?.getString(nameIndex) ?: ""
+    val size = returnCursor?.getLong(sizeIndex).toString()
     val file = File(context.cacheDir, name)
     try {
-      val inputStream: InputStream = context.contentResolver.openInputStream(uri)
+      val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
       val outputStream = FileOutputStream(file)
       var read = 0
       val maxBufferSize = 1 * 1024 * 1024
-      val bytesAvailable: Int = inputStream.available()
+      val bytesAvailable: Int? = inputStream?.available()
 
       //int bufferSize = 1024;
-      val bufferSize = bytesAvailable.coerceAtMost(maxBufferSize)
+      val bufferSize = bytesAvailable?.coerceAtMost(maxBufferSize) ?: 0
       val buffers = ByteArray(bufferSize)
-      while (inputStream.read(buffers).also { read = it } != -1) {
+      while (inputStream?.read(buffers).also { read = it!! } != -1) {
         outputStream.write(buffers, 0, read)
       }
       Log.e("File Size", "Size " + file.length())
-      inputStream.close()
+      inputStream?.close()
       outputStream.close()
       Log.e("File Path", "Path " + file.path)
       Log.e("File Size", "Size " + file.length())
@@ -223,18 +223,18 @@ class FileUtils(var context: Activity) {
    */
   private fun copyFileToInternalStorage(uri: Uri, newDirName: String): String {
     val returnUri: Uri = uri
-    val returnCursor: Cursor = context.contentResolver.query(returnUri, arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE), null, null, null)
+    val returnCursor: Cursor? = context.contentResolver.query(returnUri, arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE), null, null, null)
 
     /*
          * Get the column indexes of the data in the Cursor,
          *     * move to the first row in the Cursor, get the data,
          *     * and display it.
          * */
-    val nameIndex: Int = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-    val sizeIndex: Int = returnCursor.getColumnIndex(OpenableColumns.SIZE)
-    returnCursor.moveToFirst()
-    val name: String = returnCursor.getString(nameIndex)
-    val size = returnCursor.getLong(sizeIndex).toString()
+    val nameIndex: Int = returnCursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME) ?: 0
+    val sizeIndex: Int = returnCursor?.getColumnIndex(OpenableColumns.SIZE) ?: 0
+    returnCursor?.moveToFirst()
+    val name: String = returnCursor?.getString(nameIndex) ?: ""
+    val size = returnCursor?.getLong(sizeIndex).toString()
     val output: File
     if (newDirName != "") {
       val dir = File(context.filesDir.toString() + "/" + newDirName)
@@ -246,15 +246,15 @@ class FileUtils(var context: Activity) {
       output = File(context.filesDir.toString() + "/" + name)
     }
     try {
-      val inputStream: InputStream = context.contentResolver.openInputStream(uri)
+      val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
       val outputStream = FileOutputStream(output)
       var read = 0
       val bufferSize = 1024
       val buffers = ByteArray(bufferSize)
-      while (inputStream.read(buffers).also { read = it } != -1) {
+      while (inputStream?.read(buffers).also { read = it!! } != -1) {
         outputStream.write(buffers, 0, read)
       }
-      inputStream.close()
+      inputStream?.close()
       outputStream.close()
     } catch (e: Exception) {
       Log.e("Exception", e.message)
@@ -271,7 +271,7 @@ class FileUtils(var context: Activity) {
     val column = "_data"
     val projection = arrayOf(column)
     try {
-      cursor = context.contentResolver.query(uri, projection,
+      cursor = context.contentResolver.query(uri!!, projection,
           selection, selectionArgs, null)
       if (cursor != null && cursor.moveToFirst()) {
         val index: Int = cursor.getColumnIndexOrThrow(column)
