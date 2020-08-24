@@ -135,8 +135,9 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         WebEngageController.trackEvent("ADDONS_MARKETPLACE PaymentScreen Initialised", "ADDONS_MARKETPLACE PaymentScreen", "")
 
         var firebaseAnalytics = Firebase.analytics
+        val revenue = cartCheckoutData.getDouble("amount")
         val bundle = Bundle()
-        bundle.putDouble(FirebaseAnalytics.Param.VALUE, cartCheckoutData.getDouble("amount"))
+        bundle.putDouble(FirebaseAnalytics.Param.VALUE, revenue/100)
         bundle.putString(FirebaseAnalytics.Param.CURRENCY, "INR")
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundle)
 
