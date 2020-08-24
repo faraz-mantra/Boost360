@@ -24,6 +24,10 @@ import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessApiBindi
 import com.onboarding.nowfloats.managers.NavigatorManager
 import com.onboarding.nowfloats.model.ProcessApiSyncModel
 import com.onboarding.nowfloats.model.business.BusinessCreateRequest
+import com.onboarding.nowfloats.model.business.purchasedOrder.ActivatePurchasedOrderRequest
+import com.onboarding.nowfloats.model.business.purchasedOrder.ConsumptionConstraint
+import com.onboarding.nowfloats.model.business.purchasedOrder.Expiry
+import com.onboarding.nowfloats.model.business.purchasedOrder.Widget
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.ChannelType
 import com.onboarding.nowfloats.model.channel.getType
@@ -185,7 +189,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
           viewModel?.updateChannelAccessToken(UpdateChannelAccessTokenRequest(channelAccessToken, clientId!!, floatingPointId))?.observeOnce(viewLifecycleOwner, Observer {
             index += 1
             if (it.status == 200 || it.status == 201 || it.status == 202) {
-              if (requestFloatsModel?.channelAccessTokens?.size == index) apiBusinessComplete(dotProgressBar, floatingPointId)
+              if (requestFloatsModel?.channelAccessTokens?.size == index) apiBusinessActivatePlan(dotProgressBar, floatingPointId)
             } else {
               isBreak = true
               connectedChannels.forEach { it1 ->
@@ -197,7 +201,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
           if (isBreak) return@forEach
         }
       }
-    } else apiBusinessComplete(dotProgressBar, floatingPointId)
+    } else apiBusinessActivatePlan(dotProgressBar, floatingPointId)
   }
 
   private fun updateError(message: String?, status: Int?, type: String) {
@@ -209,11 +213,27 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
           list.addAll(ProcessApiSyncModel().getDataErrorChannelsUpdate(connectedChannels))
         } else list.addAll(ProcessApiSyncModel().getDataErrorChannels(connectedChannels))
       }
+      "PLAN_ACTIVATION" -> list.addAll(ProcessApiSyncModel().getDataErrorActivatePlan(connectedChannels))
     }
     apiProcessAdapter?.notify(list)
     binding?.errorView?.visible()
     binding?.errorApi?.text = if (message.isNullOrEmpty().not()) "$message: $status" else "Connection error: $status"
     binding?.next?.gone()
+  }
+
+  private fun apiBusinessActivatePlan(dotProgressBar: DotProgressBar, floatingPointId: String) {
+    if (requestFloatsModel?.isUpdate == true) {
+      apiBusinessComplete(dotProgressBar, floatingPointId)
+    } else {
+      val request = getRequestPurchasedOrder(floatingPointId);
+      viewModel?.postActivatePurchasedOrder(clientId, request)?.observeOnce(viewLifecycleOwner, Observer {
+        if (it.status == 200 || it.status == 201 || it.status == 202) {
+          apiBusinessComplete(dotProgressBar, floatingPointId)
+        } else {
+          updateError(it.error?.localizedMessage, it.status, "PLAN_ACTIVATION")
+        }
+      })
+    }
   }
 
   private fun apiBusinessComplete(dotProgressBar: DotProgressBar, floatingPointId: String) {
@@ -244,6 +264,20 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       binding?.categoryImage?.setTintColor(getColor(R.color.dodger_blue_two))
       apiProcessAdapter?.notify(list)
     }
+  }
+
+  private fun getRequestPurchasedOrder(floatingPointId: String): ActivatePurchasedOrderRequest {
+    val widList = ArrayList<Widget>()
+    requestFloatsModel?.categoryDataModel?.sections?.forEach {
+      it.getWidList().forEach { key ->
+        val widget = Widget(widgetKey = key, name = it.title, quantity = 1, desc = it.desc, recurringPaymentFrequency = "MONTHLY",
+            isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
+            consumptionConstraint = ConsumptionConstraint("DAYS", 30), images = ArrayList(),
+            expiry = Expiry("YEARS", 10))
+        widList.add(widget)
+      }
+    }
+    return ActivatePurchasedOrderRequest(clientId, floatingPointId, "EXTENSION", widList)
   }
 
   private fun setApiProcessAdapter(list: ArrayList<ProcessApiSyncModel>?) {
