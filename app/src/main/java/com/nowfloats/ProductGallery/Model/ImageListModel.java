@@ -3,10 +3,12 @@ package com.nowfloats.ProductGallery.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Created by guru on 09-06-2015.
  */
-public class ImageListModel  implements Parcelable {
+public class ImageListModel implements Serializable, Parcelable {
     public String ImageUri;
     public String TileImageUri;
 

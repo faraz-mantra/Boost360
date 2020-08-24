@@ -820,6 +820,7 @@
     <string name="onboarding_screen_2_title">Content is King</string>
     <string name="feedback">Need Help? Get in touch with us</string>
     <string name="addon_marketplace">Add-Ons Marketplace</string>
+    <string name="addon_marketplace_link">ADD_ONS_MARKETPLACE</string>
     <string name="noInternet">No Internet Connection</string>
     <string name="inbox_empty">Inbox is empty!</string>
     <string name="business_enquiry_empty">We\'ll send you a\nnotification as soon as\nyou get a query.</string>
@@ -1747,6 +1748,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Data privacy policy</item>
     </string-array>
     <string name="keyboard">Keyboard</string>
+    <string name="payment_gateway">Payment Gateway</string>
     <string name="facebook_leads">Facebook Lead Ads</string>
     <string name="website_domain">Website Domain</string>
     <string name="testimonials">Testimonials</string>
@@ -1805,6 +1807,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string-array name="account_setting_tab_items">
         <!--<item>Seller Profile</item>-->
         <item>My Bank Account</item>
+        <item>KYC Verification</item>
+        <item>Self Branded Payment Gateway</item>
         <item>Boost Extensions</item>
         <item>Subscription History</item>
         <item>Domain and Email</item>
@@ -1894,7 +1898,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Wordpress</item>
         <item>Static Website</item>
     </string-array>
-    <string name="your_digital_assitant">Your digital assitant</string>
+    <string name="your_digital_assitant">Your digital assistant</string>
     <string name="error_right_fptag">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right Boost account.</string>
     <string name="bank_account_details">Bank Account Details</string>
     <string name="signup_your_account">Signup your account here.</string>

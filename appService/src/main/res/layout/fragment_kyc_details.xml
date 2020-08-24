@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_4">
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="@dimen/size_90"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_160"
+          android:background="@color/orange"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <com.framework.views.customViews.CustomCardView
+          android:id="@+id/cardview_pan_card_image"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_2"
+          app:cardBackgroundColor="@color/white"
+          app:cardCornerRadius="@dimen/size_16"
+          app:layout_constraintTop_toTopOf="parent">
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.framework.views.customViews.CustomCardView
+              android:layout_width="@dimen/size_320"
+              android:layout_height="@dimen/size_200"
+              android:layout_margin="@dimen/size_20"
+              app:cardCornerRadius="@dimen/size_10"
+              app:cardElevation="0dp"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent">
+
+              <com.framework.views.customViews.CustomImageView
+                android:id="@+id/image_pan_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+            </com.framework.views.customViews.CustomCardView>
+
+            <androidx.cardview.widget.CardView
+              android:id="@+id/btn_retake_pan_image"
+              android:layout_width="@dimen/size_40"
+              android:layout_height="@dimen/size_40"
+              android:layout_marginEnd="@dimen/size_10"
+              android:layout_marginBottom="@dimen/size_10"
+              app:cardBackgroundColor="@color/gray_ligh_3"
+              app:cardCornerRadius="@dimen/size_20"
+              app:cardElevation="@dimen/size_4"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent">
+
+              <com.framework.views.customViews.CustomImageView
+                android:layout_width="@dimen/size_20"
+                android:layout_height="@dimen/size_20"
+                android:layout_gravity="center"
+                android:background="@color/gray_ligh_3"
+                app:srcCompat="@drawable/ic_camera_grey" />
+
+              <com.framework.views.customViews.CustomCardView
+                android:layout_width="@dimen/size_6"
+                android:layout_height="@dimen/size_6"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/size_1"
+                app:cardBackgroundColor="@color/gray_light_4" />
+            </androidx.cardview.widget.CardView>
+          </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.framework.views.customViews.CustomCardView>
+
+        <!-- The Form  -->
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:paddingHorizontal="@dimen/size_20"
+          android:paddingVertical="@dimen/size_10"
+          app:layout_constraintTop_toBottomOf="@id/cardview_pan_card_image">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_1"
+            android:layout_marginTop="@dimen/size_14"
+            android:text="@string/pan_number_individual_or_company"
+            android:textColor="@color/warm_grey"
+            app:fontFamily="@font/regular"
+            app:textType="BODY_1" />
+
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/edt_pan_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_2"
+            android:background="@drawable/rounded_edit_stroke"
+            android:hint="@string/enter_pan_number"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textAllCaps="true"
+            android:textColorHint="@color/gray_text_hint"
+            app:fontFamily="@font/regular" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_1"
+            android:layout_marginTop="@dimen/size_16"
+            android:text="@string/name_as_mentioned_on_pan_card"
+            android:textColor="@color/warm_grey"
+            app:fontFamily="@font/regular"
+            app:textType="BODY_1" />
+
+          <com.framework.views.customViews.CustomEditText
+            android:id="@+id/edt_name_on_pan_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_2"
+            android:background="@drawable/rounded_edit_stroke"
+            android:hint="@string/enter_name"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textColorHint="@color/gray_text_hint"
+            app:fontFamily="@font/regular" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_1"
+            android:layout_marginTop="@dimen/size_16"
+            android:text="@string/associated_bank_account"
+            android:textColor="@color/warm_grey"
+            app:fontFamily="@font/regular"
+            app:textType="BODY_1" />
+
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_2"
+            android:background="@drawable/rounded_stroke_grey"
+            android:orientation="vertical"
+            android:padding="@dimen/size_10">
+
+            <LinearLayout
+              android:id="@+id/btn_my_account"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/size_14"
+              android:clickable="true"
+              android:focusable="true"
+              android:gravity="center_vertical"
+              android:orientation="horizontal">
+
+              <com.framework.views.customViews.CustomRadioButton
+                android:id="@+id/rb_stored_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/grey_text_color"
+                android:textSize="16sp" />
+
+              <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_10"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/account"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/a_c_no_34565xxxxx45465"
+                  android:textColor="@color/greyish_brown"
+                  app:textType="HEADING_5" />
+
+                <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/bank_detail"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:ellipsize="end"
+                  android:maxLines="2"
+                  android:text="Kotak Mahindra Bank - Cannaught Place Branch"
+                  android:textColor="@color/light_blue"
+                  app:textType="BODY_1" />
+              </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+              android:id="@+id/btn_another_account"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:clickable="true"
+              android:focusable="true"
+              android:gravity="center_vertical"
+              android:orientation="horizontal">
+
+              <com.framework.views.customViews.CustomRadioButton
+                android:id="@+id/add_different"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/grey_text_color"
+                android:textSize="16sp" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_10"
+                android:text="@string/add_a_different_bank_account"
+                android:textColor="@color/greyish_brown"
+                app:textType="HEADING_5" />
+            </LinearLayout>
+
+
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+          <LinearLayout
+            android:id="@+id/ll_add_bank_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_1"
+              android:layout_marginTop="@dimen/size_14"
+              android:text="@string/account_number"
+              android:textColor="@color/greyish_brown"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
+
+            <com.framework.views.customViews.CustomEditText
+              android:id="@+id/edt_bank_account_number"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_2"
+              android:background="@drawable/rounded_edit_stroke"
+              android:hint="@string/enter_account_no"
+              android:inputType="number"
+              android:singleLine="true"
+              android:textColorHint="@color/gray_text_hint"
+              app:fontFamily="@font/regular" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_1"
+              android:layout_marginTop="@dimen/size_14"
+              android:text="@string/account_holder_s_name"
+              android:textColor="@color/greyish_brown"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
+
+            <com.framework.views.customViews.CustomEditText
+              android:id="@+id/edt_bank_account_holder_name"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_2"
+              android:background="@drawable/rounded_edit_stroke"
+              android:hint="@string/enter_name"
+              android:inputType="text"
+              android:singleLine="true"
+              android:textColorHint="@color/gray_text_hint"
+              app:fontFamily="@font/regular" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_1"
+              android:layout_marginTop="@dimen/size_14"
+              android:text="@string/ifsc_code"
+              android:textColor="@color/greyish_brown"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
+
+            <com.framework.views.customViews.CustomEditText
+              android:id="@+id/edt_bank_ifsc_code"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_2"
+              android:background="@drawable/rounded_edit_stroke"
+              android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+              android:hint="@string/enter_ifsc_code"
+              android:inputType="textCapCharacters"
+              android:maxLength="11"
+              android:singleLine="true"
+              android:textColorHint="@color/gray_text_hint"
+              app:fontFamily="@font/regular" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_1"
+              android:layout_marginTop="@dimen/size_14"
+              android:text="@string/name_of_the_bank"
+              android:textColor="@color/greyish_brown"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
+
+            <com.framework.views.customViews.CustomEditText
+              android:id="@+id/edt_bank_name"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_2"
+              android:background="@drawable/rounded_edit_stroke"
+              android:hint="@string/enter_bank_name"
+              android:inputType="text"
+              android:singleLine="true"
+              android:textColorHint="@color/gray_text_hint"
+              app:fontFamily="@font/regular" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/txtBranch"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_1"
+              android:layout_marginTop="@dimen/size_14"
+              android:text="@string/bank_branch"
+              android:textColor="@color/greyish_brown"
+              android:visibility="gone"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
+
+            <com.framework.views.customViews.CustomEditText
+              android:id="@+id/edt_bank_branch"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_2"
+              android:background="@drawable/rounded_edit_stroke"
+              android:focusable="false"
+              android:focusableInTouchMode="false"
+              android:hint="@string/bank_branch"
+              android:inputType="text"
+              android:singleLine="true"
+              android:textColorHint="@color/gray_text_hint"
+              android:visibility="gone"
+              app:fontFamily="@font/regular" />
+
+          </LinearLayout>
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_1"
+            android:layout_marginTop="@dimen/size_16"
+            android:text="@string/latest_bank_statement_last_1_month"
+            android:textColor="@color/warm_grey"
+            app:fontFamily="@font/regular"
+            app:textType="BODY_1" />
+
+
+          <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_bank_statement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_26"
+            android:visibility="gone">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/imgBankStatement"
+              android:layout_width="@dimen/size_80"
+              android:layout_height="@dimen/size_80"
+              android:layout_marginVertical="@dimen/size_26"
+              android:background="@drawable/bg_white_solid_grey_rounded"
+              app:layout_constraintLeft_toLeftOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomCardView
+              android:layout_width="@dimen/size_26"
+              android:layout_height="@dimen/size_26"
+              android:layout_marginStart="@dimen/size_62"
+              android:layout_marginBottom="@dimen/size_62"
+              android:background="@drawable/ic_close_circle"
+              app:cardBackgroundColor="@color/white"
+              app:cardCornerRadius="@dimen/size_26"
+              app:layout_constraintBottom_toBottomOf="@id/imgBankStatement"
+              app:layout_constraintLeft_toLeftOf="@id/imgBankStatement">
+
+              <com.framework.views.customViews.CustomImageView
+                android:layout_width="@dimen/size_26"
+                android:layout_height="@dimen/size_26"
+                android:background="@drawable/ic_close_circle" />
+            </com.framework.views.customViews.CustomCardView>
+          </androidx.constraintlayout.widget.ConstraintLayout>
+
+          <!--Bank Statement Preview-->
+
+          <FrameLayout
+            android:id="@+id/bankStatementView"
+            android:layout_width="@dimen/size_90"
+            android:layout_height="@dimen/size_90"
+            android:layout_marginTop="@dimen/size_10"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <com.framework.views.customViews.CustomCardView
+              android:layout_width="@dimen/size_80"
+              android:layout_height="@dimen/size_80"
+              android:layout_gravity="center"
+              app:cardBackgroundColor="@color/grey_light_2"
+              app:cardCornerRadius="@dimen/size_8">
+
+              <com.framework.views.customViews.CustomImageView
+                android:id="@+id/iv_bank_statement"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/grey_light_2"
+                android:scaleType="centerCrop" />
+            </com.framework.views.customViews.CustomCardView>
+
+            <com.framework.views.customViews.CustomCardView
+              android:id="@+id/btnClearBankStatementImage"
+              android:layout_width="@dimen/size_20"
+              android:layout_height="@dimen/size_20"
+              android:layout_gravity="top|end"
+              android:layout_marginBottom="@dimen/size_10"
+              android:clickable="true"
+              android:focusable="true"
+              app:cardBackgroundColor="@color/white"
+              app:cardCornerRadius="@dimen/size_10"
+              app:cardElevation="2dp">
+
+              <com.framework.views.customViews.CustomImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_close_round" />
+            </com.framework.views.customViews.CustomCardView>
+          </FrameLayout>
+
+          <FrameLayout
+            android:id="@+id/btn_bank_statement_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="@drawable/bg_rounded_grey"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/size_10">
+
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:layout_marginStart="@dimen/size_20"
+              app:srcCompat="@drawable/ic_attachment" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:gravity="center"
+              android:text="@string/add_file_jpg_png"
+              android:textColor="@color/greyish_brown"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
+          </FrameLayout>
+
+          <!--Additional Documents Preview-->
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_1"
+            android:layout_marginTop="@dimen/size_16"
+            android:text="@string/additional_documents_optional"
+            android:textColor="@color/warm_grey"
+            app:fontFamily="@font/regular"
+            app:textType="BODY_1" />
+
+          <com.framework.views.viewgroups.BaseRecyclerView
+            android:id="@+id/rvAdditionalDocs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="6"
+            tools:listitem="@layout/item_preview_image" />
+
+          <FrameLayout
+            android:id="@+id/btn_additional_docs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:background="@drawable/bg_rounded_grey"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/size_10">
+
+            <com.framework.views.customViews.CustomImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:layout_marginStart="@dimen/size_20"
+              app:srcCompat="@drawable/ic_attachment" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:gravity="center"
+              android:text="@string/add_multiple_files_jpg_png"
+              android:textColor="@color/greyish_brown"
+              app:fontFamily="@font/regular"
+              app:textType="BODY_1" />
+          </FrameLayout>
+
+
+        </LinearLayout>
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+      android:id="@+id/fl_submit_button"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_0"
+      android:layout_marginHorizontal="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_16"
+      app:layout_constraintBottom_toBottomOf="parent">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/btn_submit_details"
+        style="@style/ButtonStyle.Rounded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="@dimen/size_14"
+        android:text="@string/submit_verification"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent" />
+    </FrameLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
