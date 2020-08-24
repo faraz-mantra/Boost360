@@ -4,6 +4,7 @@ import com.framework.base.BaseResponse
 import com.onboarding.nowfloats.base.rest.AppBaseLocalService
 import com.onboarding.nowfloats.base.rest.AppBaseRepository
 import com.onboarding.nowfloats.model.business.BusinessCreateRequest
+import com.onboarding.nowfloats.model.business.purchasedOrder.ActivatePurchasedOrderRequest
 import com.onboarding.nowfloats.rest.Taskcode
 import com.onboarding.nowfloats.rest.apiClients.WithFloatsApiClient
 import com.onboarding.nowfloats.rest.services.remote.business.BusinessCreateRemoteDataSource
@@ -24,6 +25,9 @@ object BusinessCreateRepository : AppBaseRepository<BusinessCreateRemoteDataSour
         return makeRemoteRequest(remoteDataSource.putCreateBusinessOnboarding(profileId, request), Taskcode.POST_CREATE_BUSINESS_ONBOARDING)
     }
 
+    fun postActivatePurchasedOrder(clientId: String?, request: ActivatePurchasedOrderRequest): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.postActivatePurchasedOrder(clientId, request), Taskcode.POST_ACTIVATE_PURCHASED_ORDER)
+    }
     override fun getApiClient(): Retrofit {
         return WithFloatsApiClient.shared.retrofit
     }
