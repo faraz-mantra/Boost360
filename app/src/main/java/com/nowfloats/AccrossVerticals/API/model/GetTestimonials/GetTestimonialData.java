@@ -1,10 +1,10 @@
-package com.nowfloats.AccrossVerticals.API.model.testimonials;
+package com.nowfloats.AccrossVerticals.API.model.GetTestimonials;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TestimonialModel {
+public class GetTestimonialData {
 
     @SerializedName("Data")
     @Expose

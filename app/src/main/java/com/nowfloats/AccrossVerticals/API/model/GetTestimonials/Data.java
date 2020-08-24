@@ -1,4 +1,4 @@
-package com.nowfloats.AccrossVerticals.API.model.testimonials;
+package com.nowfloats.AccrossVerticals.API.model.GetTestimonials;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,15 +8,18 @@ public class Data {
     @SerializedName("_id")
     @Expose
     private String id;
-    @SerializedName("profileimage")
+    @SerializedName("title")
     @Expose
-    private Profileimage profileimage;
-    @SerializedName("username")
-    @Expose
-    private String username;
+    private String title;
     @SerializedName("description")
     @Expose
     private String description;
+    @SerializedName("username")
+    @Expose
+    private String username;
+    @SerializedName("profileimage")
+    @Expose
+    private Profileimage profileimage;
     @SerializedName("UserId")
     @Expose
     private String userId;
@@ -44,12 +47,20 @@ public class Data {
         this.id = id;
     }
 
-    public Profileimage getProfileimage() {
-        return profileimage;
+    public String getTitle() {
+        return title;
     }
 
-    public void setProfileimage(Profileimage profileimage) {
-        this.profileimage = profileimage;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getUsername() {
@@ -60,12 +71,12 @@ public class Data {
         this.username = username;
     }
 
-    public String getDescription() {
-        return description;
+    public Profileimage getProfileimage() {
+        return profileimage;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setProfileimage(Profileimage profileimage) {
+        this.profileimage = profileimage;
     }
 
     public String getUserId() {

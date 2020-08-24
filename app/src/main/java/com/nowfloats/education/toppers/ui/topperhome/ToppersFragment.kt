@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.nowfloats.Testimonials.TestimonialsListener
 import com.nowfloats.education.helper.BaseFragment
 import com.nowfloats.education.helper.Constants.SUCCESS
 import com.nowfloats.education.helper.Constants.TOPPERS_DETAILS_FRAGMENT
@@ -26,10 +25,10 @@ import com.nowfloats.util.Utils
 import com.thinksity.R
 import org.koin.android.ext.android.inject
 
-class ToppersFragment : BaseFragment(), TestimonialsListener, ItemClickEventListener {
+class ToppersFragment : BaseFragment(), ItemClickEventListener {
 
     private val viewModel by inject<ToppersViewModel>()
-    private val toppersAdapter: TopperAdapter by lazy { TopperAdapter(this, this) }
+    private val toppersAdapter: TopperAdapter by lazy { TopperAdapter(this) }
     private lateinit var toppersActivity: ToppersActivity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

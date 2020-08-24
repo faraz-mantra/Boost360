@@ -21,6 +21,8 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.nowfloats.Analytics_Screen.model.OrderStatusSummary;
+import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import java.text.DecimalFormat;
@@ -38,6 +40,7 @@ public class OrderAnalyticsFragment extends Fragment {
     private ArrayList<String> xValues = new ArrayList<String>();
     private ArrayList<Integer> colors = new ArrayList<>();
     private RecyclerView rvLegend;
+    private UserSessionManager mSession;
 
     public static Fragment getInstance(Bundle b) {
         Fragment frag = new OrderAnalyticsFragment();
@@ -65,6 +68,7 @@ public class OrderAnalyticsFragment extends Fragment {
         tvTitle = root.findViewById(R.id.tvTitle);
         rvLegend = root.findViewById(R.id.rvLegend);
         mFormat = new DecimalFormat("#########");
+        mSession = new UserSessionManager(requireContext(), requireActivity());
 
         return root;
     }
@@ -182,7 +186,7 @@ public class OrderAnalyticsFragment extends Fragment {
                 case 0:
                     float onlineOrders = 0, codOrders = 0;
                     int codPrevOrders = 0, onlinePrevOrders = 0;
-                    tvTitle.setText("TOTAL ORDERS");
+                    tvTitle.setText("TOTAL "+ Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toUpperCase());
                     for (OrderStatusSummary.OrderStatus orderStatus : currentOrderStatus) {
 
                         if (orderStatus.getPaymentMethod().equalsIgnoreCase("COD")) {
@@ -218,8 +222,8 @@ public class OrderAnalyticsFragment extends Fragment {
                         onlinePrevOrders = (int) (((onlineOrders / onlinePrevOrders) - 1) * 100);
                     }
 
-                    xValues.add("Online Payment Orders: " + (int) onlineOrders);
-                    xValues.add("COD Orders: " + (int) codOrders);
+                    xValues.add("Online Payment "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) onlineOrders);
+                    xValues.add("COD "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) codOrders);
 
                     totalOrders = onlineOrders + codOrders;
                     onlineOrders = (onlineOrders / totalOrders) * 100;
@@ -241,11 +245,11 @@ public class OrderAnalyticsFragment extends Fragment {
                     colors.add(Color.parseColor("#96c800"));
                     break;
                 case 1:
-                    tvTitle.setText("COD ORDERS");
+                    tvTitle.setText("COD "+ Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toUpperCase());
                     calculateOrders("COD");
                     break;
                 case 2:
-                    tvTitle.setText("ONLINE PAYMENT ORDERS");
+                    tvTitle.setText("ONLINE PAYMENT "+ Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode()).toUpperCase());
                     calculateOrders("ONLINEPAYMENT");
                     break;
             }
@@ -319,7 +323,7 @@ public class OrderAnalyticsFragment extends Fragment {
 
         if (confirmedOrders > 0.0f) {
             colors.add(Color.parseColor("#fdd400"));
-            xValues.add("Confirmed orders: " + (int) confirmedOrders);
+            xValues.add("Confirmed "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) confirmedOrders);
 
             if (prevConfirmedOrders == 0) {
                 prevConfirmedOrders = (int) (confirmedOrders * 100);
@@ -340,7 +344,7 @@ public class OrderAnalyticsFragment extends Fragment {
 
         if (successfulOrders > 0.0f) {
             colors.add(Color.parseColor("#158b44"));
-            xValues.add("Successful orders: " + (int) successfulOrders);
+            xValues.add("Successful "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) successfulOrders);
 
 
             if (prevSuccessfulOrders == 0) {
@@ -362,7 +366,7 @@ public class OrderAnalyticsFragment extends Fragment {
 
         if (cancelledOrders > 0.0f) {
             colors.add(Color.parseColor("#f58020"));
-            xValues.add("Cancelled orders: " + (int) cancelledOrders);
+            xValues.add("Cancelled "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) cancelledOrders);
 
             if (prevCancelledOrders == 0) {
                 prevCancelledOrders = (int) (cancelledOrders * 100);
@@ -381,7 +385,7 @@ public class OrderAnalyticsFragment extends Fragment {
 
         if (escalatedOrders > 0.0f) {
             colors.add(Color.parseColor("#ffb900"));
-            xValues.add("Escalated orders: " + (int) escalatedOrders);
+            xValues.add("Escalated "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) escalatedOrders);
 
 
             if (prevEscalatedOrders == 0) {
@@ -402,7 +406,7 @@ public class OrderAnalyticsFragment extends Fragment {
 
         if (placedOrders > 0.0f) {
             colors.add(Color.parseColor("#49ce75"));
-            xValues.add("Placed orders: " + (int) placedOrders);
+            xValues.add("Placed "+Utils.getCustomerTypeFromServiceCode(mSession.getFP_AppExperienceCode())+": " + (int) placedOrders);
 
             if (prevPlacedOrders == 0) {
                 prevPlacedOrders = (int) (placedOrders * 100);

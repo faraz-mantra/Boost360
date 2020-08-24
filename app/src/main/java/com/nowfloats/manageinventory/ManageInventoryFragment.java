@@ -48,7 +48,7 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  */
 public class ManageInventoryFragment extends Fragment {
     TextView tvTransactionType_1, tvTransactionType_2, orderAnalytics;
-    ImageView ivLockWidget, ivPaymentIcon, lockIcon;
+    ImageView ivLockWidget, ivPaymentIcon, lockIcon, bookTableIcon;
     LinearLayout bookTable;
     //Typeface robotoLight;
     private SharedPreferences pref = null;
@@ -245,22 +245,28 @@ public class ManageInventoryFragment extends Fragment {
             });
 
             bookTable = mainView.findViewById(R.id.book_table);
-            bookTable.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(getActivity(), BookATableActivity.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
-            });
-
+            bookTableIcon = mainView.findViewById(R.id.book_a_table_icon);
             lockIcon = mainView.findViewById(R.id.feature_lock);
-            if (Constants.StoreWidgets.contains("BOOKTABLE")) {
-                lockIcon.setVisibility(View.GONE);
-            }else{
-                lockIcon.setVisibility(View.VISIBLE);
+            View borderLine = mainView.findViewById(R.id.line_view3);
+            if(svc_code.equals("HOT")) {
+                bookTable.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getActivity(), BookATableActivity.class);
+                        startActivity(i);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                });
+                if (Constants.StoreWidgets.contains("BOOKTABLE")) {
+                    lockIcon.setVisibility(View.GONE);
+                }else{
+                    lockIcon.setVisibility(View.VISIBLE);
+                }
+            } else{
+                bookTable.setVisibility(View.GONE);
+                bookTableIcon.setVisibility(View.GONE);
+                borderLine.setVisibility(View.GONE);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
