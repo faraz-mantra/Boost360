@@ -4,13 +4,14 @@
         <!--<item>@drawable/ic_seller_profile</item>-->
         <!--        <item>@drawable/ic_account_info</item>-->
         <item>@drawable/ic_baseline_payment</item>
+        <item>@drawable/ic_baseline_verified</item>
+        <item>@drawable/ic_baseline_payment</item>
         <item>@drawable/ic_nav_settings</item>
         <item>@drawable/ic_your_plan</item>
         <item>@drawable/ic_domain_email</item>
         <item>@drawable/ic_change_password</item>
         <item>@drawable/ic_logout</item>
     </array>
-
     <array name="about_sidepanel">
         <item>@drawable/ic_about_nf</item>
         <item>@drawable/ic_faqs</item>
@@ -20,7 +21,6 @@
         <item>@drawable/ic_terms_of_use</item>
         <item>@drawable/ic_privacy_policy</item>
     </array>
-
     <!--
     <array name="manage_content_sidepanel">
         <item>@drawable/ic_manage_business</item>
@@ -95,5 +95,4 @@
         <item>@drawable/ic_background_images</item>
         <item>@drawable/ic_favicon</item>
     </array>
-
 </resources>

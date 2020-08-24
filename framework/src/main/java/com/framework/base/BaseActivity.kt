@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -57,6 +58,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   open fun customTheme(): Int? {
     return null
   }
+
   override fun onDestroy() {
     super.onDestroy()
     compositeDisposable.clear()
@@ -121,10 +123,13 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   }
 
   fun adjustToolbarTitleMarginEnd(menu: Menu) {
-    if (menu.size() > 0 && this.getToolbarTitleGravity() == Gravity.CENTER_HORIZONTAL) {
-      this.getToolbar()?.titleMarginEnd = ConversionUtils.dp2px(16f)
-    } else {
-      this.getToolbar()?.titleMarginEnd = ConversionUtils.dp2px(72f)
+    if (this.getToolbarTitleGravity() == Gravity.CENTER_HORIZONTAL || this.getToolbarTitleGravity() == Gravity.CENTER) {
+      val iteration = menu.children.iterator()
+      var b = false
+      if (iteration.hasNext()) b = iteration.next().isVisible
+      if (menu.size() > 0 && b) {
+        this.getToolbar()?.titleMarginEnd = ConversionUtils.dp2px(18f)
+      } else this.getToolbar()?.titleMarginEnd = ConversionUtils.dp2px(70f)
     }
   }
 
@@ -181,7 +186,6 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
   override fun onClick(v: View?) {
 
   }
-
 
   open fun onNavPressed() {
     this.hideKeyBoard()
