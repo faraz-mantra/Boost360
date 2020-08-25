@@ -467,6 +467,30 @@
     <string name="deeplink_nfstorebiztiming">nfstorebiztiming</string>
     <string name="deeplink_ProductGallery">productGallery</string>
     <string name="setting_faq_url">https://www.getboost360.com/faqs/</string>
+    <string name="deeplink_sitemeter">sitemeter</string>
+    <string name="deeplink_assuredPurchase">assuredPurchase</string>
+    <string name="deeplink_accSettings">accSettings</string>
+    <string name="deeplink_uniqueVisitor">uniqueVisitor</string>
+    <string name="deeplink_add_ons_marketplace">ADD_ONS_MARKETPLACE</string>
+    <string name="deeplink_cart_fragment">CART_FRAGMENT</string>
+    <string name="deeplink_notification">notification</string>
+    <string name="deeplink_site_health">site_health</string>
+    <string name="deeplink_manage_content">manage_content</string>
+    <string name="deeplink_my_bank_account">my_bank_account</string>
+    <string name="deeplink_boost_360_extensions">boost_360_extensions</string>
+    <string name="deeplink_purchased_plans">your_purchased_plans</string>
+    <string name="deeplink_digital_channels">digital_channels</string>
+    <string name="deeplink_call_tracker_add_on">call_tracker_add_on</string>
+    <string name="deeplink_service_catalogue">service_catalogue</string>
+    <string name="deeplink_all_custom_pages">all_custom_pages</string>
+    <string name="deeplink_analytics_website_visits">total_website_visits</string>
+    <string name="deeplink_analytics_website_visitors">total_website_visitors</string>
+    <string name="deeplink_background_images">background_images</string>
+    <string name="deeplink_favicon">favicon</string>
+    <string name="deeplink_appointment_summary">appointment_summary</string>
+    <string name="deeplink_book_table">book_table</string>
+    <string name="deeplink_my_add_ons">my_add_ons</string>
+    <string name="deeplink_recommended_add_ons">recommended_add_ons</string>
 
     <!-- Deep Linking URLs  -->
 
@@ -1904,4 +1928,21 @@ With this feature, you can show off your top rankers to help people gain trust i
     <string name="upcoming_batches_feature_description">Looks like this add-on is not added to your current plan. Add it now to start using it.
 With this feature, students and their parents can browse and learn about the upcoming batches you are offering their starting date etc and drop a question regarding that if they may have.</string>
     <string name="designation">Designation <p><font color="red">*</font></p></string>
+    <string name="third_party_queries">thirdPartyQueries</string>
+    <string name="facebookpage">facebookpage</string>
+    <string name="addProduct">addProduct</string>
+    <string name="keyboardSettings">keyboardSettings</string>
+    <string name="addCustomPage">addCustomPage</string>
+    <string name="myorders">myorders</string>
+    <string name="myorderdetail">myorderdetail</string>
+    <string name="appointment_fragment">APPOINTMENT_FRAGMENT</string>
+    <string name="order_fragment">ORDER_FRAGMENT</string>
+    <string name="consultation_fragment">CONSULTATION_FRAGMENT</string>
+    <string name="enquiries">enquiries</string>
+    <string name="store_url">store</string>
+    <string name="blog">blog</string>
+    <string name="subscribers">subscribers</string>
+    <string name="share_lower_case">share</string>
+    <string name="visits">visits</string>
+    <string name="viewgraph">viewgraph</string>
 </resources>

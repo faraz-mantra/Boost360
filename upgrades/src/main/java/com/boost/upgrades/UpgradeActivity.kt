@@ -104,7 +104,9 @@ class UpgradeActivity : AppCompatActivity() {
 
   fun initView() {
     if (fpid != null) {
-      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
+      val bundle = Bundle()
+      bundle.putString("screenType", intent.getStringExtra("screenType"))
+      addFragment(HomeFragment.newInstance(bundle), HOME_FRAGMENT)
       //update userdetails and buyitem
       showingPopUp()
       supportFragmentManager.addOnBackStackChangedListener {
