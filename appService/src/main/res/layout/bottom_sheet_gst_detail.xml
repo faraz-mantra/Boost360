@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:color/transparent"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:padding="@dimen/size_10">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_10"
+        android:layout_marginBottom="@dimen/size_6"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:includeFontPadding="false"
+          android:text="Invoice GST details"
+          android:textColor="@color/white"
+          app:fontFamily="@font/semi_bold"
+          app:textType="HEADING_4"
+          tools:textColor="@color/black_4a4a4a" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tvCustomerAddress"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:includeFontPadding="false"
+          android:text="Select the appropriate GST slab at which this service is taxable."
+          android:textColor="@color/white"
+          android:textSize="12sp"
+          app:fontFamily="@font/italic"
+          tools:textColor="@color/warm_grey" />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/bg_rounded_top_white_2"
+      android:orientation="vertical">
+
+      <com.framework.views.viewgroups.BaseRecyclerView
+        android:id="@+id/rvGstDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_8"
+        android:layout_marginBottom="@dimen/size_8"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_gst_detail" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
