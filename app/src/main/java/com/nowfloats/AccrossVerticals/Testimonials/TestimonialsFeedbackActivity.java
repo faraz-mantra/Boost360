@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
@@ -15,6 +16,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -42,8 +44,14 @@ import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
 import com.nowfloats.AccrossVerticals.API.model.UpdateTestimonialsData.UpdateTestimonialsData;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -349,16 +357,37 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                         media_req_id);
                 return;
             }
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, "New Picture");
-            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-            imageUri = getContentResolver().insert(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            Intent captureIntent = new Intent(
-                    MediaStore.ACTION_IMAGE_CAPTURE);
-            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            // we will handle the returned data in onActivityResult
-            startActivityForResult(captureIntent, CAMERA_PHOTO);
+//            ContentValues values = new ContentValues();
+//            values.put(MediaStore.Images.Media.TITLE, "New Picture");
+//            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+//            imageUri = getContentResolver().insert(
+//                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//            Intent captureIntent = new Intent(
+//                    MediaStore.ACTION_IMAGE_CAPTURE);
+//            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//            // we will handle the returned data in onActivityResult
+//            startActivityForResult(captureIntent, CAMERA_PHOTO);
+
+
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            // Ensure that there's a camera activity to handle the intent
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                // Create the File where the photo should go
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+                    // Error occurred while creating the File
+                }
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    Uri photoURI = FileProvider.getUriForFile(this,
+                            Constants.PACKAGE_NAME + ".provider",
+                            photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(takePictureIntent, CAMERA_PHOTO);
+                }
+            }
 
         } catch (ActivityNotFoundException anfe) {
             // display an error message
@@ -367,6 +396,22 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        path = image.getAbsolutePath();
+        return image;
     }
 
     public void galleryIntent() {
@@ -393,11 +438,11 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            path = null;
+//            path = null;
             if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
                 try {
-                    Log.e("ImageURI ->",imageUri.getPath());
-                    path = Methods.getRealPathFromURI(this, imageUri);
+                    //Log.e("ImageURI ->",imageUri.getPath());
+//                    path = Methods.getRealPathFromURI(this, imageUri);
                     String fname = "Testimonials" + System.currentTimeMillis();
 //                    path = Util.saveBitmap(path, TestimonialsFeedbackActivity.this, fname);
                     if (!Util.isNullOrEmpty(path)) {
