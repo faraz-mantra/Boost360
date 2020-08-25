@@ -81,7 +81,11 @@ class HomeFragment : BaseFragment(), HomeListener {
   var fpRefferalCode: String = ""
 
   companion object {
-    fun newInstance() = HomeFragment()
+    fun newInstance(bundle: Bundle? = null): HomeFragment{
+      val fragment = HomeFragment()
+      fragment.arguments = bundle
+      return fragment
+    }
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -218,7 +222,23 @@ class HomeFragment : BaseFragment(), HomeListener {
       )
     }
 
-
+    if(arguments?.getString("screenType") == "myAddOns"){
+      if(progressDialog.isShowing){
+        progressDialog.hide()
+      }
+      (activity as UpgradeActivity).addFragment(
+              MyAddonsFragment.newInstance(),
+              MYADDONS_FRAGMENT
+      )
+    }else if(arguments?.getString("screenType") == "recommendedAddOns"){
+      if(progressDialog.isShowing){
+        progressDialog.hide()
+      }
+      (activity as UpgradeActivity).addFragment(
+              ViewAllFeaturesFragment.newInstance(),
+              VIEW_ALL_FEATURE
+      )
+    }
   }
 
   fun setSpannableStrings() {

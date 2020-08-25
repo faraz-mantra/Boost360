@@ -69,9 +69,9 @@
                     android:layout_marginTop="5dp"
                     android:padding="5dp"
                     android:src="@drawable/icon_info"
-                    android:tint="@color/light_gray"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/light_gray" />
 
                 <LinearLayout
                     android:id="@+id/ll_order"
@@ -297,9 +297,9 @@
                     android:layout_marginTop="5dp"
                     android:padding="5dp"
                     android:src="@drawable/icon_info"
-                    android:tint="@color/light_gray"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/light_gray" />
 
                 <LinearLayout
                     android:id="@+id/ll_enable_keyboard"
