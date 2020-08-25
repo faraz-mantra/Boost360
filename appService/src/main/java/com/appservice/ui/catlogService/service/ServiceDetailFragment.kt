@@ -274,7 +274,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       binding?.imageAddBtn -> openImagePicker()
       binding?.clearImage -> clearImage()
       binding?.vwChangeDeliverConfig -> showServiceDeliveryConfigBottomSheet()
-      binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
+//      binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
       binding?.vwPaymentConfig -> showPaymentConfigBottomSheet()
       binding?.btnOtherInfo -> {
         val bundle = Bundle()

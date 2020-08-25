@@ -157,7 +157,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_3"
-              android:layout_marginTop="@dimen/size_16"
+              android:layout_marginTop="@dimen/size_20"
               android:text="Service Description*"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
@@ -179,7 +179,7 @@
             <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/size_36"
+              android:layout_marginTop="@dimen/size_20"
               android:drawablePadding="@dimen/size_4"
               android:includeFontPadding="false"
               android:text="Service Delivery Configuration"
@@ -291,7 +291,7 @@
             <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/size_36"
+              android:layout_marginTop="@dimen/size_20"
               android:drawablePadding="@dimen/size_4"
               android:includeFontPadding="false"
               android:text="Pricing &amp; payment info"
@@ -628,7 +628,7 @@
                           android:paddingLeft="@dimen/size_8"
                           android:singleLine="true"
                           android:textColor="@color/greyish_brown"
-                          android:textColorHint="@color/warm_light"
+                          android:textColorHint="@color/primary_grey"
                           android:textSize="14sp" />
 
                         <View
@@ -647,7 +647,7 @@
                           android:paddingLeft="@dimen/size_8"
                           android:singleLine="true"
                           android:textColor="@color/greyish_brown"
-                          android:textColorHint="@color/warm_light"
+                          android:textColorHint="@color/primary_grey"
                           android:textSize="14sp" />
 
                       </androidx.appcompat.widget.LinearLayoutCompat>
@@ -678,7 +678,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/size_16"
+              android:layout_marginTop="@dimen/size_20"
               android:background="@drawable/shape_grey_stroke_rect_bkg"
               android:padding="@dimen/size_10">
 
