@@ -101,6 +101,14 @@ data class OrderItem(
     return item
   }
 
+  enum class OrderMode {
+    DELIVERY, PICKUP, APPOINTMENT
+  }
+
+  enum class DeliveryMode {
+    ONLINE, OFFLINE
+  }
+
   enum class CancellingEntity {
     SELLER, BUYER, NF;
 

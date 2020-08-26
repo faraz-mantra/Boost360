@@ -173,11 +173,11 @@ public class ManageInventoryFragment extends Fragment {
 
     private Bundle getBundleData() {
         Bundle bundle = new Bundle();
-        PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
+        PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(),
+                Constants.WA_KEY, session.getFpTag(), session.getUserProfileMobile());
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
         bundle.putString(IntentConstant.EXPERIENCE_CODE.name(), session.getFP_AppExperienceCode());
         return bundle;
-
     }
 
     @Override

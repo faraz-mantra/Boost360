@@ -39,6 +39,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       APPOINTMENT_TYPE -> AppointmentTypeViewHolder(binding as ItemBottomSheetAppointmentTypeBinding)
       PICK_INVENTORY_NATURE -> PickInventoryNatureViewHolder(binding as ItemBottomSheetPickInventoryNatureBinding)
       FILTER_ORDER_ITEM -> FilterOrderViewHolder(binding as ItemBottomSheetFilterBinding)
+      WEEK_TIMING_SELECTED -> WeekTimeViewHolder(binding as ItemWeekTimeSelectBinding)
+      SERVICES_DEPARTMENT -> ServicesViewHolder(binding as ItemConsultationServicesBinding)
     }
   }
 

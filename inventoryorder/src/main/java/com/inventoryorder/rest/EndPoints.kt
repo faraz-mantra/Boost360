@@ -5,6 +5,11 @@ object EndPoints {
   // NFX APIs
   const val WITH_FLOATS_BASE_URL = "https://assuredpurchase.withfloats.com/"
   const val BOOST_FLOATS_BASE_URL = "https://boost.nowfloats.com/"
+  const val BOOST_API2_WITH_FLOAT = "https://api2.withfloats.com"
+  const val ASSURED_PURCHASE_BASE_URL = "https://assuredpurchase.withfloats.com/"
+  const val GET_LIST_INVENTORY_SYNC = "product/v1/GetListingsWithInventorySync"
+  const val GET_DOCTORS_API = "Home/GetDoctorData"
+  const val POST_INITIATE_ORDER = "api/assuredPurchase/v2/InitiateOrder"
 
   //  const val GET_SELLER_SUMMARY_URL = "api/AssuredPurchase/SellerSummary"
   const val GET_SELLER_SUMMARY_URL = "api/assuredPurchase/v2/SellerSummary"
