@@ -22,6 +22,7 @@ import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.FragmentAppointmentsBinding
 import com.inventoryorder.model.OrderConfirmStatus
+import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.bottomsheet.FilterModel
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequestItem
@@ -39,6 +40,7 @@ import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.bottomsheet.FilterBottomSheetDialog
 import com.inventoryorder.ui.startFragmentActivity
+import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -59,6 +61,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private var currentPage = PAGE_START
   private var isLastPageD = false
 
+  var data: PreferenceData? = null
+
   companion object {
     fun newInstance(bundle: Bundle? = null): AppointmentsFragment {
       val fragment = AppointmentsFragment()
@@ -68,8 +72,10 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   override fun onCreateView() {
+
     super.onCreateView()
     experienceCode = arguments?.getString(IntentConstant.EXPERIENCE_CODE.name)?.trim()
+    data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
     setOnClickListener(binding?.btnAdd)
@@ -82,8 +88,10 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     super.onClick(v)
     when (v) {
       binding?.btnAdd -> {
-        showLongToast("Coming soon...")
-//        startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
+//        showLongToast("Coming soon...")
+        val bundle = Bundle()
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+        startFragmentActivity(FragmentType.CREATE_APPOINTMENT_VIEW  , bundle)
       }
     }
   }

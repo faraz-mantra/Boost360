@@ -1,6 +1,7 @@
 package com.inventoryorder.rest.services
 
 import com.inventoryorder.model.OrderConfirmStatus
+import com.inventoryorder.model.doctorsData.DoctorDataResponse
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.rest.EndPoints
 import com.inventoryorder.rest.response.OrderSummaryResponse
@@ -67,4 +68,9 @@ interface InventoryOrderRemoteDataSource {
   fun cancelOrder(@Query("clientId") clientId: String?,
                   @Query("orderId") orderId: String?,
                   @Query("cancellingEntity") cancellingEntity: String?): Observable<Response<OrderConfirmStatus>>
+
+  @GET(EndPoints.GET_DOCTORS_API)
+  fun getDoctorsData(
+          @Query("websiteID") fpTag: String?
+    ): Observable<Response<ArrayList<DoctorDataResponse>>>
 }

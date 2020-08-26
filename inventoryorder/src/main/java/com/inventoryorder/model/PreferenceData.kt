@@ -6,5 +6,6 @@ data class PreferenceData(
     val clientId: String? = null,
     val userProfileId: String? = null,
     val authorization: String? = null,
-    val fpTag: String? = null
+    val fpTag: String? = null,
+    val userPrimaryMobile: String? = null
 ) : Serializable

@@ -21,6 +21,7 @@ import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.FragmentVideoConsultBinding
+import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.bottomsheet.FilterModel
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequestItem
@@ -59,6 +60,8 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   private var currentPage = PAGE_START
   private var isLastPageD = false
 
+  var data: PreferenceData? = null
+
   companion object {
     fun newInstance(bundle: Bundle? = null): VideoConsultFragment {
       val fragment = VideoConsultFragment()
@@ -69,6 +72,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
+    data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
@@ -165,8 +169,10 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     super.onClick(v)
     when (v) {
       binding?.btnAdd -> {
-        showLongToast("Coming soon...")
-//        startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
+//        showLongToast("Coming soon...")
+        val bundle = Bundle()
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+        startFragmentActivity(FragmentType.CREATE_APPOINTMENT_VIEW  , bundle)
       }
     }
   }

@@ -24,6 +24,9 @@ object ProductOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSource
     return makeRemoteRequest(remoteDataSource.getProductDetails(productId), TaskCode.PRODUCT_ORDER_DETAILS_TASK)
   }
 
+  fun getDoctorData(fpTag: String?): Observable<BaseResponse>{
+    return makeRemoteRequest(remoteDataSource.getDoctorsData(fpTag), TaskCode.GET_DOCTOR_DATA)
+  }
 
   override fun getApiClient(): Retrofit {
     return BoostFloatsApiClient.shared.retrofit

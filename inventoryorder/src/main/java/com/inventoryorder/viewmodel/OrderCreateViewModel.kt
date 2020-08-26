@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
+import com.inventoryorder.rest.repositories.ApiTwoWithFloatRepository
+import com.inventoryorder.rest.repositories.AssuredPurchaseRepository
 import com.inventoryorder.rest.repositories.InventoryOrderRepository
 import com.inventoryorder.rest.repositories.ProductOrderRepository
 
@@ -49,6 +52,18 @@ class OrderCreateViewModel : BaseViewModel() {
 
   fun getProductDetails(productId: String?): LiveData<BaseResponse> {
     return ProductOrderRepository.getProductDetails(productId).toLiveData()
+  }
+
+  fun getAllServiceList(clientId: String?, skipBy: Int?, fpTag: String?, identifierType: String?): LiveData<BaseResponse> {
+    return ApiTwoWithFloatRepository.getAllServiceList(clientId, skipBy, fpTag, identifierType).toLiveData()
+  }
+
+  fun getDoctorData(fpTag: String?): LiveData<BaseResponse>{
+    return ProductOrderRepository.getDoctorData(fpTag).toLiveData()
+  }
+
+  fun postOrderInitiate(clientId: String?, request: OrderInitiateRequest?): LiveData<BaseResponse> {
+    return AssuredPurchaseRepository.postOrderInitiate(clientId, request).toLiveData()
   }
 
 }

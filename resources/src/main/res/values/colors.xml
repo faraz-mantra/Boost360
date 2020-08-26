@@ -26,6 +26,7 @@
   <color name="black_15">#25000000</color>
   <color name="black_20">#33000000</color>
   <color name="pinkish_grey">#BBBBBB</color>
+  <color name="pinkish_grey_ten_alpha">#BBBBBB</color>
   <color name="marigold">#ffc800</color>
   <color name="orange">#ffb900</color>
   <color name="squash">#f7981c</color>
@@ -86,4 +87,6 @@
   <color name="grey_light_2">#898989</color>
   <color name="grey_light_3">#CECECE</color>
   <color name="white_4">#fbfbfb</color>
+  <color name="grey_f9f9f9">#f9f9f9</color>
+  <color name="colorLightGrey">#E4E4E4</color>
 </resources>
