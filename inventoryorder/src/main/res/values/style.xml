@@ -16,7 +16,7 @@
   <style name="AppTheme.Order.create_appointment" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/white</item>
+    <item name="colorAccent">@color/colorPrimary</item>
     <item name="colorControlNormal">@color/colorAccent</item>
     <item name="android:windowAnimationStyle">@null</item>
     <item name="android:windowDisablePreview">true</item>
@@ -50,10 +50,12 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
-
   <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
-    <item name="colorAccent">@color/colorAccent</item>
-    <item name="colorControlNormal">@color/orange</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorPrimary</item>
+    <item name="colorSurface">@color/white</item>
+    <item name="colorControlNormal">@color/colorAccent</item>
   </style>
 
 
