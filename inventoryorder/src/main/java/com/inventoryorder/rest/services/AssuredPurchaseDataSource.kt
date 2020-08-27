@@ -1,5 +1,6 @@
 package com.inventoryorder.rest.services
 
+import com.inventoryorder.model.OrderInitiateResponse
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.rest.EndPoints
 import io.reactivex.Observable
@@ -14,6 +15,6 @@ interface AssuredPurchaseDataSource{
     fun initiateOrder(
             @Query("clientId") clientId: String?,
             @Body request: OrderInitiateRequest?
-    ): Observable<Response<Any>>
+    ): Observable<Response<OrderInitiateResponse>>
 
 }

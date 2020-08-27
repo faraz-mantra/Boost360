@@ -1,6 +1,7 @@
 package com.inventoryorder.ui.appointment
 
 import android.app.TimePickerDialog
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -16,8 +17,10 @@ import com.framework.views.customViews.CustomEditText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
+import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentNewAppointmentBinding
+import com.inventoryorder.model.OrderInitiateResponse
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.doctorsData.DoctorDataResponse
 import com.inventoryorder.model.orderRequest.*
@@ -26,22 +29,25 @@ import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.model.services.InventoryServicesResponse
 import com.inventoryorder.model.services.InventoryServicesResponseItem
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.startFragmentActivity
 import com.michalsvec.singlerowcalendar.calendar.CalendarChangesObserver
 import com.michalsvec.singlerowcalendar.calendar.CalendarViewManager
 import com.michalsvec.singlerowcalendar.calendar.SingleRowCalendarAdapter
 import com.michalsvec.singlerowcalendar.selection.CalendarSelectionManager
 import com.michalsvec.singlerowcalendar.utils.DateUtils
 import kotlinx.android.synthetic.main.item_unavailable_calendar.view.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
+
 
 class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBinding>(), PopupMenu.OnMenuItemClickListener{
 
     private var selectPositionService: Int = -1
     private var serviceList: ArrayList<InventoryServicesResponseItem>? = null
     private var serviceData: InventoryServicesResponseItem? = null
-//    private var session: UserSessionManager? = null
     private var scheduledDateTime: String = ""
     private var orderInitiateRequest = OrderInitiateRequest()
     private val calendar = Calendar.getInstance()
@@ -50,6 +56,12 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     var data: PreferenceData? = null
     var doctorData: DoctorDataResponse? = null
     var isVideoConsult: Boolean = false
+    var patientName: String? = null
+    var startTime: String? = null
+    var patientEmail: String? = null
+    var patientMobile: String? = null
+    var duration: String? = null
+
 
     companion object{
         fun newInstance(bundle: Bundle? = null): CreateAppointmentFragment{
@@ -68,7 +80,18 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         // Get data and check if user's mobile is registered.
         checkPhoneNumberValid()
 
-        binding?.radioInClinic?.isSelected = true
+        val colorStateList = ColorStateList(
+                arrayOf(intArrayOf(-android.R.attr.state_enabled),
+                        intArrayOf(android.R.attr.state_enabled)),
+                intArrayOf(
+                        getColor(R.color.warm_grey_two), //disabled
+                        getColor(R.color.light_blue_one) //enabled
+        ))
+
+        binding?.radioInClinic?.buttonTintList = colorStateList
+//        binding?.radioVideoConsultation?.buttonTintList = colorStateList
+
+        binding?.radioInClinic?.isChecked = true
         binding?.radioGroup?.setOnCheckedChangeListener { group, checkedId ->
             if(checkedId == binding?.radioInClinic?.id){
                 binding?.radioInClinic?.setTextColor(getColor(R.color.light_blue_one))
@@ -232,15 +255,17 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     }
 
     private fun validateAndCreateRequest(): Boolean {
-        val startTime = binding?.edtStartTime?.text?.toString()
-        val duration = binding?.edtDuration?.text?.toString()
+        startTime = binding?.edtStartTime?.text?.toString()
+        duration = binding?.edtDuration?.text?.toString()
         val consultingService = binding?.edtConsultingService?.text?.toString()
         val consultFee = binding?.edtFees?.text?.toString()
-        val primaryNumber = binding?.edtPatientPhone?.text?.toString()
-        val patientName = binding?.edtPatientName?.text?.toString()
+        patientMobile = binding?.edtPatientPhone?.text?.toString()
+        patientName = binding?.edtPatientName?.text?.toString()
         val gender = binding?.edtGender?.text?.toString()
         val age = binding?.edtAge?.text?.toString()
-        val optionalEmail = binding?.edtPatientEmail?.text?.toString() ?: ""
+        patientEmail = binding?.edtPatientEmail?.text?.toString() ?: ""
+
+
         when{
             scheduledDateTime.isNullOrEmpty() -> {
                 showLongToast("Please select consultation date")
@@ -274,29 +299,29 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
                 showLongToast("Age field must not be empty.")
                 return false
             }
-            primaryNumber.isNullOrEmpty() -> {
+            patientMobile.isNullOrEmpty() -> {
                 showLongToast("Patient phone number field must not be empty.")
                 return false
             }
-            checkStringContainsDigits(patientName) -> {
+            checkStringContainsDigits(patientName!!) -> {
                 showLongToast("Please enter a valid patient name.")
                 return false
             }
 
-            primaryNumber.length != 10 ->{
+            patientMobile!!.length != 10 ->{
                 showLongToast("Please enter a valid Phone Number.")
                 return false
             }
 
-            optionalEmail.isNotEmpty() && !checkValidEmail(optionalEmail) ->{
+            patientEmail!!.isNotEmpty() && !checkValidEmail(patientEmail!!) ->{
                 showLongToast("Please enter a valid email.")
                 return false
             }
             else ->{
                 val paymentDetails = PaymentDetails(PaymentDetails.MethodType.FREE.name)
-                val buyerDetail = BuyerDetails(address = Address(), contactDetails = ContactDetails(emailId = optionalEmail, fullName = patientName, primaryContactNumber = primaryNumber))
-                val delMode = if (orderInitiateRequest.isVideoConsult) OrderItem.DeliveryMode.ONLINE.name else OrderSummaryRequest.DeliveryMode.OFFLINE.name
-                val delProvider = if (orderInitiateRequest.isVideoConsult) ShippingDetails.DeliveryProvider.NF_VIDEO_CONSULATION.name else ""
+                val buyerDetail = BuyerDetails(address = Address(), contactDetails = ContactDetails(emailId = patientEmail!!, fullName = patientName!!, primaryContactNumber = patientMobile!!))
+                val delMode = if (isVideoConsult) OrderItem.DeliveryMode.ONLINE.name else OrderSummaryRequest.DeliveryMode.OFFLINE.name
+                val delProvider = if (isVideoConsult) ShippingDetails.DeliveryProvider.NF_VIDEO_CONSULATION.name else ""
                 val shippingDetails = ShippingDetails(
                         shippedBy = ShippingDetails.ShippedBy.SELLER.name,
                         deliveryMode = delMode, deliveryProvider = delProvider, shippingCost = 0.0, currencyCode = "INR"
@@ -306,7 +331,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
                 var endTime24 = ""
                 try {
                     startTime24 = parseDate(startTime, com.framework.utils.DateUtils.FORMAT_HH_MM_A, com.framework.utils.DateUtils.FORMAT_HH_MM) ?: ""
-                    val startTimeDate = startTime.parseDate(com.framework.utils.DateUtils.FORMAT_HH_MM_A)?.getAmountMinDate(duration.toInt())
+                    val startTimeDate = startTime!!.parseDate(com.framework.utils.DateUtils.FORMAT_HH_MM_A)?.getAmountMinDate(duration!!.toInt())
                     endTime24 = startTimeDate?.parseDate(com.framework.utils.DateUtils.FORMAT_HH_MM) ?: ""
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -321,10 +346,10 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
                                         serviceData?.pickupAddressReferenceId()?.let { it6 ->
                                             serviceData?.name?.let { it7 ->
                                                 ExtraProperties(
-                                                        patientName = patientName, gender = gender, age = age, patientMobileNumber = primaryNumber,
-                                                        patientEmailId = optionalEmail, startTime = startTime24, endTime = endTime24, scheduledDateTime = scheduledDateTime, consultationFor = it7,
+                                                        patientName = patientName!!, gender = gender, age = age, patientMobileNumber = patientMobile!!,
+                                                        patientEmailId = patientEmail!!, startTime = startTime24, endTime = endTime24, scheduledDateTime = scheduledDateTime, consultationFor = it7,
                                                         doctorName = it, doctorId = it1, doctorQualification = it2, doctorSpeciality = it3,
-                                                        duration = duration.toInt(), businessLicense = it4, doctorSignature = it5,
+                                                        duration = duration!!.toInt(), businessLicense = it4, doctorSignature = it5,
                                                         referenceId = it6, businessLogo = ""
                                                 )
                                             }
@@ -345,7 +370,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
                 items.add(ItemsItem(type = "NO_ITEM", productOrOfferId = "NO_ITEM", quantity = 1, productDetails = productDetails))
 
                 orderInitiateRequest.paymentDetails = paymentDetails
-                orderInitiateRequest.sellerID = "DOCTORS"
+                orderInitiateRequest.sellerID = data?.fpTag.toString()
                 orderInitiateRequest.buyerDetails = buyerDetail
                 orderInitiateRequest.mode = OrderItem.OrderMode.APPOINTMENT.name
                 orderInitiateRequest.shippingDetails = shippingDetails
@@ -370,7 +395,17 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
             if(it.status == 200 || it.status == 201 || it.status == 202){
                 hideProgress()
                 showLongToast(getString(R.string.booking_created))
-                //TODO Add something to close the screen
+                val response = it.anyResponse as OrderInitiateResponse
+                val bundle = Bundle()
+                val format: DateFormat = SimpleDateFormat(com.framework.utils.DateUtils.FORMAT_SERVER_DATE, Locale.ENGLISH)
+                val date: Date = format.parse(scheduledDateTime)
+                bundle.putString("ORDER_ID", response.data.ReferenceNumber)
+                bundle.putString("NAME", patientName)
+                bundle.putString("START_TIME_DATE", date.parseDate(com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL).toString())
+                bundle.putString("NUMBER", patientMobile)
+                bundle.putString("EMAIL", patientEmail)
+                startFragmentActivity(FragmentType.BOOKING_SUCCESSFUL, bundle )
+                baseActivity.onBackPressed()
             }else{
                 hideProgress()
                 errorUi("Cannot create a booking at this time. Please try later.")
@@ -442,8 +477,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     }
 
     private fun checkValidEmail(email: String):Boolean{
-        val isValid = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$").matcher(email).find()
-        return isValid
+        return Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$").matcher(email).find()
     }
 
 }
