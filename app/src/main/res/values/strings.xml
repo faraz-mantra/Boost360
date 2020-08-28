@@ -1960,6 +1960,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="store_url">store</string>
     <string name="blog">blog</string>
     <string name="subscribers">subscribers</string>
+    <string name="new_subscribers">newsubscriber</string>
     <string name="share_lower_case">share</string>
     <string name="visits">visits</string>
     <string name="viewgraph">viewgraph</string>
