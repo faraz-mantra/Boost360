@@ -31,7 +31,7 @@
         android:singleLine="true"
         android:textSize="14sp"
         android:textColor="@color/greyish_brown"
-        android:textColorHint="@color/warm_light" />
+        android:textColorHint="@color/primary_grey" />
 
       <View
         android:layout_width="1dp"
@@ -50,8 +50,7 @@
         android:paddingLeft="@dimen/size_8"
         android:singleLine="true"
         android:textColor="@color/greyish_brown"
-
-        android:textColorHint="@color/warm_light" />
+        android:textColorHint="@color/primary_grey" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

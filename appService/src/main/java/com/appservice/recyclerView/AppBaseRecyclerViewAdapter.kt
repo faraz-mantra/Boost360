@@ -6,14 +6,8 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.appservice.R
 import com.appservice.constant.RecyclerViewItemType.*
-import com.appservice.databinding.ItemPdfFileBinding
-import com.appservice.databinding.ItemPreviewImageBinding
-import com.appservice.databinding.PaginationLoaderBinding
-import com.appservice.databinding.RowLayoutAddedSpecsBinding
-import com.appservice.holder.AdditionalFileViewHolder
-import com.appservice.holder.ImagePreviewViewHolder
-import com.appservice.holder.PagingViewHolder
-import com.appservice.holder.SpecificationViewHolder
+import com.appservice.databinding.*
+import com.appservice.holder.*
 import com.framework.base.BaseActivity
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
@@ -26,6 +20,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
       SPECIFICATION_ITEM -> SpecificationViewHolder(binding as RowLayoutAddedSpecsBinding)
       IMAGE_PREVIEW -> ImagePreviewViewHolder(binding as ItemPreviewImageBinding)
+      GST_DETAILS_VIEW -> GstDetailViewHolder(binding as ItemGstDetailBinding)
       ADDITIONAL_FILE_VIEW -> AdditionalFileViewHolder(binding as ItemPdfFileBinding)
     }
   }

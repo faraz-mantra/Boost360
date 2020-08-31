@@ -1,7 +1,6 @@
 package com.appservice.ui.catlogService.information
 
 import android.content.Intent
-import android.text.InputFilter
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -10,7 +9,6 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentServiceInformationBinding
-import com.appservice.extension.InputFilterIntRange
 import com.appservice.model.FileModel
 import com.appservice.model.KeySpecification
 import com.appservice.model.auth_3
@@ -22,6 +20,7 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catlogService.widgets.ClickType
+import com.appservice.ui.catlogService.widgets.GstDetailsBottomSheet
 import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.observeOnce
@@ -60,7 +59,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage,
-        binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto)
+        binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst)
     product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? Product
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? DataG
@@ -74,15 +73,15 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     setUiText()
     serviceTagsSet()
     specificationAdapter()
-    val rangeFilter = InputFilterIntRange(0, 100)
-    binding?.edtGst?.filters = arrayOf<InputFilter>(rangeFilter)
-    binding?.edtGst?.onFocusChangeListener = rangeFilter
+//    val rangeFilter = InputFilterIntRange(0, 100)
+//    binding?.edtGst?.filters = arrayOf<InputFilter>(rangeFilter)
+//    binding?.edtGst?.onFocusChangeListener = rangeFilter
   }
 
   private fun setUiText() {
     binding?.edtServiceCategory?.setText(product?.category ?: "")
     binding?.edtBrand?.setText(product?.brandName ?: "")
-    if (gstProductData != null) binding?.edtGst?.setText("${(gstProductData?.gstSlab ?: 0.0).toInt()}")
+    if (gstProductData != null) binding?.edtGst?.setText("${(gstProductData?.gstSlab ?: 0.0).toInt()} %")
     setAdapter()
   }
 
@@ -96,6 +95,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
+      binding?.edtGst -> openGStDetail()
       binding?.btnAddTag -> {
         val txtTag = binding?.edtServiceTag?.text.toString()
         if (txtTag.isNotEmpty()) {
@@ -135,7 +135,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private fun validateAnnGoBack() {
     val serviceCategory = binding?.edtServiceCategory?.text?.toString() ?: ""
     val brand = binding?.edtBrand?.text?.toString() ?: ""
-    val gst = binding?.edtGst?.text?.toString() ?: ""
+    val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
     val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>) ?: ArrayList()
     when {
 //      secondaryImage.isNullOrEmpty() -> {
@@ -266,6 +266,12 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
           baseActivity.finish()
           d.dismiss()
         }.show()
+  }
+
+  private fun openGStDetail() {
+    val gstSheet = GstDetailsBottomSheet()
+    gstSheet.onClicked = { binding?.edtGst?.setText("$it %") }
+    gstSheet.show(this@ServiceInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   fun onNavPressed() {
