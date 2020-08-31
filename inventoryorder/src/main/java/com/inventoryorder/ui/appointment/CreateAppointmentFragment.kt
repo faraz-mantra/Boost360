@@ -102,19 +102,6 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     }
     setOnClickListener(binding?.edtConsultingService, binding?.edtStartTime, binding?.btnCreate, binding?.edtGender)
     getServiceList()
-    binding?.edtDuration?.setText("15")
-//    binding?.edtPatientPhone?.addTextChangedListener(object: TextWatcher{
-//      override fun afterTextChanged(s: Editable?) {
-//      }
-//
-//      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//      }
-//
-//      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//        val
-//      }
-//    }
-//    )
   }
 
   private fun getServiceList() {
@@ -142,6 +129,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         if (response?.size!! > 0) {
           doctorData = response[0]
           hideProgress()
+          binding?.edtDuration?.setText(doctorData?.duration)
         } else {
           hideProgress()
           errorUi("Cannot create a booking at this time. Please try later.")
@@ -202,6 +190,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
       override fun whenWeekMonthYearChanged(weekNumber: String, monthNumber: String, monthName: String, year: String, date: Date) {
         scheduledDateTime = ""
 //                tvDate.text = "${DateUtils.getMonthName(date)}, ${DateUtils.getYear(date)} "
+        binding?.tvMonthDateRange?.text = "$monthName, $year"
         super.whenWeekMonthYearChanged(weekNumber, monthNumber, monthName, year, date)
       }
     }
