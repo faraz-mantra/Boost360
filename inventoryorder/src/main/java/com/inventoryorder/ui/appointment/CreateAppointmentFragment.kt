@@ -5,11 +5,14 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.widget.addTextChangedListener
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -100,6 +103,18 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     setOnClickListener(binding?.edtConsultingService, binding?.edtStartTime, binding?.btnCreate, binding?.edtGender)
     getServiceList()
     binding?.edtDuration?.setText("15")
+//    binding?.edtPatientPhone?.addTextChangedListener(object: TextWatcher{
+//      override fun afterTextChanged(s: Editable?) {
+//      }
+//
+//      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//      }
+//
+//      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//        val
+//      }
+//    }
+//    )
   }
 
   private fun getServiceList() {
@@ -287,6 +302,10 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
       }
       age.isNullOrEmpty() -> {
         showLongToast("Age field must not be empty.")
+        return false
+      }
+      age.length > 3 -> {
+        showLongToast("Please enter a valid age.")
         return false
       }
       patientMobile.isNullOrEmpty() -> {
