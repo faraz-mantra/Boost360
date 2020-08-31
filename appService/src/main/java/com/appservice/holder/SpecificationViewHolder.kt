@@ -1,5 +1,6 @@
 package com.appservice.holder
 
+import android.view.View
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.RowLayoutAddedSpecsBinding
 import com.appservice.model.KeySpecification
@@ -12,6 +13,7 @@ class SpecificationViewHolder(binding: RowLayoutAddedSpecsBinding) : AppBaseRecy
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val keySpecification = item as? KeySpecification
+    binding.btnRemoveView.visibility = if (position == 0) View.INVISIBLE else View.VISIBLE
     binding.type.setText(keySpecification?.key ?: "")
     binding.value.setText(keySpecification?.value ?: "")
     binding.type.onTextChanged {

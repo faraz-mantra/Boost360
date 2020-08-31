@@ -131,7 +131,6 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
-import com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivityKt;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
@@ -164,7 +163,6 @@ import zendesk.core.Zendesk;
 import zendesk.support.Support;
 
 import static com.appservice.ui.bankaccount.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
-import static com.inventoryorder.ui.FragmentContainerOrderActivityKt.startFragmentActivity;
 import static com.inventoryorder.ui.FragmentContainerOrderActivityKt.startFragmentActivityNew;
 import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYPE;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
@@ -510,7 +508,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Uri uri = Uri.parse(url);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
-            } else if (url.contains(getString(R.string.subscribers))) {
+            } else if (url.contains(getString(R.string.subscribers)) || url.contains(getString(R.string.new_subscribers))) {
                 Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
                 startActivity(subscribers);
             } else if (url.contains(getString(R.string.share_lower_case))) {
