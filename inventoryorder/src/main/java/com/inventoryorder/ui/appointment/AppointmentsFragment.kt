@@ -91,7 +91,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 //        showLongToast("Coming soon...")
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
-        startFragmentActivity(FragmentType.CREATE_APPOINTMENT_VIEW  , bundle)
+        bundle.putBoolean("IS_VIDEO", false)
+        startFragmentActivity(FragmentType.CREATE_APPOINTMENT_VIEW  , bundle, isResult = true)
       }
     }
   }
