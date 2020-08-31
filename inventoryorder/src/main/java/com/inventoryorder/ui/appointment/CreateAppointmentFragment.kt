@@ -1,11 +1,14 @@
 package com.inventoryorder.ui.appointment
 
+import android.app.Activity
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.annotation.MenuRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -77,7 +80,16 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     // Get data and check if user's mobile is registered.
     checkPhoneNumberValid()
-    binding?.radioInClinic?.isChecked = true
+    val isFromVideo = arguments?.getBoolean("IS_VIDEO")
+    if(isFromVideo!!) {
+      binding?.radioVideoConsultation?.isChecked = true
+      isVideoConsult = true
+    }
+    else {
+      binding?.radioInClinic?.isChecked = true
+      isVideoConsult = false
+    }
+
     binding?.radioGroup?.setOnCheckedChangeListener { _, checkedId ->
       if (checkedId == binding?.radioInClinic?.id) {
         isVideoConsult = false
@@ -382,13 +394,22 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         bundle.putString("START_TIME_DATE", date.parseDate(com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL).toString())
         bundle.putString("NUMBER", patientMobile)
         bundle.putString("EMAIL", patientEmail)
-        startFragmentActivity(FragmentType.BOOKING_SUCCESSFUL, bundle)
-        baseActivity.onBackPressed()
+        startFragmentActivity(FragmentType.BOOKING_SUCCESSFUL, bundle, isResult = true)
       } else {
         hideProgress()
         errorUi("Cannot create a booking at this time. Please try later.")
       }
     })
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+      val intent = Intent()
+      intent.putExtra(IntentConstant.RESULT_DATA.name, Bundle().apply { putBoolean(IntentConstant.IS_REFRESH.name, true) })
+      baseActivity.setResult(AppCompatActivity.RESULT_OK, intent)
+      baseActivity.finish()
+    }
   }
 
   private fun menuItemView(v: View, @MenuRes menu: Int) {

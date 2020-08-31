@@ -1,9 +1,11 @@
 package com.inventoryorder.ui.createappointment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -59,17 +61,14 @@ class BookingSuccessfulFragment : BaseInventoryFragment<FragmentBookingSuccessfu
     override fun onClick(v: View) {
         super.onClick(v)
         when(v){
-            binding?.tvHome ->{
-                baseActivity.onBackPressed()
+            binding?.tvHome -> {
+                baseActivity.setResult(AppCompatActivity.RESULT_OK)
+                baseActivity.finish()
             }
-
         }
     }
 
-    fun getBundleData(): Bundle? {
-        val bundle = Bundle()
-        // Always true because this page is called only when booking is successfull. A refresh is required then.
-        bundle.putBoolean(IntentConstant.IS_REFRESH.name, true)
-        return bundle
+    fun getBundleData(): Bundle {
+        return Bundle()
     }
 }

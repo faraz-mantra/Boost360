@@ -220,6 +220,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     super.onActivityResult(requestCode, resultCode, data)
     ordersFragment?.onActivityResult(requestCode, resultCode, data)
     appointmentsFragment?.onActivityResult(requestCode, resultCode, data)
+    videoConsultFragment?.onActivityResult(requestCode, resultCode, data)
+    createAppointmentFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -233,8 +235,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 
   override fun onBackPressed() {
-    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?:
-          videoConsultDetailsFragment?.getBundleData() ?: bookingSuccessfulFragment?.getBundleData()
+    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData() ?: bookingSuccessfulFragment?.getBundleData()
     bundle?.let {
       val intent = Intent()
       intent.putExtra(IntentConstant.RESULT_DATA.name, it)
