@@ -1,6 +1,5 @@
 package com.boost.presignup.utils
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.net.Uri
 import android.util.Log
@@ -10,13 +9,13 @@ import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 
-
 enum class DynamicLinkParams {
   fpId,
   fpTag,
   viewType,
   day,
-  referrer
+  referrer,
+  buyItemKey
 }
 
 class FirebaseDynamicLinksManager {
