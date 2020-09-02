@@ -1,9 +1,8 @@
 package com.onboarding.nowfloats.holders.channel
 
+import android.util.Log
 import com.onboarding.nowfloats.databinding.ItemSelectedChannelSmallBinding
-import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.model.channel.getDrawable
-import com.onboarding.nowfloats.model.channel.getType
+import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
@@ -19,7 +18,17 @@ class ChannelSelectedSmallRecyclerViewHolder(binding: ItemSelectedChannelSmallBi
 
     private fun setViews(model: ChannelModel?) {
         binding.image.setImageDrawable(model?.getDrawable(activity?.applicationContext))
-//        binding.image.makeGreyscale()
+//        if(model?.channelActionData == null && model?.isWhatsAppChannel()!!){
+//            binding.image.makeGreyscale()
+//        }else if(model.channelAccessToken == null && (model.isFacebookPage() || model.isFacebookShop() || model.isGoogleBusinessChannel() || model.isTwitterChannel())){
+//            binding.image.makeGreyscale()
+//        }
+        if(model?.status != "SUCCESS" && model?.isWhatsAppChannel()!!){
+            binding.image.makeGreyscale()
+        }else if(model.status != "SUCCESS" && (model.isFacebookPage() || model.isFacebookShop() ||
+                        model.isGoogleBusinessChannel() || model.isTwitterChannel())){
+            binding.image.makeGreyscale()
+        }
         val resources = getResources() ?: return
         val type = model?.getType() ?: return
     }

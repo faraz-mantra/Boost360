@@ -37,9 +37,9 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     placePickerApi()
     binding?.viewImage?.post {
       (binding?.viewImage?.fadeIn(500L)?.mergeWith(binding?.viewBusiness?.fadeIn(400L))
-          ?.mergeWith(binding?.viewForm?.fadeIn(400L)))?.andThen(binding?.title?.fadeIn(150L)
-              ?.mergeWith(binding?.subTitle?.fadeIn(150L)))?.andThen(binding?.formMain?.fadeIn(150L))
-          ?.andThen(binding?.next?.fadeIn())?.subscribe()
+              ?.mergeWith(binding?.viewForm?.fadeIn(400L)))?.andThen(binding?.title?.fadeIn(150L)
+                      ?.mergeWith(binding?.subTitle?.fadeIn(150L)))?.andThen(binding?.formMain?.fadeIn(150L))
+              ?.andThen(binding?.next?.fadeIn())?.subscribe()
     }
     setOnClickListener(binding?.next, binding?.address)
     binding?.number?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
@@ -112,7 +112,10 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     } else if (!businessInfoModel.isEmailValid()) {
       showShortToast(resources.getString(R.string.email_invalid))
       false
-    } else if (!businessInfoModel.isNumberValid()) {
+    } else if(businessInfoModel.number.isNullOrEmpty()){
+      showShortToast(resources.getString(R.string.phone_number_cannot_be_empty))
+      false
+    }else if (!businessInfoModel.isNumberValid()) {
       showShortToast(resources.getString(R.string.phone_number_invalid))
       false
     } else true
