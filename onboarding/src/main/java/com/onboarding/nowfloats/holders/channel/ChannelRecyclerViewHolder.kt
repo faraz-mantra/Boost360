@@ -1,10 +1,11 @@
 package com.onboarding.nowfloats.holders.channel
 
-import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.model.channel.getDrawable
-import com.onboarding.nowfloats.model.channel.getType
+import android.util.Log
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.ItemChannelBinding
+import com.onboarding.nowfloats.model.channel.*
+import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
+import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 
