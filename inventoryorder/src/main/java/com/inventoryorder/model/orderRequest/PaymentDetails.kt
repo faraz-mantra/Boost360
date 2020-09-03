@@ -4,10 +4,11 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class PaymentDetails(
-        @SerializedName("Method")
-        var method: String? = null
+    @SerializedName("Method")
+    var method: String? = null
 ) : Serializable {
-    enum class MethodType {
-        FREE
-    }
+
+  enum class MethodType {
+    FREE
+  }
 }
