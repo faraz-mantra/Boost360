@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="start"
-            android:maxLines="1"
+            android:maxLines="2"
             android:textColor="@color/greyish_brown"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_1"
