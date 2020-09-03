@@ -9,12 +9,12 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface AssuredPurchaseDataSource{
+interface AssuredPurchaseDataSource {
 
-    @POST(EndPoints.POST_INITIATE_ORDER)
-    fun initiateOrder(
-            @Query("clientId") clientId: String?,
-            @Body request: OrderInitiateRequest?
-    ): Observable<Response<OrderInitiateResponse>>
+  @POST(EndPoints.POST_INITIATE_ORDER)
+  fun initiateOrder(
+      @Query("clientId") clientId: String?,
+      @Body request: OrderInitiateRequest?
+  ): Observable<Response<OrderInitiateResponse>>
 
 }

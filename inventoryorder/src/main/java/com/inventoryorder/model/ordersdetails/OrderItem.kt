@@ -45,7 +45,7 @@ data class OrderItem(
   }
 
   fun stringToDate(format: String = DateUtils.FORMAT_DD_MM_YYYY): Date? {
-    return parseDate(CreatedOn, DateUtils.FORMAT_SERVER_DATE, format)?.parseDate(DateUtils.FORMAT_DD_MM_YYYY)
+    return parseDate(CreatedOn, FORMAT_SERVER_DATE, format, timeZone = TimeZone.getTimeZone("IST"))?.parseDate(DateUtils.FORMAT_DD_MM_YYYY)
   }
 
   fun referenceNumber(): String {
@@ -144,7 +144,8 @@ data class OrderItem(
         || OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED) &&
         PaymentDetails != null && ((PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
         PaymentDetailsN.STATUS.from(PaymentDetails.status()) == PaymentDetailsN.STATUS.SUCCESS)
-        || (PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.COD)))
+        || (PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.COD)
+        || (PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.FREE)))
   }
 
   fun isCancelActionBtn(): Boolean {

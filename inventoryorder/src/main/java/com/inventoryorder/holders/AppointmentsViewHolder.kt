@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
@@ -57,7 +58,13 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     binding.location.value.text = order.SellerDetails?.Address?.City?.capitalizeUtil()
     val sizeItem = order.Items?.size ?: 0
     binding.itemCount.text = takeIf { sizeItem > 1 }?.let { "Services" } ?: "Service"
-    binding.itemDesc.text = order.getTitlesBooking()
+//    binding.itemDesc.text = order.getTitlesBooking()
+    val details = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.detailsConsultation()
+    val scheduleDate = order.firstItemForConsultation()?.scheduledStartDate()
+    binding.itemDesc.text = if (details.isNullOrEmpty().not() && scheduleDate.isNullOrEmpty().not()) {
+      "$details\n${activity?.resources?.getString(R.string.schedule)}${parseDate(scheduleDate, FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)}"
+    } else details
+
 
     binding.itemMore.visibility = takeIf { (sizeItem > 1) }?.let {
       binding.itemMore.text = "+${sizeItem - 1} more"

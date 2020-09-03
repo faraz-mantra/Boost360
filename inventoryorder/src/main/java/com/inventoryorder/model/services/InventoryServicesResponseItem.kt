@@ -11,93 +11,93 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 data class InventoryServicesResponseItem(
-        @SerializedName("ApplicationId")
+    @SerializedName("ApplicationId")
     var applicationId: Any? = null,
-        @SerializedName("availableUnits")
+    @SerializedName("availableUnits")
     var availableUnits: Double? = null,
-        @SerializedName("brandName")
+    @SerializedName("brandName")
     var brandName: String? = null,
-        @SerializedName("BuyOnlineLink")
+    @SerializedName("BuyOnlineLink")
     var buyOnlineLink: Any? = null,
-        @SerializedName("category")
+    @SerializedName("category")
     var category: String? = null,
-        @SerializedName("CreatedOn")
+    @SerializedName("CreatedOn")
     var createdOn: String? = null,
-        @SerializedName("CurrencyCode")
+    @SerializedName("CurrencyCode")
     var currencyCode: String? = null,
-        @SerializedName("CustomWidgets")
+    @SerializedName("CustomWidgets")
     var customWidgets: Any? = null,
-        @SerializedName("Description")
+    @SerializedName("Description")
     var description: String? = null,
-        @SerializedName("DiscountAmount")
+    @SerializedName("DiscountAmount")
     var discountAmount: Double? = null,
-        @SerializedName("ExternalSourceId")
+    @SerializedName("ExternalSourceId")
     var externalSourceId: Any? = null,
-        @SerializedName("FPTag")
+    @SerializedName("FPTag")
     var fPTag: String? = null,
-        @SerializedName("GPId")
+    @SerializedName("GPId")
     var gPId: Any? = null,
-        @SerializedName("GroupProductId")
+    @SerializedName("GroupProductId")
     var groupProductId: Any? = null,
-        @SerializedName("_id")
+    @SerializedName("_id")
     var id: String? = null,
-        @SerializedName("ImageUri")
+    @SerializedName("ImageUri")
     var imageUri: String? = null,
-        @SerializedName("Images")
+    @SerializedName("Images")
     var images: Any? = null,
-        @SerializedName("IsArchived")
+    @SerializedName("IsArchived")
     var isArchived: Boolean? = null,
-        @SerializedName("IsAvailable")
+    @SerializedName("IsAvailable")
     var isAvailable: Boolean? = null,
-        @SerializedName("isCodAvailable")
+    @SerializedName("isCodAvailable")
     var isCodAvailable: Boolean? = null,
-        @SerializedName("IsFreeShipmentAvailable")
+    @SerializedName("IsFreeShipmentAvailable")
     var isFreeShipmentAvailable: Boolean? = null,
-        @SerializedName("isPrepaidOnlineAvailable")
+    @SerializedName("isPrepaidOnlineAvailable")
     var isPrepaidOnlineAvailable: Boolean? = null,
-        @SerializedName("keySpecification")
+    @SerializedName("keySpecification")
     var keySpecification: KeySpecification? = null,
-        @SerializedName("_keywords")
+    @SerializedName("_keywords")
     var keywords: Any? = null,
-        @SerializedName("maxCodOrders")
+    @SerializedName("maxCodOrders")
     var maxCodOrders: Int? = null,
-        @SerializedName("maxPrepaidOnlineOrders")
+    @SerializedName("maxPrepaidOnlineOrders")
     var maxPrepaidOnlineOrders: Int? = null,
-        @SerializedName("MerchantName")
+    @SerializedName("MerchantName")
     var merchantName: Any? = null,
-        @SerializedName("Name")
+    @SerializedName("Name")
     var name: String? = null,
-        @SerializedName("otherSpecifications")
+    @SerializedName("otherSpecifications")
     var otherSpecifications: List<Any>? = null,
-        @SerializedName("paymentType")
+    @SerializedName("paymentType")
     var paymentType: String? = null,
-        @SerializedName("pickupAddressReferenceId")
+    @SerializedName("pickupAddressReferenceId")
     var pickupAddressReferenceId: String? = null,
-        @SerializedName("Price")
+    @SerializedName("Price")
     var price: Double? = null,
-        @SerializedName("Priority")
+    @SerializedName("Priority")
     var priority: Int? = null,
-        @SerializedName("ProductIndex")
+    @SerializedName("ProductIndex")
     var productIndex: Int? = null,
-        @SerializedName("productType")
+    @SerializedName("productType")
     var productType: String? = null,
-        @SerializedName("ProductUrl")
+    @SerializedName("ProductUrl")
     var productUrl: String? = null,
-        @SerializedName("sharedPlatforms")
+    @SerializedName("sharedPlatforms")
     var sharedPlatforms: List<Any>? = null,
-        @SerializedName("ShipmentDuration")
+    @SerializedName("ShipmentDuration")
     var shipmentDuration: Int? = null,
-        @SerializedName("tags")
+    @SerializedName("tags")
     var tags: List<String>? = null,
-        @SerializedName("TileImageUri")
+    @SerializedName("TileImageUri")
     var tileImageUri: Any? = null,
-        @SerializedName("TotalQueries")
+    @SerializedName("TotalQueries")
     var totalQueries: Int? = null,
-        @SerializedName("uniquePaymentUrl")
+    @SerializedName("uniquePaymentUrl")
     var uniquePaymentUrl: UniquePaymentUrl? = null,
-        @SerializedName("UpdatedOn")
+    @SerializedName("UpdatedOn")
     var updatedOn: String? = null,
-        @SerializedName("variants")
+    @SerializedName("variants")
     var variants: Boolean? = null
 ) : BaseResponse(), Serializable, AppBaseRecyclerViewItem {
   var isSelected: Boolean = false

@@ -25,5 +25,12 @@ object EndPoints {
   const val GET_CONFIRM_ORDER = "api/assuredPurchase/v2/ConfirmOrder"
   const val GET_CANCEL_ORDER = "api/assuredPurchase/v2/CancelOrder"
   const val GET_PRODUCT_DETAILS = "Home/GetProductDetails"
+
+  // Boost Kit APIs
+  const val WEB_ACTION_BOOST_KIT_BASE_URL ="https://webaction.api.boostkit.dev/"
+  const val WEEKLY_SCHEDULE_DOCTOR ="api/v1/weeklyschedule/get-data"
+  const val ALL_APT_DOCTOR ="api/v1/appointment/get-data"
+  const val ADD_APT_CONSULT_DATA ="api/v1/appointment/add-data"
+
 }
 
