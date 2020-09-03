@@ -491,6 +491,7 @@
     <string name="deeplink_book_table">book_table</string>
     <string name="deeplink_my_add_ons">my_add_ons</string>
     <string name="deeplink_recommended_add_ons">recommended_add_ons</string>
+    <string name="deeplink_item_on_market_place">ITEM_ONS_MARKETPLACE</string>
 
     <!-- Deep Linking URLs  -->
 

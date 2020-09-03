@@ -1,30 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <style name="AppTheme" parent="AppTheme.Base">
+  <style name="AppTheme" parent="AppTheme.Base">
 
 
-    </style>
+  </style>
 
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- customize the color palette -->
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryDark">@color/primaryColorDark</item>
-        <item name="colorAccent">@color/primaryColor</item>
-        <item name="colorControlActivated">@color/accentColor</item>
-        <item name="colorControlHighlight">@color/accentColor</item>
-        <item name="colorControlNormal">#eeeeee</item>
-        <item name="android:windowDisablePreview">true</item>
-    </style>
+  <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- customize the color palette -->
+    <item name="colorPrimary">@color/primaryColor</item>
+    <item name="colorPrimaryDark">@color/primaryColorDark</item>
+    <item name="colorAccent">@color/primaryColor</item>
+    <item name="colorControlActivated">@color/accentColor</item>
+    <item name="colorControlHighlight">@color/accentColor</item>
+    <item name="colorControlNormal">#eeeeee</item>
+    <item name="android:windowDisablePreview">true</item>
+    <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+  </style>
 
-    <style name="AppTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- customize the color palette -->
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryDark">@color/primaryColorDark</item>
-        <item name="colorAccent">@color/primaryColor</item>
-        <item name="colorControlActivated">@color/accentColor</item>
-        <item name="colorControlHighlight">@color/accentColor</item>
-        <item name="colorControlNormal">#eeeeee</item>
+  <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+    <item name="bottomSheetStyle">@style/AppModalStyle</item>
+  </style>
+
+  <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+    <item name="android:background">@android:color/transparent</item>
+  </style>
+
+  <style name="AppTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- customize the color palette -->
+    <item name="colorPrimary">@color/primaryColor</item>
+    <item name="colorPrimaryDark">@color/primaryColorDark</item>
+    <item name="colorAccent">@color/primaryColor</item>
+    <item name="colorControlActivated">@color/accentColor</item>
+    <item name="colorControlHighlight">@color/accentColor</item>
+    <item name="colorControlNormal">#eeeeee</item>
         <item name="android:windowDisablePreview">true</item>
     </style>
 

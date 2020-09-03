@@ -352,13 +352,12 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         }
       }
     }
-    val hasexisistinginstamojoaccount = if (isEdit) {
-      dataKyc?.hasexisistinginstamojoaccount
-    } else if (isInstaMojoAccount != null) {
+    val hasexisistinginstamojoaccount = if (isInstaMojoAccount != null) {
       if (isInstaMojoAccount == true) DataKyc.HasInginstaMojo.YES.name else DataKyc.HasInginstaMojo.NO.name
-    } else {
-      if (session?.isPaymentGateway == true) DataKyc.HasInginstaMojo.PAID.name else DataKyc.HasInginstaMojo.UNPAID.name
-    }
+    } else if (session?.isPaymentGateway == true) {
+      DataKyc.HasInginstaMojo.PAID.name
+    } else DataKyc.HasInginstaMojo.UNPAID.name
+
     request = if (binding?.addDifferent?.isChecked == true) {
       val action = ActionDataKyc(panNumber = panNumber, nameOfPanHolder = panName, bankAccountNumber = accountNumber,
           nameOfBankAccountHolder = nameAccount, nameOfBank = bankName, ifsc = ifsc, bankBranchName = bankBranch,
