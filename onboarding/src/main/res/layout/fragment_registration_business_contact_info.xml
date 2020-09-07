@@ -81,13 +81,6 @@
                   android:hint="@string/city_name"
                   android:inputType="textCapWords" />
 
-                <com.framework.views.customViews.CustomTextField
-                  android:id="@+id/email"
-                  style="@style/Onboarding.TextFieldStyle"
-                  android:drawableStart="@drawable/ic_mail_focusable"
-                  android:hint="@string/enter_your_business_email"
-                  android:inputType="textEmailAddress" />
-
                 <RelativeLayout
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content">
@@ -110,6 +103,12 @@
                     android:maxLength="10"
                     tools:drawablePadding="@dimen/size_36" />
                 </RelativeLayout>
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/email"
+                    style="@style/Onboarding.TextFieldStyle"
+                    android:drawableStart="@drawable/ic_mail_focusable"
+                    android:hint="@string/enter_your_business_email"
+                    android:inputType="textEmailAddress" />
               </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 

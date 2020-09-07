@@ -54,7 +54,16 @@
   <string name="view_in_add_on_store">View in Add-on Store</string>
   <string name="self_branded_payment_gateway_camel_case">Self Branded Payment Gateway</string>
   <string name="add_on_terms_and_condition">Add-on Terms and Condition</string>
-  <string name="payment_gateway_terms_content">•Boost currently supports Instamojo as ONLY OPTION as a custom payment gateway. If you want to activate it, get this add-on from our marketplace, and then for it’s activation, we’ll ask you to either create Instamojo account yourself or else we will help you do KYC and help you setup this account.\n\n•Please note that Boost just acts as a facilitator helping businesses like you to get most out of your Business website.\n\n•Boost in no way is associated with Instamojo or claim any kind of responsibility related to the custom payment gateway.\n\n•Instamojo logo or brand name belongs to it’s respective owners.\n\n•If you do not do the kyc, Instamojo has a monthly INR 10,000 limit. Once you complete the KYC this limit get’s removed.</string>
+  <string name="payment_gateway_terms_content">
+    <li>First item</li>\n
+    <li>Second item</li>\n
+    <li>Third item</li>
+  </string>
+  <string name="payment_gateway_terms_point_one">Boost currently supports Instamojo as ONLY OPTION as a custom payment gateway. If you want to activate it, get this add-on from our marketplace, and then for it’s activation, we’ll ask you to either create Instamojo account yourself or else we will help you do KYC and help you setup this account.\n\n</string>
+  <string name="payment_gateway_terms_point_two">Please note that Boost just acts as a fecilitator helping businesses like you to get most out of your Business website.\n\n</string>
+  <string name="payment_gateway_terms_point_three">Boost in no way is associated with Instamojo or claim any kind of responsibility related to the custom payment gateway.\n\n</string>
+  <string name="payment_gateway_terms_point_four">Instamojo logo or brand name belongs to it’s respective owners.\n\n</string>
+  <string name="payment_gateway_terms_point_five">If you do not do the kyc, Instamojo has a monthly INR 10,000 limit. Once you complete the KYC this limit get’s removed.\n</string>
   <string name="i_understand">I Understand</string>
   <string name="step_1">step 1</string>
   <string name="add_on_activation_camel_case">Add-on Activation</string>
@@ -158,4 +167,7 @@
   <string name="verify_business">verify your business</string>
   <string name="on_boost360">on Boost360</string>
   <string name="delete_record_not_undone">Do you really want to delete these records? This process can not be undone.</string>
+  <string name="change_file_jpg_png">Change file (JPG/PNG)</string>
+  <string name="crop_picture">Crop picture</string>
+  <string name="proceed">Proceed</string>
 </resources>

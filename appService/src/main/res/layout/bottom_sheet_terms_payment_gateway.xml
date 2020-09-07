@@ -49,10 +49,13 @@
         android:layout_height="wrap_content">
 
         <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_terms_and_conditions"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="@string/payment_gateway_terms_content"
-          android:textColor="#787878" />
+          android:textColor="@color/grey_787878"
+          android:fontFamily="@font/regular"
+          android:layout_marginTop="@dimen/size_12"/>
       </androidx.core.widget.NestedScrollView>
 
       <com.framework.views.customViews.CustomTextView

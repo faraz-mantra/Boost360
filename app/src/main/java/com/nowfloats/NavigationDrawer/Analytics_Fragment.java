@@ -105,6 +105,7 @@ public class Analytics_Fragment extends Fragment {
     View rootView = null;
     public static TextView visitCount, mapVisitsCount, visitorsCount, subscriberCount, vmnTotalCallCount, vmnTotalCustomerCount,
             searchQueriesCount, businessEnqCount, facebokImpressions, tvOrdersCount;
+    private static ImageView rupeeSymbol;
     private int noOfSearchQueries = 0;
     public static ProgressBar visits_progressBar, map_progressbar, visitors_progressBar, vmnProgressBar, vmnCustomerProgressBar,
             subscriber_progress, search_query_progress, businessEnqProgress, pbOrders;
@@ -463,6 +464,7 @@ public class Analytics_Fragment extends Fragment {
         vmnTotalCustomerCount = (TextView) rootView.findViewById(R.id.customer_appointment_total_count);
         businessEnqCount = (TextView) rootView.findViewById(R.id.analytics_screen_business_enq_count);
         tvOrdersCount = (TextView) rootView.findViewById(R.id.orders_count);
+        rupeeSymbol = (ImageView) rootView.findViewById(R.id.iv_rupee_symbol);
         facebokImpressions = (TextView) rootView.findViewById(R.id.analytics_screen_updates_count);
         searchQueriesCount.setVisibility(View.INVISIBLE);
         visits_progressBar = (ProgressBar) rootView.findViewById(R.id.visits_progressBar);
@@ -560,10 +562,12 @@ public class Analytics_Fragment extends Fragment {
         if (orderCount != null && orderCount.trim().length() > 0) {
             pbOrders.setVisibility(View.GONE);
             tvOrdersCount.setVisibility(View.VISIBLE);
+            rupeeSymbol.setVisibility(View.VISIBLE);
             tvOrdersCount.setText(orderCount);
         } else {
 //            pbOrders.setVisibility(View.VISIBLE);
             tvOrdersCount.setVisibility(View.GONE);
+            rupeeSymbol.setVisibility(View.GONE);
         }
 
 //        final boolean isVmnEnable = "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
@@ -1094,10 +1098,12 @@ public class Analytics_Fragment extends Fragment {
                 if (sellerSummary != null && sellerSummary.getData().getTotalNetAmount() > 0) {
                     pbOrders.setVisibility(View.GONE);
                     tvOrdersCount.setVisibility(View.VISIBLE);
+                    rupeeSymbol.setVisibility(View.VISIBLE);
                     tvOrdersCount.setText(sellerSummary.getData().getTotalNetAmount().toString());
                 } else {
 //                  pbOrders.setVisibility(View.VISIBLE);
                     tvOrdersCount.setVisibility(View.GONE);
+                    rupeeSymbol.setVisibility(View.GONE);
                 }
             }
 

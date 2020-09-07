@@ -8,7 +8,7 @@ import com.framework.extensions.gone
 import com.framework.models.BaseViewModel
 
 enum class ClickType {
-  CAMERA, GALLERY, PGF
+  CAMERA, GALLERY, PDF
 }
 
 class ImagePickerBottomSheet : BaseBottomSheetDialog<BottomShettImagePickerBinding, BaseViewModel>() {
@@ -37,7 +37,7 @@ class ImagePickerBottomSheet : BaseBottomSheetDialog<BottomShettImagePickerBindi
     when (v) {
       binding?.camera -> onClicked(ClickType.CAMERA)
       binding?.gallery -> onClicked(ClickType.GALLERY)
-      binding?.pdf -> onClicked(ClickType.PGF)
+      binding?.pdf -> onClicked(ClickType.PDF)
     }
     dismiss()
   }

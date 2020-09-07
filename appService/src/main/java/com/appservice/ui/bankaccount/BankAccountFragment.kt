@@ -75,6 +75,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         if ((it.status == 200 || it.status == 201 || it.status == 202) && data != null) {
           isValidIfsc = true
           binding?.edtBankName?.setText(data.bANK ?: "")
+          binding?.edtBankName?.isEnabled = false
           if (data.bRANCH.isNullOrEmpty().not()) {
             binding?.edtBankBranch?.setText(data.bRANCH)
             binding?.txtBranch?.visible()
@@ -87,6 +88,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun ifscUiUpdate() {
     isValidIfsc = false
+    binding?.edtBankName?.isEnabled = true
     binding?.edtBankName?.setText("")
     binding?.txtBranch?.gone()
     binding?.edtBankBranch?.gone()
