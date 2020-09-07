@@ -79,5 +79,6 @@
   <string name="cancel_video_appointment">Cancel Video Appointment</string>
   <string name="call_details">Call Details</string>
   <string name="cancel_appointment" tools:ignore="ExtraTranslation">Cancel Appointment</string>
+  <string name="please_add_doctor_first">Doctor not added, please add first.</string>
 
 </resources>
