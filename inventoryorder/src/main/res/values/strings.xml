@@ -2,11 +2,17 @@
 
   <string name="orders">Orders</string>
   <string name="internet_connection_not_available">Internet connection not available.</string>
-  <string name="date_order">Date:&#160; &#160; &#160; &#160;"</string>
+  <string name="date_apt">Apt Date:"</string>
+  <string name="date_consult">Consult Date:"</string>
+  <string name="date_order">Date:&#160;&#160; &#160; &#160; &#160;"</string>
+  <string name="date_">Date:&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;"</string>
   <string name="payment">Payment:</string>
+  <string name="payment_">Payment:&#160;&#160;&#160; &#160; &#160;</string>
   <string name="payment_type">Payment Type:</string>
   <string name="delivery">"Delivery: &#160;"</string>
   <string name="cancel_order"><u>Cancel Order</u></string>
+  <string name="cancel_apt"><u>Cancel Appointment</u></string>
+  <string name="cancel_consult"><u>Cancel Consultation</u></string>
 
   <string name="bookings">Bookings</string>
   <string name="appointments">Appointments</string>
@@ -22,6 +28,7 @@
   <string name="service_location">Service Location</string>
   <string name="business">Business</string>
   <string name="booking_details">Booking details</string>
+  <string name="apt_details">Appointment details</string>
   <string name="booking_requested">Booking requested</string>
 
   <string name="option_comes_here">Option comes here</string>
@@ -47,6 +54,7 @@
   <string name="consulting_service">Consulting Service</string>
   <string name="start_time_camel_case">Start Time</string>
   <string name="fees_incl_gst">Fees (Incl. GST)</string>
+  <string name="final_price">Final price</string>
   <string name="patient_name_camel_case">Patient Name</string>
   <string name="gender">Gender</string>
   <string name="age_years">Age (years)</string>
@@ -67,6 +75,7 @@
   <string name="booking_created">Booking Created!</string>
   <string name="video_consultation_camel_case">Video Consultation</string>
   <string name="please_select_time_slot">Please select time slot</string>
+  <string name="confirm_appointment">CONFIRM APPOINTMENT</string>
 
 
 </resources>

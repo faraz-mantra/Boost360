@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.inventoryorder.model.SendMailRequest
 import com.inventoryorder.model.apointmentData.addRequest.AddAptConsultRequest
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
@@ -74,5 +75,14 @@ class OrderCreateViewModel : BaseViewModel() {
 
   fun addAptConsultData(auth: String?, request: AddAptConsultRequest?): LiveData<BaseResponse> {
     return WebActionBoostRepository.addAptConsultData(auth, request).toLiveData()
+  }
+
+  fun sendSMS(mobile: String?, message: String?, clientId: String?): LiveData<BaseResponse>{
+    return ApiTwoWithFloatRepository.sendSMS(mobile, message, clientId).toLiveData()
+  }
+
+
+  fun sendMail(request: SendMailRequest?): LiveData<BaseResponse>{
+    return ProductOrderRepository.sendMail(request).toLiveData()
   }
 }

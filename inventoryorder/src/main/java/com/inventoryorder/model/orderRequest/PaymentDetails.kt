@@ -8,7 +8,4 @@ data class PaymentDetails(
     var method: String? = null
 ) : Serializable {
 
-  enum class MethodType {
-    FREE
-  }
 }

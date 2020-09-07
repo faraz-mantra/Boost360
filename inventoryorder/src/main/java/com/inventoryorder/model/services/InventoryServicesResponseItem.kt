@@ -124,8 +124,19 @@ data class InventoryServicesResponseItem(
     return discountAmount ?: 0.0
   }
 
+  fun discountedPrice(): Double {
+    return if (price() > discountAmount()) (price() - discountAmount()) else 0.0
+  }
+
   fun pickupAddressReferenceId(): String {
     return pickupAddressReferenceId ?: ""
   }
 
+  fun getGeneralData(): InventoryServicesResponseItem {
+   return InventoryServicesResponseItem(name = "General Consultation", discountAmount = 0.0, price = 0.0, isAvailable = true)
+  }
+
+  fun getType():String{
+   return if (id.isNullOrEmpty().not()) "PRODUCT" else "NO_ITEM"
+  }
 }

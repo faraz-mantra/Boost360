@@ -21,5 +21,7 @@ data class ProductDetails(
         @SerializedName("Price")
         var price: Double? = null,
         @SerializedName("ShippingCost")
-        var shippingCost: Double? = null
+        var shippingCost: Double? = null,
+        @SerializedName("ImageUri")
+        var imageUri: String? = null
 ) : Serializable
