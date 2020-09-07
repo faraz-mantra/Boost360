@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -453,20 +454,20 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                 }
                 break;
             case social:
-                MixPanelController.track(EventKeysWL.SITE_SCORE_GET_SOCIAL, null);
-                if (!(Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && pref.getBoolean("fbPageShareEnabled", false))) {
-                    Intent in = new Intent(activity, Social_Sharing_Activity.class);
-                    startActivity(in);
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//                    if(activity instanceof HomeActivity)
-//                        ((HomeActivity) activity).onClick(getString(R.string.title_activity_social__sharing_));
-//                    else{
-//                        Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
-//                    }
+//                MixPanelController.track(EventKeysWL.SITE_SCORE_GET_SOCIAL, null);
+//                if (!(Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && pref.getBoolean("fbPageShareEnabled", false))) {
+//                    Intent in = new Intent(activity, Social_Sharing_Activity.class);
+//                    startActivity(in);
+//                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    if(activity instanceof HomeActivity)
+                        ((HomeActivity) activity).onClick(getString(R.string.title_activity_social__sharing_));
+                    else{
+                        Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
                     /*Intent in = new Intent(activity, Social_Sharing_Activity.class);
                     startActivity(in);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
-                }
+//                }
                 break;
             case email:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_ADD_EMAIL, null);

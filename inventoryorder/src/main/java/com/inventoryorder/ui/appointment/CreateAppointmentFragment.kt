@@ -133,8 +133,8 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           if (isMobileNumberValid(mobile ?: "")) session?.userPrimaryMobile = mobile
           binding?.edtDuration?.setText(doctorData?.duration)
           getServiceList()
-        } else errorUi("Cannot create a booking at this time. Please try later.")
-      } else errorUi("Cannot create a booking at this time. Please try later.")
+        } else errorUi(resources.getString(R.string.please_add_doctor_first))
+      } else errorUi(resources.getString(R.string.please_add_doctor_first))
     })
   }
 
