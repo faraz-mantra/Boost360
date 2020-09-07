@@ -113,6 +113,7 @@
             android:hint="@string/enter_pan_number"
             android:inputType="textCapCharacters"
             android:singleLine="true"
+            android:maxLines="1"
             android:textAllCaps="true"
             android:textColorHint="@color/gray_text_hint"
             app:fontFamily="@font/regular" />
@@ -134,8 +135,9 @@
             android:layout_marginTop="@dimen/size_2"
             android:background="@drawable/rounded_edit_stroke"
             android:hint="@string/enter_name"
-            android:inputType="text"
+            android:inputType="textCapWords"
             android:singleLine="true"
+            android:maxLines="1"
             android:textColorHint="@color/gray_text_hint"
             app:fontFamily="@font/regular" />
 
@@ -261,6 +263,7 @@
               android:hint="@string/enter_account_no"
               android:inputType="number"
               android:singleLine="true"
+              android:maxLines="1"
               android:textColorHint="@color/gray_text_hint"
               app:fontFamily="@font/regular" />
 
@@ -283,6 +286,7 @@
               android:hint="@string/enter_name"
               android:inputType="textCapWords"
               android:singleLine="true"
+              android:maxLines="1"
               android:textColorHint="@color/gray_text_hint"
               app:fontFamily="@font/regular" />
 
@@ -307,6 +311,7 @@
               android:inputType="textCapCharacters"
               android:maxLength="11"
               android:singleLine="true"
+              android:maxLines="1"
               android:textColorHint="@color/gray_text_hint"
               app:fontFamily="@font/regular" />
 
@@ -327,10 +332,12 @@
               android:layout_marginTop="@dimen/size_2"
               android:background="@drawable/rounded_edit_stroke"
               android:hint="@string/enter_bank_name"
-              android:inputType="text"
+              android:inputType="textCapWords"
               android:singleLine="true"
+              android:maxLines="1"
               android:textColorHint="@color/gray_text_hint"
-              app:fontFamily="@font/regular" />
+              app:fontFamily="@font/regular"
+              android:imeOptions="actionDone"  />
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/txtBranch"
@@ -353,11 +360,13 @@
               android:focusable="false"
               android:focusableInTouchMode="false"
               android:hint="@string/bank_branch"
-              android:inputType="text"
+              android:inputType="textCapWords"
               android:singleLine="true"
+              android:maxLines="1"
               android:textColorHint="@color/gray_text_hint"
               android:visibility="gone"
-              app:fontFamily="@font/regular" />
+              app:fontFamily="@font/regular"
+              android:imeOptions="actionDone"  />
 
           </LinearLayout>
 

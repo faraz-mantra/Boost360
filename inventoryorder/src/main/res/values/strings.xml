@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
   <string name="orders">Orders</string>
   <string name="internet_connection_not_available">Internet connection not available.</string>
@@ -39,7 +39,8 @@
   <string name="copied_patient_url">Copied patient URL</string>
   <string name="error_copied_patient_url">Error copied patient URL</string>
   <string name="error_opening_consultation_window">Error opening consultation window</string>
-    <string name="cancel_video_appointment">Cancel Video Appointment</string>
+  <string name="cancel_video_appointment">Cancel Video Appointment</string>
   <string name="call_details">Call Details</string>
+  <string name="cancel_appointment" tools:ignore="ExtraTranslation">Cancel Appointment</string>
 
 </resources>

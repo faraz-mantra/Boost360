@@ -816,6 +816,13 @@
                                 android:layout_gravity="center"
                                 style="?android:attr/progressBarStyleSmall"
                                 android:visibility="gone" />
+                            <ImageView
+                                android:id="@+id/iv_rupee_symbol"
+                                android:layout_width="@dimen/_10sdp"
+                                android:layout_height="@dimen/_10sdp"
+                                card_view:srcCompat="@drawable/ic_rupee_symbol"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                android:visibility="gone"/>
 
                             <TextView
                                 android:id="@+id/orders_count"
@@ -827,7 +834,7 @@
                                 android:textColor="@color/primaryColor"
                                 android:textSize="28sp"
                                 android:visibility="gone"
-                                tools:ignore="MissingPrefix" />
+                                tools:ignore="MissingPrefix"/>
                         </LinearLayout>
 
                         <ImageView

@@ -64,7 +64,8 @@
             android:text="AAGCP768M"
             android:textColor="@color/greyish_brown"
             app:fontFamily="@font/regular"
-            app:textType="HEADING_5" />
+            app:textType="HEADING_5"
+            android:textAllCaps="true"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.appcompat.widget.LinearLayoutCompat>
 

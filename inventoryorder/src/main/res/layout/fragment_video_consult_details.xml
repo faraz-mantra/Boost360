@@ -348,6 +348,8 @@
                 android:textColor="@color/greyish_brown"
                 app:fontFamily="@font/semi_bold"
                 app:textType="BODY_1"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMinTextSize="8sp"/>
 
