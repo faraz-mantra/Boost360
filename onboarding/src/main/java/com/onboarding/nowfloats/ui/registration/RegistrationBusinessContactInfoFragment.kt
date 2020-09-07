@@ -109,7 +109,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     } else if (businessInfoModel.address.isNullOrBlank()) {
       showShortToast(resources.getString(R.string.business_address_cant_empty))
       false
-    } else if (!businessInfoModel.isEmailValid()) {
+    }else if (!businessInfoModel.email.isNullOrEmpty() && !businessInfoModel.isEmailValid()) {
       showShortToast(resources.getString(R.string.email_invalid))
       false
     } else if(businessInfoModel.number.isNullOrEmpty()){

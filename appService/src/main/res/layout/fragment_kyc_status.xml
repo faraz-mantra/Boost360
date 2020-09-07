@@ -15,7 +15,7 @@
       android:visibility="gone"
       tools:visibility="visible"
       android:paddingHorizontal="@dimen/size_30"
-      android:paddingVertical="@dimen/size_10">
+      android:paddingVertical="@dimen/size_20">
 
       <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/view_top"
@@ -29,7 +29,6 @@
           android:id="@+id/img_view"
           android:layout_width="@dimen/size_140"
           android:layout_height="@dimen/size_90"
-          android:layout_marginTop="@dimen/size_10"
           app:cardCornerRadius="@dimen/size_8"
           app:cardElevation="@dimen/size_1">
 
@@ -191,7 +190,7 @@
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
   </androidx.appcompat.widget.LinearLayoutCompat>

@@ -55,4 +55,5 @@
     <string name="dont_have_jio_id">Don’t have Jio SecureID?</string>
     <string name="no_jio_id_description">Jio SecureID is the most convenient and secure way to log into any app or portal and sign documents digitally. Jio SecureID is using Aadhaar eSign for digital signatures.\n\nCreate Jio SecureID here</string>
     <string name="failed_create_user">Failed to create user, Please try again.</string>
+    <string name="you_email_com_optional">you@email.com (optional)</string>
 </resources>

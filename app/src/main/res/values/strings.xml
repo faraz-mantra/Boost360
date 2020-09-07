@@ -1965,4 +1965,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="share_lower_case">share</string>
     <string name="visits">visits</string>
     <string name="viewgraph">viewgraph</string>
+    <string name="add_a_testimonial_all_caps">ADD A TESTIMONIAL</string>
+    <string name="editing_testimonial">Editing testimonial</string>
+    <string name="add_a_testimonial">Add a testimonial</string>
 </resources>
