@@ -110,9 +110,9 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       val ifsc = binding?.edtBankIfscCode?.text.toString().trim()
       if (ifsc.length == 11) {
         apiGetIfscDetail(ifsc, true)
-        binding?.edtBankName?.isEnabled = false
+        binding?.edtBankName?.isFocusable = false
       }else{
-        binding?.edtBankName?.isEnabled = true
+        binding?.edtBankName?.isFocusable = true
       }
     }
     setOnClickListener(binding?.btnSubmitDetails, binding?.btnRetakePanImage, binding?.btnBankStatementPicker,
