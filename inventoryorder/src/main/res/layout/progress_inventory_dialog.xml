@@ -5,7 +5,7 @@
   <com.framework.views.customViews.CustomCardView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      app:cardCornerRadius="@dimen/size_4"
+      app:cardCornerRadius="@dimen/size_2"
       app:cardElevation="@dimen/size_1"
       app:cardUseCompatPadding="true">
 
@@ -17,19 +17,18 @@
         android:orientation="horizontal">
 
       <ProgressBar
-          android:layout_width="@dimen/size_28"
-          android:layout_height="@dimen/size_28"
-          android:layout_marginEnd="@dimen/size_20"
-          android:indeterminateTint="@color/colorPrimary" />
+        android:layout_width="@dimen/size_42"
+        android:layout_height="@dimen/size_42"
+        android:layout_marginEnd="@dimen/size_20"
+        android:indeterminateTint="@color/colorPrimary" />
 
       <com.framework.views.customViews.CustomTextView
           android:id="@+id/title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="Please wait..."
-          android:textColor="@color/colorPrimary"
-          app:fontFamily="@font/semi_bold"
-          app:textType="SUBHEADING_1" />
+          android:textColor="@color/greyish_brown"
+          app:textType="HEADING_6" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

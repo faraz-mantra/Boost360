@@ -75,7 +75,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         if ((it.status == 200 || it.status == 201 || it.status == 202) && data != null) {
           isValidIfsc = true
           binding?.edtBankName?.setText(data.bANK ?: "")
-          binding?.edtBankName?.isEnabled = false
+          binding?.edtBankName?.isFocusable = false
           if (data.bRANCH.isNullOrEmpty().not()) {
             binding?.edtBankBranch?.setText(data.bRANCH)
             binding?.txtBranch?.visible()
@@ -88,7 +88,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun ifscUiUpdate() {
     isValidIfsc = false
-    binding?.edtBankName?.isEnabled = true
+    binding?.edtBankName?.isFocusable = true
     binding?.edtBankName?.setText("")
     binding?.txtBranch?.gone()
     binding?.edtBankBranch?.gone()
@@ -176,7 +176,10 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
 
   private fun uiUpdate(isEditable: Boolean) {
-    val views = arrayListOf(binding?.edtAccountName, binding?.edtAccountNumber, binding?.edtBankName, binding?.edtAlias, binding?.edtIfsc)
+    val views = arrayListOf(binding?.edtAccountName, binding?.edtAccountNumber, binding?.edtAlias, binding?.edtIfsc)
+    if (!isValidIfsc) views.add(binding?.edtBankName)
+    else binding?.edtBankName?.background = ContextCompat.getDrawable(baseActivity, if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill)
+
     binding?.verificationUi?.visibility = if (isEditable) View.GONE else View.VISIBLE
     binding?.createUi?.visibility = if (isEditable) View.VISIBLE else View.GONE
     binding?.edtConfirmNumber?.visibility = if (isEditable) View.VISIBLE else View.GONE
