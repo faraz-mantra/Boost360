@@ -1,5 +1,6 @@
 package com.nowfloats.NavigationDrawer.floating_view;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,7 +48,7 @@ public class FloatingViewBottomSheetDialog extends BottomSheetDialogFragment imp
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.addProductText.setText("Add a " + Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()));
+        binding.addProductText.setText("Add a " + Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase());
         binding.addProduct.setOnClickListener(this);
         binding.addImage.setOnClickListener(this);
         binding.addCustomPage.setOnClickListener(this);

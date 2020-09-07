@@ -7,17 +7,22 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.Observer
+import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils
+import com.framework.utils.ValidationUtils
+import com.framework.utils.ValidationUtils.isEmailValid
 import com.framework.views.customViews.CustomButton
 import com.inventoryorder.R
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.FragmentVideoConsultDetailsBinding
+import com.inventoryorder.model.CLIENT_ID_3
 import com.inventoryorder.model.OrderConfirmStatus
+import com.inventoryorder.model.SendMailRequest
 import com.inventoryorder.model.bottomsheet.LocationsModel
 import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.model.ordersdetails.OrderItem
@@ -128,7 +133,13 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "₹"
       binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding?.bookingDate?.text = DateUtils.parseDate(order.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
+    val scheduleDate = order.firstItemForConsultation()?.scheduledStartDate()
+    val dateApt = DateUtils.parseDate(scheduleDate, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)
+    binding?.bookingDate?.text = if (dateApt.isNullOrEmpty().not()) {
+      dateApt
+    } else {
+      DateUtils.parseDate(order.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
+    }
 
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
@@ -165,33 +176,34 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   }
 
   private fun videoConsultCopy() {
-    orderItem?.consultationJoiningUrl()?.let {
+    orderItem?.consultationJoiningUrl(preferenceData?.webSiteUrl)?.let {
       if (baseActivity.copyClipBoard(it)) showLongToast(resources.getString(R.string.copied_patient_url))
       else showLongToast(resources.getString(R.string.error_copied_patient_url))
     }
   }
 
   private fun apiOpenConsultationWindow() {
-    orderItem?.consultationWindowUrl()?.let {
+    orderItem?.consultationWindowUrlForDoctor()?.let {
       if (baseActivity.openWebPage(it).not()) showLongToast(resources.getString(R.string.error_opening_consultation_window))
     }
   }
 
   private fun apiCancelOrder() {
     showProgress()
-    viewModel?.cancelOrder(clientId, orderItem?._id, OrderItem.CancellingEntity.SELLER.name)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.cancelOrder(clientId, orderItem?._id, OrderItem.CancellingEntity.SELLER.name)?.observeOnce(viewLifecycleOwner, Observer {cancelRes->
       hideProgress()
-      if (it.error is NoNetworkException) {
+      if (cancelRes.error is NoNetworkException) {
         showShortToast(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val data = it as? OrderConfirmStatus
+      if (cancelRes.status == 200 || cancelRes.status == 201 || cancelRes.status == 202) {
+        val data = cancelRes as? OrderConfirmStatus
         data?.let { d -> showLongToast(d.Message as String?) }
         refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CANCELLED)
-      } else showLongToast(it.message())
+      } else showLongToast(cancelRes.message())
     })
   }
+
 
   private fun refreshStatus(statusOrder: OrderSummaryModel.OrderStatus) {
     isRefresh = true

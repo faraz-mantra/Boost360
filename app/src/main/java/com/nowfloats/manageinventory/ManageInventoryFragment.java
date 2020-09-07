@@ -29,6 +29,7 @@ import com.nowfloats.Restaurants.BookATable.BookATableActivity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
@@ -173,8 +174,14 @@ public class ManageInventoryFragment extends Fragment {
 
     private Bundle getBundleData() {
         Bundle bundle = new Bundle();
+        String url = "";
+        String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
+        if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) url = rootAlisasURI;
+        else url = normalURI;
         PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(),
-                Constants.WA_KEY, session.getFpTag(), session.getUserProfileMobile());
+                Constants.WA_KEY, session.getFpTag(), session.getUserPrimaryMobile(), url, session.getFPEmail(),
+                session.getFPDetails(Key_Preferences.LATITUDE), session.getFPDetails(Key_Preferences.LONGITUDE));
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
         bundle.putString(IntentConstant.EXPERIENCE_CODE.name(), session.getFP_AppExperienceCode());
         return bundle;
@@ -248,7 +255,7 @@ public class ManageInventoryFragment extends Fragment {
             bookTableIcon = mainView.findViewById(R.id.book_a_table_icon);
             lockIcon = mainView.findViewById(R.id.feature_lock);
             View borderLine = mainView.findViewById(R.id.line_view3);
-            if(svc_code.equals("HOT")) {
+            if (svc_code.equals("HOT")) {
                 bookTable.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -259,10 +266,10 @@ public class ManageInventoryFragment extends Fragment {
                 });
                 if (Constants.StoreWidgets.contains("BOOKTABLE")) {
                     lockIcon.setVisibility(View.GONE);
-                }else{
+                } else {
                     lockIcon.setVisibility(View.VISIBLE);
                 }
-            } else{
+            } else {
                 bookTable.setVisibility(View.GONE);
                 bookTableIcon.setVisibility(View.GONE);
                 borderLine.setVisibility(View.GONE);

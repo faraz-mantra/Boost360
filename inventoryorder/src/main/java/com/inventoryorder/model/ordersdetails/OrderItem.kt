@@ -117,12 +117,15 @@ data class OrderItem(
     }
   }
 
-  fun consultationWindowUrl(): String {
-    return "https://d.nflo.at/consult?appt=$_id"
+  fun consultationWindowUrlForPatient(): String {
+    return "https://p.nflo.at/consult?appt=$_id"
   }
 
-  fun consultationJoiningUrl(): String {
-    return "https://DOCTORS.GETBOOST360.COM/consult/$_id"
+  fun consultationWindowUrlForDoctor(): String {
+    return "https://d.nflo.at/consult?appt=$_id"
+  }
+  fun consultationJoiningUrl(webSiteUrl: String?): String {
+    return "https://$webSiteUrl/consult/$_id"
   }
 
   fun isConfirmConsultBtn(): Boolean {

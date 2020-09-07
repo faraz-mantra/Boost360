@@ -658,8 +658,14 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     private Bundle getBundleData() {
         Bundle bundle = new Bundle();
+        String url = "";
+        String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
+        if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) url = rootAlisasURI;
+        else url = normalURI;
         PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(),
-                Constants.WA_KEY, session.getFpTag(), session.getUserProfileMobile());
+                Constants.WA_KEY, session.getFpTag(), session.getUserPrimaryMobile(),url,session.getFPEmail(),
+                session.getFPDetails(Key_Preferences.LATITUDE),session.getFPDetails(Key_Preferences.LONGITUDE));
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
         bundle.putString(IntentConstant.EXPERIENCE_CODE.name(), session.getFP_AppExperienceCode());
         bundle.putString(IntentConstant.ORDER_ID.name(), mPayload);
@@ -1386,12 +1392,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         Bundle bundle = new Bundle();
                         Intent channelIntent = new Intent(HomeActivity.this, Class.forName("com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity"));
                         String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
                         session.setHeader(Constants.WA_KEY);
                         bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
                         bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
                         bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
                         bundle.putBoolean("IsUpdate", true);
+                        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
                         if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) bundle.putString("website_url", rootAlisasURI);
                         else bundle.putString("website_url", normalURI);
                         channelIntent.putExtras(bundle);

@@ -261,7 +261,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="start"
-              android:text="@string/fees_incl_gst"
+              android:text="@string/final_price"
               android:textColor="@color/warm_light" />
 
             <com.framework.views.customViews.CustomEditText
@@ -301,7 +301,7 @@
           android:layout_marginHorizontal="@dimen/size_16"
           android:layout_marginVertical="@dimen/size_8"
           android:background="@drawable/et_bg"
-          android:inputType="textPersonName"
+          android:inputType="textCapWords"
           android:maxLines="1"
           android:padding="@dimen/size_8"
           android:textColor="@color/black"
