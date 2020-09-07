@@ -111,7 +111,7 @@
             android:layout_marginTop="@dimen/size_2"
             android:background="@drawable/rounded_edit_stroke"
             android:hint="@string/enter_pan_number"
-            android:inputType="text"
+            android:inputType="textCapCharacters"
             android:singleLine="true"
             android:textAllCaps="true"
             android:textColorHint="@color/gray_text_hint"
@@ -281,7 +281,7 @@
               android:layout_marginTop="@dimen/size_2"
               android:background="@drawable/rounded_edit_stroke"
               android:hint="@string/enter_name"
-              android:inputType="text"
+              android:inputType="textCapWords"
               android:singleLine="true"
               android:textColorHint="@color/gray_text_hint"
               app:fontFamily="@font/regular" />
@@ -467,6 +467,7 @@
               app:srcCompat="@drawable/ic_attachment" />
 
             <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tv_add_bank_statment"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center_horizontal"
@@ -474,7 +475,8 @@
               android:text="@string/add_file_jpg_png"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/regular"
-              app:textType="BODY_1" />
+              app:textType="BODY_1"
+              android:textAllCaps="true"/>
           </FrameLayout>
 
           <!--Additional Documents Preview-->

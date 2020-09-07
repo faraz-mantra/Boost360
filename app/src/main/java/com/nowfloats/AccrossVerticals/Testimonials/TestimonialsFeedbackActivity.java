@@ -76,6 +76,9 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testimonials_feedback);
 
+        Bundle extra = getIntent().getExtras();
+        ScreenType = extra.getString("ScreenState");
+
         //setheader
         setHeader();
         initialization();
@@ -139,13 +142,9 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                 uploadedImageURL = "";
             }
         });
-
-        Bundle extra = getIntent().getExtras();
-        ScreenType = extra.getString("ScreenState");
         if (ScreenType != null && ScreenType.equals("edit")) {
             displayData();
         }
-
     }
 
     public void displayData() {
@@ -170,8 +169,14 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         backButton = findViewById(R.id.back_button);
         rightButton = findViewById(R.id.right_icon_layout);
         rightIcon = findViewById(R.id.right_icon);
-        title.setText("Testimonials");
-        rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
+
+        if (ScreenType != null && ScreenType.equals("edit")) {
+            title.setText(R.string.editing_testimonial);
+            rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
+        }else{
+            title.setText(R.string.add_a_testimonial);
+        }
+//        rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

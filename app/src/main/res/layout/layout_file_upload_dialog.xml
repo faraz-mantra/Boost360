@@ -39,7 +39,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_camera" />
+                app:srcCompat="@drawable/ic_camera_lens" />
         </FrameLayout>
 
         <com.nowfloats.CustomWidget.roboto_lt_24_212121

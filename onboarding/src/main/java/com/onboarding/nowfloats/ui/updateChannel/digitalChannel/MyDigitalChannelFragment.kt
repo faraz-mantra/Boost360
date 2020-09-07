@@ -277,7 +277,10 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         adapterDisconnect?.notify(listDisconnect)
         val count = listDisconnect?.filter { it.isSelected == true }?.size ?: 0
         if (count > 0) {
-          binding?.syncBtn?.text = "Continue Syncing $count Channel"
+          if(count == 1)
+            binding?.syncBtn?.text = "Continue Syncing $count Channel"
+          else
+            binding?.syncBtn?.text = "Continue Syncing $count Channels"
           binding?.syncBtn?.visible()
         } else binding?.syncBtn?.gone()
       }

@@ -55,6 +55,7 @@ import org.json.JSONObject
 import java.io.File
 import java.nio.charset.Charset
 import java.util.*
+import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKitViewModel>(), RecyclerItemClickListener {
@@ -131,6 +132,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         dataKyc?.bankAccountStatement = ""
         binding?.bankStatementView?.gone()
         bankStatementImage = null
+        binding?.tvAddBankStatment?.text = getString(R.string.add_file_jpg_png)
       }
       binding?.btnAnotherAccount -> bankAssociated(false)
       binding?.btnMyAccount -> bankAssociated(true)
@@ -333,6 +335,14 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         showShortToast("Pan name can't empty.")
         return false
       }
+      !isNameValid(panName) -> {
+        showShortToast("Please enter a valid name.")
+        return false
+      }
+      !isPanNumberValid(panNumber) -> {
+        showShortToast("Please enter a valid pan number.")
+        return false
+      }
       binding?.addDifferent?.isChecked == true -> {
         if (accountNumber.isNullOrEmpty()) {
           showShortToast("Bank account number can't empty.")
@@ -395,7 +405,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
 
   private fun openImagePicker(it: ClickType, allowMultiple: Boolean) {
     imagePickerMultiple = allowMultiple
-    if (it != ClickType.PGF) {
+    if (it != ClickType.PDF) {
       val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
       ImagePicker.Builder(baseActivity).mode(type)
           .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
@@ -418,6 +428,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
           bankStatementImage = File(mPaths[0])
           binding?.bankStatementView?.visible()
           bankStatementImage?.getBitmap()?.let { binding?.ivBankStatement?.setImageBitmap(it) }
+          binding?.tvAddBankStatment?.text = getString(R.string.change_file_jpg_png)
         }
         // Multiple files might come. These are the additional docs
         else additionalDocsViewPopulation(mPaths)
@@ -626,5 +637,12 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         setAdapter()
       }
     }
+  }
+
+  private fun isPanNumberValid(panNumber: String): Boolean{
+    return Pattern.compile("[A-Z]{5}[0-9]{4}[A-Z]{1}").matcher(panNumber).matches()
+  }
+  private fun isNameValid(name: String): Boolean{
+    return Pattern.compile("[A-Z][a-z]*").matcher(name).matches()
   }
 }

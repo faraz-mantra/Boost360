@@ -290,7 +290,7 @@
                                 android:layout_weight="1"
                                 android:text="0"
                                 android:textColor="@color/primaryColor"
-                                android:textSize="28sp"
+                                android:textSize="25sp"
                                 android:visibility="visible"
                                 tools:ignore="MissingPrefix" />
                         </LinearLayout>
@@ -475,7 +475,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="0"
                                 android:textColor="@color/primaryColor"
-                                android:textSize="28sp"
+                                android:textSize="25sp"
                                 android:visibility="visible"
                                 tools:ignore="MissingPrefix" />
                         </FrameLayout>
@@ -561,7 +561,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="0"
                                 android:textColor="@color/primaryColor"
-                                android:textSize="28sp"
+                                android:textSize="25sp"
                                 tools:ignore="MissingPrefix" />
                         </FrameLayout>
 
@@ -645,7 +645,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="0"
                                 android:textColor="@color/primaryColor"
-                                android:textSize="28sp"
+                                android:textSize="25sp"
                                 tools:ignore="MissingPrefix" />
                         </FrameLayout>
 
@@ -731,7 +731,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="0"
                                 android:textColor="@color/primaryColor"
-                                android:textSize="28sp"
+                                android:textSize="25sp"
                                 android:visibility="visible"
                                 tools:ignore="MissingPrefix" />
                         </FrameLayout>
@@ -916,9 +916,9 @@
                                 android:layout_height="wrap_content"
                                 android:text="0"
                                 android:textColor="@color/primaryColor"
-                                android:textSize="28sp"
+                                android:textSize="25sp"
                                 android:visibility="visible"
-                                tools:ignore="MissingPrefix" />
+                                tools:ignore="MissingPrefix"/>
                         </FrameLayout>
 
                         <ImageView

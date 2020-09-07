@@ -39,5 +39,7 @@
   <string name="copied_patient_url">Copied patient URL</string>
   <string name="error_copied_patient_url">Error copied patient URL</string>
   <string name="error_opening_consultation_window">Error opening consultation window</string>
+    <string name="cancel_video_appointment">Cancel Video Appointment</string>
+  <string name="call_details">Call Details</string>
 
 </resources>
