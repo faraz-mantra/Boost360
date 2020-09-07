@@ -36,7 +36,7 @@ class ProgressDialog : BaseDialogFragment<ProgressInventoryDialogBinding, BaseVi
   }
 
   override fun onCreateView() {
-    title?.let { binding?.titleN?.text = it }
+    title?.let { binding?.title?.text = it }
   }
 
   override fun getWidth(): Int? {

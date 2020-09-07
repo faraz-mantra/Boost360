@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
   <string name="orders">Orders</string>
   <string name="internet_connection_not_available">Internet connection not available.</string>
@@ -76,6 +76,8 @@
   <string name="video_consultation_camel_case">Video Consultation</string>
   <string name="please_select_time_slot">Please select time slot</string>
   <string name="confirm_appointment">CONFIRM APPOINTMENT</string>
-
+  <string name="cancel_video_appointment">Cancel Video Appointment</string>
+  <string name="call_details">Call Details</string>
+  <string name="cancel_appointment" tools:ignore="ExtraTranslation">Cancel Appointment</string>
 
 </resources>

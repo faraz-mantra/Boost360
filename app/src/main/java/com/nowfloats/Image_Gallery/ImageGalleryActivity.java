@@ -72,7 +72,6 @@ public class ImageGalleryActivity extends AppCompatActivity {
                 break;
 
             case R.id.menu_add:
-
                 image_gallery_fragment.addImage();
                 break;
         }
