@@ -67,7 +67,7 @@
         android:drawablePadding="@dimen/_10sdp"
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
         android:hint="@string/your_name"
-        android:inputType="text"
+        android:inputType="textCapWords"
         android:background="@drawable/edt_bg_selector"
         app:layout_constraintEnd_toStartOf="@+id/endGuideline"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"
