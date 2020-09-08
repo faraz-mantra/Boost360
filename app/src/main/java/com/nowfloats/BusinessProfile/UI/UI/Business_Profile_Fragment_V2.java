@@ -60,7 +60,7 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiService.DomainCallback {
+public class    Business_Profile_Fragment_V2 extends Fragment implements DomainApiService.DomainCallback {
     TextView businessAddressLayout, contactInformationLayout, businessHoursLayout, businessLogoLayout, socialSharingLayout,
             tvCustomPages, tvPhotoGallery, tvSiteAppearance, tvDomainDetails;
     public static ImageView businessProfileImageView;
