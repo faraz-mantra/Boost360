@@ -34,6 +34,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.API.uploadIMAGEURI;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.EditImageActivity;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -158,40 +159,51 @@ public class FeaturedImageActivity extends AppCompatActivity {
                     Methods.showFeatureNotAvailDialog(FeaturedImageActivity.this);
                     return;
                 }
-                final MaterialDialog dialog = new MaterialDialog.Builder(FeaturedImageActivity.this)
-                        .customView(R.layout.featuredimage_popup,true)
-                        .show();
+//                final MaterialDialog dialog = new MaterialDialog.Builder(FeaturedImageActivity.this)
+//                        .customView(R.layout.featuredimage_popup,true)
+//                        .show();
+//
+//                View view = dialog.getCustomView();
+//                TextView title = (TextView) view.findViewById(R.id.textview_heading);
+//                title.setText(getResources().getString(R.string.upload_features_image));
+//                LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+//                LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//                ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+//                ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+//                cameraImg.setColorFilter(whiteLabelFilter);
+//                galleryImg.setColorFilter(whiteLabelFilter);
+//
+//                takeCamera.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
+//                        cameraIntent();
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                takeGallery.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
+//                        galleryIntent();
+//                        dialog.dismiss();
+//
+//                    }
+//                });
+                final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+                imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
+            }
 
-                View view = dialog.getCustomView();
-                TextView title = (TextView) view.findViewById(R.id.textview_heading);
-                title.setText(getResources().getString(R.string.upload_features_image));
-                LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-                LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-                ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-                ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-                cameraImg.setColorFilter(whiteLabelFilter);
-                galleryImg.setColorFilter(whiteLabelFilter);
-
-                takeCamera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
-                        cameraIntent();
-                        dialog.dismiss();
-                    }
-                });
-
-                takeGallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
-                        galleryIntent();
-                        dialog.dismiss();
-
-                    }
-                });
-
+            private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
+                if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
+                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
+                    cameraIntent();
+                }else{
+                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
+                    galleryIntent();
+                }
             }
         });
 
@@ -383,6 +395,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         try {
             if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
 
@@ -391,7 +404,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
                     imageUrl = Methods.getRealPathFromURI(this, imageUri);
                     path = imageUrl;
                     path = Util.saveBitmap(path, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
-                    WebEngageController.trackEvent("UPLOAD FEATURED IMAGE","Updated Featured Image",session.getFpTag());
+                    WebEngageController.trackEvent("UPLOAD FEATURED IMAGE", "Updated Featured Image", session.getFpTag());
                 } catch (Exception e) {
                     e.printStackTrace();
                     //  Util.toast("Uh oh. Something went wrong. Please try again", this);
@@ -410,14 +423,13 @@ public class FeaturedImageActivity extends AppCompatActivity {
                     editImage();
                 }  else
                     Methods.showSnackBarNegative(FeaturedImageActivity.this,getResources().getString(R.string.select_image_upload));*/
-            }
-            else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
+            } else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
                 {
                     Uri picUri = data.getData();
                     if (picUri != null) {
                         path = Methods.getPath(this, picUri);
                         path = Util.saveBitmap(path, FeaturedImageActivity.this, "ImageFloat" + System.currentTimeMillis());
-                        WebEngageController.trackEvent("UPLOAD FEATURED IMAGE","Updated Featured Image",session.getFpTag());
+                        WebEngageController.trackEvent("UPLOAD FEATURED IMAGE", "Updated Featured Image", session.getFpTag());
                         /*if (!Util.isNullOrEmpty(path)) {
                             editImage();
                         } else
@@ -428,7 +440,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
                         }
                     }
                 }
-            }else if(resultCode == RESULT_OK && requestCode == ACTION_REQUEST_IMAGE_EDIT){
+            } else if (resultCode == RESULT_OK && requestCode == ACTION_REQUEST_IMAGE_EDIT) {
                 String path = data.getStringExtra("edit_image");
                 if (!TextUtils.isEmpty(path)) {
                     this.path = path;
