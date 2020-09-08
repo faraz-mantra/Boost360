@@ -37,10 +37,13 @@ import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 import com.nowfloats.BusinessProfile.UI.API.UploadFaviconImage;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
@@ -265,31 +268,44 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
             return;
         }
 
-        final MaterialDialog dialog = new MaterialDialog.Builder(BackgroundImageGalleryActivity.this)
-                .customView(R.layout.featuredimage_popup,true)
-                .show();
+        final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+        imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
 
-        View view = dialog.getCustomView();
-        TextView title = view.findViewById(R.id.textview_heading);
-        title.setText(getResources().getString(R.string.upload_background_image));
-        LinearLayout takeCamera = view.findViewById(R.id.cameraimage);
-        LinearLayout takeGallery = view.findViewById(R.id.galleryimage);
-        ImageView   cameraImg = view.findViewById(R.id.pop_up_camera_imag);
-        ImageView galleryImg = view.findViewById(R.id.pop_up_gallery_img);
-        cameraImg.setColorFilter(whiteLabelFilter);
-        galleryImg.setColorFilter(whiteLabelFilter);
+//        final MaterialDialog dialog = new MaterialDialog.Builder(BackgroundImageGalleryActivity.this)
+//                .customView(R.layout.featuredimage_popup,true)
+//                .show();
 
-        takeCamera.setOnClickListener(v -> {
+//        View view = dialog.getCustomView();
+//        TextView title = view.findViewById(R.id.textview_heading);
+//        title.setText(getResources().getString(R.string.upload_background_image));
+//        LinearLayout takeCamera = view.findViewById(R.id.cameraimage);
+//        LinearLayout takeGallery = view.findViewById(R.id.galleryimage);
+//        ImageView   cameraImg = view.findViewById(R.id.pop_up_camera_imag);
+//        ImageView galleryImg = view.findViewById(R.id.pop_up_gallery_img);
+//        cameraImg.setColorFilter(whiteLabelFilter);
+//        galleryImg.setColorFilter(whiteLabelFilter);
+//
+//        takeCamera.setOnClickListener(v -> {
+//
+//            cameraIntent(CAMERA_IMAGE_REQUEST_CODE);
+//            dialog.dismiss();
+//        });
+//
+//        takeGallery.setOnClickListener(v -> {
+//
+//            openImagePicker(GALLERY_IMAGE_REQUEST_CODE, 1);
+//            dialog.dismiss();
+//        });
+    }
 
+    private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
+        if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
+            MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
             cameraIntent(CAMERA_IMAGE_REQUEST_CODE);
-            dialog.dismiss();
-        });
-
-        takeGallery.setOnClickListener(v -> {
-
+        }else{
+            MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
             openImagePicker(GALLERY_IMAGE_REQUEST_CODE, 1);
-            dialog.dismiss();
-        });
+        }
     }
 
 
@@ -376,29 +392,26 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (resultCode == RESULT_OK && requestCode == CAMERA_IMAGE_REQUEST_CODE)
-        {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == CAMERA_IMAGE_REQUEST_CODE) {
             uploadPrimaryPicture(primaryUri.getPath());
-            WebEngageController.trackEvent("UPLOAD BACKGROUND IMAGE","Update Background Image",session.getFpTag());
+            WebEngageController.trackEvent("UPLOAD BACKGROUND IMAGE", "Update Background Image", session.getFpTag());
         }
 
-        if (resultCode == RESULT_OK && requestCode == GALLERY_IMAGE_REQUEST_CODE && data != null)
-        {
+        if (resultCode == RESULT_OK && requestCode == GALLERY_IMAGE_REQUEST_CODE && data != null) {
             ArrayList<Image> images = data.getParcelableArrayListExtra(Config.EXTRA_IMAGES);
 
-            if(images.size() > 0)
-            {
+            if (images.size() > 0) {
                 File file = new File(images.get(0).getPath());
                 uploadPrimaryPicture(file.getPath());
             }
-            WebEngageController.trackEvent("UPLOAD BACKGROUND IMAGE","Update Background Image",session.getFpTag());
+            WebEngageController.trackEvent("UPLOAD BACKGROUND IMAGE", "Update Background Image", session.getFpTag());
         }
 
-        if(resultCode == RESULT_OK && requestCode == IMAGE_DELETE_REQUEST_CODE && data != null)
-        {
+        if (resultCode == RESULT_OK && requestCode == IMAGE_DELETE_REQUEST_CODE && data != null) {
             int position = data.getIntExtra("POSITION", 0);
             adapter.removeImage(position);
-            WebEngageController.trackEvent("DELETE BACKGROUND IMAGE","DELETE BACKGROUND IMAGE",session.getFpTag());
+            WebEngageController.trackEvent("DELETE BACKGROUND IMAGE", "DELETE BACKGROUND IMAGE", session.getFpTag());
         }
     }
 

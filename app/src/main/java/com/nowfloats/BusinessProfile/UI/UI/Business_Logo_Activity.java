@@ -30,11 +30,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.nowfloats.BusinessProfile.UI.API.Upload_Logo;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.EditImageActivity;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
@@ -144,41 +146,56 @@ public class Business_Logo_Activity extends AppCompatActivity {
                     Methods.showFeatureNotAvailDialog(Business_Logo_Activity.this);
                     return;
                 }
-                final MaterialDialog dialog = new MaterialDialog.Builder(Business_Logo_Activity.this)
-                        .customView(R.layout.featuredimage_popup,true)
-                        .show();
 
-                View view = dialog.getCustomView();
-                TextView title = (TextView) view.findViewById(R.id.textview_heading);
-                title.setText(getResources().getString(R.string.upload_logo_image));
-                LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-                LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-                ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-                ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-                cameraImg.setColorFilter(whiteLabelFilter);
-                galleryImg.setColorFilter(whiteLabelFilter);
+                final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+                imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
 
-                takeCamera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+//                final MaterialDialog dialog = new MaterialDialog.Builder(Business_Logo_Activity.this)
+//                        .customView(R.layout.featuredimage_popup,true)
+//                        .show();
+//
+//                View view = dialog.getCustomView();
+//                TextView title = (TextView) view.findViewById(R.id.textview_heading);
+//                title.setText(getResources().getString(R.string.upload_logo_image));
+//                LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+//                LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//                ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+//                ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+//                cameraImg.setColorFilter(whiteLabelFilter);
+//                galleryImg.setColorFilter(whiteLabelFilter);
+//
+//                takeCamera.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
+//                        WebEngageController.trackEvent("UPLOAD LOGO","Updated Buinsess Logo",session.getFpTag());
+//                        cameraIntent();
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                takeGallery.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
+//                        galleryIntent();
+//                        dialog.dismiss();
+//
+//                    }
+//                });
 
-                        MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
-                        WebEngageController.trackEvent("UPLOAD LOGO","Updated Buinsess Logo",session.getFpTag());
-                        cameraIntent();
-                        dialog.dismiss();
-                    }
-                });
+            }
 
-                takeGallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
-                        galleryIntent();
-                        dialog.dismiss();
-
-                    }
-                });
-
+            private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
+                if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
+                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
+                    WebEngageController.trackEvent("UPLOAD LOGO","Updated Buinsess Logo",session.getFpTag());
+                    cameraIntent();
+                }else{
+                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
+                    galleryIntent();
+                }
             }
         });
 
@@ -370,6 +387,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         try {
             if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
 
