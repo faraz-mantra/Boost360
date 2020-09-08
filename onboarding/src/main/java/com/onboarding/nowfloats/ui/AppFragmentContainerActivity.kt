@@ -258,7 +258,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    registrationCompleteFragment?.onActivityResult(requestCode, resultCode, data)
+//    registrationCompleteFragment?.onActivityResult(requestCode, resultCode, data)
     registrationCompleteFragment?.onActivityResult(requestCode, resultCode, data)
     registrationBusinessGoogleBusinessFragment?.onActivityResult(requestCode, resultCode, data)
     registrationBusinessTwitterDetailsFragment?.onActivityResult(requestCode, resultCode, data)

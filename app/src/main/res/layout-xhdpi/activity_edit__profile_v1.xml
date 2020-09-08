@@ -253,7 +253,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    android:tint="@color/primaryColor"
+                    app:tint="@color/primaryColor"
                     android:src="@drawable/circle_bakground" />
 
                 <ImageView
@@ -266,7 +266,7 @@
                     android:padding="16dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    app:srcCompat="@drawable/ic_camera" />
+                    app:srcCompat="@drawable/ic_camera_lens"/>
 
             </RelativeLayout>
 
