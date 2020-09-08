@@ -24,5 +24,6 @@ data class BusinessCreateRequest(
     var lng: Int? = null,
     var appExperienceCode: String? = null,
     var whatsAppNumber: String? = null,
-    var whatsAppNotificationOptIn: Boolean? = null
+    var whatsAppNotificationOptIn: Boolean? = null,
+    var boostXWebsiteUrl: String? = null
 ) : BaseRequest()
