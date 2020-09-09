@@ -53,6 +53,7 @@ import com.nowfloats.CustomWidget.CustomTagLayout;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.RiaUpdateApis;
 import com.nowfloats.NavigationDrawer.Adapter.QuikrAdapter;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NotificationCenter.AlertArchive;
@@ -656,37 +657,49 @@ public class Create_Message_Activity extends AppCompatActivity {
     }
 
     public void choosePicture() {
-        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
-                .customView(R.layout.featuredimage_popup,true)
-                .show();
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 
-        View view = dialog.getCustomView();
-        TextView header = (TextView) view.findViewById(R.id.textview_heading);
-        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-        ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-        header.setText("Upload Image");
-        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
-        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
+        final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+        imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
 
-        takeCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraIntent();
-                dialog.dismiss();
-            }
-        });
+//        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
+//                .customView(R.layout.featuredimage_popup,true)
+//                .show();
+//        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+//
+//        View view = dialog.getCustomView();
+//        TextView header = (TextView) view.findViewById(R.id.textview_heading);
+//        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+//        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//        ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+//        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+//        header.setText("Upload Image");
+//        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
+//        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
+//
+//        takeCamera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                cameraIntent();
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        takeGallery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                galleryIntent();
+//                dialog.dismiss();
+//
+//            }
+//        });
+    }
 
-        takeGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                galleryIntent();
-                dialog.dismiss();
-
-            }
-        });
+    private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
+        if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
+            cameraIntent();
+        }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
+            galleryIntent();
+        }
     }
 
     private void restoreData() {
@@ -859,6 +872,7 @@ public class Create_Message_Activity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
             if (data != null) {
                 picUri = data.getData();
@@ -870,45 +884,45 @@ public class Create_Message_Activity extends AppCompatActivity {
                         path = Util.saveBitmap(CameraBitmap, activity, tagName + System.currentTimeMillis());
                         picUri = Uri.parse(path);
                         setPicture(CameraBitmap);
-                        WebEngageController.trackEvent("ADDED PHOTO IN UPDATE","Added Photo",session.getFpTag());
+                        WebEngageController.trackEvent("ADDED PHOTO IN UPDATE", "Added Photo", session.getFpTag());
 
                     } else {
                         path = getRealPathFromURI(picUri);
                         CameraBitmap = Util.getBitmap(path, activity);
                         setPicture(CameraBitmap);
-                        WebEngageController.trackEvent("ADDED PHOTO IN UPDATE","Added Photo",session.getFpTag());
+                        WebEngageController.trackEvent("ADDED PHOTO IN UPDATE", "Added Photo", session.getFpTag());
 
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     Methods.showSnackBarNegative(Create_Message_Activity.this, getString(R.string.select_offline_image));
                 }
 
             }
-        }else if (resultCode == RESULT_OK && (Constants.CAMERA_PHOTO == requestCode)) {
+        } else if (resultCode == RESULT_OK && (Constants.CAMERA_PHOTO == requestCode)) {
             try {
-                if (picUri==null){
+                if (picUri == null) {
                     if (data != null) {
                         isImageChanged = true;
                         picUri = data.getData();
                         if (picUri == null) {
                             CameraBitmap = (Bitmap) data.getExtras().get("data");
-                            path = Util.saveCameraBitmap(CameraBitmap,activity,tagName + System.currentTimeMillis());
+                            path = Util.saveCameraBitmap(CameraBitmap, activity, tagName + System.currentTimeMillis());
                             picUri = Uri.parse(path);
                             setPicture(CameraBitmap);
-                            WebEngageController.trackEvent("ADDED PHOTO IN UPDATE","Added Photo",session.getFpTag());
+                            WebEngageController.trackEvent("ADDED PHOTO IN UPDATE", "Added Photo", session.getFpTag());
 
-                        }else{
+                        } else {
                             path = getRealPathFromURI(picUri);
                             CameraBitmap = Util.getBitmap(path, activity);
                             setPicture(CameraBitmap);
-                            WebEngageController.trackEvent("ADDED PHOTO IN UPDATE","Added Photo",session.getFpTag());
+                            WebEngageController.trackEvent("ADDED PHOTO IN UPDATE", "Added Photo", session.getFpTag());
 
                         }
-                    }else{
-                        Methods.showSnackBar(activity,getString(R.string.try_again));
+                    } else {
+                        Methods.showSnackBar(activity, getString(R.string.try_again));
                     }
-                }else{
+                } else {
                     path = getRealPathFromURI(picUri);
                     CameraBitmap = Util.getBitmap(path, activity);
                     setPicture(CameraBitmap);
@@ -916,22 +930,22 @@ public class Create_Message_Activity extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-            }catch(OutOfMemoryError E){
+            } catch (OutOfMemoryError E) {
                 E.printStackTrace();
                 CameraBitmap.recycle();
                 System.gc();
-                Methods.showSnackBar(activity,getString(R.string.try_again));
+                Methods.showSnackBar(activity, getString(R.string.try_again));
             }
-        }else if(ACTION_REQUEST_IMAGE_EDIT==requestCode && resultCode == RESULT_OK){
+        } else if (ACTION_REQUEST_IMAGE_EDIT == requestCode && resultCode == RESULT_OK) {
             //Log.v("ggg", data.getStringExtra("edit_image")+" ");
             path = data.getStringExtra("edit_image");
             CameraBitmap = Util.getBitmap(path, activity);
             setPicture(CameraBitmap);
             isImageChanged = true;
-        }else if(REQ_CODE_SPEECH_INPUT==requestCode && resultCode == RESULT_OK){
+        } else if (REQ_CODE_SPEECH_INPUT == requestCode && resultCode == RESULT_OK) {
             ArrayList<String> result = data
                     .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            msg.append(result.get(0)+". ");
+            msg.append(result.get(0) + ". ");
             isImageChanged = true;
         }
     }
