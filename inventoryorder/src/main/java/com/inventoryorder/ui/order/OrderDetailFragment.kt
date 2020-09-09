@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.view.isGone
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -176,7 +177,11 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
     binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
     binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
-    binding?.tvCustomerEmail?.text = order.BuyerDetails?.ContactDetails?.EmailId?.trim()
+    if(order.BuyerDetails?.ContactDetails?.EmailId?.isNotBlank()!!){
+      binding?.tvCustomerEmail?.text = order.BuyerDetails?.ContactDetails?.EmailId?.trim()
+    }else {
+      binding?.tvCustomerEmail?.isGone = true
+    }
 
     // shipping details
     var shippingCost = 0.0

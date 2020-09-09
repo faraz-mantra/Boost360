@@ -206,5 +206,50 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/size_14"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_32"
+                    android:layout_height="@dimen/size_32"
+                    app:srcCompat="@drawable/circle_bakground" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/delete_dustbin_button" />
+            </FrameLayout>
+            <!--                  <androidx.appcompat.widget.AppCompatImageView-->
+            <!--                    android:layout_width="@dimen/size_24"-->
+            <!--                    android:layout_height="@dimen/size_24"-->
+            <!--                    app:srcCompat="@drawable/ic_close_round" />-->
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/size_16"
+                android:includeFontPadding="false"
+                android:text="@string/delete"
+                android:textColor="@color/primary_text"
+                app:fontFamily="@font/bold"
+                app:textType="HEADING_6" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

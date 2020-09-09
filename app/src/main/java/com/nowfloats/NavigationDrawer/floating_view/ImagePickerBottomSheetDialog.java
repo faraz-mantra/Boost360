@@ -26,9 +26,15 @@ public class ImagePickerBottomSheetDialog extends BottomSheetDialogFragment impl
     private Listener listener;
     private BottomSheetImagePickerBinding binding;
     private BottomSheetDialog dialog;
+    private Boolean showDelete = false;
 
     public ImagePickerBottomSheetDialog(Listener listener) {
         this.listener = listener;
+    }
+
+    public ImagePickerBottomSheetDialog(Listener listener, Boolean showDelete) {
+        this.listener = listener;
+        this.showDelete = showDelete;
     }
 
     @Override
@@ -49,6 +55,11 @@ public class ImagePickerBottomSheetDialog extends BottomSheetDialogFragment impl
         binding.camera.setOnClickListener(this);
         binding.gallery.setOnClickListener(this);
         binding.close.setOnClickListener(this);
+        binding.delete.setOnClickListener(this);
+        if(showDelete){
+            binding.delete.setVisibility(View.VISIBLE);
+            binding.close.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -63,6 +74,8 @@ public class ImagePickerBottomSheetDialog extends BottomSheetDialogFragment impl
                 break;
             case R.id.cancel:
                 break;
+            case R.id.delete:
+                listener.onClickPicker(IMAGE_CLICK_TYPE.DELETE);
         }
     }
 
@@ -84,7 +97,7 @@ public class ImagePickerBottomSheetDialog extends BottomSheetDialogFragment impl
     }
 
     public enum IMAGE_CLICK_TYPE {
-        CAMERA, GALLERY
+        CAMERA, GALLERY, DELETE
     }
 
     public interface Listener {

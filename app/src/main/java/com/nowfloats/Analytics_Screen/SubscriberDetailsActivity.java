@@ -217,7 +217,8 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
     private void sendMail(){
         Intent email = new Intent(Intent.ACTION_SEND);
         email.setData(Uri.parse("mailto:"));
-        email.setType("text/plain");
+//        email.setType("text/plain");
+        email.setType("message/rfc822");
         email.putExtra(Intent.EXTRA_EMAIL, new String[]{mSubscriberData.getUserMobile()});
         startActivity(Intent.createChooser(email,"Email by:"));
     }

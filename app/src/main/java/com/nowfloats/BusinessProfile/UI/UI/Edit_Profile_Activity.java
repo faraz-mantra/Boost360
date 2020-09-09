@@ -320,7 +320,11 @@ public class Edit_Profile_Activity extends BaseActivity {
             }
 
             private void onClickImagePicker(IMAGE_CLICK_TYPE image_click_type) {
-                if(image_click_type.name().equals(IMAGE_CLICK_TYPE.CAMERA.name())) cameraIntent(); else galleryIntent();
+                if(image_click_type.name().equals(IMAGE_CLICK_TYPE.CAMERA.name())) {
+                    cameraIntent();
+                }else if(image_click_type.name().equals(IMAGE_CLICK_TYPE.GALLERY.name())){
+                    galleryIntent();
+                }
             }
         });
 
