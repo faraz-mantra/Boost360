@@ -39,6 +39,7 @@ import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.NavigationDrawer.popup.PurchaseFeaturesPopup;
 import com.nowfloats.on_boarding.OnBoardingApiCalls;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -210,60 +211,77 @@ public class SidePanelFragment extends Fragment {
                 final PorterDuffColorFilter whiteLabelFilter1 = new PorterDuffColorFilter
                         (getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 
-                final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                        .customView(R.layout.featuredimage_popup, true)
-                        .show();
+                final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog =
+                        new ImagePickerBottomSheetDialog(this::onClickImagePicker, true);
+                imagePickerBottomSheetDialog.show(getParentFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
 
-                View view = dialog.getCustomView();
-                LinearLayout deleteImage = (LinearLayout) view.findViewById(R.id.deletebackgroundImage);
-                deleteImage.setVisibility(View.GONE);
-                TextView title = (TextView) view.findViewById(R.id.textview_heading);
-                title.setText(getString(R.string.upload_background_image));
-                LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-                LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//                final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+//                        .customView(R.layout.featuredimage_popup, true)
+//                        .show();
+//
+//                View view = dialog.getCustomView();
+//                LinearLayout deleteImage = (LinearLayout) view.findViewById(R.id.deletebackgroundImage);
+//                deleteImage.setVisibility(View.GONE);
+//                TextView title = (TextView) view.findViewById(R.id.textview_heading);
+//                title.setText(getString(R.string.upload_background_image));
+//                LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+//                LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//
+//                ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+//                ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+//                ImageView deleteImg = (ImageView) view.findViewById(R.id.pop_up_delete_img);
+//
+//                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)) && session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length() > 0) {
+//                    deleteImage.setVisibility(View.VISIBLE);
+//                }
+//
+//                cameraImg.setColorFilter(whiteLabelFilter1);
+//                galleryImg.setColorFilter(whiteLabelFilter1);
+//                deleteImg.setColorFilter(whiteLabelFilter1);
+//
+//                takeCamera.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_CAMERA, null);
+//                        cameraIntent();
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                takeGallery.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_GALLERY, null);
+//                        galleryIntent();
+//                        dialog.dismiss();
+//
+//                    }
+//                });
+//
+//                deleteImage.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        deleteBackgroundImage();
+//                        dialog.dismiss();
+//
+//                    }
+//                });
+//
+//            }
+        }
 
-                ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-                ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-                ImageView deleteImg = (ImageView) view.findViewById(R.id.pop_up_delete_img);
-
-                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)) && session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length() > 0) {
-                    deleteImage.setVisibility(View.VISIBLE);
+            private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
+                if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_CAMERA, null);
+                    cameraIntent();
+                }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_GALLERY, null);
+                    galleryIntent();
+                }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.DELETE.name())){
+                    deleteBackgroundImage();
                 }
-
-                cameraImg.setColorFilter(whiteLabelFilter1);
-                galleryImg.setColorFilter(whiteLabelFilter1);
-                deleteImg.setColorFilter(whiteLabelFilter1);
-
-                takeCamera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_CAMERA, null);
-                        cameraIntent();
-                        dialog.dismiss();
-                    }
-                });
-
-                takeGallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_GALLERY, null);
-                        galleryIntent();
-                        dialog.dismiss();
-
-                    }
-                });
-
-                deleteImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        deleteBackgroundImage();
-                        dialog.dismiss();
-
-                    }
-                });
-
             }
-        });
+            });
 
         View card = view.findViewById(R.id.navigationDrawer_main_leftPane);
 
