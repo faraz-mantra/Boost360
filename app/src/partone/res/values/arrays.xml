@@ -66,6 +66,7 @@
         <item>@drawable/ic_updates</item>
         <item>@drawable/ic_image_gallery</item>
         <item>@drawable/ic_business_profile</item>
+        <item>@drawable/ic_testimonial</item>
         <item>@drawable/ic_custom_page</item>
         <item>@drawable/top_rankers</item>
         <item>@drawable/batches</item>
@@ -77,6 +78,7 @@
         <item>Latest Updates</item>
         <item>All Images</item>
         <item>Business Profile</item>
+        <item>Testimonials</item>
         <item>Custom Pages</item>
         <item>Toppers of Institute</item>
         <item>Upcoming Batches</item>
