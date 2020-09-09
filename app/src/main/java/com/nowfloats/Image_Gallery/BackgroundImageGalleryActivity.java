@@ -302,7 +302,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
         if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
             MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
             cameraIntent(CAMERA_IMAGE_REQUEST_CODE);
-        }else{
+        }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
             MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
             openImagePicker(GALLERY_IMAGE_REQUEST_CODE, 1);
         }

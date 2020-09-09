@@ -250,7 +250,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
             MixPanelController.track(EventKeysWL.IMAGE_GALLERY_IMAGE_CAMERA, null);
             cameraIntent();
-        }else{
+        }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
             MixPanelController.track(EventKeysWL.IMAGE_GALLERY_IMAGE_GALLERY, null);
             galleryIntent();
         }

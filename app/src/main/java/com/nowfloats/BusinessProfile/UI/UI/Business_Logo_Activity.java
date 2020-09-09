@@ -192,7 +192,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                     MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
                     WebEngageController.trackEvent("UPLOAD LOGO","Updated Buinsess Logo",session.getFpTag());
                     cameraIntent();
-                }else{
+                }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
                     MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
                     galleryIntent();
                 }

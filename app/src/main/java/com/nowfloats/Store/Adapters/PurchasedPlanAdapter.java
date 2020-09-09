@@ -176,7 +176,7 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
                     planImV.setVisibility(View.VISIBLE);
                     topUpImV.setVisibility(View.GONE);
                     validityTv.setText(Methods.fromHtml(String.format("Validity: <b><font color=%s>%s</font></b>",
-                            ContextCompat.getColor(mContext, R.color.gray), activePlan.getTotalMonthsValidity() + " Months")));
+                            ContextCompat.getColor(mContext, R.color.gray), activePlan.getTotalMonthsValidity().intValue() + " Months")));
                 }
                 if (activePlan.isExpanded()) {
                     detailsTv.setText("Hide Plan Details");
