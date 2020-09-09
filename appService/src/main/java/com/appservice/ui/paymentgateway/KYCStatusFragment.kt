@@ -25,6 +25,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import org.json.JSONObject
+import java.util.*
 
 class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitViewModel>() {
 
@@ -79,7 +80,7 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
   private fun setData(dataKyc: DataKyc) {
     if (dataKyc.isVerified == DataKyc.Verify.ALLOW_EDIT.name) menuEdit?.isVisible = true
     dataKyc.panCardDocument?.let { activity?.glideLoad(binding?.ivPanCardImage!!, it, R.drawable.placeholder_image) }
-    binding?.tvPanNumber?.text = dataKyc.panNumber
+    binding?.tvPanNumber?.text = dataKyc.panNumber?.toUpperCase(Locale.ROOT)
     binding?.tvPanName?.text = dataKyc.nameOfPanHolder
     binding?.tvBankAccNumber?.text = "A/C No. ${dataKyc.bankAccountNumber}"
     binding?.tvBankBranchDetails?.text = "${dataKyc.nameOfBank} - ${dataKyc.bankBranchName}"

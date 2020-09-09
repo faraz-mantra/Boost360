@@ -328,12 +328,12 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         showShortToast("Please select valid pan card file")
         return false
       }
-      bankStatementImage == null && dataKyc?.bankAccountStatement.isNullOrEmpty() -> {
-        showShortToast("Please select valid bank statement file")
-        return false
-      }
       panNumber.isNullOrEmpty() -> {
         showShortToast("Pan number can't empty.")
+        return false
+      }
+      !isPanNumberValid(panNumber) -> {
+        showShortToast("Please enter a valid pan number.")
         return false
       }
       panName.isNullOrEmpty() -> {
@@ -342,10 +342,6 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       }
       !isNameValid(panName) -> {
         showShortToast("Please enter a valid name.")
-        return false
-      }
-      !isPanNumberValid(panNumber) -> {
-        showShortToast("Please enter a valid pan number.")
         return false
       }
       binding?.addDifferent?.isChecked == true -> {
@@ -365,6 +361,10 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
           showShortToast("Bank name can't empty.")
           return false
         }
+      }
+      bankStatementImage == null && dataKyc?.bankAccountStatement.isNullOrEmpty() -> {
+        showShortToast("Please select valid bank statement file")
+        return false
       }
     }
     val hasexisistinginstamojoaccount = if (isInstaMojoAccount != null) {
@@ -648,6 +648,6 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     return Pattern.compile("[A-Z]{5}[0-9]{4}[A-Z]{1}").matcher(panNumber).matches()
   }
   private fun isNameValid(name: String): Boolean{
-    return Pattern.compile("[A-Z][a-z]*").matcher(name).matches()
+    return Pattern.compile("^([^0-9]*)\$").matcher(name).matches()
   }
 }
