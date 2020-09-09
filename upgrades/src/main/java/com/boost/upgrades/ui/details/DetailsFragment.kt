@@ -178,6 +178,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                   add_item_to_cart.text = getString(R.string.added_to_cart)
                   havent_bought_the_feature.visibility = View.INVISIBLE
                     itemInCartStatus = true
+
+                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature added to cart", "Feature_Key", singleWidgetKey!!)
                 }
             }
         }
@@ -390,8 +392,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                 abcText.text = addonDetails!!.description
                 review_layout.visibility = View.GONE
 
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature_Details Loaded", "Feature_Details " + addonDetails!!.boost_widget_key, "")
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature_Details - " + addonDetails!!.boost_widget_key + " Loaded", "Feature_Details" + addonDetails!!.boost_widget_key, "")
+                WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature_Details Loaded", "Feature_Details", addonDetails!!.boost_widget_key)
+                WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature_Details - " + addonDetails!!.boost_widget_key + " Loaded", "Feature_Details", addonDetails!!.boost_widget_key)
 
             }
         })

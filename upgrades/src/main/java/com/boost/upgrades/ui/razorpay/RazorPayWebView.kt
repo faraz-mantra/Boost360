@@ -101,6 +101,7 @@ class RazorPayWebView : DialogFragment() {
                     val listPersonType = object : TypeToken<PaymentErrorModule>() {}.type
                     val errorBody: PaymentErrorModule = Gson().fromJson(p1, listPersonType)
                         Toasty.error(requireContext(), errorBody.error.description, Toast.LENGTH_LONG).show()
+                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment Failed", "", "")
                         redirectTransactionFailure(data.toString())
                         dialog!!.dismiss()
                     }

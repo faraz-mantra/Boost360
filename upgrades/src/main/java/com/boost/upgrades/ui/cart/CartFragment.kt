@@ -175,6 +175,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     }
 
     back_button12.setOnClickListener {
+      WebEngageController.trackEvent("ADDONS_MARKETPLACE Cart Back", "", "")
       (activity as UpgradeActivity).onBackPressed()
     }
 
@@ -556,7 +557,6 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     viewModel.cartResult().observe(this, Observer {
       if (it.isNullOrEmpty().not()) {
         cartList = it as ArrayList<CartModel>
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", "Cart Size:" + it.size, "")
         empty_cart.visibility = View.GONE
         cart_main_layout.visibility = View.VISIBLE
         val features = arrayListOf<CartModel>()
@@ -597,6 +597,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
           package_layout.visibility = View.GONE
         }
         totalCalculation()
+
+        var event_attributes: HashMap<String, Double> = HashMap()
+        event_attributes.put("total amount", grandTotal)
+        event_attributes.put("cart size", it.size.toDouble())
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
+
       } else {
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Empty_Cart Loaded", "ADDONS_MARKETPLACE Empty_Cart Loaded", "")
         empty_cart.visibility = View.VISIBLE
