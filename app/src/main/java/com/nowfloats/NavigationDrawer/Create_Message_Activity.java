@@ -55,6 +55,7 @@ import com.nowfloats.CustomWidget.CustomTagLayout;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.RiaUpdateApis;
 import com.nowfloats.NavigationDrawer.Adapter.QuikrAdapter;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NotificationCenter.AlertArchive;
@@ -682,37 +683,49 @@ public class Create_Message_Activity extends AppCompatActivity {
     }
 
     public void choosePicture() {
-        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
-                .customView(R.layout.featuredimage_popup, true)
-                .show();
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(this, R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 
-        View view = dialog.getCustomView();
-        TextView header = (TextView) view.findViewById(R.id.textview_heading);
-        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-        header.setText("Upload Image");
-        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
-        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
+        final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+        imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
 
-        takeCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraIntent();
-                dialog.dismiss();
-            }
-        });
+//        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
+//                .customView(R.layout.featuredimage_popup,true)
+//                .show();
+//        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+//
+//        View view = dialog.getCustomView();
+//        TextView header = (TextView) view.findViewById(R.id.textview_heading);
+//        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+//        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//        ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+//        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+//        header.setText("Upload Image");
+//        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
+//        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
+//
+//        takeCamera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                cameraIntent();
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        takeGallery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                galleryIntent();
+//                dialog.dismiss();
+//
+//            }
+//        });
+    }
 
-        takeGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                galleryIntent();
-                dialog.dismiss();
-
-            }
-        });
+    private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
+        if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
+            cameraIntent();
+        }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
+            galleryIntent();
+        }
     }
 
     private void restoreData() {
