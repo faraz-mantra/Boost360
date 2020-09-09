@@ -1,6 +1,7 @@
 package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
@@ -44,10 +45,17 @@ import kotlin.collections.ArrayList
 
 class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
 
+
   private val pref: SharedPreferences?
     get() {
       return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, 0)
     }
+
+  private val mPrefTwitter: SharedPreferences?
+    get() {
+      return baseActivity.getSharedPreferences(PreferenceConstant.PREF_NAME_TWITTER, Context.MODE_PRIVATE)
+    }
+
   private val auth: String?
     get() {
       return pref?.getString(PreferenceConstant.AUTHORIZATION, "58ede4d4ee786c1604f6c535")
@@ -227,6 +235,32 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       }
       animObserver?.doOnComplete { setAdapterConnected(listConnect) }?.andThen(binding?.noteTxt?.fadeIn(100L))?.subscribe()
     }
+    setSharePrefDataFpPageAndTwitter()
+  }
+
+  private fun setSharePrefDataFpPageAndTwitter() {
+    val twitter = listConnect?.firstOrNull { it.isTwitterChannel() }
+    val editorTwitter = mPrefTwitter?.edit()
+    if (twitter != null) {
+      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, twitter.channelAccessToken?.userAccountName)
+      editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, true)
+    } else {
+      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, null)
+      editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, false)
+    }
+    val fpPage = listConnect?.firstOrNull { it.isFacebookPage() }
+    val editorFp = pref?.edit()
+    if (fpPage != null) {
+      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, fpPage.channelAccessToken?.userAccountName)
+      editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, true)
+      editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 1)
+    } else {
+      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, null)
+      editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, false)
+      editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 0)
+    }
+    editorFp?.apply()
+    editorTwitter?.apply()
   }
 
   private fun changeView(isConnect: Boolean) {
@@ -277,7 +311,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         adapterDisconnect?.notify(listDisconnect)
         val count = listDisconnect?.filter { it.isSelected == true }?.size ?: 0
         if (count > 0) {
-          if(count == 1)
+          if (count == 1)
             binding?.syncBtn?.text = "Continue Syncing $count Channel"
           else
             binding?.syncBtn?.text = "Continue Syncing $count Channels"
