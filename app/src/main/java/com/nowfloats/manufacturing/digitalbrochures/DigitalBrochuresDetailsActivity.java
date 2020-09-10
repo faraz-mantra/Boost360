@@ -85,15 +85,14 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         attachedURLText = findViewById(R.id.attached_url);
         saveButton = findViewById(R.id.save_review);
         uploadImageButton = findViewById(R.id.upload_image_button);
-
         attachBrochureEmptyLayout = findViewById(R.id.attach_brochure_empty_layout);
         fileSelectedLayout = findViewById(R.id.file_selected_layout);
-
         dummyView1 = findViewById(R.id.dummy_view1);
-
         dummyView1.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
         removePdfButton = findViewById(R.id.remove_pdf);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
 
         removePdfButton.setOnClickListener(new View.OnClickListener() {
             @Override
