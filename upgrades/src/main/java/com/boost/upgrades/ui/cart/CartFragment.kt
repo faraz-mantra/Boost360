@@ -499,15 +499,17 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //        )
       }// end of cart item for loop
 
-      purchaseOrders.add(
-          PurchaseOrder(
-              couponCode,
-              0,
-              null,
-              featureNetPrice,
-              featureWidgetList
-          )
-      )
+      if(featureWidgetList.size>0) {    //this is used only for single widgets
+        purchaseOrders.add(
+                PurchaseOrder(
+                        couponCode,
+                        0,
+                        null,
+                        featureNetPrice,
+                        featureWidgetList
+                )
+        )
+      }
     } // if end of new order
 
     var keysToBeActivated = ArrayList<String>()
