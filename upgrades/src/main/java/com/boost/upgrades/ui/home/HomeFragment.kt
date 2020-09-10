@@ -12,9 +12,11 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
@@ -23,10 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.adapter.FeatureDealsAdapter
-import com.boost.upgrades.adapter.PackageViewPagerAdapter
-import com.boost.upgrades.adapter.SimplePageTransformer
-import com.boost.upgrades.adapter.UpgradeAdapter
+import com.boost.upgrades.adapter.*
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.FeatureDeals
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
@@ -34,6 +33,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.PrimaryImage
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
+import com.boost.upgrades.data.model.YoutubeVideoModel
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.HomeListener
@@ -69,10 +69,14 @@ class HomeFragment : BaseFragment(), HomeListener {
   lateinit var ApiService: ApiInterface
   lateinit var localStorage: LocalStorage
 
+  lateinit var addonsCategoryAdapter: AddonsCategoryAdapter
   lateinit var upgradeAdapter: UpgradeAdapter
 
   lateinit var progressDialog: ProgressDialog
 
+  lateinit var videosListAdapter: VideosListAdapter
+  lateinit var partnerViewPagerAdapter: PartnerViewPagerAdapter
+  lateinit var bannerViewPagerAdapter: BannerViewPagerAdapter
   lateinit var packageViewPagerAdapter: PackageViewPagerAdapter
   lateinit var featureDealsAdapter: FeatureDealsAdapter
 
@@ -91,6 +95,10 @@ class HomeFragment : BaseFragment(), HomeListener {
     viewModel = ViewModelProviders.of(requireActivity(), homeViewModelFactory).get(HomeViewModel::class.java)
 
     upgradeAdapter = UpgradeAdapter((activity as UpgradeActivity), ArrayList())
+    addonsCategoryAdapter = AddonsCategoryAdapter((activity as UpgradeActivity), ArrayList())
+    videosListAdapter = VideosListAdapter(ArrayList(), this)
+    partnerViewPagerAdapter = PartnerViewPagerAdapter(ArrayList(), (activity as UpgradeActivity), this)
+    bannerViewPagerAdapter = BannerViewPagerAdapter(ArrayList(), (activity as UpgradeActivity), this)
     packageViewPagerAdapter = PackageViewPagerAdapter(ArrayList(), (activity as UpgradeActivity), this)
     featureDealsAdapter = FeatureDealsAdapter(ArrayList(), ArrayList(), (activity as UpgradeActivity), this)
     //request retrofit instance
@@ -98,6 +106,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     progressDialog = ProgressDialog(requireContext())
     localStorage = LocalStorage.getInstance(context!!)!!
     cart_list = localStorage.getCartItems()
+
     return root
   }
 
@@ -108,8 +117,10 @@ class HomeFragment : BaseFragment(), HomeListener {
     setSpannableStrings()
     loadData()
     initMvvm()
+
+//    initYouTube()
+
     WebEngageController.trackEvent("ADDONS_MARKETPLACE Loaded", "ADDONS_MARKETPLACE", "")
-    shimmer_view_container.startShimmer()
 //        Glide.with(this).load(R.drawable.back_beau).apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3))).into(back_image)
 
     imageView21.setOnClickListener {
@@ -120,9 +131,13 @@ class HomeFragment : BaseFragment(), HomeListener {
       (activity as UpgradeActivity).addFragment(CartFragment.newInstance(), CART_FRAGMENT)
     }
 
+    initializeVideosRecycler()
+    initializePartnerViewPager()
+    initializeBannerViewPager()
     initializePackageViewPager()
     initializeFeatureDeals()
     initializeRecycler()
+    initializeAddonCategoryRecycler()
 
     share_refferal_code_btn.setOnClickListener {
       WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "Generic", "")
@@ -221,6 +236,32 @@ class HomeFragment : BaseFragment(), HomeListener {
 
   }
 
+//  private fun initYouTube() {
+//      val youTubePlayerFragment = childFragmentManager.findFragmentById(R.id.youtube_fragment) as YouTubePlayerFragment
+////      (activity as UpgradeActivity).initYoutube()
+////      youTubePlayerFragment = (activity as UpgradeActivity).youTubePlayerFragment
+//
+//      youTubePlayerFragment.initialize(youtube_API_KEY, object : YouTubePlayer.OnInitializedListener {
+//        override fun onInitializationSuccess(provider: YouTubePlayer.Provider, player: YouTubePlayer, wasRestored: Boolean) {
+//          Log.i("Detail", "YouTube Player onInitializationSuccess")
+//
+//          // Don't do full screen
+//          player.setFullscreen(false)
+//          if (!wasRestored) {
+//            youTubePlayer = player
+//          }
+//        }
+//
+//        override fun onInitializationFailure(provider: YouTubePlayer.Provider, youTubeInitializationResult: YouTubeInitializationResult) {
+//          Log.i("Detail", "Failed: $youTubeInitializationResult")
+//        }
+//      })
+//
+//    val transaction = childFragmentManager.beginTransaction().add
+//    transaction.add(R.id.youtube_fragment, youTubePlayerFragment).commit()
+//
+//  }
+
   fun setSpannableStrings() {
     var fpId = (activity as UpgradeActivity).fpid
     if (fpId != null) {
@@ -300,7 +341,6 @@ class HomeFragment : BaseFragment(), HomeListener {
 
     viewModel.getAllAvailableFeatures().observe(this, androidx.lifecycle.Observer {
       updateRecycler(it)
-      recommended_features_section_subtitle.text = "Add these " + it.count() + " add-ons, recommended for your business."
     })
 
     viewModel.getAllBundles().observe(this, androidx.lifecycle.Observer {
@@ -366,13 +406,40 @@ class HomeFragment : BaseFragment(), HomeListener {
         }
       }
     })
+
+    viewModel.getYoutubeVideoDetails().observe(this, androidx.lifecycle.Observer {
+      Log.e("getYoutubeVideoDetails",it.toString())
+      updateVideosViewPager(it)
+    })
+
+    viewModel.getExpertConnectDetails().observe(this, androidx.lifecycle.Observer {
+      Log.e("getYoutubeVideoDetails",it.toString())
+      val expertConnectDetails = it
+      if (it.is_online){
+        callnow_layout.visibility = View.VISIBLE
+        callnow_image.visibility = View.VISIBLE
+        callnow_title.setText(it.line1)
+        callnow_desc.setText(it.line2)
+        call_shedule_layout.visibility = View.GONE
+        callnow_button.setOnClickListener {
+          val callIntent = Intent(Intent.ACTION_DIAL)
+          callIntent.data = Uri.parse("tel:" + expertConnectDetails.contact_number)
+          startActivity(Intent.createChooser(callIntent, "Call by:"))
+        }
+      }else{
+        callnow_layout.visibility = View.GONE
+        callnow_image.visibility = View.GONE
+        call_shedule_layout.visibility = View.VISIBLE
+        call_shedule_title.setText(it.line1)
+        call_shedule_desc.setText(it.line2)
+        call_shedule_button.setOnClickListener {
+          Toast.makeText(requireContext(), "Feature Coming Soon!!..", Toast.LENGTH_LONG).show()
+        }
+      }
+    })
   }
 
   fun updateRecycler(list: List<FeaturesModel>) {
-    if (shimmer_view_container.isShimmerStarted) {
-      shimmer_view_container.stopShimmer()
-      shimmer_view_container.visibility = View.GONE
-    }
     upgradeAdapter.addupdates(list)
     recycler.adapter = upgradeAdapter
     upgradeAdapter.notifyDataSetChanged()
@@ -380,11 +447,64 @@ class HomeFragment : BaseFragment(), HomeListener {
     back_image.isFocusable = true
   }
 
+  fun updateAddonCategoryRecycler(list: List<FeaturesModel>) {
+    addonsCategoryAdapter.addupdates(list)
+    addons_category_recycler.adapter = addonsCategoryAdapter
+    addonsCategoryAdapter.notifyDataSetChanged()
+    addons_category_recycler.isFocusable = false
+    back_image.isFocusable = true
+  }
+
   private fun initializeRecycler() {
-    val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+    val gridLayoutManager = GridLayoutManager(requireContext(), 3)
     gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
     recycler.apply {
       layoutManager = gridLayoutManager
+    }
+  }
+
+  private fun initializeAddonCategoryRecycler() {
+    val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+    gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+    addons_category_recycler.apply {
+      layoutManager = gridLayoutManager
+      addons_category_recycler.adapter = addonsCategoryAdapter
+    }
+  }
+
+  fun updateVideosViewPager(list: List<YoutubeVideoModel>) {
+    val link: List<String> = list.get(0).youtube_link!!.split('/')
+    videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
+//    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
+    videoPlayerWebView.setWebViewClient(WebViewClient())
+    videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + link.get(link.size-1) + "?autoplay=1&vq=small")
+    videosListAdapter.addUpdates(list)
+    videosListAdapter.notifyDataSetChanged()
+  }
+
+  fun updatePartnerViewPager(list: List<Bundles>) {
+    partner_layout.visibility = View.VISIBLE
+    partner_viewpager.offscreenPageLimit = list.size
+    partnerViewPagerAdapter.addupdates(list)
+    partnerViewPagerAdapter.notifyDataSetChanged()
+    //show dot indicator only when the (list.size > 2)
+    if (list.size > 1) {
+      partner_indicator.visibility = View.VISIBLE
+    } else {
+      partner_indicator.visibility = View.INVISIBLE
+    }
+  }
+
+  fun updateBannerViewPager(list: List<Bundles>) {
+    banner_layout.visibility = View.VISIBLE
+    banner_viewpager.offscreenPageLimit = list.size
+    bannerViewPagerAdapter.addupdates(list)
+    bannerViewPagerAdapter.notifyDataSetChanged()
+    //show dot indicator only when the (list.size > 2)
+    if (list.size > 1) {
+      banner_indicator.visibility = View.VISIBLE
+    } else {
+      banner_indicator.visibility = View.INVISIBLE
     }
   }
 
@@ -395,9 +515,9 @@ class HomeFragment : BaseFragment(), HomeListener {
     packageViewPagerAdapter.notifyDataSetChanged()
     //show dot indicator only when the (list.size > 2)
     if (list.size > 1) {
-      dots_indicator.visibility = View.VISIBLE
+      package_indicator.visibility = View.VISIBLE
     } else {
-      dots_indicator.visibility = View.INVISIBLE
+      package_indicator.visibility = View.INVISIBLE
     }
   }
 
@@ -413,17 +533,59 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
   }
 
+  private fun initializeBannerViewPager() {
+    banner_layout.visibility = View.VISIBLE
+    banner_viewpager.adapter = bannerViewPagerAdapter
+    banner_viewpager.offscreenPageLimit = 4
+    banner_indicator.setViewPager2(banner_viewpager)
+
+    banner_viewpager.setPageTransformer(SimplePageTransformer())
+
+    val itemDecoration = HorizontalMarginItemDecoration(
+            requireContext(),
+            R.dimen.viewpager_current_item_horizontal_margin
+    )
+    banner_viewpager.addItemDecoration(itemDecoration)
+
+  }
+
+  private fun initializePartnerViewPager() {
+    partner_layout.visibility = View.VISIBLE
+    partner_viewpager.adapter = partnerViewPagerAdapter
+    partner_viewpager.offscreenPageLimit = 4
+    partner_indicator.setViewPager2(partner_viewpager)
+
+    partner_viewpager.setPageTransformer(SimplePageTransformer())
+
+    val itemDecoration = HorizontalMarginItemDecoration(
+            requireContext(),
+            R.dimen.viewpager_current_item_horizontal_margin
+    )
+    partner_viewpager.addItemDecoration(itemDecoration)
+
+  }
+
+  private fun initializeVideosRecycler() {
+    val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+    gridLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+    videos_recycler.apply {
+      layoutManager = gridLayoutManager
+      videos_recycler.adapter = videosListAdapter
+    }
+
+  }
+
   private fun initializePackageViewPager() {
     package_viewpager.adapter = packageViewPagerAdapter
-    dots_indicator.setViewPager2(package_viewpager)
+    package_indicator.setViewPager2(package_viewpager)
 
     package_viewpager.setPageTransformer(SimplePageTransformer())
 
-    val itemDecoration = HorizontalMarginItemDecoration(
-        requireContext(),
-        R.dimen.viewpager_current_item_horizontal_margin
-    )
-    package_viewpager.addItemDecoration(itemDecoration)
+//    val itemDecoration = HorizontalMarginItemDecoration(
+//        requireContext(),
+//        R.dimen.viewpager_current_item_horizontal_margin
+//    )
+//    package_viewpager.addItemDecoration(itemDecoration)
 
   }
 
@@ -438,7 +600,6 @@ class HomeFragment : BaseFragment(), HomeListener {
         R.dimen.viewpager_current_item_horizontal_margin
     )
     feature_deals_viewpager.addItemDecoration(itemDecoration)
-
   }
 
   override fun onBackPressed() {
@@ -459,5 +620,16 @@ class HomeFragment : BaseFragment(), HomeListener {
     if (item != null)
       viewModel.addItemToCart(item, minMonth)
   }
+
+  override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
+    Log.i("onPlayYouTubeVideo",videoItem.youtube_link)
+    val link: List<String> = videoItem.youtube_link!!.split('/')
+    videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
+//    videoPlayerWebView.getSettings().setPluginState(WebSettings.PluginState.ON)
+    videoPlayerWebView.setWebViewClient(WebViewClient())
+    videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + link.get(link.size-1) + "?autoplay=1&vq=small")
+//    videoPlayerWebView.setWebChromeClient(WebChromeClient())
+  }
+
 
 }
