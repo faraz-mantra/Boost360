@@ -1,7 +1,9 @@
 package com.appservice.ui.paymentgateway
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -13,6 +15,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
+import com.appservice.constant.PreferenceConstant
 import com.appservice.databinding.FragmentKycDetailsBinding
 import com.appservice.model.FileModel
 import com.appservice.model.SessionData
@@ -59,6 +62,11 @@ import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKitViewModel>(), RecyclerItemClickListener {
+
+  private val pref: SharedPreferences?
+    get() {
+      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
+    }
 
   private val FILE_SELECT_CODE = 2000
   private var imagePickerMultiple: Boolean? = null
@@ -256,6 +264,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         hideProgress()
         if ((it.error is NoNetworkException).not()) {
           if (it.status == 200 || it.status == 201 || it.status == 202) {
+            setPreference()
             val bundle = Bundle()
             bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
             bundle.putSerializable(IntentConstant.KYC_DETAIL.name, request)
@@ -264,6 +273,12 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         } else showError(resources.getString(R.string.internet_connection_not_available))
       })
     } else updateKycInformation(getUpdateRequest(request))
+  }
+
+  private fun setPreference() {
+    val editor = pref?.edit()
+    editor?.putBoolean(PreferenceConstant.IS_SELF_BRANDED_KYC_ADD, true)
+    editor?.apply()
   }
 
 

@@ -129,26 +129,26 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         bundle.putString(IntentConstant.USER_PROFILE_ID.name(), sessionManager.getUserProfileId());
                         bundle.putString(IntentConstant.FP_ID.name(), sessionManager.getFPID());
                         if (sessionManager.gisAccountSave()) {
-                            startFragmentAccountActivityNew(Objects.requireNonNull(getActivity()), FragmentType.BANK_ACCOUNT_DETAILS, bundle, false);
+                            startFragmentAccountActivityNew(requireActivity(), FragmentType.BANK_ACCOUNT_DETAILS, bundle, false);
                         } else {
-                            startFragmentAccountActivityNew(Objects.requireNonNull(getActivity()), FragmentType.ADD_BANK_ACCOUNT_START, bundle, false);
+                            startFragmentAccountActivityNew(requireActivity(), FragmentType.ADD_BANK_ACCOUNT_START, bundle, false);
                         }
 //                        intent = new Intent(mContext, AccountInfoActivity.class);
                         break;
                     case "Self Branded Payment Gateway":
                         Bundle b = getBundleDataKyc();
-                        startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), com.appservice.constant.FragmentType.PAYMENT_GATEWAY, b, false);
+                        startFragmentPaymentActivityNew(requireActivity(), com.appservice.constant.FragmentType.PAYMENT_GATEWAY, b, false);
                         break;
                     case "KYC Verification":
                         Bundle b1 = getBundleDataKyc();
                         if (sessionManager.isSelfBrandedKycAdd()) {
-                            startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), com.appservice.constant.FragmentType.KYC_STATUS, b1, false);
-                        } else startFragmentPaymentActivityNew(Objects.requireNonNull(getActivity()), FragmentType.BUSINESS_KYC_VIEW, b1, false);
+                            startFragmentPaymentActivityNew(requireActivity(), com.appservice.constant.FragmentType.KYC_STATUS, b1, false);
+                        } else startFragmentPaymentActivityNew(requireActivity(), FragmentType.BUSINESS_KYC_VIEW, b1, false);
                         break;
                     case "Boost Extensions":
                         intent = new Intent(mContext, Boost360ExtensionsActivity.class);
                         startActivity(intent);
-                        Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
 //                    case "Site Appearance":
 //                        intent = new Intent(mContext, SiteAppearanceActivity.class);
@@ -169,7 +169,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     case "Subscription History":
                         intent = new Intent(mContext, YourPurchasedPlansActivity.class);
                         startActivity(intent);
-                        Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
                     case "Change Password":
                         changePassword();

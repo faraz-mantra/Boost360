@@ -1,5 +1,6 @@
 package com.onboarding.nowfloats.ui.registration
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
@@ -39,7 +40,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
   protected val pref: SharedPreferences?
     get() {
-      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, 0)
+      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
     }
   protected val userProfileId: String?
     get() {

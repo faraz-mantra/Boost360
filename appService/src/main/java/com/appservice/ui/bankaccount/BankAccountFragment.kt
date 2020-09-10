@@ -1,6 +1,8 @@
 package com.appservice.ui.bankaccount
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
@@ -14,6 +16,7 @@ import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
+import com.appservice.constant.PreferenceConstant
 import com.appservice.databinding.FragmentBankAccountDetailsBinding
 import com.appservice.model.account.AccountCreateRequest
 import com.appservice.model.account.BankAccountDetailsN
@@ -31,6 +34,12 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 
 class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, AccountViewModel>() {
+
+  private val pref: SharedPreferences?
+    get() {
+      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
+    }
+
   private var isUpdated = true
   private var fpId: String = ""
   private var clientId: String = ""
@@ -219,6 +228,9 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       val response = it as? AccountCreateResponse
       if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
         getUserDetails(isServiceCreation = isServiceCreation)
+        val editor = pref?.edit()
+        editor?.putBoolean(PreferenceConstant.IS_ACCOUNT_SAVE, true)
+        editor?.apply()
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())
