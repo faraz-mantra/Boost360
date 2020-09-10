@@ -142,12 +142,12 @@ public class ManageInventoryFragment extends Fragment {
             case "SVC": /* TODO for Appointment (delivery mode offline)*/
             case "SPA":
             case "SAL":
-            case "EDU":
             case "DOC": /* TODO for Appointment (delivery mode offline) && consultation (delivery mode online)*/
             case "HOS":
                 return 1;
             case "HOT": /* TODO for booking */
                 return 2;
+            // coming order case "EDU":
             default: /* TODO for order */
                 return 3;
         }
