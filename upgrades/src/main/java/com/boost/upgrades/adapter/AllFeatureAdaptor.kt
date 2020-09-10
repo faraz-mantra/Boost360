@@ -38,7 +38,7 @@ class AllFeatureAdaptor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(
-            R.layout.upgrade_list_item, parent, false
+            R.layout.all_feature_list_item, parent, false
         )
         context = itemView.context
 

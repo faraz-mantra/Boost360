@@ -129,6 +129,11 @@ class UpgradeActivity : AppCompatActivity() {
     razorpay = Razorpay(this, RAZORPAY_KEY)
   }
 
+//  public fun initYoutube(){
+//    youTubePlayerFragment = getSupportFragmentManager()
+//            .findFragmentById(R.id.youtube_fragment) as YouTubePlayerFragment
+//  }
+
   override fun onBackPressed() {
     performBackPressed()
   }
