@@ -54,6 +54,7 @@ public class FloatingViewBottomSheetDialog extends BottomSheetDialogFragment imp
         binding.addCustomPage.setOnClickListener(this);
         binding.addTestimonial.setOnClickListener(this);
         binding.addUpdate.setOnClickListener(this);
+        binding.mainView.setOnClickListener(this);
     }
 
     @Override

@@ -484,8 +484,7 @@
               android:text="@string/add_file_jpg_png"
               android:textColor="@color/greyish_brown"
               app:fontFamily="@font/regular"
-              app:textType="BODY_1"
-              android:textAllCaps="true"/>
+              app:textType="BODY_1"/>
           </FrameLayout>
 
           <!--Additional Documents Preview-->
