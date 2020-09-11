@@ -340,43 +340,54 @@
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/tvCancelOrder"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="@dimen/size_10"
+                app:layout_constraintEnd_toStartOf="@id/ll_costs"
                 android:text="@string/cancel_video_consultation"
                 android:textColor="@color/greyish_brown"
                 app:fontFamily="@font/semi_bold"
                 app:textType="BODY_1"
                 android:maxLines="1"
-                android:singleLine="true"
                 android:autoSizeTextType="uniform"
-                android:autoSizeMinTextSize="8sp"/>
+                android:autoSizeMinTextSize="8sp"
+                android:gravity="start|center_vertical"/>
 
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/tv_shipping_cost"
+            <LinearLayout
+                android:id="@+id/ll_costs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/warm_grey_10"
-                android:visibility="invisible"
-                app:fontFamily="@font/regular"
-                app:textType="BODY_1"
-                tools:text="Shipping Cost: ₹0"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/tvCancelOrder">
+              <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/tv_shipping_cost"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/warm_grey_10"
+                  android:visibility="invisible"
+                  app:fontFamily="@font/regular"
+                  app:textType="BODY_1"
+                  tools:text="Shipping Cost: ₹0"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintTop_toTopOf="parent"/>
 
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/tvTotalOrderAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_1"
-                android:textColor="@color/warm_grey_10"
-                app:fontFamily="@font/bold"
-                app:textType="BODY_1"
-                tools:text="Total Amount: ₹976"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_shipping_cost"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+              <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/tvTotalOrderAmount"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="@dimen/size_1"
+                  android:textColor="@color/warm_grey_10"
+                  app:fontFamily="@font/bold"
+                  app:textType="BODY_1"
+                  tools:text="Total Amount: ₹976"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintTop_toBottomOf="@id/tv_shipping_cost"
+                  app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </LinearLayout>
           </androidx.constraintlayout.widget.ConstraintLayout>
           <LinearLayout
               android:layout_width="match_parent"
