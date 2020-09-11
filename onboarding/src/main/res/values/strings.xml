@@ -120,7 +120,7 @@
   <string name="for_your">for your</string>
   <string name="business">Business</string>
   <string name="select_one_page">Select only one page</string>
-  <string name="canceled">Canceled</string>
+  <string name="cancelled">Cancelled</string>
   <string name="uploading_business_image">Uploading business image...</string>
   <string name="business_image_uploaded">Business Image uploaded.</string>
   <string name="uploading_profile_image">Uploading profile image...</string>
