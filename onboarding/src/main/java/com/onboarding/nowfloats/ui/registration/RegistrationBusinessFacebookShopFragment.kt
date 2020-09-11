@@ -140,7 +140,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
   }
 
   override fun onFacebookLoginCancel() {
-    showShortToast(resources.getString(R.string.canceled))
+    showShortToast(resources.getString(R.string.cancelled))
   }
 
   override fun onFacebookLoginError(error: FacebookException?) {
