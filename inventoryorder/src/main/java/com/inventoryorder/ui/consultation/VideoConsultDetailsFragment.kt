@@ -1,6 +1,8 @@
 package com.inventoryorder.ui.consultation
 
+import android.content.Intent
 import android.graphics.Paint
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -8,23 +10,18 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isGone
 import androidx.lifecycle.Observer
-import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils
-import com.framework.utils.ValidationUtils
-import com.framework.utils.ValidationUtils.isEmailValid
 import com.framework.views.customViews.CustomButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.FragmentVideoConsultDetailsBinding
-import com.inventoryorder.model.CLIENT_ID_3
 import com.inventoryorder.model.OrderConfirmStatus
-import com.inventoryorder.model.SendMailRequest
 import com.inventoryorder.model.bottomsheet.LocationsModel
 import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.model.ordersdetails.OrderItem
@@ -56,7 +53,8 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   override fun onCreateView() {
     super.onCreateView()
     arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
-    setOnClickListener(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.btnOpenConsult)
+    setOnClickListener(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.btnOpenConsult, binding?.tvCustomerContactNumber,
+    binding?.tvCustomerEmail)
   }
 
   private fun apiGetOrderDetails(orderId: String) {
@@ -178,7 +176,21 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       binding?.btnOpenConsult -> apiOpenConsultationWindow()
       binding?.tvCancelOrder -> cancelOrderDialog()
       binding?.btnCopyLink -> videoConsultCopy()
+      binding?.tvCustomerContactNumber -> openDialer()
+      binding?.tvCustomerEmail -> openEmailApp()
     }
+  }
+
+  private fun openEmailApp() {
+    val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+            "mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
+    startActivity(emailIntent)
+  }
+
+  private fun openDialer() {
+    val intent = Intent(Intent.ACTION_DIAL)
+    intent.data = (Uri.parse("tel:${orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()}"))
+    startActivity(intent)
   }
 
   private fun cancelOrderDialog(){

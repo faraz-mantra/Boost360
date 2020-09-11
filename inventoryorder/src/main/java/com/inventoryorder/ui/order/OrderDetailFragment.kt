@@ -1,7 +1,9 @@
 package com.inventoryorder.ui.order
 
+import android.content.Intent
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -57,7 +59,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   override fun onCreateView() {
     super.onCreateView()
     arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
-    setOnClickListener(binding?.btnPickUp)
+    setOnClickListener(binding?.btnPickUp, binding?.tvCustomerContactNumber, binding?.tvCustomerEmail)
   }
 
   private fun apiGetOrderDetails(orderId: String) {
@@ -217,7 +219,21 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       binding?.btnPickUp -> showBottomSheetDialog()
       binding?.buttonConfirmOrder -> apiConfirmOrder()
       binding?.tvCancelOrder -> cancelOrderDialog()
+      binding?.tvCustomerContactNumber -> openDialer()
+      binding?.tvCustomerEmail -> openEmailApp()
     }
+  }
+
+  private fun openEmailApp() {
+    val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+            "mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
+    startActivity(emailIntent)
+  }
+
+  private fun openDialer() {
+    val intent = Intent(Intent.ACTION_DIAL)
+    intent.data = (Uri.parse("tel:${orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()}"))
+    startActivity(intent)
   }
 
   private fun cancelOrderDialog(){

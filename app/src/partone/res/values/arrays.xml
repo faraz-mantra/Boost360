@@ -36,7 +36,7 @@
         <item>@drawable/ic_updates</item>
         <item>@drawable/ic_image_gallery</item>
         <item>@drawable/ic_business_profile</item>
-        <item>@drawable/ic_testimonials_new</item>
+        <item>@drawable/ic_testimonials</item>
         <item>@drawable/ic_custom_page</item>
     </array>
     <array name="manage_content_sidepanel_hot">
@@ -44,7 +44,7 @@
         <item>@drawable/ic_updates</item>
         <item>@drawable/ic_image_gallery</item>
         <item>@drawable/ic_business_profile</item>
-        <item>@drawable/ic_testimonials_new_direct</item>
+        <item>@drawable/ic_testimonials</item>
         <item>@drawable/ic_custom_page</item>
         <item>@drawable/ic_place_nearby</item>
         <item>@drawable/trip_advisor</item>
@@ -55,7 +55,7 @@
         <item>@drawable/ic_updates</item>
         <item>@drawable/ic_image_gallery</item>
         <item>@drawable/ic_business_profile</item>
-        <item>@drawable/ic_testimonials_new_direct</item>
+        <item>@drawable/ic_testimonials</item>
         <item>@drawable/ic_custom_page</item>
         <item>@drawable/ic_project_teams</item>
         <item>@drawable/ic_digital_brochures</item>
