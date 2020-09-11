@@ -143,7 +143,8 @@
             android:text="@string/video_consultation_camel_case"
             android:textColor="@drawable/radio_selected"
             android:textSize="16sp"
-            app:buttonTint="@drawable/radio_selected" />
+            app:buttonTint="@drawable/radio_selected"
+              android:visibility="gone"/>
         </RadioGroup>
 
         <com.framework.views.customViews.CustomTextView

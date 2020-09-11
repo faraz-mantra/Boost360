@@ -203,13 +203,13 @@ public class ManageInventoryFragment extends Fragment {
             tvTransactionType_1 = mainView.findViewById(R.id.transactions_type_1);
             tvTransactionType_1.setText(Utils.getDefaultTrasactionsTaxonomyFromServiceCode(svc_code));
             if ("DOC".equalsIgnoreCase(svc_code) || "HOS".equalsIgnoreCase(svc_code))
-                tvTransactionType_1.setText("Appointments at Clinic");
+                tvTransactionType_1.setText(R.string.appointments_at_clinic_camel_case);
 
             tvTransactionType_2 = mainView.findViewById(R.id.transactions_type_2);
             ImageView tranType2Image = mainView.findViewById(R.id.transactions_type_2_image);
             String secondTransactionType;
             if (Utils.isRoomBooking(svc_code))
-                secondTransactionType = "Orders";
+                secondTransactionType = getString(R.string.orders);
             else
                 secondTransactionType = Utils.getSecondTypeTrasactionsTaxonomyFromServiceCode(svc_code);
             tvTransactionType_2.setText(secondTransactionType);
