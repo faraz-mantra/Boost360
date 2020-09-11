@@ -76,7 +76,7 @@
   <string name="video_consultation_camel_case">Video Consultation</string>
   <string name="please_select_time_slot">Please select time slot</string>
   <string name="confirm_appointment">CONFIRM APPOINTMENT</string>
-  <string name="cancel_video_consultation"><u>Cancel Consultation</u></string>
+  <string name="cancel_video_consultation"><u>Cancel Video Consultation</u></string>
   <string name="call_details">Call Details</string>
   <string name="cancel_appointment" tools:ignore="ExtraTranslation"><u>Cancel Appointment</u></string>
   <string name="please_add_doctor_first">Doctor not added, please add first.</string>
