@@ -9,6 +9,7 @@ import android.view.View
 import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.isVisible
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.*
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
@@ -99,7 +100,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
     // Remove video consultation based on experience code.
     if(session?.experienceCode == "DOC" || session?.experienceCode == "HOS"){
-      binding?.radioVideoConsultation?.isVisible()
+      binding?.radioVideoConsultation?.isVisible = true
     }
 
     val isFromVideo = arguments?.getBoolean("IS_VIDEO")
