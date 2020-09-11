@@ -19,6 +19,7 @@ import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
 import com.framework.views.customViews.CustomButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentOrderDetailBinding
@@ -215,8 +216,23 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     when (v) {
       binding?.btnPickUp -> showBottomSheetDialog()
       binding?.buttonConfirmOrder -> apiConfirmOrder()
-      binding?.tvCancelOrder -> apiCancelOrder()
+      binding?.tvCancelOrder -> cancelOrderDialog()
     }
+  }
+
+  private fun cancelOrderDialog(){
+    MaterialAlertDialogBuilder(context)
+            .setTitle(getString(R.string.cancel_order_confirmation_message))
+            .setNeutralButton(getString(R.string.no)){
+              dialog, _ ->
+              dialog.dismiss()
+            }
+            .setPositiveButton(getString(R.string.yes)){
+              dialog, which ->
+              apiCancelOrder()
+              dialog.dismiss()
+            }
+            .show()
   }
 
   private fun apiCancelOrder() {

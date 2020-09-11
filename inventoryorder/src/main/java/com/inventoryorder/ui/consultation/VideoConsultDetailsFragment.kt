@@ -17,6 +17,7 @@ import com.framework.utils.DateUtils
 import com.framework.utils.ValidationUtils
 import com.framework.utils.ValidationUtils.isEmailValid
 import com.framework.views.customViews.CustomButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewItemType
@@ -175,9 +176,24 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     when (v) {
       binding?.btnPaymentReminder -> paymentReminder()
       binding?.btnOpenConsult -> apiOpenConsultationWindow()
-      binding?.tvCancelOrder -> apiCancelOrder()
+      binding?.tvCancelOrder -> cancelOrderDialog()
       binding?.btnCopyLink -> videoConsultCopy()
     }
+  }
+
+  private fun cancelOrderDialog(){
+    MaterialAlertDialogBuilder(context)
+            .setTitle(getString(R.string.cancel_consultation_confirmation_message))
+            .setNeutralButton(getString(R.string.no)){
+              dialog, _ ->
+              dialog.dismiss()
+            }
+            .setPositiveButton(getString(R.string.yes)){
+              dialog, which ->
+              apiCancelOrder()
+              dialog.dismiss()
+            }
+            .show()
   }
 
   private fun videoConsultCopy() {

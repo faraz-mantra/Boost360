@@ -14,5 +14,6 @@ data class PreferenceData(
     val webSiteUrl: String? = null,
     val emailDoctor: String? = null,
     val latitude: String? = null,
-    val longitude: String? = null
+    val longitude: String? = null,
+    val experienceCode: String? = null
 ) : Serializable

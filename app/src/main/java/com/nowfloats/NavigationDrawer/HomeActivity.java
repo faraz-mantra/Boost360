@@ -665,7 +665,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         else url = normalURI;
         PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(),
                 Constants.WA_KEY, session.getFpTag(), session.getUserPrimaryMobile(),url,session.getFPEmail(),
-                session.getFPDetails(Key_Preferences.LATITUDE),session.getFPDetails(Key_Preferences.LONGITUDE));
+                session.getFPDetails(Key_Preferences.LATITUDE),session.getFPDetails(Key_Preferences.LONGITUDE),
+                session.getFP_AppExperienceCode());
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
         bundle.putString(IntentConstant.EXPERIENCE_CODE.name(), session.getFP_AppExperienceCode());
         bundle.putString(IntentConstant.ORDER_ID.name(), mPayload);
