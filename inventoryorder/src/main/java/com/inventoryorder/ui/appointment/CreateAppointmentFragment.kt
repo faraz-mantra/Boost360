@@ -10,9 +10,7 @@ import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import com.framework.exceptions.NoNetworkException
-import com.framework.extensions.gone
-import com.framework.extensions.observeOnce
-import com.framework.extensions.visible
+import com.framework.extensions.*
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
@@ -98,7 +96,12 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     super.onCreateView()
     calendarView()
     session = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
-    // Get data and check if user's mobile is registered.
+
+    // Remove video consultation based on experience code.
+    if(session?.experienceCode == "DOC" || session?.experienceCode == "HOS"){
+      binding?.radioVideoConsultation?.isVisible()
+    }
+
     val isFromVideo = arguments?.getBoolean("IS_VIDEO")
     if (isFromVideo!!) {
       binding?.radioVideoConsultation?.isChecked = true
@@ -133,9 +136,25 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           if (isMobileNumberValid(mobile ?: "")) session?.userPrimaryMobile = mobile
           binding?.edtDuration?.setText(doctorData?.duration)
           getServiceList()
-        } else errorUi(resources.getString(R.string.please_add_doctor_first))
-      } else errorUi(resources.getString(R.string.please_add_doctor_first))
+        } else errorUi(getErrorMessage())
+      } else errorUi(getErrorMessage())
     })
+  }
+
+  private fun getErrorMessage(): String{
+    return when (session?.experienceCode){
+      "DOC",
+      "HOS" -> resources.getString(R.string.please_add_doctor_first)
+      "EDU" -> getString(R.string.please_add_teacher_first)
+      "SPA" -> getString(R.string.masseur_masseuse_not_added)
+      "HOT" -> getString(R.string.please_add_hotel_room_first)
+      "CAF" -> getString(R.string.please_add_table_first)
+      "SAL" -> getString(R.string.please_add_barber_first)
+      "MFG" -> getString(R.string.please_add_commodity_first)
+      "RTL" -> getString(R.string.please_add_retail_commodity_first)
+      "SVC" -> getString(R.string.please_add_service_first)
+      else -> ""
+    }
   }
 
   private fun getServiceList() {

@@ -85,5 +85,13 @@
   <string name="yes">Yes</string>
   <string name="cancel_consultation_confirmation_message">Are you sure you want to cancel the video consultation?</string>
   <string name="cancel_order_confirmation_message">Are you sure you want to cancel the order?</string>
+    <string name="please_add_teacher_first">Teacher not added, please add first.</string>
+  <string name="masseur_masseuse_not_added">Masseur/Masseuse not add, please add first</string>
+  <string name="please_add_hotel_room_first">Please add a hotel room first.</string>
+  <string name="please_add_table_first">Please add a table first.</string>
+  <string name="please_add_barber_first">Please add a barber first.</string>
+    <string name="please_add_commodity_first">Please add a manufactured commodity first.</string>
+  <string name="please_add_retail_commodity_first">Please add a retail commodity first.</string>
+  <string name="please_add_service_first">Please add a service first.</string>
 
 </resources>
