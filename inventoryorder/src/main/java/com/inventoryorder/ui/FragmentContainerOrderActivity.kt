@@ -66,7 +66,9 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return when (type) {
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> R.style.AppTheme_Order_create
-      FragmentType.CREATE_APPOINTMENT_VIEW -> R.style.AppTheme_Order_create_appointment
+      FragmentType.CREATE_APPOINTMENT_VIEW, FragmentType.APPOINTMENT_DETAIL_VIEW,
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW, FragmentType.ORDER_DETAIL_VIEW -> R.style.AppTheme_Order_create_appointment
+
       else -> super.customTheme()
     }
   }

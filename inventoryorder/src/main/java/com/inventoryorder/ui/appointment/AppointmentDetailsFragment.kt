@@ -17,6 +17,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils
 import com.framework.views.customViews.CustomButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewItemType
@@ -211,8 +212,23 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     when (v) {
       binding?.btnBusiness -> showBottomSheetDialog()
       binding?.buttonConfirmOrder -> apiConfirmOrder()
-      binding?.tvCancelOrder -> apiCancelOrder()
+      binding?.tvCancelOrder -> cancelOrderDialog()
     }
+  }
+
+  private fun cancelOrderDialog(){
+    MaterialAlertDialogBuilder(context)
+            .setTitle(getString(R.string.cancel_appointment_confirmation_message))
+            .setNeutralButton(getString(R.string.no)){
+              dialog, _ ->
+              dialog.dismiss()
+            }
+            .setPositiveButton(getString(R.string.yes)){
+              dialog, which ->
+              apiCancelOrder()
+              dialog.dismiss()
+            }
+            .show()
   }
 
   private fun apiCancelOrder() {

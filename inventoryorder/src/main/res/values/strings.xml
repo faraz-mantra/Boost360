@@ -80,5 +80,10 @@
   <string name="call_details">Call Details</string>
   <string name="cancel_appointment" tools:ignore="ExtraTranslation"><u>Cancel Appointment</u></string>
   <string name="please_add_doctor_first">Doctor not added, please add first.</string>
+    <string name="cancel_appointment_confirmation_message">Are you sure you want to cancel the appointment?</string>
+  <string name="no">No</string>
+  <string name="yes">Yes</string>
+  <string name="cancel_consultation_confirmation_message">Are you sure you want to cancel the video consultation?</string>
+  <string name="cancel_order_confirmation_message">Are you sure you want to cancel the order?</string>
 
 </resources>
