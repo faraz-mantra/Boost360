@@ -111,7 +111,8 @@
   <string name="associated_bank_account">Associated Bank Account</string>
   <string name="add_a_different_bank_account">Add a different bank account</string>
   <string name="a_c_no_34565xxxxx45465">A/C No. 34565XXXXX45465</string>
-  <string name="add_file_jpg_png">ADD FILE (Jpg/png)</string>
+  <string name="add_file_jpg_png">Add File (Jpg/png)</string>
+  <string name="change_file_jpg_png">Change File (Jpg/png)</string>
   <string name="additional_documents_optional">Additional Documents (Optional)</string>
   <string name="add_multiple_files_jpg_png">Add Multiple Files (Jpg/png)</string>
   <string name="payment_gateway_docs_ready_note"><b>NOTE:</b> Keep your PAN card handy or a picture of it from your gallery would also do. Apart from this you should keep 1 month bank statement and establishment certificate to upload here (if applicable) for extended limit.</string>
@@ -167,7 +168,6 @@
   <string name="verify_business">verify your business</string>
   <string name="on_boost360">on Boost360</string>
   <string name="delete_record_not_undone">Do you really want to delete these records? This process can not be undone.</string>
-  <string name="change_file_jpg_png">Change file (JPG/PNG)</string>
   <string name="crop_picture">Crop picture</string>
   <string name="proceed">Proceed</string>
 </resources>
