@@ -1,8 +1,10 @@
 package com.nowfloats.CustomPage;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -60,5 +62,14 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
     @Override
     public void DeletePageTrigger(int position, boolean chk, View view) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 202) {
+            if (!(data != null && data.getBooleanExtra("IS_REFRESH", false))) onBackPressed();
+            else if (customPageFragment != null) customPageFragment.isRefreshList();
+        }
     }
 }
