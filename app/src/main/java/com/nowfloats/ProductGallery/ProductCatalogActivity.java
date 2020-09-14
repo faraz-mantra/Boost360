@@ -218,9 +218,10 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
     private void openAddProductActivity(Product p) {
         String type = "";
-        if (p.productType != null && !p.productType.isEmpty()) {
-            type = p.productType;
-        } else type = Utils.getProductType(session.getFP_AppExperienceCode());
+//        if (p.productType != null && !p.productType.isEmpty()) {
+//            type = p.productType;
+//        } else
+        type = Utils.getProductType(session.getFP_AppExperienceCode());
         switch (type.toUpperCase()) {
             case "SERVICES":
                 p.setProductType(type);
