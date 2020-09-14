@@ -30,6 +30,7 @@ import com.nowfloats.hotel.tripadvisor.TripAdvisorActivity;
 import com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresActivity;
 import com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivity;
 import com.nowfloats.util.Utils;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 /**
@@ -97,6 +98,7 @@ public class ManageContentFragment extends Fragment {
                 Intent intent = null;
                 switch (pos) {
                     case 0:
+                        WebEngageController.trackEvent("MANAGE CONTENT", "Clicked on products catalogue", session.getFpTag());
                         intent = new Intent(mContext, ProductCatalogActivity.class);
                         break;
                     case 1:

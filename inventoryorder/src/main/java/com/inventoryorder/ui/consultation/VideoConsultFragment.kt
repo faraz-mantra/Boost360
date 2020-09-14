@@ -39,6 +39,7 @@ import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.bottomsheet.FilterBottomSheetDialog
 import com.inventoryorder.ui.startFragmentActivity
+import com.inventoryorder.utils.WebEngageController
 import com.inventoryorder.utils.copyClipBoard
 import com.inventoryorder.utils.openWebPage
 import java.util.*
@@ -72,6 +73,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
+    fpTag?.let { WebEngageController.trackEvent("CONSULTATIONS", "Clicked on video consultations", it) }
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)

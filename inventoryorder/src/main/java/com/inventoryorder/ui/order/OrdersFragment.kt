@@ -37,6 +37,7 @@ import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
+import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -68,6 +69,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
 
   override fun onCreateView() {
     super.onCreateView()
+    fpTag?.let { WebEngageController.trackEvent("ORDERS", "Clicked on Orders", it) }
     setOnClickListener(binding?.btnAdd)
     apiSellerSummary()
     layoutManager = LinearLayoutManager(baseActivity)

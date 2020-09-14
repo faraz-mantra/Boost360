@@ -444,6 +444,7 @@ public class FeaturedImageActivity extends AppCompatActivity {
                 String path = data.getStringExtra("edit_image");
                 if (!TextUtils.isEmpty(path)) {
                     this.path = path;
+                    WebEngageController.trackEvent("MANAGE CONTENT", "Featured Image added", session.getFpTag());
                     uploadPrimaryPicture(path);
                 }
             }

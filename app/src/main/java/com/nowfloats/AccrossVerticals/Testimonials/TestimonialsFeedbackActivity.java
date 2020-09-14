@@ -44,6 +44,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import retrofit.Callback;
@@ -120,6 +121,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (ScreenType.equals("edit")) {
                     updateExistingTestimonialsAPI();
                 } else {
@@ -279,6 +281,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
+                        WebEngageController.trackEvent("MANAGE CONTENT", "Testimonial added", session.getFpTag());
                         isNewDataAdded  = true;
                         Toast.makeText(getApplicationContext(), "Successfully Added Testimonials", Toast.LENGTH_LONG).show();
                         onBackPressed();
@@ -330,6 +333,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                     return;
                 }
 //                Methods.showSnackBarPositive(TestimonialsFeedbackActivity.this, "Successfully Updated Testimonials");
+                WebEngageController.trackEvent("MANAGE CONTENT", "Testimonial added", session.getFpTag());
                 Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
                 onBackPressed();
             }
