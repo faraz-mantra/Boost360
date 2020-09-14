@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
@@ -78,13 +79,9 @@ public class CustomPageFragment extends Fragment {
             custompageAdapter.updateSelection(0);
             custompageAdapter.notifyDataSetChanged();
 
-            if (dataModel.size()==0)
-            {
+            if (dataModel.size() == 0) {
                 emptylayout.setVisibility(View.VISIBLE);
-            }
-
-            else
-            {
+            } else {
                 emptylayout.setVisibility(View.GONE);
             }
         }
@@ -107,8 +104,8 @@ public class CustomPageFragment extends Fragment {
 //        getSupportActionBar().setBackgroundDrawable(defaultColor);
         if (titleTextView != null)
             titleTextView.setText(getString(R.string.custom_pages));
-        if(delete !=null)
-        delete.setVisibility(View.GONE);
+        if (delete != null)
+            delete.setVisibility(View.GONE);
         customPageDeleteCheck = false;
     }
 
@@ -143,6 +140,7 @@ public class CustomPageFragment extends Fragment {
         final FloatingActionButton addProduct = view.findViewById(R.id.fab_custom_page);
 
         addProduct.setOnClickListener(v -> addProduct());
+        if ((activity instanceof CustomPageActivity) && ((CustomPageActivity) activity).isAdd) addProduct();
     }
 
     @Override
@@ -168,17 +166,15 @@ public class CustomPageFragment extends Fragment {
 //        getSupportActionBar().setTitle("Custom Pages");
 
 
-
         CustomPageInterface pageInterface2 = Constants.restAdapter.create(CustomPageInterface.class);
-        pageInterface2.getPageUrl(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), 0,10,1, new Callback<CustomPageLink>() {
+        pageInterface2.getPageUrl(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), 0, 10, 1, new Callback<CustomPageLink>() {
             @Override
             public void success(CustomPageLink pageDetail, Response response) {
 
-                customPageLink=pageDetail;
+                customPageLink = pageDetail;
 
 
                 LoadPageList(activity, bus);
-
 
 
             }
@@ -189,9 +185,6 @@ public class CustomPageFragment extends Fragment {
             }
 
         });
-
-
-
 
 
         //Title
@@ -210,9 +203,8 @@ public class CustomPageFragment extends Fragment {
     }
 
     private void LoadPageList(Activity activity, Bus bus) {
-        new CustomPageService().GetPages( session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId, pageInterface, bus);
+        new CustomPageService().GetPages(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId, pageInterface, bus);
     }
-
 
 
     @Subscribe
@@ -224,12 +216,12 @@ public class CustomPageFragment extends Fragment {
             } else {
                 emptylayout.setVisibility(View.GONE);
             }
-            if (!session.getOnBoardingStatus() && dataModel.size() != session.getCustomPageCount()){
+            if (!session.getOnBoardingStatus() && dataModel.size() != session.getCustomPageCount()) {
                 session.setCustomPageCount(dataModel.size());
-                OnBoardingApiCalls.updateData(session.getFpTag(),String.format("custom_page:%s",dataModel.size()>0?"true":"false"));
+                OnBoardingApiCalls.updateData(session.getFpTag(), String.format("custom_page:%s", dataModel.size() > 0 ? "true" : "false"));
             }
             progress_layout.setVisibility(View.GONE);
-            custompageAdapter = new CustomPageAdapter(activity, dataModel, session, pageInterface, bus,customPageLink);
+            custompageAdapter = new CustomPageAdapter(activity, dataModel, session, pageInterface, bus, customPageLink);
 //            AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(custompageAdapter);
 //            ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
 //            scaleAdapter.setFirstOnly(false);
@@ -418,10 +410,9 @@ public class CustomPageFragment extends Fragment {
         }
     }
 
-    private void openAddCustomPageActivity()
-    {
+    private void openAddCustomPageActivity() {
         MixPanelController.track("AddCustomPage", null);
-        WebEngageController.trackEvent("CREATE A CUSTOMPAGE","Clicked: Post a Custompage",session.getFpTag());
+        WebEngageController.trackEvent("CREATE A CUSTOMPAGE", "Clicked: Post a Custompage", session.getFpTag());
         Intent intent = new Intent(activity, CreateCustomPageActivity.class);
         startActivity(intent);
 
@@ -432,40 +423,24 @@ public class CustomPageFragment extends Fragment {
     /**
      * Revamped Widget Logic
      */
-    private void addProduct()
-    {
+    private void addProduct() {
         /**
          * If not new pricing plan
          */
-        if(!WidgetKey.isNewPricingPlan)
-        {
-            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1"))
-            {
+        if (!WidgetKey.isNewPricingPlan) {
+            if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                 Methods.showFeatureNotAvailDialog(getContext());
-            }
-
-            else
-            {
+            } else {
                 openAddCustomPageActivity();
             }
-        }
-
-        else
-        {
+        } else {
             String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_CUSTOM_PAGES, WidgetKey.WIDGET_PROPERTY_MAX);
 
-            if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
-            {
+            if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
                 Methods.showFeatureNotAvailDialog(getContext());
-            }
-
-            else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && dataModel.size() >= Integer.parseInt(value))
-            {
+            } else if (!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && dataModel.size() >= Integer.parseInt(value)) {
                 Toast.makeText(getContext(), String.valueOf(getString(R.string.message_custom_page_limit)), Toast.LENGTH_LONG).show();
-            }
-
-            else
-            {
+            } else {
                 openAddCustomPageActivity();
             }
         }

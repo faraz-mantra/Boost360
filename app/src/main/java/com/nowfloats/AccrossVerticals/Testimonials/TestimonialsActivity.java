@@ -24,6 +24,7 @@ import com.nowfloats.AccrossVerticals.API.model.DeleteTestimonials.DeleteTestimo
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.GetTestimonialData;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.ProductGallery.Model.Product;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -59,11 +60,22 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testimonials);
-
         //setheaders
         setHeader();
-
         initialization();
+        checkIsAdd();
+    }
+
+    private void checkIsAdd() {
+        Bundle bundle=  getIntent().getExtras();
+        if (bundle!=null){
+            boolean isAdd= bundle.getBoolean("IS_ADD");
+            if (isAdd) {
+                Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
+                intent.putExtra("ScreenState", "new");
+                startActivity(intent);
+            }
+        }
     }
 
     @Override

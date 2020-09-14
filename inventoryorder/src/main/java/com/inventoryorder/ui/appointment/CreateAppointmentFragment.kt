@@ -452,18 +452,22 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
       val numberPatient = itemExtra?.patientMobileNumber?.replace("+91", "")?.trim()
       val numberDoctor = session?.userPrimaryMobile?.replace("+91", "")?.trim()
-      if (isMobileNumberValid(numberPatient ?: "")) {
-        viewModel?.sendSMS(itemExtra?.patientMobileNumber, messageForClient, CLIENT_ID_3)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-          if (isMobileNumberValid(numberDoctor ?: "")) {
-            viewModel?.sendSMS(numberDoctor, messageForDoctor, CLIENT_ID_3)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-              sendMailUserAndDoctor(response, dateApt)
-            })
-          } else sendMailUserAndDoctor(response, dateApt)
-        })
-      } else if (isMobileNumberValid(numberDoctor ?: "")) {
-        viewModel?.sendSMS(numberDoctor, messageForDoctor, CLIENT_ID_3)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-          sendMailUserAndDoctor(response, dateApt)
-        })
+      when {
+        isMobileNumberValid(numberPatient ?: "") -> {
+          viewModel?.sendSMS(itemExtra?.patientMobileNumber, messageForClient, CLIENT_ID_3)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (isMobileNumberValid(numberDoctor ?: "")) {
+              viewModel?.sendSMS(numberDoctor, messageForDoctor, CLIENT_ID_3)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+                sendMailUserAndDoctor(response, dateApt)
+              })
+            } else sendMailUserAndDoctor(response, dateApt)
+          })
+        }
+        isMobileNumberValid(numberDoctor ?: "") -> {
+          viewModel?.sendSMS(numberDoctor, messageForDoctor, CLIENT_ID_3)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+            sendMailUserAndDoctor(response, dateApt)
+          })
+        }
+        else -> sendMailUserAndDoctor(response, dateApt)
       }
     })
   }
@@ -498,29 +502,33 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
       }
     } else null
 
-    if (requestDoctor != null) {
-      viewModel?.sendMail(requestDoctor)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-        if (requestUser != null) {
-          viewModel?.sendMail(requestUser)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-            startSuccessScreen(response)
-          })
-        } else startSuccessScreen(response)
-      })
-    } else if (requestUser != null) {
-      viewModel?.sendMail(requestUser)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-        startSuccessScreen(response)
-      })
+    when {
+      requestDoctor != null -> {
+        viewModel?.sendMail(requestDoctor)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+          if (requestUser != null) {
+            viewModel?.sendMail(requestUser)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+              startSuccessScreen(response, dateApt)
+            })
+          } else startSuccessScreen(response, dateApt)
+        })
+      }
+      requestUser != null -> {
+        viewModel?.sendMail(requestUser)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+          startSuccessScreen(response,dateApt)
+        })
+      }
+      else -> startSuccessScreen(response, dateApt)
     }
   }
 
-  private fun startSuccessScreen(response: OrderItem?) {
+  private fun startSuccessScreen(response: OrderItem?, dateApt: String?) {
     hideProgress()
     showLongToast(getString(R.string.booking_created))
     val bundle = Bundle()
     bundle.putString("ORDER_ID", response?.ReferenceNumber)
     bundle.putString("NAME", patientName)
     bundle.putString("SERVICE_NAME", serviceData?.name)
-    bundle.putString("START_TIME_DATE", parseDate(scheduledDateTime, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL))
+    bundle.putString("START_TIME_DATE", dateApt)
     bundle.putString("NUMBER", patientMobile)
     bundle.putString("EMAIL", patientEmail)
     startFragmentActivity(FragmentType.BOOKING_SUCCESSFUL, bundle, isResult = true)

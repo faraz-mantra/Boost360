@@ -2,8 +2,10 @@ package com.nowfloats.CustomPage;
 
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -18,6 +20,7 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
 
     Toolbar toolbar;
     TextView headerText;
+    boolean isAdd = false;
     private CustomPageFragment customPageFragment;
 
     @Override
@@ -25,7 +28,7 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_site_appearance);
 
-        WebEngageController.trackEvent("CUSTOMPAGE","CUSTOMPAGE",null);
+        WebEngageController.trackEvent("CUSTOMPAGE", "CUSTOMPAGE", null);
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_site_appearance);
         setSupportActionBar(toolbar);
@@ -39,7 +42,8 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
         findViewById(R.id.fm_site_appearance).setVisibility(View.VISIBLE);
         getSupportFragmentManager().beginTransaction().add(R.id.fm_site_appearance, customPageFragment).
                 commit();
-
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) isAdd = bundle.getBoolean("IS_ADD");
     }
 
     @Override

@@ -74,6 +74,15 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         this.initProductRecyclerView();
         getProducts(false);
         getWidgetLimit();
+        checkIsAdd();
+    }
+
+    private void checkIsAdd() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            boolean isAdd = bundle.getBoolean("IS_ADD");
+            if (isAdd) openAddProductActivity(new Product());
+        }
     }
 
     private void getWidgetLimit() {
