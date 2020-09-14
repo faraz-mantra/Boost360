@@ -38,9 +38,9 @@ import com.thinksity.databinding.ToppersDetailsBinding
 import kotlinx.android.synthetic.main.bottom_sheet_camera_gallery.*
 import org.koin.android.ext.android.inject
 
-class TopperDetailsFragment(private val topperData: Data?) : BaseFragment(), RuntimePermissionListener {
+class TopperDetailsFragment(private val topperData: Data?, private val isEditing: Boolean) : BaseFragment(), RuntimePermissionListener {
 
-    constructor() : this(null)
+    constructor() : this(null, false)
 
     private lateinit var binding: ToppersDetailsBinding
     private val viewModel by inject<TopperDetailsViewModel>()
@@ -203,19 +203,24 @@ class TopperDetailsFragment(private val topperData: Data?) : BaseFragment(), Run
         val backButton: LinearLayout = view.findViewById(R.id.back_button)
         val rightIcon: ImageView = view.findViewById(R.id.right_icon)
         val title: TextView = view.findViewById(R.id.title)
-        title.text = getString(R.string.candidate_details)
-        rightIcon.setImageResource(R.drawable.ic_delete_white_outerline)
-        rightButton.setOnClickListener {
-            when {
-                addUpdateTopper -> {
-                    showLoader("Deleting Topper")
-                    viewModel.deleteOurTopper(topperData as Data)
-                }
-                else -> {
-                    Toast.makeText(requireContext(), "No candidate data found", Toast.LENGTH_SHORT).show()
+        if(this.isEditing!!){
+            title.text = getString(R.string.candidate_details)
+            rightIcon.setImageResource(R.drawable.ic_delete_white_outerline)
+            rightButton.setOnClickListener {
+                when {
+                    addUpdateTopper -> {
+                        showLoader("Deleting Topper")
+                        viewModel.deleteOurTopper(topperData as Data)
+                    }
+                    else -> {
+                        Toast.makeText(requireContext(), "No candidate data found", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
+        }else{
+            title.text = getString(R.string.add_candidate)
         }
+
         backButton.setOnClickListener { requireActivity().onBackPressed() }
     }
 
@@ -271,7 +276,7 @@ class TopperDetailsFragment(private val topperData: Data?) : BaseFragment(), Run
     override fun onGranted() {
         val view = layoutInflater.inflate(R.layout.bottom_sheet_camera_gallery, null)
         val dialog = BottomSheetDialog(requireContext())
-        dialog.setCancelable(false)
+        dialog.setCancelable(true)
         dialog.setContentView(view)
         dialog.show()
         dialog.camera.setOnClickListener {
@@ -355,6 +360,6 @@ class TopperDetailsFragment(private val topperData: Data?) : BaseFragment(), Run
 
     companion object {
         fun newInstance(): TopperDetailsFragment = TopperDetailsFragment()
-        fun newInstance(topperData: Data): TopperDetailsFragment = TopperDetailsFragment(topperData)
+        fun newInstance(topperData: Data, isEditing: Boolean): TopperDetailsFragment = TopperDetailsFragment(topperData, isEditing)
     }
 }
