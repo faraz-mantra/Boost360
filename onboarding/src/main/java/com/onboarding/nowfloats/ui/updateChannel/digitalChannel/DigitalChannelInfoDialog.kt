@@ -45,8 +45,13 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
         binding?.disableBtn?.gone()
         fabObservable?.subscribe()
       } else {
-        if (channelModel!!.isWhatsAppChannel()) binding?.disableBtn?.visible()
-        else binding?.disableBtn?.gone()
+        if (channelModel!!.isWhatsAppChannel()) {
+          binding?.optInOutBtn?.visible()
+          binding?.disableBtn?.gone()
+        } else {
+          binding?.optInOutBtn?.gone()
+          binding?.disableBtn?.gone()
+        }
         binding?.disconnectBtn?.visible()
         fabObservable?.andThen(binding?.btnViewChannel?.fadeIn(50L))?.subscribe()
       }
@@ -75,7 +80,7 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
       binding?.image?.setImageDrawable(channelModel?.getDrawable(activity))
       binding?.title?.underlineText(0, (binding?.title?.text ?: "").length - 1)
     }
-    setOnClickListener(binding?.confirm, binding?.disconnectBtn, binding?.disableBtn, binding?.title, binding?.dismiss, binding?.clickHelp)
+    setOnClickListener(binding?.confirm, binding?.disconnectBtn, binding?.disableBtn, binding?.title, binding?.dismiss, binding?.clickHelp, binding?.optInOutBtn)
   }
 
   fun setChannels(channelModel: ChannelModel?) {
@@ -88,7 +93,7 @@ class DigitalChannelInfoDialog : BaseDialogFragment<DialogDigitalChannelInfoBind
       binding?.confirm -> this.dismiss()
       binding?.dismiss -> this.dismiss()
       binding?.clickHelp -> callHelpLineNumber()
-      binding?.disableBtn -> showLongToast("Coming soon...")
+      binding?.disableBtn, binding?.optInOutBtn -> showLongToast("Coming soon...")
       binding?.disconnectBtn -> {
         channelModel?.let { onClickedDisconnect(it) }
         this.dismiss()

@@ -101,7 +101,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
             orderList.addAll(list)
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
-          } else errorView("No consultation available.")
+          } else errorView("No video consultation available.")
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
             val list = response.Items?.map { item ->
@@ -109,9 +109,9 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
             } as ArrayList<OrderItem>
             setAdapterNotify(list)
           } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
-          else errorView("No consultation available.")
+          else errorView("No video consultation available.")
         }
-      } else errorView(it.message ?: "No consultation available.")
+      } else errorView(it.message ?: "No video consultation available.")
     })
   }
 
@@ -124,7 +124,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.bookingRecycler?.visible()
-    binding?.errorTxt?.gone()
+    binding?.errorView?.gone()
     if (orderAdapter != null) {
       orderAdapter?.notify(getDateWiseFilter(items))
     } else setAdapterAppointmentList(getDateWiseFilter(items))
@@ -132,7 +132,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   private fun errorView(error: String) {
     binding?.bookingRecycler?.gone()
-    binding?.errorTxt?.visible()
+    binding?.errorView?.visible()
     binding?.errorTxt?.text = error
   }
 

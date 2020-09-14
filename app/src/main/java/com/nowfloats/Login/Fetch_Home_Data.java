@@ -17,12 +17,14 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.MixPanelController;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import retrofit.Callback;
@@ -32,10 +34,10 @@ import retrofit.RetrofitError;
  * Created by Dell on 11-02-2015.
  */
 public class Fetch_Home_Data {
-    Activity appActivity ;
+    Activity appActivity;
     private FloatsMessageModel sendJson = null;
     private boolean dataExists = false;
-    private boolean newPost = false,interfaceInvoke = true;
+    private boolean newPost = false, interfaceInvoke = true;
     private DbController mDbController;
     private UserSessionManager sessionManager;
 
@@ -51,19 +53,19 @@ public class Fetch_Home_Data {
 
     public interface Fetch_Home_Data_Interface {
         public void dataFetched(int skip, boolean isNewMessage);
+
         public void sendFetched(FloatsMessageModel jsonObject);
     }
 
     public Fetch_Home_Data_Interface fetchHomeDataInterface = null;
 
-    public Fetch_Home_Data(Activity activity,int type){
-        appActivity = activity ;
+    public Fetch_Home_Data(Activity activity, int type) {
+        appActivity = activity;
         setInterfaceType(type);
         mDbController = DbController.getDbController(appActivity);
     }
 
     /**
-     *
      * @param context
      * @param session
      */
@@ -73,63 +75,65 @@ public class Fetch_Home_Data {
         sessionManager = session;
     }
 
-    public void setFetchDataListener(Fetch_Home_Data_Interface fetchHomeDataInterface)
-    {
-        this.fetchHomeDataInterface = fetchHomeDataInterface ;
+    public void setFetchDataListener(Fetch_Home_Data_Interface fetchHomeDataInterface) {
+        this.fetchHomeDataInterface = fetchHomeDataInterface;
     }
-    public void setNewPostListener(boolean value){
+
+    public void setNewPostListener(boolean value) {
         this.newPost = value;
     }
-    public void getMessages(final String fpId,final String skipByCount)
-    {
-        Log.d("Fetch_Home_Data","getMessages : "+fpId);
-        HashMap<String,String> map = new HashMap<>();
-        map.put("clientId",Constants.clientId);
-        map.put("skipBy",skipByCount);
-        map.put("fpId",fpId);
+
+    public void getMessages(final String fpId, final String skipByCount) {
+        Log.d("Fetch_Home_Data", "getMessages : " + fpId);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("clientId", Constants.clientId);
+        map.put("skipBy", skipByCount);
+        map.put("fpId", fpId);
         Login_Interface login_interface = Constants.restAdapter.create(Login_Interface.class);
         login_interface.getMessages(map, new Callback<MessageModel>() {
             @Override
             public void success(MessageModel messageModel, retrofit.client.Response response) {
-                parseMessages(messageModel,fpId,skipByCount, false);
+                parseMessages(messageModel, fpId, skipByCount, false);
             }
+
             @Override
             public void failure(RetrofitError error) {
             }
         });
     }
 
-    public void getNewAvailableMessage(String messageId, final String fpId){
-        HashMap<String,String> map = new HashMap<>();
-        map.put("clientId",Constants.clientId);
-        map.put("messageId",messageId);
-        map.put("merchantId",fpId);
+    public void getNewAvailableMessage(String messageId, final String fpId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("clientId", Constants.clientId);
+        map.put("messageId", messageId);
+        map.put("merchantId", fpId);
         Login_Interface login_interface = Constants.restAdapter.create(Login_Interface.class);
         login_interface.getNewAvailableMessage(map, new Callback<MessageModel>() {
             @Override
             public void success(MessageModel messageModel, retrofit.client.Response response) {
-                parseMessages(messageModel,fpId,"0", true);
+                parseMessages(messageModel, fpId, "0", true);
             }
+
             @Override
             public void failure(RetrofitError error) {
-                if (fetchHomeDataInterface!=null && interfaceType==0){
+                if (fetchHomeDataInterface != null && interfaceType == 0) {
                     fetchHomeDataInterface.dataFetched(0, false);
-                }else if (fetchHomeDataInterface!=null && interfaceType==1){
+                } else if (fetchHomeDataInterface != null && interfaceType == 1) {
                     fetchHomeDataInterface.sendFetched(sendJson);
                 }
             }
         });
     }
 
-    public void parseMessages(MessageModel response,String fpId,String skip, boolean isNewMessage){
+    public void parseMessages(MessageModel response, String fpId, String skip, boolean isNewMessage) {
         BoostLog.d("Called Parse Message: ", "Parsing Message");
-        if (response!=null) {
+        if (response != null) {
             interfaceInvoke = true;
-            ArrayList<FloatsMessageModel> bizData 	= response.floats;
-            Constants.moreStorebizFloatsAvailable 	= response.moreFloatsAvailable;
-            if(bizData != null && bizData.size() > 0 ) {
+            ArrayList<FloatsMessageModel> bizData = response.floats;
+            Constants.moreStorebizFloatsAvailable = response.moreFloatsAvailable;
+            if (bizData != null && bizData.size() > 0) {
                 sendJson = bizData.get(0);
-                Constants.NumberOfUpdates = HomeActivity.StorebizFloats.size() ;
+                Constants.NumberOfUpdates = HomeActivity.StorebizFloats.size();
                 MixPanelController.setProperties("NoOfUpdates", "" + Constants.NumberOfUpdates);
 
                 /*for (int i = 0; i < bizData.size(); i++) {
@@ -161,7 +165,7 @@ public class Fetch_Home_Data {
                         }
                     }
                 }*/
-                for(int i=0; i<bizData.size(); i++){
+                for (int i = 0; i < bizData.size(); i++) {
                     FloatsMessageModel data = bizData.get(i);
                     Updates update = new Updates();
                     update.setServerId(data._id)
@@ -177,27 +181,27 @@ public class Fetch_Home_Data {
                 }
             }
 
-            if(HomeActivity.StorebizFloats!=null && HomeActivity.StorebizFloats.size()==0){
-                if (Home_Main_Fragment.emptyMsgLayout!=null && !Constants.isWelcomScreenToBeShown) {
-                        Home_Main_Fragment.emptyMsgLayout.setVisibility(View.VISIBLE);
+            if (HomeActivity.StorebizFloats != null && HomeActivity.StorebizFloats.size() == 0) {
+                if (Home_Main_Fragment.emptyMsgLayout != null && !Constants.isWelcomScreenToBeShown) {
+                    Home_Main_Fragment.emptyMsgLayout.setVisibility(View.VISIBLE);
                 }
-            }else{
-                if (Home_Main_Fragment.emptyMsgLayout!=null)
+            } else {
+                if (Home_Main_Fragment.emptyMsgLayout != null)
                     Home_Main_Fragment.emptyMsgLayout.setVisibility(View.GONE);
             }
 
-            if (interfaceInvoke){
-                if (fetchHomeDataInterface!=null && interfaceType==0){
+            if (interfaceInvoke) {
+                if (fetchHomeDataInterface != null && interfaceType == 0) {
                     fetchHomeDataInterface.dataFetched(Integer.parseInt(skip), isNewMessage);
-                }else if (fetchHomeDataInterface!=null && interfaceType==1){
+                } else if (fetchHomeDataInterface != null && interfaceType == 1) {
                     fetchHomeDataInterface.sendFetched(sendJson);
                 }
             }
-        }else{
+        } else {
 
-            if (fetchHomeDataInterface!=null && interfaceType==0){
+            if (fetchHomeDataInterface != null && interfaceType == 0) {
                 fetchHomeDataInterface.dataFetched(Integer.parseInt(skip), isNewMessage);
-            }else if (fetchHomeDataInterface!=null && interfaceType==1){
+            } else if (fetchHomeDataInterface != null && interfaceType == 1) {
                 fetchHomeDataInterface.sendFetched(sendJson);
             }
 
@@ -205,9 +209,7 @@ public class Fetch_Home_Data {
     }
 
 
-
-    public void getVisitors()
-    {
+    public void getVisitors() {
         /**
          * Create calendar instance
          */
@@ -248,9 +250,9 @@ public class Fetch_Home_Data {
         /**
          * Create HashMap for query string parameter
          */
-        HashMap<String,String> map = new HashMap<>();
+        HashMap<String, String> map = new HashMap<>();
 
-        map.put("clientId",Constants.clientId);
+        map.put("clientId", Constants.clientId);
         map.put("startDate", startDate /*"2018-12-05"*/);
         map.put("endDate", endDate /*"2019-02-05"*/);
         map.put("batchType", "DAILY");
@@ -264,8 +266,7 @@ public class Fetch_Home_Data {
         visitors_interface.getVisitors(array, map, new Callback<List<VisitAnalytics>>() {
 
             @Override
-            public void success(List<VisitAnalytics> visitAnalyticsList, retrofit.client.Response response)
-            {
+            public void success(List<VisitAnalytics> visitAnalyticsList, retrofit.client.Response response) {
                 /**
                  * Store visit count on session
                  */
@@ -282,34 +283,30 @@ public class Fetch_Home_Data {
                 appActivity.runOnUiThread(new Runnable() {
 
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         /**
                          * Display total visit count om TextView
                          */
-                        if(Analytics_Fragment.visitCount != null && Analytics_Fragment.visits_progressBar!=null)
-                        {
+                        if (Analytics_Fragment.visitCount != null && Analytics_Fragment.visits_progressBar != null) {
                             Analytics_Fragment.visitCount.setVisibility(View.VISIBLE);
                             Analytics_Fragment.visits_progressBar.setVisibility(View.GONE);
-                            Analytics_Fragment.visitCount.setText(sessionManager.getVisitsCount());
+                            Analytics_Fragment.visitCount.setText(Analytics_Fragment.getNumberFormat(sessionManager.getVisitsCount()));
                         }
 
                         /**
                          * Display total visitors count om TextView
                          */
-                        if(Analytics_Fragment.visitorsCount != null && Analytics_Fragment.visitors_progressBar!=null)
-                        {
+                        if (Analytics_Fragment.visitorsCount != null && Analytics_Fragment.visitors_progressBar != null) {
                             Analytics_Fragment.visitorsCount.setVisibility(View.VISIBLE);
                             Analytics_Fragment.visitors_progressBar.setVisibility(View.GONE);
-                            Analytics_Fragment.visitorsCount.setText(sessionManager.getVisitorsCount());
+                            Analytics_Fragment.visitorsCount.setText(Analytics_Fragment.getNumberFormat(sessionManager.getVisitorsCount()));
                         }
                     }
                 });
             }
 
             @Override
-            public void failure(RetrofitError error)
-            {
+            public void failure(RetrofitError error) {
                 Log.d("VisitorsApiInterface", "Fail - " + error.getMessage());
             }
         });
@@ -318,11 +315,11 @@ public class Fetch_Home_Data {
 
     /**
      * Convert local date to UTC date
+     *
      * @param date local date object
      * @return UTC date
      */
-    private Date localToGMT(Date date)
-    {
+    private Date localToGMT(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
@@ -332,20 +329,18 @@ public class Fetch_Home_Data {
 
     /**
      * Count total visitors
+     *
      * @param analytics list of analytics data
      * @return sum of visitors
      */
-    private int getTotalVisitors(List<VisitAnalytics> analytics)
-    {
+    private int getTotalVisitors(List<VisitAnalytics> analytics) {
         int sum = 0;
 
-        if(analytics == null)
-        {
+        if (analytics == null) {
             return sum;
         }
 
-        for(VisitAnalytics value: analytics)
-        {
+        for (VisitAnalytics value : analytics) {
             sum += value.getVisitors();
         }
 
@@ -354,20 +349,18 @@ public class Fetch_Home_Data {
 
     /**
      * Count total visits
+     *
      * @param analytics list of analytics data
      * @return sum of visits
      */
-    private int getTotalVisits(List<VisitAnalytics> analytics)
-    {
+    private int getTotalVisits(List<VisitAnalytics> analytics) {
         int sum = 0;
 
-        if(analytics == null)
-        {
+        if (analytics == null) {
             return sum;
         }
 
-        for(VisitAnalytics value: analytics)
-        {
+        for (VisitAnalytics value : analytics) {
             sum += value.getVisits();
         }
 

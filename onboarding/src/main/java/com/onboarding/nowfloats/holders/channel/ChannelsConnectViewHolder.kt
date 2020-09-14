@@ -1,6 +1,8 @@
 package com.onboarding.nowfloats.holders.channel
 
 import android.view.View
+import com.framework.extensions.gone
+import com.framework.extensions.visible
 import com.onboarding.nowfloats.constant.RecyclerViewActionType
 import com.onboarding.nowfloats.databinding.ItemChannelsConnectedBinding
 import com.onboarding.nowfloats.model.channel.*
@@ -28,8 +30,10 @@ class ChannelsConnectViewHolder constructor(binding: ItemChannelsConnectedBindin
     setClickListeners(binding.infoBtn)
     binding.title.text = model.getName()
     binding.image.setImageDrawable(model.getDrawable(activity))
+    binding.optInOut.gone()
     when {
       model.isWhatsAppChannel() -> {
+        binding.optInOut.visible()
         binding.nameLink.text = model.channelActionData?.active_whatsapp_number?.takeIf { it.isNotEmpty() }?.let { it } ?: model.getName()
       }
       model.isGoogleBusinessChannel() -> {

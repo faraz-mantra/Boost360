@@ -1,7 +1,9 @@
 package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
@@ -14,6 +16,7 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.*
@@ -42,6 +45,7 @@ import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 import io.reactivex.Completable
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
 
@@ -300,7 +304,9 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     when (actionType) {
       RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal -> {
         if (channel.isFacebookShop()) {
-          showLongToast("You can't connect to Facebook shop using app.")
+          AlertDialog.Builder(baseActivity).setTitle(getString(R.string.fp_shop_awaited_title))
+              .setMessage(resources.getString(R.string.fp_shop_awaited_desc))
+              .setPositiveButton(resources.getString(R.string.okay)) { d, _ -> d.dismiss() }.show()
           return
         }
         listDisconnect?.map {
