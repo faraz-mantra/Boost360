@@ -669,6 +669,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     private void addInventory() {
         WebEngageController.trackEvent("DASHBOARD - Fab - Inventory", "Fab", null);
         Intent webIntent = new Intent(getActivity(), ProductCatalogActivity.class);
+        webIntent.putExtra("IS_ADD", true);
         startActivity(webIntent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
@@ -683,6 +684,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     private void addCustomPage() {
         WebEngageController.trackEvent("DASHBOARD - Fab - CustomPage", "Fab", null);
         Intent webIntent = new Intent(getActivity(), CustomPageActivity.class);
+        webIntent.putExtra("IS_ADD", true);
         startActivity(webIntent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
@@ -690,14 +692,13 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     private void addTestimonial() {
         WebEngageController.trackEvent("DASHBOARD - Fab - Testimonial", "Fab", null);
         Intent webIntent = new Intent(getActivity(), TestimonialsActivity.class);
+        webIntent.putExtra("IS_ADD", true);
         startActivity(webIntent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void addUpdate() {
-
         openAddUpdateActivity();
-
 //        /**
 //         * If not new pricing plan
 //         */
