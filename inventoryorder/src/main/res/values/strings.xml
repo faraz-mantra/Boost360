@@ -93,5 +93,7 @@
     <string name="please_add_commodity_first">Please add a manufactured commodity first.</string>
   <string name="please_add_retail_commodity_first">Please add a retail commodity first.</string>
   <string name="please_add_service_first">Please add a service first.</string>
+    <string name="email_invalid_format_error">The email is in an invalid format.</string>
+    <string name="phone_invalid_format_error">The number is in invalid format.</string>
 
 </resources>

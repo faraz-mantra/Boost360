@@ -1969,4 +1969,5 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="editing_testimonial">Editing testimonial</string>
     <string name="add_a_testimonial">Add a testimonial</string>
     <string name="appointments_at_clinic_camel_case">Appointments at Clinic</string>
+    <string name="add_candidate">Add candidate</string>
 </resources>

@@ -37,6 +37,7 @@ import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import java.util.*
+import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() {
@@ -219,9 +220,23 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       binding?.btnPickUp -> showBottomSheetDialog()
       binding?.buttonConfirmOrder -> apiConfirmOrder()
       binding?.tvCancelOrder -> cancelOrderDialog()
-      binding?.tvCustomerContactNumber -> openDialer()
-      binding?.tvCustomerEmail -> openEmailApp()
+      binding?.tvCustomerContactNumber -> {
+        if(orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.length == 10)
+          openDialer()
+        else
+          showShortToast(getString(R.string.phone_invalid_format_error))
+
+      }
+      binding?.tvCustomerEmail -> {
+        if(orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()?.let { checkValidEmail(it) }!!) {
+          openEmailApp()
+        }else{
+          showShortToast(getString(R.string.email_invalid_format_error))
+        }
+      }
     }
+//      binding?.tvCustomerContactNumber -> openDialer()
+//      binding?.tvCustomerEmail -> openEmailApp()
   }
 
   private fun openEmailApp() {
@@ -234,6 +249,10 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     val intent = Intent(Intent.ACTION_DIAL)
     intent.data = (Uri.parse("tel:${orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()}"))
     startActivity(intent)
+  }
+
+  private fun checkValidEmail(email: String): Boolean {
+    return Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$").matcher(email).find()
   }
 
   private fun cancelOrderDialog(){
