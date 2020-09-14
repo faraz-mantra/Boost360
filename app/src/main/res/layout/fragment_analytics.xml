@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="fill_parent"
+    <ScrollView
+      android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:background="@color/screen_bg"
         android:gravity="center_horizontal"
@@ -438,7 +438,7 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/ic_nav_inbox" />
+                            card_view:srcCompat="@drawable/ic_nav_inbox" />
                     </FrameLayout>
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
@@ -523,7 +523,7 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/ic_nav_orders" />
+                            card_view:srcCompat="@drawable/ic_nav_orders" />
                     </FrameLayout>
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
@@ -555,14 +555,14 @@
                                 android:visibility="gone" />
 
                             <TextView
-                                android:id="@+id/customer_appointment_total_count"
-                                fontPath="Roboto-Medium.ttf"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textColor="@color/primaryColor"
-                                android:textSize="25sp"
-                                tools:ignore="MissingPrefix" />
+                              android:id="@+id/customer_appointment_total_count"
+                              fontPath="Roboto-Medium.ttf"
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent"
+                              android:text="0"
+                              android:textColor="@color/primaryColor"
+                              android:textSize="25sp"
+                              tools:ignore="MissingPrefix" />
                         </FrameLayout>
 
                         <ImageView
@@ -608,7 +608,7 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/ic_nav_calls" />
+                            card_view:srcCompat="@drawable/ic_nav_calls" />
                     </FrameLayout>
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121
@@ -1185,7 +1185,7 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/ic_facebook_menu" />
+                            card_view:srcCompat="@drawable/ic_facebook_menu" />
                     </FrameLayout>
 
                     <com.nowfloats.CustomWidget.roboto_lt_24_212121

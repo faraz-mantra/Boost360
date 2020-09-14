@@ -26,6 +26,7 @@ import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import org.json.JSONObject
 import java.util.*
+import kotlin.concurrent.schedule
 
 class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitViewModel>() {
 
@@ -106,22 +107,37 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
   }
 
   private fun initLottieAnimation() {
-    binding?.lottieAnimation?.setAnimation(R.raw.business_kyc_verification_gif)
-    binding?.lottieAnimation?.repeatCount = LottieDrawable.INFINITE
-    startCheckAnimation()
-  }
-
-  private fun startCheckAnimation() {
-    binding?.lottieAnimation?.let {
-      if (it.isAnimating) it.pauseAnimation()
-      else it.playAnimation()
+    binding?.lottieAnimation?.apply {
+      setAnimation(R.raw.business_kyc_verification_gif)
+      repeatCount = LottieDrawable.INFINITE
+      if (isAnimating) pauseAnimation() else playAnimation()
     }
   }
+
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnKycStatusRefresh -> showLongToast("Refreshing status...")
+      binding?.btnKycStatusRefresh -> {
+        initLottieAnimationRefresh()
+        binding?.mainView?.gone()
+        binding?.refreshView?.visible()
+        Timer().schedule(2000) {
+          baseActivity.runOnUiThread {
+            binding?.lottieAnimationRefresh?.pauseAnimation()
+            binding?.mainView?.visible()
+            binding?.refreshView?.gone()
+          }
+        }
+      }
+    }
+  }
+
+  private fun initLottieAnimationRefresh() {
+    binding?.lottieAnimationRefresh?.apply {
+      setAnimation(R.raw.verificatioan_status_loader)
+      repeatCount = LottieDrawable.INFINITE
+      if (isAnimating) pauseAnimation() else playAnimation()
     }
   }
 

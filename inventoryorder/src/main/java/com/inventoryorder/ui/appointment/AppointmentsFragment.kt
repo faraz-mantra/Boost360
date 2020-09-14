@@ -141,7 +141,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.bookingRecycler?.visible()
-    binding?.errorTxt?.gone()
+    binding?.errorView?.gone()
     if (orderAdapter != null) {
       orderAdapter?.notify(getDateWiseFilter(items))
     } else setAdapterAppointmentList(getDateWiseFilter(items))
@@ -149,7 +149,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   private fun errorView(error: String) {
     binding?.bookingRecycler?.gone()
-    binding?.errorTxt?.visible()
+    binding?.errorView?.visible()
     binding?.errorTxt?.text = error
   }
 
