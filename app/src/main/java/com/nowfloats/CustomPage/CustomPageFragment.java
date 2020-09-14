@@ -202,10 +202,13 @@ public class CustomPageFragment extends Fragment {
         }
     }
 
+    public void isRefreshList() {
+        LoadPageList(activity, bus);
+    }
+
     private void LoadPageList(Activity activity, Bus bus) {
         new CustomPageService().GetPages(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG), Constants.clientId, pageInterface, bus);
     }
-
 
     @Subscribe
     public void getPageList(CustomPageEvent response) {
@@ -414,8 +417,8 @@ public class CustomPageFragment extends Fragment {
         MixPanelController.track("AddCustomPage", null);
         WebEngageController.trackEvent("CREATE A CUSTOMPAGE", "Clicked: Post a Custompage", session.getFpTag());
         Intent intent = new Intent(activity, CreateCustomPageActivity.class);
-        startActivity(intent);
-
+        if ((activity instanceof CustomPageActivity) && ((CustomPageActivity) activity).isAdd) activity.startActivityForResult(intent, 202);
+        else activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 

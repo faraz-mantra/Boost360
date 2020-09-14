@@ -71,6 +71,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     private final int media_req_id = 1;
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
+    private boolean isNewDataAdded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +108,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 int tempCount = 200 - s.length();
-                descriptionCharCount.setText("("+tempCount+" Characters)");
+                descriptionCharCount.setText("(" + tempCount + " Characters)");
             }
 
             @Override
@@ -174,7 +175,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         if (ScreenType != null && ScreenType.equals("edit")) {
             title.setText(R.string.editing_testimonial);
             rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
-        }else{
+        } else {
             title.setText(R.string.add_a_testimonial);
         }
 //        rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
@@ -236,9 +237,9 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     }
 
     private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
-        if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name()))
+        if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name()))
             cameraIntent();
-        else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name()))
+        else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name()))
             galleryIntent();
     }
 
@@ -278,7 +279,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-//                        Methods.showSnackBarPositive(TestimonialsFeedbackActivity.this, "Successfully Added Testimonials");
+                        isNewDataAdded  = true;
                         Toast.makeText(getApplicationContext(), "Successfully Added Testimonials", Toast.LENGTH_LONG).show();
                         onBackPressed();
                     }
@@ -413,7 +414,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
             path = null;
             if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
                 try {
-                    Log.e("ImageURI ->",imageUri.getPath());
+                    Log.e("ImageURI ->", imageUri.getPath());
                     path = Methods.getRealPathFromURI(this, imageUri);
                     String fname = "Testimonials" + System.currentTimeMillis();
 //                    path = Util.saveBitmap(path, TestimonialsFeedbackActivity.this, fname);
@@ -451,13 +452,13 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                 }
             }
         } catch (Exception e) {
-            Log.e("onActivityResult ->", "Failed ->"+e.getMessage());
+            Log.e("onActivityResult ->", "Failed ->" + e.getMessage());
             e.printStackTrace();
         }
     }
 
     public void updatePlaceProfileImage() {
-        if(!uploadedImageURL.isEmpty()) {
+        if (!uploadedImageURL.isEmpty()) {
             Glide.with(TestimonialsFeedbackActivity.this).load(uploadedImageURL).into(profileImage);
             removeProfileImage.setVisibility(View.VISIBLE);
         }
@@ -513,5 +514,13 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     public void uploadImageURL(String url) {
         uploadedImageURL = url;
         updatePlaceProfileImage();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent data = new Intent();
+        data.putExtra("IS_REFRESH", isNewDataAdded );
+        setResult(RESULT_OK, data);
+        super.onBackPressed();
     }
 }
