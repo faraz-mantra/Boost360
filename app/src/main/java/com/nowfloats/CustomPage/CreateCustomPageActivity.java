@@ -506,7 +506,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            finish();
+            onBackPressed();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
         return super.onOptionsItemSelected(item);
