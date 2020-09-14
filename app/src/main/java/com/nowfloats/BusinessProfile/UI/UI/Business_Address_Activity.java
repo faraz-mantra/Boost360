@@ -107,6 +107,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
         saveTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                WebEngageController.trackEvent("BUSINESS DESCRIPTION", "Business address added", session.getFpTag());
                 MixPanelController.track(EventKeysWL.SAVE_BUSINESS_ADDRESS,null);
                 saveAddressFlag=true;
                 uploadBussinessAddress();
@@ -497,9 +498,10 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode==RESULT_OK && requestCode==PLACE_PICKER_REQUEST){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PLACE_PICKER_REQUEST) {
             Place place = PlacePicker.getPlace(this, data);
-            if(place!=null){
+            if (place != null) {
                 LatLng latLng = place.getLatLng();
                 Constants.latitude = latLng.latitude;
                 Constants.longitude = latLng.longitude;
@@ -514,13 +516,13 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
                     e.printStackTrace();
                 }
 
-                BusinessAddressUpdateApi Task = new BusinessAddressUpdateApi( Constants.latitude,
-                        Constants.longitude, Business_Address_Activity.this,citytext
-                        ,areaCode.getText().toString(),businessAddress.getText().toString(),
-                        saveAddressFlag,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+                BusinessAddressUpdateApi Task = new BusinessAddressUpdateApi(Constants.latitude,
+                        Constants.longitude, Business_Address_Activity.this, citytext
+                        , areaCode.getText().toString(), businessAddress.getText().toString(),
+                        saveAddressFlag, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
                 Task.update();
                 saveTextView.setVisibility(View.GONE);
-                saveAddressFlag=false;
+                saveAddressFlag = false;
             }
         }
     }

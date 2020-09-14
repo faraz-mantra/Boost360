@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.nowfloats.AccrossVerticals.domain.ui.ExistingDomain.ExistingDomainFragment;
 import com.nowfloats.AccrossVerticals.domain.ui.NewDomain.NewDomainFragment;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 public class DomainPurchasedFragment extends Fragment {
@@ -47,6 +48,7 @@ public class DomainPurchasedFragment extends Fragment {
         existDomainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                WebEngageController.trackEvent("DOMAIN & EMAIL", "Clicked on have an existing domain", "null");
                 ((DomainEmailActivity) requireActivity()).addFragment(new ExistingDomainFragment(), "ExistingDomain");
             }
         });
@@ -54,6 +56,7 @@ public class DomainPurchasedFragment extends Fragment {
         newDomainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                WebEngageController.trackEvent("DOMAIN & EMAIL", "Clicked on book a new domain", "null");
                 ((DomainEmailActivity) requireActivity()).addFragment(new NewDomainFragment(), "NewDomain");
             }
         });

@@ -53,6 +53,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.ProgressBarAnimation;
 import com.nowfloats.util.Utils;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
@@ -381,6 +382,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
             }
         }
 
+        WebEngageController.trackEvent("SITE HEALTH", "Clicked on site health", String.valueOf(siteMeterTotalWeight));
 
         activity.runOnUiThread(new Runnable() {
             @Override

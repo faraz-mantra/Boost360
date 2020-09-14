@@ -76,8 +76,8 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             public void onClick(View v) {
 
                 MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
-                WebEngageController.trackEvent("BUSINESS PROFILE", "Updated Business Profile", null);
                 if (Methods.isOnline(BusinessHoursActivity.this)) {
+                    WebEngageController.trackEvent("BUSINESS PROFILE", "Business hours saved", session.getFpTag());
                     uploadbusinessTimingsInfo();
                 }else{
                     Methods.snackbarNoInternet(BusinessHoursActivity.this);

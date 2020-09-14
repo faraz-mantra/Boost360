@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.nowfloats.NotificationCenter.NotificationFragment;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 public class TabPagerAdapter extends FragmentPagerAdapter {
@@ -42,6 +43,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
                 currentItem = 0;
                 break;
             case 1:
+                WebEngageController.trackEvent("HOME SCREEN", "Clicked on reports", null);
                 selectedFragment =  new Analytics_Fragment();
                 /*selectedFragment = OffersFragment.newInstance();*/
                 currentItem = 1;

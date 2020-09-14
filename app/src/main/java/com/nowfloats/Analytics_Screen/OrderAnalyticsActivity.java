@@ -16,6 +16,7 @@ import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 public class OrderAnalyticsActivity extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class OrderAnalyticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_analytics);
         MixPanelController.track(MixPanelController.ORDER_ANALYTICS, null);
-
+        WebEngageController.trackEvent("ORDER ANALYTICS", "Clicked on order analytics", "null");
         UserSessionManager session = new UserSessionManager(getApplicationContext(), OrderAnalyticsActivity.this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

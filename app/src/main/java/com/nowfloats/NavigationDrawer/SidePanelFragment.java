@@ -50,6 +50,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 

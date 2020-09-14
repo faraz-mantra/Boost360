@@ -18,6 +18,7 @@ import com.appservice.model.SessionData
 import com.appservice.model.kycData.DataKyc
 import com.appservice.model.kycData.PaymentKycDataResponse
 import com.appservice.model.paymentKyc.PaymentKycRequest
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.WebBoostKitViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -85,6 +86,7 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
     binding?.tvBankAccNumber?.text = "A/C No. ${dataKyc.bankAccountNumber}"
     binding?.tvBankBranchDetails?.text = "${dataKyc.nameOfBank} - ${dataKyc.bankBranchName}"
     if (dataKyc.isVerified == DataKyc.Verify.YES.name) {
+      session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC VERIFICATION", "KYC verified", it1) }
       startFragmentPaymentActivity(FragmentType.KYC_DETAIL_NEW, Bundle().apply { putSerializable(IntentConstant.KYC_DETAIL.name, dataKyc) })
       baseActivity.finish()
     } else binding?.mainView?.visible()

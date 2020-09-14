@@ -40,6 +40,7 @@ import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.bottomsheet.FilterBottomSheetDialog
 import com.inventoryorder.ui.startFragmentActivity
+import com.inventoryorder.utils.WebEngageController
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
@@ -72,8 +73,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   override fun onCreateView() {
-
     super.onCreateView()
+    fpTag?.let { WebEngageController.trackEvent("APPOINTMENTS", "Clicked on appointments", it) }
     experienceCode = arguments?.getString(IntentConstant.EXPERIENCE_CODE.name)?.trim()
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)

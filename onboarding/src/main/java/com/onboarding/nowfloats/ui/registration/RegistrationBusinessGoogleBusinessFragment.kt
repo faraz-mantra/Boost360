@@ -32,6 +32,7 @@ import com.onboarding.nowfloats.model.googleAuth.location.LocationNew
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.rest.response.AccountLocationResponse
 import com.onboarding.nowfloats.ui.InternetErrorDialog
+import com.onboarding.nowfloats.utils.WebEngageController
 
 class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<FragmentRegistrationBusinessGoogleBinding>(), GoogleLoginHelper {
 
@@ -193,6 +194,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
         .setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
           dialog.dismiss()
           val data = locations?.firstOrNull { singleItems[checkedItem] == it.locationName }
+          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("DIGITAL CHANNELS", "Google my business and google maps connected", it) }
           setDataGoogle(result, responseAuth, data)
           setProfileDetails(data?.locationName?.capitalizeWords(), result?.photoUrl?.toString())
         }.setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->

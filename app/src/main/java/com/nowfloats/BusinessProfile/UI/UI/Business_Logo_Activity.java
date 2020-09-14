@@ -426,6 +426,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 String path = data.getStringExtra("edit_image");
                 if (!TextUtils.isEmpty(path)) {
                     this.path = path;
+                    WebEngageController.trackEvent("BUSINESS PROFILE", "Business logo added", session.getFpTag());
                     uploadPrimaryPicture(path);
                 }
             }

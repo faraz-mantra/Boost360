@@ -29,6 +29,7 @@ import com.nowfloats.network.MyOkHttpClient;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.rd.PageIndicatorView;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
@@ -73,6 +74,7 @@ public class HelpAndSupportFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        WebEngageController.trackEvent("HELP AND SUPPORT", "Clicked on Help and Support", null);
         return inflater.inflate(R.layout.fragment_new_help_and_support, container, false);
     }
 
