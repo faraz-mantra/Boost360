@@ -73,7 +73,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
-    fpTag?.let { WebEngageController.trackEvent("CONSULTATIONS", "Clicked on video consultations", it) }
+    fpTag?.let { WebEngageController.trackEvent("Clicked on video consultations", "CONSULTATIONS", it) }
     data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)

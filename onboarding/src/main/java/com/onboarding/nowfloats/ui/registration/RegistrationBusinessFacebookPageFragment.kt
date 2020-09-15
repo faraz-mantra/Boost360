@@ -174,7 +174,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
   }
 
   override fun setProfileDetails(name: String?, profilePicture: String?) {
-    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("DIGITAL CHANNELS", "Facebook Page Connected", it) }
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook Page Connected", "DIGITAL CHANNELS", it) }
 
     val binding = binding?.facebookPageSuccess ?: return
     this.binding?.skip?.gone()
@@ -199,7 +199,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     binding?.subTitle?.text = resources.getString(R.string.facebook_page_connect_later_Skip)
     binding?.linkFacebook?.text = resources.getString(R.string.sync_facebook_page)
     channelAccessToken.clear()
-    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("DIGITAL CHANNELS", "Facebook Page Disconnected", it) }
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook Page Disconnected", "DIGITAL CHANNELS", it) }
   }
 
   override fun updateInfo() {

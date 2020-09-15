@@ -137,7 +137,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
   }
 
   override fun setProfileDetails(name: String?, profilePicture: String?) {
-    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("DIGITAL CHANNELS", "Twitter connected", it) }
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Twitter connected", "DIGITAL CHANNELS", it) }
     val binding = binding?.twitterSuccess ?: return
     this.binding?.skip?.gone()
     binding.maimView.visible()

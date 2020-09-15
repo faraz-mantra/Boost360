@@ -98,7 +98,7 @@ public class ManageContentFragment extends Fragment {
                 Intent intent = null;
                 switch (pos) {
                     case 0:
-                        WebEngageController.trackEvent("MANAGE CONTENT", "Clicked on products catalogue", session.getFpTag());
+                        WebEngageController.trackEvent("Clicked on products catalogue", "MANAGE CONTENT", session.getFpTag());
                         intent = new Intent(mContext, ProductCatalogActivity.class);
                         break;
                     case 1:

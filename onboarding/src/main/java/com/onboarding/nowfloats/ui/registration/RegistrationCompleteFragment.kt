@@ -149,7 +149,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
       binding?.businessClick -> openImagePicker(false)
       binding?.websiteBtnClick -> {
         try {
-          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("REGISTRATION COMPLETE","Business website view clicked", it) }
+          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Business website view clicked", "REGISTRATION COMPLETE",it) }
           val bundle = Bundle()
           bundle.putString(IntentConstant.DOMAIN_URL.name, "${requestFloatsModel?.contactInfo?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com")
           navigator?.startActivity(WebViewActivity::class.java, bundle)

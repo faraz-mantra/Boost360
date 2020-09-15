@@ -107,7 +107,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
         saveTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("BUSINESS DESCRIPTION", "Business address added", session.getFpTag());
+                WebEngageController.trackEvent("Business address added", "BUSINESS DESCRIPTION", session.getFpTag());
                 MixPanelController.track(EventKeysWL.SAVE_BUSINESS_ADDRESS,null);
                 saveAddressFlag=true;
                 uploadBussinessAddress();

@@ -74,7 +74,7 @@ public class HelpAndSupportFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        WebEngageController.trackEvent("HELP AND SUPPORT", "Clicked on Help and Support", null);
+        WebEngageController.trackEvent("Clicked on Help and Support", "HELP AND SUPPORT", null);
         return inflater.inflate(R.layout.fragment_new_help_and_support, container, false);
     }
 

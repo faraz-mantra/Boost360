@@ -216,6 +216,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     all_recommended_addons.setOnClickListener {
+      WebEngageController.trackEvent("Clicked view all recommended add-ons", "ADDONS_MARKETPLACE", "null")
       (activity as UpgradeActivity).addFragment(
           ViewAllFeaturesFragment.newInstance(),
           VIEW_ALL_FEATURE

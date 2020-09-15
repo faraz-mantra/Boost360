@@ -321,7 +321,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
 
     public void uploadPrimaryPicture(String path)
     {
-        WebEngageController.trackEvent("MANAGE CONTENT", "Favicon Image added", session.getFpTag());
+        WebEngageController.trackEvent("Favicon Image added", "MANAGE CONTENT", session.getFpTag());
         new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());
 
         String s_uuid = UUID.randomUUID().toString();

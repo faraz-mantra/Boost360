@@ -32,11 +32,13 @@ import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.HOME_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.ORDER_CONFIRMATION_FRAGMENT
+import com.boost.upgrades.utils.Constants.Companion.PAYMENT_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
 import com.boost.upgrades.utils.Constants.Companion.SPLASH_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
+import com.boost.upgrades.utils.WebEngageController
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -155,6 +157,10 @@ class UpgradeActivity : AppCompatActivity() {
         val tag = currentFragment?.tag
         Log.e("back pressed tag", ">>>$tag")
         if (tag != null) {
+          if(tag == CART_FRAGMENT)
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back button_cart screen", "ADDONS_MARKETPLACE", "")
+          if(tag == PAYMENT_FRAGMENT)
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back_button paymentscreen", "ADDONS_MARKETPLACE", "")
           if (tag == ORDER_CONFIRMATION_FRAGMENT) {
             if (isDeepLink) goHomeActivity()
             else goToHomeFragment()

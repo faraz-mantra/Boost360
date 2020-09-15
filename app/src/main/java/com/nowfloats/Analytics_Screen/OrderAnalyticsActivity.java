@@ -27,7 +27,7 @@ public class OrderAnalyticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_analytics);
         MixPanelController.track(MixPanelController.ORDER_ANALYTICS, null);
-        WebEngageController.trackEvent("ORDER ANALYTICS", "Clicked on order analytics", "null");
+        WebEngageController.trackEvent("Clicked on order analytics", "ORDER ANALYTICS", "null");
         UserSessionManager session = new UserSessionManager(getApplicationContext(), OrderAnalyticsActivity.this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

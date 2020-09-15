@@ -48,7 +48,7 @@ public class DomainPurchasedFragment extends Fragment {
         existDomainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("DOMAIN & EMAIL", "Clicked on have an existing domain", "null");
+                WebEngageController.trackEvent("Clicked on have an existing domain", "DOMAIN & EMAIL", "null");
                 ((DomainEmailActivity) requireActivity()).addFragment(new ExistingDomainFragment(), "ExistingDomain");
             }
         });

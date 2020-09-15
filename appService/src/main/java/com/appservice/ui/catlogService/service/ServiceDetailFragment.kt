@@ -405,7 +405,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
           checkPosition += 1
           if ((it.error is NoNetworkException).not()) {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
-              WebEngageController.trackEvent("MANAGE CONTENT", "Product added to catalogue", "null")
+              WebEngageController.trackEvent("Product added to catalogue", "MANAGE CONTENT", "null")
               val response = getResponse(it.responseBody) ?: ""
               if (response.isNotEmpty()) secondaryImageList.add(response)
             } else showError("Secondary Service image uploading error, please try again.")

@@ -382,7 +382,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
             }
         }
 
-        WebEngageController.trackEvent("SITE HEALTH", "Clicked on site health", String.valueOf(siteMeterTotalWeight));
+        WebEngageController.trackEvent( "Clicked on site health", "SITE HEALTH",String.valueOf(siteMeterTotalWeight));
 
         activity.runOnUiThread(new Runnable() {
             @Override

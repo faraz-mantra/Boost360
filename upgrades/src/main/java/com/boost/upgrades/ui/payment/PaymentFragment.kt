@@ -142,6 +142,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundle)
 
         back_button.setOnClickListener {
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back_button paymentscreen", "ADDONS_MARKETPLACE", "")
             (activity as UpgradeActivity).popFragmentFromBackStack()
         }
 
