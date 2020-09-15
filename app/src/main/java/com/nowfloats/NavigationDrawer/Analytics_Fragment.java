@@ -145,7 +145,7 @@ public class Analytics_Fragment extends Fragment {
         //getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
         //enableLockScreen();
 
-        WebEngageController.trackEvent("HOME SCREEN", "Clicked on reports", null);
+//        
 
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
         if (!Util.isNullOrEmpty(session.getVisitorsCount())) {
@@ -215,7 +215,7 @@ public class Analytics_Fragment extends Fragment {
             e.printStackTrace();
         }
         this.context = context;
-        WebEngageController.trackEvent("HOME SCREEN", "Clicked on reports", null);
+//        WebEngageController.trackEvent("HOME SCREEN", "Clicked on reports", null);
     }
 
     @Override
@@ -233,7 +233,7 @@ public class Analytics_Fragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        WebEngageController.trackEvent("HOME SCREEN", "Clicked on reports", null);
+//        WebEngageController.trackEvent("HOME SCREEN", "Clicked on reports", null);
 //        }
     }
 
