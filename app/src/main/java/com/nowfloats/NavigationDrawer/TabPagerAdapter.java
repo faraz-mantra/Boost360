@@ -43,7 +43,6 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
                 currentItem = 0;
                 break;
             case 1:
-                WebEngageController.trackEvent("Clicked on reports", "HOME SCREEN", null);
                 selectedFragment =  new Analytics_Fragment();
                 /*selectedFragment = OffersFragment.newInstance();*/
                 currentItem = 1;
@@ -83,5 +82,8 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     {
         return this.currentItem;
     }
+
+
+
 
 }
