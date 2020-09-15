@@ -101,7 +101,10 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
             orderList.addAll(list)
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
-          } else errorView("No video consultation available.")
+          } else{
+            setHasOptionsMenu(false)
+            errorView("No video consultation available.")
+          }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
             val list = response.Items?.map { item ->
@@ -109,9 +112,15 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
             } as ArrayList<OrderItem>
             setAdapterNotify(list)
           } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
-          else errorView("No video consultation available.")
+          else {
+            setHasOptionsMenu(false)
+            errorView("No video consultation available.")
+          }
         }
-      } else errorView(it.message ?: "No video consultation available.")
+      } else {
+        setHasOptionsMenu(false)
+        errorView(it.message ?: "No video consultation available.")
+      }
     })
   }
 

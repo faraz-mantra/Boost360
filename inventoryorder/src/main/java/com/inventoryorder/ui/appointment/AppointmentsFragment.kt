@@ -118,7 +118,10 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
             orderList.addAll(list)
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
-          } else errorView("No appointment available.")
+          } else{
+            setHasOptionsMenu(false)
+            errorView("No appointment available.")
+          }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
             val list = response.Items?.map { item ->
@@ -126,9 +129,15 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
             } as ArrayList<OrderItem>
             setAdapterNotify(list)
           } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
-          else errorView("No appointment available.")
+          else{
+            setHasOptionsMenu(false)
+            errorView("No appointment available.")
+          }
         }
-      } else errorView(it.message ?: "No appointment available.")
+      }else{
+        setHasOptionsMenu(false)
+        errorView("No appointment available.")
+      }
     })
   }
 
@@ -254,22 +263,22 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    super.onCreateOptionsMenu(menu, inflater)
-    val searchItem = menu.findItem(R.id.menu_item_search)
-    if (searchItem != null) {
-      val searchView = searchItem.actionView as SearchView
-      searchView.queryHint = resources.getString(R.string.queryHintAppointment)
-      searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(query: String?): Boolean {
-          return false
-        }
+      super.onCreateOptionsMenu(menu, inflater)
+      val searchItem = menu.findItem(R.id.menu_item_search)
+      if (searchItem != null) {
+        val searchView = searchItem!!.actionView as SearchView
+        searchView.queryHint = resources.getString(R.string.queryHintAppointment)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+          override fun onQueryTextSubmit(query: String?): Boolean {
+            return false
+          }
 
-        override fun onQueryTextChange(newText: String?): Boolean {
-          newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
-          return false
-        }
-      })
-    }
+          override fun onQueryTextChange(newText: String?): Boolean {
+            newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
+            return false
+          }
+        })
+      }
   }
 
 
