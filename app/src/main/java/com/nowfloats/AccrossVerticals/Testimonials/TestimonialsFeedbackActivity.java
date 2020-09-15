@@ -281,7 +281,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        WebEngageController.trackEvent("MANAGE CONTENT", "Testimonial added", session.getFpTag());
+                        WebEngageController.trackEvent("Testimonial added","MANAGE CONTENT",  session.getFpTag());
                         isNewDataAdded  = true;
                         Toast.makeText(getApplicationContext(), "Successfully Added Testimonials", Toast.LENGTH_LONG).show();
                         onBackPressed();

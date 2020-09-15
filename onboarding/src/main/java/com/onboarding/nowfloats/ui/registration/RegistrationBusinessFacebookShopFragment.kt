@@ -170,7 +170,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
   }
 
   override fun setProfileDetails(name: String?, profilePicture: String?) {
-    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("DIGITAL CHANNELS", "Facebook shop connected", it) }
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook shop connected", "DIGITAL CHANNELS", it) }
     val binding = binding?.facebookPageSuccess ?: return
     this.binding?.skip?.gone()
     binding.maimView.visible()
@@ -189,7 +189,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
 
   private fun disconnectFacebookPage() {
     logoutFacebook()
-    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("DIGITAL CHANNELS", "Facebook shop disconnected", it) }
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook shop disconnected", "DIGITAL CHANNELS", it) }
     binding?.skip?.visible()
     binding?.facebookPageSuccess?.maimView?.gone()
     this.binding?.title?.text = resources.getString(R.string.shop_section_on_your_fb_page)

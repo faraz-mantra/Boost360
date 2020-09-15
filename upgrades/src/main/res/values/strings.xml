@@ -31,6 +31,8 @@
 
     <string name="_10_digit_mobile_number">10 digit mobile number</string>
     <string name="username">Registered Email or Username</string>
+    <string name="apply_coupon">Apply coupon</string>
+    <string name="discount_coupon">Discount coupon</string>
 
     <string-array name="order_status">
         <item>Cart</item>

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.interfaces.CartFragmentListener
+import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import java.text.NumberFormat
 import java.util.*
@@ -72,6 +73,7 @@ class CartPackageAdaptor(
             holder.discount.visibility = View.GONE
         }
         holder.removePackage.setOnClickListener {
+            selectedBundle.item_name?.let { it1 -> WebEngageController.trackEvent("ADDONS_MARKETPLACE Package crossed/ deleted from cart", "ADDONS_MARKETPLACE", it1) }
             listener.deleteCartAddonsItem(bundlesList.get(position).item_id)
         }
         holder.view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)

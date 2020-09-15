@@ -194,7 +194,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
         .setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
           dialog.dismiss()
           val data = locations?.firstOrNull { singleItems[checkedItem] == it.locationName }
-          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("DIGITAL CHANNELS", "Google my business and google maps connected", it) }
+          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Google my business and google maps connected", "DIGITAL CHANNELS", it) }
           setDataGoogle(result, responseAuth, data)
           setProfileDetails(data?.locationName?.capitalizeWords(), result?.photoUrl?.toString())
         }.setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->

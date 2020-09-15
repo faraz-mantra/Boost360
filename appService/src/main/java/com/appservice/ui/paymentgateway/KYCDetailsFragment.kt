@@ -262,7 +262,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         if ((it.error is NoNetworkException).not()) {
           if (it.status == 200 || it.status == 201 || it.status == 202) {
             setPreference()
-            session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC VERIFICATION", "KYC verification requested", it1) }
+            session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC verification requested", "KYC VERIFICATION", it1) }
             val bundle = Bundle()
             bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
             bundle.putSerializable(IntentConstant.KYC_DETAIL.name, request)
@@ -286,7 +286,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       hideProgress()
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
-          session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC VERIFICATION", "KYC verification requested", it1) }
+          session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC verification requested", "KYC VERIFICATION", it1) }
           val output = Intent()
           output.putExtra(IntentConstant.IS_EDIT.name, true)
           baseActivity.setResult(AppCompatActivity.RESULT_OK, output)

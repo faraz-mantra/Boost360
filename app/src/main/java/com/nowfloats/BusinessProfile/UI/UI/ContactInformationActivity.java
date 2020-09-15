@@ -399,7 +399,7 @@ public class ContactInformationActivity extends BaseActivity {
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3, binding.editDisplayContactNumber3.getText().toString());
 
                 Methods.showSnackBarPositive(ContactInformationActivity.this, "Information Updated Successfully");
-                WebEngageController.trackEvent("BUSINESS DESCRIPTION", "Business contact added", session.getFpTag());
+                WebEngageController.trackEvent("Business contact added", "BUSINESS DESCRIPTION", session.getFpTag());
             }
 
             @Override
