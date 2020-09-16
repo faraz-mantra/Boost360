@@ -41,7 +41,7 @@
   <string name="new_booking">New Booking</string>
   <string name="video_consultation">Consultations</string>
   <string name="start_call">START CALL</string>
-  <string name="payment_reminder">PAYMENT REMINDER</string>
+  <string name="payment_reminder">Send Payment Reminder</string>
   <string name="call_could_not_happen">Call couldn\'t happen</string>
   <string name="copied_patient_url">Copied patient URL</string>
   <string name="error_copied_patient_url">Error copied patient URL</string>
@@ -76,24 +76,27 @@
   <string name="video_consultation_camel_case">Video Consultation</string>
   <string name="please_select_time_slot">Please select time slot</string>
   <string name="confirm_appointment">CONFIRM APPOINTMENT</string>
-  <string name="cancel_video_consultation"><u>Cancel Video Consultation</u></string>
+  <string name="cancel_video_consultation">Cancel Video Consultation</string>
   <string name="call_details">Call Details</string>
   <string name="cancel_appointment" tools:ignore="ExtraTranslation"><u>Cancel Appointment</u></string>
   <string name="please_add_doctor_first">Doctor not added, please add first.</string>
-    <string name="cancel_appointment_confirmation_message">Are you sure you want to cancel the appointment?</string>
+  <string name="cancel_appointment_confirmation_message">Are you sure you want to cancel the appointment?</string>
   <string name="no">No</string>
   <string name="yes">Yes</string>
   <string name="cancel_consultation_confirmation_message">Are you sure you want to cancel the video consultation?</string>
   <string name="cancel_order_confirmation_message">Are you sure you want to cancel the order?</string>
-    <string name="please_add_teacher_first">Teacher not added, please add first.</string>
+  <string name="please_add_teacher_first">Teacher not added, please add first.</string>
   <string name="masseur_masseuse_not_added">Masseur/Masseuse not add, please add first</string>
   <string name="please_add_hotel_room_first">Please add a hotel room first.</string>
   <string name="please_add_table_first">Please add a table first.</string>
   <string name="please_add_barber_first">Please add a barber first.</string>
-    <string name="please_add_commodity_first">Please add a manufactured commodity first.</string>
+  <string name="please_add_commodity_first">Please add a manufactured commodity first.</string>
   <string name="please_add_retail_commodity_first">Please add a retail commodity first.</string>
   <string name="please_add_service_first">Please add a service first.</string>
-    <string name="email_invalid_format_error">The email is in an invalid format.</string>
-    <string name="phone_invalid_format_error">The number is in invalid format.</string>
+  <string name="email_invalid_format_error">The email is in an invalid format.</string>
+  <string name="phone_invalid_format_error">The number is in invalid format.</string>
+  <string name="reschedule_consultation">Reschedule consultation</string>
+  <string name="copy_video_call_link">Copy video call link</string>
+  <string name="open_consultation_window">OPEN CONSULTATION WINDOW</string>
 
 </resources>

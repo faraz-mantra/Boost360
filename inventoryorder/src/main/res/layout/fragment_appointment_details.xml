@@ -454,7 +454,7 @@
           <com.framework.views.customViews.CustomButton
               android:id="@+id/buttonConfirmOrder"
               android:layout_width="wrap_content"
-              android:layout_height="@dimen/size_38"
+              android:layout_height="wrap_content"
               android:background="@drawable/button_confirm_order"
               android:shadowRadius="0"
               android:stateListAnimator="@null"

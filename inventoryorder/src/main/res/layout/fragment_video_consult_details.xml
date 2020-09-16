@@ -180,12 +180,12 @@
 
                 <com.framework.views.customViews.CustomButton
                   android:id="@+id/btn_payment_reminder"
-                  android:layout_width="wrap_content"
-                  android:layout_height="@dimen/size_38"
-                  android:layout_marginTop="@dimen/size_12"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="@dimen/size_14"
                   android:background="@drawable/btn_rounded_orange_border"
-                  android:paddingStart="@dimen/size_12"
-                  android:paddingEnd="@dimen/size_12"
+                  android:paddingTop="@dimen/size_2"
+                  android:paddingBottom="@dimen/size_2"
                   android:text="@string/payment_reminder"
                   android:textColor="@color/colorAccent"
                   app:textType="HEADING_6" />
@@ -348,20 +348,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_14"
+            android:gravity="end"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/size_16">
-
-            <com.framework.views.customViews.CustomTextView
-              android:id="@+id/tvCancelOrder"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginEnd="@dimen/size_10"
-              android:gravity="start|center_vertical"
-              android:maxLines="1"
-              android:text="@string/cancel_video_consultation"
-              android:textColor="@color/greyish_brown"
-              app:fontFamily="@font/semi_bold"
-              app:textType="BODY_1" />
 
             <LinearLayout
               android:id="@+id/ll_costs"
@@ -401,22 +390,55 @@
           <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_30"
-            android:gravity="center_horizontal">
+            android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/btn_copy_link"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginEnd="@dimen/size_4"
+              android:layout_marginBottom="@dimen/size_10"
               android:drawableStart="@drawable/ic_copy"
-              android:drawablePadding="@dimen/size_4"
+              android:drawablePadding="@dimen/size_10"
               android:gravity="center"
               android:includeFontPadding="false"
               android:padding="@dimen/size_4"
-              android:text="COPY PATIENT's CALL LINK"
+              android:text="@string/copy_video_call_link"
               android:textColor="@color/grey_text_color"
               android:visibility="gone"
+              app:fontFamily="@font/semi_bold"
+              app:textType="BODY_1" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tvReSchedule"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="@dimen/size_4"
+              android:layout_marginBottom="@dimen/size_10"
+              android:drawableStart="@drawable/ic_calendar_n"
+              android:drawablePadding="@dimen/size_10"
+              android:gravity="center"
+              android:includeFontPadding="false"
+              android:padding="@dimen/size_4"
+              android:text="@string/reschedule_consultation"
+              android:textColor="@color/grey_text_color"
+              app:fontFamily="@font/semi_bold"
+              app:textType="BODY_1" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/tvCancelOrder"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="@dimen/size_4"
+              android:drawableStart="@drawable/ic_delete_n"
+              android:drawablePadding="@dimen/size_10"
+              android:gravity="center"
+              android:includeFontPadding="false"
+              android:padding="@dimen/size_4"
+              android:text="@string/cancel_video_consultation"
+              android:textColor="@color/grey_text_color"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_1" />
           </LinearLayout>
@@ -484,11 +506,11 @@
           <com.framework.views.customViews.CustomButton
             android:id="@+id/btn_open_consult"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/size_38"
+            android:layout_height="wrap_content"
             android:background="@drawable/button_confirm_order"
             android:shadowRadius="0"
             android:stateListAnimator="@null"
-            android:text="OPEN CONSULTATION WINDOW"
+            android:text="@string/open_consultation_window"
             android:textColor="@color/white"
             app:textType="HEADING_6"
             tools:ignore="UnusedAttribute" />
