@@ -145,8 +145,6 @@ public class Analytics_Fragment extends Fragment {
         //getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
         //enableLockScreen();
 
-//        
-
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
         if (!Util.isNullOrEmpty(session.getVisitorsCount())) {
             visitorsCount.setText(session.getVisitorsCount());
