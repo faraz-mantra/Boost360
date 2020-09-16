@@ -12,6 +12,7 @@ import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.PromoBanners
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.interfaces.HomeListener
@@ -26,7 +27,7 @@ import java.text.NumberFormat
 import java.util.*
 
 class BannerViewPagerAdapter(
-        val list: ArrayList<Bundles>, val activity: UpgradeActivity, val homeListener: HomeListener)
+        val list: ArrayList<PromoBanners>, val activity: UpgradeActivity, val homeListener: HomeListener)
     : RecyclerView.Adapter<BannerViewPagerAdapter.PagerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerViewHolder {
@@ -40,125 +41,75 @@ class BannerViewPagerAdapter(
     }
 
     override fun getItemCount(): Int {
-        return 5//list.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
-//        holder.itemView.setOnClickListener {
-//            homeListener.onPackageClicked(list.get(position))
-//        }
-//        holder.name.setText(list.get(position).name)
-//        getPackageInfoFromDB(holder, list.get(position))
+        Glide.with(holder.itemView.context).load(list.get(position).image.url).into(holder.primaryImage)
+        holder.primaryImage.setOnClickListener {
+            homeListener.onPromoBannerClicked(list.get(position))
+        }
+        holder.title.setText(list.get(position).title)
+        checkBannerDetails(position)
     }
 
 
-    fun addupdates(Bundles: List<Bundles>) {
+    fun addupdates(promoBanners: List<PromoBanners>) {
         val initPosition = list.size
         list.clear()
-        list.addAll(Bundles)
+        list.addAll(promoBanners)
         notifyItemRangeInserted(initPosition, list.size)
     }
 
     class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        val name = itemView.findViewById<TextView>(R.id.package_name)
-//        val offerPrice = itemView.findViewById<TextView>(R.id.offer_price)
-//        val origCost = itemView.findViewById<TextView>(R.id.orig_cost)
-//        val bundleUsecase = itemView.findViewById<TextView>(R.id.package_flag_tag)
-//        val tagHolder = itemView.findViewById<RelativeLayout>(R.id.premium_account_flag_2)
-//        val primaryImage = itemView.findViewById<ImageView>(R.id.package_primary_image)
-//        val bundleDiscount = itemView.findViewById<TextView>(R.id.bundle_level_discount)
-//        val bundlePriceLabel = itemView.findViewById<TextView>(R.id.bundle_price_label)
+        val primaryImage = itemView.findViewById<ImageView>(R.id.package_primary_image)
+        val title = itemView.findViewById<TextView>(R.id.banner_title)
     }
 
-//    fun getPackageInfoFromDB(holder: PagerViewHolder, bundles: Bundles) {
-//        val itemsIds = arrayListOf<String>()
-//        for (item in bundles.included_features) {
-//            itemsIds.add(item.feature_code)
-//        }
-//
-//        var offeredBundlePrice = 0
-//        var originalBundlePrice = 0
-//        val minMonth: Int = if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1) bundles.min_purchase_months else 1
-//        CompositeDisposable().add(
-//                AppDatabase.getInstance(activity.application)!!
-//                        .featuresDao()
-//                        .getallFeaturesInList(itemsIds)
-//                        .subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(
-//                                {
-//                                    if(bundles.target_business_usecase.isNullOrEmpty())
-//                                        holder.tagHolder.visibility = View.GONE
-//                                    else
-//                                        holder.bundleUsecase.setText(bundles.target_business_usecase)
-//
-//                                    for (singleItem in it) {
-//                                        for (item in bundles.included_features) {
-//                                            if (singleItem.feature_code == item.feature_code) {
-//                                                originalBundlePrice += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt() * minMonth
-//                                            }
-//                                        }
-//                                    }
-//                                    if(bundles.overall_discount_percent > 0){
-//                                        offeredBundlePrice = originalBundlePrice - (originalBundlePrice * bundles.overall_discount_percent/100)
-//                                        holder.bundleDiscount.visibility = View.VISIBLE
-//                                        holder.bundlePriceLabel.visibility = View.GONE
-//                                        holder.bundleDiscount.setText(bundles.overall_discount_percent.toString() + "%")
-//                                    } else {
-//                                        offeredBundlePrice = originalBundlePrice
-//                                        holder.bundleDiscount.visibility = View.GONE
-//                                        holder.bundlePriceLabel.visibility = View.VISIBLE
-//                                    }
-//
-//                                    if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1){
-//                                        holder.offerPrice.setText("₹" +
-//                                                NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
-//                                                "/" + bundles.min_purchase_months + "mths")
-//                                        if (offeredBundlePrice != originalBundlePrice) {
-//                                            spannableString(holder, originalBundlePrice, bundles.min_purchase_months)
-//                                            holder.origCost.visibility = View.VISIBLE
-//                                        } else {
-//                                            holder.origCost.visibility = View.GONE
-//                                        }
-//                                    }else{
-//                                        holder.offerPrice.setText("₹" +
-//                                                NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
-//                                                + "/mth")
-//                                        if (offeredBundlePrice != originalBundlePrice) {
-//                                            spannableString(holder, originalBundlePrice, 1)
-//                                            holder.origCost.visibility = View.VISIBLE
-//                                        } else {
-//                                            holder.origCost.visibility = View.GONE
-//                                        }
-//                                    }
-//
-//                                    if(bundles.primary_image != null && !bundles.primary_image.url.isNullOrEmpty()){
-//                                        Glide.with(holder.itemView.context).load(bundles.primary_image.url).into(holder.primaryImage)
-//                                    } else {
-//                                        holder.primaryImage.setImageResource(R.drawable.scissor)
-//                                    }
-//                                },
-//                                {
-//                                    it.printStackTrace()
-//                                }
-//                        )
-//        )
-//    }
-//
-//    fun spannableString(holder: PagerViewHolder, value: Int, minMonth: Int) {
-//        val origCost: SpannableString
-//        if(minMonth > 1){
-//            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
-//        }else{
-//            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
-//        }
-//
-//        origCost.setSpan(
-//                StrikethroughSpan(),
-//                0,
-//                origCost.length,
-//                0
-//        )
-//        holder.origCost.setText(origCost)
-//    }
+    //check if the details available in the DB else remove item from list
+    fun checkBannerDetails(position: Int){
+        if (list.get(position)!!.cta_feature_key != null) {
+            CompositeDisposable().add(
+                    AppDatabase.getInstance(activity.application)!!
+                            .featuresDao()
+                            .checkFeatureTableKeyExist(list.get(position)!!.cta_feature_key)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                if (it == 0) {
+                                    for(singleBanner in list){
+                                        if(singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key){
+                                            list.remove(singleBanner)
+                                            notifyDataSetChanged()
+                                            homeListener.onShowHidePromoBannerIndicator(list.size>1)
+                                        }
+                                    }
+                                }
+                            },{
+                                it.printStackTrace()
+                            })
+            )
+        }else if (list.get(position)!!.cta_bundle_identifier != null) {
+            CompositeDisposable().add(
+                    AppDatabase.getInstance(activity.application)!!
+                            .bundlesDao()
+                            .checkBundleKeyExist(list.get(position)!!.cta_bundle_identifier)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                if (it == 0) {
+                                    for (singleBanner in list){
+                                        if(singleBanner.cta_bundle_identifier == list.get(position)!!.cta_bundle_identifier){
+                                            list.remove(singleBanner)
+                                            notifyDataSetChanged()
+                                            homeListener.onShowHidePromoBannerIndicator(list.size>1)
+                                        }
+                                    }
+                                }
+                            },{
+                                it.printStackTrace()
+                            })
+            )
+        }
+    }
 }

@@ -83,6 +83,7 @@
                 android:textSize="@dimen/_12ssp" />
 
             <LinearLayout
+                android:id="@+id/pricing_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical">

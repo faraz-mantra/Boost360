@@ -88,7 +88,7 @@
                 android:overScrollMode="never"
                 android:padding="@dimen/_15sdp"
                 android:elevation="@dimen/cardview_default_elevation"
-                tools:listitem="@layout/upgrade_list_item" />
+                tools:listitem="@layout/all_feature_list_item" />
         </androidx.core.widget.NestedScrollView>
 
     <com.facebook.shimmer.ShimmerFrameLayout

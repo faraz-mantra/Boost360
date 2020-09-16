@@ -46,6 +46,7 @@
     <color name="main_color_gray">#dadada</color>
     <color name="main_color_gray1">#8d8d8d</color>
     <color name="blue_lt">#00b0f1</color>
+    <color name="navy_blue">#4A90E2</color>
     <color name="gray_light">#e5e5e5</color>
     <color name="app_chat_sent_color">#DDEEFD</color>
     <color name="app_chat_received_color">#F5F5F5</color>

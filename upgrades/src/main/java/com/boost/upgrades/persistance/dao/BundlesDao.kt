@@ -22,6 +22,9 @@ interface BundlesDao {
     @Query("DELETE FROM Bundles")
     fun emptyBundles()
 
+    @Query("SELECT EXISTS(SELECT * FROM Bundles WHERE bundle_id=:item_id)")
+    fun checkBundleKeyExist(item_id: String): Single<Int>
+
     @Insert
     fun insertToBundles(vararg features: BundlesModel?)
 

@@ -15,6 +15,10 @@ data class Data(
         val bundles: List<Bundles>,
         @SerializedName("discount_coupons")
         val discount_coupons: List<DiscountCoupons>,
+        @SerializedName("promo_banners")
+        val promo_banners: List<PromoBanners>,
+        @SerializedName("partner_zone")
+        val partner_zone: List<PartnerZone>,
         @SerializedName("isarchived")
         val isarchived: Boolean,
         @SerializedName("rootaliasurl")

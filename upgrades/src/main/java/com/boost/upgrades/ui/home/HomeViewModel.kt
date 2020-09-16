@@ -5,9 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.ExpertConnect
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.FeatureDeals
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.VideoGallery
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
 import com.boost.upgrades.data.model.*
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Utils
@@ -26,6 +24,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var _totalActiveAddonsCount: MutableLiveData<Int> = MutableLiveData()
     var allVideoDetails: MutableLiveData<List<YoutubeVideoModel>> = MutableLiveData()
     var expertConnectDetails: MutableLiveData<ExpertConnect> = MutableLiveData()
+    var promoBanners: MutableLiveData<List<PromoBanners>> = MutableLiveData()
+    var partnerZone: MutableLiveData<List<PartnerZone>> = MutableLiveData()
 
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
@@ -59,6 +59,14 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun getExpertConnectDetails(): LiveData<ExpertConnect> {
         return expertConnectDetails
+    }
+
+    fun getPromoBanners(): LiveData<List<PromoBanners>> {
+        return promoBanners
+    }
+
+    fun getPartnerZone(): LiveData<List<PartnerZone>> {
+        return partnerZone
     }
 
     fun getTotalActiveWidgetCount(): LiveData<Int> {
@@ -324,6 +332,16 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
                                         //get ExpertConnect Details
                                         expertConnectDetails.postValue(it.Data[0].expert_connect)
+
+                                        //promobanner
+                                        if(it.Data[0].promo_banners!=null && it.Data[0].promo_banners.size>0){
+                                            promoBanners.postValue(it.Data[0].promo_banners)
+                                        }
+
+                                        //partnerZone
+                                        if(it.Data[0].partner_zone !=null && it.Data[0].partner_zone.size>0){
+                                            partnerZone.postValue(it.Data[0].partner_zone)
+                                        }
                                     },
                                     {
                                         Log.e("GetAllFeatures", "error" + it.message)
