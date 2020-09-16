@@ -44,6 +44,7 @@ import com.appservice.model.serviceProduct.update.UpdateValue
 import com.appservice.ui.bankaccount.startFragmentAccountActivity
 import com.appservice.ui.catlogService.startFragmentActivity
 import com.appservice.ui.catlogService.widgets.*
+import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.exceptions.NoNetworkException
@@ -405,6 +406,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
           checkPosition += 1
           if ((it.error is NoNetworkException).not()) {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
+              WebEngageController.trackEvent("Product added to catalogue", "MANAGE CONTENT", "null")
               val response = getResponse(it.responseBody) ?: ""
               if (response.isNotEmpty()) secondaryImageList.add(response)
             } else showError("Secondary Service image uploading error, please try again.")

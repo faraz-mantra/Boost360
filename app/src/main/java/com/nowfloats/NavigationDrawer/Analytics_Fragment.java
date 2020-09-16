@@ -213,7 +213,7 @@ public class Analytics_Fragment extends Fragment {
             e.printStackTrace();
         }
         this.context = context;
-
+//        WebEngageController.trackEvent("HOME SCREEN", "Clicked on reports", null);
     }
 
     @Override
@@ -231,7 +231,7 @@ public class Analytics_Fragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+//        WebEngageController.trackEvent("HOME SCREEN", "Clicked on reports", null);
 //        }
     }
 

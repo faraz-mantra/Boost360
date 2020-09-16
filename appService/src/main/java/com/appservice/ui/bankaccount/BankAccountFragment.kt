@@ -26,6 +26,7 @@ import com.appservice.model.accountDetails.BankAccountDetails
 import com.appservice.model.accountDetails.KYCDetails
 import com.appservice.model.accountDetails.Result
 import com.appservice.model.razor.RazorDataResponse
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.AccountViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.afterTextChanged
@@ -231,6 +232,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         val editor = pref?.edit()
         editor?.putBoolean(PreferenceConstant.IS_ACCOUNT_SAVE, true)
         editor?.apply()
+        WebEngageController.trackEvent("Bank Account submitted for verification", "BANK ACCOUNT", fpId)
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())
@@ -249,6 +251,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       val response = it as? AccountCreateResponse
       if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
         getUserDetails(isServiceCreation = isServiceCreation)
+        WebEngageController.trackEvent("Bank Account details updated", "BANK ACCOUNT", fpId)
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())

@@ -34,10 +34,7 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catlogService.widgets.ClickType
 import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
-import com.appservice.utils.FileUtils
-import com.appservice.utils.getBitmap
-import com.appservice.utils.getExtensionUrl
-import com.appservice.utils.getMimeType
+import com.appservice.utils.*
 import com.appservice.viewmodel.WebBoostKitViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.afterTextChanged
@@ -265,6 +262,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         if ((it.error is NoNetworkException).not()) {
           if (it.status == 200 || it.status == 201 || it.status == 202) {
             setPreference()
+            session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC verification requested", "KYC VERIFICATION", it1) }
             val bundle = Bundle()
             bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
             bundle.putSerializable(IntentConstant.KYC_DETAIL.name, request)
@@ -288,6 +286,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       hideProgress()
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
+          session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC verification requested", "KYC VERIFICATION", it1) }
           val output = Intent()
           output.putExtra(IntentConstant.IS_EDIT.name, true)
           baseActivity.setResult(AppCompatActivity.RESULT_OK, output)

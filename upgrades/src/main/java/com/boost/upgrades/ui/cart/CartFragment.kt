@@ -34,7 +34,6 @@ import com.boost.upgrades.data.renewalcart.RenewalPurchasedRequest
 import com.boost.upgrades.data.renewalcart.RenewalResult
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
-import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.payment.PaymentFragment
 import com.boost.upgrades.ui.popup.CouponPopUpFragment
@@ -52,6 +51,7 @@ import kotlinx.android.synthetic.main.cart_fragment.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class CartFragment : BaseFragment(), CartFragmentListener {
 
@@ -163,6 +163,25 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     cart_continue_submit.setOnClickListener {
       if (prefs.getCartOrderInfo() != null) {
+        val event_attributes: HashMap<String, Any> = HashMap()
+
+        // Add the required details about the selected packages and add ons in a single array.
+        val items: ArrayList<HashMap<String, Any>> = ArrayList()
+        for(item in this.cartList){
+          val item_details: HashMap<String, Any> = HashMap()
+          item.item_name?.let { it1 -> item_details.put("name", it1) }
+          item_details.put("price", item.MRPPrice)
+          item_details.put("discounted_price", item.price)
+          item_details.put("discount percentage", item.discount)
+          item_details.put("validity", item.min_purchase_months * item.quantity)
+          items.add(item_details)
+        }
+
+        event_attributes.put("addons/packages", items)
+        event_attributes.put("Cart Amount", this.total)
+        event_attributes.put("Coupon Discount", this.couponDiscountAmount)
+        event_attributes.put("Order Total", this.grandTotal)
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart ", "ADDONS_MARKETPLACE", event_attributes)
         proceedToPayment(prefs.getCartOrderInfo()!!)
       } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
         val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
@@ -185,6 +204,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     }
 
     cart_apply_coupon.setOnClickListener {
+      WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked on apply coupon", "ADDONS_MARKETPLACE", "")
       couponPopUpFragment.show(
           (activity as UpgradeActivity).supportFragmentManager,
           COUPON_POPUP_FRAGEMENT
@@ -850,4 +870,5 @@ class CartFragment : BaseFragment(), CartFragmentListener {
   fun isRenewalListNotEmpty(): Boolean {
     return ::cartList.isInitialized && cartList.isNotEmpty() && ::renewalList.isInitialized && renewalList.isNotEmpty()
   }
+
 }

@@ -24,6 +24,7 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
+import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -31,6 +32,7 @@ import kotlinx.android.synthetic.main.package_fragment.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class PackageFragment : BaseFragment() {
 
@@ -122,6 +124,14 @@ class PackageFragment : BaseFragment() {
                             "bundles",
                             null
                     ))
+                    val event_attributes: HashMap<String, Any> = HashMap()
+                    bundleData!!.name?.let { it1 -> event_attributes.put("Package Name", it1) }
+                    bundleData!!.target_business_usecase?.let { it1 -> event_attributes.put("Package Tag", it1) }
+                    event_attributes.put("Package Price", originalBundlePrice)
+                    event_attributes.put("Discounted Price", offeredBundlePrice)
+                    event_attributes.put("Discount %", bundleData!!.overall_discount_percent)
+                    bundleData!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
+                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", "ADDONS_MARKETPLACE", event_attributes)
                     packageInCartStatus = true
                     package_submit.background = ContextCompat.getDrawable(
                             requireContext(),
