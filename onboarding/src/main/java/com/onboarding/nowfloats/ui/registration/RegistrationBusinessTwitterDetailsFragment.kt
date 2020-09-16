@@ -25,6 +25,7 @@ import com.onboarding.nowfloats.model.channel.request.getType
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.ui.InternetErrorDialog
+import com.onboarding.nowfloats.utils.WebEngageController
 import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.TwitterSession
@@ -136,6 +137,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
   }
 
   override fun setProfileDetails(name: String?, profilePicture: String?) {
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Twitter connected", "DIGITAL CHANNELS", it) }
     val binding = binding?.twitterSuccess ?: return
     this.binding?.skip?.gone()
     binding.maimView.visible()

@@ -43,7 +43,7 @@ public class GetSearchQueryCountAsyncTask extends AsyncTask<Void, String, String
                     session.setSearchCount(count + "");
 
                     Analytics_Fragment.searchQueriesCount.setVisibility(View.VISIBLE);
-                    Analytics_Fragment.searchQueriesCount.setText(session.getSearchCount());
+                    Analytics_Fragment.searchQueriesCount.setText(Analytics_Fragment.getNumberFormat(session.getSearchCount()));
                 }
             }
         } catch (Exception e) {

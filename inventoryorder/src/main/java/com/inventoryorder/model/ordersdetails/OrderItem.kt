@@ -45,7 +45,7 @@ data class OrderItem(
   }
 
   fun stringToDate(format: String = DateUtils.FORMAT_DD_MM_YYYY): Date? {
-    return parseDate(CreatedOn, DateUtils.FORMAT_SERVER_DATE, format)?.parseDate(DateUtils.FORMAT_DD_MM_YYYY)
+    return parseDate(CreatedOn, FORMAT_SERVER_DATE, format, timeZone = TimeZone.getTimeZone("IST"))?.parseDate(DateUtils.FORMAT_DD_MM_YYYY)
   }
 
   fun referenceNumber(): String {
@@ -101,6 +101,14 @@ data class OrderItem(
     return item
   }
 
+  enum class OrderMode {
+    DELIVERY, PICKUP, APPOINTMENT
+  }
+
+  enum class DeliveryMode {
+    ONLINE, OFFLINE
+  }
+
   enum class CancellingEntity {
     SELLER, BUYER, NF;
 
@@ -109,12 +117,15 @@ data class OrderItem(
     }
   }
 
-  fun consultationWindowUrl(): String {
-    return "https://d.nflo.at/consult?appt=$_id"
+  fun consultationWindowUrlForPatient(): String {
+    return "https://p.nflo.at/consult?appt=$_id"
   }
 
-  fun consultationJoiningUrl(): String {
-    return "https://DOCTORS.GETBOOST360.COM/consult/$_id"
+  fun consultationWindowUrlForDoctor(): String {
+    return "https://d.nflo.at/consult?appt=$_id"
+  }
+  fun consultationJoiningUrl(webSiteUrl: String?): String {
+    return "https://$webSiteUrl/consult/$_id"
   }
 
   fun isConfirmConsultBtn(): Boolean {
@@ -136,7 +147,8 @@ data class OrderItem(
         || OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED) &&
         PaymentDetails != null && ((PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
         PaymentDetailsN.STATUS.from(PaymentDetails.status()) == PaymentDetailsN.STATUS.SUCCESS)
-        || (PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.COD)))
+        || (PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.COD)
+        || (PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.FREE)))
   }
 
   fun isCancelActionBtn(): Boolean {

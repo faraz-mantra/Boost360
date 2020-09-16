@@ -40,7 +40,10 @@ import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
 import com.onboarding.nowfloats.ui.InternetErrorDialog
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
+import com.onboarding.nowfloats.utils.WebEngageController
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistrationBusinessApiBinding>(), RecyclerItemClickListener {
 
@@ -159,6 +162,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       viewModel?.postUpdateWhatsappRequest(dataRequest, authorization)
           ?.observeOnce(viewLifecycleOwner, Observer {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
+              requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("WhatsApp connected", "DIGITAL CHANNELS", it) }
               connectedChannels.forEach { it1 ->
                 it1.status = takeIf { ChannelType.WAB == it1.getType() }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
               }
@@ -340,7 +344,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     createRequest.appExperienceCode = requestFloatsModel?.categoryDataModel?.experience_code
     createRequest.whatsAppNumber = requestFloatsModel?.channelActionDatas?.firstOrNull()?.getNumberWithCode()
     createRequest.whatsAppNotificationOptIn = requestFloatsModel?.whatsappEntransactional ?: false
-    //TODO: [Ronak] pass the widgetkeys (split by ,)
+    createRequest.boostXWebsiteUrl = "www.${requestFloatsModel?.contactInfo?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
     return createRequest
   }
 

@@ -21,6 +21,7 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.ui.appointment.AppointmentDetailsFragment
 import com.inventoryorder.ui.appointment.AppointmentsFragment
+import com.inventoryorder.ui.appointment.CreateAppointmentFragment
 import com.inventoryorder.ui.consultation.VideoConsultDetailsFragment
 import com.inventoryorder.ui.consultation.VideoConsultFragment
 import com.inventoryorder.ui.createappointment.BookingSuccessfulFragment
@@ -36,6 +37,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   private var orderDetailFragment: OrderDetailFragment? = null
   private var appointmentDetails: AppointmentDetailsFragment? = null
   private var appointmentsFragment: AppointmentsFragment? = null
+  private var createAppointmentFragment: CreateAppointmentFragment? = null
   private var newBookingFragmentOne: NewBookingFragmentOne? = null
   private var newBookingFragmentTwo: NewBookingFragmentTwo? = null
   private var bookingSuccessfulFragment: BookingSuccessfulFragment? = null
@@ -64,6 +66,9 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return when (type) {
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> R.style.AppTheme_Order_create
+      FragmentType.CREATE_APPOINTMENT_VIEW, FragmentType.APPOINTMENT_DETAIL_VIEW,
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW, FragmentType.ORDER_DETAIL_VIEW -> R.style.AppTheme_Order_create_appointment
+
       else -> super.customTheme()
     }
   }
@@ -82,7 +87,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2,
       FragmentType.ALL_VIDEO_CONSULT_VIEW,
-      FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.colorPrimary)
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
+      FragmentType.CREATE_APPOINTMENT_VIEW -> ContextCompat.getColor(this, R.color.colorPrimary)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -96,7 +102,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2,
       FragmentType.ALL_VIDEO_CONSULT_VIEW,
-      FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.white)
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
+      FragmentType.CREATE_APPOINTMENT_VIEW -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
   }
@@ -118,6 +125,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> "# XXXXXXX"
       FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking)
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> resources.getString(R.string.new_booking)
+      FragmentType.CREATE_APPOINTMENT_VIEW -> getString(R.string.new_apppointment_camel_case)
       else -> super.getToolbarTitle()
     }
   }
@@ -132,7 +140,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.CREATE_NEW_BOOKING,
       FragmentType.CREATE_NEW_BOOKING_PAGE_2,
       FragmentType.ALL_VIDEO_CONSULT_VIEW,
-      FragmentType.VIDEO_CONSULT_DETAIL_VIEW -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
+      FragmentType.CREATE_APPOINTMENT_VIEW  -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
       else -> super.getNavigationIcon()
     }
   }
@@ -201,6 +210,10 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
         videoConsultDetailsFragment = VideoConsultDetailsFragment.newInstance()
         videoConsultDetailsFragment
       }
+      FragmentType.CREATE_APPOINTMENT_VIEW -> {
+        createAppointmentFragment = CreateAppointmentFragment.newInstance()
+        createAppointmentFragment
+      }
       else -> throw IllegalFragmentTypeException()
     }
   }
@@ -209,6 +222,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     super.onActivityResult(requestCode, resultCode, data)
     ordersFragment?.onActivityResult(requestCode, resultCode, data)
     appointmentsFragment?.onActivityResult(requestCode, resultCode, data)
+    videoConsultFragment?.onActivityResult(requestCode, resultCode, data)
+    createAppointmentFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -222,7 +237,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 
   override fun onBackPressed() {
-    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData()
+    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData() ?: bookingSuccessfulFragment?.getBundleData()
     bundle?.let {
       val intent = Intent()
       intent.putExtra(IntentConstant.RESULT_DATA.name, it)
@@ -259,3 +274,4 @@ fun AppCompatActivity.startFragmentActivity(type: FragmentType, bundle: Bundle =
 fun Intent.setFragmentType(type: FragmentType): Intent {
   return this.putExtra(FRAGMENT_TYPE, type.ordinal)
 }
+

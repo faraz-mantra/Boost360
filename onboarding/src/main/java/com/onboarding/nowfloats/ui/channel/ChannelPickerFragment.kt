@@ -176,7 +176,6 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
     setChannelAdapter(ArrayList(selectedChannels))
   }
 
-
   private fun openFeatureDetailSheet(feature: SectionsFeature?) {
     feature?.let {
       BottomDialog.builder(baseActivity) {

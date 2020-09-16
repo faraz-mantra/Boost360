@@ -10,6 +10,7 @@ import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.ui.appointment.AppointmentDetailsFragment
 import com.inventoryorder.ui.appointment.AppointmentsFragment
+import com.inventoryorder.ui.appointment.CreateAppointmentFragment
 import com.inventoryorder.ui.consultation.VideoConsultDetailsFragment
 import com.inventoryorder.ui.consultation.VideoConsultFragment
 import com.inventoryorder.ui.createappointment.BookingSuccessfulFragment
@@ -47,6 +48,7 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
       is NewBookingFragmentOne -> R.layout.fragment_new_booking_one
       is NewBookingFragmentTwo -> R.layout.fragment_new_booking_two
       is BookingSuccessfulFragment -> R.layout.fragment_booking_successful
+      is CreateAppointmentFragment -> R.layout.fragment_new_appointment
       else -> throw IllegalFragmentTypeException()
     }
   }

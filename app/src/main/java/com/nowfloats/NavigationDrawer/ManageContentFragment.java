@@ -30,6 +30,7 @@ import com.nowfloats.hotel.tripadvisor.TripAdvisorActivity;
 import com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresActivity;
 import com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivity;
 import com.nowfloats.util.Utils;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 /**
@@ -97,6 +98,7 @@ public class ManageContentFragment extends Fragment {
                 Intent intent = null;
                 switch (pos) {
                     case 0:
+                        WebEngageController.trackEvent("Clicked on products catalogue", "MANAGE CONTENT", session.getFpTag());
                         intent = new Intent(mContext, ProductCatalogActivity.class);
                         break;
                     case 1:
@@ -110,40 +112,41 @@ public class ManageContentFragment extends Fragment {
                         intent.putExtra("fragmentName", "Business_Profile_Fragment_V2");
                         break;
                     case 4:
-                        intent = new Intent(mContext, TestimonialsActivity.class);
+                        if (experience_code.equals("EDU")) intent = new Intent(mContext, CustomPageActivity.class);
+                        else intent = new Intent(mContext, TestimonialsActivity.class);
                         break;
                     case 5:
-                        intent = new Intent(mContext, CustomPageActivity.class);
+                        if (experience_code.equals("EDU")) {
+                            intent = new Intent(mContext, ToppersActivity.class);
+                        } else intent = new Intent(mContext, CustomPageActivity.class);
                         break;
                     case 6:
-                        if(experience_code.equals("HOT")) {
+                        if (experience_code.equals("HOT")) {
                             intent = new Intent(mContext, PlacesNearByActivity.class);
                         } else if (experience_code.equals("MFG")) {
                             intent = new Intent(mContext, ProjectAndTermsActivity.class);
                         } else if (experience_code.equals("EDU")) {
-                            intent = new Intent(mContext, ToppersActivity.class);
+                            intent = new Intent(mContext, BatchesActivity.class);
                         }
                         break;
                     case 7:
-                        if(experience_code.equals("HOT")) {
+                        if (experience_code.equals("HOT")) {
                             intent = new Intent(mContext, TripAdvisorActivity.class);
                         } else if (experience_code.equals("MFG")) {
                             intent = new Intent(mContext, DigitalBrochuresActivity.class);
                         } else if (experience_code.equals("EDU")) {
-                            intent = new Intent(mContext, BatchesActivity.class);
+                            intent = new Intent(mContext, FacultyActivity.class);
                         }
                         break;
                     case 8:
-                        if(experience_code.equals("HOT")) {
+                        if (experience_code.equals("HOT")) {
                             intent = new Intent(mContext, SeasonalOffersActivity.class);
-                        } else if (experience_code.equals("EDU")) {
-                            intent = new Intent(mContext, FacultyActivity.class);
                         }
                         break;
                     default:
                         return;
                 }
-                if(intent != null) {
+                if (intent != null) {
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }

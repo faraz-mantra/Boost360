@@ -1,6 +1,8 @@
 package com.inventoryorder.rest.services
 
 import com.inventoryorder.model.OrderConfirmStatus
+import com.inventoryorder.model.SendMailRequest
+import com.inventoryorder.model.doctorsData.DoctorDataResponse
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.rest.EndPoints
 import com.inventoryorder.rest.response.OrderSummaryResponse
@@ -8,6 +10,7 @@ import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.rest.response.order.ProductResponse
 import io.reactivex.Observable
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -67,4 +70,12 @@ interface InventoryOrderRemoteDataSource {
   fun cancelOrder(@Query("clientId") clientId: String?,
                   @Query("orderId") orderId: String?,
                   @Query("cancellingEntity") cancellingEntity: String?): Observable<Response<OrderConfirmStatus>>
+
+  @GET(EndPoints.GET_DOCTORS_API)
+  fun getDoctorsData(
+      @Query("websiteID") fpTag: String?
+  ): Observable<Response<ArrayList<DoctorDataResponse>>>
+
+  @POST(EndPoints.SEND_MAIL)
+  fun sendMail(@HeaderMap headers: Map<String, String>, @Body request: SendMailRequest?): Observable<Response<ResponseBody>>
 }

@@ -67,6 +67,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WebEngageController.trackEvent("Clicked on newsletter subscriptions", "NEWSLETTER SUBSCRIPTIONS", mSessionManager.getFpTag());
         MixPanelController.track(EventKeysWL.SIDE_PANEL_SUBSCRIBERS, null);
         setContentView(R.layout.activity_subscribers);
 

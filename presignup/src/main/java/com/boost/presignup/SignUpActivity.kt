@@ -140,6 +140,7 @@ class SignUpActivity : AppCompatActivity() {
             } else {
               Log.d("createUserProfile", ">>>> Failure")
               enableFormInput()
+//              email = "" // Remove previous email data.
               create_account_button.isVisible = true
               Toast.makeText(applicationContext, "ERROR: " + it.exception!!.message, Toast.LENGTH_LONG).show()
               WebEngageController.trackEvent("PS_Account Creation Failed in Firebase " + provider, "Create User Failed in Firebase With " + provider, "")
@@ -148,6 +149,92 @@ class SignUpActivity : AppCompatActivity() {
     } else {
       registerUserProfileAPI()
     }
+  }
+
+  private fun createUserProfileFirebase(responseResult: UserProfileResponse?){
+    mAuth.createUserWithEmailAndPassword(email, userPassword)
+            .addOnCompleteListener {
+              if(it.isSuccessful) {
+                Log.d("createUserProfile", ">>>> Successfull")
+                WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
+                WebEngageController.setUserContactAttributes(email, userMobile, personName)
+                WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
+
+                val intent = Intent(applicationContext, SignUpConfirmation::class.java)
+                intent.putExtra("profileUrl", profileUrl)
+                intent.putExtra("person_name", personName)
+                intent.putExtra("profile_id", responseResult?.Result?.LoginId)
+                startActivity(intent)
+              }else{
+                Log.d("createUserProfile", ">>>> Failure")
+                enableFormInput()
+//                email = "" // Remove previous email data.
+                create_account_button.isVisible = true
+                Toast.makeText(applicationContext, "ERROR: " + it.exception!!.message, Toast.LENGTH_LONG).show()
+                WebEngageController.trackEvent("PS_Account Creation Failed in Firebase " + provider, "Create User Failed in Firebase With " + provider, "")
+              }
+            }
+  }
+
+  private fun createUserProfileAPINew() {
+    Toast.makeText(applicationContext, "Processing...", Toast.LENGTH_SHORT).show()
+    create_account_button.isVisible = false
+    disableFormInput()
+
+    val userInfo = UserProfileRequest(
+            personIdToken,
+            "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
+            email,
+            userPassword,
+            ProfileProperties(email, userMobile, personName, userPassword),
+            provider,
+            null
+    )
+    ApiService.createUserProfile(userInfo).enqueue(object: Callback<UserProfileResponse>{
+
+      override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
+        if(response.isSuccessful){
+          val responseResult : UserProfileResponse? = response.body()
+          if(responseResult?.Result?.LoginId.isNullOrEmpty().not()){
+            if(registerWithFirebaseEmailProvider){
+              // Start Firebase registration here
+              createUserProfileFirebase(responseResult)
+            }else{
+              // These 3 must happen when firebase creation is successful too
+              WebEngageController.initiateUserLogin(responseResult?.Result?.LoginId)
+              WebEngageController.setUserContactAttributes(email, userMobile, personName)
+              WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
+            }
+          }else{
+//            email = "" // Remove previous email data.
+            create_account_button.isVisible = true
+            enableFormInput()
+            Toast.makeText(applicationContext, applicationContext.getString(R.string.failed_create_user), Toast.LENGTH_SHORT).show()
+          }
+        }else{
+          try{
+            val error: Throwable = PreSignUpException(response.errorBody()?.string() ?: "")
+            val reader = JSONObject(error.localizedMessage)
+            val message: String = reader.getJSONObject("Error")?.getJSONObject("ErrorList")
+                    ?.getString("EXCEPTION") ?: applicationContext.getString(R.string.failed_create_user)
+            Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+          }catch (e: Exception){
+            Toast.makeText(applicationContext, applicationContext.getString(R.string.failed_create_user), Toast.LENGTH_SHORT).show()
+          }
+//          email = "" // Remove previous email data.
+          create_account_button.isVisible = true
+          enableFormInput()
+        }
+      }
+
+      override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
+        Toast.makeText(applicationContext, "error >>" + t.message, Toast.LENGTH_LONG).show()
+        WebEngageController.trackEvent("PS_Account Creation Failed", "Account Creation Failed", "")
+//        email = "" // Remove previous email data.
+        create_account_button.isVisible = true
+        enableFormInput()
+      }
+    })
   }
 
   private fun disableFormInput() {
@@ -165,11 +252,13 @@ class SignUpActivity : AppCompatActivity() {
   }
 
   private fun validateInput(): Boolean {
-    if (user_name.text!!.isEmpty() || user_email.text!!.isEmpty() || user_password.text!!.isEmpty() || user_mobile.text!!.isEmpty()) {
+    this.email = user_email.text.toString()
+
+    if (user_name.text!!.isEmpty() || user_password.text!!.isEmpty() || user_mobile.text!!.isEmpty()) {
       Toast.makeText(applicationContext, "Please enter all values.", Toast.LENGTH_SHORT).show()
       return false
     }
-    if (!isValidMail(email)) {
+    if (!isValidMail(email, allowEmpty = true)) {
       Toast.makeText(applicationContext, "Enter Valid EmailId.", Toast.LENGTH_SHORT).show()
       return false
     }
@@ -180,7 +269,13 @@ class SignUpActivity : AppCompatActivity() {
     return true
   }
 
-  private fun isValidMail(email: String): Boolean {
+  private fun isValidMail(email: String, allowEmpty: Boolean = false): Boolean {
+    if(allowEmpty && email.isNullOrEmpty()) {
+//      registerWithFirebaseEmailProvider = false
+      // Use the email template to allow creation of user using firebase
+      this.email = "noemail-${userMobile}@noemail.com"
+      return true
+    }
     return Pattern.compile(
         "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
             "\\@" +
@@ -242,6 +337,7 @@ class SignUpActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, applicationContext.getString(R.string.failed_create_user), Toast.LENGTH_SHORT).show()
           }
           create_account_button.isVisible = true
+          enableFormInput()
         }
       }
     })
@@ -259,7 +355,10 @@ class SignUpActivity : AppCompatActivity() {
     when (type) {
       WebViewTNCDialog.DECLINE -> {
       }
-      WebViewTNCDialog.ACCEPT -> createUser()
+      // Old code (Create User in Firebase -> Create User with Boost API -> Sign Up)
+//      WebViewTNCDialog.ACCEPT -> createUser()
+      // New flow (Create User with Boost API -> Create User in Firebase -> Sign Up)
+      WebViewTNCDialog.ACCEPT -> createUserProfileAPINew()
     }
   }
 }

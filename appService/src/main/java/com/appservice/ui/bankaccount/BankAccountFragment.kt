@@ -1,6 +1,8 @@
 package com.appservice.ui.bankaccount
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
@@ -14,6 +16,7 @@ import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
+import com.appservice.constant.PreferenceConstant
 import com.appservice.databinding.FragmentBankAccountDetailsBinding
 import com.appservice.model.account.AccountCreateRequest
 import com.appservice.model.account.BankAccountDetailsN
@@ -23,6 +26,7 @@ import com.appservice.model.accountDetails.BankAccountDetails
 import com.appservice.model.accountDetails.KYCDetails
 import com.appservice.model.accountDetails.Result
 import com.appservice.model.razor.RazorDataResponse
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.AccountViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.afterTextChanged
@@ -31,6 +35,12 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 
 class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, AccountViewModel>() {
+
+  private val pref: SharedPreferences?
+    get() {
+      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
+    }
+
   private var isUpdated = true
   private var fpId: String = ""
   private var clientId: String = ""
@@ -75,6 +85,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         if ((it.status == 200 || it.status == 201 || it.status == 202) && data != null) {
           isValidIfsc = true
           binding?.edtBankName?.setText(data.bANK ?: "")
+          binding?.edtBankName?.isFocusable = false
           if (data.bRANCH.isNullOrEmpty().not()) {
             binding?.edtBankBranch?.setText(data.bRANCH)
             binding?.txtBranch?.visible()
@@ -87,6 +98,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun ifscUiUpdate() {
     isValidIfsc = false
+    binding?.edtBankName?.isFocusable = true
     binding?.edtBankName?.setText("")
     binding?.txtBranch?.gone()
     binding?.edtBankBranch?.gone()
@@ -174,7 +186,10 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
 
   private fun uiUpdate(isEditable: Boolean) {
-    val views = arrayListOf(binding?.edtAccountName, binding?.edtAccountNumber, binding?.edtBankName, binding?.edtAlias, binding?.edtIfsc)
+    val views = arrayListOf(binding?.edtAccountName, binding?.edtAccountNumber, binding?.edtAlias, binding?.edtIfsc)
+    if (!isValidIfsc) views.add(binding?.edtBankName)
+    else binding?.edtBankName?.background = ContextCompat.getDrawable(baseActivity, if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill)
+
     binding?.verificationUi?.visibility = if (isEditable) View.GONE else View.VISIBLE
     binding?.createUi?.visibility = if (isEditable) View.VISIBLE else View.GONE
     binding?.edtConfirmNumber?.visibility = if (isEditable) View.VISIBLE else View.GONE
@@ -214,6 +229,10 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       val response = it as? AccountCreateResponse
       if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
         getUserDetails(isServiceCreation = isServiceCreation)
+        val editor = pref?.edit()
+        editor?.putBoolean(PreferenceConstant.IS_ACCOUNT_SAVE, true)
+        editor?.apply()
+        WebEngageController.trackEvent("Bank Account submitted for verification", "BANK ACCOUNT", fpId)
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())
@@ -232,6 +251,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       val response = it as? AccountCreateResponse
       if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
         getUserDetails(isServiceCreation = isServiceCreation)
+        WebEngageController.trackEvent("Bank Account details updated", "BANK ACCOUNT", fpId)
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())

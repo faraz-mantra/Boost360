@@ -1,7 +1,9 @@
 package com.appservice.ui.paymentgateway
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -13,6 +15,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
+import com.appservice.constant.PreferenceConstant
 import com.appservice.databinding.FragmentKycDetailsBinding
 import com.appservice.model.FileModel
 import com.appservice.model.SessionData
@@ -31,10 +34,7 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catlogService.widgets.ClickType
 import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
-import com.appservice.utils.FileUtils
-import com.appservice.utils.getBitmap
-import com.appservice.utils.getExtensionUrl
-import com.appservice.utils.getMimeType
+import com.appservice.utils.*
 import com.appservice.viewmodel.WebBoostKitViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.afterTextChanged
@@ -55,9 +55,15 @@ import org.json.JSONObject
 import java.io.File
 import java.nio.charset.Charset
 import java.util.*
+import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKitViewModel>(), RecyclerItemClickListener {
+
+  private val pref: SharedPreferences?
+    get() {
+      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
+    }
 
   private val FILE_SELECT_CODE = 2000
   private var imagePickerMultiple: Boolean? = null
@@ -107,7 +113,12 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     }
     binding?.edtBankIfscCode?.afterTextChanged {
       val ifsc = binding?.edtBankIfscCode?.text.toString().trim()
-      if (ifsc.length == 11) apiGetIfscDetail(ifsc, true)
+      if (ifsc.length == 11) {
+        apiGetIfscDetail(ifsc, true)
+        binding?.edtBankName?.isFocusable = false
+      }else{
+        binding?.edtBankName?.isFocusable = true
+      }
     }
     setOnClickListener(binding?.btnSubmitDetails, binding?.btnRetakePanImage, binding?.btnBankStatementPicker,
         binding?.btnAdditionalDocs, binding?.btnClearBankStatementImage, binding?.btnAnotherAccount, binding?.btnMyAccount)
@@ -131,6 +142,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         dataKyc?.bankAccountStatement = ""
         binding?.bankStatementView?.gone()
         bankStatementImage = null
+        binding?.tvAddBankStatment?.text = getString(R.string.add_file_jpg_png)
       }
       binding?.btnAnotherAccount -> bankAssociated(false)
       binding?.btnMyAccount -> bankAssociated(true)
@@ -249,6 +261,8 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         hideProgress()
         if ((it.error is NoNetworkException).not()) {
           if (it.status == 200 || it.status == 201 || it.status == 202) {
+            setPreference()
+            session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC verification requested", "KYC VERIFICATION", it1) }
             val bundle = Bundle()
             bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
             bundle.putSerializable(IntentConstant.KYC_DETAIL.name, request)
@@ -259,6 +273,12 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     } else updateKycInformation(getUpdateRequest(request))
   }
 
+  private fun setPreference() {
+    val editor = pref?.edit()
+    editor?.putBoolean(PreferenceConstant.IS_SELF_BRANDED_KYC_ADD, true)
+    editor?.apply()
+  }
+
 
   private fun updateKycInformation(updateRequest: UpdatePaymentKycRequest) {
     showProgress(resources.getString(R.string.please_wait_))
@@ -266,6 +286,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       hideProgress()
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
+          session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC verification requested", "KYC VERIFICATION", it1) }
           val output = Intent()
           output.putExtra(IntentConstant.IS_EDIT.name, true)
           baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
@@ -321,16 +342,20 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         showShortToast("Please select valid pan card file")
         return false
       }
-      bankStatementImage == null && dataKyc?.bankAccountStatement.isNullOrEmpty() -> {
-        showShortToast("Please select valid bank statement file")
-        return false
-      }
       panNumber.isNullOrEmpty() -> {
         showShortToast("Pan number can't empty.")
         return false
       }
+      !isPanNumberValid(panNumber) -> {
+        showShortToast("Please enter a valid pan number.")
+        return false
+      }
       panName.isNullOrEmpty() -> {
         showShortToast("Pan name can't empty.")
+        return false
+      }
+      !isNameValid(panName) -> {
+        showShortToast("Please enter a valid name.")
         return false
       }
       binding?.addDifferent?.isChecked == true -> {
@@ -350,6 +375,10 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
           showShortToast("Bank name can't empty.")
           return false
         }
+      }
+      bankStatementImage == null && dataKyc?.bankAccountStatement.isNullOrEmpty() -> {
+        showShortToast("Please select valid bank statement file")
+        return false
       }
     }
     val hasexisistinginstamojoaccount = if (isInstaMojoAccount != null) {
@@ -395,7 +424,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
 
   private fun openImagePicker(it: ClickType, allowMultiple: Boolean) {
     imagePickerMultiple = allowMultiple
-    if (it != ClickType.PGF) {
+    if (it != ClickType.PDF) {
       val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
       ImagePicker.Builder(baseActivity).mode(type)
           .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
@@ -418,6 +447,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
           bankStatementImage = File(mPaths[0])
           binding?.bankStatementView?.visible()
           bankStatementImage?.getBitmap()?.let { binding?.ivBankStatement?.setImageBitmap(it) }
+          binding?.tvAddBankStatment?.text = getString(R.string.change_file_jpg_png)
         }
         // Multiple files might come. These are the additional docs
         else additionalDocsViewPopulation(mPaths)
@@ -626,5 +656,12 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         setAdapter()
       }
     }
+  }
+
+  private fun isPanNumberValid(panNumber: String): Boolean{
+    return Pattern.compile("[A-Z]{5}[0-9]{4}[A-Z]{1}").matcher(panNumber).matches()
+  }
+  private fun isNameValid(name: String): Boolean{
+    return Pattern.compile("^([^0-9]*)\$").matcher(name).matches()
   }
 }

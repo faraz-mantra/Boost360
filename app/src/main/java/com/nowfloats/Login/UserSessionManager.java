@@ -36,6 +36,8 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.nowfloats.util.Key_Preferences.MAIN_PRIMARY_CONTACT_NUM;
+
 /**
  * Created by Dell on 28-01-2015.
  */
@@ -190,6 +192,11 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public String getUserProfileMobile() {
         return pref.getString(PROFILE_NUMBER, null);
     }
+
+    public String getUserPrimaryMobile() {
+        return pref.getString(MAIN_PRIMARY_CONTACT_NUM, "");
+    }
+
 
     public void setUserProfileName(String name) {
         editor.putString(PROFILE_NAME, name);
@@ -520,11 +527,6 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public String getFacebookPageID() {
         return pref.getString(KEY_FACEBOOK_PAGE_ID, null);
-    }
-
-    public void storeFPEmail(String fpEmail) {
-        editor.putString(KEY_FP_EMAIL, fpEmail);
-        editor.apply();
     }
 
     public String getFPEmail() {

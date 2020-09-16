@@ -1,11 +1,14 @@
 package com.inventoryorder.ui.consultation
 
+import android.content.Intent
 import android.graphics.Paint
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.isGone
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -13,6 +16,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils
 import com.framework.views.customViews.CustomButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewItemType
@@ -30,6 +34,7 @@ import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.utils.copyClipBoard
 import com.inventoryorder.utils.openWebPage
 import java.util.*
+import java.util.regex.Pattern
 
 class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDetailsBinding>() {
 
@@ -49,7 +54,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   override fun onCreateView() {
     super.onCreateView()
     arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
-    setOnClickListener(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.btnOpenConsult)
+    setOnClickListener(binding?.btnPaymentReminder, binding?.tvReSchedule, binding?.btnCopyLink, binding?.btnOpenConsult, binding?.tvCustomerContactNumber, binding?.tvCustomerEmail)
   }
 
   private fun apiGetOrderDetails(orderId: String) {
@@ -88,12 +93,9 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun isOpenForConsultation(order: OrderItem) {
     val isOpen = order.isConfirmConsultBtn()
-//    val isOpen = true
     binding?.bookingDate?.setTextColor(takeIf { isOpen }?.let { getColor(R.color.light_green) } ?: getColor(R.color.primary_grey))
     if (isOpen) isVisible(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
     else isGone(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
-
-    binding?.btnCopyLink?.visibility = View.GONE
   }
 
   private fun setAdapter(orderItems: ArrayList<ItemN>) {
@@ -128,7 +130,13 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "₹"
       binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding?.bookingDate?.text = DateUtils.parseDate(order.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
+    val scheduleDate = order.firstItemForConsultation()?.scheduledStartDate()
+    val dateApt = DateUtils.parseDate(scheduleDate, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)
+    binding?.bookingDate?.text = if (dateApt.isNullOrEmpty().not()) {
+      dateApt
+    } else {
+      DateUtils.parseDate(order.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
+    }
 
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
@@ -137,7 +145,11 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
     binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
     binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
-    binding?.tvCustomerEmail?.text = order.BuyerDetails?.ContactDetails?.EmailId?.trim()
+    if (order.BuyerDetails?.ContactDetails?.EmailId?.isNotBlank()!!) {
+      binding?.tvCustomerEmail?.text = order.BuyerDetails?.ContactDetails?.EmailId?.trim()
+    } else {
+      binding?.tvCustomerEmail?.isGone = true
+    }
 
     // shipping details
     var shippingCost = 0.0
@@ -157,41 +169,88 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
+      binding?.tvReSchedule -> showLongToast("Coming soon..")
       binding?.btnPaymentReminder -> paymentReminder()
       binding?.btnOpenConsult -> apiOpenConsultationWindow()
-      binding?.tvCancelOrder -> apiCancelOrder()
+      binding?.tvCancelOrder -> cancelOrderDialog()
       binding?.btnCopyLink -> videoConsultCopy()
+      binding?.tvCustomerContactNumber -> {
+        if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.length == 10)
+          openDialer()
+        else
+          showShortToast(getString(R.string.phone_invalid_format_error))
+
+      }
+      binding?.tvCustomerEmail -> {
+        if (orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()?.let { checkValidEmail(it) }!!) {
+          openEmailApp()
+        } else {
+          showShortToast(getString(R.string.email_invalid_format_error))
+        }
+      }
     }
+//      binding?.tvCustomerContactNumber -> openDialer()
+//      binding?.tvCustomerEmail -> openEmailApp()
+  }
+
+  private fun openEmailApp() {
+    val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+        "mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
+    startActivity(emailIntent)
+  }
+
+  private fun openDialer() {
+    val intent = Intent(Intent.ACTION_DIAL)
+    intent.data = (Uri.parse("tel:${orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()}"))
+    startActivity(intent)
+  }
+
+  private fun checkValidEmail(email: String): Boolean {
+    return Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$").matcher(email).find()
+  }
+
+  private fun cancelOrderDialog() {
+    MaterialAlertDialogBuilder(context)
+        .setTitle(getString(R.string.cancel_consultation_confirmation_message))
+        .setNeutralButton(getString(R.string.no)) { dialog, _ ->
+          dialog.dismiss()
+        }
+        .setPositiveButton(getString(R.string.yes)) { dialog, which ->
+          apiCancelOrder()
+          dialog.dismiss()
+        }
+        .show()
   }
 
   private fun videoConsultCopy() {
-    orderItem?.consultationJoiningUrl()?.let {
+    orderItem?.consultationJoiningUrl(preferenceData?.webSiteUrl)?.let {
       if (baseActivity.copyClipBoard(it)) showLongToast(resources.getString(R.string.copied_patient_url))
       else showLongToast(resources.getString(R.string.error_copied_patient_url))
     }
   }
 
   private fun apiOpenConsultationWindow() {
-    orderItem?.consultationWindowUrl()?.let {
+    orderItem?.consultationWindowUrlForDoctor()?.let {
       if (baseActivity.openWebPage(it).not()) showLongToast(resources.getString(R.string.error_opening_consultation_window))
     }
   }
 
   private fun apiCancelOrder() {
     showProgress()
-    viewModel?.cancelOrder(clientId, orderItem?._id, OrderItem.CancellingEntity.SELLER.name)?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.cancelOrder(clientId, orderItem?._id, OrderItem.CancellingEntity.SELLER.name)?.observeOnce(viewLifecycleOwner, Observer { cancelRes ->
       hideProgress()
-      if (it.error is NoNetworkException) {
+      if (cancelRes.error is NoNetworkException) {
         showShortToast(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val data = it as? OrderConfirmStatus
+      if (cancelRes.status == 200 || cancelRes.status == 201 || cancelRes.status == 202) {
+        val data = cancelRes as? OrderConfirmStatus
         data?.let { d -> showLongToast(d.Message as String?) }
         refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CANCELLED)
-      } else showLongToast(it.message())
+      } else showLongToast(cancelRes.message())
     })
   }
+
 
   private fun refreshStatus(statusOrder: OrderSummaryModel.OrderStatus) {
     isRefresh = true

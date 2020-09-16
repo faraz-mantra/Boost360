@@ -21,6 +21,7 @@ import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.FragmentVideoConsultBinding
+import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.bottomsheet.FilterModel
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequestItem
@@ -38,6 +39,7 @@ import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.bottomsheet.FilterBottomSheetDialog
 import com.inventoryorder.ui.startFragmentActivity
+import com.inventoryorder.utils.WebEngageController
 import com.inventoryorder.utils.copyClipBoard
 import com.inventoryorder.utils.openWebPage
 import java.util.*
@@ -59,6 +61,8 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   private var currentPage = PAGE_START
   private var isLastPageD = false
 
+  var data: PreferenceData? = null
+
   companion object {
     fun newInstance(bundle: Bundle? = null): VideoConsultFragment {
       val fragment = VideoConsultFragment()
@@ -69,6 +73,8 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
+    fpTag?.let { WebEngageController.trackEvent("Clicked on video consultations", "CONSULTATIONS", it) }
+    data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
@@ -97,7 +103,10 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
             orderList.addAll(list)
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
-          } else errorView("No consultation available.")
+          } else{
+            setHasOptionsMenu(false)
+            errorView("No video consultation available.")
+          }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
             val list = response.Items?.map { item ->
@@ -105,9 +114,15 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
             } as ArrayList<OrderItem>
             setAdapterNotify(list)
           } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
-          else errorView("No consultation available.")
+          else {
+            setHasOptionsMenu(false)
+            errorView("No video consultation available.")
+          }
         }
-      } else errorView(it.message ?: "No consultation available.")
+      } else {
+        setHasOptionsMenu(false)
+        errorView(it.message ?: "No video consultation available.")
+      }
     })
   }
 
@@ -120,7 +135,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.bookingRecycler?.visible()
-    binding?.errorTxt?.gone()
+    binding?.errorView?.gone()
     if (orderAdapter != null) {
       orderAdapter?.notify(getDateWiseFilter(items))
     } else setAdapterAppointmentList(getDateWiseFilter(items))
@@ -128,7 +143,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   private fun errorView(error: String) {
     binding?.bookingRecycler?.gone()
-    binding?.errorTxt?.visible()
+    binding?.errorView?.visible()
     binding?.errorTxt?.text = error
   }
 
@@ -165,8 +180,11 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     super.onClick(v)
     when (v) {
       binding?.btnAdd -> {
-        showLongToast("Coming soon...")
-//        startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
+//        showLongToast("Coming soon...")
+        val bundle = Bundle()
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+        bundle.putBoolean("IS_VIDEO", true)
+        startFragmentActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
       }
     }
   }
@@ -228,6 +246,12 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
         requestFilter = getRequestFilterData(status)
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
       }
+      FilterModel.FilterType.UPCOMING_CONSULT -> {
+        val status = arrayListOf(OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED.name, OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name,
+            OrderSummaryModel.OrderStatus.ORDER_INITIATED.name, OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name)
+        requestFilter = getRequestFilterData(status)
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
       FilterModel.FilterType.CANCEL_CONSULTATIONS -> {
         requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name))
         getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
@@ -280,13 +304,13 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   }
 
   private fun videoConsultCall(order: OrderItem?) {
-    order?.consultationWindowUrl()?.let {
+    order?.consultationWindowUrlForDoctor()?.let {
       if (baseActivity.openWebPage(it).not()) showLongToast(resources.getString(R.string.error_opening_consultation_window))
     }
   }
 
   private fun videoConsultCopy(order: OrderItem?) {
-    order?.consultationJoiningUrl()?.let {
+    order?.consultationJoiningUrl(preferenceData?.webSiteUrl)?.let {
       if (baseActivity.copyClipBoard(it)) showLongToast(resources.getString(R.string.copied_patient_url))
       else showLongToast(resources.getString(R.string.error_copied_patient_url))
     }

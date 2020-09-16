@@ -46,6 +46,7 @@ class FilterModel(val type: String? = null,
   fun getDataConsultations(): ArrayList<FilterModel> {
     val list = ArrayList<FilterModel>()
     list.add(FilterModel(FilterType.ALL_CONSULTATIONS.type, true))
+    list.add(FilterModel(FilterType.UPCOMING_CONSULT.type))
     list.add(FilterModel(FilterType.COMPLETED_CONSULTATIONS.type))
     list.add(FilterModel(FilterType.CANCEL_CONSULTATIONS.type))
     return list
@@ -60,6 +61,7 @@ class FilterModel(val type: String? = null,
 
     //TODO for Consultation
     ALL_CONSULTATIONS("All Consultations", ""),
+    UPCOMING_CONSULT("Upcoming Consultations", OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name),
     COMPLETED_CONSULTATIONS("Completed Consultations", OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name),
     CANCEL_CONSULTATIONS("Cancel Consultations", OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
 

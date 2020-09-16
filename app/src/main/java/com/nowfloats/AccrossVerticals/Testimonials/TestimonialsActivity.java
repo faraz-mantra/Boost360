@@ -1,5 +1,6 @@
 package com.nowfloats.AccrossVerticals.Testimonials;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import com.nowfloats.AccrossVerticals.API.model.DeleteTestimonials.DeleteTestimo
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.GetTestimonialData;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.ProductGallery.Model.Product;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -59,11 +61,22 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testimonials);
-
         //setheaders
         setHeader();
-
         initialization();
+        checkIsAdd();
+    }
+
+    private void checkIsAdd() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            boolean isAdd = bundle.getBoolean("IS_ADD");
+            if (isAdd) {
+                Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
+                intent.putExtra("ScreenState", "new");
+                startActivityForResult(intent, 202);
+            }
+        }
     }
 
     @Override
@@ -160,13 +173,13 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                         Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(testimonialModel.getData().size()>0) {
+                    if (testimonialModel.getData().size() > 0) {
                         dataList = testimonialModel.getData();
                         updateRecyclerView();
                         mainLayout.setVisibility(View.VISIBLE);
                         secondaryLayout.setVisibility(View.GONE);
                         rightButton.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         mainLayout.setVisibility(View.GONE);
                         secondaryLayout.setVisibility(View.VISIBLE);
                         rightButton.setVisibility(View.INVISIBLE);
@@ -264,6 +277,14 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     private void hideProgress() {
         if (vmnProgressBar.isShowing() && !isFinishing()) {
             vmnProgressBar.dismiss();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 202) {
+            if (!(data != null && data.getBooleanExtra("IS_REFRESH", false))) onBackPressed();
         }
     }
 }

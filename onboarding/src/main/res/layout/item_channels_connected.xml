@@ -17,7 +17,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/container"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/size_68"
+      android:layout_height="@dimen/size_70"
       android:layout_gravity="center_vertical"
       android:orientation="horizontal">
 
@@ -56,13 +56,27 @@
           android:id="@+id/name_link"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:maxLines="1"
           android:text="https://shantisalonspa.com/"
           android:textColor="@color/greyish_brown"
           app:fontFamily="@font/semi_bold"
           app:textType="HEADING_6"
-          android:ellipsize="end"
-          android:maxLines="1"
           tools:text="https://shantisalonspa.com/" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/opt_in_out"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:includeFontPadding="false"
+          android:maxLines="1"
+          android:visibility="gone"
+          android:text="Not Opted for Boost Alerts"
+          android:textColor="@color/warm_grey_two"
+          app:fontFamily="@font/regular"
+          app:textAllCaps="true"
+          app:textType="OVERLINE" />
 
       </androidx.appcompat.widget.LinearLayoutCompat>
 

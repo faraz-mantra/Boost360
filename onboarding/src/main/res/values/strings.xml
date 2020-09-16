@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="what_your_business_like">What\'s your business like?</string>
   <string name="let_me_know_describes_business">Choose a category that best matches the nature of your business.</string>
   <string name="skip">Skip</string>
@@ -64,6 +64,8 @@
   <string name="business_address_cant_empty">Business address can\'t be empty</string>
   <string name="email_invalid">Email is invalid</string>
   <string name="phone_number_invalid">Phone number is invalid</string>
+  <string name="email_cannot_be_empty">Email cannot be empty</string>
+  <string name="phone_number_cannot_be_empty">Phone number cannot be empty</string>
   <string name="your">Your</string>
   <string name="business_setup_boost">business is successfully setup on Boost.</string>
   <string name="setting_total">Setting up on total</string>
@@ -118,7 +120,7 @@
   <string name="for_your">for your</string>
   <string name="business">Business</string>
   <string name="select_one_page">Select only one page</string>
-  <string name="canceled">Canceled</string>
+  <string name="cancelled">Cancelled</string>
   <string name="uploading_business_image">Uploading business image...</string>
   <string name="business_image_uploaded">Business Image uploaded.</string>
   <string name="uploading_profile_image">Uploading profile image...</string>
@@ -145,5 +147,8 @@
   <string name="accept">Accept</string>
   <string name="boost360_terms_conditions"><![CDATA[Boost360 - Terms & Conditions]]></string>
   <string name="entransactional_updates_whatsapp_number">Allow Boost to send entransactional updates regarding you orders, invoices along with other promotional messages on this WhatsApp number.</string>
+  <string name="fp_shop_awaited_title" tools:ignore="ExtraTranslation">Awaiting Fb shop integration!</string>
+  <string name="fp_shop_awaited_desc" tools:ignore="ExtraTranslation">Unfortunately, This functionality is not available on the Android app yet. To activate this channel, please log in to boost the web portal <a href="http://boost.nowfloats.com">(boost.nowfloats.com)</a> from the nearest desktop and go to <b>Content > Content Sharing Settings</b>. There you\'ll be able to activate this.</string>
 
 </resources>
+
