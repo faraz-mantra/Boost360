@@ -182,7 +182,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
-        data?.let { d -> showLongToast(d.Message as String?) }
+        showLongToast(getString(R.string.order_confirmed))
         val itemList = orderAdapter?.list() as ArrayList<OrderItem>
         if (itemList.size > position) {
           itemList[position].Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name

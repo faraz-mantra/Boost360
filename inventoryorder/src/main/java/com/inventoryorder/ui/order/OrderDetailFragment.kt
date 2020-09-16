@@ -296,7 +296,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
-        data?.let { d -> showLongToast(d.Message as String?) }
+        showLongToast(getString(R.string.order_confirmed))
         refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED)
       } else showLongToast(it.message())
     })

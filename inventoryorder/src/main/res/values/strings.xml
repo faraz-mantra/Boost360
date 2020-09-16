@@ -98,5 +98,7 @@
   <string name="reschedule_consultation">Reschedule consultation</string>
   <string name="copy_video_call_link">Copy video call link</string>
   <string name="open_consultation_window">OPEN CONSULTATION WINDOW</string>
+    <string name="appointment_confirmed">Appointment confirmed.</string>
+  <string name="order_confirmed">Order confirmed.</string>
 
 </resources>
