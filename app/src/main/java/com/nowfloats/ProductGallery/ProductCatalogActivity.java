@@ -1,7 +1,17 @@
 package com.nowfloats.ProductGallery;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -11,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,11 +33,14 @@ import com.nowfloats.ProductGallery.Adapter.ProductCategoryRecyclerAdapter;
 import com.nowfloats.ProductGallery.Model.ImageListModel;
 import com.nowfloats.ProductGallery.Model.Product;
 import com.nowfloats.ProductGallery.Service.ProductGalleryInterface;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.nowfloats.widget.WidgetKey;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityProductCatalogBinding;
 
@@ -50,6 +64,14 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     private boolean stop = false;
     private boolean isLoading = false;
     private int limit = WidgetKey.WidgetLimit.FEATURE_NOT_AVAILABLE.getValue();
+
+    // For sharing
+    private static final int STORAGE_CODE = 120;
+    static ProgressDialog pd;
+    Target targetMap = null;
+    static boolean defaultShareGlobal = true;
+    static int shareType = 2;
+    static Product shareProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +181,17 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         binding.productList.setLayoutManager(layoutManager);
         binding.productList.setAdapter(adapter);
 
+        adapter.onShareClickListener(new ProductCategoryRecyclerAdapter.OnShareClicked() {
+            @Override
+            public void onShareClicked(boolean defaultShare, int type, Product product) {
+                defaultShareGlobal = defaultShare;
+                shareType = type;
+                shareProduct = product;
+                if(checkStoragePermission()) {
+                    share(defaultShare, type, product);
+                }
+            }
+        });
         adapter.SetOnItemClickListener(product -> {
             openAddProductActivity(product);
 //            Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
@@ -202,7 +235,6 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                 addProduct();
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -213,6 +245,16 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         if (requestCode == 300 && resultCode == RESULT_OK) {
             boolean flag = data.getBooleanExtra("LOAD", true);
             getProducts(flag);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == STORAGE_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            if(!defaultShareGlobal && shareType != 2 && shareProduct != null){
+                share(defaultShareGlobal, shareType, shareProduct);
+            }
         }
     }
 
@@ -376,5 +418,77 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         newProduct.setOtherSpecification(otherSpec);
         newProduct.setPickupAddressReferenceId(p.pickupAddressReferenceId);
         return newProduct;
+    }
+
+    public boolean checkStoragePermission(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            Methods.showDialog(this, "Storage Permission", "To share the image we need storage permission.",
+                    (dialog, which) -> ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
+            return false;
+        }
+
+        return true;
+    }
+
+    public void share(boolean defaultShare, int type, Product product){
+        pd = ProgressDialog.show(this, "", "Sharing . . .");
+
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        if(Methods.isOnline(this)){
+            @SuppressLint("DefaultLocale") String shareText = String.format("*%s*\nPrice: INR. %.2f\n%s\nView more details at: %s", product.Name, product.Price - product.DiscountAmount,
+                    product.Description, product.ProductUrl);
+
+            Target target = new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    pd.dismiss();
+                    targetMap = null;
+                    try{
+                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                        View view = new View(getApplicationContext());
+                        view.draw(new Canvas(mutableBitmap));
+                        String path = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), mutableBitmap, "boost_360", null);
+                        BoostLog.d("Path is:", path);
+                        Uri uri = Uri.parse(path);
+                        share.putExtra(Intent.EXTRA_TEXT, shareText);
+                        share.putExtra(Intent.EXTRA_STREAM, uri);
+                        share.setType("image/*");
+                        if (share.resolveActivity(getApplicationContext().getPackageManager()) != null) {
+                            if(!defaultShare) {
+                                if (type == 0) {
+                                    share.setPackage("com.facebook.katana");
+                                }else if(type == 1){
+                                    share.setPackage("com.whatsapp");
+                                }
+                            }
+                            startActivityForResult(Intent.createChooser(share, getApplicationContext().getString(R.string.share_updates)), 1);
+                        }
+                    }catch (OutOfMemoryError e) {
+                        Toast.makeText(getApplicationContext(), "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Image not able to share", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                    pd.dismiss();
+                    targetMap = null;
+                    Methods.showSnackBarNegative((Activity) getApplicationContext(), getApplicationContext().getString(R.string.failed_to_download_image));
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                }
+            };
+            targetMap = target;
+            Picasso.get().load(product.ImageUri).into(target);
+        }else{
+            pd.dismiss();
+            Methods.showSnackBarNegative((Activity) getApplicationContext(), getApplicationContext().getString(R.string.can_not_share_image_offline_mode));
+        }
     }
 }

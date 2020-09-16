@@ -1,21 +1,38 @@
 package com.nowfloats.ProductGallery.Adapter;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowfloats.ProductGallery.Model.Product;
+import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.helper.Helper;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Methods;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -24,12 +41,18 @@ import java.util.List;
 public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
+//    private ProductCatalogActivity appContext;
     private List<Product> productList;
     private OnItemClicked callback;
+    private OnShareClicked shareCallback;
+    private static final int STORAGE_CODE = 120;
+    static ProgressDialog pd;
+    Target targetMap = null;
 
-    public ProductCategoryRecyclerAdapter(Context context)
+    public ProductCategoryRecyclerAdapter(Context context)//, ProductCatalogActivity appContext)
     {
         this.context = context;
+//        this.appContext = appContext;
         this.productList = new ArrayList<>();
     }
 
@@ -125,6 +148,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             {
                 picasso.load(R.drawable.default_product_image).into(viewHolder.thumbnail);
             }
+
         }
     }
 
@@ -145,6 +169,8 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         private TextView tvBasePrice;
         private TextView tvMissingInfo;
         private Button btnEdit;
+        private ImageView whatsappShareButton;
+        private ImageView facebookShareButton;
 
         private ProductListViewHolder(View itemView)
         {
@@ -159,7 +185,13 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             tvBasePrice = itemView.findViewById(R.id.label_base_price);
             tvMissingInfo = itemView.findViewById(R.id.label_missing_info);
             btnEdit = itemView.findViewById(R.id.button_edit);
+            whatsappShareButton = itemView.findViewById(R.id.share_whatsapp);
+            facebookShareButton = itemView.findViewById(R.id.share_facebook);
             btnEdit.setOnClickListener(v -> callback.onItemClick(productList.get(getAdapterPosition())));
+//            whatsappShareButton.setOnClickListener(v -> share(false, 1, productList.get(getAdapterPosition())));
+//            facebookShareButton.setOnClickListener(v -> share(false, 0, productList.get(getAdapterPosition())));
+            whatsappShareButton.setOnClickListener(v -> shareCallback.onShareClicked(false, 1, productList.get(getAdapterPosition())));
+            facebookShareButton.setOnClickListener(v -> shareCallback.onShareClicked(false, 0, productList.get(getAdapterPosition())));
         }
 
         @Override
@@ -171,6 +203,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
     public void share(boolean defaultShare,int type,String productUrl)
     {
+
         //type 0 = facebook, type 1= whatsApp, type 3=default
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
@@ -186,6 +219,94 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
     }
 
+    public void share(boolean defaultShare,int type, Product product)
+    {
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            Methods.showDialog(context, "Storage Permission", "To share your image we need storage permission.",
+                    (dialog, which) -> ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
+            return;
+        }
+
+        pd = ProgressDialog.show(context, "", "Sharing . . .");
+
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        if(Methods.isOnline((Activity) context)){
+            @SuppressLint("DefaultLocale") String shareText = String.format("*%s*\nPrice: INR. %.2f\n%s\nView more details at: %s", product.Name, product.Price - product.DiscountAmount,
+                    product.Description, product.ProductUrl);
+
+            Target target = new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    pd.dismiss();
+                    targetMap = null;
+                    try{
+                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                        View view = new View(context);
+                        view.draw(new Canvas(mutableBitmap));
+                        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), mutableBitmap, "boost_360", null);
+                        BoostLog.d("Path is:", path);
+                        Uri uri = Uri.parse(path);
+                        share.putExtra(Intent.EXTRA_TEXT, shareText);
+                        share.putExtra(Intent.EXTRA_STREAM, uri);
+                        share.setType("image/*");
+                        if (share.resolveActivity(context.getPackageManager()) != null) {
+                            if(!defaultShare) {
+                                if (type == 0) {
+                                    share.setPackage("com.facebook.katana");
+                                }else if(type == 1){
+                                    share.setPackage("com.whatsapp");
+                                }
+                            }
+                            ProductCatalogActivity activity = (ProductCatalogActivity) context;
+                            activity.startActivityForResult(Intent.createChooser(share, context.getString(R.string.share_updates)), 1);
+                        }
+                    }catch (OutOfMemoryError e) {
+                        Toast.makeText(context, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context, "Image not able to share", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                    pd.dismiss();
+                    targetMap = null;
+                    Methods.showSnackBarNegative((Activity) context, context.getString(R.string.failed_to_download_image));
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                }
+            };
+            targetMap = target;
+            Picasso.get().load(product.ImageUri).into(target);
+        }else{
+            pd.dismiss();
+            Methods.showSnackBarNegative((Activity) context, context.getString(R.string.can_not_share_image_offline_mode));
+        }
+
+//        Picasso picasso = Picasso.get();
+//        Object image = picasso.load(product.ImageUri);
+//        picasso.load(product.ImageUri);
+//        saveImage(product.ImageUri);
+//
+//        //type 0 = facebook, type 1= whatsApp, type 3=default
+//
+//        share.setType("text/plain");
+//        if(!defaultShare)
+//        {
+//            if(type==1)
+//            { share.setPackage("com.whatsapp");}
+//            else if(type==0)
+//            { share.setPackage("com.facebook.katana"); }
+//        }
+//        context.startActivity(Intent.createChooser(share,  context.getString(R.string.share_updates)));
+    }
+
     public void setData(List<Product> productList, boolean flag)
     {
         if(flag)
@@ -195,6 +316,14 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
         this.productList.addAll(productList);
         notifyDataSetChanged();
+    }
+
+    public interface OnShareClicked{
+        void onShareClicked(boolean defaultShare, int type, Product product);
+    }
+
+    public void onShareClickListener(final OnShareClicked shareCallback){
+        this.shareCallback = shareCallback;
     }
 
     public interface OnItemClicked
