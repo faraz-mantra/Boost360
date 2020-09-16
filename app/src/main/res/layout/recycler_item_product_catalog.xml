@@ -54,7 +54,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:gravity="bottom"
+                android:gravity="top"
                 android:layout_toRightOf="@+id/card_thumbnail" >
 
                 <TextView
@@ -77,7 +77,6 @@
                     android:textColor="@color/primaryColor"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:layout_below="@+id/label_missing_info"
                     android:paddingBottom="5dp"
                     android:text="Watch by Fastrack"/>
 
@@ -165,6 +164,46 @@
 
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_share_buttons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/share_colon"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        android:fontFamily="@font/regular"/>
+
+                    <ImageView
+                        android:id="@+id/share_facebook"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/facebook_icon_share"
+                        android:visibility="visible"
+                        android:contentDescription="facebook share button" />
+
+                    <ImageView
+                        android:id="@+id/share_whatsapp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_whatsapp"
+                        android:visibility="visible"
+                        android:contentDescription="whatsapp share button" />
+
+                </LinearLayout>
+
 
 
 
