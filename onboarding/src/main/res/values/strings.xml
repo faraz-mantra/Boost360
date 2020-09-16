@@ -148,7 +148,7 @@
   <string name="boost360_terms_conditions"><![CDATA[Boost360 - Terms & Conditions]]></string>
   <string name="entransactional_updates_whatsapp_number">Allow Boost to send entransactional updates regarding you orders, invoices along with other promotional messages on this WhatsApp number.</string>
   <string name="fp_shop_awaited_title" tools:ignore="ExtraTranslation">Awaiting Fb shop integration!</string>
-  <string name="fp_shop_awaited_desc" tools:ignore="ExtraTranslation">Unfortunately, This functionality is not available on the Android app yet. To activate this channel, please log in to boost the web portal (boost.nowfloats.com) from the nearest desktop and go to <b>Content > Content Sharing Settings</b>. There you\'ll be able to activate this.</string>
+  <string name="fp_shop_awaited_desc" tools:ignore="ExtraTranslation">Unfortunately, This functionality is not available on the Android app yet. To activate this channel, please log in to boost the web portal <a href="http://boost.nowfloats.com">(boost.nowfloats.com)</a> from the nearest desktop and go to <b>Content > Content Sharing Settings</b>. There you\'ll be able to activate this.</string>
 
 </resources>
 

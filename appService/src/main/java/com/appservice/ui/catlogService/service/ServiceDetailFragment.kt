@@ -174,6 +174,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun setBankAccountData() {
     if (bankAccountDetail != null) {
+      product?.paymentType = Product.PaymentType.ASSURED_PURCHASE.value
       binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
       binding?.bankAccountView?.visible()
       binding?.externalUrlView?.gone()

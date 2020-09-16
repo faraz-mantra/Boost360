@@ -6,10 +6,14 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
@@ -304,9 +308,13 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     when (actionType) {
       RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal -> {
         if (channel.isFacebookShop()) {
-          AlertDialog.Builder(baseActivity).setTitle(getString(R.string.fp_shop_awaited_title))
-              .setMessage(resources.getString(R.string.fp_shop_awaited_desc))
-              .setPositiveButton(resources.getString(R.string.okay)) { d, _ -> d.dismiss() }.show()
+          val s = SpannableString(resources.getString(R.string.fp_shop_awaited_desc))
+          Linkify.addLinks(s, Linkify.ALL);
+          AlertDialog.Builder(baseActivity)
+              .setTitle(getString(R.string.fp_shop_awaited_title))
+              .setMessage(s)
+              .setPositiveButton(resources.getString(R.string.okay), null).show()
+              .findViewById<TextView>(android.R.id.message).movementMethod = LinkMovementMethod.getInstance()
           return
         }
         listDisconnect?.map {
