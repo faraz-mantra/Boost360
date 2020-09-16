@@ -37,6 +37,7 @@ import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
+import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.Store.Model.OnItemClickCallback;
@@ -123,6 +124,12 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
             public void onItemClick(int pos) {
                 Intent intent = null;
                 switch (adapterTexts[pos]) {
+                    case "My Business Profile":
+                        intent = new Intent(mContext, FragmentsFactoryActivity.class);
+                        intent.putExtra("fragmentName", "Business_Profile_Fragment_V2");
+                        startActivity(intent);
+                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        break;
                     case "My Bank Account":
                         Bundle bundle = new Bundle();
                         bundle.putString(IntentConstant.CLIENT_ID.name(), Constants.clientId);
@@ -139,7 +146,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         Bundle b = getBundleDataKyc();
                         startFragmentPaymentActivityNew(requireActivity(), com.appservice.constant.FragmentType.PAYMENT_GATEWAY, b, false);
                         break;
-                    case "KYC Verification":
+                    case "My Business KYC":
                         Bundle b1 = getBundleDataKyc();
                         if (sessionManager.isSelfBrandedKycAdd()) {
                             startFragmentPaymentActivityNew(requireActivity(), com.appservice.constant.FragmentType.KYC_STATUS, b1, false);

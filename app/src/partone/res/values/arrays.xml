@@ -3,6 +3,7 @@
     <array name="account_settings">
         <!--<item>@drawable/ic_seller_profile</item>-->
         <!--        <item>@drawable/ic_account_info</item>-->
+        <item>@drawable/ic_business_profile</item>
         <item>@drawable/ic_baseline_payment</item>
         <item>@drawable/ic_baseline_verified</item>
         <item>@drawable/ic_baseline_payment</item>
