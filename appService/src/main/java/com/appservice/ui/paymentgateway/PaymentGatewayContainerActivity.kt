@@ -53,7 +53,7 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getNavIconScale(): Float {
     return when (type) {
-      FragmentType.BUSINESS_KYC_VIEW, FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE, FragmentType.KYC_DETAIL_NEW -> 1f
+      FragmentType.SCAN_PAN_CARD, FragmentType.KYC_DETAIL_NEW -> 1f
       else -> super.getNavIconScale()
     }
   }
@@ -98,8 +98,8 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.PAYMENT_GATEWAY, FragmentType.DETAIL_KYC_VIEW, FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
-      FragmentType.KYC_DETAIL_NEW, FragmentType.BUSINESS_KYC_VIEW, FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> ContextCompat.getDrawable(this, R.drawable.ic_round_close_white)
+      FragmentType.PAYMENT_GATEWAY, FragmentType.DETAIL_KYC_VIEW, FragmentType.BUSINESS_KYC_VIEW, FragmentType.KYC_DETAILS, FragmentType.KYC_STATUS, FragmentType.CROP_IMAGE -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
+      FragmentType.KYC_DETAIL_NEW, FragmentType.SCAN_PAN_CARD -> ContextCompat.getDrawable(this, R.drawable.ic_round_close_white)
       else -> super.getNavigationIcon()
     }
   }
@@ -107,7 +107,8 @@ open class PaymentGatewayContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.PAYMENT_GATEWAY -> getString(R.string.self_branded_payment_gateway)
-      FragmentType.SCAN_PAN_CARD, FragmentType.CROP_IMAGE -> getString(R.string.take_photo_of_your_pan_card)
+      FragmentType.SCAN_PAN_CARD -> getString(R.string.take_photo_of_your_pan_card)
+      FragmentType.CROP_IMAGE -> getString(R.string.crop_picture)
       FragmentType.KYC_STATUS, FragmentType.KYC_DETAILS, FragmentType.BUSINESS_KYC_VIEW, FragmentType.KYC_DETAIL_NEW -> getString(R.string.business_kyc)
       else -> super.getToolbarTitle()
     }

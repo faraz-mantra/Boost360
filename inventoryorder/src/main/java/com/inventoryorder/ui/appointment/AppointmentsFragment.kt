@@ -22,6 +22,7 @@ import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.FragmentAppointmentsBinding
 import com.inventoryorder.model.OrderConfirmStatus
+import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.bottomsheet.FilterModel
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequestItem
@@ -39,6 +40,8 @@ import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.bottomsheet.FilterBottomSheetDialog
 import com.inventoryorder.ui.startFragmentActivity
+import com.inventoryorder.utils.WebEngageController
+import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -59,6 +62,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private var currentPage = PAGE_START
   private var isLastPageD = false
 
+  var data: PreferenceData? = null
+
   companion object {
     fun newInstance(bundle: Bundle? = null): AppointmentsFragment {
       val fragment = AppointmentsFragment()
@@ -69,7 +74,9 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun onCreateView() {
     super.onCreateView()
+    fpTag?.let { WebEngageController.trackEvent("Clicked on appointments", "APPOINTMENTS", it) }
     experienceCode = arguments?.getString(IntentConstant.EXPERIENCE_CODE.name)?.trim()
+    data = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
     setOnClickListener(binding?.btnAdd)
     layoutManager = LinearLayoutManager(baseActivity)
     setOnClickListener(binding?.btnAdd)
@@ -82,8 +89,11 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     super.onClick(v)
     when (v) {
       binding?.btnAdd -> {
-        showLongToast("Coming soon...")
-//        startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
+//        showLongToast("Coming soon...")
+        val bundle = Bundle()
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+        bundle.putBoolean("IS_VIDEO", false)
+        startFragmentActivity(FragmentType.CREATE_APPOINTMENT_VIEW  , bundle, isResult = true)
       }
     }
   }
@@ -109,7 +119,10 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
             orderList.addAll(list)
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
-          } else errorView("No appointment available.")
+          } else{
+            setHasOptionsMenu(false)
+            errorView("No appointment available.")
+          }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
             val list = response.Items?.map { item ->
@@ -117,9 +130,15 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
             } as ArrayList<OrderItem>
             setAdapterNotify(list)
           } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
-          else errorView("No appointment available.")
+          else{
+            setHasOptionsMenu(false)
+            errorView("No appointment available.")
+          }
         }
-      } else errorView(it.message ?: "No appointment available.")
+      }else{
+        setHasOptionsMenu(false)
+        errorView("No appointment available.")
+      }
     })
   }
 
@@ -132,7 +151,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   private fun setAdapterNotify(items: ArrayList<OrderItem>) {
     binding?.bookingRecycler?.visible()
-    binding?.errorTxt?.gone()
+    binding?.errorView?.gone()
     if (orderAdapter != null) {
       orderAdapter?.notify(getDateWiseFilter(items))
     } else setAdapterAppointmentList(getDateWiseFilter(items))
@@ -140,7 +159,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   private fun errorView(error: String) {
     binding?.bookingRecycler?.gone()
-    binding?.errorTxt?.visible()
+    binding?.errorView?.visible()
     binding?.errorTxt?.text = error
   }
 
@@ -245,22 +264,22 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    super.onCreateOptionsMenu(menu, inflater)
-    val searchItem = menu.findItem(R.id.menu_item_search)
-    if (searchItem != null) {
-      val searchView = searchItem.actionView as SearchView
-      searchView.queryHint = resources.getString(R.string.queryHintAppointment)
-      searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(query: String?): Boolean {
-          return false
-        }
+      super.onCreateOptionsMenu(menu, inflater)
+      val searchItem = menu.findItem(R.id.menu_item_search)
+      if (searchItem != null) {
+        val searchView = searchItem!!.actionView as SearchView
+        searchView.queryHint = resources.getString(R.string.queryHintAppointment)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+          override fun onQueryTextSubmit(query: String?): Boolean {
+            return false
+          }
 
-        override fun onQueryTextChange(newText: String?): Boolean {
-          newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
-          return false
-        }
-      })
-    }
+          override fun onQueryTextChange(newText: String?): Boolean {
+            newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
+            return false
+          }
+        })
+      }
   }
 
 
@@ -293,7 +312,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
-        data?.let { d -> showLongToast(d.Message as String?) }
+        showLongToast(getString(R.string.appointment_confirmed))
         val itemList = orderAdapter?.list() as ArrayList<OrderItem>
         if (itemList.size > position) {
           itemList[position].Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name

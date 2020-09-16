@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.framework.extensions.gone
 import com.framework.extensions.visible
+import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
@@ -29,7 +30,8 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     super.bind(position, item)
     val data = item as? OrderItem
     data?.let {
-      binding.bookingDate.title.text = activity?.resources?.getString(R.string.date_order)
+      binding.aptDate.title.text = activity?.resources?.getString(R.string.date_apt)
+      binding.createDate.title.text = activity?.resources?.getString(R.string.date_order)
       binding.payment.title.text = activity?.resources?.getString(R.string.payment)
       binding.location.title.text = activity?.resources?.getString(R.string.location)
       setDataResponse(it)
@@ -52,12 +54,27 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding.bookingDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL, timeZone = TimeZone.getTimeZone("IST"))
+    binding.createDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL, timeZone = TimeZone.getTimeZone("IST"))
     binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
-    binding.location.value.text = order.SellerDetails?.Address?.City?.capitalizeUtil()
+    val location = order.SellerDetails?.Address?.City?.capitalizeUtil()
+    if (location.isNullOrEmpty().not()) {
+      binding.location.mainView.visible()
+      binding.location.value.text = location
+    } else binding.location.mainView.gone()
+
     val sizeItem = order.Items?.size ?: 0
     binding.itemCount.text = takeIf { sizeItem > 1 }?.let { "Services" } ?: "Service"
-    binding.itemDesc.text = order.getTitlesBooking()
+//    binding.itemDesc.text = order.getTitlesBooking()
+    val details = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.detailsConsultation()
+    val scheduleDate = order.firstItemForConsultation()?.scheduledStartDate()
+
+    binding.itemDesc.text = details
+
+    val dateApt = parseDate(scheduleDate, FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)
+    if (dateApt.isNullOrEmpty().not()) {
+      binding.aptDate.mainView.visible()
+      binding.aptDate.value.text = dateApt
+    } else binding.aptDate.mainView.gone()
 
     binding.itemMore.visibility = takeIf { (sizeItem > 1) }?.let {
       binding.itemMore.text = "+${sizeItem - 1} more"
@@ -99,8 +116,8 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
   private fun backgroundGrey(confirm: Int, detail: Int, btn: Int, orderBg: Int, primaryGrey: Int) {
     binding.detailsOrder.visibility = detail
     binding.next2.visibility = btn
-    setColorView(primaryGrey, binding.bookingDate.title, binding.payment.title, binding.location.title, binding.bookingId,
-        binding.txtRupees, binding.bookingDate.value, binding.payment.value, binding.location.value, binding.itemCount,
+    setColorView(primaryGrey, binding.aptDate.title, binding.payment.title, binding.location.title, binding.bookingId,
+        binding.txtRupees, binding.aptDate.value, binding.payment.value, binding.location.value, binding.itemCount,
         binding.itemDesc, binding.itemMore)
     activity?.let {
       binding.btnConfirm.setTextColor(ContextCompat.getColor(it, primaryGrey))
@@ -118,7 +135,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     binding.detailsOrder.visibility = detail
     binding.next2.visibility = btn
     activity?.let {
-      binding.bookingDate.value.setTextColor(ContextCompat.getColor(it, dateColor))
+      binding.aptDate.value.setTextColor(ContextCompat.getColor(it, dateColor))
       binding.orderType.background = ContextCompat.getDrawable(it, orderBg)
       binding.txtRupees.setTextColor(ContextCompat.getColor(it, rupeesColor))
     }

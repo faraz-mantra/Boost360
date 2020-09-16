@@ -1,9 +1,13 @@
 package com.nowfloats.CustomPage;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -18,6 +22,7 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
 
     Toolbar toolbar;
     TextView headerText;
+    boolean isAdd = false;
     private CustomPageFragment customPageFragment;
 
     @Override
@@ -25,7 +30,7 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_site_appearance);
 
-        WebEngageController.trackEvent("CUSTOMPAGE","CUSTOMPAGE",null);
+        WebEngageController.trackEvent("CUSTOMPAGE", "CUSTOMPAGE", null);
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_site_appearance);
         setSupportActionBar(toolbar);
@@ -39,7 +44,8 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
         findViewById(R.id.fm_site_appearance).setVisibility(View.VISIBLE);
         getSupportFragmentManager().beginTransaction().add(R.id.fm_site_appearance, customPageFragment).
                 commit();
-
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) isAdd = bundle.getBoolean("IS_ADD");
     }
 
     @Override
@@ -56,5 +62,14 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
     @Override
     public void DeletePageTrigger(int position, boolean chk, View view) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 202) {
+            if (!(data != null && data.getBooleanExtra("IS_REFRESH", false))) onBackPressed();
+            else if (customPageFragment != null) customPageFragment.isRefreshList();
+        }
     }
 }

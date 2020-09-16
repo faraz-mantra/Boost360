@@ -93,7 +93,7 @@
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp"
                     android:gravity="center"
-                    android:text="ADD A TESTIMONIAL"
+                    android:text="@string/add_a_testimonial_all_caps"
                     android:textColor="@color/white"
                     android:layout_marginTop="@dimen/_20sdp"/>
 

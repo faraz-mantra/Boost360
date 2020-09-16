@@ -1,18 +1,26 @@
 package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.*
@@ -42,12 +50,20 @@ import io.reactivex.Completable
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
+
 
   private val pref: SharedPreferences?
     get() {
       return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, 0)
     }
+
+  private val mPrefTwitter: SharedPreferences?
+    get() {
+      return baseActivity.getSharedPreferences(PreferenceConstant.PREF_NAME_TWITTER, Context.MODE_PRIVATE)
+    }
+
   private val auth: String?
     get() {
       return pref?.getString(PreferenceConstant.AUTHORIZATION, "58ede4d4ee786c1604f6c535")
@@ -227,6 +243,32 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       }
       animObserver?.doOnComplete { setAdapterConnected(listConnect) }?.andThen(binding?.noteTxt?.fadeIn(100L))?.subscribe()
     }
+    setSharePrefDataFpPageAndTwitter()
+  }
+
+  private fun setSharePrefDataFpPageAndTwitter() {
+    val twitter = listConnect?.firstOrNull { it.isTwitterChannel() }
+    val editorTwitter = mPrefTwitter?.edit()
+    if (twitter != null) {
+      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, twitter.channelAccessToken?.userAccountName)
+      editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, true)
+    } else {
+      editorTwitter?.putString(PreferenceConstant.TWITTER_USER_NAME, null)
+      editorTwitter?.putBoolean(PreferenceConstant.PREF_KEY_TWITTER_LOGIN, false)
+    }
+    val fpPage = listConnect?.firstOrNull { it.isFacebookPage() }
+    val editorFp = pref?.edit()
+    if (fpPage != null) {
+      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, fpPage.channelAccessToken?.userAccountName)
+      editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, true)
+      editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 1)
+    } else {
+      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_PAGE, null)
+      editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, false)
+      editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 0)
+    }
+    editorFp?.apply()
+    editorTwitter?.apply()
   }
 
   private fun changeView(isConnect: Boolean) {
@@ -266,7 +308,13 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     when (actionType) {
       RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal -> {
         if (channel.isFacebookShop()) {
-          showLongToast("You can't connect to Facebook shop using app.")
+          val s = SpannableString(resources.getString(R.string.fp_shop_awaited_desc))
+          Linkify.addLinks(s, Linkify.ALL);
+          AlertDialog.Builder(baseActivity)
+              .setTitle(getString(R.string.fp_shop_awaited_title))
+              .setMessage(s)
+              .setPositiveButton(resources.getString(R.string.okay), null).show()
+              .findViewById<TextView>(android.R.id.message).movementMethod = LinkMovementMethod.getInstance()
           return
         }
         listDisconnect?.map {
@@ -277,7 +325,10 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         adapterDisconnect?.notify(listDisconnect)
         val count = listDisconnect?.filter { it.isSelected == true }?.size ?: 0
         if (count > 0) {
-          binding?.syncBtn?.text = "Continue Syncing $count Channel"
+          if (count == 1)
+            binding?.syncBtn?.text = "Continue Syncing $count Channel"
+          else
+            binding?.syncBtn?.text = "Continue Syncing $count Channels"
           binding?.syncBtn?.visible()
         } else binding?.syncBtn?.gone()
       }

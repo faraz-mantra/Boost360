@@ -72,26 +72,25 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toTopOf="@id/btn_upload_pan_gallery_sheet"
-            app:cardCornerRadius="@dimen/size_90"
+            app:cardCornerRadius="@dimen/size_40"
             app:cardElevation="@dimen/size_0"
-            android:layout_marginBottom="@dimen/size_10"
+            android:layout_marginBottom="@dimen/size_14"
             app:cardBackgroundColor="@color/white"
-
             >
             <com.framework.views.customViews.CustomImageView
-                android:layout_width="@dimen/size_40"
-                android:layout_height="@dimen/size_40"
+                android:layout_width="@dimen/size_36"
+                android:layout_height="@dimen/size_36"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_camera_orange"
                 />
             <com.framework.views.customViews.CustomCardView
-                android:layout_width="@dimen/size_14"
-                android:layout_height="@dimen/size_14"
+                android:layout_width="@dimen/size_12"
+                android:layout_height="@dimen/size_12"
                 app:cardBackgroundColor="@color/orange"
                 android:layout_gravity="center"
-                app:cardElevation="@dimen/size_0"
-                android:layout_marginTop="@dimen/size_2"
-                app:cardCornerRadius="@dimen/size_30"
+                app:cardElevation="@dimen/size_2"
+                android:layout_marginTop="@dimen/size_1"
+                app:cardCornerRadius="@dimen/size_6"
                 />
         </com.framework.views.customViews.CustomCardView>
         <com.framework.views.customViews.CustomCardView

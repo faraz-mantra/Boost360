@@ -37,6 +37,7 @@ import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
+import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -68,6 +69,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
 
   override fun onCreateView() {
     super.onCreateView()
+    fpTag?.let { WebEngageController.trackEvent("Clicked on Orders", "ORDERS", it) }
     setOnClickListener(binding?.btnAdd)
     apiSellerSummary()
     layoutManager = LinearLayoutManager(baseActivity)
@@ -180,7 +182,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
-        data?.let { d -> showLongToast(d.Message as String?) }
+        showLongToast(getString(R.string.order_confirmed))
         val itemList = orderAdapter?.list() as ArrayList<OrderItem>
         if (itemList.size > position) {
           itemList[position].Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name

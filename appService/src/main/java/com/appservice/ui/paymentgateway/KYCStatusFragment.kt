@@ -18,6 +18,7 @@ import com.appservice.model.SessionData
 import com.appservice.model.kycData.DataKyc
 import com.appservice.model.kycData.PaymentKycDataResponse
 import com.appservice.model.paymentKyc.PaymentKycRequest
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.WebBoostKitViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -25,6 +26,8 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import org.json.JSONObject
+import java.util.*
+import kotlin.concurrent.schedule
 
 class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitViewModel>() {
 
@@ -79,11 +82,12 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
   private fun setData(dataKyc: DataKyc) {
     if (dataKyc.isVerified == DataKyc.Verify.ALLOW_EDIT.name) menuEdit?.isVisible = true
     dataKyc.panCardDocument?.let { activity?.glideLoad(binding?.ivPanCardImage!!, it, R.drawable.placeholder_image) }
-    binding?.tvPanNumber?.text = dataKyc.panNumber
+    binding?.tvPanNumber?.text = dataKyc.panNumber?.toUpperCase(Locale.ROOT)
     binding?.tvPanName?.text = dataKyc.nameOfPanHolder
     binding?.tvBankAccNumber?.text = "A/C No. ${dataKyc.bankAccountNumber}"
     binding?.tvBankBranchDetails?.text = "${dataKyc.nameOfBank} - ${dataKyc.bankBranchName}"
     if (dataKyc.isVerified == DataKyc.Verify.YES.name) {
+      session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC VERIFICATION", "KYC verified", it1) }
       startFragmentPaymentActivity(FragmentType.KYC_DETAIL_NEW, Bundle().apply { putSerializable(IntentConstant.KYC_DETAIL.name, dataKyc) })
       baseActivity.finish()
     } else binding?.mainView?.visible()
@@ -105,22 +109,37 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
   }
 
   private fun initLottieAnimation() {
-    binding?.lottieAnimation?.setAnimation(R.raw.business_kyc_verification_gif)
-    binding?.lottieAnimation?.repeatCount = LottieDrawable.INFINITE
-    startCheckAnimation()
-  }
-
-  private fun startCheckAnimation() {
-    binding?.lottieAnimation?.let {
-      if (it.isAnimating) it.pauseAnimation()
-      else it.playAnimation()
+    binding?.lottieAnimation?.apply {
+      setAnimation(R.raw.business_kyc_verification_gif)
+      repeatCount = LottieDrawable.INFINITE
+      if (isAnimating) pauseAnimation() else playAnimation()
     }
   }
+
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnKycStatusRefresh -> showLongToast("Refreshing status...")
+      binding?.btnKycStatusRefresh -> {
+        initLottieAnimationRefresh()
+        binding?.mainView?.gone()
+        binding?.refreshView?.visible()
+        Timer().schedule(2000) {
+          baseActivity.runOnUiThread {
+            binding?.lottieAnimationRefresh?.pauseAnimation()
+            binding?.mainView?.visible()
+            binding?.refreshView?.gone()
+          }
+        }
+      }
+    }
+  }
+
+  private fun initLottieAnimationRefresh() {
+    binding?.lottieAnimationRefresh?.apply {
+      setAnimation(R.raw.verificatioan_status_loader)
+      repeatCount = LottieDrawable.INFINITE
+      if (isAnimating) pauseAnimation() else playAnimation()
     }
   }
 

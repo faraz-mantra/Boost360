@@ -94,7 +94,7 @@ class NewBookingFragmentOne : BaseInventoryFragment<FragmentNewBookingOneBinding
             calender.set(Calendar.MINUTE, minute)
             timePickerText?.text = SimpleDateFormat("hh:mm aa").format(calender.time)
         }
-        TimePickerDialog(baseActivity, R.style.DialogTheme, timeSetListener, calender.get(Calendar.HOUR_OF_DAY), calender.get(Calendar.MINUTE), false).show()
+        TimePickerDialog(baseActivity, timeSetListener, calender.get(Calendar.HOUR_OF_DAY), calender.get(Calendar.MINUTE), false).show()
     }
 
     fun setList(list: ArrayList<AppointmentScheduleModel>) {
