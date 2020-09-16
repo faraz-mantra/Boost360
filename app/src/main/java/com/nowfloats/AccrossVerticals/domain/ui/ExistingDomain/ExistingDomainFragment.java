@@ -30,6 +30,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Restaurants.BookATable.BookATableActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import retrofit.Callback;
@@ -62,7 +63,6 @@ public class ExistingDomainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         vmnProgressBar = new ProgressDialog(requireContext());
         vmnProgressBar.setIndeterminate(true);
         vmnProgressBar.setMessage(getString(R.string.please_wait));

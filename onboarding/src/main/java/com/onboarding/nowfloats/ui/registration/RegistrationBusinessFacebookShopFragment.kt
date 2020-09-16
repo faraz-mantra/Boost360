@@ -34,6 +34,7 @@ import com.onboarding.nowfloats.model.channel.request.getType
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.ui.InternetErrorDialog
+import com.onboarding.nowfloats.utils.WebEngageController
 
 class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookShopBinding>(),
     FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
@@ -169,6 +170,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
   }
 
   override fun setProfileDetails(name: String?, profilePicture: String?) {
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook shop connected", "DIGITAL CHANNELS", it) }
     val binding = binding?.facebookPageSuccess ?: return
     this.binding?.skip?.gone()
     binding.maimView.visible()
@@ -187,6 +189,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
 
   private fun disconnectFacebookPage() {
     logoutFacebook()
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook shop disconnected", "DIGITAL CHANNELS", it) }
     binding?.skip?.visible()
     binding?.facebookPageSuccess?.maimView?.gone()
     this.binding?.title?.text = resources.getString(R.string.shop_section_on_your_fb_page)

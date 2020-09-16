@@ -300,7 +300,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 CameraBitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), imageUri);
                 imageUrl = getRealPathFromURI(imageUri);
                 path = imageUrl;
-
+                WebEngageController.trackEvent("Gallery Image added", "MANAGE CONTENT", session.getFpTag());
                 UploadPictureAsyncTask upload = new UploadPictureAsyncTask(activity, imageUrl);
                 upload.setOnUploadListener(Image_Gallery_Fragment.this);
                 upload.execute();
@@ -341,7 +341,7 @@ public class Image_Gallery_Fragment extends Fragment implements
             try {
                 Uri extras2 = data.getData();
                 // if (extras2 != null) {
-
+                WebEngageController.trackEvent("Gallery Image added", "MANAGE CONTENT", session.getFpTag());
                 String filepath = "";
                 UploadPictureAsyncTask upload = null;
                 if (data.getData() != null) {
