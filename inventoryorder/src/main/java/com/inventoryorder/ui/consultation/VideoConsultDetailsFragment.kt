@@ -54,8 +54,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   override fun onCreateView() {
     super.onCreateView()
     arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
-    setOnClickListener(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.btnOpenConsult, binding?.tvCustomerContactNumber,
-    binding?.tvCustomerEmail)
+    setOnClickListener(binding?.btnPaymentReminder, binding?.tvReSchedule, binding?.btnCopyLink, binding?.btnOpenConsult, binding?.tvCustomerContactNumber, binding?.tvCustomerEmail)
   }
 
   private fun apiGetOrderDetails(orderId: String) {
@@ -94,12 +93,9 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun isOpenForConsultation(order: OrderItem) {
     val isOpen = order.isConfirmConsultBtn()
-//    val isOpen = true
     binding?.bookingDate?.setTextColor(takeIf { isOpen }?.let { getColor(R.color.light_green) } ?: getColor(R.color.primary_grey))
     if (isOpen) isVisible(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
     else isGone(binding?.btnPaymentReminder, binding?.btnCopyLink, binding?.bottomView)
-
-    binding?.btnCopyLink?.visibility = View.GONE
   }
 
   private fun setAdapter(orderItems: ArrayList<ItemN>) {
@@ -149,9 +145,9 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
     binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
     binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
-    if(order.BuyerDetails?.ContactDetails?.EmailId?.isNotBlank()!!){
+    if (order.BuyerDetails?.ContactDetails?.EmailId?.isNotBlank()!!) {
       binding?.tvCustomerEmail?.text = order.BuyerDetails?.ContactDetails?.EmailId?.trim()
-    }else {
+    } else {
       binding?.tvCustomerEmail?.isGone = true
     }
 
@@ -173,21 +169,22 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
+      binding?.tvReSchedule -> showLongToast("Coming soon..")
       binding?.btnPaymentReminder -> paymentReminder()
       binding?.btnOpenConsult -> apiOpenConsultationWindow()
       binding?.tvCancelOrder -> cancelOrderDialog()
       binding?.btnCopyLink -> videoConsultCopy()
       binding?.tvCustomerContactNumber -> {
-        if(orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.length == 10)
+        if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.length == 10)
           openDialer()
         else
           showShortToast(getString(R.string.phone_invalid_format_error))
 
       }
       binding?.tvCustomerEmail -> {
-        if(orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()?.let { checkValidEmail(it) }!!) {
+        if (orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()?.let { checkValidEmail(it) }!!) {
           openEmailApp()
-        }else{
+        } else {
           showShortToast(getString(R.string.email_invalid_format_error))
         }
       }
@@ -198,7 +195,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun openEmailApp() {
     val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-            "mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
+        "mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
     startActivity(emailIntent)
   }
 
@@ -212,19 +209,17 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     return Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$").matcher(email).find()
   }
 
-  private fun cancelOrderDialog(){
+  private fun cancelOrderDialog() {
     MaterialAlertDialogBuilder(context)
-            .setTitle(getString(R.string.cancel_consultation_confirmation_message))
-            .setNeutralButton(getString(R.string.no)){
-              dialog, _ ->
-              dialog.dismiss()
-            }
-            .setPositiveButton(getString(R.string.yes)){
-              dialog, which ->
-              apiCancelOrder()
-              dialog.dismiss()
-            }
-            .show()
+        .setTitle(getString(R.string.cancel_consultation_confirmation_message))
+        .setNeutralButton(getString(R.string.no)) { dialog, _ ->
+          dialog.dismiss()
+        }
+        .setPositiveButton(getString(R.string.yes)) { dialog, which ->
+          apiCancelOrder()
+          dialog.dismiss()
+        }
+        .show()
   }
 
   private fun videoConsultCopy() {
@@ -242,7 +237,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun apiCancelOrder() {
     showProgress()
-    viewModel?.cancelOrder(clientId, orderItem?._id, OrderItem.CancellingEntity.SELLER.name)?.observeOnce(viewLifecycleOwner, Observer {cancelRes->
+    viewModel?.cancelOrder(clientId, orderItem?._id, OrderItem.CancellingEntity.SELLER.name)?.observeOnce(viewLifecycleOwner, Observer { cancelRes ->
       hideProgress()
       if (cancelRes.error is NoNetworkException) {
         showShortToast(resources.getString(R.string.internet_connection_not_available))
