@@ -5,49 +5,33 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/banner_title"
+        android:id="@+id/partner_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Independence Day Offer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:fontFamily="@font/open_sans"
-        android:textFontWeight="600"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="Independence Day Offer"
         android:textColor="@color/common_text_color"
+        android:textFontWeight="600"
         android:textSize="@dimen/_15sdp"
-        android:paddingStart="@dimen/_5sdp"
-        android:paddingBottom="@dimen/_5sdp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/banner_title"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/all_side_curve_bg"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp"
-            android:elevation="@dimen/_2sdp"
-            android:layout_margin="@dimen/_5sdp">
+    <ImageView
+        android:id="@+id/partner_primary_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/group"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="37:14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/partner_title" />
 
-
-            <ImageView
-                android:id="@+id/package_primary_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:src="@drawable/group"
-                app:layout_constraintDimensionRatio="1.5:1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
