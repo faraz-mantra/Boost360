@@ -1831,8 +1831,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string-array name="account_setting_tab_items">
         <!--<item>Seller Profile</item>-->
+        <item>My Business Profile</item>
         <item>My Bank Account</item>
-        <item>KYC Verification</item>
+        <item>My Business KYC</item>
         <item>Self Branded Payment Gateway</item>
         <item>Boost Extensions</item>
         <item>Subscription History</item>
