@@ -275,7 +275,7 @@ public class Home_Fragment_Tab extends Fragment {
             public void onPageSelected(int position) {
                 Log.d("Position", String.valueOf(position));
                 if(position == 1){
-                    WebEngageController.trackEvent("HOME SCREEN", "Clicked on reports", null);
+                    WebEngageController.trackEvent("Clicked on reports", "HOME SCREEN", null);
                 }
             }
 
