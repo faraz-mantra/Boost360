@@ -43,7 +43,7 @@ class UpgradeAdapter(
     }
 
     override fun getItemCount(): Int {
-        return 4 //upgradeList.size
+        return 6 //upgradeList.size
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
@@ -72,52 +72,22 @@ class UpgradeAdapter(
 
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private var upgradeTitle = itemView.findViewById<TextView>(R.id.title)!!
         private var upgradeDetails = itemView.findViewById<TextView>(R.id.details)!!
         private var upgradePrice = itemView.findViewById<TextView>(R.id.upgrade_list_price)!!
-        private var upgradeMRP = itemView.findViewById<TextView>(R.id.upgrade_list_orig_cost)!!
-        private var upgradeDiscount = itemView.findViewById<TextView>(R.id.upgrade_list_discount)!!
         private var image = itemView.findViewById<ImageView>(R.id.imageView2)!!
-        private var view = itemView.findViewById<View>(R.id.view)!!
 
         private var context: Context = itemView.context
 
 
         fun upgradeListItem(updateModel: FeaturesModel) {
-            view.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
             val discount = 100 - updateModel.discount_percent
             val price = (discount * updateModel.price) / 100
-            if(updateModel.target_business_usecase !=null) {
-                upgradeTitle.text = updateModel.target_business_usecase
-            }else{
-                upgradeTitle.visibility = View.GONE
-            }
             upgradeDetails.text = updateModel.name
             upgradePrice.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
-            if(updateModel.discount_percent>0){
-                upgradeDiscount.visibility = View.VISIBLE
-                upgradeDiscount.text = ""+updateModel.discount_percent+"%"
-                spannableString(updateModel.price)
-            }else{
-                upgradeDiscount.visibility = View.GONE
-                upgradeMRP.visibility = View.GONE
-            }
             if(updateModel.primary_image!=null) {
                 Glide.with(context).load(updateModel.primary_image).into(image)
             }
 
-        }
-
-        fun spannableString(value: Int) {
-            val origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/month")
-
-            origCost.setSpan(
-                    StrikethroughSpan(),
-                    0,
-                    origCost.length,
-                    0
-            )
-            upgradeMRP.setText(origCost)
         }
     }
 }

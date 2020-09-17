@@ -50,6 +50,7 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 public class ManageInventoryFragment extends Fragment {
     TextView tvTransactionType_1, tvTransactionType_2, orderAnalytics;
     ImageView ivLockWidget, ivPaymentIcon, lockIcon, bookTableIcon;
+
     LinearLayout bookTable;
     //Typeface robotoLight;
     private SharedPreferences pref = null;
