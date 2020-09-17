@@ -58,7 +58,7 @@
         <com.framework.views.customViews.CustomImageView
           android:layout_width="@dimen/size_70"
           android:layout_height="@dimen/size_70"
-          app:srcCompat="@drawable/ic_calendar_n" />
+          app:srcCompat="@drawable/ic_calendar_accent" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/error_txt"
