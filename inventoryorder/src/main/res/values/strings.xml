@@ -100,5 +100,7 @@
   <string name="open_consultation_window">OPEN CONSULTATION WINDOW</string>
     <string name="appointment_confirmed">Appointment confirmed.</string>
   <string name="order_confirmed">Order confirmed.</string>
+    <string name="time_remaining">Time remaining</string>
+  <string name="_00_00_00">00:00:00</string>
 
 </resources>

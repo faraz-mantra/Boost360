@@ -217,7 +217,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
       binding?.buttonConfirmOrder -> apiConfirmOrder()
       binding?.tvCancelOrder -> cancelOrderDialog()
       binding?.tvCustomerContactNumber -> {
-        if(orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.length == 10)
+        if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { checkValidMobile(it) }!!)
           openDialer()
         else
           showShortToast(getString(R.string.phone_invalid_format_error))
@@ -247,6 +247,10 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
   private fun checkValidEmail(email: String): Boolean {
     return Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$").matcher(email).find()
+  }
+
+  private fun checkValidMobile(mobile: String): Boolean {
+    return Pattern.compile("^[+]?[0-9]{10,12}\$").matcher(mobile).find()
   }
 
   private fun cancelOrderDialog(){
