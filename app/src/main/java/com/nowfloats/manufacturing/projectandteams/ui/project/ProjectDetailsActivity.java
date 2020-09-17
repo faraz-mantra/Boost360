@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -16,9 +17,12 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -54,10 +58,14 @@ import com.nowfloats.manufacturing.API.model.UpdateProject.UpdateProjectData;
 import com.nowfloats.manufacturing.API.model.UpdateTeams.UpdateTeamsData;
 import com.nowfloats.manufacturing.projectandteams.Interfaces.ProjectDetailsListener;
 import com.nowfloats.manufacturing.projectandteams.adapter.ProjectDetailsImageAdapter;
+import com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsDetailsActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -91,7 +99,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
     Uri imageUri;
-    String path = null;
+    List<String> path = new ArrayList();
+    private ProgressDialog progressDialog;
 
     String projectResultStatus = "IN PROGRESS";
     LinearLayout inProgressButton, completedButton, withdrawButton;
@@ -136,6 +145,9 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         dummyView2.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         dummyView3.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+
 
         adapter = new ProjectDetailsImageAdapter(new ArrayList(), this);
         recyclerView.setAdapter(adapter);
@@ -144,10 +156,10 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         addImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(imageURLs.size()<3){
+                if (imageURLs.size() < 3) {
                     showDialogToGetImage();
-                }else{
-                    Toast.makeText(ProjectDetailsActivity.this,"Max Upload Image is 3(Three).",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(ProjectDetailsActivity.this, "Max Upload Image is 3(Three).", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -155,12 +167,16 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ScreenType.equals("edit")) {
-                    updateExistingTeamsAPI();
-                    Methods.hideKeyboard(ProjectDetailsActivity.this);
+                if (path.size()>0) {
+                    showLoader("Uploading Image.Please Wait...");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            uploadImageToServer();
+                        }
+                    }, 200);
                 } else {
-                    createNewTeamsAPI();
-                    Methods.hideKeyboard(ProjectDetailsActivity.this);
+                    uploadDataToServer();
                 }
             }
         });
@@ -231,7 +247,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
 
     private void updateProjectStatusButton(String value) {
         if (value.equals("COMPLETED")) {
-            
+
             inProgressButton.setBackgroundResource(R.drawable.all_side_small_curve_bg);
             completedButton.setBackgroundResource(R.drawable.all_side_small_curve_bg_blue);
             withdrawButton.setBackgroundResource(R.drawable.all_side_small_curve_bg);
@@ -240,9 +256,9 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
             completedText.setTextColor(getResources().getColor(R.color.white));
             withdrawText.setTextColor(getResources().getColor(R.color.customeNavyBlue));
             projectResultStatus = "COMPLETED";
-            
+
         } else if (value.equals("WITHDRAW")) {
-            
+
             inProgressButton.setBackgroundResource(R.drawable.all_side_small_curve_bg);
             completedButton.setBackgroundResource(R.drawable.all_side_small_curve_bg);
             withdrawButton.setBackgroundResource(R.drawable.all_side_small_curve_bg_blue);
@@ -252,9 +268,9 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
             withdrawText.setTextColor(getResources().getColor(R.color.white));
 
             projectResultStatus = "WITHDRAW";
-            
+
         } else {
-            
+
             inProgressButton.setBackgroundResource(R.drawable.all_side_small_curve_bg_blue);
             completedButton.setBackgroundResource(R.drawable.all_side_small_curve_bg);
             withdrawButton.setBackgroundResource(R.drawable.all_side_small_curve_bg);
@@ -296,15 +312,15 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         }
 
         if (existingItemData.getFeaturedImage() != null && !existingItemData.getFeaturedImage().getUrl().isEmpty()) {
-            imageURLs.add(existingItemData.getFeaturedImage().getUrl());
+            path.add(existingItemData.getFeaturedImage().getUrl());
         }
 
         if (existingItemData.getProjectImage2() != null && !existingItemData.getProjectImage2().getUrl().isEmpty()) {
-            imageURLs.add(existingItemData.getProjectImage2().getUrl());
+            path.add(existingItemData.getProjectImage2().getUrl());
         }
 
         if (existingItemData.getProjectImage3() != null && !existingItemData.getProjectImage3().getUrl().isEmpty()) {
-            imageURLs.add(existingItemData.getProjectImage3().getUrl());
+            path.add(existingItemData.getProjectImage3().getUrl());
         }
 
         updateRecyclerView();
@@ -312,15 +328,25 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     }
 
     private void updateRecyclerView() {
-        adapter.updateList(imageURLs);
+        adapter.updateList(path);
         adapter.notifyDataSetChanged();
+    }
+
+    private void uploadDataToServer() {
+        if (ScreenType.equals("edit")) {
+            showLoader("Updating Record.Please Wait...");
+            updateExistingTeamsAPI();
+            Methods.hideKeyboard(ProjectDetailsActivity.this);
+        } else {
+            showLoader("Creating Record.Please Wait...");
+            createNewTeamsAPI();
+            Methods.hideKeyboard(ProjectDetailsActivity.this);
+        }
     }
 
     void createNewTeamsAPI() {
         try {
-
             if (validateInput()) {
-
                 ActionData actionData = new ActionData();
                 actionData.setProjectTitle(companyTitle.getText().toString());
                 actionData.setProjectDescription(aboutCompany.getText().toString());
@@ -385,6 +411,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                 APICalls.addProjectData(request, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
+                        hideLoader();
                         if (response.getStatus() != 200) {
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
@@ -395,13 +422,14 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
 
                     @Override
                     public void failure(RetrofitError error) {
-
+                        hideLoader();
                         Methods.showSnackBarNegative(ProjectDetailsActivity.this, getString(R.string.something_went_wrong));
                     }
                 });
 
             }
         } catch (Exception e) {
+            hideLoader();
             e.printStackTrace();
         }
 
@@ -493,6 +521,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                 APICalls.updateProjectData(requestBody, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
+                        hideLoader();
                         if (response.getStatus() != 200) {
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
@@ -503,6 +532,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
 
                     @Override
                     public void failure(RetrofitError error) {
+                        hideLoader();
                         if (error.getResponse().getStatus() == 200) {
                             Methods.showSnackBarPositive(ProjectDetailsActivity.this, "Successfully Updated Project Details");
                             finish();
@@ -514,6 +544,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
             }
 
         } catch (Exception e) {
+            hideLoader();
             e.printStackTrace();
         }
 
@@ -537,6 +568,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
             APICalls.deleteProjectData(requestBody, new Callback<String>() {
                 @Override
                 public void success(String data, Response response) {
+                    hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deleteTeams ->", response.getBody().toString());
                         Methods.showSnackBarPositive(ProjectDetailsActivity.this, "Successfully Deleted.");
@@ -548,6 +580,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
 
                 @Override
                 public void failure(RetrofitError error) {
+                    hideLoader();
                     if (error.getResponse().getStatus() == 200) {
                         Methods.showSnackBarPositive(ProjectDetailsActivity.this, "Successfully Deleted.");
                         finish();
@@ -558,6 +591,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
             });
 
         } catch (Exception e) {
+            hideLoader();
             e.printStackTrace();
         }
     }
@@ -577,6 +611,7 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
             @Override
             public void onClick(View v) {
                 if (ScreenType != null && ScreenType.equals("edit")) {
+                    showLoader("Deleting Record.Please Wait...");
                     deleteRecord(itemId);
                     return;
                 }
@@ -594,7 +629,8 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
 
     @Override
     public void removeURLfromList(int pos) {
-        imageURLs.remove(pos);
+//        imageURLs.remove(pos);
+        path.remove(pos);
         updateRecyclerView();
     }
 
@@ -642,16 +678,25 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
                         media_req_id);
                 return;
             }
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, "New Picture");
-            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-            imageUri = getContentResolver().insert(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            Intent captureIntent = new Intent(
-                    MediaStore.ACTION_IMAGE_CAPTURE);
-            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            // we will handle the returned data in onActivityResult
-            startActivityForResult(captureIntent, CAMERA_PHOTO);
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            // Ensure that there's a camera activity to handle the intent
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                // Create the File where the photo should go
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+                    // Error occurred while creating the File
+                }
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    Uri photoURI = FileProvider.getUriForFile(this,
+                            Constants.PACKAGE_NAME + ".provider",
+                            photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(takePictureIntent, CAMERA_PHOTO);
+                }
+            }
 
         } catch (ActivityNotFoundException anfe) {
             // display an error message
@@ -660,6 +705,22 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        path.add(image.getAbsolutePath());
+        return image;
     }
 
     public void galleryIntent() {
@@ -686,48 +747,19 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            path = null;
             if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
-                try {
-                    Log.e("ImageURI ->",imageUri.getPath());
-                    path = Methods.getRealPathFromURI(this, imageUri);
-                    String fname = "PlaceNearBy" + System.currentTimeMillis();
-//                    path = Util.saveBitmap(path, ProjectDetailsActivity.this, fname);
-                    if (!Util.isNullOrEmpty(path)) {
-                        if (!TextUtils.isEmpty(path)) {
-//                            uploadFileToServer(path, fname);
-                            new UploadProjectImage(ProjectDetailsActivity.this, this, path, fname).execute().get();
-                        }
-                    } else
-                        Methods.showSnackBarNegative(ProjectDetailsActivity.this, getResources().getString(R.string.select_image_upload));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    //  Util.toast("Uh oh. Something went wrong. Please try again", this);
-                } catch (OutOfMemoryError E) {
-                    //Log.d("ANDRO_ASYNC",String.format("catch Out Of Memory error"));
-                    E.printStackTrace();
-                    System.gc();
-                    // Util.toast("Uh oh. Something went wrong. Please try again", this);
-                }
+                updateRecyclerView();
             } else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
                 {
                     Uri picUri = data.getData();
                     if (picUri != null) {
-                        path = Methods.getPath(this, picUri);
-                        String fname = "PlaceNearBy" + System.currentTimeMillis();
-//                        path = Util.saveBitmap(path, ProjectDetailsActivity.this, fname);
-                        if (!Util.isNullOrEmpty(path)) {
-                            if (!TextUtils.isEmpty(path)) {
-//                                uploadFileToServer(path, fname);
-                                new UploadProjectImage(ProjectDetailsActivity.this, this, path, fname).execute().get();
-                            }
-                        } else
-                            Methods.showSnackBarNegative(ProjectDetailsActivity.this, getResources().getString(R.string.select_image_upload));
+                        path.add(Methods.getPath(this, picUri));
+                        updateRecyclerView();
                     }
                 }
             }
         } catch (Exception e) {
-            Log.e("onActivityResult ->", "Failed ->"+e.getMessage());
+            Log.e("onActivityResult ->", "Failed ->" + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -735,6 +767,65 @@ public class ProjectDetailsActivity extends AppCompatActivity implements Project
     @Override
     public void uploadImageURL(String url) {
         imageURLs.add(url);
-        updateRecyclerView();
+        if(path.size() != imageURLs.size()){
+            uploadImageToServer();
+        }else{
+            uploadDataToServer();
+        }
+    }
+
+    public void uploadImageToServer() {
+        try {
+            if (validateInput()) {
+                String fname = "Project" + System.currentTimeMillis();
+                if (path.size() > 0) {
+                    if(path.get(imageURLs.size()).startsWith("https")){
+                        imageURLs.add(path.get(imageURLs.size()));
+                        if(path.size() != imageURLs.size()){
+                            uploadImageToServer();
+                        }else{
+                            uploadDataToServer();
+                        }
+                    }else {
+                        new UploadProjectImage(ProjectDetailsActivity.this, this, path.get(imageURLs.size()), fname).execute().get();
+                    }
+                } else {
+                    Methods.showSnackBarNegative(ProjectDetailsActivity.this, getResources().getString(R.string.select_image_upload));
+                }
+            }
+        } catch (Exception e) {
+            Log.e("uploadImageToServer ->", "Failed ->" + e.getMessage());
+            e.printStackTrace();
+        } catch (OutOfMemoryError E) {
+            E.printStackTrace();
+            System.gc();
+        }
+    }
+
+    private void showLoader(final String message) {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog == null) {
+                    progressDialog = new ProgressDialog(getApplicationContext());
+                    progressDialog.setCanceledOnTouchOutside(false);
+                }
+                progressDialog.setMessage(message);
+                progressDialog.show();
+            }
+        });
+    }
+
+    private void hideLoader() {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+            }
+        });
     }
 }
