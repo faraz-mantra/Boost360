@@ -84,6 +84,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     private static final int CAMERA_PHOTO = 1;
 
     private ProgressDialog progressDialog;
+    private boolean isNewDataAdded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +140,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                         public void run() {
                             uploadImageToServer();
                         }
-                    },200);
+                    }, 200);
                 } else {
                     uploadDataToServer();
                 }
@@ -289,8 +290,9 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        WebEngageController.trackEvent("Testimonial added","MANAGE CONTENT",  session.getFpTag());
+                        WebEngageController.trackEvent("Testimonial added", "MANAGE CONTENT", session.getFpTag());
                         Toast.makeText(getApplicationContext(), "Successfully Added Testimonials", Toast.LENGTH_LONG).show();
+                        isNewDataAdded  = true;
                         onBackPressed();
                     }
 
@@ -344,7 +346,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                    WebEngageController.trackEvent("MANAGE CONTENT", "Testimonial added", session.getFpTag());
+                        WebEngageController.trackEvent("MANAGE CONTENT", "Testimonial added", session.getFpTag());
                         Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
                         onBackPressed();
                     }
@@ -477,7 +479,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
 
     public void uploadImageToServer() {
         try {
-            if(validateInput()) {
+            if (validateInput()) {
                 String fname = "Testimonials" + System.currentTimeMillis();
                 if (!Util.isNullOrEmpty(path)) {
                     if (!TextUtils.isEmpty(path)) {
@@ -592,5 +594,13 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent data = new Intent();
+        data.putExtra("IS_REFRESH", isNewDataAdded);
+        setResult(RESULT_OK, data);
+        super.onBackPressed();
     }
 }

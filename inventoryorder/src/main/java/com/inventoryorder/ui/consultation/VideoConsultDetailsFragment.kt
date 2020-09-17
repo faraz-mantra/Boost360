@@ -78,7 +78,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
         binding?.error?.gone()
         orderItem = (it as? OrderDetailResponse)?.Data
         if (orderItem != null) {
-          if(orderItem?.isUpComingConsult()!!){
+          if (orderItem?.isUpComingConsult()!!) {
             binding?.llCountdown?.visibility = View.VISIBLE
             binding?.statusTime?.text = getString(R.string.time_remaining)
             startCountDown(orderItem!!)
@@ -89,7 +89,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     })
   }
 
-  private fun  startCountDown(order: OrderItem){
+  private fun startCountDown(order: OrderItem) {
     val startTime = orderItem?.firstItemForConsultation()?.scheduledStartDate()?.parseDate(DateUtils.FORMAT_SERVER_DATE)
     val currentTime = Calendar.getInstance().time
     val difference = startTime?.time?.minus(currentTime.time)
@@ -101,27 +101,27 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
         val secondsRemaining = (TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))).toString()
 
         val daysString: String
-        daysString = if(daysRemaining.toInt() > 1){
+        daysString = if (daysRemaining.toInt() > 1) {
           "$daysRemaining days"
-        }else{
+        } else {
           "$daysRemaining day"
         }
         val hoursString: String
-        hoursString = if(hoursRemaining.toInt() < 10){
+        hoursString = if (hoursRemaining.toInt() < 10) {
           "0$hoursRemaining"
-        }else{
+        } else {
           hoursRemaining
         }
         val minutesString: String
-        minutesString = if(minutesRemaining.toInt() < 10){
+        minutesString = if (minutesRemaining.toInt() < 10) {
           "0$minutesRemaining"
-        }else{
+        } else {
           minutesRemaining
         }
         val secondsString: String
-        secondsString = if(secondsRemaining.toInt() < 10){
+        secondsString = if (secondsRemaining.toInt() < 10) {
           "0$secondsRemaining"
-        }else{
+        } else {
           secondsRemaining
         }
 
@@ -184,8 +184,8 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   private fun setOrderDetails(order: OrderItem) {
     binding?.orderType?.text = getStatusText(order)
     binding?.tvStatus?.text = order.PaymentDetails?.status()
-    if(order.PaymentDetails?.status() == "Pending")
-      binding?.tvStatus?.setTextColor(getColor(R.color.watermelon_light_10))
+    val b = (PaymentDetailsN.STATUS.from(order.PaymentDetails?.Status ?: "") == PaymentDetailsN.STATUS.PENDING)
+    if (b) binding?.tvStatus?.setTextColor(getColor(R.color.watermelon_light_10))
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "₹"
@@ -206,15 +206,14 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
     binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
     binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
-    if(order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) }!!)
+
+    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) }!!)
       binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
-    if (order.BuyerDetails.ContactDetails.EmailId?.isNotBlank()!!) {
-      binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId.trim()
-      if(!checkValidEmail(order.BuyerDetails.ContactDetails.EmailId.trim()))
-        binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
-    } else {
-      binding?.tvCustomerEmail?.isGone = true
-    }
+    if (order.BuyerDetails.ContactDetails.EmailId.isNullOrEmpty().not()) {
+      binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
+      if (!checkValidEmail(order.BuyerDetails.ContactDetails.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
+    } else binding?.tvCustomerEmail?.isGone = true
+
 
     // shipping details
     var shippingCost = 0.0

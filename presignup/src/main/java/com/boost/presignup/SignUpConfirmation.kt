@@ -16,27 +16,29 @@ import java.net.URL
 class SignUpConfirmation : AppCompatActivity() {
 
   private var personName = ""
+  private var profile_id = ""
+  private var user_id = ""
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_sign_up_confirmation)
 
     WebEngageController.trackEvent("PS_Account Creation Confirmation", "Account Creation Confirmation", "")
     val currentFirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
-    val profile_id = intent.getStringExtra("profile_id")
+    val bundle = intent.extras
+    profile_id = bundle?.getString("profile_id") ?: ""
+    user_id = bundle?.getString("user_id") ?: ""
+    personName = bundle?.getString("person_name") ?: ""
 
-    personName = intent.getStringExtra("person_name")
     if (personName.isEmpty() && currentFirebaseUser != null) {
       personName = currentFirebaseUser.displayName.toString()
     }
     welcome_user.text = getString(R.string.welcome) + " " + personName
-
 
     var profileUrl = intent.getStringExtra("profileUrl")
     if ((profileUrl == null || profileUrl.isEmpty()) && currentFirebaseUser != null) {
       profileUrl = currentFirebaseUser.photoUrl?.toString()
     } else
       if (!profileUrl.isEmpty()) {
-
         Thread {
           val url = URL(profileUrl)
           val bmp: Bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
@@ -48,13 +50,12 @@ class SignUpConfirmation : AppCompatActivity() {
 
     set_up_business_profile.setOnClickListener {
       WebEngageController.trackEvent("PS_Business Creation Initiated", "Business Creation Initiated", "")
-
 //      val intent = Intent(applicationContext, Class.forName("com.nowfloats.signup.UI.UI.PreSignUpActivityRia"))
 //      intent.putExtra("profile_id", profile_id)
 //      startActivity(intent)
-
       val editor = this.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, 0).edit()
       editor?.putString("user_profile_id", profile_id)
+      editor?.putString("user_id", user_id)
       editor?.putString("person_name", personName)
       editor?.putBoolean("IsSignUpComplete", true)
       editor?.apply()
