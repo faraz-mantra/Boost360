@@ -475,6 +475,7 @@
           android:padding="@dimen/size_14">
 
           <LinearLayout
+              android:id="@+id/ll_countdown"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_2"
@@ -488,7 +489,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_1"
-              android:text="Time elapsed"
+              android:text="@string/time_elapsed"
               android:textColor="@color/primary_grey"
               app:textType="SUBTITLE_2" />
 
@@ -498,7 +499,7 @@
               android:layout_height="wrap_content"
               android:drawableStart="@drawable/ic_access_time"
               android:drawablePadding="@dimen/size_3"
-              android:text="00:00:00"
+              android:text="@string/_00_00_00"
               android:textColor="@color/watermelon_light_10"
               app:textType="BODY_1" />
           </LinearLayout>
