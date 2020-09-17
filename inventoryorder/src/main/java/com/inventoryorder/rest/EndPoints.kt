@@ -18,7 +18,8 @@ object EndPoints {
 
   //  const val GET_LIST_ORDER_URL = "api/AssuredPurchase/ListOrders"
   const val GET_LIST_ORDER_URL = "api/assuredPurchase/v2/ListOrders"
-  const val GET_LIST_ORDER_FILTER_URL = "api/assuredPurchase/v2.1/ListAllOrders"
+  const val GET_LIST_ORDER_FILTER_URL = "api/assuredPurchase/v2/ListAllOrders"
+//  const val GET_LIST_ORDER_FILTER_URL = "api/assuredPurchase/v2.1/ListAllOrders"
 
   // API 2 with float
   const val BOOST_API2_WITH_FLOAT = "https://api2.withfloats.com"
