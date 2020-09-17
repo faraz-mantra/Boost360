@@ -5,48 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
+        android:id="@+id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_5sdp"
-        android:background="@drawable/all_side_curve_bg"
-        android:elevation="@dimen/_2sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <ImageView
-            android:id="@+id/timer_icon"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_margin="@dimen/_15sdp"
-            android:src="@drawable/ic_stopwatch"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/deal_view"/>
+        android:layout_margin="@dimen/_10sdp">
 
         <TextView
             android:id="@+id/deal_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginStart="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Deal of the day"
+            android:text="Add-on deals"
+            android:textFontWeight="600"
             android:textColor="@color/common_text_color"
-            android:textSize="@dimen/_10sdp"
-            app:layout_constraintStart_toEndOf="@id/timer_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="@dimen/_12sdp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
 
         <TextView
             android:id="@+id/deal_ending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_semibold"
-            android:text="Deal ending in "
+            android:fontFamily="@font/open_sans"
+            android:text="Ends in "
+            android:drawableStart="@drawable/ic_feature_deals_clock"
+            android:drawablePadding="@dimen/_5sdp"
             android:textColor="#747474"
-            android:textSize="@dimen/_8sdp"
+            android:textSize="@dimen/_9sdp"
             app:layout_constraintStart_toStartOf="@id/deal_title"
             app:layout_constraintTop_toBottomOf="@id/deal_title" />
 
@@ -54,22 +45,27 @@
             android:id="@+id/deal_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/open_sans"
             android:text="00h : 00m : 00s"
-            android:textColor="#4A90E2"
-            android:textSize="@dimen/_8sdp"
+            android:textColor="#FFB900"
+            android:textSize="@dimen/_9sdp"
             app:layout_constraintStart_toEndOf="@id/deal_ending"
             app:layout_constraintTop_toBottomOf="@id/deal_title" />
+        </LinearLayout>
 
-        <View
-            android:id="@+id/deal_view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:background="#22000000"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/timer_icon" />
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@drawable/all_side_curve_bg_pink"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_layout"
+        app:layout_constraintBottom_toBottomOf="parent">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main_layout"
@@ -78,13 +74,13 @@
             android:layout_marginTop="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/deal_view">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/imageLayout"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_margin="@dimen/_10sdp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="@dimen/_15sdp"
                 app:cardCornerRadius="@dimen/_20sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/info_layout"
@@ -115,22 +111,15 @@
 
 
                 <TextView
-                    android:id="@+id/title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#747474"
-                    android:textSize="@dimen/_10sdp"
-                    tools:text="Marketing" />
-
-                <TextView
                     android:id="@+id/details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:lineSpacingExtra="1.3sp"
                     android:maxLines="2"
+                    android:textFontWeight="600"
                     android:textColor="#2a2a2a"
-                    android:textSize="@dimen/_12sdp"
+                    android:textSize="@dimen/_14sdp"
                     tools:text="Facebook Ads (upto 75 leads)" />
 
                 <LinearLayout
@@ -147,7 +136,8 @@
                         android:gravity="center"
                         android:textColor="@color/common_text_color"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:textSize="@dimen/_6sdp"
+                        android:textSize="@dimen/_8sdp"
+                        android:textStyle="bold"
                         tools:text="0%" />
 
                     <TextView
@@ -156,7 +146,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_7sdp"
                         android:textColor="#0068e0"
-                        android:textSize="@dimen/_8sdp"
+                        android:textSize="@dimen/_9sdp"
+                        android:textStyle="bold"
                         tools:text="₹400/month" />
 
 
@@ -165,7 +156,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#9b9b9b"
-                        android:textSize="@dimen/_8sdp"
+                        android:textSize="@dimen/_9sdp"
                         app:layout_constraintStart_toStartOf="@+id/money"
                         app:layout_constraintTop_toBottomOf="@+id/money"
                         tools:text="₹99/month" />
@@ -181,17 +172,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_30sdp"
             android:layout_marginBottom="@dimen/_15sdp"
-            android:background="@drawable/feature_deals_click_effect"
+            android:background="@drawable/orange_button_click_effect"
             android:fontFamily="@font/open_sans_semibold"
             android:gravity="center"
             android:paddingTop="@dimen/_10sdp"
             android:paddingBottom="@dimen/_10sdp"
             android:text="Add to cart"
             android:textAllCaps="true"
-            android:textColor="@color/app_text_yellow"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

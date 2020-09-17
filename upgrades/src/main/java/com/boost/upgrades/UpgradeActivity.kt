@@ -108,7 +108,7 @@ class UpgradeActivity : AppCompatActivity() {
     if (fpid != null) {
       val bundle = Bundle()
       bundle.putString("screenType", intent.getStringExtra("screenType"))
-      addFragment(HomeFragment.newInstance(bundle), HOME_FRAGMENT)
+      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
       //update userdetails and buyitem
       showingPopUp()
       supportFragmentManager.addOnBackStackChangedListener {
@@ -132,6 +132,11 @@ class UpgradeActivity : AppCompatActivity() {
   private fun initRazorPay() {
     razorpay = Razorpay(this, RAZORPAY_KEY)
   }
+
+//  public fun initYoutube(){
+//    youTubePlayerFragment = getSupportFragmentManager()
+//            .findFragmentById(R.id.youtube_fragment) as YouTubePlayerFragment
+//  }
 
   override fun onBackPressed() {
     performBackPressed()

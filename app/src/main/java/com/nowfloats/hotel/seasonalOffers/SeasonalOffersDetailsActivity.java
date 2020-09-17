@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.core.view.ViewCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -17,6 +19,8 @@ import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -36,6 +40,8 @@ import com.google.gson.Gson;
 
 
 import com.google.gson.GsonBuilder;
+import com.nowfloats.AccrossVerticals.API.UploadProfileImage;
+import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsFeedbackActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.hotel.API.HotelAPIInterfaces;
 import com.nowfloats.hotel.API.UploadOfferImage;
@@ -47,11 +53,17 @@ import com.nowfloats.hotel.API.model.DeleteOffer.DeleteOfferRequest;
 import com.nowfloats.hotel.API.model.GetOffers.Data;
 import com.nowfloats.hotel.API.model.UpdateOffer.UpdateOfferRequest;
 import com.nowfloats.hotel.Interfaces.SeasonalOffersDetailsListener;
+import com.nowfloats.hotel.placesnearby.PlacesNearByDetailsActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import retrofit.Callback;
@@ -80,6 +92,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
     boolean checkButtonClickStatus = false;
+    private ProgressDialog progressDialog;
 
     @Override
 
@@ -104,6 +117,9 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
         session = new UserSessionManager(this, this);
         placeImageLayout = findViewById(R.id.card_primary_image);
         removePlaceImage = findViewById(R.id.ib_remove_product_image);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
 
         placeImageLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,11 +151,16 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ScreenType.equals("edit")) {
-                    updateExistingOfferAPI();
+                if (path != null) {
+                    showLoader("Uploading Image.Please Wait...");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            uploadImageToServer();
+                        }
+                    }, 200);
                 } else {
-                    createNewOfferAPI();
-                    Methods.hideKeyboard(SeasonalOffersDetailsActivity.this);
+                    uploadDataToServer();
                 }
             }
         });
@@ -150,6 +171,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
                 offerImage.setImageDrawable(null);
                 removePlaceImage.setVisibility(View.GONE);
                 uploadedImageURL = "";
+                path = null;
             }
         });
 
@@ -215,6 +237,12 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
 
         itemId = existingItemData.getId();
         uploadedImageURL = existingItemData.getOfferImage().getUrl();
+
+        if (!uploadedImageURL.isEmpty()) {
+            Glide.with(SeasonalOffersDetailsActivity.this).load(uploadedImageURL).into(offerImage);
+            removeOfferImage.setVisibility(View.VISIBLE);
+        }
+
         mrpPrice = existingItemData.getOrignalPrice();
         offerPrice = existingItemData.getDiscountedPrice();
 
@@ -262,7 +290,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
             }
         });
 
-        updatePlaceProfileImage();
+        updateOffersImage();
     }
 
     public void setHeader() {
@@ -280,6 +308,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
             @Override
             public void onClick(View v) {
                 if (ScreenType != null && ScreenType.equals("edit")) {
+                    showLoader("Deleting Record.Please Wait...");
                     deleteRecord(itemId);
                     return;
                 }
@@ -295,9 +324,9 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
         });
     }
 
-    public void updatePlaceProfileImage() {
-        if (!uploadedImageURL.isEmpty()) {
-            Glide.with(SeasonalOffersDetailsActivity.this).load(uploadedImageURL).into(offerImage);
+    public void updateOffersImage() {
+        if (path!=null) {
+            Glide.with(SeasonalOffersDetailsActivity.this).load(path).into(offerImage);
             removeOfferImage.setVisibility(View.VISIBLE);
         }
     }
@@ -313,16 +342,25 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
                         media_req_id);
                 return;
             }
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, "New Picture");
-            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-            imageUri = getContentResolver().insert(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            Intent captureIntent = new Intent(
-                    MediaStore.ACTION_IMAGE_CAPTURE);
-            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            // we will handle the returned data in onActivityResult
-            startActivityForResult(captureIntent, CAMERA_PHOTO);
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            // Ensure that there's a camera activity to handle the intent
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                // Create the File where the photo should go
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+                    // Error occurred while creating the File
+                }
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    Uri photoURI = FileProvider.getUriForFile(this,
+                            Constants.PACKAGE_NAME + ".provider",
+                            photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(takePictureIntent, CAMERA_PHOTO);
+                }
+            }
 
         } catch (ActivityNotFoundException anfe) {
             // display an error message
@@ -331,6 +369,22 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        path = image.getAbsolutePath();
+        return image;
     }
 
     public void galleryIntent() {
@@ -387,6 +441,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
                 APICalls.addOffer(request, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
+                        hideLoader();
                         if (response.getStatus() != 200) {
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
@@ -397,13 +452,14 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
 
                     @Override
                     public void failure(RetrofitError error) {
-
+                        hideLoader();
                         Methods.showSnackBarNegative(SeasonalOffersDetailsActivity.this, getString(R.string.something_went_wrong));
                     }
                 });
 
             }
         } catch (Exception e) {
+            hideLoader();
             e.printStackTrace();
         }
 
@@ -428,49 +484,41 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            path = null;
             if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
-                try {
-                    Log.e("ImageURI ->", imageUri.getPath());
-                    path = Methods.getRealPathFromURI(this, imageUri);
-                    String fname = "PlaceNearBy" + System.currentTimeMillis();
-//                    path = Util.saveBitmap(path, SeasonalOffersDetailsActivity.this, fname);
-                    if (!Util.isNullOrEmpty(path)) {
-                        if (!TextUtils.isEmpty(path)) {
-//                            uploadFileToServer(path, fname);
-                            new UploadOfferImage(SeasonalOffersDetailsActivity.this, this, path, fname).execute().get();
-                        }
-                    } else
-                        Methods.showSnackBarNegative(SeasonalOffersDetailsActivity.this, getResources().getString(R.string.select_image_upload));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    //  Util.toast("Uh oh. Something went wrong. Please try again", this);
-                } catch (OutOfMemoryError E) {
-                    //Log.d("ANDRO_ASYNC",String.format("catch Out Of Memory error"));
-                    E.printStackTrace();
-                    System.gc();
-                    // Util.toast("Uh oh. Something went wrong. Please try again", this);
-                }
+                updateOffersImage();
             } else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
                 {
                     Uri picUri = data.getData();
                     if (picUri != null) {
                         path = Methods.getPath(this, picUri);
-                        String fname = "PlaceNearBy" + System.currentTimeMillis();
-//                        path = Util.saveBitmap(path, SeasonalOffersDetailsActivity.this, fname);
-                        if (!Util.isNullOrEmpty(path)) {
-                            if (!TextUtils.isEmpty(path)) {
-//                                uploadFileToServer(path, fname);
-                                uploadedImageURL = new UploadOfferImage(SeasonalOffersDetailsActivity.this, this, path, fname).execute().get();
-                            }
-                        } else
-                            Methods.showSnackBarNegative(SeasonalOffersDetailsActivity.this, getResources().getString(R.string.select_image_upload));
+                        updateOffersImage();
                     }
                 }
             }
         } catch (Exception e) {
             Log.e("onActivityResult ->", "Failed ->" + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    public void uploadImageToServer() {
+        try {
+            if(validateInput()) {
+                String fname = "SeasonalOffers" + System.currentTimeMillis();
+                if (!Util.isNullOrEmpty(path)) {
+                    if (!TextUtils.isEmpty(path)) {
+                        uploadedImageURL = new UploadOfferImage(SeasonalOffersDetailsActivity.this, this, path, fname).execute().get();
+                    }
+                } else {
+                    Methods.showSnackBarNegative(SeasonalOffersDetailsActivity.this, getResources().getString(R.string.select_image_upload));
+                }
+            }
+        } catch (Exception e) {
+            Log.e("uploadImageToServer ->", "Failed ->" + e.getMessage());
+            e.printStackTrace();
+        } catch (OutOfMemoryError E) {
+            E.printStackTrace();
+            System.gc();
         }
     }
 
@@ -506,6 +554,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
                 APICalls.updateOffer(requestBody, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
+                        hideLoader();
                         if (response.getStatus() != 200) {
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
@@ -516,6 +565,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
 
                     @Override
                     public void failure(RetrofitError error) {
+                        hideLoader();
                         if (error.getResponse().getStatus() == 200) {
                             Methods.showSnackBarPositive(SeasonalOffersDetailsActivity.this, "Successfully Updated Offer Details");
                             finish();
@@ -526,6 +576,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
                 });
             }
         } catch (Exception e) {
+            hideLoader();
             e.printStackTrace();
         }
 
@@ -550,6 +601,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
             APICalls.deleteOffer(requestBody, new Callback<String>() {
                 @Override
                 public void success(String s, Response response) {
+                    hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
                         Methods.showSnackBarPositive(SeasonalOffersDetailsActivity.this, "Successfully Deleted.");
@@ -561,6 +613,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
 
                 @Override
                 public void failure(RetrofitError error) {
+                    hideLoader();
                     if (error.getResponse().getStatus() == 200) {
                         Methods.showSnackBarPositive(SeasonalOffersDetailsActivity.this, "Successfully Deleted.");
                         finish();
@@ -571,6 +624,7 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
             });
 
         } catch (Exception e) {
+            hideLoader();
             e.printStackTrace();
         }
     }
@@ -578,7 +632,45 @@ public class SeasonalOffersDetailsActivity extends AppCompatActivity implements 
     @Override
     public void uploadImageURL(String url) {
         uploadedImageURL = url;
-        updatePlaceProfileImage();
+        uploadDataToServer();
+    }
+
+    private void uploadDataToServer() {
+        if (ScreenType.equals("edit")) {
+            showLoader("Updating Record.Please Wait...");
+            updateExistingOfferAPI();
+        } else {
+            showLoader("Creating Record.Please Wait...");
+            createNewOfferAPI();
+            Methods.hideKeyboard(SeasonalOffersDetailsActivity.this);
+        }
+    }
+
+    private void showLoader(final String message) {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog == null) {
+                    progressDialog = new ProgressDialog(getApplicationContext());
+                    progressDialog.setCanceledOnTouchOutside(false);
+                }
+                progressDialog.setMessage(message);
+                progressDialog.show();
+            }
+        });
+    }
+
+    private void hideLoader() {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+            }
+        });
     }
 
 //    void elevationControllerEnable(View view){

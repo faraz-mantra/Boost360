@@ -117,7 +117,6 @@ class FeatureDealsAdapter(
 
     class PagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val timer = itemView.findViewById<TextView>(R.id.deal_value)
-        val title = itemView.findViewById<TextView>(R.id.title)
         val name = itemView.findViewById<TextView>(R.id.details)
         val image = itemView.findViewById<ImageView>(R.id.feature_profile)
         val offerPrice = itemView.findViewById<TextView>(R.id.offer_price)
@@ -133,82 +132,101 @@ class FeatureDealsAdapter(
         CompositeDisposable().add(
                 AppDatabase.getInstance(activity.application)!!
                         .featuresDao()
-                        .getFeaturesItemByWidgetKey(widgetKey)
+                        .checkFeatureTableKeyExist(widgetKey)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                {
-                                    val featureModel = it
-                                    holder.title.setText(it.target_business_usecase)
-                                    holder.name.setText(it.name)
-                                    if (it.primary_image != null) {
-                                        Glide.with(holder.itemView.context).load(it.primary_image).into(holder.image)
-                                        holder.imageLayout.visibility = View.VISIBLE
-                                    } else {
-                                        holder.imageLayout.visibility = View.INVISIBLE
-                                    }
-                                    if (it.discount_percent > 0) {
-                                        holder.discount.setText(it.discount_percent.toString() + "%")
-                                        holder.discount.visibility = View.VISIBLE
-                                    } else {
-                                        holder.discount.visibility = View.GONE
-                                    }
-                                    val total = (it.price - ((it.price * it.discount_percent) / 100.0))
-                                    grandTotal += total.roundToInt()
-                                    mrpPrice += it.price
+                        .subscribe({
+                            if (it == 1) {
+                                CompositeDisposable().add(
+                                        AppDatabase.getInstance(activity.application)!!
+                                                .featuresDao()
+                                                .getFeaturesItemByWidgetKey(widgetKey)
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(
+                                                        {
+                                                            val featureModel = it
+                                                            holder.name.setText(it.name)
+                                                            if (it.primary_image != null) {
+                                                                Glide.with(holder.itemView.context).load(it.primary_image).into(holder.image)
+                                                                holder.imageLayout.visibility = View.VISIBLE
+                                                            } else {
+                                                                holder.imageLayout.visibility = View.INVISIBLE
+                                                            }
+                                                            if (it.discount_percent > 0) {
+                                                                holder.discount.setText(it.discount_percent.toString() + "%")
+                                                                holder.discount.visibility = View.VISIBLE
+                                                            } else {
+                                                                holder.discount.visibility = View.GONE
+                                                            }
+                                                            val total = (it.price - ((it.price * it.discount_percent) / 100.0))
+                                                            grandTotal += total.roundToInt()
+                                                            mrpPrice += it.price
 
-                                    holder.offerPrice.setText("₹" +
-                                            NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
-                                            + "/month")
-                                    if (grandTotal != mrpPrice.roundToInt()) {
-                                        spannableString(holder, mrpPrice)
-                                        holder.origCost.visibility = View.VISIBLE
-                                    } else {
-                                        holder.origCost.visibility = View.GONE
-                                    }
-                                    if (remainingTime > 0) {
-                                        holder.submit.setOnClickListener(object : View.OnClickListener {
-                                            override fun onClick(v: View?) {
-                                                homeListener.onAddFeatureDealItemToCart(featureModel, 1)
-                                                holder.submit.background = ContextCompat.getDrawable(
-                                                        activity.applicationContext,
-                                                        R.drawable.added_to_cart_grey
+                                                            holder.offerPrice.setText("₹" +
+                                                                    NumberFormat.getNumberInstance(Locale.ENGLISH).format(grandTotal)
+                                                                    + "/month")
+                                                            if (grandTotal != mrpPrice.roundToInt()) {
+                                                                spannableString(holder, mrpPrice)
+                                                                holder.origCost.visibility = View.VISIBLE
+                                                            } else {
+                                                                holder.origCost.visibility = View.GONE
+                                                            }
+                                                            if (remainingTime > 0) {
+                                                                holder.submit.setOnClickListener(object : View.OnClickListener {
+                                                                    override fun onClick(v: View?) {
+                                                                        homeListener.onAddFeatureDealItemToCart(featureModel, 1)
+                                                                        holder.submit.background = ContextCompat.getDrawable(
+                                                                                activity.applicationContext,
+                                                                                R.drawable.added_to_cart_grey
+                                                                        )
+                                                                        holder.submit.setTextColor(Color.parseColor("#bbbbbb"))
+                                                                        holder.submit.setText(activity.getString(R.string.added_to_cart))
+                                                                        holder.submit.isClickable = false
+                                                                    }
+
+                                                                })
+                                                                var itemInCart = false
+                                                                for (cart in cartList) {
+                                                                    if (widgetKey.equals(cart.boost_widget_key)) {
+                                                                        itemInCart = true
+                                                                        break
+                                                                    }
+                                                                }
+                                                                if (!itemInCart) {
+                                                                    holder.submit.background = ContextCompat.getDrawable(
+                                                                            activity.applicationContext,
+                                                                            R.drawable.feature_deals_click_effect
+                                                                    )
+                                                                    holder.submit.setTextColor(activity.resources.getColor(R.color.app_text_yellow))
+                                                                    holder.submit.setText("Add to cart")
+                                                                } else {
+                                                                    holder.submit.background = ContextCompat.getDrawable(
+                                                                            activity.applicationContext,
+                                                                            R.drawable.added_to_cart_grey
+                                                                    )
+                                                                    holder.submit.setTextColor(Color.parseColor("#bbbbbb"))
+                                                                    holder.submit.setText(activity.getString(R.string.added_to_cart))
+                                                                    holder.submit.isClickable = false
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            it.printStackTrace()
+                                                        }
                                                 )
-                                                holder.submit.setTextColor(Color.parseColor("#bbbbbb"))
-                                                holder.submit.setText(activity.getString(R.string.added_to_cart))
-                                                holder.submit.isClickable = false
-                                            }
-
-                                        })
-                                        var itemInCart = false
-                                        for (cart in cartList) {
-                                            if (widgetKey.equals(cart.boost_widget_key)) {
-                                                itemInCart = true
-                                                break
-                                            }
-                                        }
-                                        if (!itemInCart) {
-                                            holder.submit.background = ContextCompat.getDrawable(
-                                                    activity.applicationContext,
-                                                    R.drawable.feature_deals_click_effect
-                                            )
-                                            holder.submit.setTextColor(activity.resources.getColor(R.color.app_text_yellow))
-                                            holder.submit.setText("Add to cart")
-                                        } else {
-                                            holder.submit.background = ContextCompat.getDrawable(
-                                                    activity.applicationContext,
-                                                    R.drawable.added_to_cart_grey
-                                            )
-                                            holder.submit.setTextColor(Color.parseColor("#bbbbbb"))
-                                            holder.submit.setText(activity.getString(R.string.added_to_cart))
-                                            holder.submit.isClickable = false
-                                        }
+                                )
+                            }else{
+                                for(singleItem in list){
+                                    if(singleItem.feature_code == widgetKey){
+                                        list.remove(singleItem)
+                                        notifyDataSetChanged()
                                     }
-                                },
-                                {
-                                    it.printStackTrace()
                                 }
-                        )
+                            }
+                        }, {
+                            it.printStackTrace()
+                        })
         )
     }
 

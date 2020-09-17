@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#efefef"
+    android:background="@color/white"
     android:clickable="true"
     android:focusable="true">
 
@@ -19,25 +19,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <!--    <View-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="@dimen/_100sdp"-->
-    <!--        android:background="@drawable/background_image_fade"-->
-    <!--        app:layout_constraintBottom_toTopOf="@+id/back_image3"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent" />-->
-
-    <!--    <View-->
-    <!--        android:id="@+id/back_image3"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="300dp"-->
-    <!--        android:background="#efefef"-->
-    <!--        android:scaleType="center"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/back_image" />-->
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -251,8 +232,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_30sdp"
-                    android:layout_marginEnd="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_15sdp"
                     android:background="@drawable/button_spherical_click_effect"
                     android:elevation="@dimen/_2sdp"
@@ -266,17 +247,55 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/top_layout"/>
-
+                    app:layout_constraintTop_toBottomOf="@id/top_layout" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/banner_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/header"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/banner_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/snippet_items" />
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/banner_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:dotsColor="@color/dot_grey"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="6dp"
+                    app:dotsSpacing="4dp"
+                    app:dotsWidthFactor="2.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/banner_viewpager"
+                    app:progressMode="true"
+                    app:selectedDotColor="@color/app_yellow_1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/package_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/header"
+                android:layout_below="@+id/banner_layout"
                 android:layout_marginTop="16dp"
                 android:clickable="true"
                 android:focusable="true"
@@ -295,7 +314,7 @@
                     tools:listitem="@layout/snippet_items" />
 
                 <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                    android:id="@+id/dots_indicator"
+                    android:id="@+id/package_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -312,11 +331,90 @@
                     app:selectedDotColor="@color/app_yellow_1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <LinearLayout
+                android:id="@+id/recommended_features_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/package_layout"
+                android:layout_marginTop="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Recommended for "
+                    android:textColor="@color/common_text_color"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/recommended_features_section_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="hotels and motels"
+                    android:textColor="#FFB900"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/recommended_addons_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recommended_features_section"
+                android:background="@drawable/home_gradient_bg"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:paddingTop="@dimen/_10sdp">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/recommended_features_section"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@color/transparent"
+                    android:overScrollMode="never" />
+
+                <TextView
+                    android:id="@+id/all_recommended_addons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recycler"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/orange_button_click_effect"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_20sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_20sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="View All"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </LinearLayout>
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/feature_deals_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/package_layout"
+                android:layout_below="@+id/recommended_addons_layout"
                 android:layout_marginTop="16dp"
                 android:clickable="true"
                 android:focusable="true"
@@ -352,390 +450,754 @@
                     app:selectedDotColor="@color/app_yellow_1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            <RelativeLayout
-                android:id="@+id/recommended_features_section"
+            <LinearLayout
+                android:id="@+id/addons_category_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/feature_deals_layout"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="@dimen/_15sdp"
-                android:background="@drawable/feature_curve_top_bg"
-                android:elevation="@dimen/_2sdp">
-
-                <TextView
-                    android:id="@+id/recommended_features_section_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="18dp"
-                    android:layout_marginTop="18dp"
-                    android:text="Be better than your competitors!"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp" />
-
-                <TextView
-                    android:id="@+id/recommended_features_section_subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/recommended_features_section_title"
-                    android:layout_marginStart="18dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="18dp"
-                    android:text="loading premium digital add-ons for your business"
-                    android:textColor="@color/transparent_black_dark"
-                    android:textSize="@dimen/_10ssp" />
-
-                <!--                <View-->
-                <!--                    android:id="@+id/view"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="1dp"-->
-                <!--                    android:layout_alignParentBottom="true"-->
-                <!--                    android:layout_marginBottom="4dp"-->
-                <!--                    android:background="@color/material_grey_400"/>-->
-
-            </RelativeLayout>
-
-
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmer_view_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/recommended_features_section"
+                android:layout_below="@+id/feature_deals_layout"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_15sdp"
-                android:background="@color/white"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="8dp"
                 android:orientation="vertical">
 
-                <!-- Adding 7 rows of placeholders -->
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Add-ons by category"
+                    android:textColor="@color/common_text_color"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/_12sdp" />
 
-                    <include layout="@layout/data_placeholder_layout" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/addons_category_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:background="@drawable/all_side_curve_bg"
+                    android:elevation="@dimen/_2sdp"
+                    android:overScrollMode="never" />
 
-                    <include layout="@layout/data_placeholder_layout" />
-
-                    <include layout="@layout/data_placeholder_layout" />
-
-                    <include layout="@layout/data_placeholder_layout" />
-                </LinearLayout>
-
-            </com.facebook.shimmer.ShimmerFrameLayout>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/shimmer_view_container"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:background="@color/transparent"
-                android:overScrollMode="never" />
+            </LinearLayout>
 
             <RelativeLayout
-                android:id="@+id/recyclerBottomCard"
+                android:id="@+id/expert_guidence_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/recycler"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:background="@drawable/feature_curve_bottom_bg"
-                android:elevation="@dimen/_2sdp"
-                android:gravity="center">
+                android:layout_below="@id/addons_category_layout"
+                android:layout_marginTop="@dimen/_15sdp">
 
                 <TextView
-                    android:id="@+id/all_recommended_addons"
+                    android:id="@+id/expert_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/orange_button_click_effect"
-                    android:clickable="true"
-                    android:elevation="@dimen/_2sdp"
-                    android:focusable="true"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/_20sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_20sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:text="View all recommended add-ons"
-                    android:textAllCaps="true"
+                    android:layout_height="@dimen/_25sdp"
+                    android:background="@drawable/top_right_curve_grey_bg"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="EXPERT GUIDENCE"
                     android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    android:textFontWeight="800"
+                    android:textSize="@dimen/_10sdp" />
 
-            </RelativeLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/bottom_box"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/recyclerBottomCard"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dp">
-
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/callnow_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="@dimen/txt_16sp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="@dimen/txt_16sp"
-                    android:background="@color/transparent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_below="@id/expert_title"
+                    android:layout_marginBottom="@dimen/_25sdp"
+                    android:background="#F9F3E1"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/_15sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_15sdp"
+                    android:paddingBottom="@dimen/_10sdp">
 
+                    <TextView
+                        android:id="@+id/callnow_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Need help to decide?"
+                        android:textColor="@color/common_text_color" />
+
+                    <TextView
+                        android:id="@+id/callnow_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:text="Speak to our expert!"
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/callnow_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/recycler"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/orange_button_click_effect"
+                        android:drawableStart="@drawable/ic_call_white"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_20sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="Call Now"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textFontWeight="800"
+                        android:textSize="@dimen/_8sdp" />
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/callnow_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/_60sdp"
+                    tools:visibility="visible">
 
                     <ImageView
-                        android:id="@+id/imagexx"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:background="@color/transparent" />
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_margin="@dimen/_30sdp"
+                        app:srcCompat="@drawable/ic_expert_guidence" />
+                </androidx.cardview.widget.CardView>
 
+                <RelativeLayout
+                    android:id="@+id/call_shedule_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/callnow_layout"
+                    android:layout_marginBottom="@dimen/_25sdp"
+                    android:background="#F9F3E1"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/_15sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_15sdp"
+                    android:paddingBottom="@dimen/_10sdp">
 
-                    <LinearLayout
-                        android:id="@+id/card"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_below="@+id/imagexx"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="-40dp"
-                        android:background="@drawable/all_side_curve_bg"
-                        android:elevation="@dimen/_4sdp"
-                        android:gravity="center">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/shedule_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        app:cardCornerRadius="@dimen/_40sdp">
 
                         <ImageView
-                            android:id="@+id/image122"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_margin="8dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/boost_360_insignia"
-                            android:textSize="@dimen/txt_14sp" />
+                            android:layout_margin="@dimen/_20sdp"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            app:srcCompat="@drawable/ic_expert_guidence" />
+                    </androidx.cardview.widget.CardView>
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_toRightOf="@id/shedule_image"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/call_shedule_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/shedule_image"
+                            android:text="Need help to decide?"
+                            android:textColor="@color/common_text_color" />
+
+                        <TextView
+                            android:id="@+id/call_shedule_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
+                            android:text="Speak to our expert!"
+                            android:textColor="@color/common_text_color"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/call_schedule_timinig"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/shedule_image"
+                            android:text="Available tomorrow from 10am"
+                            android:gravity="center_vertical"
+                            android:drawableStart="@drawable/ic_blue_circle"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:textColor="@color/common_text_color" />
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/call_shedule_button"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_below="@id/recycler"-->
+<!--                            android:layout_marginTop="@dimen/_10sdp"-->
+<!--                            android:background="@drawable/orange_button_click_effect"-->
+<!--                            android:drawableStart="@drawable/ic_call_shedule"-->
+<!--                            android:drawablePadding="@dimen/_10sdp"-->
+<!--                            android:fontFamily="@font/open_sans_semibold"-->
+<!--                            android:gravity="center"-->
+<!--                            android:paddingStart="@dimen/_10sdp"-->
+<!--                            android:paddingTop="@dimen/_5sdp"-->
+<!--                            android:paddingEnd="@dimen/_20sdp"-->
+<!--                            android:paddingBottom="@dimen/_5sdp"-->
+<!--                            android:text="Schedule a Call Back"-->
+<!--                            android:textAllCaps="true"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            android:textFontWeight="800"-->
+<!--                            android:textSize="@dimen/_8sdp" />-->
 
                     </LinearLayout>
 
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/imagexx"
-                        android:layout_margin="@dimen/_5sdp"
-                        android:background="@drawable/referal_spherical"
-                        android:elevation="@dimen/_2sdp"
-                        android:paddingTop="@dimen/_15sdp">
-
-                        <TextView
-                            android:id="@+id/textView6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="@dimen/_25sdp"
-                            android:text="Refer Boost"
-                            android:textColor="@color/common_text_color"
-                            android:textSize="@dimen/_20sdp"
-
-                            />
-
-                        <TextView
-                            android:id="@+id/ref_txt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/textView6"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:gravity="center"
-                            android:minLines="2"
-                            android:padding="8dp"
-                            android:text="@string/referral_card_explainer_text"
-                            android:textColor="#4a4a4a"
-                            android:textSize="@dimen/_12sdp"
-
-                            />
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/share_referal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/ref_txt"
-                            android:layout_marginStart="32dp"
-                            android:layout_marginTop="9dp"
-                            android:layout_marginEnd="32dp"
-                            android:layout_marginBottom="24dp"
-                            android:background="@drawable/invitation_code_bg"
-                            android:padding="1dp">
-
-
-                            <TextView
-                                android:id="@+id/veqrifybtn1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:text="Invitation code: "
-                                android:textColor="#9b9b9b"
-                                android:textSize="@dimen/_10sdp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/referral_code"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/referral_code"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_semibold"
-                                android:gravity="center_vertical"
-                                android:text="565GH345"
-                                android:textColor="#9b9b9b"
-                                android:textSize="@dimen/_10sdp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@id/veqrifybtn1"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <LinearLayout
-                                android:id="@+id/share_refferal_code_btn"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/yellow_geadient"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintDimensionRatio="1:1"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
-
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:padding="8dp"
-                                    android:src="@drawable/xmlid_2074"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintLeft_toRightOf="@id/referral_code"
-                                    app:layout_constraintTop_toTopOf="parent" />
-                            </LinearLayout>
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </RelativeLayout>
                 </RelativeLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+            </RelativeLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/partner_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_120sdp"
-                android:layout_below="@+id/bottom_box">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/expert_guidence_layout"
+                android:layout_marginTop="@dimen/_15sdp">
 
-                <TextView
-                    android:id="@+id/refet_text"
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/partner_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:text="Refer Boost360 via:"
-                    android:textColor="#4a4a4a"
-                    android:textSize="@dimen/_10sdp"
-                    android:textStyle="bold"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/snippet_items" />
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/partner_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:dotsColor="@color/dot_grey"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="6dp"
+                    app:dotsSpacing="4dp"
+                    app:dotsWidthFactor="2.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/partner_viewpager"
+                    app:progressMode="true"
+                    app:selectedDotColor="@color/app_yellow_1" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/video_addons_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/partner_layout"
+                android:layout_marginTop="@dimen/_15sdp">
+
+                <TextView
+                    android:id="@+id/video_addons_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:text="Know more about our add-ons"
+                    android:textColor="@color/common_text_color"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/_15sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
-                    android:id="@+id/share_fb_1"
-                    android:layout_width="0dp"
+                    android:id="@+id/video_addons_player_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:gravity="center"
-                    android:padding="@dimen/_5sdp"
-                    app:layout_constraintBottom_toBottomOf="@id/end_guideline_vertical"
-                    app:layout_constraintEnd_toStartOf="@id/middle_guideline"
-                    app:layout_constraintStart_toStartOf="@id/start_guideline"
-                    app:layout_constraintTop_toTopOf="@id/start_guideline_vertical">
+                    android:background="@color/common_text_color"
+                    android:orientation="vertical"
+                    app:layout_constraintDimensionRatio="2:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/video_addons_title">
+                    <WebView
+                        android:id="@+id/videoPlayerWebView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/video_chat_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/video_addons_player_layout">
+
+                    <LinearLayout
+                        android:id="@+id/video_chat_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:background="@drawable/all_side_curve_bg"
+                        android:elevation="@dimen/_2sdp">
+
+                        <ImageView
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/chat_icon" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/video_chat_icon"
+                        android:layout_toLeftOf="@id/view_chat"
+                        android:layout_centerVertical="true"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Website Chatbot"
+                            android:textColor="#FFB900"
+                            android:fontFamily="@font/open_sans"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/common_text_color"
+                            android:fontFamily="@font/open_sans"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_10sdp"
+                            android:text="Watch how a chatbot makes your site 2x interactive " />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/view_chat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/orange_button_click_effect"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_20sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_20sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="View"
+                        android:layout_centerVertical="true"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:layout_alignParentEnd="true"/>
+
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/videos_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/video_chat_layout"
+                    tools:listitem="@layout/videos_item" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/video_addons_layout"
+                android:background="@drawable/home_gradient_bg_90"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/topper_line"
+                    android:layout_width="@dimen/_150sdp"
+                    android:layout_height="@dimen/_3sdp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:background="@drawable/view_dot_lines_bg" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/bottom_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/topper_line"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="@dimen/txt_16sp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="@dimen/txt_16sp"
+                        android:background="@color/transparent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <ImageView
+                            android:id="@+id/imagexx"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@color/transparent" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imagexx"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="-40dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/_5sdp">
+
+                            <LinearLayout
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:layout_below="@+id/imagexx"
+                                android:layout_centerHorizontal="true"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:background="@drawable/all_side_curve_bg"
+                                android:elevation="@dimen/_4sdp"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_margin="8dp"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/boost_360_insignia"
+                                    android:textSize="@dimen/txt_14sp" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:layout_below="@+id/imagexx"
+                                android:layout_centerHorizontal="true"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:background="@drawable/all_side_curve_bg"
+                                android:elevation="@dimen/_4sdp"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/chat_icon"
+                                    android:textSize="@dimen/txt_14sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/imagexx"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:paddingTop="@dimen/_15sdp">
+
+                            <TextView
+                                android:id="@+id/textView6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/_25sdp"
+                                android:text="Refer Boost with your friends"
+                                android:textColor="#FF9F00"
+                                android:textSize="@dimen/_18sdp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/ref_txt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/textView6"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:gravity="center"
+                                android:minLines="2"
+                                android:padding="8dp"
+                                android:text="and use Website Chatbot to help your customer reach you better for a month absolutely FREE"
+                                android:textColor="#4a4a4a"
+                                android:textSize="@dimen/_10sdp" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/share_referal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/ref_txt"
+                                android:layout_marginStart="32dp"
+                                android:layout_marginTop="9dp"
+                                android:layout_marginEnd="32dp"
+                                android:layout_marginBottom="24dp"
+                                android:background="@drawable/invitation_code_bg"
+                                android:padding="1dp">
+
+
+                                <TextView
+                                    android:id="@+id/veqrifybtn1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/open_sans"
+                                    android:paddingStart="@dimen/_10sdp"
+                                    android:text="Invitation code: "
+                                    android:textColor="#9b9b9b"
+                                    android:textSize="@dimen/_10sdp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toStartOf="@+id/referral_code"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/referral_code"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:gravity="center_vertical"
+                                    android:text="565GH345"
+                                    android:textColor="#9b9b9b"
+                                    android:textSize="@dimen/_10sdp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@id/veqrifybtn1"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <LinearLayout
+                                    android:id="@+id/share_refferal_code_btn"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/yellow_geadient"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintDimensionRatio="1:1"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:padding="8dp"
+                                        android:src="@drawable/xmlid_2074"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintLeft_toRightOf="@id/referral_code"
+                                        app:layout_constraintTop_toTopOf="parent" />
+                                </LinearLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/footer"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_120sdp"
+                    android:layout_below="@+id/bottom_box">
+
+                    <TextView
+                        android:id="@+id/refet_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:text="Refer NOW via:"
+                        android:textColor="#747474"
+                        android:textSize="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/share_fb_1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="center"
+                        android:padding="@dimen/_5sdp"
+                        app:layout_constraintBottom_toBottomOf="@id/end_guideline_vertical"
+                        app:layout_constraintEnd_toStartOf="@id/middle_guideline"
+                        app:layout_constraintStart_toStartOf="@id/start_guideline"
+                        app:layout_constraintTop_toTopOf="@id/start_guideline_vertical">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/facebook" />
-                </LinearLayout>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/share_whatsapp_1"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:gravity="center"
-                    android:padding="@dimen/_5sdp"
-                    app:layout_constraintBottom_toBottomOf="@id/end_guideline_vertical"
-                    app:layout_constraintEnd_toEndOf="@id/end_guideline"
-                    app:layout_constraintStart_toStartOf="@id/middle_guideline"
-                    app:layout_constraintTop_toTopOf="@id/start_guideline_vertical">
+                    <LinearLayout
+                        android:id="@+id/share_whatsapp_1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="center"
+                        android:padding="@dimen/_5sdp"
+                        app:layout_constraintBottom_toBottomOf="@id/end_guideline_vertical"
+                        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                        app:layout_constraintStart_toStartOf="@id/middle_guideline"
+                        app:layout_constraintTop_toTopOf="@id/start_guideline_vertical">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/whatsapp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/boost360_tnc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:gravity="center_horizontal"
+                        android:padding="@dimen/_20sdp"
+                        android:text="Read how referral works"
+                        android:textColor="#747474"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/share_fb_1" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/start_guideline_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.25" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/end_guideline_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.6" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/start_guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.05" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/middle_guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/end_guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.95" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/footer_helper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/footer"
+                    android:layout_marginStart="@dimen/_25sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_25sdp"
+                    android:layout_marginBottom="@dimen/_30sdp"
+                    android:background="@drawable/all_side_curve_bg"
+                    android:elevation="@dimen/_2sdp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/_20sdp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_55sdp"
+                        android:layout_height="@dimen/_55sdp"
+                        app:srcCompat="@drawable/ic_upgrade_helper" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:fontFamily="@font/open_sans"
+                        android:text="Help us make Boost better"
+                        android:textSize="@dimen/_15sdp" />
+
+                    <TextView
+                        android:id="@+id/share_feedback_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/recycler"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_30sdp"
+                        android:background="@drawable/share_helper_bg"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_20sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_20sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:text="Share your feedback"
+                        android:textColor="#FFB900"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/boost360_tnc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_italic"
-                    android:gravity="center_horizontal"
-                    android:padding="@dimen/_15sdp"
-                    android:text="@string/upgrade_boost_tnc_link"
-                    android:textColor="#747474"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/share_fb_1" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/start_guideline_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.25" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/end_guideline_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.6" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/start_guideline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.05" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/middle_guideline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.5" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/end_guideline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.95" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
 
         </RelativeLayout>
