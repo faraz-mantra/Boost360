@@ -1,286 +1,271 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:card_view="http://schemas.android.com/tools">
 
-   <!--
-   <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="vertical">
-    -->
+  <!--
+  <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="15dp"
+       android:layout_marginEnd="15dp"
+       android:layout_marginTop="10dp"
+       android:layout_marginBottom="5dp"
+       android:orientation="vertical">
+   -->
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
+  <androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginBottom="5dp"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+      android:id="@+id/item_category_root"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="?attr/selectableItemBackground"
+      android:paddingLeft="@dimen/margin_15"
+      android:paddingTop="@dimen/margin_15"
+      android:paddingRight="@dimen/margin_15"
+      android:paddingBottom="@dimen/margin_10">
+
+      <androidx.cardview.widget.CardView
+        android:id="@+id/card_thumbnail"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="12dp"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="4dp"
-        app:cardElevation="4dp" >
+        app:cardElevation="0dp">
 
-        <RelativeLayout
-            android:id="@+id/item_category_root"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/margin_15"
-            android:paddingRight="@dimen/margin_15"
-            android:paddingTop="@dimen/margin_15"
-            android:paddingBottom="@dimen/margin_10"
-            android:background="?attr/selectableItemBackground" >
+        <ImageView
+          android:id="@+id/thumbnail"
+          android:layout_width="80dp"
+          android:layout_height="80dp"
+          android:scaleType="centerCrop" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_thumbnail"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginRight="12dp"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="0dp" >
+      </androidx.cardview.widget.CardView>
 
-                <ImageView
-                    android:id="@+id/thumbnail"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:scaleType="centerCrop" />
-
-            </androidx.cardview.widget.CardView>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:gravity="top"
-                android:layout_toRightOf="@+id/card_thumbnail" >
-
-                <TextView
-                    android:id="@+id/label_missing_info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="2"
-                    android:textColor="#d0021b"
-                    android:textSize="14sp"
-                    android:paddingBottom="5dp"
-                    android:drawablePadding="5dp"
-                    android:drawableLeft="@drawable/ic_info_red"
-                    android:text="Missing Information"/>
-
-                <TextView
-                    android:id="@+id/label_brand"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="2"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:paddingBottom="5dp"
-                    android:text="Watch by Fastrack"/>
-
-                <TextView
-                    android:id="@+id/label_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="2"
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:layout_below="@+id/label_brand"
-                    android:text="Fastrack Bare Basic Watch"/>
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/label_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/card_thumbnail"
-                android:textColor="@color/secondaryTextColor"
-                android:textSize="14sp"
-                android:maxLines="2"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:ellipsize="end"
-                android:text="This is a wedding makeup description"/>
-
-            <View
-                android:id="@+id/dotted_line"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layerType="software"
-                android:layout_below="@+id/label_description"
-                android:background="@drawable/dotted_line"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/dotted_line"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/label_currency"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="Price: "
-                    android:textColor="@color/secondaryLightTextColor"
-                    android:textSize="13sp"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:id="@+id/linear_layout"
-                    android:layout_width="wrap_content"
-                    android:padding="6dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/label_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:text="INR 0"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/label_base_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:text="INR 0"
-                        android:textColor="@color/secondaryLightTextColor"
-                        android:textSize="14sp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_share_buttons"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/share_colon"
-                        android:layout_gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_14ssp"
-                        android:fontFamily="@font/regular"/>
-
-                    <ImageView
-                        android:id="@+id/share_facebook"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/facebook_icon_share"
-                        android:visibility="visible"
-                        android:contentDescription="facebook share button" />
-
-                    <ImageView
-                        android:id="@+id/share_whatsapp"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/ic_whatsapp"
-                        android:visibility="visible"
-                        android:contentDescription="whatsapp share button" />
-
-                </LinearLayout>
-
-
-
-
-
-                <Button
-                    android:id="@+id/button_edit"
-                    android:layout_width="40dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="end"
-                    android:background="@android:color/transparent"
-                    android:gravity="center_vertical|end"
-                    android:text="Edit"
-                    android:textColor="@color/secondaryLightTextColor"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
-
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <!--
-    <android.support.v7.widget.CardView
+      <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="#e9e9e9"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="2dp"
-        android:layout_marginTop="-3dp"
-        android:layout_marginBottom="3dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp" >
+        android:layout_height="80dp"
+        android:layout_toRightOf="@+id/card_thumbnail"
+        android:gravity="top">
 
         <TextView
-            android:id="@+id/label_variants"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/secondaryLightTextColor"
-            android:textSize="14sp"
-            android:text="4 Variants"
-            android:padding="8dp"
-            android:layout_gravity="center_vertical"/>
-
-    </android.support.v7.widget.CardView>
-    -->
-
-    <!--
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/variant_background"
-        android:visibility="gone"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="3dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp" >
-
+          android:id="@+id/label_missing_info"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:drawableLeft="@drawable/ic_info_red"
+          android:drawablePadding="5dp"
+          android:maxLines="2"
+          android:paddingBottom="5dp"
+          android:text="Missing Information"
+          android:textColor="#d0021b"
+          android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/label_variants"
+          android:id="@+id/label_brand"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:maxLines="2"
+          android:paddingBottom="5dp"
+          android:text="Watch by Fastrack"
+          android:textColor="@color/primaryColor"
+          android:textSize="14sp"
+          android:textStyle="bold" />
+
+        <TextView
+          android:id="@+id/label_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/label_brand"
+          android:maxLines="2"
+          android:text="Fastrack Bare Basic Watch"
+          android:textColor="@color/primaryTextColor"
+          android:textSize="14sp"
+          android:textStyle="bold" />
+
+      </RelativeLayout>
+
+      <TextView
+        android:id="@+id/label_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/card_thumbnail"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="This is a wedding makeup description"
+        android:textColor="@color/secondaryTextColor"
+        android:textSize="14sp" />
+
+      <View
+        android:id="@+id/dotted_line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/label_description"
+        android:background="@drawable/dotted_line"
+        android:layerType="software" />
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dotted_line"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+          android:id="@+id/label_currency"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:text="Price: "
+          android:textColor="@color/secondaryLightTextColor"
+          android:textSize="13sp"
+          android:visibility="gone" />
+
+        <LinearLayout
+          android:id="@+id/linear_layout"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:orientation="vertical"
+          android:padding="6dp">
+
+          <TextView
+            android:id="@+id/label_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="INR 0"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="14sp" />
+
+          <TextView
+            android:id="@+id/label_base_price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="INR 0"
             android:textColor="@color/secondaryLightTextColor"
-            android:textSize="14sp"
-            android:text="4 Variants"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:drawableLeft="@drawable/ic_variants"
-            android:drawablePadding="@dimen/margin_8"
-            android:layout_gravity="center_vertical"/>
+            android:textSize="14sp" />
 
-    </FrameLayout>
 
-    </LinearLayout>
-    -->
+        </LinearLayout>
+
+        <LinearLayout
+          android:id="@+id/ll_share_buttons"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_centerVertical="true"
+          android:orientation="horizontal">
+
+          <ImageView
+            android:id="@+id/share_facebook"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="facebook share button"
+            android:src="@drawable/facebook_icon_share"
+            android:visibility="visible" />
+
+          <ImageView
+            android:id="@+id/share_whatsapp"
+            android:layout_width="75dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/share_whatsapp" />
+        </LinearLayout>
+
+
+        <Button
+          android:id="@+id/button_edit"
+          android:layout_width="40dp"
+          android:layout_height="25dp"
+          android:layout_gravity="end"
+          android:background="@android:color/transparent"
+          android:gravity="center_vertical|end"
+          android:text="Edit"
+          android:textColor="@color/secondaryLightTextColor"
+          android:textSize="12sp"
+          android:visibility="gone" />
+
+      </RelativeLayout>
+
+    </RelativeLayout>
+
+  </androidx.cardview.widget.CardView>
+
+  <!--
+  <android.support.v7.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:cardBackgroundColor="#e9e9e9"
+      app:cardCornerRadius="4dp"
+      app:cardElevation="2dp"
+      android:layout_marginTop="-3dp"
+      android:layout_marginBottom="3dp"
+      android:layout_marginRight="15dp"
+      android:layout_marginLeft="15dp" >
+
+      <TextView
+          android:id="@+id/label_variants"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/secondaryLightTextColor"
+          android:textSize="14sp"
+          android:text="4 Variants"
+          android:padding="8dp"
+          android:layout_gravity="center_vertical"/>
+
+  </android.support.v7.widget.CardView>
+  -->
+
+  <!--
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/variant_background"
+      android:visibility="gone"
+      android:layout_marginTop="1dp"
+      android:layout_marginBottom="3dp"
+      android:layout_marginRight="15dp"
+      android:layout_marginLeft="15dp" >
+
+
+      <TextView
+          android:id="@+id/label_variants"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/secondaryLightTextColor"
+          android:textSize="14sp"
+          android:text="4 Variants"
+          android:paddingRight="10dp"
+          android:paddingLeft="10dp"
+          android:paddingTop="5dp"
+          android:paddingBottom="5dp"
+          android:drawableLeft="@drawable/ic_variants"
+          android:drawablePadding="@dimen/margin_8"
+          android:layout_gravity="center_vertical"/>
+
+  </FrameLayout>
+
+  </LinearLayout>
+  -->
 
 </layout>
