@@ -37,6 +37,8 @@ import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileProfileRequest
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
+import com.onboarding.nowfloats.utils.WebEngageController
+import com.webengage.sdk.android.WebEngage
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.io.File
@@ -114,6 +116,8 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
     val semiBold = getFont(R.font.semi_bold) ?: return
 
     val spannableStringBuilder = SpannableStringBuilder(resources.getString(R.string.your) + " $title " + resources.getString(R.string.business_setup_boost))
+    WebEngageController.setCategory(requestFloatsModel?.categoryDataModel?.experience_code)
+
     spannableStringBuilder.setSpan(CustomTypefaceSpan("", regular), 0, 4, Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
     spannableStringBuilder.setSpan(CustomTypefaceSpan("", semiBold), 5, 5 + title.length, Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
     spannableStringBuilder.setSpan(CustomTypefaceSpan("", regular), 5 + title.length + 1, spannableStringBuilder.length, Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
@@ -145,6 +149,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
       binding?.businessClick -> openImagePicker(false)
       binding?.websiteBtnClick -> {
         try {
+          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Business website view clicked", "REGISTRATION COMPLETE",it) }
           val bundle = Bundle()
           bundle.putString(IntentConstant.DOMAIN_URL.name, "${requestFloatsModel?.contactInfo?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com")
           navigator?.startActivity(WebViewActivity::class.java, bundle)

@@ -1,6 +1,7 @@
 package com.nowfloats.Store.Service;
 
 import com.appservice.model.accountDetails.AccountDetailsResponse;
+import com.appservice.model.kycData.PaymentKycDataResponse;
 import com.google.gson.JsonObject;
 import com.nowfloats.Store.DiscountCoupon;
 import com.nowfloats.Store.Model.ChequePaymentModel;
@@ -112,4 +113,8 @@ public interface StoreInterface {
 
     @GET("/discover/v9/business/paymentProfile/{fpId}")
     void userAccountDetail(@Path("fpId") String fpId, @Query("clientId") String clientId, Callback<AccountDetailsResponse> callback);
+
+    @Headers({"Authorization: 597ee93f5d64370820a6127c", "Accept: application/json"})
+    @GET("/api/v1/kycdoc/get-data")
+    void getSelfBrandedKyc(@Query("query") String query, Callback<PaymentKycDataResponse> callback);
 }

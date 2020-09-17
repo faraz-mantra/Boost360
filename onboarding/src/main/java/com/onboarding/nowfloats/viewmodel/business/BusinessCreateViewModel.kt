@@ -5,6 +5,7 @@ import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 import com.onboarding.nowfloats.model.business.BusinessCreateRequest
+import com.onboarding.nowfloats.model.business.purchasedOrder.ActivatePurchasedOrderRequest
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelAccessTokenRequest
 import com.onboarding.nowfloats.model.channel.request.UpdateChannelActionDataRequest
 import com.onboarding.nowfloats.model.domain.BusinessDomainRequest
@@ -20,6 +21,10 @@ class BusinessCreateViewModel : BaseViewModel() {
 
   fun putCreateBusinessOnboarding(profileId: String?, request: BusinessCreateRequest): LiveData<BaseResponse> {
     return BusinessCreateRepository.putCreateBusinessOnboarding(profileId, request).toLiveData()
+  }
+
+  fun postActivatePurchasedOrder(clientId: String?, request: ActivatePurchasedOrderRequest): LiveData<BaseResponse> {
+    return BusinessCreateRepository.postActivatePurchasedOrder(clientId, request).toLiveData()
   }
 
   fun updateChannelAccessToken(request: UpdateChannelAccessTokenRequest): LiveData<BaseResponse> {

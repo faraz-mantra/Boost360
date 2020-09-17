@@ -13,6 +13,7 @@ object DateUtils {
   const val FORMAT_SERVER_DATE = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
   const val FORMAT_SERVER_1_DATE = "yyyy-MM-dd'T'HH:mm:ss'Z'"
   const val FORMAT_SERVER_TO_LOCAL = "dd-MM-yyyy hh:mm a"
+  const val FORMAT_SERVER_TO_LOCAL_1 = "dd-MM-yyyy HH:mm"
 
   //  const val FORMAT_SERVER_TO_LOCAL_2 = "EEE dd-MMM-yyyy hh:mm a"
   const val FORMAT_SERVER_TO_LOCAL_2 = "EEE',' dd MMMM',' hh:mm a"
@@ -22,7 +23,8 @@ object DateUtils {
   const val FORMAT_YYYY_MM_DD = "yyyy-MM-dd"
   const val FORMAT_HH_MM_SS_A = "hh:mm:ss a"
   const val FORMAT_HH_MM_SS = "HH:mm:ss"
-  const val FORMAT_HH_MM = "hh:mm a"
+  const val FORMAT_HH_MM = "HH:mm"
+  const val FORMAT_HH_MM_A = "hh:mm a"
   const val FORMAT_H_MM_A = "h:mm a"
   private val dateFormater = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
   private val dateFormaterToday = SimpleDateFormat("HH:mm", Locale.getDefault())
@@ -71,6 +73,19 @@ object DateUtils {
     val cal = Calendar.getInstance()
     cal.add(Calendar.DATE, amount)
     return cal.time
+  }
+
+  fun Date.getAmountMinDate(amount: Int): Date {
+    val cal = Calendar.getInstance()
+    cal.time = this
+    cal.add(Calendar.MINUTE, amount)
+    return cal.time
+  }
+
+  fun  Date.toCalendar(): Calendar? {
+    val cal = Calendar.getInstance()
+    cal.time = this
+    return cal
   }
 
   fun formatDate(tstSeconds: Long): String? {

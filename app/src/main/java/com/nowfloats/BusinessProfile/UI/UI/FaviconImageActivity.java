@@ -28,6 +28,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.API.UploadFaviconImage;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -120,42 +121,58 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
                     Methods.showFeatureNotAvailDialog(FaviconImageActivity.this);
                     return;
                 }
-                final MaterialDialog dialog = new MaterialDialog.Builder(FaviconImageActivity.this)
-                        .customView(R.layout.featuredimage_popup,true)
-                        .show();
 
-                View view = dialog.getCustomView();
-                TextView title = (TextView) view.findViewById(R.id.textview_heading);
-                title.setText(getResources().getString(R.string.upload_favicon_image));
-                LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-                LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-                ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-                ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-                cameraImg.setColorFilter(whiteLabelFilter);
-                galleryImg.setColorFilter(whiteLabelFilter);
+                final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+                imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
 
-                takeCamera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+//                final MaterialDialog dialog = new MaterialDialog.Builder(FaviconImageActivity.this)
+//                        .customView(R.layout.featuredimage_popup,true)
+//                        .show();
+//
+//                View view = dialog.getCustomView();
+//                TextView title = (TextView) view.findViewById(R.id.textview_heading);
+//                title.setText(getResources().getString(R.string.upload_favicon_image));
+//                LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+//                LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//                ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+//                ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+//                cameraImg.setColorFilter(whiteLabelFilter);
+//                galleryImg.setColorFilter(whiteLabelFilter);
+//
+//                takeCamera.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
+//                        WebEngageController.trackEvent("UPLOAD FAVICON IMAGE","UPLOAD FAVICON IMAGE",null);
+//                        cameraIntent();
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                takeGallery.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
+//                        WebEngageController.trackEvent("UPLOAD FAVICON IMAGE","UPLOAD FAVICON IMAGE",null);
+//                        galleryIntent();
+//                        dialog.dismiss();
+//
+//                    }
+//                });
 
-                        MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
-                        WebEngageController.trackEvent("UPLOAD FAVICON IMAGE","UPLOAD FAVICON IMAGE",null);
-                        cameraIntent();
-                        dialog.dismiss();
-                    }
-                });
+            }
 
-                takeGallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
-                        WebEngageController.trackEvent("UPLOAD FAVICON IMAGE","UPLOAD FAVICON IMAGE",null);
-                        galleryIntent();
-                        dialog.dismiss();
-
-                    }
-                });
-
+            private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
+                if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
+                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_CAMERA,null);
+                    WebEngageController.trackEvent("UPLOAD FAVICON IMAGE","UPLOAD FAVICON IMAGE",null);
+                    cameraIntent();
+                }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
+                    MixPanelController.track(EventKeysWL.UPDATE_LOGO_GALLERY,null);
+                    WebEngageController.trackEvent("UPLOAD FAVICON IMAGE","UPLOAD FAVICON IMAGE",null);
+                    galleryIntent();
+                }
             }
         });
     }
@@ -259,73 +276,52 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        try
-        {
-            if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode))
-            {
-                try
-                {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
+                try {
                     CameraBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                     imageUrl = Methods.getRealPathFromURI(this, imageUri);
                     path = imageUrl;
                     path = Util.saveBitmap(path, FaviconImageActivity.this, "ImageFloat" + System.currentTimeMillis());
-                }
-
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
-                }
-
-                catch (OutOfMemoryError E)
-                {
+                } catch (OutOfMemoryError E) {
                     E.printStackTrace();
                     System.gc();
                 }
 
-                if (!TextUtils.isEmpty(path))
-                {
+                if (!TextUtils.isEmpty(path)) {
                     uploadPrimaryPicture(path);
                 }
-            }
-
-            else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode))
-            {
+            } else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
                 Uri picUri = data.getData();
 
-                if (picUri != null)
-                {
+                if (picUri != null) {
                     path = Methods.getPath(this, picUri);
                     path = Util.saveBitmap(path, FaviconImageActivity.this, "ImageFloat" + System.currentTimeMillis());
 
-                    if (!TextUtils.isEmpty(path))
-                    {
+                    if (!TextUtils.isEmpty(path)) {
                         uploadPrimaryPicture(path);
                     }
                 }
-            }
-
-            else if(resultCode == RESULT_OK && requestCode == ACTION_REQUEST_IMAGE_EDIT)
-            {
+            } else if (resultCode == RESULT_OK && requestCode == ACTION_REQUEST_IMAGE_EDIT) {
                 String path = data.getStringExtra("edit_image");
 
-                if (!TextUtils.isEmpty(path))
-                {
+                if (!TextUtils.isEmpty(path)) {
                     this.path = path;
                     uploadPrimaryPicture(path);
                 }
             }
-        }
-
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void uploadPrimaryPicture(String path)
     {
+        WebEngageController.trackEvent("Favicon Image added", "MANAGE CONTENT", session.getFpTag());
         new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());
 
         String s_uuid = UUID.randomUUID().toString();

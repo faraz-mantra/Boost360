@@ -98,6 +98,21 @@
             app:textType="SUBHEADING_1" />
 
           <com.framework.views.customViews.CustomTextView
+            android:id="@+id/opt_in_out_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:visibility="gone"
+            android:focusable="true"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/size_8"
+            app:textAllCaps="true"
+            android:text="Not Opted For Boost Alerts"
+            android:textColor="@color/scarlet"
+            app:textType="SUBHEADING_1" />
+
+          <com.framework.views.customViews.CustomTextView
             android:id="@+id/disconnect_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -367,7 +367,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
     void shareContent(String type, String imageShare, int position) {
         MixPanelController.track("SharePost", null);
         if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.",
+            Methods.showDialog(appContext, "Storage Permission", "To share service image, we need storage permission.",
                     (dialog, which) -> ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
             return;
         }

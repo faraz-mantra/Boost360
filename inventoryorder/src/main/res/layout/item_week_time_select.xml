@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_available_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_6"
+            android:text="@string/mon_9_am_to_5_pm_br_1_pm_to_2pm"
+            android:textColor="@color/black_4a4a4a"
+            android:textSize="14sp" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_mark_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_6"
+            android:text="@string/tuesday_has_been_marked_as_off"
+            android:textColor="@color/pinkish_grey"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:fontFamily="@font/italic"
+            tools:visibility="visible" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

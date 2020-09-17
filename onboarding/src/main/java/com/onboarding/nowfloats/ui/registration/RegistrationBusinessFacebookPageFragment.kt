@@ -33,6 +33,7 @@ import com.onboarding.nowfloats.model.channel.request.getType
 import com.onboarding.nowfloats.model.channel.request.isLinked
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.ui.InternetErrorDialog
+import com.onboarding.nowfloats.utils.WebEngageController
 
 class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<FragmentRegistrationBusinessFacebookPageBinding>(),
     FacebookLoginHelper, FacebookGraphManager.GraphRequestUserAccountCallback {
@@ -143,7 +144,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
   }
 
   override fun onFacebookLoginCancel() {
-    showShortToast(resources.getString(R.string.canceled))
+    showShortToast(resources.getString(R.string.cancelled))
   }
 
   override fun onFacebookLoginError(error: FacebookException?) {
@@ -173,6 +174,8 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
   }
 
   override fun setProfileDetails(name: String?, profilePicture: String?) {
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook Page Connected", "DIGITAL CHANNELS", it) }
+
     val binding = binding?.facebookPageSuccess ?: return
     this.binding?.skip?.gone()
     binding.maimView.visible()
@@ -196,6 +199,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     binding?.subTitle?.text = resources.getString(R.string.facebook_page_connect_later_Skip)
     binding?.linkFacebook?.text = resources.getString(R.string.sync_facebook_page)
     channelAccessToken.clear()
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook Page Disconnected", "DIGITAL CHANNELS", it) }
   }
 
   override fun updateInfo() {

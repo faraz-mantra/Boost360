@@ -163,7 +163,7 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
           } else {
             // If sign in fails, display a message to the user.
             Log.w(TAG, "signInWithCredential:failure", task.exception)
-            Toast.makeText(currentActivity, "SignIn Failed: " + task.exception!!.message, Toast.LENGTH_LONG).show()
+            Toast.makeText(currentActivity, "SignIn Failed: " + task.exception?.message, Toast.LENGTH_LONG).show()
             mAuth.signOut()
             LoginManager.getInstance().logOut()
           }
@@ -264,7 +264,11 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
               source?.request(Long.MAX_VALUE)
               val buffer: Buffer? = source?.buffer
               val responseBodyString: String? = buffer?.clone()?.readString(Charset.forName("UTF-8"))
-              val response: VerificationRequestResult = Gson().fromJson(responseBodyString, VerificationRequestResult::class.java)
+              val response: VerificationRequestResult? = Gson().fromJson(responseBodyString, VerificationRequestResult::class.java)
+              if (response == null) {
+                listener.onSuccess(VerificationRequestResult())
+                return
+              }
               WebEngageController.initiateUserLogin(response.loginId)
               WebEngageController.setUserContactAttributes(response.profileProperties?.userEmail, response.profileProperties?.userMobile,
                   response.profileProperties?.userName)

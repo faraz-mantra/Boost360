@@ -49,6 +49,7 @@ import com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivi
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.io.File;
@@ -288,6 +289,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
+                        WebEngageController.trackEvent("Testimonial added","MANAGE CONTENT",  session.getFpTag());
                         Toast.makeText(getApplicationContext(), "Successfully Added Testimonials", Toast.LENGTH_LONG).show();
                         onBackPressed();
                     }
@@ -342,6 +344,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
+                    WebEngageController.trackEvent("MANAGE CONTENT", "Testimonial added", session.getFpTag());
                         Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
                         onBackPressed();
                     }

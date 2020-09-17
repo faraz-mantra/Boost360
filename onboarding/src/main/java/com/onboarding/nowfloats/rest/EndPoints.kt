@@ -6,6 +6,10 @@ object EndPoints {
   const val WITH_FLOATS_BASE_URL = "https://api.withfloats.com/"
   const val POST_BUSINESS_DOMAIN_URL = "discover/v1/floatingPoint/verifyUniqueTag"
   const val POST_BUSINESS_DOMAIN_SUGGEST = "discover/v1/floatingPoint/suggestTag"
+  const val PUT_CREATE_BUSINESS_URL = "discover/v5/FloatingPoint/create"
+  const val PUT_UPLOAD_BUSINESS_LOGO = "discover/v1/floatingpoint/createLogoImage"
+  const val PUT_UPLOAD_PROFILE = "user/v9/floatingpoint/createUserProfileImage"
+  const val POST_ACTIVATE_PURCHASED_ORDER = "Payment/v9/floatingpoint/ActivatePurchaseOrder"
 
   // Base With Floats APIs
   const val RIA_WITH_FLOATS_BASE_URL = "https://ria.withfloats.com/"
@@ -15,10 +19,6 @@ object EndPoints {
   const val NFX_BASE_URL = "https://nfx.withfloats.com/"
   const val POST_UPDATE_CHANNEL_ACCESS_TOKENS_URL = "dataexchange/v1/updateAccessTokens"
   const val GET_CHANNELS_ACCESS_TOKEN = "dataexchange/v1/getAccessTokens"
-  const val PUT_CREATE_BUSINESS_URL = "discover/v5/FloatingPoint/create"
-  const val PUT_UPLOAD_BUSINESS_LOGO = "discover/v1/floatingpoint/createLogoImage"
-  const val PUT_UPLOAD_PROFILE = "user/v9/floatingpoint/createUserProfileImage"
-
   const val NFX_PROCESS_URL = "dataexchange/v1/process"
 
   // Web Action APIs

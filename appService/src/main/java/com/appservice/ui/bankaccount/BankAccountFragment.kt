@@ -1,17 +1,22 @@
 package com.appservice.ui.bankaccount
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
+import com.appservice.constant.PreferenceConstant
 import com.appservice.databinding.FragmentBankAccountDetailsBinding
 import com.appservice.model.account.AccountCreateRequest
 import com.appservice.model.account.BankAccountDetailsN
@@ -21,6 +26,7 @@ import com.appservice.model.accountDetails.BankAccountDetails
 import com.appservice.model.accountDetails.KYCDetails
 import com.appservice.model.accountDetails.Result
 import com.appservice.model.razor.RazorDataResponse
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.AccountViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.afterTextChanged
@@ -29,6 +35,12 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 
 class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, AccountViewModel>() {
+
+  private val pref: SharedPreferences?
+    get() {
+      return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
+    }
+
   private var isUpdated = true
   private var fpId: String = ""
   private var clientId: String = ""
@@ -36,6 +48,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
   private var request: AccountCreateRequest? = null
   private var requestAccount: BankAccountDetailsN? = null
   private var isValidIfsc: Boolean = false
+  private var isServiceCreation: Boolean = false
 
   companion object {
     @JvmStatic
@@ -60,6 +73,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     setOnClickListener(binding?.submitBtn, binding?.whyBtn, binding?.verificationBtn)
     fpId = arguments?.getString(IntentConstant.FP_ID.name) ?: ""
     clientId = arguments?.getString(IntentConstant.CLIENT_ID.name) ?: ""
+    isServiceCreation = arguments?.getBoolean(IntentConstant.IS_SERVICE_CREATION.name) ?: false
     binding?.edtIfsc?.afterTextChanged { isIfscValid(binding?.edtIfsc?.text.toString().trim()) }
     getUserDetails()
   }
@@ -71,6 +85,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
         if ((it.status == 200 || it.status == 201 || it.status == 202) && data != null) {
           isValidIfsc = true
           binding?.edtBankName?.setText(data.bANK ?: "")
+          binding?.edtBankName?.isFocusable = false
           if (data.bRANCH.isNullOrEmpty().not()) {
             binding?.edtBankBranch?.setText(data.bRANCH)
             binding?.txtBranch?.visible()
@@ -83,12 +98,13 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   private fun ifscUiUpdate() {
     isValidIfsc = false
+    binding?.edtBankName?.isFocusable = true
     binding?.edtBankName?.setText("")
     binding?.txtBranch?.gone()
     binding?.edtBankBranch?.gone()
   }
 
-  private fun getUserDetails(isPendingToastShow: Boolean = false) {
+  private fun getUserDetails(isPendingToastShow: Boolean = false, isServiceCreation: Boolean = false) {
     showProgress()
     viewModel?.userAccountDetails(fpId, clientId)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
@@ -98,12 +114,21 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       }
       val response = it as? AccountDetailsResponse
       if ((it.status == 200 || it.status == 201 || it.status == 202) && response != null) {
-        checkBankAccountDetail(response.result, isPendingToastShow)
+        if (isServiceCreation && response.result?.bankAccountDetails != null) {
+          goBackFragment(response.result?.bankAccountDetails!!)
+        } else checkBankAccountDetail(response.result, isPendingToastShow)
       } else {
         (baseActivity as? AccountFragmentContainerActivity)?.setToolbarTitleNew(resources.getString(R.string.adding_bank_account), resources.getDimensionPixelSize(R.dimen.size_36))
         isUpdated = false
       }
     })
+  }
+
+  private fun goBackFragment(bankAccountDetails: BankAccountDetails) {
+    val output = Intent()
+    output.putExtra(IntentConstant.USER_BANK_DETAIL.name, bankAccountDetails)
+    baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
+    baseActivity.finish()
   }
 
   private fun checkBankAccountDetail(result: Result?, isPendingToastShow: Boolean) {
@@ -161,7 +186,10 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
 
   private fun uiUpdate(isEditable: Boolean) {
-    val views = arrayListOf(binding?.edtAccountName, binding?.edtAccountNumber, binding?.edtBankName, binding?.edtAlias, binding?.edtIfsc)
+    val views = arrayListOf(binding?.edtAccountName, binding?.edtAccountNumber, binding?.edtAlias, binding?.edtIfsc)
+    if (!isValidIfsc) views.add(binding?.edtBankName)
+    else binding?.edtBankName?.background = ContextCompat.getDrawable(baseActivity, if (isEditable) R.drawable.rounded_edit_stroke else R.drawable.rounded_edit_fill)
+
     binding?.verificationUi?.visibility = if (isEditable) View.GONE else View.VISIBLE
     binding?.createUi?.visibility = if (isEditable) View.VISIBLE else View.GONE
     binding?.edtConfirmNumber?.visibility = if (isEditable) View.VISIBLE else View.GONE
@@ -200,7 +228,11 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       }
       val response = it as? AccountCreateResponse
       if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
-        getUserDetails()
+        getUserDetails(isServiceCreation = isServiceCreation)
+        val editor = pref?.edit()
+        editor?.putBoolean(PreferenceConstant.IS_ACCOUNT_SAVE, true)
+        editor?.apply()
+        WebEngageController.trackEvent("Bank Account submitted for verification", "BANK ACCOUNT", fpId)
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())
@@ -218,7 +250,8 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       }
       val response = it as? AccountCreateResponse
       if (response?.status == 200 || response?.status == 201 || response?.status == 202) {
-        getUserDetails()
+        getUserDetails(isServiceCreation = isServiceCreation)
+        WebEngageController.trackEvent("Bank Account details updated", "BANK ACCOUNT", fpId)
       } else {
         hideProgress()
         showLongToast(response?.errorN?.getMessage())
@@ -265,7 +298,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_close_icon, menu)
+    inflater.inflate(R.menu.menu_edit, menu)
     menuClose = menu.findItem(R.id.menu_edit)
     menuClose?.isVisible = false
   }

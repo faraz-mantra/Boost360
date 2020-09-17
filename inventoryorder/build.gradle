@@ -38,4 +38,6 @@ android {
 
 dependencies {
     api project(path: ':resources')
+    api 'com.michalsvec:single-row-calednar:1.0.0'
+    implementation 'com.webengage:android-sdk:3.+'
 }

@@ -1,7 +1,9 @@
 package com.inventoryorder.ui.appointment
 
+import android.content.Intent
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.view.isGone
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -16,6 +19,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils
 import com.framework.views.customViews.CustomButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewItemType
@@ -32,6 +36,7 @@ import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import java.util.*
+import java.util.regex.Pattern
 
 class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDetailsBinding>() {
 
@@ -53,7 +58,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
   override fun onCreateView() {
     super.onCreateView()
     arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
-    setOnClickListener(binding?.btnBusiness)
+    setOnClickListener(binding?.btnBusiness, binding?.tvCustomerContactNumber, binding?.tvCustomerEmail)
   }
 
   private fun apiGetOrderDetails(orderId: String) {
@@ -158,8 +163,13 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding?.bookingDate?.text = DateUtils.parseDate(order.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
-
+    val scheduleDate = order.firstItemForConsultation()?.scheduledStartDate()
+    val dateApt = DateUtils.parseDate(scheduleDate, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)
+    binding?.bookingDate?.text = if (dateApt.isNullOrEmpty().not()) {
+      dateApt
+    } else {
+      DateUtils.parseDate(order.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
+    }
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
     binding?.tvCustomerAddress?.text = order.BuyerDetails?.getAddressFull()
@@ -167,7 +177,12 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
     binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
     binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
-    binding?.tvCustomerEmail?.text = order.BuyerDetails?.ContactDetails?.EmailId?.trim()
+    if(order.BuyerDetails?.ContactDetails?.EmailId?.isNotBlank()!!){
+      binding?.tvCustomerEmail?.text = order.BuyerDetails?.ContactDetails?.EmailId?.trim()
+    }else{
+      binding?.tvCustomerEmail?.isGone = true
+    }
+
 
     // shipping details
     var shippingCost = 0.0
@@ -200,8 +215,53 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     when (v) {
       binding?.btnBusiness -> showBottomSheetDialog()
       binding?.buttonConfirmOrder -> apiConfirmOrder()
-      binding?.tvCancelOrder -> apiCancelOrder()
+      binding?.tvCancelOrder -> cancelOrderDialog()
+      binding?.tvCustomerContactNumber -> {
+        if(orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.length == 10)
+          openDialer()
+        else
+          showShortToast(getString(R.string.phone_invalid_format_error))
+
+      }
+      binding?.tvCustomerEmail -> {
+        if(orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()?.let { checkValidEmail(it) }!!) {
+          openEmailApp()
+        }else{
+          showShortToast(getString(R.string.email_invalid_format_error))
+        }
+      }
     }
+  }
+
+  private fun openEmailApp() {
+    val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+            "mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
+    startActivity(emailIntent)
+  }
+
+  private fun openDialer() {
+    val intent = Intent(Intent.ACTION_DIAL)
+    intent.data = (Uri.parse("tel:${orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()}"))
+    startActivity(intent)
+  }
+
+  private fun checkValidEmail(email: String): Boolean {
+    return Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$").matcher(email).find()
+  }
+
+  private fun cancelOrderDialog(){
+    MaterialAlertDialogBuilder(context)
+            .setTitle(getString(R.string.cancel_appointment_confirmation_message))
+            .setNeutralButton(getString(R.string.no)){
+              dialog, _ ->
+              dialog.dismiss()
+            }
+            .setPositiveButton(getString(R.string.yes)){
+              dialog, which ->
+              apiCancelOrder()
+              dialog.dismiss()
+            }
+            .show()
   }
 
   private fun apiCancelOrder() {
@@ -230,7 +290,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
-        data?.let { d -> showLongToast(d.Message as String?) }
+        showLongToast(getString(R.string.appointment_confirmed))
         refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED)
       } else showLongToast(it.message())
     })

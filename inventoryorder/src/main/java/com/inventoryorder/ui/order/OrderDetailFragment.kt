@@ -1,7 +1,9 @@
 package com.inventoryorder.ui.order
 
+import android.content.Intent
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.view.isGone
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -18,6 +21,7 @@ import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
 import com.framework.views.customViews.CustomButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentOrderDetailBinding
@@ -33,6 +37,7 @@ import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import java.util.*
+import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() {
@@ -55,7 +60,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   override fun onCreateView() {
     super.onCreateView()
     arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
-    setOnClickListener(binding?.btnPickUp)
+    setOnClickListener(binding?.btnPickUp, binding?.tvCustomerContactNumber, binding?.tvCustomerEmail)
   }
 
   private fun apiGetOrderDetails(orderId: String) {
@@ -176,7 +181,11 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
     binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
     binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
-    binding?.tvCustomerEmail?.text = order.BuyerDetails?.ContactDetails?.EmailId?.trim()
+    if(order.BuyerDetails?.ContactDetails?.EmailId?.isNotBlank()!!){
+      binding?.tvCustomerEmail?.text = order.BuyerDetails?.ContactDetails?.EmailId?.trim()
+    }else {
+      binding?.tvCustomerEmail?.isGone = true
+    }
 
     // shipping details
     var shippingCost = 0.0
@@ -210,8 +219,55 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     when (v) {
       binding?.btnPickUp -> showBottomSheetDialog()
       binding?.buttonConfirmOrder -> apiConfirmOrder()
-      binding?.tvCancelOrder -> apiCancelOrder()
+      binding?.tvCancelOrder -> cancelOrderDialog()
+      binding?.tvCustomerContactNumber -> {
+        if(orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.length == 10)
+          openDialer()
+        else
+          showShortToast(getString(R.string.phone_invalid_format_error))
+
+      }
+      binding?.tvCustomerEmail -> {
+        if(orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()?.let { checkValidEmail(it) }!!) {
+          openEmailApp()
+        }else{
+          showShortToast(getString(R.string.email_invalid_format_error))
+        }
+      }
     }
+//      binding?.tvCustomerContactNumber -> openDialer()
+//      binding?.tvCustomerEmail -> openEmailApp()
+  }
+
+  private fun openEmailApp() {
+    val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+            "mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
+    startActivity(emailIntent)
+  }
+
+  private fun openDialer() {
+    val intent = Intent(Intent.ACTION_DIAL)
+    intent.data = (Uri.parse("tel:${orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()}"))
+    startActivity(intent)
+  }
+
+  private fun checkValidEmail(email: String): Boolean {
+    return Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$").matcher(email).find()
+  }
+
+  private fun cancelOrderDialog(){
+    MaterialAlertDialogBuilder(context)
+            .setTitle(getString(R.string.cancel_order_confirmation_message))
+            .setNeutralButton(getString(R.string.no)){
+              dialog, _ ->
+              dialog.dismiss()
+            }
+            .setPositiveButton(getString(R.string.yes)){
+              dialog, which ->
+              apiCancelOrder()
+              dialog.dismiss()
+            }
+            .show()
   }
 
   private fun apiCancelOrder() {
@@ -240,7 +296,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
-        data?.let { d -> showLongToast(d.Message as String?) }
+        showLongToast(getString(R.string.order_confirmed))
         refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED)
       } else showLongToast(it.message())
     })

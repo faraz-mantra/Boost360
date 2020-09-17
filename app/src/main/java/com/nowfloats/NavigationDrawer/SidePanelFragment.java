@@ -17,13 +17,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +28,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.NavigationDrawer.popup.PurchaseFeaturesPopup;
 import com.nowfloats.on_boarding.OnBoardingApiCalls;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -50,6 +50,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
+import com.nowfloats.util.WebEngageController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -120,38 +121,6 @@ public class SidePanelFragment extends Fragment {
     private SharedPreferences pref, mSharedPreferences;
 
     private PurchaseFeaturesPopup purchaseFeaturesPopup = new PurchaseFeaturesPopup();
-
-
-    public interface OnItemClickListener {
-        public void onClick(String nextScreen);
-    }
-
-    public SidePanelFragment() {
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        mainActivity = activity;
-//        imageLoader.init(ImageLoaderConfiguration.createDefault(mainActivity));
-        session = new UserSessionManager(activity.getApplicationContext(), activity);
-    }
-
-    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(preferenceName, preferenceValue);
-        editor.apply();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.fragment_side_panel2, container, false);
-        addBackgroundImages();
-        return layout;
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -243,60 +212,77 @@ public class SidePanelFragment extends Fragment {
                 final PorterDuffColorFilter whiteLabelFilter1 = new PorterDuffColorFilter
                         (getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 
-                final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                        .customView(R.layout.featuredimage_popup, true)
-                        .show();
+                final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog =
+                        new ImagePickerBottomSheetDialog(this::onClickImagePicker, true);
+                imagePickerBottomSheetDialog.show(getParentFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
 
-                View view = dialog.getCustomView();
-                LinearLayout deleteImage = (LinearLayout) view.findViewById(R.id.deletebackgroundImage);
-                deleteImage.setVisibility(View.GONE);
-                TextView title = (TextView) view.findViewById(R.id.textview_heading);
-                title.setText(getString(R.string.upload_background_image));
-                LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-                LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//                final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+//                        .customView(R.layout.featuredimage_popup, true)
+//                        .show();
+//
+//                View view = dialog.getCustomView();
+//                LinearLayout deleteImage = (LinearLayout) view.findViewById(R.id.deletebackgroundImage);
+//                deleteImage.setVisibility(View.GONE);
+//                TextView title = (TextView) view.findViewById(R.id.textview_heading);
+//                title.setText(getString(R.string.upload_background_image));
+//                LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+//                LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//
+//                ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+//                ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+//                ImageView deleteImg = (ImageView) view.findViewById(R.id.pop_up_delete_img);
+//
+//                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)) && session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length() > 0) {
+//                    deleteImage.setVisibility(View.VISIBLE);
+//                }
+//
+//                cameraImg.setColorFilter(whiteLabelFilter1);
+//                galleryImg.setColorFilter(whiteLabelFilter1);
+//                deleteImg.setColorFilter(whiteLabelFilter1);
+//
+//                takeCamera.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_CAMERA, null);
+//                        cameraIntent();
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                takeGallery.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_GALLERY, null);
+//                        galleryIntent();
+//                        dialog.dismiss();
+//
+//                    }
+//                });
+//
+//                deleteImage.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        deleteBackgroundImage();
+//                        dialog.dismiss();
+//
+//                    }
+//                });
+//
+//            }
+        }
 
-                ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-                ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-                ImageView deleteImg = (ImageView) view.findViewById(R.id.pop_up_delete_img);
-
-                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)) && session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length() > 0) {
-                    deleteImage.setVisibility(View.VISIBLE);
+            private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
+                if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_CAMERA, null);
+                    cameraIntent();
+                }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_GALLERY, null);
+                    galleryIntent();
+                }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.DELETE.name())){
+                    deleteBackgroundImage();
                 }
-
-                cameraImg.setColorFilter(whiteLabelFilter1);
-                galleryImg.setColorFilter(whiteLabelFilter1);
-                deleteImg.setColorFilter(whiteLabelFilter1);
-
-                takeCamera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_CAMERA, null);
-                        cameraIntent();
-                        dialog.dismiss();
-                    }
-                });
-
-                takeGallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_GALLERY, null);
-                        galleryIntent();
-                        dialog.dismiss();
-
-                    }
-                });
-
-                deleteImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        deleteBackgroundImage();
-                        dialog.dismiss();
-
-                    }
-                });
-
             }
-        });
+            });
 
         View card = view.findViewById(R.id.navigationDrawer_main_leftPane);
 
@@ -613,6 +599,51 @@ public class SidePanelFragment extends Fragment {
         onclickColorChange(dasbBoardImageView, dashBoardTextView, homeLayout);
     }
 
+    public SidePanelFragment() {
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        mainActivity = activity;
+//        imageLoader.init(ImageLoaderConfiguration.createDefault(mainActivity));
+        session = new UserSessionManager(activity.getApplicationContext(), activity);
+    }
+
+    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(preferenceName, preferenceValue);
+        editor.apply();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View layout = inflater.inflate(R.layout.fragment_side_panel2, container, false);
+        addBackgroundImages();
+        return layout;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == media_req_id) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                cameraIntent();
+
+            }
+        } else if (requestCode == gallery_req_id) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                galleryIntent();
+
+            }
+
+        }
+    }
+
     private void showMailDetailDilaog() {
         new MaterialDialog.Builder(getActivity())
                 .title("Connect to Customer Support")
@@ -700,22 +731,8 @@ public class SidePanelFragment extends Fragment {
         }).start();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        if (requestCode == media_req_id) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                cameraIntent();
-
-            }
-        } else if (requestCode == gallery_req_id) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                galleryIntent();
-
-            }
-
-        }
+    public interface OnItemClickListener {
+        void onClick(String nextScreen);
     }
 
 

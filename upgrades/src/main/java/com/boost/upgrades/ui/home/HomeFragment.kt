@@ -231,14 +231,32 @@ class HomeFragment : BaseFragment(), HomeListener {
             )
         }
 
+
         all_recommended_addons.setOnClickListener {
+            WebEngageController.trackEvent("Clicked view all recommended add-ons", "ADDONS_MARKETPLACE", "null")
             (activity as UpgradeActivity).addFragment(
                     ViewAllFeaturesFragment.newInstance(),
                     VIEW_ALL_FEATURE
             )
         }
 
-
+        if (arguments?.getString("screenType") == "myAddOns") {
+            if (progressDialog.isShowing) {
+                progressDialog.hide()
+            }
+            (activity as UpgradeActivity).addFragment(
+                    MyAddonsFragment.newInstance(),
+                    MYADDONS_FRAGMENT
+            )
+        } else if (arguments?.getString("screenType") == "recommendedAddOns") {
+            if (progressDialog.isShowing) {
+                progressDialog.hide()
+            }
+            (activity as UpgradeActivity).addFragment(
+                    ViewAllFeaturesFragment.newInstance(),
+                    VIEW_ALL_FEATURE
+            )
+        }
     }
 
 //  private fun initYouTube() {
@@ -727,39 +745,39 @@ class HomeFragment : BaseFragment(), HomeListener {
             (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
 
         } else if (item!!.cta_bundle_identifier != null) {
-          CompositeDisposable().add(
-                  AppDatabase.getInstance(requireActivity().application)!!
-                          .bundlesDao()
-                          .checkBundleKeyExist(item!!.cta_bundle_identifier)
-                          .subscribeOn(Schedulers.io())
-                          .observeOn(AndroidSchedulers.mainThread())
-                          .subscribe({
-                            if (it == 1) {
-                              CompositeDisposable().add(
-                                      AppDatabase.getInstance(requireActivity().application)!!
-                                              .bundlesDao()
-                                              .getBundleItemById(item!!.cta_bundle_identifier)
-                                              .subscribeOn(Schedulers.io())
-                                              .observeOn(AndroidSchedulers.mainThread())
-                                              .subscribe({
+            CompositeDisposable().add(
+                    AppDatabase.getInstance(requireActivity().application)!!
+                            .bundlesDao()
+                            .checkBundleKeyExist(item!!.cta_bundle_identifier)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                if (it == 1) {
+                                    CompositeDisposable().add(
+                                            AppDatabase.getInstance(requireActivity().application)!!
+                                                    .bundlesDao()
+                                                    .getBundleItemById(item!!.cta_bundle_identifier)
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe({
 
-                                                val packageFragment = PackageFragment.newInstance()
-                                                val args = Bundle()
-                                                args.putString("bundleData", Gson().toJson(it))
-                                                packageFragment.arguments = args
-                                                (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)
+                                                        val packageFragment = PackageFragment.newInstance()
+                                                        val args = Bundle()
+                                                        args.putString("bundleData", Gson().toJson(it))
+                                                        packageFragment.arguments = args
+                                                        (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)
 
-                                              }, {
-                                                it.printStackTrace()
-                                              })
-                              )
-                            } else {
-                              Toasty.error(requireContext(), "Bundle Not Available To This Account", Toast.LENGTH_LONG).show()
-                            }
-                          }, {
-                            it.printStackTrace()
-                          })
-          )
+                                                    }, {
+                                                        it.printStackTrace()
+                                                    })
+                                    )
+                                } else {
+                                    Toasty.error(requireContext(), "Bundle Not Available To This Account", Toast.LENGTH_LONG).show()
+                                }
+                            }, {
+                                it.printStackTrace()
+                            })
+            )
         } else if (item!!.cta_web_link != null) {
 
             val webViewFragment: WebViewFragment = WebViewFragment.newInstance()

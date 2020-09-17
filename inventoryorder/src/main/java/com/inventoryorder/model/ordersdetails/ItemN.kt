@@ -39,7 +39,7 @@ data class ItemN(
     } else ""
   }
 
-  private fun getScheduledDate(): String? {
+  fun getScheduledDate(): String? {
     val extraConsultation = Product?.extraItemProductConsultation()
     return if (extraConsultation != null) {
       var dateString = DateUtils.parseDate(extraConsultation.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_YYYY_MM_DD)

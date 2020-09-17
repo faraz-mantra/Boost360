@@ -76,8 +76,8 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             public void onClick(View v) {
 
                 MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
-                WebEngageController.trackEvent("BUSINESS PROFILE", "Updated Business Profile", null);
                 if (Methods.isOnline(BusinessHoursActivity.this)) {
+                    WebEngageController.trackEvent("Business hours saved", "BUSINESS PROFILE", session.getFpTag());
                     uploadbusinessTimingsInfo();
                 }else{
                     Methods.snackbarNoInternet(BusinessHoursActivity.this);
@@ -144,10 +144,14 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
         JSONArray ja = new JSONArray();
         JSONObject dayData = new JSONObject();
 
+        /*The clinic must be open for at least one day. If all days closed, then it means the business hours are not set.*/
+        Boolean openAtleastOneDayFlag = false;
+
         if(switchMon.isChecked()) {
             mondayTime = etMonOpen.getText().toString().trim()+","+etMonClose.getText().toString().trim();
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME, etMonOpen.getText().toString().trim());
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME,etMonClose.getText().toString().trim());
+            openAtleastOneDayFlag = true;
         }else{
             mondayTime = defaultTime+","+defaultTime;
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME,"00");
@@ -158,6 +162,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             tuesdayTime = etTueOpen.getText().toString().trim()+","+etTueClose.getText().toString().trim();
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME,etTueOpen.getText().toString().trim());
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME,etTueClose.getText().toString().trim());
+            openAtleastOneDayFlag = true;
         }else{
             tuesdayTime = defaultTime+","+defaultTime;
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME,"00");
@@ -168,6 +173,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             wednesdayTime =  etWedOpen.getText().toString().trim()+","+etWedClose.getText().toString().trim();
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME,etWedOpen.getText().toString().trim());
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME,etWedClose.getText().toString().trim());
+            openAtleastOneDayFlag = true;
         }else{
             wednesdayTime = defaultTime+","+defaultTime;
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME,"00");
@@ -178,6 +184,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             thursdayTime = etThuOpen.getText().toString().trim()+","+etThuClose.getText().toString().trim();
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME,etThuOpen.getText().toString().trim());
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME,etThuClose.getText().toString().trim());
+            openAtleastOneDayFlag = true;
         }else{
             thursdayTime = defaultTime+","+defaultTime;
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME,"00");
@@ -188,6 +195,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             fridayTime = etFriOpen.getText().toString().trim()+","+etFriClose.getText().toString().trim();
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME,etFriOpen.getText().toString().trim());
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME,etFriClose.getText().toString().trim());
+            openAtleastOneDayFlag = true;
         }else{
             fridayTime = defaultTime+","+defaultTime;
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME,"00");
@@ -197,6 +205,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             saturdayTime =  etSatOpen.getText().toString().trim()+","+etSatClose.getText().toString().trim();
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME,etSatOpen.getText().toString().trim());
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME,etSatClose.getText().toString().trim());
+            openAtleastOneDayFlag = true;
         }else{
             saturdayTime = defaultTime+","+defaultTime;
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME,"00");
@@ -206,6 +215,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             sundayTime =  etSunOpen.getText().toString().trim()+","+etSunClose.getText().toString().trim();
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME,etSunOpen.getText().toString().trim());
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME,etSunClose.getText().toString().trim());
+            openAtleastOneDayFlag = true;
         }else{
             sundayTime = defaultTime+","+defaultTime;
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME,"00");
@@ -240,6 +250,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
         UploadProfileAsyncTask upa = new UploadProfileAsyncTask(BusinessHoursActivity.this,dayData,profilesattr);
         upa.execute();
+        session.setBusinessHours(openAtleastOneDayFlag);
     }
 
     private void updateTimings(){

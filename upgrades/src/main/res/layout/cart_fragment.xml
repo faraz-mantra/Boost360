@@ -517,7 +517,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingStart="@dimen/_10sdp"
-                        android:text="Discount coupon"
+                        android:text="@string/discount_coupon"
                         android:textColor="@color/common_text_color"
                         android:fontFamily="@font/open_sans_semibold"/>
 
@@ -526,7 +526,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_5sdp"
-                        android:text="Apply coupon"
+                        android:text="@string/apply_coupon"
                         android:textColor="#0068e0"
                         tools:visibility="gone"/>
 

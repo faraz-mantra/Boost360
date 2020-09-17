@@ -51,6 +51,9 @@ import com.anachat.chatsdk.AnaChatBuilder;
 import com.anachat.chatsdk.AnaCore;
 import com.anachat.chatsdk.internal.database.PreferencesManager;
 import com.android.inputmethod.latin.utils.JniUtils;
+import com.appservice.ui.bankaccount.BankAccountFragment;
+import com.boost.presignup.utils.DynamicLinkParams;
+import com.boost.presignup.utils.FirebaseDynamicLinksManager;
 import com.boost.upgrades.UpgradeActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -61,8 +64,11 @@ import com.inventoryorder.constant.FragmentType;
 import com.inventoryorder.constant.IntentConstant;
 import com.inventoryorder.model.PreferenceData;
 import com.nineoldandroids.animation.Animator;
+import com.nowfloats.AccrossVerticals.FacebookLeads.FacebookLeadsFragment;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
+import com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics;
 import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
+import com.nowfloats.Analytics_Screen.OrderSummaryActivity;
 import com.nowfloats.Analytics_Screen.SearchQueriesActivity;
 import com.nowfloats.Analytics_Screen.ShowVmnCallActivity;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
@@ -74,6 +80,7 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
+import com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity;
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomPage.CreateCustomPageActivity;
@@ -83,7 +90,7 @@ import com.nowfloats.CustomPage.CustomPageDeleteInterface;
 import com.nowfloats.CustomPage.CustomPageFragment;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
-import com.nowfloats.AccrossVerticals.FacebookLeads.FacebookLeadsFragment;
+import com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.API_Login;
 import com.nowfloats.Login.Login_Interface;
@@ -96,17 +103,21 @@ import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsDetailsActivity;
 import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
+import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.ProductGallery.ProductGalleryActivity;
 import com.nowfloats.ProductGallery.Product_Detail_Activity_V45;
+import com.nowfloats.Restaurants.BookATable.BookATableActivity;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.AddOnFragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.UpgradesFragment;
+import com.nowfloats.Store.YourPurchasedPlansActivity;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
+import com.nowfloats.helper.BuyItemKey;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInboxFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
@@ -154,11 +165,14 @@ import zendesk.core.Identity;
 import zendesk.core.Zendesk;
 import zendesk.support.Support;
 
+import static com.appservice.ui.bankaccount.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
 import static com.inventoryorder.ui.FragmentContainerOrderActivityKt.startFragmentActivityNew;
+import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYPE;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO_REMOVE;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_PAID;
 import static com.nowfloats.manageinventory.ManageInventoryFragment.getExperienceType;
+import static com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivityKt.startFragmentActivityNew;
 
 //import com.nfx.leadmessages.ReadMessages;
 
@@ -189,6 +203,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     Site_Meter_Fragment siteMeterFragment;
     SocialSharingFragment socialSharingFragment;
     HelpAndSupportFragment helpAndSupportFragment;
+    BankAccountFragment bankAccountFragment;
+    CustomPageFragment customPageFragment;
     UserSessionManager session;
     Typeface robotoMedium;
     Typeface robotoLight;
@@ -325,7 +341,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         super.onCreate(savedInstanceState);
         JniUtils.loadNativeLibrary();
         pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
-        BoostLog.d("HomeActivity ONcreate", "onCreate");
+        BoostLog.d("HomeActivity onCreate", "onCreate");
         bus = BusProvider.getInstance().getBus();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -374,7 +390,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         finish();
     }
 
-    public void DeepLinkPage(String url, boolean isFromRia) {
+    public void DeepLinkPage(String url, String buyItemKey, boolean isFromRia) {
         BoostLog.d("Deep Link URL", "Deep Link URL : " + url);
         Constants.GCM_Msg = false;
         if (!Util.isNullOrEmpty(url)) {
@@ -382,12 +398,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 MixPanelController.track("$app_open", null);
             }
             if (url.contains(getString(R.string.keyboard))) {
-
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
                         .commit();
             } else if (url.contains(getString(R.string.facebook_chat))) {
 
-            } else if (url.contains("thirdPartyQueries")) {
+            } else if (url.contains(getString(R.string.third_party_queries))) {
                 Intent intent = new Intent(this, ThirdPartyQueriesActivity.class);
                 startActivity(intent);
             } else if (url.contains(getString(R.string.facebook_chat_main))) {
@@ -397,7 +412,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         .commit();
             } else if (url.contains(getString(R.string.feedback_chat))) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
-            } else if (url.contains("facebookpage")) {
+            } else if (url.contains(getString(R.string.facebookpage))) {
                 Methods.likeUsFacebook(this, "/reviews/");
             } else if (url.contains(getResources().getString(R.string.deeplink_update))) {
 //                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -414,40 +429,40 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     featureImage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
                 }
                 startActivity(featureImage);
-            } else if (url.contains("addProduct")) {
+            } else if (url.contains(getString(R.string.addProduct))) {
                 Intent productActivity = new Intent(HomeActivity.this, Product_Detail_Activity_V45.class);
                 productActivity.putExtra("new", "");
                 if (isFromRia && mRiaNodeDataModel != null) {
                     productActivity.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
                 }
                 startActivity(productActivity);
-            } else if (url.contains("keyboardSettings")) {
+            } else if (url.contains(getString(R.string.keyboardSettings))) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
                         .commit();
                 //navigationView.getMenu().getItem(1).setChecked(true);
-            } else if (url.contains("addCustomPage")) {
+            } else if (url.contains(getString(R.string.addCustomPage))) {
                 Intent createCustomPage = new Intent(HomeActivity.this, CreateCustomPageActivity.class);
                 if (isFromRia && mRiaNodeDataModel != null) {
                     createCustomPage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
                 }
                 startActivity(createCustomPage);
-            } else if (url.contains("myorders")) {
+            } else if (url.contains(getString(R.string.myorders))) {
                 Intent listOrder = new Intent(HomeActivity.this, SellerAnalyticsActivity.class);
                 startActivity(listOrder);
-            } else if (url.contains("myorderdetail")) {
+            } else if (url.contains(getString(R.string.myorderdetail))) {
                 Bundle bundle = getBundleData();
                 int experienceType = getExperienceType(session.getFP_AppExperienceCode());
                 if (experienceType == 1) startFragmentActivityNew(this, FragmentType.ALL_APPOINTMENT_VIEW, bundle, false);
                 else if (experienceType == 3) startFragmentActivityNew(this, FragmentType.ALL_ORDER_VIEW, bundle, false);
-            } else if (url.contains("APPOINTMENT_FRAGMENT")) {
+            } else if (url.contains(getString(R.string.appointment_fragment))) {
                 Bundle bundle = getBundleData();
                 int experienceType = getExperienceType(session.getFP_AppExperienceCode());
                 if (experienceType == 1) startFragmentActivityNew(this, FragmentType.ALL_APPOINTMENT_VIEW, bundle, false);
-            } else if (url.contains("ORDER_FRAGMENT")) {
+            } else if (url.contains(getString(R.string.order_fragment))) {
                 Bundle bundle = getBundleData();
                 int experienceType = getExperienceType(session.getFP_AppExperienceCode());
                 if (experienceType == 3) startFragmentActivityNew(this, FragmentType.ALL_ORDER_VIEW, bundle, false);
-            } else if (url.contains("CONSULTATION_FRAGMENT")) {
+            } else if (url.contains(getString(R.string.consultation_fragment))) {
                 Bundle bundle = getBundleData();
                 int experienceType = getExperienceType(session.getFP_AppExperienceCode());
                 if (experienceType == 1) startFragmentActivityNew(this, FragmentType.ALL_VIDEO_CONSULT_VIEW, bundle, false);
@@ -467,13 +482,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 getSupportFragmentManager().executePendingTransactions();
                 Constants.deepLinkAnalytics = true;
                 homeFragment.setFragmentTab(1);
-            } else if (url.contains(getResources().getString(R.string.deeplink_bizenquiry)) || url.contains("enquiries")) {
+            } else if (url.contains(getResources().getString(R.string.deeplink_bizenquiry)) || url.contains(getString(R.string.enquiries))) {
                 Intent queries = new Intent(HomeActivity.this, BusinessEnquiryActivity.class);
                 startActivity(queries);
             } else if (url.contains(getString(R.string.deep_link_call_tracker))) {
                 Intent callLogs = new Intent(HomeActivity.this, ShowVmnCallActivity.class);
                 startActivity(callLogs);
-            } else if (url.contains("store") || url.contains(getResources().getString(R.string.deeplink_store)) ||
+            } else if (url.contains(getString(R.string.store_url)) || url.contains(getResources().getString(R.string.deeplink_store)) ||
                     url.contains(getResources().getString(R.string.deeplink_propack)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreseo)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstorettb)) ||
@@ -485,7 +500,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains(getResources().getString(R.string.deeplink_searchqueries))) {
                 Intent queries = new Intent(HomeActivity.this, SearchQueriesActivity.class);
                 startActivity(queries);
-            } else if (url.contains("blog")) {
+            } else if (url.contains(getString(R.string.blog))) {
 
                 if (!Util.isNullOrEmpty(url)) {
                     url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
@@ -496,12 +511,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Uri uri = Uri.parse(url);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
-            } else if (url.contains("subscribers")) {
+            } else if (url.contains(getString(R.string.subscribers)) || url.contains(getString(R.string.new_subscribers))) {
                 Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
                 startActivity(subscribers);
-            } else if (url.contains("share")) {
+            } else if (url.contains(getString(R.string.share_lower_case))) {
                 shareWebsite();
-            } else if (url.contains("visits") || url.contains("viewgraph")) {
+            } else if (url.contains(getString(R.string.visits)) || url.contains(getString(R.string.viewgraph))) {
                 Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
                 accountInfo.putExtra("table_name", Constants.VISITS_TABLE);
                 startActivity(accountInfo);
@@ -511,7 +526,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
 //                startActivity(new Intent(activity, Social_Sharing_Activity.class));
-            } else if (url.contains("notification")) {
+            } else if (url.contains(getResources().getString(R.string.deeplink_notification))) {
                 homeFragment.setFragmentTab(2);
             } else if (url.contains(getResources().getString(R.string.deeplink_profile))) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -519,56 +534,139 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains(getResources().getString(R.string.deeplink_contact))) {
                 Intent queries = new Intent(HomeActivity.this, ContactInformationActivity.class);
                 startActivity(queries);
-            } else if (url.contains(getResources().getString(R.string.deeplink_bizaddress)) || url.contains("address")) {
+            } else if (url.contains(getResources().getString(R.string.deeplink_bizaddress))) {
                 Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
                 startActivity(queries);
-            } else if (url.contains(getResources().getString(R.string.deeplink_bizhours)) || url.contains("hours")) {
+            } else if (url.contains(getResources().getString(R.string.deeplink_bizhours))) {
                 Intent queries = new Intent(HomeActivity.this, BusinessHoursActivity.class);
                 startActivity(queries);
-            } else if (url.contains(getResources().getString(R.string.deeplink_bizlogo)) || url.contains("logo")) {
+            } else if (url.contains(getResources().getString(R.string.deeplink_bizlogo))) {
                 Intent queries = new Intent(HomeActivity.this, Business_Logo_Activity.class);
                 startActivity(queries);
-            } else if (url.contains(getResources().getString(R.string.deeplink_nfstoreDomainTTBCombo)) || url.contains("bookdomain")) {
+            } else if (url.contains(getResources().getString(R.string.deeplink_nfstoreDomainTTBCombo))) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, businessFragment)
                         .commit();
-            } else if (url.contains("sitemeter")) {
+            } else if (url.contains(getString(R.string.deeplink_sitemeter))) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, siteMeterFragment)
                         .commit();
-            } else if (url.contains(getResources().getString(R.string.deeplink_imageGallery)) ||
-                    url.contains("imagegallery") || url.contains("imagegallery")) {
+            } else if (url.contains(getResources().getString(R.string.deeplink_imageGallery))) {
                 Intent i = new Intent(this, ImageGalleryActivity.class);
                 startActivity(i);
             } else if (url.contains(getResources().getString(R.string.deeplink_ProductGallery))) {
                 Intent i = new Intent(this, ProductGalleryActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            } else if (url.contains("assuredPurchase")) {
+            } else if (url.contains(getResources().getString(R.string.deeplink_assuredPurchase))) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
                         .commit();
-            } else if (url.contains(getResources().getString(R.string.deeplink_gplaces))) {//TODO
-            } else if (url.contains("accSetting")) {
+            } else if (url.contains(getResources().getString(R.string.deeplink_gplaces))) {
+                //TODO
+            } else if (url.contains(getResources().getString(R.string.deeplink_accSettings))) {
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_ACCOUNT_SETTINGS, null);
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, accountSettingsFragment, "accountSettingsFragment")
                         .commit();
-            } else if (url.contains("uniqueVisitor")) {
+            } else if (url.contains(getResources().getString(R.string.deeplink_uniqueVisitor))) {
                 Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
                 accountInfo.putExtra("table_name", Constants.VISITORS_TABLE);
                 startActivity(accountInfo);
-            } else if (url.contains(getResources().getString(R.string.addon_marketplace)) || url.contains("ADD_ONS_MARKETPLACE")) {
-                initiateAddonMarketplace(false);
-            } else if (url.contains("CART_FRAGMENR")) {
-                initiateAddonMarketplace(true);
-            }
+            } else if (url.contains(getResources().getString(R.string.addon_marketplace)) || url.contains(getResources().getString(R.string.deeplink_add_ons_marketplace))) {
+                initiateAddonMarketplace(false, "", "");
+            } else if (url.contains(getResources().getString(R.string.deeplink_cart_fragment))) {
+                initiateAddonMarketplace(true, "", "");
+            } else if (url.contains(getResources().getString(R.string.deeplink_manage_content))) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainFrame, manageContentFragment).commit();
 
+            } else if (url.contains(getResources().getString(R.string.deeplink_my_bank_account))) {
+                Bundle bundle = getBundleData();
+                bundle.putString("FP_ID", session.getFPID());
+                bundle.putString("CLIENT_ID", Constants.clientId);
+                startFragmentAccountActivityNew(this, com.appservice.constant.FragmentType.BANK_ACCOUNT_DETAILS, bundle, false);
+            } else if (url.contains(getResources().getString(R.string.deeplink_boost_360_extensions))) {
+                Intent boostExtensions = new Intent(HomeActivity.this, Boost360ExtensionsActivity.class);
+                startActivity(boostExtensions);
+            } else if (url.contains(getResources().getString(R.string.deeplink_purchased_plans))) {
+                Intent purchasedPlans = new Intent(HomeActivity.this, YourPurchasedPlansActivity.class);
+                startActivity(purchasedPlans);
+            } else if (url.contains(getResources().getString(R.string.deeplink_digital_channels))) {
+                Bundle bundle = getBundleData();
+                String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+                String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
+                session.setHeader(Constants.WA_KEY);
+                bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
+                bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
+                bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
+                bundle.putBoolean("IsUpdate", true);
+                if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) bundle.putString("website_url", rootAlisasURI);
+                else bundle.putString("website_url", normalURI);
+
+                startFragmentActivityNew(this,
+                        com.onboarding.nowfloats.constant.FragmentType.MY_DIGITAL_CHANNEL, bundle, false);
+            } else if (url.contains(getResources().getString(R.string.deeplink_call_tracker_add_on))) {
+//                WebEngageController.trackEvent("NAV - CALLS", "CALLS", null);
+                Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
+                startActivity(i);
+            } else if (url.contains(getResources().getString(R.string.deeplink_service_catalogue))) {
+                Intent serviceCatalogue = new Intent(HomeActivity.this, ProductCatalogActivity.class);
+                startActivity(serviceCatalogue);
+            } else if (url.contains(getResources().getString(R.string.deeplink_all_custom_pages))) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainFrame, customPageFragment)
+                        .commit();
+            } else if (url.contains(getResources().getString(R.string.deeplink_analytics_website_visits))) {
+                WebEngageController.trackEvent("WEBSITE visits - CHART DURATION CHANGED", "null", session.getFpTag());
+                MixPanelController.track("OverallVisitsDetailedView", null);
+                Intent q = new Intent(HomeActivity.this, SiteViewsAnalytics.class);
+                q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.TOTAL);
+                startActivity(q);
+                HomeActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            } else if (url.contains(getResources().getString(R.string.deeplink_analytics_website_visitors))) {
+                MixPanelController.track("UniqueVisitsDetailedView", null);
+                Intent q = new Intent(HomeActivity.this, SiteViewsAnalytics.class);
+                q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.UNIQUE);
+                startActivity(q);
+                HomeActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            } else if (url.contains(getResources().getString(R.string.deeplink_background_images))) {
+                Intent i = new Intent(this, BackgroundImageGalleryActivity.class);
+                startActivity(i);
+            } else if (url.contains(getResources().getString(R.string.deeplink_favicon))) {
+                Intent i = new Intent(this, FaviconImageActivity.class);
+                startActivity(i);
+            } else if (url.contains(getResources().getString(R.string.deeplink_appointment_summary))) {
+                Intent i = new Intent(this, OrderSummaryActivity.class);
+                startActivity(i);
+                this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            } else if (url.contains(getResources().getString(R.string.deeplink_book_table))) {
+                Intent i = new Intent(this, BookATableActivity.class);
+                startActivity(i);
+                this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            } else if (url.contains(getResources().getString(R.string.deeplink_my_add_ons))) {
+                String screenType = "myAddOns";
+                initiateAddonMarketplace(false, screenType, "");
+            } else if (url.contains(getResources().getString(R.string.deeplink_recommended_add_ons))) {
+                String screenType = "recommendedAddOns";
+                initiateAddonMarketplace(false, screenType, "");
+            } else if (!buyItemKey.isEmpty() && url.contains(getResources().getString(R.string.deeplink_item_on_market_place))) {
+                BuyItemKey buyItemKey1 = BuyItemKey.by(buyItemKey);
+                if (buyItemKey1 != null) initiateAddonMarketplace(false, "", buyItemKey1.getItemValue());
+            }
         }
         mDeepLinkUrl = null;
     }
 
     private Bundle getBundleData() {
         Bundle bundle = new Bundle();
-        PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
+        String url = "";
+        String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
+        if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) url = rootAlisasURI;
+        else url = normalURI;
+        PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(),
+                Constants.WA_KEY, session.getFpTag(), session.getUserPrimaryMobile(),url,session.getFPEmail(),
+                session.getFPDetails(Key_Preferences.LATITUDE),session.getFPDetails(Key_Preferences.LONGITUDE),
+                session.getFP_AppExperienceCode());
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
         bundle.putString(IntentConstant.EXPERIENCE_CODE.name(), session.getFP_AppExperienceCode());
         bundle.putString(IntentConstant.ORDER_ID.name(), mPayload);
@@ -1213,7 +1311,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     WebEngageController.trackEvent("NAV - SITE_HEALTH", "SITE_HEALTH", null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).commit();
                 } else if (nextScreen.equals(getString(R.string.deeplink_analytics))) {
-                    DeepLinkPage(getString(R.string.deeplink_analytics), false);
+                    DeepLinkPage(getString(R.string.deeplink_analytics), "", false);
                 } else if (nextScreen.equals(getString(R.string.home)) || nextScreen.equals(getString(R.string.update))) {
 
                     headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
@@ -1295,12 +1393,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         Bundle bundle = new Bundle();
                         Intent channelIntent = new Intent(HomeActivity.this, Class.forName("com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity"));
                         String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
                         session.setHeader(Constants.WA_KEY);
                         bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
                         bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
                         bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
                         bundle.putBoolean("IsUpdate", true);
+                        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
                         if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) bundle.putString("website_url", rootAlisasURI);
                         else bundle.putString("website_url", normalURI);
                         channelIntent.putExtras(bundle);
@@ -1348,7 +1446,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.addon_marketplace))) {
                     WebEngageController.trackEvent("NAV - ADDONS_MARKETPLACE", "ADDONS_MARKETPLACE", null);
-                    initiateAddonMarketplace(false);
+                    initiateAddonMarketplace(false, "", "");
                 } else if (nextScreen.equals(getString(R.string.subscriptions))) {
                     WebEngageController.trackEvent("NAV - SUBSCRIPTIONS", "SUBSCRIPTIONS", null);
                     Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
@@ -1412,13 +1510,14 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
-    private void initiateAddonMarketplace(Boolean isOpenCardFragment) {
+    private void initiateAddonMarketplace(Boolean isOpenCardFragment, String screenType, String buyItemKey) {
         Intent intent = new Intent(HomeActivity.this, UpgradeActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());
         intent.putExtra("loginid", session.getUserProfileId());
         intent.putExtra("isOpenCardFragment", isOpenCardFragment);
+        intent.putExtra("screenType", screenType);
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {
@@ -1429,13 +1528,15 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         } else {
             intent.putExtra("mobileNo", "9160004303");
         }
+        if (buyItemKey != null && !buyItemKey.isEmpty()) intent.putExtra("buyItemKey", buyItemKey);
         intent.putExtra("profileUrl", session.getFPLogo());
         startActivity(intent);
     }
 
+
     @Override
     public void deepLink(String url) {
-        DeepLinkPage(url, false);
+        DeepLinkPage(url, "", false);
     }
 
     @Override
@@ -1489,7 +1590,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     @Override
     public void onDeepLink(String deepLinkUrl, boolean isFromRia, RiaNodeDataModel nodeDataModel) {
         mRiaNodeDataModel = nodeDataModel;
-        DeepLinkPage(deepLinkUrl, isFromRia);
+        DeepLinkPage(deepLinkUrl, "", isFromRia);
     }
 
 
@@ -1619,6 +1720,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         siteMeterFragment = new Site_Meter_Fragment();
         customPageActivity = new CustomPageFragment();
         helpAndSupportFragment = new HelpAndSupportFragment();
+        customPageFragment = new CustomPageFragment();
 //
 //        new Thread(new Runnable() {
 //            @Override
@@ -1758,10 +1860,15 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (intent != null && intent.getData() != null) {
             String action = intent.getAction();
             String data = intent.getDataString();
+            Uri uri = intent.getData();
+            HashMap<DynamicLinkParams, String> deepHashMap = new FirebaseDynamicLinksManager().getURILinkParams(uri);
             BoostLog.d("Data: ", data + "  " + action);
-
             if (session.isLoginCheck()) {
-                deepLink(data.substring(data.lastIndexOf("/") + 1));
+                if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
+                    String viewType = deepHashMap.get(DynamicLinkParams.viewType);
+                    String buyItemKey = deepHashMap.get(DynamicLinkParams.buyItemKey);
+                    DeepLinkPage(viewType, buyItemKey, false);
+                } else deepLink(data.substring(data.lastIndexOf("/") + 1));
             } else startPreSignUpActivity();
         }
     }

@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
   </data>
 
   <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/main_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:orientation="horizontal">
+      android:textColor="@color/primary_grey"
+      app:textType="SUBTITLE_2"
+      tools:text="Payment:" />
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Payment:"
-        android:textColor="@color/primary_grey"
-        app:textType="SUBTITLE_2" />
-
-    <com.framework.views.customViews.CustomTextView
-        android:id="@+id/value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_6"
-        tools:text="Offline, Pending"
-        android:textColor="@color/black"
-        app:textType="BODY_1" />
+      android:id="@+id/value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_6"
+      android:textColor="@color/black"
+      app:textType="BODY_1"
+      tools:text="Offline, Pending" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

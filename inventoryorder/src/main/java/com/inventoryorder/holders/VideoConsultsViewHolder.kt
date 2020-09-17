@@ -30,8 +30,9 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
     super.bind(position, item)
     val data = item as? OrderItem
     data?.let {
-      binding.bookingDate.title.text = activity?.resources?.getString(R.string.date_order)
-      binding.payment.title.text = activity?.resources?.getString(R.string.payment)
+      binding.consultDate.title.text = activity?.resources?.getString(R.string.date_consult)
+      binding.createDate.title.text = activity?.resources?.getString(R.string.date_)
+      binding.payment.title.text = activity?.resources?.getString(R.string.payment_)
       binding.duration.title.text = activity?.resources?.getString(R.string.duration)
       setDataResponse(it)
     }
@@ -54,16 +55,20 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
     }
-    binding.bookingDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL, timeZone = TimeZone.getTimeZone("IST"))
+    binding.createDate.value.text = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL, timeZone = TimeZone.getTimeZone("IST"))
     binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
     binding.duration.value.text = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
     val sizeItem = if (order.firstItemForConsultation() != null) 1 else 0
     binding.itemCount.text = takeIf { sizeItem > 1 }?.let { "Details" } ?: "Detail"
     val details = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.detailsConsultation()
+    binding.itemDesc.text = details
+
     val scheduleDate = order.firstItemForConsultation()?.scheduledStartDate()
-    binding.itemDesc.text = if (details.isNullOrEmpty().not() && scheduleDate.isNullOrEmpty().not()) {
-      "$details\n${activity?.resources?.getString(R.string.schedule)}${parseDate(scheduleDate, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2)}"
-    } else details
+    val consultDate = parseDate(scheduleDate, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2)
+    if (consultDate.isNullOrEmpty().not()) {
+      binding.consultDate.mainView.visible()
+      binding.consultDate.value.text = consultDate
+    } else binding.consultDate.mainView.gone()
 
     binding.itemMore.visibility = takeIf { (sizeItem > 1) }?.let {
       binding.itemMore.text = "+${sizeItem - 1} more"
@@ -94,11 +99,11 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
       binding.btnCall.visible()
       binding.btnCall.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.VIDEO_CONSULT_CALL_CLICKED.ordinal) }
       binding.btnCopyLink.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.VIDEO_CONSULT_COPY_CLICKED.ordinal) }
-      binding.btnCopyLink.visibility = View.VISIBLE
+//      binding.btnCopyLink.visibility = View.VISIBLE
       binding.textErrorCall.gone()
     } else {
       binding.btnCall.gone()
-      binding.btnCopyLink.visibility = View.GONE
+//      binding.btnCopyLink.visibility = View.GONE
       binding.textErrorCall.visibility = if (!order.isConsultErrorText()) View.VISIBLE else View.GONE
     }
   }
@@ -106,9 +111,9 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
   private fun backgroundGrey(detail: Int, btn: Int, orderBg: Int, primaryGrey: Int) {
     binding.detailsOrder.visibility = detail
     binding.next2.visibility = btn
-    binding.btnCopyLink.visibility = View.GONE
-    setColorView(primaryGrey, binding.bookingDate.title, binding.payment.title, binding.duration.title, binding.bookingId,
-        binding.txtRupees, binding.bookingDate.value, binding.payment.value, binding.duration.value, binding.itemCount,
+//    binding.btnCopyLink.visibility = View.GONE
+    setColorView(primaryGrey, binding.consultDate.title, binding.payment.title, binding.duration.title, binding.bookingId,
+        binding.txtRupees, binding.consultDate.value, binding.payment.value, binding.duration.value, binding.itemCount,
         binding.itemDesc, binding.itemMore)
     activity?.let { binding.orderType.background = ContextCompat.getDrawable(it, orderBg) }
   }
@@ -121,7 +126,8 @@ class VideoConsultsViewHolder(binding: ItemVideoConsultOrderBinding) : AppBaseRe
     binding.detailsOrder.visibility = detail
     binding.next2.visibility = btn
     activity?.let {
-      binding.bookingDate.value.setTextColor(ContextCompat.getColor(it, dateColor))
+      binding.consultDate.value.setTextColor(ContextCompat.getColor(it, dateColor))
+      binding.createDate.value.setTextColor(ContextCompat.getColor(it, R.color.greyish_brown))
       binding.payment.value.setTextColor(ContextCompat.getColor(it, R.color.greyish_brown))
       binding.duration.value.setTextColor(ContextCompat.getColor(it, R.color.greyish_brown))
       binding.itemDesc.setTextColor(ContextCompat.getColor(it, R.color.greyish_brown))

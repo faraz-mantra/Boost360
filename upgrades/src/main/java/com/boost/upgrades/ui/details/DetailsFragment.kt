@@ -163,6 +163,16 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                     prefs.storeCartOrderInfo(null)
 
                     viewModel.addItemToCart(addonDetails!!)
+                    val event_attributes: HashMap<String, Any> = HashMap()
+                    addonDetails!!.name?.let { it1 -> event_attributes.put("Addon Name", it1) }
+                    event_attributes.put("Addon Price", addonDetails!!.price)
+                    event_attributes.put("Addon Discounted Price", getDiscountedPrice(addonDetails!!.price, addonDetails!!.discount_percent))
+                    event_attributes.put("Addon Discount %", addonDetails!!.discount_percent)
+                    event_attributes.put("Addon Validity", 1)
+                    addonDetails!!.target_business_usecase?.let { it1 -> event_attributes.put("Addon Tag", it1) }
+                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Addon added to cart", "ADDONS_MARKETPLACE", event_attributes)
+                    if(addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
+                        WebEngageController.trackEvent("Self branded payment gateway requested", "Self Branded Payment Gateway", "")
                     badgeNumber = badgeNumber + 1
                     badge121.setText(badgeNumber.toString())
                     badge121.visibility = View.VISIBLE
@@ -178,6 +188,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                   add_item_to_cart.text = getString(R.string.added_to_cart)
                   havent_bought_the_feature.visibility = View.INVISIBLE
                     itemInCartStatus = true
+
+                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature added to cart", "Feature_Key", singleWidgetKey!!)
                 }
             }
         }
@@ -390,8 +402,8 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                 abcText.text = addonDetails!!.description
                 review_layout.visibility = View.GONE
 
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature_Details Loaded", "Feature_Details " + addonDetails!!.boost_widget_key, "")
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature_Details - " + addonDetails!!.boost_widget_key + " Loaded", "Feature_Details" + addonDetails!!.boost_widget_key, "")
+                WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature_Details Loaded", "Feature_Details", addonDetails!!.boost_widget_key)
+                WebEngageController.trackEvent("ADDONS_MARKETPLACE Feature_Details - " + addonDetails!!.boost_widget_key + " Loaded", "Feature_Details", addonDetails!!.boost_widget_key)
 
             }
         })
@@ -495,6 +507,10 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
         args.putStringArrayList("list", list)
         imagePreviewPopUpFragement.arguments = args
         imagePreviewPopUpFragement.show((activity as UpgradeActivity).supportFragmentManager, IMAGE_PREVIEW_POPUP_FRAGMENT)
+    }
+
+    private fun getDiscountedPrice(price: Int, discountPercent: Int): Int {
+        return price - ((discountPercent/100) * price)
     }
 
 }

@@ -54,6 +54,7 @@ import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.ProductGallery.Adapter.SpinnerAdapter;
 import com.nowfloats.ProductGallery.Model.AddressInformation;
 import com.nowfloats.ProductGallery.Model.AssuredPurchase;
@@ -943,58 +944,85 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
      * @param requestCode
      */
     private void choosePicture(int requestCode) {
-        final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                .customView(R.layout.featuredimage_popup, true)
-                .show();
 
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+        final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(image_click_type -> {
+            if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
+                switch(requestCode){
+                    case DIALOG_REQUEST_CODE_PRIMARY:
+                        cameraIntent(CAMERA_PRIMARY_IMAGE_REQUEST_CODE);
+                        break;
 
-        View view = dialog.getCustomView();
+                    case DIALOG_REQUEST_CODE_SECONDARY:
+                        cameraIntent(CAMERA_SECONDARY_IMAGE_REQUEST_CODE);
+                        break;
+                }
+            }else{
+                switch (requestCode) {
+                    case DIALOG_REQUEST_CODE_PRIMARY:
+                        openImagePicker(GALLERY_PRIMARY_IMAGE_REQUEST_CODE, 1);
+                        break;
 
-        LinearLayout takeCamera = view.findViewById(R.id.cameraimage);
-        LinearLayout takeGallery = view.findViewById(R.id.galleryimage);
-        ImageView cameraImg = view.findViewById(R.id.pop_up_camera_imag);
-        ImageView galleryImg = view.findViewById(R.id.pop_up_gallery_img);
-        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
-        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
-
-        takeCamera.setOnClickListener(v -> {
-
-            switch (requestCode) {
-                case DIALOG_REQUEST_CODE_PRIMARY:
-
-                    cameraIntent(CAMERA_PRIMARY_IMAGE_REQUEST_CODE);
-                    break;
-
-                case DIALOG_REQUEST_CODE_SECONDARY:
-
-                    cameraIntent(CAMERA_SECONDARY_IMAGE_REQUEST_CODE);
-                    break;
+                    case DIALOG_REQUEST_CODE_SECONDARY:
+                        int max = MAX_IMAGE_ALLOWED - adapterImage.getItemCount();
+                        max = max > 0 ? max : 1;
+                        openImagePicker(GALLERY_SECONDARY_IMAGE_REQUEST_CODE, max);
+                        break;
+                }
             }
-
-            dialog.dismiss();
         });
+        imagePickerBottomSheetDialog.show(getParentFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
 
-        takeGallery.setOnClickListener(v -> {
+//        final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+//                .customView(R.layout.featuredimage_popup, true)
+//                .show();
+//
+//        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+//
+//        View view = dialog.getCustomView();
+//
+//        LinearLayout takeCamera = view.findViewById(R.id.cameraimage);
+//        LinearLayout takeGallery = view.findViewById(R.id.galleryimage);
+//        ImageView cameraImg = view.findViewById(R.id.pop_up_camera_imag);
+//        ImageView galleryImg = view.findViewById(R.id.pop_up_gallery_img);
+//        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
+//        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
 
-            switch (requestCode) {
-                case DIALOG_REQUEST_CODE_PRIMARY:
-
-                    openImagePicker(GALLERY_PRIMARY_IMAGE_REQUEST_CODE, 1);
-                    break;
-
-                case DIALOG_REQUEST_CODE_SECONDARY:
-
-                    int max = MAX_IMAGE_ALLOWED - adapterImage.getItemCount();
-                    max = max > 0 ? max : 1;
-                    openImagePicker(GALLERY_SECONDARY_IMAGE_REQUEST_CODE, max);
-                    break;
-            }
-
-            dialog.dismiss();
-        });
+//        takeCamera.setOnClickListener(v -> {
+//
+//            switch (requestCode) {
+//                case DIALOG_REQUEST_CODE_PRIMARY:
+//
+//                    cameraIntent(CAMERA_PRIMARY_IMAGE_REQUEST_CODE);
+//                    break;
+//
+//                case DIALOG_REQUEST_CODE_SECONDARY:
+//
+//                    cameraIntent(CAMERA_SECONDARY_IMAGE_REQUEST_CODE);
+//                    break;
+//            }
+//
+//            dialog.dismiss();
+//        });
+//
+//        takeGallery.setOnClickListener(v -> {
+//
+//            switch (requestCode) {
+//                case DIALOG_REQUEST_CODE_PRIMARY:
+//
+//                    openImagePicker(GALLERY_PRIMARY_IMAGE_REQUEST_CODE, 1);
+//                    break;
+//
+//                case DIALOG_REQUEST_CODE_SECONDARY:
+//
+//                    int max = MAX_IMAGE_ALLOWED - adapterImage.getItemCount();
+//                    max = max > 0 ? max : 1;
+//                    openImagePicker(GALLERY_SECONDARY_IMAGE_REQUEST_CODE, max);
+//                    break;
+//            }
+//
+//            dialog.dismiss();
+//        });
     }
-
 
     /**
      * Initialize currency list
@@ -2215,7 +2243,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         if (primaryUri != null) {
                             uploadProductImage(product.productId);
                         } else {
-                            Toast.makeText(getContext(), "Information updated successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Product updated successfully.", Toast.LENGTH_SHORT).show();
                             hideDialog();
 
                             if (getActivity() != null) {
@@ -2233,7 +2261,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         Log.d("PRODUCT_JSON", "Failed to Save Product");
 
                         hideDialog();
-                        Toast.makeText(getContext(), "Failed to update information", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Failed to update product.", Toast.LENGTH_LONG).show();
                         Log.d("PRODUCT_JSON", "FAIL " + error.getMessage());
                     }
                 });
@@ -2289,7 +2317,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         if (primaryUri != null) {
                             uploadProductImage(productId);
                         } else {
-                            Toast.makeText(getContext(), "Information saved successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Product saved successfully.", Toast.LENGTH_SHORT).show();
                             hideDialog();
 
                             if (getActivity() != null) {
@@ -2307,7 +2335,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         Log.d("PRODUCT_JSON", "Failed to Save Product");
 
                         hideDialog();
-                        Toast.makeText(getContext(), "Failed to save information", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Failed to save product.", Toast.LENGTH_LONG).show();
                         Log.d("PRODUCT_JSON", "FAIL " + error.getMessage());
                     }
                 });
@@ -2481,9 +2509,9 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         hideDialog();
 
         if (responseCode == 200 || responseCode == 202) {
-            Toast.makeText(getContext(), "Information saved successfully", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Product saved successfully.", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getContext(), "Failed to save information", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Failed to save product.", Toast.LENGTH_LONG).show();
         }
 
         /**
@@ -2503,6 +2531,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     private void deleteConfirmation() {
         new MaterialDialog.Builder(getActivity())
                 .title(getString(R.string.are_you_sure_want_to_delete))
+                .content(R.string.delete_record_not_undone)
                 .positiveText(getString(R.string.delete))
                 .positiveColorRes(R.color.primaryColor)
                 .negativeText(getString(R.string.cancel))

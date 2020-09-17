@@ -121,8 +121,15 @@
               android:orientation="vertical">
 
             <include
-                android:id="@+id/booking_date"
+                android:id="@+id/apt_date"
                 layout="@layout/text_item" />
+
+            <include
+              android:id="@+id/create_date"
+              layout="@layout/text_item"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_8" />
 
             <include
                 android:id="@+id/payment"

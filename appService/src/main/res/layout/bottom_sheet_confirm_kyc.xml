@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@drawable/bg_rounded_top_strock"
+      android:orientation="vertical"
+      android:padding="@dimen/size_24">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_branch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please confirm below info"
+        android:textColor="@color/greyish_brown"
+        app:fontFamily="@font/semi_bold"
+        app:textType="CAPTION" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Information once confirmed\nwill be sent for internal verification!"
+        android:textColor="@color/colorAccent"
+        app:textType="HEADING_4" />
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_2"
+        android:layout_marginTop="@dimen/size_16"
+        android:layout_marginBottom="@dimen/size_16"
+        android:background="@drawable/line_dotted" />
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.framework.views.customViews.CustomCardView
+          android:layout_width="@dimen/size_140"
+          android:layout_height="@dimen/size_80"
+          app:cardCornerRadius="@dimen/size_8"
+          app:cardElevation="0dp">
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/iv_pan_card_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/pan_card_dummy" />
+        </com.framework.views.customViews.CustomCardView>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom"
+          android:layout_marginStart="@dimen/size_20"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/pan_number"
+            android:textColor="@color/warm_grey"
+            app:fontFamily="@font/regular"
+            app:textType="CAPTION" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/heading_pan_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="AAGCP768M"
+            android:textColor="@color/greyish_brown"
+            app:fontFamily="@font/regular"
+            app:textType="HEADING_5" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:includeFontPadding="false"
+        android:text="Name on PAN Card"
+        android:textColor="@color/warm_grey"
+        app:fontFamily="@font/regular"
+        app:textType="CAPTION" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/heading_pan_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:text="PROPIZIO REAL ESTATE PRIVATE LIMITED"
+        android:textColor="@color/greyish_brown"
+        app:fontFamily="@font/regular"
+        app:textType="HEADING_5" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:includeFontPadding="false"
+        android:text="Bank Account Details"
+        android:textColor="@color/warm_grey"
+        app:fontFamily="@font/regular"
+        app:textType="CAPTION" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/heading_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_bank"
+        android:drawablePadding="@dimen/size_6"
+        android:includeFontPadding="false"
+        android:text="A/c No. 34565XXXXX45465"
+        android:textColor="@color/greyish_brown"
+        app:fontFamily="@font/regular"
+        app:textType="HEADING_5" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tv_bank_branch_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/kotak_mahindra_bank_connaught_place_branch"
+        android:textColor="#0074ff"
+        app:fontFamily="@font/regular"
+        app:textType="CAPTION" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:includeFontPadding="false"
+        android:text="Latest 1 month bank statement"
+        android:textColor="@color/warm_grey"
+        app:fontFamily="@font/regular"
+        app:textType="CAPTION" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/bank_statement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_pdf_new"
+        android:drawablePadding="@dimen/size_6"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:text="July 2020 234556Rvdvdg.pdf"
+        android:textColor="@color/greyish_brown"
+        app:fontFamily="@font/regular"
+        app:textType="HEADING_5" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/view_addition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:includeFontPadding="false"
+        android:text="Additional Documents"
+        android:textColor="@color/warm_grey"
+        app:fontFamily="@font/regular"
+        app:textType="CAPTION" />
+
+      <com.framework.views.viewgroups.BaseRecyclerView
+        android:id="@+id/rvAdditionalDocs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_pdf_file" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/btn_submit_submit"
+        style="@style/ButtonStyle.Rounded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_40"
+        android:gravity="center"
+        android:paddingVertical="@dimen/size_14"
+        android:text="Confirm and Submit"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/btn_cancel_review"
+        style="@style/ButtonStyle.Rounded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:background="@drawable/rounded_refresh_btn"
+        android:gravity="center"
+        android:paddingVertical="@dimen/size_14"
+        android:text="Cancel and Review"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.core.widget.NestedScrollView>
+
+</layout>

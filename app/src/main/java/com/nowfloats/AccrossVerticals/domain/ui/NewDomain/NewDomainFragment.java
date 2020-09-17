@@ -22,7 +22,10 @@ import android.widget.Toast;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
 import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
+
+import org.w3c.dom.Text;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -34,6 +37,7 @@ public class NewDomainFragment extends Fragment {
 
     private NewDomainViewModel mViewModel;
     private Spinner domainSupportTypeSpinneer;
+    private TextView confirm_btn;
     ProgressDialog vmnProgressBar;
     String[] domainSupportType = new String[]{};
 
@@ -64,6 +68,13 @@ public class NewDomainFragment extends Fragment {
 
 
         domainSupportTypeSpinneer = view.findViewById(R.id.domain_support_type);
+        confirm_btn = view.findViewById(R.id.confirm_btn);
+        confirm_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebEngageController.trackEvent("Clicked on confirm book a new domain", "Domain and Email", "");
+            }
+        });
 //        domainSupportTypeSpinneer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //            @Override
 //            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

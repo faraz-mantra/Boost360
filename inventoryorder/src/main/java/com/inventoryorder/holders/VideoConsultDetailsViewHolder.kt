@@ -24,11 +24,11 @@ class VideoConsultDetailsViewHolder(binding: ItemVideoConsultDetailsBinding) : A
   private fun setDataResponseForOrderDetails(item: ItemN) {
     binding.tvDishName.text = item.Product?.extraItemProductConsultation()?.detailsConsultation()
     binding.tvDishQuantity.text = item.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
-    val scheduleDate = item.scheduledStartDate()
-    if (scheduleDate.isNullOrEmpty().not()) {
-      binding.tvScheduleDate.visible()
-      binding.tvScheduleDate.text = "${activity?.resources?.getString(R.string.schedule)}${DateUtils.parseDate(scheduleDate, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)}"
-    } else binding.tvScheduleDate.gone()
+//    val scheduleDate = item.scheduledStartDate()
+//    if (scheduleDate.isNullOrEmpty().not()) {
+//      binding.tvScheduleDate.visible()
+//      binding.tvScheduleDate.text = "${activity?.resources?.getString(R.string.schedule)}${DateUtils.parseDate(scheduleDate, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)}"
+//    } else binding.tvScheduleDate.gone()
 
     val currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     val actualPrice = item.product().price()
