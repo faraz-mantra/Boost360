@@ -44,7 +44,7 @@ class PackageViewPagerAdapter(
     }
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
-        holder.itemView.setOnClickListener {
+        holder.getNowButton.setOnClickListener {
             homeListener.onPackageClicked(list.get(position))
         }
         holder.name.setText(list.get(position).name)
@@ -66,8 +66,7 @@ class PackageViewPagerAdapter(
         val name = itemView.findViewById<TextView>(R.id.package_name)
         val offerPrice = itemView.findViewById<TextView>(R.id.offer_price)
         val origCost = itemView.findViewById<TextView>(R.id.orig_cost)
-        val bundleUsecase = itemView.findViewById<TextView>(R.id.package_flag_tag)
-        val tagHolder = itemView.findViewById<RelativeLayout>(R.id.premium_account_flag_2)
+        val getNowButton = itemView.findViewById<TextView>(R.id.getnow_button)
         val primaryImage = itemView.findViewById<ImageView>(R.id.package_primary_image)
         val bundleDiscount = itemView.findViewById<TextView>(R.id.bundle_level_discount)
         val bundlePriceLabel = itemView.findViewById<TextView>(R.id.bundle_price_label)
@@ -90,11 +89,6 @@ class PackageViewPagerAdapter(
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 {
-                                    if(bundles.target_business_usecase.isNullOrEmpty())
-                                        holder.tagHolder.visibility = View.GONE
-                                    else
-                                        holder.bundleUsecase.setText(bundles.target_business_usecase)
-
                                     for (singleItem in it) {
                                         for (item in bundles.included_features) {
                                             if (singleItem.feature_code == item.feature_code) {

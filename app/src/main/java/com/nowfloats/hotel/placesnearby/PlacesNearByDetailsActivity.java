@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -17,8 +18,10 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,6 +37,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsFeedbackActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.hotel.API.HotelAPIInterfaces;
 import com.nowfloats.hotel.API.UploadPlaceNearByImage;
@@ -45,6 +49,7 @@ import com.nowfloats.hotel.API.model.GetPlacesAround.Data;
 import com.nowfloats.hotel.API.model.UpdatePlacesAround.UpdatePlacesAroundRequest;
 import com.nowfloats.hotel.Interfaces.PlaceNearByDetailsListener;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
@@ -53,7 +58,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 import okhttp3.MediaType;
@@ -86,6 +94,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
     String ScreenType = "", itemId = "";
     Data existingItemData = null;
     UserSessionManager session;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,6 +116,9 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
         removePlaceImage = findViewById(R.id.ib_remove_product_image);
         session = new UserSessionManager(this, this);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+
         placeImageLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,11 +129,16 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
         saveReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ScreenType.equals("edit")) {
-                    updateExistingPlaceNearByAPI();
+                if (path != null) {
+                    showLoader("Uploading Image.Please Wait...");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            uploadImageToServer();
+                        }
+                    }, 200);
                 } else {
-                    createNewPlaceNearByAPI();
-                    Methods.hideKeyboard(PlacesNearByDetailsActivity.this);
+                    uploadDataToServer();
                 }
             }
         });
@@ -132,6 +149,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
                 placeImage.setImageDrawable(null);
                 removePlaceImage.setVisibility(View.GONE);
                 uploadedImageURL = "";
+                path = null;
             }
         });
 
@@ -150,6 +168,12 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
 
         itemId = existingItemData.getId();
         uploadedImageURL = existingItemData.getPlaceImage().getUrl();
+
+        if (!uploadedImageURL.isEmpty()) {
+            Glide.with(PlacesNearByDetailsActivity.this).load(uploadedImageURL).into(placeImage);
+            removePlaceImage.setVisibility(View.VISIBLE);
+        }
+
         placeName.setText(existingItemData.getPlaceName());
         placeAddress.setText(existingItemData.getPlaceAddress());
         placeDescription.setText(existingItemData.getPlaceImage().getDescription());
@@ -207,6 +231,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
             @Override
             public void onClick(View v) {
                 if (ScreenType != null && ScreenType.equals("edit")) {
+                    showLoader("Deleting Record.Please Wait...");
                     deleteRecord(itemId);
                     return;
                 }
@@ -254,6 +279,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
                 APICalls.addPlacesAround(request, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
+                        hideLoader();
                         if (response.getStatus() != 200) {
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
@@ -264,7 +290,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
 
                     @Override
                     public void failure(RetrofitError error) {
-
+                        hideLoader();
                         Methods.showSnackBarNegative(PlacesNearByDetailsActivity.this, getString(R.string.something_went_wrong));
                     }
                 });
@@ -277,58 +303,66 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
     }
 
     void updateExistingPlaceNearByAPI() {
+        try {
 
-        ActionData actionData = new ActionData();
-        actionData.setPlaceName(placeName.getText().toString());
-        actionData.setPlaceAddress(placeAddress.getText().toString());
-        actionData.setDistance(placeDistance.getText().toString());
+            if (validateInput()) {
+                ActionData actionData = new ActionData();
+                actionData.setPlaceName(placeName.getText().toString());
+                actionData.setPlaceAddress(placeAddress.getText().toString());
+                actionData.setDistance(placeDistance.getText().toString());
 
 
-        PlaceImage placeImage = new PlaceImage();
-        placeImage.setUrl(uploadedImageURL);
-        placeImage.setDescription(placeDescription.getText().toString());
+                PlaceImage placeImage = new PlaceImage();
+                placeImage.setUrl(uploadedImageURL);
+                placeImage.setDescription(placeDescription.getText().toString());
 
-        actionData.setPlaceImage(placeImage);
+                actionData.setPlaceImage(placeImage);
 
-        UpdatePlacesAroundRequest requestBody = new UpdatePlacesAroundRequest();
-        requestBody.setQuery("{_id:'" + existingItemData.getId() + "'}");
-        requestBody.setUpdateValue("{$set :" + new Gson().toJson(actionData) + "}");
+                UpdatePlacesAroundRequest requestBody = new UpdatePlacesAroundRequest();
+                requestBody.setQuery("{_id:'" + existingItemData.getId() + "'}");
+                requestBody.setUpdateValue("{$set :" + new Gson().toJson(actionData) + "}");
 
-        HotelAPIInterfaces APICalls = new RestAdapter.Builder()
-                .setEndpoint("https://webaction.api.boostkit.dev")
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setLog(new AndroidLog("ggg"))
-                .build()
-                .create(HotelAPIInterfaces.class);
+                HotelAPIInterfaces APICalls = new RestAdapter.Builder()
+                        .setEndpoint("https://webaction.api.boostkit.dev")
+                        .setLogLevel(RestAdapter.LogLevel.FULL)
+                        .setLog(new AndroidLog("ggg"))
+                        .build()
+                        .create(HotelAPIInterfaces.class);
 
-        APICalls.updatePlacesAround(requestBody, new Callback<String>() {
-            @Override
-            public void success(String s, Response response) {
-                if (response.getStatus() != 200) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, "Successfully Updated Place Details");
-                finish();
+                APICalls.updatePlacesAround(requestBody, new Callback<String>() {
+                    @Override
+                    public void success(String s, Response response) {
+                        hideLoader();
+                        if (response.getStatus() != 200) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, "Successfully Updated Place Details");
+                        finish();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        hideLoader();
+                        if (error.getResponse().getStatus() == 200) {
+                            Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, "Successfully Updated Place Details");
+                            finish();
+                        } else {
+                            Methods.showSnackBarNegative(PlacesNearByDetailsActivity.this, getString(R.string.something_went_wrong));
+                        }
+                    }
+                });
             }
-
-            @Override
-            public void failure(RetrofitError error) {
-                if (error.getResponse().getStatus() == 200) {
-                    Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, "Successfully Updated Place Details");
-                    finish();
-                } else {
-                    Methods.showSnackBarNegative(PlacesNearByDetailsActivity.this, getString(R.string.something_went_wrong));
-                }
-            }
-        });
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean validateInput() {
         if (placeName.getText().toString().isEmpty() || placeDescription.getText().toString().isEmpty()
                 || placeDistance.getText().toString().isEmpty() || placeAddress.getText().toString().isEmpty()) {
             Toast.makeText(getApplicationContext(), "Fields are Empty...", Toast.LENGTH_SHORT).show();
+            hideLoader();
             return false;
         }
         return true;
@@ -344,16 +378,25 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
                         media_req_id);
                 return;
             }
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, "New Picture");
-            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-            imageUri = getContentResolver().insert(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            Intent captureIntent = new Intent(
-                    MediaStore.ACTION_IMAGE_CAPTURE);
-            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            // we will handle the returned data in onActivityResult
-            startActivityForResult(captureIntent, CAMERA_PHOTO);
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            // Ensure that there's a camera activity to handle the intent
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                // Create the File where the photo should go
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+                    // Error occurred while creating the File
+                }
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    Uri photoURI = FileProvider.getUriForFile(this,
+                            Constants.PACKAGE_NAME + ".provider",
+                            photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(takePictureIntent, CAMERA_PHOTO);
+                }
+            }
 
         } catch (ActivityNotFoundException anfe) {
             // display an error message
@@ -362,6 +405,22 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        path = image.getAbsolutePath();
+        return image;
     }
 
     public void galleryIntent() {
@@ -384,96 +443,54 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
         }
     }
 
-        @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            path = null;
             if (resultCode == RESULT_OK && (CAMERA_PHOTO == requestCode)) {
-                try {
-                    Log.e("ImageURI ->",imageUri.getPath());
-                    path = Methods.getRealPathFromURI(this, imageUri);
-                    String fname = "PlaceNearBy" + System.currentTimeMillis();
-//                    path = Util.saveBitmap(path, PlacesNearByDetailsActivity.this, fname);
-                    if (!Util.isNullOrEmpty(path)) {
-                        if (!TextUtils.isEmpty(path)) {
-//                            uploadFileToServer(path, fname);
-                            new UploadPlaceNearByImage(PlacesNearByDetailsActivity.this, this, path, fname).execute().get();
-                        }
-                    } else
-                        Methods.showSnackBarNegative(PlacesNearByDetailsActivity.this, getResources().getString(R.string.select_image_upload));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    //  Util.toast("Uh oh. Something went wrong. Please try again", this);
-                } catch (OutOfMemoryError E) {
-                    //Log.d("ANDRO_ASYNC",String.format("catch Out Of Memory error"));
-                    E.printStackTrace();
-                    System.gc();
-                    // Util.toast("Uh oh. Something went wrong. Please try again", this);
-                }
+                updatePlaceProfileImage();
             } else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
                 {
                     Uri picUri = data.getData();
                     if (picUri != null) {
                         path = Methods.getPath(this, picUri);
-                        String fname = "PlaceNearBy" + System.currentTimeMillis();
-//                        path = Util.saveBitmap(path, PlacesNearByDetailsActivity.this, fname);
-                        if (!Util.isNullOrEmpty(path)) {
-                            if (!TextUtils.isEmpty(path)) {
-//                                uploadFileToServer(path, fname);
-                                uploadedImageURL = new UploadPlaceNearByImage(PlacesNearByDetailsActivity.this, this, path, fname).execute().get();
-                            }
-                        } else
-                            Methods.showSnackBarNegative(PlacesNearByDetailsActivity.this, getResources().getString(R.string.select_image_upload));
+                        updatePlaceProfileImage();
+                    } else {
+                        Toast.makeText(this, "Something went wrong. Try Later!!", Toast.LENGTH_LONG).show();
                     }
                 }
             }
         } catch (Exception e) {
-            Log.e("onActivityResult ->", "Failed ->"+e.getMessage());
+            Log.e("onActivityResult ->", "Failed ->" + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    public void uploadImageToServer() {
+        try {
+            if (validateInput()) {
+                String fname = "PlaceNearBy" + System.currentTimeMillis();
+                if (!Util.isNullOrEmpty(path)) {
+                    if (!TextUtils.isEmpty(path)) {
+                        new UploadPlaceNearByImage(PlacesNearByDetailsActivity.this, this, path, fname).execute().get();
+                    }
+                } else {
+                    Methods.showSnackBarNegative(PlacesNearByDetailsActivity.this, getResources().getString(R.string.select_image_upload));
+                }
+            }
+        } catch (Exception e) {
+            Log.e("uploadImageToServer ->", "Failed ->" + e.getMessage());
+            e.printStackTrace();
+        } catch (OutOfMemoryError E) {
+            E.printStackTrace();
+            System.gc();
         }
     }
 
     public void updatePlaceProfileImage() {
-        if(!uploadedImageURL.isEmpty()) {
-            Glide.with(PlacesNearByDetailsActivity.this).load(uploadedImageURL).into(placeImage);
+        if (path != null) {
+            Glide.with(PlacesNearByDetailsActivity.this).load(path).into(placeImage);
             removePlaceImage.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public void uploadFileToServer(String path, String fileName) {
-        File file = new File(path);
-        try {
-            OkHttpClient client = new OkHttpClient();
-            InputStream in = new FileInputStream(file);
-            byte[] buf;
-            buf = new byte[in.available()];
-            while (in.read(buf) != -1) ;
-            RequestBody requestBody = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("file", fileName, RequestBody.create(MediaType.parse("image/*"), buf))
-                    .build();
-
-            //https://webaction.api.boostkit.dev/api/v1/placesaround/upload-file?assetFileName=screenshot-assuredpurchase.withfloats.com-2020.07.17-14_38_42.png
-            Request request = new Request.Builder()
-                    .url("https://webaction.api.boostkit.dev/api/v1/placesaround/upload-file?assetFileName=screenshot-assuredpurchase.withfloats.com-" + fileName + ".jpg")
-                    .post(requestBody)
-                    .addHeader("Authorization", "59c8add5dd304111404e7f04")
-                    .build();
-
-            okhttp3.Response response = client.newCall(request).execute();
-            if (response != null && response.code() == 200) {
-                uploadedImageURL = Objects.requireNonNull(response.body()).string();
-                updatePlaceProfileImage();
-            } else {
-                Methods.showSnackBarNegative(PlacesNearByDetailsActivity.this, "Uploading Image Failed");
-            }
-
-            in.close();
-            buf = null;
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -495,6 +512,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
             APICalls.deletePlacesAround(requestBody, new Callback<String>() {
                 @Override
                 public void success(String data, Response response) {
+                    hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
                         Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, "Successfully Deleted.");
@@ -506,6 +524,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
 
                 @Override
                 public void failure(RetrofitError error) {
+                    hideLoader();
                     if (error.getResponse().getStatus() == 200) {
                         Methods.showSnackBarPositive(PlacesNearByDetailsActivity.this, "Successfully Deleted.");
                         finish();
@@ -516,6 +535,7 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
             });
 
         } catch (Exception e) {
+            hideLoader();
             e.printStackTrace();
         }
     }
@@ -523,7 +543,45 @@ public class PlacesNearByDetailsActivity extends AppCompatActivity implements Pl
     @Override
     public void uploadImageURL(String url) {
         uploadedImageURL = url;
-        updatePlaceProfileImage();
+        uploadDataToServer();
+    }
+
+    private void uploadDataToServer() {
+        if (ScreenType.equals("edit")) {
+            showLoader("Updating Record.Please Wait...");
+            updateExistingPlaceNearByAPI();
+        } else {
+            showLoader("Creating Record.Please Wait...");
+            createNewPlaceNearByAPI();
+            Methods.hideKeyboard(PlacesNearByDetailsActivity.this);
+        }
+    }
+
+    private void showLoader(final String message) {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog == null) {
+                    progressDialog = new ProgressDialog(getApplicationContext());
+                    progressDialog.setCanceledOnTouchOutside(false);
+                }
+                progressDialog.setMessage(message);
+                progressDialog.show();
+            }
+        });
+    }
+
+    private void hideLoader() {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+            }
+        });
     }
 }
 

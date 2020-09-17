@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -38,7 +39,7 @@ class AllFeatureAdaptor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
         val itemView = LayoutInflater.from(parent?.context).inflate(
-            R.layout.upgrade_list_item, parent, false
+            R.layout.all_feature_list_item, parent, false
         )
         context = itemView.context
 
@@ -89,6 +90,7 @@ class AllFeatureAdaptor(
         private var upgradeTitle = itemView.findViewById<TextView>(R.id.title)!!
         private var upgradeDetails = itemView.findViewById<TextView>(R.id.details)!!
         private var upgradePrice = itemView.findViewById<TextView>(R.id.upgrade_list_price)!!
+        private var pricingLayout = itemView.findViewById<LinearLayout>(R.id.pricing_layout)!!
         private var upgradeMRP = itemView.findViewById<TextView>(R.id.upgrade_list_orig_cost)!!
         private var upgradeDiscount = itemView.findViewById<TextView>(R.id.upgrade_list_discount)!!
         private var image = itemView.findViewById<ImageView>(R.id.imageView2)!!
@@ -102,7 +104,12 @@ class AllFeatureAdaptor(
             val price = (discount * updateModel.price) / 100
             upgradeTitle.text = updateModel.target_business_usecase
             upgradeDetails.text = updateModel.name
-            upgradePrice.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
+            if(price>0) {
+                upgradePrice.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
+                pricingLayout.visibility = View.VISIBLE
+            }else{
+                pricingLayout.visibility = View.GONE
+            }
             if(updateModel.discount_percent>0){
                 upgradeDiscount.visibility = View.VISIBLE
                 upgradeDiscount.text = ""+ updateModel.discount_percent+"%"

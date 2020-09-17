@@ -4,74 +4,74 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:padding="0dp"
+        app:cardCornerRadius="@dimen/_15sdp"
+        app:cardElevation="@dimen/_2sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/all_side_curve_bg"
-            android:paddingStart="@dimen/_15sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:paddingTop="@dimen/_15sdp"
-            android:paddingBottom="@dimen/_15sdp"
-            android:elevation="@dimen/_2sdp"
-            android:layout_margin="@dimen/_5sdp">
+            app:layout_constraintTop_toTopOf="parent">
 
 
-            <ImageView
-                android:id="@+id/package_primary_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:src="@drawable/scissor"
+            <RelativeLayout
+                android:id="@+id/package_primary_image_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <View
+                    android:layout_width="@dimen/_65sdp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_ellipse" />
+
+                <ImageView
+                    android:id="@+id/package_primary_image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:src="@drawable/scissor" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/package_primary_image"
-                app:layout_constraintEnd_toStartOf="@id/package_arrow"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:orientation="vertical">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/package_primary_image_layout"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <RelativeLayout
-                    android:id="@+id/premium_account_flag_2"
+                <TextView
+                    android:id="@+id/package_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_flag_mask" />
-
-                    <TextView
-                        android:id="@+id/package_flag_tag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/_6sdp"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:text="Blossom Pack"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_5sdp" />
-                </RelativeLayout>
-
-            <TextView
-                android:id="@+id/package_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lineSpacingExtra="2.3sp"
-                android:text="Get 6 more add-ons"
-                android:textColor="#4a4a4a"
-                android:textSize="@dimen/_11ssp"
-                android:textStyle="bold"/>
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="2.3sp"
+                    android:text="Get 6 more add-ons"
+                    android:textColor="#4a4a4a"
+                    android:textSize="@dimen/_11ssp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/package_amount_layout"
@@ -89,20 +89,21 @@
                         android:paddingEnd="@dimen/_5sdp"
                         android:text="Just for"
                         android:textColor="#9b9b9b"
-                        android:visibility="gone"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_8sdp"
+                        android:visibility="gone" />
+
                     <TextView
                         android:id="@+id/bundle_level_discount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_7sdp"
                         android:background="@drawable/all_side_curve_percentage_bg"
-                        android:gravity="center"
-                        android:textColor="@color/common_text_color"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:textSize="@dimen/_6sdp"
+                        android:gravity="center"
                         android:text="0%"
-                        android:visibility="gone"/>
+                        android:textColor="@color/common_text_color"
+                        android:textSize="@dimen/_6sdp"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/offer_price"
@@ -125,18 +126,29 @@
                         android:textSize="@dimen/_8sdp" />
 
                 </LinearLayout>
-            </LinearLayout>
 
-            <ImageView
-                android:id="@+id/package_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:srcCompat="@drawable/ic_arrow_right"/>
+                <TextView
+                    android:id="@+id/getnow_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recycler"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/orange_button_click_effect"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_15sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_15sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Get Now"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textFontWeight="800"
+                    android:textSize="@dimen/_8sdp" />
+            </LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
