@@ -1,13 +1,38 @@
 package com.appservice.rest.services
 
+import com.appservice.model.serviceProduct.Product
+import com.appservice.model.serviceProduct.delete.DeleteProductRequest
+import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.rest.EndPoints
 import io.reactivex.Observable
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
+import retrofit2.http.*
 
 interface WithFloatTwoRemoteData {
 
-  @GET(EndPoints.CREATE_SERVICE)
-  fun createService(@Body request: Any): Observable<Response<Any>>
+  @POST(EndPoints.CREATE_SERVICE)
+  fun createService(@Body request: Product?): Observable<Response<String>>
+
+  @PUT(EndPoints.UPDATE_SERVICE)
+  fun updateService(@Body request: ProductUpdate?): Observable<Response<ResponseBody>>
+
+  @HTTP(method = "DELETE", path = EndPoints.DELETE_SERVICE, hasBody = true)
+  fun deleteService(@Body request: DeleteProductRequest?): Observable<Response<String>>
+
+  @GET(EndPoints.GET_TAGS)
+  fun getTags(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?): Observable<Response<List<String>>>
+
+  @Headers("Accept: application/json", "Content-Type: application/octet-stream")
+  @PUT(EndPoints.ADD_IMAGE)
+  fun addUpdateImageProductService(
+      @Query("clientId") clientId: String?,
+      @Query("requestType") requestType: String?,
+      @Query("requestId") requestId: String?,
+      @Query("totalChunks") totalChunks: Int?,
+      @Query("currentChunkNumber") currentChunkNumber: Int?,
+      @Query("productId") productId: String?,
+      @Body requestBody: RequestBody?
+  ): Observable<Response<String>>
 }

@@ -40,7 +40,7 @@
           android:layout_marginTop="@dimen/size_2"
           android:background="@drawable/rounded_edit_stroke"
           android:hint="@string/write_the_name_as_mentioned_in_bank_account"
-          android:inputType="text"
+          android:inputType="textCapWords"
           android:singleLine="true" />
 
         <com.framework.views.customViews.CustomTextView

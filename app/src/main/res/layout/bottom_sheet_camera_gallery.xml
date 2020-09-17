@@ -38,10 +38,28 @@
             android:orientation="horizontal"
             android:padding="@dimen/size_14">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                app:srcCompat="@drawable/ic_gallery_round" />
+<!--            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                android:layout_width="@dimen/size_24"-->
+<!--                android:layout_height="@dimen/size_24"-->
+<!--                app:srcCompat="@drawable/ic_gallery_round" />-->
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/pop_up_camera_imag"
+                    android:layout_width="@dimen/size_32"
+                    android:layout_height="@dimen/size_32"
+                    app:srcCompat="@drawable/circle_bakground" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/featured_gallery" />
+            </FrameLayout>
 
             <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
@@ -66,10 +84,26 @@
             android:orientation="horizontal"
             android:padding="@dimen/size_14">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                app:srcCompat="@drawable/ic_photo_camera" />
+<!--            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                android:layout_width="@dimen/size_24"-->
+<!--                android:layout_height="@dimen/size_24"-->
+<!--                app:srcCompat="@drawable/ic_photo_camera" />-->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_32"
+                    android:layout_height="@dimen/size_32"
+                    app:srcCompat="@drawable/circle_bakground" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_camera_lens" />
+            </FrameLayout>
 
             <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
@@ -94,10 +128,27 @@
             android:orientation="horizontal"
             android:padding="@dimen/size_14">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                app:srcCompat="@drawable/ic_close_round" />
+<!--            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                android:layout_width="@dimen/size_24"-->
+<!--                android:layout_height="@dimen/size_24"-->
+<!--                app:srcCompat="@drawable/ic_close_round" />-->
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="@dimen/size_32"
+                    android:layout_height="@dimen/size_32"
+                    app:srcCompat="@drawable/circle_bakground" />
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_round_close_white" />
+            </FrameLayout>
 
             <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"

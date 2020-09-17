@@ -29,6 +29,7 @@ import com.nowfloats.Restaurants.BookATable.BookATableActivity;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
@@ -142,12 +143,12 @@ public class ManageInventoryFragment extends Fragment {
             case "SVC": /* TODO for Appointment (delivery mode offline)*/
             case "SPA":
             case "SAL":
-            case "EDU":
             case "DOC": /* TODO for Appointment (delivery mode offline) && consultation (delivery mode online)*/
             case "HOS":
                 return 1;
             case "HOT": /* TODO for booking */
                 return 2;
+            // coming order case "EDU":
             default: /* TODO for order */
                 return 3;
         }
@@ -174,11 +175,18 @@ public class ManageInventoryFragment extends Fragment {
 
     private Bundle getBundleData() {
         Bundle bundle = new Bundle();
-        PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(), Constants.WA_KEY, session.getFpTag());
+        String url = "";
+        String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
+        if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) url = rootAlisasURI;
+        else url = normalURI;
+        PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(),
+                Constants.WA_KEY, session.getFpTag(), session.getUserPrimaryMobile(), url, session.getFPEmail(),
+                session.getFPDetails(Key_Preferences.LATITUDE), session.getFPDetails(Key_Preferences.LONGITUDE),
+                session.getFP_AppExperienceCode());
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
         bundle.putString(IntentConstant.EXPERIENCE_CODE.name(), session.getFP_AppExperienceCode());
         return bundle;
-
     }
 
     @Override
@@ -196,13 +204,13 @@ public class ManageInventoryFragment extends Fragment {
             tvTransactionType_1 = mainView.findViewById(R.id.transactions_type_1);
             tvTransactionType_1.setText(Utils.getDefaultTrasactionsTaxonomyFromServiceCode(svc_code));
             if ("DOC".equalsIgnoreCase(svc_code) || "HOS".equalsIgnoreCase(svc_code))
-                tvTransactionType_1.setText("Appointments at Clinic");
+                tvTransactionType_1.setText(R.string.appointments_at_clinic_camel_case);
 
             tvTransactionType_2 = mainView.findViewById(R.id.transactions_type_2);
             ImageView tranType2Image = mainView.findViewById(R.id.transactions_type_2_image);
             String secondTransactionType;
             if (Utils.isRoomBooking(svc_code))
-                secondTransactionType = "Orders";
+                secondTransactionType = getString(R.string.orders);
             else
                 secondTransactionType = Utils.getSecondTypeTrasactionsTaxonomyFromServiceCode(svc_code);
             tvTransactionType_2.setText(secondTransactionType);
@@ -249,7 +257,7 @@ public class ManageInventoryFragment extends Fragment {
             bookTableIcon = mainView.findViewById(R.id.book_a_table_icon);
             lockIcon = mainView.findViewById(R.id.feature_lock);
             View borderLine = mainView.findViewById(R.id.line_view3);
-            if(svc_code.equals("HOT")) {
+            if (svc_code.equals("HOT")) {
                 bookTable.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -260,10 +268,10 @@ public class ManageInventoryFragment extends Fragment {
                 });
                 if (Constants.StoreWidgets.contains("BOOKTABLE")) {
                     lockIcon.setVisibility(View.GONE);
-                }else{
+                } else {
                     lockIcon.setVisibility(View.VISIBLE);
                 }
-            } else{
+            } else {
                 bookTable.setVisibility(View.GONE);
                 bookTableIcon.setVisibility(View.GONE);
                 borderLine.setVisibility(View.GONE);

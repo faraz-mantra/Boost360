@@ -15,11 +15,27 @@
 
   <style name="AppTheme.account" parent="AppTheme.cataloge">
     <item name="android:editTextColor">@color/black</item>
+    <item name="android:textColorHint">@color/light_grey_two</item>
+  </style>
+
+  <style name="AppTheme_payment_dark" parent="AppTheme.cataloge">
+    <item name="android:editTextColor">@color/black</item>
+  </style>
+
+  <style name="AppTheme.payment" parent="AppTheme.cataloge">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="android:editTextColor">@color/black</item>
   </style>
 
   <style name="AppTheme_add_account" parent="AppTheme.account">
     <item name="colorPrimary">@color/white</item>
     <item name="colorPrimaryDark">@color/white</item>
+  </style>
+
+  <style name="AppTheme_payment_gateway" parent="AppTheme.account">
+    <item name="colorPrimary">@color/orange</item>
+    <item name="colorPrimaryDark">@color/orange</item>
   </style>
 
   <style name="CustomBottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">

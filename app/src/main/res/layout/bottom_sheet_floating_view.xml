@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:id="@+id/main_view"
+    android:gravity="end">
+
+    <LinearLayout
+      android:id="@+id/addOptions"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/size_16"
+      android:focusable="true"
+      android:layout_marginBottom="@dimen/_12sdp"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_white_selector_bg_top"
+        android:orientation="vertical">
+
+        <LinearLayout
+          android:id="@+id/addProduct"
+          android:layout_width="@dimen/_155sdp"
+          android:layout_height="@dimen/_35sdp"
+          android:background="?attr/selectableItemBackground"
+          android:clickable="true"
+          android:focusable="true"
+          android:orientation="vertical">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+              android:layout_width="@dimen/_15sdp"
+              android:layout_height="@dimen/_15sdp"
+              android:layout_gravity="center_vertical"
+              android:layout_marginLeft="@dimen/_8sdp"
+              android:layout_marginRight="@dimen/_8sdp"
+              app:srcCompat="@drawable/product_verb" />
+
+            <TextView
+              android:id="@+id/addProductText"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:text="Add a product"
+              android:textSize="@dimen/_11sdp" />
+          </LinearLayout>
+        </LinearLayout>
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/gray_light" />
+
+        <LinearLayout
+          android:id="@+id/addImage"
+          android:layout_width="@dimen/_155sdp"
+          android:layout_height="@dimen/_35sdp"
+          android:background="?attr/selectableItemBackground"
+          android:clickable="true"
+          android:focusable="true"
+          android:orientation="vertical">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+              android:layout_width="@dimen/_15sdp"
+              android:layout_height="@dimen/_15sdp"
+              android:layout_gravity="center_vertical"
+              android:layout_marginLeft="@dimen/_8sdp"
+              android:layout_marginRight="@dimen/_8sdp"
+              app:srcCompat="@drawable/gallery_image" />
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:text="Add an image"
+              android:textSize="@dimen/_11sdp" />
+          </LinearLayout>
+        </LinearLayout>
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/gray_light" />
+
+        <LinearLayout
+          android:id="@+id/addCustomPage"
+          android:layout_width="@dimen/_155sdp"
+          android:layout_height="@dimen/_35sdp"
+          android:background="?attr/selectableItemBackground"
+          android:clickable="true"
+          android:focusable="true"
+          android:orientation="vertical">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+              android:layout_width="@dimen/_15sdp"
+              android:layout_height="@dimen/_15sdp"
+              android:layout_gravity="center_vertical"
+              android:layout_marginLeft="@dimen/_8sdp"
+              android:layout_marginRight="@dimen/_8sdp"
+              app:srcCompat="@drawable/custom_page" />
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:text="Create a custom page"
+              android:textSize="@dimen/_11sdp" />
+          </LinearLayout>
+        </LinearLayout>
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/gray_light" />
+
+        <LinearLayout
+          android:id="@+id/addTestimonial"
+          android:layout_width="@dimen/_155sdp"
+          android:layout_height="@dimen/_35sdp"
+          android:background="?attr/selectableItemBackground"
+          android:clickable="true"
+          android:focusable="true"
+          android:orientation="vertical">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+              android:layout_width="@dimen/_15sdp"
+              android:layout_height="@dimen/_15sdp"
+              android:layout_gravity="center_vertical"
+              android:layout_marginLeft="@dimen/_8sdp"
+              android:layout_marginRight="@dimen/_8sdp"
+              app:srcCompat="@drawable/testimonial" />
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:text="Add a testimonial"
+              android:textSize="@dimen/_11sdp" />
+          </LinearLayout>
+        </LinearLayout>
+      </LinearLayout>
+
+      <LinearLayout
+        android:id="@+id/addUpdate"
+        android:layout_width="@dimen/_155sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        android:background="@drawable/rounded_corner_bottom"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        tools:ignore="UnusedAttribute">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal">
+
+          <ImageView
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:srcCompat="@drawable/create_update" />
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Write an update"
+            android:textColor="#fff"
+            android:textSize="@dimen/_11sdp" />
+        </LinearLayout>
+      </LinearLayout>
+    </LinearLayout>
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -105,6 +105,7 @@ public class Analytics_Fragment extends Fragment {
     View rootView = null;
     public static TextView visitCount, mapVisitsCount, visitorsCount, subscriberCount, vmnTotalCallCount, vmnTotalCustomerCount,
             searchQueriesCount, businessEnqCount, facebokImpressions, tvOrdersCount;
+    private static ImageView rupeeSymbol;
     private int noOfSearchQueries = 0;
     public static ProgressBar visits_progressBar, map_progressbar, visitors_progressBar, vmnProgressBar, vmnCustomerProgressBar,
             subscriber_progress, search_query_progress, businessEnqProgress, pbOrders;
@@ -146,25 +147,25 @@ public class Analytics_Fragment extends Fragment {
 
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
         if (!Util.isNullOrEmpty(session.getVisitorsCount())) {
-            visitorsCount.setText(session.getVisitorsCount());
+            visitorsCount.setText(getNumberFormat(session.getVisitorsCount()));
         }
         if (!Util.isNullOrEmpty(session.getVisitsCount())) {
-            visitCount.setText(session.getVisitsCount());
+            visitCount.setText(getNumberFormat(session.getVisitsCount()));
         }
         if (!Util.isNullOrEmpty(session.getSubcribersCount())) {
             subscriberCount.setText(session.getSubcribersCount());
         }
         if (!Util.isNullOrEmpty(session.getEnquiryCount())) {
-            businessEnqCount.setText(session.getEnquiryCount());
+            businessEnqCount.setText(getNumberFormat(session.getEnquiryCount()));
         }
         if (!Util.isNullOrEmpty(session.getOrderCount())) {
-            tvOrdersCount.setText(session.getOrderCount());
+            tvOrdersCount.setText(getNumberFormat(session.getOrderCount()));
         }
         if (!Util.isNullOrEmpty(session.getMapVisitsCount())) {
             mapVisitsCount.setText(session.getMapVisitsCount());
         }
         if (!Util.isNullOrEmpty(session.getFacebookImpressions())) {
-            facebokImpressions.setText(session.getFacebookImpressions());
+            facebokImpressions.setText(getNumberFormat(session.getFacebookImpressions()));
         } else {
             facebokImpressions.setText("0");
         }
@@ -212,7 +213,7 @@ public class Analytics_Fragment extends Fragment {
             e.printStackTrace();
         }
         this.context = context;
-
+//        WebEngageController.trackEvent("HOME SCREEN", "Clicked on reports", null);
     }
 
     @Override
@@ -230,7 +231,7 @@ public class Analytics_Fragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+//        WebEngageController.trackEvent("HOME SCREEN", "Clicked on reports", null);
 //        }
     }
 
@@ -393,7 +394,7 @@ public class Analytics_Fragment extends Fragment {
         orderLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("SALES ANALYTICS","null",session.getFpTag());
+                WebEngageController.trackEvent("SALES ANALYTICS", "null", session.getFpTag());
 //                Intent i = new Intent(getActivity(), OrderAnalyticsActivity.class);
                 Intent i = new Intent(getActivity(), RevenueSummaryActivity.class);
                 startActivity(i);
@@ -463,6 +464,7 @@ public class Analytics_Fragment extends Fragment {
         vmnTotalCustomerCount = (TextView) rootView.findViewById(R.id.customer_appointment_total_count);
         businessEnqCount = (TextView) rootView.findViewById(R.id.analytics_screen_business_enq_count);
         tvOrdersCount = (TextView) rootView.findViewById(R.id.orders_count);
+        rupeeSymbol = (ImageView) rootView.findViewById(R.id.iv_rupee_symbol);
         facebokImpressions = (TextView) rootView.findViewById(R.id.analytics_screen_updates_count);
         searchQueriesCount.setVisibility(View.INVISIBLE);
         visits_progressBar = (ProgressBar) rootView.findViewById(R.id.visits_progressBar);
@@ -510,7 +512,7 @@ public class Analytics_Fragment extends Fragment {
         if (visittotal != null && visittotal.trim().length() > 0) {
             visits_progressBar.setVisibility(View.GONE);
             visitCount.setVisibility(View.VISIBLE);
-            visitCount.setText(visittotal);
+            visitCount.setText(getNumberFormat(visittotal));
         } else {
             visits_progressBar.setVisibility(View.VISIBLE);
             visitCount.setVisibility(View.GONE);
@@ -526,7 +528,7 @@ public class Analytics_Fragment extends Fragment {
         if (visitortotal != null && visitortotal.trim().length() > 0) {
             visitors_progressBar.setVisibility(View.GONE);
             visitorsCount.setVisibility(View.VISIBLE);
-            visitorsCount.setText(visitortotal);
+            visitorsCount.setText(getNumberFormat(visitortotal));
         } else {
             visitors_progressBar.setVisibility(View.VISIBLE);
             visitorsCount.setVisibility(View.GONE);
@@ -543,7 +545,7 @@ public class Analytics_Fragment extends Fragment {
         if (searchQueryCount != null && searchQueryCount.trim().length() > 0) {
             search_query_progress.setVisibility(View.GONE);
             searchQueriesCount.setVisibility(View.VISIBLE);
-            searchQueriesCount.setText(searchQueryCount);
+            searchQueriesCount.setText(getNumberFormat(searchQueryCount));
         } else {
             search_query_progress.setVisibility(View.GONE);
             searchQueriesCount.setVisibility(View.GONE);
@@ -551,7 +553,7 @@ public class Analytics_Fragment extends Fragment {
         if (enquiryCount != null && enquiryCount.trim().length() > 0) {
             businessEnqProgress.setVisibility(View.GONE);
             businessEnqCount.setVisibility(View.VISIBLE);
-            businessEnqCount.setText(enquiryCount);
+            businessEnqCount.setText(getNumberFormat(enquiryCount));
         } else {
             businessEnqProgress.setVisibility(View.VISIBLE);
             businessEnqCount.setVisibility(View.GONE);
@@ -560,10 +562,12 @@ public class Analytics_Fragment extends Fragment {
         if (orderCount != null && orderCount.trim().length() > 0) {
             pbOrders.setVisibility(View.GONE);
             tvOrdersCount.setVisibility(View.VISIBLE);
-            tvOrdersCount.setText(orderCount);
+            rupeeSymbol.setVisibility(View.VISIBLE);
+            tvOrdersCount.setText(getNumberFormat(orderCount));
         } else {
 //            pbOrders.setVisibility(View.VISIBLE);
             tvOrdersCount.setVisibility(View.GONE);
+            rupeeSymbol.setVisibility(View.GONE);
         }
 
 //        final boolean isVmnEnable = "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
@@ -1064,7 +1068,7 @@ public class Analytics_Fragment extends Fragment {
                 }
                 if (jsonObject.has("TotalCalls")) {
                     vmnTotalCalls = jsonObject.get("TotalCalls").getAsString();
-                    vmnTotalCallCount.setText(vmnTotalCalls);
+                    vmnTotalCallCount.setText(getNumberFormat(vmnTotalCalls));
                     session.setVmnCallsCount(vmnTotalCalls);
                 }
             }
@@ -1090,14 +1094,16 @@ public class Analytics_Fragment extends Fragment {
                 if (sellerSummary == null || response.getStatus() != 200) {
                     return;
                 }
-                vmnTotalCustomerCount.setText(String.valueOf(sellerSummary.getData().getTotalOrders()));
-                if (sellerSummary != null && sellerSummary.getData().getTotalNetAmount() > 0) {
+                vmnTotalCustomerCount.setText(getNumberFormat(sellerSummary.getData().getTotalOrders().toString()));
+                if (sellerSummary.getData().getTotalNetAmount() > 0) {
                     pbOrders.setVisibility(View.GONE);
                     tvOrdersCount.setVisibility(View.VISIBLE);
-                    tvOrdersCount.setText(sellerSummary.getData().getTotalNetAmount().toString());
+                    rupeeSymbol.setVisibility(View.VISIBLE);
+                    tvOrdersCount.setText(getNumberFormat(sellerSummary.getData().getTotalNetAmount().toString()));
                 } else {
 //                  pbOrders.setVisibility(View.VISIBLE);
                     tvOrdersCount.setVisibility(View.GONE);
+                    rupeeSymbol.setVisibility(View.GONE);
                 }
             }
 
@@ -1132,6 +1138,14 @@ public class Analytics_Fragment extends Fragment {
                 WebEngageController.trackEvent("SUBSCRIBERS", "null", session.getFpTag());
                 openSubscriberActivity();
             }
+        }
+    }
+
+    public static String getNumberFormat(String value) {
+        try {
+            return NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(value));
+        } catch (Exception e) {
+            return value;
         }
     }
 }

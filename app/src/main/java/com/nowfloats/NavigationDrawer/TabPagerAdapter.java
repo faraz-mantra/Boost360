@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.nowfloats.NotificationCenter.NotificationFragment;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 public class TabPagerAdapter extends FragmentPagerAdapter {
@@ -81,5 +82,8 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     {
         return this.currentItem;
     }
+
+
+
 
 }

@@ -42,11 +42,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet;
 import com.nowfloats.BusinessProfile.UI.API.SetBusinessCategoryAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.uploadIMAGEURI;
 import com.nowfloats.GMB.GMBHandler;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.helper.ui.BaseActivity;
@@ -56,6 +58,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.RiaEventLogger;
 import com.nowfloats.util.WebEngageController;
+import com.onboarding.nowfloats.bottomsheet.builder.BottomDialog;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -65,6 +68,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
+
+import static com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog.*;
 
 public class Edit_Profile_Activity extends BaseActivity {
 
@@ -277,37 +282,49 @@ public class Edit_Profile_Activity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                final MaterialDialog dialog = new MaterialDialog.Builder(Edit_Profile_Activity.this)
-                        .customView(R.layout.featuredimage_popup, true)
-                        .show();
+                final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+                imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
 
-                View view = dialog.getCustomView();
+//                Old Image Picker
+//                final MaterialDialog dialog = new MaterialDialog.Builder(Edit_Profile_Activity.this)
+//                        .customView(R.layout.featuredimage_popup, true)
+//                        .show();
+//
+//                View view = dialog.getCustomView();
+//
+//                LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+//                LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//                ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+//                ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+//                cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
+//                galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
+//
+//                takeCamera.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        cameraIntent();
+//                        dialog.hide();
+//                    }
+//                });
+//
+//                takeGallery.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        galleryIntent();
+//                        dialog.hide();
+//
+//                    }
+//                });
 
-                LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-                LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-                ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-                ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-                cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
-                galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
+            }
 
-                takeCamera.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        cameraIntent();
-                        dialog.hide();
-                    }
-                });
-
-                takeGallery.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        galleryIntent();
-                        dialog.hide();
-
-                    }
-                });
-
+            private void onClickImagePicker(IMAGE_CLICK_TYPE image_click_type) {
+                if(image_click_type.name().equals(IMAGE_CLICK_TYPE.CAMERA.name())) {
+                    cameraIntent();
+                }else if(image_click_type.name().equals(IMAGE_CLICK_TYPE.GALLERY.name())){
+                    galleryIntent();
+                }
             }
         });
 

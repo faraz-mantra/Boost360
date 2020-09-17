@@ -65,6 +65,17 @@ class ProcessApiSyncModel(
     return list
   }
 
+  fun getDataErrorActivatePlan(channels: ArrayList<ChannelModel>?): ArrayList<ProcessApiSyncModel> {
+    val businessProfile = "•     Business name Registered\n•     Business location added\n•     Contact number added\n•     Business Email address Added"
+    val list = ArrayList<ProcessApiSyncModel>()
+    val selectedItems = channels?.map { it.recyclerViewType = RecyclerViewItemType.API_PROCESS_CHANNEL_ITEM.getLayout();it }
+    val count = channels?.filter { it.status == SyncStatus.ERROR.name }?.size
+    list.add(ProcessApiSyncModel("Business profile Created", null, businessProfile, status = SyncStatus.SUCCESS.name))
+    list.add(ProcessApiSyncModel("Business connected to " + getChannelTxt(count), selectedItems, null, status = SyncStatus.SUCCESS.name))
+    list.add(ProcessApiSyncModel("Error in activating your plan", null, "•     Activating plan features...", status = SyncStatus.ERROR.name))
+    return list
+  }
+
 
   //TODO  Update digital channel
   fun getDataStartUpdate(channels: ArrayList<ChannelModel>?): ArrayList<ProcessApiSyncModel> {

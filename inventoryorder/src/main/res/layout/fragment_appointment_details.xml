@@ -317,7 +317,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/size_16"
-                android:text="@string/booking_details"
+                android:text="@string/apt_details"
                 android:textColor="@color/greyish_brown"
                 app:fontFamily="@font/semi_bold"
                 app:textType="BODY_1"
@@ -358,7 +358,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:text="@string/cancel_order"
+                android:text="@string/cancel_apt"
                 android:textColor="@color/greyish_brown"
                 app:fontFamily="@font/semi_bold"
                 app:textType="BODY_1" />
@@ -454,11 +454,11 @@
           <com.framework.views.customViews.CustomButton
               android:id="@+id/buttonConfirmOrder"
               android:layout_width="wrap_content"
-              android:layout_height="@dimen/size_38"
+              android:layout_height="wrap_content"
               android:background="@drawable/button_confirm_order"
               android:shadowRadius="0"
               android:stateListAnimator="@null"
-              android:text="CONFIRM ORDER"
+              android:text="@string/confirm_appointment"
               android:textColor="@color/white"
               app:textType="HEADING_6"
               tools:ignore="UnusedAttribute" />

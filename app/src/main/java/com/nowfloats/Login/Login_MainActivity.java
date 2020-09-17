@@ -231,8 +231,8 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
                 if (progressDialog != null && progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
-                if (response != null) processLoginSuccessRequest(response);
-                else Methods.showSnackBarNegative(Login_MainActivity.this, "Error occurred while processing your login request. Please get in touch with Boost Support team");
+                if (response != null && response.getLoginId() != null) processLoginSuccessRequest(response);
+                else Methods.showSnackBarNegative(Login_MainActivity.this, "Ensure that the entered username and password is correct.");
             }
 
             @Override
@@ -652,11 +652,8 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
             public void onSuccess(@Nullable VerificationRequestResult response) {
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-
-                if (response != null)
-                    processLoginSuccessRequest(response);
-                else
-                    Methods.showSnackBarNegative(Login_MainActivity.this, "Unable to validate your phone number with Boost.");
+                if (response != null) processLoginSuccessRequest(response);
+                else Methods.showSnackBarNegative(Login_MainActivity.this, "Unable to validate your phone number with Boost.");
             }
 
             @Override

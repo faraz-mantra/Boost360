@@ -36,6 +36,8 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.nowfloats.util.Key_Preferences.MAIN_PRIMARY_CONTACT_NUM;
+
 /**
  * Created by Dell on 28-01-2015.
  */
@@ -123,6 +125,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_IS_SIGNUP_FROM_FACEBOOK = "SignUpFacebook";
     private String KEY_FACEBOOK_IMAGE_URL = "FacebookImageURL";
     private String IS_ACCOUNT_SAVE = "isAccountSave";
+    private String IS_SELF_BRANDED_KYC_ADD = "isSelfBrandedKycAdd";
     private String KEY_FACEBOOK_PROFILE_DESCRIPTION = "FacebookProfileDescription";
     private String KEY_IS_THINKSITY = "isThinksity";
     private String KEY_IS_FREE_DOMAIN = "isFreeDomain";
@@ -189,6 +192,11 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public String getUserProfileMobile() {
         return pref.getString(PROFILE_NUMBER, null);
     }
+
+    public String getUserPrimaryMobile() {
+        return pref.getString(MAIN_PRIMARY_CONTACT_NUM, "");
+    }
+
 
     public void setUserProfileName(String name) {
         editor.putString(PROFILE_NAME, name);
@@ -521,11 +529,6 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(KEY_FACEBOOK_PAGE_ID, null);
     }
 
-    public void storeFPEmail(String fpEmail) {
-        editor.putString(KEY_FP_EMAIL, fpEmail);
-        editor.apply();
-    }
-
     public String getFPEmail() {
         return pref.getString(Key_Preferences.GET_FP_DETAILS_EMAIL, null);
     }
@@ -682,10 +685,18 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
 
+    public void setSelfBrandedKycAdd(Boolean b) {
+        editor.putBoolean(IS_SELF_BRANDED_KYC_ADD, b);
+        editor.apply();
+    }
+
+    public Boolean isSelfBrandedKycAdd() {
+        return pref.getBoolean(IS_SELF_BRANDED_KYC_ADD, false);
+    }
+
     public void setAccountSave(Boolean b) {
         editor.putBoolean(IS_ACCOUNT_SAVE, b);
         editor.apply();
-
     }
 
     public Boolean gisAccountSave() {

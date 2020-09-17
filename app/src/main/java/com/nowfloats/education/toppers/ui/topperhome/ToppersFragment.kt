@@ -114,7 +114,7 @@ class ToppersFragment : BaseFragment(), ItemClickEventListener {
 
     override fun onEditClick(data: Any, position: Int) {
         toppersAdapter.menuOption(position, false)
-        (activity as ToppersActivity).addFragment(TopperDetailsFragment.newInstance(data as Data), TOPPERS_FRAGMENT)
+        (activity as ToppersActivity).addFragment(TopperDetailsFragment.newInstance(data as Data, true), TOPPERS_FRAGMENT)
     }
 
     override fun onDeleteClick(data: Any, position: Int) {

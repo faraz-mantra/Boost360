@@ -59,7 +59,6 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
       val dialog = it as? BottomSheetDialog ?: return@setOnShowListener
       val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) ?: return@setOnShowListener
       BottomSheetBehavior.from(bottomSheet).apply { state = getBottomSheetInitialState() }
-
 //      baseActivity.window?.setDimAmount( - 0.1f)
 //      bottomSheet.setBackgroundResource(android.R.color.background_dark)
     }
