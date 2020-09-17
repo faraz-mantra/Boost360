@@ -181,8 +181,12 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
     binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
     binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
+    if(order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) }!!)
+      binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
     if(order.BuyerDetails?.ContactDetails?.EmailId?.isNotBlank()!!){
       binding?.tvCustomerEmail?.text = order.BuyerDetails?.ContactDetails?.EmailId?.trim()
+      if(!checkValidEmail(order.BuyerDetails.ContactDetails.EmailId.trim()))
+        binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
     }else {
       binding?.tvCustomerEmail?.isGone = true
     }
