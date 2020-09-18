@@ -13,6 +13,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -66,6 +67,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
     private final int gallery_req_id = 0;
     private ProgressDialog progressDialog;
     View dummyView1;
+    String path = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,15 +85,14 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         attachedURLText = findViewById(R.id.attached_url);
         saveButton = findViewById(R.id.save_review);
         uploadImageButton = findViewById(R.id.upload_image_button);
-
         attachBrochureEmptyLayout = findViewById(R.id.attach_brochure_empty_layout);
         fileSelectedLayout = findViewById(R.id.file_selected_layout);
-
         dummyView1 = findViewById(R.id.dummy_view1);
-
         dummyView1.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
         removePdfButton = findViewById(R.id.remove_pdf);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
 
         removePdfButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,12 +107,16 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ScreenType.equals("edit")) {
-                    updateExistingTeamsAPI();
-                    Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
+                if (path != null) {
+                    showLoader("Uploading document.Please Wait...");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            uploadPdfFileToServer();
+                        }
+                    }, 200);
                 } else {
-                    createNewTeamsAPI();
-                    Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
+                    uploadDataToServer();
                 }
             }
         });
@@ -209,6 +214,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
                 APICalls.addBrochuresData(request, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
+                        hideLoader();
                         if (response.getStatus() != 200) {
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
@@ -219,13 +225,14 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
 
                     @Override
                     public void failure(RetrofitError error) {
-
+                        hideLoader();
                         Methods.showSnackBarNegative(DigitalBrochuresDetailsActivity.this, getString(R.string.something_went_wrong));
                     }
                 });
 
             }
         } catch (Exception e) {
+            hideLoader();
             e.printStackTrace();
         }
 
@@ -284,6 +291,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
                 APICalls.updateBrochuresData(requestBody, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
+                        hideLoader();
                         if (response.getStatus() != 200) {
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
@@ -294,6 +302,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
 
                     @Override
                     public void failure(RetrofitError error) {
+                        hideLoader();
                         if (error.getResponse().getStatus() == 200) {
                             Methods.showSnackBarPositive(DigitalBrochuresDetailsActivity.this, "Successfully Updated Brochure Details");
                             finish();
@@ -306,6 +315,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
             }
 
         } catch (Exception e) {
+            hideLoader();
             e.printStackTrace();
         }
 
@@ -329,6 +339,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
             APICalls.deleteBrochuresData(requestBody, new Callback<String>() {
                 @Override
                 public void success(String data, Response response) {
+                    hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deleteTeams ->", response.getBody().toString());
                         Methods.showSnackBarPositive(DigitalBrochuresDetailsActivity.this, "Successfully Deleted.");
@@ -340,6 +351,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
 
                 @Override
                 public void failure(RetrofitError error) {
+                    hideLoader();
                     if (error.getResponse().getStatus() == 200) {
                         Methods.showSnackBarPositive(DigitalBrochuresDetailsActivity.this, "Successfully Deleted.");
                         finish();
@@ -350,6 +362,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
             });
 
         } catch (Exception e) {
+            hideLoader();
             e.printStackTrace();
         }
     }
@@ -392,29 +405,43 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PDF) {
                 Uri selectedUri_PDF = data.getData();
-//                String path = Utils.getAbsoluteFilePath(this, selectedUri_PDF);
-                String path = FileUtils.getPath(this, selectedUri_PDF);
-//                SelectedPDF = getPDFPath(selectedUri_PDF);
-//                showLoader("Uploading Image. Please Wait...");
-                String fname = "Brochures" + System.currentTimeMillis();
-                try {
-                    documentPdfUrl = new UploadPdfFile(DigitalBrochuresDetailsActivity.this, this, path, fname).execute().get();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                path = FileUtils.getPath(this, selectedUri_PDF);
+                attachBrochureEmptyLayout.setVisibility(View.GONE);
+                fileSelectedLayout.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    private void uploadDataToServer() {
+        if (ScreenType.equals("edit")) {
+            showLoader("Updating Record.Please Wait...");
+            updateExistingTeamsAPI();
+            Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
+        } else {
+            showLoader("Creating Record.Please Wait...");
+            createNewTeamsAPI();
+            Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
+        }
+    }
+
+    private void uploadPdfFileToServer() {
+        String fname = "Brochures" + System.currentTimeMillis();
+        if (path != null) {
+            try {
+                documentPdfUrl = new UploadPdfFile(DigitalBrochuresDetailsActivity.this, this, path, fname).execute().get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
 
     @Override
     public void UploadedPdfURL(String url) {
-//        hideLoader();
         Log.i("UploadedPdfURL", ">>>>> " + url);
         documentPdfUrl = url;
-        attachBrochureEmptyLayout.setVisibility(View.GONE);
-        fileSelectedLayout.setVisibility(View.VISIBLE);
+        uploadDataToServer();
     }
 
 

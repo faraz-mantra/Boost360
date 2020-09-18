@@ -66,7 +66,12 @@ class ViewAllFeaturesFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        loadData()
+        if(arguments != null && arguments!!.containsKey("categoryType")){
+            toolbar_text.setText(arguments!!.getString("categoryType") + " ADD-ONS")
+            loadDataByType(arguments!!.getString("categoryType"))
+        }else {
+            loadData()
+        }
         initMvvM()
         initializeRecycler()
 
@@ -79,6 +84,10 @@ class ViewAllFeaturesFragment : BaseFragment() {
         }
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE All_Features Loaded", "All_Features", "")
+    }
+
+    fun loadDataByType(categoryType: String?){
+        viewModel.loadAddonsByTypeFromDB(categoryType!!)
     }
 
     fun loadData(){

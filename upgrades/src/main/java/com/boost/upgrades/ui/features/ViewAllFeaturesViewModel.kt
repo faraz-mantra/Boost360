@@ -31,6 +31,26 @@ class ViewAllFeaturesViewModel(application: Application) : BaseViewModel(applica
         return updatesLoader
     }
 
+    fun loadAddonsByTypeFromDB(categoryType: String){
+        updatesLoader.postValue(true)
+        compositeDisposable.add(
+                AppDatabase.getInstance(getApplication())!!
+                        .featuresDao()
+                        .getFeaturesItemsByType(categoryType)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSuccess {
+                            updatesResult.postValue(it)
+                            updatesLoader.postValue(false)
+                        }
+                        .doOnError {
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        }
+                        .subscribe()
+        )
+    }
+
     fun loadAddonsFromDB() {
         updatesLoader.postValue(true)
         compositeDisposable.add(
