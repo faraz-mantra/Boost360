@@ -158,6 +158,8 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
   private fun setOrderDetails(order: OrderItem) {
     binding?.orderType?.text = getStatusText(order)
     binding?.tvOrderStatus?.text = order.PaymentDetails?.status()
+    val b = (PaymentDetailsN.STATUS.from(order.PaymentDetails?.Status ?: "") == PaymentDetailsN.STATUS.PENDING)
+    if (b) binding?.tvOrderStatus?.setTextColor(getColor(R.color.watermelon_light_10))
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
@@ -177,15 +179,13 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
     binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
     binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
-    if(order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) }!!)
+
+    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) }!!)
       binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
-    if(order.BuyerDetails?.ContactDetails?.EmailId?.isNotBlank()!!){
-      binding?.tvCustomerEmail?.text = order.BuyerDetails?.ContactDetails?.EmailId?.trim()
-      if(!checkValidEmail(order.BuyerDetails.ContactDetails.EmailId.trim()))
-        binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
-    }else{
-      binding?.tvCustomerEmail?.isGone = true
-    }
+    if (order.BuyerDetails.ContactDetails.EmailId.isNullOrEmpty().not()) {
+      binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
+      if (!checkValidEmail(order.BuyerDetails.ContactDetails.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
+    } else binding?.tvCustomerEmail?.isGone = true
 
 
     // shipping details
@@ -228,9 +228,9 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
       }
       binding?.tvCustomerEmail -> {
-        if(orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()?.let { checkValidEmail(it) }!!) {
+        if (orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()?.let { checkValidEmail(it) }!!) {
           openEmailApp()
-        }else{
+        } else {
           showShortToast(getString(R.string.email_invalid_format_error))
         }
       }
@@ -239,7 +239,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
   private fun openEmailApp() {
     val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-            "mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
+        "mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
     startActivity(emailIntent)
   }
 
@@ -257,19 +257,17 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     return Pattern.compile("^[+]?[0-9]{10,12}\$").matcher(mobile).find()
   }
 
-  private fun cancelOrderDialog(){
+  private fun cancelOrderDialog() {
     MaterialAlertDialogBuilder(context)
-            .setTitle(getString(R.string.cancel_appointment_confirmation_message))
-            .setNeutralButton(getString(R.string.no)){
-              dialog, _ ->
-              dialog.dismiss()
-            }
-            .setPositiveButton(getString(R.string.yes)){
-              dialog, which ->
-              apiCancelOrder()
-              dialog.dismiss()
-            }
-            .show()
+        .setTitle(getString(R.string.cancel_appointment_confirmation_message))
+        .setNeutralButton(getString(R.string.no)) { dialog, _ ->
+          dialog.dismiss()
+        }
+        .setPositiveButton(getString(R.string.yes)) { dialog, which ->
+          apiCancelOrder()
+          dialog.dismiss()
+        }
+        .show()
   }
 
   private fun apiCancelOrder() {
