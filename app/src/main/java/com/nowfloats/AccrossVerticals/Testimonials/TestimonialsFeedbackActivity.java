@@ -45,10 +45,13 @@ import com.nowfloats.AccrossVerticals.API.model.DeleteTestimonials.DeleteTestimo
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
 import com.nowfloats.AccrossVerticals.API.model.UpdateTestimonialsData.UpdateTestimonialsData;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
 import com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
@@ -164,8 +167,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
             }
         });
 
-        Bundle extra = getIntent().getExtras();
-        ScreenType = extra.getString("ScreenState");
+
         if (ScreenType != null && ScreenType.equals("edit")) {
             displayData();
         }
@@ -193,23 +195,32 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         ImageView rightIcon;
         TextView title;
 
+        Bundle extra = getIntent().getExtras();
+        ScreenType = extra.getString("ScreenState");
+
         title = findViewById(R.id.title);
         backButton = findViewById(R.id.back_button);
         rightButton = findViewById(R.id.right_icon_layout);
         rightIcon = findViewById(R.id.right_icon);
-        title.setText("Testimonials");
-        rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
-        rightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ScreenType != null && ScreenType.equals("edit")) {
-                    showLoader("Deleting Record.Please Wait...");
-                    deleteRecord(itemId);
-                    return;
+        if(ScreenType.equals("edit")){
+            title.setText("Edit testimonial");
+            rightIcon.setImageResource(R.drawable.ic_delete_white_outerline);
+            rightButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (ScreenType != null && ScreenType.equals("edit")) {
+                        showLoader("Deleting Record.Please Wait...");
+                        deleteRecord(itemId);
+                        return;
+                    }
+                    onBackPressed();
                 }
-                onBackPressed();
-            }
-        });
+            });
+        }else{
+            title.setText("Add a testimonial");
+        }
+
+
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,37 +231,49 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     }
 
     public void showDialogToGetImage() {
-        final MaterialDialog dialog = new MaterialDialog.Builder(TestimonialsFeedbackActivity.this)
-                .customView(R.layout.featuredimage_popup, true)
-                .show();
 
-        PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
-        View view = dialog.getCustomView();
-        TextView title = (TextView) view.findViewById(R.id.textview_heading);
-        title.setText("Upload Image");
-        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-        cameraImg.setColorFilter(whiteLabelFilter);
-        galleryImg.setColorFilter(whiteLabelFilter);
+        final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+        imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
 
-        takeCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraIntent();
-                dialog.dismiss();
-            }
-        });
+//        final MaterialDialog dialog = new MaterialDialog.Builder(TestimonialsFeedbackActivity.this)
+//                .customView(R.layout.featuredimage_popup, true)
+//                .show();
+//
+//        PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
+//        View view = dialog.getCustomView();
+//        TextView title = (TextView) view.findViewById(R.id.textview_heading);
+//        title.setText("Upload Image");
+//        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+//        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+//        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+//        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+//        cameraImg.setColorFilter(whiteLabelFilter);
+//        galleryImg.setColorFilter(whiteLabelFilter);
+//
+//        takeCamera.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                cameraIntent();
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        takeGallery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                galleryIntent();
+//                dialog.dismiss();
+//
+//            }
+//        });
+    }
 
-        takeGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                galleryIntent();
-                dialog.dismiss();
-
-            }
-        });
+    private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
+        if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
+            cameraIntent();
+        }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
+            galleryIntent();
+        }
     }
 
     void createNewTestimonialsAPI() {

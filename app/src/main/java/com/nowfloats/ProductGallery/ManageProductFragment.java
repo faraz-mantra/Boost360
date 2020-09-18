@@ -79,6 +79,7 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.WebEngageController;
 import com.nowfloats.webactions.WebAction;
 import com.nowfloats.webactions.WebActionsFilter;
 import com.nowfloats.webactions.models.ProductImage;
@@ -2318,6 +2319,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                             uploadProductImage(productId);
                         } else {
                             Toast.makeText(getContext(), "Product saved successfully.", Toast.LENGTH_SHORT).show();
+                            WebEngageController.trackEvent("Product added to catalogue", "MANAGE CONTENT", "");
                             hideDialog();
 
                             if (getActivity() != null) {
