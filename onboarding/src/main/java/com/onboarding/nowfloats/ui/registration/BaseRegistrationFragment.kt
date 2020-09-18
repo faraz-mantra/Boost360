@@ -46,10 +46,6 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
     get() {
       return pref?.getString(PreferenceConstant.USER_PROFILE_ID, "")
     }
-  protected val userId: String?
-    get() {
-      return pref?.getString(PreferenceConstant.USER_ID, "")
-    }
   protected val clientId: String?
     get() {
       return pref?.getString(PreferenceConstant.CLIENT_ID, "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21")
@@ -151,7 +147,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
   }
 
   protected open fun gotoBusinessApiCallDetails() {
-    NavigatorManager.pushToStackAndSaveRequest(ScreenModel(getPreviousScreen(), getToolbarTitle()), requestFloatsModel)
+    NavigatorManager.pushToStackAndSaveRequest(ScreenModel(Screen.REGISTERING, getToolbarTitle()), requestFloatsModel)
     startFragmentActivity(FragmentType.REGISTRATION_BUSINESS_API_CALL, getBundle())
   }
 

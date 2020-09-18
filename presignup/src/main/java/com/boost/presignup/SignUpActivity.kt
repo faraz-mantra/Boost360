@@ -164,7 +164,6 @@ class SignUpActivity : AppCompatActivity() {
                 intent.putExtra("profileUrl", profileUrl)
                 intent.putExtra("person_name", personName)
                 intent.putExtra("profile_id", responseResult?.Result?.LoginId)
-                intent.putExtra("user_id", responseResult?.Result?._id)
                 startActivity(intent)
               }else{
                 Log.d("createUserProfile", ">>>> Failure")
@@ -322,7 +321,6 @@ class SignUpActivity : AppCompatActivity() {
             intent.putExtra("profileUrl", profileUrl)
             intent.putExtra("person_name", personName)
             intent.putExtra("profile_id", responseResult?.Result?.LoginId)
-            intent.putExtra("user_id", responseResult?.Result?._id)
             startActivity(intent)
           } else {
             create_account_button.isVisible = true

@@ -17,7 +17,6 @@ class SignUpConfirmation : AppCompatActivity() {
 
   private var personName = ""
   private var profile_id = ""
-  private var user_id = ""
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_sign_up_confirmation)
@@ -26,7 +25,6 @@ class SignUpConfirmation : AppCompatActivity() {
     val currentFirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     val bundle = intent.extras
     profile_id = bundle?.getString("profile_id") ?: ""
-    user_id = bundle?.getString("user_id") ?: ""
     personName = bundle?.getString("person_name") ?: ""
 
     if (personName.isEmpty() && currentFirebaseUser != null) {
@@ -55,7 +53,6 @@ class SignUpConfirmation : AppCompatActivity() {
 //      startActivity(intent)
       val editor = this.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, 0).edit()
       editor?.putString("user_profile_id", profile_id)
-      editor?.putString("user_id", user_id)
       editor?.putString("person_name", personName)
       editor?.putBoolean("IsSignUpComplete", true)
       editor?.apply()

@@ -24,10 +24,6 @@ data class Result(
     @SerializedName("ProfileAccessType")
     val ProfileAccessType: Int,
     @SerializedName("LoginId")
-    val LoginId: String,
-    @SerializedName("_id")
-    val _id: String,
-    @SerializedName("ParentId")
-    val parentId: String
+    val LoginId: String
 
 )

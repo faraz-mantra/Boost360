@@ -32,6 +32,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
     exitToast = makeText(this, R.string.press_again_exit, Toast.LENGTH_SHORT)
     setFragment()
   }
+
   private var type: FragmentType? = null
   private var exitToast: Toast? = null
 
@@ -234,12 +235,12 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
       }
       FragmentType.REGISTRATION_BUSINESS_API_CALL -> {
         if (exitToast?.view?.windowToken != null) {
-          if (registrationBusinessApiFragment?.isDigitalChannel() == false) {
+          if (registrationBusinessApiFragment?.isDigitalChannel() == false && registrationBusinessApiFragment?.isFpCreated() == false) {
             registrationBusinessApiFragment?.updateInfo()
             NavigatorManager.popCurrentScreen(ScreenModel.Screen.REGISTERING)
             super.onBackPressed()
           }
-        } else exitToast?.show()
+        } else if (registrationBusinessApiFragment?.isFpCreated() == false) exitToast?.show()
       }
       FragmentType.REGISTRATION_COMPLETE -> {
         if (exitToast?.view?.windowToken != null) {
