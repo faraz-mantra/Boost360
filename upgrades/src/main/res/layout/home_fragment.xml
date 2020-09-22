@@ -1180,7 +1180,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_30sdp"
-                        android:background="@drawable/share_helper_bg"
+                        android:background="@drawable/share_helper_click_effect"
                         android:clickable="true"
                         android:focusable="true"
                         android:fontFamily="@font/open_sans"
