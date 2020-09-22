@@ -88,6 +88,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     var cart_list: List<WidgetModel>? = null
     var badgeNumber = 0
     var fpRefferalCode: String = ""
+    var feedBackLink: String? = null
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -257,6 +258,32 @@ class HomeFragment : BaseFragment(), HomeListener {
                     VIEW_ALL_FEATURE
             )
         }
+
+        //chat bot view button clicked
+        view_chat.setOnClickListener {
+            val details = DetailsFragment.newInstance()
+            val args = Bundle()
+            args.putString("itemId", "CHATBOT")
+            details.arguments = args
+            (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
+        }
+
+        //share feed back button
+        share_feedback_button.setOnClickListener {
+            if(feedBackLink!=null) {
+                val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
+                val args = Bundle()
+                args.putString("link", feedBackLink)
+                webViewFragment.arguments = args
+                (activity as UpgradeActivity).addFragment(
+                        webViewFragment,
+                        Constants.WEB_VIEW_FRAGMENT
+                )
+            }else{
+                Toasty.error(requireContext(), "Feedback Service Not Available. Try Later..", Toast.LENGTH_LONG).show()
+            }
+        }
+
     }
 
 //  private fun initYouTube() {
@@ -383,8 +410,12 @@ class HomeFragment : BaseFragment(), HomeListener {
                         null
                 ))
             }
-            if (list.size > 0)
+            if (list.size > 0) {
+                package_layout.visibility = View.VISIBLE
                 updatePackageViewPager(list)
+            }else{
+                package_layout.visibility = View.GONE
+            }
         })
 
         viewModel.getAllFeatureDeals().observe(this, androidx.lifecycle.Observer {
@@ -483,6 +514,11 @@ class HomeFragment : BaseFragment(), HomeListener {
                 partner_layout.visibility = View.GONE
             }
         })
+
+        viewModel.getFeedBackLink().observe(this, androidx.lifecycle.Observer {
+            Log.e("getFeedBackLink", it.toString())
+            feedBackLink=it
+        })
     }
 
     fun updateRecycler(list: List<FeaturesModel>) {
@@ -561,7 +597,6 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     fun updatePackageViewPager(list: List<Bundles>) {
-        package_layout.visibility = View.VISIBLE
         package_viewpager.offscreenPageLimit = list.size
         packageViewPagerAdapter.addupdates(list)
         packageViewPagerAdapter.notifyDataSetChanged()

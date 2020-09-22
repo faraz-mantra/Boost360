@@ -53,6 +53,19 @@ class AddonsCategoryAdapter(
     }
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
+        when (upgradeList.get(position)) {
+            "Marketing" -> {holder.image.setImageResource(R.drawable.addons_category_marketing)}
+            "Communication" -> {holder.image.setImageResource(R.drawable.addons_category_communication)}
+            "Identity" -> {holder.image.setImageResource(R.drawable.addons_category_identity)}
+            "Content Management" -> {holder.image.setImageResource(R.drawable.addons_category_contentmanagement)}
+            "Support" -> {holder.image.setImageResource(R.drawable.addons_category_support)}
+            "E-Commerce" -> {holder.image.setImageResource(R.drawable.addons_category_ecommerce)}
+            "Reports" -> {holder.image.setImageResource(R.drawable.addons_category_reports)}
+            "Security" -> {holder.image.setImageResource(R.drawable.addons_category_security)}
+            "Booking" -> {holder.image.setImageResource(R.drawable.addons_category_booking)}
+            "Catalogue" -> {holder.image.setImageResource(R.drawable.addons_category_catalogue)}
+
+        }
         holder.title.setText(upgradeList.get(position))
         getFeaturesCount(holder, position)
         holder.itemView.setOnClickListener {
@@ -73,6 +86,7 @@ class AddonsCategoryAdapter(
     class upgradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var view = itemView.findViewById<View>(R.id.dummy_view)
         var title = itemView.findViewById<TextView>(R.id.title)
+        var image = itemView.findViewById<ImageView>(R.id.imageView2)
 
     }
 
