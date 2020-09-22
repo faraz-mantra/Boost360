@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp"
-            android:text="This Section is for filling your GSTIN information."
+            android:text="This section is for filling your GSTIN information."
             android:textColor="#747474"
             android:textSize="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"

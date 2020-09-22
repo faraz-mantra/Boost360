@@ -24,6 +24,8 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.thinksity.R;
 
+import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
+
 public class DomainNotPurchaseFragment extends Fragment {
 
     private DomainNotPurchaseViewModel mViewModel;
@@ -87,6 +89,7 @@ public class DomainNotPurchaseFragment extends Fragment {
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());
         intent.putExtra("loginid", session.getUserProfileId());
+        intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {

@@ -45,6 +45,12 @@ class WebViewFragment : BaseFragment() {
         }
 
         if (link != null) {
+            webview.getSettings().setJavaScriptEnabled(true)
+            webview.webViewClient = object : WebViewClient() {
+                override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                    return false
+                }
+            }
             webview.loadUrl(link)
         } else {
             Toast.makeText(requireContext(), "Link is Empty!!", Toast.LENGTH_LONG).show()
