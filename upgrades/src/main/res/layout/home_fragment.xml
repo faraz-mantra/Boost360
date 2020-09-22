@@ -83,11 +83,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
-                        android:textStyle="bold"
                         android:text="ADD-ONS STORE"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_13sdp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageViewCart1"
                         app:layout_constraintStart_toEndOf="@+id/imageView21"
@@ -174,32 +174,15 @@
                             android:textColor="@color/white"
                             android:textSize="@dimen/_50ssp" />
 
-                        <LinearLayout
+                        <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_semibold"
-                                android:includeFontPadding="false"
-                                android:paddingEnd="@dimen/_2sdp"
-                                android:text="FREE"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/_9sdp"
-                                app:layout_constraintStart_toStartOf="parent" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans"
-                                android:includeFontPadding="false"
-                                android:paddingStart="@dimen/_2sdp"
-                                android:text="FOREVER"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/_9sdp"
-                                app:layout_constraintStart_toStartOf="parent" />
-                        </LinearLayout>
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
+                            android:text="FREE FOREVER"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_10sdp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -266,10 +249,10 @@
                     android:id="@+id/banner_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -308,14 +291,14 @@
                     android:id="@+id/package_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Featured Packs"
                     android:layout_marginStart="@dimen/_15sdp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:fontFamily="@font/open_sans"
+                    android:text="Featured Packs"
                     android:textColor="#4a4a4a"
+                    android:textFontWeight="600"
                     android:textSize="@dimen/_14ssp"
-                    android:textFontWeight="600" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/package_viewpager"
@@ -370,8 +353,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:text="hotels and motels"
-                    android:textColor="#FFB900"
                     android:textAllCaps="false"
+                    android:textColor="#FFB900"
                     android:textFontWeight="600"
                     android:textSize="@dimen/_14ssp" />
             </LinearLayout>
@@ -382,9 +365,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/recommended_features_section"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/home_gradient_bg"
                 android:orientation="vertical"
-                android:layout_marginTop="16dp"
                 android:paddingTop="@dimen/_10sdp">
 
 
@@ -618,9 +601,9 @@
                         app:cardCornerRadius="@dimen/_40sdp">
 
                         <ImageView
-                            android:layout_margin="@dimen/_20sdp"
                             android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_40sdp"
+                            android:layout_margin="@dimen/_20sdp"
                             app:srcCompat="@drawable/ic_expert_guidence" />
                     </androidx.cardview.widget.CardView>
 
@@ -655,32 +638,32 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@id/shedule_image"
-                            android:text="Available tomorrow from 10am"
-                            android:gravity="center_vertical"
                             android:drawableStart="@drawable/ic_blue_circle"
                             android:drawablePadding="@dimen/_5sdp"
+                            android:gravity="center_vertical"
+                            android:text="Available tomorrow from 10am"
                             android:textColor="@color/common_text_color" />
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/call_shedule_button"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_below="@id/recycler"-->
-<!--                            android:layout_marginTop="@dimen/_10sdp"-->
-<!--                            android:background="@drawable/orange_button_click_effect"-->
-<!--                            android:drawableStart="@drawable/ic_call_shedule"-->
-<!--                            android:drawablePadding="@dimen/_10sdp"-->
-<!--                            android:fontFamily="@font/open_sans_semibold"-->
-<!--                            android:gravity="center"-->
-<!--                            android:paddingStart="@dimen/_10sdp"-->
-<!--                            android:paddingTop="@dimen/_5sdp"-->
-<!--                            android:paddingEnd="@dimen/_20sdp"-->
-<!--                            android:paddingBottom="@dimen/_5sdp"-->
-<!--                            android:text="Schedule a Call Back"-->
-<!--                            android:textAllCaps="true"-->
-<!--                            android:textColor="@color/white"-->
-<!--                            android:textFontWeight="800"-->
-<!--                            android:textSize="@dimen/_8sdp" />-->
+                        <!--                        <TextView-->
+                        <!--                            android:id="@+id/call_shedule_button"-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_below="@id/recycler"-->
+                        <!--                            android:layout_marginTop="@dimen/_10sdp"-->
+                        <!--                            android:background="@drawable/orange_button_click_effect"-->
+                        <!--                            android:drawableStart="@drawable/ic_call_shedule"-->
+                        <!--                            android:drawablePadding="@dimen/_10sdp"-->
+                        <!--                            android:fontFamily="@font/open_sans_semibold"-->
+                        <!--                            android:gravity="center"-->
+                        <!--                            android:paddingStart="@dimen/_10sdp"-->
+                        <!--                            android:paddingTop="@dimen/_5sdp"-->
+                        <!--                            android:paddingEnd="@dimen/_20sdp"-->
+                        <!--                            android:paddingBottom="@dimen/_5sdp"-->
+                        <!--                            android:text="Schedule a Call Back"-->
+                        <!--                            android:textAllCaps="true"-->
+                        <!--                            android:textColor="@color/white"-->
+                        <!--                            android:textFontWeight="800"-->
+                        <!--                            android:textSize="@dimen/_8sdp" />-->
 
                     </LinearLayout>
 
@@ -750,13 +733,14 @@
                     android:id="@+id/video_addons_player_layout"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="@color/common_text_color"
                     android:orientation="vertical"
-                    android:layout_marginTop="@dimen/_5sdp"
                     app:layout_constraintDimensionRatio="2:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/video_addons_title">
+
                     <WebView
                         android:id="@+id/videoPlayerWebView"
                         android:layout_width="match_parent"
@@ -793,33 +777,34 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/video_chat_icon"
-                        android:layout_toLeftOf="@id/view_chat"
                         android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/view_chat"
+                        android:layout_toRightOf="@id/video_chat_icon"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Website Chatbot"
-                            android:textColor="#FFB900"
                             android:fontFamily="@font/open_sans"
-                            />
+                            android:text="Website Chatbot"
+                            android:textColor="#FFB900" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/common_text_color"
                             android:fontFamily="@font/open_sans"
-                            android:textStyle="bold"
+                            android:text="Watch how a chatbot makes your site 2x interactive "
+                            android:textColor="@color/common_text_color"
                             android:textSize="@dimen/_10sdp"
-                            android:text="Watch how a chatbot makes your site 2x interactive " />
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <TextView
                         android:id="@+id/view_chat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="@dimen/_10sdp"
@@ -834,10 +819,8 @@
                         android:paddingEnd="@dimen/_20sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="View"
-                        android:layout_centerVertical="true"
                         android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:layout_alignParentEnd="true"/>
+                        android:textColor="@color/white" />
 
                 </RelativeLayout>
 
@@ -845,9 +828,9 @@
                     android:id="@+id/videos_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_20sdp"
                     android:clipChildren="false"
                     android:clipToPadding="false"
-                    android:layout_marginBottom="@dimen/_20sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/video_chat_layout"
@@ -917,7 +900,7 @@
                                 android:layout_below="@+id/imagexx"
                                 android:layout_centerHorizontal="true"
                                 android:layout_margin="@dimen/_10sdp"
-                                android:background="@drawable/all_side_curve_bg"
+                                android:background="@drawable/all_side_medium_curve_bg"
                                 android:elevation="@dimen/_4sdp"
                                 android:gravity="center">
 
@@ -938,7 +921,7 @@
                                 android:layout_below="@+id/imagexx"
                                 android:layout_centerHorizontal="true"
                                 android:layout_margin="@dimen/_10sdp"
-                                android:background="@drawable/all_side_curve_bg"
+                                android:background="@drawable/all_side_medium_curve_bg"
                                 android:elevation="@dimen/_4sdp"
                                 android:gravity="center">
 
@@ -1201,14 +1184,14 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:fontFamily="@font/open_sans"
-                        android:textStyle="bold"
                         android:gravity="center"
                         android:paddingStart="@dimen/_30sdp"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_30sdp"
                         android:paddingBottom="@dimen/_10sdp"
                         android:text="Share your feedback"
-                        android:textColor="#FFB900" />
+                        android:textColor="#FFB900"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
