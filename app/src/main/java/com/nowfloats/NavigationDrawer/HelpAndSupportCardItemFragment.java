@@ -41,6 +41,8 @@ import zendesk.support.guide.HelpCenterActivity;
 import zendesk.support.request.RequestActivity;
 import zendesk.support.requestlist.RequestListActivity;
 
+import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
+
 /**
  * Created by Admin on 28-12-2017.
  */
@@ -155,6 +157,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                         intent.putExtra("fpName", session.getFPName());
                         intent.putExtra("fpid", session.getFPID());
                         intent.putExtra("loginid", session.getUserProfileId());
+                        intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
                         if (session.getFPEmail() != null) {
                             intent.putExtra("email", session.getFPEmail());
                         } else {

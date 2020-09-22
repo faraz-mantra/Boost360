@@ -172,6 +172,7 @@ import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.B
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO_REMOVE;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_PAID;
 import static com.nowfloats.manageinventory.ManageInventoryFragment.getExperienceType;
+import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 import static com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivityKt.startFragmentActivityNew;
 
 //import com.nfx.leadmessages.ReadMessages;
@@ -1518,6 +1519,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         intent.putExtra("loginid", session.getUserProfileId());
         intent.putExtra("isOpenCardFragment", isOpenCardFragment);
         intent.putExtra("screenType", screenType);
+        intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {

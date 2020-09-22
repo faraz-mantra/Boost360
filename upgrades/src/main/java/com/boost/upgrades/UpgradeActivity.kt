@@ -66,6 +66,7 @@ class UpgradeActivity : AppCompatActivity() {
   var email: String? = null
   var mobileNo: String? = null
   var profileUrl: String? = null
+  var accountType: String? = null
   var isDeepLink: Boolean = false
   var isOpenCardFragment: Boolean = false
   var isBackCart: Boolean = false
@@ -97,6 +98,7 @@ class UpgradeActivity : AppCompatActivity() {
     email = intent.getStringExtra("email")
     mobileNo = intent.getStringExtra("mobileNo")
     profileUrl = intent.getStringExtra("profileUrl")
+    accountType = intent.getStringExtra("accountType")
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
