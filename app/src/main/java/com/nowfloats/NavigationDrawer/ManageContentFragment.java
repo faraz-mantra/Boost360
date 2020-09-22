@@ -112,13 +112,10 @@ public class ManageContentFragment extends Fragment {
                         intent.putExtra("fragmentName", "Business_Profile_Fragment_V2");
                         break;
                     case 4:
-                        if (experience_code.equals("EDU")) intent = new Intent(mContext, CustomPageActivity.class);
-                        else intent = new Intent(mContext, TestimonialsActivity.class);
+                        intent = new Intent(mContext, TestimonialsActivity.class);
                         break;
                     case 5:
-                        if (experience_code.equals("EDU")) {
-                            intent = new Intent(mContext, ToppersActivity.class);
-                        } else intent = new Intent(mContext, CustomPageActivity.class);
+                        intent = new Intent(mContext, CustomPageActivity.class);
                         break;
                     case 6:
                         if (experience_code.equals("HOT")) {
@@ -126,7 +123,7 @@ public class ManageContentFragment extends Fragment {
                         } else if (experience_code.equals("MFG")) {
                             intent = new Intent(mContext, ProjectAndTermsActivity.class);
                         } else if (experience_code.equals("EDU")) {
-                            intent = new Intent(mContext, BatchesActivity.class);
+                            intent = new Intent(mContext, ToppersActivity.class);
                         }
                         break;
                     case 7:
@@ -135,12 +132,14 @@ public class ManageContentFragment extends Fragment {
                         } else if (experience_code.equals("MFG")) {
                             intent = new Intent(mContext, DigitalBrochuresActivity.class);
                         } else if (experience_code.equals("EDU")) {
-                            intent = new Intent(mContext, FacultyActivity.class);
+                            intent = new Intent(mContext, BatchesActivity.class);
                         }
                         break;
                     case 8:
                         if (experience_code.equals("HOT")) {
                             intent = new Intent(mContext, SeasonalOffersActivity.class);
+                        } else if (experience_code.equals("EDU")) {
+                            intent = new Intent(mContext, FacultyActivity.class);
                         }
                         break;
                     default:
