@@ -476,6 +476,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                 public void onBitmapFailed(Exception e, Drawable errorDrawable) {
                     pd.dismiss();
                     targetMap = null;
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.failed_to_download_image), Toast.LENGTH_SHORT).show();
                     Methods.showSnackBarNegative((Activity) getApplicationContext(), getApplicationContext().getString(R.string.failed_to_download_image));
                 }
 

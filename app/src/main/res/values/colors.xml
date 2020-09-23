@@ -121,6 +121,7 @@
     <color name="disableButtonColor">#ffd566</color>
 
     <color name="customeNavyBlue">#9ABFFF</color>
+    <color name="grey_e4e4e4">#e4e4e4</color>
 
 
 </resources>

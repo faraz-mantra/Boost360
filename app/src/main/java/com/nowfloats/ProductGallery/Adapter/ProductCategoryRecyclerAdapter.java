@@ -17,6 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,15 +82,15 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             viewHolder.tvDescription.setText(model.Description);
 
             String category = model.category == null ? "" : model.category;
-            String brand = model.brandName == null ? "" : model.brandName;
 
+            String brand = model.brandName.isEmpty() || model.brandName == null ? "" : "<b>" + model.brandName + "</b>";
             viewHolder.tvBrand.setVisibility(View.VISIBLE);
             viewHolder.tvMissingInfo.setVisibility(View.GONE);
 
             if(!category.isEmpty() && !brand.isEmpty())
             {
                 String value = category.concat(" by ").concat(brand);
-                viewHolder.tvBrand.setText(value);
+                viewHolder.tvBrand.setText(Html.fromHtml(value));
             }
 
             else if(!category.isEmpty())
@@ -97,7 +100,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
             else if(!brand.isEmpty())
             {
-                viewHolder.tvBrand.setText(brand);
+                viewHolder.tvBrand.setText(Html.fromHtml(brand));
             }
 
             else
@@ -170,6 +173,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         private TextView tvBasePrice;
         private TextView tvMissingInfo;
         private Button btnEdit;
+        private ImageView shareButton;
         private ImageView whatsappShareButton;
         private ImageView facebookShareButton;
 
@@ -186,11 +190,13 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             tvBasePrice = itemView.findViewById(R.id.label_base_price);
             tvMissingInfo = itemView.findViewById(R.id.label_missing_info);
             btnEdit = itemView.findViewById(R.id.button_edit);
+            shareButton = itemView.findViewById(R.id.shareData);
             whatsappShareButton = itemView.findViewById(R.id.share_whatsapp);
             facebookShareButton = itemView.findViewById(R.id.share_facebook);
             btnEdit.setOnClickListener(v -> callback.onItemClick(productList.get(getAdapterPosition())));
 //            whatsappShareButton.setOnClickListener(v -> share(false, 1, productList.get(getAdapterPosition())));
 //            facebookShareButton.setOnClickListener(v -> share(false, 0, productList.get(getAdapterPosition())));
+            shareButton.setOnClickListener(v -> shareCallback.onShareClicked(true, 0, productList.get(getAdapterPosition())));
             whatsappShareButton.setOnClickListener(v -> shareCallback.onShareClicked(false, 1, productList.get(getAdapterPosition())));
             facebookShareButton.setOnClickListener(v -> shareCallback.onShareClicked(false, 0, productList.get(getAdapterPosition())));
         }
