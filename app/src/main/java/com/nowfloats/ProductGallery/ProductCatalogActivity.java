@@ -437,8 +437,8 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         if(Methods.isOnline(this)){
-            @SuppressLint("DefaultLocale") String shareText = String.format("*%s*\nPrice: INR. %.2f\n%s\nView more details at: %s", product.Name, product.Price - product.DiscountAmount,
-                    product.Description, product.ProductUrl);
+            @SuppressLint("DefaultLocale") String shareText = String.format("*%s*\nPrice: INR. %.2f\n%s\nView more details at: %s", product.Name.trim(), product.Price - product.DiscountAmount,
+                    product.Description.trim(), product.ProductUrl.trim());
 
             Target target = new Target() {
                 @Override
@@ -449,7 +449,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                         Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
                         View view = new View(getApplicationContext());
                         view.draw(new Canvas(mutableBitmap));
-                        String path = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), mutableBitmap, "boost_360", null);
+                        String path = MediaStore.Images.Media.insertImage(getContentResolver(), mutableBitmap, "boost_360", null);
                         BoostLog.d("Path is:", path);
                         Uri uri = Uri.parse(path);
                         share.putExtra(Intent.EXTRA_TEXT, shareText);

@@ -67,8 +67,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSessionManager = new UserSessionManager(getApplicationContext(), SubscribersActivity.this);
-        WebEngageController.trackEvent("Clicked on newsletter subscriptions", "NEWSLETTER SUBSCRIPTIONS", mSessionManager.getFpTag());
+        WebEngageController.trackEvent("Clicked on newsletter subscriptions", "NEWSLETTER SUBSCRIPTIONS", "");
         MixPanelController.track(EventKeysWL.SIDE_PANEL_SUBSCRIBERS, null);
         setContentView(R.layout.activity_subscribers);
 
@@ -123,6 +122,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         mSubscriberAdapter = new SubscribersAdapter(this, mSubscriberList);
         mRecyclerView.setAdapter(mSubscriberAdapter);
 
+        mSessionManager = new UserSessionManager(getApplicationContext(), SubscribersActivity.this);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

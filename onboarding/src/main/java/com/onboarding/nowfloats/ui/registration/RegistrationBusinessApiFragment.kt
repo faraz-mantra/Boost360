@@ -68,7 +68,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     setOnClickListener(binding?.next, binding?.retry, binding?.supportCustomer)
     binding?.categoryImage?.setImageDrawable(requestFloatsModel?.categoryDataModel?.getImage(baseActivity))
     binding?.categoryImage?.setTintColor(ResourcesCompat.getColor(resources, R.color.white, baseActivity.theme))
-    if (requestFloatsModel?.isUpdate == true && requestFloatsModel?.floatingPointId.isNullOrEmpty().not()) {
+    if ((requestFloatsModel?.isUpdate == true || requestFloatsModel?.isFpCreate == true) && requestFloatsModel?.floatingPointId.isNullOrEmpty().not()) {
       floatingPointId = requestFloatsModel?.floatingPointId!!
     }
     setProcessApiSyncModel()
@@ -116,15 +116,12 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     }
     list.clear()
     if (requestFloatsModel?.isUpdate == true) {
-      if (connectedChannels.isNullOrEmpty()) backToDigitalChannelUpdate()
-      else list.addAll(ProcessApiSyncModel().getDataStartUpdate(connectedChannels))
+      if (connectedChannels.isNullOrEmpty()) backToDigitalChannelUpdate() else list.addAll(ProcessApiSyncModel().getDataStartUpdate(connectedChannels))
     } else {
       list.addAll(ProcessApiSyncModel().getDataStart(connectedChannels))
     }
     binding?.title?.text = resources.getString(
-        if (requestFloatsModel?.isUpdate == false)
-          R.string.processing_your_business_information
-        else R.string.processing_your_digital_channel
+        if (requestFloatsModel?.isUpdate == false) R.string.processing_your_business_information else R.string.processing_your_digital_channel
     )
   }
 
@@ -138,10 +135,17 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
             it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()) }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
           }
           floatingPointId = it.stringResponse ?: ""
+          saveFpCreateData()
           apiProcessChannelWhatsApp(dotProgressBar, floatingPointId)
         } else updateError("Floating point return null", it.status, "CREATE")
       } else updateError(it.error?.localizedMessage, it.status, "CREATE")
     })
+  }
+
+  private fun saveFpCreateData() {
+    requestFloatsModel?.isFpCreate = true
+    requestFloatsModel?.floatingPointId = floatingPointId
+    updateInfo()
   }
 
   private fun checkFpCreate(dotProgressBar: DotProgressBar): Boolean {
@@ -157,7 +161,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
 
   private fun apiProcessChannelWhatsApp(dotProgressBar: DotProgressBar, floatingPointId: String) {
     if (requestFloatsModel?.channelActionDatas.isNullOrEmpty().not()) {
-      val authorization = auth?.let { it } ?: ""
+      val authorization = auth ?: ""
       val dataRequest = UpdateChannelActionDataRequest(requestFloatsModel?.channelActionDatas?.firstOrNull(), requestFloatsModel?.getWebSiteId())
       viewModel?.postUpdateWhatsappRequest(dataRequest, authorization)
           ?.observeOnce(viewLifecycleOwner, Observer {
@@ -167,12 +171,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
                 it1.status = takeIf { ChannelType.WAB == it1.getType() }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
               }
               apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
-//              val optType = (if (requestFloatsModel?.whatsappEntransactional == true) RiaWhatsappRequest.OptType.OPTIN else RiaWhatsappRequest.OptType.OPTOUT).name
-//              val request = RiaWhatsappRequest(client_id = clientId, optType = optType, whatsappNumber = "+91${dataRequest.ActionData?.active_whatsapp_number}",
-//                  notificationType = RiaWhatsappRequest.NotificationType.RIANotificationType.name, customerId = requestFloatsModel?.getWebSiteId())
-//              viewModel?.updateRiaWhatsapp(request)?.observeOnce(viewLifecycleOwner, Observer {
-//                apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
-//              })
+//              optInOutOutApi()
             } else {
               connectedChannels.forEach { it1 ->
                 it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()).not() }?.let { ProcessApiSyncModel.SyncStatus.ERROR.name }
@@ -182,6 +181,16 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
           })
     } else apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
   }
+
+//TODO Remove optInOutOutApi
+//  private fun optInOutOutApi() {
+//    val optType = (if (requestFloatsModel?.whatsappEntransactional == true) RiaWhatsappRequest.OptType.OPTIN else RiaWhatsappRequest.OptType.OPTOUT).name
+//    val request = RiaWhatsappRequest(client_id = clientId, optType = optType, whatsappNumber = "+91${dataRequest.ActionData?.active_whatsapp_number}",
+//        notificationType = RiaWhatsappRequest.NotificationType.RIANotificationType.name, customerId = requestFloatsModel?.getWebSiteId())
+//    viewModel?.updateRiaWhatsapp(request)?.observeOnce(viewLifecycleOwner, Observer {
+//      apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
+//    })
+//  }
 
 
   private fun apiProcessChannelAccessTokens(dotProgressBar: DotProgressBar, floatingPointId: String) {
@@ -365,5 +374,9 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       backToDigitalChannelUpdate()
       true
     } else false
+  }
+
+  fun isFpCreated(): Boolean {
+    return (binding?.textBtn?.visibility == View.VISIBLE) && binding?.textBtn?.text == resources.getString(R.string.start_your_digital_journey)
   }
 }

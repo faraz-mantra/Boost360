@@ -256,17 +256,16 @@ public class Edit_Profile_Activity extends BaseActivity {
             public void onClick(View v) {
 
                 if (Methods.isOnline(Edit_Profile_Activity.this)) {
-                    uploadProfile();
-                    if (mRiaNodeDataModel != null) {
-                        RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
-                                mRiaNodeDataModel.getNodeId(), mRiaNodeDataModel.getButtonId(),
-                                mRiaNodeDataModel.getButtonLabel(), RiaEventLogger.EventStatus.COMPLETED.getValue());
-                        mRiaNodeDataModel = null;
+                    if(isValid()){
+                        uploadProfile();
+                        if (mRiaNodeDataModel != null) {
+                            RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                                    mRiaNodeDataModel.getNodeId(), mRiaNodeDataModel.getButtonId(),
+                                    mRiaNodeDataModel.getButtonLabel(), RiaEventLogger.EventStatus.COMPLETED.getValue());
+                            mRiaNodeDataModel = null;
 
+                        }
                     }
-
-
-
                 } else {
                     Methods.snackbarNoInternet(Edit_Profile_Activity.this);
                 }
@@ -466,7 +465,7 @@ public class Edit_Profile_Activity extends BaseActivity {
                     msgtxt4buzzdescriptn = buzzdescription.getText()
                             .toString().trim();
                     int len = s.length();//msgtxt4buzzdescriptn.length();
-                    if (len > 0) {
+                    if (len > 50) {
 //                        businessDesciption_textlineTextView.setVisibility(View.VISIBLE);
                         saveTextView.setVisibility(View.VISIBLE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.VISIBLE);
@@ -492,6 +491,14 @@ public class Edit_Profile_Activity extends BaseActivity {
 
         initData();
         //selectCats();
+    }
+
+    private boolean isValid() {
+        if(msgtxt4buzzdescriptn.length() < 50){
+            Toast.makeText(getApplicationContext(), R.string.minimum_50_char_business_description_required, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private String getProductCategory() {

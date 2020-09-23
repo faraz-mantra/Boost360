@@ -53,6 +53,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.text.DecimalFormat;
@@ -81,6 +82,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_summary);
+        WebEngageController.trackEvent("Clicked on order analytics", "ORDER ANALYTICS", "null");
         MixPanelController.track(MixPanelController.ORDER_ANALYTICS, null);
         initView();
         initBarChart();

@@ -9,6 +9,9 @@ data class BuyerDetailsN(
 ) : Serializable {
 
   fun getAddressFull(): String? {
+    if(ContactDetails?.EmailId?.trim().isNullOrEmpty()){
+      return "${ContactDetails?.PrimaryContactNumber?.trim()}\n${address().addressLine1().trim()}"
+    }
     return "${ContactDetails?.PrimaryContactNumber?.trim()}, ${ContactDetails?.EmailId?.trim()}\n${address().addressLine1().trim()}"
   }
 

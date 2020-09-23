@@ -51,11 +51,12 @@
 
       </androidx.cardview.widget.CardView>
 
-      <RelativeLayout
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_toRightOf="@+id/card_thumbnail"
-        android:gravity="top">
+        android:gravity="top"
+          android:orientation="vertical">
 
         <TextView
           android:id="@+id/label_missing_info"
@@ -70,15 +71,15 @@
           android:textSize="14sp" />
 
         <TextView
-          android:id="@+id/label_brand"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:maxLines="2"
-          android:paddingBottom="5dp"
-          android:text="Watch by Fastrack"
-          android:textColor="@color/primaryColor"
-          android:textSize="14sp"
-          android:textStyle="bold" />
+            android:id="@+id/label_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:paddingBottom="5dp"
+            android:text="Watch by Fastrack"
+            android:textColor="@color/primaryColor"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
           android:id="@+id/label_name"
@@ -91,7 +92,7 @@
           android:textSize="14sp"
           android:textStyle="bold" />
 
-      </RelativeLayout>
+      </LinearLayout>
 
       <TextView
         android:id="@+id/label_description"
