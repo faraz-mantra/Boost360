@@ -1972,4 +1972,5 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="appointments_at_clinic_camel_case">Appointments at Clinic</string>
     <string name="add_candidate">Add candidate</string>
     <string name="share_colon">Share:</string>
+    <string name="minimum_50_char_business_description_required">Minimum 50 characters in business description are required.</string>
 </resources>

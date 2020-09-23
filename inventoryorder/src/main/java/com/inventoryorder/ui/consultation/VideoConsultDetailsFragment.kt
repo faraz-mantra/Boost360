@@ -4,17 +4,22 @@ import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
+import com.framework.extensions.isVisible
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils
+import com.framework.utils.DateUtils.parseDate
 import com.framework.views.customViews.CustomButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
@@ -33,7 +38,9 @@ import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.utils.copyClipBoard
 import com.inventoryorder.utils.openWebPage
+import java.sql.Time
 import java.util.*
+import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
 
 class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDetailsBinding>() {
@@ -41,6 +48,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   private var orderItem: OrderItem? = null
   private var serviceLocationsList = LocationsModel().getData()
   private var isRefresh: Boolean? = null
+  var countDownTimer: CountDownTimer? = null
 
   companion object {
     @JvmStatic
@@ -70,10 +78,61 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
         binding?.error?.gone()
         orderItem = (it as? OrderDetailResponse)?.Data
         if (orderItem != null) {
+          if (orderItem?.isUpComingConsult()!!) {
+            binding?.llCountdown?.visibility = View.VISIBLE
+            binding?.statusTime?.text = getString(R.string.time_remaining)
+            startCountDown(orderItem!!)
+          }
           setDetails(orderItem!!)
         } else errorUi("Order item null.")
       } else errorUi(it.message())
     })
+  }
+
+  private fun startCountDown(order: OrderItem) {
+    val startTime = orderItem?.firstItemForConsultation()?.scheduledStartDate()?.parseDate(DateUtils.FORMAT_SERVER_DATE)
+    val currentTime = Calendar.getInstance().time
+    val difference = startTime?.time?.minus(currentTime.time)
+    countDownTimer = object : CountDownTimer(difference!!, 1000) {
+      override fun onTick(millisUntilFinished: Long) {
+        val daysRemaining = TimeUnit.MILLISECONDS.toDays(millisUntilFinished).toString()
+        val hoursRemaining = (TimeUnit.MILLISECONDS.toHours(millisUntilFinished) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millisUntilFinished))).toString()
+        val minutesRemaining = (TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))).toString()
+        val secondsRemaining = (TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))).toString()
+
+        val daysString: String
+        daysString = if (daysRemaining.toInt() > 1) {
+          "$daysRemaining days"
+        } else {
+          "$daysRemaining day"
+        }
+        val hoursString: String
+        hoursString = if (hoursRemaining.toInt() < 10) {
+          "0$hoursRemaining"
+        } else {
+          hoursRemaining
+        }
+        val minutesString: String
+        minutesString = if (minutesRemaining.toInt() < 10) {
+          "0$minutesRemaining"
+        } else {
+          minutesRemaining
+        }
+        val secondsString: String
+        secondsString = if (secondsRemaining.toInt() < 10) {
+          "0$secondsRemaining"
+        } else {
+          secondsRemaining
+        }
+
+        binding?.timeElapsed?.text = "$daysString $hoursString:$minutesString:$secondsString"
+      }
+
+      override fun onFinish() {
+        binding?.statusTime?.isInvisible = true
+        binding?.timeElapsed?.isInvisible = true
+      }
+    }.start()
   }
 
   private fun errorUi(message: String) {
@@ -125,6 +184,8 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   private fun setOrderDetails(order: OrderItem) {
     binding?.orderType?.text = getStatusText(order)
     binding?.tvStatus?.text = order.PaymentDetails?.status()
+    val b = (PaymentDetailsN.STATUS.from(order.PaymentDetails?.Status ?: "") == PaymentDetailsN.STATUS.PENDING)
+    if (b) binding?.tvStatus?.setTextColor(getColor(R.color.watermelon_light_10))
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "₹"
@@ -145,11 +206,14 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
     binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
     binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
-    if (order.BuyerDetails?.ContactDetails?.EmailId?.isNotBlank()!!) {
-      binding?.tvCustomerEmail?.text = order.BuyerDetails?.ContactDetails?.EmailId?.trim()
-    } else {
-      binding?.tvCustomerEmail?.isGone = true
-    }
+
+    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) }!!)
+      binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
+    if (order.BuyerDetails.ContactDetails.EmailId.isNullOrEmpty().not()) {
+      binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
+      if (!checkValidEmail(order.BuyerDetails.ContactDetails.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
+    } else binding?.tvCustomerEmail?.isGone = true
+
 
     // shipping details
     var shippingCost = 0.0
@@ -175,7 +239,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       binding?.tvCancelOrder -> cancelOrderDialog()
       binding?.btnCopyLink -> videoConsultCopy()
       binding?.tvCustomerContactNumber -> {
-        if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.length == 10)
+        if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { checkValidMobile(it) }!!)
           openDialer()
         else
           showShortToast(getString(R.string.phone_invalid_format_error))
@@ -189,8 +253,6 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
         }
       }
     }
-//      binding?.tvCustomerContactNumber -> openDialer()
-//      binding?.tvCustomerEmail -> openEmailApp()
   }
 
   private fun openEmailApp() {
@@ -207,6 +269,10 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun checkValidEmail(email: String): Boolean {
     return Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$").matcher(email).find()
+  }
+
+  private fun checkValidMobile(mobile: String): Boolean {
+    return Pattern.compile("^[+]?[0-9]{10,12}\$").matcher(mobile).find()
   }
 
   private fun cancelOrderDialog() {
@@ -287,5 +353,10 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
 
   private fun clickDeliveryItem(list: LocationsModel?) {
     serviceLocationsList.forEach { it.isSelected = (it.serviceOptionSelectedName == list?.serviceOptionSelectedName) }
+  }
+
+  override fun onPause() {
+    super.onPause()
+    countDownTimer?.cancel()
   }
 }
