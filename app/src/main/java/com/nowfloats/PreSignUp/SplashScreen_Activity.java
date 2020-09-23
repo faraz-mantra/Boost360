@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 import static java.lang.String.format;
 
 public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface, PresignupManager.SignUpLoginHandler {
@@ -246,6 +247,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         intent.putExtra("deepLinkViewType", deepLinkViewType);
         intent.putExtra("deepLinkDay", deepLinkDay);
         intent.putExtra("loginid", session.getUserProfileId());
+        intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {

@@ -26,6 +26,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var expertConnectDetails: MutableLiveData<ExpertConnect> = MutableLiveData()
     var promoBanners: MutableLiveData<List<PromoBanners>> = MutableLiveData()
     var partnerZone: MutableLiveData<List<PartnerZone>> = MutableLiveData()
+    var feedbackLink: MutableLiveData<String> = MutableLiveData()
 
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
@@ -67,6 +68,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun getPartnerZone(): LiveData<List<PartnerZone>> {
         return partnerZone
+    }
+
+    fun getFeedBackLink(): LiveData<String> {
+        return feedbackLink
     }
 
     fun getTotalActiveWidgetCount(): LiveData<Int> {
@@ -334,13 +339,18 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                         expertConnectDetails.postValue(it.Data[0].expert_connect)
 
                                         //promobanner
-                                        if(it.Data[0].promo_banners!=null && it.Data[0].promo_banners.size>0){
+                                        if (it.Data[0].promo_banners != null && it.Data[0].promo_banners.size > 0) {
                                             promoBanners.postValue(it.Data[0].promo_banners)
                                         }
 
                                         //partnerZone
-                                        if(it.Data[0].partner_zone !=null && it.Data[0].partner_zone.size>0){
+                                        if (it.Data[0].partner_zone != null && it.Data[0].partner_zone.size > 0) {
                                             partnerZone.postValue(it.Data[0].partner_zone)
+                                        }
+
+                                        //feedbackURL
+                                        if (it.Data[0].feedback_link != null && it.Data[0].feedback_link.isNotEmpty()) {
+                                            feedbackLink.postValue(it.Data[0].feedback_link)
                                         }
                                     },
                                     {
