@@ -477,7 +477,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                     pd.dismiss();
                     targetMap = null;
                     Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.failed_to_download_image), Toast.LENGTH_SHORT).show();
-                    Methods.showSnackBarNegative((Activity) getApplicationContext(), getApplicationContext().getString(R.string.failed_to_download_image));
+//                    Methods.showSnackBarNegative((Activity) getApplicationContext(), getApplicationContext().getString(R.string.failed_to_download_image));
                 }
 
                 @Override
@@ -489,7 +489,8 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             Picasso.get().load(product.ImageUri).into(target);
         }else{
             pd.dismiss();
-            Methods.showSnackBarNegative((Activity) getApplicationContext(), getApplicationContext().getString(R.string.can_not_share_image_offline_mode));
+            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.can_not_share_image_offline_mode), Toast.LENGTH_SHORT).show();
+//            Methods.showSnackBarNegative((Activity) getApplicationContext(), getApplicationContext().getString(R.string.can_not_share_image_offline_mode));
         }
     }
 }
