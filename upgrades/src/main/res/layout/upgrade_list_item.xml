@@ -25,7 +25,10 @@
             android:id="@+id/imageLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="@dimen/_6sdp"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +48,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="13dp"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginEnd="@dimen/_3sdp"
             android:gravity="center_vertical"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -62,7 +66,7 @@
                 android:ellipsize="end"
                 tools:text="Facebook Ads (upto 75 leads)"
                 android:textColor="#2a2a2a"
-                android:textSize="@dimen/_12ssp" />
+                android:textSize="@dimen/_9sdp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,7 +79,7 @@
                     android:layout_height="wrap_content"
                     tools:text="₹400/month"
                     android:textColor="#FFB900"
-                    android:textSize="@dimen/_8sdp"
+                    android:textSize="@dimen/_9sdp"
                     android:layout_marginEnd="@dimen/_7sdp"/>
 
             </LinearLayout>

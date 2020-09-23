@@ -5,8 +5,10 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.provider.FontRequest
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -63,6 +66,7 @@ class UpgradeActivity : AppCompatActivity() {
   var email: String? = null
   var mobileNo: String? = null
   var profileUrl: String? = null
+  var accountType: String? = null
   var isDeepLink: Boolean = false
   var isOpenCardFragment: Boolean = false
   var isBackCart: Boolean = false
@@ -78,6 +82,7 @@ class UpgradeActivity : AppCompatActivity() {
   lateinit var progressDialog: ProgressDialog
   private var loadingStatus: Boolean = true
 
+  @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_upgrade)
@@ -93,6 +98,7 @@ class UpgradeActivity : AppCompatActivity() {
     email = intent.getStringExtra("email")
     mobileNo = intent.getStringExtra("mobileNo")
     profileUrl = intent.getStringExtra("profileUrl")
+    accountType = intent.getStringExtra("accountType")
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")

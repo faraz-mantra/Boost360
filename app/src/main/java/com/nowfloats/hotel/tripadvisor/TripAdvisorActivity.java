@@ -39,6 +39,8 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
+import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
+
 public class TripAdvisorActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
@@ -358,6 +360,7 @@ public class TripAdvisorActivity extends AppCompatActivity {
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());
         intent.putExtra("loginid", session.getUserProfileId());
+        intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {

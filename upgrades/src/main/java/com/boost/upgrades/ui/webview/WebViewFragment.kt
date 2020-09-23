@@ -1,21 +1,19 @@
 package com.boost.upgrades.ui.webview
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import jp.wasabeef.glide.transformations.BlurTransformation
-import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.web_view_fragment.*
+
 
 class WebViewFragment : BaseFragment() {
 
@@ -47,6 +45,12 @@ class WebViewFragment : BaseFragment() {
         }
 
         if (link != null) {
+            webview.getSettings().setJavaScriptEnabled(true)
+            webview.webViewClient = object : WebViewClient() {
+                override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                    return false
+                }
+            }
             webview.loadUrl(link)
         } else {
             Toast.makeText(requireContext(), "Link is Empty!!", Toast.LENGTH_LONG).show()
