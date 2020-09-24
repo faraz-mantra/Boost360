@@ -81,7 +81,7 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:4.9.0"
     implementation 'jp.wasabeef:glide-transformations:4.0.0'
 
-    //shimmer
+    //shimme
     implementation 'com.facebook.shimmer:shimmer:0.5.0@aar'
 
     //toasty
