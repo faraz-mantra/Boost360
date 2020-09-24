@@ -206,8 +206,8 @@
 
       <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_animation_refresh"
-        android:layout_width="@dimen/size_160"
-        android:layout_height="@dimen/size_160"
+        android:layout_width="@dimen/size_80"
+        android:layout_height="@dimen/size_80"
         android:layout_gravity="center"
         android:repeatCount="infinite"
         android:repeatMode="restart" />

@@ -24,8 +24,8 @@
         tools:ignore="RtlSymmetry">
 
         <com.framework.views.customViews.CustomImageView
-          android:layout_width="@dimen/size_36"
-          android:layout_height="@dimen/size_36"
+          android:layout_width="@dimen/size_34"
+          android:layout_height="@dimen/size_34"
           android:tint="@color/colorAccent"
           app:srcCompat="@drawable/ic_filter_n"
           android:layout_marginStart="@dimen/size_6"/>

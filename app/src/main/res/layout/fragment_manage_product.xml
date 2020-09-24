@@ -179,6 +179,31 @@
                     style="@style/ProductEditTextStyle" />
 
                 <LinearLayout
+                    android:id="@+id/layout_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/label_product_type"
+                        style="@style/ProductLabelTextStyle"
+                        android:text="Product Type/Category (If any)" />
+
+                    <ImageButton
+                        android:id="@+id/ib_info_product_type"
+                        style="@style/ProductHelpButtonStyle" />
+
+                </LinearLayout>
+
+                <AutoCompleteTextView
+                    android:id="@+id/edit_category"
+                    style="@style/ProductEditTextStyle"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- "
+                    android:hint="Write the item type eg. Book, Smartphone etc." />
+
+                <LinearLayout
                     android:id="@+id/layout_product_variants_hint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
