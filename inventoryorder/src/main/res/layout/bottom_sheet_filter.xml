@@ -27,12 +27,13 @@
           android:layout_width="@dimen/size_36"
           android:layout_height="@dimen/size_36"
           android:tint="@color/colorAccent"
-          app:srcCompat="@drawable/ic_filter_n" />
+          app:srcCompat="@drawable/ic_filter_n"
+          android:layout_marginStart="@dimen/size_6"/>
 
         <com.framework.views.customViews.CustomTextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/size_20"
+          android:layout_marginStart="@dimen/size_16"
           android:includeFontPadding="false"
           android:text="Filter"
           android:textColor="@color/orange"
