@@ -20,7 +20,7 @@ class FilterModel(val type: String? = null,
   }
 
   fun getColor(): Int {
-    return takeIf { isSelected }?.let { R.color.khaki_light } ?: R.color.white
+    return takeIf { isSelected }?.let { R.color.warm_grey_31 } ?: R.color.white
   }
 
   fun getDataOrders(): ArrayList<FilterModel> {

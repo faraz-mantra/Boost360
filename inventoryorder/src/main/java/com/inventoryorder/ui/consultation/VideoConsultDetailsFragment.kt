@@ -311,7 +311,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       }
       if (cancelRes.status == 200 || cancelRes.status == 201 || cancelRes.status == 202) {
         val data = cancelRes as? OrderConfirmStatus
-        data?.let { d -> showLongToast(d.Message as String?) }
+        data?.let { d -> showLongToast(getString(R.string.the_video_consultation_has_been_cancelled)) }
         refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CANCELLED)
       } else showLongToast(cancelRes.message())
     })
