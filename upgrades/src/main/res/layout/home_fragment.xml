@@ -507,12 +507,13 @@
                 <LinearLayout
                     android:id="@+id/callnow_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_100sdp"
                     android:layout_below="@id/expert_title"
                     android:layout_marginBottom="@dimen/_25sdp"
                     android:background="#F9F3E1"
                     android:orientation="vertical"
                     android:paddingStart="@dimen/_15sdp"
+                    android:gravity="center_vertical"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_15sdp"
                     android:paddingBottom="@dimen/_10sdp">
@@ -541,7 +542,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/recycler"
                         android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
                         android:background="@drawable/orange_button_click_effect"
                         android:drawableStart="@drawable/ic_call_white"
                         android:drawablePadding="@dimen/_10sdp"
@@ -559,24 +559,21 @@
 
                 </LinearLayout>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/callnow_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="@dimen/_25sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:visibility="gone"
-                    app:cardCornerRadius="@dimen/_60sdp"
-                    tools:visibility="visible">
 
-                    <ImageView
-                        android:layout_width="@dimen/_60sdp"
-                        android:layout_height="@dimen/_60sdp"
-                        android:layout_margin="@dimen/_30sdp"
-                        app:srcCompat="@drawable/ic_expert_guidence" />
-                </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/callnow_image"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:visibility="gone"
+                    android:elevation="@dimen/_5sdp"
+                    app:srcCompat="@drawable/ic_expert_guidence_schedule"
+                    tools:visibility="visible" />
+
 
                 <RelativeLayout
                     android:id="@+id/call_shedule_layout"
@@ -589,23 +586,16 @@
                     android:paddingStart="@dimen/_15sdp"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_15sdp"
-                    android:paddingBottom="@dimen/_10sdp">
+                    android:paddingBottom="@dimen/_10sdp"
+                    tools:visibility="gone">
 
-                    <androidx.cardview.widget.CardView
+
+                    <ImageView
                         android:id="@+id/shedule_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_2sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        app:cardCornerRadius="@dimen/_40sdp">
-
-                        <ImageView
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_margin="@dimen/_20sdp"
-                            app:srcCompat="@drawable/ic_expert_guidence" />
-                    </androidx.cardview.widget.CardView>
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_margin="@dimen/_5sdp"
+                        app:srcCompat="@drawable/ic_expert_guidence" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -787,7 +777,9 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
                             android:text="Website Chatbot"
-                            android:textColor="#FFB900" />
+                            android:textColor="#FFB900"
+                            android:textSize="@dimen/_9sdp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -894,45 +886,53 @@
                             android:orientation="horizontal"
                             android:padding="@dimen/_5sdp">
 
-                            <LinearLayout
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:layout_below="@+id/imagexx"
-                                android:layout_centerHorizontal="true"
-                                android:layout_margin="@dimen/_10sdp"
-                                android:background="@drawable/all_side_medium_curve_bg"
-                                android:elevation="@dimen/_4sdp"
-                                android:gravity="center">
+                            <ImageView
+                                android:layout_width="160dp"
+                                android:layout_height="80dp"
+                                android:layout_margin="8dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/refer_asset"
+                                android:textSize="@dimen/txt_14sp" />
 
-                                <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_margin="8dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/boost_360_insignia"
-                                    android:textSize="@dimen/txt_14sp" />
+                            <!--                            <LinearLayout-->
+                            <!--                                android:layout_width="70dp"-->
+                            <!--                                android:layout_height="70dp"-->
+                            <!--                                android:layout_below="@+id/imagexx"-->
+                            <!--                                android:layout_centerHorizontal="true"-->
+                            <!--                                android:layout_margin="@dimen/_10sdp"-->
+                            <!--                                android:background="@drawable/all_side_medium_curve_bg"-->
+                            <!--                                android:elevation="@dimen/_4sdp"-->
+                            <!--                                android:gravity="center">-->
+
+                            <!--                                <ImageView-->
+                            <!--                                    android:layout_width="60dp"-->
+                            <!--                                    android:layout_height="60dp"-->
+                            <!--                                    android:layout_margin="8dp"-->
+                            <!--                                    android:scaleType="centerCrop"-->
+                            <!--                                    android:src="@drawable/boost_360_insignia"-->
+                            <!--                                    android:textSize="@dimen/txt_14sp" />-->
 
 
-                            </LinearLayout>
+                            <!--                            </LinearLayout>-->
 
-                            <LinearLayout
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                android:layout_below="@+id/imagexx"
-                                android:layout_centerHorizontal="true"
-                                android:layout_margin="@dimen/_10sdp"
-                                android:background="@drawable/all_side_medium_curve_bg"
-                                android:elevation="@dimen/_4sdp"
-                                android:gravity="center">
+                            <!--                            <LinearLayout-->
+                            <!--                                android:layout_width="70dp"-->
+                            <!--                                android:layout_height="70dp"-->
+                            <!--                                android:layout_below="@+id/imagexx"-->
+                            <!--                                android:layout_centerHorizontal="true"-->
+                            <!--                                android:layout_margin="@dimen/_10sdp"-->
+                            <!--                                android:background="@drawable/all_side_medium_curve_bg"-->
+                            <!--                                android:elevation="@dimen/_4sdp"-->
+                            <!--                                android:gravity="center">-->
 
-                                <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/chat_icon"
-                                    android:textSize="@dimen/txt_14sp" />
+                            <!--                                <ImageView-->
+                            <!--                                    android:layout_width="60dp"-->
+                            <!--                                    android:layout_height="60dp"-->
+                            <!--                                    android:scaleType="centerCrop"-->
+                            <!--                                    android:src="@drawable/chat_icon"-->
+                            <!--                                    android:textSize="@dimen/txt_14sp" />-->
 
-                            </LinearLayout>
+                            <!--                            </LinearLayout>-->
 
                         </LinearLayout>
 
