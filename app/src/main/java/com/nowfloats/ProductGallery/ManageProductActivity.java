@@ -38,7 +38,8 @@ public class ManageProductActivity extends BaseActivity
         }
 
         Product product = (Product) getIntent().getSerializableExtra("PRODUCT");
-        loadFragment(ProductCategoryFragment.newInstance(product), "PRODUCT_CATEGORY");
+//        loadFragment(ProductCategoryFragment.newInstance(product), "PRODUCT_CATEGORY");
+        loadFragment(ManageProductFragment.newInstance(product), "MANAGE_PRODUCT");
 //        loadFragment(ManageProductFragment.newInstance("products", "", product), "MANAGE_PRODUCT");
 
         /*if(this.product == null)

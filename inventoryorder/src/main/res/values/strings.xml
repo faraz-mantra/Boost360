@@ -102,5 +102,8 @@
   <string name="order_confirmed">Order confirmed.</string>
     <string name="time_remaining">Time remaining</string>
   <string name="_00_00_00">00:00:00</string>
+    <string name="the_video_consultation_has_been_cancelled">The video consultation has been cancelled</string>
+    <string name="the_appointment_has_been_cancelled">The appointment has been cancelled.</string>
+  <string name="select_doctor">Select doctor</string>
 
 </resources>

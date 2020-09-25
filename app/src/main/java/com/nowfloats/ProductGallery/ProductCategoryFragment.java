@@ -88,7 +88,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             else type = "products";
             productType = setProductType(/*session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)*/ type, "Adding to Catalogue");
         }
-        binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(productType, binding.editCategory.getText().toString(), product), "MANAGE_PRODUCT"));
+        binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(product), "MANAGE_PRODUCT"));
         addInfoButtonListener();
         getCategoryList();
     }

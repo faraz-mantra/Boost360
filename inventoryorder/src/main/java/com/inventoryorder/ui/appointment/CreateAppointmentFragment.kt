@@ -65,6 +65,7 @@ import kotlin.collections.ArrayList
 class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBinding>(), PopupMenu.OnMenuItemClickListener {
 
   private var selectPositionService: Int = -1
+  private var selectPositionDoctor: Int = 0
   private var serviceList: ArrayList<InventoryServicesResponseItem>? = null
   private var serviceData: InventoryServicesResponseItem? = null
   private var scheduledDateTime: String = ""
@@ -73,6 +74,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   private var currentMonth = 0
 
   var session: PreferenceData? = null
+  var doctorDataList: ArrayList<DoctorDataResponse>? = null
   var doctorData: DoctorDataResponse? = null
   var isVideoConsult: Boolean = false
   var patientName: String? = null
@@ -99,7 +101,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     session = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
 
     // Remove video consultation based on experience code.
-    if(session?.experienceCode == "DOC" || session?.experienceCode == "HOS"){
+    if (session?.experienceCode == "DOC" || session?.experienceCode == "HOS") {
       binding?.radioVideoConsultation?.isVisible = true
     }
 
@@ -118,7 +120,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         isVideoConsult = true
       }
     }
-    setOnClickListener(binding?.edtConsultingService, binding?.edtStartTime, binding?.btnCreate, binding?.edtGender)
+    setOnClickListener(binding?.edtConsultingService, binding?.edtDoctor, binding?.edtStartTime, binding?.btnCreate, binding?.edtGender)
     getDoctorDetailApi()
   }
 
@@ -132,18 +134,24 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val response = it.anyResponse as? ArrayList<DoctorDataResponse>
         if (response.isNullOrEmpty().not()) {
+          doctorDataList = response
           doctorData = response?.get(0)
-          val mobile = doctorData?.mobile?.replace("+91", "")?.trim()
-          if (isMobileNumberValid(mobile ?: "")) session?.userPrimaryMobile = mobile
-          binding?.edtDuration?.setText(doctorData?.duration)
+          setDatDoctor()
           getServiceList()
         } else errorUi(getErrorMessage())
       } else errorUi(getErrorMessage())
     })
   }
 
-  private fun getErrorMessage(): String{
-    return when (session?.experienceCode){
+  private fun setDatDoctor() {
+    val mobile = doctorData?.mobile?.replace("+91", "")?.trim()
+    if (isMobileNumberValid(mobile ?: "")) session?.userPrimaryMobile = mobile
+    binding?.edtDuration?.setText(doctorData?.duration)
+    binding?.edtDoctor?.setText(doctorData?.username)
+  }
+
+  private fun getErrorMessage(): String {
+    return when (session?.experienceCode) {
       "DOC",
       "HOS" -> resources.getString(R.string.please_add_doctor_first)
       "EDU" -> getString(R.string.please_add_teacher_first)
@@ -273,6 +281,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
+      binding?.edtDoctor -> doctorListDialog()
       binding?.edtConsultingService -> {
         if (serviceList.isNullOrEmpty().not()) consultingOnService()
         else showShortToast(getString(R.string.cosulting_service_not_available))
@@ -288,6 +297,29 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
       binding?.edtGender -> menuItemView(v, R.menu.popup_menu_gender_selection)
       binding?.btnCreate -> if (validateAndCreateRequest()) createBooking()
     }
+  }
+
+  private fun doctorListDialog() {
+    val singleItems = this.doctorDataList?.map { it.username }?.toTypedArray()
+    MaterialAlertDialogBuilder(baseActivity).setTitle(getString(R.string.select_doctor)).setPositiveButton(getString(R.string.ok)) { d, _ ->
+      doctorData = this.doctorDataList?.firstOrNull { it.username == singleItems?.get(selectPositionDoctor) }
+      changeDoctor()
+      d.dismiss()
+    }.setNeutralButton(getString(R.string.cancel)) { d, _ ->
+      d.dismiss()
+    }.setSingleChoiceItems(singleItems, selectPositionDoctor) { _, pos ->
+      selectPositionDoctor = pos
+    }.show()
+  }
+
+  private fun changeDoctor() {
+    serviceData = null
+    timeSlotData = null
+    binding?.edtConsultingService?.setText("")
+    binding?.edtFees?.setText("")
+    binding?.edtStartTime?.setText("")
+    setDatDoctor()
+    getServiceList()
   }
 
   private fun validateAndCreateRequest(): Boolean {
@@ -514,7 +546,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
       }
       requestUser != null -> {
         viewModel?.sendMail(requestUser)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-          startSuccessScreen(response,dateApt)
+          startSuccessScreen(response, dateApt)
         })
       }
       else -> startSuccessScreen(response, dateApt)

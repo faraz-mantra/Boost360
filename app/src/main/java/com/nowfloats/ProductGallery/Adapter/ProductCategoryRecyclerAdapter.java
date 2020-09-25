@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import android.provider.MediaStore;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +47,7 @@ import java.util.List;
 public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-//    private ProductCatalogActivity appContext;
+    //    private ProductCatalogActivity appContext;
     private List<Product> productList;
     private OnItemClicked callback;
     private OnShareClicked shareCallback;
@@ -62,8 +64,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i)
-    {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_product_catalog, viewGroup, false);
         return new ProductListViewHolder(view);
     }
@@ -71,8 +72,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
 
-        if (holder instanceof ProductListViewHolder)
-        {
+        if (holder instanceof ProductListViewHolder) {
             Product model = productList.get(i);
             final ProductListViewHolder viewHolder = (ProductListViewHolder) holder;
 
@@ -82,55 +82,36 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             viewHolder.tvDescription.setText(model.Description);
 
             String category = model.category == null ? "" : model.category;
-
-            String brand = model.brandName.isEmpty() || model.brandName == null ? "" : "<b>" + model.brandName + "</b>";
+            String brand = TextUtils.isEmpty(model.brandName) ? "" : "<b>" + model.brandName + "</b>";
             viewHolder.tvBrand.setVisibility(View.VISIBLE);
             viewHolder.tvMissingInfo.setVisibility(View.GONE);
 
-            if(!category.isEmpty() && !brand.isEmpty())
-            {
+            if (!category.isEmpty() && !brand.isEmpty()) {
                 String value = category.concat(" by ").concat(brand);
                 viewHolder.tvBrand.setText(Html.fromHtml(value));
-            }
-
-            else if(!category.isEmpty())
-            {
+            } else if (!category.isEmpty()) {
                 viewHolder.tvBrand.setText(category);
-            }
-
-            else if(!brand.isEmpty())
-            {
+            } else if (!brand.isEmpty()) {
                 viewHolder.tvBrand.setText(Html.fromHtml(brand));
-            }
-
-            else
-            {
+            } else {
                 viewHolder.tvBrand.setVisibility(View.GONE);
                 viewHolder.tvMissingInfo.setVisibility(View.VISIBLE);
             }
 
-            try
-            {
+            try {
                 String formattedPrice = Helper.getCurrencyFormatter().format(model.Price - model.DiscountAmount);
                 viewHolder.tvPrice.setText(String.valueOf(model.CurrencyCode + " " + formattedPrice));
 
-                if(model.DiscountAmount != 0)
-                {
+                if (model.DiscountAmount != 0) {
                     viewHolder.tvBasePrice.setVisibility(View.VISIBLE);
 
                     formattedPrice = Helper.getCurrencyFormatter().format(model.Price);
                     viewHolder.tvBasePrice.setPaintFlags(viewHolder.tvBasePrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     viewHolder.tvBasePrice.setText(String.valueOf(model.CurrencyCode + " " + formattedPrice));
-                }
-
-                else
-                {
+                } else {
                     viewHolder.tvBasePrice.setVisibility(View.INVISIBLE);
                 }
-            }
-
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -138,18 +119,13 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             Picasso picasso = Picasso.get();
             String image_url = model.TileImageUri;
 
-            if (image_url != null && image_url.length() > 0 && !image_url.equals("null"))
-            {
-                if (!image_url.contains("http"))
-                {
+            if (image_url != null && image_url.length() > 0 && !image_url.equals("null")) {
+                if (!image_url.contains("http")) {
                     image_url = Constants.BASE_IMAGE_URL + model.TileImageUri;
                 }
 
                 picasso.load(image_url).placeholder(R.drawable.default_product_image).into(viewHolder.thumbnail);
-            }
-
-            else
-            {
+            } else {
                 picasso.load(R.drawable.default_product_image).into(viewHolder.thumbnail);
             }
 
@@ -157,14 +133,12 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return productList.size();
     }
 
 
-    class ProductListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-    {
+    class ProductListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView thumbnail;
         private TextView tvBrand;
         private TextView tvName;
@@ -177,8 +151,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         private ImageView whatsappShareButton;
         private ImageView facebookShareButton;
 
-        private ProductListViewHolder(View itemView)
-        {
+        private ProductListViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
 
@@ -202,32 +175,29 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         }
 
         @Override
-        public void onClick(View v)
-        {
+        public void onClick(View v) {
             callback.onItemClick(productList.get(getAdapterPosition()));
         }
     }
 
-    public void share(boolean defaultShare,int type,String productUrl)
-    {
+    public void share(boolean defaultShare, int type, String productUrl) {
 
         //type 0 = facebook, type 1= whatsApp, type 3=default
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
         share.putExtra(Intent.EXTRA_TEXT, productUrl);
-        if(!defaultShare)
-        {
-            if(type==1)
-            { share.setPackage("com.whatsapp");}
-            else if(type==0)
-            { share.setPackage("com.facebook.katana"); }
+        if (!defaultShare) {
+            if (type == 1) {
+                share.setPackage("com.whatsapp");
+            } else if (type == 0) {
+                share.setPackage("com.facebook.katana");
+            }
         }
-        context.startActivity(Intent.createChooser(share,  context.getString(R.string.share_updates)));
+        context.startActivity(Intent.createChooser(share, context.getString(R.string.share_updates)));
 
     }
 
-    public void share(boolean defaultShare,int type, Product product)
-    {
+    public void share(boolean defaultShare, int type, Product product) {
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             Methods.showDialog(context, "Storage Permission", "To share your image we need storage permission.",
@@ -240,7 +210,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         Intent share = new Intent(Intent.ACTION_SEND);
         share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        if(Methods.isOnline((Activity) context)){
+        if (Methods.isOnline((Activity) context)) {
             @SuppressLint("DefaultLocale") String shareText = String.format("*%s*\nPrice: INR. %.2f\n%s\nView more details at: %s", product.Name, product.Price - product.DiscountAmount,
                     product.Description, product.ProductUrl);
 
@@ -249,7 +219,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                     pd.dismiss();
                     targetMap = null;
-                    try{
+                    try {
                         Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
                         View view = new View(context);
                         view.draw(new Canvas(mutableBitmap));
@@ -260,17 +230,17 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
                         share.putExtra(Intent.EXTRA_STREAM, uri);
                         share.setType("image/*");
                         if (share.resolveActivity(context.getPackageManager()) != null) {
-                            if(!defaultShare) {
+                            if (!defaultShare) {
                                 if (type == 0) {
                                     share.setPackage("com.facebook.katana");
-                                }else if(type == 1){
+                                } else if (type == 1) {
                                     share.setPackage("com.whatsapp");
                                 }
                             }
                             ProductCatalogActivity activity = (ProductCatalogActivity) context;
                             activity.startActivityForResult(Intent.createChooser(share, context.getString(R.string.share_updates)), 1);
                         }
-                    }catch (OutOfMemoryError e) {
+                    } catch (OutOfMemoryError e) {
                         Toast.makeText(context, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
                         Toast.makeText(context, "Image not able to share", Toast.LENGTH_SHORT).show();
@@ -291,7 +261,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             };
             targetMap = target;
             Picasso.get().load(product.ImageUri).into(target);
-        }else{
+        } else {
             pd.dismiss();
             Methods.showSnackBarNegative((Activity) context, context.getString(R.string.can_not_share_image_offline_mode));
         }
@@ -314,10 +284,8 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
 //        context.startActivity(Intent.createChooser(share,  context.getString(R.string.share_updates)));
     }
 
-    public void setData(List<Product> productList, boolean flag)
-    {
-        if(flag)
-        {
+    public void setData(List<Product> productList, boolean flag) {
+        if (flag) {
             this.productList.clear();
         }
 
@@ -325,21 +293,19 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
         notifyDataSetChanged();
     }
 
-    public interface OnShareClicked{
+    public interface OnShareClicked {
         void onShareClicked(boolean defaultShare, int type, Product product);
     }
 
-    public void onShareClickListener(final OnShareClicked shareCallback){
+    public void onShareClickListener(final OnShareClicked shareCallback) {
         this.shareCallback = shareCallback;
     }
 
-    public interface OnItemClicked
-    {
+    public interface OnItemClicked {
         void onItemClick(Product product);
     }
 
-    public void SetOnItemClickListener(final OnItemClicked callback)
-    {
+    public void SetOnItemClickListener(final OnItemClicked callback) {
         this.callback = callback;
     }
 }

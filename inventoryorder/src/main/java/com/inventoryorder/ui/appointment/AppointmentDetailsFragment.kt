@@ -280,7 +280,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val data = it as? OrderConfirmStatus
-        data?.let { d -> showLongToast(d.Message as String?) }
+        data?.let { d -> showLongToast(getString(R.string.the_appointment_has_been_cancelled)) }
         refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CANCELLED)
       } else showLongToast(it.message())
     })
