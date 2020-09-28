@@ -20,6 +20,7 @@ import android.provider.MediaStore;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,8 +83,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
             viewHolder.tvDescription.setText(model.Description);
 
             String category = model.category == null ? "" : model.category;
-
-            String brand = model.brandName.isEmpty() || model.brandName == null ? "" : "<b>" + model.brandName + "</b>";
+            String brand = TextUtils.isEmpty(model.brandName) ? "" : "<b>" + model.brandName + "</b>";
             viewHolder.tvBrand.setVisibility(View.VISIBLE);
             viewHolder.tvMissingInfo.setVisibility(View.GONE);
 
