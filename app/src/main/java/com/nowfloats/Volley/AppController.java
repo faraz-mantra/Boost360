@@ -52,7 +52,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         initWebEngage();
 
         InviteReferralsApplication.register(this);
-        InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
+//        InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
 
         //Koin
         KoinBaseApplication.initModule(this);
