@@ -22,7 +22,7 @@
             android:text="Add-on deals"
             android:textFontWeight="600"
             android:textColor="@color/common_text_color"
-            android:textSize="@dimen/_12sdp" />
+            android:textSize="@dimen/_14ssp" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

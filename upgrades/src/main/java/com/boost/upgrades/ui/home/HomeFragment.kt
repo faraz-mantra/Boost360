@@ -5,7 +5,6 @@ import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
@@ -58,7 +57,6 @@ import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.details_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
 import java.util.*
@@ -88,6 +86,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     var cart_list: List<WidgetModel>? = null
     var badgeNumber = 0
     var fpRefferalCode: String = ""
+    var feedBackLink: String? = null
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -143,6 +142,13 @@ class HomeFragment : BaseFragment(), HomeListener {
         initializeFeatureDeals()
         initializeRecycler()
         initializeAddonCategoryRecycler()
+
+        if ((activity as UpgradeActivity).accountType != null) {
+            recommended_features_account_type.setText((activity as UpgradeActivity).accountType!!.toLowerCase())
+            recommended_features_section.visibility = View.VISIBLE
+        } else {
+            recommended_features_section.visibility = View.GONE
+        }
 
         share_refferal_code_btn.setOnClickListener {
             WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "Generic", "")
@@ -257,6 +263,35 @@ class HomeFragment : BaseFragment(), HomeListener {
                     VIEW_ALL_FEATURE
             )
         }
+
+        //chat bot view button clicked
+        view_chat.setOnClickListener {
+            val details = DetailsFragment.newInstance()
+            val args = Bundle()
+            args.putString("itemId", "CHATBOT")
+            details.arguments = args
+            (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
+        }
+
+        //share feed back button
+        share_feedback_button.setOnClickListener {
+            if (feedBackLink != null) {
+//                val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
+//                val args = Bundle()
+//                args.putString("link", feedBackLink)
+//                webViewFragment.arguments = args
+//                (activity as UpgradeActivity).addFragment(
+//                        webViewFragment,
+//                        Constants.WEB_VIEW_FRAGMENT
+//                )
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(feedBackLink)
+                startActivity(i)
+            } else {
+                Toasty.error(requireContext(), "Feedback Service Not Available. Try Later..", Toast.LENGTH_LONG).show()
+            }
+        }
+
     }
 
 //  private fun initYouTube() {
@@ -383,8 +418,12 @@ class HomeFragment : BaseFragment(), HomeListener {
                         null
                 ))
             }
-            if (list.size > 0)
+            if (list.size > 0) {
+                package_layout.visibility = View.VISIBLE
                 updatePackageViewPager(list)
+            } else {
+                package_layout.visibility = View.GONE
+            }
         })
 
         viewModel.getAllFeatureDeals().observe(this, androidx.lifecycle.Observer {
@@ -483,6 +522,11 @@ class HomeFragment : BaseFragment(), HomeListener {
                 partner_layout.visibility = View.GONE
             }
         })
+
+        viewModel.getFeedBackLink().observe(this, androidx.lifecycle.Observer {
+            Log.e("getFeedBackLink", it.toString())
+            feedBackLink = it
+        })
     }
 
     fun updateRecycler(list: List<FeaturesModel>) {
@@ -554,6 +598,15 @@ class HomeFragment : BaseFragment(), HomeListener {
         bannerViewPagerAdapter.notifyDataSetChanged()
         //show dot indicator only when the (list.size > 2)
         if (list.size > 1) {
+            if (list.size > 2) {
+                banner_viewpager.setPageTransformer(SimplePageTransformer())
+
+                val itemDecoration = HorizontalMarginItemDecoration(
+                        requireContext(),
+                        R.dimen.viewpager_current_item_horizontal_margin
+                )
+                banner_viewpager.addItemDecoration(itemDecoration)
+            }
             banner_indicator.visibility = View.VISIBLE
         } else {
             banner_indicator.visibility = View.INVISIBLE
@@ -561,7 +614,6 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     fun updatePackageViewPager(list: List<Bundles>) {
-        package_layout.visibility = View.VISIBLE
         package_viewpager.offscreenPageLimit = list.size
         packageViewPagerAdapter.addupdates(list)
         packageViewPagerAdapter.notifyDataSetChanged()
@@ -590,14 +642,6 @@ class HomeFragment : BaseFragment(), HomeListener {
         banner_viewpager.adapter = bannerViewPagerAdapter
         banner_viewpager.offscreenPageLimit = 4
         banner_indicator.setViewPager2(banner_viewpager)
-
-        banner_viewpager.setPageTransformer(SimplePageTransformer())
-
-        val itemDecoration = HorizontalMarginItemDecoration(
-                requireContext(),
-                R.dimen.viewpager_current_item_horizontal_margin
-        )
-        banner_viewpager.addItemDecoration(itemDecoration)
 
     }
 

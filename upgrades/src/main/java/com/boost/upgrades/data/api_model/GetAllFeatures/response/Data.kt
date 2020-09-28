@@ -34,5 +34,7 @@ data class Data(
         @SerializedName("expert_connect")
         val expert_connect: ExpertConnect,
         @SerializedName("video_gallery")
-        val video_gallery: List<VideoGallery>
+        val video_gallery: List<VideoGallery>,
+        @SerializedName("feedback_link")
+        val feedback_link: String
 )

@@ -23,6 +23,7 @@ import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
 import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
+import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 /**
  * Created by Admin on 02-03-2018.
@@ -91,6 +92,7 @@ public class FacebookLeadsFragment extends Fragment {
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());
         intent.putExtra("loginid", session.getUserProfileId());
+        intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {
