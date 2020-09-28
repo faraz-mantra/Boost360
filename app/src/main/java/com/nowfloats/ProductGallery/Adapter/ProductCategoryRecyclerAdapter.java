@@ -83,7 +83,7 @@ public class ProductCategoryRecyclerAdapter extends RecyclerView.Adapter<Recycle
 
             String category = model.category == null ? "" : model.category;
 
-            String brand = model.brandName.isEmpty() || model.brandName == null ? "" : "<b>" + model.brandName + "</b>";
+            String brand = model.brandName == null || model.brandName.isEmpty()  ? "" : "<b>" + model.brandName + "</b>";
             viewHolder.tvBrand.setVisibility(View.VISIBLE);
             viewHolder.tvMissingInfo.setVisibility(View.GONE);
 
