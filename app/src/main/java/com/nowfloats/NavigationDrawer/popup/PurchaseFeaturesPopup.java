@@ -19,6 +19,8 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.thinksity.R;
 
+import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
+
 public class PurchaseFeaturesPopup extends DialogFragment {
 
     LinearLayout mainLayout;
@@ -89,6 +91,7 @@ public class PurchaseFeaturesPopup extends DialogFragment {
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());
         intent.putExtra("loginid", session.getUserProfileId());
+        intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {
