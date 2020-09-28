@@ -590,7 +590,8 @@
             android:background="@color/cell_background_color"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/sixthRow_ImageView"
@@ -739,7 +740,8 @@
             android:background="@color/cell_background_color"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/eigthRow_ImageView"
@@ -758,6 +760,31 @@
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ninthRow_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/ninthRow_ImageView"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_nav_share_site" />
+
+            <TextView
+                android:id="@+id/ninthRow_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/refer_a_friend"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size"/>
         </LinearLayout>
 
     </LinearLayout>
