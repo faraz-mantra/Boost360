@@ -146,17 +146,18 @@
           android:layout_height="wrap_content"
           android:layout_alignParentLeft="true"
           android:orientation="horizontal"
-          android:layout_centerVertical="true">
+          android:layout_centerVertical="true"
+          android:layout_toStartOf="@id/ll_share_buttons">
 
           <TextView
               android:id="@+id/label_price"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center_vertical"
-              android:paddingRight="8dp"
+              android:paddingRight="4dp"
               android:text="INR 0"
               android:textColor="@color/primaryTextColor"
-              android:textSize="14sp" />
+              android:textSize="12sp" />
 
           <TextView
             android:id="@+id/label_base_price"
@@ -168,7 +169,7 @@
             android:paddingRight="8dp"
             android:text="INR 0"
             android:textColor="@color/secondaryLightTextColor"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
 
         </LinearLayout>
