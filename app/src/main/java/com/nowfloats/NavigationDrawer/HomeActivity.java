@@ -174,6 +174,7 @@ import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.B
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_PAID;
 import static com.nowfloats.manageinventory.ManageInventoryFragment.getExperienceType;
 import static com.nowfloats.util.Constants.REFERRAL_CAMPAIGN_CODE;
+import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 import static com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivityKt.startFragmentActivityNew;
 
 //import com.nfx.leadmessages.ReadMessages;
@@ -1457,15 +1458,17 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //                    String name = session.getUserProfileName();
 //                    String number = session.getUserPrimaryMobile();
 //                    String email = session.getUserProfileEmail();
-                    InviteReferralsApi.getInstance(HomeActivity.this).userDetails(
+                    InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
                             session.getUserProfileName(),
                             session.getUserProfileEmail(),
                             session.getUserPrimaryMobile(),
-                            REFERRAL_CAMPAIGN_CODE, null, null);
-                    InviteReferralsApi.getInstance(HomeActivity.this).inline_btn(REFERRAL_CAMPAIGN_CODE);
+                            REFERRAL_CAMPAIGN_CODE, null, null
+                    );
+                    InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
                 }
             }
         }, 200);
+
     }
 
     private void startBusinessApp() {
@@ -1528,6 +1531,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         intent.putExtra("loginid", session.getUserProfileId());
         intent.putExtra("isOpenCardFragment", isOpenCardFragment);
         intent.putExtra("screenType", screenType);
+        intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {
@@ -1924,4 +1928,3 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     }
 }
-
