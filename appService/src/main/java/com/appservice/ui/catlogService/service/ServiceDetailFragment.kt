@@ -637,14 +637,12 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     startFragmentAccountActivity(fragment, bundle, isResult = true, requestCode = 202)
   }
 
-
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     inflater.inflate(R.menu.menu_delete, menu)
     menuDelete = menu.findItem(R.id.menu_delete)
     menuDelete?.isVisible = isEdit ?: false
     super.onCreateOptionsMenu(menu, inflater)
   }
-
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {

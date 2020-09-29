@@ -213,9 +213,8 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
                             mainView.findViewById(R.id.cv_edit_profile).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Intent intent = new Intent(getActivity(), FeaturedImageActivity.class);
-//                                    Intent businessAddress = new Intent(activity, Edit_Profile_Activity.class);
-                                    startActivity(intent);
+                                    Intent businessAddress = new Intent(activity, Edit_Profile_Activity.class);
+                                    startActivity(businessAddress);
                                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 }
                             });
