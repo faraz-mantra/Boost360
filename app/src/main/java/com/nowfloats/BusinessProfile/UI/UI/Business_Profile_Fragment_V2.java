@@ -32,6 +32,7 @@ import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.NavigationDrawer.ImageMenuActivity;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
@@ -212,8 +213,9 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
                             mainView.findViewById(R.id.cv_edit_profile).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Intent businessAddress = new Intent(activity, Edit_Profile_Activity.class);
-                                    startActivity(businessAddress);
+                                    Intent intent = new Intent(getActivity(), FeaturedImageActivity.class);
+//                                    Intent businessAddress = new Intent(activity, Edit_Profile_Activity.class);
+                                    startActivity(intent);
                                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 }
                             });
