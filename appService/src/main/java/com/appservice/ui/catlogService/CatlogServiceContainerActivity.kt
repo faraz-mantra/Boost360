@@ -1,6 +1,7 @@
 package com.appservice.ui.catlogService
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
