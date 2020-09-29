@@ -782,7 +782,7 @@
                 android:id="@+id/ninthRow_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/refer_a_friend"
+                android:text="Refer a friend"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size"/>
         </LinearLayout>
