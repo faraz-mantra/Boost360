@@ -35,7 +35,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.invitereferrals.invitereferrals.InviteReferralsApi;
 import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;

@@ -63,6 +63,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.inventoryorder.constant.FragmentType;
 import com.inventoryorder.constant.IntentConstant;
 import com.inventoryorder.model.PreferenceData;
+import com.invitereferrals.invitereferrals.IRInterfaces.UserDetailsCallback;
 import com.invitereferrals.invitereferrals.InviteReferralsApi;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.AccrossVerticals.FacebookLeads.FacebookLeadsFragment;
@@ -1464,7 +1465,23 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                             session.getUserPrimaryMobile(),
                             REFERRAL_CAMPAIGN_CODE, null, null
                     );
-                    InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
+                    InviteReferralsApi.getInstance(getApplicationContext()).userDetailListener(new UserDetailsCallback() {
+                        @Override
+                        public void userDetails(JSONObject jsonObject) {
+                            Log.d("Referral Details", jsonObject.toString());
+                            try {
+                                String status = jsonObject.get("Authentication").toString();
+                                if(status.toLowerCase().equals("success")){
+                                    InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
+                                }else{
+                                    Toast.makeText(getApplicationContext(), "Authentication failed. Please try later.", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+//                                e.printStackTrace();
+                                Toast.makeText(getApplicationContext(), "Authentication failed. Please try later.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
         }, 200);
