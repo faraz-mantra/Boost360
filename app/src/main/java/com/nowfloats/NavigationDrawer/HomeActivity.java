@@ -1456,36 +1456,56 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
                     startActivity(subscribers);
                 }else if(nextScreen.equals(getString(R.string.referrals_button))){
-//                    String name = session.getUserProfileName();
-//                    String number = session.getUserPrimaryMobile();
-//                    String email = session.getUserProfileEmail();
-                    InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
-                            session.getUserProfileName(),
-                            session.getUserProfileEmail(),
-                            session.getUserPrimaryMobile(),
-                            REFERRAL_CAMPAIGN_CODE, null, null
-                    );
-                    InviteReferralsApi.getInstance(getApplicationContext()).userDetailListener(new UserDetailsCallback() {
-                        @Override
-                        public void userDetails(JSONObject jsonObject) {
-                            Log.d("Referral Details", jsonObject.toString());
-                            try {
-                                String status = jsonObject.get("Authentication").toString();
-                                if(status.toLowerCase().equals("success")){
-                                    InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
-                                }else{
-                                    Toast.makeText(getApplicationContext(), "Authentication failed. Please try later.", Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (JSONException e) {
-//                                e.printStackTrace();
-                                Toast.makeText(getApplicationContext(), "Authentication failed. Please try later.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    if(!TextUtils.isEmpty(session.getFPEmail())){
+                        InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
+                                session.getUserProfileName(),
+                                session.getFPEmail(),
+                                session.getUserPrimaryMobile(),
+                                REFERRAL_CAMPAIGN_CODE, null, null
+                        );
+                        inviteReferralLogin();
+                    } else if(!TextUtils.isEmpty(session.getUserProfileEmail())){
+                        InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
+                                session.getUserProfileName(),
+                                session.getUserProfileEmail(),
+                                session.getUserPrimaryMobile(),
+                                REFERRAL_CAMPAIGN_CODE, null, null
+                        );
+                        inviteReferralLogin();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "An unexpected error occured.", Toast.LENGTH_LONG).show();
+                    }
+//                    InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
+//                            session.getUserProfileName(),
+//                            session.getUserProfileEmail(),
+//                            session.getUserPrimaryMobile(),
+//                            REFERRAL_CAMPAIGN_CODE, null, null
+//                    );
+
                 }
             }
         }, 200);
 
+    }
+
+    private void inviteReferralLogin(){
+        InviteReferralsApi.getInstance(getApplicationContext()).userDetailListener(new UserDetailsCallback() {
+            @Override
+            public void userDetails(JSONObject jsonObject) {
+                Log.d("Referral Details", jsonObject.toString());
+                try {
+                    String status = jsonObject.get("Authentication").toString();
+                    if(status.toLowerCase().equals("success")){
+                        InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Authentication failed. Please try later.", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+//                                e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Authentication failed. Please try later.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void startBusinessApp() {
