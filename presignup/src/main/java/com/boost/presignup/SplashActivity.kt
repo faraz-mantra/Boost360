@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignup.utils.DynamicLinkParams
 import com.boost.presignup.utils.FirebaseDynamicLinksManager
 import com.onboarding.nowfloats.managers.NavigatorManager
+import com.smartlook.sdk.smartlook.Smartlook
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -47,6 +48,7 @@ class SplashActivity : AppCompatActivity() {
       val profileId = pref.getString("user_profile_id", null)
       isUserLoggedIn = profileId != null && profileId.trim().isNotEmpty()
     }
+    Smartlook.setupAndStartRecording("2976fda0fc620d3186eca19884bd55ac125b56e4");
     onCreateView()
   }
 
@@ -60,7 +62,8 @@ class SplashActivity : AppCompatActivity() {
       startActivity(intent)
       overridePendingTransition(0, 0)
       finish()
-    } else initLottieAnimation()
+    } else
+      initLottieAnimation()
   }
 
   private fun initLottieAnimation() {
