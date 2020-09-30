@@ -638,15 +638,15 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    inflater.inflate(R.menu.menu_delete, menu)
-    menuDelete = menu.findItem(R.id.menu_delete)
-    menuDelete?.isVisible = isEdit ?: false
     super.onCreateOptionsMenu(menu, inflater)
+    inflater.inflate(R.menu.ic_menu_delete_new, menu)
+    menuDelete = menu.findItem(R.id.id_delete)
+    menuDelete?.isVisible = isEdit ?: false
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-      R.id.menu_delete -> {
+      R.id.id_delete -> {
         MaterialAlertDialogBuilder(baseActivity).setTitle(resources.getString(R.string.are_you_sure))
             .setMessage(resources.getString(R.string.delete_record_not_undone))
             .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete)) { d, _ ->

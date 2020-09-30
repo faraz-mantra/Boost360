@@ -79,25 +79,13 @@ open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentCo
 
   override fun getToolbarTitle(): String? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION -> "Other Information"
-      FragmentType.SERVICE_DETAIL_VIEW -> "Service Details"
+      FragmentType.SERVICE_INFORMATION -> resources.getString(R.string.other_information)
+      FragmentType.SERVICE_DETAIL_VIEW -> resources.getString(R.string.service_details)
       else -> super.getToolbarTitle()
     }
   }
 
 
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    val toolbarMenu = menu ?: return super.onCreateOptionsMenu(menu)
-    val menuRes = getMenuRes() ?: return super.onCreateOptionsMenu(menu)
-    menuInflater.inflate(menuRes, toolbarMenu)
-    return true
-  }
-
-  open fun getMenuRes(): Int? {
-    return when (type) {
-      else -> null
-    }
-  }
 
   private fun shouldAddToBackStack(): Boolean {
     return when (type) {
