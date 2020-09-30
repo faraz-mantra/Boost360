@@ -30,6 +30,9 @@ allprojects {
         maven {
             url  "http://dl.bintray.com/lukaville/maven"
         }
+        maven {
+            url "https://sdk.smartlook.com/android/release"
+        }
         flatDir {
             dirs 'libs'
         }
