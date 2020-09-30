@@ -12,12 +12,15 @@ import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
+import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.ui.catlogService.information.ServiceInformationFragment
 import com.appservice.ui.catlogService.service.ServiceDetailFragment
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
+import com.framework.exceptions.NoNetworkException
+import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -123,7 +126,15 @@ open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentCo
   override fun onBackPressed() {
     if (serviceInformationFragment != null) {
       serviceInformationFragment?.onNavPressed()
-    } else super.onBackPressed()
+    } else if(serviceDetailFragment != null){
+      MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialogTheme).setTitle("Information not saved!")
+              .setMessage("You have unsaved information. Do you still want to close?")
+              .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
+                d.dismiss()
+                super.onBackPressed()
+              }.show()
+    }
+    else super.onBackPressed()
   }
 }
 
