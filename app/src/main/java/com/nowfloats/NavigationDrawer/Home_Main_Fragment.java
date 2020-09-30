@@ -662,6 +662,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     private void addImage() {
         WebEngageController.trackEvent("DASHBOARD - Fab - Image", "Fab", null);
         Intent webIntent = new Intent(getActivity(), ImageGalleryActivity.class);
+        webIntent.putExtra("create_image", true);
         startActivity(webIntent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
