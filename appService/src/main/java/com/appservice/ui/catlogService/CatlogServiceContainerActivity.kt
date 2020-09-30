@@ -139,7 +139,7 @@ open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentCo
     if (serviceInformationFragment != null) {
       serviceInformationFragment?.onNavPressed()
     } else if(serviceDetailFragment != null){
-      MaterialAlertDialogBuilder(this).setTitle("Information not saved!")
+      MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialogTheme).setTitle("Information not saved!")
               .setMessage("You have unsaved information. Do you still want to close?")
               .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
                 d.dismiss()
