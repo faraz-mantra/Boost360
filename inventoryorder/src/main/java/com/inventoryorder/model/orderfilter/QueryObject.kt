@@ -17,7 +17,9 @@ data class QueryObject(
     DeliveryProvider("LogisticsDetails.DeliveryProvider"),
     Status("Status"),
     PaymentStatus("PaymentDetails.Status"),
-    ReferenceNumber("ReferenceNumber")
+    ReferenceNumber("ReferenceNumber"),
+    BuyerFullName("BuyerDetails.ContactDetails.FullName"),
+    BuyerPrimaryContactNumber("BuyerDetails.ContactDetails.PrimaryContactNumber")
   }
 
   enum class QueryValue {

@@ -1,6 +1,8 @@
 package com.inventoryorder.model.orderRequest
 
+import com.framework.utils.DateUtils
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ExtraProperties(
     @SerializedName("businessLicense")
@@ -39,4 +41,19 @@ data class ExtraProperties(
     val endTime: String = "",
     @SerializedName("age")
     val age: String = ""
-)
+) : Serializable {
+
+  fun startTime(): String {
+    return startTime ?: ""
+  }
+
+  fun endTime(): String {
+    return endTime ?: ""
+  }
+
+  fun getScheduledDateN(): String? {
+    var dateString = DateUtils.parseDate(scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_YYYY_MM_DD)
+    if (dateString.isNullOrEmpty()) dateString = DateUtils.parseDate(scheduledDateTime, DateUtils.FORMAT_SERVER_1_DATE, DateUtils.FORMAT_YYYY_MM_DD)
+    return dateString ?: ""
+  }
+}

@@ -2,6 +2,7 @@ package com.inventoryorder.rest.services
 
 import com.inventoryorder.model.apointmentData.DoctorAppointmentResponse
 import com.inventoryorder.model.apointmentData.addRequest.AddAptConsultRequest
+import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultRequest
 import com.inventoryorder.model.weeklySchedule.GetDoctorWeeklySchedule
 import com.inventoryorder.rest.EndPoints
 import io.reactivex.Observable
@@ -31,5 +32,11 @@ interface WebActionBoostDataSource {
   fun addAptConsultData(
       @Header("Authorization") auth: String?,
       @Body request: AddAptConsultRequest?
+  ): Observable<Response<ResponseBody>>
+
+  @POST(EndPoints.UPDATE_APT_CONSULT_DATA)
+  fun updateAptConsultData(
+      @Header("Authorization") auth: String?,
+      @Body request: UpdateConsultRequest?
   ): Observable<Response<ResponseBody>>
 }
