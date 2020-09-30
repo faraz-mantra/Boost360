@@ -90,8 +90,9 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         cartCheckoutData.put("customerId", arguments!!.getString("customerId"))
         cartCheckoutData.put("amount", Math.round(totalAmount * 100).toInt())
         cartCheckoutData.put("order_id", arguments!!.getString("order_id"))
-//        cartCheckoutData.put("amount", 757400)
-//        cartCheckoutData.put("subscription_id", "sub_Ey6FAsjBmWE0WH")
+        //subscription testing
+//        cartCheckoutData.put("amount", 50000)
+//        cartCheckoutData.put("subscription_id", "sub_Fj7nfvetEC7C0W")
         cartCheckoutData.put("transaction_id", arguments!!.getString("transaction_id"))
         cartCheckoutData.put("email", arguments!!.getString("email"))
         cartCheckoutData.put("currency", arguments!!.getString("currency"));

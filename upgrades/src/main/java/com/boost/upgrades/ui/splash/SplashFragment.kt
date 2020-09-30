@@ -19,6 +19,7 @@ import com.boost.upgrades.data.api_model.customerId.customerInfo.AddressDetails
 import com.boost.upgrades.data.api_model.customerId.customerInfo.BusinessDetails
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.customerInfo.TaxDetails
+import com.boost.upgrades.data.api_model.customerId.get.Result
 import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Utils.isValidGSTIN
@@ -29,7 +30,7 @@ import kotlinx.android.synthetic.main.splash_fragment.*
 
 class SplashFragment : DialogFragment() {
 
-    var createCustomerInfoRequest: CreateCustomerInfoRequest? = null
+    var createCustomerInfoRequest: Result? = null
 
     var customerInfoState = false
 
