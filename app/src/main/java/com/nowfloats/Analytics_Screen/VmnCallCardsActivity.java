@@ -66,6 +66,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     int totalPotentialCallCount = 0;
     private int offset = 0;
     boolean stopApiCall;
+    boolean allowCallPlayFlag; // This flag allows only one audio to play at a time. True means an audio can be played.
     ArrayList<VmnCallModel> headerList = new ArrayList<>();
     VmnCall_Adapter vmnCallAdapter;
     RecyclerView mRecyclerView;
@@ -112,6 +113,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         dottedLine2.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         webCallCount = findViewById(R.id.web_call_count);
         phoneCallCount = findViewById(R.id.phone_call_count);
+        allowCallPlayFlag = true;
 
         //tracking calls
         showTrackedCalls();
@@ -230,6 +232,18 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View v) {
                 initiateBuyFromMarketplace();
+            }
+        });
+
+        vmnCallAdapter.setAllowAudioPlay(new AllowAudioPlay() {
+            @Override
+            public boolean allowAudioPlay() {
+                return allowCallPlayFlag;
+            }
+
+            @Override
+            public void toggleAllowAudioPlayFlag(boolean setValue) {
+                allowCallPlayFlag = setValue;
             }
         });
 
