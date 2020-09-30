@@ -132,12 +132,12 @@ public class ManageProductActivity extends BaseActivity
     {
         confirm();
 
-        if(isProductCategoryFragment())
-        {
+//        if(isProductCategoryFragment())
+//        {
 
 //            super.onBackPressed();
 //            return;
-        }
+//        }
 //
 //        if (doubleBackToExitPressedOnce)
 //        {
