@@ -103,7 +103,6 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
                 public void onClick(View v) {
                     if (!holder.mediaPlayer.isPlaying()) {
                         // This block is triggered if media is not playing.
-                        boolean allowAudioPlay = mAllowAudioPlay.allowAudioPlay();
                         if(mAllowAudioPlay.allowAudioPlay()){
                             mAllowAudioPlay.toggleAllowAudioPlayFlag(false); // Block other audios from playing.
                             holder.playPauseButton.setImageResource(R.drawable.ic_pause_gray);
@@ -159,6 +158,7 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
                 holder.audioEndTime.setText(" / 0:00");
                 holder.currentDuration = 0;
                 mList.get(position).setAudioPlayState(false);
+                mAllowAudioPlay.toggleAllowAudioPlayFlag(true); // Allow other audios to play.
             }
         });
 
