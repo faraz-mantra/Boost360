@@ -26,6 +26,7 @@ import com.thinksity.R;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Created by Admin on 23-06-2017.
@@ -122,7 +123,8 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
                                         }
                                     }
                                 } catch (Exception e) {
-                                    Log.v("ggg", e.getLocalizedMessage());
+                                    if (e.getLocalizedMessage() != null) Log.v("AUDIO_EXCEPTION", e.getLocalizedMessage());
+                                    else if (e.getMessage() != null) Log.v("AUDIO_EXCEPTION", e.getMessage());
                                 }
                             }
                         } else {
@@ -133,7 +135,6 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
                     }
                 } else {
                     holder.pause();
-                    mList.get(position).setAudioPlayState(false);
                     holder.playPauseButton.setImageResource(R.drawable.ic_audio_play);
                     mAllowAudioPlay.toggleAllowAudioPlayFlag(true); // Allow other audios to play.
                 }
