@@ -259,15 +259,6 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     }
   }
 
-  private fun dialogLogout() {
-    MaterialAlertDialogBuilder(baseActivity)
-        .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
-        .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
-          baseActivity.finish()
-          d.dismiss()
-        }.show()
-  }
-
   private fun openGStDetail() {
     val gstSheet = GstDetailsBottomSheet()
     gstSheet.onClicked = { binding?.edtGst?.setText("$it %") }
@@ -276,5 +267,14 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   fun onNavPressed() {
     dialogLogout()
+  }
+
+  private fun dialogLogout() {
+    MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
+        .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
+        .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
+          baseActivity.finish()
+          d.dismiss()
+        }.show()
   }
 }
