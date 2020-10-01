@@ -669,4 +669,16 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     }
   }
 
+  fun onNavPressed() {
+    dialogLogout()
+  }
+
+  private fun dialogLogout() {
+    MaterialAlertDialogBuilder(baseActivity,R.style.MaterialAlertDialogTheme)
+        .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
+        .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
+          baseActivity.finish()
+          d.dismiss()
+        }.show()
+  }
 }

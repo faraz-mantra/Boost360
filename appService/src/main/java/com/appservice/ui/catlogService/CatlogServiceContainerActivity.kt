@@ -89,7 +89,6 @@ open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentCo
   }
 
 
-
   private fun shouldAddToBackStack(): Boolean {
     return when (type) {
       else -> false
@@ -124,17 +123,11 @@ open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentCo
   }
 
   override fun onBackPressed() {
-    if (serviceInformationFragment != null) {
-      serviceInformationFragment?.onNavPressed()
-    } else if(serviceDetailFragment != null){
-      MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialogTheme).setTitle("Information not saved!")
-              .setMessage("You have unsaved information. Do you still want to close?")
-              .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
-                d.dismiss()
-                super.onBackPressed()
-              }.show()
+    when (type) {
+      FragmentType.SERVICE_DETAIL_VIEW -> serviceDetailFragment?.onNavPressed()
+      FragmentType.SERVICE_INFORMATION -> serviceInformationFragment?.onNavPressed()
+      else -> super.onBackPressed()
     }
-    else super.onBackPressed()
   }
 }
 
