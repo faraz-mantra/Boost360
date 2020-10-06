@@ -1655,10 +1655,10 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             return false;
         }*/
 
-        if (!adapter.isValid()) {
-            Toast.makeText(getContext(), "Enter all specification values", Toast.LENGTH_LONG).show();
-            return false;
-        }
+//        if (!adapter.isValid()) {
+//            Toast.makeText(getContext(), "Enter all specification values", Toast.LENGTH_LONG).show();
+//            return false;
+//        }
 
         if (paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
                 && !isService) {

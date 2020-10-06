@@ -16,6 +16,7 @@ import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_1
+import com.framework.utils.DateUtils.FORMAT_YYYY_MM_DD
 import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.DateUtils.toCalendar
 import com.framework.utils.ValidationUtils.isEmailValid
@@ -33,10 +34,15 @@ import com.inventoryorder.model.apointmentData.DoctorAppointmentResponse
 import com.inventoryorder.model.apointmentData.addRequest.ActionData
 import com.inventoryorder.model.apointmentData.addRequest.AddAptConsultRequest
 import com.inventoryorder.model.apointmentData.addRequest.CustomerInfo
+import com.inventoryorder.model.apointmentData.updateRequest.SetField
+import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultField
+import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultRequest
 import com.inventoryorder.model.doctorsData.DoctorDataResponse
 import com.inventoryorder.model.orderRequest.*
+import com.inventoryorder.model.ordersdetails.ExtraPropertiesN
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersdetails.ProductN
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.model.services.InventoryServicesResponse
 import com.inventoryorder.model.services.InventoryServicesResponseItem
@@ -63,6 +69,21 @@ import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBinding>(), PopupMenu.OnMenuItemClickListener {
+
+  //TODO update value
+  private var orderItem: OrderItem? = null
+  private val product: ProductN?
+    get() {
+      return orderItem?.firstItemForConsultation()?.product()
+    }
+  private val extraItemConsult: ExtraPropertiesN?
+    get() {
+      return product?.extraItemProductConsultation()
+    }
+  private var aptData: AptData? = null
+  private var updateExtraPropertyRequest: UpdateExtraPropertyRequest? = null
+  private var isUpdate: Boolean = false
+  //TODO update value
 
   private var selectPositionService: Int = -1
   private var selectPositionDoctor: Int = 0
@@ -98,27 +119,19 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   override fun onCreateView() {
     super.onCreateView()
     calendarView()
-    session = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as PreferenceData
+    session = arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name) as? PreferenceData
+    orderItem = arguments?.getSerializable(IntentConstant.ORDER_ITEM.name) as? OrderItem
+    isUpdate = (orderItem != null)
+    setToolbarTitle(getString(if (isUpdate) R.string.update_apt_consult else R.string.new_apppointment_camel_case))
 
     // Remove video consultation based on experience code.
-    if (session?.experienceCode == "DOC" || session?.experienceCode == "HOS") {
-      binding?.radioVideoConsultation?.isVisible = true
-    }
+    if (session?.experienceCode == "DOC" || session?.experienceCode == "HOS") binding?.radioVideoConsultation?.isVisible = true
+    isVideoConsult = arguments?.getBoolean(IntentConstant.IS_VIDEO.name) ?: false
+    if (isVideoConsult) binding?.radioVideoConsultation?.isChecked = true else binding?.radioInClinic?.isChecked = true
 
-    val isFromVideo = arguments?.getBoolean("IS_VIDEO")
-    if (isFromVideo!!) {
-      binding?.radioVideoConsultation?.isChecked = true
-      isVideoConsult = true
-    } else {
-      binding?.radioInClinic?.isChecked = true
-      isVideoConsult = false
-    }
     binding?.radioGroup?.setOnCheckedChangeListener { _, checkedId ->
-      if (checkedId == binding?.radioInClinic?.id) {
-        isVideoConsult = false
-      } else if (checkedId == binding?.radioVideoConsultation?.id) {
-        isVideoConsult = true
-      }
+      if (checkedId == binding?.radioInClinic?.id) isVideoConsult = false
+      else if (checkedId == binding?.radioVideoConsultation?.id) isVideoConsult = true
     }
     setOnClickListener(binding?.edtConsultingService, binding?.edtDoctor, binding?.edtStartTime, binding?.btnCreate, binding?.edtGender)
     getDoctorDetailApi()
@@ -135,7 +148,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         val response = it.anyResponse as? ArrayList<DoctorDataResponse>
         if (response.isNullOrEmpty().not()) {
           doctorDataList = response
-          doctorData = response?.get(0)
+          doctorData = if (isUpdate) response?.firstOrNull { data -> data.Id == extraItemConsult?.doctorId } else response?.get(0)
           setDatDoctor()
           getServiceList()
         } else errorUi(getErrorMessage())
@@ -176,6 +189,11 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         val resp = (it.arrayResponse as? Array<InventoryServicesResponseItem>)
         serviceList = if (resp.isNullOrEmpty().not()) resp?.toCollection(ArrayList()) else ArrayList()
         serviceList?.add(InventoryServicesResponseItem().getGeneralData())
+        if (isUpdate) {
+          serviceData = this.serviceList?.firstOrNull { service -> service.id == product?._id }
+          selectDatServiceDataSet()
+          updateUiConsult()
+        }
         getWeeklyScheduleList(doctorData?.Id ?: "")
       } else errorUi(it.message())
     })
@@ -227,7 +245,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         super.whenSelectionChanged(isSelected, position, date)
         if (isSelected) {
           showProgress()
-          getAllAptConsultDoctor(doctorData?.Id, date.parseDate(com.framework.utils.DateUtils.FORMAT_YYYY_MM_DD), DateUtils.getDayName(date))
+          getAllAptConsultDoctor(doctorData?.Id, date.parseDate(FORMAT_YYYY_MM_DD), DateUtils.getDayName(date))
         }
       }
 
@@ -268,8 +286,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     val singleItems = this.serviceList?.map { it.name }?.toTypedArray()
     MaterialAlertDialogBuilder(baseActivity).setTitle(getString(R.string.consult_service)).setPositiveButton(getString(R.string.ok)) { d, _ ->
       serviceData = this.serviceList?.firstOrNull { it.name == singleItems?.get(selectPositionService) }
-      binding?.edtConsultingService?.setText(serviceData?.name)
-      binding?.edtFees?.setText(serviceData?.discountedPrice()?.toString())
+      selectDatServiceDataSet()
       d.dismiss()
     }.setNeutralButton(getString(R.string.cancel)) { d, _ ->
       d.dismiss()
@@ -278,13 +295,22 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     }.show()
   }
 
+  private fun selectDatServiceDataSet() {
+    serviceData?.let {
+      binding?.edtConsultingService?.setText(it.name)
+      binding?.edtFees?.setText(it.discountedPrice().toString())
+    }
+  }
+
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.edtDoctor -> doctorListDialog()
+      binding?.edtDoctor -> if (isUpdate.not()) doctorListDialog()
       binding?.edtConsultingService -> {
-        if (serviceList.isNullOrEmpty().not()) consultingOnService()
-        else showShortToast(getString(R.string.cosulting_service_not_available))
+        if ((isUpdate && serviceData != null).not()) {
+          if (serviceList.isNullOrEmpty().not()) consultingOnService()
+          else showShortToast(getString(R.string.cosulting_service_not_available))
+        }
       }
       binding?.edtStartTime -> {
         //setTime(binding?.edtStartTime!!)
@@ -294,8 +320,12 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
           else -> timeSlotBottomSheet()
         }
       }
-      binding?.edtGender -> menuItemView(v, R.menu.popup_menu_gender_selection)
-      binding?.btnCreate -> if (validateAndCreateRequest()) createBooking()
+      binding?.edtGender -> if (isUpdate.not()) menuItemView(v, R.menu.popup_menu_gender_selection)
+      binding?.btnCreate -> {
+        if (validateAndCreateRequest()) {
+          if (isUpdate) updateBooking() else createBooking()
+        }
+      }
     }
   }
 
@@ -332,7 +362,6 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     val age = binding?.edtAge?.text?.toString()
     patientEmail = binding?.edtPatientEmail?.text?.toString() ?: ""
 
-
     when {
       scheduledDateTime.isEmpty() -> {
         showLongToast("Please select consultation date")
@@ -346,16 +375,8 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         showLongToast("Please select time slot.")
         return false
       }
-      duration.isNullOrEmpty() -> {
-        showLongToast("Please select duration.")
-        return false
-      }
       consultingService.isNullOrEmpty() -> {
         showLongToast("Please select consulting on.")
-        return false
-      }
-      consultFee.isNullOrEmpty() -> {
-        showLongToast("Consulting fee field must not be empty.")
         return false
       }
       patientName.isNullOrEmpty() -> {
@@ -368,10 +389,6 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
       }
       age.isNullOrEmpty() -> {
         showLongToast("Age field must not be empty.")
-        return false
-      }
-      age.length > 3 -> {
-        showLongToast("Please enter a valid age.")
         return false
       }
       patientMobile.isNullOrEmpty() -> {
@@ -393,16 +410,6 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         return false
       }
       else -> {
-        val method = if (serviceData?.discountedPrice() == 0.0) PaymentDetailsN.METHOD.FREE.type else PaymentDetailsN.METHOD.COD.type
-        val paymentDetails = PaymentDetails(method)
-        val buyerDetail = BuyerDetails(address = Address(), contactDetails = ContactDetails(emailId = patientEmail!!, fullName = patientName!!, primaryContactNumber = patientMobile!!))
-        val delMode = if (isVideoConsult) OrderItem.DeliveryMode.ONLINE.name else OrderSummaryRequest.DeliveryMode.OFFLINE.name
-        val delProvider = if (isVideoConsult) ShippingDetails.DeliveryProvider.NF_VIDEO_CONSULATION.name else ""
-        val shippingDetails = ShippingDetails(
-            shippedBy = ShippingDetails.ShippedBy.SELLER.name,
-            deliveryMode = delMode, deliveryProvider = delProvider, shippingCost = 0.0, currencyCode = "INR"
-        )
-        val items = ArrayList<ItemsItem>()
         var startTime24 = ""
         var endTime24 = ""
         try {
@@ -417,25 +424,70 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
             duration = duration?.toIntOrNull() ?: 0, businessLicense = doctorData?.businessLicense ?: "", doctorSignature = doctorData?.doctorsignature?.url ?: "",
             referenceId = serviceData?.pickupAddressReferenceId() ?: "", businessLogo = "")
 
-        val productDetails = ProductDetails(id = serviceData?.id ?: "NO_ITEM", name = serviceData?.name ?: "NO_ITEM", description = serviceData?.description ?: "NO_ITEM",
-            currencyCode = "INR", isAvailable = serviceData?.isAvailable(), price = serviceData?.discountedPrice(), shippingCost = 0.0, discountAmount = serviceData?.discountAmount(),
-            extraProperties = extra, imageUri = serviceData?.imageUri ?: "")
+        if (isUpdate) {
+          updateExtraPropertyRequest = UpdateExtraPropertyRequest(extraProperties = extra, orderId = orderItem?._id, updateExtraPropertyType = UpdateExtraPropertyRequest.PropertyType.ITEM.name)
+        } else {
+          val method = if (serviceData?.discountedPrice() == 0.0) PaymentDetailsN.METHOD.FREE.type else PaymentDetailsN.METHOD.COD.type
+          val paymentDetails = PaymentDetails(method)
+          val buyerDetail = BuyerDetails(address = Address(), contactDetails = ContactDetails(emailId = patientEmail!!, fullName = patientName!!, primaryContactNumber = patientMobile!!))
+          val delMode = if (isVideoConsult) OrderItem.DeliveryMode.ONLINE.name else OrderSummaryRequest.DeliveryMode.OFFLINE.name
+          val delProvider = if (isVideoConsult) ShippingDetails.DeliveryProvider.NF_VIDEO_CONSULATION.name else ""
+          val shippingDetails = ShippingDetails(shippedBy = ShippingDetails.ShippedBy.SELLER.name, deliveryMode = delMode, deliveryProvider = delProvider, shippingCost = 0.0, currencyCode = "INR")
+          val items = ArrayList<ItemsItem>()
 
-        items.add(ItemsItem(type = serviceData?.getType() ?: "NO_ITEM", productOrOfferId = serviceData?.id ?: "NO_ITEM", quantity = 1, productDetails = productDetails))
+          val productDetails = ProductDetails(id = serviceData?.id ?: "NO_ITEM", name = serviceData?.name ?: "NO_ITEM", description = serviceData?.description ?: "NO_ITEM",
+              currencyCode = "INR", isAvailable = serviceData?.isAvailable(), price = serviceData?.discountedPrice(), shippingCost = 0.0, discountAmount = serviceData?.discountAmount(),
+              extraProperties = extra, imageUri = serviceData?.imageUri ?: "")
 
-        orderInitiateRequest.paymentDetails = paymentDetails
-        orderInitiateRequest.sellerID = session?.fpTag.toString()
-        orderInitiateRequest.buyerDetails = buyerDetail
-        orderInitiateRequest.mode = OrderItem.OrderMode.APPOINTMENT.name
-        orderInitiateRequest.shippingDetails = shippingDetails
-        orderInitiateRequest.transactionCharges = 0.0
-        orderInitiateRequest.gstCharges = 0.0
-        orderInitiateRequest.items = items
-        orderInitiateRequest.isVideoConsult = isVideoConsult
+          items.add(ItemsItem(type = serviceData?.getType() ?: "NO_ITEM", productOrOfferId = serviceData?.id ?: "NO_ITEM", quantity = 1, productDetails = productDetails))
+
+          orderInitiateRequest.paymentDetails = paymentDetails
+          orderInitiateRequest.sellerID = session?.fpTag.toString()
+          orderInitiateRequest.buyerDetails = buyerDetail
+          orderInitiateRequest.mode = OrderItem.OrderMode.APPOINTMENT.name
+          orderInitiateRequest.shippingDetails = shippingDetails
+          orderInitiateRequest.transactionCharges = 0.0
+          orderInitiateRequest.gstCharges = 0.0
+          orderInitiateRequest.items = items
+          orderInitiateRequest.isVideoConsult = isVideoConsult
+        }
         return true
       }
-
     }
+  }
+
+  private fun updateBooking() {
+    showProgress()
+    viewModel?.updateExtraPropertyOrder(AppConstant.CLIENT_ID_2, updateExtraPropertyRequest)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+      if (it.error is NoNetworkException) {
+        hideProgress()
+        showLongToast(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (it.status == 200 || it.status == 201 || it.status == 202) {
+        hitApiUpdateAptConsult(updateExtraPropertyRequest?.extraProperties)
+      } else {
+        hideProgress()
+        showLongToast(if (it.message().isNotEmpty()) it.message() else "Cannot rescheduled your booking at this time. Please try later.")
+      }
+    })
+  }
+
+  private fun hitApiUpdateAptConsult(updateExtra: ExtraProperties?) {
+    val request = UpdateConsultRequest()
+    request.setQueryData(aptData?.id)
+    val dateTimeSlot = "#${updateExtra?.getScheduledDateN()}#${updateExtra?.startTime()},${updateExtra?.endTime()}#"
+    val setField = SetField(bookingRef = orderItem?._id, dateTimeSlot = dateTimeSlot, doctorId = doctorData?.Id, serviceId = serviceData?.id ?: "NO_ITEM")
+    setField.setCustomerInfo(CustomerInfo(emailId = updateExtra?.patientEmailId, name = updateExtra?.patientName, mobileNumber = updateExtra?.patientMobileNumber))
+    request.setUpdateValueAll(UpdateConsultField(setField))
+    viewModel?.updateAptConsultData(AUTHORIZATION_3, request)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+      showLongToast("Your booking is rescheduled successfully.")
+      val intent = Intent()
+      intent.putExtra(IntentConstant.ORDER_ID.name, orderItem?._id)
+      baseActivity.setResult(AppCompatActivity.RESULT_OK, intent)
+      baseActivity.finish()
+      hideProgress()
+    })
   }
 
   private fun createBooking() {
@@ -474,84 +526,87 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     viewModel?.addAptConsultData(AUTHORIZATION_3, request)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
       val scheduleDate = item?.scheduledStartDate()
       val dateApt = parseDate(scheduleDate, FORMAT_SERVER_DATE, com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2)
-      val dur = item?.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
-
-      val messageForDoctor = if (isVideoConsult) "New appointment confirmed:\n \n${itemExtra?.patientName ?: "New User"} has been booked for $dateApt with test. video, ${itemExtra?.patientMobileNumber}.\nClick here ${response?.consultationWindowUrlForDoctor()}"
-      else "Hi ${itemExtra?.doctorName}, you have a new appointment scheduled on $dateApt. You will receive a mail with the booking details shortly. For any queries, contact 1860-123-1233."
-
-      val messageForClient = if (isVideoConsult) "Your appointment details:\n\n${itemExtra?.consultationFor} with ${itemExtra?.doctorName ?: ""} for $dateApt. Click here ${response?.consultationWindowUrlForPatient()}\n\nContact: ${session?.userPrimaryMobile}"
-      else "Dear ${itemExtra?.patientName ?: "sir"}, your appointment with ${itemExtra?.doctorName ?: ""} is confirmed for $dateApt. You will receive a mail with the booking details shortly. Please reach the centre $dur before the scheduled time. For any queries, contact ${session?.userPrimaryMobile}."
-
-      val numberPatient = itemExtra?.patientMobileNumber?.replace("+91", "")?.trim()
-      val numberDoctor = session?.userPrimaryMobile?.replace("+91", "")?.trim()
-      when {
-        isMobileNumberValid(numberPatient ?: "") -> {
-          viewModel?.sendSMS(itemExtra?.patientMobileNumber, messageForClient, CLIENT_ID_3)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-            if (isMobileNumberValid(numberDoctor ?: "")) {
-              viewModel?.sendSMS(numberDoctor, messageForDoctor, CLIENT_ID_3)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-                sendMailUserAndDoctor(response, dateApt)
-              })
-            } else sendMailUserAndDoctor(response, dateApt)
-          })
-        }
-        isMobileNumberValid(numberDoctor ?: "") -> {
-          viewModel?.sendSMS(numberDoctor, messageForDoctor, CLIENT_ID_3)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-            sendMailUserAndDoctor(response, dateApt)
-          })
-        }
-        else -> sendMailUserAndDoctor(response, dateApt)
-      }
+      startSuccessScreen(response, dateApt)
+      //TODO SMS and Email is coming from backend
+//      val dur = item?.Product?.extraItemProductConsultation()?.durationTxt() ?: "0 Minute"
+//
+//      val messageForDoctor = if (isVideoConsult) "New appointment confirmed:\n \n${itemExtra?.patientName ?: "New User"} has been booked for $dateApt with test. video, ${itemExtra?.patientMobileNumber}.\nClick here ${response?.consultationWindowUrlForDoctor()}"
+//      else "Hi ${itemExtra?.doctorName}, you have a new appointment scheduled on $dateApt. You will receive a mail with the booking details shortly. For any queries, contact 1860-123-1233."
+//
+//      val messageForClient = if (isVideoConsult) "Your appointment details:\n\n${itemExtra?.consultationFor} with ${itemExtra?.doctorName ?: ""} for $dateApt. Click here ${response?.consultationWindowUrlForPatient()}\n\nContact: ${session?.userPrimaryMobile}"
+//      else "Dear ${itemExtra?.patientName ?: "sir"}, your appointment with ${itemExtra?.doctorName ?: ""} is confirmed for $dateApt. You will receive a mail with the booking details shortly. Please reach the centre $dur before the scheduled time. For any queries, contact ${session?.userPrimaryMobile}."
+//
+//      val numberPatient = itemExtra?.patientMobileNumber?.replace("+91", "")?.trim()
+//      val numberDoctor = session?.userPrimaryMobile?.replace("+91", "")?.trim()
+//      when {
+//        isMobileNumberValid(numberPatient ?: "") -> {
+//          viewModel?.sendSMS(itemExtra?.patientMobileNumber, messageForClient, CLIENT_ID_3)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+//            if (isMobileNumberValid(numberDoctor ?: "")) {
+//              viewModel?.sendSMS(numberDoctor, messageForDoctor, CLIENT_ID_3)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+//                sendMailUserAndDoctor(response, dateApt)
+//              })
+//            } else sendMailUserAndDoctor(response, dateApt)
+//          })
+//        }
+//        isMobileNumberValid(numberDoctor ?: "") -> {
+//          viewModel?.sendSMS(numberDoctor, messageForDoctor, CLIENT_ID_3)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+//            sendMailUserAndDoctor(response, dateApt)
+//          })
+//        }
+//        else -> sendMailUserAndDoctor(response, dateApt)
+//      }
     })
   }
 
-  private fun sendMailUserAndDoctor(response: OrderItem?, dateApt: String?) {
-    val item = response?.firstItemForConsultation()
-    val itemExtra = item?.product()?.extraItemProductConsultation()
-
-    val requestDoctor = if (isEmailValid(session?.emailDoctor ?: "")) {
-      if (isVideoConsult) {
-        val htmLBody = getConsultHtmlTextForDoctor(response?.SellerDetails?.ContactDetails?.FullName, itemExtra, dateApt, response?.consultationWindowUrlForDoctor())
-        val subject = "\uD83C\uDF10 New Online Video Consultation ID ${response?.ReferenceNumber} received on $dateApt • ${itemExtra?.patientName ?: ""}"
-        SendMailRequest(session?.emailDoctor, htmLBody, subject, "0")
-      } else {
-        val htmLBody = getAptHtmlTextForDoctor(response?.SellerDetails?.ContactDetails?.FullName, itemExtra, dateApt)
-        val subject = "\uD83D\uDDD3️ Appointment Consultation ID ${response?.ReferenceNumber} received on $dateApt • ${itemExtra?.patientName}"
-        SendMailRequest(session?.emailDoctor, htmLBody, subject, "0")
-      }
-    } else null
-
-    val emailUser = itemExtra?.patientEmailId ?: ""
-    val requestUser = if (isEmailValid(emailUser)) {
-      if (isVideoConsult) {
-        val htmLBody = getConsultHtmlTextForUser(session?.userPrimaryMobile, emailUser, session?.webSiteUrl, itemExtra, dateApt, response?.consultationWindowUrlForPatient(), session?.emailDoctor)
-        val subject = "\uD83C\uDF10 Online Video Consultation ID ${response?.ReferenceNumber} Confirmation: $dateApt • ${response?.SellerDetails?.ContactDetails?.FullName}"
-        SendMailRequest(emailUser, htmLBody, subject, "0")
-      } else {
-        val htmLBody = getAptHtmlForUser(response?.SellerDetails?.Address?.addressLine1(), session?.latitude, session?.longitude,
-            session?.userPrimaryMobile, emailUser, session?.webSiteUrl, itemExtra, dateApt, session?.emailDoctor)
-        val subject = "\uD83D\uDDD3️ New Appointment Consultation ID ${response?.ReferenceNumber} Confirmation: $dateApt • ${response?.SellerDetails?.ContactDetails?.FullName ?: ""}"
-        SendMailRequest(emailUser, htmLBody, subject, "0")
-      }
-    } else null
-
-    when {
-      requestDoctor != null -> {
-        viewModel?.sendMail(requestDoctor)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-          if (requestUser != null) {
-            viewModel?.sendMail(requestUser)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-              startSuccessScreen(response, dateApt)
-            })
-          } else startSuccessScreen(response, dateApt)
-        })
-      }
-      requestUser != null -> {
-        viewModel?.sendMail(requestUser)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-          startSuccessScreen(response, dateApt)
-        })
-      }
-      else -> startSuccessScreen(response, dateApt)
-    }
-  }
+  //TODO SMS and Email is coming from backend
+//  private fun sendMailUserAndDoctor(response: OrderItem?, dateApt: String?) {
+//    val item = response?.firstItemForConsultation()
+//    val itemExtra = item?.product()?.extraItemProductConsultation()
+//
+//    val requestDoctor = if (isEmailValid(session?.emailDoctor ?: "")) {
+//      if (isVideoConsult) {
+//        val htmLBody = getConsultHtmlTextForDoctor(response?.SellerDetails?.ContactDetails?.FullName, itemExtra, dateApt, response?.consultationWindowUrlForDoctor())
+//        val subject = "\uD83C\uDF10 New Online Video Consultation ID ${response?.ReferenceNumber} received on $dateApt • ${itemExtra?.patientName ?: ""}"
+//        SendMailRequest(session?.emailDoctor, htmLBody, subject, "0")
+//      } else {
+//        val htmLBody = getAptHtmlTextForDoctor(response?.SellerDetails?.ContactDetails?.FullName, itemExtra, dateApt)
+//        val subject = "\uD83D\uDDD3️ Appointment Consultation ID ${response?.ReferenceNumber} received on $dateApt • ${itemExtra?.patientName}"
+//        SendMailRequest(session?.emailDoctor, htmLBody, subject, "0")
+//      }
+//    } else null
+//
+//    val emailUser = itemExtra?.patientEmailId ?: ""
+//    val requestUser = if (isEmailValid(emailUser)) {
+//      if (isVideoConsult) {
+//        val htmLBody = getConsultHtmlTextForUser(session?.userPrimaryMobile, emailUser, session?.webSiteUrl, itemExtra, dateApt, response?.consultationWindowUrlForPatient(), session?.emailDoctor)
+//        val subject = "\uD83C\uDF10 Online Video Consultation ID ${response?.ReferenceNumber} Confirmation: $dateApt • ${response?.SellerDetails?.ContactDetails?.FullName}"
+//        SendMailRequest(emailUser, htmLBody, subject, "0")
+//      } else {
+//        val htmLBody = getAptHtmlForUser(response?.SellerDetails?.Address?.addressLine1(), session?.latitude, session?.longitude,
+//            session?.userPrimaryMobile, emailUser, session?.webSiteUrl, itemExtra, dateApt, session?.emailDoctor)
+//        val subject = "\uD83D\uDDD3️ New Appointment Consultation ID ${response?.ReferenceNumber} Confirmation: $dateApt • ${response?.SellerDetails?.ContactDetails?.FullName ?: ""}"
+//        SendMailRequest(emailUser, htmLBody, subject, "0")
+//      }
+//    } else null
+//
+//    when {
+//      requestDoctor != null -> {
+//        viewModel?.sendMail(requestDoctor)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+//          if (requestUser != null) {
+//            viewModel?.sendMail(requestUser)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+//              startSuccessScreen(response, dateApt)
+//            })
+//          } else startSuccessScreen(response, dateApt)
+//        })
+//      }
+//      requestUser != null -> {
+//        viewModel?.sendMail(requestUser)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+//          startSuccessScreen(response, dateApt)
+//        })
+//      }
+//      else -> startSuccessScreen(response, dateApt)
+//    }
+//  }
 
   private fun startSuccessScreen(response: OrderItem?, dateApt: String?) {
     hideProgress()
@@ -643,11 +698,26 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         return@Observer
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
-        hideProgress()
         val resp = it as? GetDoctorWeeklySchedule
         if (resp?.data.isNullOrEmpty().not()) {
           doctorWeeklySchedule = resp?.data
+          if (isUpdate) getAptConsultDoctor() else hideProgress()
         } else errorUi("Doctor weekly schedule not available.")
+      } else errorUi(it.message())
+    })
+  }
+
+  private fun getAptConsultDoctor() {
+    val dateTimeSlot = orderItem?.firstItemForConsultation()?.getScheduledDate()
+    val requestQuery = "{\$and:[{WebsiteId: \'${preferenceData?.fpTag}\'}, {doctorId: \'${doctorData?.Id}\'}, {status: {\$ne: 'cancelled'}}, {dateTimeSlot: /$dateTimeSlot/}]}"
+    viewModel?.getAllAptConsultDoctor(AUTHORIZATION_3, requestQuery)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+      if (it.error is NoNetworkException) {
+        errorUi(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (it.status == 200 || it.status == 201 || it.status == 202) {
+        aptData = (it as? DoctorAppointmentResponse)?.data?.firstOrNull { apt -> apt.bookingRef == orderItem?._id }
+        hideProgress()
       } else errorUi(it.message())
     })
   }
@@ -719,5 +789,19 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   private fun clickTimeItem(timeSlotData: TimeSlotData?) {
     this.timeSlotData = timeSlotData
     binding?.edtStartTime?.setText(this.timeSlotData?.getTimeSlotText())
+  }
+
+  private fun updateUiConsult() {
+    binding?.radioInClinic?.isClickable = false
+    binding?.radioVideoConsultation?.isClickable = false
+    binding?.edtAge?.isFocusable = false
+    binding?.edtPatientName?.isFocusable = false
+    binding?.edtPatientPhone?.isFocusable = false
+    binding?.edtPatientEmail?.isFocusable = false
+    binding?.edtGender?.text = extraItemConsult?.gender ?: ""
+    binding?.edtAge?.setText(extraItemConsult?.age ?: "")
+    binding?.edtPatientName?.setText(extraItemConsult?.patientName ?: "")
+    binding?.edtPatientPhone?.setText(extraItemConsult?.getNumberPatient() ?: "")
+    binding?.edtPatientEmail?.setText(extraItemConsult?.patientEmailId ?: "")
   }
 }

@@ -4,6 +4,7 @@ import com.framework.base.BaseResponse
 import com.inventoryorder.base.rest.AppBaseLocalService
 import com.inventoryorder.base.rest.AppBaseRepository
 import com.inventoryorder.model.apointmentData.addRequest.AddAptConsultRequest
+import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultRequest
 import com.inventoryorder.rest.TaskCode
 import com.inventoryorder.rest.apiClients.WebActionBoostKitApiClient
 import com.inventoryorder.rest.services.WebActionBoostDataSource
@@ -33,6 +34,9 @@ object WebActionBoostRepository : AppBaseRepository<WebActionBoostDataSource, Ap
     return makeRemoteRequest(remoteDataSource.addAptConsultData(auth, request), TaskCode.ADD_API_CONSULT_DATA)
   }
 
+  fun updateAptConsultData(auth: String?, request: UpdateConsultRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.updateAptConsultData(auth, request), TaskCode.UPDATE_API_CONSULT_DATA)
+  }
   override fun getApiClient(): Retrofit {
     return WebActionBoostKitApiClient.shared.retrofit
   }

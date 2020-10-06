@@ -21,7 +21,11 @@ data class OrderInitiateRequest(
     @SerializedName("GstCharges")
     var gstCharges: Double = 0.0,
     @SerializedName("BuyerDetails")
-    var buyerDetails: BuyerDetails? = null
+    var buyerDetails: BuyerDetails? = null,
+    //for update
+    @SerializedName("OrderId")
+    var orderId: String? = null
 ) : BaseRequest(), Serializable {
+
   var isVideoConsult: Boolean = false
 }

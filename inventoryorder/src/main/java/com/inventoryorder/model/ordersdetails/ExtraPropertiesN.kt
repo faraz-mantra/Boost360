@@ -1,5 +1,6 @@
 package com.inventoryorder.model.ordersdetails
 
+import com.framework.utils.DateUtils
 import com.inventoryorder.utils.convertMinutesToDays
 import java.io.Serializable
 
@@ -49,5 +50,9 @@ data class ExtraPropertiesN(
 
   fun endTime(): String {
     return endTime ?: ""
+  }
+
+  fun getNumberPatient(): String? {
+    return if (patientMobileNumber?.contains("+91") == true) patientMobileNumber.replace("+91", "") else patientMobileNumber
   }
 }

@@ -108,10 +108,10 @@
           android:id="@+id/tv_doctor"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_16"
           android:layout_marginTop="@dimen/size_14"
           android:text="@string/select_doctor"
           android:textColor="@color/warm_light"
-          android:layout_marginStart="@dimen/size_16"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/card_calendar_single_row" />
 
@@ -150,8 +150,8 @@
           android:id="@+id/radio_group"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_6"
           android:layout_marginStart="@dimen/size_10"
+          android:layout_marginTop="@dimen/size_6"
           android:orientation="horizontal"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/tv_consultation_type">
@@ -175,8 +175,9 @@
             android:text="@string/video_consultation_camel_case"
             android:textColor="@drawable/radio_selected"
             android:textSize="16sp"
-            app:buttonTint="@drawable/radio_selected"
-              android:visibility="gone"/>
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:buttonTint="@drawable/radio_selected" />
         </RadioGroup>
 
         <com.framework.views.customViews.CustomTextView

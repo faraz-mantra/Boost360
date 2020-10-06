@@ -108,6 +108,7 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
     }
   }
 
+
   override fun getToolbarTitle(): String? {
     return when (type) {
       else -> super.getToolbarTitle()

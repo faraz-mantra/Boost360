@@ -12,6 +12,8 @@ object EndPoints {
 
 
   const val POST_INITIATE_ORDER = "api/assuredPurchase/v2/InitiateOrder"
+  const val POST_UPDATE_ORDER = "api/assuredPurchase/v2/UpdateOrder"
+  const val POST_UPDATE_EXTRA_FIELD_ORDER = "api/assuredPurchase/v2/UpdateExtraPropertiesInformation"
 
   //  const val GET_SELLER_SUMMARY_URL = "api/AssuredPurchase/SellerSummary"
   const val GET_SELLER_SUMMARY_URL = "api/assuredPurchase/v2/SellerSummary"
@@ -47,6 +49,7 @@ object EndPoints {
   const val WEEKLY_SCHEDULE_DOCTOR = "api/v1/weeklyschedule/get-data"
   const val ALL_APT_DOCTOR = "api/v1/appointment/get-data"
   const val ADD_APT_CONSULT_DATA = "api/v1/appointment/add-data"
+  const val UPDATE_APT_CONSULT_DATA = "api/v1/appointment/update-data"
 
 }
 
