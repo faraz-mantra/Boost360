@@ -51,7 +51,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   private val connectedChannels = ArrayList<ChannelModel>()
   private var apiProcessAdapter: AppBaseRecyclerViewAdapter<ProcessApiSyncModel>? = null
   private var floatingPointId = ""
-
+  private var isSyncCreateFpApi = false
 
   companion object {
     @JvmStatic
@@ -62,7 +62,6 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     }
   }
 
-  @ExperimentalStdlibApi
   override fun onCreateView() {
     super.onCreateView()
     setOnClickListener(binding?.next, binding?.retry, binding?.supportCustomer)
@@ -120,14 +119,13 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     } else {
       list.addAll(ProcessApiSyncModel().getDataStart(connectedChannels))
     }
-    binding?.title?.text = resources.getString(
-        if (requestFloatsModel?.isUpdate == false) R.string.processing_your_business_information else R.string.processing_your_digital_channel
-    )
+    binding?.title?.text = resources.getString(if (requestFloatsModel?.isUpdate == false) R.string.processing_your_business_information else R.string.processing_your_digital_channel)
   }
 
   private fun putCreateBusinessOnboarding(dotProgressBar: DotProgressBar) {
     if (checkFpCreate(dotProgressBar)) return
     val request = getBusinessRequest()
+    isSyncCreateFpApi = true
     viewModel?.putCreateBusinessOnboarding(userProfileId, request)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         if (it.stringResponse.isNullOrEmpty().not()) {
@@ -171,7 +169,6 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
                 it1.status = takeIf { ChannelType.WAB == it1.getType() }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
               }
               apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
-//              optInOutOutApi()
             } else {
               connectedChannels.forEach { it1 ->
                 it1.status = takeIf { (ChannelType.G_SEARCH == it1.getType() || ChannelType.G_MAPS == it1.getType()).not() }?.let { ProcessApiSyncModel.SyncStatus.ERROR.name }
@@ -181,17 +178,6 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
           })
     } else apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
   }
-
-//TODO Remove optInOutOutApi
-//  private fun optInOutOutApi() {
-//    val optType = (if (requestFloatsModel?.whatsappEntransactional == true) RiaWhatsappRequest.OptType.OPTIN else RiaWhatsappRequest.OptType.OPTOUT).name
-//    val request = RiaWhatsappRequest(client_id = clientId, optType = optType, whatsappNumber = "+91${dataRequest.ActionData?.active_whatsapp_number}",
-//        notificationType = RiaWhatsappRequest.NotificationType.RIANotificationType.name, customerId = requestFloatsModel?.getWebSiteId())
-//    viewModel?.updateRiaWhatsapp(request)?.observeOnce(viewLifecycleOwner, Observer {
-//      apiProcessChannelAccessTokens(dotProgressBar, floatingPointId)
-//    })
-//  }
-
 
   private fun apiProcessChannelAccessTokens(dotProgressBar: DotProgressBar, floatingPointId: String) {
     if (requestFloatsModel?.channelAccessTokens.isNullOrEmpty().not()) {
@@ -220,7 +206,10 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   private fun updateError(message: String?, status: Int?, type: String) {
     list.clear()
     when (type) {
-      "CREATE" -> list.addAll(ProcessApiSyncModel().getDataErrorFP(connectedChannels))
+      "CREATE" -> {
+        isSyncCreateFpApi = false
+        list.addAll(ProcessApiSyncModel().getDataErrorFP(connectedChannels))
+      }
       "CHANNELS" -> {
         if (requestFloatsModel?.isUpdate == true) {
           list.addAll(ProcessApiSyncModel().getDataErrorChannelsUpdate(connectedChannels))
@@ -262,9 +251,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       binding?.next?.alpha = 1F
       binding?.textBtn?.visibility = View.VISIBLE
 
-      binding?.textBtn?.text = resources.getString(
-          if (requestFloatsModel?.isUpdate == true) R.string.digital_channel else R.string.start_your_digital_journey
-      )
+      binding?.textBtn?.text = resources.getString(if (requestFloatsModel?.isUpdate == true) R.string.digital_channel else R.string.start_your_digital_journey)
       binding?.container?.setBackgroundResource(R.drawable.bg_card_blue)
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         binding?.category?.backgroundTintList = ContextCompat.getColorStateList(baseActivity, R.color.white)
@@ -309,10 +296,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     super.onClick(v)
     when (v) {
       binding?.next -> if ((binding?.textBtn?.visibility == View.VISIBLE)) {
-        //TODO check for update channels
-        if (binding?.textBtn?.text == resources.getString(R.string.digital_channel)) {
-          backToDigitalChannelUpdate()
-        } else gotoRegistrationComplete()
+        if (binding?.textBtn?.text == resources.getString(R.string.digital_channel)) backToDigitalChannelUpdate() else gotoRegistrationComplete()
       }
       binding?.supportCustomer -> {
         try {
@@ -345,7 +329,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     createRequest.pincode = ""
     createRequest.country = "India"
     createRequest.primaryNumber = requestFloatsModel?.contactInfo?.number
-    createRequest.email = requestFloatsModel?.contactInfo?.email
+    createRequest.email = requestFloatsModel?.contactInfo?.getEmailN()
     createRequest.primaryNumberCountryCode = "+91"
     createRequest.uri = ""
     createRequest.fbPageName = requestFloatsModel?.channelAccessTokens?.firstOrNull { it.getType() == ChannelAccessToken.AccessTokenType.facebookpage }?.userAccountName
@@ -376,7 +360,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     } else false
   }
 
-  fun isFpCreated(): Boolean {
-    return (binding?.textBtn?.visibility == View.VISIBLE) && binding?.textBtn?.text == resources.getString(R.string.start_your_digital_journey)
+  fun isBackBlock(): Boolean {
+    return (isSyncCreateFpApi || requestFloatsModel?.isFpCreate ?: false)
   }
 }

@@ -7,6 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 open class BaseApiClient protected constructor() {
 
@@ -23,6 +24,9 @@ open class BaseApiClient protected constructor() {
     logging.level = HttpLoggingInterceptor.Level.BODY
 
     httpClient = OkHttpClient.Builder()
+    httpClient.readTimeout(2, TimeUnit.MINUTES)
+        .connectTimeout(2, TimeUnit.MINUTES)
+        .writeTimeout(2, TimeUnit.MINUTES)
     httpClient.addInterceptor(logging)
 
     val interceptors = getInterceptors()
@@ -40,11 +44,11 @@ open class BaseApiClient protected constructor() {
 
   fun init(baseUrl: String) {
     retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
-            .client(httpClient.build())
-            .build()
+        .baseUrl(baseUrl)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
+        .client(httpClient.build())
+        .build()
   }
 
 }

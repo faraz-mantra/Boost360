@@ -197,7 +197,7 @@
               android:layout_height="wrap_content"
               android:layout_gravity="center"
               android:gravity="center"
-              android:text="@string/start_your_digital_journey"
+              android:text="Sync"
               android:textColor="@color/white"
               app:fontFamily="@font/bold"
               app:textType="HEADING_6" />

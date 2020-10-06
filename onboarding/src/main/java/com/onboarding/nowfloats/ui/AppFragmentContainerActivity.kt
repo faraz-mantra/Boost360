@@ -236,12 +236,12 @@ open class AppFragmentContainerActivity : AppBaseActivity<ActivityFragmentContai
       }
       FragmentType.REGISTRATION_BUSINESS_API_CALL -> {
         if (exitToast?.view?.windowToken != null) {
-          if (registrationBusinessApiFragment?.isDigitalChannel() == false && registrationBusinessApiFragment?.isFpCreated() == false) {
+          if (registrationBusinessApiFragment?.isDigitalChannel() == false && registrationBusinessApiFragment?.isBackBlock() == false) {
             registrationBusinessApiFragment?.updateInfo()
             NavigatorManager.popCurrentScreen(ScreenModel.Screen.REGISTERING)
             super.onBackPressed()
           }
-        } else if (registrationBusinessApiFragment?.isFpCreated() == false) exitToast?.show()
+        } else if (registrationBusinessApiFragment?.isBackBlock() == false) exitToast?.show()
       }
       FragmentType.REGISTRATION_COMPLETE -> {
         if (exitToast?.view?.windowToken != null) {
