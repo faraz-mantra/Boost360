@@ -130,22 +130,25 @@ public class ManageProductActivity extends BaseActivity
     @Override
     public void onBackPressed()
     {
-        if(isProductCategoryFragment())
-        {
-            super.onBackPressed();
-            return;
-        }
+        confirm();
 
-        if (doubleBackToExitPressedOnce)
-        {
-            super.onBackPressed();
-            return;
-        }
+//        if(isProductCategoryFragment())
+//        {
 
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
+//            super.onBackPressed();
+//            return;
+//        }
+//
+//        if (doubleBackToExitPressedOnce)
+//        {
+//            super.onBackPressed();
+//            return;
+//        }
+//
+//        this.doubleBackToExitPressedOnce = true;
+//        Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+//
+//        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 
 

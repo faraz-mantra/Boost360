@@ -18,6 +18,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.all.All;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -25,6 +26,7 @@ import com.thinksity.R;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Created by Admin on 23-06-2017.
@@ -37,6 +39,7 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
     private Context mContext;
     NotificationManagerCompat notificationManager;
     private NotificationCompat.Builder mBuilder;
+    private AllowAudioPlay mAllowAudioPlay;
 
     VmnCall_Adapter(Context context, ArrayList<VmnCallModel> list) {
         this.mContext = context;
@@ -96,13 +99,17 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
             holder.playerLayout.setVisibility(View.VISIBLE);
             holder.divider.setVisibility(View.VISIBLE);
             holder.callType.setText("Connected Call");
-            holder.playPauseButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!holder.mediaPlayer.isPlaying()) {
+            holder.playPauseButton.setOnClickListener(v -> {
+                if (!holder.mediaPlayer.isPlaying()) {
+                    // This block is triggered if media is not playing.
+                    if (mAllowAudioPlay.allowAudioPlay()) {
+                        mAllowAudioPlay.toggleAllowAudioPlayFlag(false); // Block other audios from playing.
                         holder.playPauseButton.setImageResource(R.drawable.ic_pause_gray);
                         currentPlay = holder.getAdapterPosition();
                         if (!TextUtils.isEmpty(mList.get(position).getCallRecordingUri())) {
+                            for (int i = 0; i < mList.size(); i++) {
+                                mList.get(i).setAudioPlayState(i == position);
+                            }
                             if (holder.currentDuration > 0) {
                                 holder.start();
                                 holder.handler.postDelayed(holder.updateSeekBar, 1000);
@@ -116,16 +123,20 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
                                         }
                                     }
                                 } catch (Exception e) {
-                                    Log.v("ggg", e.getLocalizedMessage());
+                                    if (e.getLocalizedMessage() != null) Log.v("AUDIO_EXCEPTION", e.getLocalizedMessage());
+                                    else if (e.getMessage() != null) Log.v("AUDIO_EXCEPTION", e.getMessage());
                                 }
                             }
                         } else {
                             Toast.makeText(mContext, "Can't get recording url", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        holder.pause();
-                        holder.playPauseButton.setImageResource(R.drawable.ic_audio_play);
+                        Toast.makeText(mContext, "You can only play one audio clip at a time.", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    holder.pause();
+                    holder.playPauseButton.setImageResource(R.drawable.ic_audio_play);
+                    mAllowAudioPlay.toggleAllowAudioPlayFlag(true); // Allow other audios to play.
                 }
             });
         }
@@ -149,23 +160,21 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
                 holder.audioEndTime.setText(" / 0:00");
                 holder.currentDuration = 0;
                 mList.get(position).setAudioPlayState(false);
+                mAllowAudioPlay.toggleAllowAudioPlayFlag(true); // Allow other audios to play.
             }
         });
 
-        holder.mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                holder.audioEndTime.setText(" / " + getTimeFromMilliSeconds(mp.getDuration()));
-                holder.seekBar.setMax(mp.getDuration());
-                holder.start();
-                holder.handler.postDelayed(holder.updateSeekBar, 1000);
+        holder.mediaPlayer.setOnPreparedListener(mp -> {
+            holder.audioEndTime.setText(" / " + getTimeFromMilliSeconds(mp.getDuration()));
+            holder.seekBar.setMax(mp.getDuration());
+            holder.start();
+            holder.handler.postDelayed(holder.updateSeekBar, 1000);
 
-                //set audio length
-                mList.get(position).setAudioLength(mp.getDuration());
+            //set audio length
+            mList.get(position).setAudioLength(mp.getDuration());
 
-                //set audio play state
-                mList.get(position).setAudioPlayState(true);
-            }
+            //set audio play state
+            mList.get(position).setAudioPlayState(true);
         });
 
         holder.updateSeekBar = new Runnable() {
@@ -188,6 +197,10 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
                 holder.handler.postDelayed(holder.updateSeekBar, 1000);
             }
         };
+    }
+
+    public void setAllowAudioPlay(AllowAudioPlay allowAudioPlay) {
+        mAllowAudioPlay = allowAudioPlay;
     }
 
     private String getDate(String date) {
@@ -283,4 +296,10 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
         }
     }
 
+}
+
+interface AllowAudioPlay {
+    boolean allowAudioPlay();
+
+    void toggleAllowAudioPlayFlag(boolean setValue);
 }

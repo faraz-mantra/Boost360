@@ -637,19 +637,17 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     startFragmentAccountActivity(fragment, bundle, isResult = true, requestCode = 202)
   }
 
-
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    inflater.inflate(R.menu.menu_delete, menu)
-    menuDelete = menu.findItem(R.id.menu_delete)
-    menuDelete?.isVisible = isEdit ?: false
     super.onCreateOptionsMenu(menu, inflater)
+    inflater.inflate(R.menu.ic_menu_delete_new, menu)
+    menuDelete = menu.findItem(R.id.id_delete)
+    menuDelete?.isVisible = isEdit ?: false
   }
-
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
-      R.id.menu_delete -> {
-        MaterialAlertDialogBuilder(baseActivity).setTitle(resources.getString(R.string.are_you_sure))
+      R.id.id_delete -> {
+        MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme).setTitle(resources.getString(R.string.are_you_sure))
             .setMessage(resources.getString(R.string.delete_record_not_undone))
             .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete)) { d, _ ->
               d.dismiss()
@@ -671,4 +669,16 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     }
   }
 
+  fun onNavPressed() {
+    dialogLogout()
+  }
+
+  private fun dialogLogout() {
+    MaterialAlertDialogBuilder(baseActivity,R.style.MaterialAlertDialogTheme)
+        .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
+        .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
+          baseActivity.finish()
+          d.dismiss()
+        }.show()
+  }
 }

@@ -1,6 +1,7 @@
 package com.appservice.ui.catlogService
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -11,14 +12,18 @@ import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
+import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.ui.catlogService.information.ServiceInformationFragment
 import com.appservice.ui.catlogService.service.ServiceDetailFragment
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
+import com.framework.exceptions.NoNetworkException
+import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
@@ -50,6 +55,9 @@ open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentCo
     return binding?.appBarLayout?.toolbar
   }
 
+  override fun getToolbarTitleSize(): Float? {
+    return resources.getDimension(R.dimen.body_2)
+  }
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
@@ -74,25 +82,12 @@ open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentCo
 
   override fun getToolbarTitle(): String? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION -> "Other Information"
-      FragmentType.SERVICE_DETAIL_VIEW -> "Service Details"
+      FragmentType.SERVICE_INFORMATION -> resources.getString(R.string.other_information)
+      FragmentType.SERVICE_DETAIL_VIEW -> resources.getString(R.string.service_details)
       else -> super.getToolbarTitle()
     }
   }
 
-
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    val toolbarMenu = menu ?: return super.onCreateOptionsMenu(menu)
-    val menuRes = getMenuRes() ?: return super.onCreateOptionsMenu(menu)
-    menuInflater.inflate(menuRes, toolbarMenu)
-    return true
-  }
-
-  open fun getMenuRes(): Int? {
-    return when (type) {
-      else -> null
-    }
-  }
 
   private fun shouldAddToBackStack(): Boolean {
     return when (type) {
@@ -128,9 +123,11 @@ open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentCo
   }
 
   override fun onBackPressed() {
-    if (serviceInformationFragment != null) {
-      serviceInformationFragment?.onNavPressed()
-    } else super.onBackPressed()
+    when (type) {
+      FragmentType.SERVICE_DETAIL_VIEW -> serviceDetailFragment?.onNavPressed()
+      FragmentType.SERVICE_INFORMATION -> serviceInformationFragment?.onNavPressed()
+      else -> super.onBackPressed()
+    }
   }
 }
 

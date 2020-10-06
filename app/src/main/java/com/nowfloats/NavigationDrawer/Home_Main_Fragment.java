@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,6 +30,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appservice.constant.FragmentType;
+import com.appservice.constant.IntentConstant;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -49,6 +52,9 @@ import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NavigationDrawer.model.Welcome_Card_Model;
 import com.nowfloats.NavigationDrawer.model.WhatsNewDataModel;
+import com.nowfloats.ProductGallery.ManageProductActivity;
+import com.nowfloats.ProductGallery.Model.ImageListModel;
+import com.nowfloats.ProductGallery.Model.Product;
 import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.sync.model.Updates;
@@ -74,6 +80,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
+
+import static com.appservice.ui.catlogService.CatlogServiceContainerActivityKt.startFragmentActivityNew;
 
 
 public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetch_Home_Data_Interface {
@@ -669,10 +677,24 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
 
     private void addInventory() {
         WebEngageController.trackEvent("DASHBOARD - Fab - Inventory", "Fab", null);
-        Intent webIntent = new Intent(getActivity(), ProductCatalogActivity.class);
-        webIntent.putExtra("IS_ADD", true);
-        startActivity(webIntent);
-        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        String type = Utils.getProductType(session.getFP_AppExperienceCode());
+        Product newProduct = new Product();
+        newProduct.setProductType(type);
+        switch (type.toUpperCase()){
+            case "SERVICES":
+                Bundle bundle = getBundleData(newProduct);
+                startFragmentActivityNew(getActivity(), FragmentType.SERVICE_DETAIL_VIEW, bundle, false, true);
+                break;
+            default:
+                Intent intent = new Intent(getContext(), ManageProductActivity.class);
+                intent.putExtra("PRODUCT", newProduct);
+                startActivityForResult(intent, 300);
+                break;
+        }
+//        Intent webIntent = new Intent(getActivity(), ProductCatalogActivity.class);
+//        webIntent.putExtra("IS_ADD", true);
+//        startActivity(webIntent);
+//        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void openAddUpdateActivity() {
@@ -735,6 +757,93 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
 //                openAddUpdateActivity();
 //            }
 //        }
+    }
+
+    private Bundle getBundleData(Product p) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(IntentConstant.PRODUCT_DATA.name(), getProductData(p));
+        bundle.putBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name(), session.isNonPhysicalProductExperienceCode());
+        String currencyType = "";
+        if (TextUtils.isEmpty(p.CurrencyCode)) {
+            try {
+                currencyType = Constants.Currency_Country_Map.get(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else currencyType = p.CurrencyCode;
+        if (TextUtils.isEmpty(currencyType)) currencyType = getString(R.string.currency_text);
+        bundle.putString(IntentConstant.CURRENCY_TYPE.name(), currencyType);
+        bundle.putString(IntentConstant.FP_ID.name(), session.getFPID());
+        bundle.putString(IntentConstant.FP_TAG.name(), session.getFpTag());
+        bundle.putString(IntentConstant.USER_PROFILE_ID.name(), session.getUserProfileId());
+        bundle.putString(IntentConstant.CLIENT_ID.name(), Constants.clientId);
+        bundle.putString(IntentConstant.EXTERNAL_SOURCE_ID.name(), session.getFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID));
+        bundle.putString(IntentConstant.APPLICATION_ID.name(), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID));
+        return bundle;
+    }
+
+    private com.appservice.model.serviceProduct.Product getProductData(Product p) {
+        ArrayList<com.appservice.model.serviceProduct.ImageListModel> listImages = new ArrayList<>();
+        if (p.Images != null) {
+            for (ImageListModel data : p.Images) {
+                listImages.add(new com.appservice.model.serviceProduct.ImageListModel(data.ImageUri, data.TileImageUri));
+            }
+        }
+        ArrayList<com.appservice.model.KeySpecification> otherSpec = new ArrayList<>();
+        if (p.otherSpecification != null) {
+            for (Product.Specification spec : p.otherSpecification) {
+                otherSpec.add(new com.appservice.model.KeySpecification(spec.key, spec.value));
+            }
+        }
+        com.appservice.model.serviceProduct.Product newProduct = new com.appservice.model.serviceProduct.Product();
+        newProduct.setCurrencyCode(p.CurrencyCode);
+        newProduct.setDescription(p.Description);
+        newProduct.setDiscountAmount(p.DiscountAmount);
+        newProduct.setExternalSourceId(p.ExternalSourceId);
+        newProduct.setIsArchived(p.IsArchived);
+        newProduct.setIsAvailable(p.IsAvailable);
+        newProduct.setIsFreeShipmentAvailable(p.IsFreeShipmentAvailable);
+        newProduct.setName(p.Name);
+        newProduct.setPrice(p.Price);
+        newProduct.setPriority(p.Priority);
+        newProduct.setShipmentDuration(p.ShipmentDuration);
+        newProduct.setAvailableUnits(p.availableUnits);
+        newProduct.set_keywords(p._keywords);
+        newProduct.setTags((ArrayList<String>) p.tags);
+        newProduct.setApplicationId(p.ApplicationId);
+        newProduct.setFPTag(p.FPTag);
+        newProduct.setImageUri(p.ImageUri);
+        newProduct.setProductUrl(p.ProductUrl);
+        newProduct.setImages(listImages);
+        newProduct.setMerchantName(p.MerchantName);
+        newProduct.setTileImageUri(p.TileImageUri);
+        newProduct.setProductId(p.productId);
+        newProduct.setGPId(p.GPId);
+        newProduct.setTotalQueries(p.TotalQueries);
+        newProduct.setCreatedOn(p.CreatedOn);
+        newProduct.setProductIndex(p.ProductIndex);
+        newProduct.setPicimageURI(p.picimageURI);
+        newProduct.setUpdatedOn(p.UpdatedOn);
+        newProduct.setProductSelected(p.isProductSelected);
+        newProduct.setProductType(p.productType);
+        newProduct.setPaymentType(p.paymentType);
+        newProduct.setVariants(p.variants);
+        newProduct.setBrandName(p.brandName);
+        newProduct.setCategory(p.category);
+        newProduct.setCodAvailable(p.codAvailable);
+        newProduct.setMaxCodOrders(p.maxCodOrders);
+        newProduct.setPrepaidOnlineAvailable(p.prepaidOnlineAvailable);
+        newProduct.setMaxPrepaidOnlineAvailable(p.maxPrepaidOnlineAvailable);
+        if (p.BuyOnlineLink != null) {
+            newProduct.setBuyOnlineLink(new com.appservice.model.serviceProduct.BuyOnlineLink(p.BuyOnlineLink.url, p.BuyOnlineLink.description));
+        }
+        if (p.keySpecification != null) {
+            newProduct.setKeySpecification(new com.appservice.model.KeySpecification(p.keySpecification.key, p.keySpecification.value));
+        }
+        newProduct.setOtherSpecification(otherSpec);
+        newProduct.setPickupAddressReferenceId(p.pickupAddressReferenceId);
+        return newProduct;
     }
 
     interface OnRenewPlanClickListener {

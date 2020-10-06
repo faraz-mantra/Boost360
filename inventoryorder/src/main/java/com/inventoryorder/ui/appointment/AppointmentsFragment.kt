@@ -15,6 +15,7 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.utils.ValidationUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -55,6 +56,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private var experienceCode: String? = null
   private var filterItem: FilterModel? = null
   private var filterList: ArrayList<FilterModel> = FilterModel().getDataAppointments()
+  private var searchView: SearchView? = null
 
   /* Paging */
   private var isLoadingD = false
@@ -92,8 +94,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 //        showLongToast("Coming soon...")
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
-        bundle.putBoolean("IS_VIDEO", false)
-        startFragmentActivity(FragmentType.CREATE_APPOINTMENT_VIEW  , bundle, isResult = true)
+        bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)
+        startFragmentActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
       }
     }
   }
@@ -119,7 +121,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
             orderList.addAll(list)
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
-          } else{
+          } else {
             setHasOptionsMenu(false)
             errorView("No appointment available.")
           }
@@ -130,12 +132,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
             } as ArrayList<OrderItem>
             setAdapterNotify(list)
           } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
-          else{
+          else {
             setHasOptionsMenu(false)
             errorView("No appointment available.")
           }
         }
-      }else{
+      } else {
         setHasOptionsMenu(false)
         errorView("No appointment available.")
       }
@@ -264,28 +266,28 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-      super.onCreateOptionsMenu(menu, inflater)
-      val searchItem = menu.findItem(R.id.menu_item_search)
-      if (searchItem != null) {
-        val searchView = searchItem!!.actionView as SearchView
-        searchView.queryHint = resources.getString(R.string.queryHintAppointment)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-          override fun onQueryTextSubmit(query: String?): Boolean {
-            return false
-          }
+    super.onCreateOptionsMenu(menu, inflater)
+    val searchItem = menu.findItem(R.id.menu_item_search)
+    if (searchItem != null) {
+      searchView = searchItem.actionView as SearchView
+      searchView?.queryHint = resources.getString(R.string.queryHintAppointment)
+      searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+          return false
+        }
 
-          override fun onQueryTextChange(newText: String?): Boolean {
-            newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
-            return false
-          }
-        })
-      }
+        override fun onQueryTextChange(newText: String?): Boolean {
+          newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
+          return false
+        }
+      })
+    }
   }
 
 
   private fun startFilter(query: String) {
     if (query.isNotEmpty() && query.length > 2) {
-      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = true)
+      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query, type = QueryObject.QueryKey.ReferenceNumber.name), isSearch = true)
     } else setAdapterNotify(orderList)
   }
 
@@ -332,7 +334,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   }
 
 
-  private fun getRequestFilterData(statusList: ArrayList<String>, searchTxt: String = ""): OrderFilterRequest {
+  private fun getRequestFilterData(statusList: ArrayList<String>, searchTxt: String = "", type: String = QueryObject.QueryKey.ReferenceNumber.name): OrderFilterRequest {
     val requestFil: OrderFilterRequest?
     if (searchTxt.isEmpty()) {
       currentPage = PAGE_START
@@ -343,7 +345,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
       requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryStatusList(statusList)))
     }
     if (searchTxt.isNotEmpty()) {
-      requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryFilter(searchTxt)))
+      requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryFilter(type, searchTxt)))
     }
     return requestFil
   }
@@ -357,9 +359,14 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     return queryList
   }
 
-  private fun getQueryFilter(searchTxt: String): ArrayList<QueryObject> {
+  private fun getQueryFilter(type: String, searchTxt: String): ArrayList<QueryObject> {
     val queryList = ArrayList<QueryObject>()
-    queryList.add(QueryObject(QueryObject.QueryKey.ReferenceNumber.value, searchTxt, QueryObject.Operator.EQ.name))
+    val searchType = when (type) {
+      QueryObject.QueryKey.BuyerFullName.name -> QueryObject.QueryKey.BuyerFullName.value
+      QueryObject.QueryKey.BuyerPrimaryContactNumber.name -> QueryObject.QueryKey.BuyerPrimaryContactNumber.value
+      else -> QueryObject.QueryKey.ReferenceNumber.value
+    }
+    queryList.add(QueryObject(searchType, searchTxt, QueryObject.Operator.EQ.name))
     return queryList
   }
 
