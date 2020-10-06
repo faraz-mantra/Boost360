@@ -127,7 +127,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
 
   private fun setSetSelectedChannels(list: ArrayList<ChannelModel>) {
     binding?.domainTxt?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.domainTxt?.setPaintFlags(it) }
-    binding?.domainTxt?.text = "www.${requestFloatsModel?.contactInfo?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+    binding?.domainTxt?.text = "${requestFloatsModel?.contactInfo?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com"
     val itemSize = ConversionUtils.dp2px(48f)
     var spanCount = (ScreenUtils.instance.getWidth(baseActivity) - ConversionUtils.dp2px(96f)) / itemSize
     if (spanCount == 0) {
