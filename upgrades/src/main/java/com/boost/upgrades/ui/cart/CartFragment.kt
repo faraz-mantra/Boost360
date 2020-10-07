@@ -588,7 +588,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 //                "+91",
 //                "ANDROID",
 //                null,
-//                (activity as UpgradeActivity).loginid!!,
+//                (activity as UpgradeActivity).fpTag!!,
 //                null,
 //                null,
 //                com.boost.upgrades.data.api_model.customerId.customerInfo.TaxDetails(
