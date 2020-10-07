@@ -77,6 +77,9 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return binding?.appBarLayout?.toolbar
   }
 
+  override fun getToolbarTitleSize(): Float? {
+    return resources.getDimension(R.dimen.body_2)
+  }
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
@@ -224,6 +227,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     appointmentsFragment?.onActivityResult(requestCode, resultCode, data)
     videoConsultFragment?.onActivityResult(requestCode, resultCode, data)
     createAppointmentFragment?.onActivityResult(requestCode, resultCode, data)
+    videoConsultDetailsFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

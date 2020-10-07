@@ -113,7 +113,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     private String TAG = ManageProductFragment.class.getSimpleName();
 
     private String currencyType = "";
-    private String productType = "";
+    private String productType = "PRODUCTS";
     private int MAX_IMAGE_ALLOWED = 8;
 
     private List<ProductImageResponseModel> imageList = new ArrayList<>();
@@ -162,12 +162,10 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
     private boolean isService = false;
 
-    public static ManageProductFragment newInstance(String productType, String category, com.nowfloats.ProductGallery.Model.Product product) {
+    public static ManageProductFragment newInstance(com.nowfloats.ProductGallery.Model.Product product) {
         ManageProductFragment fragment = new ManageProductFragment();
 
         Bundle args = new Bundle();
-        args.putString("CATEGORY", category);
-        args.putString("PRODUCT_TYPE", productType);
         args.putSerializable("PRODUCT", product);
         fragment.setArguments(args);
 
@@ -263,8 +261,8 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         Bundle bundle = getArguments();
 
         if (bundle != null) {
-            CATEGORY = bundle.getString("CATEGORY");
-            productType = bundle.getString("PRODUCT_TYPE");
+//            CATEGORY = bundle.getString("CATEGORY");
+//            productType = bundle.getString("PRODUCT_TYPE");
 
             placeholder();
 
@@ -363,7 +361,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         binding.editBrand.setText(product.brandName != null ? product.brandName : "");
         binding.editProductName.setText(product.Name != null ? product.Name : "");
         binding.editProductDescription.setText(product.Description != null ? product.Description : "");
-
+        binding.editCategory.setText(product.category != null ? product.category : "");
         binding.editBasePrice.setText(product.Price > 0 ? new DecimalFormat("#.##").format(product.Price) : "");
         binding.editDiscount.setText(product.DiscountAmount > 0 ? new DecimalFormat("#.##").format(product.DiscountAmount) : "");
 
@@ -1657,10 +1655,10 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             return false;
         }*/
 
-        if (!adapter.isValid()) {
-            Toast.makeText(getContext(), "Enter all specification values", Toast.LENGTH_LONG).show();
-            return false;
-        }
+//        if (!adapter.isValid()) {
+//            Toast.makeText(getContext(), "Enter all specification values", Toast.LENGTH_LONG).show();
+//            return false;
+//        }
 
         if (paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
                 && !isService) {
@@ -1909,6 +1907,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         product.brandName = binding.editBrand.getText().toString().trim().length() > 0 ? binding.editBrand.getText().toString() : null;
         product.Price = binding.editBasePrice.getText().toString().trim().length() > 0 ? Double.valueOf(binding.editBasePrice.getText().toString().trim()) : 0;
         product.DiscountAmount = binding.editDiscount.getText().toString().trim().length() > 0 ? Double.valueOf(binding.editDiscount.getText().toString().trim()) : 0;
+        CATEGORY = binding.editCategory.getText().toString().trim();
 
         product.category = TextUtils.isEmpty(CATEGORY) ? null : CATEGORY;
         product.paymentType = paymentAndDeliveryMode.getValue();

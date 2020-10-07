@@ -6,7 +6,9 @@ import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 import com.inventoryorder.model.SendMailRequest
 import com.inventoryorder.model.apointmentData.addRequest.AddAptConsultRequest
+import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultRequest
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
+import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.rest.repositories.*
@@ -65,6 +67,14 @@ class OrderCreateViewModel : BaseViewModel() {
     return AssuredPurchaseRepository.postOrderInitiate(clientId, request).toLiveData()
   }
 
+  fun updateExtraPropertyOrder(clientId: String?, request: UpdateExtraPropertyRequest?): LiveData<BaseResponse> {
+    return AssuredPurchaseRepository.updateExtraPropertyOrder(clientId, request).toLiveData()
+  }
+
+  fun postOrderUpdate(clientId: String?, request: OrderInitiateRequest?): LiveData<BaseResponse> {
+    return AssuredPurchaseRepository.postOrderUpdate(clientId, request).toLiveData()
+  }
+
   fun getWeeklyScheduleList(auth: String?, query: String?, sort: String? = "{CreatedOn: -1}", limit: Int = 1000): LiveData<BaseResponse> {
     return WebActionBoostRepository.getWeekSchedule(auth, query, sort, limit).toLiveData()
   }
@@ -77,6 +87,9 @@ class OrderCreateViewModel : BaseViewModel() {
     return WebActionBoostRepository.addAptConsultData(auth, request).toLiveData()
   }
 
+  fun updateAptConsultData(auth: String?, request: UpdateConsultRequest?): LiveData<BaseResponse> {
+    return WebActionBoostRepository.updateAptConsultData(auth, request).toLiveData()
+  }
   fun sendSMS(mobile: String?, message: String?, clientId: String?): LiveData<BaseResponse>{
     return ApiTwoWithFloatRepository.sendSMS(mobile, message, clientId).toLiveData()
   }

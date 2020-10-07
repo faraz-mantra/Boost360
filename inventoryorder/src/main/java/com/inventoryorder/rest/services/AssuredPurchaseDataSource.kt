@@ -2,6 +2,7 @@ package com.inventoryorder.rest.services
 
 import com.inventoryorder.model.OrderInitiateResponse
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
+import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.rest.EndPoints
 import io.reactivex.Observable
 import retrofit2.Response
@@ -17,4 +18,16 @@ interface AssuredPurchaseDataSource {
       @Body request: OrderInitiateRequest?
   ): Observable<Response<OrderInitiateResponse>>
 
+  @POST(EndPoints.POST_UPDATE_ORDER)
+  fun updateOrder(
+      @Query("clientId") clientId: String?,
+      @Body request: OrderInitiateRequest?
+  ): Observable<Response<Any>>
+
+
+  @POST(EndPoints.POST_UPDATE_EXTRA_FIELD_ORDER)
+  fun updateExtraPropertyOrder(
+      @Query("clientId") clientId: String?,
+      @Body request: UpdateExtraPropertyRequest?
+  ): Observable<Response<Any>>
 }

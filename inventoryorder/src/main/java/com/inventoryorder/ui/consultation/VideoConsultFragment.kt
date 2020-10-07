@@ -15,6 +15,7 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.utils.ValidationUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -54,7 +55,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   private var layoutManager: LinearLayoutManager? = null
   private var filterItem: FilterModel? = null
   private var filterList: ArrayList<FilterModel> = FilterModel().getDataConsultations()
-
+  private var searchView: SearchView? = null
   /* Paging */
   private var isLoadingD = false
   private var TOTAL_ELEMENTS = 0
@@ -103,7 +104,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
             orderList.addAll(list)
             isLastPageD = (orderList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
-          } else{
+          } else {
             setHasOptionsMenu(false)
             errorView("No video consultation available.")
           }
@@ -183,7 +184,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 //        showLongToast("Coming soon...")
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
-        bundle.putBoolean("IS_VIDEO", true)
+        bundle.putBoolean(IntentConstant.IS_VIDEO.name, true)
         startFragmentActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
       }
     }
@@ -267,15 +268,15 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     super.onCreateOptionsMenu(menu, inflater)
     val searchItem = menu.findItem(R.id.menu_item_search)
     if (searchItem != null) {
-      val searchView = searchItem.actionView as SearchView
-      searchView.queryHint = resources.getString(R.string.queryHintVideo)
-      searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+      searchView = searchItem.actionView as SearchView
+      searchView?.queryHint = resources.getString(R.string.queryHintVideoN)
+      searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
           return false
         }
 
         override fun onQueryTextChange(newText: String?): Boolean {
-          newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
+          newText?.let { startFilter(it.trim()) }
           return false
         }
       })
@@ -285,7 +286,10 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   private fun startFilter(query: String) {
     if (query.isEmpty().not() && query.length > 2) {
-      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = true)
+      val isNumberWith91=(query.contains("+91"))
+      val isNumber= ValidationUtils.isNumeric(if (isNumberWith91) query.replace("+91","") else query)
+      val type = if (isNumber) QueryObject.QueryKey.BuyerPrimaryContactNumber.name else QueryObject.QueryKey.BuyerFullName.name
+      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query,type=type), isSearch = true)
     } else setAdapterNotify(orderList)
   }
 
@@ -326,7 +330,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   }
 
 
-  private fun getRequestFilterData(statusList: ArrayList<String>, searchTxt: String = ""): OrderFilterRequest {
+  private fun getRequestFilterData(statusList: ArrayList<String>, searchTxt: String = "", type: String = QueryObject.QueryKey.BuyerFullName.name): OrderFilterRequest {
     val requestFil: OrderFilterRequest?
     if (searchTxt.isEmpty()) {
       currentPage = PAGE_START
@@ -337,7 +341,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
       requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryStatusList(statusList)))
     }
     if (searchTxt.isNotEmpty()) {
-      requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryFilter(searchTxt)))
+      requestFil.filterBy.add(OrderFilterRequestItem(QueryConditionType = OrderFilterRequestItem.Condition.OR.name, QueryObject = getQueryFilter(type, searchTxt)))
     }
     return requestFil
   }
@@ -351,9 +355,14 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
     return queryList
   }
 
-  private fun getQueryFilter(searchTxt: String): ArrayList<QueryObject> {
+  private fun getQueryFilter(type: String, searchTxt: String): ArrayList<QueryObject> {
     val queryList = ArrayList<QueryObject>()
-    queryList.add(QueryObject(QueryObject.QueryKey.ReferenceNumber.value, searchTxt, QueryObject.Operator.EQ.name))
+    val searchType = when (type) {
+      QueryObject.QueryKey.BuyerFullName.name -> QueryObject.QueryKey.BuyerFullName.value
+      QueryObject.QueryKey.BuyerPrimaryContactNumber.name -> QueryObject.QueryKey.BuyerPrimaryContactNumber.value
+      else -> QueryObject.QueryKey.ReferenceNumber.value
+    }
+    queryList.add(QueryObject(searchType, searchTxt, QueryObject.Operator.EQ.name))
     return queryList
   }
 

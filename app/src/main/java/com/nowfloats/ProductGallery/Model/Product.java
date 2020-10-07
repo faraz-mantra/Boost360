@@ -1,8 +1,13 @@
 package com.nowfloats.ProductGallery.Model;
 
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
+
+import org.w3c.dom.Text;
+
+import com.nowfloats.helper.Helper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,21 +17,21 @@ public class Product implements Serializable {
 
     @SerializedName(value = "currencycode", alternate = {"CurrencyCode"})
     public String CurrencyCode;
-    @SerializedName(value="description", alternate={"Description"})
+    @SerializedName(value = "description", alternate = {"Description"})
     public String Description;
-    @SerializedName(value="discountAmount", alternate={"DiscountAmount"})
+    @SerializedName(value = "discountAmount", alternate = {"DiscountAmount"})
     public double DiscountAmount;
     public String ExternalSourceId;
     public String IsArchived;
-    @SerializedName(value="isAvailable", alternate={"IsAvailable"})
+    @SerializedName(value = "isAvailable", alternate = {"IsAvailable"})
     public boolean IsAvailable;
-    @SerializedName(value="isFreeShipmentAvailable", alternate={"IsFreeShipmentAvailable"})
+    @SerializedName(value = "isFreeShipmentAvailable", alternate = {"IsFreeShipmentAvailable"})
     public String IsFreeShipmentAvailable;
-    @SerializedName(value="name", alternate={"Name"})
+    @SerializedName(value = "name", alternate = {"Name"})
     public String Name;
-    @SerializedName(value="price", alternate={"Price"})
+    @SerializedName(value = "price", alternate = {"Price"})
     public double Price;
-    @SerializedName(value="priority", alternate={"Priority"})
+    @SerializedName(value = "priority", alternate = {"Priority"})
     public String Priority;
     public String ShipmentDuration;
     public int availableUnits = 1;
@@ -35,7 +40,7 @@ public class Product implements Serializable {
     public String ApplicationId;
     @SerializedName(value = "fpTag", alternate = {"FPTag"})
     public String FPTag;
-    @SerializedName(value="clientId", alternate={"ClientId"})
+    @SerializedName(value = "clientId", alternate = {"ClientId"})
     public String ClientId;
 
     public String ImageUri;
@@ -49,7 +54,7 @@ public class Product implements Serializable {
     public String TotalQueries;
     public String CreatedOn;
     public String ProductIndex;
-    public Uri picimageURI =null;
+    public Uri picimageURI = null;
     public String UpdatedOn;
     public boolean isProductSelected;
 
@@ -87,5 +92,40 @@ public class Product implements Serializable {
 
     public void setProductType(String productType) {
         this.productType = productType;
+    }
+
+    public String getVariantDetail() {
+        if (keySpecification != null && !TextUtils.isEmpty(keySpecification.key) && !TextUtils.isEmpty(keySpecification.value)) {
+            return "- (" + keySpecification.key + " - " + keySpecification.value + ")";
+        } else {
+            return "";
+        }
+    }
+
+    //for sharing data
+    public List<String> getAllImage() {
+        List<String> images = new ArrayList<>();
+        images.add(ImageUri);
+        if (Images != null && !Images.isEmpty()) {
+            for (ImageListModel imageListModel : Images) {
+                if (!TextUtils.isEmpty(imageListModel.ImageUri)) images.add(ImageUri);
+            }
+        }
+        return images;
+    }
+
+
+    //for sharing data
+    public String getFinalPriceWithCurrency() {
+        return CurrencyCode + " " + Helper.getCurrencyFormatter().format(Price - DiscountAmount);
+    }
+
+    //for sharing data
+    public String getActualPriceWithCurrency() {
+        if (DiscountAmount != 0) {
+            return "- ~" + CurrencyCode + " " + Helper.getCurrencyFormatter().format(Price) + "~";
+        } else {
+            return "";
+        }
     }
 }

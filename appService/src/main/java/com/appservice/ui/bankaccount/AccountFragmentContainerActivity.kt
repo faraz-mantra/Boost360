@@ -49,6 +49,10 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
     return binding?.toolbar
   }
 
+  override fun getToolbarTitleSize(): Float? {
+    return resources.getDimension(R.dimen.body_2)
+  }
+
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.ADD_BANK_ACCOUNT_START -> R.style.AppTheme_add_account
