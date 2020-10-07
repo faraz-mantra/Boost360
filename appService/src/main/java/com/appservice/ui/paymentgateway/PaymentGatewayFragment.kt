@@ -219,7 +219,7 @@ class PaymentGatewayFragment : AppBaseFragment<FragmentPaymentActiveBinding, Web
       intent.putExtra("expCode", session.experienceCode)
       intent.putExtra("fpName", session.fpTag)
       intent.putExtra("fpid", session.fpId)
-      intent.putExtra("loginid", session.userProfileId)
+      intent.putExtra("loginid", session.fpTag)
       intent.putExtra("email", session.fpEmail ?: "ria@nowfloats.com")
       intent.putExtra("mobileNo", session.fpNumber ?: "9160004303")
       intent.putExtra("profileUrl", session.fpLogo)

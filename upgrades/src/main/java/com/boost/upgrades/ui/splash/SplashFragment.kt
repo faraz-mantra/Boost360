@@ -84,7 +84,7 @@ class SplashFragment : DialogFragment() {
                             "+91",
                             "ANDROID",
                             user_email_address.text.toString(),
-                            (activity as UpgradeActivity).loginid!!,
+                            (activity as UpgradeActivity).fpid!!,
                             user_contact_number.text.toString(),
                             null,
                             TaxDetails(
@@ -115,7 +115,7 @@ class SplashFragment : DialogFragment() {
                             "+91",
                             "ANDROID",
                             user_email_address.text.toString(),
-                            (activity as UpgradeActivity).loginid,
+                            (activity as UpgradeActivity).fpid,
                             if (user_contact_number.text.isEmpty()) null else user_contact_number.text.toString(),
                             createCustomerInfoRequest!!.Name,
                             TaxDetails(
@@ -204,7 +204,7 @@ class SplashFragment : DialogFragment() {
     }
 
     private fun loadCustomerInfo() {
-        viewModel.getCustomerInfo((activity as UpgradeActivity).loginid!!, (activity as UpgradeActivity).clientid)
+        viewModel.getCustomerInfo((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
     }
 
 }

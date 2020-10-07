@@ -246,7 +246,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         intent.putExtra("isDeepLink", true);
         intent.putExtra("deepLinkViewType", deepLinkViewType);
         intent.putExtra("deepLinkDay", deepLinkDay);
-        intent.putExtra("loginid", session.getUserProfileId());
+        intent.putExtra("loginid", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
