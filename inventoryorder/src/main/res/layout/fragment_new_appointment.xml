@@ -105,23 +105,55 @@
         </com.framework.views.customViews.CustomCardView>
 
         <com.framework.views.customViews.CustomTextView
+          android:id="@+id/tv_doctor"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_16"
+          android:layout_marginTop="@dimen/size_14"
+          android:text="@string/select_doctor"
+          android:textColor="@color/warm_light"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/card_calendar_single_row" />
+
+        <com.framework.views.customViews.CustomEditText
+          android:id="@+id/edt_doctor"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginHorizontal="@dimen/size_16"
+          android:layout_marginVertical="@dimen/size_8"
+          android:background="@drawable/et_bg"
+          android:clickable="true"
+          android:drawableEnd="@drawable/ic_arrow_down_grey"
+          android:drawablePadding="@dimen/size_20"
+          android:focusable="false"
+          android:inputType="textEmailAddress"
+          android:maxLines="1"
+          android:padding="@dimen/size_8"
+          android:textColor="@color/black"
+          android:textCursorDrawable="@null"
+          android:textSize="16sp"
+          app:layout_constraintTop_toBottomOf="@id/tv_doctor" />
+
+        <com.framework.views.customViews.CustomTextView
           android:id="@+id/tv_consultation_type"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginVertical="@dimen/size_10"
           android:layout_marginStart="@dimen/size_16"
+          android:layout_marginTop="@dimen/size_14"
           android:text="@string/consultation_type_camel_case"
           android:textColor="@color/warm_grey_two"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/card_calendar_single_row" />
+          app:layout_constraintTop_toBottomOf="@id/edt_doctor" />
 
         <RadioGroup
           android:id="@+id/radio_group"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_2"
+          android:layout_marginStart="@dimen/size_10"
+          android:layout_marginTop="@dimen/size_6"
           android:orientation="horizontal"
-          app:layout_constraintStart_toStartOf="@id/tv_consultation_type"
+          app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/tv_consultation_type">
 
           <RadioButton
@@ -143,8 +175,9 @@
             android:text="@string/video_consultation_camel_case"
             android:textColor="@drawable/radio_selected"
             android:textSize="16sp"
-            app:buttonTint="@drawable/radio_selected"
-              android:visibility="gone"/>
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:buttonTint="@drawable/radio_selected" />
         </RadioGroup>
 
         <com.framework.views.customViews.CustomTextView

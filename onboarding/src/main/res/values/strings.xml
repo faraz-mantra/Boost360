@@ -84,7 +84,7 @@
   <string name="city_name">City name</string>
   <string name="logout">Logout</string>
   <string name="ok">OK</string>
-  <string name="cancel">CANCEL</string>
+  <string name="cancel" tools:ignore="ButtonCase">CANCEL</string>
 
   <string name="press_again_exit">Press again to exit!</string>
   <string name="facebook_page_connect_later_Skip">If you don\'t have a Facebook page for your business, or if you want to connect it later, please tap \'Skip\'</string>
@@ -133,8 +133,9 @@
   <string name="choose_an_action">Choose an action</string>
   <string name="search_city_name">Search city name</string>
   <string name="business_information_synce_channels">Your business information is getting synced on below channels.</string>
-  <string name="go_to_business_dashbaord">Go to business dashbaord</string>
+  <string name="go_to_business_dashbaord">Go to business dashboard</string>
   <string name="check_business_website">Check your business website</string>
+  <string name="visit_your_website">Visit your website</string>
   <string name="building_plan_for_your_business">Building a digital growth plan for your business…</string>
   <string name="error_getting_category_data">Error getting category data.</string>
   <string name="home">Home</string>

@@ -1,5 +1,7 @@
 package com.inventoryorder.model.product
 
+import java.io.Serializable
+
 data class Product(
     val ApplicationId: Any? = null,
     val BuyOnlineLink: String? = null,
@@ -44,5 +46,5 @@ data class Product(
     val tags: List<String>? = null,
     val uniquePaymentUrl: Any? = null,
     val variants: Boolean? = null
-)
+):Serializable
 

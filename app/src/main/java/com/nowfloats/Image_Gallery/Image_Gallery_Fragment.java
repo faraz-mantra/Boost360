@@ -201,14 +201,13 @@ public class Image_Gallery_Fragment extends Fragment implements
     }
 
     private void selectImage() {
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-            Methods.showFeatureNotAvailDialog(getContext());
-            return;
-        }
+//        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+//            Methods.showFeatureNotAvailDialog(getContext());
+//            return;
+//        }
 
         final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
         imagePickerBottomSheetDialog.show(getParentFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
-        MixPanelController.track("AddImage", null);
         WebEngageController.trackEvent("UPLOAD GALLERY IMAGE","Update Gallery Images",session.getFpTag());
 
 //        final MaterialDialog dialog = new MaterialDialog.Builder(activity)

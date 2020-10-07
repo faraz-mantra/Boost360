@@ -52,6 +52,13 @@ public class ImageGalleryActivity extends AppCompatActivity {
         findViewById(R.id.fm_site_appearance).setVisibility(View.VISIBLE);
         getSupportFragmentManager().beginTransaction().replace(R.id.fm_site_appearance, image_gallery_fragment, TAG_IMAGE).
                 commit();
+
+        if(savedInstanceState != null && image_gallery_fragment != null){
+            Boolean startCreateMode = savedInstanceState.getBoolean("create_image", false);
+            if(startCreateMode){
+                image_gallery_fragment.addImage();
+            }
+        }
     }
 
     @Override

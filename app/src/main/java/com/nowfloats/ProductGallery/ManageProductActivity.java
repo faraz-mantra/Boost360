@@ -38,7 +38,8 @@ public class ManageProductActivity extends BaseActivity
         }
 
         Product product = (Product) getIntent().getSerializableExtra("PRODUCT");
-        loadFragment(ProductCategoryFragment.newInstance(product), "PRODUCT_CATEGORY");
+//        loadFragment(ProductCategoryFragment.newInstance(product), "PRODUCT_CATEGORY");
+        loadFragment(ManageProductFragment.newInstance(product), "MANAGE_PRODUCT");
 //        loadFragment(ManageProductFragment.newInstance("products", "", product), "MANAGE_PRODUCT");
 
         /*if(this.product == null)
@@ -129,22 +130,25 @@ public class ManageProductActivity extends BaseActivity
     @Override
     public void onBackPressed()
     {
-        if(isProductCategoryFragment())
-        {
-            super.onBackPressed();
-            return;
-        }
+        confirm();
 
-        if (doubleBackToExitPressedOnce)
-        {
-            super.onBackPressed();
-            return;
-        }
+//        if(isProductCategoryFragment())
+//        {
 
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
+//            super.onBackPressed();
+//            return;
+//        }
+//
+//        if (doubleBackToExitPressedOnce)
+//        {
+//            super.onBackPressed();
+//            return;
+//        }
+//
+//        this.doubleBackToExitPressedOnce = true;
+//        Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+//
+//        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 
 

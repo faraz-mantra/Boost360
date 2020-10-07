@@ -1,5 +1,6 @@
 package com.inventoryorder.ui.consultation
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
@@ -23,6 +24,7 @@ import com.framework.utils.DateUtils.parseDate
 import com.framework.views.customViews.CustomButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
+import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.FragmentVideoConsultDetailsBinding
@@ -36,6 +38,7 @@ import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.startFragmentActivity
 import com.inventoryorder.utils.copyClipBoard
 import com.inventoryorder.utils.openWebPage
 import java.sql.Time
@@ -48,7 +51,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   private var orderItem: OrderItem? = null
   private var serviceLocationsList = LocationsModel().getData()
   private var isRefresh: Boolean? = null
-  var countDownTimer: CountDownTimer? = null
+  private var countDownTimer: CountDownTimer? = null
 
   companion object {
     @JvmStatic
@@ -78,19 +81,20 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
         binding?.error?.gone()
         orderItem = (it as? OrderDetailResponse)?.Data
         if (orderItem != null) {
-          if (orderItem?.isUpComingConsult()!!) {
+          if (orderItem!!.isUpComingConsult()) {
             binding?.llCountdown?.visibility = View.VISIBLE
             binding?.statusTime?.text = getString(R.string.time_remaining)
             startCountDown(orderItem!!)
           }
           setDetails(orderItem!!)
-        } else errorUi("Order item null.")
+        } else errorUi("Consultation data not available.")
       } else errorUi(it.message())
     })
   }
 
   private fun startCountDown(order: OrderItem) {
-    val startTime = orderItem?.firstItemForConsultation()?.scheduledStartDate()?.parseDate(DateUtils.FORMAT_SERVER_DATE)
+    countDownTimer?.cancel()
+    val startTime = order.firstItemForConsultation()?.scheduledEndDate()?.parseDate(DateUtils.FORMAT_SERVER_DATE)
     val currentTime = Calendar.getInstance().time
     val difference = startTime?.time?.minus(currentTime.time)
     countDownTimer = object : CountDownTimer(difference!!, 1000) {
@@ -129,6 +133,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       }
 
       override fun onFinish() {
+        setDetails(orderItem!!)
         binding?.statusTime?.isInvisible = true
         binding?.timeElapsed?.isInvisible = true
       }
@@ -142,12 +147,15 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   }
 
   private fun setDetails(order: OrderItem) {
-    setToolbarTitle("# ${order.ReferenceNumber}")
-    checkStatusConsultation(order)
-    setOrderDetails(order)
-    (order.Items?.map {
-      it.recyclerViewType = RecyclerViewItemType.VIDEO_CONSULT_DETAILS.getLayout();it
-    } as? ArrayList<ItemN>)?.let { setAdapter(it) }
+    binding?.mainView?.post {
+      setToolbarTitle("# ${order.ReferenceNumber}")
+      if (order.isRescheduleConsultBen()) binding?.tvReSchedule?.visible() else binding?.tvReSchedule?.gone()
+      checkStatusConsultation(order)
+      setOrderDetails(order)
+      (order.Items?.map {
+        it.recyclerViewType = RecyclerViewItemType.VIDEO_CONSULT_DETAILS.getLayout();it
+      } as? ArrayList<ItemN>)?.let { setAdapter(it) }
+    }
   }
 
   private fun isOpenForConsultation(order: OrderItem) {
@@ -233,7 +241,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.tvReSchedule -> showLongToast("Coming soon..")
+      binding?.tvReSchedule -> rescheduledConsult(orderItem)
       binding?.btnPaymentReminder -> paymentReminder()
       binding?.btnOpenConsult -> apiOpenConsultationWindow()
       binding?.tvCancelOrder -> cancelOrderDialog()
@@ -311,7 +319,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
       }
       if (cancelRes.status == 200 || cancelRes.status == 201 || cancelRes.status == 202) {
         val data = cancelRes as? OrderConfirmStatus
-        data?.let { d -> showLongToast(d.Message as String?) }
+        data?.let { d -> showLongToast(getString(R.string.the_video_consultation_has_been_cancelled)) }
         refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CANCELLED)
       } else showLongToast(cancelRes.message())
     })
@@ -338,6 +346,20 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     }
   }
 
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+      data?.getStringExtra(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
+    }
+  }
+
+  private fun rescheduledConsult(orderItem: OrderItem?) {
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
+    bundle.putSerializable(IntentConstant.ORDER_ITEM.name, orderItem)
+    bundle.putBoolean(IntentConstant.IS_VIDEO.name, true)
+    startFragmentActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
+  }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)

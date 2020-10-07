@@ -57,6 +57,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.RiaEventLogger;
+import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.onboarding.nowfloats.bottomsheet.builder.BottomDialog;
 import com.squareup.picasso.Picasso;
@@ -147,6 +148,17 @@ public class Edit_Profile_Activity extends BaseActivity {
         rb_Services.setEnabled(false);
         rb_Custom.setEnabled(false);
         customProductCategory.setEnabled(false);
+
+        // The below line is wrong.
+//        boolean isProductCategory = session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY).equalsIgnoreCase("products");
+        // The below line should be used.
+        boolean isProductCategory = Utils.getProductType(session.getFP_AppExperienceCode()).equals("PRODUCTS");
+
+        if(isProductCategory){
+            rb_Services.setVisibility(View.GONE);
+        }else{
+            rb_Products.setVisibility(View.GONE);
+        }
 
         productCategory.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -281,8 +293,12 @@ public class Edit_Profile_Activity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
-                imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
+                Intent intent = new Intent(Edit_Profile_Activity.this, FeaturedImageActivity.class);
+                startActivity(intent);
+//                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+//                final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
+//                imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
 
 //                Old Image Picker
 //                final MaterialDialog dialog = new MaterialDialog.Builder(Edit_Profile_Activity.this)
@@ -652,7 +668,6 @@ public class Edit_Profile_Activity extends BaseActivity {
 
             JSONObject productCategoryObj = new JSONObject();
             try {
-
                 productCategoryObj.put("key", "PRODUCTCATEGORYVERB");
                 productCategoryObj.put("value", getProductCategory());
                 session.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY, getProductCategory());
@@ -742,12 +757,20 @@ public class Edit_Profile_Activity extends BaseActivity {
     }
 
     private void setProductCategory(String initialCustomProductCategory) {
-        rb_Products.setChecked(initialCustomProductCategory.equalsIgnoreCase("products"));
-        rb_Services.setChecked(initialCustomProductCategory.equalsIgnoreCase("services"));
-        if(! initialCustomProductCategory.equalsIgnoreCase("products")&& ! initialCustomProductCategory.equalsIgnoreCase("services")) {
+        rb_Products.setChecked(Utils.getProductType(session.getFP_AppExperienceCode()).equals("PRODUCTS"));
+        rb_Services.setChecked(Utils.getProductType(session.getFP_AppExperienceCode()).equals("SERVICES"));
+        if(! Utils.getProductType(session.getFP_AppExperienceCode()).equals("PRODUCTS")
+                && ! Utils.getProductType(session.getFP_AppExperienceCode()).equals("SERVICES")) {
             rb_Custom.setChecked(true);
-            customProductCategory.setText(initialCustomProductCategory);
+            customProductCategory.setText(String.format("%s%s", Utils.getProductType(session.getFP_AppExperienceCode()).substring(0, 1), Utils.getProductType(session.getFP_AppExperienceCode()).toLowerCase().toLowerCase()));
         }
+//        rb_Products.setChecked(initialCustomProductCategory.equalsIgnoreCase("products"));
+//        rb_Services.setChecked(initialCustomProductCategory.equalsIgnoreCase("services"));
+//        if(! initialCustomProductCategory.equalsIgnoreCase("products")
+//                && ! initialCustomProductCategory.equalsIgnoreCase("services")) {
+//            rb_Custom.setChecked(true);
+//            customProductCategory.setText(initialCustomProductCategory);
+//        }
     }
 
 

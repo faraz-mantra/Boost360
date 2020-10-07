@@ -14,6 +14,8 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentKycStatusBinding
+import com.appservice.extension.fadeIn
+import com.appservice.extension.fadeOut
 import com.appservice.model.SessionData
 import com.appservice.model.kycData.DataKyc
 import com.appservice.model.kycData.PaymentKycDataResponse
@@ -121,19 +123,27 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
     super.onClick(v)
     when (v) {
       binding?.btnKycStatusRefresh -> {
-        initLottieAnimationRefresh()
-        binding?.mainView?.gone()
-        binding?.refreshView?.visible()
-        Timer().schedule(2000) {
-          baseActivity.runOnUiThread {
-            binding?.lottieAnimationRefresh?.pauseAnimation()
-            binding?.mainView?.visible()
-            binding?.refreshView?.gone()
+        binding?.txtVerification?.post{
+          initLottieAnimationRefresh()
+          binding?.mainView?.gone()
+          binding?.refreshView?.visible()
+          binding?.txtVerification?.alpha = 0F
+          binding?.txtDescKyc?.alpha = 0F
+          binding?.btnKycStatusRefresh?.alpha = 0F
+          Timer().schedule(6000) {
+            baseActivity.runOnUiThread {
+              binding?.lottieAnimationRefresh?.pauseAnimation()
+              binding?.mainView?.visible()
+              binding?.refreshView?.gone()
+              (binding?.txtVerification?.fadeIn())?.andThen(binding?.txtDescKyc?.fadeIn(400L))?.andThen(binding?.btnKycStatusRefresh?.fadeIn(400L))?.subscribe()
+            }
           }
         }
       }
     }
   }
+
+
 
   private fun initLottieAnimationRefresh() {
     binding?.lottieAnimationRefresh?.apply {

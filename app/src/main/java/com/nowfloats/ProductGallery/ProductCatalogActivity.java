@@ -436,9 +436,10 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         Intent share = new Intent(Intent.ACTION_SEND);
         share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        if(Methods.isOnline(this)){
-            @SuppressLint("DefaultLocale") String shareText = String.format("*%s*\nPrice: INR. %.2f\n%s\nView more details at: %s", product.Name.trim(), product.Price - product.DiscountAmount,
-                    product.Description.trim(), product.ProductUrl.trim());
+        if (Methods.isOnline(this)) {
+            String shareText = String.format("*%s* %s\n*%s* %s\n\n-------------\n%s\n\nfor more details visit: %s",
+                    product.Name.trim(), product.getVariantDetail(), product.getFinalPriceWithCurrency(),
+                    product.getActualPriceWithCurrency(), product.Description.trim(), product.ProductUrl.trim());
 
             Target target = new Target() {
                 @Override
