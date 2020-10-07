@@ -217,7 +217,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
         intent.putExtra("expCode", session!!.fP_AppExperienceCode)
         intent.putExtra("fpName", session!!.fpName)
         intent.putExtra("fpid", session!!.fpid)
-        intent.putExtra("loginid", session!!.fpTag)
+        intent.putExtra("fpTag", session!!.fpTag)
         if (session!!.fpEmail != null) {
             intent.putExtra("email", session!!.fpEmail)
         } else {

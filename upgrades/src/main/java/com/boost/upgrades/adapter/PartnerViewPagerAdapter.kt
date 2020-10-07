@@ -88,7 +88,7 @@ class PartnerViewPagerAdapter(
                                 }else {
                                     for (singleBanner in list) {
                                         if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
-                                            if (singleBanner.exclusive_to_customers != null && !singleBanner.exclusive_to_customers.contains(activity.loginid)) {
+                                            if (singleBanner.exclusive_to_customers != null && !singleBanner.exclusive_to_customers.contains(activity.fpTag)) {
                                                 list.remove(singleBanner)
                                                 notifyDataSetChanged()
                                                 homeListener.onShowHidePartnerZoneIndicator(list.size > 1)
@@ -127,7 +127,7 @@ class PartnerViewPagerAdapter(
                                 }else {
                                     for (singleBanner in list) {
                                         if (singleBanner.cta_bundle_identifier == list.get(position)!!.cta_bundle_identifier) {
-                                            if (singleBanner.exclusive_to_customers != null && !singleBanner.exclusive_to_customers.contains(activity.loginid)) {
+                                            if (singleBanner.exclusive_to_customers != null && !singleBanner.exclusive_to_customers.contains(activity.fpTag)) {
                                                 list.remove(singleBanner)
                                                 notifyDataSetChanged()
                                                 homeListener.onShowHidePartnerZoneIndicator(list.size > 1)

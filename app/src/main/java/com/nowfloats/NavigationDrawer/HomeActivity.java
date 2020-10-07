@@ -1516,7 +1516,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());
-        intent.putExtra("loginid", session.getFpTag());
+        intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("isOpenCardFragment", isOpenCardFragment);
         intent.putExtra("screenType", screenType);
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
