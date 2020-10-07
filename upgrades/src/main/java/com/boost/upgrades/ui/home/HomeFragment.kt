@@ -675,7 +675,7 @@ class HomeFragment : BaseFragment(), HomeListener {
         package_viewpager.adapter = packageViewPagerAdapter
         package_indicator.setViewPager2(package_viewpager)
 
-        package_viewpager.setPageTransformer(SimplePageTransformer())
+//        package_viewpager.setPageTransformer(SimplePageTransformer())
 
 //    val itemDecoration = HorizontalMarginItemDecoration(
 //        requireContext(),

@@ -57,7 +57,7 @@ class CartPackageAdaptor(
         if(selectedBundle.link != null){
           Glide.with(context).load(selectedBundle.link!!).placeholder(R.drawable.boost_360_insignia).into(holder.image)
         } else {
-            holder.image.setImageResource(R.drawable.scissor)
+            holder.image.setImageResource(R.drawable.rectangle_copy_18)
         }
         
         if(price != MRPPrice) {

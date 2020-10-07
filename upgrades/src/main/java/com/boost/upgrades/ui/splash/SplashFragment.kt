@@ -19,6 +19,7 @@ import com.boost.upgrades.data.api_model.customerId.customerInfo.AddressDetails
 import com.boost.upgrades.data.api_model.customerId.customerInfo.BusinessDetails
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.customerInfo.TaxDetails
+import com.boost.upgrades.data.api_model.customerId.get.Result
 import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Utils.isValidGSTIN
@@ -29,7 +30,7 @@ import kotlinx.android.synthetic.main.splash_fragment.*
 
 class SplashFragment : DialogFragment() {
 
-    var createCustomerInfoRequest: CreateCustomerInfoRequest? = null
+    var createCustomerInfoRequest: Result? = null
 
     var customerInfoState = false
 
@@ -83,7 +84,7 @@ class SplashFragment : DialogFragment() {
                             "+91",
                             "ANDROID",
                             user_email_address.text.toString(),
-                            (activity as UpgradeActivity).loginid!!,
+                            (activity as UpgradeActivity).fpid!!,
                             user_contact_number.text.toString(),
                             null,
                             TaxDetails(
@@ -114,7 +115,7 @@ class SplashFragment : DialogFragment() {
                             "+91",
                             "ANDROID",
                             user_email_address.text.toString(),
-                            (activity as UpgradeActivity).loginid,
+                            (activity as UpgradeActivity).fpid,
                             if (user_contact_number.text.isEmpty()) null else user_contact_number.text.toString(),
                             createCustomerInfoRequest!!.Name,
                             TaxDetails(
@@ -203,7 +204,7 @@ class SplashFragment : DialogFragment() {
     }
 
     private fun loadCustomerInfo() {
-        viewModel.getCustomerInfo((activity as UpgradeActivity).loginid!!, (activity as UpgradeActivity).clientid)
+        viewModel.getCustomerInfo((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
     }
 
 }

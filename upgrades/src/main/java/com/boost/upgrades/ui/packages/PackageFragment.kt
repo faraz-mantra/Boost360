@@ -88,7 +88,7 @@ class PackageFragment : BaseFragment() {
         if(bundleData!!.primary_image != null && !bundleData!!.primary_image!!.url.isNullOrEmpty()){
             Glide.with(this).load(bundleData!!.primary_image!!.url).into(package_profile_image)
         } else {
-            package_profile_image.setImageResource(R.drawable.scissor)
+            package_profile_image.setImageResource(R.drawable.rectangle_copy_18)
         }
 
         package_back.setOnClickListener {
