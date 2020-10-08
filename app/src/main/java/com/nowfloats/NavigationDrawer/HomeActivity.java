@@ -1520,6 +1520,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         intent.putExtra("isOpenCardFragment", isOpenCardFragment);
         intent.putExtra("screenType", screenType);
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
+        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {

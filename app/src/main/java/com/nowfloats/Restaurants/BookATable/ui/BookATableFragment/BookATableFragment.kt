@@ -218,6 +218,7 @@ class BookATableFragment : BaseFragment(), BookTableFragmentListener {
         intent.putExtra("fpName", session!!.fpName)
         intent.putExtra("fpid", session!!.fpid)
         intent.putExtra("loginid", session!!.userProfileId)
+        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets)
         if (session!!.fpEmail != null) {
             intent.putExtra("email", session!!.fpEmail)
         } else {

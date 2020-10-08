@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.boost.upgrades.UpgradeActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
+import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
@@ -90,6 +91,7 @@ public class DomainNotPurchaseFragment extends Fragment {
         intent.putExtra("fpid", session.getFPID());
         intent.putExtra("loginid", session.getUserProfileId());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
+        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {
