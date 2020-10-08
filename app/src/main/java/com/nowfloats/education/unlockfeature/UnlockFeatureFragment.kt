@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.boost.upgrades.UpgradeActivity
 import com.nowfloats.Login.UserSessionManager
 import com.nowfloats.education.model.UnlockFeatureModel
+import com.nowfloats.util.Constants
 import com.thinksity.R
 import com.thinksity.databinding.UnlockFeatureBinding
 
@@ -52,6 +53,7 @@ class UnlockFeatureFragment(private val session: UserSessionManager?, private va
             intent.putExtra("fpName", it.fpName)
             intent.putExtra("fpid", it.fpid)
             intent.putExtra("loginid", it.userProfileId)
+            intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets)
             if (it.fpEmail != null) {
                 intent.putExtra("email", it.fpEmail)
             } else {

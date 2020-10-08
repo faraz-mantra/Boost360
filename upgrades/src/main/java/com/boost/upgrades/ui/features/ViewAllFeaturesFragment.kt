@@ -33,6 +33,7 @@ class ViewAllFeaturesFragment : BaseFragment() {
     lateinit var localStorage: LocalStorage
     lateinit var allFeatureAdaptor: AllFeatureAdaptor
     lateinit var viewAllFeaturesViewModelFactory: ViewAllFeaturesViewModelFactory
+    var purchasedPackages = ArrayList<String>()
 
     lateinit var progressDialog: ProgressDialog
 
@@ -53,8 +54,12 @@ class ViewAllFeaturesFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(requireActivity(), viewAllFeaturesViewModelFactory).get(ViewAllFeaturesViewModel::class.java)
 
         progressDialog = ProgressDialog(requireContext())
+        var purchasedPack = arguments!!.getStringArrayList("userPurchsedWidgets")
+        if (purchasedPack != null) {
+            purchasedPackages = purchasedPack
+        }
 
-        allFeatureAdaptor = AllFeatureAdaptor(activity as UpgradeActivity, ArrayList())
+        allFeatureAdaptor = AllFeatureAdaptor(activity as UpgradeActivity, ArrayList(),purchasedPackages)
 
         localStorage = LocalStorage.getInstance(context!!)!!
 
