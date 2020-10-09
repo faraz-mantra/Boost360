@@ -15,12 +15,14 @@ import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
 import androidx.annotation.IdRes;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
@@ -74,7 +76,7 @@ import static com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomShee
 
 public class Edit_Profile_Activity extends BaseActivity {
 
-    public static EditText yourname, category, buzzname, buzzdescription , customProductCategory;
+    public static EditText yourname, category, buzzname, buzzdescription, customProductCategory;
     public static ImageView featuredImage, businessCategoryImage;
 
     private TextView tvBusinessCategoryChangeLabel;
@@ -83,7 +85,7 @@ public class Edit_Profile_Activity extends BaseActivity {
     public ImageView ibProductCategoryEdit;
     private Toolbar toolbar;
     private RadioGroup productCategory;
-    private RadioButton rb_Products , rb_Services , rb_Custom;
+    private RadioButton rb_Products, rb_Services, rb_Custom;
     Boolean flag4name = false, flag4category = false, flag4buzzname = false, flag4buzzdescriptn = false, allBoundaryCondtn = true;
     public static String msgtxt4_name, msgtxt4buzzname, msgtxt4buzzdescriptn, msgtxtcategory;
     String[] profilesattr = new String[20];
@@ -123,7 +125,7 @@ public class Edit_Profile_Activity extends BaseActivity {
         session = new UserSessionManager(getApplicationContext(), Edit_Profile_Activity.this);
         editProfileImageView = (ImageView) findViewById(R.id.editbusinessprofileimage);
         select_pic = (ImageView) findViewById(R.id.select_businessprofileimage);
-        gmbHandler = new GMBHandler(this,session);
+        gmbHandler = new GMBHandler(this, session);
         yourname = (EditText) findViewById(R.id.profileName);
         buzzname = (EditText) findViewById(R.id.businessName);
         customProductCategory = findViewById(R.id.et_customCategory);
@@ -154,9 +156,9 @@ public class Edit_Profile_Activity extends BaseActivity {
         // The below line should be used.
         boolean isProductCategory = Utils.getProductType(session.getFP_AppExperienceCode()).equals("PRODUCTS");
 
-        if(isProductCategory){
+        if (isProductCategory) {
             rb_Services.setVisibility(View.GONE);
-        }else{
+        } else {
             rb_Products.setVisibility(View.GONE);
         }
 
@@ -165,9 +167,9 @@ public class Edit_Profile_Activity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 isChangedProductCategory = true;
                 saveTextView.setVisibility(View.VISIBLE);
-                if(checkedId == R.id.rb_custom){
+                if (checkedId == R.id.rb_custom) {
                     showSoftKeyboard(customProductCategory);
-                }else{
+                } else {
                     hideSoftKeyboard(customProductCategory);
                 }
             }
@@ -186,14 +188,14 @@ public class Edit_Profile_Activity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                  if(! TextUtils.isEmpty(editable.toString())) {
-                      isChangedProductCategory = true;
-                      saveTextView.setVisibility(View.VISIBLE);
+                if (!TextUtils.isEmpty(editable.toString())) {
+                    isChangedProductCategory = true;
+                    saveTextView.setVisibility(View.VISIBLE);
                     rb_Custom.setChecked(true);
 
-                  }else{
-                      rb_Products.setChecked(true);
-                  }
+                } else {
+                    rb_Products.setChecked(true);
+                }
 
             }
         });
@@ -203,7 +205,6 @@ public class Edit_Profile_Activity extends BaseActivity {
             displayAlert(this);
 
         });
-
 
 
 //        yourName_textlineTextView = (TextView) findViewById(R.id.yourName_textline);
@@ -268,7 +269,7 @@ public class Edit_Profile_Activity extends BaseActivity {
             public void onClick(View v) {
 
                 if (Methods.isOnline(Edit_Profile_Activity.this)) {
-                    if(isValid()){
+                    if (isValid()) {
                         uploadProfile();
                         if (mRiaNodeDataModel != null) {
                             RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
@@ -335,9 +336,9 @@ public class Edit_Profile_Activity extends BaseActivity {
             }
 
             private void onClickImagePicker(IMAGE_CLICK_TYPE image_click_type) {
-                if(image_click_type.name().equals(IMAGE_CLICK_TYPE.CAMERA.name())) {
+                if (image_click_type.name().equals(IMAGE_CLICK_TYPE.CAMERA.name())) {
                     cameraIntent();
-                }else if(image_click_type.name().equals(IMAGE_CLICK_TYPE.GALLERY.name())){
+                } else if (image_click_type.name().equals(IMAGE_CLICK_TYPE.GALLERY.name())) {
                     galleryIntent();
                 }
             }
@@ -412,26 +413,25 @@ public class Edit_Profile_Activity extends BaseActivity {
 
         buzzname.setOnClickListener(v -> {
 
-            WebEngageController.trackEvent("BUSINESS NAME","null",session.getFpTag());
+            WebEngageController.trackEvent("BUSINESS NAME", "null", session.getFpTag());
 
         });
 
         buzzdescription.setOnClickListener(v -> {
 
-            WebEngageController.trackEvent("BUSINESS DESCRIPTION","null",session.getFpTag());
+            WebEngageController.trackEvent("BUSINESS DESCRIPTION", "null", session.getFpTag());
 
         });
 
         category.setOnClickListener(v -> {
 
-            WebEngageController.trackEvent("BUSINESS CATEGORY","null",session.getFpTag());
+            WebEngageController.trackEvent("BUSINESS CATEGORY", "null", session.getFpTag());
 
         });
         productCategory.setOnCheckedChangeListener((group, checkedId) -> {
-            WebEngageController.trackEvent("PRODUCT CATEGORY","null",session.getFpTag());
+            WebEngageController.trackEvent("PRODUCT CATEGORY", "null", session.getFpTag());
 
         });
-
 
 
         buzzname.addTextChangedListener(new TextWatcher() {
@@ -510,7 +510,7 @@ public class Edit_Profile_Activity extends BaseActivity {
     }
 
     private boolean isValid() {
-        if(msgtxt4buzzdescriptn.length() < 50){
+        if (msgtxt4buzzdescriptn.length() < 50) {
             Toast.makeText(getApplicationContext(), R.string.minimum_50_char_business_description_required, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -659,7 +659,7 @@ public class Edit_Profile_Activity extends BaseActivity {
         }
         if (isChangedProductCategory) {
 
-            if( ! checkIfOnlyLetters(customProductCategory.getText().toString())) {
+            if (!checkIfOnlyLetters(customProductCategory.getText().toString())) {
                 //Util.toast("Business Name has to be more than 3 characters", this);
                 Methods.showSnackBarNegative(Edit_Profile_Activity.this, getResources().getString(R.string.invalid_custom_product_category));
                 allBoundaryCondtn = false;
@@ -759,8 +759,8 @@ public class Edit_Profile_Activity extends BaseActivity {
     private void setProductCategory(String initialCustomProductCategory) {
         rb_Products.setChecked(Utils.getProductType(session.getFP_AppExperienceCode()).equals("PRODUCTS"));
         rb_Services.setChecked(Utils.getProductType(session.getFP_AppExperienceCode()).equals("SERVICES"));
-        if(! Utils.getProductType(session.getFP_AppExperienceCode()).equals("PRODUCTS")
-                && ! Utils.getProductType(session.getFP_AppExperienceCode()).equals("SERVICES")) {
+        if (!Utils.getProductType(session.getFP_AppExperienceCode()).equals("PRODUCTS")
+                && !Utils.getProductType(session.getFP_AppExperienceCode()).equals("SERVICES")) {
             rb_Custom.setChecked(true);
             customProductCategory.setText(String.format("%s%s", Utils.getProductType(session.getFP_AppExperienceCode()).substring(0, 1), Utils.getProductType(session.getFP_AppExperienceCode()).toLowerCase().toLowerCase()));
         }
@@ -968,7 +968,7 @@ public class Edit_Profile_Activity extends BaseActivity {
         uploadAsyncTask.execute();
     }
 
-    private void uploadToGMB(){
+    private void uploadToGMB() {
 
 
         try {
@@ -983,31 +983,38 @@ public class Edit_Profile_Activity extends BaseActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
-    private boolean checkIfOnlyLetters(String string){
+    private boolean checkIfOnlyLetters(String string) {
         //return someString.chars().allMatch(Character::isLetter);.*[a-zA-Z]+.*[a-zA-Z]
         string = string.replace(" ", "A"); // so that  special charater  regex ignores spaces
         Pattern specialCharactersRegex = Pattern.compile("[$&+,:;=\\\\?@#|\\/'<>.^*()%!-]");
         Pattern onlyNumbers = Pattern.compile("\\d");
-        if(  onlyNumbers.matcher(string).find() ||  specialCharactersRegex.matcher(string).find())
-        {
-           return false;
-        }
-        else
-        {
+        if (onlyNumbers.matcher(string).find() || specialCharactersRegex.matcher(string).find()) {
+            return false;
+        } else {
             return true;
         }
     }
 
-    public void onProductCategoryEdit(View view)
-    {
-        displayEditConfirmation(Edit_Profile_Activity.this);
+    private String getProductType() {
+        int buttonId = productCategory.getCheckedRadioButtonId();
+        switch (buttonId) {
+            case R.id.rb_services:
+                return "service";
+            case R.id.rb_custom:
+                return customProductCategory.getText().toString();
+            default:
+                return "product";
+        }
     }
 
-    public void displayEditConfirmation(final Activity mContext)
-    {
+    public void onProductCategoryEdit(View view) {
+        displayEditConfirmation(Edit_Profile_Activity.this, getProductType());
+    }
+
+    public void displayEditConfirmation(final Activity mContext, String type) {
         new MaterialDialog.Builder(mContext)
                 .title("Are you sure ?")
-                .content(Html.fromHtml("It is <b>not advised to change</b> your product category, as this can cause search related problems and a drop in search rank leading to less traffic."))
+                .content(Html.fromHtml(String.format("It is <b>not advised to change</b> your %s category, as this can cause search related problems and a drop in search rank leading to less traffic.", type)))
                 .positiveText("Change Category")
                 .negativeText("Cancel")
                 .positiveColorRes(R.color.primaryColor)
@@ -1015,8 +1022,7 @@ public class Edit_Profile_Activity extends BaseActivity {
                 .callback(new MaterialDialog.ButtonCallback() {
 
                     @Override
-                    public void onPositive(MaterialDialog dialog)
-                    {
+                    public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
 
                         ibProductCategoryEdit.setVisibility(View.INVISIBLE);
@@ -1028,8 +1034,7 @@ public class Edit_Profile_Activity extends BaseActivity {
                     }
 
                     @Override
-                    public void onNegative(MaterialDialog dialog)
-                    {
+                    public void onNegative(MaterialDialog dialog) {
                         super.onNegative(dialog);
                     }
 
@@ -1037,8 +1042,7 @@ public class Edit_Profile_Activity extends BaseActivity {
     }
 
 
-    public void displayAlert(final Activity mContext)
-    {
+    public void displayAlert(final Activity mContext) {
         new MaterialDialog.Builder(mContext)
                 .title("Wrong business category?")
                 .content(R.string.business_category_change_level)
@@ -1048,8 +1052,7 @@ public class Edit_Profile_Activity extends BaseActivity {
                 .callback(new MaterialDialog.ButtonCallback() {
 
                     @Override
-                    public void onPositive(MaterialDialog dialog)
-                    {
+                    public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
 
                     }
