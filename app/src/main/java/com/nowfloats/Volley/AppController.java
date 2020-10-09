@@ -17,6 +17,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
 import com.boost.presignup.locale.LocaleManager;
+import com.dashboard.AppDashboardApplication;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.inventoryorder.BaseOrderApplication;
@@ -47,6 +48,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         BaseBoardingApplication.initModule(this);
         AppServiceApplication.instance = this;
         AppServiceApplication.initModule(this);
+        AppDashboardApplication.instance = this;
+        AppDashboardApplication.initModule(this);
         initWebEngage();
 
 
