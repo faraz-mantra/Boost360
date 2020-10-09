@@ -132,7 +132,7 @@ class PackageViewPagerAdapter(
                                     if(bundles.primary_image != null && !bundles.primary_image.url.isNullOrEmpty()){
                                         Glide.with(holder.itemView.context).load(bundles.primary_image.url).into(holder.primaryImage)
                                     } else {
-                                        holder.primaryImage.setImageResource(R.drawable.scissor)
+                                        holder.primaryImage.setImageResource(R.drawable.rectangle_copy_18)
                                     }
                                 },
                                 {

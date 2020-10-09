@@ -23,6 +23,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.package_item.view.*
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 import java.text.NumberFormat
 import java.util.*
 
@@ -76,14 +77,32 @@ class BannerViewPagerAdapter(
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
-                                if (it == 0) {
-                                    for(singleBanner in list){
-                                        if(singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key){
-                                            list.remove(singleBanner)
-                                            notifyDataSetChanged()
-                                            homeListener.onShowHidePromoBannerIndicator(list.size>1)
+                                try {
+                                    if (it == 0) {
+                                        for (singleBanner in list) {
+                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
+                                                list.remove(singleBanner)
+                                                notifyDataSetChanged()
+                                                homeListener.onShowHidePromoBannerIndicator(list.size > 1)
+                                            }
+                                        }
+                                    } else {
+                                        for (singleBanner in list) {
+                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
+                                                if (singleBanner.exclusive_to_customers != null && !singleBanner.exclusive_to_customers.contains(activity.fpTag)) {
+                                                    list.remove(singleBanner)
+                                                    notifyDataSetChanged()
+                                                    homeListener.onShowHidePromoBannerIndicator(list.size > 1)
+                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode)) {
+                                                    list.remove(singleBanner)
+                                                    notifyDataSetChanged()
+                                                    homeListener.onShowHidePromoBannerIndicator(list.size > 1)
+                                                }
+                                            }
                                         }
                                     }
+                                } catch (e: Exception){
+                                    e.printStackTrace()
                                 }
                             },{
                                 it.printStackTrace()
@@ -97,14 +116,32 @@ class BannerViewPagerAdapter(
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
-                                if (it == 0) {
-                                    for (singleBanner in list){
-                                        if(singleBanner.cta_bundle_identifier == list.get(position)!!.cta_bundle_identifier){
-                                            list.remove(singleBanner)
-                                            notifyDataSetChanged()
-                                            homeListener.onShowHidePromoBannerIndicator(list.size>1)
+                                try {
+                                    if (it == 0) {
+                                        for (singleBanner in list) {
+                                            if (singleBanner.cta_bundle_identifier == list.get(position)!!.cta_bundle_identifier) {
+                                                list.remove(singleBanner)
+                                                notifyDataSetChanged()
+                                                homeListener.onShowHidePromoBannerIndicator(list.size > 1)
+                                            }
+                                        }
+                                    } else {
+                                        for (singleBanner in list) {
+                                            if (singleBanner.cta_bundle_identifier == list.get(position)!!.cta_bundle_identifier) {
+                                                if (singleBanner.exclusive_to_customers != null && !singleBanner.exclusive_to_customers.contains(activity.fpTag)) {
+                                                    list.remove(singleBanner)
+                                                    notifyDataSetChanged()
+                                                    homeListener.onShowHidePromoBannerIndicator(list.size > 1)
+                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode)) {
+                                                    list.remove(singleBanner)
+                                                    notifyDataSetChanged()
+                                                    homeListener.onShowHidePromoBannerIndicator(list.size > 1)
+                                                }
+                                            }
                                         }
                                     }
+                                }catch (e: Exception){
+                                    e.printStackTrace()
                                 }
                             },{
                                 it.printStackTrace()

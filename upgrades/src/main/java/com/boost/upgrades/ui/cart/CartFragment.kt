@@ -25,6 +25,9 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.PrimaryImage
 //import com.boost.upgrades.data.api_model.PurchaseOrder.request.*
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.*
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.upgrades.data.api_model.customerId.customerInfo.AddressDetails
+import com.boost.upgrades.data.api_model.customerId.customerInfo.BusinessDetails
+import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.model.BundlesModel
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.CouponsModel
@@ -575,6 +578,35 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         viewModel.getCartItems()
         viewModel.getAllFeatures()
         viewModel.getAllBundles()
+        //load customerID
+//        viewModel.requestCustomerId(CreateCustomerInfoRequest(
+//                AddressDetails(
+//                        null,
+//                        "india",
+//                        null,
+//                        null,
+//                        null,
+//                        null
+//                ),
+//                BusinessDetails(
+//                        "+91",
+//                        null,
+//                        null
+//                ),
+//                (activity as UpgradeActivity).clientid,
+//                "+91",
+//                "ANDROID",
+//                null,
+//                (activity as UpgradeActivity).fpTag!!,
+//                null,
+//                null,
+//                com.boost.upgrades.data.api_model.customerId.customerInfo.TaxDetails(
+//                        null,
+//                        null,
+//                        null,
+//                        null
+//                )
+//        ))
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -703,6 +735,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                     } else {
                         Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
                     }
+                }else if(it.equals("AUTO_RENEW")){
+
                 }
             }
         })
@@ -745,6 +779,13 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 validCouponCode = null
             }
         })
+
+        //get customerId
+//        viewModel.getCustomerId().observe(this, Observer {
+//            if (it != null && it.isNotEmpty()) {
+//                customerId = it
+//            }
+//        })
     }
 
     fun updatePackage(features: List<CartModel>) {

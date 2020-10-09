@@ -258,7 +258,7 @@ public class ManageInventoryFragment extends Fragment {
             bookTableIcon = mainView.findViewById(R.id.book_a_table_icon);
             lockIcon = mainView.findViewById(R.id.feature_lock);
             View borderLine = mainView.findViewById(R.id.line_view3);
-            if (svc_code.equals("HOT")) {
+            if (svc_code.equals("CAF")) {
                 bookTable.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

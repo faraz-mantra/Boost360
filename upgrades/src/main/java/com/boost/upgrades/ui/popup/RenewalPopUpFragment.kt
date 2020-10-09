@@ -47,6 +47,7 @@ class RenewalPopUpFragment : DialogFragment(){
 
 
         renew_popup_outer_layout.setOnClickListener {
+            radioGrpOrdering.clearCheck();
             dialog!!.dismiss()
         }
 

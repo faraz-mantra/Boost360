@@ -429,7 +429,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());
-        intent.putExtra("loginid", session.getUserProfileId());
+        intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
         intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
         if (session.getFPEmail() != null) {
