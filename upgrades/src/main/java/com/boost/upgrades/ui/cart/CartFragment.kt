@@ -39,10 +39,12 @@ import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.payment.PaymentFragment
 import com.boost.upgrades.ui.popup.CouponPopUpFragment
 import com.boost.upgrades.ui.popup.GSTINPopUpFragment
+import com.boost.upgrades.ui.popup.RenewalPopUpFragment
 import com.boost.upgrades.ui.popup.TANPopUpFragment
 import com.boost.upgrades.utils.*
 import com.boost.upgrades.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
+import com.boost.upgrades.utils.Constants.Companion.RENEW_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.DateUtils.parseDate
 import com.google.gson.Gson
@@ -97,6 +99,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     val gstinPopUpFragment = GSTINPopUpFragment()
 
     val tanPopUpFragment = TANPopUpFragment()
+
+    val renewPopUpFragment = RenewalPopUpFragment()
 
     lateinit var prefs: SharedPrefs
 
@@ -162,7 +166,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         }
 
         cart_continue_submit.setOnClickListener {
-            if (prefs.getCartOrderInfo() != null) {
+            renewPopUpFragment.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    RENEW_POPUP_FRAGEMENT
+            )
+
+           /* if (prefs.getCartOrderInfo() != null) {
                 proceedToPayment(prefs.getCartOrderInfo()!!)
             } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
                 val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
@@ -171,7 +180,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 } else createPurchaseOrder(null)
             } else {
                 Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
-            }
+            }*/
         }
 
         back_button12.setOnClickListener {
@@ -677,6 +686,24 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 gstin_layout1.visibility = View.GONE
                 gstin_layout2.visibility = View.VISIBLE
                 fill_in_gstin_value.text = it
+            }
+        })
+
+        viewModel.getRenewValue().observe(this, Observer {
+            if (it != null) {
+                Log.i("getGSTIN >> ", it)
+                if(it.equals("REMIND_ME")){
+                    if (prefs.getCartOrderInfo() != null) {
+                        proceedToPayment(prefs.getCartOrderInfo()!!)
+                    } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
+                        val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
+                        if (renewalItems.isNullOrEmpty().not()) {
+                            createCartStateRenewal(renewalItems)
+                        } else createPurchaseOrder(null)
+                    } else {
+                        Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         })
 
