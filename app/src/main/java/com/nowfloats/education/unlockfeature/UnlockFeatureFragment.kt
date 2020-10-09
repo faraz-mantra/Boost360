@@ -54,6 +54,7 @@ class UnlockFeatureFragment(private val session: UserSessionManager?, private va
             intent.putExtra("fpid", it.fpid)
             intent.putExtra("loginid", it.userProfileId)
             intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets)
+            intent.putExtra("fpTag", it.fpTag)
             if (it.fpEmail != null) {
                 intent.putExtra("email", it.fpEmail)
             } else {

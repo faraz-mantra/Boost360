@@ -9,6 +9,8 @@ data class PartnerZone(
     val cta_feature_key: String,
     val cta_web_link: String,
     val cta_bundle_identifier: String,
+    val exclusive_to_categories: List<String>,
+    val exclusive_to_customers: List<String>,
     val image: Image,
     val importance: Int,
     val isarchived: Boolean,

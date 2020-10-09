@@ -62,7 +62,7 @@ class UpgradeActivity : AppCompatActivity() {
   var experienceCode: String? = null
   var fpName: String? = null
   var fpid: String? = null
-  var loginid: String? = null
+  var fpTag: String? = null
   var email: String? = null
   var mobileNo: String? = null
   var profileUrl: String? = null
@@ -95,7 +95,7 @@ class UpgradeActivity : AppCompatActivity() {
     experienceCode = intent.getStringExtra("expCode")
     fpName = intent.getStringExtra("fpName")
     fpid = intent.getStringExtra("fpid")
-    loginid = intent.getStringExtra("loginid")
+    fpTag = intent.getStringExtra("fpTag")
     email = intent.getStringExtra("email")
     mobileNo = intent.getStringExtra("mobileNo")
     profileUrl = intent.getStringExtra("profileUrl")

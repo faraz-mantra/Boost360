@@ -8,6 +8,9 @@ import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
+import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
+import com.boost.upgrades.data.api_model.customerId.create.CustomerIDRequest
+import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.model.BundlesModel
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.CouponsModel
@@ -15,12 +18,15 @@ import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.data.renewalcart.*
 import com.boost.upgrades.utils.Utils
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.luminaire.apolloar.base_class.BaseViewModel
 import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 class CartViewModel(application: Application) : BaseViewModel(application) {
 
@@ -32,7 +38,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   var updatesError: MutableLiveData<String> = MutableLiveData()
   var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
   var _initiatePurchaseOrder: MutableLiveData<CreatePurchaseOrderResponse> = MutableLiveData()
-  private var customerId: String? = null
+  private var customerId: MutableLiveData<String> = MutableLiveData()
   private var APIRequestStatus: String? = null
 
   var _updateGSTIN: MutableLiveData<String> = MutableLiveData()
@@ -91,7 +97,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     validCouponCode.postValue(null)
   }
 
-  fun getCustomerId(): String? {
+  fun getCustomerId(): LiveData<String> {
     return customerId
   }
 
@@ -201,50 +207,50 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     }
   }
 
-//    fun requestCustomerId(customerIDRequest: CustomerIDRequest) {
-//        if (Utils.isConnectedToInternet(getApplication())) {
-//            updatesLoader.postValue(true)
-//            APIRequestStatus = "Retrieving your payment profile..."
-//            compositeDisposable.add(
-//                    ApiService.getCustomerId(customerIDRequest.InternalSourceId, customerIDRequest.ClientId)
-//                            .subscribeOn(Schedulers.io())
-//                            .observeOn(AndroidSchedulers.mainThread())
-//                            .subscribe(
-//                                    {
-//                                        Log.i("getCustomerId>>", it.toString())
-////                                        customerId = it.Result.ExternalSourceId
-//                                        updatesLoader.postValue(false)
-//                                    },
-//                                    {
-//                                        val temp = (it as HttpException).response()!!.errorBody()!!.string()
-//                                        val errorBody: CreateCustomerIDResponse = Gson().fromJson(
-//                                                temp, object : TypeToken<CreateCustomerIDResponse>() {}.type
-//                                        )
-//                                        if (errorBody != null && errorBody.Error.ErrorCode.equals("INVALID CUSTOMER") && errorBody.StatusCode == 400) {
-//                                            APIRequestStatus = "Creating a new payment profile..."
-//                                            compositeDisposable.add(
-//                                                    ApiService.createCustomerId(customerIDRequest)
-//                                                            .subscribeOn(Schedulers.io())
-//                                                            .observeOn(AndroidSchedulers.mainThread())
-//                                                            .subscribe(
-//                                                                    {
-//                                                                        Log.i("CreateCustomerId>>", it.toString())
-//                                                                        customerId = it.Result.CustomerId
-//                                                                        updatesLoader.postValue(false)
-//                                                                    },
-//                                                                    {
-//                                                                        Toasty.error(getApplication(), "Failed to create new payment profile for your account - " + it.message, Toast.LENGTH_LONG).show()
-//                                                                        updatesError.postValue(it.message)
-//                                                                        updatesLoader.postValue(false)
-//                                                                    }
-//                                                            )
-//                                            )
-//                                        }
-//                                    }
-//                            )
-//            )
-//        }
-//    }
+    fun requestCustomerId(customerInfoRequest: CreateCustomerInfoRequest) {
+        if (Utils.isConnectedToInternet(getApplication())) {
+            updatesLoader.postValue(true)
+            APIRequestStatus = "Retrieving your payment profile..."
+            compositeDisposable.add(
+                    ApiService.getCustomerId(customerInfoRequest.InternalSourceId!!, customerInfoRequest.ClientId!!)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {
+                                        Log.i("getCustomerId>>", it.toString())
+                                        customerId.postValue(it.Result.ExternalSourceId)
+                                        updatesLoader.postValue(false)
+                                    },
+                                    {
+                                        val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                                        val errorBody: CreateCustomerIDResponse = Gson().fromJson(
+                                                temp, object : TypeToken<CreateCustomerIDResponse>() {}.type
+                                        )
+                                        if (errorBody != null && errorBody.Error.ErrorCode.equals("INVALID CUSTOMER") && errorBody.StatusCode == 400) {
+                                            APIRequestStatus = "Creating a new payment profile..."
+                                            compositeDisposable.add(
+                                                    ApiService.createCustomerId(customerInfoRequest)
+                                                            .subscribeOn(Schedulers.io())
+                                                            .observeOn(AndroidSchedulers.mainThread())
+                                                            .subscribe(
+                                                                    {
+                                                                        Log.i("CreateCustomerId>>", it.toString())
+                                                                        customerId.postValue(it.Result.CustomerId)
+                                                                        updatesLoader.postValue(false)
+                                                                    },
+                                                                    {
+                                                                        Toasty.error(getApplication(), "Failed to create new payment profile for your account - " + it.message, Toast.LENGTH_LONG).show()
+                                                                        updatesError.postValue(it.message)
+                                                                        updatesLoader.postValue(false)
+                                                                    }
+                                                            )
+                                            )
+                                        }
+                                    }
+                            )
+            )
+        }
+    }
 
   fun addItemToCart(cartItem: CartModel) {
     Completable.fromAction { AppDatabase.getInstance(getApplication())?.cartDao()?.insertToCart(cartItem) }.subscribeOn(Schedulers.io())
