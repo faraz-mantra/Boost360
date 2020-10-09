@@ -61,6 +61,7 @@ class Constants {
         var GSTIN_POPUP_FRAGEMENT: String = GSTINPopUpFragment::class.java.getName()
         var TAN_POPUP_FRAGEMENT: String = TANPopUpFragment::class.java.getName()
         var RAZORPAY_WEBVIEW_POPUP_FRAGMENT: String = RazorPayWebView::class.java.getName()
+        var RENEW_POPUP_FRAGEMENT: String = RenewalPopUpFragment::class.java.getName()
 
     }
 }

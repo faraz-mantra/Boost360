@@ -43,6 +43,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   var createCartResult: MutableLiveData<CreateCartResult> = MutableLiveData()
   var cartResultItems: MutableLiveData<List<CartModel>> = MutableLiveData()
 
+  var _updateCardRenew: MutableLiveData<String> = MutableLiveData()
+
   var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
 
   val compositeDisposable = CompositeDisposable()
@@ -104,6 +106,14 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   fun getGSTIN(): LiveData<String> {
     return _updateGSTIN
   }
+
+  fun updateRenewValue(renewValue: String) {
+      _updateCardRenew.postValue(renewValue)
+    }
+
+  fun getRenewValue(): LiveData<String> {
+        return _updateCardRenew
+    }
 
   fun updateTAN(gstinValue: String) {
     _updateTAN.postValue(gstinValue)
