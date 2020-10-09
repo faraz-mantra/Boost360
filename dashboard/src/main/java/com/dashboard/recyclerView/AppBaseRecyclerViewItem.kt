@@ -1,0 +1,3 @@
+package com.dashboard.recyclerView
+
+interface AppBaseRecyclerViewItem : BaseRecyclerViewItem
