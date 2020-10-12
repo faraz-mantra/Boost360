@@ -1,5 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   package="com.dashboard">
 
-  /
+  <application
+    android:requestLegacyExternalStorage="true"
+    tools:ignore="UnusedAttribute">
+
+    <activity
+      android:name=".controller.DashboardActivity"
+      android:label="@string/dashboard"
+      android:theme="@style/DashboardTheme" />
+
+  </application>
 </manifest>

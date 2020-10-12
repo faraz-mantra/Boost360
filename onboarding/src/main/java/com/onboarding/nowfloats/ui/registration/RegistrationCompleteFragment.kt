@@ -38,12 +38,10 @@ import com.onboarding.nowfloats.model.uploadfile.UploadFileProfileRequest
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
 import com.onboarding.nowfloats.utils.WebEngageController
-import com.webengage.sdk.android.WebEngage
-import okhttp3.MediaType
-import okhttp3.RequestBody
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.*
-import kotlin.collections.ArrayList
 
 class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrationCompleteBinding>() {
 
@@ -247,7 +245,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
   }
 
   private fun getRequestBusinessDate(businessImage: File): UploadFileBusinessRequest {
-    val responseBody = RequestBody.create(MediaType.parse("image/png"), businessImage.readBytes())
+    val responseBody = businessImage.readBytes().toRequestBody("image/png".toMediaTypeOrNull(), 0, content.size)
     val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
         ?: "BUSINESS_${requestFloatsModel?.contactInfo?.domainName}.png"
     return UploadFileBusinessRequest(clientId, requestFloatsModel?.floatingPointId, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
@@ -268,7 +266,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
   }
 
   private fun getRequestProfileData(profileImage: File): UploadFileProfileRequest {
-    val responseBody = RequestBody.create(MediaType.parse("image/png"), profileImage.readBytes())
+    val responseBody = profileImage.readBytes().toRequestBody("image/png".toMediaTypeOrNull(), 0, content.size)
     val fileName = takeIf { profileImage.name.isNullOrEmpty().not() }?.let { profileImage.name }
         ?: "PROFILE_${requestFloatsModel?.contactInfo?.domainName}.png"
     return UploadFileProfileRequest(clientId, userProfileId, fileName, responseBody)

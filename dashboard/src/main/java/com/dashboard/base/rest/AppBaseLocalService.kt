@@ -1,4 +1,4 @@
-package com.appservice.base.rest
+package com.dashboard.base.rest
 
 import com.dashboard.rest.TaskCode
 import com.framework.base.BaseLocalService

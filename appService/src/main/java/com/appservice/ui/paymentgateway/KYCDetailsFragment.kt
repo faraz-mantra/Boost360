@@ -45,9 +45,9 @@ import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.utils.convertListObjToString
 import com.framework.utils.convertStringToList
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.ResponseBody
 import okio.Buffer
 import okio.BufferedSource
@@ -173,8 +173,8 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     showProgress(resources.getString(R.string.uploading_file_wait))
     val filePancard = takeIf { panCarImage?.name.isNullOrEmpty().not() }?.let { panCarImage?.name } ?: "pan_card_${Date()}.jpg"
     val mimType = panCarImage?.getMimeType() ?: "multipart/form-data"
-    val requestBody = RequestBody.create(MediaType.parse(mimType), panCarImage)
-    val bodyPanCard = MultipartBody.Part.createFormData("file", filePancard, requestBody)
+    val requestBody = panCarImage?.let { it.asRequestBody(mimType.toMediaTypeOrNull()) }
+    val bodyPanCard = requestBody?.let { MultipartBody.Part.createFormData("file", filePancard, it) }
     viewModel?.putUploadFile(session?.auth_2, bodyPanCard, filePancard)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -196,8 +196,8 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
     showProgress(resources.getString(R.string.uploading_file_wait))
     val fileStatement = takeIf { bankStatementImage?.name.isNullOrEmpty().not() }?.let { bankStatementImage?.name } ?: "bank_statement_${Date()}.jpg"
     val mimType = bankStatementImage?.getMimeType() ?: "multipart/form-data"
-    val requestBody = RequestBody.create(MediaType.parse(mimType), bankStatementImage)
-    val bodyStatement = MultipartBody.Part.createFormData("file", fileStatement, requestBody)
+    val requestBody = bankStatementImage?.let { it.asRequestBody(mimType.toMediaTypeOrNull()) }
+    val bodyStatement = requestBody?.let { MultipartBody.Part.createFormData("file", fileStatement, it) }
     viewModel?.putUploadFile(session?.auth_2, bodyStatement, fileStatement)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -232,7 +232,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         } else {
           val fileAdditional = takeIf { file.name.isNullOrEmpty().not() }?.let { file.name } ?: "additional_doc_${Date()}.jpg"
           val mimType = file.getMimeType() ?: "multipart/form-data"
-          val requestBody = RequestBody.create(MediaType.parse(mimType), file)
+          val requestBody = file.asRequestBody(mimType.toMediaTypeOrNull())
           val bodyAdditional = MultipartBody.Part.createFormData("file", fileAdditional, requestBody)
           viewModel?.putUploadFile(session?.auth_2, bodyAdditional, fileAdditional)?.observeOnce(viewLifecycleOwner, Observer {
             checkPosition += 1

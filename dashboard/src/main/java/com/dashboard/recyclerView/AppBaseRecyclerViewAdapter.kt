@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.dashboard.R
-import com.framework.base.BaseActivity
 import com.dashboard.constant.RecyclerViewItemType.*
+import com.dashboard.databinding.ItemChannelDBinding
 import com.dashboard.databinding.PaginationLoaderBinding
+import com.dashboard.holder.ChannelViewHolder
 import com.dashboard.holder.PagingViewHolder
+import com.framework.base.BaseActivity
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
-
 
   override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
     val inflater = LayoutInflater.from(parent.context)
@@ -19,6 +20,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
     val binding = getViewDataBinding(inflater, recyclerViewItemType, parent)
     return when (recyclerViewItemType) {
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
+      CHANNEL_ITEM_VIEW -> ChannelViewHolder(binding as ItemChannelDBinding)
     }
   }
 

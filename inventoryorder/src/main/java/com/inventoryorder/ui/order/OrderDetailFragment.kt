@@ -265,7 +265,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   }
 
   private fun cancelOrderDialog() {
-    MaterialAlertDialogBuilder(context)
+    MaterialAlertDialogBuilder(baseActivity)
         .setTitle(getString(R.string.cancel_order_confirmation_message))
         .setNeutralButton(getString(R.string.no)) { dialog, _ ->
           dialog.dismiss()

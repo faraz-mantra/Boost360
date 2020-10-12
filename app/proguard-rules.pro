@@ -31,6 +31,7 @@
 -dontwarn org.apache.commons.codec.binary.Base64
 
 -keep class androidx.core.app.CoreComponentFactory { *; }
+-keep class * extends androidx.fragment.app.Fragment{}
 
 #-dontwarn com.demach.konotor
 #-dontwarn com.demach.konotor.KonotorFeedbackActivity

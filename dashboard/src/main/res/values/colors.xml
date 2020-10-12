@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gray_12">#d1d1d1</color>
+    <color name="colorAccent">#ffb900</color>
+    <color name="colorPrimary">#ffb900</color>
+    <color name="colorPrimaryDark">#d99d00</color>
+    <color name="snow_white">#fbfbfb</color>
+    <color name="grey_white">#F0F0F0</color>
 </resources>

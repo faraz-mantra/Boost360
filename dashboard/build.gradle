@@ -38,5 +38,4 @@ android {
 
 dependencies {
   api project(path: ':resources')
-
 }
