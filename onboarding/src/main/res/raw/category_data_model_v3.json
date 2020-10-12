@@ -17,18 +17,20 @@
         {
           "type": "G_BUSINESS",
           "priority": "learn_more",
-          "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information."
+          "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
+          "isSelected": false
         },
         {
           "type": "FB_PAGE",
           "priority": "recommended",
           "moreDesc": "Marketing your business on Facebook can help you communicate with your customers directly and reach out to other users who are already on the platform.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_SHOP",
           "priority": "learn_more",
-          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.",
+          "isSelected": false
         },
         {
           "type": "WAB",
@@ -40,7 +42,7 @@
           "type": "T_FEED",
           "priority": "recommended",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
-          "isSelected": true
+          "isSelected": false
         }
       ],
       "sections": [
@@ -200,18 +202,19 @@
           "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_PAGE",
           "priority": "important",
           "moreDesc": "Marketing your business on Facebook can help you communicate with your customers directly and reach out to other users who are already on the platform.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_SHOP",
           "priority": "learn_more",
-          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.",
+          "isSelected": false
         },
         {
           "type": "WAB",
@@ -223,7 +226,7 @@
           "type": "T_FEED",
           "priority": "recommended",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
-          "isSelected": true
+          "isSelected": false
         }
       ],
       "sections": [
@@ -379,13 +382,13 @@
           "type": "G_BUSINESS",
           "priority": "recommended",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_PAGE",
           "priority": "recommended",
           "moreDesc": "Marketing your business on Facebook can help you communicate with your customers directly and reach out to other users who are already on the platform.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_SHOP",
@@ -402,7 +405,7 @@
           "type": "T_FEED",
           "priority": "important",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
-          "isSelected": true
+          "isSelected": false
         }
       ],
       "sections": [
@@ -562,18 +565,19 @@
           "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_PAGE",
           "priority": "important",
           "moreDesc": "Marketing your business on Facebook can help you communicate with your customers directly and reach out to other users who are already on the platform.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_SHOP",
           "priority": "learn_more",
-          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.",
+          "isSelected": false
         },
         {
           "type": "WAB",
@@ -584,7 +588,8 @@
         {
           "type": "T_FEED",
           "priority": "learn_more",
-          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost."
+          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
+          "isSelected": false
         }
       ],
       "sections": [
@@ -728,18 +733,19 @@
           "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_PAGE",
           "priority": "important",
           "moreDesc": "Marketing your business on Facebook can help you communicate with your customers directly and reach out to other users who are already on the platform.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_SHOP",
           "priority": "learn_more",
-          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.",
+          "isSelected": false
         },
         {
           "type": "WAB",
@@ -751,7 +757,7 @@
           "type": "T_FEED",
           "priority": "recommended",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
-          "isSelected": true
+          "isSelected": false
         }
       ],
       "sections": [
@@ -895,18 +901,19 @@
           "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_PAGE",
           "priority": "important",
           "moreDesc": "Marketing your business on Facebook can help you communicate with your customers directly and reach out to other users who are already on the platform.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_SHOP",
           "priority": "learn_more",
-          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.",
+          "isSelected": false
         },
         {
           "type": "WAB",
@@ -917,7 +924,8 @@
         {
           "type": "T_FEED",
           "priority": "recommended",
-          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost."
+          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
+          "isSelected": false
         }
       ],
       "sections": [
@@ -1053,18 +1061,19 @@
           "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_PAGE",
           "priority": "important",
           "moreDesc": "Marketing your business on Facebook can help you communicate with your customers directly and reach out to other users who are already on the platform.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_SHOP",
           "priority": "learn_more",
-          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.",
+          "isSelected": false
         },
         {
           "type": "WAB",
@@ -1076,7 +1085,7 @@
           "type": "T_FEED",
           "priority": "recommended",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
-          "isSelected": true
+          "isSelected": false
         }
       ],
       "sections": [
@@ -1216,17 +1225,19 @@
           "type": "G_BUSINESS",
           "priority": "recommended",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_PAGE",
           "priority": "learn_more",
-          "moreDesc": "Marketing your business on Facebook can help you communicate with your customers directly and reach out to other users who are already on the platform."
+          "moreDesc": "Marketing your business on Facebook can help you communicate with your customers directly and reach out to other users who are already on the platform.",
+          "isSelected": false
         },
         {
           "type": "FB_SHOP",
           "priority": "recommended",
-          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.",
+          "isSelected": false
         },
         {
           "type": "WAB",
@@ -1237,7 +1248,8 @@
         {
           "type": "T_FEED",
           "priority": "learn_more",
-          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost."
+          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
+          "isSelected": false
         }
       ],
       "sections": [
@@ -1376,18 +1388,19 @@
           "type": "G_BUSINESS",
           "priority": "recommended",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_PAGE",
           "priority": "learn_more",
           "moreDesc": "Marketing your business on Facebook can help you communicate with your customers directly and reach out to other users who are already on the platform.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_SHOP",
           "priority": "learn_more",
-          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.",
+          "isSelected": false
         },
         {
           "type": "WAB",
@@ -1399,7 +1412,7 @@
           "type": "T_FEED",
           "priority": "recommended",
           "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
-          "isSelected": true
+          "isSelected": false
         }
       ],
       "sections": [
@@ -1515,18 +1528,19 @@
           "type": "G_BUSINESS",
           "priority": "important",
           "moreDesc": "More and more customers search for a business with Google Maps on mobile; so you should consider listing your business on Google Maps as another way to optimize your Local SEO. And having the correct Google Business Listing in place ensures that your potential customers are up-to-date with your business hours and contact information.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_PAGE",
           "priority": "important",
           "moreDesc": "Marketing your business on Facebook can help you communicate with your customers directly and reach out to other users who are already on the platform.",
-          "isSelected": true
+          "isSelected": false
         },
         {
           "type": "FB_SHOP",
           "priority": "learn_more",
-          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products."
+          "moreDesc": "When you set up a Shop through your business’ Facebook Page, your products start appearing in the Facebook Marketplace, allowing many more potential customers to discover your business and buy your products.",
+          "isSelected": false
         },
         {
           "type": "WAB",
@@ -1537,7 +1551,8 @@
         {
           "type": "T_FEED",
           "priority": "recommended",
-          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost."
+          "moreDesc": "Twitter gives you access to a large audience base. You can communicate with your followers to build brand awareness and reach out to new customers right from Boost.",
+          "isSelected": false
         }
       ],
       "sections": [

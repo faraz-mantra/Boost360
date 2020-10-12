@@ -242,12 +242,12 @@ class ChannelPickerFragment : AppBaseFragment<FragmentChannelPickerBinding, Chan
 
 
   fun startAnimationChannelFragment() {
-    for (channel in categoryDataModel?.channels ?: ArrayList()) {
-      channelList.firstOrNull { it.getName() == channel.getName() }?.isSelected = true
-    }
+//    for (channel in categoryDataModel?.channels ?: ArrayList()) {
+//      channelList.firstOrNull { it.getName() == channel.getName() }?.isSelected = true
+//    }
     binding?.viewChannel?.post {
-      setChannelAdapter(selectedChannels, animate = false)
-      binding?.viewChannel?.fadeIn(300L)?.doOnComplete {
+//      setChannelAdapter(selectedChannels, animate = false)
+      binding?.viewChannel?.fadeIn(0L)?.doOnComplete {
         binding?.next?.visible()
         responseFeatures?.let { setChannelFeaturesAdapter(it) }
       }?.andThen(binding?.next?.fadeIn(200L))?.subscribe()
