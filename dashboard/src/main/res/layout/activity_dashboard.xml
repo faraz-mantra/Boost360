@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+      android:id="@+id/nav_host_fragment"
+      android:name="androidx.navigation.fragment.NavHostFragment"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      app:defaultNavHost="true"
+      app:layout_constraintBottom_toTopOf="@+id/view"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:navGraph="@navigation/mobile_navigation" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent">
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_6"
+        android:background="@drawable/up_shadow" />
+
+      <com.framework.views.bottombar.NiceBottomBar
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_60"
+        android:background="?android:attr/windowBackground"
+        app:indicatorEnabled="true"
+        app:indicatorGravity="top"
+        app:indicatorInterpolator="anticipateOvershoot"
+        app:itemFontActive="@font/semi_bold"
+        app:itemFontInActive="@font/regular"
+        app:menu="@menu/bottom_nav_menu" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

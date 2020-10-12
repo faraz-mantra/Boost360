@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item
+    android:id="@+id/navigation_dashboard"
+    android:icon="@drawable/ic_home_d"
+    android:title="@string/dashboard" />
+
+  <item
+    android:id="@+id/navigation_content"
+    android:icon="@drawable/ic_content_d"
+    android:title="@string/content" />
+
+  <item
+    android:id="@+id/navigation_patients"
+    android:icon="@drawable/ic_customers_d"
+    android:title="@string/patients" />
+
+  <item
+    android:id="@+id/navigation_help"
+    android:icon="@drawable/ic_help_d"
+    android:title="@string/help" />
+
+  <item
+    android:id="@+id/navigation_more"
+    android:icon="@drawable/ic_more_d"
+    android:title="@string/more" />
+
+</menu>

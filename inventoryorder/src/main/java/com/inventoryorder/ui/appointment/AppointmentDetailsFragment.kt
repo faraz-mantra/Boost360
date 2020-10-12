@@ -258,7 +258,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
   }
 
   private fun cancelOrderDialog() {
-    MaterialAlertDialogBuilder(context)
+    MaterialAlertDialogBuilder(baseActivity)
         .setTitle(getString(R.string.cancel_appointment_confirmation_message))
         .setNeutralButton(getString(R.string.no)) { dialog, _ ->
           dialog.dismiss()

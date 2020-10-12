@@ -6,7 +6,6 @@ import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -16,7 +15,6 @@ import androidx.core.view.isInvisible
 import androidx.lifecycle.Observer
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
-import com.framework.extensions.isVisible
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils
@@ -41,7 +39,6 @@ import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentActivity
 import com.inventoryorder.utils.copyClipBoard
 import com.inventoryorder.utils.openWebPage
-import java.sql.Time
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
@@ -284,7 +281,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
   }
 
   private fun cancelOrderDialog() {
-    MaterialAlertDialogBuilder(context)
+    MaterialAlertDialogBuilder(baseActivity)
         .setTitle(getString(R.string.cancel_consultation_confirmation_message))
         .setNeutralButton(getString(R.string.no)) { dialog, _ ->
           dialog.dismiss()

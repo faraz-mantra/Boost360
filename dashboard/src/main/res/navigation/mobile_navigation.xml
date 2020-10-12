@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/mobile_navigation"
+  app:startDestination="@+id/navigation_dashboard">
+
+  <fragment
+    android:id="@+id/navigation_dashboard"
+    android:name="com.dashboard.controller.ui.dashboard.DashboardFragment"
+    android:label="@string/dashboard"
+    tools:layout="@layout/fragment_dashboard" />
+
+  <fragment
+    android:id="@+id/navigation_content"
+    android:name="com.dashboard.controller.ui.content.ContentFragment"
+    android:label="@string/content"
+    tools:layout="@layout/fragment_content" />
+
+  <fragment
+    android:id="@+id/navigation_patients"
+    android:name="com.dashboard.controller.ui.patients.PatientsFragment"
+    android:label="@string/patients"
+    tools:layout="@layout/fragment_patients" />
+
+  <fragment
+    android:id="@+id/navigation_help"
+    android:name="com.dashboard.controller.ui.help.HelpFragment"
+    android:label="@string/help"
+    tools:layout="@layout/fragment_help" />
+
+  <fragment
+    android:id="@+id/navigation_more"
+    android:name="com.dashboard.controller.ui.more.MoreFragment"
+    android:label="@string/more"
+    tools:layout="@layout/fragment_more" />
+</navigation>
