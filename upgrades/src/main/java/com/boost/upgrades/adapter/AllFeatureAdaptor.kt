@@ -27,14 +27,17 @@ import kotlin.collections.ArrayList
 
 class AllFeatureAdaptor(
     val activity: UpgradeActivity,
-    cryptoCurrencies: List<FeaturesModel>?
+    cryptoCurrencies: List<FeaturesModel>?,
+    purchasedPackages: ArrayList<String>
 ) : RecyclerView.Adapter<AllFeatureAdaptor.upgradeViewHolder>() {
 
     private var upgradeList = ArrayList<FeaturesModel>()
     private lateinit var context: Context
+    private var userPurchsedWidgets = ArrayList<String>()
 
     init {
         this.upgradeList = cryptoCurrencies as ArrayList<FeaturesModel>
+        this.userPurchsedWidgets = purchasedPackages as ArrayList<String>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): upgradeViewHolder {
@@ -52,7 +55,7 @@ class AllFeatureAdaptor(
 
     override fun onBindViewHolder(holder: upgradeViewHolder, position: Int) {
         val item = upgradeList[position]
-        holder.upgradeListItem(item)
+        holder.upgradeListItem(item,userPurchsedWidgets)
 
         holder.itemView.setOnClickListener {
             val details = DetailsFragment.newInstance()
@@ -64,6 +67,7 @@ class AllFeatureAdaptor(
 //            intent.putExtra("position",position)
 //            ContextCompat.startActivity(this.context, intent, null)
         }
+
         if(position == 0 ){
             holder.upgradeLayout.setBackgroundResource(R.drawable.feature_curve_top_bg)
         }
@@ -93,22 +97,33 @@ class AllFeatureAdaptor(
         private var pricingLayout = itemView.findViewById<LinearLayout>(R.id.pricing_layout)!!
         private var upgradeMRP = itemView.findViewById<TextView>(R.id.upgrade_list_orig_cost)!!
         private var upgradeDiscount = itemView.findViewById<TextView>(R.id.upgrade_list_discount)!!
+        private var upgradeSubscribedStatus = itemView.findViewById<TextView>(R.id.upgrade_list_subbscribed)!!
         private var image = itemView.findViewById<ImageView>(R.id.imageView2)!!
         var view = itemView.findViewById<View>(R.id.view)!!
 
         private var context: Context = itemView.context
 
 
-        fun upgradeListItem(updateModel: FeaturesModel) {
+        fun upgradeListItem(updateModel: FeaturesModel, subscribedStatus: ArrayList<String>) {
+
             val discount = 100 - updateModel.discount_percent
             val price = (discount * updateModel.price) / 100
             upgradeTitle.text = updateModel.target_business_usecase
             upgradeDetails.text = updateModel.name
+
+
+            if(!checkSubscriptionPresence(updateModel.feature_code!!,subscribedStatus)){
+                upgradeSubscribedStatus.visibility = View.GONE
+            }
             if(price>0) {
                 upgradePrice.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
                 pricingLayout.visibility = View.VISIBLE
             }else{
-                pricingLayout.visibility = View.GONE
+//                pricingLayout.visibility = View.GONE
+                if(!updateModel.is_premium)  {
+                  upgradePrice.text = "FREE"
+                }
+
             }
             if(updateModel.discount_percent>0){
                 upgradeDiscount.visibility = View.VISIBLE
@@ -123,5 +138,15 @@ class AllFeatureAdaptor(
                 Glide.with(context).load(updateModel.primary_image).into(image)
             }
         }
+        fun checkSubscriptionPresence( pack: String, availableSub: ArrayList<String> ): Boolean{
+            for(sub in availableSub){
+                if(sub.equals(pack)){
+                    return true
+                }
+            }
+            return false;
+        }
     }
+
+
 }

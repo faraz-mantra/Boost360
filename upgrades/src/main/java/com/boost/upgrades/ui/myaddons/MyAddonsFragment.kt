@@ -53,6 +53,8 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
     lateinit var progressDialog: ProgressDialog
 
+    var purchasedPackages = ArrayList<String>()
+
     companion object {
         fun newInstance() = MyAddonsFragment()
     }
@@ -70,6 +72,10 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
         viewModel = ViewModelProviders.of(requireActivity(), myAddonsViewModelFactory).get(MyAddonsViewModel::class.java)
 
         progressDialog = ProgressDialog(requireContext())
+        var purchasedPack = arguments!!.getStringArrayList("userPurchsedWidgets")
+        if (purchasedPack != null) {
+            purchasedPackages = purchasedPack
+        }
 
         freeAddonsAdapter = FreeAddonsAdapter((activity as UpgradeActivity), ArrayList(), this)
         paidAddonsAdapter = PaidAddonsAdapter((activity as UpgradeActivity), ArrayList(), this)
@@ -107,9 +113,11 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
             if (add_remove_layout.visibility == View.VISIBLE) {
                 add_remove_layout.visibility = View.GONE
             } else {
-                (activity as UpgradeActivity).addFragment(
+                val args = Bundle()
+                args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+                (activity as UpgradeActivity).addFragmentHome(
                         ViewAllFeaturesFragment.newInstance(),
-                        Constants.VIEW_ALL_FEATURE
+                        Constants.VIEW_ALL_FEATURE,args
                 )
             }
         }
@@ -139,7 +147,9 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
         add_paid_addons.setOnClickListener {
             add_remove_layout.visibility = View.GONE
-            (activity as UpgradeActivity).addFragment(ViewAllFeaturesFragment.newInstance(), VIEW_ALL_FEATURE)
+            val args = Bundle()
+            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+            (activity as UpgradeActivity).addFragmentHome(ViewAllFeaturesFragment.newInstance(), VIEW_ALL_FEATURE,args)
         }
 
         remove_paid_addons.setOnClickListener {
