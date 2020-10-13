@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="facebook_app_id" translatable="false">539836972828386</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb539836972828386</string>
@@ -7,8 +7,10 @@
     <string name="app_name">My Library</string>
     <string name="replay_intro">Replay Intro</string>
     <string name="create_account">create account</string>
+    <string name="create_account_new">Create a new account </string>
     <string name="login">Login</string>
-    <string name="proceed">Proceed</string>
+    <string name="login_existing_account">Login to existing account</string>
+    <string name="proceed" tools:ignore="MissingTranslation">Proceed</string>
     <string name="skip">Skip</string>
     <string name="mute">Mute</string>
     <string name="english">English</string>
@@ -30,6 +32,8 @@
     <string name="Join_35k_plus_biz_owners">Join 35k+ biz owners</string>
     <string name="in_growing_their_business_digitally_everyday">in growing their business digitally, everyday</string>
     <string name="terms_of_use_and_privacy_policy">By creating Boost account, you agree to our Terms of use and Privacy Policy</string>
+    <string name="boost360_terms_conditions" tools:ignore="MissingTranslation"><![CDATA[Boost360 - Terms & Conditions]]></string>
+    <string name="boost360_privacy_policy" tools:ignore="MissingTranslation">Boost360 - Privacy Policy</string>
     <string name="signup_using_email">Signup using Email</string>
     <string name="signup_using_google">Signup using Google</string>
     <string name="signup_using_facebook">Signup using Facebook</string>

@@ -175,6 +175,7 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
     val ss = SpannableString(getString(R.string.terms_of_use_and_privacy_policy))
     val termsOfUseClicked: ClickableSpan = object : ClickableSpan() {
       override fun onClick(textView: View) {
+        if (popUpWebViewFragment.isAdded) return
         // navigate to sign up fragment
         // Toast.makeText(requireContext(),"Terms of process is clicked...",Toast.LENGTH_LONG).show()
         val args = Bundle()
@@ -191,6 +192,7 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
     }
     val privacyPolicyClicked: ClickableSpan = object : ClickableSpan() {
       override fun onClick(textView: View) {
+        if (popUpWebViewFragment.isAdded) return
         // navigate to sign up fragment
         // Toast.makeText(requireContext(),"Privacy policy is clicked...",Toast.LENGTH_LONG).show()
         val args = Bundle()
