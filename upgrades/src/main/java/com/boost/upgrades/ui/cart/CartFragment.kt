@@ -172,12 +172,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         }
 
         cart_continue_submit.setOnClickListener {
-            renewPopUpFragment.show(
+            /*renewPopUpFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     RENEW_POPUP_FRAGEMENT
-            )
+            )*/
 
-           /* if (prefs.getCartOrderInfo() != null) {
+            if (prefs.getCartOrderInfo() != null) {
                 proceedToPayment(prefs.getCartOrderInfo()!!)
             } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
                 val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
@@ -186,7 +186,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 } else createPurchaseOrder(null)
             } else {
                 Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
-            }*/
+            }
         }
 
         back_button12.setOnClickListener {
