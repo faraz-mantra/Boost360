@@ -231,18 +231,22 @@ class HomeFragment : BaseFragment(), HomeListener {
 
 
         view_my_addons.setOnClickListener {
-            (activity as UpgradeActivity).addFragment(
+            val args = Bundle()
+            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+            (activity as UpgradeActivity).addFragmentHome(
                     MyAddonsFragment.newInstance(),
-                    MYADDONS_FRAGMENT
+                    MYADDONS_FRAGMENT,args
             )
         }
 
 
         all_recommended_addons.setOnClickListener {
             WebEngageController.trackEvent("Clicked view all recommended add-ons", "ADDONS_MARKETPLACE", "null")
-            (activity as UpgradeActivity).addFragment(
+            val args = Bundle()
+            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+            (activity as UpgradeActivity).addFragmentHome(
                     ViewAllFeaturesFragment.newInstance(),
-                    VIEW_ALL_FEATURE
+                    VIEW_ALL_FEATURE,args
             )
         }
 
@@ -250,17 +254,21 @@ class HomeFragment : BaseFragment(), HomeListener {
             if (progressDialog.isShowing) {
                 progressDialog.hide()
             }
-            (activity as UpgradeActivity).addFragment(
+            val args = Bundle()
+            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+            (activity as UpgradeActivity).addFragmentHome(
                     MyAddonsFragment.newInstance(),
-                    MYADDONS_FRAGMENT
+                    MYADDONS_FRAGMENT,args
             )
         } else if (arguments?.getString("screenType") == "recommendedAddOns") {
             if (progressDialog.isShowing) {
                 progressDialog.hide()
             }
-            (activity as UpgradeActivity).addFragment(
+            val args = Bundle()
+            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+            (activity as UpgradeActivity).addFragmentHome(
                     ViewAllFeaturesFragment.newInstance(),
-                    VIEW_ALL_FEATURE
+                    VIEW_ALL_FEATURE,args
             )
         }
 
@@ -853,6 +861,7 @@ class HomeFragment : BaseFragment(), HomeListener {
         val viewallFeatures = ViewAllFeaturesFragment.newInstance()
         val args = Bundle()
         args.putString("categoryType", categoryType)
+        args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
         viewallFeatures.arguments = args
         (activity as UpgradeActivity).addFragment(
                 viewallFeatures,

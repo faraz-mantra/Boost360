@@ -252,6 +252,7 @@ public class PlacesNearByActivity extends AppCompatActivity implements PlaceNear
         intent.putExtra("fpid", session.getFPID());
         intent.putExtra("fpTag", session.getFpTag());
         intent.putExtra("accountType", session.getFPDetails(GET_FP_DETAILS_CATEGORY));
+        intent.putStringArrayListExtra("userPurchsedWidgets", Constants.StoreWidgets);
         if (session.getFPEmail() != null) {
             intent.putExtra("email", session.getFPEmail());
         } else {
