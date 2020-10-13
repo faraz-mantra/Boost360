@@ -2,7 +2,9 @@
     <string name="app_name">My Library</string>
     <string name="replay_intro">அறிமுகத்தை இயக்கவும்</string>
     <string name="create_account">கணக்கை துவங்குங்கள்</string>
+    <string name="create_account_new">புதிய கணக்கை துவங்கு</string>
     <string name="login">உள்நுழைய</string>
+    <string name="login_existing_account">இருக்கும் கணக்கில் உள்நுழைக</string>
     <string name="skip">ஸ்கிப்</string>
     <string name="mute">Mute</string>
     <string name="english">English</string>
