@@ -174,7 +174,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
             selectLocation(result, response, responseLocation?.locations)
           } else {
             logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
-            showLongToast("Business location not found.")
+            GmbLocationAddDialog().show(parentFragmentManager, GmbLocationAddDialog::class.java.name)
           }
         })
       } else {

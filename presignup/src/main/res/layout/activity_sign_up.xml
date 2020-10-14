@@ -9,7 +9,7 @@
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.Guideline
       android:id="@+id/startGuideline"
@@ -63,27 +63,31 @@
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/_20sdp"
-      android:background="@drawable/edt_bg_selector"
-      android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
       android:drawableStart="@drawable/ic_user"
-      android:drawablePadding="@dimen/_10sdp"
+      android:drawablePadding="@dimen/_12sdp"
       android:hint="@string/your_name"
-      android:inputType="textCapWords"
+      android:imeOptions="actionNext"
+      android:importantForAutofill="no"
+      android:inputType="textPersonName|textCapWords"
+      android:theme="@style/EditTextColored"
       app:layout_constraintEnd_toStartOf="@+id/endGuideline"
+      app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="@+id/startGuideline"
       app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2" />
 
     <androidx.appcompat.widget.AppCompatEditText
       android:id="@+id/user_mobile"
       android:layout_width="0dp"
-      android:layout_height="@dimen/_25sdp"
+      android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/_15sdp"
-      android:background="@drawable/edt_bg_selector"
       android:drawableStart="@drawable/ic_india_flag"
       android:drawablePadding="@dimen/_10sdp"
       android:hint="@string/_10_digit_mobile_number"
+      android:imeOptions="actionNext"
       android:importantForAutofill="no"
       android:inputType="phone"
+      android:maxLength="10"
+      android:theme="@style/EditTextColored"
       app:layout_constraintEnd_toStartOf="@+id/endGuideline"
       app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="@+id/startGuideline"
@@ -92,13 +96,15 @@
     <androidx.appcompat.widget.AppCompatEditText
       android:id="@+id/user_email"
       android:layout_width="0dp"
-      android:layout_height="@dimen/_25sdp"
+      android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/_15sdp"
-      android:background="@drawable/edt_bg_selector"
       android:drawableStart="@drawable/ic_email_signup"
-      android:drawablePadding="@dimen/_10sdp"
+      android:drawablePadding="@dimen/_12sdp"
       android:hint="@string/you_email_com_optional"
+      android:imeOptions="actionNext"
       android:inputType="textEmailAddress"
+      android:maxLines="1"
+      android:theme="@style/EditTextColored"
       app:layout_constraintEnd_toStartOf="@+id/endGuideline"
       app:layout_constraintStart_toStartOf="@+id/startGuideline"
       app:layout_constraintTop_toBottomOf="@+id/user_mobile" />
@@ -106,7 +112,7 @@
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/user_password_til"
       android:layout_width="0dp"
-      android:layout_height="@dimen/_25sdp"
+      android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/_15sdp"
       app:hintEnabled="false"
       app:layout_constraintEnd_toStartOf="@+id/endGuideline"
@@ -119,11 +125,13 @@
         android:id="@+id/user_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edt_bg_selector"
         android:drawableStart="@drawable/ic_key"
-        android:drawablePadding="@dimen/_8sdp"
+        android:drawablePadding="@dimen/_10sdp"
         android:hint="@string/create_a_password"
+        android:imeOptions="actionDone"
         android:inputType="textPassword"
+        android:maxLines="1"
+        android:theme="@style/EditTextColored"
         app:layout_constraintEnd_toStartOf="@+id/endGuideline"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"
@@ -160,10 +168,10 @@
       app:layout_constraintTop_toBottomOf="@id/textView2" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/bottom_view"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:id="@+id/bottom_view"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="@id/endGuideline"
       app:layout_constraintStart_toStartOf="@id/startGuideline">
@@ -182,10 +190,10 @@
         android:id="@+id/popup_login_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_6sdp"
         android:fontFamily="@font/open_sans_semibold"
         android:gravity="center"
         android:padding="@dimen/_4sdp"
-        android:layout_marginBottom="@dimen/_6sdp"
         android:text="@string/terms_of_use_and_privacy_policy"
         android:textColor="@color/common_text_color"
         android:textSize="@dimen/_9ssp" />

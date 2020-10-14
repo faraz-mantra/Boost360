@@ -32,7 +32,8 @@
   <string name="fb_shop">Facebook Shop</string>
   <string name="whatsapp_business">WhatsApp</string>
   <string name="twitter_profile">Twitter Profile</string>
-  <string name="google_business">Google My Business and Google Maps</string>
+  <string name="google_business">Google Maps (Google My Business)</string>
+  <string name="google_business_n">Google Maps (GMB)</string>
   <string name="important">Important</string>
   <string name="recommended">Recommended</string>
 
@@ -88,10 +89,10 @@
 
   <string name="press_again_exit">Press again to exit!</string>
   <string name="facebook_page_connect_later_Skip">If you don\'t have a Facebook page for your business, or if you want to connect it later, please tap \'Skip\'</string>
-  <string name="does_your_business_already_have_a_google_page">Does your business already have a Google page?</string>
-  <string name="google_page_connect_later_Skip">If you don\'t have a Google page for your business, or if you want to connect it later, please tap \'Skip\'</string>
+  <string name="does_your_business_already_have_a_google_page">Do you have your business listed on Google Maps?</string>
+  <string name="google_page_connect_later_Skip">Even if your business does’t have a GMB profile or it is not listed on Google maps yet, we’ll help you create one. Simply tap on ‘Sync my GMB profile’ and we’ll take you through it.</string>
   <string name="sync_facebook_page">Connect my Facebook page</string>
-  <string name="sync_google_page">Connect my Google page</string>
+  <string name="sync_google_page">Sync my GMB profile</string>
   <string name="shop_section_on_your_fb_page">Have you already enabled the shop section on your Facebook page?</string>
   <string name="shop_section_facebook_page_desc">If you don’t have a ‘Shop’ section on your Facebook Page or if you want to connect it later, please tap ‘Skip’.</string>
   <string name="yes_sync_my_fb_page_shop">Yes, Sync my Fb Page shop</string>
@@ -150,6 +151,11 @@
   <string name="entransactional_updates_whatsapp_number">Allow Boost to send entransactional updates regarding you orders, invoices along with other promotional messages on this WhatsApp number.</string>
   <string name="fp_shop_awaited_title" tools:ignore="ExtraTranslation">Awaiting Fb shop integration!</string>
   <string name="fp_shop_awaited_desc" tools:ignore="ExtraTranslation">Unfortunately, This functionality is not available on the Android app yet. To activate this channel, please log in to boost the web portal <a href="http://boost.nowfloats.com">(boost.nowfloats.com)</a> from the nearest desktop and go to <b>Content > Content Sharing Settings</b>. There you\'ll be able to activate this.</string>
+  <string name="create_gmb_description_dialog">Don’t worry, we’ll help you list your business on ‘Google My Business’ as well as on Google Maps. Simply click on ‘Create GMB Listing’ button to get started.</string>
+  <string name="create_gmb_profile">Create GMB Profile</string>
+  <string name="i_ll_do_it_later">I’ll do it later</string>
+  <string name="no_gmb_profile_found">No GMB profile found</string>
+  <string name="associated_with_your_google_account">associated with your Google account</string>
 
 </resources>
 

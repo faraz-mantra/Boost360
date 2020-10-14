@@ -37,9 +37,9 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     super.onCreateView()
     placePickerApi()
     binding?.viewImage?.post {
-      (binding?.viewImage?.fadeIn(400L)?.mergeWith(binding?.viewBusiness?.fadeIn(300L))
-          ?.mergeWith(binding?.viewForm?.fadeIn(300L)))?.andThen(binding?.title?.fadeIn(100L)
-              ?.mergeWith(binding?.subTitle?.fadeIn(100L)))?.andThen(binding?.formMain?.fadeIn(100L))
+      (binding?.viewImage?.fadeIn(200L)?.mergeWith(binding?.viewBusiness?.fadeIn(100L))
+          ?.mergeWith(binding?.viewForm?.fadeIn(100L)))?.andThen(binding?.title?.fadeIn(100L)
+              ?.mergeWith(binding?.subTitle?.fadeIn(50L)))?.andThen(binding?.formMain?.fadeIn(50L))
           ?.andThen(binding?.next?.fadeIn())?.doOnComplete {
             baseActivity.showKeyBoard(binding?.storeName)
           }?.subscribe()
@@ -92,7 +92,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
               it.removeAllViews()
               binding?.textBtn?.visibility = VISIBLE
               gotoBusinessWebsite()
-            }, 400)
+            }, 300)
           }
         }
       }
