@@ -21,6 +21,7 @@ import com.boost.presignup.datamodel.userprofile.UserProfileRequest
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse
 import com.boost.presignup.utils.Utils.hideSoftKeyBoard
 import com.boost.presignup.utils.WebEngageController
+import com.framework.utils.showKeyBoard
 import com.google.firebase.auth.FirebaseAuth
 import com.onboarding.nowfloats.ui.webview.WebViewTNCDialog
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -94,10 +95,8 @@ class SignUpActivity : AppCompatActivity() {
       }
 
     }
-
     create_account_button.isVisible = true
     enableFormInput()
-
     retrofit = Retrofit.Builder()
         .baseUrl("https://api2.withfloats.com")
         .addConverterFactory(GsonConverterFactory.create())
@@ -124,7 +123,7 @@ class SignUpActivity : AppCompatActivity() {
     user_mobile.addTextChangedListener {
       userMobile = it.toString()
     }
-
+    this.showKeyBoard(user_name)
     create_account_button.setOnClickListener {
       if (validateInput()) {
         openTNCDialog(true, "https://www.getboost360.com/tnc?src=android&stage=user_account_create", resources.getString(com.onboarding.nowfloats.R.string.boost360_terms_conditions))
