@@ -6,7 +6,7 @@
 
   </data>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_rounded_top_strock"
@@ -14,61 +14,68 @@
     app:behavior_peekHeight="@dimen/size_0"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:gravity="center_vertical"
-      android:orientation="vertical"
-      android:paddingHorizontal="@dimen/size_30"
-      android:paddingVertical="@dimen/size_20">
+      android:layout_height="wrap_content"
+      android:fillViewport="true">
 
-      <com.framework.views.customViews.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/semi_bold"
-        android:text="@string/self_branded_payment_gateway_camel_case"
-        android:textColor="@color/grey_dark_1"
-        android:textSize="12sp" />
-
-      <com.framework.views.customViews.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_on_terms_and_condition"
-        android:textColor="@color/orange"
-        app:textType="HEADING_4" />
-
-      <View
+      <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_1"
-        android:layout_marginTop="@dimen/size_10"
-        android:layout_marginBottom="@dimen/size_10"
-        android:background="@color/grey_light_3" />
-
-      <androidx.core.widget.NestedScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/size_30"
+        android:paddingVertical="@dimen/size_20">
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/tv_terms_and_conditions"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/semi_bold"
+          android:text="@string/self_branded_payment_gateway_camel_case"
+          android:textColor="@color/grey_dark_1"
+          android:textSize="12sp" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/add_on_terms_and_condition"
+          android:textColor="@color/orange"
+          app:textType="HEADING_4" />
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_1"
+          android:layout_marginTop="@dimen/size_10"
+          android:layout_marginBottom="@dimen/size_10"
+          android:background="@color/grey_light_3" />
+
+        <androidx.core.widget.NestedScrollView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/tv_terms_and_conditions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_12"
+            android:fontFamily="@font/regular"
+            android:text="@string/payment_gateway_terms_content"
+            android:textColor="@color/grey_787878" />
+        </androidx.core.widget.NestedScrollView>
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/understoodBtnPaymentGateway"
+          style="@style/ButtonStyle.Rounded"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="@string/payment_gateway_terms_content"
-          android:textColor="@color/grey_787878"
-          android:fontFamily="@font/regular"
-          android:layout_marginTop="@dimen/size_12"/>
-      </androidx.core.widget.NestedScrollView>
+          android:layout_marginTop="@dimen/size_30"
+          android:gravity="center"
+          android:paddingVertical="@dimen/size_14"
+          android:text="@string/i_understand"
+          android:textAllCaps="true" />
 
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/understoodBtnPaymentGateway"
-        style="@style/ButtonStyle.Rounded"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_30"
-        android:gravity="center"
-        android:paddingVertical="@dimen/size_14"
-        android:text="@string/i_understand"
-        android:textAllCaps="true" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
 
-    </LinearLayout>
-  </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
