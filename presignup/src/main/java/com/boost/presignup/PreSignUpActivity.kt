@@ -89,10 +89,9 @@ class PreSignUpActivity : AppCompatActivity() {
     }
 
     binding.createAccountButton.setOnClickListener {
-      //      NavigatorManager.startActivities(this@PreSignUpActivity)
-//      finish()
-      WebEngageController.trackEvent("PS_Clicked Create account", "create account clicked", "")
-      popUpDialogFragment.show(supportFragmentManager, "popUpDialogFragment_tag")
+      createNewEmailSignUp()
+//      WebEngageController.trackEvent("PS_Clicked Create account", "create account clicked", "")
+//      popUpDialogFragment.show(supportFragmentManager, "popUpDialogFragment_tag")
     }
 
     binding.loginButton.setOnClickListener {
@@ -111,16 +110,25 @@ class PreSignUpActivity : AppCompatActivity() {
   private fun checkIsBottomSheetSignUpOpen(extras: Bundle?) {
     if (extras != null) {
       val isSignUpBottomSheet = extras.getBoolean("isSignUpBottomSheet")
-      if (isSignUpBottomSheet) popUpDialogFragment.show(supportFragmentManager, "popUpDialogFragment_tag")
+      if (isSignUpBottomSheet) {
+        createNewEmailSignUp()
+//        popUpDialogFragment.show(supportFragmentManager, "popUpDialogFragment_tag")
+      }
     }
+  }
+
+  private fun createNewEmailSignUp() {
+    val intent = Intent(this, SignUpActivity::class.java)
+    intent.putExtra("provider", "EMAIL")
+    startActivity(intent)
+    WebEngageController.trackEvent("PS_Auth Provider Success EMAIL", "Provider Success EMAIL", "")
   }
 
   private fun getPopupWindow(): PopupWindow {
     val popupWindow: PopupWindow
     val listView: View = LayoutInflater.from(baseContext)
         .inflate(R.layout.language_recyclerview, null)
-    val mAdapter = LanguageDropDownAdapter(
-        langList,
+    val mAdapter = LanguageDropDownAdapter(this, langList,
         object : LanguageDropDownAdapter.RecyclerViewClickListener {
           override fun onClick(viewHolder: LanguageDropDownAdapter.ViewHolder, itemPos: Int) {
             if (::mPopupWindow.isInitialized) {
@@ -158,8 +166,7 @@ class PreSignUpActivity : AppCompatActivity() {
     val popupWindow: PopupWindow
     val listView: View = LayoutInflater.from(baseContext)
         .inflate(R.layout.curve_popup_layout, null)
-    val mAdapter = LanguageDropDownAdapter(
-        langList,
+    val mAdapter = LanguageDropDownAdapter(this, langList,
         object : LanguageDropDownAdapter.RecyclerViewClickListener {
           override fun onClick(viewHolder: LanguageDropDownAdapter.ViewHolder, itemPos: Int) {
             if (::mPopupWindow.isInitialized) {
@@ -608,7 +615,7 @@ class PreSignUpActivity : AppCompatActivity() {
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    popUpDialogFragment.onActivityResult(requestCode, resultCode, data)
+//    popUpDialogFragment.onActivityResult(requestCode, resultCode, data)
   }
 
 
