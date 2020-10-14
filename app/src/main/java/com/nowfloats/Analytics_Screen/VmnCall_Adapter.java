@@ -1,7 +1,9 @@
 package com.nowfloats.Analytics_Screen;
 
 import android.content.Context;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
@@ -69,6 +71,26 @@ public class VmnCall_Adapter extends RecyclerView.Adapter<VmnCall_Adapter.MyHold
             holder.seekBar.setProgress(0);
             holder.audioStartTime.setText("0:00");
             holder.audioEndTime.setText(" / 0:00");
+
+/*            if(mList.get(position).getCallRecordingUri() != null && !mList.get(position).getCallRecordingUri().equals("None")){
+               *//* Uri uri = Uri.parse(mList.get(position).getCallRecordingUri());
+                MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                int millSecond = Integer.parseInt(durationStr);*//*
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                try {
+                    Log.v("getAudioLength2", " "+ mList.get(position).getCallRecordingUri());
+                    mediaPlayer.setDataSource(mList.get(position).getCallRecordingUri());
+//                    mediaPlayer.prepare();
+                    mediaPlayer.prepareAsync();
+                    Log.v("getAudioLength3", " "+ getTimeFromMilliSeconds(mediaPlayer.getDuration()));
+                    holder.audioEndTime.setText(" / "+ getTimeFromMilliSeconds(mediaPlayer.getDuration()));
+//                    Log.v("getAudioLength3", " "+ mediaPlayer.getDuration());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }*/
+
             holder.currentDuration = 0;
             holder.playPauseButton.setImageResource(R.drawable.ic_audio_play);
         } else {
