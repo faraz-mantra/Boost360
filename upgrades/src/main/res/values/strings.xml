@@ -33,6 +33,7 @@
     <string name="username">Registered Email or Username</string>
     <string name="apply_coupon">Apply coupon</string>
     <string name="discount_coupon">Discount coupon</string>
+    <string name="auto_renew_message"><b>Auto Renewal is ON </b>using credit card of HDFC Credit card ending with 5675</string>
 
     <string-array name="order_status">
         <item>Cart</item>

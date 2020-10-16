@@ -269,7 +269,9 @@ class UpgradeActivity : AppCompatActivity() {
 
   fun goBackToMyAddonsScreen() {
     goToHomeFragment()
-    addFragment(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT)
+    val args = Bundle()
+    args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+    addFragmentHome(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT,args)
   }
 
   fun goBackToRecommentedScreen() {
