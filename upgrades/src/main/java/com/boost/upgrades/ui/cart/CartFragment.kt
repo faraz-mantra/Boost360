@@ -37,6 +37,7 @@ import com.boost.upgrades.data.renewalcart.RenewalPurchasedRequest
 import com.boost.upgrades.data.renewalcart.RenewalResult
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
+import com.boost.upgrades.ui.autorenew.AutoRenewSubsFragment
 import com.boost.upgrades.ui.home.HomeFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.payment.PaymentFragment
@@ -44,6 +45,7 @@ import com.boost.upgrades.ui.popup.CouponPopUpFragment
 import com.boost.upgrades.ui.popup.GSTINPopUpFragment
 import com.boost.upgrades.ui.popup.RenewalPopUpFragment
 import com.boost.upgrades.ui.popup.TANPopUpFragment
+import com.boost.upgrades.ui.webview.WebViewFragment
 import com.boost.upgrades.utils.*
 import com.boost.upgrades.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
@@ -54,6 +56,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.cart_fragment.*
+import kotlinx.android.synthetic.main.details_fragment.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -169,12 +172,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         }
 
         cart_continue_submit.setOnClickListener {
-            renewPopUpFragment.show(
+            /*renewPopUpFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     RENEW_POPUP_FRAGEMENT
-            )
+            )*/
 
-           /* if (prefs.getCartOrderInfo() != null) {
+            if (prefs.getCartOrderInfo() != null) {
                 proceedToPayment(prefs.getCartOrderInfo()!!)
             } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
                 val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
@@ -183,7 +186,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 } else createPurchaseOrder(null)
             } else {
                 Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
-            }*/
+            }
         }
 
         back_button12.setOnClickListener {
@@ -736,7 +739,15 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                         Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
                     }
                 }else if(it.equals("AUTO_RENEW")){
-
+                    val autoRenewFragment: AutoRenewSubsFragment = AutoRenewSubsFragment.newInstance()
+                    val args = Bundle()
+                    args.putString("title", "Auto Renewal Subscription")
+                    args.putString("link", "https://razorpay.com/demo/")
+                    autoRenewFragment.arguments = args
+                    (activity as UpgradeActivity).addFragment(
+                            autoRenewFragment,
+                            Constants.AUTO_RENEW_FRAGEMENT
+                    )
                 }
             }
         })

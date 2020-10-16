@@ -47,7 +47,7 @@ class RenewalPopUpFragment : DialogFragment(){
 
 
         renew_popup_outer_layout.setOnClickListener {
-            radioGrpOrdering.clearCheck();
+            radioGrpOrdering.clearCheck()
             dialog!!.dismiss()
         }
 
@@ -56,6 +56,7 @@ class RenewalPopUpFragment : DialogFragment(){
         renew_submit.setOnClickListener {
             if(validationRenewalOption()){
                 viewModel.updateRenewValue(renewMode)
+                radioGrpOrdering.clearCheck()
                 dialog!!.dismiss()
             }
         }
@@ -71,7 +72,7 @@ class RenewalPopUpFragment : DialogFragment(){
                 }
             }
         })
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE GSTIN Loaded", "GSTIN", "")
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE GSTIN Loaded", "AUTO_RENEW", "")
 
     }
 
