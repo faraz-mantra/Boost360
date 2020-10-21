@@ -89,62 +89,55 @@ public class API_Business_enquiries {
             if (session.getISEnterprise().equals("true")) {
                 String startDate = "2014-08-06";
                 String endDate = "2015-06-05";
-                try {
-                    Calendar c = Calendar.getInstance();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    endDate = sdf.format(c.getTime());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                endDate = sdf.format(c.getTime());
 
                 String scope = "1";
-                try {
-                    Business_enquiries_interface BE = Constants.restAdapter.create(Business_enquiries_interface.class);
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("clientId", Constants.clientId);
-                    params.put("startDate", startDate);
-                    params.put("endDate", endDate);
-                    params.put("scope", scope);
+                Business_enquiries_interface BE = Constants.restAdapter.create(Business_enquiries_interface.class);
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("clientId", Constants.clientId);
+                params.put("startDate", startDate);
+                params.put("endDate", endDate);
+                params.put("scope", scope);
 
-                    BE.getMessagesMethod(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PARENTID),
-                            params, new Callback<Business_Enquiry_Enterprise_Model>() {
-                                @Override
-                                public void success(Business_Enquiry_Enterprise_Model business_enquiry_models, Response response) {
-                                    parseEnterpriseEnquiryMessages(business_enquiry_models);
-                                }
+                BE.getMessagesMethod(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PARENTID),
+                        params, new Callback<Business_Enquiry_Enterprise_Model>() {
+                            @Override
+                            public void success(Business_Enquiry_Enterprise_Model business_enquiry_models, Response response) {
+                                parseEnterpriseEnquiryMessages(business_enquiry_models);
+                            }
 
-                                @Override
-                                public void failure(RetrofitError error) {
-                                    BoostLog.i("Enterprise_enquiry", "" + error.getMessage());
-                                }
-                            });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                            @Override
+                            public void failure(RetrofitError error) {
+                                BoostLog.i("Enterprise_enquiry", "" + error.getLocalizedMessage());
+                                if (bus != null) bus.post("Getting error " + error.getLocalizedMessage());
+                            }
+                        });
             } else {
                 HashMap<String, String> map = new HashMap<>();
                 map.put("clientId", Constants.clientId);
-                try {
-                    Business_enquiries_interface BE = Constants.restAdapter.create(Business_enquiries_interface.class);
 
-                    BE.postMessagesMethod(new JSONObject(), map, fpIdPrefs, new Callback<ArrayList<Business_Enquiry_Model>>() {
+                Business_enquiries_interface BE = Constants.restAdapter.create(Business_enquiries_interface.class);
 
-                        @Override
-                        public void success(ArrayList<Business_Enquiry_Model> data, Response response) {
-                            parseMessages(data);
-                        }
+                BE.postMessagesMethod(new JSONObject(), map, fpIdPrefs, new Callback<ArrayList<Business_Enquiry_Model>>() {
 
-                        @Override
-                        public void failure(RetrofitError error) {
-                            BoostLog.d("Business_enquiry", " Error : " + error.getMessage());
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    @Override
+                    public void success(ArrayList<Business_Enquiry_Model> data, Response response) {
+                        parseMessages(data);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        BoostLog.d("Business_enquiry", " Error : " + error.getLocalizedMessage());
+                        if (bus != null) bus.post("Getting error " + error.getLocalizedMessage());
+                    }
+                });
             }
         } catch (Exception e) {
             e.printStackTrace();
+            if (bus != null) bus.post("Getting error " + e.getLocalizedMessage());
         }
     }
 
@@ -165,10 +158,10 @@ public class API_Business_enquiries {
                     Constants.StorebizEnterpriseQueries.add(data);
                 }
             }
-            if (bus != null)
-                bus.post(new BzQueryEvent(null, Constants.StorebizEnterpriseQueries));
+            if (bus != null) bus.post(new BzQueryEvent(null, Constants.StorebizEnterpriseQueries));
         } catch (Exception e) {
             e.printStackTrace();
+            if (bus != null) bus.post("Getting error " + e.getLocalizedMessage());
         }
     }
 
@@ -187,18 +180,14 @@ public class API_Business_enquiries {
 
                 String formattedDate = Methods.getUTC_To_Local(Long.valueOf(dateString));
 
-                if(formattedDate != null)
-                {
+                if (formattedDate != null) {
                     data.createdOn = formattedDate;
                 }
 
                 Constants.StorebizQueries.add(data);
             }
         }
-        if (bus != null)
-            bus.post(new BzQueryEvent(Constants.StorebizQueries, null));
+        if (bus != null) bus.post(new BzQueryEvent(Constants.StorebizQueries, null));
     }
-
-
 
 }
