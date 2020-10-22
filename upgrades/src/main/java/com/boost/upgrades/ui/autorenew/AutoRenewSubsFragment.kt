@@ -1,6 +1,8 @@
 package com.boost.upgrades.ui.autorenew
 
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
+import com.boost.upgrades.ui.confirmation.AutoRenewOrderConfirmationFragment
+import com.boost.upgrades.utils.Constants
 import kotlinx.android.synthetic.main.auto_renew_fragment.*
 
 
@@ -33,6 +37,7 @@ class AutoRenewSubsFragment : BaseFragment() {
     ): View? {
         root = inflater.inflate(R.layout.auto_renew_fragment, container, false)
         link = arguments!!.getString("link")
+        Log.v("weblink"," "+ link)
         return root
     }
 
@@ -43,15 +48,40 @@ class AutoRenewSubsFragment : BaseFragment() {
         if(arguments !=null && arguments!!.containsKey("title")){
             autoRenewPageTitle.setText(arguments!!.getString("title"))
         }
-
+        loadSpinner(root)
         if (link != null) {
             webviewAutoRenew.getSettings().setJavaScriptEnabled(true)
-//            webviewAutoRenew.findAllAsync("Your subscription is active. Next due on")
+            webviewAutoRenew.getSettings().setDomStorageEnabled(true)
+            webviewAutoRenew.findAllAsync("All payments for this subscription have been made")
             webviewAutoRenew.webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+//                    view.findAllAsync("All payments for this subscription have been made")
+                    Log.v("shouldOverrideUrl"," "+ view)
                     return false
                 }
+
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    Log.v("onPageFinished"," "+ url)
+                }
+
+                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                    Log.v("onPageStarted"," "+ url)
+                    unloadSpinner(root)
+                }
             }
+            webviewAutoRenew.findAllAsync("All payments for this subscription have been made")
+            webviewAutoRenew.setFindListener(object : WebView.FindListener{
+                override fun onFindResultReceived(p0: Int, p1: Int, p2: Boolean) {
+                    if(p1>0) {
+//                        Toast.makeText(requireContext(), "Value exist in the page", Toast.LENGTH_LONG).show()
+                        (activity as UpgradeActivity).replaceFragment(
+                                AutoRenewOrderConfirmationFragment.newInstance(),
+                                Constants.AUTO_RENEW_ORDER_CONFIRMATION_FRAGMENT
+                        )
+                    }
+                }
+
+            })
             webviewAutoRenew.loadUrl(link)
 
 
@@ -78,5 +108,12 @@ class AutoRenewSubsFragment : BaseFragment() {
             // identify which button you click
             return true
         }
+    }
+
+    fun loadSpinner(view: View?) {
+        progressBar.setVisibility(View.VISIBLE)
+    }
+    fun unloadSpinner(view: View?) {
+        progressBar.setVisibility(View.GONE)
     }
 }

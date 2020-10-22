@@ -136,7 +136,7 @@ class SplashFragment : DialogFragment() {
 
         dialog!!.setOnKeyListener { dialog, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_BACK || event.action == KeyEvent.ACTION_UP) {
-                Toasty.info(requireContext(), "Accept Any One Condition...", Toast.LENGTH_LONG).show()
+//                Toasty.info(requireContext(), "Accept Any One Condition...", Toast.LENGTH_LONG).show()
                 return@setOnKeyListener true
             }
             false

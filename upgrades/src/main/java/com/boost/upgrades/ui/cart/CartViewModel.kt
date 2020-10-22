@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
+import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderAutoResponse
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.api_model.customerId.create.CustomerIDRequest
@@ -38,6 +39,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   var updatesError: MutableLiveData<String> = MutableLiveData()
   var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
   var _initiatePurchaseOrder: MutableLiveData<CreatePurchaseOrderResponse> = MutableLiveData()
+  var _initiatePurchaseAutoRenewOrder: MutableLiveData<CreatePurchaseOrderResponse> = MutableLiveData()
   private var customerId: MutableLiveData<String> = MutableLiveData()
   private var APIRequestStatus: String? = null
 
@@ -50,6 +52,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   var cartResultItems: MutableLiveData<List<CartModel>> = MutableLiveData()
 
   var _updateCardRenew: MutableLiveData<String> = MutableLiveData()
+
+  var _updateProceedClick: MutableLiveData<Boolean> = MutableLiveData()
 
   var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
 
@@ -113,7 +117,17 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     return _updateGSTIN
   }
 
+    fun updateProceedClick(renewValue: Boolean) {
+        Log.v("updateProceedClick", " "+ renewValue)
+        _updateProceedClick.postValue(renewValue)
+    }
+
+    fun getProceedClick(): LiveData<Boolean> {
+        return _updateProceedClick
+    }
+
   fun updateRenewValue(renewValue: String) {
+      Log.v("updateRenewValue", " "+ renewValue)
       _updateCardRenew.postValue(renewValue)
     }
 
@@ -137,7 +151,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     return _initiatePurchaseOrder
   }
 
+    fun getPurchaseOrderAutoRenewResponse(): LiveData<CreatePurchaseOrderResponse> {
+        return _initiatePurchaseAutoRenewOrder
+    }
+
   fun InitiatePurchaseOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
+      Log.v("InitiatePurchaseOld"," "+ createPurchaseOrderV2)
     if (Utils.isConnectedToInternet(getApplication())) {
       updatesLoader.postValue(true)
       APIRequestStatus = "Order registration in progress..."
@@ -160,6 +179,31 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
       )
     }
   }
+
+    fun InitiatePurchaseAutoRenewOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
+        Log.v("InitiatePurchaseAuto"," "+ createPurchaseOrderV2)
+        if (Utils.isConnectedToInternet(getApplication())) {
+            updatesLoader.postValue(true)
+            APIRequestStatus = "Order registration in progress..."
+            compositeDisposable.add(
+                    ApiService.CreatePurchaseAutoRenewOrder(createPurchaseOrderV2)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {
+                                        Log.i("InitiatePurchaseOrder>>", it.toString())
+                                        _initiatePurchaseAutoRenewOrder.postValue(it)
+                                        updatesLoader.postValue(false)
+                                    },
+                                    {
+                                        Toasty.error(getApplication(), "Error occurred while registering your order - " + it.message, Toast.LENGTH_LONG).show()
+                                        updatesError.postValue(it.message)
+                                        updatesLoader.postValue(false)
+                                    }
+                            )
+            )
+        }
+    }
 
   fun allPurchasedWidgets(req: RenewalPurchasedRequest) {
     if (Utils.isConnectedToInternet(getApplication())) {
