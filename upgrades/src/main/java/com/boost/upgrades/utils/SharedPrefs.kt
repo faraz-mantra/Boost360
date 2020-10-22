@@ -28,6 +28,7 @@ class SharedPrefs(activity: Activity) {
 
     private val temp_cartAmount = "Cart_Orig_Price"
     private val temp_couponDiscount = "Coupon_Discount"
+    private val temp_monthsValidity = "Months_validity"
 
     private var editor: SharedPreferences.Editor? = null
 
@@ -148,5 +149,12 @@ class SharedPrefs(activity: Activity) {
         return email!!
     }
 
+    fun storeMonthsValidity(monthsValidity: Int){
+        editor!!.putInt(temp_monthsValidity, monthsValidity).apply()
+    }
+
+    fun getStoreMonthsValidity(): Int{
+        return pref!!.getInt(temp_monthsValidity, 0)
+    }
 
 }
