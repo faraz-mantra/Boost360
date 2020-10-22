@@ -102,8 +102,7 @@ public class API_Business_enquiries {
                 params.put("endDate", endDate);
                 params.put("scope", scope);
 
-                BE.getMessagesMethod(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PARENTID),
-                        params, new Callback<Business_Enquiry_Enterprise_Model>() {
+                BE.getMessagesMethod(session.getFPParentId(), params, new Callback<Business_Enquiry_Enterprise_Model>() {
                             @Override
                             public void success(Business_Enquiry_Enterprise_Model business_enquiry_models, Response response) {
                                 parseEnterpriseEnquiryMessages(business_enquiry_models);

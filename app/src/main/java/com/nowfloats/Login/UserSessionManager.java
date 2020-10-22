@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
@@ -800,6 +801,12 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public String getFPLogo() {
         return pref.getString(Key_Preferences.GET_FP_DETAILS_LogoUrl, null);
+    }
+
+    public String getFPParentId() {
+        String id = pref.getString(Key_Preferences.GET_FP_DETAILS_PARENTID, null);
+        if (TextUtils.isEmpty(id)) id = pref.getString(KEY_FP_ID, null);
+        return id;
     }
 
     public void storeFPLogo(String logo) {

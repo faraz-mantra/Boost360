@@ -69,7 +69,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     val contactInfo = this.requestFloatsModel?.contactInfo ?: return
     businessInfoModel = contactInfo
     binding?.storeName?.setText(contactInfo.businessName)
-    binding?.address?.setText(contactInfo.address)
+    binding?.address?.setText(contactInfo.addressCity)
     binding?.email?.setText(contactInfo.email)
     val number = contactInfo.number ?: return
     binding?.number?.setText(number)
@@ -102,14 +102,14 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
 
   private fun isValid(): Boolean {
     requestFloatsModel?.contactInfo?.businessName = binding?.storeName?.text?.toString()
-    requestFloatsModel?.contactInfo?.address = binding?.address?.text?.toString()
+    requestFloatsModel?.contactInfo?.addressCity = binding?.address?.text?.toString()
     requestFloatsModel?.contactInfo?.email = binding?.email?.text?.toString()
     businessInfoModel.number = binding?.number?.text?.toString()
 
     return if (businessInfoModel.businessName.isNullOrBlank()) {
       showShortToast(resources.getString(R.string.business_cant_empty))
       false
-    } else if (businessInfoModel.address.isNullOrBlank()) {
+    } else if (businessInfoModel.addressCity.isNullOrBlank()) {
       showShortToast(resources.getString(R.string.business_address_cant_empty))
       false
     } else if (!businessInfoModel.email.isNullOrEmpty() && !businessInfoModel.isEmailValid()) {
