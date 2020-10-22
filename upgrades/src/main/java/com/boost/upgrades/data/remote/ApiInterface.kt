@@ -5,7 +5,6 @@ import com.boost.upgrades.data.api_model.GetFloatingPointWebWidgets.response.Get
 import com.boost.upgrades.data.api_model.GetPurchaseOrder.GetPurchaseOrderResponse
 import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmailRequestBody
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
-import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderAutoResponse
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.api_model.RazorpayToken.RazorpayTokenResponse
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
