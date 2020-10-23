@@ -51,6 +51,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   var cartResultItems: MutableLiveData<List<CartModel>> = MutableLiveData()
 
   var _updateCardRenew: MutableLiveData<String> = MutableLiveData()
+  var _updateRenewPopup: MutableLiveData<String> = MutableLiveData()
 
   var _updateProceedClick: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -128,6 +129,15 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   fun updateRenewValue(renewValue: String) {
       Log.v("updateRenewValue", " "+ renewValue)
       _updateCardRenew.postValue(renewValue)
+    }
+
+    fun updateRenewPopupClick(renewPopValue: String) {
+        Log.v("updateRenewPopupClick", " "+ renewPopValue)
+        _updateRenewPopup.postValue(renewPopValue)
+    }
+
+    fun getRenewPopupClick(): LiveData<String> {
+        return _updateRenewPopup
     }
 
   fun getRenewValue(): LiveData<String> {

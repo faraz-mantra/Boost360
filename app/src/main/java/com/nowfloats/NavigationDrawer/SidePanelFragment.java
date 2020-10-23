@@ -17,6 +17,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -299,6 +300,7 @@ public class SidePanelFragment extends Fragment {
         keyboardLock = (ImageView) card.findViewById(R.id.keyboard_lock);
         callLock = (ImageView) card.findViewById(R.id.call_lock);
         facebookLock = (ImageView) card.findViewById(R.id.facebook_lock);
+//        Log.v("StoreWidgets"," "+ Constants.StoreWidgets);
         if (Constants.StoreWidgets.contains("BOOSTKEYBOARD"))
             keyboardLock.setVisibility(View.GONE);
         else
@@ -883,6 +885,11 @@ public class SidePanelFragment extends Fragment {
 
         setThumbnail();
         setBackgroundImage();
+//        Log.v("StoreWidgets"," "+ Constants.StoreWidgets);
+        if (Constants.StoreWidgets.contains("BOOSTKEYBOARD"))
+            keyboardLock.setVisibility(View.GONE);
+        else
+            keyboardLock.setVisibility(View.VISIBLE);
     }
 
     public void siteMeterCalculation() {

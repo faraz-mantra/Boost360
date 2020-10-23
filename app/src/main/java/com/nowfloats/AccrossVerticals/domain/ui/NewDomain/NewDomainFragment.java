@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,10 @@ import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -121,9 +126,24 @@ public class NewDomainFragment extends Fragment {
 
                     if(response.getStatus() == 200 && dataList != null && dataList.length > 0 ) {
                         domainSupportType = dataList;
+                        ArrayList<String> domainList = new ArrayList<String>(Arrays.asList(dataList) );
+                        if(domainList.contains(".COM")){
+//                            Log.v("domainSupportType", "contains " +domainList.contains(".COM"));
+                            domainList.remove(".COM");
+                            domainList.add(0,".COM");
+                        }
+                        if(domainList.contains(".CO.ZA")){
+                            domainList.remove(".CO.ZA");
+                            domainList.add(".CO.ZA");
+                        }
+                        if(domainList.contains(".CA")){
+                            domainList.remove(".CA");
+                            domainList.add(".CA");
+                        }
 
                         //Creating the ArrayAdapter instance having the country list
-                        ArrayAdapter aa = new ArrayAdapter(requireActivity(), R.layout.spinner_item_white_text, domainSupportType);
+//                        ArrayAdapter aa = new ArrayAdapter(requireActivity(), R.layout.spinner_item_white_text, domainSupportType);
+                        ArrayAdapter aa = new ArrayAdapter(requireActivity(), R.layout.spinner_item_white_text, domainList);
                         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         //Setting the ArrayAdapter data on the Spinner
                         domainSupportTypeSpinneer.setAdapter(aa);
