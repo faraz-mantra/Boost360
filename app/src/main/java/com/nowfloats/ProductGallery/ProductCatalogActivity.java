@@ -60,6 +60,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     private ProductCategoryRecyclerAdapter adapter;
 
     private UserSessionManager session;
+    private MenuItem itemToAdd;
 
     private boolean stop = false;
     private boolean isLoading = false;
@@ -147,12 +148,14 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
                 if (data != null && response.getStatus() == 200) {
                     if (data.size() > 0) {
+                        itemToAdd.setVisible(true);
                         binding.layoutEmptyView.setVisibility(View.GONE);
                         adapter.setData(data, flag);
                         return;
                     }
 
                     if (adapter.getItemCount() == 0) {
+                        itemToAdd.setVisible(false);
                         binding.layoutEmptyView.setVisibility(View.VISIBLE);
                     }
                 }
@@ -222,6 +225,8 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add, menu);
+        itemToAdd = menu.findItem(R.id.menu_add);
+        itemToAdd.setVisible(true);
         return true;
     }
 
