@@ -1,5 +1,6 @@
 package com.boost.upgrades.ui.popup
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,13 +11,17 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
+import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.ui.cart.CartViewModel
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
+import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.cart_fragment.*
 import kotlinx.android.synthetic.main.renewal_popup.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.lifecycle.Observer
 
 class RenewalPopUpFragment : DialogFragment(){
 
@@ -46,6 +51,7 @@ class RenewalPopUpFragment : DialogFragment(){
         return root
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -61,8 +67,8 @@ class RenewalPopUpFragment : DialogFragment(){
 
         renew_submit.setOnClickListener {
             if(validationRenewalOption()){
-                viewModel.updateRenewValue(renewMode)
-                viewModel.updateProceedClick(true)
+                viewModel.updateRenewPopupClick(renewMode)
+//                viewModel.updateProceedClick(true)
                 radioGrpOrdering.clearCheck()
                 dialog!!.dismiss()
             }
@@ -115,6 +121,7 @@ class RenewalPopUpFragment : DialogFragment(){
 //                renewMode = "REMIND_ME"
             }
         }
+        initMvvM();
 
 
     }
@@ -155,5 +162,14 @@ class RenewalPopUpFragment : DialogFragment(){
 
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
+    fun initMvvM() {
+
+        viewModel.getRenewPopupClick().observe(this, Observer {
+            if (it != null) {
+                viewModel.updateRenewValue(it)
+            }
+        })
+    }
 
 }
