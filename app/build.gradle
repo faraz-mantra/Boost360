@@ -44,6 +44,9 @@ allprojects {
         maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
 
         google()
+        maven {
+            url "https://dl.bintray.com/notifyvisitors/invitereferrals"
+        }
     }
 }
 
@@ -286,4 +289,8 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-fragment:$koin_version"
+
+    // Referral Library: invitereferrals
+    implementation 'com.android.installreferrer:installreferrer:1.1.1'
+    implementation 'com.invitereferrals.invitereferrals:invitereferrals:v29-1.0.5'
 }

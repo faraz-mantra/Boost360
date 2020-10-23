@@ -20,6 +20,7 @@ import com.boost.presignup.locale.LocaleManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.inventoryorder.BaseOrderApplication;
+import com.invitereferrals.invitereferrals.InviteReferralsApplication;
 import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.nowfloats.util.Constants;
 import com.onboarding.nowfloats.BaseBoardingApplication;
@@ -49,6 +50,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         AppServiceApplication.initModule(this);
         initWebEngage();
 
+        InviteReferralsApplication.register(this);
+//        InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
 
         //Koin
         KoinBaseApplication.initModule(this);

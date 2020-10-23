@@ -1973,4 +1973,6 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="add_candidate">Add candidate</string>
     <string name="share_colon">Share:</string>
     <string name="minimum_50_char_business_description_required">Minimum 50 characters in business description are required.</string>
+    <string name="refer_a_friend">Refer a friend</string>
+    <string name="referrals_button">Referrals Button</string>
 </resources>
