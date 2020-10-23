@@ -290,6 +290,6 @@ dependencies {
     implementation "org.koin:koin-androidx-fragment:$koin_version"
 
     // Referral Library: invitereferrals
-    implementation 'com.android.installreferrer:installreferrer:1.1.1'
+    implementation 'com.android.installreferrer:installreferrer:2.1'
     implementation 'com.invitereferrals.invitereferrals:invitereferrals:v29-1.0.5'
 }

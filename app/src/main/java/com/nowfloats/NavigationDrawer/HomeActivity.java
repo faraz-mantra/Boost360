@@ -1473,7 +1473,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         );
                         inviteReferralLogin();
                     }else{
-                        Toast.makeText(getApplicationContext(), "An unexpected error occured.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "An unexpected error occurred.", Toast.LENGTH_LONG).show();
                     }
 //                    InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
 //                            session.getUserProfileName(),
