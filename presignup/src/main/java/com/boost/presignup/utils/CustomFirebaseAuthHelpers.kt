@@ -223,9 +223,9 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
 
         override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
           WebEngageController.initiateUserLogin(response.body()?.Result?.LoginId)
-          WebEngageController.setUserContactAttributes(email, userMobile, personName)
+          WebEngageController.setUserContactAttributes(email, userMobile, personName, response.body()?.Result?.ClientId)
           WebEngageController.trackEvent("PS_Account Creation Success", "Account Creation Success", "")
-
+          SmartLookController.setUserAttributes(email, userMobile, personName, response.body()?.Result?.ClientId)
           listener.onSuccess(response.body(), loginKey)
         }
       })
@@ -270,9 +270,9 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
                 return
               }
               WebEngageController.initiateUserLogin(response.loginId)
-              WebEngageController.setUserContactAttributes(response.profileProperties?.userEmail, response.profileProperties?.userMobile,
-                  response.profileProperties?.userName)
+              WebEngageController.setUserContactAttributes(response.profileProperties?.userEmail, response.profileProperties?.userMobile, response.profileProperties?.userName,response.sourceClientId)
               WebEngageController.trackEvent("PS_Login Success", "Login Success", "")
+              SmartLookController.setUserAttributes(response.profileProperties?.userEmail, response.profileProperties?.userMobile, response.profileProperties?.userName,response.sourceClientId)
               listener.onSuccess(response)
             } catch (e: Exception) {
               listener.onSuccess(VerificationRequestResult())
@@ -280,6 +280,8 @@ class CustomFirebaseAuthHelpers constructor(activity: Activity, listener: Custom
           } else {
             listener.onSuccess(VerificationRequestResult())
           }
+        }else{
+          listener.onFailure()
         }
       }
     })

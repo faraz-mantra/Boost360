@@ -17,6 +17,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
 import com.boost.presignup.locale.LocaleManager;
+import com.boost.presignup.utils.SmartLookController;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.inventoryorder.BaseOrderApplication;
@@ -24,6 +25,8 @@ import com.invitereferrals.invitereferrals.InviteReferralsApplication;
 import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.nowfloats.util.Constants;
 import com.onboarding.nowfloats.BaseBoardingApplication;
+import com.smartlook.sdk.smartlook.Smartlook;
+import com.thinksity.R;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
 import com.webengage.sdk.android.WebEngageConfig;
 
@@ -36,13 +39,14 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static AppController mInstance;
-    String webEngageKey="~10a5cad2d";
+    String webEngageKey = "~10a5cad2d";
     private LocaleManager localeManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
         BaseOrderApplication.instance = this;
+        SmartLookController.initiateSmartLook(this.getString(R.string.samrt_look_api_key));
         BaseOrderApplication.initModule(this);
         BaseBoardingApplication.instance = this;
         BaseBoardingApplication.initModule(this);
@@ -100,7 +104,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         //TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "open_sans_hebrew_bold.ttf");
     }
 
-    void initWebEngage(){
+    void initWebEngage() {
         WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
                 .setWebEngageKey(webEngageKey)
                 .setDebugMode(true)
@@ -258,7 +262,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     protected void attachBaseContext(Context base) {
         MultiDex.install(this);
         localeManager = new LocaleManager(base);
-        Log.e("getLanguage",">>>>>>>>>>>>>>" + localeManager.getLanguage());
+        Log.e("getLanguage", ">>>>>>>>>>>>>>" + localeManager.getLanguage());
         try {
             localeManager.setNewLocale(base, localeManager.getLanguage());
         } catch (Exception e) {
@@ -272,7 +276,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         super.onConfigurationChanged(newConfig);
         localeManager.setLocale(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Log.d("onConfigurationChanged" , ""+ newConfig.getLocales().toLanguageTags());
+            Log.d("onConfigurationChanged", "" + newConfig.getLocales().toLanguageTags());
         }
     }
 
