@@ -105,7 +105,6 @@ dependencies {
     //facebook
     implementation 'com.facebook.android:facebook-login:5.15.3'
     implementation 'com.google.firebase:firebase-invites:17.0.0'
-    implementation 'com.smartlook.recording:app:1.5.3-native'
     api project(path: ':onboarding')
 }
 

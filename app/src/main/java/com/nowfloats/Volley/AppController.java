@@ -25,7 +25,6 @@ import com.invitereferrals.invitereferrals.InviteReferralsApplication;
 import com.nowfloats.education.koindi.KoinBaseApplication;
 import com.nowfloats.util.Constants;
 import com.onboarding.nowfloats.BaseBoardingApplication;
-import com.smartlook.sdk.smartlook.Smartlook;
 import com.thinksity.R;
 import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
 import com.webengage.sdk.android.WebEngageConfig;
