@@ -132,12 +132,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     override fun onResume() {
         super.onResume()
         Log.e("onResume", "onResume of LoginFragment")
+        viewModel.updateRenewValue("")
 //        initMvvM()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         Log.e("onDestroy", "onDestroy of LoginFragment")
+        viewModel.updateRenewValue("")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -179,12 +181,48 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         }
 
         cart_continue_submit.setOnClickListener {
-          /*  renewPopUpFragment.show(
+            renewPopUpFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     RENEW_POPUP_FRAGEMENT
-            )*/
+            )
 
-            if (prefs.getCartOrderInfo() != null) {
+            /*viewModel.getRenewValue().observeOnce(this, Observer {
+                if (it != null) {
+                    Log.i("getRenewValuesamp >> ", it )
+                    if(it.equals("REMIND_ME")){
+//                if(it.equals("REMIND_ME")  && proceedRenewPopup!!){
+                        if (prefs.getCartOrderInfo() != null) {
+                            proceedToPayment(prefs.getCartOrderInfo()!!)
+                        } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
+                            val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
+                            if (renewalItems.isNullOrEmpty().not()) {
+                                createCartStateRenewal(renewalItems)
+                            } else createPurchaseOrder(null)
+                        } else {
+                            Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
+                        }
+                    }else if(it.equals("AUTO_RENEW")){
+//                }else if(it.equals("AUTO_RENEW") && proceedRenewPopup!!){
+                        viewModel.updateProceedClick(false)
+                        if (prefs.getCartOrderInfo() != null) {
+//                        proceedToAutoRenewPayment(prefs.getCartOrderInfo()!!)
+                            createPurchaseAutoSubscriptionOrder(null)
+                            Log.i("getRenewValuesamp1 >> ", it )
+                        } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
+                            val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
+                            if (renewalItems.isNullOrEmpty().not()) {
+                                Log.i("getRenewValuesamp2 >> ", it )
+                                createCartStateRenewal(renewalItems)
+                            } else {createPurchaseAutoSubscriptionOrder(null)
+                                Log.i("getRenewValuesamp3 >> ", it )
+                            }
+                        } else {
+                            Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            })*/
+            /*if (prefs.getCartOrderInfo() != null) {
                 proceedToPayment(prefs.getCartOrderInfo()!!)
             } else if (total > 0 && ::cartList.isInitialized && ::featuresList.isInitialized || ::renewalList.isInitialized) {
                 val renewalItems = cartList.filter { it.item_type == "renewals" } as? List<CartModel>
@@ -193,7 +231,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 } else createPurchaseOrder(null)
             } else {
                 Toasty.error(requireContext(), "Invalid items found in the cart. Please re-launch the Marketplace.", Toast.LENGTH_SHORT).show()
-            }
+            }*/
         }
 
         back_button12.setOnClickListener {
@@ -967,7 +1005,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 proceedToPayment(it)
             }
         })
-        viewModel.getPurchaseOrderAutoRenewResponse().observe(this, Observer {
+
+//        viewModel.getPurchaseOrderAutoRenewResponse().observe(getViewLifecycleOwner(),  -> {})
+        viewModel.getPurchaseOrderAutoRenewResponse().observe(getViewLifecycleOwner(), Observer {
             Log.v("getPurchaseOrderAuto", " "+ it)
             if (it != null) {
 //                prefs.storeLatestPurchaseOrderId(it.Result.OrderId)
@@ -1055,10 +1095,15 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             }
         })
 
-        viewModel.getProceedClick().observe(this, Observer {
+/*        viewModel.getProceedClick().observe(this, Observer {
             if (it != null) {
                 Log.i("getTAN >> ", it.toString())
                 proceedRenewPopup = it
+            }
+        })*/
+        viewModel.getRenewPopupClick().observe(this, Observer {
+            if (it != null) {
+                viewModel.updateRenewValue(it)
             }
         })
 
