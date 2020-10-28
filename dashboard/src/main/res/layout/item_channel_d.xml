@@ -5,7 +5,7 @@
   <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/size_10"
+    android:layout_marginStart="@dimen/size_12"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -32,7 +32,7 @@
       android:layout_marginTop="@dimen/size_3"
       android:text="@string/website"
       android:textColor="@color/black_4f4f4f"
-      app:textType="BODY_1" />
+      app:textType="CAPTION" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>

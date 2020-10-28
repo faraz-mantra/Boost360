@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+
+  <LinearLayout
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/img_icon"
+      android:layout_width="@dimen/size_36"
+      android:layout_height="@dimen/size_36"
+      tools:srcCompat="@drawable/ic_add_photo_d" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/txt_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_4"
+      android:gravity="center"
+      android:textColor="@color/warm_grey_two"
+      app:textType="CAPTION"
+      tools:text="Add photo\nto gallery" />
+  </LinearLayout>
+</layout>

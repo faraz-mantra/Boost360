@@ -44,7 +44,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, BaseViewMode
       0 -> mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
       1 -> mNavController.navigate(R.id.navigation_content, Bundle(), getNavOptions())
       2 -> mNavController.navigate(R.id.navigation_patients, Bundle(), getNavOptions())
-      3 -> mNavController.navigate(R.id.navigation_help, Bundle(), getNavOptions())
+      3 -> mNavController.navigate(R.id.navigation_academy, Bundle(), getNavOptions())
       4 -> mNavController.navigate(R.id.navigation_more, Bundle(), getNavOptions())
       else -> mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
     }

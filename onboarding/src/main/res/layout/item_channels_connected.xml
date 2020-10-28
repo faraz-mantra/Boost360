@@ -47,7 +47,7 @@
           android:includeFontPadding="false"
           android:maxLines="1"
           android:text="Google search"
-          android:textColor="@color/light_blue_one"
+          android:textColor="@color/light_blue_1"
           app:fontFamily="@font/regular"
           app:textType="CAPTION"
           tools:text="Google search" />

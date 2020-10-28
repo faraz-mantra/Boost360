@@ -24,9 +24,9 @@
     tools:layout="@layout/fragment_patients" />
 
   <fragment
-    android:id="@+id/navigation_help"
-    android:name="com.dashboard.controller.ui.help.HelpFragment"
-    android:label="@string/help"
+    android:id="@+id/navigation_academy"
+    android:name="com.dashboard.controller.ui.help.AcademyFragment"
+    android:label="@string/academy"
     tools:layout="@layout/fragment_help" />
 
   <fragment

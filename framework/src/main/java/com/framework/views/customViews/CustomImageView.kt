@@ -44,9 +44,12 @@ class CustomImageView : AppCompatImageView {
     matrix.setSaturation(0f)
     val filter = ColorMatrixColorFilter(matrix)
     this.colorFilter = filter
+    imageAlpha = 128
   }
 
   fun removeGreyscale() {
     this.colorFilter = null
+    imageAlpha = 255
   }
+
 }

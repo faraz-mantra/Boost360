@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <color name="accent_dark">#F2994A</color>
   <color name="greyish_brown">#4a4a4a</color>
   <color name="greyish_brown_light">#898A8D</color>
   <color name="greyish_brown_40">#664A4A4A</color>
   <color name="greyish_brown_80">#CC4A4A4A</color>
   <color name="cerulean_blue">#0068e0</color>
   <color name="dodger_blue">#53a0fd</color>
-  <color name="light_blue_one">#4889F8</color>
+  <color name="light_blue_1">#4889F8</color>
+  <color name="light_blue_2">#4A90E2</color>
   <color name="dodger_blue_two">#4889f8</color>
   <color name="dodger_blue_two_70">#b34889f8</color>
   <color name="dodger_blue_two_10">#194889f8</color>
@@ -19,6 +21,15 @@
   <color name="aliceblue">#e6f4fc</color>
   <color name="aliceblue_10">#ecf3fe</color>
   <color name="warm_light">#979797</color>
+  <color name="grey_dark_2">#828282</color>
+  <color name="grey_dark_3">#BDBDBD</color>
+  <color name="light_grey_1">#d0d0d0</color>
+  <color name="light_grey_2">#E0E0E0</color>
+  <color name="light_grey_4">#FAFAFA</color>
+  <color name="light_grey_5">#F5F5F5</color>
+  <color name="light_grey_6">#C5C5C5</color>
+  <color name="grey_dim_1">#717A80</color>
+  <color name="grey_dim">#E9E9E9</color>
   <color name="warm_grey">#747474</color>
   <color name="warm_grey_70">#B3747474</color>
   <color name="warm_grey_31">#508e8e8e</color>
@@ -36,12 +47,14 @@
   <color name="black_two">#2a2a2a</color>
   <color name="black_6">#0f000000</color>
   <color name="black_10">#19000000</color>
+  <color name="dimgray">#54617A</color>
   <color name="dusky_blue">#475993</color>
   <color name="french_blue">#4267b2</color>
   <color name="white_two">#efefef</color>
   <color name="white_three">#f1f1f1</color>
   <color name="white_four">#ededed</color>
   <color name="white_five">#FBFBFB</color>
+  <color name="light_grey_3">#B5B5B5</color>
   <color name="azure">#1da1f2</color>
   <color name="warm_grey_two">#9b9b9b</color>
   <color name="transparent">#00000000</color>

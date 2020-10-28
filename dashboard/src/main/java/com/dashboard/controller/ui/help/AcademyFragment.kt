@@ -5,7 +5,7 @@ import com.dashboard.base.AppBaseFragment
 import com.dashboard.databinding.FragmentContentBinding
 import com.framework.models.BaseViewModel
 
-class HelpFragment : AppBaseFragment<FragmentContentBinding, BaseViewModel>() {
+class AcademyFragment : AppBaseFragment<FragmentContentBinding, BaseViewModel>() {
 
   override fun getLayout(): Int {
     return R.layout.fragment_help

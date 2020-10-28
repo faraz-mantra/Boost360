@@ -287,4 +287,67 @@
       <enum name="bottom" value="1" />
     </attr>
   </declare-styleable>
+
+  <!--  dots indicator-->
+  <attr name="dotsColor" format="color" />
+  <attr name="selectedDotColor" format="color" />
+  <attr name="dotsStrokeColor" format="color" />
+  <attr name="dotsSize" format="dimension" />
+  <attr name="dotsWidthFactor" format="float" />
+  <attr name="dotsSpacing" format="dimension" />
+  <attr name="dotsCornerRadius" format="dimension" />
+  <attr name="dotsStrokeWidth" format="dimension" />
+  <attr name="stiffness" format="float" />
+  <attr name="dampingRatio" format="float" />
+  <attr name="progressMode" format="boolean" />
+
+  <declare-styleable name="DotsIndicator">
+    <attr name="dotsColor" />
+    <attr name="selectedDotColor" />
+    <attr name="dotsSize" />
+    <attr name="dotsWidthFactor" />
+    <attr name="dotsSpacing" />
+    <attr name="dotsCornerRadius" />
+    <attr name="progressMode" />
+  </declare-styleable>
+
+  <declare-styleable name="SpringDotsIndicator">
+    <attr name="dotsColor" />
+    <attr name="dotsSize" />
+    <attr name="dotsSpacing" />
+    <attr name="dotsCornerRadius" />
+    <attr name="dotsStrokeWidth" />
+    <attr name="dotsStrokeColor" />
+    <attr name="stiffness" />
+    <attr name="dampingRatio" />
+  </declare-styleable>
+
+  <declare-styleable name="WormDotsIndicator">
+    <attr name="dotsColor" />
+    <attr name="dotsSize" />
+    <attr name="dotsSpacing" />
+    <attr name="dotsCornerRadius" />
+    <attr name="dotsStrokeWidth" />
+    <attr name="dotsStrokeColor" />
+  </declare-styleable>
+  <!--  dots indicator-->
+
+  <declare-styleable name="DashedDividerView">
+    <attr name="dividerDashGap" format="dimension" />
+    <attr name="dividerDashWidth" format="dimension" />
+    <attr name="dividerDashColor" format="reference|color" />
+    <attr name="dividerDirection" format="enum">
+      <enum name="vertical" value="0" />
+      <enum name="horizontal" value="1" />
+    </attr>
+  </declare-styleable>
+
+  <declare-styleable name="CustomTheme">
+    <attr name="gifViewStyle" format="reference" />
+  </declare-styleable>
+
+  <declare-styleable name="GifView">
+    <attr name="gif" format="reference" />
+    <attr name="paused" format="boolean" />
+  </declare-styleable>
 </resources>

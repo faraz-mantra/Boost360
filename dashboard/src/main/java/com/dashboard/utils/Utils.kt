@@ -9,6 +9,8 @@ import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
 import android.webkit.MimeTypeMap
+import com.framework.glide.util.loadGifGlide
+import com.framework.views.customViews.CustomImageView
 import java.io.File
 import java.util.*
 import java.util.regex.Matcher
@@ -89,8 +91,8 @@ fun String.getBitmap(): Bitmap? {
 }
 
 fun File.getMimeType(): String? {
-    var mimeType: String? = null
-    val extension: String? = absolutePath?.getExtension()
+  var mimeType: String? = null
+  val extension: String? = absolutePath.getExtension()
     if (MimeTypeMap.getSingleton().hasExtension(extension)) {
         mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
     }
@@ -103,12 +105,16 @@ fun String.getExtension(): String? {
 }
 
 fun String.getFileName(): String? {
-    return substring(lastIndexOf("/") + 1)
+  return substring(lastIndexOf("/") + 1)
 }
 
 fun getExtensionUrl(url: String?): String {
-    val filenameArray = url?.split("\\.".toRegex())?.toTypedArray()
-    return filenameArray?.get(filenameArray.size - 1) ?: ""
+  val filenameArray = url?.split("\\.".toRegex())?.toTypedArray()
+  return filenameArray?.get(filenameArray.size - 1) ?: ""
+}
+
+fun Context.setGifAnim(image: CustomImageView, icGif: Int, placeHolder: Int) {
+  this.loadGifGlide(image, icGif, placeHolder)
 }
 
 
