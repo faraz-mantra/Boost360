@@ -1,0 +1,22 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:bottom="0dp"
+    android:left="0dp"
+    android:right="0dp"
+    android:top="@dimen/size_4">
+    <vector
+      android:width="12dp"
+      android:height="8dp"
+      android:viewportWidth="12"
+      android:viewportHeight="8">
+      <path
+        android:fillColor="#00000000"
+        android:pathData="M11,1L6,6L1,1"
+        android:strokeWidth="1"
+        android:strokeColor="#828282"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    </vector>
+  </item>
+</layer-list>
+

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_94"
+    android:background="@color/light_grey_4"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/size_6">
+
+    <com.framework.views.customViews.CustomImageView
+      android:layout_width="@dimen/size_30"
+      android:layout_height="@dimen/size_30"
+      android:layout_marginStart="@dimen/size_8"
+      android:padding="@dimen/size_2"
+      app:srcCompat="@drawable/ic_search_queries_d" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_10"
+      android:layout_marginEnd="@dimen/size_10"
+      android:layout_weight="1"
+      android:text="Appointment\nBookings Worth"
+      app:textType="BODY_2" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/size_10"
+      android:orientation="vertical">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_marginEnd="@dimen/size_6"
+          android:includeFontPadding="false"
+          android:paddingTop="@dimen/size_6"
+          android:text="INR"
+          android:textColor="@color/dimgray"
+          app:fontFamily="@font/regular"
+          app:textType="CAPTION" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_marginEnd="@dimen/size_6"
+          android:includeFontPadding="false"
+          android:text="1,579"
+          android:textColor="@color/dimgray"
+          app:fontFamily="@font/regular"
+          app:textType="HEADING_3" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/size_6"
+        android:includeFontPadding="false"
+        android:text="INR 3,678 today"
+        android:textColor="@color/light_blue_2"
+        app:textType="BODY_1" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.framework.views.customViews.CustomImageView
+      android:layout_width="@dimen/size_20"
+      android:layout_height="@dimen/size_20"
+      android:layout_marginEnd="@dimen/size_6"
+      android:padding="@dimen/size_4"
+      android:tint="@color/colorAccent"
+      app:srcCompat="@drawable/ic_arrow_right_d" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

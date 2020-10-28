@@ -6,10 +6,8 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.dashboard.R
 import com.dashboard.constant.RecyclerViewItemType.*
-import com.dashboard.databinding.ItemChannelDBinding
-import com.dashboard.databinding.PaginationLoaderBinding
-import com.dashboard.holder.ChannelViewHolder
-import com.dashboard.holder.PagingViewHolder
+import com.dashboard.databinding.*
+import com.dashboard.holder.*
 import com.framework.base.BaseActivity
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
@@ -21,6 +19,13 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
     return when (recyclerViewItemType) {
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
       CHANNEL_ITEM_VIEW -> ChannelViewHolder(binding as ItemChannelDBinding)
+      BUSINESS_SETUP_ITEM_VIEW -> BusinessSetupViewHolder(binding as ItemBusinessManagementBinding)
+      QUICK_ACTION_ITEM_VIEW -> QuickActionViewHolder(binding as ItemQuickActionBinding)
+      RIA_ACADEMY_ITEM_VIEW -> RiaAcademyViewHolder(binding as ItemLearnDigitalJourneyBinding)
+      BOOST_PREMIUM_ITEM_VIEW -> BoostPremiumViewHolder(binding as ItemBoostPremiumBinding)
+      ROI_SUMMARY_ITEM_VIEW -> RoiSummaryViewHolder(binding as ItemRoiSummaryBinding)
+      MANAGE_BUSINESS_ITEM_VIEW -> ManageBusinessViewHolder(binding as ItemManageBusinessDBinding)
+      GROWTH_STATE_ITEM_VIEW -> GrowthStateViewHolder(binding as ItemGrowthStateBinding)
     }
   }
 

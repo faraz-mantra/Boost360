@@ -64,7 +64,7 @@
               android:layout_marginStart="@dimen/size_8"
               android:includeFontPadding="false"
               android:text="@string/aug_sep_2020"
-              android:textColor="@color/light_blue_one"
+              android:textColor="@color/light_blue_1"
               android:textStyle="bold"
               app:layout_constraintStart_toEndOf="@id/btn_month_range"
               app:layout_constraintTop_toTopOf="parent" />

@@ -14,6 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.DrawableImageViewTarget
 import com.bumptech.glide.request.target.Target
 import com.framework.R
 import com.framework.views.CircularImageView
@@ -38,6 +39,12 @@ fun Context.glideLoad(mImageView: CustomImageView, url: String?, placeholder: In
   placeholder?.let { glide.placeholder(it) }
   if (isCrop) glide.centerCrop()
   glide.diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
+}
+
+fun Context.loadGifGlide(mImageView: CustomImageView, gif_file: Int?, placeholder: Int?) {
+  val glide = Glide.with(this).load(gif_file).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+  placeholder?.let { glide.placeholder(it) }
+  glide.into(DrawableImageViewTarget(mImageView))
 }
 
 
