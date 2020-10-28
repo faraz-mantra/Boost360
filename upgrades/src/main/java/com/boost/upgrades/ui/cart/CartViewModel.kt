@@ -9,7 +9,6 @@ import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
-import com.boost.upgrades.data.api_model.customerId.create.CustomerIDRequest
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.model.BundlesModel
 import com.boost.upgrades.data.model.CartModel
@@ -17,6 +16,7 @@ import com.boost.upgrades.data.model.CouponsModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.data.renewalcart.*
+import com.boost.upgrades.utils.SingleLiveEvent
 import com.boost.upgrades.utils.Utils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -39,6 +39,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
   var _initiatePurchaseOrder: MutableLiveData<CreatePurchaseOrderResponse> = MutableLiveData()
   var _initiatePurchaseAutoRenewOrder: MutableLiveData<CreatePurchaseOrderResponse> = MutableLiveData()
+    val _initiateAutoRenewOrder: SingleLiveEvent<CreatePurchaseOrderResponse> = SingleLiveEvent()
   private var customerId: MutableLiveData<String> = MutableLiveData()
   private var APIRequestStatus: String? = null
 
@@ -161,7 +162,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   }
 
     fun getPurchaseOrderAutoRenewResponse(): LiveData<CreatePurchaseOrderResponse> {
-        return _initiatePurchaseAutoRenewOrder
+        return _initiateAutoRenewOrder
     }
 
   fun InitiatePurchaseOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
@@ -201,7 +202,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                             .subscribe(
                                     {
                                         Log.i("InitiatePurchaseOrder>>", it.toString())
-                                        _initiatePurchaseAutoRenewOrder.postValue(it)
+                                        _initiateAutoRenewOrder.postValue(it)
                                         updatesLoader.postValue(false)
                                     },
                                     {

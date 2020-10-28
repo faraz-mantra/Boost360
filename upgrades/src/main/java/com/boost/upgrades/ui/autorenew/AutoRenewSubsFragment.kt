@@ -111,9 +111,14 @@ class AutoRenewSubsFragment : BaseFragment() {
     }
 
     fun loadSpinner(view: View?) {
-        progressBar.setVisibility(View.VISIBLE)
+        if(progressBar != null){
+            progressBar.setVisibility(View.VISIBLE)
+        }
+
     }
     fun unloadSpinner(view: View?) {
-        progressBar.setVisibility(View.GONE)
+        if(progressBar != null) {
+            progressBar.setVisibility(View.GONE)
+        }
     }
 }

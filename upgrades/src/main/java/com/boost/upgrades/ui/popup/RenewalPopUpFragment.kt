@@ -41,6 +41,12 @@ class RenewalPopUpFragment : DialogFragment(){
         dialog!!.window!!.setBackgroundDrawableResource(R.color.fullscreen_color)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("onDestroy", "onDestroy of LoginFragment")
+        viewModel.updateRenewValue("")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -121,7 +127,7 @@ class RenewalPopUpFragment : DialogFragment(){
 //                renewMode = "REMIND_ME"
             }
         }
-        initMvvM();
+//        initMvvM()
 
 
     }
