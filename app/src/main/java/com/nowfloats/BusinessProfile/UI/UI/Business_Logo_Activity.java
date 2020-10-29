@@ -448,10 +448,14 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
     public void uploadPrimaryPicture(String path) {
         new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());
-        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this,path,session.getFPID(), session);
+        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this, path, session.getFPID(), session, this::changeText);
         upload_logo.execute();
 //        Constants.isImgUploaded = false;
 //        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Business_Logo_Activity.this, path, false,true,session.getFPID());
 //        upa.execute();
+    }
+
+    private void changeText(Boolean siSuccess) {
+        uploadButton.setText("CHANGE");
     }
 }
