@@ -607,13 +607,13 @@ class HomeFragment : BaseFragment(), HomeListener {
         //show dot indicator only when the (list.size > 2)
         if (list.size > 1) {
             if (list.size > 2) {
-                banner_viewpager.setPageTransformer(SimplePageTransformer())
+//                banner_viewpager.setPageTransformer(SimplePageTransformer())
 
-                val itemDecoration = HorizontalMarginItemDecoration(
-                        requireContext(),
-                        R.dimen.viewpager_current_item_horizontal_margin
-                )
-                banner_viewpager.addItemDecoration(itemDecoration)
+//                val itemDecoration = HorizontalMarginItemDecoration(
+//                        requireContext(),
+//                        R.dimen.viewpager_current_item_horizontal_margin
+//                )
+//                banner_viewpager.addItemDecoration(itemDecoration)
             }
             banner_indicator.visibility = View.VISIBLE
         } else {
