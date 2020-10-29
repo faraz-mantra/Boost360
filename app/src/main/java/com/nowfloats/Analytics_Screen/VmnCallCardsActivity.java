@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -71,6 +72,9 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     VmnCall_Adapter vmnCallAdapter;
     RecyclerView mRecyclerView;
     String selectedViewType="ALL";
+    LinearLayout noCallTrackLayout;
+    LinearLayout secondLayout;
+    LinearLayout firstLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,6 +123,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         showTrackedCalls();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.call_recycler);
+        noCallTrackLayout =  findViewById(R.id.ll_no_call_tracker);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -201,6 +206,8 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         session = new UserSessionManager(getApplicationContext(), this);
         mainLayout = (LinearLayout) findViewById(R.id.main_layout);
         primaryLayout = findViewById(R.id.primary_layout);
+        secondLayout = findViewById(R.id.second_layout);
+        firstLayout = findViewById(R.id.first_layout);
 
         secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
         buyItemButton = (TextView) findViewById(R.id.buy_item);
@@ -314,11 +321,23 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
                     return;
                 }
                 int size = vmnCallModels.size();
+                Log.v("getCalls"," "+ size);
                 stopApiCall = size < 100;
                 updateRecyclerData(vmnCallModels);
 
                 if (size != 0) {
                     offset += 100;
+                }
+                if(size < 1){
+                    mRecyclerView.setVisibility(View.GONE);
+                    firstLayout.setVisibility(View.GONE);
+                    secondLayout.setVisibility(View.GONE);
+                    noCallTrackLayout.setVisibility(View.VISIBLE);
+                }else{
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    firstLayout.setVisibility(View.VISIBLE);
+                    secondLayout.setVisibility(View.VISIBLE);
+                    noCallTrackLayout.setVisibility(View.GONE);
                 }
             }
 
@@ -509,7 +528,8 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
                     Methods.showSnackBarNegative(VmnCallCardsActivity.this, getString(R.string.something_went_wrong));
                 } else {
                     String callCount = jsonObject.get("POTENTIAL_CALLS").getAsString();
-                    webCallCount.setText(callCount);
+//                    webCallCount.setText(callCount);
+                    phoneCallCount.setText(callCount);
                     totalPotentialCallCount += Integer.parseInt(callCount);
                     potentialCallsText.setText("View potential calls ("+totalPotentialCallCount+")");
                 }

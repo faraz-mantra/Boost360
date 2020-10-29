@@ -2,7 +2,6 @@ package com.boost.upgrades.adapter
 
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -52,7 +51,6 @@ class BannerViewPagerAdapter(
             homeListener.onPromoBannerClicked(list.get(position))
         }
         holder.title.setText(list.get(position).title)
-        Log.v("onBindViewHolder1"," "+ list.get(position).title + " "+ list.get(position).image.url);
         checkBannerDetails(position)
     }
 
