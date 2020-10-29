@@ -389,7 +389,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun getRequestServiceImage(serviceImage: File?): RequestBody? {
-    val responseBody = serviceImage?.readBytes()?.let { it.toRequestBody("image/png".toMediaTypeOrNull(), 0, content.size) }
+    val responseBody = serviceImage?.readBytes()?.let { it.toRequestBody("image/png".toMediaTypeOrNull(), 0, it.size) }
     val fileName = takeIf { serviceImage?.name.isNullOrEmpty().not() }?.let { serviceImage?.name }
         ?: "service_${Date().time}.png"
     return responseBody
