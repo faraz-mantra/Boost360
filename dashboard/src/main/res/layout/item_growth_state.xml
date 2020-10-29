@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -16,33 +17,38 @@
     android:padding="@dimen/size_6">
 
     <com.framework.views.customViews.CustomImageView
+      android:id="@+id/img_icon"
       android:layout_width="@dimen/size_30"
       android:layout_height="@dimen/size_30"
       android:layout_marginStart="@dimen/size_8"
       android:padding="@dimen/size_2"
-      app:srcCompat="@drawable/ic_search_queries_d" />
+      tools:srcCompat="@drawable/ic_search_queries_d" />
 
     <com.framework.views.customViews.CustomTextView
+      android:id="@+id/txt_title"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginStart="@dimen/size_10"
       android:layout_marginEnd="@dimen/size_10"
       android:layout_weight="1"
-      android:text="Appointment\nBookings Worth"
-      app:textType="BODY_2" />
+      app:textType="BODY_2"
+      tools:text="Appointment\nBookings Worth" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginEnd="@dimen/size_10"
+      android:gravity="center"
       android:orientation="vertical">
 
       <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:orientation="horizontal">
 
         <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_symbol"
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:layout_marginEnd="@dimen/size_6"
@@ -54,25 +60,29 @@
           app:textType="CAPTION" />
 
         <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_amount"
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:layout_marginEnd="@dimen/size_6"
           android:includeFontPadding="false"
-          android:text="1,579"
           android:textColor="@color/dimgray"
           app:fontFamily="@font/regular"
-          app:textType="HEADING_3" />
+          app:textType="HEADING_3"
+          tools:text="1,579" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
 
       <com.framework.views.customViews.CustomTextView
-        android:layout_width="wrap_content"
+        android:id="@+id/txt_amount_count_day"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/size_6"
+        android:gravity="end"
         android:includeFontPadding="false"
-        android:text="INR 3,678 today"
+        android:textAlignment="gravity"
         android:textColor="@color/light_blue_2"
-        app:textType="BODY_1" />
+        app:textType="BODY_1"
+        tools:text="INR 3,678 today" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.framework.views.customViews.CustomImageView

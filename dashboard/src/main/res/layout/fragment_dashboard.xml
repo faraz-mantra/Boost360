@@ -25,7 +25,7 @@
 
         <FrameLayout
           android:layout_width="match_parent"
-          android:layout_height="@dimen/size_200">
+          android:layout_height="@dimen/size_210">
 
           <com.framework.views.customViews.CustomImageView
             android:layout_width="match_parent"
@@ -40,13 +40,200 @@
             app:srcCompat="@drawable/ic_fill_bg" />
         </FrameLayout>
 
+        <com.framework.views.customViews.CustomCardView
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_226"
+          android:layout_marginStart="@dimen/size_6"
+          android:layout_marginTop="@dimen/size_132"
+          android:layout_marginEnd="@dimen/size_6"
+          app:cardBackgroundColor="@color/white"
+          app:cardCornerRadius="@dimen/size_16"
+          app:cardUseCompatPadding="true">
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+              <LinearLayout
+                android:id="@+id/view_visting_card_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/size_3"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <LinearLayout
+                  android:id="@+id/btn_visiting_card_down"
+                  android:layout_width="0dp"
+                  android:layout_height="@dimen/size_42"
+                  android:layout_marginEnd="1.5dp"
+                  android:layout_weight="1"
+                  android:background="@drawable/ic_bg_btn_round_start"
+                  android:gravity="center"
+                  android:orientation="horizontal">
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_visiting_card"
+                    android:textColor="@color/greyish_brown" />
+
+                  <com.framework.views.customViews.CustomImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_6"
+                    android:layout_marginTop="@dimen/size_1"
+                    app:srcCompat="@drawable/ic_arrow_down_7_d" />
+                </LinearLayout>
+
+                <LinearLayout
+                  android:id="@+id/btn_product_catalog_down"
+                  android:layout_width="0dp"
+                  android:layout_height="@dimen/size_42"
+                  android:layout_marginStart="1.5dp"
+                  android:layout_weight="1"
+                  android:background="@drawable/ic_bg_btn_round_end"
+                  android:gravity="center">
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_products_catalog"
+                    android:textColor="@color/greyish_brown" />
+
+                  <com.framework.views.customViews.CustomImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_6"
+                    android:layout_marginTop="@dimen/size_1"
+                    app:srcCompat="@drawable/ic_arrow_down_7_d" />
+                </LinearLayout>
+              </LinearLayout>
+
+              <LinearLayout
+                android:id="@+id/view_all_business_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/size_10"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                  android:id="@+id/btn_visiting_card_up"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="@dimen/size_2"
+                  android:layout_weight="1"
+                  android:orientation="vertical">
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_arrow_up_d"
+                    android:drawablePadding="@dimen/size_8"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:text="@string/your_visiting_card"
+                    android:textColor="@color/colorAccent"
+                    app:textType="HEADING_7" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_2"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@string/one_tap_to_share_your_all_business_contact_points_with_anyone"
+                    android:textColor="@color/warm_grey"
+                    app:textType="CAPTION" />
+                </LinearLayout>
+
+                <com.framework.views.customViews.CustomImageView
+                  android:layout_width="@dimen/size_28"
+                  android:layout_height="@dimen/size_28"
+                  android:background="?attr/selectableItemBackgroundBorderless"
+                  android:clickable="true"
+                  android:focusable="true"
+                  android:padding="@dimen/size_4"
+                  app:srcCompat="@drawable/ic_filter_d" />
+              </LinearLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:gravity="center_vertical">
+
+              <com.framework.views.viewgroups.BaseRecyclerView
+                android:id="@+id/rv_channel_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_channel_d" />
+            </LinearLayout>
+
+            <View
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/size_1"
+              android:layout_marginTop="@dimen/size_8"
+              android:background="@color/grey_dim" />
+
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/size_42"
+              android:background="@color/light_grey_5"
+              android:orientation="horizontal">
+
+              <com.framework.views.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/share_on_whatsapp"
+                android:textColor="@color/black_4f4f4f"
+                app:fontFamily="@font/sans_medium" />
+
+              <View
+                android:layout_width="@dimen/size_1"
+                android:layout_height="match_parent"
+                android:background="@color/grey_dim" />
+
+              <com.framework.views.customViews.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/share_on_more"
+                android:textColor="@color/black_4f4f4f"
+                app:fontFamily="@font/sans_medium" />
+            </LinearLayout>
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </com.framework.views.customViews.CustomCardView>
+
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_190"
+          android:id="@+id/view_digital_score"
           android:background="@drawable/ic_bg_dark_white_top_round"
           android:orientation="vertical"
-          android:paddingTop="@dimen/size_160"
+          android:layout_marginTop="@dimen/size_184"
+          android:paddingTop="@dimen/size_164"
           android:paddingBottom="@dimen/size_14">
 
           <androidx.appcompat.widget.LinearLayoutCompat
@@ -58,7 +245,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_14"
-              android:layout_marginTop="@dimen/size_16"
+              android:layout_marginTop="@dimen/size_20"
               android:layout_marginEnd="@dimen/size_12"
               android:orientation="horizontal">
 
@@ -266,138 +453,11 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <com.framework.views.customViews.CustomCardView
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/size_226"
-          android:layout_marginStart="@dimen/size_6"
-          android:layout_marginTop="@dimen/size_130"
-          android:layout_marginEnd="@dimen/size_6"
-          app:cardBackgroundColor="@color/white"
-          app:cardCornerRadius="@dimen/size_16"
-          app:cardUseCompatPadding="true">
-
-          <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="@dimen/size_10">
-
-              <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                  android:layout_width="0dp"
-                  android:layout_height="wrap_content"
-                  android:layout_marginStart="@dimen/size_2"
-                  android:layout_weight="1"
-                  android:orientation="vertical">
-
-                  <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_arrow_up_d"
-                    android:drawablePadding="@dimen/size_8"
-                    android:gravity="center_vertical"
-                    android:includeFontPadding="false"
-                    android:text="@string/your_visiting_card"
-                    android:textColor="@color/colorAccent"
-                    app:textType="HEADING_7" />
-
-                  <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_2"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="@string/one_tap_to_share_your_all_business_contact_points_with_anyone"
-                    android:textColor="@color/warm_grey"
-                    app:textType="CAPTION" />
-                </LinearLayout>
-
-                <com.framework.views.customViews.CustomImageView
-                  android:layout_width="@dimen/size_28"
-                  android:layout_height="@dimen/size_28"
-                  android:background="?attr/selectableItemBackgroundBorderless"
-                  android:clickable="true"
-                  android:focusable="true"
-                  android:padding="@dimen/size_4"
-                  app:srcCompat="@drawable/ic_filter_d" />
-              </LinearLayout>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_weight="1"
-              android:gravity="center_vertical">
-
-              <com.framework.views.viewgroups.BaseRecyclerView
-                android:id="@+id/rv_channel_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="4"
-                tools:listitem="@layout/item_channel_d" />
-            </LinearLayout>
-
-            <View
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/size_1"
-              android:layout_marginTop="@dimen/size_8"
-              android:background="@color/grey_dim" />
-
-            <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/size_42"
-              android:background="@color/light_grey_5"
-              android:orientation="horizontal">
-
-              <com.framework.views.customViews.CustomTextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="@string/share_on_whatsapp"
-                android:textColor="@color/black_4f4f4f"
-                app:fontFamily="@font/sans_medium" />
-
-              <View
-                android:layout_width="@dimen/size_1"
-                android:layout_height="match_parent"
-                android:background="@color/grey_dim" />
-
-              <com.framework.views.customViews.CustomTextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="@string/share_on_more"
-                android:textColor="@color/black_4f4f4f"
-                app:fontFamily="@font/sans_medium" />
-            </LinearLayout>
-          </androidx.appcompat.widget.LinearLayoutCompat>
-
-        </com.framework.views.customViews.CustomCardView>
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_34"
+          android:layout_marginTop="@dimen/size_38"
           android:orientation="horizontal">
 
           <com.framework.views.customViews.CustomCardView
@@ -749,8 +809,7 @@
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:orientation="vertical">
 
             <FrameLayout
               android:layout_width="match_parent"

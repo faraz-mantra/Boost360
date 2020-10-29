@@ -16,13 +16,9 @@ class CustomMaterialButton : MaterialButton {
   }
 
   private fun init(context: Context, attrs: AttributeSet, defStyleAttr: Int) {
-    val typedArray = context
-            .theme
-            .obtainStyledAttributes(attrs, R.styleable.CustomMaterialButton, defStyleAttr, 0)
-
+    val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.CustomMaterialButton, defStyleAttr, 0)
     isEnabled = isEnabled
     requestLayout()
-
     invalidate()
     typedArray.recycle()
   }

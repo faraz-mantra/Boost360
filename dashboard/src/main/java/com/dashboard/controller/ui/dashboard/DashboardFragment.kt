@@ -1,10 +1,12 @@
 package com.dashboard.controller.ui.dashboard
 
+import android.animation.ValueAnimator
+import android.view.View
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.appservice.utils.setGifAnim
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
-import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
@@ -12,6 +14,7 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.framework.models.BaseViewModel
 import com.framework.views.dotsindicator.OffsetPageTransformer
+
 
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, BaseViewModel>(), RecyclerItemClickListener {
 
@@ -27,6 +30,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, BaseViewMode
 
   override fun onCreateView() {
     super.onCreateView()
+    setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown)
     binding?.rvChannelList?.apply {
       val adapter1 = AppBaseRecyclerViewAdapter(baseActivity, ChannelData().getDataChannel(), this@DashboardFragment)
       adapter = adapter1
@@ -80,12 +84,36 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, BaseViewMode
     }
 
     binding?.rvGrowthState?.apply {
-      val adapter3 = AppBaseRecyclerViewAdapter(baseActivity, ChannelData().getDataChannel(RecyclerViewItemType.GROWTH_STATE_ITEM_VIEW.getLayout()), this@DashboardFragment)
+      val adapter3 = AppBaseRecyclerViewAdapter(baseActivity, GrowthStatsData().getData(), this@DashboardFragment)
       adapter = adapter3
     }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
 
+  }
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.btnVisitingCardUp -> visitingCardShowHide(true)
+      binding?.btnVisitingCardDown -> visitingCardShowHide(false)
+    }
+  }
+
+  private fun visitingCardShowHide(isDown: Boolean) {
+    binding?.viewAllBusinessContact?.visibility = if (isDown) View.GONE else View.VISIBLE
+    binding?.viewVistingCardProduct?.visibility = if (isDown) View.VISIBLE else View.GONE
+    binding?.viewDigitalScore?.elevation = resources.getDimension(if (isDown) R.dimen.size_2 else R.dimen.size_0)
+    binding?.viewDigitalScore?.animateViewTopPadding(isDown)
+  }
+}
+
+private fun LinearLayoutCompat?.animateViewTopPadding(isDown: Boolean) {
+  this?.apply {
+    val animator: ValueAnimator = ValueAnimator.ofInt(paddingTop, resources.getDimensionPixelSize(if (isDown) R.dimen.size_0 else R.dimen.size_164))
+    animator.addUpdateListener { valueAnimator -> setPadding(0, (valueAnimator.animatedValue as Int), 0, resources.getDimensionPixelSize(R.dimen.size_14)) }
+    animator.duration = 300
+    animator.start()
   }
 }
