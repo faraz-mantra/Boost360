@@ -37,13 +37,13 @@
           android:maxLines="2"
           android:textColor="@color/grey_dark_3"
           app:fontFamily="@font/light"
-          app:textType="HEADING_6"
+          app:textType="BODY_1"
           tools:text="Patient Enquiries" />
 
         <com.framework.views.customViews.CustomImageView
           android:id="@+id/img_icon"
-          android:layout_width="@dimen/size_46"
-          android:layout_height="@dimen/size_46"
+          android:layout_width="@dimen/size_44"
+          android:layout_height="@dimen/size_44"
           tools:srcCompat="@drawable/ic_chat_enquiry_d" />
       </LinearLayout>
 
@@ -62,7 +62,7 @@
           android:layout_marginEnd="@dimen/size_6"
           android:includeFontPadding="false"
           android:textColor="@color/light_blue_2"
-          app:textType="BODY_1"
+          app:textType="CAPTION"
           tools:text="2 today" />
 
         <LinearLayout

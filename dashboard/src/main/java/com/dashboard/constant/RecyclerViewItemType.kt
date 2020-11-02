@@ -7,6 +7,7 @@ enum class RecyclerViewItemType {
   PAGINATION_LOADER,
   CHANNEL_ITEM_VIEW,
   BUSINESS_SETUP_ITEM_VIEW,
+  BUSINESS_SETUP_HIGH_ITEM_VIEW,
   MANAGE_BUSINESS_ITEM_VIEW,
   QUICK_ACTION_ITEM_VIEW,
   RIA_ACADEMY_ITEM_VIEW,
@@ -20,6 +21,7 @@ enum class RecyclerViewItemType {
       PAGINATION_LOADER -> R.layout.pagination_loader
       CHANNEL_ITEM_VIEW -> R.layout.item_channel_d
       BUSINESS_SETUP_ITEM_VIEW -> R.layout.item_business_management
+      BUSINESS_SETUP_HIGH_ITEM_VIEW -> R.layout.item_business_setup_high
       MANAGE_BUSINESS_ITEM_VIEW -> R.layout.item_manage_business_d
       QUICK_ACTION_ITEM_VIEW -> R.layout.item_quick_action
       RIA_ACADEMY_ITEM_VIEW -> R.layout.item_learn_digital_journey

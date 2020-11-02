@@ -61,7 +61,7 @@
               android:orientation="vertical">
 
               <LinearLayout
-                android:id="@+id/view_visting_card_product"
+                android:id="@+id/view_visiting_card_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/size_3"
@@ -82,7 +82,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/my_visiting_card"
-                    android:textColor="@color/greyish_brown" />
+                    android:textColor="@color/greyish_brown"
+                    app:fontFamily="@font/sans_medium" />
 
                   <com.framework.views.customViews.CustomImageView
                     android:layout_width="wrap_content"
@@ -105,7 +106,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/my_products_catalog"
-                    android:textColor="@color/greyish_brown" />
+                    android:textColor="@color/greyish_brown"
+                    app:fontFamily="@font/sans_medium" />
 
                   <com.framework.views.customViews.CustomImageView
                     android:layout_width="wrap_content"
@@ -140,7 +142,7 @@
                     android:includeFontPadding="false"
                     android:text="@string/your_visiting_card"
                     android:textColor="@color/colorAccent"
-                    app:textType="HEADING_7" />
+                    app:textType="HEADING_6" />
 
                   <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
@@ -227,19 +229,22 @@
         </com.framework.views.customViews.CustomCardView>
 
         <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/view_digital_score"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:id="@+id/view_digital_score"
+          android:layout_marginTop="@dimen/size_184"
           android:background="@drawable/ic_bg_dark_white_top_round"
           android:orientation="vertical"
-          android:layout_marginTop="@dimen/size_184"
           android:paddingTop="@dimen/size_164"
-          android:paddingBottom="@dimen/size_14">
+          tools:background="@drawable/ic_bg_white_top_round">
 
           <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/view_low_digital_readiness"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginBottom="@dimen/size_14"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <androidx.appcompat.widget.LinearLayoutCompat
               android:layout_width="match_parent"
@@ -420,7 +425,7 @@
                   app:layout_constraintWidth_percent="1">
 
                   <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/pager_business_setup"
+                    android:id="@+id/pager_business_setup_low"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_160"
                     android:layout_marginStart="@dimen/size_2"
@@ -447,12 +452,69 @@
                 app:selectedDotColor="@color/grey_dark_2" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+          </androidx.appcompat.widget.LinearLayoutCompat>
+
+          <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/view_high_digital_readiness"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+              android:id="@+id/view_business_bg_score"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/ic_bg_dark_white_vertical"
+              android:orientation="vertical">
+
+              <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_18"
+                android:orientation="vertical">
+
+                <androidx.viewpager2.widget.ViewPager2
+                  android:id="@+id/pager_business_setup_high"
+                  android:layout_width="match_parent"
+                  android:layout_height="@dimen/size_50"
+                  android:clipChildren="false"
+                  android:clipToPadding="false" />
+
+                <com.framework.views.dotsindicator.DotsIndicator
+                  android:id="@+id/dot_indicator_business_high"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_horizontal"
+                  android:layout_marginTop="@dimen/size_14"
+                  app:dotsColor="@color/light_grey_1"
+                  app:dotsCornerRadius="@dimen/_6dp"
+                  app:dotsSize="@dimen/size_5"
+                  app:dotsSpacing="@dimen/size_2"
+                  app:dotsWidthFactor="2.5"
+                  app:progressMode="false"
+                  app:selectedDotColor="@color/colorAccent" />
+              </androidx.appcompat.widget.LinearLayoutCompat>
+
+              <View
+                android:id="@+id/view_up_business_shadow"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_6"
+                android:layout_marginTop="@dimen/size_6"
+                android:background="@android:color/transparent"
+                tools:background="@drawable/up_shadow_d" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <include
+              android:id="@+id/high_manage_business"
+              layout="@layout/item_manage_business_view" />
+
+            <include
+              android:id="@+id/high_recommended_task"
+              layout="@layout/item_recommended_task_view" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
 
-
         </androidx.appcompat.widget.LinearLayoutCompat>
-
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
@@ -506,6 +568,7 @@
             <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_2"
               android:layout_marginTop="@dimen/size_2"
               android:drawableStart="@drawable/ic_edit_d"
               android:drawablePadding="@dimen/size_6"
@@ -514,7 +577,7 @@
               android:maxLines="2"
               android:text="@string/www_sravansclinic_com"
               android:textColor="@color/greyish_brown"
-              app:textType="HEADING_6" />
+              app:textType="BODY_1" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <FrameLayout
@@ -526,19 +589,12 @@
             android:clickable="true"
             android:focusable="true">
 
-            <FrameLayout
+            <com.framework.views.customViews.CustomImageView
               android:layout_width="@dimen/size_34"
               android:layout_height="@dimen/size_34"
               android:layout_marginStart="@dimen/size_8"
               android:layout_marginTop="@dimen/size_8"
-              android:background="@drawable/ic_chat_ria_d">
-
-              <com.framework.views.customViews.CustomImageView
-                android:layout_width="30dp"
-                android:layout_height="29dp"
-                android:padding="@dimen/size_2"
-                app:srcCompat="@drawable/ic_ria_d" />
-            </FrameLayout>
+              android:background="@drawable/ic_chat_ria_icon_d" />
 
             <com.framework.views.customViews.CustomTextView
               android:layout_width="@dimen/size_26"
@@ -558,157 +614,28 @@
       <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_12"
         android:orientation="vertical">
 
-        <com.framework.views.customViews.CustomCardView
+        <LinearLayout
+          android:id="@+id/view_low_task_manage_business"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          app:cardBackgroundColor="@color/white">
+          android:orientation="vertical">
 
-          <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+          <include
+            android:id="@+id/low_recommended_task"
+            layout="@layout/item_recommended_task_view" />
 
-            <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginStart="@dimen/size_14"
-              android:layout_marginTop="@dimen/size_16"
-              android:layout_marginEnd="@dimen/size_14"
-              android:orientation="vertical">
-
-              <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/recommended_tasks"
-                android:textColor="@color/black_4f4f4f"
-                app:fontFamily="@font/sans_medium"
-                app:textType="HEADING_7" />
-
-              <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_2"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="@string/access_all_activate_plan"
-                android:textColor="@color/warm_grey"
-                app:textType="CAPTION" />
-            </LinearLayout>
-
-            <androidx.viewpager2.widget.ViewPager2
-              android:id="@+id/pager_quick_action"
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/size_100"
-              android:layout_marginTop="@dimen/size_12"
-              android:clipChildren="false"
-              android:clipToPadding="false" />
-
-            <com.framework.views.dotsindicator.DotsIndicator
-              android:id="@+id/dot_indicator_action"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="center_horizontal"
-              android:layout_marginTop="@dimen/size_14"
-              android:layout_marginBottom="@dimen/size_14"
-              app:dotsColor="@color/light_grey_1"
-              app:dotsCornerRadius="@dimen/_6dp"
-              app:dotsSize="@dimen/size_5"
-              app:dotsSpacing="@dimen/size_2"
-              app:dotsWidthFactor="2.5"
-              app:progressMode="false"
-              app:selectedDotColor="@color/grey_dark_2" />
-          </androidx.appcompat.widget.LinearLayoutCompat>
-        </com.framework.views.customViews.CustomCardView>
-
-        <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/white">
-
-          <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/ic_bg_dark_white"
-            android:orientation="vertical">
-
-            <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginStart="@dimen/size_14"
-              android:layout_marginTop="@dimen/size_14"
-              android:layout_marginEnd="@dimen/size_14"
-              android:orientation="vertical">
-
-              <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/manage_your_business"
-                android:textColor="@color/black_4f4f4f"
-                app:fontFamily="@font/sans_medium"
-                app:textType="HEADING_7" />
-
-              <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_2"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="@string/access_all_activated_features_in_your_plan"
-                android:textColor="@color/warm_grey"
-                app:textType="CAPTION" />
-            </LinearLayout>
-
-            <com.framework.views.viewgroups.BaseRecyclerView
-              android:id="@+id/rv_manage_business"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/size_18"
-              android:layout_marginBottom="@dimen/size_28"
-              app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-              app:spanCount="4"
-              tools:itemCount="8"
-              tools:listitem="@layout/item_manage_business_d" />
-
-            <View
-              android:layout_width="match_parent"
-              android:layout_height="@dimen/size_30"
-              android:layout_marginTop="@dimen/size_8"
-              android:background="@color/white" />
-          </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-          <com.framework.views.customViews.CustomCardView
-            android:layout_width="@dimen/size_90"
-            android:layout_height="@dimen/size_28"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="@dimen/size_20"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/size_14">
-
-            <com.framework.views.customViews.CustomTextView
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_gravity="center_vertical"
-              android:drawableEnd="@drawable/ic_arrow_right_9_d"
-              android:gravity="center"
-              android:includeFontPadding="false"
-              android:paddingEnd="@dimen/size_6"
-              android:text="@string/show_all"
-              android:textAllCaps="true"
-              android:textColor="@color/greyish_brown"
-              app:fontFamily="@font/semi_bold"
-              app:textType="CAPTION"
-              tools:ignore="RtlSymmetry" />
-          </com.framework.views.customViews.CustomCardView>
-        </FrameLayout>
+          <include
+            android:id="@+id/low_manage_business"
+            layout="@layout/item_manage_business_view" />
+        </LinearLayout>
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_16"
           android:orientation="vertical">
 
           <com.framework.views.customViews.CustomTextView
@@ -719,7 +646,7 @@
             android:text="@string/ria_academy"
             android:textColor="@color/black_4f4f4f"
             app:fontFamily="@font/sans_medium"
-            app:textType="HEADING_7" />
+            app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextView
             android:layout_width="wrap_content"
@@ -767,7 +694,7 @@
                 android:text="@string/roi_summary"
                 android:textColor="@color/black_4f4f4f"
                 app:fontFamily="@font/sans_medium"
-                app:textType="HEADING_7" />
+                app:textType="HEADING_6" />
 
               <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
@@ -875,7 +802,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Version 1.6.17"
-              android:textColor="@color/light_grey_6"
+              android:textColor="@color/colorLightGrey"
               app:textType="CAPTION" />
           </androidx.appcompat.widget.LinearLayoutCompat>
 

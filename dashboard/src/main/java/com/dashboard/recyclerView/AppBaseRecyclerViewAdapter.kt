@@ -20,6 +20,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       PAGINATION_LOADER -> PagingViewHolder(binding as PaginationLoaderBinding)
       CHANNEL_ITEM_VIEW -> ChannelViewHolder(binding as ItemChannelDBinding)
       BUSINESS_SETUP_ITEM_VIEW -> BusinessSetupViewHolder(binding as ItemBusinessManagementBinding)
+      BUSINESS_SETUP_HIGH_ITEM_VIEW -> BusinessSetupHighViewHolder(binding as ItemBusinessSetupHighBinding)
       QUICK_ACTION_ITEM_VIEW -> QuickActionViewHolder(binding as ItemQuickActionBinding)
       RIA_ACADEMY_ITEM_VIEW -> RiaAcademyViewHolder(binding as ItemLearnDigitalJourneyBinding)
       BOOST_PREMIUM_ITEM_VIEW -> BoostPremiumViewHolder(binding as ItemBoostPremiumBinding)
