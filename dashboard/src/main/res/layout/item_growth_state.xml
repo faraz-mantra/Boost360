@@ -31,7 +31,7 @@
       android:layout_marginStart="@dimen/size_10"
       android:layout_marginEnd="@dimen/size_10"
       android:layout_weight="1"
-      app:textType="BODY_2"
+      app:textType="BODY_1"
       tools:text="Appointment\nBookings Worth" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -67,7 +67,7 @@
           android:includeFontPadding="false"
           android:textColor="@color/dimgray"
           app:fontFamily="@font/regular"
-          app:textType="HEADING_3"
+          android:textSize="26sp"
           tools:text="1,579" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -81,7 +81,7 @@
         android:includeFontPadding="false"
         android:textAlignment="gravity"
         android:textColor="@color/light_blue_2"
-        app:textType="BODY_1"
+        app:textType="CAPTION"
         tools:text="INR 3,678 today" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
