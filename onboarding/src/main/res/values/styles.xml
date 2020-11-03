@@ -46,7 +46,7 @@
     <item name="android:paddingLeft">@dimen/size_6</item>
     <item name="android:textAllCaps">false</item>
     <item name="android:drawableEnd">@null</item>
-    <item name="android:layout_height">@dimen/size_48</item>
+    <item name="android:layout_height">@dimen/size_46</item>
     <item name="android:foreground">@null</item>
   </style>
 
@@ -127,8 +127,8 @@
     <item name="android:gravity">center</item>
     <item name="textType">HEADING_4</item>
     <item name="fontFamily">@font/regular</item>
-    <item name="android:layout_marginStart">@dimen/size_20</item>
-    <item name="android:layout_marginEnd">@dimen/size_20</item>
+    <item name="android:layout_marginStart">@dimen/size_16</item>
+    <item name="android:layout_marginEnd">@dimen/size_16</item>
     <item name="android:layout_marginBottom">@dimen/size_6</item>
   </style>
 
@@ -220,9 +220,9 @@
 
   <style name="ButtonStyle.Rounded.Outlined">
     <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_marginStart">@dimen/size_32</item>
-    <item name="android:layout_marginBottom">@dimen/size_32</item>
-    <item name="android:layout_marginEnd">@dimen/size_32</item>
+    <item name="android:layout_marginStart">@dimen/size_30</item>
+    <item name="android:layout_marginBottom">@dimen/size_30</item>
+    <item name="android:layout_marginEnd">@dimen/size_30</item>
     <item name="android:fontFamily">@font/regular</item>
     <item name="android:textColor">@color/greyish_brown</item>
     <item name="android:background">@drawable/bg_button_rounded_greyish_brown_outlined</item>
