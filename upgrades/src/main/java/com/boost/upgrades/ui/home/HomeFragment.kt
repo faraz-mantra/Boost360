@@ -713,6 +713,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onPackageClicked(item: Bundles?) {
+        WebEngageController.trackEvent("Feature packs Clicked", "ADDONS_MARKETPLACE", item?.name?:"")
         val packageFragment = PackageFragment.newInstance()
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
@@ -721,6 +722,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onPromoBannerClicked(item: PromoBanners?) {
+        WebEngageController.trackEvent("Promo banner Clicked", "ADDONS_MARKETPLACE", item?.title?:"")
         Log.i("onPromoBannerClicked >>", item.toString())
         if (item!!.cta_feature_key != null) {
             val details = DetailsFragment.newInstance()
@@ -853,8 +855,10 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int) {
-        if (item != null)
+        if (item != null) {
+            WebEngageController.trackEvent("Feature deals add cart Clicked", "ADDONS_MARKETPLACE", item.name?:"")
             viewModel.addItemToCart(item, minMonth)
+        }
     }
 
     override fun onAddonsCategoryClicked(categoryType: String) {
@@ -870,6 +874,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
+        WebEngageController.trackEvent("Video gallery Clicked", "ADDONS_MARKETPLACE", videoItem.title?:"")
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link)
         val link: List<String> = videoItem.youtube_link!!.split('/')
         videoPlayerWebView.getSettings().setJavaScriptEnabled(true)

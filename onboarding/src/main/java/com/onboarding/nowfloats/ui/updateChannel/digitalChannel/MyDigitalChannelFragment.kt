@@ -3,7 +3,6 @@ package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.SpannableString
@@ -20,7 +19,6 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.*
@@ -45,6 +43,7 @@ import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
 import com.onboarding.nowfloats.ui.startFragmentActivity
 import com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity
+import com.onboarding.nowfloats.utils.WebEngageController
 import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 import io.reactivex.Completable
 import java.util.*
@@ -105,6 +104,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent("My digital channel load", "MY DIGITAL CHANNEL","")
     progress = ProgressChannelDialog.newInstance()
     updateRequestGetChannelData()
     binding?.syncBtn?.setOnClickListener { syncChannels() }
@@ -358,6 +358,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   private fun syncChannels() {
     if (selectedChannels.isNullOrEmpty().not()) {
+      WebEngageController.trackEvent("My digital channel sync button click", "MY DIGITAL CHANNEL","")
       val bundle = Bundle()
       var totalPages = if (requestFloatsModel?.isUpdate == true) 0 else 2
       selectedChannels.let { channels ->
