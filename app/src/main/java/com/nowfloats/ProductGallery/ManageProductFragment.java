@@ -200,7 +200,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_manage_product, container, false);
         sheetBehavior = BottomSheetBehavior.from(binding.layoutBottomSheet.getRoot());
         sheetBehaviorAddress = BottomSheetBehavior.from(binding.layoutBottomSheetAddress.getRoot());
-
+        WebEngageController.trackEvent("Add/Update product catalogue Loaded", "PRODUCT CATALOGUE ADD/UPDATE", "");
         return binding.getRoot();
     }
 
@@ -2218,7 +2218,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 Log.d("PRODUCT_JSON", "" + new Gson().toJson(model));
 
                 showDialog("Please Wait...");
-
+                WebEngageController.trackEvent("Update product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "");
                 productInterface.put_UpdateGalleryUpdate(model, new Callback<ArrayList<String>>() {
 
                     @Override
@@ -2270,6 +2270,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             }
         } catch (Exception e) {
             Log.d("JSON_PRODUCT_UPDATE", "ERROR " + e.getMessage());
+            WebEngageController.trackEvent("Error update product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "");
         }
     }
 
@@ -2296,7 +2297,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 Log.d("PRODUCT_JSON", "JSON: " + new Gson().toJson(product));
 
                 showDialog("Please Wait...");
-
+                WebEngageController.trackEvent("Add product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "");
                 productInterface.addProduct(product, new Callback<String>() {
 
                     @Override
@@ -2365,7 +2366,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             map.put("identifierType", "SINGLE");
 
             showDialog("Please Wait...");
-
+            WebEngageController.trackEvent("Delete product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "");
             productInterface.removeProduct(map, new Callback<String>() {
 
                 @Override
