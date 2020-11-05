@@ -25,7 +25,7 @@
 
         <FrameLayout
           android:layout_width="match_parent"
-          android:layout_height="@dimen/size_210">
+          android:layout_height="@dimen/size_200">
 
           <com.framework.views.customViews.CustomImageView
             android:layout_width="match_parent"
@@ -44,7 +44,7 @@
           android:layout_width="match_parent"
           android:layout_height="@dimen/size_226"
           android:layout_marginStart="@dimen/size_6"
-          android:layout_marginTop="@dimen/size_132"
+          android:layout_marginTop="@dimen/size_122"
           android:layout_marginEnd="@dimen/size_6"
           app:cardBackgroundColor="@color/white"
           app:cardCornerRadius="@dimen/size_16"
@@ -140,7 +140,7 @@
                     android:drawablePadding="@dimen/size_8"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
-                    android:text="@string/your_visiting_card"
+                    android:text="@string/my_visiting_card"
                     android:textColor="@color/colorAccent"
                     app:textType="HEADING_6" />
 
@@ -232,7 +232,7 @@
           android:id="@+id/view_digital_score"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_184"
+          android:layout_marginTop="@dimen/size_174"
           android:background="@drawable/ic_bg_dark_white_top_round"
           android:orientation="vertical"
           android:paddingTop="@dimen/size_164"
@@ -314,7 +314,7 @@
                 android:layout_height="@dimen/size_26"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ic_round_accent_d"
-                android:drawableEnd="@drawable/ic_arrow_right_8_d"
+                android:drawableEnd="@drawable/ic_arrow_right_7_white_d"
                 android:drawablePadding="-6dp"
                 android:gravity="center"
                 android:includeFontPadding="false"
@@ -519,7 +519,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_38"
+          android:layout_marginTop="@dimen/size_34"
           android:orientation="horizontal">
 
           <com.framework.views.customViews.CustomCardView
@@ -532,7 +532,7 @@
             <com.framework.views.customViews.CustomCardView
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_margin="@dimen/size_6"
+              android:layout_margin="@dimen/size_4"
               app:cardBackgroundColor="@color/white_one"
               app:cardCornerRadius="@dimen/size_6"
               app:cardElevation="@dimen/size_0">
@@ -558,23 +558,23 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:ellipsize="end"
+              android:lineSpacingExtra="-6dp"
               android:includeFontPadding="false"
               android:maxLines="2"
-              android:text="Dr. Sravan’s Skin Clinic"
+              android:text="PLASTO INDIA AND POLYMERS"
               android:textColor="@color/white"
               app:fontFamily="@font/bold"
-              app:textType="HEADING_4" />
+              app:textType="HEADING_5" />
 
             <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_2"
-              android:layout_marginTop="@dimen/size_2"
               android:drawableStart="@drawable/ic_edit_d"
-              android:drawablePadding="@dimen/size_6"
+              android:drawablePadding="@dimen/size_4"
               android:ellipsize="end"
               android:includeFontPadding="false"
-              android:maxLines="2"
+              android:maxLines="1"
               android:text="@string/www_sravansclinic_com"
               android:textColor="@color/greyish_brown"
               app:textType="BODY_1" />

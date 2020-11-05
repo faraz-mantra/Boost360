@@ -8,6 +8,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.appservice.utils.setGifAnim
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
+import com.dashboard.constant.FragmentType
+import com.dashboard.constant.RecyclerViewActionType
+import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
@@ -80,7 +83,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, BaseViewMode
         val adapterPager5 = AppBaseRecyclerViewAdapter(baseActivity, QuickActionData().getData(), this@DashboardFragment)
         offscreenPageLimit = 3
         adapter = adapterPager5
-        binding?.lowRecommendedTask?.dotIndicatorAction?.setViewPager2(this)
+        dotIndicatorAction.setViewPager2(this)
         setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
       }
     }
@@ -89,6 +92,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, BaseViewMode
         val adapter1 = AppBaseRecyclerViewAdapter(baseActivity, ManageBusinessData().getData(), this@DashboardFragment)
         adapter = adapter1
       }
+      btnShowAll.setOnClickListener { startFragmentDashboardActivity(FragmentType.ALL_BOOST_ADD_ONS) }
     }
 
     binding?.pagerRiaAcademy?.apply {
@@ -116,10 +120,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, BaseViewMode
     }
   }
 
-  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-
-  }
-
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
@@ -128,8 +128,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, BaseViewMode
     }
   }
 
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE)
+    }
+  }
+
   private fun visitingCardShowHide(isDown: Boolean) {
-    Timer().schedule(if (isDown) 60 else 150) {
+    Timer().schedule(if (isDown) 60 else if (isHigh) 200 else 150) {
       binding?.viewDigitalScore?.post {
         binding?.viewDigitalScore?.elevation = resources.getDimension(if (isDown) R.dimen.size_2 else R.dimen.size_0)
         binding?.viewAllBusinessContact?.visibility = if (isDown) View.GONE else View.VISIBLE

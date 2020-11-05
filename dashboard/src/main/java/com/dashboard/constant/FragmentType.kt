@@ -1,5 +1,6 @@
 package com.dashboard.constant
 
 enum class FragmentType {
-  BUSINESS_KYC_VIEW
+  DIGITAL_READINESS_SCORE,
+  ALL_BOOST_ADD_ONS
 }

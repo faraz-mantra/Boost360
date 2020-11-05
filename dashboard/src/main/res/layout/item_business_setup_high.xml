@@ -31,6 +31,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="Business"
+          android:id="@+id/txt_title1"
           android:textColor="@color/black_4f4f4f"
           app:fontFamily="@font/sans_medium"
           app:textType="BODY_1" />
@@ -40,6 +41,7 @@
           android:layout_height="wrap_content"
           android:drawableEnd="@drawable/ic_summary_alert_8_d"
           android:text="Update"
+          android:id="@+id/txt_title2"
           android:textColor="@color/black_4f4f4f"
           app:fontFamily="@font/sans_medium"
           app:textType="BODY_1" />
@@ -51,7 +53,9 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <include layout="@layout/item_detail_business" />
+        <include
+          android:id="@+id/view_visitor"
+          layout="@layout/item_detail_business" />
       </LinearLayout>
 
       <LinearLayout
@@ -60,7 +64,9 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <include layout="@layout/item_detail_business" />
+        <include
+          android:id="@+id/view_booking"
+          layout="@layout/item_detail_business" />
       </LinearLayout>
 
       <LinearLayout
@@ -69,7 +75,9 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <include layout="@layout/item_detail_business" />
+        <include
+          android:id="@+id/view_enquiry"
+          layout="@layout/item_detail_business" />
       </LinearLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -93,6 +101,7 @@
           android:layout_weight="1"
           android:paddingTop="@dimen/size_2"
           android:paddingBottom="@dimen/size_2"
+          android:id="@+id/txt_title3"
           android:text="Digital Readiness score: 82%"
           android:textColor="@color/black_4f4f4f"
           app:fontFamily="@font/sans_medium"

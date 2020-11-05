@@ -13,7 +13,10 @@ enum class RecyclerViewItemType {
   RIA_ACADEMY_ITEM_VIEW,
   BOOST_PREMIUM_ITEM_VIEW,
   ROI_SUMMARY_ITEM_VIEW,
-  GROWTH_STATE_ITEM_VIEW;
+  GROWTH_STATE_ITEM_VIEW,
+  BUSINESS_CONTENT_SETUP_ITEM_VIEW,
+  ITEMS_CONTENT_SETUP_ITEM_VIEW,
+  ALL_BOOST_ADD_ONS_VIEW;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -28,6 +31,9 @@ enum class RecyclerViewItemType {
       BOOST_PREMIUM_ITEM_VIEW -> R.layout.item_boost_premium
       ROI_SUMMARY_ITEM_VIEW -> R.layout.item_roi_summary
       GROWTH_STATE_ITEM_VIEW -> R.layout.item_growth_state
+      BUSINESS_CONTENT_SETUP_ITEM_VIEW -> R.layout.item_business_content_setup
+      ITEMS_CONTENT_SETUP_ITEM_VIEW -> R.layout.item_content_setup_manage
+      ALL_BOOST_ADD_ONS_VIEW -> R.layout.item_boost_add_ons
     }
   }
 }

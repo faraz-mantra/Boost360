@@ -9,6 +9,7 @@ import com.dashboard.constant.RecyclerViewItemType.*
 import com.dashboard.databinding.*
 import com.dashboard.holder.*
 import com.framework.base.BaseActivity
+import java.util.*
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
 
@@ -27,6 +28,9 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       ROI_SUMMARY_ITEM_VIEW -> RoiSummaryViewHolder(binding as ItemRoiSummaryBinding)
       MANAGE_BUSINESS_ITEM_VIEW -> ManageBusinessViewHolder(binding as ItemManageBusinessDBinding)
       GROWTH_STATE_ITEM_VIEW -> GrowthStateViewHolder(binding as ItemGrowthStateBinding)
+      BUSINESS_CONTENT_SETUP_ITEM_VIEW -> BusinessContentSetupViewHolder(binding as ItemBusinessContentSetupBinding)
+      ITEMS_CONTENT_SETUP_ITEM_VIEW -> ItemContentSetupHolder(binding as ItemContentSetupManageBinding)
+      ALL_BOOST_ADD_ONS_VIEW -> BoostAddOnsViewHolder(binding as ItemBoostAddOnsBinding)
     }
   }
 
@@ -100,4 +104,37 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
   open fun list(): ArrayList<T> {
     return list
   }
+
+  // New Function
+  open fun clearAllItem() {
+    val size = itemCount
+    list.clear()
+    notifyItemRangeRemoved(0, size)
+  }
+
+  open fun insertItem(`object`: T, index: Int) {
+    list.add(index, `object`)
+    notifyItemInserted(index)
+  }
+
+  open fun positionItem(item: T): Int {
+    return list.indexOf(item)
+  }
+
+  open fun addItem(`object`: T) {
+    list.add(`object`)
+    notifyItemInserted(itemCount - 1)
+  }
+
+  open fun removeItem(`object`: T) {
+    val position: Int = positionItem(`object`)
+    list.remove(`object`)
+    notifyItemRemoved(position)
+  }
+
+  open fun sortItem(comparator: Comparator<in T?>?) {
+    Collections.sort(list, comparator)
+    notifyItemRangeChanged(0, itemCount)
+  }
+  // New Function
 }
