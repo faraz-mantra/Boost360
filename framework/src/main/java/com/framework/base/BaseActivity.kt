@@ -189,7 +189,7 @@ abstract class BaseActivity<Binding : ViewDataBinding, ViewModel : BaseViewModel
 
   open fun onNavPressed() {
     this.hideKeyBoard()
-    onBackPressed()
+    super.onBackPressed()
   }
 
   override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {

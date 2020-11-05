@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/size_10"
+    android:paddingEnd="@dimen/size_10">
+
+    <View
+      android:id="@+id/view1"
+      android:layout_width="0.7dp"
+      android:layout_height="@dimen/size_14"
+      android:layout_marginStart="@dimen/size_8"
+      android:background="@color/light_grey_7"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+      android:id="@+id/view_frame"
+      android:layout_width="@dimen/size_12"
+      android:layout_height="@dimen/size_12"
+      android:layout_marginStart="@dimen/size_3"
+      android:layout_marginTop="@dimen/size_4"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/view1">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/img_ok_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_ok_11_d" />
+    </FrameLayout>
+
+    <View
+      android:id="@+id/view2"
+      android:layout_width="0.7dp"
+      android:layout_height="@dimen/size_28"
+      android:layout_marginStart="@dimen/size_8"
+      android:layout_marginTop="@dimen/size_4"
+      android:background="@color/light_grey_7"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/view_frame" />
+
+    <LinearLayout
+      android:id="@+id/view_linear"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_marginStart="@dimen/size_20"
+      android:layout_marginTop="@dimen/size_12"
+      android:layout_marginEnd="@dimen/size_10"
+      android:gravity="center_vertical"
+      android:orientation="vertical"
+      app:layout_constraintEnd_toStartOf="@+id/view_frame1"
+      app:layout_constraintStart_toEndOf="@+id/view1"
+      app:layout_constraintTop_toTopOf="@+id/view1">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="@color/warm_light"
+        app:fontFamily="@font/sans_medium"
+        app:textType="HEADING_6"
+        tools:text="Business Name" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_1"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="2"
+        android:textColor="@color/warm_light_1"
+        app:textType="CAPTION"
+        tools:text="Add name of your\nbusiness." />
+    </LinearLayout>
+
+    <FrameLayout
+      android:id="@+id/view_frame1"
+      android:layout_width="@dimen/size_30"
+      android:layout_height="match_parent"
+      android:layout_gravity="center"
+      android:paddingTop="@dimen/size_6"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/view_linear"
+      app:layout_constraintTop_toTopOf="@+id/view_linear">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/img_arrow_icon"
+        android:layout_width="@dimen/size_16"
+        android:layout_height="@dimen/size_16"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_arrow_right_7_d" />
+
+      <com.framework.views.GifView
+        android:id="@+id/img_arrow_gif"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_20"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:gif="@raw/ic_next_arrow_gif_d"
+        app:paused="true" />
+    </FrameLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

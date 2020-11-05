@@ -11,5 +11,8 @@
       android:label="@string/dashboard"
       android:theme="@style/DashboardTheme" />
 
+    <activity
+      android:name=".controller.AccountFragmentContainerActivity"
+      android:theme="@style/DashboardTheme" />
   </application>
 </manifest>

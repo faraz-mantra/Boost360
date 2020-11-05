@@ -1,5 +1,6 @@
 package com.appservice.utils
 
+import android.animation.ObjectAnimator
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -8,6 +9,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.view.View
+import android.view.animation.LinearInterpolator
 import android.webkit.MimeTypeMap
 import com.framework.glide.util.loadGifGlide
 import com.framework.views.customViews.CustomImageView
@@ -115,6 +118,18 @@ fun getExtensionUrl(url: String?): String {
 
 fun Context.setGifAnim(image: CustomImageView, icGif: Int, placeHolder: Int) {
   this.loadGifGlide(image, icGif, placeHolder)
+}
+
+const val INITIAL_POSITION = 0.0f
+const val ROTATED_POSITION = 180f
+
+fun CustomImageView.rotateImage(isExpanded: Boolean) {
+  val startAngle = if (isExpanded) 0f else 180f
+  ObjectAnimator.ofFloat(this, View.ROTATION, startAngle, startAngle + 180f).apply {
+    duration = 200
+    interpolator = LinearInterpolator()
+    start()
+  }
 }
 
 

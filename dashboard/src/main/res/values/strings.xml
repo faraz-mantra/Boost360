@@ -4,13 +4,14 @@
   <string name="patients">Patients</string>
   <string name="academy">Academy</string>
   <string name="more">More</string>
-  <string name="www_sravansclinic_com"><u>www.sravansclinic.com</u></string>
-  <string name="your_visiting_card">Your visiting card</string>
+  <string name="www_sravansclinic_com"><u>www.plastoindiaandpolymers.com</u></string>
+  <string name="my_visiting_card">My visiting card</string>
   <string name="improve_your_score_to_90">Improve your score above <b>90</b> for\nbetter online traction.</string>
   <string name="share_on_whatsapp">Share on WhatsApp</string>
   <string name="share_on_more">Share on more...</string>
   <string name="website">Website</string>
   <string name="digital_readiness_score">Digital readiness score</string>
+  <string name="digital_readiness_score_n">Digital Readiness Score</string>
   <string name="quick_actions">Quick actions</string>
   <string name="access_all_activate_plan">Access all activated features in your plan.</string>
   <string name="one_tap_to_share_your_all_business_contact_points_with_anyone">One tap to share your all business contact points with anyone</string>
@@ -25,6 +26,6 @@
   <string name="show_all">SHOW ALL</string>
   <string name="missing_ndetails">Missing\nDetails</string>
   <string name="improve">Improve</string>
-  <string name="my_visiting_card">My visiting card</string>
   <string name="my_products_catalog">My products catalog</string>
+  <string name="all_boost_add_ons">All Boost add-ons</string>
 </resources>
