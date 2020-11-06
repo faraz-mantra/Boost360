@@ -12,14 +12,17 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.common.util.CollectionUtils;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -84,7 +87,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
                 AnaCore.saveFcmToken(this, token);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             Crashlytics.log("Failed to process FCM Token by RiaFirebaseMessagingService" + e.getMessage());
         }
     }
@@ -102,7 +105,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                 sendNotification(mapResult);
                 Constants.GCM_Msg = true;
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             Crashlytics.log("Failed to process onMessageReceived in RiaFirebaseMessagingService" + e.getMessage());
         }
     }
@@ -113,7 +116,6 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(Map<String, String> message) {
 
         BoostLog.d("Message", message.toString());
-
         if (message == null || message.size() == 0) {
 
         } else {
@@ -167,6 +169,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             String title = message.get("title");
             String notiMessage = message.get("mp_message");
             String channelId = "0001";
+            boolean isNotificationShow = !TextUtils.isEmpty(notiMessage);
 
             String jsonData = "";
 
@@ -235,7 +238,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                             notificationBuilder.setContentTitle("Received Call");
                         }
 
-
+                        isNotificationShow = !TextUtils.isEmpty(vmnCallModel.getCallerNumber());
                         notificationBuilder.setContentText("" + vmnCallModel.getCallerNumber());
                         notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText("" + vmnCallModel.getCallerNumber()));
 
@@ -267,6 +270,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         BoostLog.e("deepLinkUrl", jsonData);
 
                         notificationBuilder.setContentTitle("Business Enquiry");
+                        isNotificationShow = !TextUtils.isEmpty(entity_model.getMessage());
                         notificationBuilder.setContentText("" + entity_model.getMessage());
                         notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(entity_model.getMessage()));
                     } else if (deepLinkUrl.contains("myorders")) {
@@ -325,10 +329,10 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                 if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
                     FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
                     if (data.getId() != null) {
-                        notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
+                        if (isNotificationShow) notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
                     }
                 } else {
-                    notificationManager.notify(createID(), notificationBuilder.build());
+                    if (isNotificationShow) notificationManager.notify(createID(), notificationBuilder.build());
                     BoostLog.d("Message-", "fsdf");
 
                 }
