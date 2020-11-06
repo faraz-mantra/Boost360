@@ -35,7 +35,7 @@
       android:windowSoftInputMode="adjustPan" />
     <activity
       android:name="com.framework.imagepicker.ImageActivity"
-      android:screenOrientation="portrait"
+
       android:theme="@style/Theme.AppCompat.Translucent"
       android:windowSoftInputMode="stateHidden" />
 

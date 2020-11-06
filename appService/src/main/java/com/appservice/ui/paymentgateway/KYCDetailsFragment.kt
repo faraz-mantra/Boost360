@@ -358,6 +358,10 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         showShortToast("Please enter a valid name.")
         return false
       }
+      bankStatementImage == null && dataKyc?.bankAccountStatement.isNullOrEmpty() -> {
+        showShortToast("Please select valid bank statement file")
+        return false
+      }
       binding?.addDifferent?.isChecked == true -> {
         if (accountNumber.isNullOrEmpty()) {
           showShortToast("Bank account number can't empty.")
