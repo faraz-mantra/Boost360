@@ -99,11 +99,16 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
             Map<String, String> mapResult = remoteMessage.getData();
             BoostLog.d(TAG, "onMessageReceived");
-            if (mapResult.containsKey("payload")) {
-                AnaCore.handlePush(this, mapResult.get("payload"));
-            } else {
-                sendNotification(mapResult);
-                Constants.GCM_Msg = true;
+            if (mapResult != null){
+                if(mapResult.containsKey("source") && "webengage".equals(mapResult.get("source"))) {
+                    WebEngage.get().receive(mapResult);
+                }
+                if (mapResult.containsKey("payload")) {
+                    AnaCore.handlePush(this, mapResult.get("payload"));
+                } else {
+                    sendNotification(mapResult);
+                    Constants.GCM_Msg = true;
+                }
             }
         } catch (Exception e) {
             Crashlytics.log("Failed to process onMessageReceived in RiaFirebaseMessagingService" + e.getMessage());

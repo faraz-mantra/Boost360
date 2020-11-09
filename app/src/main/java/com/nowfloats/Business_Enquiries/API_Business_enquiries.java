@@ -82,6 +82,8 @@ public class API_Business_enquiries {
         @POST("/Discover/v1/floatingPoint/usermessages/{fpId}")
         public void postMessagesMethod(@Body JSONObject empty, @QueryMap HashMap<String, String> map, @Path("fpId") String fpId, Callback<ArrayList<Business_Enquiry_Model>> callback);
 
+        @GET("/dashboard/v1/floatingPoint/usermessageswithoffset/{ParentId}")
+        public void getMessagesEnterPriseMethod(@Path("ParentId") String ParentId, @QueryMap Map<String, String> map, Callback<ArrayList<Business_Enquiry_Model>> callback);
     }
 
     public void getMessages() {
@@ -98,22 +100,34 @@ public class API_Business_enquiries {
                 Business_enquiries_interface BE = Constants.restAdapter.create(Business_enquiries_interface.class);
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("clientId", Constants.clientId);
-                params.put("startDate", startDate);
-                params.put("endDate", endDate);
-                params.put("scope", scope);
+//                params.put("startDate", startDate);
+//                params.put("endDate", endDate);
+//                params.put("scope", scope);
+//                BE.getMessagesMethod(session.getFPParentId(), params, new Callback<Business_Enquiry_Enterprise_Model>() {
+//                            @Override
+//                            public void success(Business_Enquiry_Enterprise_Model business_enquiry_models, Response response) {
+//                                parseEnterpriseEnquiryMessages(business_enquiry_models);
+//                            }
+//
+//                            @Override
+//                            public void failure(RetrofitError error) {
+//                                BoostLog.i("Enterprise_enquiry", "" + error.getLocalizedMessage());
+//                                if (bus != null) bus.post("Getting error " + error.getLocalizedMessage());
+//                            }
+//                        });
+                BE.getMessagesEnterPriseMethod(session.getFPParentId(), params, new Callback<ArrayList<Business_Enquiry_Model>>() {
+                    @Override
+                    public void success(ArrayList<Business_Enquiry_Model> data, Response response) {
+                        parseMessages(data);
+                    }
 
-                BE.getMessagesMethod(session.getFPParentId(), params, new Callback<Business_Enquiry_Enterprise_Model>() {
-                            @Override
-                            public void success(Business_Enquiry_Enterprise_Model business_enquiry_models, Response response) {
-                                parseEnterpriseEnquiryMessages(business_enquiry_models);
-                            }
+                    @Override
+                    public void failure(RetrofitError error) {
+                        BoostLog.i("Enterprise_enquiry", "" + error.getLocalizedMessage());
+                        if (bus != null) bus.post("Getting error " + error.getLocalizedMessage());
+                    }
+                });
 
-                            @Override
-                            public void failure(RetrofitError error) {
-                                BoostLog.i("Enterprise_enquiry", "" + error.getLocalizedMessage());
-                                if (bus != null) bus.post("Getting error " + error.getLocalizedMessage());
-                            }
-                        });
             } else {
                 HashMap<String, String> map = new HashMap<>();
                 map.put("clientId", Constants.clientId);
