@@ -4,71 +4,89 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white_smoke"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-      android:id="@+id/content_main"
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_12" />
+
+    <com.framework.views.customViews.CustomCardView
+      android:id="@+id/content_parent"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical">
+      android:clickable="true"
+      android:focusable="true"
+      app:cardBackgroundColor="@color/white_smoke"
+      app:cardElevation="@dimen/size_0">
 
       <androidx.appcompat.widget.LinearLayoutCompat
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/size_14">
+        android:orientation="vertical">
 
-        <com.framework.views.customViews.CustomImageView
-          android:layout_width="wrap_content"
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:tint="@color/greyish_brown"
-          app:srcCompat="@drawable/ic_rounded_end_accent_d" />
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingTop="@dimen/size_14">
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/img_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/greyish_brown"
+            app:srcCompat="@drawable/ic_rounded_end_accent_d" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/txt_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_12"
+            android:layout_marginEnd="@dimen/size_4"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="Customer Orders &amp; Enquiries"
+            android:textColor="@color/greyish_brown"
+            app:fontFamily="@font/sans_medium"
+            app:textType="HEADING_6" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/img_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_14"
+            android:padding="@dimen/size_5"
+            android:tint="@color/grey_dim_2"
+            android:translationY="@dimen/size_4"
+            app:srcCompat="@drawable/ic_arrow_down_accent_d" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/txt_title"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/size_12"
-          android:layout_marginEnd="@dimen/size_4"
-          android:layout_weight="1"
-          android:ellipsize="end"
-          android:includeFontPadding="false"
-          android:maxLines="1"
-          android:text="Customer Orders &amp; Enquiries"
-          android:textColor="@color/greyish_brown"
-          app:fontFamily="@font/sans_medium"
-          app:textType="HEADING_6" />
-
-        <com.framework.views.customViews.CustomImageView
-          android:id="@+id/img_arrow"
+          android:id="@+id/txt_sub_title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginEnd="@dimen/size_14"
-          android:padding="@dimen/size_4"
-          android:tint="@color/grey_dim_2"
-          app:srcCompat="@drawable/ic_arrow_down_accent_d" />
+          android:layout_marginStart="@dimen/size_36"
+          android:layout_marginEnd="@dimen/size_36"
+          android:ellipsize="end"
+          android:includeFontPadding="false"
+          android:maxLines="2"
+          android:paddingBottom="@dimen/size_10"
+          android:text="One place to manage all patient interactions."
+          android:textColor="@color/warm_grey"
+          app:fontFamily="@font/regular"
+          app:textType="CAPTION" />
+
       </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.framework.views.customViews.CustomCardView>
 
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/txt_sub_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_36"
-        android:layout_marginEnd="@dimen/size_36"
-        android:ellipsize="end"
-        android:includeFontPadding="false"
-        android:maxLines="2"
-        android:paddingBottom="@dimen/size_10"
-        android:text="One place to manage all patient interactions."
-        android:textColor="@color/warm_grey"
-        app:fontFamily="@font/regular"
-        app:textType="CAPTION" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.framework.views.viewgroups.BaseRecyclerView
       android:id="@+id/rv_manage_business"
@@ -82,6 +100,4 @@
       tools:itemCount="8"
       tools:listitem="@layout/item_manage_business_d" />
   </androidx.appcompat.widget.LinearLayoutCompat>
-
-
 </layout>

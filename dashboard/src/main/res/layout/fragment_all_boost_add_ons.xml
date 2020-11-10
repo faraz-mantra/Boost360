@@ -18,7 +18,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="vertical"
-      android:paddingTop="@dimen/size_10">
+      android:paddingBottom="@dimen/size_20">
 
       <com.framework.views.viewgroups.BaseRecyclerView
         android:id="@+id/rv_boost_add_ons"
