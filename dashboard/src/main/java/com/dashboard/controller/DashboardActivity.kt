@@ -9,12 +9,14 @@ import androidx.navigation.fragment.NavHostFragment
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.databinding.ActivityDashboardBinding
+import com.dashboard.pref.UserSessionManager
 import com.framework.models.BaseViewModel
 import com.framework.views.bottombar.OnItemSelectedListener
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, BaseViewModel>(), OnItemSelectedListener {
 
   private lateinit var mNavController: NavController
+  private var session: UserSessionManager? = null
 
   override fun getLayout(): Int {
     return R.layout.activity_dashboard
@@ -22,6 +24,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, BaseViewMode
 
   override fun onCreateView() {
     super.onCreateView()
+    session = UserSessionManager(this)
     mNavController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
     val graph = mNavController.graph
     graph.addArgument("data", NavArgument.Builder().setDefaultValue("data").build())

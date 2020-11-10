@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignup.utils.DynamicLinkParams
 import com.boost.presignup.utils.FirebaseDynamicLinksManager
+import com.onboarding.nowfloats.managers.NavigatorManager
 import com.smartlook.sdk.smartlook.Smartlook
 import kotlinx.android.synthetic.main.activity_splash.*
 import java.security.MessageDigest
@@ -73,25 +74,25 @@ class SplashActivity : AppCompatActivity() {
 
       override fun onAnimationEnd(animation: Animator?) {
         animation_view?.cancelAnimation()
-        val intent = Intent(applicationContext, Class.forName("com.dashboard.controller.DashboardActivity"))
-        startActivity(intent)
-        finish()
-//        when {
-//          isUserLoggedIn -> {
-//            val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
-//            startActivity(intent)
-//            finish()
-//          }
-//          isSignUpComplete -> {
-//            NavigatorManager.startActivities(this@SplashActivity)
-//            finish()
-//          }
-//          else -> {
-//            val mainIntent = Intent(applicationContext, PreSignUpActivity::class.java)
-//            startActivity(mainIntent)
-//            finish()
-//          }
-//        }
+//        val intent = Intent(applicationContext, Class.forName("com.dashboard.controller.DashboardActivity"))
+//        startActivity(intent)
+//        finish()
+        when {
+          isUserLoggedIn -> {
+            val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))
+            startActivity(intent)
+            finish()
+          }
+          isSignUpComplete -> {
+            NavigatorManager.startActivities(this@SplashActivity)
+            finish()
+          }
+          else -> {
+            val mainIntent = Intent(applicationContext, PreSignUpActivity::class.java)
+            startActivity(mainIntent)
+            finish()
+          }
+        }
       }
 
       override fun onAnimationCancel(animation: Animator?) {
