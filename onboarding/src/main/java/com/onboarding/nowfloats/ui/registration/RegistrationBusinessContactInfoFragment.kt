@@ -10,6 +10,7 @@ import android.view.View.VISIBLE
 import com.framework.extensions.gone
 import com.framework.extensions.isVisible
 import com.framework.extensions.visible
+import com.framework.utils.showKeyBoard
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.widget.Autocomplete
 import com.onboarding.nowfloats.R
@@ -36,10 +37,12 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     super.onCreateView()
     placePickerApi()
     binding?.viewImage?.post {
-      (binding?.viewImage?.fadeIn(500L)?.mergeWith(binding?.viewBusiness?.fadeIn(400L))
-              ?.mergeWith(binding?.viewForm?.fadeIn(400L)))?.andThen(binding?.title?.fadeIn(150L)
-                      ?.mergeWith(binding?.subTitle?.fadeIn(150L)))?.andThen(binding?.formMain?.fadeIn(150L))
-              ?.andThen(binding?.next?.fadeIn())?.subscribe()
+      (binding?.viewImage?.fadeIn(200L)?.mergeWith(binding?.viewBusiness?.fadeIn(100L))
+          ?.mergeWith(binding?.viewForm?.fadeIn(100L)))?.andThen(binding?.title?.fadeIn(100L)
+              ?.mergeWith(binding?.subTitle?.fadeIn(50L)))?.andThen(binding?.formMain?.fadeIn(50L))
+          ?.andThen(binding?.next?.fadeIn())?.doOnComplete {
+            baseActivity.showKeyBoard(binding?.storeName)
+          }?.subscribe()
     }
     setOnClickListener(binding?.next, binding?.address)
     binding?.number?.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
@@ -66,7 +69,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
     val contactInfo = this.requestFloatsModel?.contactInfo ?: return
     businessInfoModel = contactInfo
     binding?.storeName?.setText(contactInfo.businessName)
-    binding?.address?.setText(contactInfo.address)
+    binding?.address?.setText(contactInfo.addressCity)
     binding?.email?.setText(contactInfo.email)
     val number = contactInfo.number ?: return
     binding?.number?.setText(number)
@@ -89,7 +92,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
               it.removeAllViews()
               binding?.textBtn?.visibility = VISIBLE
               gotoBusinessWebsite()
-            }, 1000)
+            }, 300)
           }
         }
       }
@@ -99,23 +102,23 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
 
   private fun isValid(): Boolean {
     requestFloatsModel?.contactInfo?.businessName = binding?.storeName?.text?.toString()
-    requestFloatsModel?.contactInfo?.address = binding?.address?.text?.toString()
+    requestFloatsModel?.contactInfo?.addressCity = binding?.address?.text?.toString()
     requestFloatsModel?.contactInfo?.email = binding?.email?.text?.toString()
     businessInfoModel.number = binding?.number?.text?.toString()
 
     return if (businessInfoModel.businessName.isNullOrBlank()) {
       showShortToast(resources.getString(R.string.business_cant_empty))
       false
-    } else if (businessInfoModel.address.isNullOrBlank()) {
+    } else if (businessInfoModel.addressCity.isNullOrBlank()) {
       showShortToast(resources.getString(R.string.business_address_cant_empty))
       false
-    }else if (!businessInfoModel.email.isNullOrEmpty() && !businessInfoModel.isEmailValid()) {
+    } else if (!businessInfoModel.email.isNullOrEmpty() && !businessInfoModel.isEmailValid()) {
       showShortToast(resources.getString(R.string.email_invalid))
       false
-    } else if(businessInfoModel.number.isNullOrEmpty()){
+    } else if (businessInfoModel.number.isNullOrEmpty()) {
       showShortToast(resources.getString(R.string.phone_number_cannot_be_empty))
       false
-    }else if (!businessInfoModel.isNumberValid()) {
+    } else if (!businessInfoModel.isNumberValid()) {
       showShortToast(resources.getString(R.string.phone_number_invalid))
       false
     } else true

@@ -2,7 +2,9 @@
     <string name="app_name">My Library</string>
     <string name="replay_intro">రీప్లే చేయండి</string>
     <string name="create_account">ఖాతాను ప్రారంభించండి</string>
+    <string name="create_account_new">క్రొత్త ఖాతాను సృష్టించండి</string>
     <string name="login">లాగిన్ చేయండి</string>
+    <string name="login_existing_account">ఇప్పటికే ఉన్న ఖాతాకు లాగిన్ అవ్వండి</string>
     <string name="skip">స్కిప్</string>
     <string name="mute">Mute</string>
     <string name="english">English</string>

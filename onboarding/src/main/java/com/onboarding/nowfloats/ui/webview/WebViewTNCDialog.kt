@@ -9,21 +9,19 @@ import android.view.ViewGroup
 import android.webkit.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
 import com.framework.extensions.gone
 import com.framework.extensions.visible
-import com.framework.models.BaseViewModel
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.DialogWebviewTncBinding
 import com.onboarding.nowfloats.utils.getWebViewUrl
+import kotlinx.android.synthetic.main.dialog_progress.*
 
 class WebViewTNCDialog : DialogFragment() {
 
   private lateinit var binding: DialogWebviewTncBinding
-  private lateinit var viewModel: ViewModel
-
   private var domainUrl = ""
+  private var title = ""
+  private var isAcceptDeclineShow = false
 
   companion object {
     const val DECLINE = "decline"
@@ -32,30 +30,33 @@ class WebViewTNCDialog : DialogFragment() {
 
   var onClickType: (type: String) -> Unit = { }
 
+
+  fun setData(isAcceptDeclineShow: Boolean, domainUrl: String, title: String) {
+    this.isAcceptDeclineShow = isAcceptDeclineShow
+    this.domainUrl = domainUrl
+    this.title = title
+  }
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     binding = DataBindingUtil.inflate(inflater, R.layout.dialog_webview_tnc, container, false)
-    viewModel = ViewModelProviders.of(this).get(BaseViewModel::class.java)
     return binding.root
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     loadData(domainUrl)
+    if (title.isNullOrEmpty()) title = resources.getString(R.string.boost360_terms_conditions)
+    binding.title.text = title
     binding.backBtn.setOnClickListener { dismiss() }
     binding.decline.setOnClickListener {
       dismiss()
-      onClickType(DECLINE)
+      if (isAcceptDeclineShow) onClickType(DECLINE)
     }
     binding.accept.setOnClickListener {
       dismiss()
-      onClickType(ACCEPT)
+      if (isAcceptDeclineShow) onClickType(ACCEPT)
     }
   }
-
-  fun setUrl(domainUrl: String) {
-    this.domainUrl = domainUrl
-  }
-
 
   override fun getTheme(): Int {
     return R.style.MaterialDialogThemeFull
@@ -83,7 +84,7 @@ class WebViewTNCDialog : DialogFragment() {
 
       override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
-        binding.btnView.visible()
+        binding.btnView.visibility = if (isAcceptDeclineShow) View.VISIBLE else View.GONE
         binding.progressBar.gone()
       }
 

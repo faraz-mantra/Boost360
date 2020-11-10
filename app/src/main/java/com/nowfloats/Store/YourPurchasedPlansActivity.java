@@ -176,7 +176,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
                         yourOrdersItems.add(activePackage);
                     }
                 } else {
-                    Toast.makeText(YourPurchasedPlansActivity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(YourPurchasedPlansActivity.this, "Oops, Invoice details not found.", Toast.LENGTH_SHORT).show();
                     hideDialog();
                 }
                 // zeroth screen
@@ -212,7 +212,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
                 if (storeMainModel != null) {
                     preProcessAndDispatchPlans(storeMainModel);
                 } else {
-                    Toast.makeText(YourPurchasedPlansActivity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(YourPurchasedPlansActivity.this, "Oops, Pricing plans not found.", Toast.LENGTH_SHORT).show();
                     hideDialog();
                 }
                 // zeroth screen

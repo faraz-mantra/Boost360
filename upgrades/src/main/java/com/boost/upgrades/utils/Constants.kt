@@ -1,6 +1,8 @@
 package com.boost.upgrades.utils
 
+import com.boost.upgrades.ui.autorenew.AutoRenewSubsFragment
 import com.boost.upgrades.ui.cart.CartFragment
+import com.boost.upgrades.ui.confirmation.AutoRenewOrderConfirmationFragment
 import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
@@ -61,6 +63,9 @@ class Constants {
         var GSTIN_POPUP_FRAGEMENT: String = GSTINPopUpFragment::class.java.getName()
         var TAN_POPUP_FRAGEMENT: String = TANPopUpFragment::class.java.getName()
         var RAZORPAY_WEBVIEW_POPUP_FRAGMENT: String = RazorPayWebView::class.java.getName()
+        var RENEW_POPUP_FRAGEMENT: String = RenewalPopUpFragment::class.java.getName()
+        var AUTO_RENEW_FRAGEMENT: String = AutoRenewSubsFragment::class.java.getName()
+        var AUTO_RENEW_ORDER_CONFIRMATION_FRAGMENT: String = AutoRenewOrderConfirmationFragment::class.java.getName()
 
     }
 }

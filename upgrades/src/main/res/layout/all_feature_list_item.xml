@@ -35,10 +35,11 @@
             android:id="@+id/imageLayout"
             android:layout_width="70dp"
             android:layout_height="67dp"
-            android:layout_marginStart="13dp"
+            android:layout_marginLeft="@dimen/_5sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+            <!--android:layout_marginStart="13dp"-->
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -117,9 +118,19 @@
                     android:textColor="#9b9b9b"
                     android:textSize="@dimen/_8sdp"
                     app:layout_constraintStart_toStartOf="@+id/money"
-                    app:layout_constraintTop_toBottomOf="@+id/money" />
+                    app:layout_constraintTop_toBottomOf="@+id/money"
+                    android:layout_marginEnd="@dimen/_7sdp"/>
+
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/upgrade_list_subbscribed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="you've subscribed to it"
+                android:textColor="#9b9b9b"
+                android:textSize="@dimen/_8sdp"/>
+
 
         </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.boost.upgrades.adapter
 
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -51,6 +52,7 @@ class BannerViewPagerAdapter(
             homeListener.onPromoBannerClicked(list.get(position))
         }
         holder.title.setText(list.get(position).title)
+        Log.v("onBindViewHolder1"," "+ list.get(position).title + " "+ list.get(position).image.url);
         checkBannerDetails(position)
     }
 
@@ -80,16 +82,29 @@ class BannerViewPagerAdapter(
                                 try {
                                     if (it == 0) {
                                         for (singleBanner in list) {
-                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
+                                          /*  if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
                                                 list.remove(singleBanner)
                                                 notifyDataSetChanged()
                                                 homeListener.onShowHidePromoBannerIndicator(list.size > 1)
+                                            }*/
+                                        }
+                                        for (singleBanner in list) {
+                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
+                                                if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.contains(activity.fpTag)) {
+                                                    list.remove(singleBanner)
+                                                    notifyDataSetChanged()
+                                                    homeListener.onShowHidePromoBannerIndicator(list.size > 1)
+                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode)) {
+                                                    list.remove(singleBanner)
+                                                    notifyDataSetChanged()
+                                                    homeListener.onShowHidePromoBannerIndicator(list.size > 1)
+                                                }
                                             }
                                         }
                                     } else {
                                         for (singleBanner in list) {
                                             if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
-                                                if (singleBanner.exclusive_to_customers != null && !singleBanner.exclusive_to_customers.contains(activity.fpTag)) {
+                                                if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.contains(activity.fpTag)) {
                                                     list.remove(singleBanner)
                                                     notifyDataSetChanged()
                                                     homeListener.onShowHidePromoBannerIndicator(list.size > 1)

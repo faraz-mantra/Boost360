@@ -123,4 +123,8 @@ public class Business_Enquiries_Fragment extends Fragment {
             }
         });
     }
+    @Subscribe
+    public void error(String error){
+        progressLayout.setVisibility(View.GONE);
+    }
 }

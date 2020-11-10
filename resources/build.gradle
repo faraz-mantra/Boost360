@@ -38,5 +38,8 @@ android {
 
 dependencies {
     api project(path: ':framework')
+    //Webengage Library
     api 'com.webengage:android-sdk:3.+'
+    // Smartlook Library
+    api 'com.smartlook.recording:app:1.6.0-native'
 }

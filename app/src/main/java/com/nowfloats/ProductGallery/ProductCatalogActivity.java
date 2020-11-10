@@ -38,6 +38,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
+import com.nowfloats.util.WebEngageController;
 import com.nowfloats.widget.WidgetKey;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -60,6 +61,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     private ProductCategoryRecyclerAdapter adapter;
 
     private UserSessionManager session;
+    private MenuItem itemToAdd;
 
     private boolean stop = false;
     private boolean isLoading = false;
@@ -147,12 +149,14 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
                 if (data != null && response.getStatus() == 200) {
                     if (data.size() > 0) {
+                        itemToAdd.setVisible(true);
                         binding.layoutEmptyView.setVisibility(View.GONE);
                         adapter.setData(data, flag);
                         return;
                     }
 
                     if (adapter.getItemCount() == 0) {
+                        itemToAdd.setVisible(false);
                         binding.layoutEmptyView.setVisibility(View.VISIBLE);
                     }
                 }
@@ -193,6 +197,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             }
         });
         adapter.SetOnItemClickListener(product -> {
+            WebEngageController.trackEvent("Clicked on products catalogue item", "PRODUCT CATALOGUE", "");
             openAddProductActivity(product);
 //            Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
 //            intent.putExtra("PRODUCT", selected_product);
@@ -222,6 +227,8 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add, menu);
+        itemToAdd = menu.findItem(R.id.menu_add);
+        itemToAdd.setVisible(true);
         return true;
     }
 
@@ -311,6 +318,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                 Methods.showFeatureNotAvailDialog(this);
             } else {
+                WebEngageController.trackEvent("Clicked on products catalogue add new", "PRODUCT CATALOGUE", "");
                 openAddProductActivity(new Product());
             }
 
@@ -325,6 +333,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             } else if (!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && adapter.getItemCount() >= Integer.parseInt(value)) {
                 Toast.makeText(getApplicationContext(), getString(R.string.message_add_product_limit), Toast.LENGTH_LONG).show();
             } else {
+                WebEngageController.trackEvent("Clicked on products catalogue add new", "PRODUCT CATALOGUE", "");
                 openAddProductActivity(new Product());
             }
 

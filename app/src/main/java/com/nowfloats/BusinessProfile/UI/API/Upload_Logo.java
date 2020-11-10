@@ -32,15 +32,17 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
     ProgressDialog pd = null;
     UserSessionManager mSession;
     private int imageSize = 4194304;
+    private Listener listener;
 
     boolean isUploadingSuccess = false ;
 
-    public Upload_Logo(Activity context , String path, String fpID, UserSessionManager sessionManager) {
+    public Upload_Logo(Activity context , String path, String fpID, UserSessionManager sessionManager,Listener listener) {
         this.appContext	=  	context;
         this.path	= 	path;
         this.fpID = fpID;
         Constants.LOGOUPLOADED = false ;
         mSession = sessionManager;
+        this.listener = listener;
     }
 
 
@@ -75,6 +77,7 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
                 @Override
                 public void run() {
                     try {
+                        listener.onSuccess(true);
                         Methods.showSnackBarPositive(appContext, "Image updated successfully");
                         Constants.LOGOUPLOADED = true ;
                         Bitmap bmp = Methods.decodeSampledBitmap(path, 720,720);
@@ -227,4 +230,7 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
         }
     }
 
+    public interface Listener {
+        void onSuccess(Boolean siSuccess);
+    }
 }
