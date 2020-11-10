@@ -2,7 +2,9 @@
     <string name="app_name">My Library</string>
     <string name="replay_intro">वीडियो दोबारा देखें</string>
     <string name="create_account">अकाउंट बनायें</string>
+    <string name="create_account_new">एक नया अकाउंट बनायें</string>
     <string name="login">लॉगिन करें</string>
+    <string name="login_existing_account">मौजूदा खाते में लॉगिन करें</string>
     <string name="skip">स्किप</string>
     <string name="mute">Mute</string>
     <string name="english">English</string>

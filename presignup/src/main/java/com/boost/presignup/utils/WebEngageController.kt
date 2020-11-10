@@ -16,8 +16,8 @@ object WebEngageController {
         }
     }
 
-    fun setUserContactAttributes(email: String?, mobile: String?, name: String?){
-        if(isUserLogedIn) {
+    fun setUserContactAttributes(email: String?, mobile: String?, name: String?, clientId: String? = "") {
+        if (isUserLogedIn) {
             if (!email.isNullOrEmpty()) {
                 weUser.setEmail(email)
             }
@@ -26,6 +26,9 @@ object WebEngageController {
             }
             if (!name.isNullOrEmpty()) {
                 weUser.setFirstName(name)
+            }
+            if (!clientId.isNullOrEmpty()) {
+                weUser.setAttribute("clientId", clientId)
             }
         }
     }

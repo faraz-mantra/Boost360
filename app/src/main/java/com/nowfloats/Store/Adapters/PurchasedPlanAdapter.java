@@ -143,9 +143,9 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
             detailsTv.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG | detailsTv.getPaintFlags());
             detailsTv.setOnClickListener(this);
             renewTv = itemView.findViewById(R.id.tv_renew_upgrade);
-            renewTv.setOnClickListener(this);
+//            renewTv.setOnClickListener(this);
             topUpTv = itemView.findViewById(R.id.tv_top_up);
-            topUpTv.setOnClickListener(this);
+//            topUpTv.setOnClickListener(this);
         }
 
         public void setActiveOrExpiredHolder(ActivePackage activePlan) {

@@ -81,6 +81,7 @@ class UpgradeActivity : AppCompatActivity() {
   private var initialLoadUpgradeActivity: Int = 0
   lateinit var progressDialog: ProgressDialog
   private var loadingStatus: Boolean = true
+  var userPurchsedWidgets = ArrayList<String>()
 
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,6 +103,12 @@ class UpgradeActivity : AppCompatActivity() {
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
+    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")
+    if(userPurchsedWidgets != null){
+    for (a in userPurchsedWidgets)  {
+      println("userPurchsedWidgets  ${userPurchsedWidgets}")
+    }
+    }
 
     progressDialog = ProgressDialog(this)
 
@@ -114,7 +121,10 @@ class UpgradeActivity : AppCompatActivity() {
     if (fpid != null) {
       val bundle = Bundle()
       bundle.putString("screenType", intent.getStringExtra("screenType"))
-      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
+      bundle.putStringArrayList("userPurchsedWidgets", intent.getStringArrayListExtra("userPurchsedWidgets"))
+      bundle.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+//      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
+      addFragmentHome(HomeFragment.newInstance(), HOME_FRAGMENT,bundle)
       //update userdetails and buyitem
       showingPopUp()
       supportFragmentManager.addOnBackStackChangedListener {
@@ -219,6 +229,16 @@ class UpgradeActivity : AppCompatActivity() {
     fragmentTransaction!!.addToBackStack(fragmentTag)
     fragmentTransaction!!.commit()
   }
+  fun addFragmentHome(fragment: Fragment, fragmentTag: String?,  args: Bundle?) {
+    fragment.setArguments(args)
+    currentFragment = fragment
+    fragmentManager = supportFragmentManager
+    fragmentTransaction = fragmentManager!!.beginTransaction()
+    fragmentTransaction!!.add(R.id.ao_fragment_container, fragment, fragmentTag)
+    fragmentTransaction!!.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+    fragmentTransaction!!.addToBackStack(fragmentTag)
+    fragmentTransaction!!.commit()
+  }
 
   fun replaceFragment(fragment: Fragment, fragmentTag: String?) {
     popFragmentFromBackStack()
@@ -249,12 +269,16 @@ class UpgradeActivity : AppCompatActivity() {
 
   fun goBackToMyAddonsScreen() {
     goToHomeFragment()
-    addFragment(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT)
+    val args = Bundle()
+    args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+    addFragmentHome(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT,args)
   }
 
   fun goBackToRecommentedScreen() {
     goToHomeFragment()
-    addFragment(ViewAllFeaturesFragment.newInstance(), VIEW_ALL_FEATURE)
+    val args = Bundle()
+    args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+    addFragmentHome(ViewAllFeaturesFragment.newInstance(), VIEW_ALL_FEATURE,args)
   }
 
 

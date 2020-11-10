@@ -82,7 +82,7 @@ public class SidePanelFragment extends Fragment {
     private Activity mainActivity;
     TextView dashBoardTextView, analyticsTextView, tvManageCustomers, tvManageInventory, tvInbox, tvManageContent,
             accountSettingsText, tvSubscriptions, keyboardTextView, facebookTextView, marketplaceTextView, helpAndSupportText, shareText, aboutText,
-            tvContentSharing, tvCalls;
+            tvContentSharing, tvCalls, tvReferrals;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -100,7 +100,7 @@ public class SidePanelFragment extends Fragment {
     private static final int CAMERA_PHOTO = 1;
 
     LinearLayout homeLayout, analyticsLayout, subscriptionsLayout, accountSettingsLayout, keyboardLayout, facebookLayout, marketplaceLayout, aboutLayout, helpAndSupportLayout, shareLayout,
-            manageContentLayout, manageContentSharing, manageCalls, manageCustomersLayout, manageInventoryLayout, inboxLayout;
+            manageContentLayout, manageContentSharing, manageCalls, manageCustomersLayout, manageInventoryLayout, inboxLayout, referralLayout;
 
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
@@ -323,6 +323,7 @@ public class SidePanelFragment extends Fragment {
         helpAndSupportLayout = card.findViewById(R.id.seventhRow_Layout);
         aboutLayout = card.findViewById(R.id.layout_about);
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
+        referralLayout = (LinearLayout) card.findViewById(R.id.ninthRow_Layout);
 
         if (session.getISEnterprise().equals("true")) {
             siteMeter.setVisibility(View.GONE);
@@ -363,6 +364,7 @@ public class SidePanelFragment extends Fragment {
             keyboardTextView.setText("Boost Keyboard");
         }
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
+        tvReferrals = (TextView) referralLayout.findViewById(R.id.ninthRow_TextView);
 
         dasbBoardImageView = homeLayout.findViewById(R.id.firstrow_ImageView);
         analyticsImageView = analyticsLayout.findViewById(R.id.analytics_row_ImageView);
@@ -435,6 +437,7 @@ public class SidePanelFragment extends Fragment {
         helpAndSupportText.setTypeface(robotoMedium);
         aboutText.setTypeface(robotoMedium);
         shareText.setTypeface(robotoMedium);
+        tvReferrals.setTypeface(robotoMedium);
 
         homeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -585,6 +588,18 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.share));
                 //onclickColorChange(shareImageView, shareText, shareLayout);
+            }
+        });
+
+        referralLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.referrals_button));
+//                String name = session.getUserProfileName();
+//                String number = session.getUserPrimaryMobile();
+//                String email = session.getUserProfileEmail();
+//                InviteReferralsApi.getInstance(getContext()).userDetails(name, email, number, 0, null, null);
+//                InviteReferralsApi.getInstance(getContext()).inline_btn(26277);
             }
         });
 

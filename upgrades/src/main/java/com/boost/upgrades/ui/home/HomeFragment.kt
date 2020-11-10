@@ -231,18 +231,22 @@ class HomeFragment : BaseFragment(), HomeListener {
 
 
         view_my_addons.setOnClickListener {
-            (activity as UpgradeActivity).addFragment(
+            val args = Bundle()
+            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+            (activity as UpgradeActivity).addFragmentHome(
                     MyAddonsFragment.newInstance(),
-                    MYADDONS_FRAGMENT
+                    MYADDONS_FRAGMENT,args
             )
         }
 
 
         all_recommended_addons.setOnClickListener {
             WebEngageController.trackEvent("Clicked view all recommended add-ons", "ADDONS_MARKETPLACE", "null")
-            (activity as UpgradeActivity).addFragment(
+            val args = Bundle()
+            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+            (activity as UpgradeActivity).addFragmentHome(
                     ViewAllFeaturesFragment.newInstance(),
-                    VIEW_ALL_FEATURE
+                    VIEW_ALL_FEATURE,args
             )
         }
 
@@ -250,17 +254,21 @@ class HomeFragment : BaseFragment(), HomeListener {
             if (progressDialog.isShowing) {
                 progressDialog.hide()
             }
-            (activity as UpgradeActivity).addFragment(
+            val args = Bundle()
+            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+            (activity as UpgradeActivity).addFragmentHome(
                     MyAddonsFragment.newInstance(),
-                    MYADDONS_FRAGMENT
+                    MYADDONS_FRAGMENT,args
             )
         } else if (arguments?.getString("screenType") == "recommendedAddOns") {
             if (progressDialog.isShowing) {
                 progressDialog.hide()
             }
-            (activity as UpgradeActivity).addFragment(
+            val args = Bundle()
+            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+            (activity as UpgradeActivity).addFragmentHome(
                     ViewAllFeaturesFragment.newInstance(),
-                    VIEW_ALL_FEATURE
+                    VIEW_ALL_FEATURE,args
             )
         }
 
@@ -705,6 +713,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onPackageClicked(item: Bundles?) {
+        WebEngageController.trackEvent("Feature packs Clicked", "ADDONS_MARKETPLACE", item?.name?:"")
         val packageFragment = PackageFragment.newInstance()
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
@@ -713,6 +722,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onPromoBannerClicked(item: PromoBanners?) {
+        WebEngageController.trackEvent("Promo banner Clicked", "ADDONS_MARKETPLACE", item?.title?:"")
         Log.i("onPromoBannerClicked >>", item.toString())
         if (item!!.cta_feature_key != null) {
             val details = DetailsFragment.newInstance()
@@ -845,14 +855,17 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int) {
-        if (item != null)
+        if (item != null) {
+            WebEngageController.trackEvent("Feature deals add cart Clicked", "ADDONS_MARKETPLACE", item.name?:"")
             viewModel.addItemToCart(item, minMonth)
+        }
     }
 
     override fun onAddonsCategoryClicked(categoryType: String) {
         val viewallFeatures = ViewAllFeaturesFragment.newInstance()
         val args = Bundle()
         args.putString("categoryType", categoryType)
+        args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
         viewallFeatures.arguments = args
         (activity as UpgradeActivity).addFragment(
                 viewallFeatures,
@@ -861,6 +874,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
+        WebEngageController.trackEvent("Video gallery Clicked", "ADDONS_MARKETPLACE", videoItem.title?:"")
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link)
         val link: List<String> = videoItem.youtube_link!!.split('/')
         videoPlayerWebView.getSettings().setJavaScriptEnabled(true)

@@ -144,13 +144,13 @@ fun ChannelModel.getAccessTokenType(): String {
 fun ChannelModel.getDrawable(context: Context?): Drawable? {
   if (context == null) return null
   return when (getType()) {
-    ChannelType.G_SEARCH -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_n, context.theme)
+    ChannelType.G_SEARCH -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_website, context.theme)
     ChannelType.FB_PAGE -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_facebook_page_n, context.theme)
     ChannelType.G_MAPS -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_maps_n, context.theme)
     ChannelType.FB_SHOP -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_facebook_shop_n, context.theme)
     ChannelType.WAB -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_whatsapp_business_n, context.theme)
     ChannelType.T_FEED -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_twitter_n, context.theme)
-    ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_business_n, context.theme)
+    ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_maps_n, context.theme)
     else -> null
   }
 }
