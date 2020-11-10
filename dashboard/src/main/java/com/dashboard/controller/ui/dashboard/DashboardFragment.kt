@@ -13,6 +13,7 @@ import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
+import com.dashboard.pref.UserSessionManager
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -25,6 +26,8 @@ import kotlin.concurrent.schedule
 
 
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, BaseViewModel>(), RecyclerItemClickListener {
+
+  private var session: UserSessionManager? = null
 
   private val isHigh = false
 
@@ -40,6 +43,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, BaseViewMode
 
   override fun onCreateView() {
     super.onCreateView()
+    session = UserSessionManager(baseActivity)
     setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown)
     binding?.rvChannelList?.apply {
       val adapter1 = AppBaseRecyclerViewAdapter(baseActivity, ChannelData().getDataChannel(), this@DashboardFragment)
@@ -150,6 +154,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, BaseViewMode
     }
     binding?.viewDigitalScore?.animateViewTopPadding(isDown)
   }
+
 }
 
 private fun LinearLayoutCompat?.animateViewTopPadding(isDown: Boolean) {
@@ -159,4 +164,5 @@ private fun LinearLayoutCompat?.animateViewTopPadding(isDown: Boolean) {
     animator.duration = 280
     animator.start()
   }
+
 }
