@@ -26,7 +26,7 @@ import kotlin.concurrent.schedule
 
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, BaseViewModel>(), RecyclerItemClickListener {
 
-  private val isHigh = true
+  private val isHigh = false
 
   private var adapterPager1: AppBaseRecyclerViewAdapter<BusinessSetupData>? = null
 
@@ -98,6 +98,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, BaseViewMode
     binding?.pagerRiaAcademy?.apply {
       val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, RiaAcademyData().getData(), this@DashboardFragment)
       offscreenPageLimit = 3
+      clipToPadding = false
+      setPadding(37, 0, 37, 0)
       adapter = adapterPager3
       setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
     }
