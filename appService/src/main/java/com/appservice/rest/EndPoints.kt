@@ -43,6 +43,7 @@ object EndPoints {
   const val ADD_PRODUCT_IMAGE = "api/v1/product_images/add-data"
   const val GET_PRODUCT_IMAGE = "api/v1/product_images/get-data"
   const val DELETE_PRODUCT_IMAGE = "api/v1/product_images/delete-data"
+  const val FP_ONBOARDING_UPDATE_DATA = "api/v1/fp_onboarding/update-data"
 
 }
 

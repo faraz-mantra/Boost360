@@ -37,5 +37,7 @@ android {
 }
 
 dependencies {
-  api project(path: ':resources')
+  api project(path: ':onboarding')
+  api project(path: ':inventoryorder')
+  api project(path: ':appService')
 }

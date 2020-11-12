@@ -35,10 +35,10 @@ fun Context.glideLoad(mImageView: CircularImageView?, url: String) {
 
 fun Context.glideLoad(mImageView: CustomImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
   if (url?.isEmpty() == true) return
-  val glide = Glide.with(this).load(url).skipMemoryCache(true)
+  val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
   placeholder?.let { glide.placeholder(it) }
   if (isCrop) glide.centerCrop()
-  glide.diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
+  glide.into(mImageView)
 }
 
 fun Context.loadGifGlide(mImageView: CustomImageView, gif_file: Int?, placeholder: Int?) {

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.database.Cursor
 import android.text.TextUtils
+import com.dashboard.AppDashboardApplication
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.dashboard.pref.Key_Preferences.GET_FP_EXPERIENCE_CODE
@@ -77,7 +78,12 @@ class UserSessionManager(var activity: Activity) {
   private val KEY_FP_TAG = "fptag"
   private val KEY_WEB_TEMPLATE_TYPE = "webTemplateType"
   private val KEY_BUSINESS_HOURS = "BusinessHoursMainKey"
+  private val KEY_FP_SHARE_ENABLE = "fbShareEnabled"
+  private val KEY_FP_PAGE_SHARE_ENABLE = "fbPageShareEnabled"
 
+  fun getPreferenceTwitter(): SharedPreferences {
+    return AppDashboardApplication.instance.getSharedPreferences(Key_Preferences.PREF_NAME_TWITTER, Context.MODE_PRIVATE)
+  }
 
   //Create login session
   fun createUserLoginSession(name: String?, email: String?) {
@@ -90,6 +96,20 @@ class UserSessionManager(var activity: Activity) {
     // commit changes
     editor.commit()
   }
+
+  var fbShareEnabled: Boolean
+    get() = pref.getBoolean(KEY_FP_SHARE_ENABLE, false)
+    set(cnt) {
+      editor.putBoolean(KEY_FP_SHARE_ENABLE, cnt)
+      editor.apply()
+    }
+
+  var fbPageShareEnabled: Boolean
+    get() = pref.getBoolean(KEY_FP_PAGE_SHARE_ENABLE, false)
+    set(cnt) {
+      editor.putBoolean(KEY_FP_PAGE_SHARE_ENABLE, cnt)
+      editor.apply()
+    }
 
   fun storeFPName(fpName: String?) {
     editor.putString(KEY_FP_NAME, fpName)
@@ -476,8 +496,10 @@ class UserSessionManager(var activity: Activity) {
 
   val googleAuthDone: Boolean
     get() = pref.getBoolean("GOOGLE", false)
+
   val fPID: String?
-    get() = pref.getString(UserSessionManager.Companion.KEY_FP_ID, null)
+    get() = pref.getString(KEY_FP_ID, null)
+
   val isAllAuthSet: Boolean
     get() = googleAuthDone && oTPAuthDone && facebookAuthDone
 
@@ -488,6 +510,7 @@ class UserSessionManager(var activity: Activity) {
 
   val facebookPageURL: String?
     get() = pref.getString(KEY_FACEBOOK_IMAGE_URL, "")
+
   var isSelfBrandedKycAdd: Boolean?
     get() = pref.getBoolean(IS_SELF_BRANDED_KYC_ADD, false)
     set(b) {

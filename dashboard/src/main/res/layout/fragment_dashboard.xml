@@ -267,6 +267,7 @@
                   android:includeFontPadding="false"
                   android:lineSpacingExtra="0dp"
                   android:text="26"
+                  android:id="@+id/txt_readiness_score"
                   android:textColor="@color/accent_dark"
                   app:fontFamily="@font/light"
                   app:textType="HEADING_TEXT_2" />
@@ -328,7 +329,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <ProgressBar
-              android:id="@+id/progressBar"
+              android:id="@+id/progress_score"
               style="@style/CustomProgressBar"
               android:layout_width="match_parent"
               android:layout_height="@dimen/size_6"
@@ -541,6 +542,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:id="@+id/img_business_logo"
                 app:srcCompat="@drawable/ic_add_logo_d" />
             </com.framework.views.customViews.CustomCardView>
 
@@ -561,6 +563,7 @@
               android:lineSpacingExtra="-6dp"
               android:includeFontPadding="false"
               android:maxLines="2"
+              android:id="@+id/txt_business_name"
               android:text="PLASTO INDIA AND POLYMERS"
               android:textColor="@color/white"
               app:fontFamily="@font/bold"
@@ -575,6 +578,7 @@
               android:ellipsize="end"
               android:includeFontPadding="false"
               android:maxLines="1"
+              android:id="@+id/txt_domain_name"
               android:text="@string/www_sravansclinic_com"
               android:textColor="@color/greyish_brown"
               app:textType="BODY_1" />

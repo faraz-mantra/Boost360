@@ -1,5 +1,5 @@
 package com.dashboard.rest
 
 enum class TaskCode {
-  POST_CREATE_SERVICE,
+  POST_UPDATE_FACEBOOK_PAGE_TOKEN1
 }

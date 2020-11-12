@@ -2,9 +2,6 @@ package com.dashboard.holder
 
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.appservice.utils.INITIAL_POSITION
-import com.appservice.utils.ROTATED_POSITION
-import com.appservice.utils.rotateImage
 import com.dashboard.R
 import com.dashboard.databinding.ItemBoostAddOnsBinding
 import com.dashboard.model.AllBoostAddOnsData
@@ -12,6 +9,9 @@ import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
+import com.dashboard.utils.INITIAL_POSITION
+import com.dashboard.utils.ROTATED_POSITION
+import com.dashboard.utils.rotateImage
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
