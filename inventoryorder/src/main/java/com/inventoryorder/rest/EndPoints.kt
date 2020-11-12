@@ -27,6 +27,7 @@ object EndPoints {
   const val BOOST_API2_WITH_FLOAT = "https://api2.withfloats.com"
   const val GET_LIST_INVENTORY_SYNC = "product/v1/GetListingsWithInventorySync"
   const val SEND_SMS = "discover/v1/floatingpoint/CreateSMSHighPriorityIndia"
+  const val GET_BIZ_FLOATS_MESSAGE = "/Discover/v1/floatingPoint/bizFloats"
 
 
   //Boost now float

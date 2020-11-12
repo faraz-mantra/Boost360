@@ -32,3 +32,7 @@ var dataDirectory = "NowFloatsBoost"
 var days = arrayOf("SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY")
 var Currency_Country_Map: Map<String, String> = HashMap()
 var currencyArray = ArrayList<String>()
+
+const val WA_KEY = "58ede4d4ee786c1604f6c535"
+
+const val BASE_IMAGE_URL = "https://content.withfloats.com"

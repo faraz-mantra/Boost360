@@ -63,9 +63,13 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
   fun makeLocalResponse(observable: Observable<BaseResponse>, taskcode: Int): Observable<BaseResponse> {
     return observable.map {
       if (it.error != null) {
+        it.status = 400
+        it.taskcode = taskcode
         onFailure(it, taskcode)
         return@map it
       } else {
+        it.status = 200
+        it.taskcode = taskcode
         onSuccess(it, taskcode)
         return@map it
       }

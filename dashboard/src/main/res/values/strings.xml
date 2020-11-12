@@ -28,4 +28,22 @@
   <string name="improve">Improve</string>
   <string name="my_products_catalog">My products catalog</string>
   <string name="all_boost_add_ons">All Boost add-ons</string>
+
+  <!-- SITE-Meter Percentage  -->
+  <string name="buydomain_percentage">10</string>
+  <string name="phoneNumber_percentage">5</string>
+  <string name="businessCategory_percentage">5</string>
+  <string name="featuredImage_percentage">10</string>
+  <string name="businessName_percentage">5</string>
+  <string name="businessdescription_percentage">10</string>
+  <string name="social_percentage">10</string>
+  <string name="businessCategory">5</string>
+  <string name="address_percentage">10</string>
+  <string name="email_percentage">5</string>
+  <string name="postUpdate_percentage">20</string>
+  <string name="share_percentage">5</string>
+  <string name="Logo_percentage">5</string>
+  <string name="business_hours">5</string>
+  <!-- SITE-Meter Percentage  -->
+
 </resources>

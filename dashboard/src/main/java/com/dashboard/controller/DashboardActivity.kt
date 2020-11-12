@@ -10,10 +10,14 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.pref.UserSessionManager
-import com.framework.models.BaseViewModel
+import com.dashboard.pref.clientId
+import com.dashboard.viewmodel.DashboardViewModel
+import com.framework.extensions.observeOnce
 import com.framework.views.bottombar.OnItemSelectedListener
+import com.inventoryorder.model.floatMessage.MessageModel
+import java.util.*
 
-class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, BaseViewModel>(), OnItemSelectedListener {
+class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener {
 
   private lateinit var mNavController: NavController
   private var session: UserSessionManager? = null
@@ -32,14 +36,21 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, BaseViewMode
     navControllerListener()
     binding?.navView?.setOnItemSelectedListener(this)
     binding?.navView?.setActiveItem(0)
+    getFloatMessage()
+  }
+
+  private fun getFloatMessage() {
+    viewModel.getBizFloatMessage(getRequestFloat()).observeOnce(this, {
+      if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
+    })
   }
 
   private fun navControllerListener() {
     mNavController.addOnDestinationChangedListener { _, destination, _ -> print("" + destination) }
   }
 
-  override fun getViewModelClass(): Class<BaseViewModel> {
-    return BaseViewModel::class.java
+  override fun getViewModelClass(): Class<DashboardViewModel> {
+    return DashboardViewModel::class.java
   }
 
   override fun onItemSelect(pos: Int) {
@@ -73,5 +84,13 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, BaseViewMode
 
   override fun onBackPressed() {
     if (mNavController.currentDestination?.id == R.id.navigation_dashboard) this.finish() else openDashboard()
+  }
+
+  private fun getRequestFloat(): Map<String, String> {
+    val map = HashMap<String, String>()
+    map["clientId"] = clientId
+    map["skipBy"] = "0"
+    map["fpId"] = session?.fPID!!
+    return map
   }
 }

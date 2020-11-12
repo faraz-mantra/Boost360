@@ -105,4 +105,11 @@ object Key_Preferences {
   const val BUBBLE_POS_Y = "bubble_pos_y"
   const val BUBBLE_POS_X = "bubble_pos_x"
   const val NO_OF_TIMES_RESPONDED = "NO_OF_TIMES_RESPONDED"
+
+  // Twitter Share preference
+  const val PREF_NAME_TWITTER = "NFBoostTwitterPref"
+  const val PREF_KEY_TWITTER_LOGIN = "is_twitter_loggedin"
+  const val PREF_KEY_OAUTH_TOKEN = "oauth_token"
+  const val PREF_KEY_OAUTH_SECRET = "oauth_token_secret"
+  const val PREF_USER_NAME = "twitter_user_name"
 }

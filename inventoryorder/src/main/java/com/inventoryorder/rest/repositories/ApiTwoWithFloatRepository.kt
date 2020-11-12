@@ -15,13 +15,16 @@ object ApiTwoWithFloatRepository: AppBaseRepository<WithFloatTwoDataSource, AppB
         return makeRemoteRequest(remoteDataSource.getAllServiceList(clientId, skipBy, fpTag, identifierType), TaskCode.GET_ALL_SERVICES)
     }
 
-
-    fun sendSMS(mobile: String?, message: String?, clientId: String?): Observable<BaseResponse>{
+    fun sendSMS(mobile: String?, message: String?, clientId: String?): Observable<BaseResponse> {
         return makeRemoteRequest(remoteDataSource.sendSMS(mobile, message, clientId), TaskCode.SEND_SMS)
     }
 
     override fun getRemoteDataSourceClass(): Class<WithFloatTwoDataSource> {
         return WithFloatTwoDataSource::class.java
+    }
+
+    fun getBizFloatMessage(map: Map<String, String>): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.getBizFloatMessage(map), TaskCode.GET_BIZ_FLOAT_MESSAGE)
     }
 
     override fun getLocalDataSourceInstance(): AppBaseLocalService {
