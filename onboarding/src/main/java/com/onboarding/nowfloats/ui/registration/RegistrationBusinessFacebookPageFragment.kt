@@ -105,7 +105,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
           gotoNextScreen()
         } else if (!NetworkUtils.isNetworkConnected()) {
           InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
-        } else loginWithFacebook(this, listOf(FacebookPermissions.pages_show_list, FacebookPermissions.public_profile))
+        } else loginWithFacebook(this, listOf(FacebookPermissions.pages_show_list,FacebookPermissions.pages_manage_metadata, FacebookPermissions.public_profile))
       }
     }
   }
