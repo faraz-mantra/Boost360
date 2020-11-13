@@ -724,14 +724,14 @@ class HomeFragment : BaseFragment(), HomeListener {
     override fun onPromoBannerClicked(item: PromoBanners?) {
         WebEngageController.trackEvent("Promo banner Clicked", "ADDONS_MARKETPLACE", item?.title?:"")
         Log.i("onPromoBannerClicked >>", item.toString())
-        if (item!!.cta_feature_key != null) {
+        if (item!!.cta_feature_key.isNullOrEmpty().not()) {
             val details = DetailsFragment.newInstance()
             val args = Bundle()
             args.putString("itemId", item!!.cta_feature_key)
             details.arguments = args
             (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
 
-        } else if (item!!.cta_bundle_identifier != null) {
+        } else if (item.cta_bundle_identifier.isNullOrEmpty().not()) {
             CompositeDisposable().add(
                     AppDatabase.getInstance(requireActivity().application)!!
                             .bundlesDao()
@@ -765,7 +765,7 @@ class HomeFragment : BaseFragment(), HomeListener {
                                 it.printStackTrace()
                             })
             )
-        } else if (item!!.cta_web_link != null) {
+        } else if (item.cta_web_link.isNullOrEmpty().not()) {
 
             val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
             val args = Bundle()
@@ -789,8 +789,9 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onPartnerZoneClicked(item: PartnerZone?) {
+        WebEngageController.trackEvent("Partner's Promo banners Clicked", "ADDONS_MARKETPLACE", item?.title?:"")
         Log.i("onPartnerZoneClicked >>", item.toString())
-        if (item!!.cta_feature_key != null) {
+        if (item!!.cta_feature_key.isNullOrEmpty().not()) {
 
             val details = DetailsFragment.newInstance()
             val args = Bundle()
@@ -798,7 +799,7 @@ class HomeFragment : BaseFragment(), HomeListener {
             details.arguments = args
             (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
 
-        } else if (item!!.cta_bundle_identifier != null) {
+        } else if (item.cta_bundle_identifier.isNullOrEmpty().not()) {
             CompositeDisposable().add(
                     AppDatabase.getInstance(requireActivity().application)!!
                             .bundlesDao()
@@ -832,7 +833,7 @@ class HomeFragment : BaseFragment(), HomeListener {
                                 it.printStackTrace()
                             })
             )
-        } else if (item!!.cta_web_link != null) {
+        } else if (item.cta_web_link.isNullOrEmpty().not()) {
 
             val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
             val args = Bundle()
