@@ -65,6 +65,8 @@
   <color name="placeholder_bg">#dddddd</color>
   <color name="greyish">#afafaf</color>
   <color name="light_green_1">#0DC920</color>
+  <color name="light_green_2">#00D34F</color>
+  <color name="light_green_3">#99DC45</color>
   <color name="light_lemon">#EC9A81</color>
   <color name="accent_lemon">#fef3ce</color>
   <color name="pinkish_grey_two">#bababa</color>

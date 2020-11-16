@@ -33,6 +33,9 @@ interface WithFloatTwoRemoteData {
       @Query("totalChunks") totalChunks: Int?,
       @Query("currentChunkNumber") currentChunkNumber: Int?,
       @Query("productId") productId: String?,
-      @Body requestBody: RequestBody?
+      @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
+
+  @GET(EndPoints.GET_NOTIFICATION)
+  fun getNotificationCount(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?, @Query("isRead") isRead: Boolean = false): Observable<Response<Any>>
 }

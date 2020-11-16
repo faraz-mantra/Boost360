@@ -11,13 +11,15 @@ import com.framework.base.BaseActivity
 abstract class BaseRecyclerViewAdapter<T : BaseRecyclerViewItem>(
     var activity: BaseActivity<*, *>,
     var list: ArrayList<T>,
-    var itemClickListener: RecyclerItemClickListener?) : RecyclerView.Adapter<BaseRecyclerViewHolder<*>>() {
+    private var itemClickListener: RecyclerItemClickListener?,
+) : RecyclerView.Adapter<BaseRecyclerViewHolder<*>>() {
 
   protected var isLoaderVisible = false
 
   override fun onBindViewHolder(viewHolder: BaseRecyclerViewHolder<*>, position: Int) {
     viewHolder.activity = activity
     viewHolder.listener = itemClickListener
+    viewHolder.itemCount = itemCount
     viewHolder.bind(position, list[position])
   }
 

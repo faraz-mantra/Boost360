@@ -11,7 +11,8 @@ data class BusinessSetupHighData(
     var siteVisitor: Specification? = null,
     var booking: Specification? = null,
     var enquiry: Specification? = null,
-    var type: String? = null
+    var score: Int? = null,
+    var type: String? = null,
 ) : BaseResponse(), Serializable, AppBaseRecyclerViewItem {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.BUSINESS_SETUP_HIGH_ITEM_VIEW.getLayout()
@@ -19,10 +20,10 @@ data class BusinessSetupHighData(
     return recyclerViewItemType
   }
 
-  fun getData(): ArrayList<BusinessSetupHighData> {
+  fun getData(score: Int): ArrayList<BusinessSetupHighData> {
     val list = ArrayList<BusinessSetupHighData>()
     list.add(BusinessSetupHighData(title1 = "Business", title2 = "Update", siteVisitor = Specification("Site visitors", "3,45,890"), booking = Specification("Bookings", "3,400"), enquiry = Specification("Enquiries", "2,105"), type = ActiveViewType.IS_BUSINESS_UPDATE.name))
-    list.add(BusinessSetupHighData(title1 = "Digital readiness score: 82%", type = ActiveViewType.IS_PROGRESS.name))
+    list.add(BusinessSetupHighData(title1 = "Digital readiness score: $score%", score = score, type = ActiveViewType.IS_PROGRESS.name))
     return list
   }
 

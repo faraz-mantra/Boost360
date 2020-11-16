@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
@@ -78,7 +79,8 @@
           android:layout_height="wrap_content"
           android:gravity="center"
           android:includeFontPadding="false"
-          android:text="26%"
+          android:id="@+id/txt_percentage"
+          tools:text="26%"
           android:textColor="@color/accent_dark"
           app:fontFamily="@font/regular"
           app:textType="HEADING_TEXT_3" />
@@ -90,7 +92,8 @@
           android:includeFontPadding="false"
           android:paddingStart="@dimen/size_4"
           android:paddingEnd="@dimen/size_4"
-          android:text="Add missing info and improve your digital readiness\nscore above 90% for better online traction."
+          android:id="@+id/txt_des"
+          tools:text="@string/add_missing_info_better_online_traction"
           android:textColor="@color/white_70"
           app:textType="CAPTION" />
 

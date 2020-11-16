@@ -29,6 +29,7 @@ class BusinessSetupHighViewHolder(binding: ItemBusinessSetupHighBinding) : AppBa
         binding.viewReadinessScore.visible()
         binding.viewBusinessCount.gone()
         binding.txtTitle3.text = data.title1
+        data.score?.let { binding.progressBar.progress = it }
         binding.viewReadinessScore.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.READING_SCORE_CLICK.ordinal) }
       }
     }
