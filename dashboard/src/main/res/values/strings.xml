@@ -44,6 +44,7 @@
   <string name="share_percentage">5</string>
   <string name="Logo_percentage">5</string>
   <string name="business_hours">5</string>
+  <string name="add_missing_info_better_online_traction">Add missing info and improve your digital readiness\nscore above %s for better online traction.</string>
   <!-- SITE-Meter Percentage  -->
 
 </resources>

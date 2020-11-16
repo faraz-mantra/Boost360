@@ -3,7 +3,7 @@ package com.dashboard.holder
 import android.view.View
 import com.dashboard.R
 import com.dashboard.databinding.ItemContentSetupManageBinding
-import com.dashboard.model.AllBusinessData
+import com.dashboard.model.live.SiteMeterModel
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
@@ -13,11 +13,11 @@ class ItemContentSetupHolder(binding: ItemContentSetupManageBinding) : AppBaseRe
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    val data = item as? AllBusinessData ?: return
-    binding.txtTitle.text = data.title
-    binding.txtSubtitle.text = data.subTitle
-    data.icon1?.let { binding.imgOkCircle.setImageResource(it) }
-    if (data.isDone == true) {
+    val data = item as? SiteMeterModel ?: return
+    binding.txtTitle.text = data.Title
+    binding.txtSubtitle.text = data.Desc
+    binding.imgOkCircle.setImageResource(data.getIcon())
+    if (data.status == true) {
       binding.imgArrowIcon.visible()
       binding.imgArrowGif.gone()
       binding.imgArrowGif.pause()
@@ -28,7 +28,7 @@ class ItemContentSetupHolder(binding: ItemContentSetupManageBinding) : AppBaseRe
       binding.imgArrowGif.play()
       getColor(R.color.colorAccent)?.let { binding.txtTitle.setTextColor(it) }
     }
-    binding.view2.visibility = if (data.isLast == true) View.INVISIBLE else View.VISIBLE
+    binding.view2.visibility = if (itemCount != null && position == (itemCount!! - 1)) View.INVISIBLE else View.VISIBLE
   }
 }
 

@@ -1,6 +1,9 @@
 package com.dashboard.holder
 
+import com.dashboard.R
+import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.ItemBusinessManagementBinding
+import com.dashboard.model.BusinessContentSetupData
 import com.dashboard.model.BusinessSetupData
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
@@ -11,10 +14,11 @@ class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) : AppBaseR
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    val data = item as? BusinessSetupData ?: return
+    val data = item as? BusinessContentSetupData ?: return
     binding.txtTitle.text = data.title
     binding.txtDes.text = data.subTitle
     if (data.type == BusinessSetupData.ActiveViewType.ONLINE_SYNC.name) {
+      getColor(R.color.light_green_2)?.let { binding.txtDes.setTextColor(it) }
       binding.viewBtn.gone()
       binding.viewImage.gone()
       binding.gifSyncOk.visible()
@@ -24,16 +28,19 @@ class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) : AppBaseR
       }
 
     } else {
+      getColor(R.color.light_grey_3)?.let { binding.txtDes.setTextColor(it) }
       binding.viewBtn.visible()
       binding.viewImage.visible()
       binding.gifSyncOk.gone()
-      binding.btnTitle.text = data.btnTitle
+      val btnTxt = data.getPendingText()
+      binding.btnTitle.text = if (btnTxt.isNullOrEmpty().not()) "Add $btnTxt" else data.getCompleteText()
       binding.imgArrowGif.apply {
-        data.btnGifIcon?.let { gifResource = it }
+        data.gifIcon?.let { gifResource = it }
         play()
       }
       data.icon1?.let { binding.imgCircle.setImageResource(it) }
       data.icon2?.let { binding.imgIcon.setImageResource(it) }
     }
+    binding.mainContent.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal) }
   }
 }

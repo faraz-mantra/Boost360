@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.appservice.rest.repository.KitWebActionRepository
+import com.appservice.rest.repository.WithFloatTwoRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -38,6 +39,10 @@ class DashboardViewModel : BaseViewModel() {
 
   fun fpOnboardingUpdate(auth: String?, request: OnBoardingUpdateModel?): LiveData<BaseResponse> {
     return KitWebActionRepository.fpOnboardingUpdate(auth, request).toLiveData()
+  }
+
+  fun getNotificationCount(clientId: String?, fpId: String?): LiveData<BaseResponse> {
+    return WithFloatTwoRepository.getNotificationCount(clientId, fpId).toLiveData()
   }
 
 }

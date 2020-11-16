@@ -251,6 +251,9 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_14"
               android:layout_marginTop="@dimen/size_20"
+              android:id="@+id/btn_show_digital_score"
+              android:clickable="true"
+              android:focusable="true"
               android:layout_marginEnd="@dimen/size_12"
               android:orientation="horizontal">
 
@@ -266,7 +269,7 @@
                   android:layout_marginTop="-13dp"
                   android:includeFontPadding="false"
                   android:lineSpacingExtra="0dp"
-                  android:text="26"
+                  tools:text="26"
                   android:id="@+id/txt_readiness_score"
                   android:textColor="@color/accent_dark"
                   app:fontFamily="@font/light"
@@ -606,7 +609,8 @@
               android:background="@drawable/ic_round_red_d"
               android:gravity="center"
               android:paddingStart="@dimen/size_2"
-              android:text="9+"
+              android:id="@+id/txt_notification"
+              tools:text="9+"
               android:textAlignment="gravity"
               android:textColor="@color/white"
               app:textType="OVERLINE"

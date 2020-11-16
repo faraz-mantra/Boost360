@@ -1,6 +1,7 @@
 package com.dashboard.controller.ui.dashboard
 
 import android.animation.ValueAnimator
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.LinearLayoutCompat
@@ -10,7 +11,9 @@ import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
+import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
+import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
@@ -21,11 +24,12 @@ import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_ROOTALIASURI
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.dashboard.pref.UserSessionManager
 import com.dashboard.pref.WA_KEY
+import com.dashboard.pref.clientId
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.setGifAnim
-import com.dashboard.utils.siteMeterCalculation
+import com.dashboard.utils.siteMeterData
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -52,9 +56,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private var session: UserSessionManager? = null
 
-  private val isHigh = false
+  private var isHigh = false
 
-  private var adapterPager1: AppBaseRecyclerViewAdapter<BusinessSetupData>? = null
+  private var adapterBusinessContent: AppBaseRecyclerViewAdapter<BusinessContentSetupData>? = null
   private var channelAdapter: AppBaseRecyclerViewAdapter<ChannelData>? = null
 
   override fun getLayout(): Int {
@@ -68,59 +72,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown)
+    setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown, binding?.btnShowDigitalScore)
     setUserData()
     getCategoryData()
-    getSiteMeter()
-
-    if (isHigh) {
-      binding?.viewLowDigitalReadiness?.gone()
-      binding?.viewLowTaskManageBusiness?.gone()
-      binding?.viewHighDigitalReadiness?.visible()
-      binding?.pagerBusinessSetupHigh?.apply {
-        val adapterPager2 = AppBaseRecyclerViewAdapter(baseActivity, BusinessSetupHighData().getData(), this@DashboardFragment)
-        offscreenPageLimit = 3
-        adapter = adapterPager2
-        binding?.dotIndicatorBusinessHigh?.setViewPager2(this)
-        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-      }
-    } else {
-      binding?.viewHighDigitalReadiness?.gone()
-      binding?.viewLowDigitalReadiness?.visible()
-      binding?.viewLowTaskManageBusiness?.visible()
-      binding?.pagerBusinessSetupLow?.apply {
-        adapterPager1 = AppBaseRecyclerViewAdapter(baseActivity, BusinessSetupData().getData(), this@DashboardFragment)
-        offscreenPageLimit = 3
-        adapter = adapterPager1
-        binding?.dotIndicator?.setViewPager2(this)
-        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-          override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-            binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
-          }
-        })
-        baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
-        baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
-      }
-    }
-
-    (if (isHigh) binding?.highRecommendedTask else binding?.lowRecommendedTask)?.apply {
-      pagerQuickAction.apply {
-        val adapterPager5 = AppBaseRecyclerViewAdapter(baseActivity, QuickActionData().getData(), this@DashboardFragment)
-        offscreenPageLimit = 3
-        adapter = adapterPager5
-        dotIndicatorAction.setViewPager2(this)
-        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-      }
-    }
-    (if (isHigh) binding?.highManageBusiness else binding?.lowManageBusiness)?.apply {
-      rvManageBusiness.apply {
-        val adapter1 = AppBaseRecyclerViewAdapter(baseActivity, ManageBusinessData().getData(), this@DashboardFragment)
-        adapter = adapter1
-      }
-      btnShowAll.setOnClickListener { startFragmentDashboardActivity(FragmentType.ALL_BOOST_ADD_ONS) }
-    }
+    getNotificationCount()
 
     binding?.pagerRiaAcademy?.apply {
       val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, RiaAcademyData().getData(), this@DashboardFragment)
@@ -149,17 +104,25 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
+  override fun onResume() {
+    super.onResume()
+    getSiteMeter()
+    setRecBusinessManageTask()
+  }
+
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
       binding?.btnVisitingCardUp -> visitingCardShowHide(true)
       binding?.btnVisitingCardDown -> visitingCardShowHide(false)
+      binding?.btnShowDigitalScore -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
     }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
-      RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE)
+      RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+      RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, position) })
     }
   }
 
@@ -178,20 +141,87 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     binding?.viewDigitalScore?.animateViewTopPadding(isDown)
   }
 
+
   private fun getSiteMeter() {
-    val siteMeterTotalWeight = session?.siteMeterCalculation() ?: 0
-    if (session?.siteHealth != siteMeterTotalWeight) {
-      session?.siteHealth = siteMeterTotalWeight
+    val siteMeterData = session?.siteMeterData() ?: return
+    val listDigitalScore = siteMeterData.getListDigitalScore()
+    isHigh = (siteMeterData.siteMeterTotalWeight >= 80)
+    if (isHigh) {
+      binding?.viewLowDigitalReadiness?.gone()
+      binding?.viewLowTaskManageBusiness?.gone()
+      binding?.viewHighDigitalReadiness?.visible()
+      binding?.pagerBusinessSetupHigh?.apply {
+        val adapterPager2 = AppBaseRecyclerViewAdapter(baseActivity, BusinessSetupHighData().getData(siteMeterData.siteMeterTotalWeight), this@DashboardFragment)
+        offscreenPageLimit = 3
+        adapter = adapterPager2
+        binding?.dotIndicatorBusinessHigh?.setViewPager2(this)
+        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+      }
+    } else {
+      binding?.txtReadinessScore?.text = "${siteMeterData.siteMeterTotalWeight}"
+      binding?.progressScore?.progress = siteMeterData.siteMeterTotalWeight
+      binding?.viewHighDigitalReadiness?.gone()
+      binding?.viewLowDigitalReadiness?.visible()
+      binding?.viewLowTaskManageBusiness?.visible()
+      val listContent = ArrayList(listDigitalScore.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout();it })
+      if (adapterBusinessContent == null) {
+        binding?.pagerBusinessSetupLow?.apply {
+          adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, listContent, this@DashboardFragment)
+          offscreenPageLimit = 3
+          adapter = adapterBusinessContent
+          binding?.dotIndicator?.setViewPager2(this)
+          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+          registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+              super.onPageSelected(position)
+              binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
+            }
+          })
+        }
+      } else adapterBusinessContent?.notify(listContent)
+      baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
+      baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
+    }
+
+
+
+    if (session?.siteHealth != siteMeterData.siteMeterTotalWeight) {
+      session?.siteHealth = siteMeterData.siteMeterTotalWeight
       val data = OnBoardingUpdateModel()
-      data.setData(session?.fPID!!, String.format("site_health:%s", siteMeterTotalWeight))
+      data.setData(session?.fPID!!, String.format("site_health:%s", siteMeterData.siteMeterTotalWeight))
       viewModel?.fpOnboardingUpdate(WA_KEY, data)?.observeOnce(viewLifecycleOwner, {
         Log.i("DASHBOARD", it.message())
       })
     }
-    binding?.txtReadinessScore?.text = "$siteMeterTotalWeight"
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-      binding?.progressScore?.setProgress(siteMeterTotalWeight, true)
-    } else binding?.progressScore?.progress = siteMeterTotalWeight
+  }
+
+  private fun setRecBusinessManageTask() {
+    (if (isHigh) binding?.highRecommendedTask else binding?.lowRecommendedTask)?.apply {
+      pagerQuickAction.apply {
+        val adapterPager5 = AppBaseRecyclerViewAdapter(baseActivity, QuickActionData().getData(), this@DashboardFragment)
+        offscreenPageLimit = 3
+        adapter = adapterPager5
+        dotIndicatorAction.setViewPager2(this)
+        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+      }
+    }
+    (if (isHigh) binding?.highManageBusiness else binding?.lowManageBusiness)?.apply {
+      rvManageBusiness.apply {
+        val adapter1 = AppBaseRecyclerViewAdapter(baseActivity, ManageBusinessData().getData(), this@DashboardFragment)
+        adapter = adapter1
+      }
+      btnShowAll.setOnClickListener { startFragmentDashboardActivity(FragmentType.ALL_BOOST_ADD_ONS) }
+    }
+  }
+
+  private fun getNotificationCount() {
+    viewModel?.getNotificationCount(clientId, session?.fPID)?.observeOnce(viewLifecycleOwner, {
+      val value = (it.anyResponse as? Double)?.toInt()
+      if (it.isSuccess() && (value != null && value != 0)) {
+        binding?.txtNotification?.visibility = View.VISIBLE
+        binding?.txtNotification?.text = "$value+"
+      } else binding?.txtNotification?.visibility = View.INVISIBLE
+    })
   }
 
   private fun setViewChannels(channels: ArrayList<ChannelModel>?) {

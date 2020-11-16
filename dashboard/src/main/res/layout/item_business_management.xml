@@ -14,6 +14,9 @@
     android:layout_marginEnd="@dimen/size_34"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/size_10"
+    android:id="@+id/main_content"
+    android:clickable="true"
+    android:focusable="true"
     app:cardUseCompatPadding="true">
 
     <androidx.appcompat.widget.LinearLayoutCompat
