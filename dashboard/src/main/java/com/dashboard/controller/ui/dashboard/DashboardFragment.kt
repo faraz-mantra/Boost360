@@ -55,6 +55,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private val isHigh = false
 
   private var adapterPager1: AppBaseRecyclerViewAdapter<BusinessSetupData>? = null
+  private var channelAdapter: AppBaseRecyclerViewAdapter<ChannelData>? = null
 
   override fun getLayout(): Int {
     return R.layout.fragment_dashboard
@@ -68,6 +69,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     super.onCreateView()
     session = UserSessionManager(baseActivity)
     setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown)
+    setUserData()
+    getCategoryData()
+    getSiteMeter()
 
     if (isHigh) {
       binding?.viewLowDigitalReadiness?.gone()
@@ -174,36 +178,31 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     binding?.viewDigitalScore?.animateViewTopPadding(isDown)
   }
 
-  override fun onResume() {
-    super.onResume()
-    setUserData()
-    getCategoryData()
-    getSiteMeter()
-  }
-
   private fun getSiteMeter() {
-    val siteMeterTotalWeight = session?.siteMeterCalculation()
+    val siteMeterTotalWeight = session?.siteMeterCalculation() ?: 0
     if (session?.siteHealth != siteMeterTotalWeight) {
-      session?.siteHealth = siteMeterTotalWeight!!
-      binding?.txtReadinessScore?.text = "$siteMeterTotalWeight"
-      if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-        binding?.progressScore?.setProgress(siteMeterTotalWeight, true)
-      } else binding?.progressScore?.progress = siteMeterTotalWeight
+      session?.siteHealth = siteMeterTotalWeight
       val data = OnBoardingUpdateModel()
       data.setData(session?.fPID!!, String.format("site_health:%s", siteMeterTotalWeight))
       viewModel?.fpOnboardingUpdate(WA_KEY, data)?.observeOnce(viewLifecycleOwner, {
         Log.i("DASHBOARD", it.message())
       })
     }
+    binding?.txtReadinessScore?.text = "$siteMeterTotalWeight"
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+      binding?.progressScore?.setProgress(siteMeterTotalWeight, true)
+    } else binding?.progressScore?.progress = siteMeterTotalWeight
   }
 
   private fun setViewChannels(channels: ArrayList<ChannelModel>?) {
     val list = ArrayList<ChannelData>()
     channels?.forEach { list.add(ChannelData(it)) }
-    binding?.rvChannelList?.apply {
-      val adapter1 = AppBaseRecyclerViewAdapter(baseActivity, list, this@DashboardFragment)
-      adapter = adapter1
-    }
+    if (channelAdapter == null) {
+      binding?.rvChannelList?.apply {
+        channelAdapter = AppBaseRecyclerViewAdapter(baseActivity, list, this@DashboardFragment)
+        adapter = channelAdapter
+      }
+    } else channelAdapter?.notify(list)
   }
 
   private fun setUserData() {
@@ -217,7 +216,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun getCategoryData() {
-    showProgress()
+    val data = CategoryDataModel().getCategoryChannelData()
+    if (data != null && data.channels.isNullOrEmpty().not()) {
+      setViewChannels(data.channels)
+    } else showProgress()
     viewModel?.getCategories(baseActivity)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         val categoryData = (it as? ResponseDataCategory)?.data?.singleOrNull { c -> c.experienceCode() == session?.fP_AppExperienceCode }
@@ -274,6 +276,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           categoryData.channels?.forEach { it1 -> if (it1.isWhatsAppChannel()) it1.channelActionData = ChannelActionData(response.active_whatsapp_number?.trim()) }
         }
       }
+      categoryData.saveData()
       setViewChannels(categoryData.channels)
       hideProgress()
     })

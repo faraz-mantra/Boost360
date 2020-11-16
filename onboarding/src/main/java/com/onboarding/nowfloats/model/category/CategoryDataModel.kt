@@ -7,12 +7,18 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.core.content.res.ResourcesCompat
 import com.framework.base.BaseResponse
+import com.framework.utils.PreferencesUtils
+import com.framework.utils.convertObjToString
+import com.framework.utils.convertStringToObj
+import com.framework.utils.getData
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.ChannelType
 import com.onboarding.nowfloats.model.channel.isGoogleChannel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewItem
+
+const val CATEGORY_DASHBOARD_DATA = "CATEGORY_DASHBOARD_DATA"
 
 class CategoryDataModel(
     val experience_code: String? = null,
@@ -22,7 +28,7 @@ class CategoryDataModel(
     val category_descriptor: String? = null,
     val icon: String? = null,
     var channels: ArrayList<ChannelModel>? = null,
-    val sections: ArrayList<SectionsFeature>? = null
+    val sections: ArrayList<SectionsFeature>? = null,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Parcelable {
   val sectionType: Boolean = false
   var isSelected = false
@@ -141,4 +147,14 @@ class CategoryDataModel(
       return arrayOfNulls(size)
     }
   }
+
+  fun getCategoryChannelData(): CategoryDataModel? {
+    val resp = PreferencesUtils.instance.getData(CATEGORY_DASHBOARD_DATA, "") ?: ""
+    return convertStringToObj(resp)
+  }
+
+  fun saveData() {
+    PreferencesUtils.instance.saveDataN(CATEGORY_DASHBOARD_DATA, convertObjToString(this) ?: "")
+  }
+
 }
