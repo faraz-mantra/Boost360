@@ -27,8 +27,8 @@
         <item>@drawable/ic_manage_business</item>
         <item>@drawable/ic_about</item>
         <item>@drawable/ic_image_gallery</item>
-        <item>@drawable/ic_custom_page</item>
-        <item>@drawable/ic_custom_page</item>
+        <item>@drawable/ic_custom_page_add</item>
+        <item>@drawable/ic_custom_page_add</item>
     </array>
     -->
 

@@ -2,7 +2,7 @@ package com.dashboard.holder
 
 import android.view.View
 import com.dashboard.databinding.ItemManageBusinessDBinding
-import com.dashboard.model.ManageBusinessData
+import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 
@@ -12,7 +12,7 @@ class ManageBusinessViewHolder(binding: ItemManageBusinessDBinding) : AppBaseRec
     super.bind(position, item)
     val data = item as? ManageBusinessData ?: return
     binding.txtTitle.text = data.title
-    data.icon1?.let { binding.imgIcon.setImageResource(it) }
+    ManageBusinessData.IconType.fromType(data.iconType)?.let { binding.imgIcon.setImageResource(it.icon) }
     binding.imgLock.visibility = if (data.isLock) View.VISIBLE else View.GONE
     binding.imgIcon.apply { if (data.isLock) this.makeGreyscale() else this.removeGreyscale() }
   }

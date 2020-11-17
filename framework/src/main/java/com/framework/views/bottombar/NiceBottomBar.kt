@@ -38,6 +38,7 @@ class NiceBottomBar : View {
   private var activeFontTypeface: Typeface? = null
   private var inActiveFontTypeface: Typeface? = null
   private var activeItem = 0
+  private var clickPosition: ArrayList<Int>? = null
 
   /**
    * Dynamic variables
@@ -102,6 +103,9 @@ class NiceBottomBar : View {
     itemFontActive = typedArray.getResourceId(R.styleable.NiceBottomBar_itemFontActive, this.itemFontActive)
     itemFontInActive = typedArray.getResourceId(R.styleable.NiceBottomBar_itemFontInActive, this.itemFontInActive)
     items = BottomBarParser(context, typedArray.getResourceId(R.styleable.NiceBottomBar_menu, 0)).parse()
+    val clickPositionValue = typedArray.getString(R.styleable.NiceBottomBar_clickPosition)
+    clickPosition = ArrayList()
+    clickPositionValue?.split(",")?.forEach { it.toIntOrNull()?.let { it1 -> clickPosition!!.add(it1) } }
     typedArray.recycle()
 
     setBackgroundColor(barBackgroundColor)
@@ -187,24 +191,31 @@ class NiceBottomBar : View {
     if (event.action == MotionEvent.ACTION_UP && abs(event.downTime - event.eventTime) < longPressTime)
       for ((i, item) in items.withIndex())
         if (item.rect.contains(event.x, event.y))
-          if (i != this.activeItem) {
-            setActiveItem(i)
-            onItemSelected(i)
-            onItemSelectedListener?.onItemSelect(i)
-          } else {
-            onItemReselected(i)
-            onItemReselectedListener?.onItemReselect(i)
-          }
+          if (isClickPosition(i).not()) {
+            if (i != this.activeItem) {
+              setActiveItem(i)
+              onItemSelected(i)
+              onItemSelectedListener?.onItemSelect(i)
+            } else {
+              onItemReselected(i)
+              onItemReselectedListener?.onItemReselect(i)
+            }
+          } else onItemSelectedListener?.onItemClick(i)
 
     if (event.action == MotionEvent.ACTION_MOVE || event.action == MotionEvent.ACTION_UP)
       if (abs(event.downTime - event.eventTime) > longPressTime)
         for ((i, item) in items.withIndex())
           if (item.rect.contains(event.x, event.y)) {
-            onItemLongClick(i)
-            onItemLongClickListener?.onItemLongClick(i)
+            if (isClickPosition(i).not()) {
+              onItemLongClick(i)
+              onItemLongClickListener?.onItemLongSelect(i)
+            } else onItemLongClickListener?.onItemLongClick(i)
           }
-
     return true
+  }
+
+  private fun isClickPosition(i: Int): Boolean {
+    return (clickPosition?.firstOrNull { it == i } != null)
   }
 
   // Draw item badge
@@ -253,9 +264,11 @@ class NiceBottomBar : View {
   }
 
   fun setActiveItem(pos: Int) {
-    activeItem = pos
-    animateIndicator(pos)
-    setItemColors()
+    if (isClickPosition(pos).not()) {
+      activeItem = pos
+      animateIndicator(pos)
+      setItemColors()
+    }
   }
 
   private fun animateIndicator(pos: Int) {

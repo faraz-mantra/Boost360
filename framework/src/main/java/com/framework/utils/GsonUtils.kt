@@ -31,3 +31,4 @@ inline fun <reified T> convertStringToObj(json: String): T? {
 inline fun <reified T> convertObjToString(clsObj: T): String? {
   return Gson().toJson(clsObj, object : TypeToken<T?>() {}.type)
 }
+

@@ -16,7 +16,8 @@ enum class RecyclerViewItemType {
   GROWTH_STATE_ITEM_VIEW,
   BUSINESS_CONTENT_SETUP_ITEM_VIEW,
   ITEMS_CONTENT_SETUP_ITEM_VIEW,
-  ALL_BOOST_ADD_ONS_VIEW;
+  ALL_BOOST_ADD_ONS_VIEW,
+  HOME_DRAWER_VIEW;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -34,6 +35,7 @@ enum class RecyclerViewItemType {
       BUSINESS_CONTENT_SETUP_ITEM_VIEW -> R.layout.item_business_content_setup
       ITEMS_CONTENT_SETUP_ITEM_VIEW -> R.layout.item_content_setup_manage
       ALL_BOOST_ADD_ONS_VIEW -> R.layout.item_boost_add_ons
+      HOME_DRAWER_VIEW -> R.layout.item_drawer_view
     }
   }
 }

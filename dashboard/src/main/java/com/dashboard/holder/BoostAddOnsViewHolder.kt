@@ -4,7 +4,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.dashboard.R
 import com.dashboard.databinding.ItemBoostAddOnsBinding
-import com.dashboard.model.AllBoostAddOnsData
+import com.dashboard.model.live.addOns.AllBoostAddOnsData
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem

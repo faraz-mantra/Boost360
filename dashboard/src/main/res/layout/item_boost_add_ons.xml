@@ -17,24 +17,23 @@
     <com.framework.views.customViews.CustomCardView
       android:id="@+id/content_parent"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/size_74"
       android:clickable="true"
       android:focusable="true"
       app:cardBackgroundColor="@color/white_smoke"
       app:cardElevation="@dimen/size_0">
 
       <androidx.appcompat.widget.LinearLayoutCompat
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:gravity="center_vertical"
-          android:orientation="horizontal"
-          android:paddingTop="@dimen/size_14">
+          android:orientation="horizontal">
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/img_symbol"
@@ -53,7 +52,7 @@
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:text="Customer Orders &amp; Enquiries"
+            tools:text="Customer Orders &amp; Enquiries"
             android:textColor="@color/greyish_brown"
             app:fontFamily="@font/sans_medium"
             app:textType="HEADING_6" />
@@ -78,8 +77,7 @@
           android:ellipsize="end"
           android:includeFontPadding="false"
           android:maxLines="2"
-          android:paddingBottom="@dimen/size_10"
-          android:text="One place to manage all patient interactions."
+          tools:text="One place to manage all patient interactions."
           android:textColor="@color/warm_grey"
           app:fontFamily="@font/regular"
           app:textType="CAPTION" />
