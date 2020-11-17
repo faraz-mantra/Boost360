@@ -268,6 +268,7 @@
     <attr name="itemFontActive" format="reference" />
     <attr name="itemFontInActive" format="reference" />
     <attr name="textColorActive" format="color" />
+    <attr name="clickPosition" format="string" />
     <attr name="textSize" format="dimension" />
     <attr name="iconSize" format="dimension" />
     <attr name="iconMargin" format="dimension" />

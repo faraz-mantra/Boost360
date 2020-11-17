@@ -1,0 +1,278 @@
+{
+  "data": [
+    {
+      "isExpend": true,
+      "isLastSeen": false,
+      "manageBusinessList": [
+        {
+          "iconType": "video_consultations",
+          "isLock": true,
+          "title": "Video consultations"
+        },
+        {
+          "iconType": "in_clinic_appointments",
+          "isLock": false,
+          "title": "In-clinic Appointments"
+        },
+        {
+          "iconType": "ic_customer_call_d",
+          "isLock": false,
+          "title": "Patient Calls"
+        },
+        {
+          "iconType": "ic_customer_enquiries_d",
+          "isLock": false,
+          "title": "Patient Enquiries"
+        }
+      ],
+      "subTitle": "One place to manage all your patient interactions.",
+      "title": "Customer Orders \u0026 Enquiries"
+    },
+    {
+      "isExpend": true,
+      "isLastSeen": false,
+      "manageBusinessList": [
+        {
+          "iconType": "ic_daily_business_update_d",
+          "isLock": true,
+          "title": "Daily Tips & Updates"
+        },
+        {
+          "iconType": "picture_gallery",
+          "isLock": false,
+          "title": "Pictures Gallery"
+        },
+        {
+          "iconType": "ic_custom_page_add",
+          "isLock": false,
+          "title": "Custom Pages"
+        },
+        {
+          "iconType": "website_chatbot",
+          "isLock": false,
+          "title": "Website Catboat"
+        },
+        {
+          "iconType": "ic_customer_testimonial_d",
+          "isLock": false,
+          "title": "Customer Testimonials"
+        },
+        {
+          "iconType": "content_sync_acros_channels",
+          "isLock": false,
+          "title": "Content sync across channels"
+        },
+        {
+          "iconType": "unlimited_website_bandwidth",
+          "isLock": false,
+          "title": "Unlimited Website Bandwidth"
+        },
+        {
+          "iconType": "unlimited_content_updates",
+          "isLock": true,
+          "title": "Unlimited Content Updates"
+        },
+        {
+          "iconType": "ic_business_keyboard_d",
+          "isLock": false,
+          "title": "Boost Keyboard"
+        },
+        {
+          "iconType": "website_social_share_plugin",
+          "isLock": true,
+          "title": "Website social share plugin"
+        },
+        {
+          "iconType": "assisted_content_creation",
+          "isLock": false,
+          "title": "Dictate: Assisted content creation"
+        },
+        {
+          "iconType": "autamated_seo_d",
+          "isLock": true,
+          "title": "Automated SEO"
+        }
+      ],
+      "subTitle": "Engage with your existing and potential customer with these tools.",
+      "title": "Content Management"
+    },
+    {
+      "isExpend": true,
+      "isLastSeen": false,
+      "manageBusinessList": [
+        {
+          "iconType": "ic_product_cataloge_d",
+          "isLock": false,
+          "title": "Services Listed"
+        },
+        {
+          "iconType": "doctor_profile",
+          "isLock": false,
+          "title": "Doctor Profile"
+        },
+        {
+          "iconType": "appointment_settings",
+          "isLock": false,
+          "title": "Appointment Settings"
+        }
+      ],
+      "subTitle": "Manage your services, staff and their appointment schedule.",
+      "title": "Catalogue and Team Listing"
+    },
+    {
+      "isExpend": true,
+      "isLastSeen": false,
+      "manageBusinessList": [
+        {
+          "iconType": "clinic_basic_info",
+          "isLock": true,
+          "title": "Clinic Basic info"
+        },
+        {
+          "iconType": "clinic_logo",
+          "isLock": false,
+          "title": "Clinic Logo"
+        },
+        {
+          "iconType": "featured_image_video",
+          "isLock": false,
+          "title": "Featured Image/video"
+        },
+        {
+          "iconType": "business_hours",
+          "isLock": false,
+          "title": "Business Hours"
+        },
+        {
+          "iconType": "contact_details",
+          "isLock": false,
+          "title": "Contact Details"
+        },
+        {
+          "iconType": "business_kyc_verification",
+          "isLock": false,
+          "title": "Business KYC/Verification"
+        },
+        {
+          "iconType": "domain_name_ssl",
+          "isLock": false,
+          "title": "My Domain Name & SSL"
+        },
+        {
+          "iconType": "my_email_accounts",
+          "isLock": true,
+          "title": "My Email Accounts"
+        },
+        {
+          "iconType": "boost_data_security",
+          "isLock": true,
+          "title": "Boost Data Security"
+        }
+      ],
+      "subTitle": "Manage your services, staff and their appointment schedule.",
+      "title": "Business Profile"
+    },
+    {
+      "isExpend": true,
+      "isLastSeen": false,
+      "manageBusinessList": [
+        {
+          "iconType": "boost_payment_gateway",
+          "isLock": true,
+          "title": "Boost Payment Gateway"
+        },
+        {
+          "iconType": "my_bank_account",
+          "isLock": false,
+          "title": "My Bank Account"
+        },
+        {
+          "iconType": "custom_payment_gateway",
+          "isLock": false,
+          "title": "Custom payment gateway"
+        },
+        {
+          "iconType": "e_commerce_website",
+          "isLock": false,
+          "title": "eCommerce on website"
+        }
+      ],
+      "subTitle": "Configure how and where you collect your customer payments.",
+      "title": "Payment Collection Setup"
+    },
+    {
+      "isExpend": true,
+      "isLastSeen": false,
+      "manageBusinessList": [
+        {
+          "iconType": "facebook_lead_ads",
+          "isLock": true,
+          "title": "Facebook Lead Ads"
+        },
+        {
+          "iconType": "advertising_google_fb",
+          "isLock": false,
+          "title": "Advertising (Google & Fb)"
+        },
+        {
+          "iconType": "facebook_likebox_plugin",
+          "isLock": false,
+          "title": "Facebook Likebox Plugin"
+        },
+        {
+          "iconType": "newsletter_subscription",
+          "isLock": false,
+          "title": "Newsletter Subscription"
+        }
+      ],
+      "subTitle": "Tools to help you increase your brand awareness and reach.",
+      "title": "Marketing Tools"
+    },
+    {
+      "isExpend": true,
+      "isLastSeen": false,
+      "manageBusinessList": [
+        {
+          "iconType": "website_visits_visitors",
+          "isLock": true,
+          "title": "Website visits and visitors"
+        },
+        {
+          "iconType": "social_sharing_analytics",
+          "isLock": false,
+          "title": "Social Sharing Analytics"
+        },
+        {
+          "iconType": "sales_analytics",
+          "isLock": false,
+          "title": "Sales Analytics"
+        },
+        {
+          "iconType": "search_analytics",
+          "isLock": false,
+          "title": "Search Analytics"
+        }
+      ],
+      "subTitle": "Live analytics to help you know how your business is doing.",
+      "title": "Realtime Analytics"
+    },
+    {
+      "isExpend": true,
+      "isLastSeen": false,
+      "manageBusinessList": [
+        {
+          "iconType": "ria_digital_assistant",
+          "isLock": true,
+          "title": "RIA - your digital assistant"
+        },
+        {
+          "iconType": "premium_boost_support",
+          "isLock": false,
+          "title": "Premium Boost Support"
+        }
+      ],
+      "subTitle": "We’re always there to help you, just tap and reach out to us.",
+      "title": "Business Support"
+    }
+  ]
+}

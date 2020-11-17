@@ -7,16 +7,19 @@ import androidx.appcompat.widget.SearchView
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.databinding.FragmentAllBoostAddOnsBinding
-import com.dashboard.model.AllBoostAddOnsData
+import com.dashboard.model.live.addOns.AllBoostAddOnsData
+import com.dashboard.model.live.addOns.AllBoostAddOnsDataResponse
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
-import com.framework.models.BaseViewModel
+import com.dashboard.viewmodel.AddOnsViewModel
+import com.framework.extensions.observeOnce
 import java.util.*
 
-class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, BaseViewModel>(), RecyclerItemClickListener {
+class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, AddOnsViewModel>(), RecyclerItemClickListener {
 
   private var searchView: SearchView? = null
+  var adapterAddOns: AppBaseRecyclerViewAdapter<AllBoostAddOnsData>? = null
 
   companion object {
     @JvmStatic
@@ -31,16 +34,21 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ba
     return R.layout.fragment_all_boost_add_ons
   }
 
-  override fun getViewModelClass(): Class<BaseViewModel> {
-    return BaseViewModel::class.java
+  override fun getViewModelClass(): Class<AddOnsViewModel> {
+    return AddOnsViewModel::class.java
   }
 
   override fun onCreateView() {
     super.onCreateView()
-    binding?.rvBoostAddOns?.apply {
-      val adapter1 = AppBaseRecyclerViewAdapter(baseActivity, AllBoostAddOnsData().getData(), this@AllBoostAddonsFragment)
-      adapter = adapter1
-    }
+    viewModel?.getBoostAddOns(baseActivity)?.observeOnce(viewLifecycleOwner, {
+      val response = it as? AllBoostAddOnsDataResponse
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        binding?.rvBoostAddOns?.apply {
+          adapterAddOns = AppBaseRecyclerViewAdapter(baseActivity, response.data!!, this@AllBoostAddonsFragment)
+          adapter = adapterAddOns
+        }
+      } else showShortToast(it.message())
+    })
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {

@@ -1,54 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
   </data>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/container"
+  <androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:openDrawer="start">
 
-    <fragment
-      android:id="@+id/nav_host_fragment"
-      android:name="androidx.navigation.fragment.NavHostFragment"
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/container"
       android:layout_width="match_parent"
-      android:layout_height="0dp"
-      app:defaultNavHost="true"
-      app:layout_constraintBottom_toTopOf="@+id/view"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:navGraph="@navigation/mobile_navigation" />
+      android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-      android:id="@+id/view"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent">
-
-      <View
+      <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_6"
-        android:background="@drawable/up_shadow_d" />
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/mobile_navigation" />
 
-      <com.framework.views.bottombar.NiceBottomBar
-        android:id="@+id/nav_view"
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_60"
-        android:background="?android:attr/windowBackground"
-        app:indicatorEnabled="true"
-        app:indicatorGravity="top"
-        app:indicatorInterpolator="anticipateOvershoot"
-        app:itemFontActive="@font/semi_bold"
-        app:itemFontInActive="@font/regular"
-        app:menu="@menu/bottom_nav_menu" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_6"
+          android:background="@drawable/up_shadow_d" />
+
+        <com.framework.views.bottombar.NiceBottomBar
+          android:id="@+id/nav_view"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_60"
+          android:background="?android:attr/windowBackground"
+          app:clickPosition="4"
+          app:indicatorEnabled="true"
+          app:indicatorGravity="top"
+          app:indicatorInterpolator="anticipateOvershoot"
+          app:itemFontActive="@font/semi_bold"
+          app:itemFontInActive="@font/regular"
+          app:menu="@menu/bottom_nav_menu" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="@dimen/size_320"
+      android:layout_height="match_parent"
+      android:layout_gravity="start"
+      android:background="@color/white">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_150">
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:scaleType="centerCrop" />
+
+          <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.framework.views.CircularImageView
+              android:id="@+id/profile_image"
+              android:layout_width="@dimen/size_70"
+              android:layout_height="@dimen/size_70"
+              app:civ_border_color="@color/white"
+              app:civ_border_width="@dimen/size_2"
+              app:civ_shadow="true"
+              app:civ_shadow_color="@color/quantum_grey200"
+              app:civ_shadow_radius="@dimen/size_2"
+              app:srcCompat="@drawable/ic_user3" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/txt_business_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:ellipsize="end"
+              android:includeFontPadding="false"
+              android:maxLines="1"
+              android:text="PLASTO INDIA AND POLYMERS"
+              android:textColor="@color/white"
+              app:fontFamily="@font/bold"
+              app:textType="HEADING_6" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/txt_domain_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_2"
+              android:ellipsize="end"
+              android:includeFontPadding="false"
+              android:maxLines="1"
+              android:text="@string/www_sravansclinic_com"
+              android:textColor="@color/greyish_brown"
+              app:textType="CAPTION" />
+          </LinearLayout>
+
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_gravity="end"
+            android:padding="@dimen/size_10"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_camera_lens" />
+        </FrameLayout>
+
+        <com.framework.views.viewgroups.BaseRecyclerView
+          android:id="@+id/rv_left_drawer"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          tools:itemCount="8"
+          tools:listitem="@layout/item_drawer_view" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+  </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

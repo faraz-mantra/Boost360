@@ -31,6 +31,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       BUSINESS_CONTENT_SETUP_ITEM_VIEW -> BusinessContentSetupViewHolder(binding as ItemBusinessContentSetupBinding)
       ITEMS_CONTENT_SETUP_ITEM_VIEW -> ItemContentSetupHolder(binding as ItemContentSetupManageBinding)
       ALL_BOOST_ADD_ONS_VIEW -> BoostAddOnsViewHolder(binding as ItemBoostAddOnsBinding)
+      HOME_DRAWER_VIEW -> HomeDrawerViewHolder(binding as ItemDrawerViewBinding)
     }
   }
 
