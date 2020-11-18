@@ -14,6 +14,7 @@ import com.dashboard.constant.FragmentType
 import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
+import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
@@ -21,8 +22,6 @@ import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.pref.BASE_IMAGE_URL
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
-import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_ROOTALIASURI
-import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.dashboard.pref.UserSessionManager
 import com.dashboard.pref.WA_KEY
 import com.dashboard.pref.clientId
@@ -69,12 +68,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun getViewModelClass(): Class<DashboardViewModel> {
     return DashboardViewModel::class.java
   }
-
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
     setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown, binding?.btnShowDigitalScore)
-    setUserData()
+    val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
+    binding?.txtVersion?.text = "Version $versionName"
     getCategoryData()
     getNotificationCount()
     binding?.pagerRiaAcademy?.apply {
@@ -89,6 +88,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onResume() {
     super.onResume()
+    setUserData()
     getSiteMeter()
     setRecBusinessManageTask()
     setGrowthStatHigh()
@@ -245,7 +245,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun setUserData() {
     binding?.txtBusinessName?.text = session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
-    binding?.txtDomainName?.text = fromHtml("<u>${getDomainName(true)}</u>")
+    binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(true)}</u>")
     var imageUri = session?.getFPDetails(GET_FP_DETAILS_IMAGE_URI)
     if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
@@ -320,20 +320,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     })
   }
 
-  private fun getDomainName(isRemoveHttp: Boolean = false): String? {
-    val rootAliasUri = session?.getFPDetails(GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
-    val normalUri = "${session?.getFPDetails(GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
-    return if (rootAliasUri.isNullOrEmpty().not() && rootAliasUri != "null") {
-      return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace("http://", "")
-      else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace("https://", "") else rootAliasUri
-    } else normalUri
-  }
-
   private fun showErrorChannel(message: String) {
     showShortToast(message)
     hideProgress()
   }
 }
+
 
 private fun LinearLayoutCompat?.animateViewTopPadding(isDown: Boolean) {
   this?.apply {

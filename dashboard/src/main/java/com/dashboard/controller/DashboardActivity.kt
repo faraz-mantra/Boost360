@@ -2,6 +2,8 @@ package com.dashboard.controller
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavArgument
 import androidx.navigation.NavController
@@ -11,13 +13,18 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.model.live.drawerData.DrawerHomeData
+import com.dashboard.pref.BASE_IMAGE_URL
+import com.dashboard.pref.Key_Preferences
 import com.dashboard.pref.UserSessionManager
 import com.dashboard.pref.clientId
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
+import com.dashboard.utils.siteMeterCalculation
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
+import com.framework.glide.util.glideLoad
+import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.inventoryorder.model.floatMessage.MessageModel
 import java.util.*
@@ -27,6 +34,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private lateinit var mNavController: NavController
   private var session: UserSessionManager? = null
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
+  private var isHigh = false
 
   override fun getLayout(): Int {
     return R.layout.activity_dashboard
@@ -44,10 +52,39 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     binding?.navView?.setActiveItem(0)
     setDrawerHome()
     getFloatMessage()
+    val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
+    binding?.drawerView?.txtVersion?.text = "Version $versionName"
+  }
+
+  override fun onResume() {
+    super.onResume()
+    setUserData()
+    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage)
+  }
+
+  private fun setUserData() {
+    binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
+    binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
+    val score = session?.siteMeterCalculation() ?: 0
+    isHigh = (score >= 80)
+    binding?.drawerView?.txtPercentage?.text = "$score%"
+    binding?.drawerView?.progressBar?.progress = score
+    binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
+    binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+    var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
+    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
+      imageUri = BASE_IMAGE_URL + imageUri
+    }
+    binding?.drawerView?.imgBusinessLogo?.let { glideLoad(it, imageUri ?: "", R.drawable.business_edit_profile_icon_d) }
+    var bgImageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)
+    if (bgImageUri.isNullOrEmpty().not() && bgImageUri!!.contains("http").not()) {
+      bgImageUri = BASE_IMAGE_URL + bgImageUri
+    }
+    binding?.drawerView?.bgImage?.let { glideLoad(it, bgImageUri ?: "", R.drawable.general_services_background_img_d) }
   }
 
   private fun setDrawerHome() {
-    binding?.rvLeftDrawer?.apply {
+    binding?.drawerView?.rvLeftDrawer?.apply {
       adapterDrawer = AppBaseRecyclerViewAdapter(this@DashboardActivity, DrawerHomeData().getData(), this@DashboardActivity)
       adapter = adapterDrawer
     }
@@ -122,4 +159,25 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
 
   }
+
+  override fun onClick(v: View?) {
+    super.onClick(v)
+    when (v) {
+      binding?.drawerView?.btnSiteMeter -> {
+      }
+      binding?.drawerView?.imgBusinessLogo -> {
+      }
+      binding?.drawerView?.backgroundImage -> {
+      }
+    }
+  }
+}
+
+fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {
+  val rootAliasUri = getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
+  val normalUri = "${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+  return if (rootAliasUri.isNullOrEmpty().not() && rootAliasUri != "null") {
+    return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace("http://", "")
+    else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace("https://", "") else rootAliasUri
+  } else normalUri
 }
