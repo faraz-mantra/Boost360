@@ -885,7 +885,7 @@ public class SidePanelFragment extends Fragment {
 
         setThumbnail();
         setBackgroundImage();
-//        Log.v("StoreWidgets"," "+ Constants.StoreWidgets);
+        Log.v("StoreWidgets"," "+ Constants.StoreWidgets);
         if (Constants.StoreWidgets.contains("BOOSTKEYBOARD"))
             keyboardLock.setVisibility(View.GONE);
         else
