@@ -54,6 +54,7 @@ import kotlinx.android.synthetic.main.cart_fragment.*
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class CartFragment : BaseFragment(), CartFragmentListener {
 
@@ -103,6 +104,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     val tanPopUpFragment = TANPopUpFragment()
 
     val renewPopUpFragment = RenewalPopUpFragment()
+
+//    var couponDiwaliRedundant : MutableList<String?> = java.util.ArrayList()
+    var couponDiwaliRedundant : HashMap<String?, String?> = HashMap<String?, String?> ()
 
     lateinit var prefs: SharedPrefs
     var totalValidityDays = 0
@@ -245,18 +249,38 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             }
         }
 
-        cart_apply_coupon.setOnClickListener {
+/*        cart_apply_coupon.setOnClickListener {
+            if(couponDiwaliRedundant.contains("WILDFIRE_FB_LEAD_ADS") ){
+                Log.v("couponDiwaliRedundant1", " "+ couponDiwaliRedundant)
+            }else if(couponDiwaliRedundant.contains("WILDFIRE") ){
+                Log.v("couponDiwaliRedundant2", " "+ couponDiwaliRedundant)
+            }else if(couponDiwaliRedundant.contains("DICTATE") ){
+                Log.v("couponDiwaliRedundant3", " "+ couponDiwaliRedundant)
+            }else{
             couponPopUpFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     COUPON_POPUP_FRAGEMENT
             )
-        }
+            }
+        }*/
 
         cart_apply_coupon.setOnClickListener {
-            couponPopUpFragment.show(
+            if(couponDiwaliRedundant.contains("WILDFIRE_FB_LEAD_ADS") ){
+                Toasty.error(requireContext(), "In order to apply coupon remove the item "+ couponDiwaliRedundant.get("WILDFIRE_FB_LEAD_ADS"), Toast.LENGTH_SHORT, true).show()
+            }else if(couponDiwaliRedundant.contains("WILDFIRE") ){
+                Toasty.error(requireContext(), "In order to apply coupon remove the item "+ couponDiwaliRedundant.get("WILDFIRE"), Toast.LENGTH_SHORT, true).show()
+            }else if(couponDiwaliRedundant.contains("DICTATE") ){
+                Toasty.error(requireContext(), "In order to apply coupon remove the item "+ couponDiwaliRedundant.get("DICTATE"), Toast.LENGTH_SHORT, true).show()
+            }else{
+                couponPopUpFragment.show(
+                        (activity as UpgradeActivity).supportFragmentManager,
+                        COUPON_POPUP_FRAGEMENT
+                )
+            }
+            /*couponPopUpFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     COUPON_POPUP_FRAGEMENT
-            )
+            )*/
         }
         enter_gst_number.setOnClickListener {
             gstinPopUpFragment.show(
@@ -287,7 +311,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         prefs.storeMonthsValidity(totalValidityDays)
         months_validity_edit_inc.setOnClickListener {
             if (!bundles_in_cart) {
-                default_validity_months++
+                if (default_validity_months < 12){
+                    default_validity_months++
                 months_validity.text = default_validity_months.toString() + " months"
                 totalValidityDays = 30 * default_validity_months
                 prefs.storeMonthsValidity(totalValidityDays)
@@ -295,6 +320,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 totalCalculation()
 
                 Toasty.success(requireContext(), "Validity increased by 1 month.", Toast.LENGTH_SHORT, true).show()
+            }
             }
         }
 
@@ -926,6 +952,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 val bundles = arrayListOf<CartModel>()
                 for (items in it) {
                     if (items.item_type.equals("features")) {
+                        couponDiwaliRedundant.clear()
+                        if(items.feature_code.equals("WILDFIRE_FB_LEAD_ADS") || items.feature_code.equals("WILDFIRE") || items.feature_code.equals("DICTATE")){
+                            Log.v("couponDiwaliRedundant" , " "+ items.item_id)
+//                            couponDiwaliRedundant.add(items.feature_code)
+                            couponDiwaliRedundant.put(items.feature_code,items.item_name)
+                        }
                         features.add(items)
                     } else if (items.item_type.equals("bundles")) {
                         bundles.add(items)
@@ -1233,6 +1265,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     override fun deleteCartAddonsItem(itemID: String) {
         viewModel.deleteCartItems(itemID)
+        couponDiwaliRedundant.remove(itemID)
         //remove saved orderdetails from prefs
         prefs.storeCartOrderInfo(null)
     }

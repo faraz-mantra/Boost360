@@ -64,7 +64,7 @@ class AllFeatureAdaptor(
             args.putString("itemId", upgradeList.get(position).feature_code)
             details.arguments = args
             activity.addFragment(details, DETAILS_FRAGMENT)
-            Log.v("DETAILS_FRAGMENT"," "+ DETAILS_FRAGMENT)
+            Log.v("DETAILS_FRAGMENT"," "+ upgradeList.get(position).feature_code +" "+ upgradeList.get(position).feature_code)
 //            val intent = Intent(this.context, Details::class.java)
 //            intent.putExtra("position",position)
 //            ContextCompat.startActivity(this.context, intent, null)
@@ -120,10 +120,12 @@ class AllFeatureAdaptor(
             if(price>0) {
                 upgradePrice.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
                 pricingLayout.visibility = View.VISIBLE
+//                upgradeSubscribedStatus.visibility = View.GONE
             }else{
 //                pricingLayout.visibility = View.GONE
                 if(!updateModel.is_premium)  {
                   upgradePrice.text = "FREE"
+                    upgradeSubscribedStatus.visibility = View.VISIBLE
                 }
 
             }

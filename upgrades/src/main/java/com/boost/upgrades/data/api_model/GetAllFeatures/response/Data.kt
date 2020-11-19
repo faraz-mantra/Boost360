@@ -36,5 +36,7 @@ data class Data(
         @SerializedName("video_gallery")
         val video_gallery: List<VideoGallery>,
         @SerializedName("feedback_link")
-        val feedback_link: String
+        val feedback_link: String,
+        @SerializedName("_propertyName")
+        val propertyName: String
 )

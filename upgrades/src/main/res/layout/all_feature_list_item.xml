@@ -128,7 +128,7 @@
                 android:id="@+id/upgrade_list_subbscribed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="you've subscribed to it"
+                android:text="Activated for You"
                 android:textColor="#9b9b9b"
                 android:textSize="@dimen/_8sdp"/>
 

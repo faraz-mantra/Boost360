@@ -38,6 +38,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.separ.neural.inputmethod.compat.TextInfoCompatUtils;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -75,6 +76,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     LinearLayout noCallTrackLayout;
     LinearLayout secondLayout;
     LinearLayout firstLayout;
+    TextView tvNoCallRecorded;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,6 +119,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         dottedLine2.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         webCallCount = findViewById(R.id.web_call_count);
         phoneCallCount = findViewById(R.id.phone_call_count);
+        tvNoCallRecorded = findViewById(R.id.tv_no_call_recorded);
         allowCallPlayFlag = true;
 
         //tracking calls
@@ -363,6 +366,17 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             }
         }
         vmnCallAdapter.updateList(getSelectedTypeList(headerList));
+        if(getSelectedTypeList(headerList).size() == 0){
+            noCallTrackLayout.setVisibility(View.VISIBLE);
+            if(selectedViewType.equals("CONNECTED")){
+                tvNoCallRecorded.setText("No calls connected yet");
+            } else if(selectedViewType.equals("MISSED")){
+                tvNoCallRecorded.setText("No missed calls yet");
+            }
+
+        }else{
+            noCallTrackLayout.setVisibility(View.GONE);
+        }
 
     }
 
