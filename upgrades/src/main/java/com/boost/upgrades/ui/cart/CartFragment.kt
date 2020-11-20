@@ -144,6 +144,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         super.onDestroy()
         Log.e("onDestroy", "onDestroy of LoginFragment")
         viewModel.updateRenewValue("")
+        requireActivity().viewModelStore.clear()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -297,6 +298,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         }
 
         enter_tan_number.setOnClickListener {
+            tanPopUpFragment.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    TAN_POPUP_FRAGEMENT
+            )
+        }
+        entered_tan_number.setOnClickListener {
             tanPopUpFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     TAN_POPUP_FRAGEMENT
