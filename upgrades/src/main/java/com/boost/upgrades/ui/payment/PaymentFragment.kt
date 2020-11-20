@@ -110,7 +110,6 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         netbankingList.add(SingleNetBankData("CIUB", "City Union", razorpay.getBankLogoUrl("CIUB")))
         netbankingList.add(SingleNetBankData("SBIN", "SBI", razorpay.getBankLogoUrl("SBIN")))
 
-
         cardPaymentAdapter = CardPaymentAdapter(requireActivity(), ArrayList())
         upiAdapter = UPIAdapter(ArrayList())
         walletAdapter = WalletAdapter(razorpay, ArrayList(), this)
@@ -135,7 +134,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         initializeWalletRecycler()
         updateSubscriptionDetails()
 
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE PaymentScreen Initialised", "ADDONS_MARKETPLACE PaymentScreen", "")
+        WebEngageController.trackEvent("ADDONS MARKETPLACE", "pageview", "ADDONS MARKETPLACE PAYMENT SCREEN")
 
         var firebaseAnalytics = Firebase.analytics
         val revenue = cartCheckoutData.getDouble("amount")

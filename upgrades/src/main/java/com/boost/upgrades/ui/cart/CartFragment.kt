@@ -126,8 +126,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
         prefs = SharedPrefs(activity as UpgradeActivity)
-
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE Cart Initialised", "ADDONS_MARKETPLACE Cart", "")
+        WebEngageController.trackEvent("ADDONS MARKETPLACE", "pageview", "ADDONS MARKETPLACE CART")
 
         return root
     }
