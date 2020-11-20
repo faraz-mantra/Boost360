@@ -1,14 +1,18 @@
 package com.nowfloats.facebook.constants
 
 enum class FacebookPermissions {
-  manage_pages,
   pages_manage_instant_articles,
   pages_manage_metadata,
-  pages_show_list,
-  publish_pages,
-  read_insights,
   pages_messaging,
   catalog_management,
-  public_profile,
   email,
+  public_profile,
+  read_insights,
+  business_management,
+  pages_show_list,
+  pages_manage_cta,
+  manage_pages,
+  publish_pages,
+  ads_management
 }
+

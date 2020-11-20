@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.provider.FontRequest
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -113,6 +112,7 @@ class UpgradeActivity : AppCompatActivity() {
     progressDialog = ProgressDialog(this)
 
     prefs = SharedPrefs(this)
+   WebEngageController.trackEvent("ADDONS MARKETPLACE", "pageview", "ADDONS MARKETPLACE HOME")
     initView()
     initRazorPay()
   }
@@ -124,7 +124,7 @@ class UpgradeActivity : AppCompatActivity() {
       bundle.putStringArrayList("userPurchsedWidgets", intent.getStringArrayListExtra("userPurchsedWidgets"))
       bundle.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
 //      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
-      addFragmentHome(HomeFragment.newInstance(), HOME_FRAGMENT,bundle)
+      addFragmentHome(HomeFragment.newInstance(), HOME_FRAGMENT, bundle)
       //update userdetails and buyitem
       showingPopUp()
       supportFragmentManager.addOnBackStackChangedListener {
@@ -229,7 +229,7 @@ class UpgradeActivity : AppCompatActivity() {
     fragmentTransaction!!.addToBackStack(fragmentTag)
     fragmentTransaction!!.commit()
   }
-  fun addFragmentHome(fragment: Fragment, fragmentTag: String?,  args: Bundle?) {
+  fun addFragmentHome(fragment: Fragment, fragmentTag: String?, args: Bundle?) {
     fragment.setArguments(args)
     currentFragment = fragment
     fragmentManager = supportFragmentManager
@@ -271,14 +271,14 @@ class UpgradeActivity : AppCompatActivity() {
     goToHomeFragment()
     val args = Bundle()
     args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
-    addFragmentHome(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT,args)
+    addFragmentHome(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT, args)
   }
 
   fun goBackToRecommentedScreen() {
     goToHomeFragment()
     val args = Bundle()
     args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
-    addFragmentHome(ViewAllFeaturesFragment.newInstance(), VIEW_ALL_FEATURE,args)
+    addFragmentHome(ViewAllFeaturesFragment.newInstance(), VIEW_ALL_FEATURE, args)
   }
 
 
