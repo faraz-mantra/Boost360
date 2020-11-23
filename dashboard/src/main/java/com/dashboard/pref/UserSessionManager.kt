@@ -11,6 +11,7 @@ import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_TAG
 import com.dashboard.pref.Key_Preferences.GET_FP_EXPERIENCE_CODE
 import com.dashboard.pref.Key_Preferences.MAIN_PRIMARY_CONTACT_NUM
 import com.dashboard.pref.Key_Preferences.WEBSITE_SHARE
+import com.framework.utils.convertStringToList
 import java.util.*
 
 class UserSessionManager(var activity: Activity) {
@@ -242,6 +243,11 @@ class UserSessionManager(var activity: Activity) {
   fun storeSourceClientId(`val`: String?) {
     editor.putString(KEY_sourceClientId, `val`)
     editor.apply()
+  }
+
+  fun getStoreWidgets(): List<String>? {
+    val str = pref.getString(Key_Preferences.STORE_WIDGETS, "")
+    return if (str.isNullOrEmpty()) ArrayList<String>() else convertStringToList(str)
   }
 
   val sourceClientId: String?

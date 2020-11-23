@@ -3,26 +3,21 @@ package com.nowfloats.NavigationDrawer;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
 import com.nowfloats.network.MyOkHttpClient;
@@ -31,7 +26,6 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.rd.PageIndicatorView;
-import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.json.JSONArray;
@@ -280,7 +274,7 @@ public class HelpAndSupportFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (headerText != null) {
-            headerText.setText("Help and Support");
+            headerText.setText(getString(R.string.help_and_support));
         }
     }
 

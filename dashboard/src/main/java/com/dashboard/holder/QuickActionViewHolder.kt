@@ -1,5 +1,6 @@
 package com.dashboard.holder
 
+import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.ItemActionBinding
 import com.dashboard.databinding.ItemQuickActionBinding
 import com.dashboard.model.QuickActionData
@@ -26,6 +27,7 @@ class QuickActionViewHolder(binding: ItemQuickActionBinding) : AppBaseRecyclerVi
 
 private fun ItemActionBinding.setData(index: Int, item: QuickActionItem, listener: RecyclerItemClickListener?) {
   this.txtTitle.text = item.title
-  item.icon1?.let { this.imgIcon.setImageResource(it) }
-  this.mainContent.setOnClickListener { listener?.onItemClick(index, item, 88) }
+  val type = QuickActionData.QuickActionType.from(item.quickActionType)
+  type?.icon?.let { this.imgIcon.setImageResource(it) }
+  this.mainContent.setOnClickListener { listener?.onItemClick(index, item, RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal) }
 }

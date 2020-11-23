@@ -4,10 +4,15 @@ import com.dashboard.R
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
+import com.framework.utils.PreferencesUtils
+import com.framework.utils.convertListObjToString
+import com.framework.utils.convertStringToList
+
+const val LAST_SEEN_DATA = "LAST_SEEN_DATA"
 
 class ManageBusinessData(
     var title: String? = null,
-    var iconType: String? = null,
+    var businessType: String? = null,
     var isLock: Boolean = false,
 ) : BaseResponse(), AppBaseRecyclerViewItem {
 
@@ -19,19 +24,19 @@ class ManageBusinessData(
 
   fun getData(): ArrayList<ManageBusinessData> {
     val list = ArrayList<ManageBusinessData>()
-    list.add(ManageBusinessData(title = "Projects and Teams", iconType = "ic_project_terms_d", isLock = true))
-    list.add(ManageBusinessData(title = "Unlimited Digital Brochures", iconType = "ic_digital_brochures_d"))
-    list.add(ManageBusinessData(title = "Customer Calls", iconType = "ic_customer_call_d"))
-    list.add(ManageBusinessData(title = "Customer Enquiries", iconType = "ic_customer_enquiries_d"))
-    list.add(ManageBusinessData(title = "Daily Business Updates", iconType = "ic_daily_business_update_d"))
-    list.add(ManageBusinessData(title = "Products Catalogue", iconType = "ic_product_cataloge_d"))
-    list.add(ManageBusinessData(title = "Customer Testimonials", iconType = "ic_customer_testimonial_d"))
-    list.add(ManageBusinessData(title = "Business Keyboard", iconType = "ic_business_keyboard_d", isLock = true))
+    list.add(ManageBusinessData(title = "Projects and Teams", businessType = BusinessType.ic_project_terms_d.name, isLock = true))
+    list.add(ManageBusinessData(title = "Unlimited Digital Brochures", businessType = BusinessType.ic_digital_brochures_d.name))
+    list.add(ManageBusinessData(title = "Customer Calls", businessType = BusinessType.ic_customer_call_d.name))
+    list.add(ManageBusinessData(title = "Customer Enquiries", businessType = BusinessType.ic_customer_enquiries_d.name))
+    list.add(ManageBusinessData(title = "Daily Business Updates", businessType = BusinessType.ic_daily_business_update_d.name))
+    list.add(ManageBusinessData(title = "Products Catalogue", businessType = BusinessType.ic_product_cataloge_d.name))
+    list.add(ManageBusinessData(title = "Customer Testimonials", businessType = BusinessType.ic_customer_testimonial_d.name))
+    list.add(ManageBusinessData(title = "Business Keyboard", businessType = BusinessType.ic_business_keyboard_d.name, isLock = true))
     return list
   }
 
 
-  enum class IconType(var type: String, var icon: Int) {
+  enum class BusinessType(var type: String, var icon: Int) {
     ic_project_terms_d("ic_project_terms_d", R.drawable.ic_project_terms_d),
     ic_digital_brochures_d("ic_digital_brochures_d", R.drawable.ic_digital_brochures_d),
     ic_customer_call_d("ic_customer_call_d", R.drawable.ic_customer_call_d),
@@ -70,7 +75,19 @@ class ManageBusinessData(
     website_social_share_plugin("website_social_share_plugin", R.drawable.website_social_share_plugin);
 
     companion object {
-      fun fromType(type: String?): IconType? = values().firstOrNull { it.type == type }
+      fun fromName(name: String?): BusinessType? = values().firstOrNull { it.name == name }
     }
   }
+
+  fun getLastSeenData(): ArrayList<ManageBusinessData> {
+    return ArrayList(convertStringToList(PreferencesUtils.instance.getDataN(LAST_SEEN_DATA) ?: "") ?: ArrayList())
+  }
+
+  fun saveLastSeenData(data: ManageBusinessData) {
+    val addOnsLast = getLastSeenData()
+    addOnsLast.add(0, data)
+    if (addOnsLast.size > 8) addOnsLast.removeLast()
+    PreferencesUtils.instance.saveDataN(LAST_SEEN_DATA, convertListObjToString(addOnsLast) ?: "")
+  }
+
 }

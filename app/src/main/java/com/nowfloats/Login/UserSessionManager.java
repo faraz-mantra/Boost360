@@ -11,6 +11,8 @@ import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
 import com.facebook.login.LoginManager;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.Graph.database.SaveDataCounts;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.Login.Model.FloatsMessageModel;
@@ -32,6 +34,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -756,6 +759,13 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public String getFPDetails(String key) {
         return pref.getString(key.trim(), "");
+    }
+
+    public List<String> getStoreWidgets() {
+        String str = pref.getString(Key_Preferences.STORE_WIDGETS, "");
+        if (TextUtils.isEmpty(str)) return new ArrayList();
+        return new Gson().fromJson(str, new TypeToken<List<String>>() {
+        }.getType());
     }
 
     public boolean isBoostBubbleEnabled() {

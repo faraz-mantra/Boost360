@@ -3,6 +3,8 @@ package com.dashboard.pref
 import android.util.DisplayMetrics
 import java.util.*
 
+const val REFERRAL_CAMPAIGN_CODE = 26277
+
 var PREF_NAME = "nowfloatsPrefs"
 
 val clientId: String get() = clientId2
@@ -36,3 +38,5 @@ var currencyArray = ArrayList<String>()
 const val WA_KEY = "58ede4d4ee786c1604f6c535"
 
 const val BASE_IMAGE_URL = "https://content.withfloats.com"
+
+var StoreWidgets = ArrayList<String>()

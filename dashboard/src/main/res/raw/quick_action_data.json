@@ -1,0 +1,38 @@
+/* This data pair of four items */
+{
+  "data": [
+    {
+      "items": [
+        {
+          "quickActionType": "POST_STATUS_STORY",
+          "title": "Post New\nStatus/Story"
+        },
+        {
+          "quickActionType": "POST_NEW_UPDATE",
+          "title": "Post new \nUpdate"
+        },
+        {
+          "quickActionType": "PLACE_ORDER_APT_BOOKING",
+          "title": "Place New\nOrder"
+        },
+        {
+          "quickActionType": "ADD_PHOTO_GALLERY",
+          "title": "Add photo\nto gallery"
+        }
+      ]
+    },
+    {
+      "items": [
+        {
+          "quickActionType": "ADD_TESTIMONIAL",
+          "title": "Add new\ntestimonial"
+        },
+        {
+          "quickActionType": "ADD_CUSTOM_PAGE",
+          "title": "Add new\ncustom page"
+        }
+      ]
+    }
+  ]
+}
+

@@ -37,7 +37,7 @@
         android:layout_height="@dimen/size_22"
         android:layout_marginStart="@dimen/size_4"
         android:layout_marginEnd="@dimen/size_24"
-        app:srcCompat="@drawable/ic_customers_d" />
+        app:srcCompat="@drawable/ic_nav_dashboard_d" />
 
       <com.framework.views.customViews.CustomTextView
         android:id="@+id/textViewName"
