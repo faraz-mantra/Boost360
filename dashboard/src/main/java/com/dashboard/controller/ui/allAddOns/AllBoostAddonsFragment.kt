@@ -51,7 +51,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         if (adapterAddOns == null) {
           binding?.rvBoostAddOns?.apply {
-            adapterAddOns = AppBaseRecyclerViewAdapter(baseActivity, setLastSeenData(response.data!!), this@AllBoostAddonsFragment)
+            adapterAddOns = AppBaseRecyclerViewAdapter(baseActivity, response.data!!, this@AllBoostAddonsFragment)
             adapter = adapterAddOns
           }
         } else adapterAddOns?.notify(setLastSeenData(response.data!!))
