@@ -2,7 +2,9 @@ package com.dashboard.holder
 
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import com.dashboard.R
+import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.ItemBoostAddOnsBinding
 import com.dashboard.model.live.addOns.AllBoostAddOnsData
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
@@ -24,7 +26,10 @@ class BoostAddOnsViewHolder(binding: ItemBoostAddOnsBinding) : AppBaseRecyclerVi
     binding.txtSubTitle.text = data.subTitle
 
     if (data.isLastSeen.not()) {
+      activity?.resources?.getDimensionPixelSize(R.dimen.size_74)?.let { binding.contentParent.layoutParams.height = it }
+      activity?.resources?.getDimensionPixelSize(R.dimen.size_10)?.let { binding.view.layoutParams.height = it }
       activity?.let { binding.imgSymbol.setTintColor(ContextCompat.getColor(it, R.color.greyish_brown)) }
+      binding.mainContent.background = activity?.let { ContextCompat.getDrawable(it, R.color.white_smoke) }
       setExpendStatusView(data)
       binding.imgArrow.rotation = if (data.isExpend) ROTATED_POSITION else INITIAL_POSITION
       binding.contentParent.setOnClickListener {
@@ -32,13 +37,24 @@ class BoostAddOnsViewHolder(binding: ItemBoostAddOnsBinding) : AppBaseRecyclerVi
         binding.imgArrow.rotateImage(data.isExpend)
         setExpendStatusView(data)
       }
-    } else setLastSeenView(data)
+    } else {
+      activity?.resources?.getDimensionPixelSize(R.dimen.size_40)?.let { binding.contentParent.layoutParams.height = it }
+      activity?.resources?.getDimensionPixelSize(R.dimen.size_16)?.let { binding.view.layoutParams.height = it }
+      setLastSeenView(data)
+    }
 
     if (data.manageBusinessList.isNullOrEmpty().not()) {
+      binding.rvManageBusiness.visible()
       activity?.let {
         binding.rvManageBusiness.apply {
           visible()
           val adapter1 = AppBaseRecyclerViewAdapter(it, data.manageBusinessList!!, this@BoostAddOnsViewHolder)
+          val layoutManager1: GridLayoutManager = object : GridLayoutManager(context, 4) {
+            override fun canScrollVertically(): Boolean {
+              return false
+            }
+          }
+          layoutManager = layoutManager1
           adapter = adapter1
         }
       }
@@ -65,6 +81,8 @@ class BoostAddOnsViewHolder(binding: ItemBoostAddOnsBinding) : AppBaseRecyclerVi
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-
+    if (actionType == RecyclerViewActionType.BUSINESS_ADD_ONS_CLICK.ordinal) {
+      listener?.onItemClick(position, item, RecyclerViewActionType.BUSINESS_ADD_ONS_CLICK.ordinal)
+    }
   }
 }

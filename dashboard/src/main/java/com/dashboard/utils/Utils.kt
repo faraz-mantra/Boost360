@@ -12,6 +12,9 @@ import android.net.Uri
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.webkit.MimeTypeMap
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import com.framework.glide.util.loadGifGlide
 import com.framework.views.customViews.CustomImageView
 import java.io.File
@@ -19,6 +22,16 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.math.floor
+
+fun <F : Fragment> AppCompatActivity.getFragment(fragmentClass: Class<F>): F? {
+  val navHostFragment = this.supportFragmentManager.fragments.first() as NavHostFragment
+  navHostFragment.childFragmentManager.fragments.forEach {
+    if (fragmentClass.isAssignableFrom(it.javaClass)) {
+      return it as F
+    }
+  }
+  return null
+}
 
 inline fun <reified T : Any> Any.cast(): T? {
   return this as? T

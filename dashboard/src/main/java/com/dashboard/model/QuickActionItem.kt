@@ -6,7 +6,7 @@ import com.framework.base.BaseResponse
 
 class QuickActionItem(
     var title: String? = null,
-    var icon1: Int? = null,
+    var quickActionType: String = "",
 ) : BaseResponse(), AppBaseRecyclerViewItem {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.QUICK_ACTION_ITEM_VIEW.getLayout()

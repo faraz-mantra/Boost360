@@ -18,6 +18,14 @@ object WithFloatRepository : AppBaseRepository<WithFloatRemoteData, DashboardLoc
   }
 
 
+  fun getNavDashboardData(context: Context): Observable<BaseResponse> {
+    return makeLocalRequest(DashboardLocalDataSource.getNavDashboardData(context), TaskCode.GET_NAV_DASHBOARD_DATA)
+  }
+
+  fun getQuickActionData(context: Context): Observable<BaseResponse> {
+    return makeLocalRequest(DashboardLocalDataSource.getQuickActionData(context), TaskCode.GET_QUICK_ACTION_DATA)
+  }
+
   override fun getRemoteDataSourceClass(): Class<WithFloatRemoteData> {
     return WithFloatRemoteData::class.java
   }

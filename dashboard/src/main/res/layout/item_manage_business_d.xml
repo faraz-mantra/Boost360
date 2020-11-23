@@ -4,11 +4,14 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/size_6"
     android:layout_marginTop="@dimen/size_4"
     android:layout_marginBottom="@dimen/size_4"
+    android:clickable="true"
+    android:focusable="true"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -39,7 +42,7 @@
         android:layout_height="@dimen/size_30"
         android:layout_gravity="end|top"
         android:elevation="2dp"
-        tools:srcCompat="@drawable/ic_lock_add_ons_d" />
+        app:srcCompat="@drawable/ic_lock_add_ons_d" />
     </FrameLayout>
 
     <com.framework.views.customViews.CustomTextView
@@ -50,9 +53,9 @@
       android:ellipsize="end"
       android:gravity="center"
       android:maxLines="2"
-      tools:text="Projects and Teams"
       android:textColor="@color/warm_grey_two"
-      app:textType="CAPTION" />
+      app:textType="CAPTION"
+      tools:text="Projects and Teams" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>

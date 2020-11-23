@@ -1295,25 +1295,29 @@ in api 29 for ImagePicker library in ManageProductFragment-->
             android:name="com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.nowfloats.manufacturing.projectandteams.ui.project.ProjectActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresDetailsActivity"
-            android:screenOrientation="portrait" />
+      <activity
+        android:name="com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsActivity"
+        android:screenOrientation="portrait" />
+      <activity
+        android:name="com.nowfloats.manufacturing.projectandteams.ui.project.ProjectActivity"
+        android:screenOrientation="portrait" />
+      <activity
+        android:name="com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresDetailsActivity"
+        android:screenOrientation="portrait" />
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
+      <activity
+        android:name="com.nowfloats.helper.AppFragmentContainerActivity"
+        android:screenOrientation="portrait" />
+
+      <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="${applicationId}.provider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/provider_paths" />
+      </provider>
     </application>
 
 </manifest>

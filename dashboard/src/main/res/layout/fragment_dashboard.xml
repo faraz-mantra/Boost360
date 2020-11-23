@@ -122,7 +122,7 @@
                 android:id="@+id/view_all_business_contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/size_10"
+                android:layout_margin="@dimen/size_12"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -162,6 +162,7 @@
                   android:clickable="true"
                   android:focusable="true"
                   android:padding="@dimen/size_4"
+                  android:id="@+id/btn_digital_channel"
                   app:srcCompat="@drawable/ic_filter_d" />
               </LinearLayout>
 

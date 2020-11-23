@@ -30,6 +30,7 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.setGifAnim
 import com.dashboard.utils.siteMeterData
+import com.dashboard.utils.startDigitalChannel
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -60,6 +61,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private var adapterBusinessContent: AppBaseRecyclerViewAdapter<BusinessContentSetupData>? = null
   private var channelAdapter: AppBaseRecyclerViewAdapter<ChannelData>? = null
+  private var adapterQuickAction: AppBaseRecyclerViewAdapter<QuickActionData>? = null
+  private var adapterBusinessData: AppBaseRecyclerViewAdapter<ManageBusinessData>? = null
 
   override fun getLayout(): Int {
     return R.layout.fragment_dashboard
@@ -68,10 +71,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun getViewModelClass(): Class<DashboardViewModel> {
     return DashboardViewModel::class.java
   }
+
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown, binding?.btnShowDigitalScore)
+    setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown, binding?.btnShowDigitalScore, binding?.btnDigitalChannel)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     getCategoryData()
@@ -92,22 +96,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getSiteMeter()
     setRecBusinessManageTask()
     setGrowthStatHigh()
-  }
-
-  override fun onClick(v: View) {
-    super.onClick(v)
-    when (v) {
-      binding?.btnVisitingCardUp -> visitingCardShowHide(true)
-      binding?.btnVisitingCardDown -> visitingCardShowHide(false)
-      binding?.btnShowDigitalScore -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
-    }
-  }
-
-  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    when (actionType) {
-      RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
-      RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, position) })
-    }
   }
 
   private fun visitingCardShowHide(isDown: Boolean) {
@@ -205,18 +193,28 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun setRecBusinessManageTask() {
     (if (isHigh) binding?.highRecommendedTask else binding?.lowRecommendedTask)?.apply {
-      pagerQuickAction.apply {
-        val adapterPager5 = AppBaseRecyclerViewAdapter(baseActivity, QuickActionData().getData(), this@DashboardFragment)
-        offscreenPageLimit = 3
-        adapter = adapterPager5
-        dotIndicatorAction.setViewPager2(this)
-        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-      }
+      viewModel?.getQuickActionData(baseActivity)?.observeOnce(viewLifecycleOwner, {
+        val response = it as? QuickActionDataResponse
+        if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+          if (adapterQuickAction == null) {
+            pagerQuickAction.apply {
+              adapterQuickAction = AppBaseRecyclerViewAdapter(baseActivity, response.data!!, this@DashboardFragment)
+              offscreenPageLimit = 3
+              adapter = adapterQuickAction
+              dotIndicatorAction.setViewPager2(this)
+              setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+            }
+          } else adapterQuickAction?.notify(response.data!!)
+        } else showShortToast(baseActivity.getString(R.string.quick_action_data_error))
+      })
+
     }
     (if (isHigh) binding?.highManageBusiness else binding?.lowManageBusiness)?.apply {
       rvManageBusiness.apply {
-        val adapter1 = AppBaseRecyclerViewAdapter(baseActivity, ManageBusinessData().getData(), this@DashboardFragment)
-        adapter = adapter1
+        if (adapterBusinessData == null) {
+          adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, ManageBusinessData().getData(), this@DashboardFragment)
+          adapter = adapterBusinessData
+        } else adapterBusinessData?.notify(ManageBusinessData().getData())
       }
       btnShowAll.setOnClickListener { startFragmentDashboardActivity(FragmentType.ALL_BOOST_ADD_ONS) }
     }
@@ -324,6 +322,72 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     showShortToast(message)
     hideProgress()
   }
+
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+      RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, position) })
+      RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal -> {
+        val data = item as? QuickActionItem ?: return
+        QuickActionData.QuickActionType.from(data.quickActionType)?.let { quickActionClick(it) }
+      }
+      RecyclerViewActionType.BUSINESS_ADD_ONS_CLICK.ordinal -> {
+        val data = item as? ManageBusinessData ?: return
+        ManageBusinessData().saveLastSeenData(data)
+        ManageBusinessData.BusinessType.fromName(data.businessType)?.let { businessAddOnsClick(it) }
+      }
+    }
+  }
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.btnVisitingCardUp -> visitingCardShowHide(true)
+      binding?.btnVisitingCardDown -> visitingCardShowHide(false)
+      binding?.btnDigitalChannel -> session?.let { baseActivity.startDigitalChannel(it) }
+      binding?.btnShowDigitalScore -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+    }
+  }
+
+
+  private fun quickActionClick(type: QuickActionData.QuickActionType) {
+    when (type) {
+      QuickActionData.QuickActionType.POST_STATUS_STORY -> {
+      }
+      QuickActionData.QuickActionType.POST_NEW_UPDATE -> {
+      }
+      QuickActionData.QuickActionType.PLACE_ORDER_APT_BOOKING -> {
+      }
+      QuickActionData.QuickActionType.ADD_PHOTO_GALLERY -> {
+      }
+      QuickActionData.QuickActionType.ADD_TESTIMONIAL -> {
+      }
+      QuickActionData.QuickActionType.ADD_CUSTOM_PAGE -> {
+      }
+    }
+  }
+
+  private fun businessAddOnsClick(type: ManageBusinessData.BusinessType) {
+    when (type) {
+      ManageBusinessData.BusinessType.ic_project_terms_d -> {
+      }
+      ManageBusinessData.BusinessType.ic_digital_brochures_d -> {
+      }
+      ManageBusinessData.BusinessType.ic_customer_call_d -> {
+      }
+      ManageBusinessData.BusinessType.ic_customer_enquiries_d -> {
+      }
+      ManageBusinessData.BusinessType.ic_daily_business_update_d -> {
+      }
+      ManageBusinessData.BusinessType.ic_product_cataloge_d -> {
+      }
+      ManageBusinessData.BusinessType.ic_customer_testimonial_d -> {
+      }
+      ManageBusinessData.BusinessType.ic_business_keyboard_d -> {
+      }
+    }
+  }
+
 }
 
 

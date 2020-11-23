@@ -16,13 +16,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,10 +30,17 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.boost.upgrades.UpgradeActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
@@ -102,16 +102,16 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        session = new UserSessionManager(requireActivity().getApplicationContext(), (HomeActivity) requireActivity());
+        session = new UserSessionManager(requireActivity().getApplicationContext(), requireActivity());
 
         //show or hide if feature is available to user
-        mainLayout = (ScrollView) view.findViewById(R.id.main_layout);
-        secondaryLayout= (LinearLayout) view.findViewById(R.id.secondary_layout);
-        buyItemButton = (TextView) view.findViewById(R.id.buy_item);
-        if(Constants.StoreWidgets.contains("BOOSTKEYBOARD")) {
+        mainLayout = view.findViewById(R.id.main_layout);
+        secondaryLayout = view.findViewById(R.id.secondary_layout);
+        buyItemButton = view.findViewById(R.id.buy_item);
+        if (Constants.StoreWidgets.contains("BOOSTKEYBOARD")) {
             mainLayout.setVisibility(View.VISIBLE);
             secondaryLayout.setVisibility(View.GONE);
-        }else{
+        } else {
             mainLayout.setVisibility(View.GONE);
             secondaryLayout.setVisibility(View.VISIBLE);
         }
@@ -425,7 +425,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
         progressDialog.setMessage(status);
         progressDialog.setCancelable(false);
         progressDialog.show();
-        Intent intent = new Intent((HomeActivity) requireActivity(), UpgradeActivity.class);
+        Intent intent = new Intent(requireActivity(), UpgradeActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());

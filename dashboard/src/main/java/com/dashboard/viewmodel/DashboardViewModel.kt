@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.appservice.rest.repository.KitWebActionRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
+import com.dashboard.rest.repository.WithFloatRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -45,6 +46,13 @@ class DashboardViewModel : BaseViewModel() {
     return WithFloatTwoRepository.getNotificationCount(clientId, fpId).toLiveData()
   }
 
+  fun getNavDashboardData(context: Context): LiveData<BaseResponse> {
+    return WithFloatRepository.getNavDashboardData(context).toLiveData()
+  }
+
+  fun getQuickActionData(context: Context): LiveData<BaseResponse> {
+    return WithFloatRepository.getQuickActionData(context).toLiveData()
+  }
 }
 
 fun getJsonRequest(fpTag: String?): String {

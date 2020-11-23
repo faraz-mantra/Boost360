@@ -11,7 +11,7 @@ import com.nowfloats.util.MixPanelController;
 
 import java.util.ArrayList;
 
-import nfkeyboard.util.SharedPrefUtil;
+import static com.framework.utils.GsonUtilsKt.convertListObjToString;
 
 /**
  * Created by NowFloatsDev on 25/05/2015.
@@ -147,7 +147,8 @@ public class ProcessFPDetails {
             ArrayList<String> widgetsList = get_fp_details_model.FPWebWidgets;
             Constants.StorePackageIds = get_fp_details_model.PackageIds;
             Constants.StoreWidgets = get_fp_details_model.FPWebWidgets;
-            Log.d("Constants.storeWidgets","widgets : "+widgetsList);
+            session.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(get_fp_details_model.FPWebWidgets));
+            Log.d("Constants.storeWidgets", "widgets : " + widgetsList);
             Constants.storeSecondaryImages = get_fp_details_model.SecondaryTileImages;
 
 //        for(String widget : widgetsList)

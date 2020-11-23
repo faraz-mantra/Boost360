@@ -28,6 +28,7 @@
   <string name="improve">Improve</string>
   <string name="my_products_catalog">My products catalog</string>
   <string name="all_boost_add_ons">All Boost add-ons</string>
+  <string name="tag_for_partners">.nowfloats.com</string>
 
   <!-- SITE-Meter Percentage  -->
   <string name="buydomain_percentage">10</string>
@@ -47,6 +48,8 @@
   <string name="add_missing_info_better_online_traction">Add missing info and improve your digital readiness\nscore above %s for better online traction.</string>
   <string name="site_completed">site completed</string>
   <string name="your_site_health">Your Site Health</string>
+  <string name="navigation_data_error">Navigation data getting error!</string>
+  <string name="quick_action_data_error">Quick action data getting error!</string>
   <!-- SITE-Meter Percentage  -->
 
 </resources>

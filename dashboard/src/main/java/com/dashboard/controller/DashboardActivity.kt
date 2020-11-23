@@ -5,14 +5,20 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
+import com.dashboard.constant.FragmentType
+import com.dashboard.constant.IntentConstant
+import com.dashboard.constant.RecyclerViewActionType
+import com.dashboard.controller.ui.dashboard.DashboardFragment
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.model.live.drawerData.DrawerHomeData
+import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.pref.BASE_IMAGE_URL
 import com.dashboard.pref.Key_Preferences
 import com.dashboard.pref.UserSessionManager
@@ -20,7 +26,7 @@ import com.dashboard.pref.clientId
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
-import com.dashboard.utils.siteMeterCalculation
+import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
@@ -35,6 +41,15 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private var session: UserSessionManager? = null
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
   private var isHigh = false
+  private val navHostFragment: NavHostFragment?
+    get() {
+      return supportFragmentManager.fragments.first() as? NavHostFragment
+    }
+
+  private val childFragments: List<Fragment>?
+    get() {
+      return navHostFragment?.childFragmentManager?.fragments
+    }
 
   override fun getLayout(): Int {
     return R.layout.activity_dashboard
@@ -84,10 +99,24 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun setDrawerHome() {
-    binding?.drawerView?.rvLeftDrawer?.apply {
-      adapterDrawer = AppBaseRecyclerViewAdapter(this@DashboardActivity, DrawerHomeData().getData(), this@DashboardActivity)
-      adapter = adapterDrawer
-    }
+    viewModel.getNavDashboardData(this).observeOnce(this, {
+      val response = it as? DrawerHomeDataResponse
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        binding?.drawerView?.rvLeftDrawer?.apply {
+          adapterDrawer = AppBaseRecyclerViewAdapter(this@DashboardActivity, checkLockData(response.data!!), this@DashboardActivity)
+          adapter = adapterDrawer
+        }
+      } else showShortToast(this.getString(R.string.navigation_data_error))
+    })
+  }
+
+  private fun checkLockData(data: ArrayList<DrawerHomeData>): ArrayList<DrawerHomeData> {
+//    data.forEach {
+//      if (it.navType== DrawerHomeData.NavType.NAV_CALLS.name && ){
+//
+//      }
+//    }
+    return data
   }
 
   private fun getFloatMessage() {
@@ -133,17 +162,13 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    val navHostFragment = supportFragmentManager.fragments.first() as? NavHostFragment
-    navHostFragment?.let {
-      val childFragments = navHostFragment.childFragmentManager.fragments
-      childFragments.forEach { fragment -> fragment.onActivityResult(requestCode, resultCode, data) }
-    }
+    childFragments?.forEach { fragment -> fragment.onActivityResult(requestCode, resultCode, data) }
   }
 
   override fun onBackPressed() {
     when {
       (binding?.drawerLayout?.isDrawerOpen(GravityCompat.START) == true) -> binding?.drawerLayout?.closeDrawers()
-      (mNavController.currentDestination?.id == R.id.navigation_dashboard) -> this.onNavPressed()
+      (mNavController.currentDestination?.id == R.id.navigation_dashboard) -> this.finish()
       else -> openDashboard()
     }
   }
@@ -156,21 +181,46 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     return map
   }
 
-  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-
-  }
-
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding?.drawerView?.btnSiteMeter -> {
-      }
+      binding?.drawerView?.btnSiteMeter -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
       binding?.drawerView?.imgBusinessLogo -> {
       }
       binding?.drawerView?.backgroundImage -> {
       }
     }
   }
+
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.NAV_CLICK_ITEM_CLICK.ordinal -> {
+        val data = item as? DrawerHomeData ?: return
+        DrawerHomeData.NavType.from(data.navType)?.let { navClickEvent(it) }
+      }
+    }
+  }
+
+  private fun navClickEvent(type: DrawerHomeData.NavType) {
+    when (type) {
+      DrawerHomeData.NavType.NAV_HOME -> if ((getFragment(DashboardFragment::class.java) == null)) openDashboard()
+      DrawerHomeData.NavType.NAV_DIGITAL_CHANNEL -> session?.let { this.startDigitalChannel(it) }
+      DrawerHomeData.NavType.NAV_MANAGE_CONTENT -> session?.let { this.startManageContentActivity(it) }
+      DrawerHomeData.NavType.NAV_CALLS -> this.startVmnCallCard()
+      DrawerHomeData.NavType.NAV_ENQUIRY -> this.startBusinessEnquiry()
+      DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let { this.startManageInventoryActivity(it) }
+      DrawerHomeData.NavType.NAV_NEWS_LETTER_SUB -> this.startSubscriber()
+      DrawerHomeData.NavType.NAV_BOOST_KEYBOARD -> session?.let { this.startKeyboardActivity(it) }
+      DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+      DrawerHomeData.NavType.NAV_SETTING -> session?.let { this.startSettingActivity(it) }
+      DrawerHomeData.NavType.NAV_HELP_SUPPORT -> session?.let { this.startHelpAndSupportActivity(it) }
+      DrawerHomeData.NavType.NAV_ABOUT_BOOST -> session?.let { this.startAboutBoostActivity(it) }
+      DrawerHomeData.NavType.NAV_REFER_FRIEND -> {
+      }
+    }
+    if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.START) == true) binding?.drawerLayout?.closeDrawers()
+  }
+
 }
 
 fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {

@@ -52,6 +52,10 @@ class PreferencesUtils {
   fun getData(key: PreferencesKey): String? {
     return getData(key.name, null)
   }
+
+  fun getDataN(key: String): String? {
+    return getData(key, null)
+  }
 }
 
 @Synchronized

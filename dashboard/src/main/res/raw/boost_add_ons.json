@@ -5,22 +5,22 @@
       "isLastSeen": false,
       "manageBusinessList": [
         {
-          "iconType": "video_consultations",
+          "businessType": "video_consultations",
           "isLock": true,
           "title": "Video consultations"
         },
         {
-          "iconType": "in_clinic_appointments",
+          "businessType": "in_clinic_appointments",
           "isLock": false,
           "title": "In-clinic Appointments"
         },
         {
-          "iconType": "ic_customer_call_d",
+          "businessType": "ic_customer_call_d",
           "isLock": false,
           "title": "Patient Calls"
         },
         {
-          "iconType": "ic_customer_enquiries_d",
+          "businessType": "ic_customer_enquiries_d",
           "isLock": false,
           "title": "Patient Enquiries"
         }
@@ -33,63 +33,63 @@
       "isLastSeen": false,
       "manageBusinessList": [
         {
-          "iconType": "ic_daily_business_update_d",
-          "isLock": true,
+          "businessType": "ic_daily_business_update_d",
+          "isLock": false,
           "title": "Daily Tips & Updates"
         },
         {
-          "iconType": "picture_gallery",
+          "businessType": "picture_gallery",
           "isLock": false,
           "title": "Pictures Gallery"
         },
         {
-          "iconType": "ic_custom_page_add",
+          "businessType": "ic_custom_page_add",
           "isLock": false,
           "title": "Custom Pages"
         },
         {
-          "iconType": "website_chatbot",
+          "businessType": "website_chatbot",
           "isLock": false,
           "title": "Website Catboat"
         },
         {
-          "iconType": "ic_customer_testimonial_d",
+          "businessType": "ic_customer_testimonial_d",
           "isLock": false,
           "title": "Customer Testimonials"
         },
         {
-          "iconType": "content_sync_acros_channels",
+          "businessType": "content_sync_acros_channels",
           "isLock": false,
           "title": "Content sync across channels"
         },
         {
-          "iconType": "unlimited_website_bandwidth",
+          "businessType": "unlimited_website_bandwidth",
           "isLock": false,
           "title": "Unlimited Website Bandwidth"
         },
         {
-          "iconType": "unlimited_content_updates",
+          "businessType": "unlimited_content_updates",
           "isLock": true,
           "title": "Unlimited Content Updates"
         },
         {
-          "iconType": "ic_business_keyboard_d",
+          "businessType": "ic_business_keyboard_d",
           "isLock": false,
           "title": "Boost Keyboard"
         },
         {
-          "iconType": "website_social_share_plugin",
-          "isLock": true,
+          "businessType": "website_social_share_plugin",
+          "isLock": false,
           "title": "Website social share plugin"
         },
         {
-          "iconType": "assisted_content_creation",
+          "businessType": "assisted_content_creation",
           "isLock": false,
           "title": "Dictate: Assisted content creation"
         },
         {
-          "iconType": "autamated_seo_d",
-          "isLock": true,
+          "businessType": "autamated_seo_d",
+          "isLock": false,
           "title": "Automated SEO"
         }
       ],
@@ -101,17 +101,17 @@
       "isLastSeen": false,
       "manageBusinessList": [
         {
-          "iconType": "ic_product_cataloge_d",
+          "businessType": "ic_product_cataloge_d",
           "isLock": false,
           "title": "Services Listed"
         },
         {
-          "iconType": "doctor_profile",
+          "businessType": "doctor_profile",
           "isLock": false,
           "title": "Doctor Profile"
         },
         {
-          "iconType": "appointment_settings",
+          "businessType": "appointment_settings",
           "isLock": false,
           "title": "Appointment Settings"
         }
@@ -124,47 +124,47 @@
       "isLastSeen": false,
       "manageBusinessList": [
         {
-          "iconType": "clinic_basic_info",
-          "isLock": true,
+          "businessType": "clinic_basic_info",
+          "isLock": false,
           "title": "Clinic Basic info"
         },
         {
-          "iconType": "clinic_logo",
+          "businessType": "clinic_logo",
           "isLock": false,
           "title": "Clinic Logo"
         },
         {
-          "iconType": "featured_image_video",
-          "isLock": false,
+          "businessType": "featured_image_video",
+          "isLock": true,
           "title": "Featured Image/video"
         },
         {
-          "iconType": "business_hours",
+          "businessType": "business_hours",
           "isLock": false,
           "title": "Business Hours"
         },
         {
-          "iconType": "contact_details",
+          "businessType": "contact_details",
           "isLock": false,
           "title": "Contact Details"
         },
         {
-          "iconType": "business_kyc_verification",
+          "businessType": "business_kyc_verification",
           "isLock": false,
           "title": "Business KYC/Verification"
         },
         {
-          "iconType": "domain_name_ssl",
+          "businessType": "domain_name_ssl",
           "isLock": false,
           "title": "My Domain Name & SSL"
         },
         {
-          "iconType": "my_email_accounts",
+          "businessType": "my_email_accounts",
           "isLock": true,
           "title": "My Email Accounts"
         },
         {
-          "iconType": "boost_data_security",
+          "businessType": "boost_data_security",
           "isLock": true,
           "title": "Boost Data Security"
         }
@@ -177,22 +177,22 @@
       "isLastSeen": false,
       "manageBusinessList": [
         {
-          "iconType": "boost_payment_gateway",
+          "businessType": "boost_payment_gateway",
           "isLock": true,
           "title": "Boost Payment Gateway"
         },
         {
-          "iconType": "my_bank_account",
+          "businessType": "my_bank_account",
           "isLock": false,
           "title": "My Bank Account"
         },
         {
-          "iconType": "custom_payment_gateway",
+          "businessType": "custom_payment_gateway",
           "isLock": false,
           "title": "Custom payment gateway"
         },
         {
-          "iconType": "e_commerce_website",
+          "businessType": "e_commerce_website",
           "isLock": false,
           "title": "eCommerce on website"
         }
@@ -205,22 +205,22 @@
       "isLastSeen": false,
       "manageBusinessList": [
         {
-          "iconType": "facebook_lead_ads",
-          "isLock": true,
+          "businessType": "facebook_lead_ads",
+          "isLock": false,
           "title": "Facebook Lead Ads"
         },
         {
-          "iconType": "advertising_google_fb",
+          "businessType": "advertising_google_fb",
           "isLock": false,
           "title": "Advertising (Google & Fb)"
         },
         {
-          "iconType": "facebook_likebox_plugin",
-          "isLock": false,
+          "businessType": "facebook_likebox_plugin",
+          "isLock": true,
           "title": "Facebook Likebox Plugin"
         },
         {
-          "iconType": "newsletter_subscription",
+          "businessType": "newsletter_subscription",
           "isLock": false,
           "title": "Newsletter Subscription"
         }
@@ -233,22 +233,22 @@
       "isLastSeen": false,
       "manageBusinessList": [
         {
-          "iconType": "website_visits_visitors",
+          "businessType": "website_visits_visitors",
           "isLock": true,
           "title": "Website visits and visitors"
         },
         {
-          "iconType": "social_sharing_analytics",
+          "businessType": "social_sharing_analytics",
           "isLock": false,
           "title": "Social Sharing Analytics"
         },
         {
-          "iconType": "sales_analytics",
+          "businessType": "sales_analytics",
           "isLock": false,
           "title": "Sales Analytics"
         },
         {
-          "iconType": "search_analytics",
+          "businessType": "search_analytics",
           "isLock": false,
           "title": "Search Analytics"
         }
@@ -261,12 +261,12 @@
       "isLastSeen": false,
       "manageBusinessList": [
         {
-          "iconType": "ria_digital_assistant",
-          "isLock": true,
+          "businessType": "ria_digital_assistant",
+          "isLock": false,
           "title": "RIA - your digital assistant"
         },
         {
-          "iconType": "premium_boost_support",
+          "businessType": "premium_boost_support",
           "isLock": false,
           "title": "Premium Boost Support"
         }
