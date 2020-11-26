@@ -13,8 +13,9 @@
         android:paddingBottom="@dimen/_5sdp"
         android:text="Independence Day Offer"
         android:textColor="@color/common_text_color"
+        android:textStyle="bold"
         android:textFontWeight="600"
-        android:textSize="@dimen/_14ssp"
+        android:textSize="@dimen/_14sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -402,7 +402,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        requireActivity().viewModelStore.clear()
+//        requireActivity().viewModelStore.clear()
     }
 
     fun updateSubscriptionDetails() {

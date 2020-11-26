@@ -33,7 +33,11 @@
     <string name="username">Registered Email or Username</string>
     <string name="apply_coupon">Apply coupon</string>
     <string name="discount_coupon">Discount coupon</string>
-    <string name="auto_renew_message"><b>Auto Renewal is ON </b>using credit card of HDFC Credit card ending with 5675</string>
+    <string name="auto_renew_message"><b>Auto Renewal is ON </b></string>
+    <string name="auto_renewal_date">Your next auto-renewal date will be %1$s. You can disable auto renewal of any feature/package at anytime.</string>
+    <string name="auto_next_renewal_date">Your next auto-renewal date will be %1$s.</string>
+    <string name="radio_auto_renew"><b>Auto-renew (using credit card)</b>\n<font color='#747474'>Your next auto-renewal date will be %1$s. You can disable auto renewal of any feature/package at anytime. </font></string>
+    <string name="radio_remind_me">Your next auto-renewal date will be %1$s.</string>
 
     <string-array name="order_status">
         <item>Cart</item>
