@@ -112,7 +112,7 @@
                 android:textColor="@color/dot_grey"
                 android:gravity="center"
                 android:textSize="@dimen/_14sdp"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:visibility="visible"/>
 
             <TextView
@@ -166,7 +166,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/order_id_details"
+                android:id="@+id/auto_renew_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

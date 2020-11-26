@@ -21,10 +21,7 @@ import com.appservice.databinding.FragmentBankAccountDetailsBinding
 import com.appservice.model.account.AccountCreateRequest
 import com.appservice.model.account.BankAccountDetailsN
 import com.appservice.model.account.response.AccountCreateResponse
-import com.appservice.model.accountDetails.AccountDetailsResponse
-import com.appservice.model.accountDetails.BankAccountDetails
-import com.appservice.model.accountDetails.KYCDetails
-import com.appservice.model.accountDetails.Result
+import com.appservice.model.accountDetails.*
 import com.appservice.model.razor.RazorDataResponse
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.AccountViewModel
@@ -171,7 +168,11 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     when (v) {
       binding?.submitBtn -> {
         if (isValid()) {
-          if (isUpdated.not()) createApiAccount() else updateApiAccount()
+          if (isUpdated.not()){
+            createApiAccount()
+          } else {
+            updateApiAccount()
+          }
         }
       }
       binding?.whyBtn -> bottomSheetWhy()
@@ -218,7 +219,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     showProgress()
     request = AccountCreateRequest(clientId = clientId, floatingPointId = fpId, bankAccountDetails = requestAccount,
         additionalKYCDocuments = AccountCreateRequest().setKYCBlankValue(), registeredBusinessAddress = AccountCreateRequest().setAddressBlankValue(),
-        registeredBusinessContactDetails = AccountCreateRequest().setContactDetailBlankValue(), taxDetails = AccountCreateRequest().setTaxBlankValue()
+        registeredBusinessContactDetails = AccountCreateRequest().setContactDetailBlankValue(), taxDetails = AccountCreateRequest().setTaxBlankValue()/*, paymentGatewayDetails = AccountCreateRequest().setPaymentsGateway()*/
     )
     viewModel?.createAccount(request)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
@@ -293,6 +294,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
       return false
     }
     requestAccount = BankAccountDetailsN(accountName = nameAccount, accountNumber = accountNumber, iFSC = ifsc, bankName = bankName, accountAlias = alias, kYCDetails = BankAccountDetailsN().kycObj())
+//    requestPayment = PaymentGatewayDetails(configType = "", accountId = "", paymentConfig = PaymentGatewayDetails().payObj())
     return true
   }
 

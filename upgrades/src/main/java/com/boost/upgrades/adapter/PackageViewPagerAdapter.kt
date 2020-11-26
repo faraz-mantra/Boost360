@@ -47,6 +47,9 @@ class PackageViewPagerAdapter(
         holder.getNowButton.setOnClickListener {
             homeListener.onPackageClicked(list.get(position))
         }
+        holder.itemView.setOnClickListener {
+            homeListener.onPackageClicked(list.get(position))
+        }
         holder.name.setText(list.get(position).name)
         getPackageInfoFromDB(holder, list.get(position))
 //        image_title.setText(list.get(position).title)

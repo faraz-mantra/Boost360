@@ -69,7 +69,9 @@
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="2.3sp"
                     android:text="Get 6 more add-ons"
-                    android:textColor="#4a4a4a"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#000"
+                    android:textFontWeight="500"
                     android:textSize="@dimen/_11ssp"
                     android:textStyle="bold" />
 
@@ -112,7 +114,9 @@
                         android:paddingStart="0dp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:text="₹2,099/month"
-                        android:textColor="#0068e0"
+                        android:textColor="#707070"
+                        android:fontFamily="sans-serif"
+                        android:textFontWeight="400"
                         android:textSize="@dimen/_8sdp" />
 
                     <TextView

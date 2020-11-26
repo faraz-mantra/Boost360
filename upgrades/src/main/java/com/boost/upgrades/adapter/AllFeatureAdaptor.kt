@@ -4,6 +4,7 @@ import android.app.ActionBar
 import android.content.Context
 import android.graphics.Paint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,6 +64,7 @@ class AllFeatureAdaptor(
             args.putString("itemId", upgradeList.get(position).feature_code)
             details.arguments = args
             activity.addFragment(details, DETAILS_FRAGMENT)
+            Log.v("DETAILS_FRAGMENT"," "+ upgradeList.get(position).feature_code +" "+ upgradeList.get(position).feature_code)
 //            val intent = Intent(this.context, Details::class.java)
 //            intent.putExtra("position",position)
 //            ContextCompat.startActivity(this.context, intent, null)
@@ -118,10 +120,12 @@ class AllFeatureAdaptor(
             if(price>0) {
                 upgradePrice.text = "₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(price) + "/month"
                 pricingLayout.visibility = View.VISIBLE
+//                upgradeSubscribedStatus.visibility = View.GONE
             }else{
 //                pricingLayout.visibility = View.GONE
                 if(!updateModel.is_premium)  {
                   upgradePrice.text = "FREE"
+                    upgradeSubscribedStatus.visibility = View.VISIBLE
                 }
 
             }
@@ -140,6 +144,7 @@ class AllFeatureAdaptor(
         }
         fun checkSubscriptionPresence( pack: String, availableSub: ArrayList<String> ): Boolean{
             for(sub in availableSub){
+                Log.v("checkSubscription"," "+ pack + " "+ sub)
                 if(sub.equals(pack)){
                     return true
                 }
