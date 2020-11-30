@@ -7,6 +7,8 @@ import com.framework.base.BaseResponse
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.convertListObjToString
 import com.framework.utils.convertStringToList
+import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 const val LAST_SEEN_DATA = "LAST_SEEN_DATA"
 
@@ -14,7 +16,7 @@ class ManageBusinessData(
     var title: String? = null,
     var businessType: String? = null,
     var isLock: Boolean = false,
-) : BaseResponse(), AppBaseRecyclerViewItem {
+) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.MANAGE_BUSINESS_ITEM_VIEW.getLayout()
 
@@ -43,14 +45,21 @@ class ManageBusinessData(
     ic_customer_enquiries_d("ic_customer_enquiries_d", R.drawable.ic_customer_enquiries_d),
     ic_daily_business_update_d("ic_daily_business_update_d", R.drawable.ic_daily_business_update_d),
     ic_product_cataloge_d("ic_product_cataloge_d", R.drawable.ic_product_cataloge_d),
+    ic_service_cataloge_d("ic_service_cataloge_d", R.drawable.ic_product_cataloge_d),
     ic_customer_testimonial_d("ic_customer_testimonial_d", R.drawable.ic_customer_testimonial_d),
     ic_business_keyboard_d("ic_business_keyboard_d", R.drawable.ic_business_keyboard_d),
+    ic_latest_news_d("ic_latest_news_d", 0),
+    ic_my_customers_clients_d("ic_my_customers_clients_d", 0),
+    ic_featured_client_projects_d("ic_featured_client_projects_d", 0),
+    ic_my_business_faqs("ic_my_business_faqs", 0),
     clinic_logo("clinic_logo", R.drawable.clinic_logo),
     advertising_google_fb("advertising_google_fb", R.drawable.advertising_google_fb),
     appointment_settings("appointment_settings", R.drawable.appointment_settings),
+    ic_e_commerce_setting_d("ic_e_commerce_setting_d", R.drawable.appointment_settings),
     assisted_content_creation("assisted_content_creation", R.drawable.assisted_content_creation),
     autamated_seo_d("autamated_seo_d", R.drawable.autamated_seo_d),
     boost_data_security("boost_data_security", R.drawable.boost_data_security),
+    feature_business_image("feature_business_image", 0),
     boost_payment_gateway("boost_payment_gateway", R.drawable.boost_payment_gateway),
     business_hours("business_hours", R.drawable.business_hours),
     contact_details("contact_details", R.drawable.contact_details),
@@ -63,6 +72,7 @@ class ManageBusinessData(
     facebook_lead_ads("facebook_lead_ads", R.drawable.facebook_lead_ads),
     facebook_likebox_plugin("facebook_likebox_plugin", R.drawable.facebook_likebox_plugin),
     in_clinic_appointments("in_clinic_appointments", R.drawable.in_clinic_appointments),
+    customer_order_d("customer_order_d", 0),
     my_email_accounts("my_email_accounts", R.drawable.my_email_accounts),
     newsletter_subscription("newsletter_subscription", R.drawable.newsletter_subscription),
     picture_gallery("picture_gallery", R.drawable.picture_gallery),
@@ -71,6 +81,7 @@ class ManageBusinessData(
     unlimited_content_updates("unlimited_content_updates", R.drawable.unlimited_content_updates),
     unlimited_website_bandwidth("unlimited_website_bandwidth", R.drawable.unlimited_website_bandwidth),
     video_consultations("video_consultations", R.drawable.video_consultations),
+    chatbot_analytics("chatbot_analytics", 0),
     website_chatbot("website_chatbot", R.drawable.website_chatbot),
     website_social_share_plugin("website_social_share_plugin", R.drawable.website_social_share_plugin);
 
@@ -91,3 +102,14 @@ class ManageBusinessData(
   }
 
 }
+
+data class ManageBusinessDataResponse(
+    var data: ArrayList<ManageActionData>? = null,
+) : BaseResponse(), Serializable
+
+data class ManageActionData(
+    @SerializedName("action_item")
+    var actionItem: ArrayList<ManageBusinessData>? = null,
+    @SerializedName("type")
+    var type: String? = null,
+) : Serializable

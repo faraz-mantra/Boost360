@@ -34,7 +34,7 @@
     },
     {
       "isBottomLineShow": false,
-      "isLockShow": true,
+      "isLockShow": false,
       "isNewBtnShow": false,
       "isUpLineShow": false,
       "navType": "NAV_ENQUIRY",

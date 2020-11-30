@@ -2,6 +2,7 @@ package com.dashboard.controller.ui.dashboard
 
 import android.animation.ValueAnimator
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.LinearLayoutCompat
@@ -19,6 +20,10 @@ import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
+import com.dashboard.model.live.addOns.ManageBusinessDataResponse
+import com.dashboard.model.live.quickAction.QuickActionData
+import com.dashboard.model.live.quickAction.QuickActionItem
+import com.dashboard.model.live.quickAction.QuickActionResponse
 import com.dashboard.pref.BASE_IMAGE_URL
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
@@ -28,9 +33,7 @@ import com.dashboard.pref.clientId
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
-import com.dashboard.utils.setGifAnim
-import com.dashboard.utils.siteMeterData
-import com.dashboard.utils.startDigitalChannel
+import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -56,9 +59,7 @@ import kotlin.concurrent.schedule
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
-
   private var isHigh = false
-
   private var adapterBusinessContent: AppBaseRecyclerViewAdapter<BusinessContentSetupData>? = null
   private var channelAdapter: AppBaseRecyclerViewAdapter<ChannelData>? = null
   private var adapterQuickAction: AppBaseRecyclerViewAdapter<QuickActionData>? = null
@@ -79,23 +80,20 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     getCategoryData()
-    getNotificationCount()
-    binding?.pagerRiaAcademy?.apply {
-      val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, RiaAcademyData().getData(), this@DashboardFragment)
-      offscreenPageLimit = 3
-      clipToPadding = false
-      setPadding(37, 0, 37, 0)
-      adapter = adapterPager3
-      setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-    }
+    setDataRiaAcademy()
   }
 
   override fun onResume() {
     super.onResume()
+    Handler().postDelayed({ refreshData() }, 100)
+  }
+
+  private fun refreshData() {
     setUserData()
     getSiteMeter()
     setRecBusinessManageTask()
     setGrowthStatHigh()
+    getNotificationCount()
   }
 
   private fun visitingCardShowHide(isDown: Boolean) {
@@ -178,7 +176,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
 
       binding?.rvRoiSummary?.apply {
-        val adapter2 = AppBaseRecyclerViewAdapter(baseActivity, RoiSummaryData().getData(), this@DashboardFragment)
+        val adapter2 = AppBaseRecyclerViewAdapter(baseActivity, RoiSummaryData().getData(getRoiSummaryType(session?.fP_AppExperienceCode)), this@DashboardFragment)
         adapter = adapter2
       }
 
@@ -194,27 +192,35 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun setRecBusinessManageTask() {
     (if (isHigh) binding?.highRecommendedTask else binding?.lowRecommendedTask)?.apply {
       viewModel?.getQuickActionData(baseActivity)?.observeOnce(viewLifecycleOwner, {
-        val response = it as? QuickActionDataResponse
-        if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        val response = it as? QuickActionResponse
+        val listAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT) }
+        if (response?.isSuccess() == true && listAction?.actionItem.isNullOrEmpty().not()) {
           if (adapterQuickAction == null) {
             pagerQuickAction.apply {
-              adapterQuickAction = AppBaseRecyclerViewAdapter(baseActivity, response.data!!, this@DashboardFragment)
+              adapterQuickAction = AppBaseRecyclerViewAdapter(baseActivity, listAction?.actionItem!!, this@DashboardFragment)
               offscreenPageLimit = 3
               adapter = adapterQuickAction
               dotIndicatorAction.setViewPager2(this)
               setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
             }
-          } else adapterQuickAction?.notify(response.data!!)
+          } else adapterQuickAction?.notify(listAction?.actionItem!!)
         } else showShortToast(baseActivity.getString(R.string.quick_action_data_error))
       })
 
     }
     (if (isHigh) binding?.highManageBusiness else binding?.lowManageBusiness)?.apply {
+      title.text = if (getRoiSummaryType(session?.fP_AppExperienceCode) == "DOC") baseActivity.getString(R.string.manage_your_clinic) else baseActivity.getString(R.string.manage_your_business)
       rvManageBusiness.apply {
-        if (adapterBusinessData == null) {
-          adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, ManageBusinessData().getData(), this@DashboardFragment)
-          adapter = adapterBusinessData
-        } else adapterBusinessData?.notify(ManageBusinessData().getData())
+        viewModel?.getBoostAddOnsTop(baseActivity)?.observeOnce(viewLifecycleOwner, {
+          val response = it as? ManageBusinessDataResponse
+          val dataAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == getAddonsType(session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT)) }
+          if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
+            if (adapterBusinessData == null) {
+              adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@DashboardFragment)
+              adapter = adapterBusinessData
+            } else adapterBusinessData?.notify(dataAction.actionItem!!)
+          } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
+        })
       }
       btnShowAll.setOnClickListener { startFragmentDashboardActivity(FragmentType.ALL_BOOST_ADD_ONS) }
     }
@@ -249,6 +255,17 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       imageUri = BASE_IMAGE_URL + imageUri
     }
     binding?.imgBusinessLogo?.let { baseActivity.glideLoad(it, imageUri, R.drawable.ic_add_logo_d, isCrop = true) }
+  }
+
+  private fun setDataRiaAcademy() {
+    binding?.pagerRiaAcademy?.apply {
+      val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, RiaAcademyData().getData(), this@DashboardFragment)
+      offscreenPageLimit = 3
+      clipToPadding = false
+      setPadding(37, 0, 37, 0)
+      adapter = adapterPager3
+      setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+    }
   }
 
   private fun getCategoryData() {

@@ -34,7 +34,7 @@ class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) :
         data.gifIcon?.let { gifResource = it }
         play()
       }
-      list = data.businessData ?: ArrayList()
+      list = (data.businessData?.filter { it.status == true } ?: ArrayList()) as ArrayList<SiteMeterModel>?
     } else {
       MATCH_PARENT.setHeight()
       getColor(R.color.light_grey_3)?.let { binding.txtDes.setTextColor(it) }

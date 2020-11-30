@@ -1,6 +1,7 @@
 package com.dashboard.controller.ui.allAddOns
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuInflater
 import androidx.appcompat.widget.SearchView
@@ -9,17 +10,20 @@ import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.FragmentAllBoostAddOnsBinding
 import com.dashboard.model.live.addOns.AllBoostAddOnsData
-import com.dashboard.model.live.addOns.AllBoostAddOnsDataResponse
+import com.dashboard.model.live.addOns.ManageAddOnsBusinessResponse
 import com.dashboard.model.live.addOns.ManageBusinessData
+import com.dashboard.pref.UserSessionManager
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
+import com.dashboard.utils.getAddonsType
 import com.dashboard.viewmodel.AddOnsViewModel
 import com.framework.extensions.observeOnce
 import java.util.*
 
 class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, AddOnsViewModel>(), RecyclerItemClickListener {
 
+  private var session: UserSessionManager? = null
   private var searchView: SearchView? = null
   var adapterAddOns: AppBaseRecyclerViewAdapter<AllBoostAddOnsData>? = null
 
@@ -40,22 +44,28 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
     return AddOnsViewModel::class.java
   }
 
+  override fun onCreateView() {
+    super.onCreateView()
+    session = UserSessionManager(baseActivity)
+  }
+
   override fun onResume() {
     super.onResume()
-    getBoostAddOnsData()
+    Handler().postDelayed({ getBoostAddOnsData() }, 100)
   }
 
   private fun getBoostAddOnsData() {
     viewModel?.getBoostAddOns(baseActivity)?.observeOnce(viewLifecycleOwner, {
-      val response = it as? AllBoostAddOnsDataResponse
-      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+      val response = it as? ManageAddOnsBusinessResponse
+      val dataAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == getAddonsType(session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT)) }
+      if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
         if (adapterAddOns == null) {
           binding?.rvBoostAddOns?.apply {
-            adapterAddOns = AppBaseRecyclerViewAdapter(baseActivity, response.data!!, this@AllBoostAddonsFragment)
+            adapterAddOns = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@AllBoostAddonsFragment)
             adapter = adapterAddOns
           }
-        } else adapterAddOns?.notify(setLastSeenData(response.data!!))
-      } else showShortToast(it.message())
+        } else adapterAddOns?.notify(setLastSeenData(dataAction.actionItem!!))
+      } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
     })
   }
 

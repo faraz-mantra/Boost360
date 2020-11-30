@@ -4,11 +4,6 @@ import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
 
-class AllBoostAddOnsDataResponse(
-    var data: ArrayList<AllBoostAddOnsData>? = null,
-) : BaseResponse()
-
-
 class AllBoostAddOnsData(
     var title: String? = null,
     var subTitle: String? = null,

@@ -1,0 +1,185 @@
+{
+  "data": [
+    {
+      "type": "DOC",
+      "action_item": [
+        {
+          "businessType": "video_consultations",
+          "isLock": true,
+          "title": "Video consultations"
+        },
+        {
+          "businessType": "in_clinic_appointments",
+          "isLock": false,
+          "title": "In-clinic Appointments"
+        },
+        {
+          "businessType": "ic_customer_call_d",
+          "isLock": false,
+          "title": "Patient Calls"
+        },
+        {
+          "businessType": "ic_customer_enquiries_d",
+          "isLock": false,
+          "title": "Patient Enquiries"
+        },
+        {
+          "businessType": "ic_daily_business_update_d",
+          "isLock": false,
+          "title": "Daily Business Updates"
+        },
+        {
+          "businessType": "ic_service_cataloge_d",
+          "isLock": false,
+          "title": "Services Listed"
+        },
+        {
+          "businessType": "ic_customer_testimonial_d",
+          "isLock": false,
+          "title": "Patient Testimonials"
+        },
+        {
+          "businessType": "doctor_profile",
+          "isLock": false,
+          "title": "Doctor e-Profile"
+        }
+      ]
+    },
+    {
+      "type": "HOS",
+      "action_item": [
+        {
+          "businessType": "video_consultations",
+          "isLock": true,
+          "title": "Video consultations"
+        },
+        {
+          "businessType": "in_clinic_appointments",
+          "isLock": false,
+          "title": "In-clinic Appointments"
+        },
+        {
+          "businessType": "ic_customer_call_d",
+          "isLock": false,
+          "title": "Patient Calls"
+        },
+        {
+          "businessType": "ic_customer_enquiries_d",
+          "isLock": false,
+          "title": "Patient Enquiries"
+        },
+        {
+          "businessType": "ic_daily_business_update_d",
+          "isLock": false,
+          "title": "Daily Business Updates"
+        },
+        {
+          "businessType": "ic_service_cataloge_d",
+          "isLock": false,
+          "title": "Services Listed"
+        },
+        {
+          "businessType": "ic_customer_testimonial_d",
+          "isLock": false,
+          "title": "Patient Testimonials"
+        },
+        {
+          "businessType": "doctor_profile",
+          "isLock": false,
+          "title": "Doctor e-Profile"
+        }
+      ]
+    },
+    {
+      "type": "SPA",
+      "action_item": [
+        {
+          "businessType": "in_clinic_appointments",
+          "isLock": false,
+          "title": "In-clinic Appointments"
+        },
+        {
+          "businessType": "ic_customer_call_d",
+          "isLock": false,
+          "title": "Customer Calls"
+        },
+        {
+          "businessType": "ic_customer_enquiries_d",
+          "isLock": false,
+          "title": "Customer Enquiries"
+        },
+        {
+          "businessType": "ic_daily_business_update_d",
+          "isLock": false,
+          "title": "Daily Business Updates"
+        },
+        {
+          "businessType": "ic_service_cataloge_d",
+          "isLock": false,
+          "title": "Services Listed"
+        },
+        {
+          "businessType": "ic_customer_testimonial_d",
+          "isLock": false,
+          "title": "Customer Testimonials"
+        },
+        {
+          "businessType": "doctor_profile",
+          "isLock": false,
+          "title": "Doctor e-Profile"
+        },
+        {
+          "businessType": "ic_business_keyboard_d",
+          "isLock": false,
+          "title": "Boost Keyboard"
+        }
+      ]
+    },
+    {
+      "type": "MFG",
+      "action_item": [
+        {
+          "businessType": "ic_project_terms_d",
+          "isLock": true,
+          "title": "Projects and Teams"
+        },
+        {
+          "businessType": "ic_digital_brochures_d",
+          "isLock": false,
+          "title": "Unlimited Digital Brochures"
+        },
+        {
+          "businessType": "ic_customer_call_d",
+          "isLock": false,
+          "title": "Customer Calls"
+        },
+        {
+          "businessType": "ic_customer_enquiries_d",
+          "isLock": false,
+          "title": "Customer Enquiries"
+        },
+        {
+          "businessType": "ic_daily_business_update_d",
+          "isLock": false,
+          "title": "Daily Business Updates"
+        },
+        {
+          "businessType": "ic_product_cataloge_d",
+          "isLock": false,
+          "title": "Products Catalogue"
+        },
+        {
+          "businessType": "ic_customer_testimonial_d",
+          "isLock": false,
+          "title": "Customer Testimonials"
+        },
+        {
+          "businessType": "ic_business_keyboard_d",
+          "isLock": true,
+          "title": "Business Keyboard"
+        }
+      ]
+    }
+  ]
+}
+

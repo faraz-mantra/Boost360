@@ -30,6 +30,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@string/manage_your_business"
+          android:id="@+id/title"
           android:textColor="@color/black_4f4f4f"
           app:fontFamily="@font/sans_medium"
           app:textType="HEADING_6" />
