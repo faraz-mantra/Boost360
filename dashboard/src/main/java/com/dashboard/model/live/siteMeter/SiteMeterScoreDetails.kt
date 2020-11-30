@@ -12,7 +12,7 @@ data class SiteMeterScoreDetails(
 
 fun ArrayList<SiteMeterModel>.getCompletePercentage(): Int {
   var count = 0
-  forEach { if (it.status == true) count += it.getValue() }
+  forEach { if (it.status == true || it.isPost) count += it.getValue() }
   return count
 }
 

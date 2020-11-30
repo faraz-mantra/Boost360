@@ -10,7 +10,7 @@
   <androidx.core.widget.NestedScrollView
     android:layout_width="@dimen/size_320"
     android:layout_height="match_parent"
-    android:layout_gravity="start"
+    android:layout_gravity="end"
     android:background="@color/white">
 
     <androidx.appcompat.widget.LinearLayoutCompat

@@ -111,11 +111,19 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun checkLockData(data: ArrayList<DrawerHomeData>): ArrayList<DrawerHomeData> {
-//    data.forEach {
-//      if (it.navType== DrawerHomeData.NavType.NAV_CALLS.name && ){
-//
-//      }
-//    }
+    data.forEach { it1 ->
+      when (it1.navType) {
+        DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING.name -> {
+          it1.title = getDefaultTrasactionsTaxonomyFromServiceCode(session?.fP_AppExperienceCode)
+        }
+        DrawerHomeData.NavType.NAV_CALLS.name -> {
+          it1.isLockShow = (session?.getStoreWidgets()?.firstOrNull { it == PremiumCode.CALLTRACKER.value } == null)
+        }
+        DrawerHomeData.NavType.NAV_BOOST_KEYBOARD.name -> {
+          it1.isLockShow = (session?.getStoreWidgets()?.firstOrNull { it == PremiumCode.BOOSTKEYBOARD.value } == null)
+        }
+      }
+    }
     return data
   }
 
@@ -139,7 +147,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       1 -> mNavController.navigate(R.id.navigation_content, Bundle(), getNavOptions())
       2 -> mNavController.navigate(R.id.navigation_patients, Bundle(), getNavOptions())
       3 -> mNavController.navigate(R.id.navigation_academy, Bundle(), getNavOptions())
-//      4 -> mNavController.navigate(R.id.navigation_more, Bundle(), getNavOptions())
       else -> mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
     }
   }
@@ -147,7 +154,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)
     when (pos) {
-      4 -> binding?.drawerLayout?.openDrawer(GravityCompat.START, true)
+      4 -> binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
     }
   }
 
@@ -167,7 +174,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onBackPressed() {
     when {
-      (binding?.drawerLayout?.isDrawerOpen(GravityCompat.START) == true) -> binding?.drawerLayout?.closeDrawers()
+      (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) -> binding?.drawerLayout?.closeDrawers()
       (mNavController.currentDestination?.id == R.id.navigation_dashboard) -> this.finish()
       else -> openDashboard()
     }
@@ -218,7 +225,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       DrawerHomeData.NavType.NAV_REFER_FRIEND -> {
       }
     }
-    if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.START) == true) binding?.drawerLayout?.closeDrawers()
+    if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
   }
 
 }

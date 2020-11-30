@@ -12,6 +12,7 @@ class SiteMeterModel(
     var Percentage: String? = null,
     var status: Boolean? = null,
     var sortChar: Int = 0,
+    var isPost: Boolean = false,
 ) : AppBaseRecyclerViewItem, Serializable, Comparable<Any?> {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.ITEMS_CONTENT_SETUP_ITEM_VIEW.getLayout()

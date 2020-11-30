@@ -249,14 +249,18 @@ fun UserSessionManager.siteMeterData(): SiteMeterScoreDetails? {
           siteMeterTotalWeight += bizFloat * onUpdate
           it.status = false
           it.sortChar = 2
+          it.isPost = true
         } else {
           fiveUpdatesDone = true
           siteMeterTotalWeight += 20
           it.status = true
           it.sortChar = 1
-          siteMeterScoreDetails.channelSync.add(it)
+          it.isPost = true
         }
         siteMeterScoreDetails.contentManagement.add(it)
+        val data = it.copy()
+        data.Percentage = "+${bizFloat * onUpdate}%"
+        siteMeterScoreDetails.channelSync.add(data)
       }
       logo -> {
         if (getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl).isNullOrEmpty().not() && res.getString(R.string.Logo_percentage) != "0") {
@@ -286,4 +290,8 @@ fun UserSessionManager.siteMeterData(): SiteMeterScoreDetails? {
   }
   siteMeterScoreDetails.siteMeterTotalWeight = siteMeterTotalWeight
   return siteMeterScoreDetails
+}
+
+private fun SiteMeterModel.copy(): SiteMeterModel {
+  return SiteMeterModel(position, Title, Desc, Percentage, status, sortChar, isPost)
 }

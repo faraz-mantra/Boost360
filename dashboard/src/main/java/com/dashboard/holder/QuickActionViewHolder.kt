@@ -3,8 +3,8 @@ package com.dashboard.holder
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.ItemActionBinding
 import com.dashboard.databinding.ItemQuickActionBinding
-import com.dashboard.model.QuickActionData
-import com.dashboard.model.QuickActionItem
+import com.dashboard.model.live.quickAction.QuickActionData
+import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener

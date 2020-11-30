@@ -53,6 +53,10 @@ class DashboardViewModel : BaseViewModel() {
   fun getQuickActionData(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getQuickActionData(context).toLiveData()
   }
+
+  fun getBoostAddOnsTop(context: Context): LiveData<BaseResponse> {
+    return WithFloatRepository.getBoostAddOnsTop(context).toLiveData()
+  }
 }
 
 fun getJsonRequest(fpTag: String?): String {
