@@ -2,7 +2,6 @@ package com.dashboard.controller.ui.dashboard
 
 import android.animation.ValueAnimator
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.LinearLayoutCompat
@@ -15,6 +14,7 @@ import com.dashboard.constant.FragmentType
 import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
+import com.dashboard.controller.DashboardActivity
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.databinding.FragmentDashboardBinding
@@ -24,12 +24,10 @@ import com.dashboard.model.live.addOns.ManageBusinessDataResponse
 import com.dashboard.model.live.quickAction.QuickActionData
 import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.model.live.quickAction.QuickActionResponse
-import com.dashboard.pref.BASE_IMAGE_URL
+import com.dashboard.model.live.siteMeter.SiteMeterScoreDetails
+import com.dashboard.pref.*
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
-import com.dashboard.pref.UserSessionManager
-import com.dashboard.pref.WA_KEY
-import com.dashboard.pref.clientId
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -41,6 +39,12 @@ import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.utils.fromHtml
 import com.framework.views.dotsindicator.OffsetPageTransformer
+import com.inventoryorder.model.floatMessage.MessageModel
+import com.inventoryorder.model.ordersummary.OrderSummaryModel
+import com.inventoryorder.model.summary.SummaryEntity
+import com.inventoryorder.model.summary.UserSummaryResponse
+import com.inventoryorder.model.summaryCall.CallSummaryResponse
+import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.ChannelTokenResponse
@@ -80,20 +84,32 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     getCategoryData()
+    apiSellerSummary()
     setDataRiaAcademy()
   }
 
   override fun onResume() {
     super.onResume()
-    Handler().postDelayed({ refreshData() }, 100)
+    if (MessageModel().getMessageFloatData() != null) session?.siteMeterData { it?.let { it1 -> refreshData(it1) } }
+    else getFloatMessage()
   }
 
-  private fun refreshData() {
+  private fun getFloatMessage() {
+    viewModel?.getBizFloatMessage(getRequestFloat())?.observeOnce(this, {
+      if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
+      session?.siteMeterData { it1 -> it1?.let { it2 -> refreshData(it2) } }
+    })
+  }
+
+  private fun refreshData(siteMeterData: SiteMeterScoreDetails) {
+    (baseActivity as? DashboardActivity)?.setPercentageData(siteMeterData.siteMeterTotalWeight)
+    isHigh = (siteMeterData.siteMeterTotalWeight >= 80)
     setUserData()
-    getSiteMeter()
     setRecBusinessManageTask()
     setGrowthStatHigh()
     getNotificationCount()
+    getSiteMeter(siteMeterData)
+    setDataSellerSummary(OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
   }
 
   private fun visitingCardShowHide(isDown: Boolean) {
@@ -111,11 +127,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     binding?.viewDigitalScore?.animateViewTopPadding(isDown)
   }
 
-
-  private fun getSiteMeter() {
-    val siteMeterData = session?.siteMeterData() ?: return
+  private fun getSiteMeter(siteMeterData: SiteMeterScoreDetails) {
     val listDigitalScore = siteMeterData.getListDigitalScore()
-    isHigh = (siteMeterData.siteMeterTotalWeight >= 80)
     if (isHigh) {
       binding?.viewLowDigitalReadiness?.gone()
       binding?.viewLowTaskManageBusiness?.gone()
@@ -226,6 +239,23 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
+  private fun apiSellerSummary() {
+    viewModel?.getSellerSummary(clientId_ORDER, session?.fpTag)?.observeOnce(viewLifecycleOwner, {
+      val response1 = it as? OrderSummaryResponse
+      if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveData()
+      val scope = if (session?.iSEnterprise == "true") "1" else "0"
+      viewModel?.getUserSummary(clientId, session?.fPParentId, scope)?.observeOnce(viewLifecycleOwner, { it1 ->
+        val response2 = it1 as? UserSummaryResponse
+        val identifierType = if (session?.iSEnterprise == "true") "MULTI" else "SINGLE"
+        viewModel?.getUserCallSummary(clientId, session?.fPParentId, identifierType)?.observeOnce(viewLifecycleOwner, { it2 ->
+          val response3 = it2 as? CallSummaryResponse
+          response3?.saveData()
+          setDataSellerSummary(response1?.Data, response2?.getSummary(), response3)
+        })
+      })
+    })
+  }
+
   private fun getNotificationCount() {
     viewModel?.getNotificationCount(clientId, session?.fPID)?.observeOnce(viewLifecycleOwner, {
       val value = (it.anyResponse as? Double)?.toInt()
@@ -234,6 +264,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         binding?.txtNotification?.text = "$value+"
       } else binding?.txtNotification?.visibility = View.INVISIBLE
     })
+  }
+
+  private fun setDataSellerSummary(sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, response3: CallSummaryResponse?) {
+
+  }
+
+  private fun getSummaryDetail(): SummaryEntity? {
+    return SummaryEntity(session?.enquiryCount?.toIntOrNull() ?: 0, session?.subcribersCount?.toIntOrNull() ?: 0, session?.visitorsCount?.toIntOrNull() ?: 0, session?.visitsCount?.toIntOrNull() ?: 0)
   }
 
   private fun setViewChannels(channels: ArrayList<ChannelModel>?) {
@@ -405,6 +443,23 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
+  override fun showProgress(title: String?, cancelable: Boolean?) {
+    binding?.nestedScrollView?.gone()
+    binding?.progress?.visible()
+  }
+
+  override fun hideProgress() {
+    binding?.nestedScrollView?.visible()
+    binding?.progress?.gone()
+  }
+
+  private fun getRequestFloat(): Map<String, String> {
+    val map = HashMap<String, String>()
+    map["clientId"] = clientId
+    map["skipBy"] = "0"
+    map["fpId"] = session?.fPID!!
+    return map
+  }
 }
 
 

@@ -15,7 +15,7 @@ data class MessageModel(
     var moreFloatsAvailable: Boolean = false,
 ) : BaseResponse(), Serializable {
 
-  private fun getMessageFloatData(): MessageModel? {
+  fun getMessageFloatData(): MessageModel? {
     val resp = PreferencesUtils.instance.getData(MESSAGE_FLOAT_DATA, "") ?: ""
     return convertStringToObj(resp)
   }
