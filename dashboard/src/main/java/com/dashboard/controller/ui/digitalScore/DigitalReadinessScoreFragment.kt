@@ -58,28 +58,29 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
   }
 
   private fun getSiteMeter() {
-    val siteMeterData = session?.siteMeterData() ?: return
-    isHigh = (siteMeterData.siteMeterTotalWeight >= 80)
-    val listDigitalScore = siteMeterData.getListDigitalScore()
-    val list = ArrayList(listDigitalScore.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout();it })
-    if (adapterPager == null) {
-      binding?.pagerBusinessContentSetup?.apply {
-        adapterPager = AppBaseRecyclerViewAdapter(baseActivity, list, this@DigitalReadinessScoreFragment)
-        offscreenPageLimit = 3
-        clipToPadding = false
-        setPadding(36, 0, 36, 0)
-        adapter = adapterPager
-        currentItem = position
-        binding?.dotBusinessContentSetup?.setViewPager2(this)
-        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-      }
-    } else adapterPager?.notify(list)
+    session?.siteMeterData { siteMeterData ->
+      if (siteMeterData == null) return@siteMeterData
+      isHigh = (siteMeterData.siteMeterTotalWeight >= 80)
+      val listDigitalScore = siteMeterData.getListDigitalScore()
+      val list = ArrayList(listDigitalScore.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout();it })
+      if (adapterPager == null) {
+        binding?.pagerBusinessContentSetup?.apply {
+          adapterPager = AppBaseRecyclerViewAdapter(baseActivity, list, this@DigitalReadinessScoreFragment)
+          offscreenPageLimit = 3
+          clipToPadding = false
+          setPadding(36, 0, 36, 0)
+          adapter = adapterPager
+          currentItem = position
+          binding?.dotBusinessContentSetup?.setViewPager2(this)
+          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+        }
+      } else adapterPager?.notify(list)
 
-    binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "90%")
-    binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-    binding?.txtPercentage?.text = "${siteMeterData.siteMeterTotalWeight}%"
-    binding?.progressBar?.progress = siteMeterData.siteMeterTotalWeight
-    binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+      binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "90%")
+      binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
+      binding?.txtPercentage?.text = "${siteMeterData.siteMeterTotalWeight}%"
+      binding?.progressBar?.progress = siteMeterData.siteMeterTotalWeight
+      binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+    }
   }
-
 }

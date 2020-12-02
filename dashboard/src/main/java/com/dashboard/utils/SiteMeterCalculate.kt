@@ -125,13 +125,13 @@ private fun loadData(res: Resources): ArrayList<SiteMeterModel> {
   return siteData
 }
 
-fun UserSessionManager.siteMeterData(): SiteMeterScoreDetails? {
+fun UserSessionManager.siteMeterData(callback: (data: SiteMeterScoreDetails?) -> Unit) {
   val res = AppDashboardApplication.instance.resources
   val prefTwitter = getPreferenceTwitter()
   val siteData = loadData(res)
   val siteMeterScoreDetails = SiteMeterScoreDetails()
   siteMeterTotalWeight = 0
-  if (siteData.isNullOrEmpty()) return null
+  if (siteData.isNullOrEmpty()) return callback(null)
   siteData.forEach {
     when (it.position) {
       domain -> {
@@ -289,7 +289,7 @@ fun UserSessionManager.siteMeterData(): SiteMeterScoreDetails? {
     }
   }
   siteMeterScoreDetails.siteMeterTotalWeight = siteMeterTotalWeight
-  return siteMeterScoreDetails
+  callback(siteMeterScoreDetails)
 }
 
 private fun SiteMeterModel.copy(): SiteMeterModel {

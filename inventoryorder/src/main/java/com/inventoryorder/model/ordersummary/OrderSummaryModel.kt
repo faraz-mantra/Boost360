@@ -1,10 +1,17 @@
 package com.inventoryorder.model.ordersummary
 
 import com.framework.base.BaseResponse
+import com.framework.utils.PreferencesUtils
+import com.framework.utils.convertObjToString
+import com.framework.utils.convertStringToObj
+import com.framework.utils.getData
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
+import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
+
+const val SELLER_SUMMARY_DATA = "SELLER_SUMMARY_DATA"
 
 class OrderSummaryModel(
     val CurrencyCode: String? = null,
@@ -22,8 +29,8 @@ class OrderSummaryModel(
 
     val type: String? = null,
     val count: Int? = null,
-    var isSelected: Boolean = false
-) : BaseResponse(), AppBaseRecyclerViewItem {
+    var isSelected: Boolean = false,
+) : BaseResponse(), Serializable, AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
     return RecyclerViewItemType.ORDERS_ITEM_TYPE.getLayout()
@@ -81,6 +88,15 @@ class OrderSummaryModel(
 
   enum class OrderType {
     ORDER, APPOINTMENT, VIDEO_CONSULTATION;
+  }
+
+  fun getSellerSummary(): OrderSummaryModel? {
+    val resp = PreferencesUtils.instance.getData(SELLER_SUMMARY_DATA, "") ?: ""
+    return convertStringToObj(resp)
+  }
+
+  fun saveData() {
+    PreferencesUtils.instance.saveDataN(SELLER_SUMMARY_DATA, convertObjToString(this) ?: "")
   }
 }
 

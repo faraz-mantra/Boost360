@@ -10,6 +10,7 @@ import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 import com.inventoryorder.rest.repositories.ApiTwoWithFloatRepository
+import com.inventoryorder.rest.repositories.InventoryOrderRepository
 import com.onboarding.nowfloats.model.nfxProcess.NFXProcessRequest
 import com.onboarding.nowfloats.rest.repositories.CategoryRepository
 import com.onboarding.nowfloats.rest.repositories.ChannelRepository
@@ -56,6 +57,18 @@ class DashboardViewModel : BaseViewModel() {
 
   fun getBoostAddOnsTop(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getBoostAddOnsTop(context).toLiveData()
+  }
+
+  fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
+  }
+
+  fun getUserSummary(clientId: String?, fpIdParent: String?, scope: String?): LiveData<BaseResponse> {
+    return ApiTwoWithFloatRepository.getUserSummary(clientId, fpIdParent, scope).toLiveData()
+  }
+
+  fun getUserCallSummary(clientId: String?, fpIdParent: String?, identifierType: String?): LiveData<BaseResponse> {
+    return ApiTwoWithFloatRepository.getUserCallSummary(clientId, fpIdParent, identifierType).toLiveData()
   }
 }
 

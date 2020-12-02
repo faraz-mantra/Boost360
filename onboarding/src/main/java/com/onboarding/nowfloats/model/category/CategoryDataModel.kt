@@ -156,5 +156,4 @@ class CategoryDataModel(
   fun saveData() {
     PreferencesUtils.instance.saveDataN(CATEGORY_DASHBOARD_DATA, convertObjToString(this) ?: "")
   }
-
 }

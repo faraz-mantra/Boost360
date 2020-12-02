@@ -2,6 +2,8 @@ package com.inventoryorder.rest.services
 
 import com.inventoryorder.model.floatMessage.MessageModel
 import com.inventoryorder.model.services.InventoryServicesResponseItem
+import com.inventoryorder.model.summary.UserSummaryResponse
+import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.EndPoints
 import io.reactivex.Observable
 import retrofit2.Response
@@ -29,4 +31,17 @@ interface WithFloatTwoDataSource {
   @GET(EndPoints.GET_BIZ_FLOATS_MESSAGE)
   fun getBizFloatMessage(@QueryMap map: Map<String, String>): Observable<Response<MessageModel>>
 
+  @GET(EndPoints.GET_USER_SUMMARY)
+  fun getUserSummary(
+      @Query("clientId") clientId: String?,
+      @Query("fpId") fpIdParent: String?,
+      @Query("scope") scope: String? = "0", //enterprise for 1
+  ): Observable<Response<UserSummaryResponse>>
+
+  @GET(EndPoints.GET_USER_CALL_SUMMARY)
+  fun getUserCallSummary(
+      @Query("clientId") clientId: String?,
+      @Query("fpId") fpIdParent: String?,
+      @Query("identifierType") identifierType: String? = "SINGLE",
+  ): Observable<Response<CallSummaryResponse>>
 }

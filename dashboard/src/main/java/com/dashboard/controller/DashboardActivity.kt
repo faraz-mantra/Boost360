@@ -22,7 +22,6 @@ import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.pref.BASE_IMAGE_URL
 import com.dashboard.pref.Key_Preferences
 import com.dashboard.pref.UserSessionManager
-import com.dashboard.pref.clientId
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -32,7 +31,6 @@ import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
-import com.inventoryorder.model.floatMessage.MessageModel
 import java.util.*
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
@@ -66,7 +64,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     binding?.navView?.setOnItemSelectedListener(this)
     binding?.navView?.setActiveItem(0)
     setDrawerHome()
-    getFloatMessage()
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
     binding?.drawerView?.txtVersion?.text = "Version $versionName"
   }
@@ -77,15 +74,18 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage)
   }
 
-  private fun setUserData() {
-    binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
-    binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
-    val score = session?.siteMeterCalculation() ?: 0
+  fun setPercentageData(score: Int) {
     isHigh = (score >= 80)
     binding?.drawerView?.txtPercentage?.text = "$score%"
     binding?.drawerView?.progressBar?.progress = score
     binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
     binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+  }
+
+  private fun setUserData() {
+    binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
+    binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
+    setPercentageData(session?.siteMeterCalculation() ?: 0)
     var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
     if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
@@ -125,12 +125,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       }
     }
     return data
-  }
-
-  private fun getFloatMessage() {
-    viewModel.getBizFloatMessage(getRequestFloat()).observeOnce(this, {
-      if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
-    })
   }
 
   private fun navControllerListener() {
@@ -178,14 +172,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       (mNavController.currentDestination?.id == R.id.navigation_dashboard) -> this.finish()
       else -> openDashboard()
     }
-  }
-
-  private fun getRequestFloat(): Map<String, String> {
-    val map = HashMap<String, String>()
-    map["clientId"] = clientId
-    map["skipBy"] = "0"
-    map["fpId"] = session?.fPID!!
-    return map
   }
 
   override fun onClick(v: View?) {
