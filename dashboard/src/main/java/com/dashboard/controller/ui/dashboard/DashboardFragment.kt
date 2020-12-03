@@ -68,6 +68,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var channelAdapter: AppBaseRecyclerViewAdapter<ChannelData>? = null
   private var adapterQuickAction: AppBaseRecyclerViewAdapter<QuickActionData>? = null
   private var adapterBusinessData: AppBaseRecyclerViewAdapter<ManageBusinessData>? = null
+  private var adapterPagerBusinessUpdate: AppBaseRecyclerViewAdapter<BusinessSetupHighData>? = null
+  private var adapterRoi: AppBaseRecyclerViewAdapter<RoiSummaryData>? = null
+  private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
+  private var siteMeterData: SiteMeterScoreDetails? = null
 
   override fun getLayout(): Int {
     return R.layout.fragment_dashboard
@@ -102,6 +106,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun refreshData(siteMeterData: SiteMeterScoreDetails) {
+    this.siteMeterData = siteMeterData
     (baseActivity as? DashboardActivity)?.setPercentageData(siteMeterData.siteMeterTotalWeight)
     isHigh = (siteMeterData.siteMeterTotalWeight >= 80)
     setUserData()
@@ -133,13 +138,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.viewLowDigitalReadiness?.gone()
       binding?.viewLowTaskManageBusiness?.gone()
       binding?.viewHighDigitalReadiness?.visible()
-      binding?.pagerBusinessSetupHigh?.apply {
-        val adapterPager2 = AppBaseRecyclerViewAdapter(baseActivity, BusinessSetupHighData().getData(siteMeterData.siteMeterTotalWeight), this@DashboardFragment)
-        offscreenPageLimit = 3
-        adapter = adapterPager2
-        binding?.dotIndicatorBusinessHigh?.setViewPager2(this)
-        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-      }
     } else {
       binding?.txtReadinessScore?.text = "${siteMeterData.siteMeterTotalWeight}"
       binding?.progressScore?.progress = siteMeterData.siteMeterTotalWeight
@@ -186,16 +184,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         offscreenPageLimit = 3
         adapter = adapterPager4
         setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-      }
-
-      binding?.rvRoiSummary?.apply {
-        val adapter2 = AppBaseRecyclerViewAdapter(baseActivity, RoiSummaryData().getData(getRoiSummaryType(session?.fP_AppExperienceCode)), this@DashboardFragment)
-        adapter = adapter2
-      }
-
-      binding?.rvGrowthState?.apply {
-        val adapter3 = AppBaseRecyclerViewAdapter(baseActivity, GrowthStatsData().getData(), this@DashboardFragment)
-        adapter = adapter3
       }
     } else {
       binding?.viewHighSummaryBottom?.apply { gone() }
@@ -246,6 +234,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
       viewModel?.getUserSummary(clientId, session?.fPParentId, scope)?.observeOnce(viewLifecycleOwner, { it1 ->
         val response2 = it1 as? UserSummaryResponse
+        session?.saveUserSummary(response2?.getSummary())
         val identifierType = if (session?.iSEnterprise == "true") "MULTI" else "SINGLE"
         viewModel?.getUserCallSummary(clientId, session?.fPParentId, identifierType)?.observeOnce(viewLifecycleOwner, { it2 ->
           val response3 = it2 as? CallSummaryResponse
@@ -266,12 +255,34 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     })
   }
 
-  private fun setDataSellerSummary(sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, response3: CallSummaryResponse?) {
-
-  }
-
-  private fun getSummaryDetail(): SummaryEntity? {
-    return SummaryEntity(session?.enquiryCount?.toIntOrNull() ?: 0, session?.subcribersCount?.toIntOrNull() ?: 0, session?.visitorsCount?.toIntOrNull() ?: 0, session?.visitsCount?.toIntOrNull() ?: 0)
+  private fun setDataSellerSummary(sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, callSummary: CallSummaryResponse?) {
+    if (isHigh) {
+      val data = BusinessSetupHighData().getData(siteMeterData?.siteMeterTotalWeight ?: 0,
+          summary?.getNoOfUniqueViews() ?: "0", sellerOrder?.getTotalNetAmount() ?: "0", getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
+      if (adapterPagerBusinessUpdate == null) {
+        binding?.pagerBusinessSetupHigh?.apply {
+          adapterPagerBusinessUpdate = AppBaseRecyclerViewAdapter(baseActivity, data, this@DashboardFragment)
+          offscreenPageLimit = 3
+          adapter = adapterPagerBusinessUpdate
+          binding?.dotIndicatorBusinessHigh?.setViewPager2(this)
+          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+        }
+      } else adapterPagerBusinessUpdate?.notify(data)
+      val roiData = RoiSummaryData().getData(summary?.getNoOfMessages() ?: "0", callSummary?.getTotalCalls() ?: "0", sellerOrder, getRoiSummaryType(session?.fP_AppExperienceCode))
+      if (adapterRoi == null) {
+        binding?.rvRoiSummary?.apply {
+          adapterRoi = AppBaseRecyclerViewAdapter(baseActivity, roiData, this@DashboardFragment)
+          adapter = adapterRoi
+        }
+      } else adapterRoi?.notify(roiData)
+      val growthStatsList = GrowthStatsData().getData(summary)
+      if (adapterGrowth == null) {
+        binding?.rvGrowthState?.apply {
+          adapterGrowth = AppBaseRecyclerViewAdapter(baseActivity, growthStatsList, this@DashboardFragment)
+          adapter = adapterGrowth
+        }
+      } else adapterGrowth?.notify(growthStatsList)
+    }
   }
 
   private fun setViewChannels(channels: ArrayList<ChannelModel>?) {
@@ -453,6 +464,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     binding?.progress?.gone()
   }
 
+  private fun getSummaryDetail(): SummaryEntity? {
+    return SummaryEntity(session?.enquiryCount?.toIntOrNull() ?: 0, session?.subcribersCount?.toIntOrNull() ?: 0, session?.visitorsCount?.toIntOrNull() ?: 0, session?.visitsCount?.toIntOrNull() ?: 0)
+  }
+
   private fun getRequestFloat(): Map<String, String> {
     val map = HashMap<String, String>()
     map["clientId"] = clientId
@@ -460,6 +475,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     map["fpId"] = session?.fPID!!
     return map
   }
+}
+
+private fun UserSessionManager.saveUserSummary(summary: SummaryEntity?) {
+  enquiryCount = (summary?.noOfMessages ?: 0).toString()
+  subcribersCount = (summary?.noOfSubscribers ?: 0).toString()
+  visitorsCount = (summary?.noOfUniqueViews ?: 0).toString()
+  visitsCount = (summary?.noOfViews ?: 0).toString()
 }
 
 

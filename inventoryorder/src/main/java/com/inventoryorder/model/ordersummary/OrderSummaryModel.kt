@@ -1,10 +1,7 @@
 package com.inventoryorder.model.ordersummary
 
 import com.framework.base.BaseResponse
-import com.framework.utils.PreferencesUtils
-import com.framework.utils.convertObjToString
-import com.framework.utils.convertStringToObj
-import com.framework.utils.getData
+import com.framework.utils.*
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
@@ -34,6 +31,10 @@ class OrderSummaryModel(
 
   override fun getViewType(): Int {
     return RecyclerViewItemType.ORDERS_ITEM_TYPE.getLayout()
+  }
+
+  fun getTotalNetAmount(): String {
+    return getNumberFormat((TotalNetAmount ?: 0).toInt().toString())
   }
 
   fun getOrderType(): ArrayList<OrderSummaryModel> {

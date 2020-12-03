@@ -259,7 +259,7 @@ fun UserSessionManager.siteMeterData(callback: (data: SiteMeterScoreDetails?) ->
         }
         siteMeterScoreDetails.contentManagement.add(it)
         val data = it.copy()
-        data.Percentage = "+${bizFloat * onUpdate}%"
+        data.Percentage = "+${if (bizFloat < 5 && !fiveUpdatesDone) bizFloat * onUpdate else 20}%"
         siteMeterScoreDetails.channelSync.add(data)
       }
       logo -> {

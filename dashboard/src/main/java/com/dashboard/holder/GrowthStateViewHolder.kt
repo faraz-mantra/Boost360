@@ -14,7 +14,7 @@ class GrowthStateViewHolder(binding: ItemGrowthStateBinding) : AppBaseRecyclerVi
     val data = item as? GrowthStatsData ?: return
     getColor(if (position % 2 == 0) R.color.light_grey_4 else R.color.white)?.let { binding.mainContent.setBackgroundColor(it) }
     binding.txtTitle.text = data.title
-    binding.txtAmount.text = data.amount
+    binding.txtAmount.text = data.value
     binding.txtAmountCountDay.text = data.dayAmountTitle
     data.icon1?.let { binding.imgIcon.setImageResource(it) }
     binding.txtSymbol.apply { visibility = if (data.isRupeeSymbols) View.VISIBLE else View.GONE }

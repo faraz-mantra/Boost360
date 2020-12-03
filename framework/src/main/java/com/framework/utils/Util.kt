@@ -7,6 +7,8 @@ import android.text.Html
 import android.text.Spanned
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import java.text.NumberFormat
+import java.util.*
 
 fun Activity.hideKeyBoard() {
   val view = this.currentFocus
@@ -27,5 +29,13 @@ fun Activity.showKeyBoard(view: View?) {
 fun fromHtml(html: String?): Spanned? {
   return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
   else Html.fromHtml(html)
+}
+
+fun getNumberFormat(value: String): String {
+  return try {
+    NumberFormat.getNumberInstance(Locale.US).format(value.toInt().toLong())
+  } catch (e: Exception) {
+    value
+  }
 }
 

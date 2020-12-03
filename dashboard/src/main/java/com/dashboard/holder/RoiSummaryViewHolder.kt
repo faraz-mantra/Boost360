@@ -15,7 +15,7 @@ class RoiSummaryViewHolder(binding: ItemRoiSummaryBinding) : AppBaseRecyclerView
     binding.txtTitle.text = data.title
     data.icon1?.let { binding.imgIcon.setImageResource(it) }
     binding.txtDayTitle.text = data.dayTitle
-    binding.txtAmount.text = data.amount
+    binding.txtAmount.text = data.value
   }
 
 }
