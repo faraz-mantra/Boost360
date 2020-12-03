@@ -20,9 +20,9 @@ data class BusinessSetupHighData(
     return recyclerViewItemType
   }
 
-  fun getData(score: Int): ArrayList<BusinessSetupHighData> {
+  fun getData(score: Int, visitor: String, order: String, orderText: String = "Bookings", enquiry: String): ArrayList<BusinessSetupHighData> {
     val list = ArrayList<BusinessSetupHighData>()
-    list.add(BusinessSetupHighData(title1 = "Business", title2 = "Update", siteVisitor = Specification("Site visitors", "3,45,890"), booking = Specification("Bookings", "3,400"), enquiry = Specification("Enquiries", "2,105"), type = ActiveViewType.IS_BUSINESS_UPDATE.name))
+    list.add(BusinessSetupHighData(title1 = "Business", title2 = "Update", siteVisitor = Specification("Site visitors", visitor), booking = Specification(orderText, order), enquiry = Specification("Enquiries", enquiry), type = ActiveViewType.IS_BUSINESS_UPDATE.name))
     list.add(BusinessSetupHighData(title1 = "Digital readiness score: $score%", score = score, type = ActiveViewType.IS_PROGRESS.name))
     return list
   }

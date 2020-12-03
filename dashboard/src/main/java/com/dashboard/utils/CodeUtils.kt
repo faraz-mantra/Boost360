@@ -39,7 +39,7 @@ fun getCustomerAppointmentTaxonomyFromServiceCode(category_code: String?): Strin
 }
 
 
-fun getCustomerTypeFromServiceCode(category_code: String?): String? {
+fun getCustomerTypeFromServiceCode(category_code: String?): String {
   //" Customer Appointments" for "SVC","DOC", "HOS","SPA", "SAL"  & "Customer Orders" for all others.
   return when (category_code) {
     "DOC", "HOS" -> "Appointments"

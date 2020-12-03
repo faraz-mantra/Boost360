@@ -1,10 +1,7 @@
 package com.inventoryorder.model.summaryCall
 
 import com.framework.base.BaseResponse
-import com.framework.utils.PreferencesUtils
-import com.framework.utils.convertObjToString
-import com.framework.utils.convertStringToObj
-import com.framework.utils.getData
+import com.framework.utils.*
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -18,6 +15,10 @@ data class CallSummaryResponse(
     @SerializedName("TotalCalls")
     var totalCalls: Int? = null,
 ) : BaseResponse(), Serializable {
+
+  fun getTotalCalls(): String {
+    return getNumberFormat((totalCalls ?: 0).toString())
+  }
 
   fun getCallSummary(): CallSummaryResponse? {
     val resp = PreferencesUtils.instance.getData(CALL_SUMMARY_DATA, "") ?: ""
