@@ -16,7 +16,8 @@ enum class RecyclerViewItemType {
   SECTION_HEADER_ITEM,
   CITY_DETAILS_ITEM,
   CHANNEL_ITEM_CONNECT,
-  CHANNEL_ITEM_DISCONNECT;
+  CHANNEL_ITEM_DISCONNECT,
+  DIGITAL_CARD_ITEM;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -34,6 +35,7 @@ enum class RecyclerViewItemType {
       CITY_DETAILS_ITEM -> R.layout.city_item_data
       CHANNEL_ITEM_CONNECT -> R.layout.item_channels_connected
       CHANNEL_ITEM_DISCONNECT -> R.layout.item_channels_disconnect
+      DIGITAL_CARD_ITEM -> R.layout.item_digital_card
     }
-    }
+  }
 }
