@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/greyish_light"
+      android:orientation="vertical">
+
+      <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager_digital_card"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_196"
+        android:layout_marginTop="@dimen/size_18"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal" />
+
+      <com.framework.views.dotsindicator.DotsIndicator
+        android:id="@+id/dot_indicator_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/size_9"
+        android:layout_marginBottom="@dimen/size_12"
+        app:dotsColor="@color/white_50"
+        app:dotsCornerRadius="@dimen/_6dp"
+        app:dotsSize="@dimen/size_5"
+        app:dotsSpacing="@dimen/size_2"
+        app:dotsWidthFactor="2.5"
+        app:progressMode="false"
+        app:selectedDotColor="@color/colorAccent" />
+
+    </LinearLayout>
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />
+  </FrameLayout>
+</layout>

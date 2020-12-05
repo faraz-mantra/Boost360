@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -48,7 +46,6 @@ import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 import io.reactivex.Completable
 import java.util.*
 import kotlin.collections.ArrayList
-
 
 class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
 
@@ -112,7 +109,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   private fun updateRequestGetChannelData() {
     val bundle = arguments
-    isStartActivity = bundle?.getBoolean(PreferenceConstant.IS_START_ACTIVITY) ?: false
     val isUpdate = bundle?.getBoolean(PreferenceConstant.IS_UPDATE)
     websiteUrl = bundle?.getString(PreferenceConstant.WEBSITE_URL) ?: ""
     if (isUpdate != null && isUpdate) {
@@ -309,7 +305,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal -> {
         if (channel.isFacebookShop()) {
           val s = SpannableString(resources.getString(R.string.fp_shop_awaited_desc))
-          Linkify.addLinks(s, Linkify.ALL);
+          Linkify.addLinks(s, Linkify.ALL)
           AlertDialog.Builder(baseActivity)
               .setTitle(getString(R.string.fp_shop_awaited_title))
               .setMessage(s)
@@ -390,11 +386,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   override fun hideProgress() {
     progress.hideProgress()
-  }
-
-  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_alert_icon, menu)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
