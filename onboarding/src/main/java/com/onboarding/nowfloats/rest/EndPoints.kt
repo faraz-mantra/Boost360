@@ -15,6 +15,10 @@ object EndPoints {
   const val RIA_WITH_FLOATS_BASE_URL = "https://ria.withfloats.com/"
   const val RIA_WHATSAPP = "api/WhatsApp/OptIn"
 
+  // Base With Floats APIs
+  const val BOOST_FLOATS_BASE_URL = "https://boost.nowfloats.com"
+  const val MERCHANT_PROFILE = "/Home/MerchantProfileStatus"
+
   // NFX APIs
   const val NFX_BASE_URL = "https://nfx.withfloats.com/"
   const val POST_UPDATE_CHANNEL_ACCESS_TOKENS_URL = "dataexchange/v1/updateAccessTokens"

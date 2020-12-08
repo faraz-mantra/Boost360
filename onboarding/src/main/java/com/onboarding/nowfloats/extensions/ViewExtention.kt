@@ -15,6 +15,7 @@ import com.framework.views.customViews.CustomTextField
 import java.io.File
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.util.*
 
 fun CustomTextField.afterTextChanged(afterTextChanged: (String) -> Unit) {
   this.addTextChangedListener(object : TextWatcher {
@@ -30,7 +31,7 @@ fun CustomTextField.afterTextChanged(afterTextChanged: (String) -> Unit) {
   })
 }
 
-fun String.capitalizeWords(): String = split(" ").joinToString(" ") { it.toLowerCase().capitalize() }
+fun String.capitalizeWords(): String = split(" ").joinToString(" ") { it.toLowerCase(Locale.ROOT).capitalize(Locale.ROOT) }
 
 fun getScreenWidth(): Int {
   return Resources.getSystem().displayMetrics.widthPixels

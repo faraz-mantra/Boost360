@@ -4,13 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dashboard.R
-import com.dashboard.pref.Key_Preferences
-import com.dashboard.pref.StoreWidgets
-import com.dashboard.pref.UserSessionManager
-import com.dashboard.pref.WA_KEY
+import com.dashboard.controller.getDomainName
+import com.dashboard.pref.*
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
-import java.util.*
 
 fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
   try {
@@ -20,9 +17,21 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
     bundle.putString(UserSessionManager.KEY_FP_ID, session.fPID)
     bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.fpTag)
     bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.fP_AppExperienceCode)
-    bundle.putBoolean("IsUpdate", true)
-    val normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT) + this.getString(R.string.tag_for_partners)
-    if (rootAlisasURI.isNotEmpty()) bundle.putString("website_url", rootAlisasURI) else bundle.putString("website_url", normalURI)
+    bundle.putBoolean(Key_Preferences.IS_UPDATE, true)
+    bundle.putString(Key_Preferences.BUSINESS_NAME, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
+    var imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
+    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
+      imageUri = BASE_IMAGE_URL + imageUri
+    }
+    bundle.putString(Key_Preferences.BUSINESS_IMAGE, imageUri)
+    bundle.putString(Key_Preferences.BUSINESS_TYPE, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
+
+    val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
+    val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
+    bundle.putString(Key_Preferences.LOCATION, if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country")
+    bundle.putString(Key_Preferences.WEBSITE_URL, session.getDomainName(false))
+    bundle.putString(Key_Preferences.PRIMARY_NUMBER, session.userPrimaryMobile)
+    bundle.putString(Key_Preferences.PRIMARY_EMAIL, session.fPEmail)
     startFragmentActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()

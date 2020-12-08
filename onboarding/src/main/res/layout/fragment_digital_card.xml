@@ -8,7 +8,7 @@
 
   <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
@@ -45,8 +45,41 @@
 
     </LinearLayout>
 
-    <View
+    <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
+      android:layout_margin="@dimen/size_14"
+      android:gravity="bottom"
+
+      android:orientation="vertical">
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/share_whatsapp"
+        style="@style/ButtonStyle.Rounded"
+        android:layout_width="match_parent"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:backgroundTint="@color/light_green_new"
+        android:drawableStart="@drawable/ic_whatsapp_white_transparent"
+        android:stateListAnimator="@null"
+        android:text="Share via WhatsApp"
+        android:textAllCaps="true"
+        app:textType="HEADING_6" />
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/share_other"
+        style="@style/ButtonStyle.Rounded.Outlined"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="@dimen/size_14"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/bg_button_outlined_grey"
+        android:stateListAnimator="@null"
+        android:text="Share via others "
+        android:textAllCaps="true"
+        app:textType="HEADING_6" />
+    </LinearLayout>
   </FrameLayout>
 </layout>
