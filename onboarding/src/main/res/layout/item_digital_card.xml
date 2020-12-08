@@ -26,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ic_card_bg_1"
+        android:id="@+id/view1"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:weightSum="3">
@@ -71,9 +72,10 @@
             android:layout_marginTop="@dimen/size_6"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:id="@+id/business_name"
             android:includeFontPadding="false"
             android:maxLines="3"
-            android:text="PLASTO INDIA AND POLYMERS"
+            tools:text="PLASTO INDIA AND POLYMERS"
             android:textColor="@color/white"
             app:fontFamily="@font/bold"
             app:textType="HEADING_6" />
@@ -84,7 +86,8 @@
             android:layout_marginStart="@dimen/size_1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="New Delhi, India"
+            android:id="@+id/location"
+            tools:text="New Delhi, India"
             android:textColor="@color/white"
             app:textType="CAPTION" />
         </LinearLayout>
@@ -99,6 +102,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/size_6"
             android:background="@drawable/ic_accent_left_cut_bg"
+            android:id="@+id/view2"
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomTextView
@@ -107,7 +111,8 @@
               android:layout_marginStart="@dimen/size_25"
               android:layout_marginTop="@dimen/size_25"
               android:includeFontPadding="false"
-              android:text="Shashikant Sinha"
+              android:id="@+id/name"
+              tools:text="Shashikant Sinha"
               android:textColor="@color/white"
               app:fontFamily="@font/semi_bold"
               app:textType="HEADING_6" />
@@ -115,26 +120,26 @@
             <RelativeLayout
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginStart="@dimen/size_25"
+              android:layout_marginStart="@dimen/size_26"
               android:gravity="center_vertical">
 
               <com.framework.views.customViews.CustomTextView
-                android:id="@+id/user_type"
+                android:id="@+id/business_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:text="Marketing Manager"
+                tools:text="Marketing Manager"
                 android:textColor="@color/greyish_brown_1"
                 app:textType="CAPTION" />
 
               <com.framework.views.DashedDividerView
                 android:layout_width="match_parent"
                 android:layout_height="0.7dp"
-                android:layout_below="@+id/user_type"
-                android:layout_alignStart="@+id/user_type"
-                android:layout_alignEnd="@+id/user_type"
+                android:layout_below="@+id/business_type"
+                android:layout_alignStart="@+id/business_type"
+                android:layout_alignEnd="@+id/business_type"
                 android:layout_marginStart="@dimen/size_1"
                 android:layout_marginTop="@dimen/size_2"
                 app:dividerDashColor="@color/white"
@@ -173,7 +178,8 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="0801234567890"
+                android:id="@+id/number"
+                tools:text="0801234567890"
                 android:textColor="@color/greyish_brown_1"
                 app:textType="CAPTION" />
             </LinearLayout>
@@ -198,7 +204,8 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="plastoindia@gmail.com"
+                android:id="@+id/email"
+                tools:text="plastoindia@gmail.com"
                 android:textColor="@color/greyish_brown_1"
                 app:textType="CAPTION" />
             </LinearLayout>
@@ -223,7 +230,8 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="https://plastoindiaandpolymers.com"
+                android:id="@+id/website"
+                tools:text="https://plastoindiaandpolymers.com"
                 android:textColor="@color/greyish_brown_1"
                 app:textType="CAPTION" />
             </LinearLayout>

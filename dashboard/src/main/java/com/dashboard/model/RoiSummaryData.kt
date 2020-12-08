@@ -38,7 +38,7 @@ class RoiSummaryData(
         list.add(RoiSummaryData(title = "Appointment\nWorth", value = "0K", icon1 = R.drawable.ic_meeting_apt_d, isRupeeSymbols = true, type = RoiType.APT_ORDER_WORTH.name))
         list.add(RoiSummaryData(title = "Collection\nWorth (INR)", value = "0k", icon1 = R.drawable.ic_meeting_conslt_d, isRupeeSymbols = true, type = RoiType.COLLECTION_WORTH.name))
       }
-      "MGF" -> {
+      "MFG" -> {
         list.add(RoiSummaryData(title = "Customer\nEnquiries", value = enquiry, icon1 = R.drawable.ic_chat_enquiry_d, type = RoiType.ENQUIRY.name))
         list.add(RoiSummaryData(title = "Tracked\nCalls", value = totalCalls, icon1 = R.drawable.ic_track_call_d, type = RoiType.TRACK_CALL.name))
         list.add(RoiSummaryData(title = "Customer\nOrders", value = sellerOrder?.getTotalNetAmount() ?: "0", icon1 = R.drawable.ic_meeting_apt_d, type = RoiType.APT_ORDER.name))

@@ -105,6 +105,14 @@ object Key_Preferences {
   const val BUBBLE_POS_Y = "bubble_pos_y"
   const val BUBBLE_POS_X = "bubble_pos_x"
   const val NO_OF_TIMES_RESPONDED = "NO_OF_TIMES_RESPONDED"
+  const val WEBSITE_URL = "website_url"
+  const val IS_UPDATE = "IsUpdate"
+  const val BUSINESS_NAME = "business_name"
+  const val BUSINESS_IMAGE = "business_image"
+  const val BUSINESS_TYPE = "business_type"
+  const val LOCATION = "location"
+  const val PRIMARY_NUMBER = "primary_number"
+  const val PRIMARY_EMAIL = "primary_email"
 
   // Twitter Share preference
   const val PREF_NAME_TWITTER = "NFBoostTwitterPref"
