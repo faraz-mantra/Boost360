@@ -721,8 +721,70 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onPromoBannerClicked(item: PromoBanners?) {
-//        Log.v("PromoBannerClicked >>", item!!.cta_web_link.isNullOrBlank().toString() )
-        if (item!!.cta_feature_key != null) {
+//        Log.v("PromoBannerClicked >>", item!!.cta_web_link.isNullOrBlank().toString()  + " "+item!!.cta_feature_key.isNullOrBlank().toString() )
+        if(!item!!.cta_feature_key.isNullOrBlank()){
+            if (item!!.cta_feature_key != null) {
+                val details = DetailsFragment.newInstance()
+                val args = Bundle()
+                args.putString("itemId", item!!.cta_feature_key)
+                details.arguments = args
+                (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
+
+            }
+        }else{
+            if(!item!!.cta_bundle_identifier.isNullOrBlank()){
+                if (item!!.cta_bundle_identifier != null) {
+                    CompositeDisposable().add(
+                            AppDatabase.getInstance(requireActivity().application)!!
+                                    .bundlesDao()
+                                    .checkBundleKeyExist(item!!.cta_bundle_identifier)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe({
+                                        if (it == 1) {
+                                            CompositeDisposable().add(
+                                                    AppDatabase.getInstance(requireActivity().application)!!
+                                                            .bundlesDao()
+                                                            .getBundleItemById(item!!.cta_bundle_identifier)
+                                                            .subscribeOn(Schedulers.io())
+                                                            .observeOn(AndroidSchedulers.mainThread())
+                                                            .subscribe({
+
+                                                                val packageFragment = PackageFragment.newInstance()
+                                                                val args = Bundle()
+                                                                args.putString("bundleData", Gson().toJson(it))
+                                                                packageFragment.arguments = args
+                                                                (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)
+
+                                                            }, {
+                                                                it.printStackTrace()
+                                                            })
+                                            )
+                                        } else {
+                                            Toasty.error(requireContext(), "Bundle Not Available To This Account", Toast.LENGTH_LONG).show()
+                                        }
+                                    }, {
+                                        it.printStackTrace()
+                                    })
+                    )
+                }
+            }else{
+                if(!item!!.cta_web_link.isNullOrBlank()){
+                    if (item!!.cta_web_link != null) {
+                        val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
+                        val args = Bundle()
+                        args.putString("title", "Browser")
+                        args.putString("link", item!!.cta_web_link)
+                        webViewFragment.arguments = args
+                        (activity as UpgradeActivity).addFragment(
+                                webViewFragment,
+                                Constants.WEB_VIEW_FRAGMENT
+                        )
+                    }
+                }
+            }
+        }
+        /*if (item!!.cta_feature_key != null) {
             val details = DetailsFragment.newInstance()
             val args = Bundle()
             args.putString("itemId", item!!.cta_feature_key)
@@ -773,7 +835,7 @@ class HomeFragment : BaseFragment(), HomeListener {
                     webViewFragment,
                     Constants.WEB_VIEW_FRAGMENT
             )
-        }
+        }*/
 
     }
 
