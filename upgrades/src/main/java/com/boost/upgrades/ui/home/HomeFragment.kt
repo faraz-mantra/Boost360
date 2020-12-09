@@ -721,7 +721,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onPromoBannerClicked(item: PromoBanners?) {
-        Log.v("PromoBannerClicked >>", item!!.cta_web_link )
+//        Log.v("PromoBannerClicked >>", item!!.cta_web_link.isNullOrBlank().toString() )
         if (item!!.cta_feature_key != null) {
             val details = DetailsFragment.newInstance()
             val args = Bundle()
