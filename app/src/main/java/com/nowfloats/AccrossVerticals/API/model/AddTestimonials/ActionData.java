@@ -18,6 +18,78 @@ public class ActionData {
     @Expose
     private Profileimage profileimage;
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getTestimonial() {
+        return testimonial;
+    }
+
+    public void setTestimonial(String testimonial) {
+        this.testimonial = testimonial;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    @SerializedName("city")
+    @Expose
+    private String city;
+
+    @SerializedName("testimonials")
+    @Expose
+    private String testimonial;
+
+    @SerializedName("customerName")
+    @Expose
+    private String customerName;
+
+    public ProfileImagee getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImagee(ProfileImagee profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    @SerializedName("profileImage")
+    @Expose
+    private ProfileImagee profileImage;
+
+    public String getOurStory() {
+        return ourStory;
+    }
+
+    public void setOurStory(String ourStory) {
+        this.ourStory = ourStory;
+    }
+
+    @SerializedName("ourStory")
+    @Expose
+    private String ourStory;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @SerializedName("name")
+    @Expose
+    private String name;
+
     public String getTitle() {
         return title;
     }

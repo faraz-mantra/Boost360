@@ -144,11 +144,13 @@
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_15sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:text="Get Now"
+                    android:text="get now"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textFontWeight="800"
                     android:textSize="@dimen/_8sdp" />
+
+
             </LinearLayout>
 
 

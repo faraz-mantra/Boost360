@@ -20,7 +20,6 @@ import android.view.ViewGroup
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,7 +59,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -723,7 +721,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onPromoBannerClicked(item: PromoBanners?) {
-        Log.i("onPromoBannerClicked >>", item.toString())
+        Log.v("PromoBannerClicked >>", item!!.cta_web_link )
         if (item!!.cta_feature_key != null) {
             val details = DetailsFragment.newInstance()
             val args = Bundle()
@@ -766,7 +764,6 @@ class HomeFragment : BaseFragment(), HomeListener {
                             })
             )
         } else if (item!!.cta_web_link != null) {
-
             val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
             val args = Bundle()
             args.putString("title", "Browser")
