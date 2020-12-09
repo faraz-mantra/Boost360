@@ -24,9 +24,11 @@ import com.nowfloats.AccrossVerticals.API.APIInterfaces;
 import com.nowfloats.AccrossVerticals.API.model.DeleteTestimonials.DeleteTestimonialsData;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.GetTestimonialData;
+import com.nowfloats.AccrossVerticals.API.model.GetToken.GetTokenData;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.ProductGallery.Model.Product;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -56,6 +58,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     LinearLayout rightButton, backButton;
     ImageView rightIcon;
     TextView title;
+    String headerToken = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         setHeader();
         initialization();
         checkIsAdd();
+        Log.v("experincecode"," themeID: "+  session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) +" FpTag: " + session.getFpTag());
     }
 
     private void checkIsAdd() {
@@ -82,7 +86,15 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     @Override
     protected void onResume() {
         super.onResume();
-        loadData();
+//        loadData();
+        getHeaderAuthToken();
+/*        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("HOTEL & MOTELS")){
+//            loadHotelsData();
+            getHeaderAuthToken();
+        }else{
+            loadData();
+        }*/
+//        getHeaderAuthToken();
     }
 
     void initialization() {
@@ -96,7 +108,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         session = new UserSessionManager(getApplicationContext(), this);
 
         recyclerView = (RecyclerView) findViewById(R.id.testimonials_recycler);
-        testimonialsAdapter = new TestimonialsAdapter(new ArrayList(), this);
+        testimonialsAdapter = new TestimonialsAdapter(new ArrayList(), this, session);
         initialiseRecycler();
 
 
@@ -164,8 +176,52 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                     .setLog(new AndroidLog("ggg"))
                     .build()
                     .create(APIInterfaces.class);
+            Log.v("headerToken"," "+ headerToken);
+            APICalls.getTestimonialsList(/*headerToken,*/query, 0, 1000, new Callback<GetTestimonialData>() {
+                @Override
+                public void success(GetTestimonialData testimonialModel, Response response) {
+                    hideProgress();
+                    if (testimonialModel == null || response.getStatus() != 200) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (testimonialModel.getData().size() > 0) {
+                        dataList = testimonialModel.getData();
+                        updateRecyclerView();
+                        mainLayout.setVisibility(View.VISIBLE);
+                        secondaryLayout.setVisibility(View.GONE);
+                        rightButton.setVisibility(View.VISIBLE);
+                    } else {
+                        mainLayout.setVisibility(View.GONE);
+                        secondaryLayout.setVisibility(View.VISIBLE);
+                        rightButton.setVisibility(View.INVISIBLE);
+                    }
+                }
 
-            APICalls.getTestimonialsList(query, 0, 1000, new Callback<GetTestimonialData>() {
+                @Override
+                public void failure(RetrofitError error) {
+                    hideProgress();
+                    Methods.showSnackBarNegative(TestimonialsActivity.this, getString(R.string.something_went_wrong));
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    void loadHotelsData() {
+        try {
+            showProgress();
+            JSONObject query = new JSONObject();
+            query.put("WebsiteId", session.getFpTag());
+            APIInterfaces APICalls = new RestAdapter.Builder()
+                    .setEndpoint("https://webaction.api.boostkit.dev")
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setLog(new AndroidLog("ggg"))
+                    .build()
+                    .create(APIInterfaces.class);
+            Log.v("headerToken"," "+ headerToken);
+            APICalls.getHotelsTestimonialsList(headerToken, query, 0, 1000, new Callback<GetTestimonialData>() {
                 @Override
                 public void success(GetTestimonialData testimonialModel, Response response) {
                     hideProgress();
@@ -233,12 +289,13 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                     .build()
                     .create(APIInterfaces.class);
 
-            APICalls.deleteTestimoinals(requestBody, new Callback<String>() {
+            APICalls.deleteTestimonials(headerToken, requestBody, new Callback<String>() {
                 @Override
                 public void success(String data, Response response) {
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deleteTestimonials ->", response.getBody().toString());
-                        loadData();
+//                        loadData();
+                        getHeaderAuthToken();
                         Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
 //                        Methods.showSnackBarPositive(TestimonialsActivity.this, "Successfully Deleted.");
                     } else {
@@ -249,7 +306,8 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                 @Override
                 public void failure(RetrofitError error) {
                     if (error.getResponse().getStatus() == 200) {
-                        loadData();
+//                        loadData();
+                        getHeaderAuthToken();
                         Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
 //                        Methods.showSnackBarPositive(TestimonialsActivity.this, "Successfully Deleted.");
                     } else {
@@ -286,5 +344,57 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         if (resultCode == RESULT_OK && requestCode == 202) {
             if (!(data != null && data.getBooleanExtra("IS_REFRESH", false))) onBackPressed();
         }
+    }
+    String getHeaderAuthToken() {
+
+        try {
+
+            APIInterfaces APICalls = new RestAdapter.Builder()
+                    .setEndpoint("https://developer.api.boostkit.dev")
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setLog(new AndroidLog("ggg"))
+                    .build()
+                    .create(APIInterfaces.class);
+            Log.v("newvlue"," "+ session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID)+ " "+ session.getFpTag());
+            APICalls.getHeaderAuthorizationtoken(session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID), session.getFpTag(), new Callback<GetTokenData>() {
+                @Override
+                public void success(GetTokenData s, Response response) {
+                    Log.v("experincecode1"," "+ s.getToken() );
+                    if (response.getStatus() != 200) {
+                        Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
+                        headerToken = "";
+                        return ;
+                    }else{
+                        headerToken = s.getToken();
+                        Log.v("experincecode"," "+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY) + " headerToken: "+ headerToken);
+//                        loadData();
+                        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("HOTEL & MOTELS")){
+                            loadHotelsData();
+                        }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("MANUFACTURERS")){
+                            loadData();
+                        }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("SALON")){
+                            loadHotelsData();
+                        }else{
+                            loadData();
+                        }
+//                        Toast.makeText(getApplicationContext(), response.getBody().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.v("experincecode2"," "+ error.getBody() + " "+ error.getMessage() );
+                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Methods.showSnackBarNegative(TestimonialsActivity.this, getString(R.string.something_went_wrong));
+                }
+            });
+
+
+        } catch (Exception e) {
+            Log.v("experincecode3"," "+ e.getMessage() +" "+ e.getStackTrace() );
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+        return headerToken;
     }
 }

@@ -1,5 +1,6 @@
 package com.nowfloats.AccrossVerticals.Testimonials;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
+import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -26,10 +29,13 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
     private int menuPosition = -1;
     private boolean menuStatus = false;
     private Context context;
+    private UserSessionManager userSession;
+    Activity activity;
 
-    public TestimonialsAdapter(List<Data> itemList, TestimonialsListener listener) {
+    public TestimonialsAdapter(List<Data> itemList, TestimonialsListener listener, UserSessionManager session) {
         this.itemList = itemList;
         this.listener = listener;
+        this.userSession = session;
     }
 
 
@@ -96,13 +102,44 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
             }
         });
 
-        Glide.with(context)
-                .load(itemList.get(position).getProfileimage().getUrl())
-                .into(holder.userProfileImage);
+        if(userSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("HOTEL & MOTELS")){
+            Glide.with(context)
+                    .load(itemList.get(position).getProfileImage().getUrl())
+                    .into(holder.userProfileImage);
+            holder.userName.setText(itemList.get(position).getCustomerName());
+            holder.reviewTitle.setText(itemList.get(position).getCity());
+            holder.reviewDescription.setText(itemList.get(position).getTestimonial());
+        }else if(userSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("MANUFACTURERS")){
+            Glide.with(context)
+                    .load(itemList.get(position).getProfileimage().getUrl())
+                    .into(holder.userProfileImage);
+            holder.userName.setText(itemList.get(position).getUsername());
+            holder.reviewTitle.setText(itemList.get(position).getTitle());
+            holder.reviewDescription.setText(itemList.get(position).getDescription());
+        }else if(userSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("SALON")){
+            Glide.with(context)
+                    .load(itemList.get(position).getProfileimage().getUrl())
+                    .into(holder.userProfileImage);
+            holder.userName.setText(itemList.get(position).getName());
+            holder.reviewTitle.setText(itemList.get(position).getTitle());
+            holder.reviewDescription.setText(itemList.get(position).getOurStory());
+        }else{
+            Glide.with(context)
+                    .load(itemList.get(position).getProfileImage().getUrl())
+                    .into(holder.userProfileImage);
+            holder.userName.setText(itemList.get(position).getUsername());
+            holder.reviewTitle.setText(itemList.get(position).getTitle());
+            holder.reviewDescription.setText(itemList.get(position).getDescription());
+        }
 
-        holder.userName.setText(itemList.get(position).getUsername());
+/*            Glide.with(context)
+                    .load(itemList.get(position).getProfileimage().getUrl())
+                    .into(holder.userProfileImage);*/
+
+
+/*        holder.userName.setText(itemList.get(position).getUsername());
         holder.reviewTitle.setText(itemList.get(position).getTitle());
-        holder.reviewDescription.setText(itemList.get(position).getDescription());
+        holder.reviewDescription.setText(itemList.get(position).getDescription());*/
 
     }
 

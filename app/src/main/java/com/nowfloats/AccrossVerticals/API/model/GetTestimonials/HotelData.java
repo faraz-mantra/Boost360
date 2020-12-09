@@ -3,20 +3,20 @@ package com.nowfloats.AccrossVerticals.API.model.GetTestimonials;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data {
+public class HotelData {
 
     @SerializedName("_id")
     @Expose
     private String id;
-    @SerializedName("title")
+    @SerializedName("city")
     @Expose
-    private String title;
-    @SerializedName("description")
+    private String city;
+    @SerializedName("testimonial")
     @Expose
-    private String description;
-    @SerializedName("username")
+    private String testimonial;
+    @SerializedName("customerName")
     @Expose
-    private String username;
+    private String customerName;
     @SerializedName("profileimage")
     @Expose
     private Profileimage profileimage;
@@ -39,68 +39,12 @@ public class Data {
     @Expose
     private Boolean isArchived;
 
-    @SerializedName("city")
-    @Expose
-    private String city;
-
-    @SerializedName("testimonial")
-    @Expose
-    private String testimonial;
-
-    @SerializedName("customerName")
-    @Expose
-    private String customerName;
-
-    public String getCustomerName() {
-        return customerName;
+    public String getId() {
+        return id;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public Profileimage getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(Profileimage profileImage) {
-        this.profileImage = profileImage;
-    }
-
-    @SerializedName("profileImage")
-    @Expose
-    private Profileimage profileImage;
-
-    public String getOurStory() {
-        return ourStory;
-    }
-
-    public void setOurStory(String ourStory) {
-        this.ourStory = ourStory;
-    }
-
-    @SerializedName("ourStory")
-    @Expose
-    private String ourStory;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @SerializedName("name")
-    @Expose
-    private String name;
-
-    public Boolean getArchived() {
-        return isArchived;
-    }
-
-    public void setArchived(Boolean archived) {
-        isArchived = archived;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCity() {
@@ -119,36 +63,12 @@ public class Data {
         this.testimonial = testimonial;
     }
 
-    public String getId() {
-        return id;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public Profileimage getProfileimage() {

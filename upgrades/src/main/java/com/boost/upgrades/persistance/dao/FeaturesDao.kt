@@ -15,8 +15,9 @@ interface FeaturesDao {
     @Query("SELECT * FROM Features WHERE is_premium = :premiumType ORDER BY feature_importance DESC")
     fun getFeaturesItems(premiumType: Boolean): Single<List<FeaturesModel>>
 
-    @Query("SELECT * FROM Features WHERE target_business_usecase = :categoryType  ORDER BY feature_importance DESC")
-    fun getFeaturesItemsByType(categoryType: String): Single<List<FeaturesModel>>
+//    @Query("SELECT * FROM Features WHERE target_business_usecase = :categoryType  ORDER BY feature_importance DESC")
+    @Query("SELECT * FROM Features WHERE target_business_usecase = :categoryType AND feature_code != :excludeFeature ORDER BY feature_importance DESC")
+    fun getFeaturesItemsByType(categoryType: String, excludeFeature: String): Single<List<FeaturesModel>>
 
     @Query("SELECT * FROM Features WHERE feature_id=:item_id")
     fun getFeaturesItemById(item_id: String): Single<FeaturesModel>
@@ -62,8 +63,8 @@ interface FeaturesDao {
 //    @Query("SELECT COUNT(*) FROM Features Where feature_code IN (:list)")
     fun getallActivefeatureCount(list: List<String>): Single<Int>
 
-    @Query("SELECT COUNT(*) FROM Features Where target_business_usecase = :featureType")
-    fun getFeatureTypeCount(featureType: String): Single<Int>
+    @Query("SELECT COUNT(*) FROM Features Where target_business_usecase = :featureType AND feature_code != :excludeFeature")
+    fun getFeatureTypeCount(featureType: String, excludeFeature: String): Single<Int>
 
     @Query("SELECT * FROM Features Where feature_code IN (:list) ORDER BY is_premium DESC, feature_importance DESC")
     fun getallFeaturesInList(list: List<String>): Single<List<FeaturesModel>>
