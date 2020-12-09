@@ -41,7 +41,7 @@ class BannerViewPagerAdapter(
             homeListener.onPromoBannerClicked(list.get(position))
         }
         holder.title.setText(list.get(position).title)
-//        checkBannerDetails(position)
+        checkBannerDetails(position)
     }
 
 
