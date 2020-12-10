@@ -10,25 +10,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -46,21 +33,34 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.CustomWidget.CustomTagLayout;
+import com.nowfloats.Login.Fetch_Home_Data;
+import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.RiaUpdateApis;
 import com.nowfloats.NavigationDrawer.Adapter.QuikrAdapter;
 import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
+import com.nowfloats.NavigationDrawer.model.PostTaskModel;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
@@ -84,8 +84,10 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.nowfloats.util.Constants.BASE_IMAGE_URL;
 
-public class Create_Message_Activity extends AppCompatActivity {
+
+public class Create_Message_Activity extends AppCompatActivity implements Fetch_Home_Data.Fetch_Home_Data_Interface {
     private Toolbar toolbar;
     ImageView cameraButton;
     ContentValues values;
@@ -111,6 +113,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     private boolean isFirstTimeFacebookPage = false;
     public static boolean isFirstTimeTwitter = false;
     private boolean isFirstTimeSendToSubscriber = false;
+    private Fetch_Home_Data fetch_home_data;
 
     public static boolean facbookEnabled = false;
     public static boolean twittersharingenabled = false;
@@ -139,6 +142,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create__message_v2);
+        fetch_home_data = new Fetch_Home_Data(this, 0);
         mBusEvent = BusProvider.getInstance().getBus();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -148,21 +152,21 @@ public class Create_Message_Activity extends AppCompatActivity {
         prefsEditor = pref.edit();
         session = new UserSessionManager(getApplicationContext(), Create_Message_Activity.this);
         dataBase = new DataBase(activity);
-        LinearLayout socialSharingIconLayout = (LinearLayout) findViewById(R.id.socialSharingIconLayout);
-        title_card = (CardView) findViewById(R.id.title_card);
-        message_card = (CardView) findViewById(R.id.message_card_view);
-        ivSpeakUpdate = (ImageView) findViewById(R.id.iv_speak_update);
+        LinearLayout socialSharingIconLayout = findViewById(R.id.socialSharingIconLayout);
+        title_card = findViewById(R.id.title_card);
+        message_card = findViewById(R.id.message_card_view);
+        ivSpeakUpdate = findViewById(R.id.iv_speak_update);
         WebEngageController.trackEvent("UPDATE", "pageview", session.getFpTag());
-        TextView shareText = (TextView) findViewById(R.id.shareTextView);
+        TextView shareText = findViewById(R.id.shareTextView);
         tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
         if (session.getISEnterprise().equals("true")) {
             socialSharingIconLayout.setVisibility(View.GONE);
             shareText.setVisibility(View.GONE);
         }
         tosubscribers = false;
-        msg = (EditText) findViewById(R.id.createMessageEditText);
+        msg = findViewById(R.id.createMessageEditText);
         msg.requestFocus();
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
@@ -171,91 +175,89 @@ public class Create_Message_Activity extends AppCompatActivity {
 
         mRiaNodedata = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
 
-        post = (TextView) toolbar.findViewById(R.id.saveTextView);
-        TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
+        post = toolbar.findViewById(R.id.saveTextView);
+        TextView titleTextView = toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getString(R.string.post_update));
         post.setText(getString(R.string.post_in_capital));
 
-        post.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WebEngageController.trackEvent("POST AN UPDATE", "null", session.getFpTag());
-                String businessMessage = msg.getText().toString();
+        post.setOnClickListener(v -> {
+            WebEngageController.trackEvent("POST AN UPDATE", "null", session.getFpTag());
+            String businessMessage = msg.getText().toString();
 
-                if (TextUtils.isEmpty((businessMessage))) {
-                    Toast.makeText(Create_Message_Activity.this, getString(R.string.null_string_exception), Toast.LENGTH_LONG).show();
-                    return;
-                }
+            if (TextUtils.isEmpty((businessMessage))) {
+                Toast.makeText(Create_Message_Activity.this, getString(R.string.null_string_exception), Toast.LENGTH_LONG).show();
+                return;
+            }
 
-                if (session.getISEnterprise().equals("false") && Methods.hasHTMLTags(msg.getText().toString())) {
-                    Toast.makeText(Create_Message_Activity.this, getString(R.string.html_tags_exception), Toast.LENGTH_LONG).show();
-                    return;
-                }
+            if (session.getISEnterprise().equals("false") && Methods.hasHTMLTags(msg.getText().toString())) {
+                Toast.makeText(Create_Message_Activity.this, getString(R.string.html_tags_exception), Toast.LENGTH_LONG).show();
+                return;
+            }
 
-                if (!Methods.isOnline(Create_Message_Activity.this)) {
+            if (!Methods.isOnline(Create_Message_Activity.this)) {
 
-                    return;
-                }
-                if (!Util.isNullOrEmpty(msg.getText().toString())) {
-                    Methods.hideKeyboard(msg, Create_Message_Activity.this);
+                return;
+            }
+            if (!Util.isNullOrEmpty(msg.getText().toString())) {
+                Methods.hideKeyboard(msg, Create_Message_Activity.this);
 
-                    if (!imageIconButtonSelected) {
+                if (!imageIconButtonSelected) {
 
-                        MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_NOT_SELECTED, null);
-                        Constants.imageNotSet = true;
-                        HashMap<String, String> eventKey = new HashMap<String, String>();
-                        eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_NOT_SELECTED, "Posted Update with only text");
+                    MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_NOT_SELECTED, null);
+                    Constants.imageNotSet = true;
+                    HashMap<String, String> eventKey = new HashMap<String, String>();
+                    eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_NOT_SELECTED, "Posted Update with only text");
 
-                    } else {
-
-                        MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_SELECTED, null);
-                        Constants.imageNotSet = false;
-
-                        HashMap<String, String> eventKey = new HashMap<String, String>();
-                        eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_SELECTED, "Posted Update with text and image");
-
-                    }
-
-                    Constants.createMsg = true;
-                    String socialShare = "";
-                    if (mFbProfileShare == 1) {
-                        socialShare += "FACEBOOK.";
-                    }
-                    if (mFbPageShare == 1) {
-                        socialShare += "FACEBOOK_PAGE.";
-                    }
-                    if (mTwitterShare == 1) {
-                        socialShare += "TWITTER.";
-                    }
-                    if (mQuikrShare == 1) {
-                        socialShare += "QUIKR.";
-                    }
-                    showLoader("Uploading...");
-                    mBusEvent.post(new UploadPostEvent(path, msg.getText().toString(), socialShare));
-                    if (path != null && path.trim().length() > 0) {
-                        //Log.v("ggg",path+" path for upadte");
-                        new AlertArchive(Constants.alertInterface, "FEATURE IMAGE", session.getFPID());
-                    } else {
-                        new AlertArchive(Constants.alertInterface, "UPDATE", session.getFPID());
-                    }
-                    if (mRiaNodedata != null) {
-                        RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
-                                mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
-                                mRiaNodedata.getButtonLabel(), RiaEventLogger.EventStatus.COMPLETED.getValue());
-                        mRiaNodedata = null;
-                    }
                 } else {
-                    YoYo.with(Techniques.Shake).playOn(msg);
-                    Methods.showSnackBarNegative(Create_Message_Activity.this, getString(R.string.enter_message));
+
+                    MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_SELECTED, null);
+                    Constants.imageNotSet = false;
+
+                    HashMap<String, String> eventKey = new HashMap<String, String>();
+                    eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_SELECTED, "Posted Update with text and image");
+
                 }
+
+                Constants.createMsg = true;
+                String socialShare = "";
+                if (mFbProfileShare == 1) {
+                    socialShare += "FACEBOOK.";
+                }
+                if (mFbPageShare == 1) {
+                    socialShare += "FACEBOOK_PAGE.";
+                }
+                if (mTwitterShare == 1) {
+                    socialShare += "TWITTER.";
+                }
+                if (mQuikrShare == 1) {
+                    socialShare += "QUIKR.";
+                }
+                showLoader("Uploading...");
+//                    mBusEvent.post(new UploadPostEvent(path, msg.getText().toString(), socialShare));
+                uploadProcess(new UploadPostEvent(path, msg.getText().toString(), socialShare));
+                if (path != null && path.trim().length() > 0) {
+                    //Log.v("ggg",path+" path for upadte");
+                    new AlertArchive(Constants.alertInterface, "FEATURE IMAGE", session.getFPID());
+                } else {
+                    new AlertArchive(Constants.alertInterface, "UPDATE", session.getFPID());
+                }
+                if (mRiaNodedata != null) {
+                    RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                            mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                            mRiaNodedata.getButtonLabel(), RiaEventLogger.EventStatus.COMPLETED.getValue());
+                    mRiaNodedata = null;
+                }
+            } else {
+                YoYo.with(Techniques.Shake).playOn(msg);
+                Methods.showSnackBarNegative(Create_Message_Activity.this, getString(R.string.enter_message));
             }
         });
 
 
-        facebookShare = (ImageView) findViewById(R.id.create_message_activity_facebokhome_button);
-        facebookPageShare = (ImageView) findViewById(R.id.create_message_activity_facebokpage_button);
-        twitterloginButton = (ImageView) findViewById(R.id.create_message_activity_twitter_button);
-        quikrButton = (ImageView) findViewById(R.id.create_message_activity_quikr_button);
+        facebookShare = findViewById(R.id.create_message_activity_facebokhome_button);
+        facebookPageShare = findViewById(R.id.create_message_activity_facebokpage_button);
+        twitterloginButton = findViewById(R.id.create_message_activity_twitter_button);
+        quikrButton = findViewById(R.id.create_message_activity_quikr_button);
         quikrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -338,7 +340,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         });
 
 
-        create_message_subscribe_button = (ImageView) findViewById(R.id.create_message_subscribe_button);
+        create_message_subscribe_button = findViewById(R.id.create_message_subscribe_button);
         create_message_subscribe_button.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
         create_message_subscribe_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -456,11 +458,11 @@ public class Create_Message_Activity extends AppCompatActivity {
             }
         });
 
-        cameraButton = (ImageView) findViewById(R.id.create_mee_activity_facebokhome_button);
-        imageIconButton = (ImageView) findViewById(R.id.imageIcon);
-        deleteButton = (ImageView) findViewById(R.id.img_delete);
-        editButton = (ImageView) findViewById(R.id.img_edit);
-        image_card = (CardView) findViewById(R.id.image_card);
+        cameraButton = findViewById(R.id.create_mee_activity_facebokhome_button);
+        imageIconButton = findViewById(R.id.imageIcon);
+        deleteButton = findViewById(R.id.img_delete);
+        editButton = findViewById(R.id.img_edit);
+        image_card = findViewById(R.id.image_card);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -512,7 +514,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         });
 
         //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
-        LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
+        LinearLayout layout = findViewById(R.id.float_a_picture_share_quikr_parent);
         layout.setVisibility(View.GONE);
 //        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
 //            layout.setVisibility(View.GONE);
@@ -536,6 +538,76 @@ public class Create_Message_Activity extends AppCompatActivity {
         });
     }
 
+    private void uploadProcess(UploadPostEvent event) {
+        try {
+            fetch_home_data.setNewPostListener(true);
+            fetch_home_data.setFetchDataListener(Create_Message_Activity.this);
+            uploadPicture(event.path, event.msg, event.mSocialShare);
+        } catch (Exception e) {
+            e.printStackTrace();
+            hideLoader();
+            Toast.makeText(this, "Unable to post Message", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void uploadPicture(String path, String msg, String socialShare) {
+        BoostLog.d("Image : ", "Upload Pic Path : " + path);
+        String merchantId = null, parentId = null;
+
+        try {
+            if (session.getISEnterprise().equals("true")) {
+                merchantId = null;
+            } else {
+                merchantId = session.getFPID();
+            }
+            if (session.getISEnterprise().equals("true")) {
+                parentId = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PARENTID);
+            } else {
+                parentId = null;
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            hideLoader();
+        }
+        PostTaskModel task;
+        if (!Util.isNullOrEmpty(path) && path.length() > 1) {
+            task = new PostTaskModel(Constants.clientId, msg, socialShare, Create_Message_Activity.imageIconButtonSelected,
+                    merchantId, parentId, false);
+        } else {
+            task = new PostTaskModel(Constants.clientId, msg, socialShare, Create_Message_Activity.imageIconButtonSelected,
+                    merchantId, parentId, Create_Message_Activity.tosubscribers);
+        }
+
+      /*  if (facebookPostCount==0) {
+            if (Constants.fbShareEnabled) {
+                Create_Message_Activity.postUser = new com.nowfloats.NavigationDrawer.API.PostModel(msg);
+            }
+
+            if (Constants.fbPageShareEnabled) {
+                if (Constants.FbPageList != null && Constants.FbPageList.length() > 0) {
+                    Create_Message_Activity.postPage = new com.nowfloats.NavigationDrawer.API.PostModel(msg, Constants.FbPageList);
+                }
+            }
+
+
+        }*/
+        new UploadMessageTask(this, path, task, session, (isSuccess, msg1) -> {
+            if (isSuccess) {
+                Create_Message_Activity.path = "";
+                Constants.createMsg = false;
+                pref.edit().putInt("quikrStatus", 0).apply();
+                pref.edit().putString("msg_post", "").apply();
+                pref.edit().putString("image_post", "").apply();
+                isMsgChanged = false;
+                isImageChanged = false;
+            }
+            Toast.makeText(Create_Message_Activity.this, msg1, Toast.LENGTH_SHORT).show();
+            hideLoader();
+            if (isSuccess) this.finish();
+        }).UploadPostService();
+    }
+
     private void openDigitalChannel() {
         try {
             Bundle bundle = new Bundle();
@@ -545,10 +617,27 @@ public class Create_Message_Activity extends AppCompatActivity {
             bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
             bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
             bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
-            bundle.putBoolean("IsUpdate", true);
+            bundle.putBoolean(Key_Preferences.IS_UPDATE, true);
+            bundle.putString(Key_Preferences.BUSINESS_NAME, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+            String imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
+            if (!TextUtils.isEmpty(imageUri) && !imageUri.contains("http")) {
+                imageUri = BASE_IMAGE_URL + imageUri;
+            }
+            bundle.putString(Key_Preferences.BUSINESS_IMAGE, imageUri);
+            bundle.putString(Key_Preferences.BUSINESS_TYPE, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
+
+            String city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY);
+            String country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
+            String location = "";
+            if (!TextUtils.isEmpty(city) && !TextUtils.isEmpty(country)) location = city + ", " + country;
+            else location = city + country;
+            bundle.putString(Key_Preferences.LOCATION, location);
+
             String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
-            if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) bundle.putString("website_url", rootAlisasURI);
-            else bundle.putString("website_url", normalURI);
+            if (!TextUtils.isEmpty(rootAlisasURI)) bundle.putString(Key_Preferences.WEBSITE_URL, rootAlisasURI);
+            else bundle.putString(Key_Preferences.WEBSITE_URL, normalURI);
+            bundle.putString(Key_Preferences.PRIMARY_NUMBER, session.getUserPrimaryMobile());
+            bundle.putString(Key_Preferences.PRIMARY_EMAIL, session.getFPEmail());
             channelIntent.putExtras(bundle);
             channelIntent.putExtra("FRAGMENT_TYPE", "MY_DIGITAL_CHANNEL");
             startActivity(channelIntent);
@@ -633,9 +722,9 @@ public class Create_Message_Activity extends AppCompatActivity {
 
     private void showQuikrGuidelines() {
         View v = LayoutInflater.from(this).inflate(R.layout.quikr_guidlines, null);
-        final AppCompatCheckBox checkBox = (AppCompatCheckBox) v.findViewById(R.id.checkbox);
-        RecyclerView list = (RecyclerView) v.findViewById(R.id.list);
-        Button agree = (Button) v.findViewById(R.id.button2);
+        final AppCompatCheckBox checkBox = v.findViewById(R.id.checkbox);
+        RecyclerView list = v.findViewById(R.id.list);
+        Button agree = v.findViewById(R.id.button2);
 
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -721,9 +810,9 @@ public class Create_Message_Activity extends AppCompatActivity {
     }
 
     private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
-        if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
+        if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
             cameraIntent();
-        }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
+        } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
             galleryIntent();
         }
     }
@@ -769,7 +858,7 @@ public class Create_Message_Activity extends AppCompatActivity {
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == media_req_id) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
@@ -1126,10 +1215,7 @@ public class Create_Message_Activity extends AppCompatActivity {
 
     private boolean isExternalStorageAvailable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
     private File createFolders() {
@@ -1172,4 +1258,13 @@ public class Create_Message_Activity extends AppCompatActivity {
         cookieManager.removeAllCookie();
     }
 
+    @Override
+    public void dataFetched(int skip, boolean isNewMessage) {
+
+    }
+
+    @Override
+    public void sendFetched(FloatsMessageModel jsonObject) {
+
+    }
 }

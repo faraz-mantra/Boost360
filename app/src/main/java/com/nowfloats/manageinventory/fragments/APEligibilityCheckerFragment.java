@@ -25,7 +25,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.ProductGallery.ProductGalleryActivity;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
@@ -69,28 +68,28 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_apeligibility_checker_fragemnt, container, false);
+        View view = inflater.inflate(R.layout.fragment_apeligibility_checker_fragemnt, container, false);
 
-        pbAddressPincode = (ProgressBar) view.findViewById(R.id.pb_addr_pin_code);
-        pbSiteAppearance = (ProgressBar) view.findViewById(R.id.pb_site_appearance);
-        pbSubscriptionStatus = (ProgressBar) view.findViewById(R.id.pb_subscription_status);
-        pbCustomDomain = (ProgressBar) view.findViewById(R.id.pb_custom_domain);
-        pbShippingMetrics = (ProgressBar) view.findViewById(R.id.pb_shipping_metrics);
-        pbBankDetails = (ProgressBar) view.findViewById(R.id.pb_bank_details);
+        pbAddressPincode = view.findViewById(R.id.pb_addr_pin_code);
+        pbSiteAppearance = view.findViewById(R.id.pb_site_appearance);
+        pbSubscriptionStatus = view.findViewById(R.id.pb_subscription_status);
+        pbCustomDomain = view.findViewById(R.id.pb_custom_domain);
+        pbShippingMetrics = view.findViewById(R.id.pb_shipping_metrics);
+        pbBankDetails = view.findViewById(R.id.pb_bank_details);
 
-        ivAddressPinCode = (ImageView) view.findViewById(R.id.iv_addr_pincode);
-        ivSubscriptionStatus = (ImageView) view.findViewById(R.id.iv_subscription_status);
-        ivCustomDomain = (ImageView) view.findViewById(R.id.iv_custom_domain);
-        ivSiteAppearance = (ImageView) view.findViewById(R.id.iv_site_appearance);
-        ivShippingMetrics = (ImageView) view.findViewById(R.id.iv_shipping_metrics);
-        ivBankDetails = (ImageView) view.findViewById(R.id.iv_bank_details);
+        ivAddressPinCode = view.findViewById(R.id.iv_addr_pincode);
+        ivSubscriptionStatus = view.findViewById(R.id.iv_subscription_status);
+        ivCustomDomain = view.findViewById(R.id.iv_custom_domain);
+        ivSiteAppearance = view.findViewById(R.id.iv_site_appearance);
+        ivShippingMetrics = view.findViewById(R.id.iv_shipping_metrics);
+        ivBankDetails = view.findViewById(R.id.iv_bank_details);
 
-        llAddressPincode = (LinearLayout) view.findViewById(R.id.ll_addr_pincode);
-        llSubscriptionStatus = (LinearLayout) view.findViewById(R.id.ll_subscription_status);
-        llCustomDomain = (LinearLayout) view.findViewById(R.id.ll_custom_domain);
-        llSiteAppearance = (LinearLayout) view.findViewById(R.id.ll_site_appearance);
-        llShippingMetrics = (LinearLayout) view.findViewById(R.id.ll_shipping_metrics);
-        llBankDetails = (LinearLayout) view.findViewById(R.id.ll_bank_details);
+        llAddressPincode = view.findViewById(R.id.ll_addr_pincode);
+        llSubscriptionStatus = view.findViewById(R.id.ll_subscription_status);
+        llCustomDomain = view.findViewById(R.id.ll_custom_domain);
+        llSiteAppearance = view.findViewById(R.id.ll_site_appearance);
+        llShippingMetrics = view.findViewById(R.id.ll_shipping_metrics);
+        llBankDetails = view.findViewById(R.id.ll_bank_details);
 
         mHandler = new Handler();
         mSession = new UserSessionManager(getActivity(), getActivity());
@@ -99,7 +98,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
 
         setCancelable(false);
 
-        ivClose = (ImageView) view.findViewById(R.id.iv_close);
+        ivClose = view.findViewById(R.id.iv_close);
 
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -366,16 +365,23 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                 break;
             case R.id.ll_subscription_status:
 
-                Intent ppActivity = new Intent(getActivity(),NewPricingPlansActivity.class);
+                Intent ppActivity = new Intent(getActivity(), NewPricingPlansActivity.class);
                 startActivity(ppActivity);
                 break;
             case R.id.ll_custom_domain:
-                Intent siteMeterFragment = new Intent(getActivity(), HomeActivity.class);
-                siteMeterFragment.putExtra("url", getString(R.string.site__meter));
-                startActivity(siteMeterFragment);
+//                Intent siteMeterFragment = new Intent(getActivity(), HomeActivity.class);
+//                siteMeterFragment.putExtra("url", getString(R.string.site__meter));
+//                startActivity(siteMeterFragment);
+                try {
+                    Intent siteMeterFragment = new Intent(getActivity(), Class.forName("com.dashboard.controller.DashboardActivity"));
+                    siteMeterFragment.putExtra("url", getString(R.string.site__meter));
+                    startActivity(siteMeterFragment);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.ll_site_appearance:
-                showDialog("SiteAppearance","Your website look must be changed to 'Fresh Milk Lite'","Take Me There");
+                showDialog("SiteAppearance", "Your website look must be changed to 'Fresh Milk Lite'", "Take Me There");
                 break;
             case R.id.ll_shipping_metrics:
                 Intent productGallery = new Intent(getActivity(), ProductGalleryActivity.class);
@@ -402,7 +408,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
             }
         });
         dialog = builder.show();
-        TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+        TextView textView = dialog.findViewById(android.R.id.message);
         Typeface face = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Light.ttf");
         textView.setTypeface(face);
         textView.setTextColor(Color.parseColor("#808080"));

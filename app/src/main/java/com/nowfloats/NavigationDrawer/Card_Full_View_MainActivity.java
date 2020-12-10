@@ -2,17 +2,19 @@ package com.nowfloats.NavigationDrawer;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Login.Model.FloatsMessageModel;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.Home_View_Card_Delete;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -37,16 +39,18 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
     private String cardId;
     int position;
     private ProgressDialog pd;
+    private UserSessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card__full__view__main);
+        session = new UserSessionManager(this, this);
         Methods.isOnline(Card_Full_View_MainActivity.this);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager);
 
         Bundle extras = getIntent().getExtras();
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -54,12 +58,12 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
         position = extras.getInt("POSITION");
         BoostLog.d("POSITION: ", position + "");
 
-        deleteButton = (ImageView) toolbar.findViewById(R.id.home_view_delete_card);
+        deleteButton = toolbar.findViewById(R.id.home_view_delete_card);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
 
-                if(!Methods.isOnline(Card_Full_View_MainActivity.this)){
+                if (!Methods.isOnline(Card_Full_View_MainActivity.this)) {
                     return;
                 }
 

@@ -4,10 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
@@ -99,15 +100,15 @@ public class SiteAppearanceFragment extends Fragment {
         session = new UserSessionManager(getContext(), getActivity());
         View view = inflater.inflate(R.layout.fragment_site_appearance, container, false);
         //svKitsune = (Switch)view.findViewById(R.id.sv_kitsune);
-        cvKitsuneSwitch = (CardView) view.findViewById(R.id.cv_kitsune_switch);
-        cvRevertBack = (CardView) view.findViewById(R.id.cv_revert_back);
-        tvKitsuneSwitch = (TextView)view.findViewById(R.id.tv_kitsune_switch);
-        tvHelpHeader = (TextView)view.findViewById(R.id.tv_help_header);
-        tvHelpBody = (JustifyTextView) view.findViewById(R.id.tv_help_body);
-        tvHelpFooter = (TextView) view.findViewById(R.id.tv_help_footer);
-        linearLayout = (LinearLayout) view.findViewById(R.id.child_layout);
+        cvKitsuneSwitch = view.findViewById(R.id.cv_kitsune_switch);
+        cvRevertBack = view.findViewById(R.id.cv_revert_back);
+        tvKitsuneSwitch = view.findViewById(R.id.tv_kitsune_switch);
+        tvHelpHeader = view.findViewById(R.id.tv_help_header);
+        tvHelpBody = view.findViewById(R.id.tv_help_body);
+        tvHelpFooter = view.findViewById(R.id.tv_help_footer);
+        linearLayout = view.findViewById(R.id.child_layout);
         //btnLearnMore = (Button)view.findViewById(R.id.btn_learn_kitsune);
-        ivKitsuneSwitch = (ImageView)view.findViewById(R.id.iv_kitsune_switch);
+        ivKitsuneSwitch = view.findViewById(R.id.iv_kitsune_switch);
       /*  if(session.getWebTemplateType().equals("6")){
             tvHelpHeader.setText(getResources().getString(R.string.conv_sa_title));
             tvHelpBody.setText(getResources().getString(R.string.conv_sa_body));
@@ -175,32 +176,33 @@ public class SiteAppearanceFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(HomeActivity.headerText != null)
+
+        if (mContext instanceof HomeActivity && HomeActivity.headerText != null)
             HomeActivity.headerText.setText(getResources().getString(R.string.side_panel_site_appearance));
     }
 
-    private void showFeedBackDialog(){
+    private void showFeedBackDialog() {
         //lfkvljgf
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View v = getActivity().getLayoutInflater().inflate(R.layout.feedback_kitsune_layout, null);
-        final EditText et = (EditText)v.findViewById(R.id.et_other_reason);
-        final CheckBox cbOtherReasons  = (CheckBox) v.findViewById(R.id.cb_other_reasons);
+        final EditText et = v.findViewById(R.id.et_other_reason);
+        final CheckBox cbOtherReasons = v.findViewById(R.id.cb_other_reasons);
         cbOtherReasons.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     et.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     et.setVisibility(View.GONE);
                 }
             }
         });
 
         final List<CheckBox> checkBoxList = new ArrayList<>();
-        checkBoxList.add((CheckBox)v.findViewById(R.id.cb_old_theme));
-        checkBoxList.add((CheckBox)v.findViewById(R.id.cb_customer_old_theme));
-        checkBoxList.add((CheckBox)v.findViewById(R.id.cb_widgets_old_theme));
-        checkBoxList.add((CheckBox)v.findViewById(R.id.cb_not_paid_for));
+        checkBoxList.add(v.findViewById(R.id.cb_old_theme));
+        checkBoxList.add(v.findViewById(R.id.cb_customer_old_theme));
+        checkBoxList.add(v.findViewById(R.id.cb_widgets_old_theme));
+        checkBoxList.add(v.findViewById(R.id.cb_not_paid_for));
         checkBoxList.add(cbOtherReasons);
         final AlertDialog dialog = builder.setView(v).setCancelable(false).create();
         v.findViewById(R.id.btn_submit).setOnClickListener(new View.OnClickListener() {
@@ -208,7 +210,7 @@ public class SiteAppearanceFragment extends Fragment {
             public void onClick(View v) {
                 //Write Code for submitting the feedback and disabling kitsune
                 //Also set the offline webtemplate to 4 in preference
-                if(cbOtherReasons.isChecked() && Util.isNullOrEmpty(et.getText().toString().trim())){
+                if (cbOtherReasons.isChecked() && Util.isNullOrEmpty(et.getText().toString().trim())) {
                     Methods.showSnackBarNegative(getActivity(), getString(R.string.fill_reasons));
                     return;
                 }
