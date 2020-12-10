@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.provider.FontRequest
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -103,15 +102,11 @@ class UpgradeActivity : AppCompatActivity() {
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
-    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")
-    if(userPurchsedWidgets != null){
+    userPurchsedWidgets = intent.extras?.getStringArrayList("userPurchsedWidgets") ?: ArrayList()
     for (a in userPurchsedWidgets)  {
       println("userPurchsedWidgets  ${userPurchsedWidgets}")
     }
-    }
-
     progressDialog = ProgressDialog(this)
-
     prefs = SharedPrefs(this)
     initView()
     initRazorPay()
@@ -160,7 +155,7 @@ class UpgradeActivity : AppCompatActivity() {
 
   private fun goHomeActivity() {
     try {
-      val i = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
+      val i = Intent(this, Class.forName("com.dashboard.controller.DashboardActivity"))
       i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
       startActivity(i)
       overridePendingTransition(0, 0)
@@ -230,7 +225,7 @@ class UpgradeActivity : AppCompatActivity() {
     fragmentTransaction!!.commit()
   }
   fun addFragmentHome(fragment: Fragment, fragmentTag: String?,  args: Bundle?) {
-    fragment.setArguments(args)
+    fragment.arguments = args
     currentFragment = fragment
     fragmentManager = supportFragmentManager
     fragmentTransaction = fragmentManager!!.beginTransaction()

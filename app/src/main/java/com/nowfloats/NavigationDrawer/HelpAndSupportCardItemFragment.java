@@ -1,23 +1,20 @@
 package com.nowfloats.NavigationDrawer;
 
 import android.app.ProgressDialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.boost.upgrades.UpgradeActivity;
@@ -38,7 +35,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import zendesk.support.guide.HelpCenterActivity;
-import zendesk.support.request.RequestActivity;
 import zendesk.support.requestlist.RequestListActivity;
 
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
@@ -152,7 +148,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                         progressDialog.setCancelable(false);
                         progressDialog.show();
                         UserSessionManager session = new UserSessionManager(getContext(), getActivity());
-                        Intent intent = new Intent((HomeActivity) requireActivity(), UpgradeActivity.class);
+                        Intent intent = new Intent(requireActivity(), UpgradeActivity.class);
                         intent.putExtra("expCode", session.getFP_AppExperienceCode());
                         intent.putExtra("fpName", session.getFPName());
                         intent.putExtra("fpid", session.getFPID());

@@ -15,8 +15,8 @@ import com.nowfloats.NavigationDrawer.model.PostTaskModel;
 import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.UploadLargeImage;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.UploadLargeImage;
 import com.thinksity.R;
 
 import org.json.JSONObject;
@@ -38,27 +38,35 @@ import retrofit.http.Headers;
 import retrofit.http.PUT;
 import retrofit.http.QueryMap;
 
-public final class UploadMessageTask implements UploadLargeImage.ImageCompressed{
+public final class UploadMessageTask implements UploadLargeImage.ImageCompressed {
 
-    private Activity appContext 	= null;
-    String path 					= null;
-    Boolean success 				= false;
+    String path = null;
+    Boolean success = false;
+    ListenNew listenNew;
     String subscribers = "false";
     PostTaskModel obj;
     UserSessionManager session;
+    private Activity appContext = null;
     String textId;
 
-    public UploadMessageTask(Activity context, String path,
-                             PostTaskModel offerObj,UserSessionManager session) {
-        this.appContext	=  	context;
+    public UploadMessageTask(Activity context, String path, PostTaskModel offerObj, UserSessionManager session) {
+        this.appContext = context;
         this.obj = offerObj;
-        this.path	= 	path;
+        this.path = path;
         this.session = session;
+    }
+
+    public UploadMessageTask(Activity context, String path, PostTaskModel offerObj, UserSessionManager session, ListenNew listenNew) {
+        this.appContext = context;
+        this.obj = offerObj;
+        this.path = path;
+        this.session = session;
+        this.listenNew = listenNew;
     }
 
     @Override
     public void onImageCompressed(Bitmap bitmap) {
-        if(bitmap == null){
+        if (bitmap == null) {
             return;
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -70,16 +78,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
         }
     }
 
-    public interface UploadPostInterface {
-        @PUT("/Discover/v1/FloatingPoint/createBizMessage")
-        public void postText(@Body PostTaskModel task, Callback<String> callback);
-
-        @Headers({"Content-Type: application/x-www-form-urlencoded","Connection: Keep-Alive"})
-        @PUT("/Discover/v1/FloatingPoint/createBizImage")
-        public void uploadPic(@Body byte[] file,@QueryMap HashMap<String,String> map,Callback<String> cb);
-    }
-
-    public void UploadPostService(){
+    public void UploadPostService() {
         try {
             UploadPostInterface postInterface = Constants.restAdapter.create(UploadPostInterface.class);
             postInterface.postText(obj, new Callback<String>() {
@@ -88,7 +87,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                     //Log.d("Response", "Text Response : " + txtId);
                     if (!Util.isNullOrEmpty(txtId) && !Util.isNullOrEmpty(path) && path.length() > 1) {
                         textId = txtId;
-                        new UploadLargeImage(appContext,UploadMessageTask.this,path,720,720).execute();
+                        new UploadLargeImage(appContext, UploadMessageTask.this, path, 720, 720).execute();
                     } else if (txtId != null && txtId.length() > 1) {
                         success = true;
                         //Constants.createMsg = false;
@@ -103,14 +102,14 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                                 e.printStackTrace();
                             }
                         }*/
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try{
-                                    Thread.sleep(2000);
-                                    Log.i("Text---wait"," for 2 SEconDS");
-                                    Home_Main_Fragment.bus.post(new PostTextSuccessEvent(true));
-                                }catch(Exception e){e.printStackTrace();}
+                        new Thread(() -> {
+                            try {
+                                Thread.sleep(1000);
+                                Log.i("Text---wait", " for 2 SEconDS");
+                                if (Home_Main_Fragment.bus != null) Home_Main_Fragment.bus.post(new PostTextSuccessEvent(true));
+                                if (listenNew != null) listenNew.postUpdate(true, "Post Updated.");
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         }).start();
                     }
@@ -119,22 +118,24 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                 @Override
                 public void failure(RetrofitError error) {
                     success = false;
+                    if (listenNew != null) listenNew.postUpdate(false, "Post updating error!");
                     //Constants.createMsg = false;
                 }
             });
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
+            if (listenNew != null) listenNew.postUpdate(false, "Post updating error!");
         }
     }
 
-    public void uploadImage(final byte[] bitmapdata, final String response){
-        try{
+    public void uploadImage(final byte[] bitmapdata, final String response) {
+        try {
             UUID uuid = UUID.randomUUID();
             String s_uuid = uuid.toString();
             s_uuid = s_uuid.replace("-", "");
             try {
                 boolean val = obj.sendToSubscribers;
-                if (val)  subscribers = "true";
+                if (val) subscribers = "true";
                 else subscribers = "false";
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -149,28 +150,27 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
             values.put("currentChunkNumber","1");*/
 
 
-            final String uri = Constants.PictureFloatImgCreationURI+"?clientId="+ Constants.clientId+"&bizMessageId="+response+"&requestType=sequential&requestId="
-                    + s_uuid + "&sendToSubscribers="+Create_Message_Activity.tosubscribers+"&"+ "totalChunks=1&currentChunkNumber=1&socialParmeters=" + obj.socialParameters ;
+            final String uri = Constants.PictureFloatImgCreationURI + "?clientId=" + Constants.clientId + "&bizMessageId=" + response + "&requestType=sequential&requestId="
+                    + s_uuid + "&sendToSubscribers=" + Create_Message_Activity.tosubscribers + "&" + "totalChunks=1&currentChunkNumber=1&socialParmeters=" + obj.socialParameters;
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    sendDataToServer(uri,bitmapdata,response);
+                    sendDataToServer(uri, bitmapdata, response);
                 }
             }).start();
 //            sendDataToServer(values,response,bitmapdata);
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void sendDataToServer(String url,byte[] imageData,final String txtId){
+
+    public void sendDataToServer(String url, byte[] imageData, final String txtId) {
         DataOutputStream outputStream = null;
         try {
             URL new_url = new URL(url);
-            HttpURLConnection connection = (HttpURLConnection) new_url
-                    .openConnection();
+            HttpURLConnection connection = (HttpURLConnection) new_url.openConnection();
 
             // Allow Inputs & Outputs
             connection.setDoInput(true);
@@ -179,7 +179,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
             // Enable PUT method
             connection.setRequestMethod(Constants.HTTP_PUT);
             connection.setRequestProperty("Connection", "Keep-Alive");
-            if(!url.toLowerCase().contains("createbizimage"))
+            if (!url.toLowerCase().contains("createbizimage"))
                 connection.setRequestProperty("Content-Type",
                         "application/x-www-form-urlencoded");
             else
@@ -193,17 +193,11 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
             }
 
             int responseCode = connection.getResponseCode();
-            if (responseCode == 200 || responseCode == 202)
-            {
-                success = true;
-            }else {
-                success = false;
-            }
+            success = responseCode == 200 || responseCode == 202;
 
             InputStreamReader inputStreamReader = null;
-            BufferedReader bufferedReader =  null;
-            try
-            {
+            BufferedReader bufferedReader = null;
+            try {
                 inputStreamReader = new InputStreamReader(connection.getInputStream());
                 bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -213,9 +207,8 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
 
                 boolean isFirst = true;
 
-                while((temp = bufferedReader.readLine())!=null)
-                {
-                    if(!isFirst)
+                while ((temp = bufferedReader.readLine()) != null) {
+                    if (!isFirst)
                         responseContent.append(Constants.NEW_LINE);
                     responseContent.append(temp);
                     isFirst = false;
@@ -223,7 +216,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
 
                 String response = responseContent.toString();
                 //Log.d("Message Task","Image Response : "+response);
-                if(success){
+                if (success) {
                     /*if(Constants.twitterShareEnabled && obj.message!=null && Home_Main_Fragment.facebookPostCount == 0)
                     {
                         //PostImageTweetInBackgroundAsyncTask tweet = new PostImageTweetInBackgroundAsyncTask(appContext,obj.message,txtId,path,session);
@@ -233,24 +226,26 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                     Create_Message_Activity.imageIconButtonSelected = false;
                     Constants.serviceResponse = response;
                     //Log.d("Test:::Test", ":::::Again:::  " + path + "    "  + url);
-                    if (path!=null && !path.equals("")){
+                    if (path != null && !path.equals("")) {
                         //Log.d("Test:::Test", ":::::");
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                try{
+                                try {
                                     Thread.sleep(8000);
                                     //Log.i("IMAGE---wait"," for 8 SEconDS");
-                                    Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
-                                }catch(Exception e){e.printStackTrace();}
+                                    if (Home_Main_Fragment.bus != null) Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
+                                    if (listenNew != null) listenNew.postUpdate(true, "Post Updated.");
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }).start();
                     }
-                }
-                else{
+                } else {
                     Constants.serviceResponse = "";
                 }
-                if (!success){
+                if (!success) {
                     //Log.i("Image UPLOAD FAILED","");
                     Methods.showSnackBarNegative(appContext, appContext.getString(R.string.image_uploading_failed_try_again));
                     JSONObject obj2 = new JSONObject();
@@ -260,23 +255,26 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                     } catch (Exception ex1) {
                         ex1.printStackTrace();
                     }
-                    Home_View_Card_Delete deleteCard =  new Home_View_Card_Delete(appContext,Constants.DeleteCard,obj2,0,null,1);
+                    Home_View_Card_Delete deleteCard = new Home_View_Card_Delete(appContext, Constants.DeleteCard, obj2, 0, null, 1);
                     deleteCard.execute();
                 }
-            }
-            catch(Exception e){e.printStackTrace();}
-            finally
-            {
-                try{
+            } catch (Exception e) {
+                e.printStackTrace();
+                if (listenNew != null) listenNew.postUpdate(false, "Post image uploading error!");
+            } finally {
+                try {
                     inputStreamReader.close();
-                }catch (Exception e) {}
-                try{
+                } catch (Exception e) {
+                }
+                try {
                     bufferedReader.close();
-                }catch (Exception e) {}
+                } catch (Exception e) {
+                }
 
             }
         } catch (Exception ex) {
             success = false;
+            if (listenNew != null) listenNew.postUpdate(false, "Post image uploading error!");
         } finally {
             try {
                 outputStream.flush();
@@ -286,44 +284,46 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
         }
     }
 
-    public void sendDataToServer(HashMap<String,String> values,final String txtId,final byte[] bitmapdata){
-        try{
+    public void sendDataToServer(HashMap<String, String> values, final String txtId, final byte[] bitmapdata) {
+        try {
             UploadPostInterface anInterface = Constants.restAdapter.create(UploadPostInterface.class);
-            anInterface.uploadPic(bitmapdata,values,new Callback<String>() {
+            anInterface.uploadPic(bitmapdata, values, new Callback<String>() {
                 @Override
                 public void success(String imgId, Response response) {
                     int responseCode = response.getStatus();
-                    if (responseCode == 200 || responseCode == 202)
-                    {
-                        try{
+                    if (responseCode == 200 || responseCode == 202) {
+                        try {
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
-                            ImageView touch =new ImageView(appContext);
+                            ImageView touch = new ImageView(appContext);
                             touch.setImageBitmap(bitmap);
-                            new MaterialDialog.Builder(appContext).customView(touch,true).title("Title Test Bitmap array").show();
-                        }catch (Exception e){e.printStackTrace();}
+                            new MaterialDialog.Builder(appContext).customView(touch, true).title("Title Test Bitmap array").show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                         success = true;
-                        if(Constants.twitterShareEnabled && obj.message!=null)
-                        {
-                            PostImageTweetInBackgroundAsyncTask tweet = new PostImageTweetInBackgroundAsyncTask(appContext,obj.message,txtId,path,session);
+                        if (Constants.twitterShareEnabled && obj.message != null) {
+                            PostImageTweetInBackgroundAsyncTask tweet = new PostImageTweetInBackgroundAsyncTask(appContext, obj.message, txtId, path, session);
                             tweet.execute();
                         }
                     }
 
-                    if(!Util.isNullOrEmpty(imgId)) Constants.serviceResponse = imgId;
+                    if (!Util.isNullOrEmpty(imgId)) Constants.serviceResponse = imgId;
                     else Constants.serviceResponse = "";
 
-                    Log.d("Upload Task","Constants.serviceResponse : "+ Constants.serviceResponse);
+                    Log.d("Upload Task", "Constants.serviceResponse : " + Constants.serviceResponse);
 
-                    if (path!=null && !path.equals("")){
+                    if (path != null && !path.equals("")) {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                try{
+                                try {
                                     Thread.sleep(8000);
-                                    Log.i("IMAGE---wait"," for 8 SEconDS");
-                                    Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
-                                }catch(Exception e){e.printStackTrace();}
+                                    Log.i("IMAGE---wait", " for 8 SEconDS");
+                                    if (Home_Main_Fragment.bus != null) Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }).start();
                     }
@@ -332,7 +332,7 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                 @Override
                 public void failure(RetrofitError error) {
                     success = false;
-                    Log.i("Image UPLOAD FAILED",""+error.getMessage());
+                    Log.i("Image UPLOAD FAILED", "" + error.getMessage());
                     Methods.showSnackBarNegative(appContext, appContext.getString(R.string.image_uploading_failed_try_again));
                     JSONObject obj2 = new JSONObject();
                     try {
@@ -341,10 +341,26 @@ public final class UploadMessageTask implements UploadLargeImage.ImageCompressed
                     } catch (Exception ex1) {
                         ex1.printStackTrace();
                     }
-                    Home_View_Card_Delete deleteCard =  new Home_View_Card_Delete(appContext,Constants.DeleteCard,obj2,0,null,1);
+                    Home_View_Card_Delete deleteCard = new Home_View_Card_Delete(appContext, Constants.DeleteCard, obj2, 0, null, 1);
                     deleteCard.execute();
                 }
             });
-        }catch(Exception e){success = false; e.printStackTrace();}
+        } catch (Exception e) {
+            success = false;
+            e.printStackTrace();
+        }
+    }
+
+    public interface UploadPostInterface {
+        @PUT("/Discover/v1/FloatingPoint/createBizMessage")
+        void postText(@Body PostTaskModel task, Callback<String> callback);
+
+        @Headers({"Content-Type: application/x-www-form-urlencoded", "Connection: Keep-Alive"})
+        @PUT("/Discover/v1/FloatingPoint/createBizImage")
+        void uploadPic(@Body byte[] file, @QueryMap HashMap<String, String> map, Callback<String> cb);
+    }
+
+    interface ListenNew {
+        void postUpdate(Boolean isSuccess, String msg);
     }
 }

@@ -55,7 +55,6 @@ import io.codetail.widget.RevealFrameLayout;
 import io.separ.neural.inputmethod.indic.LatinIME;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
-import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 /**
@@ -169,8 +168,8 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     @Override
     public void onResume() {
         super.onResume();
-        if (headerText != null && mContext instanceof HomeActivity)
-            headerText.setText(getString(R.string.boost_keyboard));
+        if (mContext instanceof HomeActivity && HomeActivity.headerText != null)
+            HomeActivity.headerText.setText(getString(R.string.boost_keyboard));
 
        /* storageSwitchTv.setChecked(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED);
         microphoneSwitchTv.setChecked(ActivityCompat.checkSelfPermission(mContext, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_DENIED);

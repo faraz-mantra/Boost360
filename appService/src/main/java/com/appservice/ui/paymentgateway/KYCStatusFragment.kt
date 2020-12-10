@@ -15,7 +15,6 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentKycStatusBinding
 import com.appservice.extension.fadeIn
-import com.appservice.extension.fadeOut
 import com.appservice.model.SessionData
 import com.appservice.model.kycData.DataKyc
 import com.appservice.model.kycData.PaymentKycDataResponse
@@ -159,8 +158,12 @@ class KYCStatusFragment : AppBaseFragment<FragmentKycStatusBinding, WebBoostKitV
 
   fun onNavPressed() {
     if (saveKycData != null) {
-      val intent = Intent(baseActivity, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
-      baseActivity.startActivity(intent)
+      try {
+        val intent = Intent(baseActivity, Class.forName("com.dashboard.controller.DashboardActivity"))
+        baseActivity.startActivity(intent)
+      } catch (e: Exception) {
+        baseActivity.finish()
+      }
     }
     baseActivity.finish()
   }

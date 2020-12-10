@@ -1027,6 +1027,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
             Intent i = new Intent(activity, PreSignUpActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
             activity.startActivity(i);
+            activity.overridePendingTransition(0, 0);
             activity.finish();
         } catch (Exception e) {
             e.printStackTrace();
