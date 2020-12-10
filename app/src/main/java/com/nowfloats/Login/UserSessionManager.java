@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.anachat.chatsdk.AnaCore;
-import com.facebook.login.LoginManager;
+import com.boost.presignup.PreSignUpActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.Graph.database.SaveDataCounts;
@@ -951,11 +951,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
      * Clear session details
      */
     public void logoutUser() {
-
         // Clearing all user data from Shared Preferences
         unsubscribeRIA(getFPID(), activity);
-
-
     }
 
     public void unsubscribeRIA(String fpID, final Activity activity) {
@@ -971,22 +968,18 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 @Override
                 public void success(String s, Response response) {
                     Log.d("Valid Email", "Valid Email Response: " + response);
-                    if (pd.isShowing())
-                        pd.dismiss();
-
+                    if (pd.isShowing()) pd.dismiss();
                     processUserSessionDataClear();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if (pd.isShowing())
-                        pd.dismiss();
+                    if (pd.isShowing()) pd.dismiss();
                     Methods.showSnackBarNegative(activity, activity.getString(R.string.unable_to_logout));
                 }
             });
         } else {
-            if (pd.isShowing())
-                pd.dismiss();
+            if (pd.isShowing()) pd.dismiss();
             processUserSessionDataClear();
         }
     }
@@ -994,35 +987,20 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private void processUserSessionDataClear() {
         try {
             setUserLogin(false);
-
             DataBase db = new DataBase(activity);
             DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
             db.deleteLoginStatus();
-
-            SharedPreferences.Editor editor = pref.edit();
-            editor.clear();
-            editor.apply();
-
-
-            SharedPreferences.Editor twitterEditor = _context.getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE).edit();
-            twitterEditor.clear();
-            twitterEditor.apply();
-
+            pref.edit().clear().apply();
+            activity.getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE).edit().clear().apply();
+            activity.getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().clear().apply();
 
             WebEngage.get().user().logout();
-
             AnaCore.logoutUser(activity);
-
             AppController.getInstance().clearApplicationData();
-
             Date date = new Date(System.currentTimeMillis());
             String dateString = date.toString();
-
             MixPanelController.setProperties("LastLogoutDate", dateString);
-
-            LoginManager.getInstance().logOut();
-
-
+            com.facebook.login.LoginManager.getInstance().logOut();
             // After logout redirect user to Login Activity
             Constants.clearStore();
             Constants.StorebizQueries = new ArrayList<>();
@@ -1036,32 +1014,20 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
             Constants.ImageGalleryWidget = false;
             Constants.BusinessTimingsWidget = false;
             Constants.BusinessEnquiryWidget = false;
-
             if (HomeActivity.StorebizFloats != null) {
                 HomeActivity.StorebizFloats.clear();
                 HomeActivity.StorebizFloats = new ArrayList<FloatsMessageModel>();
             }
-
             //Analytics_Fragment.subscriberCount.setText("0");
             //Analytics_Fragment.visitCount.setText("0");
             if (_context != null) {
                 _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
                 _context.deleteDatabase("updates_db");  //DELETE MARKETPLACE DB
             }
-            //Mobihelp.clearUserData(activity.getApplicationContext());
-
-//                MixPanelController.track("LogoutSuccess", null);
-            //activity.finish();
-
-            Intent i = new Intent(activity, com.boost.presignup.SplashActivity.class);
-            // Closing all the Activities
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-            // Staring Login Activity
+            Intent i = new Intent(activity, PreSignUpActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
             activity.startActivity(i);
-            //activity.finish();
-            System.gc();
-            System.exit(0);
+            activity.finish();
         } catch (Exception e) {
             e.printStackTrace();
         }

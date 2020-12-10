@@ -258,7 +258,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun setDataSellerSummary(sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, callSummary: CallSummaryResponse?) {
     if (isHigh) {
       val data = BusinessSetupHighData().getData(siteMeterData?.siteMeterTotalWeight ?: 0,
-          summary?.getNoOfUniqueViews() ?: "0", sellerOrder?.getTotalNetAmount() ?: "0", getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
+          summary?.getNoOfUniqueViews() ?: "0", sellerOrder?.getTotalOrders() ?: "0", getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
       if (adapterPagerBusinessUpdate == null) {
         binding?.pagerBusinessSetupHigh?.apply {
           adapterPagerBusinessUpdate = AppBaseRecyclerViewAdapter(baseActivity, data, this@DashboardFragment)
@@ -399,7 +399,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
       RecyclerViewActionType.BUSINESS_ADD_ONS_CLICK.ordinal -> {
         val data = item as? ManageBusinessData ?: return
-        ManageBusinessData().saveLastSeenData(data)
         ManageBusinessData.BusinessType.fromName(data.businessType)?.let { businessAddOnsClick(it) }
       }
     }
@@ -419,16 +418,47 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun quickActionClick(type: QuickActionData.QuickActionType) {
     when (type) {
       QuickActionData.QuickActionType.POST_STATUS_STORY -> {
+
       }
-      QuickActionData.QuickActionType.POST_NEW_UPDATE -> {
+      QuickActionData.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
+      QuickActionData.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
+      QuickActionData.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startAddTestimonial(session)
+      QuickActionData.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCreateCustomPage(session)
+
+      QuickActionData.QuickActionType.LIST_SERVICES,
+      QuickActionData.QuickActionType.LIST_PRODUCT,
+      QuickActionData.QuickActionType.LIST_DRUG_MEDICINE,
+      QuickActionData.QuickActionType.LIST_TOPPER,
+      -> baseActivity.startListServiceProduct(session)
+
+      QuickActionData.QuickActionType.ADD_SERVICE,
+      QuickActionData.QuickActionType.ADD_PRODUCT,
+      QuickActionData.QuickActionType.ADD_COURSE,
+      QuickActionData.QuickActionType.ADD_PROJECT,
+      -> baseActivity.startAddServiceProduct(session)
+
+      QuickActionData.QuickActionType.PLACE_APPOINTMENT -> baseActivity.startBookAppointmentConsult(session, false)
+      QuickActionData.QuickActionType.PLACE_CONSULT -> baseActivity.startBookAppointmentConsult(session, true)
+
+      QuickActionData.QuickActionType.ADD_UPCOMING_BATCH -> {
       }
-      QuickActionData.QuickActionType.PLACE_ORDER_APT_BOOKING -> {
+      QuickActionData.QuickActionType.ADD_SLIDER_BANNER -> {
       }
-      QuickActionData.QuickActionType.ADD_PHOTO_GALLERY -> {
+      QuickActionData.QuickActionType.ADD_DOCTOR -> {
       }
-      QuickActionData.QuickActionType.ADD_TESTIMONIAL -> {
+      QuickActionData.QuickActionType.ADD_STAFF_MEMBER -> {
       }
-      QuickActionData.QuickActionType.ADD_CUSTOM_PAGE -> {
+      QuickActionData.QuickActionType.ADD_MENU -> {
+      }
+      QuickActionData.QuickActionType.UPLOAD_BROCHURE -> {
+      }
+      QuickActionData.QuickActionType.MAKE_ANNOUNCEMENT -> {
+      }
+      QuickActionData.QuickActionType.ADD_FACULTY_MEMBER -> {
+      }
+      QuickActionData.QuickActionType.POST_SEASONAL_OFFER -> {
+      }
+      QuickActionData.QuickActionType.ADD_NEARBY_ATTRACTION -> {
       }
     }
   }
@@ -437,7 +467,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (type) {
       ManageBusinessData.BusinessType.ic_project_terms_d -> {
       }
-      ManageBusinessData.BusinessType.ic_digital_brochures_d -> {
+      ManageBusinessData.BusinessType.ic_digital_brochures -> {
       }
       ManageBusinessData.BusinessType.ic_customer_call_d -> {
       }

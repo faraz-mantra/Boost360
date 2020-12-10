@@ -24,23 +24,10 @@ class ManageBusinessData(
     return recyclerViewItemType
   }
 
-  fun getData(): ArrayList<ManageBusinessData> {
-    val list = ArrayList<ManageBusinessData>()
-    list.add(ManageBusinessData(title = "Projects and Teams", businessType = BusinessType.ic_project_terms_d.name, isLock = true))
-    list.add(ManageBusinessData(title = "Unlimited Digital Brochures", businessType = BusinessType.ic_digital_brochures_d.name))
-    list.add(ManageBusinessData(title = "Customer Calls", businessType = BusinessType.ic_customer_call_d.name))
-    list.add(ManageBusinessData(title = "Customer Enquiries", businessType = BusinessType.ic_customer_enquiries_d.name))
-    list.add(ManageBusinessData(title = "Daily Business Updates", businessType = BusinessType.ic_daily_business_update_d.name))
-    list.add(ManageBusinessData(title = "Products Catalogue", businessType = BusinessType.ic_product_cataloge_d.name))
-    list.add(ManageBusinessData(title = "Customer Testimonials", businessType = BusinessType.ic_customer_testimonial_d.name))
-    list.add(ManageBusinessData(title = "Business Keyboard", businessType = BusinessType.ic_business_keyboard_d.name, isLock = true))
-    return list
-  }
-
 
   enum class BusinessType(var type: String, var icon: Int) {
     ic_project_terms_d("ic_project_terms_d", R.drawable.ic_project_terms_d),
-    ic_digital_brochures_d("ic_digital_brochures_d", R.drawable.ic_digital_brochures_d),
+    ic_digital_brochures("ic_digital_brochures", R.drawable.ic_digital_brochures),
     ic_customer_call_d("ic_customer_call_d", R.drawable.ic_customer_call_d),
     ic_customer_enquiries_d("ic_customer_enquiries_d", R.drawable.ic_customer_enquiries_d),
     ic_daily_business_update_d("ic_daily_business_update_d", R.drawable.ic_daily_business_update_d),
@@ -96,6 +83,8 @@ class ManageBusinessData(
 
   fun saveLastSeenData(data: ManageBusinessData) {
     val addOnsLast = getLastSeenData()
+    val matchData = addOnsLast.firstOrNull { it.businessType == data.businessType }
+    matchData?.let { addOnsLast.remove(matchData) }
     addOnsLast.add(0, data)
     if (addOnsLast.size > 8) addOnsLast.removeLast()
     PreferencesUtils.instance.saveDataN(LAST_SEEN_DATA, convertListObjToString(addOnsLast) ?: "")

@@ -61,7 +61,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
         if (adapterAddOns == null) {
           binding?.rvBoostAddOns?.apply {
-            adapterAddOns = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@AllBoostAddonsFragment)
+            adapterAddOns = AppBaseRecyclerViewAdapter(baseActivity, setLastSeenData(dataAction.actionItem!!), this@AllBoostAddonsFragment)
             adapter = adapterAddOns
           }
         } else adapterAddOns?.notify(setLastSeenData(dataAction.actionItem!!))
@@ -89,7 +89,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
     when (type) {
       ManageBusinessData.BusinessType.ic_project_terms_d -> {
       }
-      ManageBusinessData.BusinessType.ic_digital_brochures_d -> {
+      ManageBusinessData.BusinessType.ic_digital_brochures -> {
       }
       ManageBusinessData.BusinessType.ic_customer_call_d -> {
       }

@@ -37,6 +37,10 @@ class OrderSummaryModel(
     return getNumberFormat((TotalNetAmount ?: 0).toInt().toString())
   }
 
+  fun getTotalOrders(): String {
+    return getNumberFormat((TotalOrders ?: 0).toInt().toString())
+  }
+
   fun getOrderType(): ArrayList<OrderSummaryModel> {
     val list = ArrayList<OrderSummaryModel>()
     list.add(OrderSummaryModel(type = OrderSummaryType.TOTAL.type, count = TotalOrders, isSelected = true))

@@ -36,7 +36,7 @@ import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
-import com.inventoryorder.ui.startFragmentActivity
+import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.copyClipBoard
 import com.inventoryorder.utils.openWebPage
 import java.util.*
@@ -355,7 +355,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
     bundle.putSerializable(IntentConstant.ORDER_ITEM.name, orderItem)
     bundle.putBoolean(IntentConstant.IS_VIDEO.name, true)
-    startFragmentActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
+    startFragmentOrderActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
