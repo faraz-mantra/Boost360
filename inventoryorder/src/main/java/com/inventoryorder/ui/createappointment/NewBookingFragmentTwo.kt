@@ -11,7 +11,7 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.databinding.FragmentNewBookingTwoBinding
 import com.inventoryorder.model.bottomsheet.GenderSelectionModel
 import com.inventoryorder.ui.BaseInventoryFragment
-import com.inventoryorder.ui.startFragmentActivity
+import com.inventoryorder.ui.startFragmentOrderActivity
 import kotlinx.android.synthetic.main.fragment_new_booking_two.*
 
 class NewBookingFragmentTwo : BaseInventoryFragment<FragmentNewBookingTwoBinding>() {
@@ -87,7 +87,7 @@ class NewBookingFragmentTwo : BaseInventoryFragment<FragmentNewBookingTwoBinding
             return
         }
         if (!TextUtils.isEmpty(customerName) && !TextUtils.isEmpty(customerPhoneNumber) && !TextUtils.isEmpty(customerEmail) && !TextUtils.isEmpty(selectGender)) {
-            startFragmentActivity(FragmentType.BOOKING_SUCCESSFUL, Bundle())
+            startFragmentOrderActivity(FragmentType.BOOKING_SUCCESSFUL, Bundle())
         }
 
     }

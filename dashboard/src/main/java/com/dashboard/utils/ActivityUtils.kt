@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.pref.*
+import com.inventoryorder.constant.IntentConstant
+import com.inventoryorder.model.PreferenceData
+import com.inventoryorder.ui.startFragmentOrderActivity
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
 
@@ -132,6 +135,84 @@ fun AppCompatActivity.startAppActivity(bundle: Bundle = Bundle(), fragmentType: 
   }
 }
 
+fun AppCompatActivity.startPostUpdate(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Create_Message_Activity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startAddImageGallery(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.Image_Gallery.ImageGalleryActivity"))
+    webIntent.putExtra("create_image", true)
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startAddTestimonial(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"))
+    webIntent.putExtra("IS_ADD", true)
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startCreateCustomPage(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.CustomPage.CustomPageActivity"))
+    webIntent.putExtra("IS_ADD", true)
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startAddServiceProduct(session: UserSessionManager?) {
+  val type: String = getProductType(session?.fP_AppExperienceCode)
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
+    webIntent.putExtra("IS_ADD", true)
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startBookAppointmentConsult(session: UserSessionManager?, isConsult: Boolean = true) {
+  try {
+    val data = PreferenceData(clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
+        session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
+        session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode)
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+    bundle.putBoolean(IntentConstant.IS_VIDEO.name, isConsult)
+    this.startFragmentOrderActivity(com.inventoryorder.constant.FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
 //fun AppCompatActivity.referFriend(session: UserSessionManager){
 //  if (!TextUtils.isEmpty(session.fPEmail)) {
 //    InviteReferralsApi.getInstance(applicationContext).userDetails(

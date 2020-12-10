@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isVisible
 import com.framework.exceptions.NoNetworkException
-import com.framework.extensions.*
+import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
@@ -19,7 +21,6 @@ import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_1
 import com.framework.utils.DateUtils.FORMAT_YYYY_MM_DD
 import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.DateUtils.toCalendar
-import com.framework.utils.ValidationUtils.isEmailValid
 import com.framework.utils.ValidationUtils.isMobileNumberValid
 import com.framework.views.customViews.CustomEditText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -28,7 +29,9 @@ import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentNewAppointmentBinding
-import com.inventoryorder.model.*
+import com.inventoryorder.model.AUTHORIZATION_3
+import com.inventoryorder.model.OrderInitiateResponse
+import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.apointmentData.AptData
 import com.inventoryorder.model.apointmentData.DoctorAppointmentResponse
 import com.inventoryorder.model.apointmentData.addRequest.ActionData
@@ -52,11 +55,7 @@ import com.inventoryorder.model.weeklySchedule.GetDoctorWeeklySchedule
 import com.inventoryorder.model.weeklySchedule.isTimeBetweenTwoHours
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.bottomsheet.TimeSlotBottomSheetDialog
-import com.inventoryorder.ui.startFragmentActivity
-import com.inventoryorder.utils.getAptHtmlForUser
-import com.inventoryorder.utils.getAptHtmlTextForDoctor
-import com.inventoryorder.utils.getConsultHtmlTextForDoctor
-import com.inventoryorder.utils.getConsultHtmlTextForUser
+import com.inventoryorder.ui.startFragmentOrderActivity
 import com.michalsvec.singlerowcalendar.calendar.CalendarChangesObserver
 import com.michalsvec.singlerowcalendar.calendar.CalendarViewManager
 import com.michalsvec.singlerowcalendar.calendar.SingleRowCalendarAdapter
@@ -618,7 +617,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     bundle.putString("START_TIME_DATE", dateApt)
     bundle.putString("NUMBER", patientMobile)
     bundle.putString("EMAIL", patientEmail)
-    startFragmentActivity(FragmentType.BOOKING_SUCCESSFUL, bundle, isResult = true)
+    startFragmentOrderActivity(FragmentType.BOOKING_SUCCESSFUL, bundle, isResult = true)
   }
 
 
@@ -755,7 +754,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
       if (it.dateTimeSlot.isNullOrEmpty().not()) {
         val dataTimeDate = it.dateTimeSlot?.split("#") ?: ArrayList()
         if (dataTimeDate.size >= 4) {
-          val timeSlot = dataTimeDate[2].trim().split(",") ?: ArrayList()
+          val timeSlot = dataTimeDate[2].trim().split(",")
           if (timeSlot.size >= 2) {
             val date = parseDate(scheduledDateTime, FORMAT_SERVER_DATE, FORMAT_DD_MM_YYYY)
             val startTime = "$date ${timeSlot[0]}".parseDate(FORMAT_SERVER_TO_LOCAL_1)?.toCalendar()

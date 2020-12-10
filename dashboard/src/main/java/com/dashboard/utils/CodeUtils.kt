@@ -87,7 +87,7 @@ fun getSingleProductTaxonomyFromServiceCode(category_code: String?): String? {
 }
 
 
-fun getProductType(category_code: String?): String? {
+fun getProductType(category_code: String?): String {
   return when (category_code) {
     "SVC", "DOC", "HOS", "SPA", "SAL" -> "SERVICES"
     else -> "PRODUCTS"

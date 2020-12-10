@@ -26,24 +26,24 @@ class RoiSummaryData(
       "DOC" -> {
         list.add(RoiSummaryData(title = "Patient\nEnquiries", value = enquiry, icon1 = R.drawable.ic_chat_enquiry_d, type = RoiType.ENQUIRY.name))
         list.add(RoiSummaryData(title = "Tracked\nCalls", value = totalCalls, icon1 = R.drawable.ic_track_call_d, type = RoiType.TRACK_CALL.name))
-        list.add(RoiSummaryData(title = "In-Clinic\nAppointments", value = sellerOrder?.getTotalNetAmount() ?: "0", icon1 = R.drawable.ic_meeting_apt_d, type = RoiType.APT_ORDER.name))
+        list.add(RoiSummaryData(title = "In-Clinic\nAppointments", value = sellerOrder?.getTotalOrders(), icon1 = R.drawable.ic_meeting_apt_d, type = RoiType.APT_ORDER.name))
         list.add(RoiSummaryData(title = "Online Video\nConsultations", value = "0", icon1 = R.drawable.ic_meeting_conslt_d, type = RoiType.CONSULTATION.name))
-        list.add(RoiSummaryData(title = "Appointment\nWorth", value = "0K", icon1 = R.drawable.ic_meeting_apt_d, isRupeeSymbols = true, type = RoiType.APT_ORDER_WORTH.name))
-        list.add(RoiSummaryData(title = "Collection\nWorth (INR)", value = "0k", icon1 = R.drawable.ic_meeting_conslt_d, isRupeeSymbols = true, type = RoiType.COLLECTION_WORTH.name))
+        list.add(RoiSummaryData(title = "Appointment\nWorth", value = "0", icon1 = R.drawable.ic_meeting_apt_d, isRupeeSymbols = true, type = RoiType.APT_ORDER_WORTH.name))
+        list.add(RoiSummaryData(title = "Collection\nWorth (INR)", value = sellerOrder?.getTotalNetAmount(), icon1 = R.drawable.ic_meeting_conslt_d, isRupeeSymbols = true, type = RoiType.COLLECTION_WORTH.name))
       }
       "SPA" -> {
         list.add(RoiSummaryData(title = "Customer\nEnquiries", value = enquiry, icon1 = R.drawable.ic_chat_enquiry_d, type = RoiType.ENQUIRY.name))
         list.add(RoiSummaryData(title = "Tracked\nCalls", value = totalCalls, icon1 = R.drawable.ic_track_call_d, type = RoiType.TRACK_CALL.name))
-        list.add(RoiSummaryData(title = "In-Clinic\nAppointments", value = sellerOrder?.getTotalNetAmount() ?: "0", icon1 = R.drawable.ic_meeting_apt_d, type = RoiType.APT_ORDER.name))
-        list.add(RoiSummaryData(title = "Appointment\nWorth", value = "0K", icon1 = R.drawable.ic_meeting_apt_d, isRupeeSymbols = true, type = RoiType.APT_ORDER_WORTH.name))
-        list.add(RoiSummaryData(title = "Collection\nWorth (INR)", value = "0k", icon1 = R.drawable.ic_meeting_conslt_d, isRupeeSymbols = true, type = RoiType.COLLECTION_WORTH.name))
+        list.add(RoiSummaryData(title = "In-Clinic\nAppointments", value = sellerOrder?.getTotalOrders(), icon1 = R.drawable.ic_meeting_apt_d, type = RoiType.APT_ORDER.name))
+        list.add(RoiSummaryData(title = "Appointment\nWorth", value = "0", icon1 = R.drawable.ic_meeting_apt_d, isRupeeSymbols = true, type = RoiType.APT_ORDER_WORTH.name))
+        list.add(RoiSummaryData(title = "Collection\nWorth (INR)", value = sellerOrder?.getTotalNetAmount(), icon1 = R.drawable.ic_meeting_conslt_d, isRupeeSymbols = true, type = RoiType.COLLECTION_WORTH.name))
       }
       "MFG" -> {
         list.add(RoiSummaryData(title = "Customer\nEnquiries", value = enquiry, icon1 = R.drawable.ic_chat_enquiry_d, type = RoiType.ENQUIRY.name))
         list.add(RoiSummaryData(title = "Tracked\nCalls", value = totalCalls, icon1 = R.drawable.ic_track_call_d, type = RoiType.TRACK_CALL.name))
-        list.add(RoiSummaryData(title = "Customer\nOrders", value = sellerOrder?.getTotalNetAmount() ?: "0", icon1 = R.drawable.ic_meeting_apt_d, type = RoiType.APT_ORDER.name))
-        list.add(RoiSummaryData(title = "Order\nWorth", value = "0K", icon1 = R.drawable.ic_meeting_apt_d, isRupeeSymbols = true, type = RoiType.APT_ORDER_WORTH.name))
-        list.add(RoiSummaryData(title = "Collection\nWorth (INR)", value = "0k", icon1 = R.drawable.ic_meeting_conslt_d, isRupeeSymbols = true, type = RoiType.COLLECTION_WORTH.name))
+        list.add(RoiSummaryData(title = "Customer\nOrders", value = sellerOrder?.getTotalOrders(), icon1 = R.drawable.ic_meeting_apt_d, type = RoiType.APT_ORDER.name))
+        list.add(RoiSummaryData(title = "Order\nWorth", value = "0", icon1 = R.drawable.ic_meeting_apt_d, isRupeeSymbols = true, type = RoiType.APT_ORDER_WORTH.name))
+        list.add(RoiSummaryData(title = "Collection\nWorth (INR)", value = sellerOrder?.getTotalNetAmount(), icon1 = R.drawable.ic_meeting_conslt_d, isRupeeSymbols = true, type = RoiType.COLLECTION_WORTH.name))
       }
     }
     return list

@@ -19,7 +19,7 @@ data class QuickActionData(
   enum class QuickActionType(var icon: Int) {
     POST_STATUS_STORY(R.drawable.ic_post_new_story_d), POST_NEW_UPDATE(R.drawable.ic_post_edit_d),
     ADD_PHOTO_GALLERY(R.drawable.ic_add_photo_d), PLACE_CONSULT(R.drawable.ic_video_consulation_d),
-    PLACE_APPOINTMENT(R.drawable.ic_book_appointment_d), PLACE_ORDER_APT_BOOKING(R.drawable.ic_new_apt_d),
+    PLACE_APPOINTMENT(R.drawable.ic_book_appointment_d), PLACE_ORDER_BOOKING(R.drawable.ic_new_apt_d),
     ADD_TESTIMONIAL(R.drawable.ic_add_testmonial_d), LIST_SERVICES(R.drawable.ic_add_service_d),
     ADD_DOCTOR(R.drawable.ic_add_doctor_staff_member_d), ADD_CUSTOM_PAGE(R.drawable.ic_custom_page_d),
     ADD_STAFF_MEMBER(R.drawable.ic_add_doctor_staff_member_d), ADD_TABLE_BOOKING(R.drawable.ic_add_table_booking_d),
@@ -30,7 +30,7 @@ data class QuickActionData(
     ADD_FACULTY_MEMBER(R.drawable.ic_add_faculty_member_d), ADD_SLIDER_BANNER(R.drawable.ic_slider_banner_d),
     POST_SEASONAL_OFFER(R.drawable.ic_add_seasional_offer_d), ADD_ROOM_TYPE(R.drawable.ic_add_room_type_d),
     ADD_NEARBY_ATTRACTION(R.drawable.ic_add_nearby_attraction_d), ADD_PRODUCT(R.drawable.ic_add_project_d),
-    ADD_SERVICE(R.drawable.ic_add_service_d), LIST_DRUG_MEDICINE(0), LIST_PRODUCT(0);
+    ADD_SERVICE(R.drawable.ic_add_service_d), LIST_DRUG_MEDICINE(R.drawable.ic_add_service_d), LIST_PRODUCT(R.drawable.ic_add_service_d);
 
     companion object {
       fun from(name: String): QuickActionType? = values().firstOrNull { it.name == name }
