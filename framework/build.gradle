@@ -92,7 +92,7 @@ dependencies {
     api "com.squareup.retrofit2:converter-scalars:2.5.0"
 
     // Multi Dex
-    api'androidx.multidex:multidex:2.0.1'
+    api 'androidx.multidex:multidex:2.0.1'
 
     // lottie animation
     api "com.airbnb.android:lottie:3.3.1"

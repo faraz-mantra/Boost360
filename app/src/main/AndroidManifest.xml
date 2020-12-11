@@ -62,6 +62,14 @@ in api 29 for ImagePicker library in ManageProductFragment-->
         <meta-data android:name="invitereferrals_bid_e" android:value="355BCB8D72414FBD784338ADC28FCA09">
         </meta-data>
 
+        <receiver
+            android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
 <!--        <receiver-->
 <!--            android:name="com.invitereferrals.invitereferrals.InviteReferrerBroadcastReceiver"-->
 <!--            android:exported="true" >-->
