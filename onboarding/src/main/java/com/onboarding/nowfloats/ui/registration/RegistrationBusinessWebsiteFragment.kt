@@ -22,6 +22,7 @@ import com.onboarding.nowfloats.model.domain.BusinessDomainRequest
 import com.onboarding.nowfloats.model.domain.BusinessDomainSuggestRequest
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.ui.InternetErrorDialog
+import com.onboarding.nowfloats.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -150,6 +151,10 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
         if (domainValue.isNullOrEmpty().not() && isDomain) {
           requestFloatsModel?.contactInfo?.domainName = domainValue
           if ((binding?.textBtn?.visibility == View.VISIBLE)) {
+
+            //create my business website Event Tracker.
+            WebEngageController.trackEvent("Create my business website", "Button", "Clicked")
+
             getDotProgress()?.let {
               binding?.textBtn?.visibility = View.GONE
               binding?.next?.addView(it)

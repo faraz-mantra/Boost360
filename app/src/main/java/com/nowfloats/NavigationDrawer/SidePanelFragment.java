@@ -61,6 +61,15 @@ import java.util.HashMap;
  * A simple {@link Fragment} subclass.
  */
 public class SidePanelFragment extends Fragment {
+    public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
+    private static final int PICK_FROM_CAMERA = 1;
+    private static final int PICK_FROM_GALLERY = 2;
+    private static final int GALLERY_PHOTO = 2;
+    private static final int CAMERA_PHOTO = 1;
+    public static TextView fpNameTextView;
+    public static ImageView iconImage;
+    public static TextView storeName;
+    public static ImageView containerImage;
     private static int businessNameWeight = 5;
     private static int businessDescriptionWeight = 10;
     private static int businessCategoryWeight = 5;
@@ -74,47 +83,33 @@ public class SidePanelFragment extends Fragment {
     private static int shareWebsiteWeight = 5;
     private static int firstUpdatesWeight = 5;
     private static int logoWeight = 5;
-    private boolean mUserLearnedDrawer;
-    private View containerView;
+    private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
+    private final int media_req_id = 5;
+    private final int gallery_req_id = 6;
     public ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
-    private boolean mFromSavedInstanceState;
-    public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
-    private Activity mainActivity;
+    public ImageView backgroundImageButton;
     TextView dashBoardTextView, analyticsTextView, tvManageCustomers, tvManageInventory, tvInbox, tvManageContent,
             accountSettingsText, tvSubscriptions, keyboardTextView, facebookTextView, marketplaceTextView, helpAndSupportText, shareText, aboutText,
             tvContentSharing, tvCalls, tvReferrals;
-    public static TextView fpNameTextView;
     UserSessionManager session;
-    public static ImageView iconImage;
-    public static TextView storeName;
-    public static ImageView containerImage;
-    public ImageView backgroundImageButton;
-    private Toolbar toolbar;
-    private static final int PICK_FROM_CAMERA = 1;
-    private static final int PICK_FROM_GALLERY = 2;
     Bitmap CameraBitmap;
     String path = null;
     String imageUrl = "";
     Uri imageUri;
-    private static final int GALLERY_PHOTO = 2;
-    private static final int CAMERA_PHOTO = 1;
-
     LinearLayout homeLayout, analyticsLayout, subscriptionsLayout, accountSettingsLayout, keyboardLayout, facebookLayout, marketplaceLayout, aboutLayout, helpAndSupportLayout, shareLayout,
             manageContentLayout, manageContentSharing, manageCalls, manageCustomersLayout, manageInventoryLayout, inboxLayout, referralLayout;
-
+    private boolean mUserLearnedDrawer;
+    private View containerView;
+    private DrawerLayout mDrawerLayout;
+    private boolean mFromSavedInstanceState;
+    private Activity mainActivity;
+    private Toolbar toolbar;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
     private TextView meterValue;
     private boolean fiveUpdatesDone = false;
     private int onUpdate = 4;
-
-    private final int media_req_id = 5;
-    private final int gallery_req_id = 6;
-
-    private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
-
     private ImageView shareImageView, keyboardImageView, facebookImageView, marketplaceImageView, subscriptionsImageView, analyticsImageView, dasbBoardImageView, helpAndSupportImageView,
             accountSettingsImageView, manageCustomerImageView, manageContentImageView, aboutImageView, cotnentSharingImageView, callsImageView,
             manageInventoryImageView, inboxImageView, keyboardLock, callLock, facebookLock;
@@ -122,6 +117,33 @@ public class SidePanelFragment extends Fragment {
     private SharedPreferences pref, mSharedPreferences;
 
     private PurchaseFeaturesPopup purchaseFeaturesPopup = new PurchaseFeaturesPopup();
+
+    public SidePanelFragment() {
+    }
+
+    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(preferenceName, preferenceValue);
+        editor.apply();
+    }
+
+    public static int getCategoryBackgroundImage(String category) {
+
+        return R.drawable.general_services_background_img;
+    }
+
+    public static void addBackgroundImages() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (backgroundImages.size() == 0) {
+                    backgroundImages.put("GENERALSERVICES", R.drawable.general_services_background_img);
+
+                }
+            }
+        }).start();
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -196,6 +218,9 @@ public class SidePanelFragment extends Fragment {
         fpNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Self Website Event Trigger
+                WebEngageController.trackEvent("Self website click", "Button", "Clicked");
+
                 String url = fpNameTextView.getText().toString().trim();
 
                 Intent showWebSiteIntent = new Intent(getContext(), Mobile_Site_Activity.class);
@@ -270,20 +295,20 @@ public class SidePanelFragment extends Fragment {
 //                });
 //
 //            }
-        }
+            }
 
             private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
-                if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())){
+                if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_CAMERA, null);
                     cameraIntent();
-                }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
+                } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_GALLERY, null);
                     galleryIntent();
-                }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.DELETE.name())){
+                } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.DELETE.name())) {
                     deleteBackgroundImage();
                 }
             }
-            });
+        });
 
         View card = view.findViewById(R.id.navigationDrawer_main_leftPane);
 
@@ -311,10 +336,10 @@ public class SidePanelFragment extends Fragment {
         else
             callLock.setVisibility(View.VISIBLE);
         //facebookleads
-        if(Constants.StoreWidgets.contains("WILDFIRE_FB_LEAD_ADS")) {
+        if (Constants.StoreWidgets.contains("WILDFIRE_FB_LEAD_ADS")) {
             facebookLayout.setVisibility(View.GONE);
             facebookLock.setVisibility(View.GONE);
-        }else {
+        } else {
             facebookLock.setVisibility(View.VISIBLE);
         }
 
@@ -462,8 +487,8 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                if(Constants.StoreWidgets.contains("BOOSTKEYBOARD")) {
-                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.keyboard));
-                    onclickColorChange(keyboardImageView, keyboardTextView, keyboardLayout);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.keyboard));
+                onclickColorChange(keyboardImageView, keyboardTextView, keyboardLayout);
 //                }else{
 //                    mDrawerLayout.closeDrawers();
 //                    // show popup to user to Purchase this item.
@@ -522,8 +547,8 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                if(Constants.StoreWidgets.contains("CALLTRACKER")) {
-                    onclickColorChange(callsImageView, tvCalls, manageCalls);
-                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_customer_calls));
+                onclickColorChange(callsImageView, tvCalls, manageCalls);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_customer_calls));
 //                }else{
 //                    mDrawerLayout.closeDrawers();
 //                    // show popup to user to Purchase this item.
@@ -546,6 +571,9 @@ public class SidePanelFragment extends Fragment {
         aboutLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //About Boost Event Trigger
+                WebEngageController.trackEvent("Clicked on about Boost", "Button", "Clicked");
+
                 onclickColorChange(aboutImageView, aboutText, aboutLayout);
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.about));
             }
@@ -596,6 +624,9 @@ public class SidePanelFragment extends Fragment {
         referralLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //About Boost Event Trigger
+                WebEngageController.trackEvent("Clicked on Refer a friend", "Button", "Clicked");
+
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.referrals_button));
 //                String name = session.getUserProfileName();
 //                String number = session.getUserPrimaryMobile();
@@ -616,9 +647,6 @@ public class SidePanelFragment extends Fragment {
         onclickColorChange(dasbBoardImageView, dashBoardTextView, homeLayout);
     }
 
-    public SidePanelFragment() {
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -626,13 +654,6 @@ public class SidePanelFragment extends Fragment {
         mainActivity = activity;
 //        imageLoader.init(ImageLoaderConfiguration.createDefault(mainActivity));
         session = new UserSessionManager(activity.getApplicationContext(), activity);
-    }
-
-    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(preferenceName, preferenceValue);
-        editor.apply();
     }
 
     @Override
@@ -675,11 +696,6 @@ public class SidePanelFragment extends Fragment {
                         dialog.dismiss();
                     }
                 }).show();
-    }
-
-    public static int getCategoryBackgroundImage(String category) {
-
-        return R.drawable.general_services_background_img;
     }
 
     private void deleteBackgroundImage() {
@@ -735,23 +751,6 @@ public class SidePanelFragment extends Fragment {
             }
         });
     }
-
-    public static void addBackgroundImages() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (backgroundImages.size() == 0) {
-                    backgroundImages.put("GENERALSERVICES", R.drawable.general_services_background_img);
-
-                }
-            }
-        }).start();
-    }
-
-    public interface OnItemClickListener {
-        void onClick(String nextScreen);
-    }
-
 
     public void cameraIntent() {
         try {
@@ -889,7 +888,6 @@ public class SidePanelFragment extends Fragment {
         upa.execute();
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -900,7 +898,7 @@ public class SidePanelFragment extends Fragment {
 
         setThumbnail();
         setBackgroundImage();
-        Log.v("StoreWidgets"," "+ Constants.StoreWidgets);
+        Log.v("StoreWidgets", " " + Constants.StoreWidgets);
         if (Constants.StoreWidgets.contains("BOOSTKEYBOARD"))
             keyboardLock.setVisibility(View.GONE);
         else
@@ -1101,5 +1099,9 @@ public class SidePanelFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public interface OnItemClickListener {
+        void onClick(String nextScreen);
     }
 }

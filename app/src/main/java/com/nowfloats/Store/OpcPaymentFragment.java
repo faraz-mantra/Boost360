@@ -42,6 +42,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
 import java.text.NumberFormat;
@@ -535,6 +536,9 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.textView_apply:
+                //Apply Coupon Event Trigger
+                WebEngageController.trackEvent("Apply_Coupon", "Button", "Clicked");
+
                 updateDraftInvoice(opcEditText.getText().toString());
                 // check for opc
                 break;
