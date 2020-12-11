@@ -77,12 +77,12 @@ class BannerViewPagerAdapter(
                                             }*/
                                         }
                                         for (singleBanner in list) {
-                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
+                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key && list.get(position)!!.cta_feature_key.isNotEmpty() && singleBanner.cta_feature_key.isNotEmpty()) {
                                                 if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.contains(activity.fpTag)) {
                                                     list.remove(singleBanner)
                                                     notifyDataSetChanged()
                                                     homeListener.onShowHidePromoBannerIndicator(list.size > 1)
-                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode)) {
+                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode) && !singleBanner.exclusive_to_categories.isEmpty()) {
                                                     list.remove(singleBanner)
                                                     notifyDataSetChanged()
                                                     homeListener.onShowHidePromoBannerIndicator(list.size > 1)
@@ -91,12 +91,12 @@ class BannerViewPagerAdapter(
                                         }
                                     } else {
                                         for (singleBanner in list) {
-                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
+                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key && list.get(position)!!.cta_feature_key.isNotEmpty() && singleBanner.cta_feature_key.isNotEmpty()) {
                                                 if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.contains(activity.fpTag)) {
                                                     list.remove(singleBanner)
                                                     notifyDataSetChanged()
                                                     homeListener.onShowHidePromoBannerIndicator(list.size > 1)
-                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode)) {
+                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode) && !singleBanner.exclusive_to_categories.isEmpty()) {
                                                     list.remove(singleBanner)
                                                     notifyDataSetChanged()
                                                     homeListener.onShowHidePromoBannerIndicator(list.size > 1)
