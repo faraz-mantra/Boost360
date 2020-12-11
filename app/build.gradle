@@ -180,7 +180,7 @@ dependencies {
     //implementation project(':ZoomImageLibrary')
     implementation project(':instamojoLib')
     implementation files('libs/libraries/signpost-core-1.2.1.2.jar')
-    implementation files('libs/libraries/AF-Android-SDK-v2.3.1.17.jar')
+    implementation files('libs/libraries/AF-Android-SDK.jar')
     implementation files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')
     implementation project(':messagelibrary')
     //presignup library
@@ -295,4 +295,9 @@ dependencies {
     // Referral Library: invitereferrals
     implementation 'com.android.installreferrer:installreferrer:2.1'
     implementation 'com.invitereferrals.invitereferrals:invitereferrals:v29-1.0.5'
+
+    //AppsFlyer SDK
+//    implementation 'com.appsflyer:af-android-sdk:6.1.1'
+//    implementation 'com.android.installreferrer:installreferrer:2.1'
+
 }

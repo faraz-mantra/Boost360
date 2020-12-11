@@ -1,5 +1,7 @@
 package com.nowfloats.util;
 
+import android.text.TextUtils;
+
 import com.framework.analytics.FirebaseAnalyticsUtils;
 import com.nowfloats.Login.UserSessionManager;
 import com.webengage.sdk.android.Analytics;
@@ -22,7 +24,7 @@ public class WebEngageController {
         weAnalytics.track(event_name, trackEvent);
 
         //Firebase Analytics Event...
-        FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, event_value);
+        FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, TextUtils.isEmpty(event_value) ? "null" : event_value);
 
     }
 
