@@ -10,6 +10,8 @@ import androidx.navigation.NavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
+import com.appservice.ui.catlogService.widgets.ClickType
+import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.FragmentType
@@ -22,6 +24,7 @@ import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.pref.BASE_IMAGE_URL
 import com.dashboard.pref.Key_Preferences
 import com.dashboard.pref.UserSessionManager
+import com.dashboard.pref.clientId
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -29,8 +32,13 @@ import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
+import com.framework.imagepicker.ImagePicker
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
+import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 import java.util.*
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
@@ -39,6 +47,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private var session: UserSessionManager? = null
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
   private var isHigh = false
+  private var isSecondaryImage = false
   private val navHostFragment: NavHostFragment?
     get() {
       return supportFragmentManager.fragments.first() as? NavHostFragment
@@ -71,7 +80,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onResume() {
     super.onResume()
     setUserData()
-    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage)
+    setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage, binding?.drawerView?.txtDomainName)
   }
 
   fun setPercentageData(score: Int) {
@@ -163,7 +172,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    childFragments?.forEach { fragment -> fragment.onActivityResult(requestCode, resultCode, data) }
+    if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK && isSecondaryImage) {
+      val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
+      if (mPaths.isNullOrEmpty().not()) uploadSecondaryImage(mPaths[0])
+    } else childFragments?.forEach { fragment -> fragment.onActivityResult(requestCode, resultCode, data) }
   }
 
   override fun onBackPressed() {
@@ -178,10 +190,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onClick(v)
     when (v) {
       binding?.drawerView?.btnSiteMeter -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
-      binding?.drawerView?.imgBusinessLogo -> {
-      }
-      binding?.drawerView?.backgroundImage -> {
-      }
+      binding?.drawerView?.imgBusinessLogo -> this.startBusinessDescriptionEdit(session)
+      binding?.drawerView?.txtDomainName -> this.startWebViewPageLoad(session, session!!.getDomainName(false))
+      binding?.drawerView?.backgroundImage -> openImagePicker(true)
     }
   }
 
@@ -214,7 +225,47 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
   }
 
+  private fun openImagePicker(isSecondaryImage: Boolean) {
+    this.isSecondaryImage = isSecondaryImage
+    val filterSheet = ImagePickerBottomSheet()
+    filterSheet.isHidePdf(true)
+    filterSheet.onClicked = { clickPickerType(it) }
+    filterSheet.show(supportFragmentManager, ImagePickerBottomSheet::class.java.name)
+  }
+
+  private fun clickPickerType(it: ClickType) {
+    val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
+    ImagePicker.Builder(this)
+        .mode(type)
+        .compressLevel(ImagePicker.ComperesLevel.MEDIUM).directory(ImagePicker.Directory.DEFAULT)
+        .extension(ImagePicker.Extension.PNG).allowMultipleImages(true)
+        .scale(800, 800)
+        .enableDebuggingMode(true).build()
+  }
+
+  private fun uploadSecondaryImage(path: String) {
+    val imageFile = File(path)
+    isSecondaryImage = false
+    showProgress()
+    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, {
+      if (it.isSuccess()) {
+        if (it.stringResponse.isNullOrEmpty().not()) {
+          session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)
+          binding?.drawerView?.bgImage?.let { it1 -> glideLoad(it1, it.stringResponse ?: "", R.drawable.general_services_background_img_d) }
+        }
+      } else showLongToast(it.message())
+      hideProgress()
+    })
+  }
+
+  private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
+    val responseBody = businessImage.readBytes().toRequestBody("image/png".toMediaTypeOrNull(), 0, content.size)
+    val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
+        ?: "bg_${UUID.randomUUID()}.png"
+    return UploadFileBusinessRequest(clientId, session?.fPID, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
+  }
 }
+
 
 fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {
   val rootAliasUri = getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)

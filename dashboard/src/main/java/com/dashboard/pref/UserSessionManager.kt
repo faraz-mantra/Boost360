@@ -529,7 +529,7 @@ class UserSessionManager(var activity: Activity) {
     editor.apply()
   }
 
-  fun gisAccountSave(): Boolean {
+  fun isAccountSave(): Boolean {
     return pref.getBoolean(IS_ACCOUNT_SAVE, false)
   }
 

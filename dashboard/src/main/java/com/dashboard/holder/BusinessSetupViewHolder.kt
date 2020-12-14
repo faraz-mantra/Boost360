@@ -21,26 +21,27 @@ class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) : AppBaseR
       getColor(R.color.light_green_2)?.let { binding.txtDes.setTextColor(it) }
       binding.viewBtn.gone()
       binding.viewImage.gone()
-      binding.gifSyncOk.visible()
-      binding.gifSyncOk.apply {
-        data.gifIcon?.let { gifResource = it }
-        play()
-      }
-
+      binding.lottySyncOk.visible()
+      startCheckAnimation(true)
     } else {
       getColor(R.color.light_grey_3)?.let { binding.txtDes.setTextColor(it) }
       binding.viewBtn.visible()
       binding.viewImage.visible()
-      binding.gifSyncOk.gone()
+      binding.lottySyncOk.gone()
+      startCheckAnimation(false)
       val btnTxt = data.getPendingText()
       binding.btnTitle.text = if (btnTxt.isNullOrEmpty().not()) "Add $btnTxt" else data.getCompleteText()
       binding.imgArrowGif.apply {
         data.gifIcon?.let { gifResource = it }
         play()
       }
-      data.icon1?.let { binding.imgCircle.setImageResource(it) }
+      binding.progressBar.setProgressWithAnimation((100 - (data.percentage ?: 0)).toFloat(), 1000)
       data.icon2?.let { binding.imgIcon.setImageResource(it) }
     }
     binding.mainContent.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal) }
+  }
+
+  private fun startCheckAnimation(isAnimate: Boolean) {
+    binding.lottySyncOk.apply { if (isAnimate) playAnimation() else pauseAnimation() }
   }
 }

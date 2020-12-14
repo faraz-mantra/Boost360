@@ -102,7 +102,7 @@ public class ManageContentFragment extends Fragment {
                         intent = new Intent(mContext, ProductCatalogActivity.class);
                         break;
                     case 1:
-                        ((SidePanelFragment.OnItemClickListener) mContext).onClick(getString(R.string.update));
+//                        ((SidePanelFragment.OnItemClickListener) mContext).onClick(getString(R.string.update));
                         return;
                     case 2:
                         intent = new Intent(mContext, ImageMenuActivity.class);

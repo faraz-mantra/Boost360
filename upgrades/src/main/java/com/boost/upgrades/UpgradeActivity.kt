@@ -103,8 +103,10 @@ class UpgradeActivity : AppCompatActivity() {
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
     userPurchsedWidgets = intent.extras?.getStringArrayList("userPurchsedWidgets") ?: ArrayList()
-    for (a in userPurchsedWidgets)  {
-      println("userPurchsedWidgets  ${userPurchsedWidgets}")
+    if (userPurchsedWidgets.isNullOrEmpty().not()) {
+      for (a in userPurchsedWidgets) {
+        println("userPurchsedWidgets  ${userPurchsedWidgets}")
+      }
     }
     progressDialog = ProgressDialog(this)
     prefs = SharedPrefs(this)
@@ -119,7 +121,7 @@ class UpgradeActivity : AppCompatActivity() {
       bundle.putStringArrayList("userPurchsedWidgets", intent.getStringArrayListExtra("userPurchsedWidgets"))
       bundle.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
 //      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
-      addFragmentHome(HomeFragment.newInstance(), HOME_FRAGMENT,bundle)
+      addFragmentHome(HomeFragment.newInstance(), HOME_FRAGMENT, bundle)
       //update userdetails and buyitem
       showingPopUp()
       supportFragmentManager.addOnBackStackChangedListener {
@@ -173,9 +175,9 @@ class UpgradeActivity : AppCompatActivity() {
         val tag = currentFragment?.tag
         Log.e("back pressed tag", ">>>$tag")
         if (tag != null) {
-          if(tag == CART_FRAGMENT)
+          if (tag == CART_FRAGMENT)
             WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back button_cart screen", "ADDONS_MARKETPLACE", "")
-          if(tag == PAYMENT_FRAGMENT)
+          if (tag == PAYMENT_FRAGMENT)
             WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back_button paymentscreen", "ADDONS_MARKETPLACE", "")
           if (tag == ORDER_CONFIRMATION_FRAGMENT) {
             if (isDeepLink) goHomeActivity()
@@ -224,7 +226,8 @@ class UpgradeActivity : AppCompatActivity() {
     fragmentTransaction!!.addToBackStack(fragmentTag)
     fragmentTransaction!!.commit()
   }
-  fun addFragmentHome(fragment: Fragment, fragmentTag: String?,  args: Bundle?) {
+
+  fun addFragmentHome(fragment: Fragment, fragmentTag: String?, args: Bundle?) {
     fragment.arguments = args
     currentFragment = fragment
     fragmentManager = supportFragmentManager
@@ -266,14 +269,14 @@ class UpgradeActivity : AppCompatActivity() {
     goToHomeFragment()
     val args = Bundle()
     args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
-    addFragmentHome(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT,args)
+    addFragmentHome(MyAddonsFragment.newInstance(), MYADDONS_FRAGMENT, args)
   }
 
   fun goBackToRecommentedScreen() {
     goToHomeFragment()
     val args = Bundle()
     args.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
-    addFragmentHome(ViewAllFeaturesFragment.newInstance(), VIEW_ALL_FEATURE,args)
+    addFragmentHome(ViewAllFeaturesFragment.newInstance(), VIEW_ALL_FEATURE, args)
   }
 
 

@@ -2,6 +2,7 @@ package com.dashboard.holder
 
 import android.view.View
 import com.dashboard.R
+import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.ItemContentSetupManageBinding
 import com.dashboard.model.live.SiteMeterModel
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
@@ -29,6 +30,9 @@ class ItemContentSetupHolder(binding: ItemContentSetupManageBinding) : AppBaseRe
       getColor(R.color.colorAccent)?.let { binding.txtTitle.setTextColor(it) }
     }
     binding.view2.visibility = if (itemCount != null && position == (itemCount!! - 1)) View.INVISIBLE else View.VISIBLE
+    binding.mainContent.setOnClickListener {
+      if (data.status == false) listener?.onItemClick(position, data, RecyclerViewActionType.DIGITAL_SCORE_READINESS_CLICK.ordinal)
+    }
   }
 }
 

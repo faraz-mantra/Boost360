@@ -3,6 +3,10 @@ package com.dashboard.utils
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.appservice.model.SessionData
+import com.appservice.model.StatusKyc
+import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
+import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.pref.*
@@ -11,6 +15,7 @@ import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
+import com.onboarding.nowfloats.ui.webview.WebViewActivity
 
 fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
   try {
@@ -209,6 +214,292 @@ fun AppCompatActivity.startBookAppointmentConsult(session: UserSessionManager?, 
     bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
     bundle.putBoolean(IntentConstant.IS_VIDEO.name, isConsult)
     this.startFragmentOrderActivity(com.inventoryorder.constant.FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isOrder: Boolean = false, isConsult: Boolean = false) {
+  try {
+    val data = PreferenceData(clientId_ORDER, session?.userProfileId, WA_KEY, session?.fpTag, session?.userPrimaryMobile,
+        session?.getDomainName(false), session?.fPEmail, session?.getFPDetails(Key_Preferences.LATITUDE),
+        session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode)
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
+    val fragmentType = when {
+      isOrder -> com.inventoryorder.constant.FragmentType.ALL_ORDER_VIEW
+      isConsult -> com.inventoryorder.constant.FragmentType.ALL_VIDEO_CONSULT_VIEW
+      else -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_VIEW
+    }
+    this.startFragmentOrderActivity(fragmentType, bundle, isResult = true)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startBusinessLogo(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startFeatureLogo(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.FeaturedImageActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startBusinessAddress(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startBusinessEmail(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startBusinessDescriptionEdit(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startBusinessContactInfo(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startBusinessHours(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startFragmentsFactory(session: UserSessionManager?, fragmentType: String) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity"))
+    webIntent.putExtra("fragmentName", fragmentType)
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startPricingPlan(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.Store.NewPricingPlansActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startWebViewPageLoad(session: UserSessionManager?, url: String?) {
+  try {
+    val intent = Intent(this, WebViewActivity::class.java)
+    intent.putExtra(com.onboarding.nowfloats.constant.IntentConstant.DOMAIN_URL.name, url)
+    startActivity(intent)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+
+fun AppCompatActivity.startSelfBrandedGateway(session: UserSessionManager?) {
+  try {
+    session?.getBundleDataKyc()?.let { startFragmentPaymentActivityNew(this, com.appservice.constant.FragmentType.PAYMENT_GATEWAY, it, false) }
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startBusinessKycBoost(session: UserSessionManager?) {
+  try {
+    session?.getBundleDataKyc()?.let {
+      if (session.isSelfBrandedKycAdd == true) {
+        startFragmentPaymentActivityNew(this, com.appservice.constant.FragmentType.KYC_STATUS, it, false)
+      } else startFragmentPaymentActivityNew(this, com.appservice.constant.FragmentType.BUSINESS_KYC_VIEW, it, false)
+    }
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startMyBankAccount(session: UserSessionManager?) {
+  try {
+    val bundle = Bundle()
+    bundle.putString(com.appservice.constant.IntentConstant.CLIENT_ID.name, clientId)
+    bundle.putString(com.appservice.constant.IntentConstant.USER_PROFILE_ID.name, session?.userProfileId)
+    bundle.putString(com.appservice.constant.IntentConstant.FP_ID.name, session?.fPID)
+    if (session?.isAccountSave() == true) {
+      startFragmentAccountActivityNew(this, com.appservice.constant.FragmentType.BANK_ACCOUNT_DETAILS, bundle, false)
+    } else {
+      startFragmentAccountActivityNew(this, com.appservice.constant.FragmentType.ADD_BANK_ACCOUNT_START, bundle, false)
+    }
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun UserSessionManager.getBundleDataKyc(): Bundle? {
+  val session = SessionData()
+  session.clientId = clientId
+  session.userProfileId = userProfileId
+  session.fpId = fPID
+  session.fpTag = fpTag
+  session.experienceCode = fP_AppExperienceCode
+  session.fpLogo = fPLogo
+  session.fpEmail = fPEmail
+  session.fpNumber = fPPrimaryContactNumber
+  session.isSelfBrandedAdd = isSelfBrandedKycAdd ?: false
+  session.isPaymentGateway = getStoreWidgets()?.contains(StatusKyc.CUSTOM_PAYMENTGATEWAY.name) ?: false
+  val bundle = Bundle()
+  bundle.putSerializable(com.appservice.constant.IntentConstant.SESSION_DATA.name, session)
+  return bundle
+}
+
+fun AppCompatActivity.startListDigitalBrochure(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+//check is premium
+fun AppCompatActivity.startAddDigitalBrochure(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.manufacturing.digitalbrochures.DigitalBrochuresDetailsActivity"))
+    webIntent.putExtra("ScreenState", "new")
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startListProjectAndTeams(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startListProject(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.manufacturing.projectandteams.ui.project.ProjectActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startListTeams(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.manufacturing.projectandteams.ui.teams.TeamsActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startListSeasonalOffer(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.hotel.seasonalOffers.SeasonalOffersActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startAddSeasonalOffer(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.hotel.seasonalOffers.SeasonalOffersDetailsActivity"))
+    webIntent.putExtra("ScreenState", "new")
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startListToppers(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.education.toppers.ToppersActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startListBatches(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.education.batches.BatchesActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startNearByView(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.hotel.placesnearby.PlacesNearByActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startFacultyMember(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.education.faculty.FacultyActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }

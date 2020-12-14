@@ -5,42 +5,50 @@
       "action_item": [
         {
           "businessType": "video_consultations",
-          "isLock": true,
+          "isLock": false,
+          "premiumCode": "",
           "title": "Video consultations"
         },
         {
           "businessType": "in_clinic_appointments",
           "isLock": false,
+          "premiumCode": "",
           "title": "In-clinic Appointments"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
+          "premiumCode": "CALLTRACKER",
           "title": "Patient Calls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Patient Enquiries"
         },
         {
           "businessType": "ic_daily_business_update_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Daily Business Updates"
         },
         {
           "businessType": "ic_service_cataloge_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Services Listed"
         },
         {
           "businessType": "ic_customer_testimonial_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Patient Testimonials"
         },
         {
           "businessType": "doctor_profile",
           "isLock": false,
+          "premiumCode": "",
           "title": "Doctor e-Profile"
         }
       ]
@@ -50,42 +58,50 @@
       "action_item": [
         {
           "businessType": "video_consultations",
-          "isLock": true,
+          "isLock": false,
+          "premiumCode": "",
           "title": "Video consultations"
         },
         {
           "businessType": "in_clinic_appointments",
           "isLock": false,
+          "premiumCode": "",
           "title": "In-clinic Appointments"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
+          "premiumCode": "CALLTRACKER",
           "title": "Patient Calls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Patient Enquiries"
         },
         {
           "businessType": "ic_daily_business_update_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Daily Business Updates"
         },
         {
           "businessType": "ic_service_cataloge_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Services Listed"
         },
         {
           "businessType": "ic_customer_testimonial_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Patient Testimonials"
         },
         {
           "businessType": "doctor_profile",
           "isLock": false,
+          "premiumCode": "",
           "title": "Doctor e-Profile"
         }
       ]
@@ -96,41 +112,49 @@
         {
           "businessType": "in_clinic_appointments",
           "isLock": false,
+          "premiumCode": "",
           "title": "In-clinic Appointments"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
+          "premiumCode": "CALLTRACKER",
           "title": "Customer Calls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Customer Enquiries"
         },
         {
           "businessType": "ic_daily_business_update_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Daily Business Updates"
         },
         {
           "businessType": "ic_service_cataloge_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Services Listed"
         },
         {
           "businessType": "ic_customer_testimonial_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Customer Testimonials"
         },
         {
           "businessType": "doctor_profile",
           "isLock": false,
+          "premiumCode": "",
           "title": "Doctor e-Profile"
         },
         {
           "businessType": "ic_business_keyboard_d",
           "isLock": false,
+          "premiumCode": "BOOSTKEYBOARD",
           "title": "Boost Keyboard"
         }
       ]
@@ -140,42 +164,50 @@
       "action_item": [
         {
           "businessType": "ic_project_terms_d",
-          "isLock": true,
+          "isLock": false,
+          "premiumCode": "PROJECTTEAM",
           "title": "Projects and Teams"
         },
         {
-          "businessType": "ic_digital_brochures_d",
+          "businessType": "ic_digital_brochures",
           "isLock": false,
+          "premiumCode": "BROCHURE",
           "title": "Unlimited Digital Brochures"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
+          "premiumCode": "CALLTRACKER",
           "title": "Customer Calls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Customer Enquiries"
         },
         {
           "businessType": "ic_daily_business_update_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Daily Business Updates"
         },
         {
           "businessType": "ic_product_cataloge_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Products Catalogue"
         },
         {
           "businessType": "ic_customer_testimonial_d",
           "isLock": false,
+          "premiumCode": "",
           "title": "Customer Testimonials"
         },
         {
           "businessType": "ic_business_keyboard_d",
-          "isLock": true,
+          "isLock": false,
+          "premiumCode": "BOOSTKEYBOARD",
           "title": "Business Keyboard"
         }
       ]
