@@ -1,4 +1,4 @@
-package com.appservice.utils
+package com.dashboard.utils
 
 import android.app.Activity
 import android.content.ContentUris

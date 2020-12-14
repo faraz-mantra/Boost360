@@ -12,8 +12,10 @@ import com.framework.models.toLiveData
 import com.inventoryorder.rest.repositories.ApiTwoWithFloatRepository
 import com.inventoryorder.rest.repositories.InventoryOrderRepository
 import com.onboarding.nowfloats.model.nfxProcess.NFXProcessRequest
+import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import com.onboarding.nowfloats.rest.repositories.CategoryRepository
 import com.onboarding.nowfloats.rest.repositories.ChannelRepository
+import com.onboarding.nowfloats.rest.repositories.UploadImageRepository
 import com.onboarding.nowfloats.rest.repositories.WhatsAppRepository
 import org.json.JSONObject
 
@@ -70,7 +72,12 @@ class DashboardViewModel : BaseViewModel() {
   fun getUserCallSummary(clientId: String?, fpIdParent: String?, identifierType: String?): LiveData<BaseResponse> {
     return ApiTwoWithFloatRepository.getUserCallSummary(clientId, fpIdParent, identifierType).toLiveData()
   }
+
+  fun putUploadSecondaryImage(request: UploadFileBusinessRequest): LiveData<BaseResponse> {
+    return UploadImageRepository.putUploadSecondaryImage(request).toLiveData()
+  }
 }
+
 
 fun getJsonRequest(fpTag: String?): String {
   val jsonObject = JSONObject()

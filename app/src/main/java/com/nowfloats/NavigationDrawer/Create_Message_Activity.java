@@ -593,18 +593,20 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
 
         }*/
         new UploadMessageTask(this, path, task, session, (isSuccess, msg1) -> {
-            if (isSuccess) {
-                Create_Message_Activity.path = "";
-                Constants.createMsg = false;
-                pref.edit().putInt("quikrStatus", 0).apply();
-                pref.edit().putString("msg_post", "").apply();
-                pref.edit().putString("image_post", "").apply();
-                isMsgChanged = false;
-                isImageChanged = false;
-            }
-            Toast.makeText(Create_Message_Activity.this, msg1, Toast.LENGTH_SHORT).show();
-            hideLoader();
-            if (isSuccess) this.finish();
+            runOnUiThread(() -> {
+                if (isSuccess) {
+                    Create_Message_Activity.path = "";
+                    Constants.createMsg = false;
+                    pref.edit().putInt("quikrStatus", 0).apply();
+                    pref.edit().putString("msg_post", "").apply();
+                    pref.edit().putString("image_post", "").apply();
+                    isMsgChanged = false;
+                    isImageChanged = false;
+                }
+                Toast.makeText(Create_Message_Activity.this, msg1, Toast.LENGTH_SHORT).show();
+                hideLoader();
+                if (isSuccess) this.finish();
+            });
         }).UploadPostService();
     }
 

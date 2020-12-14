@@ -63,15 +63,15 @@ import kotlin.concurrent.schedule
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
+  private var isRecreate: Boolean? = null
   private var isHigh = false
   private var adapterBusinessContent: AppBaseRecyclerViewAdapter<BusinessContentSetupData>? = null
   private var channelAdapter: AppBaseRecyclerViewAdapter<ChannelData>? = null
-  private var adapterQuickAction: AppBaseRecyclerViewAdapter<QuickActionData>? = null
-  private var adapterBusinessData: AppBaseRecyclerViewAdapter<ManageBusinessData>? = null
   private var adapterPagerBusinessUpdate: AppBaseRecyclerViewAdapter<BusinessSetupHighData>? = null
   private var adapterRoi: AppBaseRecyclerViewAdapter<RoiSummaryData>? = null
   private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
   private var siteMeterData: SiteMeterScoreDetails? = null
+  private var quickActionPosition = 0
 
   override fun getLayout(): Int {
     return R.layout.fragment_dashboard
@@ -84,7 +84,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown, binding?.btnShowDigitalScore, binding?.btnDigitalChannel)
+    setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown, binding?.btnShowDigitalScore, binding?.btnDigitalChannel, binding?.btnBusinessLogo, binding?.txtDomainName)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     getCategoryData()
@@ -94,14 +94,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onResume() {
     super.onResume()
-    if (MessageModel().getMessageFloatData() != null) session?.siteMeterData { it?.let { it1 -> refreshData(it1) } }
-    else getFloatMessage()
+    baseActivity.runOnUiThread { getFloatMessage() }
   }
 
   private fun getFloatMessage() {
-    viewModel?.getBizFloatMessage(getRequestFloat())?.observeOnce(this, {
+    binding?.progress?.visible()
+    viewModel?.getBizFloatMessage(session!!.getRequestFloat())?.observeOnce(this, {
       if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
       session?.siteMeterData { it1 -> it1?.let { it2 -> refreshData(it2) } }
+      binding?.progress?.gone()
     })
   }
 
@@ -109,6 +110,16 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     this.siteMeterData = siteMeterData
     (baseActivity as? DashboardActivity)?.setPercentageData(siteMeterData.siteMeterTotalWeight)
     isHigh = (siteMeterData.siteMeterTotalWeight >= 80)
+    if (isRecreate != null && this.isHigh != this.isRecreate) {
+      getCategoryData()
+      apiSellerSummary()
+      setDataRiaAcademy()
+      setUserBusinessAllData(siteMeterData)
+    } else setUserBusinessAllData(siteMeterData)
+    isRecreate = this.isHigh
+  }
+
+  private fun setUserBusinessAllData(siteMeterData: SiteMeterScoreDetails) {
     setUserData()
     setRecBusinessManageTask()
     setGrowthStatHigh()
@@ -196,15 +207,21 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         val response = it as? QuickActionResponse
         val listAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT) }
         if (response?.isSuccess() == true && listAction?.actionItem.isNullOrEmpty().not()) {
-          if (adapterQuickAction == null) {
-            pagerQuickAction.apply {
-              adapterQuickAction = AppBaseRecyclerViewAdapter(baseActivity, listAction?.actionItem!!, this@DashboardFragment)
-              offscreenPageLimit = 3
-              adapter = adapterQuickAction
-              dotIndicatorAction.setViewPager2(this)
-              setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-            }
-          } else adapterQuickAction?.notify(listAction?.actionItem!!)
+          val position = quickActionPosition
+          pagerQuickAction.apply {
+            val adapterQuickAction = AppBaseRecyclerViewAdapter(baseActivity, listAction?.actionItem!!, this@DashboardFragment)
+            offscreenPageLimit = 3
+            adapter = adapterQuickAction
+            dotIndicatorAction.setViewPager2(this)
+            post { currentItem = position }
+            setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+              override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                quickActionPosition = position
+              }
+            })
+          }
         } else showShortToast(baseActivity.getString(R.string.quick_action_data_error))
       })
 
@@ -216,10 +233,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           val response = it as? ManageBusinessDataResponse
           val dataAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == getAddonsType(session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT)) }
           if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
-            if (adapterBusinessData == null) {
-              adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@DashboardFragment)
-              adapter = adapterBusinessData
-            } else adapterBusinessData?.notify(dataAction.actionItem!!)
+            dataAction.actionItem?.map { it1 -> if (it1.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it1.premiumCode).not()) it1.isLock = true }
+            val adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@DashboardFragment)
+            adapter = adapterBusinessData
           } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
         })
       }
@@ -399,7 +415,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
       RecyclerViewActionType.BUSINESS_ADD_ONS_CLICK.ordinal -> {
         val data = item as? ManageBusinessData ?: return
-        ManageBusinessData.BusinessType.fromName(data.businessType)?.let { businessAddOnsClick(it) }
+        ManageBusinessData.BusinessType.fromName(data.businessType)?.let { com.dashboard.controller.ui.allAddOns.businessAddOnsClick(it, baseActivity, session) }
       }
     }
   }
@@ -409,6 +425,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (v) {
       binding?.btnVisitingCardUp -> visitingCardShowHide(true)
       binding?.btnVisitingCardDown -> visitingCardShowHide(false)
+      binding?.btnBusinessLogo -> baseActivity.startBusinessDescriptionEdit(session)
+      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.btnDigitalChannel -> session?.let { baseActivity.startDigitalChannel(it) }
       binding?.btnShowDigitalScore -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
     }
@@ -418,7 +436,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun quickActionClick(type: QuickActionData.QuickActionType) {
     when (type) {
       QuickActionData.QuickActionType.POST_STATUS_STORY -> {
-
       }
       QuickActionData.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
       QuickActionData.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
@@ -428,58 +445,52 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionData.QuickActionType.LIST_SERVICES,
       QuickActionData.QuickActionType.LIST_PRODUCT,
       QuickActionData.QuickActionType.LIST_DRUG_MEDICINE,
-      QuickActionData.QuickActionType.LIST_TOPPER,
       -> baseActivity.startListServiceProduct(session)
 
       QuickActionData.QuickActionType.ADD_SERVICE,
       QuickActionData.QuickActionType.ADD_PRODUCT,
       QuickActionData.QuickActionType.ADD_COURSE,
-      QuickActionData.QuickActionType.ADD_PROJECT,
       -> baseActivity.startAddServiceProduct(session)
 
       QuickActionData.QuickActionType.PLACE_APPOINTMENT -> baseActivity.startBookAppointmentConsult(session, false)
       QuickActionData.QuickActionType.PLACE_CONSULT -> baseActivity.startBookAppointmentConsult(session, true)
 
-      QuickActionData.QuickActionType.ADD_UPCOMING_BATCH -> {
+      QuickActionData.QuickActionType.ADD_PROJECT -> {
+        if (session?.getStoreWidgets()?.equals(PremiumCode.PROJECTTEAM.value) == true) {
+          baseActivity.startListProject(session)
+        } else baseActivity.startListProjectAndTeams(session)
       }
+      QuickActionData.QuickActionType.ADD_TEAM_MEMBER -> {
+        if (session?.getStoreWidgets()?.equals(PremiumCode.PROJECTTEAM.value) == true) {
+          baseActivity.startListTeams(session)
+        } else baseActivity.startListProjectAndTeams(session)
+      }
+      QuickActionData.QuickActionType.UPLOAD_BROCHURE -> {
+        if (session?.getStoreWidgets()?.equals(PremiumCode.BROCHURE.value) == true) {
+          baseActivity.startAddDigitalBrochure(session)
+        } else baseActivity.startListDigitalBrochure(session)
+      }
+      QuickActionData.QuickActionType.POST_SEASONAL_OFFER -> baseActivity.startAddSeasonalOffer(session)
+      QuickActionData.QuickActionType.LIST_TOPPER -> baseActivity.startListToppers(session)
+      QuickActionData.QuickActionType.ADD_UPCOMING_BATCH -> baseActivity.startListBatches(session)
+      QuickActionData.QuickActionType.ADD_NEARBY_ATTRACTION -> baseActivity.startNearByView(session)
+      QuickActionData.QuickActionType.ADD_FACULTY_MEMBER -> baseActivity.startFacultyMember(session)
+
       QuickActionData.QuickActionType.ADD_SLIDER_BANNER -> {
       }
       QuickActionData.QuickActionType.ADD_DOCTOR -> {
+      }
+      QuickActionData.QuickActionType.ADD_ROOM_TYPE -> {
+      }
+      QuickActionData.QuickActionType.PLACE_ORDER_BOOKING -> {
+      }
+      QuickActionData.QuickActionType.ADD_TABLE_BOOKING -> {
       }
       QuickActionData.QuickActionType.ADD_STAFF_MEMBER -> {
       }
       QuickActionData.QuickActionType.ADD_MENU -> {
       }
-      QuickActionData.QuickActionType.UPLOAD_BROCHURE -> {
-      }
       QuickActionData.QuickActionType.MAKE_ANNOUNCEMENT -> {
-      }
-      QuickActionData.QuickActionType.ADD_FACULTY_MEMBER -> {
-      }
-      QuickActionData.QuickActionType.POST_SEASONAL_OFFER -> {
-      }
-      QuickActionData.QuickActionType.ADD_NEARBY_ATTRACTION -> {
-      }
-    }
-  }
-
-  private fun businessAddOnsClick(type: ManageBusinessData.BusinessType) {
-    when (type) {
-      ManageBusinessData.BusinessType.ic_project_terms_d -> {
-      }
-      ManageBusinessData.BusinessType.ic_digital_brochures -> {
-      }
-      ManageBusinessData.BusinessType.ic_customer_call_d -> {
-      }
-      ManageBusinessData.BusinessType.ic_customer_enquiries_d -> {
-      }
-      ManageBusinessData.BusinessType.ic_daily_business_update_d -> {
-      }
-      ManageBusinessData.BusinessType.ic_product_cataloge_d -> {
-      }
-      ManageBusinessData.BusinessType.ic_customer_testimonial_d -> {
-      }
-      ManageBusinessData.BusinessType.ic_business_keyboard_d -> {
       }
     }
   }
@@ -496,14 +507,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun getSummaryDetail(): SummaryEntity? {
     return SummaryEntity(session?.enquiryCount?.toIntOrNull() ?: 0, session?.subcribersCount?.toIntOrNull() ?: 0, session?.visitorsCount?.toIntOrNull() ?: 0, session?.visitsCount?.toIntOrNull() ?: 0)
-  }
-
-  private fun getRequestFloat(): Map<String, String> {
-    val map = HashMap<String, String>()
-    map["clientId"] = clientId
-    map["skipBy"] = "0"
-    map["fpId"] = session?.fPID!!
-    return map
   }
 }
 
@@ -522,4 +525,16 @@ private fun LinearLayoutCompat?.animateViewTopPadding(isDown: Boolean) {
     animator.duration = 280
     animator.start()
   }
+}
+
+fun UserSessionManager.getRequestFloat(): Map<String, String> {
+  val map = HashMap<String, String>()
+  map["clientId"] = clientId
+  map["skipBy"] = "0"
+  map["fpId"] = this.fPID!!
+  return map
+}
+
+fun UserSessionManager?.checkIsPremiumUnlock(value: String?): Boolean {
+  return (this?.getStoreWidgets()?.firstOrNull { it == value } != null)
 }

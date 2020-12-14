@@ -3,6 +3,7 @@ package com.dashboard.model.live
 import com.dashboard.R
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.recyclerView.AppBaseRecyclerViewItem
+import com.dashboard.utils.*
 import java.io.Serializable
 
 class SiteMeterModel(
@@ -28,5 +29,24 @@ class SiteMeterModel(
 
   fun getIcon(): Int {
     return if (status == true) R.drawable.ic_ok_11_d else R.drawable.ic_circle_grey_9_d
+  }
+
+  enum class TypePosition(var value: Int) {
+    BUSINESS_NAME(businessName),
+    DESCRIPTION(description),
+    CATEGORY(category),
+    EMAIL(email),
+    PHONE(phone),
+    ADDRESS(address),
+    BUSINESS_HOURS(businessHoursV),
+    IMAGE(image),
+    LOGO(logo),
+    POST(post),
+    SOCIAL(social),
+    DOMAIN(domain);
+
+    companion object {
+      fun fromValue(value: Int?): TypePosition? = values().firstOrNull { it.value == value }
+    }
   }
 }

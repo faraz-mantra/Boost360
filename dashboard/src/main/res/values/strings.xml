@@ -30,6 +30,10 @@
   <string name="my_products_catalog">My products catalog</string>
   <string name="all_boost_add_ons">All Boost add-ons</string>
   <string name="tag_for_partners">.nowfloats.com</string>
+  <string name="features_not_available">Feature not available</string>
+  <string name="check_store_for_upgrade_info">Check the store for more information on upgrade plans</string>
+  <string name="goto_store">Go to Store</string>
+  <string name="cancel">Cancel</string>
 
   <!-- SITE-Meter Percentage  -->
   <string name="buydomain_percentage">10</string>

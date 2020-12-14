@@ -17,7 +17,7 @@
     <com.framework.views.customViews.CustomCardView
       android:id="@+id/card_view"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
       app:cardBackgroundColor="@color/white"
       app:cardCornerRadius="@dimen/size_10"
       app:cardUseCompatPadding="true">
@@ -77,11 +77,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
-            <com.framework.views.customViews.CustomImageView
-              android:id="@+id/img_circle"
+            <com.framework.views.CircularProgressBar
+              android:id="@+id/progress_remaining"
               android:layout_width="@dimen/size_50"
               android:layout_height="@dimen/size_50"
               android:layout_gravity="center"
+              app:cpb_background_progressbar_color="@color/grey_light_1_d"
+              app:cpb_background_progressbar_width="@dimen/size_9"
+              app:cpb_progress_direction="to_right"
+              app:cpb_progressbar_color="@color/grey_light_2_d"
+              app:cpb_progressbar_width="@dimen/size_9"
+              app:cpb_round_border="false"
               tools:srcCompat="@drawable/ic_add_home_circle_d" />
 
             <com.framework.views.customViews.CustomImageView
@@ -92,16 +98,19 @@
               tools:srcCompat="@drawable/ic_add_home_d" />
           </FrameLayout>
 
-          <com.framework.views.GifView
-            android:id="@+id/gif_sync_ok"
+          <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lotty_sync_ok"
             android:layout_width="@dimen/size_94"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/size_6"
             android:layout_marginBottom="@dimen/size_6"
             android:visibility="gone"
-            app:paused="true"
-            tools:gif="@raw/ic_ok_gif_d" />
+            android:repeatCount="infinite"
+            android:repeatMode="restart"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/completed_lottie_animation" />
         </FrameLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat

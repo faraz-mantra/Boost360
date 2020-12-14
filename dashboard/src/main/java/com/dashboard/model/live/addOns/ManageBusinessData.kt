@@ -15,6 +15,7 @@ const val LAST_SEEN_DATA = "LAST_SEEN_DATA"
 class ManageBusinessData(
     var title: String? = null,
     var businessType: String? = null,
+    var premiumCode: String? = null,
     var isLock: Boolean = false,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
 
@@ -47,7 +48,9 @@ class ManageBusinessData(
     autamated_seo_d("autamated_seo_d", R.drawable.autamated_seo_d),
     boost_data_security("boost_data_security", R.drawable.boost_data_security),
     feature_business_image("feature_business_image", 0),
+    business_kyc_verification("business_kyc_verification", R.drawable.boost_payment_gateway),
     boost_payment_gateway("boost_payment_gateway", R.drawable.boost_payment_gateway),
+    my_bank_account("my_bank_account", 0),
     business_hours("business_hours", R.drawable.business_hours),
     contact_details("contact_details", R.drawable.contact_details),
     content_sync_acros_channels("content_sync_acros_channels", R.drawable.content_sync_acros_channels),

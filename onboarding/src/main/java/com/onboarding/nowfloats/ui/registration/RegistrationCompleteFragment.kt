@@ -38,10 +38,7 @@ import com.onboarding.nowfloats.model.uploadfile.UploadFileProfileRequest
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
 import com.onboarding.nowfloats.utils.WebEngageController
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.*
@@ -242,13 +239,13 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
           showLongToast(resources.getString(R.string.business_image_uploaded))
           requestFloatsModel?.businessUrl = it.stringResponse
           updateInfo()
-        } else showLongToast(it.message)
+        } else showLongToast(it.message())
       })
     }
   }
 
   private fun getRequestBusinessDate(businessImage: File): UploadFileBusinessRequest {
-    val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), businessImage.readBytes())
+    val responseBody = businessImage.readBytes().toRequestBody("image/png".toMediaTypeOrNull(), 0, content.size)
     val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
         ?: "BUSINESS_${requestFloatsModel?.contactInfo?.domainName}.png"
     return UploadFileBusinessRequest(clientId, requestFloatsModel?.floatingPointId, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
@@ -269,7 +266,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
   }
 
   private fun getRequestProfileData(profileImage: File): UploadFileProfileRequest {
-    val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), profileImage.readBytes())
+    val responseBody = profileImage.readBytes().toRequestBody("image/png".toMediaTypeOrNull(), 0, content.size)
     val fileName = takeIf { profileImage.name.isNullOrEmpty().not() }?.let { profileImage.name }
         ?: "PROFILE_${requestFloatsModel?.contactInfo?.domainName}.png"
     return UploadFileProfileRequest(clientId, userProfileId, fileName, responseBody)

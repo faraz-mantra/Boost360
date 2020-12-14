@@ -17,20 +17,28 @@ object UploadImageRepository : AppBaseRepository<UploadImageRemoteDataSource, Ap
         return UploadImageRemoteDataSource::class.java
     }
 
-    override fun getLocalDataSourceInstance(): AppBaseLocalService {
-        return AppBaseLocalService()
-    }
+  override fun getLocalDataSourceInstance(): AppBaseLocalService {
+    return AppBaseLocalService()
+  }
 
-    fun putUploadImageBusiness(request: UploadFileBusinessRequest): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.putUploadImageBusiness(request.clientId, request.fpId, request.identifierType, request.fileName, request.requestBody), Taskcode.PUT_FILE_UPLOAD_BUSINESS)
-    }
+  fun putUploadImageBusiness(request: UploadFileBusinessRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.putUploadImageBusiness(request.clientId, request.fpId, request.identifierType, request.fileName, request.requestBody), Taskcode.PUT_FILE_UPLOAD_BUSINESS)
+  }
 
-    fun putUploadImageProfile(request: UploadFileProfileRequest): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.putUploadImageProfile(request.clientId, request.loginId, request.fileName, request.requestBody), Taskcode.PUT_FILE_UPLOAD_PROFILE)
-    }
+  fun putUploadImage(request: UploadFileBusinessRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.putUploadImage(clientId = request.clientId, fpId = request.fpId, identifierType = request.identifierType, fileName = request.fileName, requestBody = request.requestBody), Taskcode.PUT_FILE_UPLOAD_IMAGE_PROFILE)
+  }
 
-    override fun getApiClient(): Retrofit {
-        return WithFloatsApiClient.shared.retrofit
-    }
+  fun putUploadSecondaryImage(request: UploadFileBusinessRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.putUploadSecondaryImage(clientId = request.clientId, fpId = request.fpId, identifierType = request.identifierType, fileName = request.fileName, requestBody = request.requestBody), Taskcode.PUT_FILE_UPLOAD_IMAGE_PROFILE)
+  }
+
+  fun putUploadImageProfile(request: UploadFileProfileRequest): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.putUploadImageProfile(request.clientId, request.loginId, request.fileName, request.requestBody), Taskcode.PUT_FILE_UPLOAD_PROFILE)
+  }
+
+  override fun getApiClient(): Retrofit {
+    return WithFloatsApiClient.shared.retrofit
+  }
 
 }

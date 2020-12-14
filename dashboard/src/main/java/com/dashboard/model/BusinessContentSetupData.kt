@@ -13,7 +13,7 @@ import java.io.Serializable
 class BusinessContentSetupData(
     var title: String? = null,
     var subTitle: String? = null,
-    var icon1: Int? = null,
+    var percentage: Int? = null,
     var icon2: Int? = null,
     var businessData: ArrayList<SiteMeterModel>? = null,
     var gifIcon: Int? = null,
@@ -41,8 +41,8 @@ class BusinessContentSetupData(
 
 fun SiteMeterScoreDetails.getListDigitalScore(): ArrayList<BusinessContentSetupData> {
   val listDigitalScore = ArrayList<BusinessContentSetupData>()
-  listDigitalScore.add(BusinessContentSetupData(title = "Business profile setup", subTitle = "${businessProfile.getRemainingPercentage()}% remaining", icon1 = R.drawable.ic_add_home_circle_d, icon2 = R.drawable.ic_add_home_d, businessData = businessProfile, gifIcon = R.raw.ic_next_arrow_gif_d, type = BusinessContentSetupData.ActiveViewType.PROFILE_SETUP.name))
-  listDigitalScore.add(BusinessContentSetupData(title = "Content management", subTitle = "${contentManagement.getRemainingPercentage()}% remaining", icon1 = R.drawable.ic_edit_content_circle_d, icon2 = R.drawable.ic_edit_content_d, businessData = contentManagement, gifIcon = R.raw.ic_next_arrow_gif_d, type = BusinessContentSetupData.ActiveViewType.MANAGEMENT.name))
+  listDigitalScore.add(BusinessContentSetupData(title = "Business profile setup", subTitle = "${businessProfile.getRemainingPercentage()}% remaining", percentage = businessProfile.getRemainingPercentage(), icon2 = R.drawable.ic_add_home_d, businessData = businessProfile, gifIcon = R.raw.ic_next_arrow_gif_d, type = BusinessContentSetupData.ActiveViewType.PROFILE_SETUP.name))
+  listDigitalScore.add(BusinessContentSetupData(title = "Content management", subTitle = "${contentManagement.getRemainingPercentage()}% remaining", percentage = contentManagement.getRemainingPercentage(), icon2 = R.drawable.ic_edit_content_d, businessData = contentManagement, gifIcon = R.raw.ic_next_arrow_gif_d, type = BusinessContentSetupData.ActiveViewType.MANAGEMENT.name))
   listDigitalScore.add(BusinessContentSetupData(title = "Online channels sync", subTitle = "${channelSync.getCompletePercentage()}% completed", businessData = channelSync, gifIcon = R.raw.ic_ok_gif_d, type = BusinessContentSetupData.ActiveViewType.ONLINE_SYNC.name))
   return listDigitalScore
 }

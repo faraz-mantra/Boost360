@@ -9,22 +9,26 @@
           "manageBusinessList": [
             {
               "businessType": "video_consultations",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Video consultations"
             },
             {
               "businessType": "in_clinic_appointments",
               "isLock": false,
+              "premiumCode": "",
               "title": "In-clinic Appointments"
             },
             {
               "businessType": "ic_customer_call_d",
               "isLock": false,
+              "premiumCode": "CALLTRACKER",
               "title": "Patient Calls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Patient Enquiries"
             }
           ],
@@ -38,61 +42,73 @@
             {
               "businessType": "ic_daily_business_update_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Business Updates"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
+              "premiumCode": "",
               "title": "Pictures Gallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
+              "premiumCode": "",
               "title": "Custom Pages"
             },
             {
               "businessType": "website_chatbot",
               "isLock": false,
+              "premiumCode": "",
               "title": "Website Catboat"
             },
             {
               "businessType": "ic_customer_testimonial_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Customer Testimonials"
             },
             {
               "businessType": "content_sync_acros_channels",
               "isLock": false,
+              "premiumCode": "",
               "title": "Content sync across channels"
             },
             {
               "businessType": "unlimited_website_bandwidth",
               "isLock": false,
+              "premiumCode": "",
               "title": "Unlimited Website Bandwidth"
             },
             {
               "businessType": "unlimited_content_updates",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Unlimited Content Updates"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
+              "premiumCode": "BOOSTKEYBOARD",
               "title": "Boost Keyboard"
             },
             {
               "businessType": "website_social_share_plugin",
               "isLock": false,
+              "premiumCode": "",
               "title": "Website social share plugin"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
+              "premiumCode": "",
               "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "autamated_seo_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Automated SEO"
             }
           ],
@@ -106,16 +122,19 @@
             {
               "businessType": "ic_service_cataloge_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Services Listed"
             },
             {
               "businessType": "doctor_profile",
               "isLock": false,
+              "premiumCode": "",
               "title": "Doctor e-Profile"
             },
             {
               "businessType": "appointment_settings",
               "isLock": false,
+              "premiumCode": "",
               "title": "Appointment Settings"
             }
           ],
@@ -129,51 +148,61 @@
             {
               "businessType": "clinic_basic_info",
               "isLock": false,
+              "premiumCode": "",
               "title": "Clinic Basic info"
             },
             {
               "businessType": "clinic_logo",
               "isLock": false,
+              "premiumCode": "",
               "title": "Clinic Logo"
             },
             {
               "businessType": "featured_image_video",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Featured Image/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
+              "premiumCode": "",
               "title": "Business Hours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
+              "premiumCode": "",
               "title": "Contact Details"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
+              "premiumCode": "",
               "title": "Business KYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
+              "premiumCode": "DOMAINPURCHASE",
               "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "My Email Accounts"
             },
             {
               "businessType": "boost_data_security",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Boost Data Security"
             },
             {
               "businessType": "feature_business_image",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Featured Business Image/Logo"
             }
           ],
@@ -186,22 +215,26 @@
           "manageBusinessList": [
             {
               "businessType": "boost_payment_gateway",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
+              "premiumCode": "",
               "title": "My Bank Account"
             },
             {
               "businessType": "custom_payment_gateway",
               "isLock": false,
+              "premiumCode": "CUSTOM_PAYMENTGATEWAY",
               "title": "Custom payment gateway"
             },
             {
               "businessType": "e_commerce_website",
               "isLock": false,
+              "premiumCode": "",
               "title": "eCommerce on website"
             }
           ],
@@ -215,21 +248,25 @@
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
+              "premiumCode": "",
               "title": "Facebook Lead Ads"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
+              "premiumCode": "",
               "title": "Advertising (Google & Fb)"
             },
             {
               "businessType": "facebook_likebox_plugin",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
+              "premiumCode": "",
               "title": "Newsletter Subscription"
             }
           ],
@@ -242,27 +279,32 @@
           "manageBusinessList": [
             {
               "businessType": "website_visits_visitors",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Website visits and visitors"
             },
             {
               "businessType": "social_sharing_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Sales Analytics"
             },
             {
               "businessType": "search_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Search Analytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Chatbot Analytics"
             }
           ],
@@ -276,11 +318,13 @@
             {
               "businessType": "ria_digital_assistant",
               "isLock": false,
+              "premiumCode": "",
               "title": "RIA - your digital assistant"
             },
             {
               "businessType": "premium_boost_support",
               "isLock": false,
+              "premiumCode": "",
               "title": "Premium Boost Support"
             }
           ],
@@ -298,22 +342,26 @@
           "manageBusinessList": [
             {
               "businessType": "video_consultations",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Video consultations"
             },
             {
               "businessType": "in_clinic_appointments",
               "isLock": false,
+              "premiumCode": "",
               "title": "In-clinic Appointments"
             },
             {
               "businessType": "ic_customer_call_d",
               "isLock": false,
+              "premiumCode": "CALLTRACKER",
               "title": "Customer Calls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Patient Enquiries"
             }
           ],
@@ -327,61 +375,73 @@
             {
               "businessType": "ic_daily_business_update_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Business Updates"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
+              "premiumCode": "",
               "title": "Pictures Gallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
+              "premiumCode": "",
               "title": "Custom Pages"
             },
             {
               "businessType": "website_chatbot",
               "isLock": false,
+              "premiumCode": "",
               "title": "Website Catboat"
             },
             {
               "businessType": "ic_customer_testimonial_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Patient Testimonials"
             },
             {
               "businessType": "content_sync_acros_channels",
               "isLock": false,
+              "premiumCode": "",
               "title": "Content sync across channels"
             },
             {
               "businessType": "unlimited_website_bandwidth",
               "isLock": false,
+              "premiumCode": "",
               "title": "Unlimited Website Bandwidth"
             },
             {
               "businessType": "unlimited_content_updates",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Unlimited Content Updates"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
+              "premiumCode": "BOOSTKEYBOARD",
               "title": "Boost Keyboard"
             },
             {
               "businessType": "website_social_share_plugin",
               "isLock": false,
+              "premiumCode": "",
               "title": "Website social share plugin"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
+              "premiumCode": "",
               "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "autamated_seo_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Automated SEO"
             }
           ],
@@ -395,16 +455,19 @@
             {
               "businessType": "ic_service_cataloge_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Services Listed"
             },
             {
               "businessType": "doctor_profile",
               "isLock": false,
+              "premiumCode": "",
               "title": "Doctor e-Profile"
             },
             {
               "businessType": "appointment_settings",
               "isLock": false,
+              "premiumCode": "",
               "title": "Appointment Settings"
             }
           ],
@@ -418,51 +481,61 @@
             {
               "businessType": "clinic_basic_info",
               "isLock": false,
+              "premiumCode": "",
               "title": "Clinic Basic info"
             },
             {
               "businessType": "clinic_logo",
               "isLock": false,
+              "premiumCode": "",
               "title": "Clinic Logo"
             },
             {
               "businessType": "featured_image_video",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Featured Image/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
+              "premiumCode": "",
               "title": "Business Hours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
+              "premiumCode": "",
               "title": "Contact Details"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
+              "premiumCode": "",
               "title": "Business KYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
+              "premiumCode": "DOMAINPURCHASE",
               "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "My Email Accounts"
             },
             {
               "businessType": "boost_data_security",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Boost Data Security"
             },
             {
               "businessType": "feature_business_image",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Featured Business Image/Logo"
             }
           ],
@@ -475,22 +548,26 @@
           "manageBusinessList": [
             {
               "businessType": "boost_payment_gateway",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
+              "premiumCode": "",
               "title": "My Bank Account"
             },
             {
               "businessType": "custom_payment_gateway",
               "isLock": false,
+              "premiumCode": "CUSTOM_PAYMENTGATEWAY",
               "title": "Custom payment gateway"
             },
             {
               "businessType": "e_commerce_website",
               "isLock": false,
+              "premiumCode": "",
               "title": "eCommerce on website"
             }
           ],
@@ -504,21 +581,25 @@
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
+              "premiumCode": "",
               "title": "Facebook Lead Ads"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
+              "premiumCode": "",
               "title": "Advertising (Google & Fb)"
             },
             {
               "businessType": "facebook_likebox_plugin",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
+              "premiumCode": "",
               "title": "Newsletter Subscription"
             }
           ],
@@ -531,27 +612,32 @@
           "manageBusinessList": [
             {
               "businessType": "website_visits_visitors",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Website visits and visitors"
             },
             {
               "businessType": "social_sharing_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Sales Analytics"
             },
             {
               "businessType": "search_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Search Analytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Chatbot Analytics"
             }
           ],
@@ -565,11 +651,13 @@
             {
               "businessType": "ria_digital_assistant",
               "isLock": false,
+              "premiumCode": "",
               "title": "RIA - your digital assistant"
             },
             {
               "businessType": "premium_boost_support",
               "isLock": false,
+              "premiumCode": "",
               "title": "Premium Boost Support"
             }
           ],
@@ -588,16 +676,19 @@
             {
               "businessType": "in_clinic_appointments",
               "isLock": false,
+              "premiumCode": "",
               "title": "Customer Appointments"
             },
             {
               "businessType": "ic_customer_call_d",
               "isLock": false,
+              "premiumCode": "CALLTRACKER",
               "title": "Customer Calls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Customer Enquiries"
             }
           ],
@@ -611,61 +702,73 @@
             {
               "businessType": "ic_daily_business_update_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Business Updates"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
+              "premiumCode": "",
               "title": "Pictures Gallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
+              "premiumCode": "",
               "title": "Custom Pages"
             },
             {
               "businessType": "website_chatbot",
               "isLock": false,
+              "premiumCode": "",
               "title": "Website Catboat"
             },
             {
               "businessType": "ic_customer_testimonial_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Customer Testimonials"
             },
             {
               "businessType": "content_sync_acros_channels",
               "isLock": false,
+              "premiumCode": "",
               "title": "Content sync across channels"
             },
             {
               "businessType": "unlimited_website_bandwidth",
               "isLock": false,
+              "premiumCode": "",
               "title": "Unlimited Website Bandwidth"
             },
             {
               "businessType": "unlimited_content_updates",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Unlimited Content Updates"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
+              "premiumCode": "BOOSTKEYBOARD",
               "title": "Boost Keyboard"
             },
             {
               "businessType": "website_social_share_plugin",
               "isLock": false,
+              "premiumCode": "",
               "title": "Website social share plugin"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
+              "premiumCode": "",
               "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "autamated_seo_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Automated SEO"
             }
           ],
@@ -679,16 +782,19 @@
             {
               "businessType": "ic_product_cataloge_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Services Listed"
             },
             {
               "businessType": "doctor_profile",
               "isLock": false,
+              "premiumCode": "",
               "title": "Doctor e-Profile"
             },
             {
               "businessType": "appointment_settings",
               "isLock": false,
+              "premiumCode": "",
               "title": "Appointment Settings"
             }
           ],
@@ -702,51 +808,61 @@
             {
               "businessType": "clinic_basic_info",
               "isLock": false,
+              "premiumCode": "",
               "title": "Clinic Basic info"
             },
             {
               "businessType": "clinic_logo",
               "isLock": false,
+              "premiumCode": "",
               "title": "Clinic Logo"
             },
             {
               "businessType": "featured_image_video",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Featured Image/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
+              "premiumCode": "",
               "title": "Business Hours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
+              "premiumCode": "",
               "title": "Contact Details"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
+              "premiumCode": "",
               "title": "Business KYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
+              "premiumCode": "DOMAINPURCHASE",
               "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "My Email Accounts"
             },
             {
               "businessType": "boost_data_security",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Boost Data Security"
             },
             {
               "businessType": "feature_business_image",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Featured Business Image/Logo"
             }
           ],
@@ -759,22 +875,26 @@
           "manageBusinessList": [
             {
               "businessType": "boost_payment_gateway",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
+              "premiumCode": "",
               "title": "My Bank Account"
             },
             {
               "businessType": "custom_payment_gateway",
               "isLock": false,
+              "premiumCode": "CUSTOM_PAYMENTGATEWAY",
               "title": "Custom payment gateway"
             },
             {
               "businessType": "e_commerce_website",
               "isLock": false,
+              "premiumCode": "",
               "title": "eCommerce on website"
             }
           ],
@@ -788,21 +908,25 @@
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
+              "premiumCode": "",
               "title": "Facebook Lead Ads"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
+              "premiumCode": "",
               "title": "Advertising (Google & Fb)"
             },
             {
               "businessType": "facebook_likebox_plugin",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
+              "premiumCode": "",
               "title": "Newsletter Subscription"
             }
           ],
@@ -815,27 +939,32 @@
           "manageBusinessList": [
             {
               "businessType": "website_visits_visitors",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Website visits and visitors"
             },
             {
               "businessType": "social_sharing_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Sales Analytics"
             },
             {
               "businessType": "search_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Search Analytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Chatbot Analytics"
             }
           ],
@@ -849,11 +978,13 @@
             {
               "businessType": "ria_digital_assistant",
               "isLock": false,
+              "premiumCode": "",
               "title": "RIA - your digital assistant"
             },
             {
               "businessType": "premium_boost_support",
               "isLock": false,
+              "premiumCode": "",
               "title": "Premium Boost Support"
             }
           ],
@@ -872,16 +1003,19 @@
             {
               "businessType": "customer_order_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Customer Orders"
             },
             {
               "businessType": "ic_customer_call_d",
               "isLock": false,
+              "premiumCode": "CALLTRACKER",
               "title": "Customer Calls"
             },
             {
               "businessType": "ic_customer_enquiries_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Customer Enquiries"
             }
           ],
@@ -895,81 +1029,97 @@
             {
               "businessType": "ic_daily_business_update_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Daily Stories"
             },
             {
               "businessType": "ic_latest_news_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Latest news"
             },
             {
               "businessType": "picture_gallery",
               "isLock": false,
+              "premiumCode": "",
               "title": "Pictures Gallery"
             },
             {
               "businessType": "ic_custom_page_add",
               "isLock": false,
+              "premiumCode": "",
               "title": "Custom Pages"
             },
             {
               "businessType": "ic_digital_brochures",
               "isLock": false,
+              "premiumCode": "BROCHURE",
               "title": "Business Brochures"
             },
             {
               "businessType": "ic_featured_client_projects_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Featured Client Projects"
             },
             {
               "businessType": "ic_customer_testimonial_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Customer Testimonials"
             },
             {
               "businessType": "ic_my_customers_clients_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "My Customers/Clients"
             },
             {
               "businessType": "ic_my_business_faqs",
               "isLock": false,
+              "premiumCode": "",
               "title": "My Business FAQs"
             },
             {
               "businessType": "content_sync_acros_channels",
               "isLock": false,
+              "premiumCode": "",
               "title": "Content sync across channels"
             },
             {
               "businessType": "unlimited_website_bandwidth",
               "isLock": false,
+              "premiumCode": "",
               "title": "Unlimited Website Bandwidth"
             },
             {
               "businessType": "unlimited_content_updates",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Unlimited Content Updates"
             },
             {
               "businessType": "ic_business_keyboard_d",
               "isLock": false,
+              "premiumCode": "BOOSTKEYBOARD",
               "title": "Boost Keyboard"
             },
             {
               "businessType": "website_social_share_plugin",
               "isLock": false,
+              "premiumCode": "",
               "title": "Website social share plugin"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
+              "premiumCode": "",
               "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "autamated_seo_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Automated SEO"
             }
           ],
@@ -983,11 +1133,13 @@
             {
               "businessType": "ic_product_cataloge_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "Services Listed"
             },
             {
               "businessType": "ic_e_commerce_setting_d",
               "isLock": false,
+              "premiumCode": "",
               "title": "E-Commerce Settings"
             }
           ],
@@ -1001,51 +1153,61 @@
             {
               "businessType": "clinic_basic_info",
               "isLock": false,
+              "premiumCode": "",
               "title": "Basic business info"
             },
             {
               "businessType": "clinic_logo",
               "isLock": false,
+              "premiumCode": "",
               "title": "Business Logo"
             },
             {
               "businessType": "featured_image_video",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Featured Image/video"
             },
             {
               "businessType": "business_hours",
               "isLock": false,
+              "premiumCode": "",
               "title": "Business Hours"
             },
             {
               "businessType": "contact_details",
               "isLock": false,
+              "premiumCode": "",
               "title": "Contact Details"
             },
             {
               "businessType": "business_kyc_verification",
               "isLock": false,
+              "premiumCode": "",
               "title": "Business KYC/Verification"
             },
             {
               "businessType": "domain_name_ssl",
               "isLock": false,
+              "premiumCode": "DOMAINPURCHASE",
               "title": "Custom Domain Name & SSL"
             },
             {
               "businessType": "my_email_accounts",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "My Email Accounts"
             },
             {
               "businessType": "boost_data_security",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Boost Data Security"
             },
             {
               "businessType": "feature_business_image",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Featured Business Image/Logo"
             }
           ],
@@ -1058,22 +1220,26 @@
           "manageBusinessList": [
             {
               "businessType": "boost_payment_gateway",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Boost Payment Gateway"
             },
             {
               "businessType": "my_bank_account",
               "isLock": false,
+              "premiumCode": "",
               "title": "My Bank Account"
             },
             {
               "businessType": "custom_payment_gateway",
               "isLock": false,
+              "premiumCode": "CUSTOM_PAYMENTGATEWAY",
               "title": "Custom payment gateway"
             },
             {
               "businessType": "e_commerce_website",
               "isLock": false,
+              "premiumCode": "",
               "title": "eCommerce on website"
             }
           ],
@@ -1087,21 +1253,25 @@
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
+              "premiumCode": "",
               "title": "Facebook Lead Ads"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
+              "premiumCode": "",
               "title": "Advertising (Google & Fb)"
             },
             {
               "businessType": "facebook_likebox_plugin",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Facebook Likebox Plugin"
             },
             {
               "businessType": "newsletter_subscription",
               "isLock": false,
+              "premiumCode": "",
               "title": "Newsletter Subscription"
             }
           ],
@@ -1114,27 +1284,32 @@
           "manageBusinessList": [
             {
               "businessType": "website_visits_visitors",
-              "isLock": true,
+              "isLock": false,
+              "premiumCode": "",
               "title": "Website visits and visitors"
             },
             {
               "businessType": "social_sharing_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Social Sharing Analytics"
             },
             {
               "businessType": "sales_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Sales Analytics"
             },
             {
               "businessType": "search_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Search Analytics"
             },
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
+              "premiumCode": "",
               "title": "Chatbot Analytics"
             }
           ],
@@ -1148,11 +1323,13 @@
             {
               "businessType": "ria_digital_assistant",
               "isLock": false,
+              "premiumCode": "",
               "title": "RIA - your digital assistant"
             },
             {
               "businessType": "premium_boost_support",
               "isLock": false,
+              "premiumCode": "",
               "title": "Premium Boost Support"
             }
           ],

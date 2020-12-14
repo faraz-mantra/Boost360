@@ -14,7 +14,6 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
-
 class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) : AppBaseRecyclerViewHolder<ItemBusinessContentSetupBinding>(binding), RecyclerItemClickListener {
 
   private var adapterSiteMeter: AppBaseRecyclerViewAdapter<SiteMeterModel>? = null
@@ -29,20 +28,18 @@ class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) :
       WRAP_CONTENT.setHeight()
       getColor(R.color.light_green_2)?.let { binding.txtDes.setTextColor(it) }
       binding.viewImage.gone()
-      binding.gifSyncOk.visible()
-      binding.gifSyncOk.apply {
-        data.gifIcon?.let { gifResource = it }
-        play()
-      }
+      binding.lottySyncOk.visible()
+      startCheckAnimation(true)
       list = (data.businessData?.filter { it.status == true } ?: ArrayList()) as ArrayList<SiteMeterModel>?
     } else {
       MATCH_PARENT.setHeight()
       getColor(R.color.light_grey_3)?.let { binding.txtDes.setTextColor(it) }
       binding.viewImage.visible()
-      binding.gifSyncOk.gone()
-      data.icon1?.let { binding.imgCircle.setImageResource(it) }
+      binding.lottySyncOk.gone()
+      startCheckAnimation(false)
+      binding.progressRemaining.setProgressWithAnimation((100 - (data.percentage ?: 0)).toFloat(), 1000)
       data.icon2?.let { binding.imgIcon.setImageResource(it) }
-      list = ArrayList(data.businessData?.sortedBy { it.status == false } ?: ArrayList())
+      list = ArrayList(data.businessData?.sortedBy { it.status == true } ?: ArrayList())
     }
     if (adapterSiteMeter == null) {
       binding.rvBusinessItemState.apply {
@@ -50,6 +47,12 @@ class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) :
         adapter = adapterSiteMeter
       }
     } else adapterSiteMeter?.notify(list)
+
+
+  }
+
+  private fun startCheckAnimation(isAnimate: Boolean) {
+    binding.lottySyncOk.apply { if (isAnimate) playAnimation() else pauseAnimation() }
   }
 
   private fun Int.setHeight() {
@@ -60,5 +63,6 @@ class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) :
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    listener?.onItemClick(position, item, actionType)
   }
 }

@@ -99,7 +99,7 @@
   <string name="verification_still_pending_camel_case">Verification Still Pending!</string>
   <string name="documents_have_been_submitted_and_your_profile_is_being_verified">Documents have been submitted and your profile is being verified.\nThis may take a while. We’ll notify you soon.</string>
   <string name="successful">Successful!</string>
-  <string name="something_went_wrong_camel_case">Something Went Wrong!</string>
+  <string name="something_went_wrong_camel_case">Something went wrong!</string>
   <string name="your_profile_has_been_verified_successfully_for_any_changes_in_the_account_request_below_to_edit">Your profile has been verified successfully. For any changes in the account, request below to edit.</string>
   <string name="we_ve_encountered_the_following_issues_while_verifying_your_profile">We\'ve encountered the following issues while verifying your profile.</string>
   <string name="request_for_edit">request for edit</string>
