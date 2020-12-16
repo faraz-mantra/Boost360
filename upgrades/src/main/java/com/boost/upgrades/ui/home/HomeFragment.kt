@@ -47,7 +47,6 @@ import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.COMPARE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
-import com.boost.upgrades.utils.Constants.Companion.NEW_PACKAGE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PACKAGE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.HorizontalMarginItemDecoration
