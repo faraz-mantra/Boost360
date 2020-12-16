@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,7 +65,8 @@ class PackageFragment : BaseFragment() {
 
         val jsonString = arguments!!.getString("bundleData")
         bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
-
+        Log.v("onPackageAddToCart", " "+ jsonString)
+        Log.v("onPackageAddToCart1", " "+ bundleData)
         packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type))
         prefs = SharedPrefs(activity as UpgradeActivity)
         return root
@@ -156,6 +158,7 @@ class PackageFragment : BaseFragment() {
             }
             viewModel.loadUpdates(itemIds)
         } else {
+            Log.v("getkeyWidget1"," "+ bundleData!!._kid)
             //TODO: Load the widget_keys associated with Bundle from db
             viewModel.getAssociatedWidgetKeys(bundleData!!._kid)
         }

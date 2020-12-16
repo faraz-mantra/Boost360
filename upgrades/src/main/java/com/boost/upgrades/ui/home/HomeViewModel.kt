@@ -435,6 +435,24 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 .subscribe()
     }
 
+    fun addItemToCartPackage(cartItem: CartModel) {
+        updatesLoader.postValue(true)
+        Completable.fromAction {
+            AppDatabase.getInstance(getApplication())!!.cartDao()
+                    .insertToCart(cartItem)
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    updatesLoader.postValue(false)
+                }
+                .doOnError {
+                    updatesError.postValue(it.message)
+                    updatesLoader.postValue(false)
+                }
+                .subscribe()
+    }
+
     fun emptyCouponTable() {
         Completable.fromAction {
             AppDatabase.getInstance(getApplication())!!

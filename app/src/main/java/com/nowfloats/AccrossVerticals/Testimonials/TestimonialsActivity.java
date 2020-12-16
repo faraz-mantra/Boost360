@@ -68,7 +68,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         setHeader();
         initialization();
         checkIsAdd();
-        Log.v("experincecode"," themeID: "+  session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) +" FpTag: " + session.getFpTag());
+        Log.v("experincecode"," themeID: "+  session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) +" FpTag: " + session.getFpTag() + " exp: "+ session.getFPDetails(Key_Preferences.GET_FP_EXPERIENCE_CODE) );
     }
 
     private void checkIsAdd() {
