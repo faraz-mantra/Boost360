@@ -29,6 +29,7 @@ object EndPoints {
   const val SEND_SMS = "discover/v1/floatingpoint/CreateSMSHighPriorityIndia"
   const val GET_BIZ_FLOATS_MESSAGE = "/Discover/v1/floatingPoint/bizFloats"
   const val GET_USER_SUMMARY = "/Dashboard/v1/{fpTag}/summary"
+  const val GET_MAP_ADDRESS_DETAILS = "/Dashboard/v1/{fpTag}/totaladdressviewdetails"
   const val GET_USER_CALL_SUMMARY = "/WildFire/v1/calls/summary"
 
 

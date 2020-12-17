@@ -49,6 +49,7 @@
           android:layout_width="match_parent"
           android:layout_height="@dimen/size_60"
           android:background="?android:attr/windowBackground"
+          app:activeMenu="@menu/bottom_nav_active_menu"
           app:clickPosition="4"
           app:indicatorEnabled="true"
           app:indicatorGravity="top"

@@ -37,9 +37,14 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY_N
+import com.framework.utils.DateUtils.getCurrentDate
+import com.framework.utils.DateUtils.getDateMillSecond
+import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.fromHtml
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.inventoryorder.model.floatMessage.MessageModel
+import com.inventoryorder.model.mapDetail.VisitsModelResponse
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.summary.SummaryEntity
 import com.inventoryorder.model.summary.UserSummaryResponse
@@ -72,6 +77,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
   private var siteMeterData: SiteMeterScoreDetails? = null
   private var quickActionPosition = 0
+  private var isFirsLoad = true
 
   override fun getLayout(): Int {
     return R.layout.fragment_dashboard
@@ -84,7 +90,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown, binding?.btnShowDigitalScore, binding?.btnDigitalChannel, binding?.btnBusinessLogo, binding?.txtDomainName)
+    setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown, binding?.btnShowDigitalScore, binding?.btnDigitalChannel, binding?.btnBusinessLogo, binding?.txtDomainName, binding?.btnNotofication)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     getCategoryData()
@@ -98,8 +104,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun getFloatMessage() {
+    if (isFirsLoad) session?.siteMeterData { it?.let { it1 -> refreshData(it1) } }
     binding?.progress?.visible()
     viewModel?.getBizFloatMessage(session!!.getRequestFloat())?.observeOnce(this, {
+      isFirsLoad = false
       if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
       session?.siteMeterData { it1 -> it1?.let { it2 -> refreshData(it2) } }
       binding?.progress?.gone()
@@ -231,7 +239,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       rvManageBusiness.apply {
         viewModel?.getBoostAddOnsTop(baseActivity)?.observeOnce(viewLifecycleOwner, {
           val response = it as? ManageBusinessDataResponse
-          val dataAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == getAddonsType(session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT)) }
+          val dataAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT) }
           if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
             dataAction.actionItem?.map { it1 -> if (it1.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it1.premiumCode).not()) it1.isLock = true }
             val adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@DashboardFragment)
@@ -255,7 +263,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         viewModel?.getUserCallSummary(clientId, session?.fPParentId, identifierType)?.observeOnce(viewLifecycleOwner, { it2 ->
           val response3 = it2 as? CallSummaryResponse
           response3?.saveData()
-          setDataSellerSummary(response1?.Data, response2?.getSummary(), response3)
+          viewModel?.getMapVisits(session?.fpTag, session?.getRequestMap())?.observeOnce(viewLifecycleOwner, { it3 ->
+            val response4 = it3 as? VisitsModelResponse
+            session?.mapVisitsCount = response4?.getTotalCount() ?: "0"
+            setDataSellerSummary(response1?.Data, response2?.getSummary(), response3)
+          })
         })
       })
     })
@@ -291,7 +303,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           adapter = adapterRoi
         }
       } else adapterRoi?.notify(roiData)
-      val growthStatsList = GrowthStatsData().getData(summary)
+      val growthStatsList = GrowthStatsData().getData(summary, session)
       if (adapterGrowth == null) {
         binding?.rvGrowthState?.apply {
           adapterGrowth = AppBaseRecyclerViewAdapter(baseActivity, growthStatsList, this@DashboardFragment)
@@ -417,12 +429,25 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         val data = item as? ManageBusinessData ?: return
         ManageBusinessData.BusinessType.fromName(data.businessType)?.let { com.dashboard.controller.ui.allAddOns.businessAddOnsClick(it, baseActivity, session) }
       }
+      RecyclerViewActionType.BUSINESS_UPDATE_CLICK.ordinal -> {
+        val data = item as? Specification ?: return
+        BusinessSetupHighData.BusinessClickEvent.fromName(data.clickType)?.let { clickBusinessUpdate(it) }
+      }
+      RecyclerViewActionType.ROI_SUMMARY_CLICK.ordinal -> {
+        val data = item as? RoiSummaryData ?: return
+        RoiSummaryData.RoiType.fromName(data.type)?.let { clickRoiSummary(it) }
+      }
+      RecyclerViewActionType.GROWTH_STATS_CLICK.ordinal -> {
+        val data = item as? GrowthStatsData ?: return
+        GrowthStatsData.GrowthType.fromName(data.type)?.let { clickGrowthStats(it) }
+      }
     }
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
+      binding?.btnNotofication -> baseActivity.startAppActivity(fragmentType = "NOTIFICATION_VIEW")
       binding?.btnVisitingCardUp -> visitingCardShowHide(true)
       binding?.btnVisitingCardDown -> visitingCardShowHide(false)
       binding?.btnBusinessLogo -> baseActivity.startBusinessDescriptionEdit(session)
@@ -495,6 +520,37 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
+  private fun clickBusinessUpdate(type: BusinessSetupHighData.BusinessClickEvent) {
+    when (type) {
+      BusinessSetupHighData.BusinessClickEvent.WEBSITE_VISITOR -> baseActivity.startSiteViewAnalytic(session, "UNIQUE")
+      BusinessSetupHighData.BusinessClickEvent.ENQUIRIES -> baseActivity.startBusinessEnquiry(session)
+      BusinessSetupHighData.BusinessClickEvent.ODER_APT -> baseActivity.startAptOrderSummary(session)
+    }
+  }
+
+  private fun clickRoiSummary(type: RoiSummaryData.RoiType) {
+    when (type) {
+      RoiSummaryData.RoiType.ENQUIRY -> baseActivity.startBusinessEnquiry(session)
+      RoiSummaryData.RoiType.TRACK_CALL -> baseActivity.startVmnCallCard(session)
+      RoiSummaryData.RoiType.APT_ORDER -> baseActivity.startAptOrderSummary(session)
+      RoiSummaryData.RoiType.CONSULTATION -> {
+      }
+      RoiSummaryData.RoiType.APT_ORDER_WORTH -> baseActivity.startRevenueSummary(session)
+      RoiSummaryData.RoiType.COLLECTION_WORTH -> {
+      }
+    }
+  }
+
+  private fun clickGrowthStats(type: GrowthStatsData.GrowthType) {
+    when (type) {
+      GrowthStatsData.GrowthType.ALL_VISITS -> baseActivity.startSiteViewAnalytic(session, "TOTAL")
+      GrowthStatsData.GrowthType.UNIQUE_VISITS -> baseActivity.startSiteViewAnalytic(session, "UNIQUE")
+      GrowthStatsData.GrowthType.ADDRESS_NEWS -> baseActivity.startSiteViewAnalytic(session, "MAP_VISITS")
+      GrowthStatsData.GrowthType.NEWSLETTER_SUBSCRIPTION -> baseActivity.startSubscriber(session)
+      GrowthStatsData.GrowthType.SEARCH_QUERIES -> baseActivity.startSearchQuery(session)
+    }
+  }
+
   override fun showProgress(title: String?, cancelable: Boolean?) {
     binding?.nestedScrollView?.gone()
     binding?.progress?.visible()
@@ -525,6 +581,19 @@ private fun LinearLayoutCompat?.animateViewTopPadding(isDown: Boolean) {
     animator.duration = 280
     animator.start()
   }
+}
+
+fun UserSessionManager.getRequestMap(): Map<String, String> {
+  val map = HashMap<String, String>()
+  var startDate = ""
+  val str = this.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON)
+  if (str.isNullOrEmpty().not()) startDate = Date(getDateMillSecond(str!!)).parseDate(FORMAT_DD_MM_YYYY_N) ?: ""
+  map["batchType"] = VisitsModelResponse.BatchType.yy.name
+  map["startDate"] = startDate
+  map["endDate"] = getCurrentDate().parseDate(FORMAT_DD_MM_YYYY_N) ?: ""
+  map["clientId"] = clientId
+  map["scope"] = if (this.iSEnterprise == "true") "Enterprise" else "Store"
+  return map
 }
 
 fun UserSessionManager.getRequestFloat(): Map<String, String> {

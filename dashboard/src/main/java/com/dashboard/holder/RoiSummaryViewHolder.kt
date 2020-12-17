@@ -1,6 +1,7 @@
 package com.dashboard.holder
 
 import android.view.View
+import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.ItemRoiSummaryBinding
 import com.dashboard.model.RoiSummaryData
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
@@ -16,6 +17,7 @@ class RoiSummaryViewHolder(binding: ItemRoiSummaryBinding) : AppBaseRecyclerView
     data.icon1?.let { binding.imgIcon.setImageResource(it) }
     binding.txtDayTitle.text = data.dayTitle
     binding.txtAmount.text = data.value
+    binding.mainContent.setOnClickListener { listener?.onItemClick(position,item, RecyclerViewActionType.ROI_SUMMARY_CLICK.ordinal) }
   }
 
 }

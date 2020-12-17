@@ -6,50 +6,58 @@
         {
           "businessType": "video_consultations",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Video consultations"
+          "title": "Video\nconsultations"
         },
         {
           "businessType": "in_clinic_appointments",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "In-clinic Appointments"
+          "title": "In-clinic\nAppointments"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "CALLTRACKER",
-          "title": "Patient Calls"
+          "title": "Patient\nCalls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Patient Enquiries"
+          "title": "Patient\nEnquiries"
         },
         {
           "businessType": "ic_daily_business_update_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Daily Business Updates"
+          "title": "Business\nUpdates"
         },
         {
           "businessType": "ic_service_cataloge_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Services Listed"
+          "title": "Service\nCatalogue"
         },
         {
           "businessType": "ic_customer_testimonial_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Patient Testimonials"
+          "title": "Testimonials"
         },
         {
           "businessType": "doctor_profile",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Doctor e-Profile"
+          "title": "Doctor\ne-Profile"
         }
       ]
     },
@@ -59,50 +67,424 @@
         {
           "businessType": "video_consultations",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Video consultations"
+          "title": "Video\nconsultations"
         },
         {
           "businessType": "in_clinic_appointments",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "In-clinic Appointments"
+          "title": "In-clinic\nAppointments"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "CALLTRACKER",
-          "title": "Patient Calls"
+          "title": "Patient\nCalls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Patient Enquiries"
+          "title": "Patient\nEnquiries"
         },
         {
           "businessType": "ic_daily_business_update_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Daily Business Updates"
+          "title": "Business\nUpdates"
         },
         {
           "businessType": "ic_service_cataloge_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Services Listed"
+          "title": "Service\nCatalogue"
         },
         {
           "businessType": "ic_customer_testimonial_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Patient Testimonials"
+          "title": "Testimonials"
         },
         {
           "businessType": "doctor_profile",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Doctor e-Profile"
+          "title": "Doctor\ne-Profile"
+        }
+      ]
+    },
+    {
+      "type": "RTL",
+      "action_item": [
+        {
+          "businessType": "customer_order_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Customer\nOrders"
+        },
+        {
+          "businessType": "ic_custom_page_add",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Custom\nPages"
+        },
+        {
+          "businessType": "ic_customer_call_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "CALLTRACKER",
+          "title": "Customer\nCalls"
+        },
+        {
+          "businessType": "ic_customer_enquiries_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Customer\nEnquiries"
+        },
+        {
+          "businessType": "ic_daily_business_update_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Business\nUpdates"
+        },
+        {
+          "businessType": "ic_product_cataloge_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Product\nCatalogue"
+        },
+        {
+          "businessType": "ic_customer_testimonial_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Testimonials"
+        },
+        {
+          "businessType": "ic_business_keyboard_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "BOOSTKEYBOARD",
+          "title": "Boost\nKeyboard"
+        }
+      ]
+    },
+    {
+      "type": "EDU",
+      "action_item": [
+        {
+          "businessType": "customer_order_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Admission\nRequests"
+        },
+        {
+          "businessType": "ic_custom_page_add",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Custom\nPages"
+        },
+        {
+          "businessType": "ic_customer_call_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "CALLTRACKER",
+          "title": "Student\nCalls"
+        },
+        {
+          "businessType": "ic_customer_enquiries_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Student\nEnquiries"
+        },
+        {
+          "businessType": "ic_daily_business_update_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Business\nUpdates"
+        },
+        {
+          "businessType": "ic_product_cataloge_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Product\nCatalogue"
+        },
+        {
+          "businessType": "ic_customer_testimonial_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Testimonials"
+        },
+        {
+          "businessType": "ic_business_keyboard_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "BOOSTKEYBOARD",
+          "title": "Boost\nKeyboard"
+        }
+      ]
+    },
+    {
+      "type": "HOT",
+      "action_item": [
+        {
+          "businessType": "customer_order_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Room\nBookings"
+        },
+        {
+          "businessType": "ic_custom_page_add",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Custom\nPages"
+        },
+        {
+          "businessType": "ic_customer_call_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "CALLTRACKER",
+          "title": "Customer\nCalls"
+        },
+        {
+          "businessType": "ic_customer_enquiries_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Customer\nEnquiries"
+        },
+        {
+          "businessType": "ic_daily_business_update_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Business\nUpdates"
+        },
+        {
+          "businessType": "ic_product_cataloge_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Product\nCatalogue"
+        },
+        {
+          "businessType": "ic_customer_testimonial_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Testimonials"
+        },
+        {
+          "businessType": "ic_business_keyboard_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "BOOSTKEYBOARD",
+          "title": "Boost\nKeyboard"
+        }
+      ]
+    },
+    {
+      "type": "MFG",
+      "action_item": [
+        {
+          "businessType": "customer_order_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Customer\nOrders"
+        },
+        {
+          "businessType": "ic_digital_brochures",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "E-Brochures For Your Business"
+        },
+        {
+          "businessType": "ic_customer_call_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "CALLTRACKER",
+          "title": "Customer\nCalls"
+        },
+        {
+          "businessType": "ic_customer_enquiries_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Customer\nEnquiries"
+        },
+        {
+          "businessType": "ic_daily_business_update_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Business\nUpdates"
+        },
+        {
+          "businessType": "ic_product_cataloge_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Product\nCatalogue"
+        },
+        {
+          "businessType": "ic_customer_testimonial_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Testimonials"
+        },
+        {
+          "businessType": "ic_business_keyboard_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "BOOSTKEYBOARD",
+          "title": "Boost\nKeyboard"
+        }
+      ]
+    },
+    {
+      "type": "CAF",
+      "action_item": [
+        {
+          "businessType": "customer_order_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Customer\nOrders"
+        },
+        {
+          "businessType": "ic_custom_page_add",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Custom\nPages"
+        },
+        {
+          "businessType": "ic_customer_call_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "CALLTRACKER",
+          "title": "Customer\nCalls"
+        },
+        {
+          "businessType": "ic_customer_enquiries_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Customer\nEnquiries"
+        },
+        {
+          "businessType": "ic_daily_business_update_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Business\nUpdates"
+        },
+        {
+          "businessType": "ic_product_cataloge_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Product\nCatalogue"
+        },
+        {
+          "businessType": "ic_customer_testimonial_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Testimonials"
+        },
+        {
+          "businessType": "ic_business_keyboard_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "BOOSTKEYBOARD",
+          "title": "Boost\nKeyboard"
+        }
+      ]
+    },
+    {
+      "type": "SVC",
+      "action_item": [
+        {
+          "businessType": "in_clinic_appointments",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Appointments"
+        },
+        {
+          "businessType": "ic_custom_page_add",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Custom\nPages"
+        },
+        {
+          "businessType": "ic_customer_call_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "CALLTRACKER",
+          "title": "Customer\nCalls"
+        },
+        {
+          "businessType": "ic_customer_enquiries_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Customer\nEnquiries"
+        },
+        {
+          "businessType": "ic_daily_business_update_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Business\nUpdates"
+        },
+        {
+          "businessType": "ic_product_cataloge_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Product\nCatalogue"
+        },
+        {
+          "businessType": "ic_customer_testimonial_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Testimonials"
+        },
+        {
+          "businessType": "ic_business_keyboard_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "BOOSTKEYBOARD",
+          "title": "Boost\nKeyboard"
         }
       ]
     },
@@ -112,103 +494,58 @@
         {
           "businessType": "in_clinic_appointments",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "In-clinic Appointments"
+          "title": "Appointments"
+        },
+        {
+          "businessType": "ic_custom_page_add",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Custom\nPages"
         },
         {
           "businessType": "ic_customer_call_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "CALLTRACKER",
-          "title": "Customer Calls"
+          "title": "Customer\nCalls"
         },
         {
           "businessType": "ic_customer_enquiries_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Customer Enquiries"
+          "title": "Customer\nEnquiries"
         },
         {
           "businessType": "ic_daily_business_update_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Daily Business Updates"
-        },
-        {
-          "businessType": "ic_service_cataloge_d",
-          "isLock": false,
-          "premiumCode": "",
-          "title": "Services Listed"
-        },
-        {
-          "businessType": "ic_customer_testimonial_d",
-          "isLock": false,
-          "premiumCode": "",
-          "title": "Customer Testimonials"
-        },
-        {
-          "businessType": "doctor_profile",
-          "isLock": false,
-          "premiumCode": "",
-          "title": "Doctor e-Profile"
-        },
-        {
-          "businessType": "ic_business_keyboard_d",
-          "isLock": false,
-          "premiumCode": "BOOSTKEYBOARD",
-          "title": "Boost Keyboard"
-        }
-      ]
-    },
-    {
-      "type": "MFG",
-      "action_item": [
-        {
-          "businessType": "ic_project_terms_d",
-          "isLock": false,
-          "premiumCode": "PROJECTTEAM",
-          "title": "Projects and Teams"
-        },
-        {
-          "businessType": "ic_digital_brochures",
-          "isLock": false,
-          "premiumCode": "BROCHURE",
-          "title": "Unlimited Digital Brochures"
-        },
-        {
-          "businessType": "ic_customer_call_d",
-          "isLock": false,
-          "premiumCode": "CALLTRACKER",
-          "title": "Customer Calls"
-        },
-        {
-          "businessType": "ic_customer_enquiries_d",
-          "isLock": false,
-          "premiumCode": "",
-          "title": "Customer Enquiries"
-        },
-        {
-          "businessType": "ic_daily_business_update_d",
-          "isLock": false,
-          "premiumCode": "",
-          "title": "Daily Business Updates"
+          "title": "Business\nUpdates"
         },
         {
           "businessType": "ic_product_cataloge_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Products Catalogue"
+          "title": "Product\nCatalogue"
         },
         {
           "businessType": "ic_customer_testimonial_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "",
-          "title": "Customer Testimonials"
+          "title": "Testimonials"
         },
         {
           "businessType": "ic_business_keyboard_d",
           "isLock": false,
+          "isHide": false,
           "premiumCode": "BOOSTKEYBOARD",
-          "title": "Business Keyboard"
+          "title": "Boost\nKeyboard"
         }
       ]
     }

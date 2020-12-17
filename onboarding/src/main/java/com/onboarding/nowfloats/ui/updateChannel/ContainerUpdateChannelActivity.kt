@@ -44,13 +44,13 @@ open class ContainerUpdateChannelActivity : AppBaseActivity<ActivityFragmentCont
     return ContextCompat.getColor(this, R.color.bg_dark_grey)
   }
 
-
   private fun setFragment() {
     val bundle = intent.extras
     isStartActivity = bundle?.getBoolean(PreferenceConstant.IS_START_ACTIVITY) ?: false
     val fragments = getFragments(bundle)
     val titleList = arrayListOf("Channels", "Visiting card")
     binding?.container?.apply {
+      isUserInputEnabled = false
       val adapterInfo = FragmentAdapter(fragments, this@ContainerUpdateChannelActivity)
       adapter = adapterInfo
       val tabLayout = binding?.tabMode ?: return@apply

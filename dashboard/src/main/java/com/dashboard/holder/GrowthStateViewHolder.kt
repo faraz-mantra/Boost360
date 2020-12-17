@@ -2,6 +2,7 @@ package com.dashboard.holder
 
 import android.view.View
 import com.dashboard.R
+import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.ItemGrowthStateBinding
 import com.dashboard.model.GrowthStatsData
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
@@ -19,6 +20,7 @@ class GrowthStateViewHolder(binding: ItemGrowthStateBinding) : AppBaseRecyclerVi
     data.icon1?.let { binding.imgIcon.setImageResource(it) }
     binding.txtSymbol.apply { visibility = if (data.isRupeeSymbols) View.VISIBLE else View.GONE }
     binding.txtAmountCountDay.apply { visibility = if (data.dayAmountTitle.isNullOrEmpty()) View.GONE else View.VISIBLE }
+    binding.mainContent.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.GROWTH_STATS_CLICK.ordinal) }
   }
 
 }

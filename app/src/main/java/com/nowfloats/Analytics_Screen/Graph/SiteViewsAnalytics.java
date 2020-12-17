@@ -1,14 +1,6 @@
 package com.nowfloats.Analytics_Screen.Graph;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,6 +11,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.nowfloats.Analytics_Screen.Graph.fragments.UniqueVisitorsFragment;
 import com.nowfloats.Login.UserSessionManager;
@@ -46,10 +47,8 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
     private UniqueVisitorsFragment.BatchType currentTabType;
     private PopupWindow popup;
     public static final String VISITS_TYPE = "visits_type";
+    public static final String VISITS_TYPE_STRING = "visits_type_string";
     private VisitsType mVisitsType;
-    public enum VisitsType{
-        UNIQUE, TOTAL, MAP_VISITS;
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +63,9 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
         }
 
         mVisitsType = (VisitsType) getIntent().getSerializableExtra(VISITS_TYPE);
+        if (mVisitsType == null) {
+            mVisitsType = VisitsType.fromName(getIntent().getStringExtra(VISITS_TYPE_STRING));
+        }
         if (mVisitsType == null) finish();
 
         switch (mVisitsType){
@@ -88,6 +90,19 @@ public class SiteViewsAnalytics extends AppCompatActivity implements UniqueVisit
         tvYear.setOnClickListener(this);
 
         changeTab(UniqueVisitorsFragment.BatchType.dy);
+    }
+
+    public enum VisitsType {
+        UNIQUE, TOTAL, MAP_VISITS;
+
+        public static VisitsType fromName(String name) {
+            for (VisitsType b : VisitsType.values()) {
+                if (b.name().equalsIgnoreCase(name)) {
+                    return b;
+                }
+            }
+            return null;
+        }
     }
 
     @Override

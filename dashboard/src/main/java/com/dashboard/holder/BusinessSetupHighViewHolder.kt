@@ -7,6 +7,7 @@ import com.dashboard.model.BusinessSetupHighData
 import com.dashboard.model.Specification
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
+import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.framework.extensions.gone
 import com.framework.extensions.visible
 
@@ -21,9 +22,9 @@ class BusinessSetupHighViewHolder(binding: ItemBusinessSetupHighBinding) : AppBa
         binding.viewBusinessCount.visible()
         binding.txtTitle1.text = data.title1
         binding.txtTitle2.text = data.title2
-        binding.viewVisitor.setData(data.siteVisitor)
-        binding.viewBooking.setData(data.booking)
-        binding.viewEnquiry.setData(data.enquiry)
+        binding.viewVisitor.setData(listener, position, data.siteVisitor)
+        binding.viewBooking.setData(listener, position, data.booking)
+        binding.viewEnquiry.setData(listener, position, data.enquiry)
       }
       BusinessSetupHighData.ActiveViewType.IS_PROGRESS.name -> {
         binding.viewReadinessScore.visible()
@@ -36,7 +37,8 @@ class BusinessSetupHighViewHolder(binding: ItemBusinessSetupHighBinding) : AppBa
   }
 }
 
-private fun ItemDetailBusinessBinding.setData(item: Specification?) {
+private fun ItemDetailBusinessBinding.setData(listener: RecyclerItemClickListener?, position: Int, item: Specification?) {
   txtTitle.text = item?.title
   txtValue.text = item?.value
+  viewBusinessCount.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.BUSINESS_UPDATE_CLICK.ordinal) }
 }
