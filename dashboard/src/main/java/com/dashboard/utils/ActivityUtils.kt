@@ -17,6 +17,8 @@ import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
 
+const val VISITS_TYPE_STRING = "visits_type_string"
+
 fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
   try {
     val bundle = Bundle()
@@ -46,7 +48,7 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
   }
 }
 
-fun AppCompatActivity.startVmnCallCard() {
+fun AppCompatActivity.startVmnCallCard(session: UserSessionManager?) {
   try {
     val i = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.VmnCallCardsActivity"))
     startActivity(i)
@@ -56,7 +58,7 @@ fun AppCompatActivity.startVmnCallCard() {
   }
 }
 
-fun AppCompatActivity.startBusinessEnquiry() {
+fun AppCompatActivity.startBusinessEnquiry(session: UserSessionManager?) {
   try {
     val queries = Intent(this, Class.forName("com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"))
     startActivity(queries)
@@ -66,7 +68,48 @@ fun AppCompatActivity.startBusinessEnquiry() {
   }
 }
 
-fun AppCompatActivity.startSubscriber() {
+fun AppCompatActivity.startSearchQuery(session: UserSessionManager?) {
+  try {
+    val queries = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.SearchQueriesActivity"))
+    startActivity(queries)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startRevenueSummary(session: UserSessionManager?) {
+  try {
+    val queries = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.RevenueSummaryActivity"))
+    startActivity(queries)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startAptOrderSummary(session: UserSessionManager?) {
+  try {
+    val queries = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.OrderSummaryActivity"))
+    startActivity(queries)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startSiteViewAnalytic(session: UserSessionManager?, type: String) {
+  try {
+    val intent = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics"))
+    intent.putExtra(VISITS_TYPE_STRING, type);
+    startActivity(intent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startSubscriber(session: UserSessionManager?) {
   try {
     val subscribers = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.SubscribersActivity"))
     startActivity(subscribers)

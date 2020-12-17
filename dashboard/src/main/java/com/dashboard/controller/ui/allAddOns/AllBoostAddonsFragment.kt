@@ -59,7 +59,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
   private fun getBoostAddOnsData() {
     viewModel?.getBoostAddOns(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? ManageAddOnsBusinessResponse
-      val dataAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == getAddonsType(session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT)) }
+      val dataAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT) }
       if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
         dataAction.actionItem?.map { it2 -> it2.manageBusinessList?.map { it3 -> if (it3.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it3.premiumCode).not()) it3.isLock = true } }
         if (adapterAddOns == null) {
@@ -118,8 +118,8 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
 
 fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: AppCompatActivity, session: UserSessionManager?) {
   when (type) {
-    ManageBusinessData.BusinessType.ic_customer_call_d -> baseActivity.startVmnCallCard()
-    ManageBusinessData.BusinessType.ic_customer_enquiries_d -> baseActivity.startBusinessEnquiry()
+    ManageBusinessData.BusinessType.ic_customer_call_d -> baseActivity.startVmnCallCard(session)
+    ManageBusinessData.BusinessType.ic_customer_enquiries_d -> baseActivity.startBusinessEnquiry(session)
     ManageBusinessData.BusinessType.ic_daily_business_update_d -> baseActivity.startPostUpdate(session)
 
     ManageBusinessData.BusinessType.ic_product_cataloge_d,
@@ -129,7 +129,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.ic_customer_testimonial_d -> baseActivity.startAddTestimonial(session)
     ManageBusinessData.BusinessType.ic_business_keyboard_d -> session?.let { baseActivity.startKeyboardActivity(it) }
     ManageBusinessData.BusinessType.clinic_logo -> baseActivity.startBusinessLogo(session)
-    ManageBusinessData.BusinessType.feature_business_image -> baseActivity.startFeatureLogo(session)
+    ManageBusinessData.BusinessType.featured_image_video -> baseActivity.startFeatureLogo(session)
     ManageBusinessData.BusinessType.business_hours -> baseActivity.startBusinessHours(session)
 
     ManageBusinessData.BusinessType.doctor_profile,
@@ -141,7 +141,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.in_clinic_appointments -> baseActivity.startOrderAptConsultList(session, isConsult = false)
     ManageBusinessData.BusinessType.customer_order_d -> baseActivity.startOrderAptConsultList(session, isOrder = true)
     ManageBusinessData.BusinessType.video_consultations -> baseActivity.startOrderAptConsultList(session, isConsult = true)
-    ManageBusinessData.BusinessType.newsletter_subscription -> baseActivity.startSubscriber()
+    ManageBusinessData.BusinessType.newsletter_subscription -> baseActivity.startSubscriber(session)
     ManageBusinessData.BusinessType.picture_gallery -> baseActivity.startAddImageGallery(session)
     ManageBusinessData.BusinessType.premium_boost_support -> session?.let { baseActivity.startHelpAndSupportActivity(it) }
     ManageBusinessData.BusinessType.custom_payment_gateway -> baseActivity.startSelfBrandedGateway(session)

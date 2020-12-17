@@ -37,7 +37,7 @@ import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.RequestBody
 import java.io.File
 import java.util.*
 
@@ -210,10 +210,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       DrawerHomeData.NavType.NAV_HOME -> if ((getFragment(DashboardFragment::class.java) == null)) openDashboard()
       DrawerHomeData.NavType.NAV_DIGITAL_CHANNEL -> session?.let { this.startDigitalChannel(it) }
       DrawerHomeData.NavType.NAV_MANAGE_CONTENT -> session?.let { this.startManageContentActivity(it) }
-      DrawerHomeData.NavType.NAV_CALLS -> this.startVmnCallCard()
-      DrawerHomeData.NavType.NAV_ENQUIRY -> this.startBusinessEnquiry()
+      DrawerHomeData.NavType.NAV_CALLS -> this.startVmnCallCard(session)
+      DrawerHomeData.NavType.NAV_ENQUIRY -> this.startBusinessEnquiry(session)
       DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let { this.startManageInventoryActivity(it) }
-      DrawerHomeData.NavType.NAV_NEWS_LETTER_SUB -> this.startSubscriber()
+      DrawerHomeData.NavType.NAV_NEWS_LETTER_SUB -> this.startSubscriber(session)
       DrawerHomeData.NavType.NAV_BOOST_KEYBOARD -> session?.let { this.startKeyboardActivity(it) }
       DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let { this.initiateAddonMarketplace(it, false, "", "") }
       DrawerHomeData.NavType.NAV_SETTING -> session?.let { this.startSettingActivity(it) }
@@ -259,7 +259,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getRequestImageDate(businessImage: File): UploadFileBusinessRequest {
-    val responseBody = businessImage.readBytes().toRequestBody("image/png".toMediaTypeOrNull(), 0, content.size)
+    val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), businessImage.readBytes())
     val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
         ?: "bg_${UUID.randomUUID()}.png"
     return UploadFileBusinessRequest(clientId, session?.fPID, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)

@@ -22,7 +22,7 @@ data class BusinessSetupHighData(
 
   fun getData(score: Int, visitor: String, order: String, orderText: String = "Bookings", enquiry: String): ArrayList<BusinessSetupHighData> {
     val list = ArrayList<BusinessSetupHighData>()
-    list.add(BusinessSetupHighData(title1 = "Business", title2 = "Update", siteVisitor = Specification("Site visitors", visitor), booking = Specification(orderText, order), enquiry = Specification("Enquiries", enquiry), type = ActiveViewType.IS_BUSINESS_UPDATE.name))
+    list.add(BusinessSetupHighData(title1 = "Business", title2 = "Update", siteVisitor = Specification("Site visitors", visitor, BusinessClickEvent.WEBSITE_VISITOR.name), booking = Specification(orderText, order, BusinessClickEvent.ODER_APT.name), enquiry = Specification("Enquiries", enquiry, BusinessClickEvent.ENQUIRIES.name), type = ActiveViewType.IS_BUSINESS_UPDATE.name))
     list.add(BusinessSetupHighData(title1 = "Digital readiness score: $score%", score = score, type = ActiveViewType.IS_PROGRESS.name))
     return list
   }
@@ -30,9 +30,21 @@ data class BusinessSetupHighData(
   enum class ActiveViewType {
     IS_BUSINESS_UPDATE, IS_PROGRESS
   }
+
+  enum class BusinessClickEvent {
+    WEBSITE_VISITOR, ODER_APT, ENQUIRIES;
+    companion object {
+      fun fromName(name: String?): BusinessClickEvent? = values().firstOrNull { it.name == name }
+    }
+  }
 }
 
 data class Specification(
     var title: String? = null,
     var value: String? = null,
-) : Serializable
+    var clickType: String? = null,
+) : Serializable, AppBaseRecyclerViewItem {
+  override fun getViewType(): Int {
+    return RecyclerViewItemType.BUSINESS_SETUP_HIGH_ITEM_VIEW.getLayout()
+  }
+}

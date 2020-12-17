@@ -94,15 +94,6 @@ fun getProductType(category_code: String?): String {
   }
 }
 
-fun getAddonsType(category_code: String?): String? {
-  return when (category_code) {
-    "DOC" -> "DOC"
-    "HOS" -> "HOS"
-    "SVC", "SPA", "SAL" -> "SPA"
-    else -> "MFG"
-  }
-}
-
 fun getRoiSummaryType(category_code: String?): String? {
   return when (category_code) {
     "DOC", "HOS" -> "DOC"

@@ -600,6 +600,7 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_4"
               android:layout_marginEnd="@dimen/size_12"
+              android:id="@+id/btn_notofication"
               android:background="?attr/selectableItemBackgroundBorderless"
               android:clickable="true"
               android:focusable="true">

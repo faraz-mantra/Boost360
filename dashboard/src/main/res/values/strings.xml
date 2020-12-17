@@ -1,7 +1,7 @@
 <resources>
   <string name="dashboard">Dashboard</string>
-  <string name="content">Content</string>
-  <string name="patients">Patients</string>
+  <string name="website">Website</string>
+  <string name="my_clinic">My Clinic</string>
   <string name="academy">Academy</string>
   <string name="more">More</string>
   <string name="www_sravansclinic_com"><u>www.plastoindiaandpolymers.com</u></string>
@@ -9,7 +9,6 @@
   <string name="improve_your_score_to_90">Improve your score above <b>90</b> for\nbetter online traction.</string>
   <string name="share_on_whatsapp">Share on WhatsApp</string>
   <string name="share_on_more">Share on more...</string>
-  <string name="website">Website</string>
   <string name="digital_readiness_score">Digital readiness score</string>
   <string name="digital_readiness_score_n">Digital Readiness Score</string>
   <string name="quick_actions">Quick actions</string>

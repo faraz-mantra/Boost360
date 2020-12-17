@@ -11,6 +11,8 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="@dimen/size_94"
+    android:clickable="true"
+    android:focusable="true"
     android:background="@color/light_grey_4"
     android:gravity="center_vertical"
     android:orientation="horizontal"

@@ -69,6 +69,10 @@ class DashboardViewModel : BaseViewModel() {
     return ApiTwoWithFloatRepository.getUserSummary(clientId, fpIdParent, scope).toLiveData()
   }
 
+  fun getMapVisits(fpTag: String?, mapData: Map<String, String>?): LiveData<BaseResponse> {
+    return ApiTwoWithFloatRepository.getMapVisits(fpTag, mapData).toLiveData()
+  }
+
   fun getUserCallSummary(clientId: String?, fpIdParent: String?, identifierType: String?): LiveData<BaseResponse> {
     return ApiTwoWithFloatRepository.getUserCallSummary(clientId, fpIdParent, identifierType).toLiveData()
   }

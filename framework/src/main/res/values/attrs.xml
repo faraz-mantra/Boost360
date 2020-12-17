@@ -260,6 +260,7 @@
 
   <declare-styleable name="NiceBottomBar">
     <attr name="menu" format="reference" />
+    <attr name="activeMenu" format="reference" />
     <attr name="backgroundColor" format="color" />
     <attr name="indicatorColor" format="color" />
     <attr name="indicatorWidth" format="dimension" />
@@ -269,6 +270,7 @@
     <attr name="itemFontInActive" format="reference" />
     <attr name="textColorActive" format="color" />
     <attr name="clickPosition" format="string" />
+
     <attr name="textSize" format="dimension" />
     <attr name="iconSize" format="dimension" />
     <attr name="iconMargin" format="dimension" />

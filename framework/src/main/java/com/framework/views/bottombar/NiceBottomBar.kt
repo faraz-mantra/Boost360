@@ -51,6 +51,8 @@ class NiceBottomBar : View {
   private val titleSideMargins = d2p(12f)
 
   private var items = listOf<BottomBarItem>()
+  private var itemsInActive = listOf<BottomBarItem>()
+  private var itemsActive = listOf<BottomBarItem>()
 
   private var onItemSelectedListener: OnItemSelectedListener? = null
   private var onItemReselectedListener: OnItemReselectedListener? = null
@@ -103,6 +105,8 @@ class NiceBottomBar : View {
     itemFontActive = typedArray.getResourceId(R.styleable.NiceBottomBar_itemFontActive, this.itemFontActive)
     itemFontInActive = typedArray.getResourceId(R.styleable.NiceBottomBar_itemFontInActive, this.itemFontInActive)
     items = BottomBarParser(context, typedArray.getResourceId(R.styleable.NiceBottomBar_menu, 0)).parse()
+    itemsInActive = BottomBarParser(context, typedArray.getResourceId(R.styleable.NiceBottomBar_menu, 0)).parse()
+    itemsActive = BottomBarParser(context, typedArray.getResourceId(R.styleable.NiceBottomBar_activeMenu, 0)).parse()
     val clickPositionValue = typedArray.getString(R.styleable.NiceBottomBar_clickPosition)
     clickPosition = ArrayList()
     clickPositionValue?.split(",")?.forEach { it.toIntOrNull()?.let { it1 -> clickPosition!!.add(it1) } }
@@ -116,7 +120,7 @@ class NiceBottomBar : View {
     paintText.textSize = itemTextSize
     paintBadge.color = itemBadgeColor
 
-//      paintText.typeface
+    // paintText.typeface
     if (itemFontActive != 0) activeFontTypeface = ResourcesCompat.getFont(context, itemFontActive)
     if (itemFontInActive != 0) inActiveFontTypeface = ResourcesCompat.getFont(context, itemFontInActive)
   }
@@ -156,15 +160,19 @@ class NiceBottomBar : View {
 
     // Push the item components from the top a bit if the indicator is at the top
     val additionalTopMargin = if (barIndicatorGravity == 1) 0f else 10f
-
     for ((i, item) in items.withIndex()) {
+
+      if (itemsActive.isNullOrEmpty().not() && (itemsActive.size == items.size)) {
+        item.icon = if (i == activeItem) itemsActive[i].icon else itemsInActive[i].icon
+        item.title = if (i == activeItem) itemsActive[i].title else itemsInActive[i].title
+      } else DrawableCompat.setTint(item.icon, if (i == activeItem) currentActiveItemColor else itemTextColor)
+
       item.icon.mutate()
       item.icon.setBounds(item.rect.centerX().toInt() - itemIconSize.toInt() / 2,
           height / 2 - itemIconSize.toInt() - itemIconMargin.toInt() / 2 + additionalTopMargin.toInt(),
           item.rect.centerX().toInt() + itemIconSize.toInt() / 2,
           height / 2 - itemIconMargin.toInt() / 2 + additionalTopMargin.toInt())
 
-      DrawableCompat.setTint(item.icon, if (i == activeItem) currentActiveItemColor else itemTextColor)
       item.icon.draw(canvas)
 
       // Draw item title

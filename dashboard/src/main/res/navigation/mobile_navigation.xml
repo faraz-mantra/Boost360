@@ -14,13 +14,13 @@
   <fragment
     android:id="@+id/navigation_content"
     android:name="com.dashboard.controller.ui.content.ContentFragment"
-    android:label="@string/content"
+    android:label="@string/website"
     tools:layout="@layout/fragment_content" />
 
   <fragment
     android:id="@+id/navigation_patients"
     android:name="com.dashboard.controller.ui.patients.PatientsFragment"
-    android:label="@string/patients"
+    android:label="@string/my_clinic"
     tools:layout="@layout/fragment_patients" />
 
   <fragment

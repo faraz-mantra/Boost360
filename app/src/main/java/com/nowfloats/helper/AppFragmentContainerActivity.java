@@ -22,6 +22,7 @@ import com.nowfloats.NavigationDrawer.AboutFragment;
 import com.nowfloats.NavigationDrawer.AccountSettingsFragment;
 import com.nowfloats.NavigationDrawer.HelpAndSupportFragment;
 import com.nowfloats.NavigationDrawer.ManageContentFragment;
+import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
 import com.nowfloats.util.Utils;
@@ -34,7 +35,8 @@ enum FragmentType {
     MANAGE_CONTENT,
     MANAGE_INVENTORY,
     HELP_AND_SUPPORT,
-    ABOUT_BOOST
+    ABOUT_BOOST,
+    NOTIFICATION_VIEW
 }
 
 public class AppFragmentContainerActivity extends AppCompatActivity {
@@ -50,6 +52,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
     private ManageInventoryFragment manageInventoryFragment = null;
     private HelpAndSupportFragment helpAndSupportFragment = null;
     private AboutFragment aboutFragment = null;
+    private NotificationFragment notificationFragment = null;
 
     public static void startFragmentAppActivity(Activity activity, FragmentType type, Bundle bundle, Boolean clearTop) {
         Intent intent = new Intent(activity, AppFragmentContainerActivity.class);
@@ -106,6 +109,8 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
                 return getString(R.string.help_and_support);
             case ABOUT_BOOST:
                 return getString(R.string.about);
+            case NOTIFICATION_VIEW:
+                return getString(R.string.notification);
             default:
                 return "";
         }
@@ -119,6 +124,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case MANAGE_INVENTORY:
             case HELP_AND_SUPPORT:
             case ABOUT_BOOST:
+            case NOTIFICATION_VIEW:
             default:
                 return R.color.white;
         }
@@ -136,6 +142,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case MANAGE_INVENTORY:
             case HELP_AND_SUPPORT:
             case ABOUT_BOOST:
+            case NOTIFICATION_VIEW:
             default:
                 return ContextCompat.getDrawable(this, R.drawable.ic_arrow_back);
         }
@@ -149,6 +156,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case MANAGE_INVENTORY:
             case HELP_AND_SUPPORT:
             case ABOUT_BOOST:
+            case NOTIFICATION_VIEW:
             default:
                 return ContextCompat.getColor(this, R.color.colorAccent);
 
@@ -175,6 +183,9 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case ABOUT_BOOST:
                 aboutFragment = new AboutFragment();
                 return aboutFragment;
+            case NOTIFICATION_VIEW:
+                notificationFragment = new NotificationFragment();
+                return notificationFragment;
             default:
                 return null;
         }

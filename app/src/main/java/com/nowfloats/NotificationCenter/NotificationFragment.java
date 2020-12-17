@@ -2,16 +2,19 @@ package com.nowfloats.NotificationCenter;
 
 import android.app.Activity;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
+import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.model.AlertCountEvent;
 import com.nowfloats.NotificationCenter.Model.AlertModel;
@@ -34,7 +37,7 @@ import retrofit.client.Response;
 /**
  * Created by guru on 19-06-2015.
  */
-public class NotificationFragment extends Fragment {
+public class NotificationFragment extends Fragment implements DeepLinkInterface {
     Activity activity;
     UserSessionManager session;
     public static RecyclerView recyclerView;
@@ -43,7 +46,7 @@ public class NotificationFragment extends Fragment {
     private LinearLayout emptylayout, progress_layout;
     NotificationInterface alertInterface;
     private boolean mIsAlertShown = false;
-    private int readAlertsCount,unReadAlertCount;
+    private int readAlertsCount, unReadAlertCount;
     private boolean stop;
     private ArrayList<AlertModel> alertModelsList = new ArrayList<>();
 
@@ -76,7 +79,7 @@ public class NotificationFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(mIsAlertShown){
+        if (mIsAlertShown) {
             alertModelsList.clear();
             adapter.notifyDataSetChanged();
             mIsAlertShown = false;
@@ -94,7 +97,7 @@ public class NotificationFragment extends Fragment {
         progress_layout = (LinearLayout) view.findViewById(R.id.progress_layout);
         final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLinearLayoutManager);
-        adapter = new NotificationAdapter(getActivity(), alertModelsList, alertInterface, session, bus);
+        adapter = new NotificationAdapter(activity, alertModelsList, alertInterface, session, bus, this);
         recyclerView.setAdapter(adapter);
         //get alert Values
         if (!mIsAlertShown) {
@@ -109,9 +112,10 @@ public class NotificationFragment extends Fragment {
                 int totalItemCount = mLinearLayoutManager.getItemCount();
                 int lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
                 if (lastVisibleItem >= totalItemCount - 2 && !stop) {
-                    if(Integer.parseInt(Home_Fragment_Tab.alertCountVal)>totalItemCount){
+
+                    if (Integer.parseInt(Home_Fragment_Tab.alertCountVal) > totalItemCount) {
                         loadAlerts();
-                    }else{
+                    } else {
                         moreAlerts();
                     }
 
@@ -181,6 +185,15 @@ public class NotificationFragment extends Fragment {
         }
     }
 
+    @Override
+    public void deepLink(String url) {
+        if (getActivity() instanceof HomeActivity) {
+            ((HomeActivity) getActivity()).deepLink(url);
+        }else {
+//            Toast.makeText(activity, url, Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     public class AlterDateComparator implements Comparator<AlertModel> {
         public int compare(AlertModel left, AlertModel right) {
@@ -211,10 +224,10 @@ public class NotificationFragment extends Fragment {
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
                     progress_layout.setVisibility(View.GONE);
-                    if(alertModels == null){
+                    if (alertModels == null) {
                         emptylayout.setVisibility(View.VISIBLE);
                         return;
-                    }else if (alertModels.size()>0) {
+                    } else if (alertModels.size() > 0) {
                         alertModelsList.addAll(alertModels);
                         /*for (int i = 0; i < alertModels.size(); i++) {
                             alertModelsList.add(alertModels.get(i));
@@ -222,7 +235,7 @@ public class NotificationFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                     }
                     stop = false;
-                    if(alertModels.size()<10){
+                    if (alertModels.size() < 10) {
                         moreAlerts();
                     }
 
