@@ -1,12 +1,17 @@
 package com.boost.upgrades.ui.compare
 
+import android.content.Context
 import android.graphics.Color
+import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.data.model.FeaturesModel
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 
@@ -16,6 +21,8 @@ class MySection // call constructor with layout resources for this Section heade
         .itemResourceId(R.layout.compare_package_item)
         .headerResourceId(R.layout.compare_package_item_header)
         .build()) {
+
+    var context: Context? = null
     override fun getContentItemsTotal(): Int {
         return list!!.size // number of items of this section
 //        return 0 // number of items of this section
@@ -23,6 +30,7 @@ class MySection // call constructor with layout resources for this Section heade
 
     override fun getItemViewHolder(view: View): RecyclerView.ViewHolder {
         // return a custom instance of ViewHolder for the items of this section
+        context = view.getContext();
         return ItemViewHolder(view)
     }
 
@@ -35,15 +43,24 @@ class MySection // call constructor with layout resources for this Section heade
 //        Log.v("onBindItemViewHolder", " "+ list!![position].name )
         if(position %2 == 1)
         {
-            holder.item_mainLayout!!.setBackgroundColor(Color.parseColor("#F8F8F8"));
-            //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            holder.item_mainLayout!!.setBackgroundColor(Color.parseColor("#F8F8F8"))
         }
         else
         {
-            holder.item_mainLayout!!.setBackgroundColor(Color.parseColor("#FFFFFF"));
-            //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
+            holder.item_mainLayout!!.setBackgroundColor(Color.parseColor("#FFFFFF"))
         }
         //        itemHolder.description.setText(list.get(position).FromTime + " - "+ list.get(position).ToTime);
+      /*  holder.infoIcon!!.setOnClickListener {
+            Log.v("infoIcon", " "+ list!![position].description_title)
+            SimpleTooltip.Builder(context)
+                    .anchorView(holder.infoIcon)
+                    .text(list!![position].description_title)
+                    .gravity(Gravity.END)
+                    .animated(true)
+                    .transparentOverlay(false)
+                    .build()
+                    .show();
+        }*/
     }
 
     override fun getHeaderViewHolder(view: View): RecyclerView.ViewHolder {
@@ -76,9 +93,11 @@ class MySection // call constructor with layout resources for this Section heade
         var comment_count: TextView? = null
         var status: TextView? = null
         var item_mainLayout: ConstraintLayout? =null
+        var infoIcon: ImageView? =null
 
         init {
             title = itemView.findViewById<View>(R.id.textA) as TextView
+//            infoIcon = itemView.findViewById<View>(R.id.info_icon) as ImageView
             item_mainLayout = itemView.findViewById<View>(R.id.item_mainLayout) as ConstraintLayout
         }
     }
