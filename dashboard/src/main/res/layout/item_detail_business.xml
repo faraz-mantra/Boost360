@@ -23,7 +23,6 @@
         android:text="Business"
         android:id="@+id/txt_title"
         android:textColor="@color/black_4f4f4f"
-        app:fontFamily="@font/sans_medium"
         app:textType="CAPTION" />
 
       <com.framework.views.customViews.CustomTextView
@@ -33,7 +32,6 @@
         android:text="3,45,890"
         android:id="@+id/txt_value"
         android:textColor="@color/colorAccent"
-        app:fontFamily="@font/sans_medium"
         app:textType="HEADING_6" />
     </LinearLayout>
 

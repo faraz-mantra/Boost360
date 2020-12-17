@@ -87,8 +87,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="@string/my_visiting_card"
-                      android:textColor="@color/greyish_brown"
-                      app:fontFamily="@font/sans_medium" />
+                      android:textColor="@color/greyish_brown" />
 
                     <com.framework.views.customViews.CustomImageView
                       android:layout_width="wrap_content"
@@ -111,8 +110,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="@string/my_products_catalog"
-                      android:textColor="@color/greyish_brown"
-                      app:fontFamily="@font/sans_medium" />
+                      android:textColor="@color/greyish_brown" />
 
                     <com.framework.views.customViews.CustomImageView
                       android:layout_width="wrap_content"
@@ -210,8 +208,7 @@
                   android:focusable="true"
                   android:gravity="center"
                   android:text="@string/share_on_whatsapp"
-                  android:textColor="@color/black_4f4f4f"
-                  app:fontFamily="@font/sans_medium" />
+                  android:textColor="@color/black_4f4f4f" />
 
                 <View
                   android:layout_width="@dimen/size_1"
@@ -227,8 +224,7 @@
                   android:focusable="true"
                   android:gravity="center"
                   android:text="@string/share_on_more"
-                  android:textColor="@color/black_4f4f4f"
-                  app:fontFamily="@font/sans_medium" />
+                  android:textColor="@color/black_4f4f4f" />
               </LinearLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -305,7 +301,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/digital_readiness_score"
                     android:textColor="@color/black_4f4f4f"
-                    app:fontFamily="@font/sans_medium"
                     app:textType="HEADING_6" />
 
                   <com.framework.views.customViews.CustomTextView
@@ -398,7 +393,6 @@
                       android:gravity="center"
                       android:text="@string/missing_ndetails"
                       android:textColor="@color/grey_dim_1"
-                      app:fontFamily="@font/sans_medium"
                       app:textType="HEADING_6" />
                   </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -664,7 +658,6 @@
               android:layout_marginEnd="@dimen/size_18"
               android:text="@string/ria_academy"
               android:textColor="@color/black_4f4f4f"
-              app:fontFamily="@font/sans_medium"
               app:textType="HEADING_6" />
 
             <com.framework.views.customViews.CustomTextView
@@ -717,7 +710,6 @@
                     android:includeFontPadding="false"
                     android:text="@string/roi_summary"
                     android:textColor="@color/black_4f4f4f"
-                    app:fontFamily="@font/sans_medium"
                     app:textType="HEADING_6" />
 
                   <com.framework.views.customViews.CustomTextView
@@ -780,7 +772,6 @@
                     android:includeFontPadding="false"
                     android:text="@string/online_growth_stats"
                     android:textColor="@color/black_4f4f4f"
-                    app:fontFamily="@font/sans_medium"
                     app:textType="HEADING_6" />
 
                   <com.framework.views.customViews.CustomTextView

@@ -55,6 +55,8 @@
   <string name="navigation_data_error">Navigation data getting error!</string>
   <string name="quick_action_data_error">Quick action data getting error!</string>
   <string name="manage_business_not_found">Manage business data not found!</string>
+  <string name="powered_by">Powered By</string>
+  <string name="nowfloats">NowFloats</string>
   <!-- SITE-Meter Percentage  -->
 
 </resources>

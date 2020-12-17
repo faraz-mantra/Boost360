@@ -33,7 +33,6 @@
           android:text="Business"
           android:id="@+id/txt_title1"
           android:textColor="@color/black_4f4f4f"
-          app:fontFamily="@font/sans_medium"
           app:textType="BODY_1" />
 
         <com.framework.views.customViews.CustomTextView
@@ -43,7 +42,6 @@
           android:text="Update"
           android:id="@+id/txt_title2"
           android:textColor="@color/black_4f4f4f"
-          app:fontFamily="@font/sans_medium"
           app:textType="BODY_1" />
       </LinearLayout>
 
@@ -104,7 +102,6 @@
           android:id="@+id/txt_title3"
           android:text="Digital Readiness score: 82%"
           android:textColor="@color/black_4f4f4f"
-          app:fontFamily="@font/sans_medium"
           app:textType="BODY_1" />
 
         <com.framework.views.customViews.CustomTextView

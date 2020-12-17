@@ -58,7 +58,6 @@
             android:gravity="center"
             android:text="@string/digital_readiness_score_n"
             android:textColor="@color/white"
-            app:fontFamily="@font/sans_medium"
             app:textType="HEADING_7" />
 
           <com.framework.views.customViews.CustomImageView

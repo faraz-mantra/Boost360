@@ -71,7 +71,6 @@
         android:includeFontPadding="false"
         android:maxLines="1"
         android:textColor="@color/warm_light"
-        app:fontFamily="@font/sans_medium"
         app:textType="HEADING_6"
         tools:text="Business Name" />
 

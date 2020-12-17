@@ -46,7 +46,6 @@
         android:layout_weight="1"
         android:textColor="@color/cell_text_color"
         android:textSize="14sp"
-        app:fontFamily="@font/sans_medium"
         tools:text="My digital channels" />
 
       <FrameLayout

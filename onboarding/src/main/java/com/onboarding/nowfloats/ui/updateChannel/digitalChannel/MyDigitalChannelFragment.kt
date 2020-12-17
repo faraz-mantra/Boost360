@@ -101,7 +101,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent("My digital channel load", "MY DIGITAL CHANNEL","")
+    WebEngageController.trackEvent("My digital channel load", "MY DIGITAL CHANNEL", "")
     progress = ProgressChannelDialog.newInstance()
     updateRequestGetChannelData()
     binding?.syncBtn?.setOnClickListener { syncChannels() }
@@ -158,7 +158,8 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         var data: ChannelAccessToken? = null
         when (it.type()) {
           ChannelAccessToken.AccessTokenType.facebookpage.name,
-          ChannelAccessToken.AccessTokenType.twitter.name -> {
+          ChannelAccessToken.AccessTokenType.twitter.name,
+          -> {
             if (it.isValidType()) {
               data = ChannelAccessToken(type = it.type(), userAccessTokenKey = it.UserAccessTokenKey,
                   userAccountId = it.UserAccountId, userAccountName = it.UserAccountName)
@@ -237,7 +238,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         changeView(false)
         binding?.viewDisconnect?.fadeIn(200L)?.doOnComplete { setAdapterDisconnected(listDisconnect) }?.andThen(binding?.viewConnect?.fadeIn(500L))
       }
-      animObserver?.doOnComplete { setAdapterConnected(listConnect) }?.andThen(binding?.noteTxt?.fadeIn(100L))?.subscribe()
+      animObserver?.doOnComplete { setAdapterConnected(listConnect) }?.andThen(binding?.noteTxt?.fadeIn(100L)?.mergeWith(binding?.noteAboutTxt?.fadeIn(100L)))?.subscribe()
     }
     setSharePrefDataFpPageAndTwitter()
   }
@@ -354,7 +355,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   private fun syncChannels() {
     if (selectedChannels.isNullOrEmpty().not()) {
-      WebEngageController.trackEvent("My digital channel sync button click", "MY DIGITAL CHANNEL","")
+      WebEngageController.trackEvent("My digital channel sync button click", "MY DIGITAL CHANNEL", "")
       val bundle = Bundle()
       var totalPages = if (requestFloatsModel?.isUpdate == true) 0 else 2
       selectedChannels.let { channels ->
