@@ -46,15 +46,17 @@
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/txt_title"
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_3"
-      android:layout_marginEnd="@dimen/size_4"
+      android:paddingEnd="@dimen/size_6"
       android:ellipsize="end"
       android:gravity="center"
+      android:textAlignment="gravity"
       android:maxLines="2"
       android:textColor="@color/warm_grey_two"
       app:textType="CAPTION"
+      tools:ignore="RtlSymmetry"
       tools:text="Projects and Teams" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -172,4 +172,6 @@
   <string name="proceed">Proceed</string>
   <string name="service_details">Service Details</string>
   <string name="other_information">Other Information</string>
+  <string name="why_do_we_need_your_bank_account">Why do we need your bank account?</string>
+  <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
 </resources>

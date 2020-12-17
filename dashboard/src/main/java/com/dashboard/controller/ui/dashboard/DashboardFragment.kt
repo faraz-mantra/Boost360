@@ -51,16 +51,14 @@ import com.inventoryorder.model.summary.UserSummaryResponse
 import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.onboarding.nowfloats.model.category.CategoryDataModel
-import com.onboarding.nowfloats.model.channel.ChannelModel
-import com.onboarding.nowfloats.model.channel.ChannelTokenResponse
-import com.onboarding.nowfloats.model.channel.getAccessTokenType
-import com.onboarding.nowfloats.model.channel.isWhatsAppChannel
+import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.model.channel.request.ChannelActionData
 import com.onboarding.nowfloats.model.channel.respose.NFXAccessToken
 import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
+import com.onboarding.nowfloats.ui.webview.WebViewBottomDialog
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.concurrent.schedule
@@ -441,6 +439,22 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         val data = item as? GrowthStatsData ?: return
         GrowthStatsData.GrowthType.fromName(data.type)?.let { clickGrowthStats(it) }
       }
+      RecyclerViewActionType.CHANNEL_ITEM_CLICK.ordinal -> {
+        val data = (item as? ChannelData)?.channelData ?: return
+        val title: String
+        var website = ""
+        if (data.isWhatsAppChannel().not()) {
+          if (data.isGoogleSearch()) {
+            title = "Website"
+            website = session?.getDomainName(false) ?: ""
+          } else {
+            title = data.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() } ?: data.getName()
+            if (data.isTwitterChannel()) website = "https://twitter.com/${data.channelAccessToken?.userAccountName?.trim()}"
+            else if (data.isFacebookPage()) website = "https://www.facebook.com/${data.channelAccessToken?.userAccountId?.trim()}"
+          }
+          bottomSheetWebView(title, website)
+        }
+      }
     }
   }
 
@@ -561,6 +575,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun getSummaryDetail(): SummaryEntity? {
     return SummaryEntity(session?.enquiryCount?.toIntOrNull() ?: 0, session?.subcribersCount?.toIntOrNull() ?: 0, session?.visitorsCount?.toIntOrNull() ?: 0, session?.visitsCount?.toIntOrNull() ?: 0)
+  }
+
+  private fun bottomSheetWebView(title: String, domainUrl: String) {
+    val webViewBottomDialog = WebViewBottomDialog()
+    webViewBottomDialog.setData(title, domainUrl)
+    webViewBottomDialog.show(this@DashboardFragment.parentFragmentManager, WebViewBottomDialog::class.java.name)
   }
 }
 

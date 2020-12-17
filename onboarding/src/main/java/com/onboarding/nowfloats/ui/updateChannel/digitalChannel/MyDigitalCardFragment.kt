@@ -1,7 +1,17 @@
 package com.onboarding.nowfloats.ui.updateChannel.digitalChannel
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore.Images.Media.insertImage
+import androidx.core.app.ActivityCompat
+import androidx.viewpager2.widget.ViewPager2
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
@@ -14,9 +24,13 @@ import com.onboarding.nowfloats.model.profile.ProfileProperties
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
+import com.onboarding.nowfloats.utils.viewToBitmap
 import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
 
+
 class MyDigitalCardFragment : AppBaseFragment<FragmentDigitalCardBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
+
+  private var cardPosition = 0
 
   companion object {
     @JvmStatic
@@ -43,7 +57,7 @@ class MyDigitalCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Channe
     val primaryNumber = arguments?.getString(PreferenceConstant.PRIMARY_NUMBER)
     val primaryEmail = arguments?.getString(PreferenceConstant.PRIMARY_EMAIL)
     val fpTag = arguments?.getString(PreferenceConstant.GET_FP_DETAILS_TAG)
-
+    showProgress()
     viewModel?.getMerchantProfile(floatingPoint)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         val response = it as? MerchantProfileResponse
@@ -60,11 +74,61 @@ class MyDigitalCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Channe
             businessType, websiteUrl, R.color.linen, R.color.lightskyblue, R.color.textGreyLight, R.color.textGreyDark))
         setAdapterCard(cardList)
       } else showShortToast(it.message())
+      hideProgress()
     })
-
+    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp() }
+    binding?.shareOther?.setOnClickListener { shareCardOther() }
   }
 
-  private fun setAdapterCard(cardList: java.util.ArrayList<DigitalCardData>) {
+  private fun shareCardOther() {
+    if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+      ActivityCompat.requestPermissions(baseActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+      return
+    }
+    showProgress()
+    val bitmap = binding?.pagerDigitalCard?.getChildAt(0)?.let { viewToBitmap(it) }
+    try {
+      val cropBitmap = bitmap?.let { Bitmap.createBitmap(it, 33, 0, bitmap.width - 66, bitmap.height) }
+      val path = insertImage(baseActivity.contentResolver, cropBitmap, "boost_360", null)
+      val imageUri: Uri = Uri.parse(path)
+      val intent = Intent(Intent.ACTION_SEND)
+      intent.type = "image/*"
+      intent.putExtra(Intent.EXTRA_STREAM, imageUri)
+      intent.putExtra(Intent.EXTRA_TEXT, "Business Card")
+      baseActivity.startActivity(Intent.createChooser(intent, "Share your business card..."))
+      hideProgress()
+    } catch (e: Exception) {
+      showLongToast("App not Installed")
+      hideProgress()
+    }
+  }
+
+  private fun shareCardWhatsApp() {
+    if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+      ActivityCompat.requestPermissions(baseActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+      return
+    }
+    showProgress()
+    val bitmap = binding?.pagerDigitalCard?.getChildAt(0)?.let { viewToBitmap(it) }
+    val pm = baseActivity.packageManager
+    try {
+      val cropBitmap = bitmap?.let { Bitmap.createBitmap(it, 33, 0, bitmap.width - 66, bitmap.height) }
+      val path = insertImage(baseActivity.contentResolver, cropBitmap, "boost_360", null)
+      val imageUri: Uri = Uri.parse(path)
+      val waIntent = Intent(Intent.ACTION_SEND)
+      waIntent.type = "image/*"
+      waIntent.setPackage("com.whatsapp")
+      waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
+      waIntent.putExtra(Intent.EXTRA_TEXT, "Business Card")
+      baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
+      hideProgress()
+    } catch (e: Exception) {
+      showLongToast("App not Installed")
+      hideProgress()
+    }
+  }
+
+  private fun setAdapterCard(cardList: ArrayList<DigitalCardData>) {
     binding?.pagerDigitalCard?.apply {
       val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, cardList, this@MyDigitalCardFragment)
       offscreenPageLimit = 3
@@ -72,6 +136,12 @@ class MyDigitalCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Channe
       adapter = adapterPager3
       binding?.dotIndicatorCard?.setViewPager2(this)
       setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+      registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+          super.onPageSelected(position)
+          cardPosition = position
+        }
+      })
     }
   }
 
@@ -83,4 +153,11 @@ class MyDigitalCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Channe
 
   }
 
+  override fun showProgress(title: String?, cancelable: Boolean?) {
+    binding?.progress?.visible()
+  }
+
+  override fun hideProgress() {
+    binding?.progress?.gone()
+  }
 }

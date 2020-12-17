@@ -22,7 +22,7 @@ import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
 
-open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
 
@@ -156,7 +156,7 @@ open class AccountFragmentContainerActivity : AppBaseActivity<ActivityFragmentCo
 }
 
 fun Fragment.startFragmentDashboardActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false, requestCode: Int = 101) {
-  val intent = Intent(activity, AccountFragmentContainerActivity::class.java)
+  val intent = Intent(activity, DashboardFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -164,7 +164,7 @@ fun Fragment.startFragmentDashboardActivity(type: FragmentType, bundle: Bundle =
 }
 
 fun startFragmentAccountDashboardNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
-  val intent = Intent(activity, AccountFragmentContainerActivity::class.java)
+  val intent = Intent(activity, DashboardFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -172,7 +172,7 @@ fun startFragmentAccountDashboardNew(activity: Activity, type: FragmentType, bun
 }
 
 fun AppCompatActivity.startFragmentDashboardActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
-  val intent = Intent(this, AccountFragmentContainerActivity::class.java)
+  val intent = Intent(this, DashboardFragmentContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
