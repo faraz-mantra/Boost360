@@ -21,9 +21,9 @@
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_14"
+        android:layout_marginStart="@dimen/size_16"
         android:layout_marginTop="@dimen/size_14"
-        android:layout_marginEnd="@dimen/size_14"
+        android:layout_marginEnd="@dimen/size_16"
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView

@@ -8,7 +8,7 @@
           "items": [
             {
               "quickActionType": "POST_STATUS_STORY",
-              "title": "Daily\nstory"
+              "title": "Daily\nstatus/story"
             },
             {
               "quickActionType": "POST_NEW_UPDATE",
@@ -53,7 +53,7 @@
           "items": [
             {
               "quickActionType": "POST_STATUS_STORY",
-              "title": "Daily\nstory"
+              "title": "Daily\nstatus/story"
             },
             {
               "quickActionType": "POST_NEW_UPDATE",
@@ -80,7 +80,7 @@
               "title": "Add patient\ntestimonial"
             },
             {
-              "quickActionType": "ADD_DOCTOR",
+              "quickActionType": "ADD_FACULTY_MEMBER",
               "title": "Add a\ndoctor"
             },
             {
@@ -106,7 +106,7 @@
           "items": [
             {
               "quickActionType": "POST_STATUS_STORY",
-              "title": "Daily\nstory"
+              "title": "Daily\nstatus/story"
             },
             {
               "quickActionType": "POST_NEW_UPDATE",
@@ -129,7 +129,7 @@
               "title": "Add customer\ntestimonial"
             },
             {
-              "quickActionType": "LIST_SERVICES",
+              "quickActionType": "ADD_FACULTY_MEMBER",
               "title": "Add a\nstaff member"
             },
             {
@@ -151,7 +151,7 @@
           "items": [
             {
               "quickActionType": "POST_STATUS_STORY",
-              "title": "Daily\nstory"
+              "title": "Daily\nstatus/story"
             },
             {
               "quickActionType": "POST_NEW_UPDATE",
@@ -174,7 +174,7 @@
               "title": "Add customer\ntestimonial"
             },
             {
-              "quickActionType": "LIST_SERVICES",
+              "quickActionType": "ADD_FACULTY_MEMBER",
               "title": "Add a\nstaff member"
             },
             {
@@ -196,7 +196,7 @@
           "items": [
             {
               "quickActionType": "POST_STATUS_STORY",
-              "title": "Today's\nStory"
+              "title": "Today's\nstatus/story"
             },
             {
               "quickActionType": "POST_NEW_UPDATE",
@@ -241,7 +241,7 @@
           "items": [
             {
               "quickActionType": "POST_STATUS_STORY",
-              "title": "Today's\nStory"
+              "title": "Today's\nstatus/story"
             },
             {
               "quickActionType": "POST_NEW_UPDATE",
@@ -294,7 +294,7 @@
           "items": [
             {
               "quickActionType": "POST_STATUS_STORY",
-              "title": "Today's\nStory"
+              "title": "Today's\nstatus/story"
             },
             {
               "quickActionType": "POST_NEW_UPDATE",
@@ -351,7 +351,7 @@
           "items": [
             {
               "quickActionType": "POST_STATUS_STORY",
-              "title": "Today's\nStory"
+              "title": "Today's\nstatus/story"
             },
             {
               "quickActionType": "POST_NEW_UPDATE",
@@ -396,7 +396,7 @@
           "items": [
             {
               "quickActionType": "POST_STATUS_STORY",
-              "title": "Today's\nStory"
+              "title": "Today's\nstatus/story"
             },
             {
               "quickActionType": "POST_NEW_UPDATE",
@@ -437,7 +437,7 @@
           "items": [
             {
               "quickActionType": "POST_STATUS_STORY",
-              "title": "Daily\nBusiness Status"
+              "title": "Daily\nstatus/story"
             },
             {
               "quickActionType": "POST_NEW_UPDATE",
@@ -478,7 +478,7 @@
           "items": [
             {
               "quickActionType": "POST_STATUS_STORY",
-              "title": "Daily Business\nStatus"
+              "title": "Daily\nstatus/story"
             },
             {
               "quickActionType": "POST_NEW_UPDATE",
