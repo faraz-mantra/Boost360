@@ -2,7 +2,9 @@ package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+
 import androidx.databinding.DataBindingUtil;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
@@ -50,6 +52,9 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.nowfloats.helper.ValidationUtilsKt.isMobileNumberValid;
+import static com.nowfloats.helper.ValidationUtilsKt.isEmailValid;
+
 
 public class ContactInformationActivity extends BaseActivity {
     ActivityContactInformationBinding binding;
@@ -80,41 +85,36 @@ public class ContactInformationActivity extends BaseActivity {
 
         this.phoneCountryCode = "+".concat(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
         binding.editPrimaryContactNumber.setOnClickListener(v -> {
-            WebEngageController.trackEvent("REGISTERED CONTACT NUMBER","null",null);
+            WebEngageController.trackEvent("REGISTERED CONTACT NUMBER", "null", null);
         });
         binding.editDisplayContactNumber1.setOnClickListener(v -> {
-            WebEngageController.trackEvent("DISPLAY CONTACT 1","null",null);
+            WebEngageController.trackEvent("DISPLAY CONTACT 1", "null", null);
         });
         binding.editDisplayContactNumber1.setOnClickListener(v -> {
-            WebEngageController.trackEvent("DISPLAY CONTACT 2","null",null);
+            WebEngageController.trackEvent("DISPLAY CONTACT 2", "null", null);
         });
         binding.editDisplayContactNumber1.setOnClickListener(v -> {
-            WebEngageController.trackEvent("DISPLAY CONTACT 3","null",null);
+            WebEngageController.trackEvent("DISPLAY CONTACT 3", "null", null);
         });
         binding.editWhatsappNumber.setOnClickListener(v -> {
-            WebEngageController.trackEvent("WHATSAPP FOR BUSINESS NUMBER","null",null);
+            WebEngageController.trackEvent("WHATSAPP FOR BUSINESS NUMBER", "null", null);
         });
         binding.editBusinessEmailAddress.setOnClickListener(v -> {
-            WebEngageController.trackEvent("EMAIL ADDRESS","null",null);
+            WebEngageController.trackEvent("EMAIL ADDRESS", "null", null);
         });
         binding.editWebsiteAddress.setOnClickListener(v -> {
-            WebEngageController.trackEvent("OTHER WEBSITE","null",null);
+            WebEngageController.trackEvent("OTHER WEBSITE", "null", null);
         });
         binding.editFbPageWidget.setOnClickListener(v -> {
-            WebEngageController.trackEvent("FACEBOOK PAGE URL","null",null);
+            WebEngageController.trackEvent("FACEBOOK PAGE URL", "null", null);
         });
 
         binding.editPrimaryContactNumber.setOnTouchListener((v, event) -> {
 
-            if (event.getAction() == MotionEvent.ACTION_UP)
-            {
-                if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz"))
-                {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                     showOtpDialog();
-                }
-
-                else
-                {
+                } else {
                     dialog().show();
                 }
             }
@@ -124,8 +124,7 @@ public class ContactInformationActivity extends BaseActivity {
 
         binding.editCallTrackerNumber.setOnTouchListener((v, event) -> {
 
-            if (event.getAction() == MotionEvent.ACTION_UP)
-            {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
                 dialog().show();
             }
 
@@ -435,26 +434,32 @@ public class ContactInformationActivity extends BaseActivity {
 
 
     private boolean isValid() {
-        if (binding.editDisplayContactNumber1.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber1.getText().toString().trim().length() < 6) {
-            Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+        String contactNumber1 = binding.editDisplayContactNumber1.getText().toString().trim();
+        String contactNumber2 = binding.editDisplayContactNumber2.getText().toString().trim();
+        String contactNumber3 = binding.editDisplayContactNumber3.getText().toString().trim();
+        String whatsAppNumber = binding.editWhatsappNumber.getText().toString().trim();
+        String businessEmailAddress = binding.editBusinessEmailAddress.getText().toString().trim();
+
+       if (!contactNumber1.isEmpty() && !isMobileNumberValid(contactNumber1)){
+            Methods.showSnackBarNegative(this, getResources().getString(R.string.contact_number_not_valid));
             binding.editDisplayContactNumber1.requestFocus();
             return false;
         }
 
-        if (binding.editDisplayContactNumber2.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber2.getText().toString().trim().length() < 6) {
-            Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+        if (!contactNumber2.isEmpty() && !isMobileNumberValid(contactNumber2)){
+            Methods.showSnackBarNegative(this, getResources().getString(R.string.contact_number_not_valid));
             binding.editDisplayContactNumber2.requestFocus();
             return false;
         }
 
-        if (binding.editDisplayContactNumber3.getText().toString().trim().length() > 0 && binding.editDisplayContactNumber3.getText().toString().trim().length() < 6) {
-            Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+         if (!contactNumber3.isEmpty() && !isMobileNumberValid(contactNumber3)){
+            Methods.showSnackBarNegative(this, getResources().getString(R.string.contact_number_not_valid));
             binding.editDisplayContactNumber3.requestFocus();
             return false;
         }
 
-        if (binding.editWhatsappNumber.getText().toString().trim().length() > 0 && binding.editWhatsappNumber.getText().toString().trim().length() < 6) {
-            Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+     if (!whatsAppNumber.isEmpty() && !isMobileNumberValid(whatsAppNumber)){
+            Methods.showSnackBarNegative(this, getResources().getString(R.string.contact_number_not_valid));
             binding.editWhatsappNumber.requestFocus();
             return false;
         }
@@ -465,7 +470,7 @@ public class ContactInformationActivity extends BaseActivity {
             return false;
         }
 
-        if (binding.editBusinessEmailAddress.getText().toString().trim().length() > 0 && !isValidEmail(binding.editBusinessEmailAddress.getText().toString())) {
+        if (!businessEmailAddress.isEmpty() && !isEmailValid(businessEmailAddress)){
             Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_valid_email));
             binding.editBusinessEmailAddress.requestFocus();
             return false;
@@ -474,15 +479,6 @@ public class ContactInformationActivity extends BaseActivity {
         return true;
     }
 
-
-    private boolean isValidEmail(String email) {
-        String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
-        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
 
     private boolean isValidWebsite(String website) {
         Pattern pattern = Pattern.compile("(@)?(href=')?(HREF=')?(HREF=\")?(href=\")?(http://)?[a-zA-Z_0-9\\-]+(\\.\\w[a-zA-Z_0-9\\-]+)+(/[#&\\n\\-=?\\+\\%/\\.\\w]+)?");
@@ -715,8 +711,7 @@ public class ContactInformationActivity extends BaseActivity {
     /**
      * Add tooltip button listener
      */
-    private void addInfoButtonListener()
-    {
+    private void addInfoButtonListener() {
         binding.ibInfoWhatsapp.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "This is your WhatsApp number.", binding.ibInfoWhatsapp));
     }
 }

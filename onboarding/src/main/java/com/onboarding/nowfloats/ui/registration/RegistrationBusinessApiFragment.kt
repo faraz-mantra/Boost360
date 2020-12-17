@@ -324,8 +324,8 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     createRequest.clientId = clientId
     createRequest.tag = requestFloatsModel?.contactInfo?.domainName
     createRequest.name = requestFloatsModel?.contactInfo?.businessName
-    createRequest.address = requestFloatsModel?.contactInfo?.address
-    createRequest.city = ""
+    createRequest.address = ""
+    createRequest.city = requestFloatsModel?.contactInfo?.addressCity
     createRequest.pincode = ""
     createRequest.country = "India"
     createRequest.primaryNumber = requestFloatsModel?.contactInfo?.number

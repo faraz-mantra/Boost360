@@ -51,6 +51,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent("Google My business page load", "GOOGLE MY BUSINESS", "")
     checkIsUpdate()
     binding?.googleChannels?.post {
       (binding?.googleChannels?.fadeIn()?.mergeWith(binding?.viewBusiness?.fadeIn()))
@@ -94,13 +95,19 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.skip -> gotoNextScreen()
+      binding?.skip -> {
+        WebEngageController.trackEvent("Google My business click to skip", "GOOGLE MY BUSINESS","")
+        gotoNextScreen()
+      }
       binding?.linkGoogle -> {
         if (channelAccessToken.isLinkedGoogleBusiness()) {
           gotoNextScreen()
         } else if (!NetworkUtils.isNetworkConnected()) {
           InternetErrorDialog().show(parentFragmentManager, InternetErrorDialog::class.java.name)
-        } else googleLoginCallback(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
+        } else {
+          WebEngageController.trackEvent("Google My business click to connect", "GOOGLE MY BUSINESS","")
+          googleLoginCallback(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
+        }
       }
     }
   }
@@ -145,6 +152,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
   }
 
   private fun disconnectGooglePage() {
+    WebEngageController.trackEvent("Google My business click to disconnect", "GOOGLE MY BUSINESS","")
     logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
     binding?.skip?.visible()
     binding?.googlePageSuccess?.maimView?.gone()
@@ -174,7 +182,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
             selectLocation(result, response, responseLocation?.locations)
           } else {
             logoutGoogle(baseActivity, GoogleGraphPath.GMB_SIGN_IN)
-            showLongToast("Business location not found.")
+            GmbLocationAddDialog().show(parentFragmentManager, GmbLocationAddDialog::class.java.name)
           }
         })
       } else {

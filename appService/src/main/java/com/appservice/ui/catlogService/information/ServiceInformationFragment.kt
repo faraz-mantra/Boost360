@@ -22,6 +22,7 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.ui.catlogService.widgets.ClickType
 import com.appservice.ui.catlogService.widgets.GstDetailsBottomSheet
 import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
+import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.observeOnce
 import com.framework.imagepicker.ImagePicker
@@ -58,6 +59,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   override fun onCreateView() {
     super.onCreateView()
+    WebEngageController.trackEvent("Service other information catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
+
     setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage,
         binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst)
     product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? Product
@@ -159,6 +162,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 //        return
 //      }
       else -> {
+        WebEngageController.trackEvent("Other information confirm", "SERVICE CATALOGUE ADD/UPDATE", "")
         product?.category = serviceCategory
         product?.brandName = brand
         product?.tags = tagList

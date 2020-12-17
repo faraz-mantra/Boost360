@@ -12,8 +12,8 @@
       android:id="@+id/main_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:paddingHorizontal="@dimen/size_30"
-      android:paddingVertical="@dimen/size_20"
+      android:paddingHorizontal="@dimen/size_16"
+      android:paddingVertical="@dimen/size_10"
       android:visibility="gone"
       tools:visibility="visible">
 
@@ -44,7 +44,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="bottom"
-          android:layout_marginStart="@dimen/size_20"
+          android:layout_marginStart="@dimen/size_16"
           android:orientation="vertical">
 
           <com.framework.views.customViews.CustomTextView
@@ -73,7 +73,7 @@
         android:id="@+id/heading_pan_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_14"
+        android:layout_marginTop="@dimen/size_12"
         android:text="@string/name_as_mentioned_on_pan_card"
         android:textColor="@color/warm_grey"
         app:fontFamily="@font/regular"
@@ -85,7 +85,7 @@
         android:id="@+id/tv_pan_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_4"
+        android:layout_marginTop="@dimen/size_2"
         android:text="@string/propizio_real_estate_private_limited_all_caps"
         android:textColor="@color/greyish_brown"
         app:fontFamily="@font/regular"
@@ -97,7 +97,7 @@
         android:id="@+id/heading_bank_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_14"
+        android:layout_marginTop="@dimen/size_12"
         android:text="@string/associated_bank_account"
         android:textColor="@color/warm_grey"
         app:fontFamily="@font/regular"
@@ -109,7 +109,7 @@
         android:id="@+id/tv_bank_acc_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_4"
+        android:layout_marginTop="@dimen/size_2"
         android:text="@string/a_c_no_34565xxxxx45465"
         android:textColor="@color/greyish_brown"
         app:fontFamily="@font/regular"
@@ -137,12 +137,12 @@
         app:layout_constraintTop_toBottomOf="@id/tv_bank_branch_details">
 
         <com.framework.views.customViews.CustomCardView
-          android:layout_width="@dimen/size_130"
-          android:layout_height="@dimen/size_130"
+          android:layout_width="@dimen/size_120"
+          android:layout_height="@dimen/size_120"
           android:clipToPadding="false"
           android:outlineSpotShadowColor="@color/gray_text_hint"
           app:cardBackgroundColor="@color/white"
-          app:cardCornerRadius="@dimen/size_65"
+          app:cardCornerRadius="@dimen/size_60"
           app:cardPreventCornerOverlap="false"
           app:contentPadding="-50dp"
           tools:ignore="UnusedAttribute">
@@ -160,7 +160,7 @@
           android:id="@+id/txt_verification"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_12"
           android:text="@string/business_kyc_verification_underway_n"
           android:textColor="@color/greyish_brown"
           app:fontFamily="@font/regular"
@@ -170,7 +170,7 @@
           android:id="@+id/txt_desc_kyc"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_10"
+          android:layout_marginTop="@dimen/size_6"
           android:fontFamily="@font/regular"
           android:gravity="center"
           android:text="@string/verification_underway_details"
@@ -186,7 +186,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_refresh_btn"
         android:gravity="center"
-        android:paddingVertical="@dimen/size_14"
+        android:paddingVertical="@dimen/size_12"
         android:text="@string/refresh_status_camel_case"
         android:textAllCaps="false"
         android:textColor="@color/colorAccent"

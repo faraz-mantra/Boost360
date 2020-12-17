@@ -32,6 +32,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -79,6 +80,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -721,9 +723,9 @@ public class Create_Message_Activity extends AppCompatActivity {
     }
 
     private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
-        if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
+        if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.CAMERA.name())) {
             cameraIntent();
-        }else if(image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())){
+        } else if (image_click_type.name().equals(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE.GALLERY.name())) {
             galleryIntent();
         }
     }
@@ -1010,7 +1012,11 @@ public class Create_Message_Activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mBusEvent.register(this);
+        try {
+            mBusEvent.register(this);
+        } catch (Exception e) {
+            Log.e(Create_Message_Activity.class.getName(), "Error " + e.getLocalizedMessage());
+        }
         if (!Util.isNullOrEmpty(session.getFacebookName()) && pref.getInt("fbStatus", 3) == 1) {
             facbookEnabled = true;
             mFbProfileShare = 1;
