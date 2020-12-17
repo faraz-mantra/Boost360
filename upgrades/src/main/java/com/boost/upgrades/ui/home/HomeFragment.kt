@@ -625,13 +625,13 @@ class HomeFragment : BaseFragment(), HomeListener {
         //show dot indicator only when the (list.size > 2)
         if (list.size > 1) {
             if (list.size > 2) {
-//                banner_viewpager.setPageTransformer(SimplePageTransformer())
+                banner_viewpager.setPageTransformer(SimplePageTransformer())
 
-//                val itemDecoration = HorizontalMarginItemDecoration(
-//                        requireContext(),
-//                        R.dimen.viewpager_current_item_horizontal_margin
-//                )
-//                banner_viewpager.addItemDecoration(itemDecoration)
+                val itemDecoration = HorizontalMarginItemDecoration(
+                        requireContext(),
+                        R.dimen.viewpager_current_item_horizontal_margin
+                )
+                banner_viewpager.addItemDecoration(itemDecoration)
             }
             banner_indicator.visibility = View.VISIBLE
         } else {
@@ -732,7 +732,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onPackageClicked(item: Bundles?) {
-        Log.v("onPackageClicked", " "+ item.toString())
+        WebEngageController.trackEvent("Feature packs Clicked", "ADDONS_MARKETPLACE", item?.name?:"")
         val packageFragment = PackageFragment.newInstance()
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
@@ -816,7 +816,7 @@ class HomeFragment : BaseFragment(), HomeListener {
             details.arguments = args
             (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
 
-        } else if (item!!.cta_bundle_identifier != null) {
+        } else if (item.cta_bundle_identifier.isNullOrEmpty().not()) {
             CompositeDisposable().add(
                     AppDatabase.getInstance(requireActivity().application)!!
                             .bundlesDao()
@@ -873,8 +873,9 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onPartnerZoneClicked(item: PartnerZone?) {
+        WebEngageController.trackEvent("Partner's Promo banners Clicked", "ADDONS_MARKETPLACE", item?.title?:"")
         Log.i("onPartnerZoneClicked >>", item.toString())
-        if (item!!.cta_feature_key != null) {
+        if (item!!.cta_feature_key.isNullOrEmpty().not()) {
 
             val details = DetailsFragment.newInstance()
             val args = Bundle()
@@ -882,7 +883,7 @@ class HomeFragment : BaseFragment(), HomeListener {
             details.arguments = args
             (activity as UpgradeActivity).addFragment(details, Constants.DETAILS_FRAGMENT)
 
-        } else if (item!!.cta_bundle_identifier != null) {
+        } else if (item.cta_bundle_identifier.isNullOrEmpty().not()) {
             CompositeDisposable().add(
                     AppDatabase.getInstance(requireActivity().application)!!
                             .bundlesDao()
@@ -916,7 +917,7 @@ class HomeFragment : BaseFragment(), HomeListener {
                                 it.printStackTrace()
                             })
             )
-        } else if (item!!.cta_web_link != null) {
+        } else if (item.cta_web_link.isNullOrEmpty().not()) {
 
             val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
             val args = Bundle()
@@ -939,8 +940,10 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int) {
-        if (item != null)
+        if (item != null) {
+            WebEngageController.trackEvent("Feature deals add cart Clicked", "ADDONS_MARKETPLACE", item.name?:"")
             viewModel.addItemToCart(item, minMonth)
+        }
     }
 
     override fun onAddonsCategoryClicked(categoryType: String) {
@@ -956,6 +959,7 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
+        WebEngageController.trackEvent("Video gallery Clicked", "ADDONS_MARKETPLACE", videoItem.title?:"")
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link)
         val link: List<String> = videoItem.youtube_link!!.split('/')
         videoPlayerWebView.getSettings().setJavaScriptEnabled(true)

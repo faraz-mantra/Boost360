@@ -58,7 +58,7 @@ class RegistrationBusinessWebsiteFragment : BaseRegistrationFragment<FragmentReg
   }
 
   private fun getRequestData(): BusinessDomainSuggestRequest {
-    return BusinessDomainSuggestRequest(clientId, requestFloatsModel?.contactInfo?.businessName, requestFloatsModel?.contactInfo?.address, category = requestFloatsModel?.categoryDataModel?.category_key)
+    return BusinessDomainSuggestRequest(clientId, requestFloatsModel?.contactInfo?.businessName, requestFloatsModel?.contactInfo?.addressCity, category = requestFloatsModel?.categoryDataModel?.category_key)
   }
 
   private fun apiCheckDomainSuggest(requestData: BusinessDomainSuggestRequest) {

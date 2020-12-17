@@ -56,6 +56,20 @@ in api 29 for ImagePicker library in ManageProductFragment-->
         tools:ignore="UnusedAttribute"
         android:requestLegacyExternalStorage="true"
         tools:replace="android:name,android:theme,android:appComponentFactory">
+
+        <meta-data android:name="invitereferrals_bid" android:value="31445" >
+        </meta-data>
+        <meta-data android:name="invitereferrals_bid_e" android:value="355BCB8D72414FBD784338ADC28FCA09">
+        </meta-data>
+
+<!--        <receiver-->
+<!--            android:name="com.invitereferrals.invitereferrals.InviteReferrerBroadcastReceiver"-->
+<!--            android:exported="true" >-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.android.vending.INSTALL_REFERRER" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
+
         <activity
             android:name="com.nowfloats.Restaurants.BookATable.BookATableActivity"
             android:screenOrientation="portrait" />

@@ -31,15 +31,14 @@ public class BusinessAddressUpdateApi {
     UserSessionManager session;
     String city, pincode, address;
     double latitude, longitude;
+    ListenerNew listenerNew;
 
     BusinessAddressUpdateModel addressModel = new BusinessAddressUpdateModel();
     List<BusinessAddressUpdateModel.Update> list = new ArrayList<>();
 
-    public BusinessAddressUpdateApi(double latitude,
-                                    double longitude,
-                                    Activity context,
-                                    String city, String pincode,
-                                    String address, boolean addressAdd, String fpTag) {
+    public BusinessAddressUpdateApi(double latitude, double longitude,
+                                    Activity context, String city, String pincode,
+                                    String address, boolean addressAdd, String fpTag, ListenerNew listenerNew) {
 //values are coming from the bussiness address fragment
         this.appContext = context;
         String location = latitude + "," + longitude;
@@ -70,6 +69,7 @@ public class BusinessAddressUpdateApi {
         addressModel.setClientId(Constants.clientId);
         addressModel.setUpdates(list);
         addressModel.setFpTag(fpTag);
+        this.listenerNew = listenerNew;
         session = new UserSessionManager(appContext, context);
 
     }
@@ -91,6 +91,7 @@ public class BusinessAddressUpdateApi {
                 session.storeFPDetails(Key_Preferences.LONGITUDE, String.valueOf(longitude));
                 Methods.showSnackBarPositive(appContext, "Update Address successful");
                 NewMapViewDialogBusinessAddress.updatingPostionFromMap = true;
+                if (listenerNew != null) listenerNew.updateAddress(true);
 
             }
 
@@ -99,6 +100,7 @@ public class BusinessAddressUpdateApi {
                 if (pd != null && pd.isShowing())
                     pd.dismiss();
                 //Log.v("ggg",error+"update address json error");
+                if (listenerNew != null) listenerNew.updateAddress(false);
             }
         });
     }
@@ -108,4 +110,7 @@ public class BusinessAddressUpdateApi {
         void updateAddress(@Body BusinessAddressUpdateModel model, Callback<JsonArray> response);
     }
 
+    public interface ListenerNew {
+        void updateAddress(boolean success);
+    }
 }

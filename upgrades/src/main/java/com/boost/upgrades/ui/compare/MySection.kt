@@ -11,7 +11,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.data.model.FeaturesModel
-import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection
 

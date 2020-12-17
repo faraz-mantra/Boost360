@@ -311,7 +311,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("clientId", Constants.clientId);
-        hashMap.put("fpid", sessionManager.getFPID());
+        hashMap.put("fpid", sessionManager.getFPParentId());
         hashMap.put("offset", startOffset);
         hashMap.put("limit", String.valueOf(100));
         hashMap.put("identifierType", sessionManager.getISEnterprise().equals("true") ? "MULTI" : "SINGLE");

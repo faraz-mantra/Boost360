@@ -143,6 +143,7 @@ public class Constants {
     public final static String HTTP_PUT = "PUT";
     public final static String HTTP_POST = "POST";
     public final static String HTTP_DEL = "DELETE";
+    public final static int REFERRAL_CAMPAIGN_CODE = 26277;
 
 
     public static OkHttpClient getClient() {

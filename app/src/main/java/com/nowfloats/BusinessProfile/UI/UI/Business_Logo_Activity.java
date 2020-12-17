@@ -111,14 +111,17 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
 
             if(iconUrl!=null && iconUrl.length()>0 && !iconUrl.contains("http")) {
+                uploadButton.setText("CHANGE");
                 //String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
                 BoostLog.d("Logo Url:", iconUrl);
                 Glide.with(this).asGif().load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
             }else{
                 if(iconUrl!=null && iconUrl.length()>0) {
+                    uploadButton.setText("CHANGE");
                     BoostLog.d("Logo Url:", iconUrl);
                     Glide.with(this).load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
                 }else{
+                    uploadButton.setText("ADD");
                     Glide.with(this).asGif().load(R.drawable.logo_default_image).into(logoimageView);
                 }
             }
@@ -445,10 +448,14 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
     public void uploadPrimaryPicture(String path) {
         new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());
-        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this,path,session.getFPID(), session);
+        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this, path, session.getFPID(), session, this::changeText);
         upload_logo.execute();
 //        Constants.isImgUploaded = false;
 //        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Business_Logo_Activity.this, path, false,true,session.getFPID());
 //        upa.execute();
+    }
+
+    private void changeText(Boolean siSuccess) {
+        uploadButton.setText("CHANGE");
     }
 }

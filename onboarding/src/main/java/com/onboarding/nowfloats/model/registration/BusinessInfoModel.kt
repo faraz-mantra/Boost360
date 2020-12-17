@@ -10,7 +10,7 @@ import java.net.URL
 
 class BusinessInfoModel(
     var businessName: String? = null,
-    var address: String? = null,
+    var addressCity: String? = null,
     var email: String? = null,
     var number: String? = null,
     var domainName: String? = null
@@ -40,7 +40,7 @@ class BusinessInfoModel(
 
   override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
     writeString(businessName)
-    writeString(address)
+    writeString(addressCity)
     writeString(email)
     writeString(number)
     writeString(domainName)
@@ -73,14 +73,14 @@ class BusinessInfoModel(
 
   fun clearAllDomain() {
     businessName = null
-    address = null
+    addressCity = null
     email = null
     number = null
     domainName = null
   }
 
   fun isAllExceptDomainEmpty(): Boolean {
-    return businessName.isNullOrEmpty() && address.isNullOrEmpty() && email.isNullOrEmpty()
+    return businessName.isNullOrEmpty() && addressCity.isNullOrEmpty() && email.isNullOrEmpty()
         && number.isNullOrEmpty()
   }
 
