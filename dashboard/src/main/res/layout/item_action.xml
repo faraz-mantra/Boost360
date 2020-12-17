@@ -30,6 +30,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_4"
       android:gravity="center"
+      android:textAlignment="gravity"
       android:textColor="@color/warm_grey_two"
       app:textType="CAPTION"
       tools:text="Add photo\nto gallery" />

@@ -503,8 +503,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
       QuickActionData.QuickActionType.ADD_SLIDER_BANNER -> {
       }
-      QuickActionData.QuickActionType.ADD_DOCTOR -> {
-      }
       QuickActionData.QuickActionType.ADD_ROOM_TYPE -> {
       }
       QuickActionData.QuickActionType.PLACE_ORDER_BOOKING -> {

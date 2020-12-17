@@ -10,7 +10,7 @@
   <com.framework.views.customViews.CustomCardView
     android:layout_width="match_parent"
     android:layout_height="@dimen/size_146"
-    android:layout_margin="@dimen/size_3"
+    android:layout_margin="@dimen/size_4"
     android:id="@+id/main_content"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/size_10"

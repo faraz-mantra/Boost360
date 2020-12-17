@@ -10,8 +10,8 @@
   <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="@dimen/size_14"
-    android:layout_marginEnd="@dimen/size_14">
+    android:layout_marginStart="@dimen/size_15"
+    android:layout_marginEnd="@dimen/size_15">
 
     <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/view_business_count"
