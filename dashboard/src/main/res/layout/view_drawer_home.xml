@@ -7,205 +7,214 @@
 
   </data>
 
-  <androidx.core.widget.NestedScrollView
-    android:layout_width="@dimen/size_320"
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     android:layout_gravity="end"
-    android:background="@color/white">
+    android:weightSum="10">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1" />
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="0dp"
       android:layout_height="match_parent"
-      android:orientation="vertical">
+      android:layout_weight="9"
+      android:background="@color/white">
 
-      <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_156">
-
-        <com.framework.views.customViews.CustomImageView
-          android:id="@+id/bg_image"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:scaleType="centerCrop"
-          app:srcCompat="@drawable/general_services_background_img_d" />
-
-        <com.framework.views.customViews.CustomImageView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:scaleType="centerCrop"
-          app:srcCompat="@drawable/cover_gradient_d" />
-
-        <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:gravity="center"
-          android:orientation="vertical">
-
-          <com.framework.views.roundedimageview.RoundedImageView
-            android:id="@+id/img_business_logo"
-            android:layout_width="@dimen/size_65"
-            android:layout_height="@dimen/size_65"
-            android:scaleType="fitXY"
-            app:riv_border_color="@color/white"
-            app:riv_border_width="2dip"
-            app:riv_corner_radius="30dip"
-            app:riv_mutate_background="true"
-            app:riv_oval="true"
-            app:srcCompat="@drawable/business_edit_profile_icon_d" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/txt_business_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_10"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:text="Test"
-            android:textColor="@color/white"
-            app:fontFamily="@font/bold"
-            app:textType="BODY_1" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/txt_domain_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_2"
-            android:paddingTop="@dimen/size_1"
-            android:paddingBottom="@dimen/size_1"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:text="@string/www_sravansclinic_com"
-            android:textColor="@color/white"
-            app:textType="CAPTION" />
-        </LinearLayout>
-
-
-        <com.framework.views.customViews.CustomImageView
-          android:id="@+id/background_image"
-          android:layout_width="@dimen/size_36"
-          android:layout_height="@dimen/size_36"
-          android:layout_gravity="end"
-          android:layout_margin="@dimen/size_6"
-          android:background="@drawable/transparent_background_circle_d"
-          android:padding="@dimen/size_7"
-          android:scaleType="centerCrop"
-          app:srcCompat="@drawable/camera_button_d" />
-      </FrameLayout>
-
-      <LinearLayout
-        android:id="@+id/btn_site_meter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_6"
-        android:layout_marginEnd="@dimen/size_6"
-        android:background="?android:attr/activatedBackgroundIndicator"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal">
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/txt_percentage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:textColor="@color/greyish_brown"
-            app:fontFamily="@font/sans_medium"
-            app:textType="HEADING_6"
-            tools:text="43%" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_2"
-            android:includeFontPadding="false"
-            android:text="@string/site_completed"
-            android:textColor="@color/warm_grey"
-            app:fontFamily="@font/sans_medium"
-            app:textType="CAPTION" />
-
-          <com.framework.views.customViews.CustomTextView
-            android:id="@+id/txt_site_helth"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:includeFontPadding="false"
-            android:text="@string/your_site_health"
-            android:textAlignment="gravity"
-            android:textColor="@color/accent_dark"
-            app:fontFamily="@font/sans_medium"
-            app:textType="CAPTION" />
-        </LinearLayout>
-
-        <ProgressBar
-          android:id="@+id/progressBar"
-          style="@style/CustomProgressBar"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/size_5"
-          android:layout_marginTop="@dimen/size_6"
-          android:max="100"
-          tools:progress="50" />
-      </LinearLayout>
-
-
-      <com.framework.views.viewgroups.BaseRecyclerView
-        android:id="@+id/rv_left_drawer"
+      <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:itemCount="8"
-        tools:listitem="@layout/item_drawer_view" />
+        android:orientation="vertical">
 
-      <com.framework.views.customViews.CustomTextView
-        android:id="@+id/txt_version"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_2"
-        android:layout_marginTop="@dimen/size_28"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:textColor="@color/greyish_brown"
-        app:fontFamily="@font/light"
-        app:textType="CAPTION"
-        tools:text="Version 5.3.35" />
+        <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_156">
 
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/size_2"
-        android:paddingBottom="@dimen/size_22">
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/bg_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/general_services_background_img_d" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/cover_gradient_d" />
+
+          <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.framework.views.roundedimageview.RoundedImageView
+              android:id="@+id/img_business_logo"
+              android:layout_width="@dimen/size_65"
+              android:layout_height="@dimen/size_65"
+              android:scaleType="fitXY"
+              app:riv_border_color="@color/white"
+              app:riv_border_width="2dip"
+              app:riv_corner_radius="30dip"
+              app:riv_mutate_background="true"
+              app:riv_oval="true"
+              app:srcCompat="@drawable/business_edit_profile_icon_d" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/txt_business_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_10"
+              android:ellipsize="end"
+              android:includeFontPadding="false"
+              android:maxLines="1"
+              android:text="Test"
+              android:textColor="@color/white"
+              app:fontFamily="@font/bold"
+              app:textType="BODY_1" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/txt_domain_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_2"
+              android:ellipsize="end"
+              android:includeFontPadding="false"
+              android:maxLines="1"
+              android:paddingTop="@dimen/size_1"
+              android:paddingBottom="@dimen/size_1"
+              android:text="@string/www_sravansclinic_com"
+              android:textColor="@color/white"
+              app:textType="CAPTION" />
+          </LinearLayout>
+
+
+          <com.framework.views.customViews.CustomImageView
+            android:id="@+id/background_image"
+            android:layout_width="@dimen/size_36"
+            android:layout_height="@dimen/size_36"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/size_6"
+            android:background="@drawable/transparent_background_circle_d"
+            android:padding="@dimen/size_7"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/camera_button_d" />
+        </FrameLayout>
+
+        <LinearLayout
+          android:id="@+id/btn_site_meter"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_6"
+          android:layout_marginEnd="@dimen/size_6"
+          android:background="?android:attr/activatedBackgroundIndicator"
+          android:minHeight="?android:attr/listPreferredItemHeightSmall"
+          android:orientation="vertical"
+          android:padding="10dp">
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/txt_percentage"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:includeFontPadding="false"
+              android:textColor="@color/greyish_brown"
+              app:textType="HEADING_6"
+              tools:text="43%" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_2"
+              android:includeFontPadding="false"
+              android:text="@string/site_completed"
+              android:textColor="@color/warm_grey"
+              app:textType="CAPTION" />
+
+            <com.framework.views.customViews.CustomTextView
+              android:id="@+id/txt_site_helth"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:gravity="end"
+              android:includeFontPadding="false"
+              android:text="@string/your_site_health"
+              android:textAlignment="gravity"
+              android:textColor="@color/accent_dark"
+              app:textType="CAPTION" />
+          </LinearLayout>
+
+          <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/CustomProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_5"
+            android:layout_marginTop="@dimen/size_6"
+            android:max="100"
+            tools:progress="50" />
+        </LinearLayout>
+
+
+        <com.framework.views.viewgroups.BaseRecyclerView
+          android:id="@+id/rv_left_drawer"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+          tools:itemCount="8"
+          tools:listitem="@layout/item_drawer_view" />
 
         <com.framework.views.customViews.CustomTextView
-          android:layout_width="wrap_content"
+          android:id="@+id/txt_version"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_2"
+          android:layout_marginTop="@dimen/size_28"
+          android:gravity="center"
           android:includeFontPadding="false"
-          android:text="Powered By"
           android:textColor="@color/greyish_brown"
           app:fontFamily="@font/light"
-          app:textType="CAPTION" />
+          app:textType="CAPTION"
+          tools:text="Version 5.3.35" />
 
-        <com.framework.views.customViews.CustomTextView
-          android:layout_width="wrap_content"
+        <LinearLayout
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/size_2"
-          android:includeFontPadding="false"
-          android:text=" NowFloats"
-          android:textColor="@color/pencil_shade"
-          app:fontFamily="@font/sans_medium"
-          app:textType="CAPTION" />
-      </LinearLayout>
-    </androidx.appcompat.widget.LinearLayoutCompat>
-  </androidx.core.widget.NestedScrollView>
+          android:gravity="center"
+          android:orientation="horizontal"
+          android:paddingTop="@dimen/size_2"
+          android:paddingBottom="@dimen/size_22">
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_2"
+            android:includeFontPadding="false"
+            android:text="@string/powered_by"
+            android:textColor="@color/greyish_brown"
+            app:fontFamily="@font/light"
+            app:textType="CAPTION" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_3"
+            android:includeFontPadding="false"
+            android:text="@string/nowfloats"
+            android:textColor="@color/pencil_shade"
+            app:textType="CAPTION" />
+        </LinearLayout>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+  </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

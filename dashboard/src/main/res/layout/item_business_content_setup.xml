@@ -125,7 +125,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black_4f4f4f"
-            app:fontFamily="@font/sans_medium"
             app:textType="HEADING_6"
             tools:text="Business profile setup" />
 
@@ -134,7 +133,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/light_grey_3"
-            app:fontFamily="@font/sans_medium"
             app:textType="BODY_1"
             tools:text="40% remaining" />
         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -55,7 +55,6 @@
             android:maxLines="1"
             tools:text="Customer Orders &amp; Enquiries"
             android:textColor="@color/greyish_brown"
-            app:fontFamily="@font/sans_medium"
             app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomImageView

@@ -65,7 +65,7 @@
             android:layout_margin="@dimen/size_10"
             android:alpha="0"
             android:gravity="center_horizontal"
-            android:text="You've connected all digital channels for your Business."
+            android:text="@string/you_ve_connected_all_digital_channels_for_your_business"
             android:textAlignment="center"
             android:textColor="@color/white"
             app:textType="BODY_2"
@@ -103,7 +103,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_10"
-              android:text="Not Connected (2/6)"
+              tools:text="Not Connected (2/6)"
               android:textColor="@color/white"
               app:textType="HEADING_6" />
           </LinearLayout>
@@ -175,7 +175,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_10"
-                android:text="Connected (2/6)"
+                tools:text="Connected (2/6)"
                 android:textColor="@color/white"
                 app:textType="HEADING_6" />
             </LinearLayout>
@@ -198,11 +198,24 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/note_txt"
+          android:id="@+id/note_about_txt"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_24"
           android:layout_marginTop="@dimen/size_16"
+          android:layout_marginEnd="@dimen/size_24"
+          android:alpha="0"
+          android:text="@string/about_channel_desc"
+          android:textColor="@color/light_grey_two"
+          app:textType="CAPTION"
+          tools:alpha="1" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/note_txt"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_24"
+          android:layout_marginTop="@dimen/size_8"
           android:layout_marginEnd="@dimen/size_24"
           android:alpha="0"
           android:text="@string/channels_belong_to_respective_owners_boost_360_does_not_own_them"
