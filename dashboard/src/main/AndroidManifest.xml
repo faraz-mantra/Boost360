@@ -12,7 +12,7 @@
       android:theme="@style/DashboardTheme" />
 
     <activity
-      android:name=".controller.AccountFragmentContainerActivity"
+      android:name=".controller.DashboardFragmentContainerActivity"
       android:theme="@style/DashboardTheme" />
   </application>
 </manifest>
