@@ -21,6 +21,10 @@ import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
+import com.dashboard.model.live.premiumBanner.PremiumFeatureData
+import com.dashboard.model.live.premiumBanner.PromoBanner
+import com.dashboard.model.live.premiumBanner.UpgradePremiumFeatureResponse
+import com.dashboard.model.live.premiumBanner.marketBannerFilter
 import com.dashboard.model.live.quickAction.QuickActionData
 import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.model.live.quickAction.QuickActionResponse
@@ -73,6 +77,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterPagerBusinessUpdate: AppBaseRecyclerViewAdapter<BusinessSetupHighData>? = null
   private var adapterRoi: AppBaseRecyclerViewAdapter<RoiSummaryData>? = null
   private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
+  private var adapterMarketBanner: AppBaseRecyclerViewAdapter<PromoBanner>? = null
   private var siteMeterData: SiteMeterScoreDetails? = null
   private var quickActionPosition = 0
   private var isFirsLoad = true
@@ -93,7 +98,21 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     binding?.txtVersion?.text = "Version $versionName"
     getCategoryData()
     apiSellerSummary()
+    getPremiumBanner()
     setDataRiaAcademy()
+  }
+
+  private fun getPremiumBanner() {
+    val promoBanners = PremiumFeatureData().getMarketPlaceBanners()
+    if (promoBanners.isNullOrEmpty().not()) promoBanners?.marketBannerFilter(session)?.let { it1 -> setDataMarketBanner(it1) }
+    viewModel?.getUpgradePremiumBanner()?.observeOnce(viewLifecycleOwner, {
+      val response = it as? UpgradePremiumFeatureResponse
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        val data = response.data?.get(0)
+        data?.saveDataMarketPlace()
+        data?.promoBanners?.marketBannerFilter(session)?.let { it1 -> setDataMarketBanner(it1) }
+      }
+    })
   }
 
   override fun onResume() {
@@ -119,6 +138,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     if (isRecreate != null && this.isHigh != this.isRecreate) {
       getCategoryData()
       apiSellerSummary()
+      getPremiumBanner()
       setDataRiaAcademy()
       setUserBusinessAllData(siteMeterData)
     } else setUserBusinessAllData(siteMeterData)
@@ -128,7 +148,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun setUserBusinessAllData(siteMeterData: SiteMeterScoreDetails) {
     setUserData()
     setRecBusinessManageTask()
-    setGrowthStatHigh()
     getNotificationCount()
     getSiteMeter(siteMeterData)
     setDataSellerSummary(OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
@@ -193,20 +212,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  private fun setGrowthStatHigh() {
-    if (isHigh) {
-      binding?.viewHighSummaryBottom?.apply { visible() }
-      binding?.pagerBoostPremium?.apply {
-        val adapterPager4 = AppBaseRecyclerViewAdapter(baseActivity, BoostPremiumData().getDataChannel(), this@DashboardFragment)
-        offscreenPageLimit = 3
-        adapter = adapterPager4
-        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-      }
-    } else {
-      binding?.viewHighSummaryBottom?.apply { gone() }
-    }
-  }
-
   private fun setRecBusinessManageTask() {
     (if (isHigh) binding?.highRecommendedTask else binding?.lowRecommendedTask)?.apply {
       viewModel?.getQuickActionData(baseActivity)?.observeOnce(viewLifecycleOwner, {
@@ -219,7 +224,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
             offscreenPageLimit = 3
             adapter = adapterQuickAction
             dotIndicatorAction.setViewPager2(this)
-            post { currentItem = position }
+            post { setCurrentItem(position,false)}
             setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
               override fun onPageSelected(position: Int) {
@@ -283,6 +288,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun setDataSellerSummary(sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, callSummary: CallSummaryResponse?) {
     if (isHigh) {
+      binding?.viewHighSummaryBottom?.apply { visible() }
       val data = BusinessSetupHighData().getData(siteMeterData?.siteMeterTotalWeight ?: 0,
           summary?.getNoOfUniqueViews() ?: "0", sellerOrder?.getTotalOrders() ?: "0", getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
       if (adapterPagerBusinessUpdate == null) {
@@ -308,7 +314,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           adapter = adapterGrowth
         }
       } else adapterGrowth?.notify(growthStatsList)
-    }
+    }else  binding?.viewHighSummaryBottom?.apply { gone() }
   }
 
   private fun setViewChannels(channels: ArrayList<ChannelModel>?) {
@@ -340,6 +346,21 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 //      setPadding(37, 0, 37, 0)
       adapter = adapterPager3
       setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+    }
+  }
+
+  private fun setDataMarketBanner(marketBannerFilter: ArrayList<PromoBanner>) {
+    if (isHigh) {
+      binding?.pagerBoostPremium?.apply {
+        if (adapterMarketBanner == null) {
+          adapterMarketBanner = AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
+          offscreenPageLimit = 3
+          clipToPadding = false
+          setPadding(0, 0, 37, 0)
+          adapter = adapterMarketBanner
+          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+        } else adapterMarketBanner?.notify(marketBannerFilter)
+      }
     }
   }
 

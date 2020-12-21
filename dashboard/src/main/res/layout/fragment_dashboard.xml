@@ -744,7 +744,7 @@
               <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pager_boost_premium"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_160"
+                android:layout_height="@dimen/size_190"
                 android:layout_marginTop="@dimen/size_16"
                 android:clipChildren="false"
                 android:clipToPadding="false" />
