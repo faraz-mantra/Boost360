@@ -39,6 +39,14 @@ class PackageViewPagerAdapter(
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
         holder.getNowButton.setOnClickListener {
+            homeListener.onPackageAddToCart(list.get(position))
+        }
+
+        holder.details_button.setOnClickListener {
+            homeListener.onPackageClicked(list.get(position))
+        }
+
+        holder.itemView.setOnClickListener {
             homeListener.onPackageClicked(list.get(position))
         }
         holder.name.setText(list.get(position).name)
@@ -61,6 +69,7 @@ class PackageViewPagerAdapter(
         val offerPrice = itemView.findViewById<TextView>(R.id.offer_price)
         val origCost = itemView.findViewById<TextView>(R.id.orig_cost)
         val getNowButton = itemView.findViewById<TextView>(R.id.getnow_button)
+        val details_button = itemView.findViewById<TextView>(R.id.details_button)
         val primaryImage = itemView.findViewById<ImageView>(R.id.package_primary_image)
         val bundleDiscount = itemView.findViewById<TextView>(R.id.bundle_level_discount)
         val bundlePriceLabel = itemView.findViewById<TextView>(R.id.bundle_price_label)

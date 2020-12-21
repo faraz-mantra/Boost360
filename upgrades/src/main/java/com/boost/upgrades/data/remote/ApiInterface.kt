@@ -43,6 +43,10 @@ interface ApiInterface {
   fun CreatePurchaseOrder(@Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<CreatePurchaseOrderResponse>
 
   @Headers("Content-Type: application/json")
+  @POST("http://api2.withfloats.com/Payment/v11/floatingpoint/CreatePurchaseOrder")
+  fun CreatePurchaseAutoRenewOrder(@Body createPurchaseOrderV2: CreatePurchaseOrderV2): Observable<CreatePurchaseOrderResponse>
+
+  @Headers("Content-Type: application/json")
   @GET("discover/v9/floatingPoint/FloatingPointWebWidgets/{floatingPointId}")
   fun GetFloatingPointWebWidgets(@Path("floatingPointId") floatingPointId: String, @Query("clientId") clientId: String): Observable<GetFloatingPointWebWidgetsResponse>
 

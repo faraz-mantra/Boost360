@@ -102,14 +102,17 @@ class UpgradeActivity : AppCompatActivity() {
     isOpenCardFragment = intent.getBooleanExtra("isOpenCardFragment", false)
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
-    userPurchsedWidgets = intent.extras?.getStringArrayList("userPurchsedWidgets") ?: ArrayList()
-    if (userPurchsedWidgets.isNullOrEmpty().not()) {
-      for (a in userPurchsedWidgets) {
-        println("userPurchsedWidgets  ${userPurchsedWidgets}")
-      }
+    userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")
+    if(userPurchsedWidgets != null){
+    for (a in userPurchsedWidgets)  {
+      println("userPurchsedWidgets  ${userPurchsedWidgets}")
     }
+    }
+
     progressDialog = ProgressDialog(this)
+
     prefs = SharedPrefs(this)
+   WebEngageController.trackEvent("ADDONS MARKETPLACE", "pageview", "ADDONS MARKETPLACE HOME")
     initView()
     initRazorPay()
   }
@@ -157,7 +160,7 @@ class UpgradeActivity : AppCompatActivity() {
 
   private fun goHomeActivity() {
     try {
-      val i = Intent(this, Class.forName("com.dashboard.controller.DashboardActivity"))
+      val i = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
       i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
       startActivity(i)
       overridePendingTransition(0, 0)
@@ -175,9 +178,9 @@ class UpgradeActivity : AppCompatActivity() {
         val tag = currentFragment?.tag
         Log.e("back pressed tag", ">>>$tag")
         if (tag != null) {
-          if (tag == CART_FRAGMENT)
+          if(tag == CART_FRAGMENT)
             WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back button_cart screen", "ADDONS_MARKETPLACE", "")
-          if (tag == PAYMENT_FRAGMENT)
+          if(tag == PAYMENT_FRAGMENT)
             WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back_button paymentscreen", "ADDONS_MARKETPLACE", "")
           if (tag == ORDER_CONFIRMATION_FRAGMENT) {
             if (isDeepLink) goHomeActivity()
@@ -226,9 +229,8 @@ class UpgradeActivity : AppCompatActivity() {
     fragmentTransaction!!.addToBackStack(fragmentTag)
     fragmentTransaction!!.commit()
   }
-
   fun addFragmentHome(fragment: Fragment, fragmentTag: String?, args: Bundle?) {
-    fragment.arguments = args
+    fragment.setArguments(args)
     currentFragment = fragment
     fragmentManager = supportFragmentManager
     fragmentTransaction = fragmentManager!!.beginTransaction()

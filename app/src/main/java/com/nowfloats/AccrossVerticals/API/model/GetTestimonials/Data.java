@@ -39,6 +39,86 @@ public class Data {
     @Expose
     private Boolean isArchived;
 
+    @SerializedName("city")
+    @Expose
+    private String city;
+
+    @SerializedName("testimonial")
+    @Expose
+    private String testimonial;
+
+    @SerializedName("customerName")
+    @Expose
+    private String customerName;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public Profileimage getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(Profileimage profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    @SerializedName("profileImage")
+    @Expose
+    private Profileimage profileImage;
+
+    public String getOurStory() {
+        return ourStory;
+    }
+
+    public void setOurStory(String ourStory) {
+        this.ourStory = ourStory;
+    }
+
+    @SerializedName("ourStory")
+    @Expose
+    private String ourStory;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @SerializedName("name")
+    @Expose
+    private String name;
+
+    public Boolean getArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(Boolean archived) {
+        isArchived = archived;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getTestimonial() {
+        return testimonial;
+    }
+
+    public void setTestimonial(String testimonial) {
+        this.testimonial = testimonial;
+    }
+
     public String getId() {
         return id;
     }

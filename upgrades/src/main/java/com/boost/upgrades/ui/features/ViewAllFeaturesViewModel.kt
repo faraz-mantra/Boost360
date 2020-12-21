@@ -35,7 +35,7 @@ class ViewAllFeaturesViewModel(application: Application) : BaseViewModel(applica
         compositeDisposable.add(
                 AppDatabase.getInstance(getApplication())!!
                         .featuresDao()
-                        .getFeaturesItemsByType(categoryType)
+                        .getFeaturesItemsByType(categoryType,"MERCHANT_TRAINING")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSuccess {

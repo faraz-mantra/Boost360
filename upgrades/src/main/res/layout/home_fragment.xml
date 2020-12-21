@@ -219,14 +219,15 @@
                     android:layout_marginBottom="@dimen/_15sdp"
                     android:background="@drawable/button_spherical_click_effect"
                     android:elevation="@dimen/_2sdp"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="@font/open_sans_bold"
                     android:gravity="center"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp"
                     android:text="@string/view_my_add_ons"
                     android:textAllCaps="true"
                     android:textColor="#ffb900"
-                    android:textSize="@dimen/_10ssp"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -296,9 +297,38 @@
                     android:text="Featured Packs"
                     android:textColor="#4a4a4a"
                     android:textFontWeight="600"
-                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/package_compare_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_compare" />
+                    <TextView
+                        android:id="@+id/package_name1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:text="Compare"
+                        android:textColor="#FFB900"
+                        android:textFontWeight="600"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:layout_marginLeft="@dimen/_7sdp"
+                        android:layout_marginRight="@dimen/_9sdp"
+                        android:textSize="@dimen/_12sdp"/>
+                </LinearLayout>
+
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/package_viewpager"
@@ -343,9 +373,11 @@
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:text="Recommended for "
+                    android:fontFamily="@font/open_sans"
+                    android:textStyle="bold"
                     android:textColor="@color/common_text_color"
                     android:textFontWeight="600"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_14sdp" />
 
                 <TextView
                     android:id="@+id/recommended_features_account_type"
@@ -353,10 +385,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:text="hotels and motels"
+                    android:fontFamily="@font/open_sans"
+                    android:textStyle="bold"
                     android:textAllCaps="false"
                     android:textColor="#FFB900"
                     android:textFontWeight="600"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_14sdp" />
             </LinearLayout>
 
 
@@ -465,9 +499,10 @@
                     android:layout_marginStart="@dimen/_15sdp"
                     android:fontFamily="@font/open_sans"
                     android:text="Add-ons by category"
+                    android:textStyle="bold"
                     android:textColor="@color/common_text_color"
                     android:textFontWeight="600"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_16ssp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/addons_category_recycler"
@@ -500,9 +535,11 @@
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_5sdp"
                     android:text="EXPERT GUIDENCE"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textFontWeight="800"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/_10ssp" />
 
                 <LinearLayout
                     android:id="@+id/callnow_layout"
@@ -531,8 +568,9 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
                         android:text="Speak to our expert!"
+                        android:textFontWeight="700"
                         android:textColor="@color/common_text_color"
-                        android:textSize="@dimen/_15sdp"
+                        android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />
 
 
@@ -552,10 +590,11 @@
                         android:paddingEnd="@dimen/_20sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="Call Now"
+                        android:textStyle="bold"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textFontWeight="800"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/_10sdp" />
 
                 </LinearLayout>
 
@@ -714,7 +753,9 @@
                     android:text="Know more about our add-ons"
                     android:textColor="@color/common_text_color"
                     android:textFontWeight="600"
-                    android:textSize="@dimen/_14ssp"
+                    android:fontFamily="@font/open_sans"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_14sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -1183,7 +1224,7 @@
                         android:background="@drawable/share_helper_click_effect"
                         android:clickable="true"
                         android:focusable="true"
-                        android:fontFamily="@font/open_sans"
+                        android:fontFamily="@font/open_sans_bold"
                         android:gravity="center"
                         android:paddingStart="@dimen/_30sdp"
                         android:paddingTop="@dimen/_10sdp"
@@ -1191,7 +1232,9 @@
                         android:paddingBottom="@dimen/_10sdp"
                         android:text="Share your feedback"
                         android:textColor="#FFB900"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_12sdp"
+                        android:textFontWeight="700"/>
 
                 </LinearLayout>
 

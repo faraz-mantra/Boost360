@@ -16,4 +16,5 @@ interface HomeListener {
     fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int)
     fun onAddonsCategoryClicked(categoryType: String)
     fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel)
+    fun onPackageAddToCart(item: Bundles?)
 }

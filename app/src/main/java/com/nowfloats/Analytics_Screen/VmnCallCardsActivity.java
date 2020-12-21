@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,6 +38,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.separ.neural.inputmethod.compat.TextInfoCompatUtils;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -71,6 +73,10 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     VmnCall_Adapter vmnCallAdapter;
     RecyclerView mRecyclerView;
     String selectedViewType="ALL";
+    LinearLayout noCallTrackLayout;
+    LinearLayout secondLayout;
+    LinearLayout firstLayout;
+    TextView tvNoCallRecorded;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,12 +119,14 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         dottedLine2.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         webCallCount = findViewById(R.id.web_call_count);
         phoneCallCount = findViewById(R.id.phone_call_count);
+        tvNoCallRecorded = findViewById(R.id.tv_no_call_recorded);
         allowCallPlayFlag = true;
 
         //tracking calls
         showTrackedCalls();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.call_recycler);
+        noCallTrackLayout =  findViewById(R.id.ll_no_call_tracker);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -201,6 +209,8 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         session = new UserSessionManager(getApplicationContext(), this);
         mainLayout = (LinearLayout) findViewById(R.id.main_layout);
         primaryLayout = findViewById(R.id.primary_layout);
+        secondLayout = findViewById(R.id.second_layout);
+        firstLayout = findViewById(R.id.first_layout);
 
         secondaryLayout = (LinearLayout) findViewById(R.id.secondary_layout);
         buyItemButton = (TextView) findViewById(R.id.buy_item);
@@ -314,11 +324,23 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
                     return;
                 }
                 int size = vmnCallModels.size();
+                Log.v("getCalls"," "+ size);
                 stopApiCall = size < 100;
                 updateRecyclerData(vmnCallModels);
 
                 if (size != 0) {
                     offset += 100;
+                }
+                if(size < 1){
+                    mRecyclerView.setVisibility(View.GONE);
+                    firstLayout.setVisibility(View.GONE);
+                    secondLayout.setVisibility(View.GONE);
+                    noCallTrackLayout.setVisibility(View.VISIBLE);
+                }else{
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    firstLayout.setVisibility(View.VISIBLE);
+                    secondLayout.setVisibility(View.VISIBLE);
+                    noCallTrackLayout.setVisibility(View.GONE);
                 }
             }
 
@@ -344,6 +366,17 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             }
         }
         vmnCallAdapter.updateList(getSelectedTypeList(headerList));
+        if(getSelectedTypeList(headerList).size() == 0){
+            noCallTrackLayout.setVisibility(View.VISIBLE);
+            if(selectedViewType.equals("CONNECTED")){
+                tvNoCallRecorded.setText("No calls connected yet");
+            } else if(selectedViewType.equals("MISSED")){
+                tvNoCallRecorded.setText("No missed calls yet");
+            }
+
+        }else{
+            noCallTrackLayout.setVisibility(View.GONE);
+        }
 
     }
 
@@ -509,7 +542,8 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
                     Methods.showSnackBarNegative(VmnCallCardsActivity.this, getString(R.string.something_went_wrong));
                 } else {
                     String callCount = jsonObject.get("POTENTIAL_CALLS").getAsString();
-                    webCallCount.setText(callCount);
+//                    webCallCount.setText(callCount);
+                    phoneCallCount.setText(callCount);
                     totalPotentialCallCount += Integer.parseInt(callCount);
                     potentialCallsText.setText("View potential calls ("+totalPotentialCallCount+")");
                 }

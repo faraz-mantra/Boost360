@@ -18,8 +18,7 @@ object FacebookGraphManager {
   }
 
   interface GraphRequestUserAccountCallback {
-    fun onCompleted(type: FacebookGraphRequestType,
-                    facebookGraphResponse: BaseFacebookGraphResponse?)
+    fun onCompleted(type: FacebookGraphRequestType, facebookGraphResponse: BaseFacebookGraphResponse?)
   }
 
   fun getProfilePictureUrl(id: String, type: ProfilePictureType = ProfilePictureType.Square): String {

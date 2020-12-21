@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.text.NumberFormat
 import java.util.*
 
 class PartnerViewPagerAdapter(

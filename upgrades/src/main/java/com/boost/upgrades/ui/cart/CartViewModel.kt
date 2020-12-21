@@ -16,6 +16,7 @@ import com.boost.upgrades.data.model.CouponsModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.data.renewalcart.*
+import com.boost.upgrades.utils.SingleLiveEvent
 import com.boost.upgrades.utils.Utils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -37,6 +38,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   var updatesError: MutableLiveData<String> = MutableLiveData()
   var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
   var _initiatePurchaseOrder: MutableLiveData<CreatePurchaseOrderResponse> = MutableLiveData()
+  var _initiatePurchaseAutoRenewOrder: MutableLiveData<CreatePurchaseOrderResponse> = MutableLiveData()
+    val _initiateAutoRenewOrder: SingleLiveEvent<CreatePurchaseOrderResponse> = SingleLiveEvent()
   private var customerId: MutableLiveData<String> = MutableLiveData()
   private var APIRequestStatus: String? = null
 
@@ -49,6 +52,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   var cartResultItems: MutableLiveData<List<CartModel>> = MutableLiveData()
 
   var _updateCardRenew: MutableLiveData<String> = MutableLiveData()
+  var _updateRenewPopup: MutableLiveData<String> = MutableLiveData()
+
+  var _updateProceedClick: MutableLiveData<Boolean> = MutableLiveData()
 
   var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
 
@@ -112,8 +118,27 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     return _updateGSTIN
   }
 
+    fun updateProceedClick(renewValue: Boolean) {
+        Log.v("updateProceedClick", " "+ renewValue)
+        _updateProceedClick.postValue(renewValue)
+    }
+
+    fun getProceedClick(): LiveData<Boolean> {
+        return _updateProceedClick
+    }
+
   fun updateRenewValue(renewValue: String) {
+      Log.v("updateRenewValue", " "+ renewValue)
       _updateCardRenew.postValue(renewValue)
+    }
+
+    fun updateRenewPopupClick(renewPopValue: String) {
+        Log.v("updateRenewPopupClick", " "+ renewPopValue)
+        _updateRenewPopup.postValue(renewPopValue)
+    }
+
+    fun getRenewPopupClick(): LiveData<String> {
+        return _updateRenewPopup
     }
 
   fun getRenewValue(): LiveData<String> {
@@ -136,7 +161,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
     return _initiatePurchaseOrder
   }
 
+    fun getPurchaseOrderAutoRenewResponse(): LiveData<CreatePurchaseOrderResponse> {
+        return _initiateAutoRenewOrder
+    }
+
   fun InitiatePurchaseOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
+      Log.v("InitiatePurchaseOld"," "+ createPurchaseOrderV2)
     if (Utils.isConnectedToInternet(getApplication())) {
       updatesLoader.postValue(true)
       APIRequestStatus = "Order registration in progress..."
@@ -159,6 +189,31 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
       )
     }
   }
+
+    fun InitiatePurchaseAutoRenewOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
+        Log.v("InitiatePurchaseAuto"," "+ createPurchaseOrderV2)
+        if (Utils.isConnectedToInternet(getApplication())) {
+            updatesLoader.postValue(true)
+            APIRequestStatus = "Order registration in progress..."
+            compositeDisposable.add(
+                    ApiService.CreatePurchaseAutoRenewOrder(createPurchaseOrderV2)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {
+                                        Log.i("InitiatePurchaseOrder>>", it.toString())
+                                        _initiateAutoRenewOrder.postValue(it)
+                                        updatesLoader.postValue(false)
+                                    },
+                                    {
+                                        Toasty.error(getApplication(), "Error occurred while registering your order - " + it.message, Toast.LENGTH_LONG).show()
+                                        updatesError.postValue(it.message)
+                                        updatesLoader.postValue(false)
+                                    }
+                            )
+            )
+        }
+    }
 
   fun allPurchasedWidgets(req: RenewalPurchasedRequest) {
     if (Utils.isConnectedToInternet(getApplication())) {
