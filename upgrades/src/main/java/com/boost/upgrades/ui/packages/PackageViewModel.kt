@@ -1,6 +1,7 @@
 package com.boost.upgrades.ui.packages
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
@@ -35,6 +36,7 @@ class PackageViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun loadUpdates(list: List<String>){
+        Log.v("loadUpdates", " "+ list);
         CompositeDisposable().add(
                 AppDatabase.getInstance(getApplication())!!
                         .featuresDao()

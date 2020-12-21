@@ -7,7 +7,7 @@ public class Profileimage {
 
     @SerializedName("url")
     @Expose
-    private String url;
+    private String url = "";
     @SerializedName("description")
     @Expose
     private String description;

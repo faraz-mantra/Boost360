@@ -85,7 +85,7 @@
                         android:id="@+id/imageViewCart121"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/_13sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"

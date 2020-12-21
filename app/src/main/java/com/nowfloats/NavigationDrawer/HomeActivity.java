@@ -366,7 +366,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             }
         });
 
-        WebEngageController.trackEvent("HOME", "pageview", null);
+        WebEngageController.trackEvent("HOME", "pageview", "Home Page");
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

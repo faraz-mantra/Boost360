@@ -1,10 +1,9 @@
 package com.biz2.nowfloats.boost.updates.persistance.dao
 
 import androidx.room.*
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.GetAllFeaturesResponse
 import com.boost.upgrades.data.model.FeaturesModel
-import io.reactivex.Flowable
 import io.reactivex.Single
+import kotlin.collections.ArrayList
 
 @Dao
 interface FeaturesDao {
@@ -15,8 +14,9 @@ interface FeaturesDao {
     @Query("SELECT * FROM Features WHERE is_premium = :premiumType ORDER BY feature_importance DESC")
     fun getFeaturesItems(premiumType: Boolean): Single<List<FeaturesModel>>
 
-    @Query("SELECT * FROM Features WHERE target_business_usecase = :categoryType  ORDER BY feature_importance DESC")
-    fun getFeaturesItemsByType(categoryType: String): Single<List<FeaturesModel>>
+//    @Query("SELECT * FROM Features WHERE target_business_usecase = :categoryType  ORDER BY feature_importance DESC")
+    @Query("SELECT * FROM Features WHERE target_business_usecase = :categoryType AND feature_code != :excludeFeature ORDER BY feature_importance DESC")
+    fun getFeaturesItemsByType(categoryType: String, excludeFeature: String): Single<List<FeaturesModel>>
 
     @Query("SELECT * FROM Features WHERE feature_id=:item_id")
     fun getFeaturesItemById(item_id: String): Single<FeaturesModel>
@@ -51,6 +51,7 @@ interface FeaturesDao {
     fun updateFeatures(vararg featuress: FeaturesModel?)
 
 //    @Query("SELECT * FROM Features Where boost_widget_key IN (:list) AND is_premium = :premiumType ORDER BY feature_importance DESC")
+//    @Query("SELECT * FROM Features Where is_premium = :premiumType AND feature_code IN (:list)")
     @Query("SELECT * FROM Features Where is_premium = :premiumType AND boost_widget_key IN (:list)")
     fun getallActiveFeatures(list: List<String>, premiumType: Boolean): Single<List<FeaturesModel>>
 
@@ -58,13 +59,29 @@ interface FeaturesDao {
     fun deleteFeaturesItem(vararg itemId: String)
 
     @Query("SELECT COUNT(*) FROM Features Where boost_widget_key IN (:list)")
+//    @Query("SELECT COUNT(*) FROM Features Where feature_code IN (:list)")
     fun getallActivefeatureCount(list: List<String>): Single<Int>
 
-    @Query("SELECT COUNT(*) FROM Features Where target_business_usecase = :featureType")
-    fun getFeatureTypeCount(featureType: String): Single<Int>
+    @Query("SELECT COUNT(*) FROM Features Where target_business_usecase = :featureType AND feature_code != :excludeFeature")
+    fun getFeatureTypeCount(featureType: String, excludeFeature: String): Single<Int>
 
     @Query("SELECT * FROM Features Where feature_code IN (:list) ORDER BY is_premium DESC, feature_importance DESC")
     fun getallFeaturesInList(list: List<String>): Single<List<FeaturesModel>>
 
+    @Query("SELECT * FROM Features Where feature_code IN (:featureCode) ")
+    fun getSpecificFeature(featureCode: List<String>): Single<List<FeaturesModel>>
+
+
+    @Query("SELECT * FROM Features Where target_business_usecase= :business_usecase AND feature_code IN (:featureCodes) ")
+    fun getFeatureListTargetBusiness(business_usecase: String?, featureCodes: ArrayList<String?>): Single<List<FeaturesModel>>
+
+    @Query("SELECT * FROM Features Where feature_code IN (:featureCodes) AND target_business_usecase= :business_usecase ")
+    fun getFeatureListFeature( featureCodes: ArrayList<String?>,business_usecase: String?): Single<List<FeaturesModel>>
+
+    @Query("SELECT * FROM Features Where feature_code IN (:featureCode) ")
+    fun getSpecificFeatureTwo(featureCode: ArrayList<String?>): Single<List<FeaturesModel>>
+
+    @Query("SELECT * FROM Features Where feature_code IN (:featureCodes) AND target_business_usecase IN (:business_usecase) ")
+    fun getFeatureListFeatureNew(featureCodes: ArrayList<String>, business_usecase: MutableList<String?>): Single<List<FeaturesModel>>
 
 }

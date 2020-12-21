@@ -1,6 +1,5 @@
 package com.boost.upgrades.adapter
 
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -15,6 +14,7 @@ import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.lang.Exception
 import java.util.*
 
 class BannerViewPagerAdapter(
@@ -41,7 +41,6 @@ class BannerViewPagerAdapter(
             homeListener.onPromoBannerClicked(list.get(position))
         }
         holder.title.setText(list.get(position).title)
-        Log.v("onBindViewHolder1"," "+ list.get(position).title + " "+ list.get(position).image.url);
         checkBannerDetails(position)
     }
 
@@ -78,12 +77,12 @@ class BannerViewPagerAdapter(
                                             }*/
                                         }
                                         for (singleBanner in list) {
-                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
+                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key && list.get(position)!!.cta_feature_key.isNotEmpty() && singleBanner.cta_feature_key.isNotEmpty()) {
                                                 if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.contains(activity.fpTag)) {
                                                     list.remove(singleBanner)
                                                     notifyDataSetChanged()
                                                     homeListener.onShowHidePromoBannerIndicator(list.size > 1)
-                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode)) {
+                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode) && !singleBanner.exclusive_to_categories.isEmpty()) {
                                                     list.remove(singleBanner)
                                                     notifyDataSetChanged()
                                                     homeListener.onShowHidePromoBannerIndicator(list.size > 1)
@@ -92,12 +91,12 @@ class BannerViewPagerAdapter(
                                         }
                                     } else {
                                         for (singleBanner in list) {
-                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
+                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key && list.get(position)!!.cta_feature_key.isNotEmpty() && singleBanner.cta_feature_key.isNotEmpty()) {
                                                 if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.contains(activity.fpTag)) {
                                                     list.remove(singleBanner)
                                                     notifyDataSetChanged()
                                                     homeListener.onShowHidePromoBannerIndicator(list.size > 1)
-                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode)) {
+                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode) && !singleBanner.exclusive_to_categories.isEmpty()) {
                                                     list.remove(singleBanner)
                                                     notifyDataSetChanged()
                                                     homeListener.onShowHidePromoBannerIndicator(list.size > 1)

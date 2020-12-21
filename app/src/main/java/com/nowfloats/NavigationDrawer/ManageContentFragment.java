@@ -56,7 +56,7 @@ public class ManageContentFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
-
+        WebEngageController.trackEvent("Manage content", "pageview", "Manage content");
         UserSessionManager session = new UserSessionManager(getContext(), getActivity());
         String experience_code = session.getFP_AppExperienceCode();
 
