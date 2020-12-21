@@ -163,6 +163,7 @@
                     android:id="@+id/package_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     app:layout_constraintEnd_toEndOf="parent"

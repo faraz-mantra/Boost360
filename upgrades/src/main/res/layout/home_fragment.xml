@@ -250,8 +250,8 @@
                     android:id="@+id/banner_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -273,7 +273,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/banner_viewpager"
-                    app:progressMode="true"
+                    app:progressMode="false"
                     app:selectedDotColor="@color/app_yellow_1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -305,14 +305,13 @@
                 <LinearLayout
                     android:id="@+id/package_compare_layout"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:visibility="gone"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:src="@drawable/ic_compare" />
                     <TextView
                         android:id="@+id/package_name1"
@@ -322,11 +321,10 @@
                         android:text="Compare"
                         android:textColor="#FFB900"
                         android:textFontWeight="600"
-                        android:textStyle="bold"
                         android:textAllCaps="true"
                         android:layout_marginLeft="@dimen/_7sdp"
                         android:layout_marginRight="@dimen/_9sdp"
-                        android:textSize="@dimen/_12sdp"/>
+                        android:textSize="@dimen/_9sdp"/>
                 </LinearLayout>
 
 
@@ -355,7 +353,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/package_viewpager"
-                    app:progressMode="true"
+                    app:progressMode="false"
                     app:selectedDotColor="@color/app_yellow_1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -479,7 +477,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/feature_deals_viewpager"
-                    app:progressMode="true"
+                    app:progressMode="false"
                     app:selectedDotColor="@color/app_yellow_1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -733,7 +731,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/partner_viewpager"
-                    app:progressMode="true"
+                    app:progressMode="false"
                     app:selectedDotColor="@color/app_yellow_1" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

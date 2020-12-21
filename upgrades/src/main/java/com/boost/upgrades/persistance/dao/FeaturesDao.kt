@@ -84,4 +84,7 @@ interface FeaturesDao {
     @Query("SELECT * FROM Features Where feature_code IN (:featureCodes) AND target_business_usecase IN (:business_usecase) ")
     fun getFeatureListFeatureNew(featureCodes: ArrayList<String>, business_usecase: MutableList<String?>): Single<List<FeaturesModel>>
 
+    @Query("SELECT * FROM Features Where feature_code IN (:featureCodes) ")
+    fun getFeatureListForCompare(featureCodes: ArrayList<String?>): Single<List<FeaturesModel>>
+
 }
