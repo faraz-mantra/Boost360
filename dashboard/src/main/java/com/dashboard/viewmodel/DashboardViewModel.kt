@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.appservice.rest.repository.KitWebActionRepository
 import com.appservice.rest.repository.WithFloatTwoRepository
+import com.dashboard.rest.repository.DevBoostKitRepository
 import com.dashboard.rest.repository.WithFloatRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
@@ -79,6 +80,10 @@ class DashboardViewModel : BaseViewModel() {
 
   fun putUploadSecondaryImage(request: UploadFileBusinessRequest): LiveData<BaseResponse> {
     return UploadImageRepository.putUploadSecondaryImage(request).toLiveData()
+  }
+
+  fun getUpgradePremiumBanner(website_id: String? = "5e7a3cf46e0572000109a5b2"): LiveData<BaseResponse> {
+    return DevBoostKitRepository.getUpgradePremiumBanner(website_id = website_id).toLiveData()
   }
 }
 

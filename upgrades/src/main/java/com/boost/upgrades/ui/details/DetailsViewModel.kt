@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.data.model.WidgetModel
 import com.luminaire.apolloar.base_class.BaseViewModel
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers

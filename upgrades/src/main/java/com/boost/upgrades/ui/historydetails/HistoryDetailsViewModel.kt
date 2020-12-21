@@ -3,7 +3,6 @@ package com.boost.upgrades.ui.historydetails
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.model.FeaturesModel
 import com.luminaire.apolloar.base_class.BaseViewModel

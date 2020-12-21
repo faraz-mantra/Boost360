@@ -1,6 +1,5 @@
 package com.dashboard.model
 
-import com.dashboard.R
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
@@ -15,16 +14,6 @@ class BoostPremiumData(
 
   override fun getViewType(): Int {
     return recyclerViewItemType
-  }
-
-  fun getDataChannel(recyclerViewItemType: Int = RecyclerViewItemType.BOOST_PREMIUM_ITEM_VIEW.getLayout()): ArrayList<BoostPremiumData> {
-    val list = ArrayList<BoostPremiumData>()
-    list.add(BoostPremiumData(title = "Website", icon1 = R.drawable.ic_website_d, recyclerViewItemType = recyclerViewItemType))
-    list.add(BoostPremiumData(title = "GMB", icon1 = R.drawable.ic_google_maps_n, recyclerViewItemType = recyclerViewItemType))
-    list.add(BoostPremiumData(title = "GMB", icon1 = R.drawable.ic_google_maps_n, recyclerViewItemType = recyclerViewItemType))
-    list.add(BoostPremiumData(title = "GMB", icon1 = R.drawable.ic_google_maps_n, recyclerViewItemType = recyclerViewItemType))
-    list.add(BoostPremiumData(title = "GMB", icon1 = R.drawable.ic_google_maps_n, recyclerViewItemType = recyclerViewItemType))
-    return list
   }
 
 }
