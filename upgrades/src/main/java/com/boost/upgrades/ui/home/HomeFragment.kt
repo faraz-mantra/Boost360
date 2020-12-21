@@ -123,6 +123,10 @@ class HomeFragment : BaseFragment(), HomeListener {
         return root
     }
 
+    override fun onResume(){
+        super.onResume()
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         //emptyCouponTable everytime for new coupon code
@@ -494,6 +498,81 @@ class HomeFragment : BaseFragment(), HomeListener {
                     updateFeatureDealsViewPager(list, it)
                 }
             }
+
+            if (viewModel.allBundleResult.value != null) {
+
+
+                var list = viewModel.allBundleResult.value!!
+                if (list.size > 0) {
+                    val listItem = arrayListOf<Bundles>()
+                    for (item in list) {
+                        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                        listItem.add(Bundles(
+                                item.bundle_id,
+                                temp,
+                                item.min_purchase_months,
+                                item.name,
+                                item.overall_discount_percent,
+                                PrimaryImage(item.primary_image),
+                                item.target_business_usecase,
+                                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                null,item.desc
+                        ))
+                    }
+                    if (list.size > 0) {
+//                        updatePackageViewPager(listItem)
+                        packageViewPagerAdapter.addupdates(listItem)
+                        packageViewPagerAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+        })
+
+        viewModel.cartResultBack().observe(this, androidx.lifecycle.Observer {
+            if (it != null && it.size > 0) {
+                badge.visibility = View.VISIBLE
+                badgeNumber = it.size
+                badge.setText(badgeNumber.toString())
+                Constants.CART_VALUE = badgeNumber
+            } else {
+                badgeNumber = 0
+                badge.visibility = View.GONE
+            }
+            //refresh FeatureDeals adaptor when cart is updated
+            if (viewModel.allFeatureDealsResult.value != null) {
+                val list = viewModel.allFeatureDealsResult.value!!
+                if (list.size > 0) {
+                    updateFeatureDealsViewPager(list, it)
+                }
+            }
+
+            /*if (viewModel.allBundleResult.value != null) {
+
+
+                var list = viewModel.allBundleResult.value!!
+                if (list.size > 0) {
+                    val listItem = arrayListOf<Bundles>()
+                    for (item in list) {
+                        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                        listItem.add(Bundles(
+                                item.bundle_id,
+                                temp,
+                                item.min_purchase_months,
+                                item.name,
+                                item.overall_discount_percent,
+                                PrimaryImage(item.primary_image),
+                                item.target_business_usecase,
+                                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                null,item.desc
+                        ))
+                    }
+                    if (list.size > 0) {
+//                        updatePackageViewPager(listItem)
+                        packageViewPagerAdapter.addupdates(listItem)
+                        packageViewPagerAdapter.notifyDataSetChanged()
+                    }
+                }
+            }*/
         })
 
         viewModel.getYoutubeVideoDetails().observe(this, androidx.lifecycle.Observer {
@@ -625,11 +704,12 @@ class HomeFragment : BaseFragment(), HomeListener {
         //show dot indicator only when the (list.size > 2)
         if (list.size > 1) {
             if (list.size > 2) {
-                banner_viewpager.setPageTransformer(SimplePageTransformer())
-
+//                banner_viewpager.setPageTransformer(SimplePageTransformer())
+//
                 val itemDecoration = HorizontalMarginItemDecoration(
                         requireContext(),
-                        R.dimen.viewpager_current_item_horizontal_margin
+//                        R.dimen.viewpager_current_item_horizontal_margin
+                        R.dimen.viewpager_current_item_horizontal_margin1
                 )
                 banner_viewpager.addItemDecoration(itemDecoration)
             }
@@ -727,7 +807,8 @@ class HomeFragment : BaseFragment(), HomeListener {
 
     override fun onBackPressed() {
         if (::viewModel.isInitialized) {
-            viewModel.getCartItems()
+//            viewModel.getCartItems()
+            viewModel.getCartItemsBack()
         }
     }
 
@@ -1045,6 +1126,7 @@ class HomeFragment : BaseFragment(), HomeListener {
 //                badge121.setText(badgeNumber.toString())
 //                badge121.visibility = View.VISIBLE
                                             Constants.CART_VALUE = badgeNumber
+                                            viewModel.getCartItems()
                                         },
                                         {
                                             it.printStackTrace()

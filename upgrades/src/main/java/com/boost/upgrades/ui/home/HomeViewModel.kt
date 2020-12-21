@@ -31,6 +31,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
+    var cartResultBack: MutableLiveData<List<CartModel>> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
@@ -80,6 +81,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun cartResult(): LiveData<List<CartModel>> {
         return cartResult
+    }
+
+    fun cartResultBack(): LiveData<List<CartModel>> {
+        return cartResultBack
     }
 
     fun updatesError(): LiveData<String> {
@@ -388,6 +393,24 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             cartResult.postValue(it)
+                            updatesLoader.postValue(false)
+                        }, {
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        }
+                        )
+        )
+    }
+
+    fun getCartItemsBack() {
+        compositeDisposable.add(
+                AppDatabase.getInstance(getApplication())!!
+                        .cartDao()
+                        .getCartItems()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            cartResultBack.postValue(it)
                             updatesLoader.postValue(false)
                         }, {
                             updatesError.postValue(it.message)

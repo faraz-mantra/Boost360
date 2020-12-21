@@ -20,6 +20,7 @@ import com.boost.upgrades.adapter.SimplePageTransformer
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.PrimaryImage
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.PromoBanners
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.CompareListener
@@ -35,8 +36,13 @@ import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.compare_all_packages.*
 import kotlinx.android.synthetic.main.compare_package_fragment.*
+import kotlinx.android.synthetic.main.compare_package_fragment.badge121
+import kotlinx.android.synthetic.main.compare_package_fragment.package_back
+import kotlinx.android.synthetic.main.compare_package_fragment.package_cart_icon
 import kotlinx.android.synthetic.main.compare_package_fragment.package_indicator
+import kotlinx.android.synthetic.main.compare_package_fragment.package_indicator2
 import kotlinx.android.synthetic.main.compare_package_fragment.package_viewpager
 import kotlinx.android.synthetic.main.home_fragment.*
 import org.json.JSONArray
@@ -63,7 +69,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
     var packageInCartStatus = false
     lateinit var prefs: SharedPrefs
     var featuresHashMap:MutableMap<String?, FeaturesModel> = HashMap<String?, FeaturesModel>()
-    lateinit var upgradeList: List<Bundles>
+    lateinit var upgradeList: ArrayList<Bundles>
 
 
     private lateinit var viewModel: ComparePackageViewModel
@@ -75,7 +81,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        root = inflater.inflate(R.layout.compare_packages, container, false)
+        root = inflater.inflate(R.layout.compare_all_packages, container, false)
 
 //        val jsonString = arguments!!.getString("bundleData")
 //        bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
@@ -88,7 +94,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
         val layoutManager = LinearLayoutManager(
                 context)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        packageAdaptor = ParentCompareItemAdapter(ArrayList(),HashMap(),(activity as UpgradeActivity),this)
+        packageAdaptor = ParentCompareItemAdapter(ArrayList(),(activity as UpgradeActivity),this)
         prefs = SharedPrefs(activity as UpgradeActivity)
         return root
     }
@@ -118,7 +124,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
                     Constants.CART_FRAGMENT
             )
         }
-
+        initializePackageViewPager()
 
     }
 
@@ -197,6 +203,34 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
 
 
             }
+//            viewModel.getCartItems()
+            if (viewModel.allBundleResult.value != null) {
+
+
+                var list = viewModel.allBundleResult.value!!
+                if (list.size > 0) {
+                    val listItem = arrayListOf<Bundles>()
+                    for (item in list) {
+                        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                        listItem.add(Bundles(
+                                item.bundle_id,
+                                temp,
+                                item.min_purchase_months,
+                                item.name,
+                                item.overall_discount_percent,
+                                PrimaryImage(item.primary_image),
+                                item.target_business_usecase,
+                                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                null,item.desc
+                        ))
+                    }
+                    if (list.size > 0) {
+//                        updatePackageViewPager(listItem)
+                        packageAdaptor.addupdates(listItem)
+                        packageAdaptor.notifyDataSetChanged()
+                    }
+                }
+            }
         })
 
         viewModel.getSpecificFeature().observe(this, Observer {
@@ -207,7 +241,8 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
                 }
 
                 featureCount++
-                updatePackageViewPager(upgradeList, it as ArrayList<FeaturesModel>)
+                updatePackageViewPager(upgradeList)
+//                updateBannerViewPager(upgradeList, it as ArrayList<FeaturesModel>)
             }
             val obj = JSONObject(featuresHashMap as Map<*, *>)
 //            val array = JSONArray(obj.toString())
@@ -280,19 +315,41 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
 
 
 
-    fun updatePackageViewPager(list: List<Bundles>, hashmap: ArrayList<FeaturesModel>) {
+    fun updatePackageViewPager(list: List<Bundles>) {
 
         initializeFreeAddonsRecyclerView()
 //        initializePackageViewPager()
 //        package_viewpager.offscreenPageLimit = list.size
         Log.v("updatePackageViewPager"," "+ list.size)
-        packageAdaptor.addupdates(list,hashmap)
+        packageAdaptor.addupdates(list)
         packageAdaptor.notifyDataSetChanged()
         //show dot indicator only when the (list.size > 2)
+        upgradeText.visibility = View.VISIBLE
         if (list.size > 1) {
             package_indicator2.visibility = View.VISIBLE
         } else {
             package_indicator2.visibility = View.INVISIBLE
+        }
+    }
+
+    fun updateBannerViewPager(list: List<Bundles>) {
+//        package_viewpager.offscreenPageLimit = list.size
+        packageAdaptor.addupdates(list)
+        packageAdaptor.notifyDataSetChanged()
+        //show dot indicator only when the (list.size > 2)
+        if (list.size > 1) {
+            if (list.size > 2) {
+                package_viewpager.setPageTransformer(SimplePageTransformer())
+
+                val itemDecoration = HorizontalMarginItemDecoration(
+                        requireContext(),
+                        R.dimen.viewpager_current_item_horizontal_margin
+                )
+                package_viewpager.addItemDecoration(itemDecoration)
+            }
+//            banner_indicator.visibility = View.VISIBLE
+        } else {
+//            banner_indicator.visibility = View.INVISIBLE
         }
     }
 
@@ -302,11 +359,10 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
         val layoutManager = LinearLayoutManager(
                 context)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        val parentItemAdapter = ParentCompareItemAdapter(
-                upgradeList,featuresHashMap,(activity as UpgradeActivity),this)
-//                ArrayList())
-        package_viewpager.adapter = parentItemAdapter
-//        package_viewpager.offscreenPageLimit = 2
+        val parentItemAdapter = ParentCompareItemAdapter(upgradeList,(activity as UpgradeActivity),this)
+//        package_viewpager.adapter = parentItemAdapter
+        package_viewpager.adapter = packageAdaptor
+        package_viewpager.offscreenPageLimit = 2
 //        package_viewpager.offscreenPageLimit = upgradeList.size
         package_indicator2.setViewPager2(package_viewpager)
 
@@ -332,6 +388,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
 
     private fun initializePackageViewPager() {
         package_viewpager.adapter = packageAdaptor
+//        package_viewpager.offscreenPageLimit = 4
         package_indicator2.setViewPager2(package_viewpager)
 
     }
@@ -398,17 +455,10 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
                                             event_attributes.put("Discount %", item!!.overall_discount_percent)
                                             item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
                                             WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", "ADDONS_MARKETPLACE", event_attributes)
-//                packageInCartStatus = true
-//                package_submit.background = ContextCompat.getDrawable(
-//                        requireContext(),
-//                        R.drawable.added_to_cart_grey
-//                )
-//                package_submit.setTextColor(Color.parseColor("#bbbbbb"))
-//                package_submit.setText(getString(R.string.added_to_cart))
                                             badgeNumber = badgeNumber + 1
-//                badge121.setText(badgeNumber.toString())
-//                badge121.visibility = View.VISIBLE
+
                                             Constants.CART_VALUE = badgeNumber
+                                            viewModel.getCartItems()
                                         },
                                         {
                                             it.printStackTrace()
