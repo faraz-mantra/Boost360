@@ -252,12 +252,12 @@ parentViewHolder.package_submit.setOnClickListener{
                                     if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1){
                                         holder.tv_price.setText("₹" +
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
-                                                "/" + bundles.min_purchase_months + " months" + " for "+ it.size + " features")
+                                                "/" + bundles.min_purchase_months + " months" + " included "+ it.size + " features")
 
                                     }else{
                                         holder.tv_price.setText("₹" +
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
-                                                + "/month" + " for "+ it.size + " features")
+                                                + "/month" + " included "+ it.size + " features")
 
                                     }
 

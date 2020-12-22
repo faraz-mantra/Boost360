@@ -118,6 +118,8 @@
   <dimen name="pad_180dp">180dp</dimen>
 
   <dimen name="txt_7sp">7sp</dimen>
+  <dimen name="txt_10sp">10sp</dimen>
+  <dimen name="txt_11sp">11sp</dimen>
   <dimen name="txt_12sp">12sp</dimen>
   <dimen name="txt_13sp">13sp</dimen>
   <dimen name="txt_14sp">14sp</dimen>

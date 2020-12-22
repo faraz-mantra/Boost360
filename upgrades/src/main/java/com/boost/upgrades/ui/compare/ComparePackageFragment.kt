@@ -1,6 +1,7 @@
 package com.boost.upgrades.ui.compare
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -70,7 +71,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
     lateinit var prefs: SharedPrefs
     var featuresHashMap:MutableMap<String?, FeaturesModel> = HashMap<String?, FeaturesModel>()
     lateinit var upgradeList: ArrayList<Bundles>
-
+    lateinit var progressDialog: ProgressDialog
 
     private lateinit var viewModel: ComparePackageViewModel
     companion object {
@@ -96,6 +97,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
         packageAdaptor = ParentCompareItemAdapter(ArrayList(),(activity as UpgradeActivity),this)
         prefs = SharedPrefs(activity as UpgradeActivity)
+        progressDialog = ProgressDialog(requireContext())
         return root
     }
 
@@ -305,6 +307,16 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
             }
         })
 
+        viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
+            if (it) {
+                val status = "Loading. Please wait..."
+                progressDialog.setMessage(status)
+                progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
+                progressDialog.show()
+            } else {
+                progressDialog.dismiss()
+            }
+        })
     }
 
     override fun onBackPressed() {

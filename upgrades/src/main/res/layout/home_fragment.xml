@@ -319,6 +319,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
                         android:text="Compare"
+                        android:textStyle="bold"
                         android:textColor="#FFB900"
                         android:textFontWeight="600"
                         android:textAllCaps="true"
