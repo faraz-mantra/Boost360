@@ -47,6 +47,10 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
         return bundleKeysResult
     }
 
+    fun updatesLoader(): LiveData<Boolean> {
+        return updatesLoader
+    }
+
     fun loadUpdates(list: List<String>){
         CompositeDisposable().add(
                 AppDatabase.getInstance(getApplication())!!
