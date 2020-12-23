@@ -65,8 +65,6 @@ class PackageFragment : BaseFragment() {
 
         val jsonString = arguments!!.getString("bundleData")
         bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
-        Log.v("onPackageAddToCart", " "+ jsonString)
-        Log.v("onPackageAddToCart1", " "+ bundleData)
         packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type))
         prefs = SharedPrefs(activity as UpgradeActivity)
         return root
