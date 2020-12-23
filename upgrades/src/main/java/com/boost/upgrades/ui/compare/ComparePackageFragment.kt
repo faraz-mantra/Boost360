@@ -336,7 +336,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
         packageAdaptor.addupdates(list)
         packageAdaptor.notifyDataSetChanged()
         //show dot indicator only when the (list.size > 2)
-        upgradeText.visibility = View.VISIBLE
+//        upgradeText.visibility = View.VISIBLE
         if (list.size > 1) {
             package_indicator2.visibility = View.VISIBLE
         } else {
@@ -371,6 +371,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
         val layoutManager = LinearLayoutManager(
                 context)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+//        layoutManager.isMeasurementCacheEnabled = false
         val parentItemAdapter = ParentCompareItemAdapter(upgradeList,(activity as UpgradeActivity),this)
 //        package_viewpager.adapter = parentItemAdapter
         package_viewpager.adapter = packageAdaptor
@@ -379,13 +380,13 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
         package_indicator2.setViewPager2(package_viewpager)
 
         if (upgradeList.size > 2) {
-            package_viewpager.setPageTransformer(SimplePageTransformer())
+//            package_viewpager.setPageTransformer(SimplePageTransformer())
 
-                val itemDecoration = HorizontalMarginItemDecoration(
-                        requireContext(),
-                        R.dimen.viewpager_current_item_horizontal_margin2
-                )
-            package_viewpager.addItemDecoration(itemDecoration)
+//                val itemDecoration = HorizontalMarginItemDecoration(
+//                        requireContext(),
+//                        R.dimen.viewpager_current_item_horizontal_margin2
+//                )
+//            package_viewpager.addItemDecoration(itemDecoration)
         }
 
         // removed for viewpager//

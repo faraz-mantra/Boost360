@@ -53,7 +53,7 @@ class ParentCompareItemAdapter (val list: java.util.ArrayList<Bundles>, val acti
         val view = LayoutInflater
                 .from(viewGroup.context)
                 .inflate(
-                        R.layout.parent_item_new,
+                        R.layout.package_fragment_compare,
                         viewGroup, false)
         return ParentViewHolder(view)
     }
@@ -204,7 +204,7 @@ parentViewHolder.package_submit.setOnClickListener{
                             R.id.child_recyclerview)
             package_submit = itemView
                     .findViewById(
-                            R.id.package_addCart)
+                            R.id.package_addCartNew)
             tv_price = itemView
                     .findViewById(
                             R.id.tv_price)

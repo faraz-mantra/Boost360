@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:background="@color/primaryDark"
+        android:background="@color/main_color_gray"
         android:orientation="vertical">
 
         <FrameLayout
@@ -127,12 +127,16 @@
                 android:orientation="vertical"
                 android:layout_marginTop="50dp">
                 <!--android:padding="16dp"-->
-                <androidx.core.widget.NestedScrollView
+                <!--<androidx.core.widget.NestedScrollView
                     android:id="@+id/scroll_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
-                    android:layout_marginTop="25dp">
+                    android:layout_marginTop="25dp">-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/package_layout"
                     android:layout_width="match_parent"
@@ -141,7 +145,8 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@id/toolbar"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_10sdp"
                     tools:visibility="visible">
 
                     <TextView
@@ -201,8 +206,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/package_indicator"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </androidx.core.widget.NestedScrollView>
+                    </RelativeLayout>
+               <!-- </androidx.core.widget.NestedScrollView>-->
 
 
             </LinearLayout>

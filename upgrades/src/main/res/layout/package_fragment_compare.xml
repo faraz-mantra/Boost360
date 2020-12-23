@@ -2,55 +2,134 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="5dp">
+    android:clickable="true"
+    android:focusable="true">
 
-    <!--<FrameLayout
-        android:id="@+id/rootview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">-->
-
-
-    <!--The child view inside the cardview should have extra padding,so that negative margin will not affect the bottom padding of its child.Here normally we have 16dp bottom padding for child + margin bottom of the parent is 3dp=19dp comes.-->
-
-    <!--<FrameLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/back_image"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:paddingBottom="19dp"/>-->
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-
-    <!--  <androidx.cardview.widget.CardView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_marginStart="@dimen/_5sdp"
-          android:layout_marginTop="@dimen/_5sdp"
-          android:layout_marginEnd="@dimen/_5sdp"
-          app:cardCornerRadius="15dp"
-          android:padding="0dp"
-          android:layout_marginBottom="@dimen/_2sdp"
-          android:background="@drawable/top_side_curve_bg"
-          app:cardElevation="@dimen/_2sdp"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent">-->
-    <!--android:layout_marginBottom="@dimen/_5sdp"-->
-
-    <androidx.core.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/nestedScroll"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@id/package_addCartNew"
+        android:layout_height="@dimen/_100sdp"
+        
+        app:layout_constraintBottom_toTopOf="@+id/back_image3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/back_image3"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back_image" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:contentInsetStart="0dp"
+        app:contentInsetStart="0dp"
+        android:contentInsetEnd="0dp"
+        app:contentInsetEnd="0dp"
+        android:visibility="gone"
+        android:background="#FF9F00"
+        app:layout_collapseMode="parallax"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/package_cart_icon"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                android:layout_marginEnd="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/cart48" />
+
+
+                <com.nex3z.notificationbadge.NotificationBadge
+                    android:id="@+id/badge121"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    app:nbMaxTextLength="2" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="Package Details"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/package_cart_icon"
+                app:layout_constraintStart_toEndOf="@+id/package_back"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/package_back"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/arrow_white" />
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@id/package_addCartNew"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -64,7 +143,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/top_side_curve_bg">
+                android:background="@drawable/all_side_curve_bg">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/package_main_layout"
@@ -201,7 +280,7 @@
                     android:layout_marginBottom="25dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/child_recyclerview"
                     android:orientation="vertical">
                     <TextView
@@ -224,28 +303,22 @@
                 </RelativeLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>
+
     </androidx.core.widget.NestedScrollView>
-
-
 
     <TextView
         android:id="@+id/package_addCartNew"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/orange_button_click_effect"
         android:fontFamily="@font/open_sans_semibold"
         android:gravity="center"
         android:padding="@dimen/_10sdp"
-        android:text="Add to cart"
-        android:visibility="visible"
+        android:text="Add Package to cart"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <!--</androidx.cardview.widget.CardView>-->
-    <!--</FrameLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
