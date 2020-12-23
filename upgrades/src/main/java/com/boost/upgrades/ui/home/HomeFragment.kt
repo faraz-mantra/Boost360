@@ -62,6 +62,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -611,7 +612,9 @@ class HomeFragment : BaseFragment(), HomeListener {
         viewModel.getPromoBanners().observe(this, androidx.lifecycle.Observer {
             Log.e("getPromoBanners", it.toString())
             if (it.size > 0) {
-                updateBannerViewPager(it)
+//                checkBannerDetails(it as ArrayList<PromoBanners>)
+                checkBannerDetailsNew(it as ArrayList<PromoBanners>)
+//                updateBannerViewPager(it)
                 banner_layout.visibility = View.VISIBLE
             } else {
                 banner_layout.visibility = View.GONE
@@ -706,12 +709,12 @@ class HomeFragment : BaseFragment(), HomeListener {
             if (list.size > 2) {
 //                banner_viewpager.setPageTransformer(SimplePageTransformer())
 //
-                val itemDecoration = HorizontalMarginItemDecoration(
-                        requireContext(),
-//                        R.dimen.viewpager_current_item_horizontal_margin
-                        R.dimen.viewpager_current_item_horizontal_margin1
-                )
-                banner_viewpager.addItemDecoration(itemDecoration)
+//                val itemDecoration = HorizontalMarginItemDecoration(
+//                        requireContext(),
+////                        R.dimen.viewpager_current_item_horizontal_margin
+//                        R.dimen.viewpager_current_item_horizontal_margin1
+//                )
+//                banner_viewpager.addItemDecoration(itemDecoration)
             }
             banner_indicator.visibility = View.VISIBLE
         } else {
@@ -749,6 +752,12 @@ class HomeFragment : BaseFragment(), HomeListener {
         banner_viewpager.adapter = bannerViewPagerAdapter
         banner_viewpager.offscreenPageLimit = 4
         banner_indicator.setViewPager2(banner_viewpager)
+        val itemDecoration = HorizontalMarginItemDecoration(
+                requireContext(),
+//                        R.dimen.viewpager_current_item_horizontal_margin
+                R.dimen.viewpager_current_item_horizontal_margin1
+        )
+        banner_viewpager.addItemDecoration(itemDecoration)
 
     }
 
@@ -855,10 +864,24 @@ class HomeFragment : BaseFragment(), HomeListener {
                                                             .subscribeOn(Schedulers.io())
                                                             .observeOn(AndroidSchedulers.mainThread())
                                                             .subscribe({
+                                                                var selectedBundle: Bundles? = null
+                                                                var item = it
 
+                                                                        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                                                                        selectedBundle = Bundles(
+                                                                                item.bundle_id,
+                                                                                temp,
+                                                                                item.min_purchase_months,
+                                                                                item.name,
+                                                                                item.overall_discount_percent,
+                                                                                PrimaryImage(item.primary_image),
+                                                                                item.target_business_usecase,
+                                                                                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                                                                null,
+                                                                                item.desc)
                                                                 val packageFragment = PackageFragment.newInstance()
                                                                 val args = Bundle()
-                                                                args.putString("bundleData", Gson().toJson(it))
+                                                                args.putString("bundleData", Gson().toJson(selectedBundle))
                                                                 packageFragment.arguments = args
                                                                 (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)
 
@@ -1177,5 +1200,197 @@ class HomeFragment : BaseFragment(), HomeListener {
 
     }
 
+    fun checkBannerDetails(list: ArrayList<PromoBanners>){
+        for(singleItem in list){
+
+            if (singleItem!!.cta_feature_key != null) {
+                CompositeDisposable().add(
+                        AppDatabase.getInstance(activity!!.application)!!
+                                .featuresDao()
+                                .checkFeatureTableKeyExist(singleItem!!.cta_feature_key)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({
+                                    try {
+                                        if (it == 0) {
+                                            for (singleBanner in list) {
+                                                /*  if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
+                                                      list.remove(singleBanner)
+                                                      notifyDataSetChanged()
+                                                      homeListener.onShowHidePromoBannerIndicator(list.size > 1)
+                                                  }*/
+                                            }
+                                            for (singleBanner in list) {
+                                                if (singleBanner.cta_feature_key == singleItem!!.cta_feature_key && singleItem!!.cta_feature_key.isNotEmpty() && singleBanner.cta_feature_key.isNotEmpty()) {
+                                                    if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode) && !singleBanner.exclusive_to_categories.isEmpty()) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            for (singleBanner in list) {
+                                                if (singleBanner.cta_feature_key == singleItem!!.cta_feature_key && singleItem!!.cta_feature_key.isNotEmpty() && singleBanner.cta_feature_key.isNotEmpty()) {
+                                                    if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode) && !singleBanner.exclusive_to_categories.isEmpty()) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                    } catch (e: Exception){
+                                        e.printStackTrace()
+                                    }
+                                },{
+                                    it.printStackTrace()
+                                })
+                )
+            }
+            else if (singleItem!!.cta_bundle_identifier != null) {
+                CompositeDisposable().add(
+                        AppDatabase.getInstance(activity!!.application)!!
+                                .bundlesDao()
+                                .checkBundleKeyExist(singleItem!!.cta_bundle_identifier)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({
+                                    try {
+                                        if (it == 0) {
+                                            for (singleBanner in list) {
+                                                if (singleBanner.cta_bundle_identifier == singleItem!!.cta_bundle_identifier) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                }
+                                            }
+                                        } else {
+                                            for (singleBanner in list) {
+                                                if (singleBanner.cta_bundle_identifier == singleItem!!.cta_bundle_identifier) {
+                                                    if (singleBanner.exclusive_to_customers != null && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }catch (e: Exception){
+                                        e.printStackTrace()
+                                    }
+                                },{
+                                    it.printStackTrace()
+                                })
+                )
+
+            }
+
+        }
+
+
+
+    }
+
+    fun checkBannerDetailsNew(list: ArrayList<PromoBanners>) {
+        for(singleItem in list){
+        if (singleItem!!.cta_feature_key != null && singleItem!!.cta_feature_key.isNotEmpty()) {
+            CompositeDisposable().add(
+                    AppDatabase.getInstance(activity!!.application)!!
+                            .featuresDao()
+                            .checkFeatureTableKeyExist(singleItem!!.cta_feature_key)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                try {
+                                    if (it == 0) {
+
+                                        for (singleBanner in list) {
+                                            if (singleBanner.cta_feature_key == singleBanner!!.cta_feature_key) {
+
+                                                if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty() && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        for (singleBanner in list) {
+                                            if (singleBanner.cta_feature_key == singleBanner!!.cta_feature_key) {
+
+                                                if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty()
+                                                        && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }, {
+                                it.printStackTrace()
+                            })
+            )
+        } else if (singleItem!!.cta_bundle_identifier != null && singleItem!!.cta_bundle_identifier.isNotEmpty()) {
+            CompositeDisposable().add(
+                    AppDatabase.getInstance(activity!!.application)!!
+                            .bundlesDao()
+                            .checkBundleKeyExist(singleItem!!.cta_bundle_identifier)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                try {
+                                    if (it == 0) {
+
+                                        for (singleBanner in list) {
+                                            if (singleBanner.cta_bundle_identifier == singleItem!!.cta_bundle_identifier) {
+
+                                                if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty() && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        for (singleBanner in list) {
+                                            if (singleBanner.cta_bundle_identifier == singleItem!!.cta_bundle_identifier) {
+                                                if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty() && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                }
+                                            }
+                                        }
+                                    }
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }, {
+                                it.printStackTrace()
+                            })
+            )
+        }
+    }
+    }
 
 }
