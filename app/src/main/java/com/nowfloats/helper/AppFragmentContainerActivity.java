@@ -21,6 +21,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.AboutFragment;
 import com.nowfloats.NavigationDrawer.AccountSettingsFragment;
 import com.nowfloats.NavigationDrawer.HelpAndSupportFragment;
+import com.nowfloats.NavigationDrawer.Home_Main_Fragment;
 import com.nowfloats.NavigationDrawer.ManageContentFragment;
 import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
@@ -28,16 +29,6 @@ import com.nowfloats.manageinventory.ManageInventoryFragment;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityFragmentContainerAppBinding;
-
-enum FragmentType {
-    ACCOUNT_SETTING,
-    ACCOUNT_KEYBOARD,
-    MANAGE_CONTENT,
-    MANAGE_INVENTORY,
-    HELP_AND_SUPPORT,
-    ABOUT_BOOST,
-    NOTIFICATION_VIEW
-}
 
 public class AppFragmentContainerActivity extends AppCompatActivity {
 
@@ -53,21 +44,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
     private HelpAndSupportFragment helpAndSupportFragment = null;
     private AboutFragment aboutFragment = null;
     private NotificationFragment notificationFragment = null;
-
-    public static void startFragmentAppActivity(Activity activity, FragmentType type, Bundle bundle, Boolean clearTop) {
-        Intent intent = new Intent(activity, AppFragmentContainerActivity.class);
-        intent.putExtras(bundle);
-        setFragmentType(intent, type);
-        if (clearTop) {
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        }
-        activity.startActivity(intent);
-    }
-
-    private static void setFragmentType(Intent intent, FragmentType type) {
-        intent.putExtra(FRAGMENT_TYPE, type.name());
-    }
+    private Home_Main_Fragment homeMainFragment = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,6 +72,25 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
         return true;
     }
 
+    public static void startFragmentAppActivity(Activity activity, FragmentType type, Bundle bundle, Boolean clearTop) {
+        Intent intent = new Intent(activity, AppFragmentContainerActivity.class);
+        intent.putExtras(bundle);
+        setFragmentType(intent, type);
+        if (clearTop) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        }
+        activity.startActivity(intent);
+    }
+
+    private static void setFragmentType(Intent intent, FragmentType type) {
+        intent.putExtra(FRAGMENT_TYPE, type.name());
+    }
+
+    private Boolean isHideToolbar() {
+        return false;
+    }
+
     private String getTitleTextView() {
         switch (type) {
             case ACCOUNT_SETTING:
@@ -111,6 +107,8 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
                 return getString(R.string.about);
             case NOTIFICATION_VIEW:
                 return getString(R.string.notification);
+            case UPDATE_LATEST_STORY_VIEW:
+                return Utils.getLatestUpdatesTaxonomyFromServiceCode(session.getFP_AppExperienceCode());
             default:
                 return "";
         }
@@ -125,13 +123,10 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case HELP_AND_SUPPORT:
             case ABOUT_BOOST:
             case NOTIFICATION_VIEW:
+            case UPDATE_LATEST_STORY_VIEW:
             default:
                 return R.color.white;
         }
-    }
-
-    private Boolean isHideToolbar() {
-        return false;
     }
 
     private Drawable getNavigationIcon() {
@@ -143,51 +138,9 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case HELP_AND_SUPPORT:
             case ABOUT_BOOST:
             case NOTIFICATION_VIEW:
+            case UPDATE_LATEST_STORY_VIEW:
             default:
                 return ContextCompat.getDrawable(this, R.drawable.ic_arrow_back);
-        }
-    }
-
-    private int getToolbarBackgroundColor() {
-        switch (type) {
-            case ACCOUNT_SETTING:
-            case ACCOUNT_KEYBOARD:
-            case MANAGE_CONTENT:
-            case MANAGE_INVENTORY:
-            case HELP_AND_SUPPORT:
-            case ABOUT_BOOST:
-            case NOTIFICATION_VIEW:
-            default:
-                return ContextCompat.getColor(this, R.color.colorAccent);
-
-        }
-    }
-
-    private Fragment getFragmentInstance(FragmentType type) {
-        switch (type) {
-            case ACCOUNT_SETTING:
-                accountSettingsFragment = new AccountSettingsFragment();
-                return accountSettingsFragment;
-            case ACCOUNT_KEYBOARD:
-                keyboardFragment = new KeyboardFragment();
-                return keyboardFragment;
-            case MANAGE_CONTENT:
-                manageContentFragment = new ManageContentFragment();
-                return manageContentFragment;
-            case MANAGE_INVENTORY:
-                manageInventoryFragment = new ManageInventoryFragment();
-                return manageInventoryFragment;
-            case HELP_AND_SUPPORT:
-                helpAndSupportFragment = new HelpAndSupportFragment();
-                return helpAndSupportFragment;
-            case ABOUT_BOOST:
-                aboutFragment = new AboutFragment();
-                return aboutFragment;
-            case NOTIFICATION_VIEW:
-                notificationFragment = new NotificationFragment();
-                return notificationFragment;
-            default:
-                return null;
         }
     }
 
@@ -215,15 +168,20 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
         } else throw new IllegalArgumentException();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (accountSettingsFragment != null) accountSettingsFragment.onActivityResult(requestCode, resultCode, data);
-        if (keyboardFragment != null) keyboardFragment.onActivityResult(requestCode, resultCode, data);
-        if (manageContentFragment != null) manageContentFragment.onActivityResult(requestCode, resultCode, data);
-        if (manageInventoryFragment != null) manageInventoryFragment.onActivityResult(requestCode, resultCode, data);
-        if (helpAndSupportFragment != null) helpAndSupportFragment.onActivityResult(requestCode, resultCode, data);
-        if (aboutFragment != null) aboutFragment.onActivityResult(requestCode, resultCode, data);
+    private int getToolbarBackgroundColor() {
+        switch (type) {
+            case ACCOUNT_SETTING:
+            case ACCOUNT_KEYBOARD:
+            case MANAGE_CONTENT:
+            case MANAGE_INVENTORY:
+            case HELP_AND_SUPPORT:
+            case ABOUT_BOOST:
+            case UPDATE_LATEST_STORY_VIEW:
+            case NOTIFICATION_VIEW:
+            default:
+                return ContextCompat.getColor(this, R.color.colorAccent);
+
+        }
     }
 
     private void addFragmentReplace(Integer containerId, Fragment fragment, Boolean addToBackStack) {
@@ -258,4 +216,49 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+    private Fragment getFragmentInstance(FragmentType type) {
+        switch (type) {
+            case ACCOUNT_SETTING:
+                accountSettingsFragment = new AccountSettingsFragment();
+                return accountSettingsFragment;
+            case ACCOUNT_KEYBOARD:
+                keyboardFragment = new KeyboardFragment();
+                return keyboardFragment;
+            case MANAGE_CONTENT:
+                manageContentFragment = new ManageContentFragment();
+                return manageContentFragment;
+            case MANAGE_INVENTORY:
+                manageInventoryFragment = new ManageInventoryFragment();
+                return manageInventoryFragment;
+            case HELP_AND_SUPPORT:
+                helpAndSupportFragment = new HelpAndSupportFragment();
+                return helpAndSupportFragment;
+            case ABOUT_BOOST:
+                aboutFragment = new AboutFragment();
+                return aboutFragment;
+            case NOTIFICATION_VIEW:
+                notificationFragment = new NotificationFragment();
+                return notificationFragment;
+            case UPDATE_LATEST_STORY_VIEW:
+                homeMainFragment = new Home_Main_Fragment();
+                return homeMainFragment;
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (accountSettingsFragment != null) accountSettingsFragment.onActivityResult(requestCode, resultCode, data);
+        if (keyboardFragment != null) keyboardFragment.onActivityResult(requestCode, resultCode, data);
+        if (manageContentFragment != null) manageContentFragment.onActivityResult(requestCode, resultCode, data);
+        if (manageInventoryFragment != null) manageInventoryFragment.onActivityResult(requestCode, resultCode, data);
+        if (helpAndSupportFragment != null) helpAndSupportFragment.onActivityResult(requestCode, resultCode, data);
+        if (aboutFragment != null) aboutFragment.onActivityResult(requestCode, resultCode, data);
+        if (notificationFragment != null) notificationFragment.onActivityResult(requestCode, resultCode, data);
+        if (homeMainFragment != null) homeMainFragment.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

@@ -317,6 +317,8 @@ class HomeFragment : BaseFragment(), HomeListener {
                     COMPARE_FRAGMENT,args
             )
         }
+        val promoBanners=arguments?.getSerializable("PROMO_BANNER_CLICK") as? PromoBanners
+        if (promoBanners!=null) onPromoBannerClicked(promoBanners)
 
     }
 

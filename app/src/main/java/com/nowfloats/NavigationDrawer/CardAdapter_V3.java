@@ -58,7 +58,8 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
     String imageUri = "";
 
     private LayoutInflater mInflater;
-    public HomeActivity appContext;
+    public Activity appContext;
+//    public HomeActivity appContext;
     FloatsMessageModel data;
     String msg = "", date = "";
     private boolean imagePresent;
@@ -73,7 +74,8 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
     public CardAdapter_V3(Activity appContext, UserSessionManager session) {
         Log.d("CardAdapter_V3", "Constructor");
-        this.appContext = (HomeActivity) appContext;
+        this.appContext =  appContext;
+//        this.appContext = (HomeActivity) appContext;
         this.session = session;
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -131,7 +133,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     Constants.isWelcomScreenToBeShown = false;
                     initialCard.setVisibility(View.GONE);
 
-                    if (HomeActivity.StorebizFloats != null && HomeActivity.StorebizFloats.size() == 0) {
+                    if (Home_Main_Fragment.getMessageList(appContext) != null && Home_Main_Fragment.getMessageList(appContext).size() == 0) {
                         if (Home_Main_Fragment.emptyMsgLayout != null)
                             Home_Main_Fragment.emptyMsgLayout.setVisibility(View.VISIBLE);
                     }
@@ -159,7 +161,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     showWebSiteIntent.putExtra("WEBSITE_NAME", url);
                     appContext.startActivity(showWebSiteIntent);
 
-                    if (HomeActivity.StorebizFloats != null && HomeActivity.StorebizFloats.size() == 0) {
+                    if (Home_Main_Fragment.getMessageList(appContext) != null && Home_Main_Fragment.getMessageList(appContext).size() == 0) {
                         if (Home_Main_Fragment.emptyMsgLayout != null)
                             Home_Main_Fragment.emptyMsgLayout.setVisibility(View.VISIBLE);
                     }
@@ -173,7 +175,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             ImageView shareFacebook = holder.share_facebook;
             ImageView shareWhatsapp = holder.share_whatsapp;
 
-            final String imageShare = HomeActivity.StorebizFloats.get(position).imageUri;
+            final String imageShare = Home_Main_Fragment.getMessageList(appContext).get(position).imageUri;
 
             shareFacebook.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -216,9 +218,9 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
             if (Constants.isWelcomScreenToBeShown) {
                 Constants.isWelcomScreenToBeShown = false;
-                data = HomeActivity.StorebizFloats.get(position - 1);
+                data = Home_Main_Fragment.getMessageList(appContext).get(position - 1);
             } else {
-                data = HomeActivity.StorebizFloats.get(position);
+                data = Home_Main_Fragment.getMessageList(appContext).get(position);
             }
 
             try {
@@ -359,7 +361,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
         if (Constants.isWelcomScreenToBeShown) {
             return 1;
         } else {
-            return HomeActivity.StorebizFloats.size();
+            return Home_Main_Fragment.getMessageList(appContext).size();
         }
     }
 
@@ -402,8 +404,8 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                             String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
                             BoostLog.d("Path is:", path);
                             Uri uri = Uri.parse(path);
-                            shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
-                                    HomeActivity.StorebizFloats.get(position).url);
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, Home_Main_Fragment.getMessageList(appContext).get(position).message + " View more at: " +
+                                    Home_Main_Fragment.getMessageList(appContext).get(position).url);
                             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
                             shareIntent.setType("image/*");
                             if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
@@ -438,7 +440,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
         } else {
             pd.dismiss();
             shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " + HomeActivity.StorebizFloats.get(position).url);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, Home_Main_Fragment.getMessageList(appContext).get(position).message + " View more at: " + Home_Main_Fragment.getMessageList(appContext).get(position).url);
             if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
                 appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
             } else {

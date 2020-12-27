@@ -34,6 +34,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
 
     PageAdapter pageAdapter;
     ViewPager viewPager ;
+    private boolean isDashboard;
     private Toolbar toolbar;
     ImageView deleteButton;
     private String cardId;
@@ -41,80 +42,9 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
     private ProgressDialog pd;
     private UserSessionManager session;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card__full__view__main);
-        session = new UserSessionManager(this, this);
-        Methods.isOnline(Card_Full_View_MainActivity.this);
-        viewPager = findViewById(R.id.viewPager);
-
-        Bundle extras = getIntent().getExtras();
-        toolbar = findViewById(R.id.app_bar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        position = extras.getInt("POSITION");
-        BoostLog.d("POSITION: ", position + "");
-
-        deleteButton = toolbar.findViewById(R.id.home_view_delete_card);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-
-                if (!Methods.isOnline(Card_Full_View_MainActivity.this)) {
-                    return;
-                }
-
-                new MaterialDialog.Builder(Card_Full_View_MainActivity.this)
-                        .customView(R.layout.exit_dialog, true)
-                        .positiveText("Delete")
-                        .negativeText("Cancel")
-                        .positiveColorRes(R.color.primaryColor)
-                        .negativeColorRes(R.color.light_gray)
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                            MixPanelController.track(EventKeysWL.MESSAGE_FULL_VIEW_DELETE, null);
-                                WebEngageController.trackEvent("DELETE AN UPDATE","null",null);
-
-                                try {
-                                    cardId = HomeActivity.StorebizFloats.get(viewPager.getCurrentItem())._id;
-                                    JSONObject content = new JSONObject();
-                                    content.put("dealId", cardId);
-                                    content.put("clientId", Constants.clientId1);
-
-
-                                    Home_View_Card_Delete obj =  new Home_View_Card_Delete(Card_Full_View_MainActivity.this,
-                                            Constants.DeleteCard,content,viewPager.getCurrentItem(),v,0);
-                                    //obj.CardRefresh_Listener(this);
-                                    obj.execute();
-
-                                    pd = ProgressDialog.show(Card_Full_View_MainActivity.this, null,
-                                            "Deleting Message . . . ");
-                                    pd.setCancelable(false);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
-
-                            @Override
-                            public void onNegative(MaterialDialog dialog) {
-                                super.onNegative(dialog);
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
-            }
-        });
-        List<FloatsMessageModel> floatsMessageModels = new ArrayList<>(HomeActivity.StorebizFloats);
-        pageAdapter = new PageAdapter(getSupportFragmentManager(), floatsMessageModels,Card_Full_View_MainActivity.this);
-        //  Log.d("View Pager", "View Pager  :"+viewPager+" , "+pageAdapter);
-        viewPager.setAdapter(pageAdapter);
-        pageAdapter.notifyDataSetChanged();
-        viewPager.setCurrentItem(position);
+    public static ArrayList<FloatsMessageModel> getMessageList(boolean isDashboard) {
+        if (!isDashboard) return HomeActivity.StorebizFloats;
+        else return Home_Main_Fragment.StorebizFloats;
     }
 
     @Override
@@ -147,6 +77,85 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_card__full__view__main);
+        session = new UserSessionManager(this, this);
+        Methods.isOnline(Card_Full_View_MainActivity.this);
+        viewPager = findViewById(R.id.viewPager);
+
+        Bundle extras = getIntent().getExtras();
+        toolbar = findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        position = extras.getInt("POSITION");
+        isDashboard = extras.getBoolean("IS_DASHBOARD",false);
+        BoostLog.d("POSITION: ", position + "");
+
+        deleteButton = toolbar.findViewById(R.id.home_view_delete_card);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+
+                if (!Methods.isOnline(Card_Full_View_MainActivity.this)) {
+                    return;
+                }
+
+                new MaterialDialog.Builder(Card_Full_View_MainActivity.this)
+                        .customView(R.layout.exit_dialog, true)
+                        .positiveText("Delete")
+                        .negativeText("Cancel")
+                        .positiveColorRes(R.color.primaryColor)
+                        .negativeColorRes(R.color.light_gray)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                            MixPanelController.track(EventKeysWL.MESSAGE_FULL_VIEW_DELETE, null);
+                                WebEngageController.trackEvent("DELETE AN UPDATE","null",null);
+
+                                try {
+                                    cardId = getMessageList(isDashboard).get(viewPager.getCurrentItem())._id;
+                                    JSONObject content = new JSONObject();
+                                    content.put("dealId", cardId);
+                                    content.put("clientId", Constants.clientId1);
+
+
+                                    Home_View_Card_Delete obj =  new Home_View_Card_Delete(Card_Full_View_MainActivity.this,
+                                            Constants.DeleteCard,content,viewPager.getCurrentItem(),v,0);
+//                                    obj.CardRefresh_Listener(this);
+                                    obj.setDashboard(isDashboard);
+                                    obj.execute();
+
+                                    pd = ProgressDialog.show(Card_Full_View_MainActivity.this, null,
+                                            "Deleting Message . . . ");
+                                    pd.setCancelable(false);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                            @Override
+                            public void onNegative(MaterialDialog dialog) {
+                                super.onNegative(dialog);
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+            }
+        });
+        List<FloatsMessageModel> floatsMessageModels = new ArrayList<>(getMessageList(isDashboard));
+        pageAdapter = new PageAdapter(getSupportFragmentManager(), floatsMessageModels,Card_Full_View_MainActivity.this);
+        //  Log.d("View Pager", "View Pager  :"+viewPager+" , "+pageAdapter);
+        viewPager.setAdapter(pageAdapter);
+        pageAdapter.notifyDataSetChanged();
+        viewPager.setCurrentItem(position);
+    }
+
     @Override
     public void cardrefresh(boolean flag) {
         Log.d("full Activity","True");
@@ -155,6 +164,11 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
         adapter.notifyDataSetChanged();
         adapter.notifyItemRemoved(position);
         Card_Full_View_MainActivity.this.finish();
+    }
 
+    @Override
+    public void error(boolean flag) {
+        Log.d("full Activity",""+flag);
+        pd.dismiss();
     }
 }

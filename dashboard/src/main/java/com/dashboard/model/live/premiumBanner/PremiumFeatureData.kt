@@ -60,10 +60,6 @@ data class PremiumFeatureData(
     return ArrayList(convertStringToList(resp) ?: ArrayList())
   }
 
-  fun saveDataMarketPlace() {
-    PreferencesUtils.instance.saveDataN(MARKETPLACE_BANNER_DATA, convertListObjToString(promoBanners ?: ArrayList()) ?: "")
-  }
-
   fun saveDataAcademy() {
     PreferencesUtils.instance.saveDataN(ACADEMY_BANNER_DATA, convertListObjToString(promoBanners ?: ArrayList()) ?: "")
   }
@@ -76,7 +72,12 @@ fun ArrayList<PromoBanner>.marketBannerFilter(session: UserSessionManager?): Arr
   forEach {
     if (it.exclusiveToCategories.isNullOrEmpty().not()) {
       if (it.exclusiveToCategories!!.firstOrNull { it1 -> it1.toLowerCase(Locale.ROOT).trim() == expCode } != null) list.add(it)
-    }
+    }else list.add(it)
   }
+  saveDataMarketPlace(list)
   return list
+}
+
+fun saveDataMarketPlace(promoBanners: ArrayList<PromoBanner>?) {
+  PreferencesUtils.instance.saveDataN(MARKETPLACE_BANNER_DATA, convertListObjToString(promoBanners ?: ArrayList()) ?: "")
 }

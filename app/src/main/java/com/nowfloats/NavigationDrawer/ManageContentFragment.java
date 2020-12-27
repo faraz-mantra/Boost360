@@ -24,6 +24,7 @@ import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.education.batches.BatchesActivity;
 import com.nowfloats.education.faculty.FacultyActivity;
 import com.nowfloats.education.toppers.ToppersActivity;
+import com.nowfloats.helper.AppFragmentContainerActivity;
 import com.nowfloats.hotel.placesnearby.PlacesNearByActivity;
 import com.nowfloats.hotel.seasonalOffers.SeasonalOffersActivity;
 import com.nowfloats.hotel.tripadvisor.TripAdvisorActivity;
@@ -32,6 +33,8 @@ import com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivi
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
+
+import static com.nowfloats.helper.FragmentType.UPDATE_LATEST_STORY_VIEW;
 
 /**
  * Created by Admin on 29-01-2018.
@@ -102,6 +105,7 @@ public class ManageContentFragment extends Fragment {
                         intent = new Intent(mContext, ProductCatalogActivity.class);
                         break;
                     case 1:
+                        AppFragmentContainerActivity.startFragmentAppActivity(getActivity(), UPDATE_LATEST_STORY_VIEW, new Bundle(), false);
 //                        ((SidePanelFragment.OnItemClickListener) mContext).onClick(getString(R.string.update));
                         return;
                     case 2:
