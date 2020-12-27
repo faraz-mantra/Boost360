@@ -17,6 +17,7 @@ import com.nowfloats.Analytics_Screen.Graph.database.SaveDataCounts;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.NavigationDrawer.Home_Main_Fragment;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
@@ -1016,7 +1017,11 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
             Constants.BusinessEnquiryWidget = false;
             if (HomeActivity.StorebizFloats != null) {
                 HomeActivity.StorebizFloats.clear();
-                HomeActivity.StorebizFloats = new ArrayList<FloatsMessageModel>();
+                HomeActivity.StorebizFloats = new ArrayList<>();
+            }
+            if (Home_Main_Fragment.StorebizFloats != null) {
+                Home_Main_Fragment.StorebizFloats.clear();
+                Home_Main_Fragment.StorebizFloats = new ArrayList<>();
             }
             //Analytics_Fragment.subscriberCount.setText("0");
             //Analytics_Fragment.visitCount.setText("0");

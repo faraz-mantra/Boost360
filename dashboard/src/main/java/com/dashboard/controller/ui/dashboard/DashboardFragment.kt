@@ -104,12 +104,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun getPremiumBanner() {
     val promoBanners = PremiumFeatureData().getMarketPlaceBanners()
-    if (promoBanners.isNullOrEmpty().not()) promoBanners?.marketBannerFilter(session)?.let { it1 -> setDataMarketBanner(it1) }
+    if (promoBanners.isNullOrEmpty().not()) setDataMarketBanner(promoBanners ?: ArrayList())
     viewModel?.getUpgradePremiumBanner()?.observeOnce(viewLifecycleOwner, {
       val response = it as? UpgradePremiumFeatureResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val data = response.data?.get(0)
-        data?.saveDataMarketPlace()
         data?.promoBanners?.marketBannerFilter(session)?.let { it1 -> setDataMarketBanner(it1) }
       }
     })
@@ -224,7 +223,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
             offscreenPageLimit = 3
             adapter = adapterQuickAction
             dotIndicatorAction.setViewPager2(this)
-            post { setCurrentItem(position,false)}
+            post { setCurrentItem(position, false) }
             setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
               override fun onPageSelected(position: Int) {
@@ -314,7 +313,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           adapter = adapterGrowth
         }
       } else adapterGrowth?.notify(growthStatsList)
-    }else  binding?.viewHighSummaryBottom?.apply { gone() }
+    } else binding?.viewHighSummaryBottom?.apply { gone() }
   }
 
   private fun setViewChannels(channels: ArrayList<ChannelModel>?) {
@@ -352,14 +351,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun setDataMarketBanner(marketBannerFilter: ArrayList<PromoBanner>) {
     if (isHigh) {
       binding?.pagerBoostPremium?.apply {
-        if (adapterMarketBanner == null) {
-          adapterMarketBanner = AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
-          offscreenPageLimit = 3
-          clipToPadding = false
-          setPadding(0, 0, 37, 0)
-          adapter = adapterMarketBanner
-          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-        } else adapterMarketBanner?.notify(marketBannerFilter)
+        if (marketBannerFilter.isNotEmpty()) {
+          visible()
+          if (adapterMarketBanner == null) {
+            adapterMarketBanner = AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
+            offscreenPageLimit = 3
+            adapter = adapterMarketBanner
+            setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+          } else adapterMarketBanner?.notify(marketBannerFilter)
+        } else gone()
       }
     }
   }
@@ -462,19 +462,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
       RecyclerViewActionType.CHANNEL_ITEM_CLICK.ordinal -> {
         val data = (item as? ChannelData)?.channelData ?: return
-        val title: String
-        var website = ""
-        if (data.isWhatsAppChannel().not()) {
-          if (data.isGoogleSearch()) {
-            title = "Website"
-            website = session?.getDomainName(false) ?: ""
-          } else {
-            title = data.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() } ?: data.getName()
-            if (data.isTwitterChannel()) website = "https://twitter.com/${data.channelAccessToken?.userAccountName?.trim()}"
-            else if (data.isFacebookPage()) website = "https://www.facebook.com/${data.channelAccessToken?.userAccountId?.trim()}"
-          }
-          bottomSheetWebView(title, website)
-        }
+        actionChannelClick(data)
+      }
+      RecyclerViewActionType.PROMO_BANNER_CLICK.ordinal -> {
+        val data = item as? PromoBanner ?: return
+        session?.let { baseActivity.promoBannerMarketplace(it, data) }
       }
     }
   }
@@ -495,26 +487,22 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun quickActionClick(type: QuickActionData.QuickActionType) {
     when (type) {
-      QuickActionData.QuickActionType.POST_STATUS_STORY -> {
-      }
       QuickActionData.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
       QuickActionData.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
       QuickActionData.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startAddTestimonial(session)
       QuickActionData.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCreateCustomPage(session)
-
       QuickActionData.QuickActionType.LIST_SERVICES,
       QuickActionData.QuickActionType.LIST_PRODUCT,
       QuickActionData.QuickActionType.LIST_DRUG_MEDICINE,
       -> baseActivity.startListServiceProduct(session)
-
       QuickActionData.QuickActionType.ADD_SERVICE,
       QuickActionData.QuickActionType.ADD_PRODUCT,
       QuickActionData.QuickActionType.ADD_COURSE,
+      QuickActionData.QuickActionType.ADD_MENU,
+      QuickActionData.QuickActionType.ADD_ROOM_TYPE,
       -> baseActivity.startAddServiceProduct(session)
-
       QuickActionData.QuickActionType.PLACE_APPOINTMENT -> baseActivity.startBookAppointmentConsult(session, false)
       QuickActionData.QuickActionType.PLACE_CONSULT -> baseActivity.startBookAppointmentConsult(session, true)
-
       QuickActionData.QuickActionType.ADD_PROJECT -> {
         if (session?.getStoreWidgets()?.equals(PremiumCode.PROJECTTEAM.value) == true) {
           baseActivity.startListProject(session)
@@ -535,18 +523,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionData.QuickActionType.ADD_UPCOMING_BATCH -> baseActivity.startListBatches(session)
       QuickActionData.QuickActionType.ADD_NEARBY_ATTRACTION -> baseActivity.startNearByView(session)
       QuickActionData.QuickActionType.ADD_FACULTY_MEMBER -> baseActivity.startFacultyMember(session)
-
-      QuickActionData.QuickActionType.ADD_SLIDER_BANNER -> {
+      QuickActionData.QuickActionType.POST_STATUS_STORY -> {
       }
-      QuickActionData.QuickActionType.ADD_ROOM_TYPE -> {
+      QuickActionData.QuickActionType.ADD_SLIDER_BANNER -> {
       }
       QuickActionData.QuickActionType.PLACE_ORDER_BOOKING -> {
       }
       QuickActionData.QuickActionType.ADD_TABLE_BOOKING -> {
       }
       QuickActionData.QuickActionType.ADD_STAFF_MEMBER -> {
-      }
-      QuickActionData.QuickActionType.ADD_MENU -> {
       }
       QuickActionData.QuickActionType.MAKE_ANNOUNCEMENT -> {
       }
@@ -584,6 +569,32 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
+  private fun getSummaryDetail(): SummaryEntity? {
+    return SummaryEntity(session?.enquiryCount?.toIntOrNull() ?: 0, session?.subcribersCount?.toIntOrNull() ?: 0, session?.visitorsCount?.toIntOrNull() ?: 0, session?.visitsCount?.toIntOrNull() ?: 0)
+  }
+
+  private fun actionChannelClick(data: ChannelModel) {
+    val title: String
+    var website = ""
+    if (data.isWhatsAppChannel().not()) {
+      if (data.isGoogleSearch()) {
+        title = "Website"
+        website = session?.getDomainName(false) ?: ""
+      } else {
+        title = data.channelAccessToken?.userAccountName?.takeIf { it.isNotEmpty() } ?: data.getName()
+        if (data.isTwitterChannel()) website = "https://twitter.com/${data.channelAccessToken?.userAccountName?.trim()}"
+        else if (data.isFacebookPage()) website = "https://www.facebook.com/${data.channelAccessToken?.userAccountId?.trim()}"
+      }
+      bottomSheetWebView(title, website)
+    }
+  }
+
+  private fun bottomSheetWebView(title: String, domainUrl: String) {
+    val webViewBottomDialog = WebViewBottomDialog()
+    webViewBottomDialog.setData(title, domainUrl)
+    webViewBottomDialog.show(this@DashboardFragment.parentFragmentManager, WebViewBottomDialog::class.java.name)
+  }
+
   override fun showProgress(title: String?, cancelable: Boolean?) {
     binding?.nestedScrollView?.gone()
     binding?.progress?.visible()
@@ -593,21 +604,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     binding?.nestedScrollView?.visible()
     binding?.progress?.gone()
   }
-
-  private fun getSummaryDetail(): SummaryEntity? {
-    return SummaryEntity(session?.enquiryCount?.toIntOrNull() ?: 0, session?.subcribersCount?.toIntOrNull() ?: 0, session?.visitorsCount?.toIntOrNull() ?: 0, session?.visitsCount?.toIntOrNull() ?: 0)
-  }
-
-  private fun bottomSheetWebView(title: String, domainUrl: String) {
-    val webViewBottomDialog = WebViewBottomDialog()
-    webViewBottomDialog.setData(title, domainUrl)
-    webViewBottomDialog.show(this@DashboardFragment.parentFragmentManager, WebViewBottomDialog::class.java.name)
-  }
 }
 
 private fun UserSessionManager.saveUserSummary(summary: SummaryEntity?) {
   enquiryCount = (summary?.noOfMessages ?: 0).toString()
-  subcribersCount = (summary?.noOfSubscribers ?: 0).toString()
+  if (summary?.noOfSubscribers != null && summary.noOfSubscribers != 0)
+    subcribersCount = summary.noOfSubscribers.toString()
   visitorsCount = (summary?.noOfUniqueViews ?: 0).toString()
   visitsCount = (summary?.noOfViews ?: 0).toString()
 }

@@ -80,7 +80,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Objects;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -1269,6 +1268,11 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     @Override
     public void dataFetched(int skip, boolean isNewMessage) {
 
+    }
+
+    public static ArrayList<FloatsMessageModel> getMessageList(boolean isDashboard) {
+        if (!isDashboard) return HomeActivity.StorebizFloats;
+        else return Home_Main_Fragment.StorebizFloats;
     }
 
     @Override

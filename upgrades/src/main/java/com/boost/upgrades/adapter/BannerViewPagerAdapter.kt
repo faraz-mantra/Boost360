@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.lang.Exception
 import java.util.*
 
 class BannerViewPagerAdapter(
@@ -36,7 +35,7 @@ class BannerViewPagerAdapter(
     }
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
-        Glide.with(holder.itemView.context).load(list.get(position).image.url).into(holder.primaryImage)
+        Glide.with(holder.itemView.context).load(list.get(position).image?.url?:"").into(holder.primaryImage)
         holder.primaryImage.setOnClickListener {
             homeListener.onPromoBannerClicked(list.get(position))
         }
