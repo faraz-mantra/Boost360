@@ -63,8 +63,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Marketing"
-                android:textColor="#747474"
-                android:textSize="@dimen/_8sdp" />
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textFontWeight="600"
+                android:fontFamily="@font/open_sans"
+                android:textColor="#FFB900"
+                android:textSize="@dimen/_9sdp" />
 
             <TextView
                 android:id="@+id/details"
@@ -74,9 +78,12 @@
                 android:layout_marginRight="@dimen/_25sdp"
                 android:maxLines="3"
                 android:ellipsize="end"
+                android:textStyle="bold"
+                android:textFontWeight="600"
+                android:fontFamily="@font/open_sans"
+                android:textColor="#4A4A4A"
                 tools:text="Facebook Ads (upto 75 leads)"
-                android:textColor="#2a2a2a"
-                android:textSize="@dimen/_12ssp" />
+                android:textSize="@dimen/_13ssp" />
 
 
         </LinearLayout>
@@ -94,9 +101,11 @@
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_5sdp"
+        android:layout_height="@dimen/_4sdp"
         android:layout_marginTop="@dimen/_8sdp"
-        android:background="@drawable/view_dot_lines_bg"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
+        android:background="@drawable/view_lines_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
