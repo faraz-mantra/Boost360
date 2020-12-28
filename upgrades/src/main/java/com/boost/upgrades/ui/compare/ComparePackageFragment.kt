@@ -38,6 +38,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.compare_all_packages.*
+import kotlinx.android.synthetic.main.compare_all_packages_new.*
 import kotlinx.android.synthetic.main.compare_package_fragment.*
 import kotlinx.android.synthetic.main.compare_package_fragment.badge121
 import kotlinx.android.synthetic.main.compare_package_fragment.package_back
@@ -82,7 +83,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        root = inflater.inflate(R.layout.compare_all_packages, container, false)
+        root = inflater.inflate(R.layout.compare_all_packages_new, container, false)
 
 //        val jsonString = arguments!!.getString("bundleData")
 //        bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
@@ -108,7 +109,13 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
         loadData()
         initMvvm()
 
+        package_viewpager.setPageTransformer(SimplePageTransformer())
 
+        val itemDecoration = HorizontalMarginItemDecoration(
+                requireContext(),
+                R.dimen.viewpager_current_item_horizontal_margin
+        )
+        package_viewpager.addItemDecoration(itemDecoration)
 
         if(arguments!!.containsKey("showCartIcon")){
             package_cart_icon.visibility = View.INVISIBLE
@@ -336,7 +343,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
         packageAdaptor.addupdates(list)
         packageAdaptor.notifyDataSetChanged()
         //show dot indicator only when the (list.size > 2)
-//        upgradeText.visibility = View.VISIBLE
+        upgradeTextBottom.visibility = View.VISIBLE
         if (list.size > 1) {
             package_indicator2.visibility = View.VISIBLE
         } else {
@@ -344,26 +351,6 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
         }
     }
 
-    fun updateBannerViewPager(list: List<Bundles>) {
-//        package_viewpager.offscreenPageLimit = list.size
-        packageAdaptor.addupdates(list)
-        packageAdaptor.notifyDataSetChanged()
-        //show dot indicator only when the (list.size > 2)
-        if (list.size > 1) {
-            if (list.size > 2) {
-                package_viewpager.setPageTransformer(SimplePageTransformer())
-
-                val itemDecoration = HorizontalMarginItemDecoration(
-                        requireContext(),
-                        R.dimen.viewpager_current_item_horizontal_margin
-                )
-                package_viewpager.addItemDecoration(itemDecoration)
-            }
-//            banner_indicator.visibility = View.VISIBLE
-        } else {
-//            banner_indicator.visibility = View.INVISIBLE
-        }
-    }
 
 
     fun initializeFreeAddonsRecyclerView() {
@@ -381,7 +368,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
 
         if (upgradeList.size > 2) {
 //            package_viewpager.setPageTransformer(SimplePageTransformer())
-
+//
 //                val itemDecoration = HorizontalMarginItemDecoration(
 //                        requireContext(),
 //                        R.dimen.viewpager_current_item_horizontal_margin2

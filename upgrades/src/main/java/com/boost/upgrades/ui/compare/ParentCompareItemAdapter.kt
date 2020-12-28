@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,13 +14,10 @@ import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.CompareItemAdapter
-import com.boost.upgrades.adapter.PackageViewPagerAdapter
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.CompareListener
-import com.boost.upgrades.interfaces.HomeListener
 import com.bumptech.glide.Glide
-import es.dmoral.toasty.Toasty
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -29,7 +25,6 @@ import io.reactivex.schedulers.Schedulers
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 import kotlin.collections.LinkedHashSet
 
 class ParentCompareItemAdapter (val list: java.util.ArrayList<Bundles>, val activity: UpgradeActivity, val homeListener: CompareListener) : RecyclerView.Adapter<ParentCompareItemAdapter.ParentViewHolder>() {
@@ -53,7 +48,7 @@ class ParentCompareItemAdapter (val list: java.util.ArrayList<Bundles>, val acti
         val view = LayoutInflater
                 .from(viewGroup.context)
                 .inflate(
-                        R.layout.package_fragment_compare,
+                        R.layout.package_fragment_compare_new,
                         viewGroup, false)
         return ParentViewHolder(view)
     }
@@ -70,6 +65,21 @@ class ParentCompareItemAdapter (val list: java.util.ArrayList<Bundles>, val acti
         // get the title and set it
         // as the text for the TextView
         parentViewHolder.PackageItemTitle.text = parentItem.name
+        val data = parentItem.name
+//        val items = data!!.split(" ".toRegex()).toTypedArray()
+        val items = data!!.split(" ".toRegex())
+        if(items.size == 1){
+            parentViewHolder.PackageItemTitle.text = items[0]
+        }else if(items.size == 2){
+            parentViewHolder.PackageItemTitle.text = items[0] + " \n" + items[1]
+        }else if(items.size == 3){
+            parentViewHolder.PackageItemTitle.text = items[0] + " \n" + items[1] + " " + items[2]
+        }else if(items.size == 4){
+            parentViewHolder.PackageItemTitle.text = items[0] + " " + items[1]  + " \n"  +items[2] + " "  + items[3]
+        }else if(items.size == 5){
+            parentViewHolder.PackageItemTitle.text = items[0] + " " + items[1]  + " \n"  +items[2] + " "  + items[3] + " " +items[4]
+        }
+        Log.v("split_words", " one"+ items[0] + " "+ items[1] + " count: "+ items.size)
         if(parentItem.desc != null){
             parentViewHolder.parent_item_title.text = parentItem.desc
         }else{
@@ -194,6 +204,7 @@ parentViewHolder.package_submit.setOnClickListener{
         val tv_price: TextView
         val package_profile_image: ImageView
         val parent_item_title: TextView
+        val tv_inlcuded_add_on: TextView
 
         init {
             PackageItemTitle = itemView
@@ -214,6 +225,9 @@ parentViewHolder.package_submit.setOnClickListener{
             parent_item_title = itemView
                     .findViewById(
                             R.id.parent_item_title)
+            tv_inlcuded_add_on = itemView
+                    .findViewById(
+                            R.id.tv_inlcuded_add_on)
         }
     }
 
@@ -252,13 +266,14 @@ parentViewHolder.package_submit.setOnClickListener{
                                     if (bundles.min_purchase_months != null && bundles.min_purchase_months > 1){
                                         holder.tv_price.setText("₹" +
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)+
-                                                "/" + bundles.min_purchase_months + " months" + " included "+ it.size + " features")
+                                                "/" + bundles.min_purchase_months + " months")
+                                        holder.tv_inlcuded_add_on.setText("Includes these "+ it.size+ " add-ons")
 
                                     }else{
                                         holder.tv_price.setText("₹" +
                                                 NumberFormat.getNumberInstance(Locale.ENGLISH).format(offeredBundlePrice)
-                                                + "/month" + " included "+ it.size + " features")
-
+                                                + "/month")
+                                        holder.tv_inlcuded_add_on.setText("Includes these "+ it.size+ " add-ons")
                                     }
 
                                     if(bundles.primary_image != null && !bundles.primary_image.url.isNullOrEmpty()){
