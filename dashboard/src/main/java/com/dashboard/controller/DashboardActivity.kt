@@ -35,6 +35,7 @@ import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
+import com.framework.views.customViews.CustomToolbar
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -72,6 +73,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     navControllerListener()
     binding?.navView?.setOnItemSelectedListener(this)
     binding?.navView?.setActiveItem(0)
+    toolbarPropertySet(0)
     setDrawerHome()
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
     binding?.drawerView?.txtVersion?.text = "Version $versionName"
@@ -81,6 +83,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     super.onResume()
     setUserData()
     setOnClickListener(binding?.drawerView?.btnSiteMeter, binding?.drawerView?.imgBusinessLogo, binding?.drawerView?.backgroundImage, binding?.drawerView?.txtDomainName)
+  }
+
+  override fun getToolbar(): CustomToolbar? {
+    return binding?.toolbar
   }
 
   fun setPercentageData(score: Int) {
@@ -147,16 +153,35 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onItemSelect(pos: Int) {
     when (pos) {
       0 -> mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-      1 -> mNavController.navigate(R.id.navigation_content, Bundle(), getNavOptions())
-      2 -> mNavController.navigate(R.id.navigation_patients, Bundle(), getNavOptions())
+      1 -> mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
+//      2 -> mNavController.navigate(R.id.navigation_patients, Bundle(), getNavOptions())
       3 -> mNavController.navigate(R.id.navigation_academy, Bundle(), getNavOptions())
       else -> mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
+    }
+    toolbarPropertySet(pos)
+  }
+
+  private fun toolbarPropertySet(pos: Int) {
+    when (pos) {
+      1 -> showToolbar(getString(R.string.website))
+      3 -> showToolbar(getString(R.string.academy))
+      else -> getToolbar()?.apply { visibility = View.GONE }
+    }
+  }
+
+  private fun showToolbar(title: String) {
+    getToolbar()?.apply {
+      visibility = View.VISIBLE
+      setTitle(title)
+      setBackgroundColor(ContextCompat.getColor(this@DashboardActivity, R.color.colorPrimary))
+      supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
   }
 
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)
     when (pos) {
+      2 -> session?.let { this.initiateAddonMarketplace(it, false, "", "") }
       4 -> binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
     }
   }

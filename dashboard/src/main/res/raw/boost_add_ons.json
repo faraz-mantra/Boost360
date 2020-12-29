@@ -1168,7 +1168,7 @@
               "businessType": "toppers_institute_d",
               "isLock": false,
               "isHide": false,
-              "premiumCode": "",
+              "premiumCode": "OUR-TOPPERS",
               "title": "Toppers of\nInstitute"
             },
             {
@@ -1551,14 +1551,14 @@
               "businessType": "places_look_around_d",
               "isLock": false,
               "isHide": false,
-              "premiumCode": "",
+              "premiumCode": "PLACES-TO-LOOK-AROUND",
               "title": "Places to Look Around"
             },
             {
               "businessType": "trip_advisor_reviews_d",
               "isLock": false,
               "isHide": false,
-              "premiumCode": "",
+              "premiumCode": "TRIPADVISOR-REVIEWS",
               "title": "Display TripAdvisor Reviews"
             },
             {
@@ -1934,21 +1934,21 @@
               "businessType": "project_portfolio_d",
               "isLock": false,
               "isHide": false,
-              "premiumCode": "",
+              "premiumCode": "PROJECTTEAM",
               "title": "Project\nPortfolio"
             },
             {
               "businessType": "team_page_d",
               "isLock": false,
               "isHide": false,
-              "premiumCode": "",
+              "premiumCode": "PROJECTTEAM",
               "title": "Team\nPage"
             },
             {
               "businessType": "ic_digital_brochures",
               "isLock": false,
               "isHide": false,
-              "premiumCode": "",
+              "premiumCode": "BROCHURE",
               "title": "E-Brochures For Your Business"
             },
             {
@@ -2331,7 +2331,7 @@
               "businessType": "table_reservations_d",
               "isLock": false,
               "isHide": false,
-              "premiumCode": "",
+              "premiumCode": "BOOKTABLE",
               "title": "Online Table Reservations"
             },
             {

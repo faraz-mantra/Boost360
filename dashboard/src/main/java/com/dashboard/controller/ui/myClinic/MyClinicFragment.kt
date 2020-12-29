@@ -1,14 +1,14 @@
-package com.dashboard.controller.ui.help
+package com.dashboard.controller.ui.myClinic
 
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
-import com.dashboard.databinding.FragmentContentBinding
+import com.dashboard.databinding.FragmentPatientsBinding
 import com.framework.models.BaseViewModel
 
-class AcademyFragment : AppBaseFragment<FragmentContentBinding, BaseViewModel>() {
+class MyClinicFragment : AppBaseFragment<FragmentPatientsBinding, BaseViewModel>() {
 
   override fun getLayout(): Int {
-    return R.layout.fragment_help
+    return R.layout.fragment_patients
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {

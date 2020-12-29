@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuInflater
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.dashboard.R
@@ -22,12 +23,15 @@ import com.dashboard.utils.*
 import com.dashboard.viewmodel.AddOnsViewModel
 import com.framework.extensions.observeOnce
 import java.util.*
+import kotlin.collections.ArrayList
 
 class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, AddOnsViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
   private var searchView: SearchView? = null
-  var adapterAddOns: AppBaseRecyclerViewAdapter<AllBoostAddOnsData>? = null
+  private var adapterAddOns: AppBaseRecyclerViewAdapter<AllBoostAddOnsData>? = null
+  private var addOnsList = ArrayList<AllBoostAddOnsData>()
+  private var addOnsListFilter = ArrayList<AllBoostAddOnsData>()
 
   companion object {
     @JvmStatic
@@ -62,12 +66,18 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       val dataAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT) }
       if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
         dataAction.actionItem?.map { it2 -> it2.manageBusinessList?.map { it3 -> if (it3.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it3.premiumCode).not()) it3.isLock = true } }
+        addOnsList.clear()
+        addOnsListFilter.clear()
+        val list = setLastSeenData(dataAction.actionItem!!)
+        addOnsList.addAll(list)
+        addOnsListFilter.addAll(list)
         if (adapterAddOns == null) {
           binding?.rvBoostAddOns?.apply {
-            adapterAddOns = AppBaseRecyclerViewAdapter(baseActivity, setLastSeenData(dataAction.actionItem!!), this@AllBoostAddonsFragment)
+            adapterAddOns = AppBaseRecyclerViewAdapter(baseActivity, list, this@AllBoostAddonsFragment)
             adapter = adapterAddOns
           }
-        } else adapterAddOns?.notify(setLastSeenData(dataAction.actionItem!!))
+        } else adapterAddOns?.notify(list)
+
       } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
     })
   }
@@ -104,7 +114,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
         }
 
         override fun onQueryTextChange(newText: String?): Boolean {
-          newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
+          newText?.let { startFilter(it.trim().toLowerCase(Locale.ROOT)) }
           return false
         }
       })
@@ -112,23 +122,29 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
   }
 
   private fun startFilter(query: String) {
-
+    if (query.isNotEmpty()) {
+      val list = ArrayList<ManageBusinessData>()
+      addOnsListFilter.forEach { it0 ->
+        it0.manageBusinessList?.forEach { if (it.title?.toLowerCase(Locale.ROOT)?.contains(query) == true) list.add(it) }
+      }
+      val listAddOns = ArrayList<AllBoostAddOnsData>()
+      if (list.isNotEmpty()) listAddOns.add(AllBoostAddOnsData(title = "Boost Add-ons", manageBusinessList = list))
+      adapterAddOns?.notify(listAddOns)
+    } else adapterAddOns?.notify(addOnsListFilter)
   }
 }
 
 fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: AppCompatActivity, session: UserSessionManager?) {
   when (type) {
-    ManageBusinessData.BusinessType.ic_customer_call_d ,
-    ManageBusinessData.BusinessType.ic_customer_call_tracker_d
+    ManageBusinessData.BusinessType.ic_customer_call_d,
+    ManageBusinessData.BusinessType.ic_customer_call_tracker_d,
     -> baseActivity.startVmnCallCard(session)
     ManageBusinessData.BusinessType.ic_customer_enquiries_d -> baseActivity.startBusinessEnquiry(session)
-    ManageBusinessData.BusinessType.ic_daily_business_update_d -> {
-      baseActivity.startPostUpdate(session)
-    }
+    ManageBusinessData.BusinessType.ic_daily_business_update_d -> baseActivity.startAppActivity(fragmentType = "UPDATE_LATEST_STORY_VIEW")
     ManageBusinessData.BusinessType.ic_product_cataloge_d,
     ManageBusinessData.BusinessType.ic_service_cataloge_d,
     -> baseActivity.startListServiceProduct(session)
-    ManageBusinessData.BusinessType.ic_customer_testimonial_d -> baseActivity.startAddTestimonial(session)
+    ManageBusinessData.BusinessType.ic_customer_testimonial_d -> baseActivity.startAddTestimonial(session, false)
     ManageBusinessData.BusinessType.ic_business_keyboard_d -> session?.let { baseActivity.startKeyboardActivity(it) }
     ManageBusinessData.BusinessType.clinic_logo -> baseActivity.startBusinessLogo(session)
     ManageBusinessData.BusinessType.featured_image_video -> baseActivity.startFeatureLogo(session)
@@ -138,93 +154,61 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.faculty_profiles_d,
     -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
     ManageBusinessData.BusinessType.content_sync_acros_channels -> session?.let { baseActivity.startDigitalChannel(it) }
-    ManageBusinessData.BusinessType.ic_custom_page_add -> baseActivity.startCreateCustomPage(session)
+    ManageBusinessData.BusinessType.ic_custom_page_add -> baseActivity.startCreateCustomPage(session, false)
     ManageBusinessData.BusinessType.in_clinic_appointments -> baseActivity.startOrderAptConsultList(session, isConsult = false)
     ManageBusinessData.BusinessType.customer_order_d -> baseActivity.startOrderAptConsultList(session, isOrder = true)
     ManageBusinessData.BusinessType.video_consultations -> baseActivity.startOrderAptConsultList(session, isConsult = true)
     ManageBusinessData.BusinessType.newsletter_subscription -> baseActivity.startSubscriber(session)
-    ManageBusinessData.BusinessType.picture_gallery -> baseActivity.startAddImageGallery(session)
+    ManageBusinessData.BusinessType.picture_gallery,
+    ManageBusinessData.BusinessType.client_logos_d,
+    -> baseActivity.startAddImageGallery(session)
     ManageBusinessData.BusinessType.premium_boost_support -> session?.let { baseActivity.startHelpAndSupportActivity(it) }
     ManageBusinessData.BusinessType.custom_payment_gateway -> baseActivity.startSelfBrandedGateway(session)
     ManageBusinessData.BusinessType.business_kyc_verification -> baseActivity.startBusinessKycBoost(session)
     ManageBusinessData.BusinessType.my_bank_account -> baseActivity.startMyBankAccount(session)
     ManageBusinessData.BusinessType.ic_digital_brochures -> baseActivity.startListDigitalBrochure(session)
-    ManageBusinessData.BusinessType.clinic_basic_info -> {
-    }
-    ManageBusinessData.BusinessType.ic_ivr_faculty -> {
-    }
-    ManageBusinessData.BusinessType.boost_payment_gateway -> {
-    }
+    ManageBusinessData.BusinessType.places_look_around_d -> baseActivity.startNearByView(session)
+    ManageBusinessData.BusinessType.trip_advisor_reviews_d -> baseActivity.startListTripAdvisor(session)
+    ManageBusinessData.BusinessType.team_page_d -> baseActivity.startListProjectAndTeams(session)
+    ManageBusinessData.BusinessType.upcoming_batches_d -> baseActivity.startListBatches(session)
+    ManageBusinessData.BusinessType.toppers_institute_d -> baseActivity.startListToppers(session)
+    ManageBusinessData.BusinessType.website_visits_visitors -> baseActivity.startSiteViewAnalytic(session, "TOTAL")
+    ManageBusinessData.BusinessType.business_name_d,
+    ManageBusinessData.BusinessType.clinic_basic_info,
+    ManageBusinessData.BusinessType.business_description_d,
+    -> baseActivity.startBusinessDescriptionEdit(session)
+    ManageBusinessData.BusinessType.ic_my_business_faqs -> baseActivity.startMobileSite(session, "https://www.getboost360.com/faqs/")
+    ManageBusinessData.BusinessType.website_social_share_plugin -> baseActivity.startBoostExtension(session)
+    ManageBusinessData.BusinessType.project_portfolio_d -> baseActivity.startListProjectAndTeams(session)
+    ManageBusinessData.BusinessType.table_reservations_d -> baseActivity.startBookTable(session)
+
     ManageBusinessData.BusinessType.domain_name_ssl -> {
     }
-    ManageBusinessData.BusinessType.ic_my_business_faqs -> {
+    ManageBusinessData.BusinessType.room_booking_engine_d,
+    ManageBusinessData.BusinessType.ic_ivr_faculty,
+    ManageBusinessData.BusinessType.boost_payment_gateway,
+    ManageBusinessData.BusinessType.advertising_google_fb,
+    ManageBusinessData.BusinessType.appointment_settings,
+    ManageBusinessData.BusinessType.assisted_content_creation,
+    ManageBusinessData.BusinessType.autamated_seo_d,
+    ManageBusinessData.BusinessType.boost_data_security,
+    ManageBusinessData.BusinessType.e_commerce_website,
+    ManageBusinessData.BusinessType.facebook_lead_ads,
+    ManageBusinessData.BusinessType.facebook_likebox_plugin,
+    ManageBusinessData.BusinessType.my_email_accounts,
+    ManageBusinessData.BusinessType.ria_digital_assistant,
+    ManageBusinessData.BusinessType.unlimited_content_updates,
+    ManageBusinessData.BusinessType.unlimited_website_bandwidth,
+    ManageBusinessData.BusinessType.chatbot_analytics,
+    ManageBusinessData.BusinessType.website_chatbot,
+    ManageBusinessData.BusinessType.sync_otas_channel_manager_d,
+    ManageBusinessData.BusinessType.social_sharing_analytics,
+    ManageBusinessData.BusinessType.sales_analytics,
+    ManageBusinessData.BusinessType.search_analytics,
+    ManageBusinessData.BusinessType.membership_plans,
+    ManageBusinessData.BusinessType.restaurant_story_d,
+    -> {
+      Toast.makeText(baseActivity, "Coming soon...", Toast.LENGTH_SHORT).show()
     }
-    ManageBusinessData.BusinessType.advertising_google_fb -> {
-    }
-    ManageBusinessData.BusinessType.appointment_settings -> {
-    }
-    ManageBusinessData.BusinessType.assisted_content_creation -> {
-    }
-    ManageBusinessData.BusinessType.autamated_seo_d -> {
-    }
-    ManageBusinessData.BusinessType.boost_data_security -> {
-    }
-    ManageBusinessData.BusinessType.e_commerce_website -> {
-    }
-    ManageBusinessData.BusinessType.facebook_lead_ads -> {
-    }
-    ManageBusinessData.BusinessType.facebook_likebox_plugin -> {
-    }
-    ManageBusinessData.BusinessType.my_email_accounts -> {
-    }
-    ManageBusinessData.BusinessType.ria_digital_assistant -> {
-    }
-    ManageBusinessData.BusinessType.unlimited_content_updates -> {
-    }
-    ManageBusinessData.BusinessType.unlimited_website_bandwidth -> {
-    }
-    ManageBusinessData.BusinessType.chatbot_analytics -> {
-    }
-    ManageBusinessData.BusinessType.website_chatbot -> {
-    }
-    ManageBusinessData.BusinessType.website_social_share_plugin -> {
-    }
-    ManageBusinessData.BusinessType.sync_otas_channel_manager_d -> {
-    }
-    ManageBusinessData.BusinessType.places_look_around_d -> {
-    }
-    ManageBusinessData.BusinessType.trip_advisor_reviews_d -> {
-    }
-    ManageBusinessData.BusinessType.room_booking_engine_d -> {
-    }
-    ManageBusinessData.BusinessType.table_reservations_d -> {
-    }
-    ManageBusinessData.BusinessType.website_visits_visitors -> {
-    }
-    ManageBusinessData.BusinessType.social_sharing_analytics -> {
-    }
-    ManageBusinessData.BusinessType.sales_analytics -> {
-    }
-    ManageBusinessData.BusinessType.search_analytics -> {
-    }
-    ManageBusinessData.BusinessType.project_portfolio_d -> {
-    }
-    ManageBusinessData.BusinessType.team_page_d -> {
-    }
-    ManageBusinessData.BusinessType.membership_plans -> {
-    }
-    ManageBusinessData.BusinessType.upcoming_batches_d -> {
-    }
-    ManageBusinessData.BusinessType.toppers_institute_d -> {
-    }
-    ManageBusinessData.BusinessType.business_name_d -> {
-    }
-    ManageBusinessData.BusinessType.restaurant_story_d -> {
-    }
-    ManageBusinessData.BusinessType.business_description_d -> {
-    }
-    ManageBusinessData.BusinessType.client_logos_d -> {
-    }
-    //ManageBusinessData.BusinessType.ic_project_terms_d -> baseActivity.startListProjectAndTeams(session)
   }
 }

@@ -2,6 +2,7 @@
   <string name="dashboard">Dashboard</string>
   <string name="website">Website</string>
   <string name="my_clinic">My Clinic</string>
+  <string name="boost_add_ons">Add-ons</string>
   <string name="academy">Academy</string>
   <string name="more">More</string>
   <string name="www_sravansclinic_com"><u>www.plastoindiaandpolymers.com</u></string>
@@ -57,6 +58,7 @@
   <string name="manage_business_not_found">Manage business data not found!</string>
   <string name="powered_by">Powered By</string>
   <string name="nowfloats">NowFloats</string>
+  <string name="academy_banner_not_found">Academy banner not found.</string>
   <!-- SITE-Meter Percentage  -->
 
 </resources>

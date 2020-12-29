@@ -21,10 +21,7 @@ import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
-import com.dashboard.model.live.premiumBanner.PremiumFeatureData
-import com.dashboard.model.live.premiumBanner.PromoBanner
-import com.dashboard.model.live.premiumBanner.UpgradePremiumFeatureResponse
-import com.dashboard.model.live.premiumBanner.marketBannerFilter
+import com.dashboard.model.live.premiumBanner.*
 import com.dashboard.model.live.quickAction.QuickActionData
 import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.model.live.quickAction.QuickActionResponse
@@ -77,7 +74,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterPagerBusinessUpdate: AppBaseRecyclerViewAdapter<BusinessSetupHighData>? = null
   private var adapterRoi: AppBaseRecyclerViewAdapter<RoiSummaryData>? = null
   private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
-  private var adapterMarketBanner: AppBaseRecyclerViewAdapter<PromoBanner>? = null
+  private var adapterMarketBanner: AppBaseRecyclerViewAdapter<PromoAcademyBanner>? = null
+  private var adapterAcademy: AppBaseRecyclerViewAdapter<PromoAcademyBanner>? = null
   private var siteMeterData: SiteMeterScoreDetails? = null
   private var quickActionPosition = 0
   private var isFirsLoad = true
@@ -99,17 +97,21 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getCategoryData()
     apiSellerSummary()
     getPremiumBanner()
-    setDataRiaAcademy()
   }
 
   private fun getPremiumBanner() {
-    val promoBanners = PremiumFeatureData().getMarketPlaceBanners()
-    if (promoBanners.isNullOrEmpty().not()) setDataMarketBanner(promoBanners ?: ArrayList())
+    setDataMarketBanner(PremiumFeatureData().getMarketPlaceBanners() ?: ArrayList())
+    setDataRiaAcademy(PremiumFeatureData().getAcademyBanners() ?: ArrayList())
     viewModel?.getUpgradePremiumBanner()?.observeOnce(viewLifecycleOwner, {
       val response = it as? UpgradePremiumFeatureResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val data = response.data?.get(0)
-        data?.promoBanners?.marketBannerFilter(session)?.let { it1 -> setDataMarketBanner(it1) }
+        val promoBannersFilter = (data?.promoBanners ?: ArrayList()).marketBannerFilter(session)
+        saveDataMarketPlace(promoBannersFilter)
+        setDataMarketBanner(promoBannersFilter)
+        val academyBannerFilter = (data?.academyBanner ?: ArrayList()).marketBannerFilter(session)
+        saveDataAcademy(academyBannerFilter)
+        setDataRiaAcademy(academyBannerFilter)
       }
     })
   }
@@ -138,7 +140,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       getCategoryData()
       apiSellerSummary()
       getPremiumBanner()
-      setDataRiaAcademy()
       setUserBusinessAllData(siteMeterData)
     } else setUserBusinessAllData(siteMeterData)
     isRecreate = this.isHigh
@@ -337,18 +338,24 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     binding?.imgBusinessLogo?.let { baseActivity.glideLoad(it, imageUri, R.drawable.ic_add_logo_d, isCrop = true) }
   }
 
-  private fun setDataRiaAcademy() {
+  private fun setDataRiaAcademy(academyBanner: ArrayList<PromoAcademyBanner>) {
     binding?.pagerRiaAcademy?.apply {
-      val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, RiaAcademyData().getData(), this@DashboardFragment)
-      offscreenPageLimit = 3
-//      clipToPadding = false
-//      setPadding(37, 0, 37, 0)
-      adapter = adapterPager3
-      setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+      if (academyBanner.isNotEmpty()) {
+        academyBanner.map { it.recyclerViewItemType = RecyclerViewItemType.RIA_ACADEMY_ITEM_VIEW.getLayout() }
+        binding?.riaAcademyView?.visible()
+        if (adapterAcademy == null) {
+          adapterAcademy = AppBaseRecyclerViewAdapter(baseActivity, academyBanner, this@DashboardFragment)
+          offscreenPageLimit = 3
+//          clipToPadding = false
+//          setPadding(37, 0, 37, 0)
+          adapter = adapterAcademy
+          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+        } else adapterAcademy?.notify(academyBanner)
+      } else binding?.riaAcademyView?.gone()
     }
   }
 
-  private fun setDataMarketBanner(marketBannerFilter: ArrayList<PromoBanner>) {
+  private fun setDataMarketBanner(marketBannerFilter: ArrayList<PromoAcademyBanner>) {
     if (isHigh) {
       binding?.pagerBoostPremium?.apply {
         if (marketBannerFilter.isNotEmpty()) {
@@ -465,7 +472,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         actionChannelClick(data)
       }
       RecyclerViewActionType.PROMO_BANNER_CLICK.ordinal -> {
-        val data = item as? PromoBanner ?: return
+        val data = item as? PromoAcademyBanner ?: return
         session?.let { baseActivity.promoBannerMarketplace(it, data) }
       }
     }
@@ -489,8 +496,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (type) {
       QuickActionData.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
       QuickActionData.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
-      QuickActionData.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startAddTestimonial(session)
-      QuickActionData.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCreateCustomPage(session)
+      QuickActionData.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startAddTestimonial(session, true)
+      QuickActionData.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCreateCustomPage(session, true)
       QuickActionData.QuickActionType.LIST_SERVICES,
       QuickActionData.QuickActionType.LIST_PRODUCT,
       QuickActionData.QuickActionType.LIST_DRUG_MEDICINE,
@@ -523,17 +530,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       QuickActionData.QuickActionType.ADD_UPCOMING_BATCH -> baseActivity.startListBatches(session)
       QuickActionData.QuickActionType.ADD_NEARBY_ATTRACTION -> baseActivity.startNearByView(session)
       QuickActionData.QuickActionType.ADD_FACULTY_MEMBER -> baseActivity.startFacultyMember(session)
-      QuickActionData.QuickActionType.POST_STATUS_STORY -> {
-      }
-      QuickActionData.QuickActionType.ADD_SLIDER_BANNER -> {
-      }
-      QuickActionData.QuickActionType.PLACE_ORDER_BOOKING -> {
-      }
-      QuickActionData.QuickActionType.ADD_TABLE_BOOKING -> {
-      }
-      QuickActionData.QuickActionType.ADD_STAFF_MEMBER -> {
-      }
-      QuickActionData.QuickActionType.MAKE_ANNOUNCEMENT -> {
+
+      QuickActionData.QuickActionType.POST_STATUS_STORY,
+      QuickActionData.QuickActionType.ADD_SLIDER_BANNER,
+      QuickActionData.QuickActionType.PLACE_ORDER_BOOKING,
+      QuickActionData.QuickActionType.ADD_TABLE_BOOKING,
+      QuickActionData.QuickActionType.ADD_STAFF_MEMBER,
+      QuickActionData.QuickActionType.MAKE_ANNOUNCEMENT,
+      -> {
+        showShortToast("Coming soon...")
       }
     }
   }
