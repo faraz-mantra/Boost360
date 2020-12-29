@@ -25,6 +25,7 @@ import com.nowfloats.NavigationDrawer.Home_Main_Fragment;
 import com.nowfloats.NavigationDrawer.ManageContentFragment;
 import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
+import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
@@ -45,6 +46,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
     private AboutFragment aboutFragment = null;
     private NotificationFragment notificationFragment = null;
     private Home_Main_Fragment homeMainFragment = null;
+    private ManageCustomerFragment manageCustomerFragment = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,6 +111,8 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
                 return getString(R.string.notification);
             case UPDATE_LATEST_STORY_VIEW:
                 return Utils.getLatestUpdatesTaxonomyFromServiceCode(session.getFP_AppExperienceCode());
+            case MANAGE_CUSTOMER_VIEW:
+                return getString(R.string.manage_customers);
             default:
                 return "";
         }
@@ -124,6 +128,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case ABOUT_BOOST:
             case NOTIFICATION_VIEW:
             case UPDATE_LATEST_STORY_VIEW:
+            case MANAGE_CUSTOMER_VIEW:
             default:
                 return R.color.white;
         }
@@ -139,6 +144,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case ABOUT_BOOST:
             case NOTIFICATION_VIEW:
             case UPDATE_LATEST_STORY_VIEW:
+            case MANAGE_CUSTOMER_VIEW:
             default:
                 return ContextCompat.getDrawable(this, R.drawable.ic_arrow_back);
         }
@@ -178,6 +184,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case ABOUT_BOOST:
             case UPDATE_LATEST_STORY_VIEW:
             case NOTIFICATION_VIEW:
+            case MANAGE_CUSTOMER_VIEW:
             default:
                 return ContextCompat.getColor(this, R.color.colorAccent);
 
@@ -243,6 +250,9 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case UPDATE_LATEST_STORY_VIEW:
                 homeMainFragment = new Home_Main_Fragment();
                 return homeMainFragment;
+            case MANAGE_CUSTOMER_VIEW:
+                manageCustomerFragment =  new ManageCustomerFragment();
+                return manageCustomerFragment;
             default:
                 return null;
         }
@@ -259,6 +269,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
         if (aboutFragment != null) aboutFragment.onActivityResult(requestCode, resultCode, data);
         if (notificationFragment != null) notificationFragment.onActivityResult(requestCode, resultCode, data);
         if (homeMainFragment != null) homeMainFragment.onActivityResult(requestCode, resultCode, data);
+        if (manageCustomerFragment!= null) manageCustomerFragment.onActivityResult(requestCode, resultCode, data);
     }
 
 }

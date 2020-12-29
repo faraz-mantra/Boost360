@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dashboard.utils.DeepLinkUtil;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.HomeActivity;
@@ -48,6 +50,7 @@ public class NotificationFragment extends Fragment implements DeepLinkInterface 
     private boolean mIsAlertShown = false;
     private int readAlertsCount, unReadAlertCount;
     private boolean stop;
+    private DeepLinkUtil deepLinkUtil;
     private ArrayList<AlertModel> alertModelsList = new ArrayList<>();
 
     @Override
@@ -57,6 +60,7 @@ public class NotificationFragment extends Fragment implements DeepLinkInterface 
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         alertInterface = Constants.restAdapter.create(NotificationInterface.class);
+        deepLinkUtil = new DeepLinkUtil((AppCompatActivity) activity, new com.dashboard.pref.UserSessionManager(activity));
     }
 
     @Override
@@ -189,18 +193,15 @@ public class NotificationFragment extends Fragment implements DeepLinkInterface 
     public void deepLink(String url) {
         if (getActivity() instanceof HomeActivity) {
             ((HomeActivity) getActivity()).deepLink(url);
-        }else {
-//            Toast.makeText(activity, url, Toast.LENGTH_SHORT).show();
+        } else if (deepLinkUtil != null) {
+            deepLinkUtil.deepLinkPage(url, "", false);
         }
     }
 
 
     public class AlterDateComparator implements Comparator<AlertModel> {
         public int compare(AlertModel left, AlertModel right) {
-            return Methods.getFormattedDate(right.
-                    CreatedOn).compareTo(Methods.getFormattedDate(left.
-                    CreatedOn));
-
+            return Methods.getFormattedDate(right.CreatedOn).compareTo(Methods.getFormattedDate(left.CreatedOn));
         }
 
     }

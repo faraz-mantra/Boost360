@@ -431,17 +431,17 @@ in api 29 for ImagePicker library in ManageProductFragment-->
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden">
-            <intent-filter android:label="Queries">
-                <action android:name="android.intent.action.VIEW" />
+<!--            <intent-filter android:label="Queries">-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
 
-                <data
-                    android:host="${applicationId}.keyboard.home"
-                    android:pathPrefix="/"
-                    android:scheme="http" />
-            </intent-filter>
+<!--                <data-->
+<!--                    android:host="${applicationId}.keyboard.home"-->
+<!--                    android:pathPrefix="/"-->
+<!--                    android:scheme="http" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity"

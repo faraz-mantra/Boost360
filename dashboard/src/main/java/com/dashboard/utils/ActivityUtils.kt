@@ -20,6 +20,8 @@ import com.onboarding.nowfloats.ui.webview.WebViewActivity
 
 const val VISITS_TYPE_STRING = "visits_type_string"
 
+const val RIA_NODE_DATA = "riaNodeDatas"
+
 fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
   try {
     val bundle = Bundle()
@@ -79,6 +81,7 @@ fun AppCompatActivity.startSearchQuery(session: UserSessionManager?) {
   }
 }
 
+
 fun AppCompatActivity.startRevenueSummary(session: UserSessionManager?) {
   try {
     val queries = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.RevenueSummaryActivity"))
@@ -92,6 +95,26 @@ fun AppCompatActivity.startRevenueSummary(session: UserSessionManager?) {
 fun AppCompatActivity.startAptOrderSummary(session: UserSessionManager?) {
   try {
     val queries = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.OrderSummaryActivity"))
+    startActivity(queries)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startBackgroundImageGallery(session: UserSessionManager?) {
+  try {
+    val queries = Intent(this, Class.forName("com.nowfloats.Image_Gallery.BackgroundImageGalleryActivity"))
+    startActivity(queries)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
+  try {
+    val queries = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.FaviconImageActivity"))
     startActivity(queries)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
@@ -114,6 +137,17 @@ fun AppCompatActivity.startSubscriber(session: UserSessionManager?) {
   try {
     val subscribers = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.SubscribersActivity"))
     startActivity(subscribers)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startAnalytics(session: UserSessionManager?, table_name: Int?) {
+  try {
+    val intent = Intent(this, Class.forName("com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"))
+    if (table_name != null) intent.putExtra("table_name", table_name)
+    startActivity(intent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
     e.printStackTrace()
@@ -193,6 +227,10 @@ fun AppCompatActivity.startAboutBoostActivity(session: UserSessionManager) {
   startAppActivity(fragmentType = "ABOUT_BOOST")
 }
 
+fun AppCompatActivity.startManageCustomer(session: UserSessionManager) {
+  startAppActivity(fragmentType = "MANAGE_CUSTOMER_VIEW")
+}
+
 fun AppCompatActivity.startAppActivity(bundle: Bundle = Bundle(), fragmentType: String) {
   try {
     val intent = Intent(this, Class.forName("com.nowfloats.helper.AppFragmentContainerActivity"))
@@ -214,6 +252,16 @@ fun AppCompatActivity.startPostUpdate(session: UserSessionManager?) {
   }
 }
 
+fun AppCompatActivity.startThirdPartyQueries(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("om.nowfloats.customerassistant.ThirdPartyQueriesActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
 fun AppCompatActivity.startBoostExtension(session: UserSessionManager?) {
   try {
     val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Boost360ExtensionsActivity"))
@@ -223,10 +271,11 @@ fun AppCompatActivity.startBoostExtension(session: UserSessionManager?) {
     e.printStackTrace()
   }
 }
-fun AppCompatActivity.startMobileSite(session: UserSessionManager?,website:String) {
+
+fun AppCompatActivity.startMobileSite(session: UserSessionManager?, website: String) {
   try {
     val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
-    webIntent.putExtra("WEBSITE_NAME",website)
+    webIntent.putExtra("WEBSITE_NAME", website)
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -234,10 +283,10 @@ fun AppCompatActivity.startMobileSite(session: UserSessionManager?,website:Strin
   }
 }
 
-fun AppCompatActivity.startAddImageGallery(session: UserSessionManager?) {
+fun AppCompatActivity.startAddImageGallery(session: UserSessionManager?,isCreate:Boolean=true) {
   try {
     val webIntent = Intent(this, Class.forName("com.nowfloats.Image_Gallery.ImageGalleryActivity"))
-    webIntent.putExtra("create_image", true)
+    webIntent.putExtra("create_image", isCreate)
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -245,7 +294,17 @@ fun AppCompatActivity.startAddImageGallery(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startAddTestimonial(session: UserSessionManager?,isAdd:Boolean) {
+fun AppCompatActivity.startProductGallery(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductGalleryActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startAddTestimonial(session: UserSessionManager?, isAdd: Boolean) {
   try {
     val webIntent = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"))
     webIntent.putExtra("IS_ADD", isAdd)
@@ -256,7 +315,7 @@ fun AppCompatActivity.startAddTestimonial(session: UserSessionManager?,isAdd:Boo
   }
 }
 
-fun AppCompatActivity.startCreateCustomPage(session: UserSessionManager?,isAdd:Boolean) {
+fun AppCompatActivity.startCreateCustomPage(session: UserSessionManager?, isAdd: Boolean) {
   try {
     val webIntent = Intent(this, Class.forName("com.nowfloats.CustomPage.CustomPageActivity"))
     webIntent.putExtra("IS_ADD", isAdd)
@@ -280,6 +339,16 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
 fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
   try {
     val webIntent = Intent(this, Class.forName("com.nowfloats.Restaurants.BookATable.BookATableActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startPreSignUp(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.boost.presignup.PreSignUpActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -380,6 +449,7 @@ fun AppCompatActivity.startBusinessDescriptionEdit(session: UserSessionManager?)
     e.printStackTrace()
   }
 }
+
 
 fun AppCompatActivity.startBusinessContactInfo(session: UserSessionManager?) {
   try {
@@ -527,6 +597,7 @@ fun AppCompatActivity.startListTripAdvisor(session: UserSessionManager?) {
     e.printStackTrace()
   }
 }
+
 fun AppCompatActivity.startListProject(session: UserSessionManager?) {
   try {
     val webIntent = Intent(this, Class.forName("com.nowfloats.manufacturing.projectandteams.ui.project.ProjectActivity"))
