@@ -276,8 +276,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       DrawerHomeData.NavType.NAV_SETTING -> session?.let { this.startSettingActivity(it) }
       DrawerHomeData.NavType.NAV_HELP_SUPPORT -> session?.let { this.startHelpAndSupportActivity(it) }
       DrawerHomeData.NavType.NAV_ABOUT_BOOST -> session?.let { this.startAboutBoostActivity(it) }
-      DrawerHomeData.NavType.NAV_REFER_FRIEND -> {
-      }
+      DrawerHomeData.NavType.NAV_REFER_FRIEND -> this.startReferralView(session)
     }
     if (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) binding?.drawerLayout?.closeDrawers()
   }
