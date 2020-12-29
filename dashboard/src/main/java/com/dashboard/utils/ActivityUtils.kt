@@ -272,6 +272,16 @@ fun AppCompatActivity.startBoostExtension(session: UserSessionManager?) {
   }
 }
 
+fun AppCompatActivity.startReferralView(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.helper.ReferralTransActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(0,0)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
 fun AppCompatActivity.startMobileSite(session: UserSessionManager?, website: String) {
   try {
     val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
