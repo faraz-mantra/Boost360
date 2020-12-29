@@ -1,14 +1,14 @@
-package com.dashboard.controller.ui.patients
+package com.dashboard.controller.ui.website
 
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
-import com.dashboard.databinding.FragmentPatientsBinding
+import com.dashboard.databinding.FragmentMoreBinding
 import com.framework.models.BaseViewModel
 
-class PatientsFragment : AppBaseFragment<FragmentPatientsBinding, BaseViewModel>() {
+class WebsiteFragment : AppBaseFragment<FragmentMoreBinding, BaseViewModel>() {
 
   override fun getLayout(): Int {
-    return R.layout.fragment_patients
+    return R.layout.fragment_more
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {

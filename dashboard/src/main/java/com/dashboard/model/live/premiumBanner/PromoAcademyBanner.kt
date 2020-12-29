@@ -5,7 +5,7 @@ import com.dashboard.recyclerView.AppBaseRecyclerViewItem
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class PromoBanner(
+data class PromoAcademyBanner(
   @SerializedName("createdon")
   var createdon: String? = null,
   @SerializedName("cta_bundle_identifier")

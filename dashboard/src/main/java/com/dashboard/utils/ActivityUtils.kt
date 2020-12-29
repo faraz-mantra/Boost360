@@ -9,7 +9,7 @@ import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
-import com.dashboard.model.live.premiumBanner.PromoBanner
+import com.dashboard.model.live.premiumBanner.PromoAcademyBanner
 import com.dashboard.pref.*
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
@@ -120,7 +120,7 @@ fun AppCompatActivity.startSubscriber(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.promoBannerMarketplace(session: UserSessionManager, promoBanner: PromoBanner?) {
+fun AppCompatActivity.promoBannerMarketplace(session: UserSessionManager, promoBanner: PromoAcademyBanner?) {
   val bundle = Bundle()
   bundle.putString("_kid", promoBanner?.kid)
   bundle.putString("_parentClassId", promoBanner?.parentClassId)
@@ -214,6 +214,26 @@ fun AppCompatActivity.startPostUpdate(session: UserSessionManager?) {
   }
 }
 
+fun AppCompatActivity.startBoostExtension(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Boost360ExtensionsActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+fun AppCompatActivity.startMobileSite(session: UserSessionManager?,website:String) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.Mobile_Site_Activity"))
+    webIntent.putExtra("WEBSITE_NAME",website)
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
 fun AppCompatActivity.startAddImageGallery(session: UserSessionManager?) {
   try {
     val webIntent = Intent(this, Class.forName("com.nowfloats.Image_Gallery.ImageGalleryActivity"))
@@ -225,10 +245,10 @@ fun AppCompatActivity.startAddImageGallery(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startAddTestimonial(session: UserSessionManager?) {
+fun AppCompatActivity.startAddTestimonial(session: UserSessionManager?,isAdd:Boolean) {
   try {
     val webIntent = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"))
-    webIntent.putExtra("IS_ADD", true)
+    webIntent.putExtra("IS_ADD", isAdd)
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -236,10 +256,10 @@ fun AppCompatActivity.startAddTestimonial(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startCreateCustomPage(session: UserSessionManager?) {
+fun AppCompatActivity.startCreateCustomPage(session: UserSessionManager?,isAdd:Boolean) {
   try {
     val webIntent = Intent(this, Class.forName("com.nowfloats.CustomPage.CustomPageActivity"))
-    webIntent.putExtra("IS_ADD", true)
+    webIntent.putExtra("IS_ADD", isAdd)
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -250,6 +270,16 @@ fun AppCompatActivity.startCreateCustomPage(session: UserSessionManager?) {
 fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
   try {
     val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("com.nowfloats.Restaurants.BookATable.BookATableActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -488,6 +518,15 @@ fun AppCompatActivity.startListProjectAndTeams(session: UserSessionManager?) {
   }
 }
 
+fun AppCompatActivity.startListTripAdvisor(session: UserSessionManager?) {
+  try {
+    val webIntent = Intent(this, Class.forName("ccom.nowfloats.hotel.tripadvisor.TripAdvisorActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
 fun AppCompatActivity.startListProject(session: UserSessionManager?) {
   try {
     val webIntent = Intent(this, Class.forName("com.nowfloats.manufacturing.projectandteams.ui.project.ProjectActivity"))

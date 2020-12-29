@@ -34,8 +34,10 @@ data class PremiumFeatureData(
     var kid: String? = null,
     @SerializedName("partner_zone")
     var partnerZone: ArrayList<PartnerZone>? = null,
-    @SerializedName("promo_banners")
-    var promoBanners: ArrayList<PromoBanner>? = null,
+    @SerializedName(value = "promo_banners", alternate = ["marketplace_banners"])
+    var promoBanners: ArrayList<PromoAcademyBanner>? = null,
+    @SerializedName("academy_banners")
+    var academyBanner: ArrayList<PromoAcademyBanner>? = null,
     @SerializedName("rootaliasurl")
     var rootaliasurl: Rootaliasurl? = null,
     @SerializedName("schemaid")
@@ -50,34 +52,33 @@ data class PremiumFeatureData(
     var websiteid: String? = null,
 ) : Serializable {
 
-  fun getMarketPlaceBanners(): ArrayList<PromoBanner>? {
+  fun getMarketPlaceBanners(): ArrayList<PromoAcademyBanner>? {
     val resp = PreferencesUtils.instance.getData(MARKETPLACE_BANNER_DATA, "") ?: ""
     return ArrayList(convertStringToList(resp) ?: ArrayList())
   }
 
-  fun getAcademyBanners(): ArrayList<PromoBanner>? {
+  fun getAcademyBanners(): ArrayList<PromoAcademyBanner>? {
     val resp = PreferencesUtils.instance.getData(ACADEMY_BANNER_DATA, "") ?: ""
     return ArrayList(convertStringToList(resp) ?: ArrayList())
   }
-
-  fun saveDataAcademy() {
-    PreferencesUtils.instance.saveDataN(ACADEMY_BANNER_DATA, convertListObjToString(promoBanners ?: ArrayList()) ?: "")
-  }
 }
 
-fun ArrayList<PromoBanner>.marketBannerFilter(session: UserSessionManager?): ArrayList<PromoBanner> {
+fun ArrayList<PromoAcademyBanner>.marketBannerFilter(session: UserSessionManager?): ArrayList<PromoAcademyBanner> {
   if (isNullOrEmpty()) return ArrayList()
-  val list = ArrayList<PromoBanner>()
+  val list = ArrayList<PromoAcademyBanner>()
   val expCode = session?.fP_AppExperienceCode?.toLowerCase(Locale.ROOT)?.trim()
   forEach {
     if (it.exclusiveToCategories.isNullOrEmpty().not()) {
       if (it.exclusiveToCategories!!.firstOrNull { it1 -> it1.toLowerCase(Locale.ROOT).trim() == expCode } != null) list.add(it)
     }else list.add(it)
   }
-  saveDataMarketPlace(list)
   return list
 }
 
-fun saveDataMarketPlace(promoBanners: ArrayList<PromoBanner>?) {
+fun saveDataMarketPlace(promoBanners: ArrayList<PromoAcademyBanner>?) {
   PreferencesUtils.instance.saveDataN(MARKETPLACE_BANNER_DATA, convertListObjToString(promoBanners ?: ArrayList()) ?: "")
+}
+
+fun saveDataAcademy(academyBanner: ArrayList<PromoAcademyBanner>?) {
+  PreferencesUtils.instance.saveDataN(ACADEMY_BANNER_DATA, convertListObjToString(academyBanner ?: ArrayList()) ?: "")
 }

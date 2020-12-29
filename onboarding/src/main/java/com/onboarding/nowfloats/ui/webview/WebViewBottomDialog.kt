@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.view.View
 import android.webkit.*
-import android.widget.Toast
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -35,7 +34,6 @@ class WebViewBottomDialog : BaseBottomSheetDialog<WebViewBottomsheetBinding, Bas
 
   override fun onCreateView() {
     if (domainUrl.isEmpty()) {
-      Toast.makeText(baseActivity, "Invalid url.", Toast.LENGTH_SHORT).show()
       dismiss()
     }
     binding?.title?.text = title

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
+import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Profileimage;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
@@ -52,7 +53,7 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
         menuStatus = status;
     }
 
-    public void updateList(List<Data> itemList){
+    public void updateList(List<Data> itemList) {
         this.itemList = itemList;
         menuPosition = -1; //reset menu
         notifyDataSetChanged();
@@ -102,31 +103,41 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
             }
         });
 
-        if(userSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("HOTEL & MOTELS")){
+        if (userSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("HOTEL & MOTELS")) {
+            Profileimage profileImage = itemList.get(position).getProfileImage();
+            String imageUrl = "";
+            if (profileImage != null) imageUrl = profileImage.getUrl();
             Glide.with(context)
-                    .load(itemList.get(position).getProfileImage().getUrl())
+                    .load(imageUrl)
                     .into(holder.userProfileImage);
             holder.userName.setText(itemList.get(position).getCustomerName());
             holder.reviewTitle.setText(itemList.get(position).getCity());
             holder.reviewDescription.setText(itemList.get(position).getTestimonial());
-        }else if(userSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("MANUFACTURERS")){
+        } else if (userSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("MANUFACTURERS")) {
+            Profileimage profileImage = itemList.get(position).getProfileimage();
+            String imageUrl = "";
+            if (profileImage != null) imageUrl = profileImage.getUrl();
             Glide.with(context)
-                    .load(itemList.get(position).getProfileimage().getUrl())
+                    .load(imageUrl)
                     .into(holder.userProfileImage);
             holder.userName.setText(itemList.get(position).getUsername());
             holder.reviewTitle.setText(itemList.get(position).getTitle());
             holder.reviewDescription.setText(itemList.get(position).getDescription());
-        }else if(userSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("SALON")){
+        } else if (userSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("SALON")) {
+            Profileimage profileImage = itemList.get(position).getProfileimage();
+            String imageUrl = "";
+            if (profileImage != null) imageUrl = profileImage.getUrl();
             Glide.with(context)
-                    .load(itemList.get(position).getProfileimage().getUrl())
+                    .load(imageUrl)
                     .into(holder.userProfileImage);
             holder.userName.setText(itemList.get(position).getName());
             holder.reviewTitle.setText(itemList.get(position).getTitle());
             holder.reviewDescription.setText(itemList.get(position).getOurStory());
-        }else{
-            Glide.with(context)
-                    .load(itemList.get(position).getProfileImage().getUrl())
-                    .into(holder.userProfileImage);
+        } else {
+            Profileimage profileImage = itemList.get(position).getProfileImage();
+            String imageUrl = "";
+            if (profileImage != null) imageUrl = profileImage.getUrl();
+            Glide.with(context).load(imageUrl).into(holder.userProfileImage);
             holder.userName.setText(itemList.get(position).getUsername());
             holder.reviewTitle.setText(itemList.get(position).getTitle());
             holder.reviewDescription.setText(itemList.get(position).getDescription());
@@ -150,7 +161,7 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView menuButton,userProfileImage;
+        ImageView menuButton, userProfileImage;
         LinearLayout menuOptionLayout;
         ConstraintLayout mainLayout;
         TextView userName, reviewTitle, reviewDescription, editOption, deleteOption;
