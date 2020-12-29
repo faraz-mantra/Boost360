@@ -7,6 +7,7 @@ import com.dashboard.model.live.addOns.ManageAddOnsBusinessResponse
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
 import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.quickAction.QuickActionResponse
+import com.dashboard.model.live.shareUser.ShareUserDetailResponse
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 
@@ -18,6 +19,10 @@ object DashboardLocalDataSource : AppBaseLocalService() {
 
   fun getBoostAddOnsTop(context: Context): Observable<BaseResponse> {
     return fromJsonRes(context, R.raw.boost_add_ons_top, ManageBusinessDataResponse::class.java)
+  }
+
+  fun getBoostUserDetailMessage(context: Context): Observable<BaseResponse> {
+    return fromJsonRes(context, R.raw.user_details_share, ShareUserDetailResponse::class.java)
   }
 
   fun getNavDashboardData(context: Context): Observable<BaseResponse> {

@@ -207,6 +207,7 @@
                   android:clickable="true"
                   android:focusable="true"
                   android:gravity="center"
+                  android:id="@+id/btn_share_whatsapp"
                   android:text="@string/share_on_whatsapp"
                   android:textColor="@color/black_4f4f4f" />
 
@@ -223,6 +224,7 @@
                   android:clickable="true"
                   android:focusable="true"
                   android:gravity="center"
+                  android:id="@+id/btn_share_more"
                   android:text="@string/share_on_more"
                   android:textColor="@color/black_4f4f4f" />
               </LinearLayout>

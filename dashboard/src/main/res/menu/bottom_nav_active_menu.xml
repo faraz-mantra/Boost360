@@ -12,14 +12,14 @@
     android:title="@string/website" />
 
   <item
-    android:id="@+id/navigation_add_ons"
-    android:icon="@drawable/ic_my_clinic_active_nav"
-    android:title="@string/boost_add_ons" />
-
-  <item
     android:id="@+id/navigation_academy"
     android:icon="@drawable/ic_academy_active_nav"
     android:title="@string/academy" />
+
+  <item
+    android:id="@+id/navigation_add_ons"
+    android:icon="@drawable/ic_my_clinic_active_nav"
+    android:title="@string/boost_add_ons" />
 
   <item
     android:id="@+id/navigation_more"

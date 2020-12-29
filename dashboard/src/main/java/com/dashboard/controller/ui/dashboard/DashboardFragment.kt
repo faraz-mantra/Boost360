@@ -1,6 +1,7 @@
 package com.dashboard.controller.ui.dashboard
 
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -25,6 +26,7 @@ import com.dashboard.model.live.premiumBanner.*
 import com.dashboard.model.live.quickAction.QuickActionData
 import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.model.live.quickAction.QuickActionResponse
+import com.dashboard.model.live.shareUser.ShareUserDetailResponse
 import com.dashboard.model.live.siteMeter.SiteMeterScoreDetails
 import com.dashboard.pref.*
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
@@ -91,7 +93,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown, binding?.btnShowDigitalScore, binding?.btnDigitalChannel, binding?.btnBusinessLogo, binding?.txtDomainName, binding?.btnNotofication)
+    setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown, binding?.btnShowDigitalScore, binding?.btnDigitalChannel, binding?.btnBusinessLogo, binding?.txtDomainName, binding?.btnNotofication, binding?.btnShareWhatsapp, binding?.btnShareMore)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     getCategoryData()
@@ -261,6 +263,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
       viewModel?.getUserSummary(clientId, session?.fPParentId, scope)?.observeOnce(viewLifecycleOwner, { it1 ->
         val response2 = it1 as? UserSummaryResponse
+        response2?.getSummary()?.noOfSubscribers = session?.subcribersCount?.toIntOrNull() ?: 0
         session?.saveUserSummary(response2?.getSummary())
         val identifierType = if (session?.iSEnterprise == "true") "MULTI" else "SINGLE"
         viewModel?.getUserCallSummary(clientId, session?.fPParentId, identifierType)?.observeOnce(viewLifecycleOwner, { it2 ->
@@ -488,7 +491,30 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.btnDigitalChannel -> session?.let { baseActivity.startDigitalChannel(it) }
       binding?.btnShowDigitalScore -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+      binding?.btnShareWhatsapp -> shareUserDetail(true)
+      binding?.btnShareMore -> shareUserDetail(false)
     }
+  }
+
+  private fun shareUserDetail(isWhatsApp: Boolean) {
+    viewModel?.getBoostUserDetailMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
+      val response = it as? ShareUserDetailResponse
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        val messageDetail = response.data?.firstOrNull { it1 -> it1.type?.toLowerCase(Locale.ROOT) == session?.fP_AppExperienceCode?.toLowerCase(Locale.ROOT) }?.message
+        if (messageDetail.isNullOrEmpty().not()) {
+          val txt = String.format(messageDetail!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), session?.userPrimaryMobile, session?.fPEmail)
+          try {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            if (isWhatsApp) intent.setPackage("com.whatsapp")
+            intent.putExtra(Intent.EXTRA_TEXT, txt)
+            baseActivity.startActivity(Intent.createChooser(intent, "Share your business detail..."))
+          } catch (e: Exception) {
+            e.printStackTrace()
+          }
+        }
+      }
+    })
   }
 
 
@@ -613,8 +639,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
 private fun UserSessionManager.saveUserSummary(summary: SummaryEntity?) {
   enquiryCount = (summary?.noOfMessages ?: 0).toString()
-  if (summary?.noOfSubscribers != null && summary.noOfSubscribers != 0)
-    subcribersCount = summary.noOfSubscribers.toString()
+  subcribersCount = summary?.noOfSubscribers.toString()
   visitorsCount = (summary?.noOfUniqueViews ?: 0).toString()
   visitsCount = (summary?.noOfViews ?: 0).toString()
 }

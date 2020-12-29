@@ -2,6 +2,7 @@ package com.dashboard.controller
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -36,6 +37,8 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
+import com.inventoryorder.utils.DynamicLinkParams
+import com.inventoryorder.utils.DynamicLinksManager
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -44,6 +47,9 @@ import java.util.*
 
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
+  private var mDeepLinkUrl: String? = null;
+  private var mPayload: String? = null
+  private var deepLinkUtil: DeepLinkUtil? = null
   private lateinit var mNavController: NavController
   private var session: UserSessionManager? = null
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
@@ -66,6 +72,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(this)
+    session?.let { deepLinkUtil = DeepLinkUtil(this, it) }
     mNavController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
     val graph = mNavController.graph
     graph.addArgument("data", NavArgument.Builder().setDefaultValue("data").build())
@@ -77,7 +84,32 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     setDrawerHome()
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
     binding?.drawerView?.txtVersion?.text = "Version $versionName"
+    intentDataCheckAndDeepLink()
   }
+
+  private fun intentDataCheckAndDeepLink() {
+    if (intent.extras != null) {
+      if (intent.extras!!.containsKey("url")) mDeepLinkUrl = intent.extras!!.getString("url")
+      if (intent.extras!!.containsKey("payload")) mPayload = intent.extras!!.getString("payload")
+    }
+    if (intent != null && intent.data != null) {
+      val action = intent.action
+      val data = intent.dataString
+      val uri = intent.data
+      val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(uri)
+      Log.d("Data: ", "$data  $action")
+      if (session?.isLoginCheck == true) {
+        if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
+          val viewType = deepHashMap[DynamicLinkParams.viewType]
+          val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
+          if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+        } else deepLinkUtil?.deepLinkPage(data?.substring(data?.lastIndexOf("/") + 1) ?: "", "", false)
+      } else this.startPreSignUp(session)
+    } else {
+      if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
+    }
+  }
+
 
   override fun onResume() {
     super.onResume()
@@ -154,8 +186,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     when (pos) {
       0 -> mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
       1 -> mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
-//      2 -> mNavController.navigate(R.id.navigation_patients, Bundle(), getNavOptions())
-      3 -> mNavController.navigate(R.id.navigation_academy, Bundle(), getNavOptions())
+      2 -> mNavController.navigate(R.id.navigation_academy, Bundle(), getNavOptions())
+//      3 -> mNavController.navigate(R.id.navigation_patients, Bundle(), getNavOptions())
       else -> mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
     }
     toolbarPropertySet(pos)
@@ -164,7 +196,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun toolbarPropertySet(pos: Int) {
     when (pos) {
       1 -> showToolbar(getString(R.string.website))
-      3 -> showToolbar(getString(R.string.academy))
+      2 -> showToolbar(getString(R.string.academy))
       else -> getToolbar()?.apply { visibility = View.GONE }
     }
   }
@@ -181,7 +213,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)
     when (pos) {
-      2 -> session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+      3 -> session?.let { this.initiateAddonMarketplace(it, false, "", "") }
       4 -> binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
     }
   }
