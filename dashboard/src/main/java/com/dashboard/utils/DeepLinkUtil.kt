@@ -176,7 +176,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_socailsharing)) {
           baseActivity.startDigitalChannel(session)
         } else if (url.contains(deeplink_notification)) {
-          baseActivity.startAppActivity(fragmentType = "NOTIFICATION_VIEW")
+          baseActivity.startNotification(session)
         } else if (url.contains(deeplink_profile)) {
           baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
         } else if (url.contains(deeplink_contact)) {

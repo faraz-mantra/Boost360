@@ -3,7 +3,7 @@ package com.dashboard.pref
 import android.util.DisplayMetrics
 import java.util.*
 
-const val REFERRAL_CAMPAIGN_CODE = 26277
+val REFERRAL_CAMPAIGN_CODE = 26277
 
 var PREF_NAME = "nowfloatsPrefs"
 
@@ -37,10 +37,13 @@ var currencyArray = ArrayList<String>()
 
 const val WA_KEY = "58ede4d4ee786c1604f6c535"
 
-const val BASE_IMAGE_URL = "https://content.withfloats.com"
-const val FACEBOOK_PAGE_ID = "fb://page/277931445614143"
-const val FACEBOOK_PAGE_WITH_ID: String = FACEBOOK_PAGE_ID
+val BASE_IMAGE_URL = "https://content.withfloats.com"
+val FACEBOOK_PAGE_ID = "fb://page/277931445614143"
+val FACEBOOK_PAGE_WITH_ID: String = FACEBOOK_PAGE_ID
 
 var FACEBOOK_URL: String = "https://www.facebook.com/nowfloats"
 
 var StoreWidgets = ArrayList<String>()
+
+var ANA_CHAT_API_URL =  /*"http://chat-dev.nowfloatsdev.com";// */"https://gateway.api.ana.chat"
+var ANA_BUSINESS_ID =  /*"Boost-Web";// */"boost-agent-chat"
