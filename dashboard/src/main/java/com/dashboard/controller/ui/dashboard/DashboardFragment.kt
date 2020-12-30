@@ -99,6 +99,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getCategoryData()
     apiSellerSummary()
     getPremiumBanner()
+    WebEngageController.trackEvent("Dashboard Home Page", "pageview", session?.fpTag)
   }
 
   private fun getPremiumBanner() {
@@ -252,7 +253,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
         })
       }
-      btnShowAll.setOnClickListener { startFragmentDashboardActivity(FragmentType.ALL_BOOST_ADD_ONS) }
+      btnShowAll.setOnClickListener {
+        WebEngageController.trackEvent("Business Add-ons Page", "Add-ons", session?.fpTag)
+        startFragmentDashboardActivity(FragmentType.ALL_BOOST_ADD_ONS)
+      }
     }
   }
 
@@ -448,7 +452,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
-      RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+      RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> {
+        WebEngageController.trackEvent("SITE HEALTH Page", "SITE_HEALTH", session?.fpTag);
+        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+      }
       RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, position) })
       RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal -> {
         val data = item as? QuickActionItem ?: return
@@ -484,13 +491,16 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnNotofication -> baseActivity.startAppActivity(fragmentType = "NOTIFICATION_VIEW")
+      binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
       binding?.btnVisitingCardUp -> visitingCardShowHide(true)
       binding?.btnVisitingCardDown -> visitingCardShowHide(false)
       binding?.btnBusinessLogo -> baseActivity.startBusinessDescriptionEdit(session)
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.btnDigitalChannel -> session?.let { baseActivity.startDigitalChannel(it) }
-      binding?.btnShowDigitalScore -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+      binding?.btnShowDigitalScore -> {
+        WebEngageController.trackEvent("SITE HEALTH Page", "SITE_HEALTH", session?.fpTag);
+        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+      }
       binding?.btnShareWhatsapp -> shareUserDetail(true)
       binding?.btnShareMore -> shareUserDetail(false)
     }

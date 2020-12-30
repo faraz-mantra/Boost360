@@ -56,6 +56,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
     session = UserSessionManager(baseActivity)
     position = arguments?.getInt(IntentConstant.POSITION.name) ?: 0
     binding?.btnBack?.setOnClickListener { baseActivity.onNavPressed() }
+    WebEngageController.trackEvent("Digital Readiness Page", "pageview", session?.fpTag)
   }
 
   override fun onResume() {

@@ -53,6 +53,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
+    WebEngageController.trackEvent("Boost Add-ons Page", "pageview", session?.fpTag)
   }
 
   override fun onResume() {
@@ -140,7 +141,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.ic_customer_call_tracker_d,
     -> baseActivity.startVmnCallCard(session)
     ManageBusinessData.BusinessType.ic_customer_enquiries_d -> baseActivity.startBusinessEnquiry(session)
-    ManageBusinessData.BusinessType.ic_daily_business_update_d -> baseActivity.startAppActivity(fragmentType = "UPDATE_LATEST_STORY_VIEW")
+    ManageBusinessData.BusinessType.ic_daily_business_update_d -> session?.let { baseActivity.startUpdateLatestStory(it) }
     ManageBusinessData.BusinessType.ic_product_cataloge_d,
     ManageBusinessData.BusinessType.ic_service_cataloge_d,
     -> baseActivity.startListServiceProduct(session)
