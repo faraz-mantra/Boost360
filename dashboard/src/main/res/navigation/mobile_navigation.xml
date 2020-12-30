@@ -19,7 +19,7 @@
 
   <fragment
     android:id="@+id/navigation_customer"
-    android:name="com.dashboard.controller.ui.academy.AcademyFragment"
+    android:name="com.dashboard.controller.ui.customer.PatientCustomerFragment"
     android:label="@string/customer"
     tools:layout="@layout/fragment_patients_customer" />
 

@@ -187,7 +187,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       0 -> mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
       1 -> mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
       2 -> mNavController.navigate(R.id.navigation_customer, Bundle(), getNavOptions())
-//      3 -> mNavController.navigate(R.id.navigation_patients, Bundle(), getNavOptions())
       else -> mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
     }
     toolbarPropertySet(pos)
@@ -196,7 +195,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun toolbarPropertySet(pos: Int) {
     when (pos) {
       1 -> showToolbar(getString(R.string.website))
-      2 -> showToolbar(getString(R.string.customer))
+      2 -> showToolbar(if (session?.fP_AppExperienceCode == "DOC" || session?.fP_AppExperienceCode == "HOS") getString(R.string.patient) else getString(R.string.customer))
       else -> getToolbar()?.apply { visibility = View.GONE }
     }
   }

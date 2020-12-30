@@ -65,6 +65,11 @@ class DashboardViewModel : BaseViewModel() {
   fun getBoostUserDetailMessage(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getBoostUserDetailMessage(context).toLiveData()
   }
+
+  fun getBoostCustomerItem(context: Context): LiveData<BaseResponse> {
+    return WithFloatRepository.getBoostCustomerItem(context).toLiveData()
+  }
+
   fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
     return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
   }
