@@ -41,6 +41,7 @@ import com.boost.upgrades.ui.popup.CouponPopUpFragment
 import com.boost.upgrades.ui.popup.GSTINPopUpFragment
 import com.boost.upgrades.ui.popup.RenewalPopUpFragment
 import com.boost.upgrades.ui.popup.TANPopUpFragment
+import com.boost.upgrades.ui.splash.SplashFragment
 import com.boost.upgrades.utils.*
 import com.boost.upgrades.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
@@ -105,6 +106,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     val renewPopUpFragment = RenewalPopUpFragment()
 
+    val splashFragment = SplashFragment()
+
 //    var couponDiwaliRedundant : MutableList<String?> = java.util.ArrayList()
     var couponDiwaliRedundant : HashMap<String?, String?> = HashMap<String?, String?> ()
 
@@ -149,7 +152,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
-
+        Constants.COMPARE_BACK_VALUE = 1
+        showpopup()
         initializePackageRecycler()
         initializeAddonsRecycler()
         initializeRenewalRecycler()
@@ -348,6 +352,16 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             }
         }
 
+    }
+
+    fun showpopup(){
+        if (prefs.getInitialLoadMarketPlace()) {
+
+            splashFragment.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    Constants.SPLASH_FRAGMENT
+            )
+        }
     }
 
     private fun createCartStateRenewal(renewalItems: List<CartModel>?) {
@@ -980,6 +994,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 } else {
                     addons_layout.visibility = View.GONE
                 }
+                Constants.COMPARE_CART_COUNT = bundles.size
                 if (bundles.size > 0) {
                     bundles_in_cart = true
                     updatePackage(bundles)
@@ -1013,7 +1028,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 WebEngageController.trackEvent("ADDONS_MARKETPLACE Empty_Cart Loaded", "ADDONS_MARKETPLACE Empty_Cart Loaded", "")
                 empty_cart.visibility = View.VISIBLE
                 cart_main_layout.visibility = View.GONE
-
+                Constants.COMPARE_CART_COUNT = 0
                 months_validity_edit_inc.visibility = View.GONE
                 months_validity_edit_dsc.visibility = View.GONE
                 months_validity.text = "- -"

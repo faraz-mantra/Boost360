@@ -27,7 +27,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.LinkedHashSet
 
-class ParentCompareItemAdapter (val list: java.util.ArrayList<Bundles>, val activity: UpgradeActivity, val homeListener: CompareListener) : RecyclerView.Adapter<ParentCompareItemAdapter.ParentViewHolder>() {
+class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>, val activity: UpgradeActivity, val homeListener: CompareListener) : RecyclerView.Adapter<ParentCompareItemAdapter.ParentViewHolder>() {
     // An object of RecyclerView.RecycledViewPool
     // is created to share the Views
     // between the child and
@@ -48,7 +48,7 @@ class ParentCompareItemAdapter (val list: java.util.ArrayList<Bundles>, val acti
         val view = LayoutInflater
                 .from(viewGroup.context)
                 .inflate(
-                        R.layout.package_fragment_compare_new,
+                        R.layout.package_fragment_adapter,
                         viewGroup, false)
         return ParentViewHolder(view)
     }
@@ -79,7 +79,7 @@ class ParentCompareItemAdapter (val list: java.util.ArrayList<Bundles>, val acti
         }else if(items.size == 5){
             parentViewHolder.PackageItemTitle.text = items[0] + " " + items[1]  + " \n"  +items[2] + " "  + items[3] + " " +items[4]
         }
-        Log.v("split_words", " one"+ items[0] + " "+ items[1] + " count: "+ items.size)
+
         if(parentItem.desc != null){
             parentViewHolder.parent_item_title.text = parentItem.desc
         }else{
@@ -99,8 +99,10 @@ class ParentCompareItemAdapter (val list: java.util.ArrayList<Bundles>, val acti
             listSamp.add(item.feature_code)
         }
 
-        getPackageInfoFromDB(parentViewHolder,parentItem)
-        isItemAddedInCart(parentViewHolder,parentItem)
+//        getPackageInfoFromDB(parentViewHolder,parentItem)
+//        isItemAddedInCart(parentViewHolder,parentItem)
+        getPackageInfoFromDB(parentViewHolder,list.get(position))
+        isItemAddedInCart(parentViewHolder,list.get(position))
 
         val distinct: List<String> = LinkedHashSet(listSamp).toMutableList()
 
@@ -164,15 +166,21 @@ class ParentCompareItemAdapter (val list: java.util.ArrayList<Bundles>, val acti
 
         // Here we have assigned the layout
         // as LinearLayout with vertical orientation
-        val layoutManager = LinearLayoutManager(parentViewHolder.ChildRecyclerView.context,
+        /*val layoutManager = LinearLayoutManager(parentViewHolder.ChildRecyclerView.context,
                 LinearLayoutManager.VERTICAL, false)
 
 
-        layoutManager.initialPrefetchItemCount = list.size
+        layoutManager.initialPrefetchItemCount = list.size*/
 
 
 
 parentViewHolder.package_submit.setOnClickListener{
+    parentViewHolder.package_submit.background = ContextCompat.getDrawable(
+            activity.application,
+            R.drawable.added_to_cart_grey
+    )
+    parentViewHolder.package_submit.setTextColor(Color.parseColor("#bbbbbb"))
+    parentViewHolder.package_submit.setText("Added To Cart")
     homeListener.onPackageClicked(parentItem)
 }
 
@@ -192,6 +200,18 @@ parentViewHolder.package_submit.setOnClickListener{
         list.clear()
         list.addAll(upgradeModel)
         notifyItemRangeInserted(initPosition, list.size)
+        /*val diffResult = DiffUtil.calculateDiff(BundleCallBack(this.list, upgradeModel))
+//        list = upgradeModel as java.util.ArrayList<Bundles>
+        diffResult.dispatchUpdatesTo(this)
+//        list = upgradeModel as java.util.ArrayList<Bundles>
+        list.clear()
+        list.addAll(upgradeModel)
+        notifyDataSetChanged()*/
+    }
+
+    fun addupdatesNew(upgradeModel: List<Bundles>) {
+        list = upgradeModel as java.util.ArrayList<Bundles>
+        notifyDataSetChanged()
     }
 
     // This class is to initialize
@@ -290,10 +310,10 @@ parentViewHolder.package_submit.setOnClickListener{
     }
 
     fun isItemAddedInCart(holder: ParentViewHolder, bundles: Bundles){
-        val itemsIds = arrayListOf<String>()
+        /*val itemsIds = arrayListOf<String>()
         for (item in bundles.included_features) {
             itemsIds.add(item.feature_code)
-        }
+        }*/
         CompositeDisposable().add(
                 AppDatabase.getInstance(activity.application)!!
                         .cartDao()
@@ -303,10 +323,11 @@ parentViewHolder.package_submit.setOnClickListener{
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             for (singleItem in it) {
-                                Log.v("isItemAddedInCart", " "+ bundles!!._kid + " "+ singleItem.item_id)
+                                Log.v("isItemAddedInCart", " "+ bundles!!.name + " "+ singleItem.item_id)
 //                                for (item in bundles.included_features) {
-//                                    Log.v("isItemAddedInCar12", " "+ item.feature_code)
+
                                 if (singleItem.item_id.equals(bundles!!._kid)) {
+                                    Log.v("isItemAddedInCar12", " item_id: "+ singleItem.item_id + " kid: "+ bundles!!._kid + " "+ bundles!!.name)
                                     holder.package_submit.background = ContextCompat.getDrawable(
                                             activity.application,
                                             R.drawable.added_to_cart_grey

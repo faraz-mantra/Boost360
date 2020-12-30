@@ -338,10 +338,10 @@ class UpgradeActivity : AppCompatActivity() {
                 //prefs.storeInitialLoadMarketPlace(true)
                 else if (prefs.getInitialLoadMarketPlace()) {
 //                Handler().postDelayed({
-                  splashFragment.show(
+                  /*splashFragment.show(
                       supportFragmentManager,
                       SPLASH_FRAGMENT
-                  )
+                  )*/
 //                }, 1000)
                 }
               } else {

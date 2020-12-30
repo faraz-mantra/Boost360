@@ -49,6 +49,12 @@ class PackageViewPagerAdapter(
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
         holder.getNowButton.setOnClickListener {
+            holder.getNowButton.background = ContextCompat.getDrawable(
+                    activity.application,
+                    R.drawable.added_to_cart_grey
+            )
+            holder.getNowButton.setTextColor(Color.parseColor("#bbbbbb"))
+            holder.getNowButton.setText("Added To Cart")
             homeListener.onPackageAddToCart(list.get(position))
         }
 

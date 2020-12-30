@@ -66,6 +66,15 @@ class CompareItemAdapter(
 
             activity.addFragment(details, Constants.DETAILS_FRAGMENT)
         }
+        holder.itemView.setOnClickListener {
+            val details = DetailsFragment.newInstance()
+            val args = Bundle()
+            args.putString("itemId", upgradeList.get(position).feature_code)
+            args.putBoolean("packageView",true)
+            details.arguments = args
+
+            activity.addFragment(details, Constants.DETAILS_FRAGMENT)
+        }
     }
 
     fun addupdates(upgradeModel: List<FeaturesModel>, noOfMonth: Int) {

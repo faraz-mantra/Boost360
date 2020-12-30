@@ -114,10 +114,13 @@
   <dimen name="pad_15dp">15dp</dimen>
   <dimen name="pad_20dp">20dp</dimen>
   <dimen name="pad_30dp">30dp</dimen>
+  <dimen name="pad_36dp">36dp</dimen>
+  <dimen name="pad_70dp">70dp</dimen>
   <dimen name="pad_125dp">125dp</dimen>
   <dimen name="pad_180dp">180dp</dimen>
 
   <dimen name="txt_7sp">7sp</dimen>
+  <dimen name="txt_9sp">9sp</dimen>
   <dimen name="txt_10sp">10sp</dimen>
   <dimen name="txt_11sp">11sp</dimen>
   <dimen name="txt_12sp">12sp</dimen>
