@@ -12,8 +12,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,20 +19,18 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.nowfloats.Login.GetGalleryImagesAsyncTask_Interface;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
@@ -43,7 +39,6 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
@@ -116,9 +111,9 @@ public class Image_Gallery_Fragment extends Fragment implements
 
         activity = getActivity();
         session = new UserSessionManager(getContext(), activity);
-        gvImages =  view.findViewById(R.id.grid);
-        emptyGalleryLayout = (LinearLayout) view.findViewById(R.id.layout_empty);
-        progressLayout = (LinearLayout) view.findViewById(R.id.layout_progress);
+        gvImages = view.findViewById(R.id.grid);
+        emptyGalleryLayout = view.findViewById(R.id.layout_empty);
+        progressLayout = view.findViewById(R.id.layout_progress);
         progressLayout.setVisibility(View.VISIBLE);
         otherImagesAdapter = new OtherImagesAdapter(activity);
         if (otherImagesAdapter.getCount() == 0) {
@@ -137,26 +132,18 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     @Override
     public void imagesReceived() {
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (progressLayout != null) {
-                    progressLayout.setVisibility(View.GONE);
-                }
-            }
+        activity.runOnUiThread(() -> {
+            if (progressLayout != null) progressLayout.setVisibility(View.GONE);
         });
         if (gvImages != null) {
             gvImages.invalidateViews();
-            if (otherImagesAdapter != null)
-                otherImagesAdapter.notifyDataSetChanged();
-            if (emptyGalleryLayout != null && otherImagesAdapter.getCount() != 0)
-                emptyGalleryLayout.setVisibility(View.GONE);
-
+            if (otherImagesAdapter != null) otherImagesAdapter.notifyDataSetChanged();
+            if (emptyGalleryLayout != null && otherImagesAdapter.getCount() != 0) emptyGalleryLayout.setVisibility(View.GONE);
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == media_req_id) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
@@ -579,14 +566,12 @@ public class Image_Gallery_Fragment extends Fragment implements
             });
         }*/
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity, session);
-                gallery.setGalleryInterfaceListener(Image_Gallery_Fragment.this);
-                gallery.execute();
-            }
-        }, 6000);
+        handler.postDelayed(() -> {
+            if (progressLayout != null) progressLayout.setVisibility(View.VISIBLE);
+            GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity, session);
+            gallery.setGalleryInterfaceListener(Image_Gallery_Fragment.this);
+            gallery.execute();
+        }, 500);
 
     }
 

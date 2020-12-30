@@ -115,6 +115,7 @@
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:orientation="horizontal">
                 <TextView
+                    android:id="@+id/reviewTitleLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Review Title"
@@ -151,6 +152,7 @@
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/reviewDescriptionLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Review Description"

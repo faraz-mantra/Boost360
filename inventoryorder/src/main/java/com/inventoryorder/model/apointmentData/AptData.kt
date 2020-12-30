@@ -38,6 +38,6 @@ data class AptData(
 ) : Serializable {
 
   fun getCustomerInfoData(): CustomerInfoData? {
-    return if (customerInfo.isNullOrEmpty().not()) convertStringToObj(customerInfo!!, CustomerInfoData::class.java) else null
+    return if (customerInfo.isNullOrEmpty().not()) convertStringToObj(customerInfo!!) else null
   }
 }

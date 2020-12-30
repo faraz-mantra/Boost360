@@ -1,5 +1,7 @@
 package com.boost.upgrades.data.api_model.GetAllFeatures.response
 
+import java.io.Serializable
+
 data class Image(
     val _kid: String,
     val _parentClassId: String,
@@ -11,4 +13,4 @@ data class Image(
     val updatedon: String,
     val url: String,
     val websiteid: String
-)
+):Serializable

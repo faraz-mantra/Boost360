@@ -19,6 +19,12 @@ object PreferenceConstant {
   const val KEY_FACEBOOK_PAGE = "facebookpage"
   const val FP_PAGE_SHARE_ENABLED = "fbPageShareEnabled"
   const val FP_PAGE_STATUS = "fbPageStatus"
+  const val BUSINESS_NAME = "business_name"
+  const val BUSINESS_IMAGE = "business_image"
+  const val LOCATION = "location"
+  const val BUSINESS_TYPE = "business_type"
+  const val PRIMARY_NUMBER = "primary_number"
+  const val PRIMARY_EMAIL = "primary_email"
 
   // for twitter
   const val PREF_NAME_TWITTER = "NFBoostTwitterPref"

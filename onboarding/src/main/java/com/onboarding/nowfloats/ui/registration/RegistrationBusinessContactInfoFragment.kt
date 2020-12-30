@@ -18,6 +18,7 @@ import com.onboarding.nowfloats.databinding.FragmentRegistrationBusinessContactI
 import com.onboarding.nowfloats.extensions.fadeIn
 import com.onboarding.nowfloats.model.registration.BusinessInfoModel
 import com.onboarding.nowfloats.ui.CitySearchDialog
+import com.onboarding.nowfloats.utils.WebEngageController
 
 class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<FragmentRegistrationBusinessContactInfoBinding>() {
 
@@ -92,6 +93,10 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
               it.removeAllViews()
               binding?.textBtn?.visibility = VISIBLE
               gotoBusinessWebsite()
+
+              //Business Contact Info Event Tracker.
+              WebEngageController.trackEvent("Building Your Business Contact Info", "Confirm", "Clicked")
+
             }, 300)
           }
         }

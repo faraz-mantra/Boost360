@@ -439,7 +439,7 @@
     <string name="side_panel_row_eight">Share My Site</string>
     <string name="setting_logout">Logout</string>
     <string name="signup_subd">^[a&#8211;zA&#8211;Z0&#8211;9][a&#8211;zA&#8211;Z0&#8211;9&#8211;]{1,61}[a&#8211;zA&#8211;Z0&#8211;9]$</string>
-
+    <string name="notification">Notification</string>
 
     <!-- Deep Linking URLs  -->
 

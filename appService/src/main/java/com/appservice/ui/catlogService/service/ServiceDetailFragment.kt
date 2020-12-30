@@ -55,9 +55,11 @@ import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import okio.Buffer
 import okio.BufferedSource
@@ -390,8 +392,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     })
   }
 
-  private fun getRequestServiceImage(serviceImage: File?): RequestBody {
-    val responseBody = RequestBody.create(MediaType.parse("image/png"), serviceImage?.readBytes())
+  private fun getRequestServiceImage(serviceImage: File?): RequestBody? {
+    val responseBody = serviceImage?.readBytes()?.let { it.toRequestBody("image/png".toMediaTypeOrNull(), 0, it.size) }
     val fileName = takeIf { serviceImage?.name.isNullOrEmpty().not() }?.let { serviceImage?.name }
         ?: "service_${Date().time}.png"
     return responseBody
@@ -405,8 +407,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       images.forEach { fileData ->
         val secondaryFile = fileData.getFile()
         val fileNew = takeIf { secondaryFile?.name.isNullOrEmpty().not() }?.let { secondaryFile?.name } ?: "service_${Date()}.jpg"
-        val requestProfile = RequestBody.create(MediaType.parse("image/*"), secondaryFile)
-        val body = MultipartBody.Part.createFormData("file", fileNew, requestProfile)
+        val requestProfile = secondaryFile?.let { it.asRequestBody("image/*".toMediaTypeOrNull()) }
+        val body = requestProfile?.let { MultipartBody.Part.createFormData("file", fileNew, it) }
         viewModel?.uploadImageProfile(auth_3, fileNew, body)?.observeOnce(viewLifecycleOwner, Observer {
           checkPosition += 1
           if ((it.error is NoNetworkException).not()) {

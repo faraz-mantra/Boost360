@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="?android:attr/activatedBackgroundIndicator"
+      android:gravity="center_vertical"
+      android:minHeight="?android:attr/listPreferredItemHeightSmall"
+      android:orientation="horizontal"
+      android:paddingLeft="12dp"
+      android:paddingTop="16dp"
+      android:paddingRight="12dp"
+      android:paddingBottom="16dp">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/imageViewIcon"
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
+        android:layout_marginStart="@dimen/size_4"
+        android:layout_marginEnd="@dimen/size_24"
+        android:tint="@color/cell_text_color"
+        app:srcCompat="@drawable/ic_all_orders_d" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/cell_text_color"
+        android:textSize="14sp"
+        tools:text="My digital channels" />
+
+      <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_25"
+        android:layout_gravity="center">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_view_new"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_gravity="center"
+          android:background="@drawable/addons_store_new_bg_d"
+          android:gravity="center"
+          android:includeFontPadding="false"
+          android:text="NEW"
+          android:textAllCaps="true"
+          android:textColor="@color/white"
+          android:textSize="12sp"
+          android:visibility="gone"
+          app:fontFamily="@font/regular" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/view_lock"
+          android:layout_width="@dimen/size_20"
+          android:layout_height="@dimen/size_20"
+          android:layout_gravity="center"
+          app:srcCompat="@drawable/ic_expiry_lock_d" />
+      </FrameLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="0.5dp"
+      android:background="@color/cell_text_color"
+      android:visibility="gone" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

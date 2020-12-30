@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -48,7 +46,6 @@ import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 import io.reactivex.Completable
 import java.util.*
 import kotlin.collections.ArrayList
-
 
 class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, CategoryViewModel>(), RecyclerItemClickListener {
 
@@ -104,7 +101,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent("My digital channel load", "MY DIGITAL CHANNEL","")
+    WebEngageController.trackEvent("My digital channel load", "MY DIGITAL CHANNEL", "")
     progress = ProgressChannelDialog.newInstance()
     updateRequestGetChannelData()
     binding?.syncBtn?.setOnClickListener { syncChannels() }
@@ -112,7 +109,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   private fun updateRequestGetChannelData() {
     val bundle = arguments
-    isStartActivity = bundle?.getBoolean(PreferenceConstant.IS_START_ACTIVITY) ?: false
     val isUpdate = bundle?.getBoolean(PreferenceConstant.IS_UPDATE)
     websiteUrl = bundle?.getString(PreferenceConstant.WEBSITE_URL) ?: ""
     if (isUpdate != null && isUpdate) {
@@ -162,7 +158,8 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         var data: ChannelAccessToken? = null
         when (it.type()) {
           ChannelAccessToken.AccessTokenType.facebookpage.name,
-          ChannelAccessToken.AccessTokenType.twitter.name -> {
+          ChannelAccessToken.AccessTokenType.twitter.name,
+          -> {
             if (it.isValidType()) {
               data = ChannelAccessToken(type = it.type(), userAccessTokenKey = it.UserAccessTokenKey,
                   userAccountId = it.UserAccountId, userAccountName = it.UserAccountName)
@@ -241,7 +238,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         changeView(false)
         binding?.viewDisconnect?.fadeIn(200L)?.doOnComplete { setAdapterDisconnected(listDisconnect) }?.andThen(binding?.viewConnect?.fadeIn(500L))
       }
-      animObserver?.doOnComplete { setAdapterConnected(listConnect) }?.andThen(binding?.noteTxt?.fadeIn(100L))?.subscribe()
+      animObserver?.doOnComplete { setAdapterConnected(listConnect) }?.andThen(binding?.noteTxt?.fadeIn(100L)?.mergeWith(binding?.noteAboutTxt?.fadeIn(100L)))?.subscribe()
     }
     setSharePrefDataFpPageAndTwitter()
   }
@@ -309,7 +306,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       RecyclerViewActionType.CHANNEL_DISCONNECT_CLICKED.ordinal -> {
         if (channel.isFacebookShop()) {
           val s = SpannableString(resources.getString(R.string.fp_shop_awaited_desc))
-          Linkify.addLinks(s, Linkify.ALL);
+          Linkify.addLinks(s, Linkify.ALL)
           AlertDialog.Builder(baseActivity)
               .setTitle(getString(R.string.fp_shop_awaited_title))
               .setMessage(s)
@@ -358,7 +355,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   private fun syncChannels() {
     if (selectedChannels.isNullOrEmpty().not()) {
-      WebEngageController.trackEvent("My digital channel sync button click", "MY DIGITAL CHANNEL","")
+      WebEngageController.trackEvent("My digital channel sync button click", "MY DIGITAL CHANNEL", "")
       val bundle = Bundle()
       var totalPages = if (requestFloatsModel?.isUpdate == true) 0 else 2
       selectedChannels.let { channels ->
@@ -390,11 +387,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   override fun hideProgress() {
     progress.hideProgress()
-  }
-
-  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_alert_icon, menu)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -1,13 +1,15 @@
 package com.inventoryorder.utils
 
 import android.net.Uri
+import android.util.Log
 
 enum class DynamicLinkParams {
   fpId,
   fpTag,
   viewType,
   day,
-  referrer
+  referrer,
+  buyItemKey
 }
 
 class DynamicLinksManager {
@@ -16,6 +18,7 @@ class DynamicLinksManager {
     @JvmField
     val instance = DynamicLinksManager()
   }
+
 
   fun getURILinkParams(deepLink: Uri?): HashMap<DynamicLinkParams, String> {
     val map = HashMap<DynamicLinkParams, String>()
@@ -36,10 +39,12 @@ class DynamicLinksManager {
             map[key] = value
           }
         }
-      } catch (e: IllegalArgumentException) {
-        e.printStackTrace()
+      } catch (e: Exception) {
+        Log.e(DynamicLinksManager::class.java.name, e.localizedMessage ?: "")
       }
     }
     return map
   }
+
 }
+

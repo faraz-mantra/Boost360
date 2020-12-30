@@ -10,6 +10,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -46,13 +47,14 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Model.Login_Data_Model;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.helper.ui.KeyboardUtil;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
@@ -71,9 +73,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import jp.wasabeef.richeditor.RichEditor;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class Login_MainActivity extends AppCompatActivity implements API_Login.API_Login_Interface, View.OnClickListener {
     Bus bus;
@@ -102,6 +108,106 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
     private final static int READ_MESSAGES_ID = 221;
     LinearLayout parent_layout;
 
+    public static void registerChat(String userId) {
+        BoostLog.d("HomeActivity", "This is getting Called");
+        try {
+            final HashMap<String, String> params = new HashMap<String, String>();
+            params.put("Channel", FirebaseInstanceId.getInstance().getToken());
+            params.put("UserId", userId);
+            params.put("DeviceType", "ANDROID");
+            params.put("clientId", Constants.clientId);
+
+            Log.i("Ria_Register GCM id--", "API call Started");
+
+            Login_Interface emailValidation = Constants.restAdapter.create(Login_Interface.class);
+            emailValidation.post_RegisterRia(params, new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    Log.i("GCM local ", "reg success" + params.toString());
+                    Log.d("Response", "Response : " + s);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.i("GCM local ", "reg FAILed" + params.toString());
+                }
+            });
+        } catch (Exception e) {
+            Log.i("Ria_Register ", "API Exception:" + e);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (customFirebaseAuthHelpers != null) {
+            if (callbackManager != null) {
+                callbackManager.onActivityResult(requestCode, resultCode, data);
+            } else {
+                if (resultCode != RESULT_OK) {
+                    if (progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
+                    Methods.showSnackBar(this, "Login failed. Please try again");
+                    return;
+                }
+                customFirebaseAuthHelpers.disableAutoUserProfileCreationMode();
+                customFirebaseAuthHelpers.googleLoginActivityResult(requestCode, data);
+            }
+        }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bus.register(this);
+        Methods.isOnline(Login_MainActivity.this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        bus.unregister(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.forgotPwdTextView) {
+            new MaterialDialog.Builder(this)
+                    .title(getString(R.string.forgot_password))
+                    .inputType(InputType.TYPE_CLASS_TEXT)
+                    .input(getString(R.string.enter_user_name), null, new MaterialDialog.InputCallback() {
+                        @Override
+                        public void onInput(MaterialDialog dialog, CharSequence input) {
+                            try {
+                                MixPanelController.track(EventKeysWL.LOGIN_SCREEN_FORGOT_PWD, null);
+                                String enteredText = input.toString().trim();
+                                if (enteredText.length() > 1) {
+                                    sendPasswordToEmail(enteredText);
+                                    dialog.dismiss();
+                                } else {
+                                    YoYo.with(Techniques.Shake).playOn(dialog.getInputEditText());
+                                    Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.enter_correct_user_name));
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    })
+                    .positiveText(getString(R.string.ok))
+                    .negativeText(getString(R.string.cancel))
+                    .positiveColorRes(R.color.primaryColor)
+                    .negativeColorRes(R.color.primaryColor)
+                    .show();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,7 +231,15 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
 
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(), Login_MainActivity.this);
-        dashboardIntent = new Intent(Login_MainActivity.this, HomeActivity.class);
+        Class<?> dashBoardActivity;
+        try {
+            dashBoardActivity = Class.forName("com.dashboard.controller.DashboardActivity");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
+//        dashboardIntent = new Intent(Login_MainActivity.this, HomeActivity.class);
+        dashboardIntent = new Intent(Login_MainActivity.this, dashBoardActivity);
         dashboardIntent.putExtras(getIntent());
         parent_layout = findViewById(R.id.parent_layout);
         cvFacebookLogin = findViewById(R.id.cv_facebook_login);
@@ -311,104 +425,6 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         findViewById(R.id.ll_2).setOnClickListener(v -> {
             password.requestFocus();
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (customFirebaseAuthHelpers != null) {
-            if (callbackManager != null) {
-                callbackManager.onActivityResult(requestCode, resultCode, data);
-            } else {
-                if (resultCode != RESULT_OK) {
-                    if (progressDialog != null && progressDialog.isShowing())
-                        progressDialog.dismiss();
-                    Methods.showSnackBar(this, "Login failed. Please try again");
-                    return;
-                }
-                customFirebaseAuthHelpers.disableAutoUserProfileCreationMode();
-                customFirebaseAuthHelpers.googleLoginActivityResult(requestCode, data);
-            }
-        }
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        bus.register(this);
-        Methods.isOnline(Login_MainActivity.this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        bus.unregister(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.forgotPwdTextView) {
-            new MaterialDialog.Builder(this)
-                    .title(getString(R.string.forgot_password))
-                    .inputType(InputType.TYPE_CLASS_TEXT)
-                    .input(getString(R.string.enter_user_name), null, new MaterialDialog.InputCallback() {
-                        @Override
-                        public void onInput(MaterialDialog dialog, CharSequence input) {
-                            try {
-                                MixPanelController.track(EventKeysWL.LOGIN_SCREEN_FORGOT_PWD, null);
-                                String enteredText = input.toString().trim();
-                                if (enteredText.length() > 1) {
-                                    sendPasswordToEmail(enteredText);
-                                    dialog.dismiss();
-                                } else {
-                                    YoYo.with(Techniques.Shake).playOn(dialog.getInputEditText());
-                                    Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.enter_correct_user_name));
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    })
-                    .positiveText(getString(R.string.ok))
-                    .negativeText(getString(R.string.cancel))
-                    .positiveColorRes(R.color.primaryColor)
-                    .negativeColorRes(R.color.primaryColor)
-                    .show();
-        }
-    }
-
-    @Override
-    public void authenticationStatus(String value) {
-        if (value.equals("Success")) {
-            session.setUserLogin(true);
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("message", new ArrayList<FloatsMessageModel>());
-            dashboardIntent.putExtras(bundle);
-
-            Date date = new Date(System.currentTimeMillis());
-            String dateString = date.toString();
-
-//            MixPanelController.setProperties("LastLoginDate", dateString);
-//            MixPanelController.setProperties("LoggedIn", "True");
-
-            getFPDetails(Login_MainActivity.this, session.getFPID(), Constants.clientId, bus);
-            HomeActivity.registerChat(session.getFPID());
-        } else {
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-                progressDialog = null;
-            }
-            if (value.equals("Partial")) {
-                session.setUserLogin(true);
-                showBusinessProfileCreationStartScreen(session.getUserProfileId());
-            }
-        }
     }
 
 
@@ -781,6 +797,34 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
             dataBase.insertLoginStatus(response_Data, session.getFPID());
 
             processUserProfile(userProfileResponse);
+        }
+    }
+
+    @Override
+    public void authenticationStatus(String value) {
+        if (value.equals("Success")) {
+            session.setUserLogin(true);
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("message", new ArrayList<FloatsMessageModel>());
+            dashboardIntent.putExtras(bundle);
+
+            Date date = new Date(System.currentTimeMillis());
+            String dateString = date.toString();
+
+//            MixPanelController.setProperties("LastLoginDate", dateString);
+//            MixPanelController.setProperties("LoggedIn", "True");
+
+            getFPDetails(Login_MainActivity.this, session.getFPID(), Constants.clientId, bus);
+            registerChat(session.getFPID());
+        } else {
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+                progressDialog = null;
+            }
+            if (value.equals("Partial")) {
+                session.setUserLogin(true);
+                showBusinessProfileCreationStartScreen(session.getUserProfileId());
+            }
         }
     }
 }

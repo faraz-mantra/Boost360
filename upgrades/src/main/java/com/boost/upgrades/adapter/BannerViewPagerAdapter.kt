@@ -1,30 +1,19 @@
 package com.boost.upgrades.adapter
 
-import android.text.SpannableString
-import android.text.style.StrikethroughSpan
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.PromoBanners
-import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.interfaces.HomeListener
 import com.bumptech.glide.Glide
-import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.package_item.view.*
-import kotlinx.coroutines.withContext
-import java.lang.Exception
-import java.text.NumberFormat
 import java.util.*
 
 class BannerViewPagerAdapter(
@@ -46,7 +35,7 @@ class BannerViewPagerAdapter(
     }
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
-        Glide.with(holder.itemView.context).load(list.get(position).image.url).into(holder.primaryImage)
+        Glide.with(holder.itemView.context).load(list.get(position).image?.url?:"").into(holder.primaryImage)
         holder.primaryImage.setOnClickListener {
             homeListener.onPromoBannerClicked(list.get(position))
         }
@@ -87,12 +76,12 @@ class BannerViewPagerAdapter(
                                             }*/
                                         }
                                         for (singleBanner in list) {
-                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
+                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key && list.get(position)!!.cta_feature_key.isNotEmpty() && singleBanner.cta_feature_key.isNotEmpty()) {
                                                 if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.contains(activity.fpTag)) {
                                                     list.remove(singleBanner)
                                                     notifyDataSetChanged()
                                                     homeListener.onShowHidePromoBannerIndicator(list.size > 1)
-                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode)) {
+                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode) && !singleBanner.exclusive_to_categories.isEmpty()) {
                                                     list.remove(singleBanner)
                                                     notifyDataSetChanged()
                                                     homeListener.onShowHidePromoBannerIndicator(list.size > 1)
@@ -101,12 +90,12 @@ class BannerViewPagerAdapter(
                                         }
                                     } else {
                                         for (singleBanner in list) {
-                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
+                                            if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key && list.get(position)!!.cta_feature_key.isNotEmpty() && singleBanner.cta_feature_key.isNotEmpty()) {
                                                 if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.contains(activity.fpTag)) {
                                                     list.remove(singleBanner)
                                                     notifyDataSetChanged()
                                                     homeListener.onShowHidePromoBannerIndicator(list.size > 1)
-                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode)) {
+                                                } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains(activity.experienceCode) && !singleBanner.exclusive_to_categories.isEmpty()) {
                                                     list.remove(singleBanner)
                                                     notifyDataSetChanged()
                                                     homeListener.onShowHidePromoBannerIndicator(list.size > 1)

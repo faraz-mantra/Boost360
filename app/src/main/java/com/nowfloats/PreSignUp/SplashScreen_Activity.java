@@ -185,25 +185,29 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private void goHomePage() {
-        Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        if (deepLink != null) {
-            if (!deepLink.contains("logout")) {
-                i.putExtras(getIntent());
+//        Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
+        try {
+            Intent i = new Intent(SplashScreen_Activity.this, Class.forName("com.dashboard.controller.DashboardActivity"));
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (deepLink != null) {
+                if (!deepLink.contains("logout")) {
+                    i.putExtras(getIntent());
+                    startActivity(i);
+                    if (pd != null && pd.isShowing()) pd.dismiss();
+                    finish();
+                } else {
+                    session.logoutUser();
+                    DataBase db = new DataBase(this);
+                    DbController.getDbController(getApplicationContext()).deleteDataBase();
+                    db.deleteLoginStatus();
+                }
+            } else {
                 startActivity(i);
                 if (pd != null && pd.isShowing()) pd.dismiss();
                 finish();
-            } else {
-                session.logoutUser();
-                DataBase db = new DataBase(this);
-                DbController.getDbController(getApplicationContext()).deleteDataBase();
-                db.deleteLoginStatus();
             }
-        } else {
-            startActivity(i);
-            if (pd != null && pd.isShowing()) pd.dismiss();
-            finish();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -246,22 +250,30 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
     @Subscribe
     public void getResponse(Response response) {
-        Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (pd != null && pd.isShowing())
-            pd.dismiss();
-        startActivity(i);
-        finish();
+        try {
+            Intent i = new Intent(SplashScreen_Activity.this, Class.forName("com.dashboard.controller.DashboardActivity"));
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (pd != null && pd.isShowing())
+                pd.dismiss();
+            startActivity(i);
+            finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Subscribe
     public void getError(RetrofitError retrofitError) {
-        Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (pd != null && pd.isShowing())
-            pd.dismiss();
-        startActivity(i);
-        finish();
+        try {
+            Intent i = new Intent(SplashScreen_Activity.this, Class.forName("com.dashboard.controller.DashboardActivity"));
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (pd != null && pd.isShowing())
+                pd.dismiss();
+            startActivity(i);
+            finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -288,29 +300,32 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
     @Override
     public void dataFetched(int skip, boolean isNewMessage) {
-
-        Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        // Staring Login Activity
-        if (deepLink != null) {
-            if (!deepLink.contains("logout")) {
-                //i.putExtra("url", deepLink);
-                i.putExtras(getIntent());
+        try {
+            Intent i = new Intent(SplashScreen_Activity.this, Class.forName("com.dashboard.controller.DashboardActivity"));
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            // Staring Login Activity
+            if (deepLink != null) {
+                if (!deepLink.contains("logout")) {
+                    //i.putExtra("url", deepLink);
+                    i.putExtras(getIntent());
+                    startActivity(i);
+                    if (pd != null)
+                        pd.dismiss();
+                    finish();
+                } else {
+                    session.logoutUser();
+                    DataBase db = new DataBase(this);
+                    DbController.getDbController(getApplicationContext()).deleteDataBase();
+                    db.deleteLoginStatus();
+                }
+            } else {
                 startActivity(i);
                 if (pd != null)
                     pd.dismiss();
                 finish();
-            } else {
-                session.logoutUser();
-                DataBase db = new DataBase(this);
-                DbController.getDbController(getApplicationContext()).deleteDataBase();
-                db.deleteLoginStatus();
             }
-        } else {
-            startActivity(i);
-            if (pd != null)
-                pd.dismiss();
-            finish();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

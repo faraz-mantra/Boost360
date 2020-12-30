@@ -8,15 +8,10 @@ import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.Retrofit
 
-abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLocalService> :
-    BaseRepository<RemoteDataSource, LocalDataSource>() {
+abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLocalService> : BaseRepository<RemoteDataSource, LocalDataSource>() {
 
   protected fun <T> makeRemoteRequest(observable: Observable<Response<T>>, taskCode: TaskCode): Observable<BaseResponse> {
     return makeRemoteRequest(observable, taskCode.ordinal)
-  }
-
-  override fun getApiClient(): Retrofit {
-    return WithFloatsApiClient.shared.retrofit
   }
 
   fun makeLocalRequest(observable: Observable<BaseResponse>, taskCode: TaskCode): Observable<BaseResponse> {
@@ -31,4 +26,9 @@ abstract class AppBaseRepository<RemoteDataSource, LocalDataSource : AppBaseLoca
     super.onSuccess(response, taskCode.ordinal)
     localDataSource.saveToLocal(response, taskCode)
   }
+
+  override fun getApiClient(): Retrofit {
+    return WithFloatsApiClient.shared.retrofit
+  }
+
 }

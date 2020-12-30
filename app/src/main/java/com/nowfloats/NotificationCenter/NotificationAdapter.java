@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
@@ -59,7 +60,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private String currentUrl;
     private String ruleId;
 
-    public NotificationAdapter(Activity appContext, ArrayList<AlertModel> alertData, NotificationInterface alertInterface, UserSessionManager session, Bus bus) {
+    public NotificationAdapter(Activity appContext, ArrayList<AlertModel> alertData, NotificationInterface alertInterface, UserSessionManager session, Bus bus,DeepLinkInterface linkInterface) {
         loadImages();
         this.appContext = appContext;
         this.alertData = alertData;
@@ -72,7 +73,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         format = new SimpleDateFormat("MMM dd, hh:mm aa", Locale.ENGLISH);
         format.setTimeZone(TimeZone.getDefault());
         imageId = R.drawable.alert_default;
-        linkInterface = (DeepLinkInterface) appContext;
+        this.linkInterface = linkInterface;
     }
 
 
@@ -222,7 +223,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                         if (currentUrl != null && currentUrl.trim().length() > 0)
                             if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                                 Methods.showFeatureNotAvailDialog(appContext);
-                            } else {
+                            } else if (linkInterface != null) {
                                 linkInterface.deepLink(currentUrl);
                             }
                     }

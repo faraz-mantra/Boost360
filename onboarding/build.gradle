@@ -43,5 +43,4 @@ dependencies {
     api project(path: ':facebook')
     api project(path: ':twitter')
     api project(path: ':google')
-    implementation 'com.webengage:android-sdk:3.+'
 }

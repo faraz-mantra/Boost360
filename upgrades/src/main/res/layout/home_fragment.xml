@@ -302,6 +302,34 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <LinearLayout
+                    android:id="@+id/package_compare_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_compare" />
+                    <TextView
+                        android:id="@+id/package_name1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:text="Compare"
+                        android:textColor="#FFB900"
+                        android:textFontWeight="600"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:layout_marginLeft="@dimen/_7sdp"
+                        android:layout_marginRight="@dimen/_9sdp"
+                        android:textSize="@dimen/_12sdp"/>
+                </LinearLayout>
+
+
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/package_viewpager"
                     android:layout_width="match_parent"

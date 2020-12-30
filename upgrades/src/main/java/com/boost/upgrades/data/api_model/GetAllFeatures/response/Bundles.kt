@@ -9,5 +9,6 @@ data class Bundles(
         val primary_image: PrimaryImage?,
         val target_business_usecase: String?,
         val exclusive_to_categories: List<String>?,
-        val exclusive_for_customers: List<String>?
+        val exclusive_for_customers: List<String>?,
+        val desc: String?
 )

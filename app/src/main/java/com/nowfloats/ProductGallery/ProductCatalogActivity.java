@@ -1,8 +1,6 @@
 package com.nowfloats.ProductGallery;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -149,14 +147,14 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
                 if (data != null && response.getStatus() == 200) {
                     if (data.size() > 0) {
-                        itemToAdd.setVisible(true);
+                        if (itemToAdd!=null) itemToAdd.setVisible(true);
                         binding.layoutEmptyView.setVisibility(View.GONE);
                         adapter.setData(data, flag);
                         return;
                     }
 
                     if (adapter.getItemCount() == 0) {
-                        itemToAdd.setVisible(false);
+                        if (itemToAdd!=null) itemToAdd.setVisible(false);
                         binding.layoutEmptyView.setVisibility(View.VISIBLE);
                     }
                 }

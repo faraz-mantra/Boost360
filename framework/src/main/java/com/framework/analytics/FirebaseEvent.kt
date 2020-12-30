@@ -14,7 +14,7 @@ class FirebaseEvent(private var name: String, private var bundle: Bundle = Bundl
     }
 
     fun getName(): String {
-        return name
+        return name.replace("-", " ").replace(" ", "_")
     }
 
     fun setName(name: String) {

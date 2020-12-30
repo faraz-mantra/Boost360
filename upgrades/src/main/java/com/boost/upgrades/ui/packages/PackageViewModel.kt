@@ -1,11 +1,10 @@
 package com.boost.upgrades.ui.packages
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.google.gson.Gson
@@ -37,6 +36,7 @@ class PackageViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun loadUpdates(list: List<String>){
+        Log.v("loadUpdates", " "+ list);
         CompositeDisposable().add(
                 AppDatabase.getInstance(getApplication())!!
                         .featuresDao()
