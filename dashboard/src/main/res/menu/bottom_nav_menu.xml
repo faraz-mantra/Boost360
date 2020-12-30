@@ -12,13 +12,13 @@
     android:title="@string/website" />
 
   <item
-    android:id="@+id/navigation_academy"
-    android:icon="@drawable/ic_academy_inactive_nav"
-    android:title="@string/academy" />
+    android:id="@+id/navigation_customer"
+    android:icon="@drawable/ic_customers_inactive_nav"
+    android:title="@string/customer" />
 
   <item
     android:id="@+id/navigation_add_ons"
-    android:icon="@drawable/ic_my_clinic_inactive_nav"
+    android:icon="@drawable/ic_add_ons_inactive_nav"
     android:title="@string/boost_add_ons" />
 
   <item
