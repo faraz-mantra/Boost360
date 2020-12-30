@@ -22,6 +22,7 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
     var updatesResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var featureResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
+    var cartResultBack: MutableLiveData<List<CartModel>> = MutableLiveData()
     var bundleKeysResult: MutableLiveData<List<String>> = MutableLiveData()
 
     var updatesError: MutableLiveData<String> = MutableLiveData()
@@ -41,6 +42,10 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
 
     fun cartResult(): LiveData<List<CartModel>>{
         return cartResult
+    }
+
+    fun cartResultBack(): LiveData<List<CartModel>>{
+        return cartResultBack
     }
 
     fun getBundleWidgetKeys(): LiveData<List<String>> {
@@ -131,6 +136,26 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
         )
     }
 
+    fun getCartItemsBack() {
+        updatesLoader.postValue(true)
+        CompositeDisposable().add(
+                AppDatabase.getInstance(getApplication())!!
+                        .cartDao()
+                        .getCartItems()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSuccess {
+                            cartResultBack.postValue(it)
+                            updatesLoader.postValue(false)
+                        }
+                        .doOnError {
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        }
+                        .subscribe()
+        )
+    }
+
     fun getAssociatedWidgetKeys(bundleId: String) {
         updatesLoader.postValue(true)
         CompositeDisposable().add(
@@ -202,7 +227,7 @@ class ComparePackageViewModel(application: Application) : BaseViewModel(applicat
                                                     if (item.primary_image != null) item.primary_image.url else null,
                                                     Gson().toJson(item.included_features),
                                                     item.target_business_usecase,
-                                                    Gson().toJson(item.exclusive_to_categories)
+                                                    Gson().toJson(item.exclusive_to_categories),item.desc
                                             ))
                                         }
                                         Completable.fromAction {

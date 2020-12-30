@@ -3,13 +3,16 @@ package com.boost.upgrades.ui.compare
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,12 +24,11 @@ import com.boost.upgrades.adapter.SimplePageTransformer
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.PrimaryImage
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.PromoBanners
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.CompareListener
-import com.boost.upgrades.interfaces.HomeListener
 import com.boost.upgrades.ui.cart.CartFragment
+import com.boost.upgrades.ui.freeaddons.FreeAddonsFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.HorizontalMarginItemDecoration
@@ -37,17 +39,12 @@ import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.compare_all_packages.*
 import kotlinx.android.synthetic.main.compare_all_packages_new.*
-import kotlinx.android.synthetic.main.compare_package_fragment.*
 import kotlinx.android.synthetic.main.compare_package_fragment.badge121
 import kotlinx.android.synthetic.main.compare_package_fragment.package_back
 import kotlinx.android.synthetic.main.compare_package_fragment.package_cart_icon
-import kotlinx.android.synthetic.main.compare_package_fragment.package_indicator
 import kotlinx.android.synthetic.main.compare_package_fragment.package_indicator2
 import kotlinx.android.synthetic.main.compare_package_fragment.package_viewpager
-import kotlinx.android.synthetic.main.home_fragment.*
-import org.json.JSONArray
 import org.json.JSONObject
 
 
@@ -67,6 +64,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
     var offeredBundlePrice = 0
     var originalBundlePrice = 0
     var featureCount = 0
+    var cartCount = 0
 
     var packageInCartStatus = false
     lateinit var prefs: SharedPrefs
@@ -121,7 +119,27 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
             package_cart_icon.visibility = View.INVISIBLE
         }
 
+        val ss = SpannableString("If you don’t upgrade to any of the premium plans listed above, you will be moved to our Free forever base plan. View features available in the Free plan here.")
+        val clickableSpan: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(textView: View) {
+                val args = Bundle()
+                args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+                (activity as UpgradeActivity).addFragmentHome(
+                        FreeAddonsFragment.newInstance(),
+                        Constants.FREEADDONS_FRAGMENT,args
+                )
+            }
 
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = resources.getColor(R.color.common_text_color)
+                ds.isUnderlineText = true
+            }
+        }
+        ss.setSpan(clickableSpan, 143, 157, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        upgradeTextBottom.setText(ss)
+        upgradeTextBottom.setMovementMethod(LinkMovementMethod.getInstance())
+//        upgradeTextBottom.setHighlightColor(resources.getColor(R.color.common_text_color))
 
         package_back.setOnClickListener {
             (activity as UpgradeActivity).popFragmentFromBackStack()
@@ -132,6 +150,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
                     CartFragment.newInstance(),
                     Constants.CART_FRAGMENT
             )
+//            Constants.COMPARE_BACK_VALUE = 1
         }
         initializePackageViewPager()
 
@@ -162,25 +181,6 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
     @SuppressLint("FragmentLiveDataObserve")
     private fun initMvvm() {
 
-        viewModel.getUpgradeResult().observe(this, Observer {
-            if (it.size > 0) {
-                featuresList = it
-                var bundleMonthlyMRP = 0
-
-                for (singleItem in it) {
-
-                    Log.v("getUpgradeResult", " "+ singleItem.feature_id + " "+ singleItem.boost_widget_key + " "+singleItem.name)
-                    /*for (item in bundleData!!.included_features) {
-                        if (singleItem.feature_code == item.feature_code) {
-                            bundleMonthlyMRP += (singleItem.price - ((singleItem.price * item.feature_price_discount_percent) / 100.0)).toInt()
-                        }
-                    }*/
-                }
-
-
-            }
-        })
-
 
 //        initializeFreeAddonsRecyclerView()
         viewModel.cartResult().observe(this, Observer {
@@ -195,16 +195,16 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
                             break
                         }
                     }*/
+                Constants.COMPARE_CART_COUNT = cartList!!.size
+                cartCount = cartList!!.size
                     badgeNumber = cartList!!.size
                     badge121.setText(badgeNumber.toString())
                     badge121.visibility = View.VISIBLE
-
-                    if(!packageInCartStatus){
-
-
-                    }
+                Log.v("badgeNumber", " "+ badgeNumber)
 //                }
             } else {
+                Constants.COMPARE_CART_COUNT = 0
+                cartCount = 0
                 badgeNumber = 0
                 badge121.visibility = View.GONE
                 packageInCartStatus = false
@@ -213,13 +213,14 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
 
             }
 //            viewModel.getCartItems()
-            if (viewModel.allBundleResult.value != null) {
+            /*if (viewModel.allBundleResult.value != null) {
 
 
                 var list = viewModel.allBundleResult.value!!
                 if (list.size > 0) {
                     val listItem = arrayListOf<Bundles>()
                     for (item in list) {
+                        Log.v("allBundleResultValue"," "+ item.name)
                         val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
                         listItem.add(Bundles(
                                 item.bundle_id,
@@ -235,11 +236,13 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
                     }
                     if (list.size > 0) {
 //                        updatePackageViewPager(listItem)
+//                        packageAdaptor.addupdatesNew(listItem)
                         packageAdaptor.addupdates(listItem)
                         packageAdaptor.notifyDataSetChanged()
                     }
                 }
-            }
+            }*/
+            viewModel.getCartItems()
         })
 
         viewModel.getSpecificFeature().observe(this, Observer {
@@ -315,20 +318,87 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
         })
 
         viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
-            if (it) {
+            /*if (it) {
                 val status = "Loading. Please wait..."
                 progressDialog.setMessage(status)
                 progressDialog.setCancelable(false) // disable dismiss by tapping outside of the dialog
                 progressDialog.show()
             } else {
                 progressDialog.dismiss()
+            }*/
+        })
+
+        viewModel.cartResultBack().observe(this, Observer {
+            cartList = it
+            packageInCartStatus = false
+            if (cartList != null && cartList!!.size > 0) {
+//                if (bundleData != null) {
+                /*  for (item in it) {
+                      if (item.item_id.equals(bundleData!!._kid)) {
+                          packageInCartStatus = true
+
+                          break
+                      }
+                  }*/
+
+                badgeNumber = cartList!!.size
+                badge121.setText(badgeNumber.toString())
+                badge121.visibility = View.VISIBLE
+                Log.v("badgeNumber", " "+ badgeNumber)
+//                }
+            } else {
+                badgeNumber = 0
+                badge121.visibility = View.GONE
+                packageInCartStatus = false
+
+
+
             }
+//            viewModel.getCartItems()
+            Log.v("COMPARE_BACK_VALUE"," "+ Constants.COMPARE_BACK_VALUE + " cartCount: "+  cartCount + " COMPARE_CART_COUNT: "+Constants.COMPARE_CART_COUNT + " "+ Constants.CART_VALUE)
+            if(Constants.COMPARE_BACK_VALUE == 1 /*&& cartCount != Constants.COMPARE_CART_COUNT*/){
+                Constants.COMPARE_BACK_VALUE = 0
+                if (viewModel.allBundleResult.value != null) {
+
+
+                    var list = viewModel.allBundleResult.value!!
+                    if (list.size > 0) {
+                        val listItem = arrayListOf<Bundles>()
+                        for (item in list) {
+                            Log.v("allBundleResultValue"," "+ item.name)
+                            val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                            listItem.add(Bundles(
+                                    item.bundle_id,
+                                    temp,
+                                    item.min_purchase_months,
+                                    item.name,
+                                    item.overall_discount_percent,
+                                    PrimaryImage(item.primary_image),
+                                    item.target_business_usecase,
+                                    Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                    null,item.desc
+                            ))
+                        }
+                        if (list.size > 0) {
+                            updatePackageViewPager(listItem)
+//                        packageAdaptor.addupdates(listItem)
+//                        packageAdaptor.notifyDataSetChanged()
+                        }
+                    }
+                }else{
+                    viewModel.loadPackageUpdates()
+                }
+                viewModel.getCartItemsBack()
+            }
+
+
         })
     }
 
     override fun onBackPressed() {
         if (::viewModel.isInitialized) {
-            viewModel.getCartItems()
+//            viewModel.getCartItems()
+            viewModel.getCartItemsBack()
         }
     }
 
@@ -410,7 +480,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(
                                         {
-                                            featuresList = it
+//                                            featuresList = it
                                             var bundleMonthlyMRP = 0
                                             val minMonth:Int = if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
 
@@ -456,7 +526,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
                                             item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
                                             WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", "ADDONS_MARKETPLACE", event_attributes)
                                             badgeNumber = badgeNumber + 1
-
+                                            Log.v("badgeNumber321", " "+ badgeNumber)
                                             Constants.CART_VALUE = badgeNumber
                                             viewModel.getCartItems()
                                         },

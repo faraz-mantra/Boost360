@@ -500,53 +500,6 @@ class HomeFragment : BaseFragment(), HomeListener {
                 }
             }
 
-            if (viewModel.allBundleResult.value != null) {
-
-
-                var list = viewModel.allBundleResult.value!!
-                if (list.size > 0) {
-                    val listItem = arrayListOf<Bundles>()
-                    for (item in list) {
-                        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-                        listItem.add(Bundles(
-                                item.bundle_id,
-                                temp,
-                                item.min_purchase_months,
-                                item.name,
-                                item.overall_discount_percent,
-                                PrimaryImage(item.primary_image),
-                                item.target_business_usecase,
-                                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                null,item.desc
-                        ))
-                    }
-                    if (list.size > 0) {
-//                        updatePackageViewPager(listItem)
-                        packageViewPagerAdapter.addupdates(listItem)
-                        packageViewPagerAdapter.notifyDataSetChanged()
-                    }
-                }
-            }
-        })
-
-        viewModel.cartResultBack().observe(this, androidx.lifecycle.Observer {
-            if (it != null && it.size > 0) {
-                badge.visibility = View.VISIBLE
-                badgeNumber = it.size
-                badge.setText(badgeNumber.toString())
-                Constants.CART_VALUE = badgeNumber
-            } else {
-                badgeNumber = 0
-                badge.visibility = View.GONE
-            }
-            //refresh FeatureDeals adaptor when cart is updated
-            if (viewModel.allFeatureDealsResult.value != null) {
-                val list = viewModel.allFeatureDealsResult.value!!
-                if (list.size > 0) {
-                    updateFeatureDealsViewPager(list, it)
-                }
-            }
-
             /*if (viewModel.allBundleResult.value != null) {
 
 
@@ -574,6 +527,56 @@ class HomeFragment : BaseFragment(), HomeListener {
                     }
                 }
             }*/
+        })
+
+        viewModel.cartResultBack().observe(this, androidx.lifecycle.Observer {
+            if (it != null && it.size > 0) {
+                badge.visibility = View.VISIBLE
+                badgeNumber = it.size
+                badge.setText(badgeNumber.toString())
+                Constants.CART_VALUE = badgeNumber
+            } else {
+                badgeNumber = 0
+                badge.visibility = View.GONE
+            }
+            //refresh FeatureDeals adaptor when cart is updated
+            if (viewModel.allFeatureDealsResult.value != null) {
+                val list = viewModel.allFeatureDealsResult.value!!
+                if (list.size > 0) {
+                    updateFeatureDealsViewPager(list, it)
+                }
+            }
+            if(Constants.COMPARE_BACK_VALUE == 1) {
+                Constants.COMPARE_BACK_VALUE = 0
+                if (viewModel.allBundleResult.value != null) {
+
+
+                    var list = viewModel.allBundleResult.value!!
+                    if (list.size > 0) {
+                        val listItem = arrayListOf<Bundles>()
+                        for (item in list) {
+                            val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                            listItem.add(Bundles(
+                                    item.bundle_id,
+                                    temp,
+                                    item.min_purchase_months,
+                                    item.name,
+                                    item.overall_discount_percent,
+                                    PrimaryImage(item.primary_image),
+                                    item.target_business_usecase,
+                                    Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                    null, item.desc
+                            ))
+                        }
+                        if (list.size > 0) {
+//                        updatePackageViewPager(listItem)
+                            packageViewPagerAdapter.addupdates(listItem)
+                            packageViewPagerAdapter.notifyDataSetChanged()
+                        }
+                    }
+                }
+                viewModel.getCartItemsBack()
+            }
         })
 
         viewModel.getYoutubeVideoDetails().observe(this, androidx.lifecycle.Observer {
