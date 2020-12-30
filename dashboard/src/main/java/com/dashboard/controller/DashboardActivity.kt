@@ -2,6 +2,7 @@ package com.dashboard.controller
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -11,6 +12,7 @@ import androidx.navigation.NavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
+import com.anachat.chatsdk.AnaCore
 import com.appservice.ui.catlogService.widgets.ClickType
 import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
 import com.dashboard.R
@@ -22,10 +24,7 @@ import com.dashboard.controller.ui.dashboard.DashboardFragment
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.model.live.drawerData.DrawerHomeData
 import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
-import com.dashboard.pref.BASE_IMAGE_URL
-import com.dashboard.pref.Key_Preferences
-import com.dashboard.pref.UserSessionManager
-import com.dashboard.pref.clientId
+import com.dashboard.pref.*
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -37,11 +36,17 @@ import com.framework.imagepicker.ImagePicker
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
+import com.google.firebase.iid.FirebaseInstanceId
 import com.inventoryorder.utils.DynamicLinkParams
 import com.inventoryorder.utils.DynamicLinksManager
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
+import com.webengage.sdk.android.WebEngage
+import com.zopim.android.sdk.api.ZopimChat
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
+import zendesk.core.AnonymousIdentity
+import zendesk.core.Zendesk
+import zendesk.support.Support
 import java.io.File
 import java.util.*
 
@@ -85,6 +90,26 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
     binding?.drawerView?.txtVersion?.text = "Version $versionName"
     intentDataCheckAndDeepLink()
+    initialize()
+  }
+
+  private fun initialize() {
+    val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+    StrictMode.setThreadPolicy(policy)
+    WebEngageController.initiateUserLogin(session?.userProfileId)
+    WebEngageController.setUserContactAttributes(session?.userProfileEmail, session?.userPrimaryMobile, session?.userProfileName, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
+    WebEngageController.setFPTag(session?.fpTag)
+    WebEngageController.trackEvent("DASHBOARD HOME", "pageview", session?.fpTag)
+    FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
+      val token = instanceIdResult.token
+      WebEngage.get().setRegistrationID(token)
+    }
+    initialiseZendeskSupportSdk()
+    if (FirebaseInstanceId.getInstance().token != null) {
+      AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().token?:"")
+      AnaCore.registerUser(this, session?.fpTag?:"", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
+    }
+    //checkCustomerAssistantService()
   }
 
   private fun intentDataCheckAndDeepLink() {
@@ -319,6 +344,21 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
         ?: "bg_${UUID.randomUUID()}.png"
     return UploadFileBusinessRequest(clientId, session?.fPID, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
+  }
+
+  private fun initialiseZendeskSupportSdk() {
+    try {
+      Zendesk.INSTANCE.init(this, "https://boost360.zendesk.com",
+          "684341b544a77a2a73f91bd3bb2bc77141d4fc427decda49", "mobile_sdk_client_6c56562cfec5c64c7857")
+      val identity = AnonymousIdentity.Builder()
+          .withNameIdentifier(session?.fpTag)
+          .withEmailIdentifier(session?.fPEmail)
+          .build()
+      Zendesk.INSTANCE.setIdentity(identity)
+      Support.INSTANCE.init(Zendesk.INSTANCE)
+      ZopimChat.init("MJwgUJn9SKy2m9ooxsQgJSeTSR5hU3A5")
+    } catch (e: Exception) {
+    }
   }
 }
 
