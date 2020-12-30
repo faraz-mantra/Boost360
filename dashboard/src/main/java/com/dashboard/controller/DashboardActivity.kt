@@ -217,6 +217,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     }
   }
 
+
   private fun getNavOptions(): NavOptions? {
     return NavOptions.Builder().setLaunchSingleTop(true).build()
   }
