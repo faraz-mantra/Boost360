@@ -31,5 +31,8 @@ data class BundlesModel(
         var target_business_usecase: String? = null,
 
         @ColumnInfo(name = "exclusive_to_categories")
-        var exclusive_to_categories: String? = null
+        var exclusive_to_categories: String? = null,
+
+        @ColumnInfo(name = "desc")
+        var desc: String? = null
 )

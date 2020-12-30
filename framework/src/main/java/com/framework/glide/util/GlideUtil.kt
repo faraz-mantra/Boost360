@@ -14,30 +14,47 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.DrawableImageViewTarget
 import com.bumptech.glide.request.target.Target
 import com.framework.R
 import com.framework.views.CircularImageView
 import com.framework.views.customViews.CustomImageView
+import com.framework.views.roundedimageview.RoundedImageView
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 fun Context.glideLoad(mImageView: CustomImageView?, url: String) {
   if (mImageView == null) return
-  Glide.with(this).load(url).skipMemoryCache(true)
-      .diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
+  Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
 }
 
-fun Context.glideLoad(mImageView: CircularImageView?, url: String) {
-  if (mImageView == null) return
-  Glide.with(this).load(url)
-      .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
+fun Context.glideLoad(mImageView: CircularImageView, url: String, placeholder: Int?, isCrop: Boolean = false) {
+  if (url.isEmpty()) return
+  val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+  placeholder?.let { glide.placeholder(it) }
+  if (isCrop) glide.centerCrop()
+  glide.into(mImageView)
+}
+
+fun Context.glideLoad(mImageView: RoundedImageView, url: String, placeholder: Int?, isCrop: Boolean = false) {
+  if (url.isEmpty()) return
+  val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+  placeholder?.let { glide.placeholder(it) }
+  if (isCrop) glide.centerCrop()
+  glide.into(mImageView)
 }
 
 fun Context.glideLoad(mImageView: CustomImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
   if (url?.isEmpty() == true) return
-  val glide = Glide.with(this).load(url).skipMemoryCache(true)
+  val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
   placeholder?.let { glide.placeholder(it) }
   if (isCrop) glide.centerCrop()
-  glide.diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
+  glide.into(mImageView)
+}
+
+fun Context.loadGifGlide(mImageView: CustomImageView, gif_file: Int?, placeholder: Int?) {
+  val glide = Glide.with(this).load(gif_file).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+  placeholder?.let { glide.placeholder(it) }
+  glide.into(DrawableImageViewTarget(mImageView))
 }
 
 
@@ -61,7 +78,7 @@ fun Context.glideLoadColor(mImageView: CustomImageView, url: String, view: View)
             e: GlideException?,
             model: Any?,
             target: Target<Bitmap>?,
-            isFirstResource: Boolean
+            isFirstResource: Boolean,
         ): Boolean {
           return false
         }
@@ -72,7 +89,7 @@ fun Context.glideLoadColor(mImageView: CustomImageView, url: String, view: View)
             model: Any,
             target: Target<Bitmap>,
             dataSource: DataSource,
-            isFirstResource: Boolean
+            isFirstResource: Boolean,
         ): Boolean {
           if (resource != null) {
             val p = Palette.from(resource).generate()

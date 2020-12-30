@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/greyish_light"
+      android:orientation="vertical">
+
+      <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager_digital_card"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_196"
+        android:layout_marginTop="@dimen/size_18"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal" />
+
+      <com.framework.views.dotsindicator.DotsIndicator
+        android:id="@+id/dot_indicator_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/size_9"
+        android:layout_marginBottom="@dimen/size_12"
+        app:dotsColor="@color/white_50"
+        app:dotsCornerRadius="@dimen/_6dp"
+        app:dotsSize="@dimen/size_5"
+        app:dotsSpacing="@dimen/size_2"
+        app:dotsWidthFactor="2.5"
+        app:progressMode="false"
+        app:selectedDotColor="@color/colorAccent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
+      android:layout_margin="@dimen/size_14"
+      android:gravity="bottom"
+
+      android:orientation="vertical">
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/share_whatsapp"
+        style="@style/ButtonStyle.Rounded"
+        android:layout_width="match_parent"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:backgroundTint="@color/light_green_new"
+        android:drawableStart="@drawable/ic_whatsapp_white_transparent"
+        android:stateListAnimator="@null"
+        android:text="Share via WhatsApp"
+        android:textAllCaps="true"
+        app:textType="HEADING_6" />
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/share_other"
+        style="@style/ButtonStyle.Rounded.Outlined"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="@dimen/size_14"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/bg_button_outlined_grey"
+        android:stateListAnimator="@null"
+        android:text="Share via others "
+        android:textAllCaps="true"
+        app:textType="HEADING_6" />
+    </LinearLayout>
+
+    <ProgressBar
+      android:id="@+id/progress"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:indeterminate="true"
+      android:theme="@style/progressBar"
+      android:visibility="gone" />
+  </FrameLayout>
+</layout>

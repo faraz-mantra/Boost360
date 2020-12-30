@@ -131,24 +131,49 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/getnow_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/recycler"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/orange_button_click_effect"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/_15sdp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingEnd="@dimen/_15sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:text="Get Now"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textFontWeight="800"
-                    android:textSize="@dimen/_8sdp" />
+                <LinearLayout
+                    android:id="@+id/package_button_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/getnow_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/recycler"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/orange_button_click_effect"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:gravity="center"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_15sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="add to cart"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textFontWeight="800"
+                        android:textSize="@dimen/_8sdp" />
+                    <TextView
+                        android:id="@+id/details_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/recycler"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/share_helper_click_effect"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:gravity="center"
+                        android:layout_marginLeft="@dimen/_16sdp"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_15sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="Details"
+                        android:textAllCaps="true"
+                        android:textColor="#FFB900"
+                        android:textFontWeight="800"
+                        android:textSize="@dimen/_8sdp" />
+                </LinearLayout>
+
             </LinearLayout>
 
 

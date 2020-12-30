@@ -2,8 +2,12 @@ package com.onboarding.nowfloats.utils
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.net.Uri
+import android.view.View
 import com.onboarding.nowfloats.extensions.checkIsFile
+
 
 fun String.getWebViewUrl(): String {
   return (takeIf { checkIsFile().not() }?.let { this } ?: "https://docs.google.com/viewer?url=$this").checkHttp()
@@ -22,4 +26,12 @@ fun Context.openWebPage(url: String): Boolean {
   } catch (e: Exception) {
     false
   }
+}
+
+
+fun viewToBitmap(view: View): Bitmap? {
+  val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+  val canvas = Canvas(bitmap)
+  view.draw(canvas)
+  return bitmap
 }

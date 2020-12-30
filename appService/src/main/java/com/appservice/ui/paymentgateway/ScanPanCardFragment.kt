@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -100,28 +99,23 @@ class ScanPanCardFragment : AppBaseFragment<FragmentScanPanCardBinding, BaseView
   }
 
   private fun checkAndAskPermissions() {
-    if (this.context?.let { ActivityCompat.checkSelfPermission(it, Manifest.permission.WRITE_EXTERNAL_STORAGE) }
-        != PackageManager.PERMISSION_GRANTED && this.context?.let {
-          ActivityCompat.checkSelfPermission(it, Manifest.permission.READ_EXTERNAL_STORAGE)
-        } != PackageManager.PERMISSION_GRANTED) {
+    if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+        ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
       requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSIONS_CODE)
     }
   }
 
   private fun openImagePicker() {
-    if (this.context?.let { ActivityCompat.checkSelfPermission(it, Manifest.permission.READ_EXTERNAL_STORAGE) } != PackageManager.PERMISSION_GRANTED) {
-      requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-          STORAGE_PERMISSIONS_CODE)
+    if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+      requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), STORAGE_PERMISSIONS_CODE)
     } else startImagePickerIntent()
   }
 
   private fun startImagePickerIntent() {
     val intent = Intent(Intent.ACTION_PICK)
     intent.type = "image/*"
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-      val mimeTypes = arrayOf("image/jpeg", "image/png")
-      intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-    }
+    val mimeTypes = arrayOf("image/jpeg", "image/png")
+    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
     startActivityForResult(intent, IMAGE_PICK_CODE)
   }
 

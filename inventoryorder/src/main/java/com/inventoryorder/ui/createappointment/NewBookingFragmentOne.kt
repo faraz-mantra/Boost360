@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.views.customViews.CustomTextView
-import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.databinding.FragmentNewBookingOneBinding
 import com.inventoryorder.model.AppointmentScheduleModel
@@ -16,7 +15,7 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 import com.inventoryorder.ui.BaseInventoryFragment
-import com.inventoryorder.ui.startFragmentActivity
+import com.inventoryorder.ui.startFragmentOrderActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -48,7 +47,7 @@ class NewBookingFragmentOne : BaseInventoryFragment<FragmentNewBookingOneBinding
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
-            binding?.buttonProceed -> startFragmentActivity(FragmentType.CREATE_NEW_BOOKING_PAGE_2, Bundle())
+            binding?.buttonProceed -> startFragmentOrderActivity(FragmentType.CREATE_NEW_BOOKING_PAGE_2, Bundle())
             binding?.choosePurpose -> showBottomSheetDialogForChoosePurpose()
             binding?.appointmentType -> showBottomSheetDialogForAppointmentType()
             binding?.selectTimeSlot -> setTime(binding?.selectTimeSlotText, baseActivity)

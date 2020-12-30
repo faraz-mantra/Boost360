@@ -1,0 +1,278 @@
+{
+  "data": [
+    {
+      "type": "DOC",
+      "action_item": [
+        {
+          "title": "In-clinic Appointments",
+          "type": "in_clinic_appointments",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Video consultations",
+          "type": "video_consultations",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Patient calls",
+          "type": "patient_customer_calls",
+          "isLock": false,
+          "premiumCode": "CALLTRACKER"
+        },
+        {
+          "title": "Patient messages",
+          "type": "patient_customer_messages",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Newsletter Subscribers",
+          "type": "newsletter_subscribers",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "HOS",
+      "action_item": [
+        {
+          "title": "In-clinic Appointments",
+          "type": "in_clinic_appointments",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Video consultations",
+          "type": "video_consultations",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Patient calls",
+          "type": "patient_customer_calls",
+          "isLock": false,
+          "premiumCode": "CALLTRACKER"
+        },
+        {
+          "title": "Patient messages",
+          "type": "patient_customer_messages",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Newsletter Subscribers",
+          "type": "newsletter_subscribers",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "RTL",
+      "action_item": [
+        {
+          "title": "Customer Orders",
+          "type": "customer_orders",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Customer calls",
+          "type": "patient_customer_calls",
+          "isLock": false,
+          "premiumCode": "CALLTRACKER"
+        },
+        {
+          "title": "Customer messages",
+          "type": "patient_customer_messages",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Newsletter Subscribers",
+          "type": "newsletter_subscribers",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "EDU",
+      "action_item": [
+        {
+          "title": "Admission Requests",
+          "type": "customer_orders",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Customer calls",
+          "type": "patient_customer_calls",
+          "isLock": false,
+          "premiumCode": "CALLTRACKER"
+        },
+        {
+          "title": "Customer messages",
+          "type": "patient_customer_messages",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Newsletter Subscribers",
+          "type": "newsletter_subscribers",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "HOT",
+      "action_item": [
+        {
+          "title": "Room Bookings",
+          "type": "customer_orders",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Customer calls",
+          "type": "patient_customer_calls",
+          "isLock": false,
+          "premiumCode": "CALLTRACKER"
+        },
+        {
+          "title": "Customer messages",
+          "type": "patient_customer_messages",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Newsletter Subscribers",
+          "type": "newsletter_subscribers",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "MFG",
+      "action_item": [
+        {
+          "title": "Customer Orders",
+          "type": "customer_orders",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Customer calls",
+          "type": "patient_customer_calls",
+          "isLock": false,
+          "premiumCode": "CALLTRACKER"
+        },
+        {
+          "title": "Customer messages",
+          "type": "patient_customer_messages",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Newsletter Subscribers",
+          "type": "newsletter_subscribers",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "CAF",
+      "action_item": [
+        {
+          "title": "Customer Orders",
+          "type": "customer_orders",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Customer calls",
+          "type": "patient_customer_calls",
+          "isLock": false,
+          "premiumCode": "CALLTRACKER"
+        },
+        {
+          "title": "Customer messages",
+          "type": "patient_customer_messages",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Newsletter Subscribers",
+          "type": "newsletter_subscribers",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "SVC",
+      "action_item": [
+        {
+          "title": "Appointments",
+          "type": "in_clinic_appointments",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Customer calls",
+          "type": "patient_customer_calls",
+          "isLock": false,
+          "premiumCode": "CALLTRACKER"
+        },
+        {
+          "title": "Customer messages",
+          "type": "patient_customer_messages",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Newsletter Subscribers",
+          "type": "newsletter_subscribers",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "SPA",
+      "action_item": [
+        {
+          "title": "Appointments",
+          "type": "in_clinic_appointments",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Customer calls",
+          "type": "patient_customer_calls",
+          "isLock": false,
+          "premiumCode": "CALLTRACKER"
+        },
+        {
+          "title": "Customer messages",
+          "type": "patient_customer_messages",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Newsletter Subscribers",
+          "type": "newsletter_subscribers",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    }
+  ]
+}
+

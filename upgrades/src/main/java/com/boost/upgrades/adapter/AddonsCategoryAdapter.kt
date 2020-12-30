@@ -1,9 +1,6 @@
 package com.boost.upgrades.adapter
 
 import android.content.Context
-import android.os.Bundle
-import android.text.SpannableString
-import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,17 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.HomeListener
-import com.boost.upgrades.ui.details.DetailsFragment
-import com.boost.upgrades.utils.Constants
-import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.text.NumberFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class AddonsCategoryAdapter(
@@ -94,7 +84,7 @@ class AddonsCategoryAdapter(
         CompositeDisposable().add(
                 AppDatabase.getInstance(activity.application)!!
                         .featuresDao()
-                        .getFeatureTypeCount(upgradeList.get(position))
+                        .getFeatureTypeCount(upgradeList.get(position),"MERCHANT_TRAINING")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({

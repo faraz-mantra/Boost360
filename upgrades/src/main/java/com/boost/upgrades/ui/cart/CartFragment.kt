@@ -360,6 +360,11 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     }
 
     private fun checkRenewalItemDeepLinkClick() {
+        val request1 =
+                RenewalPurchasedRequest(floatingPointId = (activity as UpgradeActivity).fpid, clientId = (activity as UpgradeActivity).clientid,
+                        widgetStatus = RenewalPurchasedRequest.WidgetStatus.ACTIVE.name, nextWidgetStatus = RenewalPurchasedRequest.NextWidgetStatus.RENEWAL.name,
+                        dateFilter = RenewalPurchasedRequest.DateFilter.EXPIRY_DATE.name, startDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY), endDate = DateUtils.getAmountDate((activity as UpgradeActivity).deepLinkDay).parseDate(DateUtils.FORMAT_MM_DD_YYYY))
+        Log.v("allPurchasedWidgets"," "+ request1);
         val ac = (activity as UpgradeActivity)
         if (ac.isBackCart.not() && (ac.isDeepLink || ac.isOpenCardFragment)) {
             val currentDate = DateUtils.getCurrentDate().parseDate(DateUtils.FORMAT_MM_DD_YYYY)
@@ -1290,8 +1295,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                         PrimaryImage(item.primary_image),
                         item.target_business_usecase,
                         Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                        null
-                )
+                        null,
+                item.desc)
                 break
             }
         }

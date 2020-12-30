@@ -43,8 +43,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.PowerManager;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -52,7 +50,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.nowfloats.NavigationDrawer.HomeActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+
 import com.nowfloats.managenotification.CallerInfoDialog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -308,8 +308,13 @@ public class CustomerAssistantService extends Service {
     }
 
     private PendingIntent createPendingIntent() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        return PendingIntent.getActivity(this, 0, intent, 0);
+        try {
+            Intent intent = new Intent(this, Class.forName("com.dashboard.controller.DashboardActivity"));
+            return PendingIntent.getActivity(this, 0, intent, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

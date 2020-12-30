@@ -23,7 +23,7 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
 
   fun <T> makeRemoteRequest(observable: Observable<Response<T>>, taskCode: Int): Observable<BaseResponse> {
     if (!NetworkUtils.isNetworkConnected()) {
-      val response = BaseResponse(error = NoNetworkException())
+      val response = BaseResponse(error = NoNetworkException(), status = 400, message = "No internet connection.")
       return Observable.just(response)
     }
 
@@ -63,9 +63,13 @@ abstract class BaseRepository<RemoteDataSource, LocalDataSource : BaseLocalServi
   fun makeLocalResponse(observable: Observable<BaseResponse>, taskcode: Int): Observable<BaseResponse> {
     return observable.map {
       if (it.error != null) {
+        it.status = 400
+        it.taskcode = taskcode
         onFailure(it, taskcode)
         return@map it
       } else {
+        it.status = 200
+        it.taskcode = taskcode
         onSuccess(it, taskcode)
         return@map it
       }

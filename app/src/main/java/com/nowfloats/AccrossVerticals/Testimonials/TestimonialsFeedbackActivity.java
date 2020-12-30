@@ -40,9 +40,11 @@ import com.nowfloats.AccrossVerticals.API.APIInterfaces;
 import com.nowfloats.AccrossVerticals.API.UploadProfileImage;
 import com.nowfloats.AccrossVerticals.API.model.AddTestimonials.ActionData;
 import com.nowfloats.AccrossVerticals.API.model.AddTestimonials.AddTestimonialsData;
+import com.nowfloats.AccrossVerticals.API.model.AddTestimonials.ProfileImagee;
 import com.nowfloats.AccrossVerticals.API.model.AddTestimonials.Profileimage;
 import com.nowfloats.AccrossVerticals.API.model.DeleteTestimonials.DeleteTestimonialsData;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
+import com.nowfloats.AccrossVerticals.API.model.GetToken.GetTokenData;
 import com.nowfloats.AccrossVerticals.API.model.UpdateTestimonialsData.UpdateTestimonialsData;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
@@ -50,6 +52,7 @@ import com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivi
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
@@ -80,6 +83,8 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     CardView imageLayout;
     ImageView profileImage;
     ImageButton removeProfileImage;
+    TextView reviewDescriptionLabel;
+    TextView reviewTitleLabel;
 
     private final int gallery_req_id = 0;
     private final int media_req_id = 1;
@@ -88,15 +93,19 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
 
     private ProgressDialog progressDialog;
     private boolean isNewDataAdded = false;
+    String headerToken = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testimonials_feedback);
-
         //setheader
         setHeader();
         initialization();
+        getHeaderAuthToken();
+//        Log.v("experincecode"," "+ session.getFP_AppExperienceCode() + " "+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
+        Log.v("experincecode"," "+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY) + " "+ session.getFPID() + " "+ session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID) +" "
+        + session.getFpTag());
     }
 
 
@@ -111,6 +120,8 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         profileImage = findViewById(R.id.iv_primary_image);
         removeProfileImage = findViewById(R.id.ib_remove_product_image);
         descriptionCharCount = findViewById(R.id.description_char_count);
+        reviewDescriptionLabel = findViewById(R.id.reviewDescriptionLabel);
+        reviewTitleLabel = findViewById(R.id.reviewTitleLabel);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
@@ -145,7 +156,8 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                         }
                     }, 200);
                 } else {
-                    uploadDataToServer();
+                    Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, "Please upload an image.");
+//                    uploadDataToServer();
                 }
             }
         });
@@ -170,6 +182,13 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
 
         if (ScreenType != null && ScreenType.equals("edit")) {
             displayData();
+        }else if(ScreenType != null){
+            if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("HOTEL & MOTELS")){
+                reviewTitleLabel.setText("Review City");
+                reviewDescriptionLabel.setText("Review Testimonial");
+            } else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("SALON")){
+                reviewDescriptionLabel.setText("Review Story");
+            }
         }
 
     }
@@ -178,15 +197,40 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         existingItemData = new Gson().fromJson(getIntent().getStringExtra("data"), Data.class);
 
         itemId = existingItemData.getId();
-        uploadedImageURL = existingItemData.getProfileimage().getUrl();
+        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("HOTEL & MOTELS")){
+            uploadedImageURL = existingItemData.getProfileImage().getUrl();
+            userNameText.setText(existingItemData.getCustomerName());
+            reviewTitleText.setText(existingItemData.getCity());
+            reviewDescriptionText.setText(existingItemData.getTestimonial());
+            reviewTitleLabel.setText("Review City");
+            reviewDescriptionLabel.setText("Review Testimonial");
+        } else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("MANUFACTURERS")){
+            uploadedImageURL = existingItemData.getProfileimage().getUrl();
+            userNameText.setText(existingItemData.getUsername());
+            reviewTitleText.setText(existingItemData.getTitle());
+            reviewDescriptionText.setText(existingItemData.getDescription());
+            reviewDescriptionLabel.setText("Review Testimonial");
+        } else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("SALON")){
+            uploadedImageURL = existingItemData.getProfileimage().getUrl();
+            userNameText.setText(existingItemData.getName());
+            reviewTitleText.setText(existingItemData.getTitle());
+            reviewDescriptionText.setText(existingItemData.getOurStory());
+            reviewDescriptionLabel.setText("Review Story");
+        }else{
+            uploadedImageURL = existingItemData.getProfileimage().getUrl();
+            userNameText.setText(existingItemData.getUsername());
+            reviewTitleText.setText(existingItemData.getTitle());
+            reviewDescriptionText.setText(existingItemData.getDescription());
+        }
+//        uploadedImageURL = existingItemData.getProfileimage().getUrl();
         if (!uploadedImageURL.isEmpty()) {
             Glide.with(TestimonialsFeedbackActivity.this).load(uploadedImageURL).into(profileImage);
             removeProfileImage.setVisibility(View.VISIBLE);
         }
 
-        userNameText.setText(existingItemData.getUsername());
+/*        userNameText.setText(existingItemData.getUsername());
         reviewTitleText.setText(existingItemData.getTitle());
-        reviewDescriptionText.setText(existingItemData.getDescription());
+        reviewDescriptionText.setText(existingItemData.getDescription());*/
 
     }
 
@@ -282,22 +326,57 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
             if (validateInput()) {
 
                 ActionData actionData = new ActionData();
-                actionData.setUsername(userNameText.getText().toString());
-                actionData.setTitle(reviewTitleText.getText().toString());
-                actionData.setDescription(reviewDescriptionText.getText().toString());
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("HOTEL & MOTELS")){
+                    actionData.setCustomerName(userNameText.getText().toString());
+                    actionData.setTestimonial(reviewDescriptionText.getText().toString());
+                    actionData.setCity(reviewTitleText.getText().toString());
+
+                    ProfileImagee placeImage = new ProfileImagee();
+                    placeImage.setUrl(uploadedImageURL);
+                    placeImage.setDescription("");
+
+                    actionData.setProfileImagee(placeImage);
+                }if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("SALON")){
+                    actionData.setName(userNameText.getText().toString());
+                    actionData.setTitle(reviewTitleText.getText().toString());
+                    actionData.setOurStory(reviewDescriptionText.getText().toString());
+
+                    Profileimage placeImage = new Profileimage();
+                    placeImage.setUrl(uploadedImageURL);
+                    placeImage.setDescription("");
+
+                    actionData.setProfileimage(placeImage);
+                }else{
+                    actionData.setUsername(userNameText.getText().toString());
+                    actionData.setTitle(reviewTitleText.getText().toString());
+                    actionData.setDescription(reviewDescriptionText.getText().toString());
+//                    actionData.setTestimonial(reviewDescriptionText.getText().toString());
+
+                    Profileimage placeImage = new Profileimage();
+                    placeImage.setUrl(uploadedImageURL);
+                    placeImage.setDescription("");
+
+                    actionData.setProfileimage(placeImage);
+                }
+//                actionData.setUsername(userNameText.getText().toString());
+//                actionData.setTitle(reviewTitleText.getText().toString());
+//                actionData.setDescription(reviewDescriptionText.getText().toString());
 
 
-                Profileimage placeImage = new Profileimage();
-                placeImage.setUrl(uploadedImageURL);
-                placeImage.setDescription("");
 
-                actionData.setProfileimage(placeImage);
+
+//                Profileimage placeImage = new Profileimage();
+//                placeImage.setUrl(uploadedImageURL);
+//                placeImage.setDescription("");
+//
+//                actionData.setProfileimage(placeImage);
 
 
                 AddTestimonialsData request = new AddTestimonialsData();
                 request.setWebsiteId(session.getFpTag());
                 request.setActionData(actionData);
-
+//                headerToken = "59c89bbb5d64370a04c9aea1";
+                Log.v("addTest"," "+ session.getFpTag());
                 APIInterfaces APICalls = new RestAdapter.Builder()
                         .setEndpoint("https://webaction.api.boostkit.dev")
                         .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -305,7 +384,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                         .build()
                         .create(APIInterfaces.class);
 
-                APICalls.addTestimoinals(request, new Callback<String>() {
+                APICalls.addTestimonials(headerToken, request, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
                         hideLoader();
@@ -321,6 +400,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
 
                     @Override
                     public void failure(RetrofitError error) {
+                        Log.v("addTestimonial"," message: "+ error.getMessage() +" error: "+ error );
                         hideLoader();
                         Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
                     }
@@ -339,16 +419,38 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
             if (validateInput()) {
 
                 ActionData actionData = new ActionData();
-                actionData.setUsername(userNameText.getText().toString());
-                actionData.setTitle(reviewTitleText.getText().toString());
-                actionData.setDescription(reviewDescriptionText.getText().toString());
+//                actionData.setUsername(userNameText.getText().toString());
+//                actionData.setTitle(reviewTitleText.getText().toString());
+//                actionData.setDescription(reviewDescriptionText.getText().toString());
 
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("HOTEL & MOTELS")){
+                    actionData.setCustomerName(userNameText.getText().toString());
+                    actionData.setTestimonial(reviewTitleText.getText().toString());
+                    actionData.setCity(reviewDescriptionText.getText().toString());
 
-                Profileimage placeImage = new Profileimage();
-                placeImage.setUrl(uploadedImageURL);
-                placeImage.setDescription("");
+                    ProfileImagee placeImage = new ProfileImagee();
+                    placeImage.setUrl(uploadedImageURL);
+                    placeImage.setDescription("");
 
-                actionData.setProfileimage(placeImage);
+                    actionData.setProfileImagee(placeImage);
+
+                }else{
+                    actionData.setUsername(userNameText.getText().toString());
+                    actionData.setTitle(reviewTitleText.getText().toString());
+                    actionData.setDescription(reviewDescriptionText.getText().toString());
+
+                    Profileimage placeImage = new Profileimage();
+                    placeImage.setUrl(uploadedImageURL);
+                    placeImage.setDescription("");
+
+                    actionData.setProfileimage(placeImage);
+                }
+
+//                Profileimage placeImage = new Profileimage();
+//                placeImage.setUrl(uploadedImageURL);
+//                placeImage.setDescription("");
+//
+//                actionData.setProfileimage(placeImage);
 
                 UpdateTestimonialsData requestBody = new UpdateTestimonialsData();
                 requestBody.setQuery("{_id:'" + existingItemData.getId() + "'}");
@@ -361,7 +463,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                         .build()
                         .create(APIInterfaces.class);
 
-                APICalls.updateTestimoinals(requestBody, new Callback<String>() {
+                APICalls.updateTestimonials(headerToken, requestBody, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
                         hideLoader();
@@ -543,7 +645,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                     .build()
                     .create(APIInterfaces.class);
 
-            APICalls.deleteTestimoinals(requestBody, new Callback<String>() {
+            APICalls.deleteTestimonials(headerToken, requestBody, new Callback<String>() {
                 @Override
                 public void success(String data, Response response) {
                     hideLoader();
@@ -625,5 +727,47 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         data.putExtra("IS_REFRESH", isNewDataAdded);
         setResult(RESULT_OK, data);
         super.onBackPressed();
+    }
+
+    String getHeaderAuthToken() {
+
+        try {
+
+                APIInterfaces APICalls = new RestAdapter.Builder()
+                        .setEndpoint("https://developer.api.boostkit.dev")
+                        .setLogLevel(RestAdapter.LogLevel.FULL)
+                        .setLog(new AndroidLog("ggg"))
+                        .build()
+                        .create(APIInterfaces.class);
+            Log.v("newvlue"," "+ session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID)+ " "+ session.getFpTag());
+                APICalls.getHeaderAuthorizationtoken(session.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID), session.getFpTag(), new Callback<GetTokenData>() {
+                    @Override
+                    public void success(GetTokenData s, Response response) {
+                        Log.v("experincecode1"," "+ s.getToken() + " "+ response.getReason() + " "+ response.getBody());
+                        if (response.getStatus() != 200) {
+                            Toast.makeText(getApplicationContext(), response.getStatus(), Toast.LENGTH_SHORT).show();
+                            headerToken = "";
+                            return ;
+                        }else{
+                            headerToken = s.getToken();
+//                            Toast.makeText(getApplicationContext(), response.getBody().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.v("experincecode2"," "+ error.getBody() + " "+ error.getMessage() );
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
+                    }
+                });
+
+
+        } catch (Exception e) {
+            Log.v("experincecode3"," "+ e.getMessage() +" "+ e.getStackTrace() );
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    return headerToken;
     }
 }

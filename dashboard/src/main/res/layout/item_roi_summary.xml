@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <com.framework.views.customViews.CustomCardView
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_146"
+    android:layout_margin="@dimen/size_4"
+    android:id="@+id/main_content"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/size_10"
+    app:cardUseCompatPadding="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:padding="@dimen/size_8">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_title"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/size_2"
+          android:layout_weight="1"
+          android:ellipsize="end"
+          android:includeFontPadding="false"
+          android:maxLines="2"
+          android:textColor="@color/grey_dark_3"
+          app:fontFamily="@font/light"
+          app:textType="BODY_1"
+          tools:text="Patient Enquiries" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/img_icon"
+          android:layout_width="@dimen/size_44"
+          android:layout_height="@dimen/size_44"
+          tools:srcCompat="@drawable/ic_chat_enquiry_d" />
+      </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_day_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart=".5dp"
+          android:layout_marginEnd="@dimen/size_6"
+          android:includeFontPadding="false"
+          android:textColor="@color/light_blue_2"
+          app:textType="CAPTION"
+          tools:text="2 today" />
+
+        <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/size_6"
+          android:orientation="horizontal">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/txt_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/size_1"
+            android:includeFontPadding="false"
+            android:text="₹"
+            android:textColor="@color/grey_dark_2"
+            app:fontFamily="@font/regular"
+            app:textType="OVERLINE" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/txt_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_2"
+            android:includeFontPadding="false"
+            android:text="1,579"
+            android:textColor="@color/dimgray"
+            app:fontFamily="@font/regular"
+            app:textType="HEADING_4" />
+        </LinearLayout>
+
+      </LinearLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </com.framework.views.customViews.CustomCardView>
+</layout>

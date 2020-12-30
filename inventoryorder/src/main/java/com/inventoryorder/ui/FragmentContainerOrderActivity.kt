@@ -251,7 +251,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 }
 
-fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+fun Fragment.startFragmentOrderActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
   val intent = Intent(activity, FragmentContainerOrderActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
@@ -267,12 +267,12 @@ fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bun
   activity.startActivity(intent)
 }
 
-fun AppCompatActivity.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
+fun AppCompatActivity.startFragmentOrderActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
   val intent = Intent(this, FragmentContainerOrderActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-  startActivity(intent)
+  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
 fun Intent.setFragmentType(type: FragmentType): Intent {

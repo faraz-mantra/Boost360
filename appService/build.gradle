@@ -40,6 +40,5 @@ android {
 dependencies {
     api project(path: ':resources')
     // MY added libraries
-    api 'com.otaliastudios:cameraview:2.6.3'
-    implementation 'com.webengage:android-sdk:3.+'
+    api 'com.otaliastudios:cameraview:2.6.4'
 }

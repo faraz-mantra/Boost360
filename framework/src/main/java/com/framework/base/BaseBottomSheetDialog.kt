@@ -2,6 +2,7 @@ package com.framework.base
 
 import android.app.Dialog
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -58,9 +59,17 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     dialog.setOnShowListener {
       val dialog = it as? BottomSheetDialog ?: return@setOnShowListener
       val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) ?: return@setOnShowListener
-      BottomSheetBehavior.from(bottomSheet).apply { state = getBottomSheetInitialState() }
-//      baseActivity.window?.setDimAmount( - 0.1f)
-//      bottomSheet.setBackgroundResource(android.R.color.background_dark)
+      BottomSheetBehavior.from(bottomSheet).apply {
+        isPeekHeightSetMatch()?.let {
+          isFitToContents = true
+          expandedOffset = 0
+          peekHeight = getScreenHeight()
+        }
+        state = getBottomSheetInitialState()
+        getSkipCollapse()?.let { it1 -> skipCollapsed = it1 }
+        getDraggable()?.let { it1 -> isDraggable = it1 }
+      }
+      bottomSheet.parent.requestLayout()
     }
     return dialog
   }
@@ -96,26 +105,11 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    onCreateView()
-
-//    getBehaviour().addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-//      override fun onSlide(bottomSheet: View, slideOffset: Float) {
-//
-//      }
-//
-//      override fun onStateChanged(bottomSheet: View, newState: Int) {
-//        if (newState == BottomSheetBehavior.STATE_HALF_EXPANDED ||
-//            newState == BottomSheetBehavior.STATE_COLLAPSED) {
-//          getBehaviour().state = BottomSheetBehavior.STATE_EXPANDED
-//        } else {
-//          println()
-//        }
-//      }
-//    })
     val parent = view.parent as? View
     val layoutParams = parent?.layoutParams as? CoordinatorLayout.LayoutParams
     layoutParams?.setMargins(getMarginStart(), getMarginTop(), getMarginEnd(), getMarginBottom())
     parent?.layoutParams = layoutParams
+    onCreateView()
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -156,6 +150,18 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
     return BottomSheetBehavior.STATE_EXPANDED
   }
 
+  open fun isPeekHeightSetMatch(): Boolean? {
+    return null
+  }
+
+  open fun getDraggable(): Boolean? {
+    return null
+  }
+
+  open fun getSkipCollapse(): Boolean? {
+    return null
+  }
+
   open fun getMarginTop(): Int {
     return 0
   }
@@ -171,4 +177,6 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
   open fun getMarginBottom(): Int {
     return 0
   }
+
+  private fun getScreenHeight(): Int = Resources.getSystem().displayMetrics.heightPixels
 }

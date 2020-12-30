@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.data.model.WidgetModel
 import com.luminaire.apolloar.base_class.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -36,7 +35,7 @@ class ViewAllFeaturesViewModel(application: Application) : BaseViewModel(applica
         compositeDisposable.add(
                 AppDatabase.getInstance(getApplication())!!
                         .featuresDao()
-                        .getFeaturesItemsByType(categoryType)
+                        .getFeaturesItemsByType(categoryType,"MERCHANT_TRAINING")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSuccess {

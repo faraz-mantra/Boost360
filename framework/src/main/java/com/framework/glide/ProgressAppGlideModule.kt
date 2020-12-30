@@ -13,29 +13,29 @@ import java.io.InputStream
 @GlideModule  //1
 class ProgressAppGlideModule : AppGlideModule() {
 
-    override fun registerComponents(context: Context, glide: Glide, registry: Registry) { //2
-        super.registerComponents(context, glide, registry)
-        val client = OkHttpClient.Builder()
-                .addNetworkInterceptor { chain ->
-                    //3
-                    val request = chain.request()
-                    val response = chain.proceed(request)
-                    val listener = DispatchingProgressManager()  //4
-                    response.newBuilder()
-                            .body(
-                                    OkHttpProgressResponseBody(
-                                            request.url(),
-                                            response.body()!!,
-                                            listener
-                                    )
-                            )  //5
-                            .build()
-                }
-                .build()
-        glide.registry.replace(
-                GlideUrl::class.java,
-                InputStream::class.java,
-                OkHttpUrlLoader.Factory(client)
-        ) //6
-    }
+  override fun registerComponents(context: Context, glide: Glide, registry: Registry) { //2
+    super.registerComponents(context, glide, registry)
+    val client = OkHttpClient.Builder()
+        .addNetworkInterceptor { chain ->
+          //3
+          val request = chain.request()
+          val response = chain.proceed(request)
+          val listener = DispatchingProgressManager()  //4
+          response.newBuilder()
+              .body(
+                  OkHttpProgressResponseBody(
+                      request.url,
+                      response.body!!,
+                      listener
+                  )
+              )  //5
+              .build()
+        }
+        .build()
+    glide.registry.replace(
+        GlideUrl::class.java,
+        InputStream::class.java,
+        OkHttpUrlLoader.Factory(client)
+    ) //6
+  }
 }

@@ -22,7 +22,6 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
-import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 
 /**
@@ -55,14 +54,14 @@ public class FacebookLeadsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        session = new UserSessionManager(requireActivity().getApplicationContext(), (HomeActivity) requireActivity());
+        session = new UserSessionManager(requireActivity().getApplicationContext(), requireActivity());
 
         //show or hide if feature is available to user
-        secondaryLayout= (LinearLayout) view.findViewById(R.id.secondary_layout);
-        buyItemButton = (TextView) view.findViewById(R.id.buy_item);
-        if(Constants.StoreWidgets.contains("WILDFIRE_FB_LEAD_ADS")) {
+        secondaryLayout = view.findViewById(R.id.secondary_layout);
+        buyItemButton = view.findViewById(R.id.buy_item);
+        if (Constants.StoreWidgets.contains("WILDFIRE_FB_LEAD_ADS")) {
             secondaryLayout.setVisibility(View.GONE);
-        }else{
+        } else {
             secondaryLayout.setVisibility(View.VISIBLE);
         }
         buyItemButton.setOnClickListener(new View.OnClickListener() {
@@ -77,8 +76,8 @@ public class FacebookLeadsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (headerText != null && mContext instanceof HomeActivity)
-            headerText.setText(getString(R.string.facebook_leads));
+        if (mContext instanceof HomeActivity && HomeActivity.headerText != null)
+            HomeActivity.headerText.setText(getString(R.string.facebook_leads));
     }
 
     private void initiateBuyFromMarketplace() {
@@ -87,7 +86,7 @@ public class FacebookLeadsFragment extends Fragment {
         progressDialog.setMessage(status);
         progressDialog.setCancelable(false);
         progressDialog.show();
-        Intent intent = new Intent((HomeActivity) requireActivity(), UpgradeActivity.class);
+        Intent intent = new Intent(requireActivity(), UpgradeActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());

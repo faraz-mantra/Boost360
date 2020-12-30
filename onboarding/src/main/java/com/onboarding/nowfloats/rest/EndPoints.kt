@@ -7,6 +7,8 @@ object EndPoints {
   const val POST_BUSINESS_DOMAIN_URL = "discover/v1/floatingPoint/verifyUniqueTag"
   const val POST_BUSINESS_DOMAIN_SUGGEST = "discover/v1/floatingPoint/suggestTag"
   const val PUT_CREATE_BUSINESS_URL = "discover/v5/FloatingPoint/create"
+  const val PUT_UPLOAD_CREATE_IMAGE = "discover/v1/floatingpoint/createImage"
+  const val PUT_UPLOAD_SECONDARY_IMAGE = "discover/v1/floatingpoint/createSecondaryImage"
   const val PUT_UPLOAD_BUSINESS_LOGO = "discover/v1/floatingpoint/createLogoImage"
   const val PUT_UPLOAD_PROFILE = "user/v9/floatingpoint/createUserProfileImage"
   const val POST_ACTIVATE_PURCHASED_ORDER = "Payment/v9/floatingpoint/ActivatePurchaseOrder"
@@ -14,6 +16,10 @@ object EndPoints {
   // Base With Floats APIs
   const val RIA_WITH_FLOATS_BASE_URL = "https://ria.withfloats.com/"
   const val RIA_WHATSAPP = "api/WhatsApp/OptIn"
+
+  // Base With Floats APIs
+  const val BOOST_FLOATS_BASE_URL = "https://boost.nowfloats.com"
+  const val MERCHANT_PROFILE = "/Home/MerchantProfileStatus"
 
   // NFX APIs
   const val NFX_BASE_URL = "https://nfx.withfloats.com/"

@@ -24,6 +24,7 @@ open class BaseBoardingApplication : BaseApplication() {
           WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE_URL)
           RiaWithFloatsApiClient.shared.init(EndPoints.RIA_WITH_FLOATS_BASE_URL)
           WebActionsApiClient.shared.init(EndPoints.WEB_ACTION_BASE_URL)
+          BoostFloatClient.shared.init(EndPoints.BOOST_FLOATS_BASE_URL)
           TwitterConfigHelper.debug(true)
           TwitterConfigHelper.initialize(application)
           NavigatorManager.initialize()

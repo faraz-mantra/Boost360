@@ -1,0 +1,517 @@
+/* This data pair of four items */
+{
+  "data": [
+    {
+      "type": "DOC",
+      "action_item": [
+        {
+          "items": [
+            {
+              "quickActionType": "POST_STATUS_STORY",
+              "title": "Daily\nstatus/story"
+            },
+            {
+              "quickActionType": "POST_NEW_UPDATE",
+              "title": "Post today's\nupdate"
+            },
+            {
+              "quickActionType": "ADD_PHOTO_GALLERY",
+              "title": "Post new\nphotos"
+            },
+            {
+              "quickActionType": "PLACE_APPOINTMENT",
+              "title": "Book in-clinic\nappointment"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "PLACE_CONSULT",
+              "title": "Book a video\nconsultation"
+            },
+            {
+              "quickActionType": "ADD_TESTIMONIAL",
+              "title": "Add patient\ntestimonial"
+            },
+            {
+              "quickActionType": "LIST_SERVICES",
+              "title": "List a\nservice"
+            },
+            {
+              "quickActionType": "ADD_CUSTOM_PAGE",
+              "title": "Add a\ncustom page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "HOS",
+      "action_item": [
+        {
+          "items": [
+            {
+              "quickActionType": "POST_STATUS_STORY",
+              "title": "Daily\nstatus/story"
+            },
+            {
+              "quickActionType": "POST_NEW_UPDATE",
+              "title": "Post today's\nupdate"
+            },
+            {
+              "quickActionType": "ADD_PHOTO_GALLERY",
+              "title": "Post new\nphotos"
+            },
+            {
+              "quickActionType": "PLACE_APPOINTMENT",
+              "title": "Book in-clinic\nappointment"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "PLACE_CONSULT",
+              "title": "Book a video\nconsultation"
+            },
+            {
+              "quickActionType": "ADD_TESTIMONIAL",
+              "title": "Add patient\ntestimonial"
+            },
+            {
+              "quickActionType": "ADD_FACULTY_MEMBER",
+              "title": "Add a\ndoctor"
+            },
+            {
+              "quickActionType": "LIST_SERVICES",
+              "title": "List a\nservice"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "ADD_CUSTOM_PAGE",
+              "title": "Add a\ncustom page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "SPA",
+      "action_item": [
+        {
+          "items": [
+            {
+              "quickActionType": "POST_STATUS_STORY",
+              "title": "Daily\nstatus/story"
+            },
+            {
+              "quickActionType": "POST_NEW_UPDATE",
+              "title": "Post today's\nupdate"
+            },
+            {
+              "quickActionType": "ADD_PHOTO_GALLERY",
+              "title": "Post new\nphotos"
+            },
+            {
+              "quickActionType": "PLACE_APPOINTMENT",
+              "title": "Add an\nappointment"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "ADD_TESTIMONIAL",
+              "title": "Add customer\ntestimonial"
+            },
+            {
+              "quickActionType": "ADD_FACULTY_MEMBER",
+              "title": "Add a\nstaff member"
+            },
+            {
+              "quickActionType": "LIST_SERVICES",
+              "title": "List a\nservice"
+            },
+            {
+              "quickActionType": "ADD_CUSTOM_PAGE",
+              "title": "Add a\ncustom page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "SAL",
+      "action_item": [
+        {
+          "items": [
+            {
+              "quickActionType": "POST_STATUS_STORY",
+              "title": "Daily\nstatus/story"
+            },
+            {
+              "quickActionType": "POST_NEW_UPDATE",
+              "title": "Post today's\nupdate"
+            },
+            {
+              "quickActionType": "ADD_PHOTO_GALLERY",
+              "title": "Post new\nphotos"
+            },
+            {
+              "quickActionType": "PLACE_APPOINTMENT",
+              "title": "Add an\nappointment"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "ADD_TESTIMONIAL",
+              "title": "Add customer\ntestimonial"
+            },
+            {
+              "quickActionType": "ADD_FACULTY_MEMBER",
+              "title": "Add a\nstaff member"
+            },
+            {
+              "quickActionType": "LIST_SERVICES",
+              "title": "List a\nservice"
+            },
+            {
+              "quickActionType": "ADD_CUSTOM_PAGE",
+              "title": "Add a\ncustom page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "CAF",
+      "action_item": [
+        {
+          "items": [
+            {
+              "quickActionType": "POST_STATUS_STORY",
+              "title": "Today's\nstatus/story"
+            },
+            {
+              "quickActionType": "POST_NEW_UPDATE",
+              "title": "Post today's\nupdate"
+            },
+            {
+              "quickActionType": "ADD_PHOTO_GALLERY",
+              "title": "Post new\nphotos"
+            },
+            {
+              "quickActionType": "PLACE_ORDER_BOOKING",
+              "title": "Add an\norder"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "ADD_TABLE_BOOKING",
+              "title": "Add a\ntable booking"
+            },
+            {
+              "quickActionType": "ADD_MENU",
+              "title": "Add to\nmenu"
+            },
+            {
+              "quickActionType": "ADD_TESTIMONIAL",
+              "title": "Add customer\ntestimonial"
+            },
+            {
+              "quickActionType": "ADD_CUSTOM_PAGE",
+              "title": "Add a\ncustom page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "MFG",
+      "action_item": [
+        {
+          "items": [
+            {
+              "quickActionType": "POST_STATUS_STORY",
+              "title": "Today's\nstatus/story"
+            },
+            {
+              "quickActionType": "POST_NEW_UPDATE",
+              "title": "Post today's\nupdate"
+            },
+            {
+              "quickActionType": "ADD_PHOTO_GALLERY",
+              "title": "Post new\nphotos"
+            },
+            {
+              "quickActionType": "LIST_PRODUCT",
+              "title": "List a\nproduct"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "ADD_PROJECT",
+              "title": "Add a\nproject"
+            },
+            {
+              "quickActionType": "UPLOAD_BROCHURE",
+              "title": "Upload a\nbrochure"
+            },
+            {
+              "quickActionType": "ADD_TESTIMONIAL",
+              "title": "Add customer\ntestimonial"
+            },
+            {
+              "quickActionType": "ADD_TEAM_MEMBER",
+              "title": "Add a\nteam member"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "ADD_CUSTOM_PAGE",
+              "title": "Add a\ncustom page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "EDU",
+      "action_item": [
+        {
+          "items": [
+            {
+              "quickActionType": "POST_STATUS_STORY",
+              "title": "Today's\nstatus/story"
+            },
+            {
+              "quickActionType": "POST_NEW_UPDATE",
+              "title": "Post today's\nupdate"
+            },
+            {
+              "quickActionType": "ADD_PHOTO_GALLERY",
+              "title": "Post new\nphotos"
+            },
+            {
+              "quickActionType": "MAKE_ANNOUNCEMENT",
+              "title": "Make an\nannouncement"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "LIST_TOPPER",
+              "title": "List a\ntopper"
+            },
+            {
+              "quickActionType": "ADD_COURSE",
+              "title": "Add a\ncourse"
+            },
+            {
+              "quickActionType": "ADD_UPCOMING_BATCH",
+              "title": "Add an\nupcoming batch"
+            },
+            {
+              "quickActionType": "ADD_FACULTY_MEMBER",
+              "title": "List a\nfaculty member"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "ADD_SLIDER_BANNER",
+              "title": "Add slider\nbanner"
+            },
+            {
+              "quickActionType": "ADD_CUSTOM_PAGE",
+              "title": "Add a\ncustom page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "HOT",
+      "action_item": [
+        {
+          "items": [
+            {
+              "quickActionType": "POST_STATUS_STORY",
+              "title": "Today's\nstatus/story"
+            },
+            {
+              "quickActionType": "POST_NEW_UPDATE",
+              "title": "Post today's\nupdate"
+            },
+            {
+              "quickActionType": "ADD_PHOTO_GALLERY",
+              "title": "Post new\nphotos"
+            },
+            {
+              "quickActionType": "POST_SEASONAL_OFFER",
+              "title": "Post a\nseasonal offer"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "ADD_ROOM_TYPE",
+              "title": "Add new\nroom type"
+            },
+            {
+              "quickActionType": "ADD_TESTIMONIAL",
+              "title": "Add guest\ntestimonials"
+            },
+            {
+              "quickActionType": "ADD_NEARBY_ATTRACTION",
+              "title": "Add nearby\nattraction"
+            },
+            {
+              "quickActionType": "ADD_CUSTOM_PAGE",
+              "title": "Add a\ncustom page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "RTL",
+      "action_item": [
+        {
+          "items": [
+            {
+              "quickActionType": "POST_STATUS_STORY",
+              "title": "Today's\nstatus/story"
+            },
+            {
+              "quickActionType": "POST_NEW_UPDATE",
+              "title": "Post today's\nupdate"
+            },
+            {
+              "quickActionType": "ADD_PHOTO_GALLERY",
+              "title": "Post new\nphotos"
+            },
+            {
+              "quickActionType": "PLACE_ORDER_BOOKING",
+              "title": "Add an\norder"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "ADD_PRODUCT",
+              "title": "Add a\nproduct"
+            },
+            {
+              "quickActionType": "ADD_TESTIMONIAL",
+              "title": "Add customer\ntestimonial"
+            },
+            {
+              "quickActionType": "ADD_CUSTOM_PAGE",
+              "title": "Add a\ncustom page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "SVC",
+      "action_item": [
+        {
+          "items": [
+            {
+              "quickActionType": "POST_STATUS_STORY",
+              "title": "Daily\nstatus/story"
+            },
+            {
+              "quickActionType": "POST_NEW_UPDATE",
+              "title": "Post today's\nupdate"
+            },
+            {
+              "quickActionType": "ADD_PHOTO_GALLERY",
+              "title": "Post new\nphotos"
+            },
+            {
+              "quickActionType": "PLACE_APPOINTMENT",
+              "title": "Book an\nappointment"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "ADD_TESTIMONIAL",
+              "title": "Add customer\ntestimonial"
+            },
+            {
+              "quickActionType": "ADD_SERVICE",
+              "title": "Add a\nservice"
+            },
+            {
+              "quickActionType": "ADD_CUSTOM_PAGE",
+              "title": "Add a\ncustom page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Pharmacy",
+      "action_item": [
+        {
+          "items": [
+            {
+              "quickActionType": "POST_STATUS_STORY",
+              "title": "Daily\nstatus/story"
+            },
+            {
+              "quickActionType": "POST_NEW_UPDATE",
+              "title": "Post today's\nupdate"
+            },
+            {
+              "quickActionType": "ADD_PHOTO_GALLERY",
+              "title": "Post new\nphotos"
+            },
+            {
+              "quickActionType": "LIST_DRUG_MEDICINE",
+              "title": "List new\ndrug/medicine"
+            }
+          ]
+        },
+        {
+          "items": [
+            {
+              "quickActionType": "PLACE_ORDER_BOOKING",
+              "title": "Place an\norder"
+            },
+            {
+              "quickActionType": "ADD_TESTIMONIAL",
+              "title": "Add customer\ntestimonial"
+            },
+            {
+              "quickActionType": "ADD_CUSTOM_PAGE",
+              "title": "Add a\ncustom page"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

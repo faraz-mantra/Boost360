@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/size_4"
+    android:layout_marginBottom="@dimen/size_4"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <FrameLayout
+      android:layout_width="@dimen/size_70"
+      android:layout_height="@dimen/size_70">
+
+      <com.framework.views.customViews.CustomCardView
+        android:layout_width="@dimen/size_56"
+        android:layout_height="@dimen/size_56"
+        android:layout_gravity="start|center_vertical"
+        android:layout_margin="@dimen/size_2"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/size_6">
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/img_icon"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:padding="@dimen/size_4"
+          tools:srcCompat="@drawable/ic_custom_page_add" />
+
+      </com.framework.views.customViews.CustomCardView>
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/img_lock"
+        android:layout_width="@dimen/size_30"
+        android:layout_height="@dimen/size_30"
+        android:layout_gravity="end|top"
+        android:elevation="2dp"
+        app:srcCompat="@drawable/ic_lock_add_ons_d" />
+    </FrameLayout>
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/txt_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_3"
+      android:paddingEnd="@dimen/size_6"
+      android:ellipsize="end"
+      android:gravity="center"
+      android:textAlignment="gravity"
+      android:maxLines="2"
+      android:textColor="@color/warm_grey_two"
+      app:textType="CAPTION"
+      tools:ignore="RtlSymmetry"
+      tools:text="Projects and Teams" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

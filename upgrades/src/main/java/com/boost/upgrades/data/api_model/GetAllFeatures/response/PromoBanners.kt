@@ -1,5 +1,7 @@
 package com.boost.upgrades.data.api_model.GetAllFeatures.response
 
+import java.io.Serializable
+
 data class PromoBanners(
     val _kid: String,
     val _parentClassId: String,
@@ -11,10 +13,10 @@ data class PromoBanners(
     val cta_bundle_identifier: String,
     val exclusive_to_categories: List<String>,
     val exclusive_to_customers: List<String>,
-    val image: Image,
-    val importance: Int,
+    val image: Image?=null,
+    val importance: Int?=null,
     val isarchived: Boolean,
     val title: String,
     val updatedon: String,
     val websiteid: String
-)
+):Serializable

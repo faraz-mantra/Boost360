@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,8 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
@@ -72,7 +73,7 @@ public class ManageCustomerFragment extends Fragment implements View.OnClickList
     @Override
     public void onViewCreated(final View mainView, Bundle savedInstanceState) {
         super.onViewCreated(mainView, savedInstanceState);
-        if (!isAdded()|| isDetached()) return;
+        if (!isAdded() || isDetached()) return;
         if (getActivity() != null) {
             getActivity().setTitle(getString(R.string.manage_customers));
         }
@@ -83,9 +84,9 @@ public class ManageCustomerFragment extends Fragment implements View.OnClickList
         String callCount = session.getVmnCallsCount();
         overLayout1 = mainView.findViewById(R.id.rfl_overlay1);
         overLayout2 = mainView.findViewById(R.id.rfl_overlay2);
-        ((TextView)mainView.findViewById(R.id.tv_subscriber_count)).setText(subscriberCount);
-        ((TextView)mainView.findViewById(R.id.tv_enquiries_count)).setText(enquiryCount);
-        ((TextView)mainView.findViewById(R.id.tv_calls_count)).setText(callCount);
+        ((TextView) mainView.findViewById(R.id.tv_subscriber_count)).setText(subscriberCount);
+        ((TextView) mainView.findViewById(R.id.tv_enquiries_count)).setText(enquiryCount);
+        ((TextView) mainView.findViewById(R.id.tv_calls_count)).setText(callCount);
         mainView.findViewById(R.id.ll_order).setOnClickListener(this);
         mainView.findViewById(R.id.ll_enquiry).setOnClickListener(this);
         mainView.findViewById(R.id.ll_calls).setOnClickListener(this);
@@ -95,7 +96,7 @@ public class ManageCustomerFragment extends Fragment implements View.OnClickList
     }
 
 
-    private void showOverlay(final RevealFrameLayout overLayout,String title, String msg) {
+    private void showOverlay(final RevealFrameLayout overLayout, String title, String msg) {
         RelativeLayout revealLayout = overLayout.findViewById(R.id.ll_reveal_layout);
         revealLayout.findViewById(R.id.ivClose).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,8 +104,8 @@ public class ManageCustomerFragment extends Fragment implements View.OnClickList
                 closeOverlay(overLayout);
             }
         });
-        ((TextView)revealLayout.findViewById(R.id.tvInfoTitle)).setText(title);
-        ((TextView)revealLayout.findViewById(R.id.tvInfo)).setText(msg);
+        ((TextView) revealLayout.findViewById(R.id.tvInfoTitle)).setText(title);
+        ((TextView) revealLayout.findViewById(R.id.tvInfo)).setText(msg);
 
         int cx = (revealLayout.getLeft() + revealLayout.getRight());
         int cy = revealLayout.getTop();
@@ -187,21 +188,21 @@ public class ManageCustomerFragment extends Fragment implements View.OnClickList
     @Override
     public void onResume() {
         super.onResume();
-        if (HomeActivity.headerText != null && mContext instanceof HomeActivity){
+        if (activity instanceof HomeActivity && HomeActivity.headerText != null) {
             HomeActivity.headerText.setText(getString(R.string.manage_customers));
         }
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.img_info1:
                 MixPanelController.track(EventKeysWL.MERCHANT_EDUCATION_MANAGE_CUSTOMERS, null);
-               showOverlay(overLayout1,getString(R.string.website_customers),getString(R.string.manage_website_customers));
+                showOverlay(overLayout1, getString(R.string.website_customers), getString(R.string.manage_website_customers));
                 return;
             case R.id.img_info2:
                 MixPanelController.track(EventKeysWL.MERCHANT_EDUCATION_MANAGE_CUSTOMERS, null);
-                showOverlay(overLayout2,getString(R.string.cross_platform),getString(R.string.manage_multichannel_customers));
+                showOverlay(overLayout2, getString(R.string.cross_platform), getString(R.string.manage_multichannel_customers));
                 return;
             case R.id.ll_calls:
                 openCallLog();
@@ -215,7 +216,7 @@ public class ManageCustomerFragment extends Fragment implements View.OnClickList
                 startActivity(new Intent(getActivity(), BusinessEnquiryActivity.class));
                 break;
             case R.id.ll_facebook_chat:
-                startActivity( new Intent(getActivity(), FacebookChatActivity.class));
+                startActivity(new Intent(getActivity(), FacebookChatActivity.class));
                 break;
             case R.id.ll_third_party_query:
                 startActivity(new Intent(getActivity(), ThirdPartyQueriesActivity.class));

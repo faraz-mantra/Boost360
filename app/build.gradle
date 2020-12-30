@@ -185,14 +185,10 @@ dependencies {
     implementation project(':messagelibrary')
     //presignup library
     implementation project(path: ':presignup')
-    //Inventory order library
-    api project(path: ':inventoryorder')
+    api project(path: ':dashboard')
 
     //upgrade library
     implementation project(path: ':upgrades')
-
-    //Catlog Library
-    implementation project(path: ':appService')
 
 //    implementation project(':riachatsdkMain')
     implementation('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
@@ -293,7 +289,7 @@ dependencies {
     implementation "org.koin:koin-androidx-fragment:$koin_version"
 
     // Referral Library: invitereferrals
-    implementation 'com.android.installreferrer:installreferrer:2.1'
+    implementation 'com.android.installreferrer:installreferrer:2.2'
     implementation 'com.invitereferrals.invitereferrals:invitereferrals:v29-1.0.5'
     implementation files('libs/libraries/AF-Android-SDK.jar')
 

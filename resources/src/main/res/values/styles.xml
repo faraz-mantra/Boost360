@@ -38,6 +38,9 @@
     <item name="android:windowExitAnimation">@anim/slide_down</item>
   </style>
 
+  <style name="progressBar" parent="@style/Theme.AppCompat.Light">
+    <item name="colorAccent">@color/colorAccent</item>
+  </style>
 
   <style name="ActionButtonOverflow" parent="@style/Widget.AppCompat.ActionButton.Overflow">
     <item name="android:tint">@color/greyish_brown</item>
