@@ -224,6 +224,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun openDashboard() {
     binding?.navView?.setActiveItem(0)
     mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
+    toolbarPropertySet(0)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
