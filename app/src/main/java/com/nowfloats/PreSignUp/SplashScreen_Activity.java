@@ -71,9 +71,6 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         session = new UserSessionManager(getApplicationContext(), SplashScreen_Activity.this);
         initLottieAnimation();
 
-        //TODO Test Fire base Event..
-        FirebaseAnalyticsUtils.logEvent("Dummy_Event", "Dummy_Event_Label", "Dummy Event Value");
-
     }
 
     private void initLottieAnimation() {

@@ -433,3 +433,6 @@
 ##------Upgrades---------##
 -keep class com.boost.upgrades.** {*;}
 -dontwarn com.boost.upgrades.**
+
+##-----Appsflyer-----###
+-keep class com.appsflyer.** { *; }
