@@ -16,8 +16,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
-import com.appsflyer.AppsFlyerConversionListener;
-import com.appsflyer.AppsFlyerLib;
 import com.boost.presignup.locale.LocaleManager;
 import com.boost.presignup.utils.SmartLookController;
 import com.facebook.FacebookSdk;
@@ -25,6 +23,7 @@ import com.facebook.appevents.AppEventsLogger;
 import com.inventoryorder.BaseOrderApplication;
 import com.invitereferrals.invitereferrals.InviteReferralsApplication;
 import com.nowfloats.education.koindi.KoinBaseApplication;
+import com.nowfloats.util.AppsFlyerUtils;
 import com.nowfloats.util.Constants;
 import com.onboarding.nowfloats.BaseBoardingApplication;
 import com.thinksity.R;
@@ -33,7 +32,6 @@ import com.webengage.sdk.android.WebEngageConfig;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.util.Map;
 
 public class AppController extends MultiDexApplication/* implements IAviaryClientCredentials*/ {
 
@@ -127,8 +125,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         //AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
 
         /* Init AppsFlyer SDK */
-        initAppsFlyerLib();
-
+        AppsFlyerUtils.initAppsFlyer(this, APPSFLAYER_DEV_KEY);
 
         try {
             //Fabric.with(this, new Crashlytics());
@@ -167,42 +164,6 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         }
 
         //TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "open_sans_hebrew_bold.ttf");
-    }
-
-    private void initAppsFlyerLib() {
-        AppsFlyerLib.getInstance().init(APPSFLAYER_DEV_KEY, new AppsFlyerConversionListener() {
-            @Override
-            public void onConversionDataSuccess(Map<String, Object> conversionData) {
-
-                for (String attrName : conversionData.keySet()) {
-                    Log.d(TAG, "attribute: " + attrName + " = " + conversionData.get(attrName));
-                }
-            }
-
-            @Override
-            public void onConversionDataFail(String errorMessage) {
-                Log.d(TAG, "error getting conversion data: " + errorMessage);
-            }
-
-            @Override
-            public void onAppOpenAttribution(Map<String, String> attributionData) {
-                for (String attrName : attributionData.keySet()) {
-                    Log.d(TAG, "attribute: " + attrName + " = " + attributionData.get(attrName));
-                }
-            }
-
-            @Override
-            public void onAttributionFailure(String errorMessage) {
-                Log.d(TAG, "error onAttributionFailure : " + errorMessage);
-            }
-        }, this);
-
-
-        //Start the SDK
-        AppsFlyerLib.getInstance().start(this);
-        //Enable Debugging
-        AppsFlyerLib.getInstance().setDebugLog(true);
-
     }
 
     void initWebEngage() {

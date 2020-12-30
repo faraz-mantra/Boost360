@@ -192,14 +192,6 @@ in api 29 for ImagePicker library in ManageProductFragment-->
             android:name="com.nowfloats.Analytics_Screen.VmnNumberRequestActivity"
             android:screenOrientation="portrait" />
 
-        <receiver
-            android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
-
         <meta-data
             android:name="com.webengage.sdk.android.debug"
             android:value="false" /> <!-- only for debugging -->
@@ -245,6 +237,7 @@ in api 29 for ImagePicker library in ManageProductFragment-->
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
+
 
         <activity
             android:name="com.nowfloats.managecustomers.FacebookChatActivity"
@@ -759,11 +752,19 @@ in api 29 for ImagePicker library in ManageProductFragment-->
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash"
             tools:replace="android:theme">
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="nowfloat.onelink.me"
+                    android:pathPrefix="/FX0L" />
+
             </intent-filter>
             <intent-filter
                 android:autoVerify="true"
