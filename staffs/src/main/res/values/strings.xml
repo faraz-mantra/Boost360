@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Staffs</string>
+    <string name="what_services_you_give">What services do you give?</string>
+    <string name="you_don_t_h">
+In order to add staff members, please first add all the services your business offers.
+</string>
+    <string name="take_me_to_service_listing">Take me to service listing</string>
+    <string name="staff_listing">Staff Listing</string>
+    <string name="staff_listing_paragraph">You don\'t have anything listed on your site as of yet. Tap the plus icon to start adding a staff.</string>
+    <string name="add_a_staff">Add a Staff</string>
+</resources>
