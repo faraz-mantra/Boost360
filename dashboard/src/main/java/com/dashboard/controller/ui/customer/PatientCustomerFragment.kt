@@ -12,10 +12,7 @@ import com.dashboard.pref.UserSessionManager
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
-import com.dashboard.utils.startBusinessEnquiry
-import com.dashboard.utils.startOrderAptConsultList
-import com.dashboard.utils.startSubscriber
-import com.dashboard.utils.startVmnCallCard
+import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import java.util.*
@@ -37,6 +34,7 @@ class PatientCustomerFragment : AppBaseFragment<FragmentPatientsCustomerBinding,
     super.onCreateView()
     session = UserSessionManager(baseActivity)
     loadData()
+    WebEngageController.trackEvent("Customer Page", "pageview", session?.fpTag)
   }
 
   private fun loadData() {
