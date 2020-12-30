@@ -15,23 +15,18 @@
     android:id="@+id/navigation_website"
     android:name="com.nowfloats.NavigationDrawer.ManageContentFragment"
     android:label="@string/website"
-    tools:layout="@layout/fragment_academy" />
-
-<!--  <fragment-->
-<!--    android:id="@+id/navigation_patients"-->
-<!--    android:name="com.dashboard.controller.ui.patients.PatientsFragment"-->
-<!--    android:label="@string/my_clinic"-->
-<!--    tools:layout="@layout/fragment_patients" />-->
+    tools:layout="@layout/fragment_patients_customer" />
 
   <fragment
-    android:id="@+id/navigation_academy"
+    android:id="@+id/navigation_customer"
     android:name="com.dashboard.controller.ui.academy.AcademyFragment"
-    android:label="@string/academy"
-    tools:layout="@layout/fragment_help" />
+    android:label="@string/customer"
+    tools:layout="@layout/fragment_patients_customer" />
 
-<!--  <fragment-->
-<!--    android:id="@+id/navigation_more"-->
-<!--    android:name="com.dashboard.controller.ui.more.MoreFragment"-->
-<!--    android:label="@string/more"-->
-<!--    tools:layout="@layout/fragment_more" />-->
+  <!--  <fragment-->
+  <!--    android:id="@+id/navigation_patients"-->
+  <!--    android:name="com.dashboard.controller.ui.patients.PatientsFragment"-->
+  <!--    android:label="@string/my_clinic"-->
+  <!--    tools:layout="@layout/fragment_patients" />-->
+
 </navigation>

@@ -4,6 +4,7 @@ import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -57,6 +58,7 @@ class NiceBottomBar : View {
   private var onItemSelectedListener: OnItemSelectedListener? = null
   private var onItemReselectedListener: OnItemReselectedListener? = null
   private var onItemLongClickListener: OnItemLongClickListener? = null
+  private var pref: SharedPreferences? = null
 
   var onItemSelected: (Int) -> Unit = {}
   var onItemReselected: (Int) -> Unit = {}
@@ -88,6 +90,7 @@ class NiceBottomBar : View {
 
   constructor(context: Context) : super(context)
   constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+    pref = context.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
     val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.NiceBottomBar, 0, 0)
     barBackgroundColor = typedArray.getColor(R.styleable.NiceBottomBar_backgroundColor, this.barBackgroundColor)
     barIndicatorColor = typedArray.getColor(R.styleable.NiceBottomBar_indicatorColor, this.barIndicatorColor)
@@ -164,7 +167,8 @@ class NiceBottomBar : View {
 
       if (itemsActive.isNullOrEmpty().not() && (itemsActive.size == items.size)) {
         item.icon = if (i == activeItem) itemsActive[i].icon else itemsInActive[i].icon
-        item.title = if (i == activeItem) itemsActive[i].title else itemsInActive[i].title
+        val title = if (i == 2 && (pref?.getString("GET_FP_EXPERIENCE_CODE", "") == "DOC" || pref?.getString("GET_FP_EXPERIENCE_CODE", "") == "HOS")) "Patient" else ""
+        item.title = if (i == 2 && title.isNotEmpty()) title else if (i == activeItem) itemsActive[i].title else itemsInActive[i].title
       } else DrawableCompat.setTint(item.icon, if (i == activeItem) currentActiveItemColor else itemTextColor)
 
       item.icon.mutate()
