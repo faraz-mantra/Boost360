@@ -1,7 +1,8 @@
 package com.nowfloats.util;
 
-import android.se.omapi.Session;
+import android.text.TextUtils;
 
+import com.framework.analytics.FirebaseAnalyticsUtils;
 import com.nowfloats.Login.UserSessionManager;
 import com.webengage.sdk.android.Analytics;
 import com.webengage.sdk.android.User;
@@ -12,20 +13,28 @@ import java.util.Map;
 
 public class WebEngageController {
 
-    static Analytics weAnalytics = WebEngage.get().analytics();
     public static User weUser;
+    static Analytics weAnalytics = WebEngage.get().analytics();
 
-    public static void trackEvent(String event_name,String event_label,String event_value) {
+    public static void trackEvent(String event_name, String event_label, String event_value) {
         Map<String, Object> trackEvent = new HashMap<>();
         trackEvent.put("event_name", event_name);
-        trackEvent.put("event_label",event_label);
+        trackEvent.put("event_label", event_label);
         trackEvent.put("event_value", event_value);
-        weAnalytics.track(event_name,trackEvent);
+        weAnalytics.track(event_name, trackEvent);
+
+        //Firebase Analytics Event...
+        FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, TextUtils.isEmpty(event_value) ? "null" : event_value);
+
     }
 
-    public static void initiateUserLogin(String profileId){
+    public static void initiateUserLogin(String profileId) {
         weUser = WebEngage.get().user();
         weUser.login(profileId);
+
+        //Firebase Analytics User Session Event.
+        FirebaseAnalyticsUtils.identifyUser(profileId);
+
     }
 
     public static void setUserContactInfoProperties(String profileId, String email, String mobile, String name) {
@@ -34,14 +43,29 @@ public class WebEngageController {
                 initiateUserLogin(profileId);
             }
             if (weUser != null) {
-                if(email != null && email.length() > 0)
+                if (email != null && email.length() > 0) {
                     weUser.setEmail(email);
-                if(name != null && name.length() > 0)
+
+                    //Firebase Analytics User Property.
+                    FirebaseAnalyticsUtils.setUserProperty("emailId", email);
+                }
+
+                if (name != null && name.length() > 0) {
                     weUser.setFirstName(name);
-                if(mobile != null && mobile.length() > 0)
+
+                    //Firebase Analytics User Property.
+                    FirebaseAnalyticsUtils.setUserProperty("name", name);
+                }
+
+                if (mobile != null && mobile.length() > 0) {
                     weUser.setPhoneNumber(mobile);
+
+                    //Firebase Analytics User Property.
+                    FirebaseAnalyticsUtils.setUserProperty("mobile", mobile);
+                }
             }
-        } catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
     public static void setUserContactInfoProperties(UserSessionManager session) {
@@ -55,18 +79,35 @@ public class WebEngageController {
                 weUser.setPhoneNumber(session.getUserProfileMobile());
                 weUser.setCompany(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
             }
-        } catch (Exception e){}
+
+            //Firebase Analytics User Property.
+            FirebaseAnalyticsUtils.setUserProperty("emailId", session.getUserProfileEmail());
+            FirebaseAnalyticsUtils.setUserProperty("name", session.getUserProfileName());
+            FirebaseAnalyticsUtils.setUserProperty("mobile", session.getUserPrimaryMobile());
+            FirebaseAnalyticsUtils.setUserProperty("Company", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+
+        } catch (Exception e) {
+        }
     }
 
-    public static void setFPTag(String fpTag){
-        try{
-            if(weUser != null)
+    public static void setFPTag(String fpTag) {
+        try {
+            if (weUser != null) {
                 weUser.setAttribute("fpTag", fpTag);
-        }catch (Exception e){}
+            }
+
+            //Firebase Analytics User Property.
+            FirebaseAnalyticsUtils.setUserProperty("fpTag", fpTag);
+
+        } catch (Exception e) {
+        }
     }
 
-    public static void logout(){
-        if(weUser != null)
+    public static void logout() {
+        if (weUser != null)
             weUser.logout();
+
+        //Reset Firebase Analytics User Session Event.
+        FirebaseAnalyticsUtils.resetIdentifyUser();
     }
 }

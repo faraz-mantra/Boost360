@@ -22,6 +22,7 @@ import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
 import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import com.onboarding.nowfloats.ui.channel.ChannelPickerActivity
+import com.onboarding.nowfloats.utils.WebEngageController
 import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 
 class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding, CategoryViewModel>(), RecyclerItemClickListener {
@@ -93,6 +94,11 @@ class CategorySelectorFragment : AppBaseFragment<FragmentCategorySelectorBinding
             it.isSelected = (it.icon == (item as? CategoryDataModel)?.icon)
           }
         }
+
+        //Business Category Event Tracker.
+        category?.category_Name?.let {
+          WebEngageController.trackEvent("CHOOSE BUSINESS CATEGORY", "Category", it) }
+
         binding?.next?.visible()
         baseAdapter?.notifyDataSetChanged()
       }
