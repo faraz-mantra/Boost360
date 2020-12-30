@@ -25,7 +25,6 @@ const val RIA_NODE_DATA = "riaNodeDatas"
 fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
   try {
     val bundle = Bundle()
-    val rootAlisasURI: String = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) ?: ""
     session.setHeader(WA_KEY)
     bundle.putString(UserSessionManager.KEY_FP_ID, session.fPID)
     bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.fpTag)
@@ -198,6 +197,7 @@ fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOp
     if (buyItemKey != null && buyItemKey.isNotEmpty()) intent.putExtra("buyItemKey", buyItemKey)
     intent.putExtra("profileUrl", session.fPLogo)
     startActivity(intent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: Exception) {
     e.printStackTrace()
   }
@@ -688,42 +688,3 @@ fun AppCompatActivity.startFacultyMember(session: UserSessionManager?) {
     e.printStackTrace()
   }
 }
-//fun AppCompatActivity.referFriend(session: UserSessionManager){
-//  if (!TextUtils.isEmpty(session.fPEmail)) {
-//    InviteReferralsApi.getInstance(applicationContext).userDetails(
-//        session.userProfileName,
-//        session.fPEmail,
-//        session.userPrimaryMobile,
-//        REFERRAL_CAMPAIGN_CODE, null, null
-//    )
-//    inviteReferralLogin(session)
-//  } else if (!TextUtils.isEmpty(session.userProfileEmail)) {
-//    InviteReferralsApi.getInstance(applicationContext).userDetails(
-//        session.userProfileName,
-//        session.userProfileEmail,
-//        session.userPrimaryMobile,
-//        REFERRAL_CAMPAIGN_CODE, null, null
-//    )
-//    inviteReferralLogin(session)
-//  } else {
-//    Toast.makeText(applicationContext, "An unexpected error occured.", Toast.LENGTH_LONG).show()
-//  }
-//}
-//
-//fun AppCompatActivity.inviteReferralLogin(session: UserSessionManager) {
-//  InviteReferralsApi.getInstance(this).userDetailListener(object : UserDetailsCallback() {
-//    fun userDetails(jsonObject: JSONObject) {
-//      Log.d("Referral Details", jsonObject.toString())
-//      try {
-//        val status = jsonObject["Authentication"].toString()
-//        if (status.toLowerCase() == "success") {
-//          InviteReferralsApi.getInstance(this).inline_btn(REFERRAL_CAMPAIGN_CODE)
-//        } else {
-//          Toast.makeText(applicationContext, "Authentication failed. Please try later.", Toast.LENGTH_SHORT).show()
-//        }
-//      } catch (e: JSONException) {
-//        Toast.makeText(applicationContext, "Authentication failed. Please try later.", Toast.LENGTH_SHORT).show()
-//      }
-//    }
-//  })
-//}
