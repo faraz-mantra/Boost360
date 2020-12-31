@@ -830,6 +830,7 @@
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
                     android:text="@string/last_60_days"
+                    android:visibility="invisible"
                     android:textColor="@color/grey_dark_2"
                     app:fontFamily="@font/light"
                     app:textType="CAPTION" />
