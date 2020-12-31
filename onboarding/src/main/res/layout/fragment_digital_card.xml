@@ -64,7 +64,7 @@
         android:backgroundTint="@color/light_green_new"
         android:drawableStart="@drawable/ic_whatsapp_white_transparent"
         android:stateListAnimator="@null"
-        android:text="Share via WhatsApp"
+        android:text="@string/share_via_whatsapp"
         android:textAllCaps="true"
         app:textType="HEADING_6" />
 
@@ -77,7 +77,7 @@
         android:layout_marginBottom="0dp"
         android:background="@drawable/bg_button_outlined_grey"
         android:stateListAnimator="@null"
-        android:text="Share via others "
+        android:text="@string/share_via_others"
         android:textAllCaps="true"
         app:textType="HEADING_6" />
     </LinearLayout>
