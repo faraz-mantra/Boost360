@@ -20,6 +20,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var updatesResult: MutableLiveData<List<WidgetModel>> = MutableLiveData()
     var allAvailableFeaturesDownloadResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var allBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
+    var allBackBundleResult: MutableLiveData<List<BundlesModel>> = MutableLiveData()
     var allFeatureDealsResult: MutableLiveData<List<FeatureDeals>> = MutableLiveData()
     var _totalActiveAddonsCount: MutableLiveData<Int> = MutableLiveData()
     var allVideoDetails: MutableLiveData<List<YoutubeVideoModel>> = MutableLiveData()
@@ -31,6 +32,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
+    var cartResultBack: MutableLiveData<List<CartModel>> = MutableLiveData()
 
     val compositeDisposable = CompositeDisposable()
     var ApiService = Utils.getRetrofit().create(ApiInterface::class.java)
@@ -52,6 +54,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun getAllBundles(): LiveData<List<BundlesModel>> {
         return allBundleResult
+    }
+
+    fun getBackAllBundles(): LiveData<List<BundlesModel>> {
+        return allBackBundleResult
     }
 
     fun getYoutubeVideoDetails(): LiveData<List<YoutubeVideoModel>> {
@@ -80,6 +86,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun cartResult(): LiveData<List<CartModel>> {
         return cartResult
+    }
+
+    fun cartResultBack(): LiveData<List<CartModel>> {
+        return cartResultBack
     }
 
     fun updatesError(): LiveData<String> {
@@ -379,6 +389,102 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
+    fun loadPackageUpdates(fpid: String, clientId: String) {
+        updatesLoader.postValue(true)
+
+        if (Utils.isConnectedToInternet(getApplication())) {
+            compositeDisposable.add(
+                    ApiService.GetAllFeatures()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {
+                                        Log.e("GetAllFeatures", it.toString())
+
+
+
+                                        //saving bundle info in bundle table
+                                        val bundles = arrayListOf<BundlesModel>()
+                                        for (item in it.Data[0].bundles) {
+                                            if (item.exclusive_for_customers != null && item.exclusive_for_customers.size > 0) {
+                                                var applicableToCurrentFPTag = false
+                                                for (code in item.exclusive_for_customers) {
+                                                    if (code.equals(_fpTag, true)) {
+                                                        applicableToCurrentFPTag = true
+                                                        break
+                                                    }
+                                                }
+                                                if (!applicableToCurrentFPTag)
+                                                    continue
+                                            }
+                                            if (item.exclusive_to_categories != null && item.exclusive_to_categories.size > 0) {
+                                                var applicableToCurrentExpCode = false
+                                                for (code in item.exclusive_to_categories) {
+                                                    if (code.equals(experienceCode, true)) {
+                                                        applicableToCurrentExpCode = true
+                                                        break
+                                                    }
+                                                }
+                                                if (!applicableToCurrentExpCode)
+                                                    continue
+                                            }
+                                            bundles.add(BundlesModel(
+                                                    item._kid,
+                                                    item.name,
+                                                    if (item.min_purchase_months != null && item.min_purchase_months > 1) item.min_purchase_months else 1,
+                                                    item.overall_discount_percent,
+                                                    if (item.primary_image != null) item.primary_image.url else null,
+                                                    Gson().toJson(item.included_features),
+                                                    item.target_business_usecase,
+                                                    Gson().toJson(item.exclusive_to_categories)
+                                            ))
+                                        }
+                                        Completable.fromAction {
+//                                            AppDatabase.getInstance(getApplication())!!
+//                                                    .bundlesDao()
+//                                                    .insertAllBundles(bundles)
+                                        }
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .doOnComplete {
+                                                    Log.i("insertAllBundles", "Successfully")
+                                                    allBackBundleResult.postValue(bundles)
+                                                    updatesLoader.postValue(false)
+                                                }
+                                                .doOnError {
+                                                    updatesError.postValue(it.message)
+                                                    updatesLoader.postValue(false)
+                                                }
+                                                .subscribe()
+
+
+                                    },
+                                    {
+                                        Log.e("GetAllFeatures", "error" + it.message)
+                                        updatesLoader.postValue(false)
+                                    }
+                            )
+            )
+        } else {
+            compositeDisposable.add(
+                    AppDatabase.getInstance(getApplication())!!
+                            .widgetDao()
+                            .queryUpdates()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnSuccess {
+                                updatesResult.postValue(it)
+                                updatesLoader.postValue(false)
+                            }
+                            .doOnError {
+                                updatesError.postValue(it.message)
+                                updatesLoader.postValue(false)
+                            }
+                            .subscribe()
+            )
+        }
+    }
+
     fun getCartItems() {
         compositeDisposable.add(
                 AppDatabase.getInstance(getApplication())!!
@@ -388,6 +494,24 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             cartResult.postValue(it)
+                            updatesLoader.postValue(false)
+                        }, {
+                            updatesError.postValue(it.message)
+                            updatesLoader.postValue(false)
+                        }
+                        )
+        )
+    }
+
+    fun getCartItemsBack() {
+        compositeDisposable.add(
+                AppDatabase.getInstance(getApplication())!!
+                        .cartDao()
+                        .getCartItems()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            cartResultBack.postValue(it)
                             updatesLoader.postValue(false)
                         }, {
                             updatesError.postValue(it.message)

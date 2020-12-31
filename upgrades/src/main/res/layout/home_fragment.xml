@@ -86,7 +86,7 @@
                         android:text="ADD-ONS STORE"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_13sdp"
+                        android:textSize="@dimen/txt_14sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageViewCart1"
@@ -180,7 +180,7 @@
                             android:fontFamily="@font/open_sans"
                             android:text="FREE FOREVER"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/txt_13sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent" />
 
@@ -192,7 +192,7 @@
                             android:text="add-ons"
                             android:textAllCaps="true"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_14sdp"
+                            android:textSize="@dimen/txt_18sp"
                             app:layout_constraintStart_toStartOf="parent" />
                     </LinearLayout>
 
@@ -224,9 +224,8 @@
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp"
                     android:text="@string/view_my_add_ons"
-                    android:textAllCaps="true"
                     android:textColor="#ffb900"
-                    android:textSize="@dimen/_12ssp"
+                    android:textSize="@dimen/txt_16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -250,8 +249,8 @@
                     android:id="@+id/banner_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -273,7 +272,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/banner_viewpager"
-                    app:progressMode="true"
+                    app:progressMode="false"
                     app:selectedDotColor="@color/app_yellow_1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -298,21 +297,21 @@
                     android:textColor="#4a4a4a"
                     android:textFontWeight="600"
                     android:textStyle="bold"
-                    android:textSize="@dimen/_14sdp"
+                    android:textSize="@dimen/txt_16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:id="@+id/package_compare_layout"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:visibility="gone"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:src="@drawable/ic_compare" />
                     <TextView
                         android:id="@+id/package_name1"
@@ -320,13 +319,13 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
                         android:text="Compare"
+                        android:textStyle="bold"
                         android:textColor="#FFB900"
                         android:textFontWeight="600"
-                        android:textStyle="bold"
                         android:textAllCaps="true"
                         android:layout_marginLeft="@dimen/_7sdp"
-                        android:layout_marginRight="@dimen/_9sdp"
-                        android:textSize="@dimen/_12sdp"/>
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:textSize="@dimen/txt_12sp"/>
                 </LinearLayout>
 
 
@@ -355,7 +354,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/package_viewpager"
-                    app:progressMode="true"
+                    app:progressMode="false"
                     app:selectedDotColor="@color/app_yellow_1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -479,7 +478,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/feature_deals_viewpager"
-                    app:progressMode="true"
+                    app:progressMode="false"
                     app:selectedDotColor="@color/app_yellow_1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -502,7 +501,7 @@
                     android:textStyle="bold"
                     android:textColor="@color/common_text_color"
                     android:textFontWeight="600"
-                    android:textSize="@dimen/_16ssp" />
+                    android:textSize="@dimen/txt_16sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/addons_category_recycler"
@@ -539,7 +538,7 @@
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:textFontWeight="600"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/txt_10sp" />
 
                 <LinearLayout
                     android:id="@+id/callnow_layout"
@@ -560,6 +559,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Need help to decide?"
+                        android:textSize="@dimen/txt_12sp"
                         android:textColor="@color/common_text_color" />
 
                     <TextView
@@ -570,7 +570,7 @@
                         android:text="Speak to our expert!"
                         android:textFontWeight="700"
                         android:textColor="@color/common_text_color"
-                        android:textSize="@dimen/_14sdp"
+                        android:textSize="@dimen/txt_16sp"
                         android:textStyle="bold" />
 
 
@@ -733,7 +733,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/partner_viewpager"
-                    app:progressMode="true"
+                    app:progressMode="false"
                     app:selectedDotColor="@color/app_yellow_1" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -755,7 +755,7 @@
                     android:textFontWeight="600"
                     android:fontFamily="@font/open_sans"
                     android:textStyle="bold"
-                    android:textSize="@dimen/_14sdp"
+                    android:textSize="@dimen/txt_16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -819,7 +819,7 @@
                             android:fontFamily="@font/open_sans"
                             android:text="Website Chatbot"
                             android:textColor="#FFB900"
-                            android:textSize="@dimen/_9sdp"
+                            android:textSize="@dimen/txt_9sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -993,7 +993,7 @@
                                 android:layout_marginTop="@dimen/_25sdp"
                                 android:text="Refer Boost with your friends"
                                 android:textColor="#FF9F00"
-                                android:textSize="@dimen/_18sdp"
+                                android:textSize="@dimen/txt_18sp"
                                 android:textStyle="bold" />
 
                             <TextView

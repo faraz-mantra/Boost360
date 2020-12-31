@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.PromoBanners
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.details.DetailsFragment
@@ -31,13 +32,13 @@ import com.boost.upgrades.ui.myaddons.MyAddonsFragment
 import com.boost.upgrades.ui.splash.SplashFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Constants.Companion.CART_FRAGMENT
+import com.boost.upgrades.utils.Constants.Companion.COMPARE_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.DETAILS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.HOME_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.MYADDONS_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.ORDER_CONFIRMATION_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.PAYMENT_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.RAZORPAY_KEY
-import com.boost.upgrades.utils.Constants.Companion.SPLASH_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.VIEW_ALL_FEATURE
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils
@@ -73,7 +74,7 @@ class UpgradeActivity : AppCompatActivity() {
 
   var deepLinkViewType: String = ""
   var deepLinkDay: Int = 7
-
+  var compareBackListener: CompareBackListener? = null
 
   var clientid: String = "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21"
   private var widgetFeatureCode: String? = null
@@ -104,10 +105,11 @@ class UpgradeActivity : AppCompatActivity() {
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
     userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")
-    if (userPurchsedWidgets != null) {
-      for (a in userPurchsedWidgets) {
-        println("userPurchsedWidgets  ${userPurchsedWidgets}")
-      }
+    if(userPurchsedWidgets != null){
+    for (a in userPurchsedWidgets)  {
+//      println("userPurchsedWidgets  ${userPurchsedWidgets}")
+    }
+
     }
 
     progressDialog = ProgressDialog(this)
@@ -119,7 +121,13 @@ class UpgradeActivity : AppCompatActivity() {
     initRazorPay()
   }
 
+  infix fun setBackListener(compareBackListener: CompareBackListener?) {
+    this.compareBackListener = compareBackListener
+  }
+
+
   fun initView(dataPromo: PromoBanners?) {
+
     if (fpid != null) {
       val bundle = Bundle()
       bundle.putString("screenType", intent.getStringExtra("screenType"))
@@ -181,9 +189,23 @@ class UpgradeActivity : AppCompatActivity() {
         val tag = currentFragment?.tag
         Log.e("back pressed tag", ">>>$tag")
         if (tag != null) {
-          if (tag == CART_FRAGMENT)
+          if(tag == CART_FRAGMENT) {
             WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back button_cart screen", "ADDONS_MARKETPLACE", "")
-          if (tag == PAYMENT_FRAGMENT)
+                supportFragmentManager.addOnBackStackChangedListener {
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
+            if (currentFragment != null) {
+              val tag = currentFragment.tag
+              Log.e("Add tagu", ">>>$tag")
+              if(tag == Constants.COMPARE_FRAGMENT){
+                Log.e("Add tags", ">>>$tag")
+                compareBackListener!!.backComparePress()
+              }else if(tag == Constants.HOME_FRAGMENT){
+                compareBackListener!!.backComparePress()
+              }
+            }
+    }
+          }
+            if(tag == PAYMENT_FRAGMENT)
             WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back_button paymentscreen", "ADDONS_MARKETPLACE", "")
           if (tag == ORDER_CONFIRMATION_FRAGMENT) {
             if (isDeepLink) goHomeActivity()
@@ -342,10 +364,10 @@ class UpgradeActivity : AppCompatActivity() {
                 //prefs.storeInitialLoadMarketPlace(true)
                 else if (prefs.getInitialLoadMarketPlace()) {
 //                Handler().postDelayed({
-                  splashFragment.show(
+                  /*splashFragment.show(
                       supportFragmentManager,
                       SPLASH_FRAGMENT
-                  )
+                  )*/
 //                }, 1000)
                 }
               } else {
@@ -400,7 +422,7 @@ private fun Bundle.getPromoBannerClickData(): PromoBanners? {
         isarchived = promoBundle?.getBoolean("isarchived") ?: false,
         title = promoBundle?.getString("title") ?: "",
         updatedon = promoBundle?.getString("updatedon") ?: "",
-        websiteid = promoBundle?.getString("websiteid") ?: "",
+        websiteid = promoBundle?.getString("websiteid") ?: ""
     )
   }
   return null
