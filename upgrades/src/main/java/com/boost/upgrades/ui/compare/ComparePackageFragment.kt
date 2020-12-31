@@ -26,6 +26,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.IncludedFeature
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.PrimaryImage
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
+import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.interfaces.CompareListener
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.freeaddons.FreeAddonsFragment
@@ -48,7 +49,7 @@ import kotlinx.android.synthetic.main.compare_package_fragment.package_viewpager
 import org.json.JSONObject
 
 
-class ComparePackageFragment : BaseFragment(), CompareListener {
+class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListener {
 
     lateinit var root: View
 
@@ -106,7 +107,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
 //        initializeBannerViewPager()
         loadData()
         initMvvm()
-
+        (activity as UpgradeActivity)setBackListener(this)
         package_viewpager.setPageTransformer(SimplePageTransformer())
 
         val itemDecoration = HorizontalMarginItemDecoration(
@@ -195,7 +196,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
                             break
                         }
                     }*/
-                Constants.COMPARE_CART_COUNT = cartList!!.size
+//                Constants.COMPARE_CART_COUNT = cartList!!.size
                 cartCount = cartList!!.size
                     badgeNumber = cartList!!.size
                     badge121.setText(badgeNumber.toString())
@@ -203,7 +204,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
                 Log.v("badgeNumber", " "+ badgeNumber)
 //                }
             } else {
-                Constants.COMPARE_CART_COUNT = 0
+//                Constants.COMPARE_CART_COUNT = 0
                 cartCount = 0
                 badgeNumber = 0
                 badge121.visibility = View.GONE
@@ -355,9 +356,10 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
 
             }
 //            viewModel.getCartItems()
-            Log.v("COMPARE_BACK_VALUE"," "+ Constants.COMPARE_BACK_VALUE + " cartCount: "+  cartCount + " COMPARE_CART_COUNT: "+Constants.COMPARE_CART_COUNT + " "+ Constants.CART_VALUE)
+            Log.v("COMPARE_BACK_VALUE"," "+ Constants.COMPARE_BACK_VALUE + " cartCount: "+  cartCount +
+                    " COMPARE_CART_COUNT: "+Constants.COMPARE_CART_COUNT + " CART_VALUE: "+ Constants.CART_VALUE)
             if(Constants.COMPARE_BACK_VALUE == 1 /*&& cartCount != Constants.COMPARE_CART_COUNT*/){
-                Constants.COMPARE_BACK_VALUE = 0
+//                Constants.COMPARE_BACK_VALUE = 0
                 if (viewModel.allBundleResult.value != null) {
 
 
@@ -396,10 +398,11 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
     }
 
     override fun onBackPressed() {
-        if (::viewModel.isInitialized) {
+        Log.v("onBackPressed", " "+ Constants.COMPARE_BACK_VALUE)
+        /*if (::viewModel.isInitialized) {
 //            viewModel.getCartItems()
             viewModel.getCartItemsBack()
-        }
+        }*/
     }
 
 
@@ -549,4 +552,13 @@ class ComparePackageFragment : BaseFragment(), CompareListener {
         packageFragment.arguments = args
         (activity as UpgradeActivity).addFragment(packageFragment, Constants.PACKAGE_FRAGMENT)
     }
+
+    override fun backComparePress() {
+     if(prefs.getCompareState() == 1){
+         prefs.storeCompareState(0)
+         viewModel.loadPackageUpdates()
+     }
+    }
+
+
 }
