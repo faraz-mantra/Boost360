@@ -200,6 +200,7 @@
                 android:orientation="horizontal">
 
                 <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/btn_share_whatsapp"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:layout_weight="1"
@@ -207,7 +208,6 @@
                   android:clickable="true"
                   android:focusable="true"
                   android:gravity="center"
-                  android:id="@+id/btn_share_whatsapp"
                   android:text="@string/share_on_whatsapp"
                   android:textColor="@color/black_4f4f4f" />
 
@@ -217,6 +217,7 @@
                   android:background="@color/grey_dim" />
 
                 <com.framework.views.customViews.CustomTextView
+                  android:id="@+id/btn_share_more"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:layout_weight="1"
@@ -224,7 +225,6 @@
                   android:clickable="true"
                   android:focusable="true"
                   android:gravity="center"
-                  android:id="@+id/btn_share_more"
                   android:text="@string/share_on_more"
                   android:textColor="@color/black_4f4f4f" />
               </LinearLayout>
@@ -664,6 +664,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_18"
                 android:layout_marginEnd="@dimen/size_18"
+                android:drawableEnd="@drawable/ic_summary_alert_d"
+                android:drawablePadding="@dimen/size_8"
                 android:text="@string/ria_academy"
                 android:textColor="@color/black_4f4f4f"
                 app:textType="HEADING_6" />
@@ -732,6 +734,7 @@
                     android:includeFontPadding="false"
                     android:text="@string/last_60_days"
                     android:textColor="@color/grey_dark_2"
+                    android:visibility="invisible"
                     app:fontFamily="@font/light"
                     app:textType="CAPTION" />
 
@@ -751,15 +754,47 @@
                   tools:listitem="@layout/item_roi_summary" />
               </androidx.appcompat.widget.LinearLayoutCompat>
 
-              <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/pager_boost_premium"
+              <LinearLayout
+                android:id="@+id/boost_premium_view"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_200"
-                android:layout_marginTop="@dimen/size_16"
-                android:clipChildren="false"
-                android:clipToPadding="false"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:visibility="gone"
-                tools:visibility="visible" />
+                tools:visibility="visible">
+
+                <com.framework.views.customViews.CustomTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="@dimen/size_18"
+                  android:layout_marginTop="@dimen/size_16"
+                  android:layout_marginEnd="@dimen/size_18"
+                  android:drawableEnd="@drawable/ic_summary_alert_d"
+                  android:drawablePadding="@dimen/size_8"
+                  android:text="@string/ria_academy"
+                  android:textColor="@color/black_4f4f4f"
+                  app:textType="HEADING_6" />
+
+                <com.framework.views.customViews.CustomTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="@dimen/size_18"
+                  android:layout_marginTop="@dimen/size_2"
+                  android:layout_marginEnd="@dimen/size_18"
+                  android:ellipsize="end"
+                  android:maxLines="2"
+                  android:text="@string/learn_boost_360"
+                  android:textColor="@color/warm_grey"
+                  app:textType="CAPTION" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                  android:id="@+id/pager_boost_premium"
+                  android:layout_width="match_parent"
+                  android:layout_height="@dimen/size_210"
+                  android:layout_marginTop="@dimen/size_14"
+                  android:clipChildren="false"
+                  android:clipToPadding="false" />
+              </LinearLayout>
+
 
               <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"

@@ -81,6 +81,7 @@ import java.util.List;
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
 import static com.appservice.ui.catlogService.CatlogServiceContainerActivityKt.startFragmentActivityNew;
+import static com.nowfloats.NavigationDrawer.floating_view.FloatingViewBottomSheetDialog.FLOATING_CLICK_TYPE.WRITE_UPDATE;
 
 
 public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetch_Home_Data_Interface {
@@ -458,8 +459,6 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         });
 
         fabButton = mainView.findViewById(R.id.fab);
-        if (getActivity() instanceof HomeActivity) fabButton.setVisibility(View.VISIBLE);
-        else  fabButton.setVisibility(View.GONE);
 
         addProduct = mainView.findViewById(R.id.addProduct);
         addImage = mainView.findViewById(R.id.addImage);
@@ -477,9 +476,13 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         ViewAnimation.init(addOptions);
 
         fabButton.setOnClickListener(v -> {
+            if (getActivity() instanceof HomeActivity){
+                FloatingViewBottomSheetDialog dialog = new FloatingViewBottomSheetDialog(session, this::onClickFloatingView);
+                dialog.show(getParentFragmentManager(), FloatingViewBottomSheetDialog.class.getName());
+            }else {
+                onClickFloatingView(WRITE_UPDATE);
+            }
 //            processOnClickOfFabButton()
-            FloatingViewBottomSheetDialog dialog = new FloatingViewBottomSheetDialog(session, this::onClickFloatingView);
-            dialog.show(getParentFragmentManager(), FloatingViewBottomSheetDialog.class.getName());
         });
         addUpdate.setOnClickListener(v -> {
             addUpdate();
