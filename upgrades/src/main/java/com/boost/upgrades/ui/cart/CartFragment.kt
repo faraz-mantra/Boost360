@@ -153,6 +153,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
         Constants.COMPARE_BACK_VALUE = 1
+        prefs.storeCompareState(1)
         showpopup()
         initializePackageRecycler()
         initializeAddonsRecycler()

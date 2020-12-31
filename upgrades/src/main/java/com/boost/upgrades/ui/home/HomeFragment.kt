@@ -35,6 +35,7 @@ import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.data.model.YoutubeVideoModel
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.database.LocalStorage
+import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.interfaces.HomeListener
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.compare.ComparePackageFragment
@@ -66,7 +67,7 @@ import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HomeFragment : BaseFragment(), HomeListener {
+class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     lateinit var root: View
     private lateinit var viewModel: HomeViewModel
@@ -135,7 +136,7 @@ class HomeFragment : BaseFragment(), HomeListener {
         setSpannableStrings()
         loadData()
         initMvvm()
-
+        (activity as UpgradeActivity)setBackListener(this)
 //    initYouTube()
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Loaded", "ADDONS_MARKETPLACE", "")
@@ -457,6 +458,31 @@ class HomeFragment : BaseFragment(), HomeListener {
             }
         })
 
+        viewModel.getBackAllBundles().observe(this, androidx.lifecycle.Observer {
+            val list = arrayListOf<Bundles>()
+            for (item in it) {
+                val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                list.add(Bundles(
+                        item.bundle_id,
+                        temp,
+                        item.min_purchase_months,
+                        item.name,
+                        item.overall_discount_percent,
+                        PrimaryImage(item.primary_image),
+                        item.target_business_usecase,
+                        Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                        null,item.desc
+                ))
+            }
+            if (list.size > 0) {
+                package_layout.visibility = View.VISIBLE
+//                updatePackageViewPager(list)
+                updatePackageBackPressViewPager(list)
+            } else {
+                package_layout.visibility = View.GONE
+            }
+        })
+
         viewModel.getAllFeatureDeals().observe(this, androidx.lifecycle.Observer {
             if (it.size > 0) {
                 var cartItems: List<CartModel> = arrayListOf()
@@ -726,6 +752,20 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     fun updatePackageViewPager(list: List<Bundles>) {
+        package_viewpager.offscreenPageLimit = list.size
+        packageViewPagerAdapter.addupdates(list)
+        packageViewPagerAdapter.notifyDataSetChanged()
+        //show dot indicator only when the (list.size > 2)
+        if (list.size > 1) {
+            package_indicator.visibility = View.VISIBLE
+        } else {
+            package_indicator.visibility = View.INVISIBLE
+            package_compare_layout.visibility = View.INVISIBLE
+        }
+    }
+
+    fun updatePackageBackPressViewPager(list: List<Bundles>) {
+        initializePackageViewPager()
         package_viewpager.offscreenPageLimit = list.size
         packageViewPagerAdapter.addupdates(list)
         packageViewPagerAdapter.notifyDataSetChanged()
@@ -1394,6 +1434,20 @@ class HomeFragment : BaseFragment(), HomeListener {
             )
         }
     }
+    }
+
+    override fun backComparePress() {
+        if(prefs.getCompareState() == 1) {
+            prefs.storeCompareState(0)
+            val pref = activity!!.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+            val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
+            var code: String = (activity as UpgradeActivity).experienceCode!!
+            if (!code.equals("null", true)) {
+                viewModel.setCurrentExperienceCode(code, fpTag!!)
+            }
+
+            viewModel.loadPackageUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
+        }
     }
 
 }
