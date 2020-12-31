@@ -1,23 +1,24 @@
 package com.newfloats.staffs.ui.details;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.newfloats.staffs.R;
+import com.newfloats.staffs.ui.BaseFragmentStaff;
+import com.newfloats.staffs.ui.details.timing.StaffTimingFragment;
 
 
-public class StaffDetailsFragment extends Fragment {
-
+public class StaffDetailsFragment extends BaseFragmentStaff {
+    View view;
     private StaffDetailsViewModel mViewModel;
+    private RelativeLayout staffTiming;
 
     public static StaffDetailsFragment newInstance() {
         return new StaffDetailsFragment();
@@ -27,8 +28,14 @@ public class StaffDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.staff_details_fragment, container, false);
+        view = inflater.inflate(R.layout.fragment_staff_details, container, false);
+
+        this.staffTiming = view.findViewById(R.id.rl_staff_timing);
+        staffTiming.setOnClickListener(v -> launchFragment(StaffTimingFragment.newInstance()));
+        ((StaffDetailsActivity) requireActivity()).setToolBarTitle("Staff Details", false);
+        return view;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -37,4 +44,14 @@ public class StaffDetailsFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 }

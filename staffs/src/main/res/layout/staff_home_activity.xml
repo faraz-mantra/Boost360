@@ -9,7 +9,6 @@
     <include
         android:id="@+id/toolbar_staff"
         layout="@layout/toolbar_staff" />
-
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
