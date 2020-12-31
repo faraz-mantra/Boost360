@@ -39,7 +39,7 @@ import com.inventoryorder.recyclerView.RecyclerItemClickListener
 import com.inventoryorder.rest.response.order.InventoryOrderListResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.bottomsheet.FilterBottomSheetDialog
-import com.inventoryorder.ui.startFragmentActivity
+import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
 import com.inventoryorder.utils.copyClipBoard
 import com.inventoryorder.utils.openWebPage
@@ -185,7 +185,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
         bundle.putBoolean(IntentConstant.IS_VIDEO.name, true)
-        startFragmentActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
+        startFragmentOrderActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
       }
     }
   }
@@ -300,7 +300,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
         val bundle = Bundle()
         bundle.putString(IntentConstant.ORDER_ID.name, orderItem?._id)
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
-        startFragmentActivity(FragmentType.VIDEO_CONSULT_DETAIL_VIEW, bundle, isResult = true)
+        startFragmentOrderActivity(FragmentType.VIDEO_CONSULT_DETAIL_VIEW, bundle, isResult = true)
       }
       RecyclerViewActionType.VIDEO_CONSULT_CALL_CLICKED.ordinal -> videoConsultCall((item as? OrderItem))
       RecyclerViewActionType.VIDEO_CONSULT_COPY_CLICKED.ordinal -> videoConsultCopy((item as? OrderItem))

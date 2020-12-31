@@ -25,13 +25,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
 import com.appservice.model.SessionData;
 import com.appservice.model.StatusKyc;
 import com.appservice.model.accountDetails.AccountDetailsResponse;
 import com.appservice.model.kycData.PaymentKycDataResponse;
+import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.nowfloats.BusinessProfile.UI.UI.changePasswordAsyncTask;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
@@ -45,7 +45,6 @@ import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
-import com.nowfloats.AccrossVerticals.domain.DomainDetailsActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -62,7 +61,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -165,7 +163,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     case "Domain and Email":
                         isAlreadyCalled = false;
                         MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
-                        WebEngageController.trackEvent("DOMAIN-EMAIL", null, sessionManager.getFpTag());
+                        WebEngageController.trackEvent("DOMAIN-EMAIL", "", sessionManager.getFpTag());
                         if (Methods.isOnline(getActivity())) {
                             showLoader(getString(R.string.please_wait));
                             domainApiService.getDomainDetails(mContext, sessionManager.getFpTag(), getDomainDetailsParam());

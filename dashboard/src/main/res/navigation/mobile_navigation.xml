@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/mobile_navigation"
+  app:startDestination="@+id/navigation_dashboard">
+
+  <fragment
+    android:id="@+id/navigation_dashboard"
+    android:name="com.dashboard.controller.ui.dashboard.DashboardFragment"
+    android:label="@string/dashboard"
+    tools:layout="@layout/fragment_dashboard" />
+
+  <fragment
+    android:id="@+id/navigation_website"
+    android:name="com.nowfloats.NavigationDrawer.ManageContentFragment"
+    android:label="@string/website"
+    tools:layout="@layout/fragment_patients_customer" />
+
+  <fragment
+    android:id="@+id/navigation_customer"
+    android:name="com.dashboard.controller.ui.customer.PatientCustomerFragment"
+    android:label="@string/customer"
+    tools:layout="@layout/fragment_patients_customer" />
+
+  <!--  <fragment-->
+  <!--    android:id="@+id/navigation_patients"-->
+  <!--    android:name="com.dashboard.controller.ui.patients.PatientsFragment"-->
+  <!--    android:label="@string/my_clinic"-->
+  <!--    tools:layout="@layout/fragment_patients" />-->
+
+</navigation>

@@ -27,10 +27,16 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return makeRemoteRequest(remoteDataSource.deleteService(request), TaskCode.POST_UPDATE_SERVICE)
   }
 
-  fun addUpdateImageProductService(clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
-                                   productId: String?, requestBody: RequestBody?): Observable<BaseResponse> {
+  fun addUpdateImageProductService(
+      clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
+      productId: String?, requestBody: RequestBody?,
+  ): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.addUpdateImageProductService(clientId, requestType, requestId, totalChunks,
         currentChunkNumber, productId, requestBody), TaskCode.ADD_UPDATE_IMAGE_PRODUCT_SERVICE)
+  }
+
+  fun getNotificationCount(clientId: String?, fpId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getNotificationCount(clientId, fpId), TaskCode.GET_NOTIFICATION)
   }
 
   override fun getRemoteDataSourceClass(): Class<WithFloatTwoRemoteData> {

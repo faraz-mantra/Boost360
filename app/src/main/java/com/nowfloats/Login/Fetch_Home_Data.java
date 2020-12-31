@@ -8,7 +8,6 @@ import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Model.MessageModel;
 import com.nowfloats.NavigationDrawer.API.VisitorsApiInterface;
 import com.nowfloats.NavigationDrawer.Analytics_Fragment;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Main_Fragment;
 import com.nowfloats.NavigationDrawer.model.VisitAnalytics;
 import com.nowfloats.sync.DbController;
@@ -17,14 +16,12 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.MixPanelController;
 
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import retrofit.Callback;
@@ -133,7 +130,7 @@ public class Fetch_Home_Data {
             Constants.moreStorebizFloatsAvailable = response.moreFloatsAvailable;
             if (bizData != null && bizData.size() > 0) {
                 sendJson = bizData.get(0);
-                Constants.NumberOfUpdates = HomeActivity.StorebizFloats.size();
+                Constants.NumberOfUpdates = Home_Main_Fragment.getMessageList(appActivity).size();
                 MixPanelController.setProperties("NoOfUpdates", "" + Constants.NumberOfUpdates);
 
                 /*for (int i = 0; i < bizData.size(); i++) {
@@ -181,7 +178,7 @@ public class Fetch_Home_Data {
                 }
             }
 
-            if (HomeActivity.StorebizFloats != null && HomeActivity.StorebizFloats.size() == 0) {
+            if (Home_Main_Fragment.getMessageList(appActivity) != null && Home_Main_Fragment.getMessageList(appActivity).size() == 0) {
                 if (Home_Main_Fragment.emptyMsgLayout != null && !Constants.isWelcomScreenToBeShown) {
                     Home_Main_Fragment.emptyMsgLayout.setVisibility(View.VISIBLE);
                 }

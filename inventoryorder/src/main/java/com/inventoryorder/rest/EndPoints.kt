@@ -27,13 +27,17 @@ object EndPoints {
   const val BOOST_API2_WITH_FLOAT = "https://api2.withfloats.com"
   const val GET_LIST_INVENTORY_SYNC = "product/v1/GetListingsWithInventorySync"
   const val SEND_SMS = "discover/v1/floatingpoint/CreateSMSHighPriorityIndia"
+  const val GET_BIZ_FLOATS_MESSAGE = "/Discover/v1/floatingPoint/bizFloats"
+  const val GET_USER_SUMMARY = "/Dashboard/v1/{fpTag}/summary"
+  const val GET_MAP_ADDRESS_DETAILS = "/Dashboard/v1/{fpTag}/totaladdressviewdetails"
+  const val GET_USER_CALL_SUMMARY = "/WildFire/v1/calls/summary"
 
 
   //Boost now float
   const val BOOST_FLOATS_BASE_URL = "https://boost.nowfloats.com/"
   const val GET_DOCTORS_API = "Home/GetDoctorData"
   const val GET_PRODUCT_DETAILS = "Home/GetProductDetails"
-  const val SEND_MAIL= "Home/SendEmail"
+  const val SEND_MAIL = "Home/SendEmail"
 
   const val GET_LIST_ASSURE_PURCHASE_ORDER = "api/assuredPurchase/v2/ListInProgressOrders"
   const val GET_LIST_CANCELLED_ORDER = "api/assuredPurchase/v2/ListCancelledOrders"

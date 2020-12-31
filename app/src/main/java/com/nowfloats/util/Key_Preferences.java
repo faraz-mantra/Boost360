@@ -131,4 +131,13 @@ public class Key_Preferences {
     public static final String BUBBLE_POS_Y = "bubble_pos_y";
     public static final String BUBBLE_POS_X = "bubble_pos_x";
     public static final String NO_OF_TIMES_RESPONDED = "NO_OF_TIMES_RESPONDED";
+    public static final String STORE_WIDGETS = "StoreWidgets";
+    public static final String WEBSITE_URL = "website_url";
+    public static final String IS_UPDATE = "IsUpdate";
+    public static final String BUSINESS_NAME = "business_name";
+    public static final String BUSINESS_IMAGE = "business_image";
+    public static final String BUSINESS_TYPE = "business_type";
+    public static final String LOCATION = "location";
+    public static final String PRIMARY_NUMBER = "primary_number";
+    public static final String PRIMARY_EMAIL = "primary_email";
 }

@@ -3,14 +3,15 @@ package com.nowfloats.NavigationDrawer;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Adapter.TextExpandableAdapter;
@@ -28,8 +29,6 @@ import java.util.Arrays;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-
-import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
  * Created by Admin on 20-12-2017.
@@ -100,8 +99,8 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        if (headerText != null){
-            headerText.setText("WildFire");
+        if (mContext instanceof HomeActivity && HomeActivity.headerText != null) {
+            HomeActivity.headerText.setText("WildFire");
         }
     }
     @Override

@@ -7,10 +7,10 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import com.framework.base.BaseActivity
-import com.onboarding.nowfloats.constant.RecyclerViewItemType
-import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.R
+import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.CompoundViewChannelBottomSheetBinding
+import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 
 @Deprecated("not in use")
@@ -22,18 +22,15 @@ class ChannelBottomSheetView : ConstraintLayout, View.OnClickListener {
 
   var onDoneClicked: () -> Unit = { }
 
-  constructor(context: Context?) : super(context) {
+  constructor(context: Context) : super(context) {
     setup(context, null)
   }
 
-  constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+  constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
     setup(context, attrs)
   }
 
-  constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
-          context,
-          attrs, defStyleAttr
-  ) {
+  constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
     setup(context, attrs)
   }
 
@@ -41,10 +38,7 @@ class ChannelBottomSheetView : ConstraintLayout, View.OnClickListener {
     if (isInEditMode) {
       View.inflate(context, R.layout.compound_view_channel_bottom_sheet, this)
     } else {
-      binding = DataBindingUtil.inflate(
-              LayoutInflater.from(context),
-              R.layout.compound_view_channel_bottom_sheet, this, true
-      )
+      binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.compound_view_channel_bottom_sheet, this, true)
       setCustomAttrs(context, attrs)
       binding?.done?.setOnClickListener(this)
     }

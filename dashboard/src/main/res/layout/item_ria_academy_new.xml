@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <com.framework.views.customViews.CustomCardView
+    android:id="@+id/maim_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_140"
+    android:layout_marginStart="@dimen/size_10"
+    android:layout_marginTop="@dimen/size_6"
+    android:layout_marginEnd="@dimen/size_10"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="@dimen/size_10"
+    app:cardElevation="0dp"
+    app:cardUseCompatPadding="true">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/image"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scaleType="fitXY" />
+  </com.framework.views.customViews.CustomCardView>
+</layout>

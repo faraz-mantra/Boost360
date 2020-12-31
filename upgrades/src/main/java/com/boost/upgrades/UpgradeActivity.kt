@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.interfaces.CompareBackListener
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.PromoBanners
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
@@ -108,13 +109,15 @@ class UpgradeActivity : AppCompatActivity() {
     for (a in userPurchsedWidgets)  {
 //      println("userPurchsedWidgets  ${userPurchsedWidgets}")
     }
+
     }
 
     progressDialog = ProgressDialog(this)
 
     prefs = SharedPrefs(this)
-   WebEngageController.trackEvent("ADDONS MARKETPLACE", "pageview", "ADDONS MARKETPLACE HOME")
-    initView()
+    WebEngageController.trackEvent("ADDONS MARKETPLACE", "pageview", "ADDONS MARKETPLACE HOME")
+    val dataPromo = intent.extras?.getPromoBannerClickData()
+    initView(dataPromo)
     initRazorPay()
   }
 
@@ -122,16 +125,19 @@ class UpgradeActivity : AppCompatActivity() {
     this.compareBackListener = compareBackListener
   }
 
-  fun initView() {
+
+  fun initView(dataPromo: PromoBanners?) {
+
     if (fpid != null) {
       val bundle = Bundle()
       bundle.putString("screenType", intent.getStringExtra("screenType"))
       bundle.putStringArrayList("userPurchsedWidgets", intent.getStringArrayListExtra("userPurchsedWidgets"))
       bundle.putStringArrayList("userPurchsedWidgets", userPurchsedWidgets)
+      dataPromo?.let { bundle.putSerializable("PROMO_BANNER_CLICK", it) }
 //      addFragment(HomeFragment.newInstance(), HOME_FRAGMENT)
       addFragmentHome(HomeFragment.newInstance(), HOME_FRAGMENT, bundle)
       //update userdetails and buyitem
-      showingPopUp()
+      if (dataPromo == null) showingPopUp()
       supportFragmentManager.addOnBackStackChangedListener {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.ao_fragment_container)
         if (currentFragment != null) {
@@ -248,6 +254,7 @@ class UpgradeActivity : AppCompatActivity() {
     fragmentTransaction!!.addToBackStack(fragmentTag)
     fragmentTransaction!!.commit()
   }
+
   fun addFragmentHome(fragment: Fragment, fragmentTag: String?, args: Bundle?) {
     fragment.setArguments(args)
     currentFragment = fragment
@@ -396,4 +403,27 @@ class UpgradeActivity : AppCompatActivity() {
     }
   }
 
+}
+
+private fun Bundle.getPromoBannerClickData(): PromoBanners? {
+  if (this.containsKey("PROMO_BANNER_CLICK") && this.getBundle("PROMO_BANNER_CLICK") != null) {
+    val promoBundle = this.getBundle("PROMO_BANNER_CLICK")
+    return PromoBanners(
+        promoBundle?.getString("_kid") ?: "",
+        promoBundle?.getString("_parentClassId") ?: "",
+        promoBundle?.getString("_parentClassName") ?: "",
+        promoBundle?.getString("_propertyName") ?: "",
+        promoBundle?.getString("createdon") ?: "",
+        promoBundle?.getString("cta_feature_key") ?: "",
+        promoBundle?.getString("cta_web_link") ?: "",
+        promoBundle?.getString("cta_bundle_identifier") ?: "",
+        promoBundle?.getStringArrayList("exclusive_to_categories") ?: ArrayList(),
+        promoBundle?.getStringArrayList("exclusive_to_customers") ?: ArrayList(),
+        isarchived = promoBundle?.getBoolean("isarchived") ?: false,
+        title = promoBundle?.getString("title") ?: "",
+        updatedon = promoBundle?.getString("updatedon") ?: "",
+        websiteid = promoBundle?.getString("websiteid") ?: ""
+    )
+  }
+  return null
 }

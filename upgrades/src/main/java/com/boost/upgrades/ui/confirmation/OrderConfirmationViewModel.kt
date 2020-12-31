@@ -3,10 +3,8 @@ package com.boost.upgrades.ui.confirmation
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
-import com.boost.upgrades.UpgradeActivity
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class OrderConfirmationViewModel : ViewModel() {

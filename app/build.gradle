@@ -41,7 +41,6 @@ allprojects {
             url "https://s3-ap-southeast-1.amazonaws.com/godel-release/godel/"
         }
         maven { url "https://maven.google.com" }
-        maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
 
         google()
         maven {
@@ -185,14 +184,10 @@ dependencies {
     implementation project(':messagelibrary')
     //presignup library
     implementation project(path: ':presignup')
-    //Inventory order library
-    api project(path: ':inventoryorder')
+    api project(path: ':dashboard')
 
     //upgrade library
     implementation project(path: ':upgrades')
-
-    //Catlog Library
-    implementation project(path: ':appService')
 
 //    implementation project(':riachatsdkMain')
     implementation('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
@@ -202,7 +197,7 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
     }
-    implementation 'com.google.firebase:firebase-core:17.2.1'
+
     implementation 'com.romandanylyk:pageindicatorview:0.2.0'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.android.volley:volley:1.1.1'
@@ -223,15 +218,11 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    //Firebase Library
-    implementation 'com.google.firebase:firebase-core:17.2.1'
-    implementation 'com.google.firebase:firebase-messaging:20.0.1'
-    implementation 'com.google.firebase:firebase-database:19.2.0'
+
 
 //    implementation 'uk.co.chrisjenx:calligraphy:2.2.0'
     implementation 'io.github.inflationx:calligraphy3:3.1.1'
     implementation 'io.github.inflationx:viewpump:2.0.3'
-    implementation 'com.kitsune:anachatsdk:1.18.11@aar'
     implementation 'com.j256.ormlite:ormlite-android:5.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
@@ -264,6 +255,7 @@ dependencies {
     //wenengage analytics
     implementation 'com.webengage:android-sdk:3.+'
 
+
 //    implementation 'com.apxor.android:apxor-android-sdk-core:2.5.1@aar'
     implementation project(':keyboard')
     implementation project(':imagepicker')
@@ -274,9 +266,6 @@ dependencies {
     implementation 'com.github.florent37:viewtooltip:1.1.5'
 
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.0'
-    implementation 'com.google.firebase:firebase-auth:19.2.0'
-    implementation group: 'com.zendesk', name: 'support', version: '3.0.2'
-    implementation group: 'com.zopim.android', name: 'sdk', version: '1.4.4'
 
     //sdp
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
@@ -292,6 +281,6 @@ dependencies {
     implementation "org.koin:koin-androidx-fragment:$koin_version"
 
     // Referral Library: invitereferrals
-    implementation 'com.android.installreferrer:installreferrer:2.1'
+    implementation 'com.android.installreferrer:installreferrer:2.2'
     implementation 'com.invitereferrals.invitereferrals:invitereferrals:v29-1.0.5'
 }

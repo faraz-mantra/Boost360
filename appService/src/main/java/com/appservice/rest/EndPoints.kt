@@ -16,6 +16,7 @@ object EndPoints {
   const val DELETE_SERVICE = "Product/v1/Delete"
   const val ADD_IMAGE = "Product/v1/AddImage"
   const val GET_TAGS = "Product/v1/tags"
+  const val GET_NOTIFICATION = "Discover/v1/floatingpoint/notificationscount"
 
   //TODO NFX API 2 WITH FLOAT
   const val RAZOR_API_BASE = "https://ifsc.razorpay.com/"
@@ -43,6 +44,7 @@ object EndPoints {
   const val ADD_PRODUCT_IMAGE = "api/v1/product_images/add-data"
   const val GET_PRODUCT_IMAGE = "api/v1/product_images/get-data"
   const val DELETE_PRODUCT_IMAGE = "api/v1/product_images/delete-data"
+  const val FP_ONBOARDING_UPDATE_DATA = "api/v1/fp_onboarding/update-data"
 
 }
 

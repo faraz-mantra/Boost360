@@ -128,6 +128,19 @@ fun ChannelModel.getName(): String {
   }
 }
 
+fun ChannelModel.getNameAlternate(): String {
+  return when (getType()) {
+    ChannelType.G_SEARCH -> "Website"
+    ChannelType.FB_PAGE -> "FP Page"
+    ChannelType.G_MAPS -> "Maps"
+    ChannelType.FB_SHOP -> "FP Shop"
+    ChannelType.WAB -> "WA Profile"
+    ChannelType.T_FEED -> "Twitter"
+    ChannelType.G_BUSINESS -> "Maps"
+    null -> ""
+  }
+}
+
 fun ChannelModel.getAccessTokenType(): String {
   return when (getType()) {
     ChannelType.G_SEARCH -> ChannelAccessToken.AccessTokenType.googlesearch.name
