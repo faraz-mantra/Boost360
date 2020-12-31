@@ -95,28 +95,28 @@
             {
               "businessType": "unlimited_content_updates",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website social share plugin"
             },
             {
               "businessType": "autamated_seo_d",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Automated\nSEO"
             },
             {
               "businessType": "unlimited_website_bandwidth",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited Website Bandwidth"
             }
@@ -180,14 +180,14 @@
             {
               "businessType": "my_email_accounts",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Data\nSecurity"
             }
@@ -202,7 +202,7 @@
             {
               "businessType": "boost_payment_gateway",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Payment Gateway"
             },
@@ -223,7 +223,7 @@
             {
               "businessType": "e_commerce_website",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
             }
@@ -245,7 +245,7 @@
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook Likebox Plugin"
             },
@@ -259,7 +259,7 @@
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "IVR\nFacility"
             },
@@ -280,28 +280,28 @@
             {
               "businessType": "website_chatbot",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook\nLead Ads"
             }
@@ -323,7 +323,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
             },
@@ -344,7 +344,7 @@
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Chatbot\nAnalytics"
             }
@@ -366,7 +366,7 @@
             {
               "businessType": "premium_boost_support",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Premium\nSupport"
             }
@@ -471,28 +471,28 @@
             {
               "businessType": "unlimited_content_updates",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website social share plugin"
             },
             {
               "businessType": "autamated_seo_d",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Automated\nSEO"
             },
             {
               "businessType": "unlimited_website_bandwidth",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited Website Bandwidth"
             }
@@ -556,14 +556,14 @@
             {
               "businessType": "my_email_accounts",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Data\nSecurity"
             }
@@ -578,7 +578,7 @@
             {
               "businessType": "boost_payment_gateway",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Payment Gateway"
             },
@@ -599,7 +599,7 @@
             {
               "businessType": "e_commerce_website",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
             }
@@ -621,7 +621,7 @@
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook Likebox Plugin"
             },
@@ -635,7 +635,7 @@
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "IVR\nFacility"
             },
@@ -663,21 +663,21 @@
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook\nLead Ads"
             }
@@ -699,7 +699,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
             },
@@ -720,7 +720,7 @@
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Chatbot\nAnalytics"
             }
@@ -742,7 +742,7 @@
             {
               "businessType": "premium_boost_support",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Premium\nSupport"
             }
@@ -826,28 +826,28 @@
             {
               "businessType": "unlimited_content_updates",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website social share plugin"
             },
             {
               "businessType": "autamated_seo_d",
               "isLock": false,
-              "isHide": false,
+              "isHide": ftrue,
               "premiumCode": "",
               "title": "Automated\nSEO"
             },
             {
               "businessType": "unlimited_website_bandwidth",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited Website Bandwidth"
             }
@@ -918,14 +918,14 @@
             {
               "businessType": "my_email_accounts",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Data\nSecurity"
             }
@@ -940,7 +940,7 @@
             {
               "businessType": "boost_payment_gateway",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Payment Gateway"
             },
@@ -983,7 +983,7 @@
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook Likebox Plugin"
             },
@@ -997,7 +997,7 @@
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "IVR\nFacility"
             },
@@ -1018,28 +1018,28 @@
             {
               "businessType": "website_chatbot",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook\nLead Ads"
             }
@@ -1061,7 +1061,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
             },
@@ -1082,7 +1082,7 @@
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Chatbot\nAnalytics"
             }
@@ -1104,7 +1104,7 @@
             {
               "businessType": "premium_boost_support",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Premium\nSupport"
             }
@@ -1209,28 +1209,28 @@
             {
               "businessType": "unlimited_content_updates",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website social share plugin"
             },
             {
               "businessType": "autamated_seo_d",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Automated\nSEO"
             },
             {
               "businessType": "unlimited_website_bandwidth",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited Website Bandwidth"
             }
@@ -1301,14 +1301,14 @@
             {
               "businessType": "my_email_accounts",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Data\nSecurity"
             }
@@ -1323,7 +1323,7 @@
             {
               "businessType": "boost_payment_gateway",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Payment Gateway"
             },
@@ -1344,7 +1344,7 @@
             {
               "businessType": "e_commerce_website",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
             }
@@ -1366,7 +1366,7 @@
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook Likebox Plugin"
             },
@@ -1380,7 +1380,7 @@
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "IVR\nFacility"
             },
@@ -1408,21 +1408,21 @@
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook\nLead Ads"
             }
@@ -1444,7 +1444,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
             },
@@ -1465,7 +1465,7 @@
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Chatbot\nAnalytics"
             }
@@ -1487,7 +1487,7 @@
             {
               "businessType": "premium_boost_support",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Premium\nSupport"
             }
@@ -1543,7 +1543,7 @@
             {
               "businessType": "sync_otas_channel_manager_d",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Sync with OTAs Using Channel Manager"
             },
@@ -1592,28 +1592,28 @@
             {
               "businessType": "unlimited_content_updates",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website social share plugin"
             },
             {
               "businessType": "autamated_seo_d",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Automated\nSEO"
             },
             {
               "businessType": "unlimited_website_bandwidth",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited Website Bandwidth"
             }
@@ -1684,14 +1684,14 @@
             {
               "businessType": "my_email_accounts",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Data\nSecurity"
             }
@@ -1706,14 +1706,14 @@
             {
               "businessType": "room_booking_engine_d",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Room Booking Engine"
             },
             {
               "businessType": "boost_payment_gateway",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Payment Gateway"
             },
@@ -1756,7 +1756,7 @@
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook Likebox Plugin"
             },
@@ -1770,7 +1770,7 @@
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "IVR\nFacility"
             },
@@ -1791,28 +1791,28 @@
             {
               "businessType": "website_chatbot",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook\nLead Ads"
             }
@@ -1834,7 +1834,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
             },
@@ -1855,7 +1855,7 @@
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Chatbot\nAnalytics"
             }
@@ -1877,7 +1877,7 @@
             {
               "businessType": "premium_boost_support",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Premium\nSupport"
             }
@@ -1996,28 +1996,28 @@
             {
               "businessType": "unlimited_content_updates",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website social share plugin"
             },
             {
               "businessType": "autamated_seo_d",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Automated\nSEO"
             },
             {
               "businessType": "unlimited_website_bandwidth",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited Website Bandwidth"
             }
@@ -2088,14 +2088,14 @@
             {
               "businessType": "my_email_accounts",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Data\nSecurity"
             }
@@ -2110,7 +2110,7 @@
             {
               "businessType": "boost_payment_gateway",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Payment Gateway"
             },
@@ -2131,7 +2131,7 @@
             {
               "businessType": "e_commerce_website",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "eCommerce on\nwebsite"
             }
@@ -2153,7 +2153,7 @@
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook Likebox Plugin"
             },
@@ -2167,7 +2167,7 @@
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "IVR\nFacility"
             },
@@ -2188,28 +2188,28 @@
             {
               "businessType": "website_chatbot",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook\nLead Ads"
             }
@@ -2231,7 +2231,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
             },
@@ -2252,7 +2252,7 @@
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Chatbot\nAnalytics"
             }
@@ -2274,7 +2274,7 @@
             {
               "businessType": "premium_boost_support",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Premium\nSupport"
             }
@@ -2372,28 +2372,28 @@
             {
               "businessType": "unlimited_content_updates",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website social share plugin"
             },
             {
               "businessType": "autamated_seo_d",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Automated\nSEO"
             },
             {
               "businessType": "unlimited_website_bandwidth",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited Website Bandwidth"
             }
@@ -2464,14 +2464,14 @@
             {
               "businessType": "my_email_accounts",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Data\nSecurity"
             }
@@ -2486,7 +2486,7 @@
             {
               "businessType": "boost_payment_gateway",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Payment Gateway"
             },
@@ -2529,7 +2529,7 @@
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook Likebox Plugin"
             },
@@ -2543,7 +2543,7 @@
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "IVR\nFacility"
             },
@@ -2564,28 +2564,28 @@
             {
               "businessType": "website_chatbot",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook\nLead Ads"
             }
@@ -2607,7 +2607,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
             },
@@ -2628,7 +2628,7 @@
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Chatbot\nAnalytics"
             }
@@ -2650,7 +2650,7 @@
             {
               "businessType": "premium_boost_support",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Premium\nSupport"
             }
@@ -2741,28 +2741,28 @@
             {
               "businessType": "unlimited_content_updates",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website social share plugin"
             },
             {
               "businessType": "autamated_seo_d",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Automated\nSEO"
             },
             {
               "businessType": "unlimited_website_bandwidth",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited Website Bandwidth"
             }
@@ -2833,14 +2833,14 @@
             {
               "businessType": "my_email_accounts",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Data\nSecurity"
             }
@@ -2855,7 +2855,7 @@
             {
               "businessType": "boost_payment_gateway",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Payment Gateway"
             },
@@ -2898,7 +2898,7 @@
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook Likebox Plugin"
             },
@@ -2912,7 +2912,7 @@
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "IVR\nFacility"
             },
@@ -2933,28 +2933,28 @@
             {
               "businessType": "website_chatbot",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook\nLead Ads"
             }
@@ -2976,7 +2976,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
             },
@@ -2997,7 +2997,7 @@
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Chatbot\nAnalytics"
             }
@@ -3019,7 +3019,7 @@
             {
               "businessType": "premium_boost_support",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Premium\nSupport"
             }
@@ -3124,28 +3124,28 @@
             {
               "businessType": "unlimited_content_updates",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited\nContent Updates"
             },
             {
               "businessType": "website_social_share_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website social share plugin"
             },
             {
               "businessType": "autamated_seo_d",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Automated\nSEO"
             },
             {
               "businessType": "unlimited_website_bandwidth",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Unlimited Website Bandwidth"
             }
@@ -3216,14 +3216,14 @@
             {
               "businessType": "my_email_accounts",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "My Email\nAccounts"
             },
             {
               "businessType": "boost_data_security",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Data\nSecurity"
             }
@@ -3238,7 +3238,7 @@
             {
               "businessType": "boost_payment_gateway",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Boost Payment Gateway"
             },
@@ -3281,7 +3281,7 @@
             {
               "businessType": "facebook_likebox_plugin",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook Likebox Plugin"
             },
@@ -3295,7 +3295,7 @@
             {
               "businessType": "ic_ivr_faculty",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "IVR\nFacility"
             },
@@ -3316,28 +3316,28 @@
             {
               "businessType": "website_chatbot",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Website\nCatboat"
             },
             {
               "businessType": "assisted_content_creation",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Dictate: Assisted content creation"
             },
             {
               "businessType": "advertising_google_fb",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Wildfire (Google & Facebook Advertising)"
             },
             {
               "businessType": "facebook_lead_ads",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Facebook\nLead Ads"
             }
@@ -3359,7 +3359,7 @@
             {
               "businessType": "social_sharing_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Social Sharing Analytics"
             },
@@ -3380,7 +3380,7 @@
             {
               "businessType": "chatbot_analytics",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Chatbot\nAnalytics"
             }
@@ -3402,7 +3402,7 @@
             {
               "businessType": "premium_boost_support",
               "isLock": false,
-              "isHide": false,
+              "isHide": true,
               "premiumCode": "",
               "title": "Premium\nSupport"
             }

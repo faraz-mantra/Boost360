@@ -158,6 +158,7 @@
   <string name="no_gmb_profile_found">No business location found</string>
   <string name="associated_with_your_google_account">associated with your Google account</string>
   <string name="you_ve_connected_all_digital_channels_for_your_business">You\'ve connected all digital channels for your Business.</string>
+  <string name="share_visiting_card">Share Visiting Card</string>
 
 </resources>
 

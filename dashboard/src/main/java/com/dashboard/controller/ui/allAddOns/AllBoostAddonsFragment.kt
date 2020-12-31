@@ -69,6 +69,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       val response = it as? ManageAddOnsBusinessResponse
       val dataAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT) }
       if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
+        dataAction.actionItem?.forEach { it2 -> it2.manageBusinessList = ArrayList(it2.manageBusinessList?.filter { it3 -> !it3.isHide } ?: ArrayList()) }
         dataAction.actionItem?.map { it2 -> it2.manageBusinessList?.map { it3 -> if (it3.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it3.premiumCode).not()) it3.isLock = true } }
         addOnsList.clear()
         addOnsListFilter.clear()
@@ -175,9 +176,9 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.featured_image_video -> baseActivity.startFeatureLogo(session)
     ManageBusinessData.BusinessType.business_hours -> baseActivity.startBusinessHours(session)
     ManageBusinessData.BusinessType.doctor_profile,
-    ManageBusinessData.BusinessType.contact_details,
     ManageBusinessData.BusinessType.faculty_profiles_d,
     -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
+    ManageBusinessData.BusinessType.contact_details->baseActivity.startBusinessInfoEmail(session)
     ManageBusinessData.BusinessType.content_sync_acros_channels -> session?.let { baseActivity.startDigitalChannel(it) }
     ManageBusinessData.BusinessType.ic_custom_page_add -> baseActivity.startCreateCustomPage(session, false)
     ManageBusinessData.BusinessType.in_clinic_appointments -> baseActivity.startOrderAptConsultList(session, isConsult = false)
@@ -187,7 +188,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.picture_gallery,
     ManageBusinessData.BusinessType.client_logos_d,
     -> baseActivity.startAddImageGallery(session)
-    ManageBusinessData.BusinessType.premium_boost_support -> session?.let { baseActivity.startHelpAndSupportActivity(it) }
+    ManageBusinessData.BusinessType.ria_digital_assistant -> session?.let { baseActivity.startHelpAndSupportActivity(it) }
     ManageBusinessData.BusinessType.custom_payment_gateway -> baseActivity.startSelfBrandedGateway(session)
     ManageBusinessData.BusinessType.business_kyc_verification -> baseActivity.startBusinessKycBoost(session)
     ManageBusinessData.BusinessType.my_bank_account -> baseActivity.startMyBankAccount(session)
@@ -206,6 +207,8 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.website_social_share_plugin -> baseActivity.startBoostExtension(session)
     ManageBusinessData.BusinessType.project_portfolio_d -> baseActivity.startListProjectAndTeams(session)
     ManageBusinessData.BusinessType.table_reservations_d -> baseActivity.startBookTable(session)
+    ManageBusinessData.BusinessType.sales_analytics -> baseActivity.startAptOrderSummary(session)
+    ManageBusinessData.BusinessType.search_analytics -> baseActivity.startSearchQuery(session)
 
     ManageBusinessData.BusinessType.room_booking_engine_d,
     ManageBusinessData.BusinessType.ic_ivr_faculty,
@@ -219,15 +222,13 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.facebook_lead_ads,
     ManageBusinessData.BusinessType.facebook_likebox_plugin,
     ManageBusinessData.BusinessType.my_email_accounts,
-    ManageBusinessData.BusinessType.ria_digital_assistant,
+    ManageBusinessData.BusinessType.premium_boost_support,
     ManageBusinessData.BusinessType.unlimited_content_updates,
     ManageBusinessData.BusinessType.unlimited_website_bandwidth,
     ManageBusinessData.BusinessType.chatbot_analytics,
     ManageBusinessData.BusinessType.website_chatbot,
     ManageBusinessData.BusinessType.sync_otas_channel_manager_d,
     ManageBusinessData.BusinessType.social_sharing_analytics,
-    ManageBusinessData.BusinessType.sales_analytics,
-    ManageBusinessData.BusinessType.search_analytics,
     ManageBusinessData.BusinessType.membership_plans,
     ManageBusinessData.BusinessType.restaurant_story_d,
     -> {
