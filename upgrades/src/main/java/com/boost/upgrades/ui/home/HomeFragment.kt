@@ -35,6 +35,7 @@ import com.boost.upgrades.data.model.WidgetModel
 import com.boost.upgrades.data.model.YoutubeVideoModel
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.database.LocalStorage
+import com.boost.upgrades.interfaces.CompareBackListener
 import com.boost.upgrades.interfaces.HomeListener
 import com.boost.upgrades.ui.cart.CartFragment
 import com.boost.upgrades.ui.compare.ComparePackageFragment
@@ -62,10 +63,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HomeFragment : BaseFragment(), HomeListener {
+class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     lateinit var root: View
     private lateinit var viewModel: HomeViewModel
@@ -123,6 +125,10 @@ class HomeFragment : BaseFragment(), HomeListener {
         return root
     }
 
+    override fun onResume(){
+        super.onResume()
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         //emptyCouponTable everytime for new coupon code
@@ -130,7 +136,7 @@ class HomeFragment : BaseFragment(), HomeListener {
         setSpannableStrings()
         loadData()
         initMvvm()
-
+        (activity as UpgradeActivity)setBackListener(this)
 //    initYouTube()
 
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Loaded", "ADDONS_MARKETPLACE", "")
@@ -454,6 +460,31 @@ class HomeFragment : BaseFragment(), HomeListener {
             }
         })
 
+        viewModel.getBackAllBundles().observe(this, androidx.lifecycle.Observer {
+            val list = arrayListOf<Bundles>()
+            for (item in it) {
+                val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                list.add(Bundles(
+                        item.bundle_id,
+                        temp,
+                        item.min_purchase_months,
+                        item.name,
+                        item.overall_discount_percent,
+                        PrimaryImage(item.primary_image),
+                        item.target_business_usecase,
+                        Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                        null,item.desc
+                ))
+            }
+            if (list.size > 0) {
+                package_layout.visibility = View.VISIBLE
+//                updatePackageViewPager(list)
+                updatePackageBackPressViewPager(list)
+            } else {
+                package_layout.visibility = View.GONE
+            }
+        })
+
         viewModel.getAllFeatureDeals().observe(this, androidx.lifecycle.Observer {
             if (it.size > 0) {
                 var cartItems: List<CartModel> = arrayListOf()
@@ -496,6 +527,84 @@ class HomeFragment : BaseFragment(), HomeListener {
                     updateFeatureDealsViewPager(list, it)
                 }
             }
+
+            /*if (viewModel.allBundleResult.value != null) {
+
+
+                var list = viewModel.allBundleResult.value!!
+                if (list.size > 0) {
+                    val listItem = arrayListOf<Bundles>()
+                    for (item in list) {
+                        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                        listItem.add(Bundles(
+                                item.bundle_id,
+                                temp,
+                                item.min_purchase_months,
+                                item.name,
+                                item.overall_discount_percent,
+                                PrimaryImage(item.primary_image),
+                                item.target_business_usecase,
+                                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                null,item.desc
+                        ))
+                    }
+                    if (list.size > 0) {
+//                        updatePackageViewPager(listItem)
+                        packageViewPagerAdapter.addupdates(listItem)
+                        packageViewPagerAdapter.notifyDataSetChanged()
+                    }
+                }
+            }*/
+        })
+
+        viewModel.cartResultBack().observe(this, androidx.lifecycle.Observer {
+            if (it != null && it.size > 0) {
+                badge.visibility = View.VISIBLE
+                badgeNumber = it.size
+                badge.setText(badgeNumber.toString())
+                Constants.CART_VALUE = badgeNumber
+            } else {
+                badgeNumber = 0
+                badge.visibility = View.GONE
+            }
+            //refresh FeatureDeals adaptor when cart is updated
+            if (viewModel.allFeatureDealsResult.value != null) {
+                val list = viewModel.allFeatureDealsResult.value!!
+                if (list.size > 0) {
+                    updateFeatureDealsViewPager(list, it)
+                }
+            }
+            if(Constants.COMPARE_BACK_VALUE == 1) {
+                Constants.COMPARE_BACK_VALUE = 0
+                if (viewModel.allBundleResult.value != null) {
+
+
+                    var list = viewModel.allBundleResult.value!!
+                    if (list.size > 0) {
+                        val listItem = arrayListOf<Bundles>()
+                        for (item in list) {
+                            val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                            listItem.add(Bundles(
+                                    item.bundle_id,
+                                    temp,
+                                    item.min_purchase_months,
+                                    item.name,
+                                    item.overall_discount_percent,
+                                    PrimaryImage(item.primary_image),
+                                    item.target_business_usecase,
+                                    Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                    null, item.desc
+                            ))
+                        }
+                        if (list.size > 0) {
+//                        updatePackageViewPager(listItem)
+                            packageViewPagerAdapter.addupdates(listItem)
+                            packageViewPagerAdapter.notifyDataSetChanged()
+                        }
+                    }
+                }
+                viewModel.getCartItemsBack()
+            }
         })
 
         viewModel.getYoutubeVideoDetails().observe(this, androidx.lifecycle.Observer {
@@ -534,7 +643,9 @@ class HomeFragment : BaseFragment(), HomeListener {
         viewModel.getPromoBanners().observe(this, androidx.lifecycle.Observer {
             Log.e("getPromoBanners", it.toString())
             if (it.size > 0) {
-                updateBannerViewPager(it)
+//                checkBannerDetails(it as ArrayList<PromoBanners>)
+                checkBannerDetailsNew(it as ArrayList<PromoBanners>)
+//                updateBannerViewPager(it)
                 banner_layout.visibility = View.VISIBLE
             } else {
                 banner_layout.visibility = View.GONE
@@ -627,13 +738,14 @@ class HomeFragment : BaseFragment(), HomeListener {
         //show dot indicator only when the (list.size > 2)
         if (list.size > 1) {
             if (list.size > 2) {
-                banner_viewpager.setPageTransformer(SimplePageTransformer())
-
-                val itemDecoration = HorizontalMarginItemDecoration(
-                        requireContext(),
-                        R.dimen.viewpager_current_item_horizontal_margin
-                )
-                banner_viewpager.addItemDecoration(itemDecoration)
+//                banner_viewpager.setPageTransformer(SimplePageTransformer())
+//
+//                val itemDecoration = HorizontalMarginItemDecoration(
+//                        requireContext(),
+////                        R.dimen.viewpager_current_item_horizontal_margin
+//                        R.dimen.viewpager_current_item_horizontal_margin1
+//                )
+//                banner_viewpager.addItemDecoration(itemDecoration)
             }
             banner_indicator.visibility = View.VISIBLE
         } else {
@@ -642,6 +754,20 @@ class HomeFragment : BaseFragment(), HomeListener {
     }
 
     fun updatePackageViewPager(list: List<Bundles>) {
+        package_viewpager.offscreenPageLimit = list.size
+        packageViewPagerAdapter.addupdates(list)
+        packageViewPagerAdapter.notifyDataSetChanged()
+        //show dot indicator only when the (list.size > 2)
+        if (list.size > 1) {
+            package_indicator.visibility = View.VISIBLE
+        } else {
+            package_indicator.visibility = View.INVISIBLE
+            package_compare_layout.visibility = View.INVISIBLE
+        }
+    }
+
+    fun updatePackageBackPressViewPager(list: List<Bundles>) {
+        initializePackageViewPager()
         package_viewpager.offscreenPageLimit = list.size
         packageViewPagerAdapter.addupdates(list)
         packageViewPagerAdapter.notifyDataSetChanged()
@@ -671,6 +797,12 @@ class HomeFragment : BaseFragment(), HomeListener {
         banner_viewpager.adapter = bannerViewPagerAdapter
         banner_viewpager.offscreenPageLimit = 4
         banner_indicator.setViewPager2(banner_viewpager)
+        val itemDecoration = HorizontalMarginItemDecoration(
+                requireContext(),
+//                        R.dimen.viewpager_current_item_horizontal_margin
+                R.dimen.viewpager_current_item_horizontal_margin1
+        )
+        banner_viewpager.addItemDecoration(itemDecoration)
 
     }
 
@@ -729,7 +861,8 @@ class HomeFragment : BaseFragment(), HomeListener {
 
     override fun onBackPressed() {
         if (::viewModel.isInitialized) {
-            viewModel.getCartItems()
+//            viewModel.getCartItems()
+            viewModel.getCartItemsBack()
         }
     }
 
@@ -776,10 +909,24 @@ class HomeFragment : BaseFragment(), HomeListener {
                                                             .subscribeOn(Schedulers.io())
                                                             .observeOn(AndroidSchedulers.mainThread())
                                                             .subscribe({
+                                                                var selectedBundle: Bundles? = null
+                                                                var item = it
 
+                                                                        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                                                                        selectedBundle = Bundles(
+                                                                                item.bundle_id,
+                                                                                temp,
+                                                                                item.min_purchase_months,
+                                                                                item.name,
+                                                                                item.overall_discount_percent,
+                                                                                PrimaryImage(item.primary_image),
+                                                                                item.target_business_usecase,
+                                                                                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                                                                null,
+                                                                                item.desc)
                                                                 val packageFragment = PackageFragment.newInstance()
                                                                 val args = Bundle()
-                                                                args.putString("bundleData", Gson().toJson(it))
+                                                                args.putString("bundleData", Gson().toJson(selectedBundle))
                                                                 packageFragment.arguments = args
                                                                 (activity as UpgradeActivity).addFragment(packageFragment, PACKAGE_FRAGMENT)
 
@@ -1047,6 +1194,7 @@ class HomeFragment : BaseFragment(), HomeListener {
 //                badge121.setText(badgeNumber.toString())
 //                badge121.visibility = View.VISIBLE
                                             Constants.CART_VALUE = badgeNumber
+                                            viewModel.getCartItems()
                                         },
                                         {
                                             it.printStackTrace()
@@ -1097,5 +1245,211 @@ class HomeFragment : BaseFragment(), HomeListener {
 
     }
 
+    fun checkBannerDetails(list: ArrayList<PromoBanners>){
+        for(singleItem in list){
+
+            if (singleItem!!.cta_feature_key != null) {
+                CompositeDisposable().add(
+                        AppDatabase.getInstance(activity!!.application)!!
+                                .featuresDao()
+                                .checkFeatureTableKeyExist(singleItem!!.cta_feature_key)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({
+                                    try {
+                                        if (it == 0) {
+                                            for (singleBanner in list) {
+                                                /*  if (singleBanner.cta_feature_key == list.get(position)!!.cta_feature_key) {
+                                                      list.remove(singleBanner)
+                                                      notifyDataSetChanged()
+                                                      homeListener.onShowHidePromoBannerIndicator(list.size > 1)
+                                                  }*/
+                                            }
+                                            for (singleBanner in list) {
+                                                if (singleBanner.cta_feature_key == singleItem!!.cta_feature_key && singleItem!!.cta_feature_key.isNotEmpty() && singleBanner.cta_feature_key.isNotEmpty()) {
+                                                    if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode) && !singleBanner.exclusive_to_categories.isEmpty()) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            for (singleBanner in list) {
+                                                if (singleBanner.cta_feature_key == singleItem!!.cta_feature_key && singleItem!!.cta_feature_key.isNotEmpty() && singleBanner.cta_feature_key.isNotEmpty()) {
+                                                    if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode) && !singleBanner.exclusive_to_categories.isEmpty()) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                    } catch (e: Exception){
+                                        e.printStackTrace()
+                                    }
+                                },{
+                                    it.printStackTrace()
+                                })
+                )
+            }
+            else if (singleItem!!.cta_bundle_identifier != null) {
+                CompositeDisposable().add(
+                        AppDatabase.getInstance(activity!!.application)!!
+                                .bundlesDao()
+                                .checkBundleKeyExist(singleItem!!.cta_bundle_identifier)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({
+                                    try {
+                                        if (it == 0) {
+                                            for (singleBanner in list) {
+                                                if (singleBanner.cta_bundle_identifier == singleItem!!.cta_bundle_identifier) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                }
+                                            }
+                                        } else {
+                                            for (singleBanner in list) {
+                                                if (singleBanner.cta_bundle_identifier == singleItem!!.cta_bundle_identifier) {
+                                                    if (singleBanner.exclusive_to_customers != null && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    } else if (singleBanner.exclusive_to_categories != null && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                        list.remove(singleBanner)
+                                                        updateBannerViewPager(list)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }catch (e: Exception){
+                                        e.printStackTrace()
+                                    }
+                                },{
+                                    it.printStackTrace()
+                                })
+                )
+
+            }
+
+        }
+
+
+
+    }
+
+    fun checkBannerDetailsNew(list: ArrayList<PromoBanners>) {
+        for(singleItem in list){
+        if (singleItem!!.cta_feature_key != null && singleItem!!.cta_feature_key.isNotEmpty()) {
+            CompositeDisposable().add(
+                    AppDatabase.getInstance(activity!!.application)!!
+                            .featuresDao()
+                            .checkFeatureTableKeyExist(singleItem!!.cta_feature_key)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                try {
+                                    if (it == 0) {
+
+                                        for (singleBanner in list) {
+                                            if (singleBanner.cta_feature_key == singleBanner!!.cta_feature_key) {
+
+                                                if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty() && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        for (singleBanner in list) {
+                                            if (singleBanner.cta_feature_key == singleBanner!!.cta_feature_key) {
+
+                                                if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty()
+                                                        && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }, {
+                                it.printStackTrace()
+                            })
+            )
+        } else if (singleItem!!.cta_bundle_identifier != null && singleItem!!.cta_bundle_identifier.isNotEmpty()) {
+            CompositeDisposable().add(
+                    AppDatabase.getInstance(activity!!.application)!!
+                            .bundlesDao()
+                            .checkBundleKeyExist(singleItem!!.cta_bundle_identifier)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                try {
+                                    if (it == 0) {
+
+                                        for (singleBanner in list) {
+                                            if (singleBanner.cta_bundle_identifier == singleItem!!.cta_bundle_identifier) {
+
+                                                if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty() && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        for (singleBanner in list) {
+                                            if (singleBanner.cta_bundle_identifier == singleItem!!.cta_bundle_identifier) {
+                                                if (singleBanner.exclusive_to_customers != null && singleBanner.exclusive_to_customers.isNotEmpty() && !singleBanner.exclusive_to_customers.contains((activity as UpgradeActivity).fpTag)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                } else if (singleBanner.exclusive_to_categories != null && singleBanner.exclusive_to_categories.isNotEmpty() && !singleBanner.exclusive_to_categories.contains((activity as UpgradeActivity).experienceCode)) {
+                                                    list.remove(singleBanner)
+                                                    updateBannerViewPager(list)
+                                                }
+                                            }
+                                        }
+                                    }
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }, {
+                                it.printStackTrace()
+                            })
+            )
+        }
+    }
+    }
+
+    override fun backComparePress() {
+        if(prefs.getCompareState() == 1) {
+            prefs.storeCompareState(0)
+            val pref = activity!!.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+            val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
+            var code: String = (activity as UpgradeActivity).experienceCode!!
+            if (!code.equals("null", true)) {
+                viewModel.setCurrentExperienceCode(code, fpTag!!)
+            }
+
+            viewModel.loadPackageUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
+        }
+    }
 
 }

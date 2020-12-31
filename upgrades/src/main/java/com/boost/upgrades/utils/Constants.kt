@@ -7,6 +7,7 @@ import com.boost.upgrades.ui.confirmation.AutoRenewOrderConfirmationFragment
 import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
 import com.boost.upgrades.ui.details.DetailsFragment
 import com.boost.upgrades.ui.features.ViewAllFeaturesFragment
+import com.boost.upgrades.ui.freeaddons.FreeAddonsFragment
 import com.boost.upgrades.ui.history.HistoryFragment
 import com.boost.upgrades.ui.historydetails.HistoryDetailsFragment
 import com.boost.upgrades.ui.home.HomeFragment
@@ -31,7 +32,8 @@ class Constants {
         const val START_ZERO_VALUE = "0"
         const val DATABASE_NAME = "updates_db"
         var CART_VALUE = 0
-
+        var COMPARE_BACK_VALUE = 0
+        var COMPARE_CART_COUNT = 0
         //razorpay credentials
             val RAZORPAY_KEY: String = "rzp_live_o8qdD1DZ3PHBn0"
             val RAZORPAY_SECREAT: String = "Gfq8pQyFbu5BOoY5SeT6UuQk"
@@ -68,6 +70,7 @@ class Constants {
         var AUTO_RENEW_FRAGEMENT: String = AutoRenewSubsFragment::class.java.getName()
         var AUTO_RENEW_ORDER_CONFIRMATION_FRAGMENT: String = AutoRenewOrderConfirmationFragment::class.java.getName()
         var COMPARE_FRAGMENT: String = ComparePackageFragment::class.java.getName()
+        var FREEADDONS_FRAGMENT: String = FreeAddonsFragment::class.java.getName()
 
     }
 }

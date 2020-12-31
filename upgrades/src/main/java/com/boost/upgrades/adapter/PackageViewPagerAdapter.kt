@@ -1,11 +1,14 @@
 package com.boost.upgrades.adapter
 
+import android.graphics.Color
 import android.text.SpannableString
 import android.text.style.StrikethroughSpan
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.R
@@ -16,6 +19,9 @@ import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.package_fragment.*
+import kotlinx.android.synthetic.main.package_item.view.*
+import kotlinx.coroutines.withContext
 import java.text.NumberFormat
 import java.util.*
 
@@ -39,6 +45,12 @@ class PackageViewPagerAdapter(
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
         holder.getNowButton.setOnClickListener {
+            holder.getNowButton.background = ContextCompat.getDrawable(
+                    activity.application,
+                    R.drawable.added_to_cart_grey
+            )
+            holder.getNowButton.setTextColor(Color.parseColor("#bbbbbb"))
+            holder.getNowButton.setText("Added To Cart")
             homeListener.onPackageAddToCart(list.get(position))
         }
 
@@ -51,6 +63,7 @@ class PackageViewPagerAdapter(
         }
         holder.name.setText(list.get(position).name)
         getPackageInfoFromDB(holder, list.get(position))
+        isItemAddedInCart(holder, list.get(position))
 //        image_title.setText(list.get(position).title)
 //        image_description.setText(list.get(position).description)
 //        page_images.setImageResource(list.get(position).image!!)
@@ -141,6 +154,40 @@ class PackageViewPagerAdapter(
                                 {
                                     it.printStackTrace()
                                 }
+                        )
+        )
+    }
+
+    fun isItemAddedInCart(holder: PagerViewHolder, bundles: Bundles){
+        val itemsIds = arrayListOf<String>()
+        for (item in bundles.included_features) {
+            itemsIds.add(item.feature_code)
+        }
+        CompositeDisposable().add(
+                AppDatabase.getInstance(activity.application)!!
+                        .cartDao()
+                        .getCartItems()
+//                        .getAllCartItemsInList(itemsIds)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            for (singleItem in it) {
+                                Log.v("isItemAddedInCart", " "+ bundles!!._kid + " "+ singleItem.item_id)
+//                                for (item in bundles.included_features) {
+//                                    Log.v("isItemAddedInCar12", " "+ item.feature_code)
+                                    if (singleItem.item_id.equals(bundles!!._kid)) {
+                                        holder.getNowButton.background = ContextCompat.getDrawable(
+                                                activity.application,
+                                                R.drawable.added_to_cart_grey
+                                        )
+                                        holder.getNowButton.setTextColor(Color.parseColor("#bbbbbb"))
+                                        holder.getNowButton.setText("Added To Cart")
+                                    }
+//                                }
+                            }
+                        }, {
+
+                        }
                         )
         )
     }

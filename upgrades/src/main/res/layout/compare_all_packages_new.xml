@@ -15,8 +15,9 @@
         <FrameLayout
             android:id="@+id/ly_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:elevation="3dp"
+            app:layout_constraintBottom_toTopOf="@+id/upgradeTextBottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -69,11 +70,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_bold"
-                        android:text="Pick a premium pack"
-                        android:textAllCaps="true"
+                        android:fontFamily="@font/open_sans"
+                        android:text="Compare and choose pack"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_11sdp"
+                        android:textSize="@dimen/txt_14sp"
+                        android:textStyle="bold"
                         android:layout_marginTop="25dp"
                         app:layout_constraintEnd_toStartOf="@+id/package_cart_icon"
                         app:layout_constraintStart_toEndOf="@+id/package_back"
@@ -84,7 +85,7 @@
                         android:id="@+id/package_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
+                        android:layout_marginTop="20dp"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -134,6 +135,7 @@
                     android:scrollbars="none"
                     android:layout_marginTop="25dp">-->
                     <RelativeLayout
+                        android:id="@+id/rl_viewpage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp">
@@ -145,8 +147,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:visibility="visible"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingRight="@dimen/_10sdp"
+
                     tools:visibility="visible">
 
                     <TextView
@@ -163,6 +164,17 @@
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+                    <LinearLayout
+                        android:id="@+id/ll_package_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/package_name"
+                        app:layout_constraintBottom_toTopOf="@+id/upgradeText"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/package_viewpager"
@@ -174,23 +186,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/package_name"
                         tools:listitem="@layout/snippet_items" />
+                    </LinearLayout>
                     <!--app:layout_constraintTop_toBottomOf="@id/package_name"-->
-                    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-                        android:id="@+id/package_indicator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        app:dotsColor="@color/dot_grey"
-                        app:dotsCornerRadius="8dp"
-                        app:dotsSize="6dp"
-                        app:dotsSpacing="4dp"
-                        app:dotsWidthFactor="2.5"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/package_viewpager"
-                        app:progressMode="false"
-                        app:selectedDotColor="@color/app_yellow_1" />
+
                     <TextView
                         android:id="@+id/upgradeText"
                         android:layout_width="match_parent"
@@ -204,7 +202,7 @@
                         android:textSize="@dimen/_11sdp"
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/package_indicator"/>
+                        app:layout_constraintTop_toBottomOf="@+id/ll_package_viewpager"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
                     </RelativeLayout>
                <!-- </androidx.core.widget.NestedScrollView>-->
@@ -213,4 +211,21 @@
             </LinearLayout>
 
         </FrameLayout>
+    <TextView
+        android:id="@+id/upgradeTextBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:text="If you don’t upgrade to any of the premium plans listed above, you will be moved to our Free forever base plan. View features available in the Free plan here."
+        android:gravity="center"
+        android:textColor="#747474"
+        android:textFontWeight="400"
+        android:paddingBottom="5dp"
+        android:textSize="@dimen/txt_10sp"
+        android:visibility="visible"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
