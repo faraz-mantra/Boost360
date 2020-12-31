@@ -180,7 +180,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_profile)) {
           baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
         } else if (url.contains(deeplink_contact)) {
-          baseActivity.startBusinessEmail(session)
+          baseActivity.startBusinessInfoEmail(session)
         } else if (url.contains(deeplink_bizaddress)) {
           baseActivity.startBusinessAddress(session)
         } else if (url.contains(deeplink_bizhours)) {

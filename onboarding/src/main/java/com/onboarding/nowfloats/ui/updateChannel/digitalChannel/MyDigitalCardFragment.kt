@@ -76,34 +76,11 @@ class MyDigitalCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Channe
       } else showShortToast(it.message())
       hideProgress()
     })
-    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp() }
-    binding?.shareOther?.setOnClickListener { shareCardOther() }
+    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp("Business Card", true) }
+    binding?.shareOther?.setOnClickListener { shareCardWhatsApp("Business Card", false) }
   }
 
-  private fun shareCardOther() {
-    if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-      ActivityCompat.requestPermissions(baseActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
-      return
-    }
-    showProgress()
-    val bitmap = binding?.pagerDigitalCard?.getChildAt(0)?.let { viewToBitmap(it) }
-    try {
-      val cropBitmap = bitmap?.let { Bitmap.createBitmap(it, 33, 0, bitmap.width - 66, bitmap.height) }
-      val path = insertImage(baseActivity.contentResolver, cropBitmap, "boost_360", null)
-      val imageUri: Uri = Uri.parse(path)
-      val intent = Intent(Intent.ACTION_SEND)
-      intent.type = "image/*"
-      intent.putExtra(Intent.EXTRA_STREAM, imageUri)
-      intent.putExtra(Intent.EXTRA_TEXT, "Business Card")
-      baseActivity.startActivity(Intent.createChooser(intent, "Share your business card..."))
-      hideProgress()
-    } catch (e: Exception) {
-      showLongToast("App not Installed")
-      hideProgress()
-    }
-  }
-
-  private fun shareCardWhatsApp() {
+  private fun shareCardWhatsApp(messageN: String?, isWhatsApp: Boolean) {
     if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
       ActivityCompat.requestPermissions(baseActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
       return
@@ -117,9 +94,9 @@ class MyDigitalCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Channe
       val imageUri: Uri = Uri.parse(path)
       val waIntent = Intent(Intent.ACTION_SEND)
       waIntent.type = "image/*"
-      waIntent.setPackage("com.whatsapp")
+      if (isWhatsApp) waIntent.setPackage("com.whatsapp")
       waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
-      waIntent.putExtra(Intent.EXTRA_TEXT, "Business Card")
+      waIntent.putExtra(Intent.EXTRA_TEXT, messageN?:"")
       baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
       hideProgress()
     } catch (e: Exception) {

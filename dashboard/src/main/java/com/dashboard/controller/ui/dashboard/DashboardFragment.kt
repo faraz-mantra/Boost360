@@ -61,6 +61,8 @@ import com.onboarding.nowfloats.model.channel.respose.NFXAccessToken
 import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
+import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.LocalSessionModel
+import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyDigitalCardShareDialog
 import com.onboarding.nowfloats.ui.webview.WebViewBottomDialog
 import java.util.*
 import kotlin.collections.ArrayList
@@ -514,8 +516,17 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         WebEngageController.trackEvent("SITE HEALTH Page", "SITE_HEALTH", session?.fpTag);
         startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
       }
-      binding?.btnShareWhatsapp -> shareUserDetail(true)
-      binding?.btnShareMore -> shareUserDetail(false)
+      binding?.btnShareWhatsapp -> shareVisitingCard(true)
+      binding?.btnShareMore -> shareVisitingCard(false)
+      //shareUserDetail(false)
+    }
+  }
+
+  private fun shareVisitingCard(isWhatsApp: Boolean) {
+    session?.let {
+      val dialogCard = MyDigitalCardShareDialog.newInstance()
+      dialogCard.setData(getLocalSession(it), isWhatsApp)
+      dialogCard.showDialog(baseActivity.supportFragmentManager)
     }
   }
 
@@ -539,7 +550,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
     })
   }
-
 
   private fun quickActionClick(type: QuickActionData.QuickActionType) {
     when (type) {
@@ -700,4 +710,16 @@ fun UserSessionManager.getRequestFloat(): Map<String, String> {
 
 fun UserSessionManager?.checkIsPremiumUnlock(value: String?): Boolean {
   return (this?.getStoreWidgets()?.firstOrNull { it == value } != null)
+}
+
+fun getLocalSession(session: UserSessionManager): LocalSessionModel {
+  var imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
+  if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) imageUri = BASE_IMAGE_URL + imageUri
+  val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
+  val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
+  val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
+  return LocalSessionModel(floatingPoint = session.fPID, businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME),
+      businessImage = imageUri, location = location, websiteUrl = session.getDomainName(false),
+      businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), primaryNumber = session.userPrimaryMobile,
+      primaryEmail = session.fPEmail, fpTag = session.fpTag)
 }

@@ -17,6 +17,7 @@ class ManageBusinessData(
     var businessType: String? = null,
     var premiumCode: String? = null,
     var isLock: Boolean = false,
+    var isHide: Boolean = false,
 ) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.MANAGE_BUSINESS_ITEM_VIEW.getLayout()

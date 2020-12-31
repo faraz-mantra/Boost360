@@ -503,9 +503,9 @@ fun AppCompatActivity.startBusinessAddress(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startBusinessEmail(session: UserSessionManager?) {
+fun AppCompatActivity.startBusinessInfoEmail(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Business Email Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent("Business Info Page", "startview", session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
