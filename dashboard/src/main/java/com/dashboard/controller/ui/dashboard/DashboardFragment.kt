@@ -30,7 +30,7 @@ import com.dashboard.model.live.shareUser.ShareUserDetailResponse
 import com.dashboard.model.live.siteMeter.SiteMeterScoreDetails
 import com.dashboard.pref.*
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
-import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_IMAGE_URI
+import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -81,6 +81,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var siteMeterData: SiteMeterScoreDetails? = null
   private var quickActionPosition = 0
   private var isFirsLoad = true
+  private var isExpendCard = false
 
   override fun getLayout(): Int {
     return R.layout.fragment_dashboard
@@ -139,6 +140,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     this.siteMeterData = siteMeterData
     (baseActivity as? DashboardActivity)?.setPercentageData(siteMeterData.siteMeterTotalWeight)
     isHigh = (siteMeterData.siteMeterTotalWeight >= 80)
+    if (isExpendCard.not()) visitingCardShowHide(isDown = true, isStart = true)
     if (isRecreate != null && this.isHigh != this.isRecreate) {
       getCategoryData()
       apiSellerSummary()
@@ -156,8 +158,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     setDataSellerSummary(OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
   }
 
-  private fun visitingCardShowHide(isDown: Boolean) {
-    Timer().schedule(if (isDown) 60 else if (isHigh) 200 else 150) {
+  private fun visitingCardShowHide(isDown: Boolean, isStart: Boolean = false) {
+    Timer().schedule(when {
+      isStart -> 0
+      isDown -> 60
+      isHigh -> 200
+      else -> 150
+    }) {
       binding?.viewDigitalScore?.post {
         binding?.viewDigitalScore?.elevation = resources.getDimension(if (isDown) R.dimen.size_2 else R.dimen.size_0)
         binding?.viewAllBusinessContact?.visibility = if (isDown) View.GONE else View.VISIBLE
@@ -168,7 +175,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         }
       }
     }
-    binding?.viewDigitalScore?.animateViewTopPadding(isDown)
+    binding?.viewDigitalScore?.animateViewTopPadding(isDown, isStart)
   }
 
   private fun getSiteMeter(siteMeterData: SiteMeterScoreDetails) {
@@ -338,11 +345,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun setUserData() {
     binding?.txtBusinessName?.text = session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
     binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(true)}</u>")
-    var imageUri = session?.getFPDetails(GET_FP_DETAILS_IMAGE_URI)
-    if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
-      imageUri = BASE_IMAGE_URL + imageUri
+    var imageLogoUri = session?.getFPDetails(GET_FP_DETAILS_LogoUrl)
+    if (imageLogoUri.isNullOrEmpty().not() && imageLogoUri!!.contains("http").not()) {
+      imageLogoUri = BASE_IMAGE_URL + imageLogoUri
     }
-    binding?.imgBusinessLogo?.let { baseActivity.glideLoad(it, imageUri, R.drawable.ic_add_logo_d, isCrop = true) }
+    binding?.imgBusinessLogo?.let { baseActivity.glideLoad(it, imageLogoUri, R.drawable.ic_add_logo_d, isCrop = true) }
   }
 
   private fun setDataRiaAcademy(academyBanner: ArrayList<PromoAcademyBanner>) {
@@ -366,14 +373,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     if (isHigh) {
       binding?.pagerBoostPremium?.apply {
         if (marketBannerFilter.isNotEmpty()) {
-          visible()
+          binding?.boostPremiumView?.visible()
           if (adapterMarketBanner == null) {
             adapterMarketBanner = AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
             offscreenPageLimit = 3
             adapter = adapterMarketBanner
             setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
           } else adapterMarketBanner?.notify(marketBannerFilter)
-        } else gone()
+        } else binding?.boostPremiumView?.gone()
       }
     }
   }
@@ -492,9 +499,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     super.onClick(v)
     when (v) {
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
-      binding?.btnVisitingCardUp -> visitingCardShowHide(true)
-      binding?.btnVisitingCardDown -> visitingCardShowHide(false)
-      binding?.btnBusinessLogo -> baseActivity.startBusinessDescriptionEdit(session)
+      binding?.btnVisitingCardUp -> {
+        isExpendCard = false
+        visitingCardShowHide(true)
+      }
+      binding?.btnVisitingCardDown -> {
+        isExpendCard = true
+        visitingCardShowHide(false)
+      }
+      binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.btnDigitalChannel -> session?.let { baseActivity.startDigitalChannel(it) }
       binding?.btnShowDigitalScore -> {
@@ -655,11 +668,11 @@ private fun UserSessionManager.saveUserSummary(summary: SummaryEntity?) {
 }
 
 
-private fun LinearLayoutCompat?.animateViewTopPadding(isDown: Boolean) {
+private fun LinearLayoutCompat?.animateViewTopPadding(isDown: Boolean, isStart: Boolean = false) {
   this?.apply {
     val animator: ValueAnimator = ValueAnimator.ofInt(paddingTop, resources.getDimensionPixelSize(if (isDown) R.dimen.size_0 else R.dimen.size_164))
     animator.addUpdateListener { valueAnimator -> setPadding(0, (valueAnimator.animatedValue as Int), 0, 0) }
-    animator.duration = 280
+    animator.duration = if (isStart) 0 else 280
     animator.start()
   }
 }

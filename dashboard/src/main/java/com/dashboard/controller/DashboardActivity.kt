@@ -220,7 +220,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun toolbarPropertySet(pos: Int) {
     when (pos) {
       1 -> showToolbar(getString(R.string.website))
-      2 -> showToolbar(if (session?.fP_AppExperienceCode == "DOC" || session?.fP_AppExperienceCode == "HOS") getString(R.string.patient) else getString(R.string.customer))
+      2 -> showToolbar((if (session?.fP_AppExperienceCode == "DOC" || session?.fP_AppExperienceCode == "HOS") getString(R.string.patient) else getString(R.string.customer)).plus(" Interaction"))
       else -> getToolbar()?.apply { visibility = View.GONE }
     }
   }

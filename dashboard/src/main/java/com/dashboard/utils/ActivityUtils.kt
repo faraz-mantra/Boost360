@@ -129,6 +129,17 @@ fun AppCompatActivity.startFeviconImage(session: UserSessionManager?) {
   }
 }
 
+fun AppCompatActivity.startDomainDetail(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent("Domain Email Page", "startview", session?.fpTag);
+    val queries = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.domain.DomainEmailActivity"))
+    startActivity(queries)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
 fun AppCompatActivity.startSiteViewAnalytic(session: UserSessionManager?, type: String) {
   try {
     WebEngageController.trackEvent("WEBSITE visits - CHART DURATION CHANGED", "null", session?.fpTag)

@@ -17,6 +17,11 @@ object EndPoints {
   // NFX APIs
   const val DEV_BOOST_KIT_URL = "https://developer.api.boostkit.dev/"
   const val UPGRADE_PREMIUM_BANNER = "language/v1/upgrade/get-data"
+  // Plugin APIs
+  const val PLUGIN_FLOATS_URL = "https://plugin.withfloats.com/"
+  const val DOMAIN_DETAIL = "DomainService/v3/GetDomainDetailsForFloatingPoint/{fpTag}"
+
+
 
 }
 

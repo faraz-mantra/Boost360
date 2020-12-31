@@ -15,7 +15,9 @@ import com.dashboard.databinding.FragmentAllBoostAddOnsBinding
 import com.dashboard.model.live.addOns.AllBoostAddOnsData
 import com.dashboard.model.live.addOns.ManageAddOnsBusinessResponse
 import com.dashboard.model.live.addOns.ManageBusinessData
+import com.dashboard.model.live.domainDetail.DomainDetailResponse
 import com.dashboard.pref.UserSessionManager
+import com.dashboard.pref.clientId
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -53,6 +55,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
+    getDomainDetail()
     WebEngageController.trackEvent("Boost Add-ons Page", "pageview", session?.fpTag)
   }
 
@@ -94,7 +97,12 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       RecyclerViewActionType.BUSINESS_ADD_ONS_CLICK.ordinal -> {
         val data = item as? ManageBusinessData ?: return
         ManageBusinessData().saveLastSeenData(data)
-        ManageBusinessData.BusinessType.fromName(data.businessType)?.let { businessAddOnsClick(it, baseActivity, session) }
+        ManageBusinessData.BusinessType.fromName(data.businessType)?.let {
+          if (it == ManageBusinessData.BusinessType.domain_name_ssl) {
+            if (DomainDetailResponse().getDomainDetail() != null) baseActivity.startDomainDetail(session) else getDomainDetail(true)
+
+          } else businessAddOnsClick(it, baseActivity, session)
+        }
       }
     }
   }
@@ -132,6 +140,22 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       if (list.isNotEmpty()) listAddOns.add(AllBoostAddOnsData(title = "Boost Add-ons", manageBusinessList = list))
       adapterAddOns?.notify(listAddOns)
     } else adapterAddOns?.notify(addOnsListFilter)
+  }
+
+  private fun getDomainDetail(isClick: Boolean = false) {
+    if (isClick) showProgress()
+    viewModel?.getDomainDetailsForFloatingPoint(session?.fpTag, getDomainDetailsParam())?.observeOnce(viewLifecycleOwner, {
+      if (isClick) hideProgress()
+      val response = it as? DomainDetailResponse
+      if (response?.isSuccess() == true) response.saveDomainDetail()
+      if (isClick) baseActivity.startDomainDetail(session)
+    })
+  }
+
+  private fun getDomainDetailsParam(): HashMap<String, String>? {
+    val offersParam = HashMap<String, String>()
+    offersParam["clientId"] = clientId
+    return offersParam
   }
 }
 
@@ -183,8 +207,6 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.project_portfolio_d -> baseActivity.startListProjectAndTeams(session)
     ManageBusinessData.BusinessType.table_reservations_d -> baseActivity.startBookTable(session)
 
-    ManageBusinessData.BusinessType.domain_name_ssl -> {
-    }
     ManageBusinessData.BusinessType.room_booking_engine_d,
     ManageBusinessData.BusinessType.ic_ivr_faculty,
     ManageBusinessData.BusinessType.boost_payment_gateway,

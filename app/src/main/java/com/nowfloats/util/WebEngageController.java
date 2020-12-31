@@ -17,15 +17,18 @@ public class WebEngageController {
     static Analytics weAnalytics = WebEngage.get().analytics();
 
     public static void trackEvent(String event_name, String event_label, String event_value) {
-        Map<String, Object> trackEvent = new HashMap<>();
-        trackEvent.put("event_name", event_name);
-        trackEvent.put("event_label", event_label);
-        trackEvent.put("event_value", event_value);
-        weAnalytics.track(event_name, trackEvent);
+        try {
+            Map<String, Object> trackEvent = new HashMap<>();
+            trackEvent.put("event_name", event_name);
+            trackEvent.put("event_label", event_label);
+            trackEvent.put("event_value", event_value);
+            weAnalytics.track(event_name, trackEvent);
 
-        //Firebase Analytics Event...
-        FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, TextUtils.isEmpty(event_value) ? "null" : event_value);
-
+            //Firebase Analytics Event...
+            FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, TextUtils.isEmpty(event_value) ? "" : event_value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void initiateUserLogin(String profileId) {
@@ -65,6 +68,7 @@ public class WebEngageController {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -87,6 +91,7 @@ public class WebEngageController {
             FirebaseAnalyticsUtils.setUserProperty("Company", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -100,13 +105,12 @@ public class WebEngageController {
             FirebaseAnalyticsUtils.setUserProperty("fpTag", fpTag);
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public static void logout() {
-        if (weUser != null)
-            weUser.logout();
-
+        if (weUser != null) weUser.logout();
         //Reset Firebase Analytics User Session Event.
         FirebaseAnalyticsUtils.resetIdentifyUser();
     }

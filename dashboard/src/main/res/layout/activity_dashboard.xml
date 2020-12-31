@@ -62,7 +62,7 @@
 
         <View
           android:layout_width="match_parent"
-          android:layout_height="@dimen/size_3"
+          android:layout_height="@dimen/size_2"
           android:background="@drawable/up_shadow_d" />
 
         <com.framework.views.bottombar.NiceBottomBar
@@ -76,7 +76,7 @@
           app:indicatorGravity="top"
           tools:background="@color/white"
           app:indicatorInterpolator="anticipateOvershoot"
-          app:itemFontActive="@font/semi_bold"
+          app:itemFontActive="@font/regular"
           app:itemFontInActive="@font/regular"
           app:menu="@menu/bottom_nav_menu" />
       </androidx.appcompat.widget.LinearLayoutCompat>
