@@ -672,12 +672,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun academyBannerBoostClick(data: DashboardAcademyBanner) {
-    if (data.ctaFileLink.isNullOrEmpty().not()){
-
-    }else if (data.ctaWebLink.isNullOrEmpty().not()){
-
-    }else if (data.ctaYoutubeLink.isNullOrEmpty().not()){
-
+    when {
+      data.ctaFileLink.isNullOrEmpty().not() -> baseActivity.startDownloadUri(session, data.ctaFileLink?.trim()!!)
+      data.ctaWebLink.isNullOrEmpty().not() -> baseActivity.startWebViewPageLoad(session, data.ctaWebLink?.trim()!!)
+      data.ctaYoutubeLink.isNullOrEmpty().not() -> baseActivity.startYouTube(session, data.ctaYoutubeLink?.trim()!!)
     }
   }
 
