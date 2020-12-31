@@ -1,8 +1,16 @@
 package com.dashboard.utils
 
+import android.Manifest
+import android.app.DownloadManager
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.checkSelfPermission
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
@@ -17,6 +25,7 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
+
 
 const val VISITS_TYPE_STRING = "visits_type_string"
 
@@ -364,7 +373,7 @@ fun AppCompatActivity.startProductGallery(session: UserSessionManager?) {
 
 fun AppCompatActivity.startAddTestimonial(session: UserSessionManager?, isAdd: Boolean) {
   try {
-    val text=if(isAdd) "Add Testimonial Page" else "Testimonial Page"
+    val text = if (isAdd) "Add Testimonial Page" else "Testimonial Page"
     WebEngageController.trackEvent(text, "startview", session?.fpTag);
     val webIntent = Intent(this, Class.forName("com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity"))
     webIntent.putExtra("IS_ADD", isAdd)
@@ -377,7 +386,7 @@ fun AppCompatActivity.startAddTestimonial(session: UserSessionManager?, isAdd: B
 
 fun AppCompatActivity.startCreateCustomPage(session: UserSessionManager?, isAdd: Boolean) {
   try {
-    val text=if(isAdd) "Add Custom Page" else "Custom Page"
+    val text = if (isAdd) "Add Custom Page" else "Custom Page"
     WebEngageController.trackEvent(text, "startview", session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.CustomPage.CustomPageActivity"))
     webIntent.putExtra("IS_ADD", isAdd)
@@ -770,6 +779,44 @@ fun AppCompatActivity.startFacultyMember(session: UserSessionManager?) {
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startOldSiteMeter(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent("Site meter", "startview", session?.fpTag)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+fun AppCompatActivity.startYouTube(session: UserSessionManager?, url: String) {
+  try {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url));
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    intent.setPackage("com.google.android.youtube")
+    startActivity(intent)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startDownloadUri(session: UserSessionManager?, url: String) {
+  try {
+    if (checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED ||
+        checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+    }
+    val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+    val uri = Uri.parse(url)
+    val request = DownloadManager.Request(uri)
+    request.setTitle(uri.path?.getFileName() ?: "boost_file")
+    request.setDescription("boost360 File")
+    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
+    downloader.enqueue(request)
+  } catch (e: Exception) {
     e.printStackTrace()
   }
 }
