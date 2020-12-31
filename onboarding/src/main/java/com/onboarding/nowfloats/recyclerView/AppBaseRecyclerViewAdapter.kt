@@ -9,6 +9,7 @@ import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType.*
 import com.onboarding.nowfloats.databinding.*
 import com.onboarding.nowfloats.holders.CityRecyclerViewHolder
+import com.onboarding.nowfloats.holders.DigitalCardViewHolder
 import com.onboarding.nowfloats.holders.apiprocess.ApiProcessChannelRecyclerViewHolder
 import com.onboarding.nowfloats.holders.apiprocess.ApiProcessRecyclerViewHolder
 import com.onboarding.nowfloats.holders.category.CategoryRecyclerViewHolder
@@ -29,24 +30,12 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     val recyclerViewItemType = values().first { it.getLayout() == viewType }
     val binding = getViewDataBinding(inflater, recyclerViewItemType, parent)
     return when (recyclerViewItemType) {
-      CATEGORY_ITEM -> CategoryRecyclerViewHolder(
-          binding as ItemCategoryBinding
-      )
-      CHANNEL_ITEM -> ChannelRecyclerViewHolder(
-          binding as ItemChannelBinding
-      )
-      FEATURE_ITEM -> ChannelFeatureRecyclerViewHolder(
-          binding as ItemChannelFeatureBinding
-      )
-      CHANNEL_BOTTOM_SHEET_ITEM -> ChannelSelectorBottomSheetRecyclerViewHolder(
-          binding as ItemChannelBottomSheetBinding
-      )
-      SECTION_HEADER_ITEM -> SectionHeaderRecyclerViewHolder(
-          binding as ItemSectionHeaderBinding
-      )
-      FEATURE_DETAILS_BOTTOM_SHEET_ITEM -> FeatureDetailsRecyclerViewHolder(
-          binding as ItemFeatureDetailsBottomSheetBinding
-      )
+      CATEGORY_ITEM -> CategoryRecyclerViewHolder(binding as ItemCategoryBinding)
+      CHANNEL_ITEM -> ChannelRecyclerViewHolder(binding as ItemChannelBinding)
+      FEATURE_ITEM -> ChannelFeatureRecyclerViewHolder(binding as ItemChannelFeatureBinding)
+      CHANNEL_BOTTOM_SHEET_ITEM -> ChannelSelectorBottomSheetRecyclerViewHolder(binding as ItemChannelBottomSheetBinding)
+      SECTION_HEADER_ITEM -> SectionHeaderRecyclerViewHolder(binding as ItemSectionHeaderBinding)
+      FEATURE_DETAILS_BOTTOM_SHEET_ITEM -> FeatureDetailsRecyclerViewHolder(binding as ItemFeatureDetailsBottomSheetBinding)
       SELECTED_CHANNEL_ITEM -> ChannelSelectedRecyclerViewHolder(binding as ItemSelectedChannelBinding)
       SMALL_SELECTED_CHANNEL_ITEM -> ChannelSelectedSmallRecyclerViewHolder(binding as ItemSelectedChannelSmallBinding)
       API_PROCESS_BUSINESS_ITEM -> ApiProcessRecyclerViewHolder(binding as ItemApiCallingProcessBinding)
@@ -54,6 +43,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       CITY_DETAILS_ITEM -> CityRecyclerViewHolder(binding as CityItemDataBinding)
       CHANNEL_ITEM_CONNECT -> ChannelsConnectViewHolder(binding as ItemChannelsConnectedBinding)
       CHANNEL_ITEM_DISCONNECT -> ChannelsDisconnectViewHolder(binding as ItemChannelsDisconnectBinding)
+      DIGITAL_CARD_ITEM -> DigitalCardViewHolder(binding as ItemDigitalCardBinding)
     }
   }
 

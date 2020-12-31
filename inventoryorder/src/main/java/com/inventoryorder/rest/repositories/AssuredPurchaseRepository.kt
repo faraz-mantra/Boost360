@@ -6,8 +6,10 @@ import com.inventoryorder.base.rest.AppBaseRepository
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.rest.TaskCode
+import com.inventoryorder.rest.apiClients.AssuredPurchaseClient
 import com.inventoryorder.rest.services.AssuredPurchaseDataSource
 import io.reactivex.Observable
+import retrofit2.Retrofit
 
 object AssuredPurchaseRepository: AppBaseRepository<AssuredPurchaseDataSource, AppBaseLocalService>(){
 
@@ -22,6 +24,7 @@ object AssuredPurchaseRepository: AppBaseRepository<AssuredPurchaseDataSource, A
     fun updateExtraPropertyOrder(clientId: String?, request: UpdateExtraPropertyRequest?): Observable<BaseResponse> {
         return makeRemoteRequest(remoteDataSource.updateExtraPropertyOrder(clientId, request), TaskCode.POST_ORDER_EXTRA_FILED_UPDATE)
     }
+
     override fun getRemoteDataSourceClass(): Class<AssuredPurchaseDataSource> {
         return AssuredPurchaseDataSource::class.java
     }
@@ -30,4 +33,7 @@ object AssuredPurchaseRepository: AppBaseRepository<AssuredPurchaseDataSource, A
         return AppBaseLocalService()
     }
 
+    override fun getApiClient(): Retrofit {
+        return AssuredPurchaseClient.shared.retrofit
+    }
 }

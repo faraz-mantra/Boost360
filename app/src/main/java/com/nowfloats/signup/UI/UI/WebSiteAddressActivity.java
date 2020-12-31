@@ -9,11 +9,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.cardview.widget.CardView;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
@@ -28,6 +23,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -36,7 +37,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.signup.UI.API.Download_Facebook_Image;
 import com.nowfloats.signup.UI.API.Signup_Descriptinon;
 import com.nowfloats.signup.UI.Model.Create_Store_Event;
@@ -93,14 +93,14 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_site_address);
         dataBase = new DataBase(WebSiteAddressActivity.this);
-        createButton = (Button) findViewById(R.id.createButton);
-        termAndPolicyTextView = (TextView) findViewById(R.id.term_policy_textview);
-        termAndPolicyCheckbox = (AppCompatCheckBox) findViewById(R.id.checkbox);
-        webSiteTextView = (EditText) findViewById(R.id.websiteTitleTextView);
-        termAndPolicyCheckbox = (AppCompatCheckBox) findViewById(R.id.checkbox);
-        webSiteCardView = (CardView) findViewById(R.id.websiteTitleCardView);
+        createButton = findViewById(R.id.createButton);
+        termAndPolicyTextView = findViewById(R.id.term_policy_textview);
+        termAndPolicyCheckbox = findViewById(R.id.checkbox);
+        webSiteTextView = findViewById(R.id.websiteTitleTextView);
+        termAndPolicyCheckbox = findViewById(R.id.checkbox);
+        webSiteCardView = findViewById(R.id.websiteTitleCardView);
 
-        session = new UserSessionManager(getApplicationContext(),WebSiteAddressActivity.this);
+        session = new UserSessionManager(getApplicationContext(), WebSiteAddressActivity.this);
 
         bus = BusProvider.getInstance().getBus();
 
@@ -119,20 +119,18 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 //        });
 
 
-        label = (TextView) findViewById(R.id.domainAvailable);
-        domainCheckStatus = (ImageView)findViewById(R.id.domainCheckStatus);
+        label = findViewById(R.id.domainAvailable);
+        domainCheckStatus = findViewById(R.id.domainCheckStatus);
         getEditTextBundle();
-        if(Util.isNetworkStatusAvialable(WebSiteAddressActivity.this))
-        {
+        if (Util.isNetworkStatusAvialable(WebSiteAddressActivity.this)) {
             domainCheck();
-        }
-        else{
+        } else {
             Toast.makeText(WebSiteAddressActivity.this, getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show();
         }
         rTags = new HashSet<String>();
         xTags = new HashSet<String>();
 
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        toolbar = findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -266,18 +264,23 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                     session.getFacebookProfileDescription(),
                     session.getFacebookPageID(),
                     response.model.FPWebWidgets
-                 );
+            );
             descriptinon.execute();
         }
 
-        Intent webIntent = new Intent(WebSiteAddressActivity.this, HomeActivity.class);
-        webIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-        Bundle loginBundle = new Bundle();
-        loginBundle.putBoolean("fromLogin", true);
-        Constants.isWelcomScreenToBeShown = true;
-        webIntent.putExtras(loginBundle);
-        startActivity(webIntent);
-        finish();
+        try {
+            //        Intent webIntent = new Intent(WebSiteAddressActivity.this, HomeActivity.class);
+            Intent webIntent = new Intent(WebSiteAddressActivity.this, Class.forName("com.dashboard.controller.DashboardActivity"));
+            webIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            Bundle loginBundle = new Bundle();
+            loginBundle.putBoolean("fromLogin", true);
+            Constants.isWelcomScreenToBeShown = true;
+            webIntent.putExtras(loginBundle);
+            startActivity(webIntent);
+            finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -478,11 +481,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 
     public boolean validate(String text) {
         regex = R.string.signup_subd;
-        if (text.matches(WebSiteAddressActivity.this.getResources().getString(regex))) {
-            return true;
-        } else {
-            return false;
-        }
+        return text.matches(WebSiteAddressActivity.this.getResources().getString(regex));
     }
 
     public void domainCheck() {
@@ -570,7 +569,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 
             if(data_businessName != null)
             {
-                store.put("name",data_businessName.toString());
+                store.put("name", data_businessName);
             }
             if(data_city != null)
             {

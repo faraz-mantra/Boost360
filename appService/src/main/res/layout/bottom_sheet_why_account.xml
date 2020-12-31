@@ -25,7 +25,7 @@
       android:clickable="true"
       android:focusable="true"
       android:gravity="center"
-      android:text="Why do we need your bank account?"
+      android:text="@string/why_do_we_need_your_bank_account"
       android:textAlignment="gravity"
       android:textColor="@color/greyish_brown"
       app:textType="HEADING_5" />
@@ -40,7 +40,7 @@
       android:clickable="true"
       android:focusable="true"
       android:gravity="center"
-      android:text="This account is being used to send you money collected from your customers who are making payments on your Boost Business website."
+      android:text="@string/collect_boost_business_website_desc"
       android:textAlignment="gravity"
       android:textColor="@color/greyish_brown"
       app:fontFamily="@font/regular"

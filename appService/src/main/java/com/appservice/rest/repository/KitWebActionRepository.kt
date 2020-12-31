@@ -2,6 +2,7 @@ package com.appservice.rest.repository
 
 import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
+import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
 import com.appservice.model.serviceProduct.gstProduct.ProductGstDetailRequest
@@ -42,6 +43,10 @@ object KitWebActionRepository : AppBaseRepository<KitWebActionRemoteData, AppBas
 
   fun getProductImage(auth: String?, query: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getProductImage(auth, query), TaskCode.GET_PRODUCT_IMAGE)
+  }
+
+  fun fpOnboardingUpdate(auth: String?, request: OnBoardingUpdateModel?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.fpOnboardingUpdate(auth, request), TaskCode.FP_ONBOARDING_UPDATE)
   }
 
   override fun getRemoteDataSourceClass(): Class<KitWebActionRemoteData> {

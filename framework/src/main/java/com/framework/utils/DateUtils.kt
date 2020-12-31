@@ -18,6 +18,7 @@ object DateUtils {
   //  const val FORMAT_SERVER_TO_LOCAL_2 = "EEE dd-MMM-yyyy hh:mm a"
   const val FORMAT_SERVER_TO_LOCAL_2 = "EEE',' dd MMMM',' hh:mm a"
   const val FORMAT_DD_MM_YYYY = "dd-MM-yyyy"
+  const val FORMAT_DD_MM_YYYY_N = "yyyy/MM/dd"
   const val FORMAT_DD_MM_YYYY_hh_mm_ss = "dd-MM-yyyy HH:mm:ss"
   const val FORMAT__DD__MM__YYYY = "dd MM yyyy"
   const val FORMAT_YYYY_MM_DD = "yyyy-MM-dd"
@@ -107,5 +108,27 @@ object DateUtils {
     } else {
       dateFormater.format(d)
     }
+  }
+
+  fun getDateMillSecond(date: String): Long {
+    var date = date
+    var dateTime: Array<String>? = null
+    var dateMilliseconds: Long = 0
+    if (date.contains("/Date")) {
+      date = date.replace("/Date(", "").replace(")/", "")
+    }
+    if (date.contains("+")) {
+      dateTime = date.split("\\+".toRegex()).toTypedArray()
+      if (dateTime[1].length > 1) {
+        dateMilliseconds += dateTime[1].substring(0, 2).toInt() * 60 * 60 * 1000.toLong()
+      }
+      if (dateTime[1].length > 3) {
+        dateMilliseconds += dateTime[1].substring(2, 4).toInt() * 60 * 1000.toLong()
+      }
+      dateMilliseconds += java.lang.Long.valueOf(dateTime[0])
+    } else {
+      dateMilliseconds += java.lang.Long.valueOf(date)
+    }
+    return dateMilliseconds
   }
 }

@@ -1,0 +1,13 @@
+package com.nowfloats.helper;
+
+public enum FragmentType {
+    ACCOUNT_SETTING,
+    ACCOUNT_KEYBOARD,
+    MANAGE_CONTENT,
+    MANAGE_INVENTORY,
+    HELP_AND_SUPPORT,
+    ABOUT_BOOST,
+    NOTIFICATION_VIEW,
+    UPDATE_LATEST_STORY_VIEW,
+    MANAGE_CUSTOMER_VIEW
+}

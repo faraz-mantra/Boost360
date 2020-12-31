@@ -1,0 +1,65 @@
+<resources>
+  <string name="dashboard">Dashboard</string>
+  <string name="website">Website</string>
+  <string name="my_clinic">My Clinic</string>
+  <string name="boost_add_ons">Add-ons</string>
+  <string name="customer">Customer</string>
+  <string name="patient">Patient</string>
+  <string name="more">More</string>
+  <string name="www_sravansclinic_com"><u>www.plastoindiaandpolymers.com</u></string>
+  <string name="my_visiting_card">My visiting card</string>
+  <string name="improve_your_score_to_90">Improve your score above <b>90%</b> for\nbetter online traction.</string>
+  <string name="share_on_whatsapp">Share on WhatsApp</string>
+  <string name="share_on_more">Share on more...</string>
+  <string name="digital_readiness_score">Digital readiness score</string>
+  <string name="digital_readiness_score_n">Digital Readiness Score</string>
+  <string name="quick_actions">Quick actions</string>
+  <string name="access_all_activate_plan">Access all activated features in your plan.</string>
+  <string name="one_tap_to_share_your_all_business_contact_points_with_anyone">One tap to share your all business contact points with anyone</string>
+  <string name="ria_academy">Boost academy</string>
+  <string name="learn_boost_360">Learn how to make Boost 360 work for you.</string>
+  <string name="roi_summary">ROI Summary</string>
+  <string name="last_60_days">Last 60 days</string>
+  <string name="online_growth_stats">Online growth stats</string>
+  <string name="manage_your_business">Manage your business</string>
+  <string name="manage_your_clinic">Manage your clinic</string>
+  <string name="access_all_activated_features_in_your_plan">Access all activated features in your plan</string>
+  <string name="recommended_tasks">Recommended tasks</string>
+  <string name="show_all">SHOW ALL</string>
+  <string name="missing_ndetails">Missing\nDetails</string>
+  <string name="improve">Improve</string>
+  <string name="my_products_catalog">My products catalog</string>
+  <string name="all_boost_add_ons">All Boost add-ons</string>
+  <string name="tag_for_partners">.nowfloats.com</string>
+  <string name="features_not_available">Feature not available</string>
+  <string name="check_store_for_upgrade_info">Check the store for more information on upgrade plans</string>
+  <string name="goto_store">Go to Store</string>
+  <string name="cancel">Cancel</string>
+
+  <!-- SITE-Meter Percentage  -->
+  <string name="buydomain_percentage">10</string>
+  <string name="phoneNumber_percentage">5</string>
+  <string name="businessCategory_percentage">5</string>
+  <string name="featuredImage_percentage">10</string>
+  <string name="businessName_percentage">5</string>
+  <string name="businessdescription_percentage">10</string>
+  <string name="social_percentage">10</string>
+  <string name="businessCategory">5</string>
+  <string name="address_percentage">10</string>
+  <string name="email_percentage">5</string>
+  <string name="postUpdate_percentage">20</string>
+  <string name="share_percentage">5</string>
+  <string name="Logo_percentage">5</string>
+  <string name="business_hours">5</string>
+  <!-- SITE-Meter Percentage  -->
+
+  <string name="add_missing_info_better_online_traction">Add missing info and improve your digital readiness\nscore above %s for better online traction.</string>
+  <string name="site_completed">site completed</string>
+  <string name="your_site_health">Your Site Health</string>
+  <string name="navigation_data_error">Navigation data getting error!</string>
+  <string name="quick_action_data_error">Quick action data getting error!</string>
+  <string name="manage_business_not_found">Manage business data not found!</string>
+  <string name="powered_by">Powered By</string>
+  <string name="nowfloats">NowFloats</string>
+  <string name="academy_banner_not_found">Academy banner not found.</string>
+</resources>

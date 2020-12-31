@@ -31,6 +31,7 @@
 -dontwarn org.apache.commons.codec.binary.Base64
 
 -keep class androidx.core.app.CoreComponentFactory { *; }
+-keep class * extends androidx.fragment.app.Fragment{}
 
 #-dontwarn com.demach.konotor
 #-dontwarn com.demach.konotor.KonotorFeedbackActivity
@@ -336,13 +337,20 @@
 
 
 #Glide
--dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
 -keep public class * implements com.bumptech.glide.module.GlideModule
--keep public class * extends com.bumptech.glide.module.AppGlideModule
--keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+-keep class * extends com.bumptech.glide.module.AppGlideModule {
+ <init>(...);
+}
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
   **[] $VALUES;
   public *;
 }
+-keep class com.bumptech.glide.load.data.ParcelFileDescriptorRewinder$InternalRewinder {
+  *** rewind();
+}
+
+-dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
+
 
 ##onboarding progard rule
 -keeppackagenames com.onboarding

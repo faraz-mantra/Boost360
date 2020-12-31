@@ -48,7 +48,7 @@ class SplashActivity : AppCompatActivity() {
       val profileId = pref.getString("user_profile_id", null)
       isUserLoggedIn = profileId != null && profileId.trim().isNotEmpty()
     }
-    Smartlook.setupAndStartRecording("2976fda0fc620d3186eca19884bd55ac125b56e4");
+    Smartlook.setupAndStartRecording("2976fda0fc620d3186eca19884bd55ac125b56e4")
     onCreateView()
   }
 
@@ -74,6 +74,9 @@ class SplashActivity : AppCompatActivity() {
 
       override fun onAnimationEnd(animation: Animator?) {
         animation_view?.cancelAnimation()
+//        val intent = Intent(applicationContext, Class.forName("com.dashboard.controller.DashboardActivity"))
+//        startActivity(intent)
+//        finish()
         when {
           isUserLoggedIn -> {
             val intent = Intent(applicationContext, Class.forName("com.nowfloats.PreSignUp.SplashScreen_Activity"))

@@ -11,7 +11,7 @@ import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Model.MessageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.CardAdapter_v2;
-import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.NavigationDrawer.Card_Full_View_MainActivity;
 import com.nowfloats.NavigationDrawer.Home_Main_Fragment;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.util.Constants;
@@ -20,7 +20,6 @@ import com.nowfloats.util.WebEngageController;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -28,7 +27,6 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,11 +46,9 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
     View v;
     UserSessionManager session;
     int retryKey = 0;
+    boolean isDashboard = false;
     private boolean dataExists = false;
-    public interface CardRefresh{
-        public void cardrefresh(boolean flag);
-    }
-    CardRefresh cardrefresh;
+
     public Home_View_Card_Delete(Activity activity,String Url,JSONObject Content,int position,View v,int key){
         this.url = Url;
         this.values = Content;
@@ -63,18 +59,23 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
         flag =false;
         try {
             cardrefresh = (CardRefresh) activity;
-        }catch (Exception e){e.printStackTrace();}
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         session = new UserSessionManager(activity.getApplicationContext(),activity);
     }
-    @Override
-    protected void onPreExecute() {}
+
+    public void setDashboard(boolean isDashboard) {
+        this.isDashboard=isDashboard;
+    }
+    CardRefresh cardrefresh;
+
     @Override
     protected void onPostExecute(final String result)
     {
         String temp = null;
-        if(flag)
-        {
+        if(flag) {
             try{
                 Log.i("IMAGE---","VISIBLE RETRY LayOut");
                 if (/*Home_Main_Fragment.progressBar!=null &&*/ Home_Main_Fragment.retryLayout!=null && retryKey!=0){
@@ -88,8 +89,8 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
 //                    Home_Main_Fragment.scaleAdapter.notifyDataSetChanged();
                 }
 
-                DbController.getDbController(activity).deleteUpdate(new String[]{HomeActivity.StorebizFloats.get(position)._id});
-                HomeActivity.StorebizFloats.remove(position);
+                DbController.getDbController(activity).deleteUpdate(new String[]{Card_Full_View_MainActivity.getMessageList(isDashboard).get(position)._id});
+                Card_Full_View_MainActivity.getMessageList(isDashboard).remove(position);
                 temp	=	"Its Gone!";
                 WebEngageController.trackEvent("DELETE AN UPDATE","Deleted update",session.getFpTag());
                 refresh = new CardAdapter_v2(null,activity);
@@ -100,11 +101,10 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
                 Log.i("Delete POST---",""+temp);
             }catch(Exception e){
                 e.printStackTrace();
+                if (cardrefresh!=null) cardrefresh.error(true);
                 Log.i("Delete POST---","Exception");
             }
-        }
-        else
-        {
+        } else {
             temp	=	"error";
             Log.i("Delete POST---",""+temp);
             WebEngageController.trackEvent("DELETE AN UPDATE","Unable to delete Update",session.getFpTag());
@@ -112,12 +112,34 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
             try {
                 Home_View_Card_Delete cardDelete = new Home_View_Card_Delete(activity, url, values, position, v,retryKey);
                 cardDelete.execute();
-            } catch(Exception e )
-            {
+            } catch(Exception e ) {
                 e.printStackTrace();
+                if (cardrefresh!=null) cardrefresh.error(true);
             }
 
         }
+    }
+    @Override
+    protected void onPreExecute() {}
+
+    public void getMessages(String fpId)
+    {
+        HashMap<String,String> map = new HashMap<>();
+        map.put("clientId",Constants.clientId);
+        map.put("skipBy","0");
+        map.put("fpId",fpId);
+        Login_Interface login_interface = Constants.restAdapter.create(Login_Interface.class);
+        login_interface.getMessages(map,new Callback<MessageModel>() {
+            @Override
+            public void success(MessageModel messageModel, retrofit.client.Response response) {
+                parseMessages(messageModel);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                if (cardrefresh!=null) cardrefresh.error(true);
+            }
+        });
     }
 
 
@@ -142,67 +164,46 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
                 Log.i("Upload Delete msg...","Success");
                 flag = true;
             }
-        } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return  null;
     }
 
-    public void getMessages(String fpId)
-    {
-        HashMap<String,String> map = new HashMap<>();
-        map.put("clientId",Constants.clientId);
-        map.put("skipBy","0");
-        map.put("fpId",fpId);
-        Login_Interface login_interface = Constants.restAdapter.create(Login_Interface.class);
-        login_interface.getMessages(map,new Callback<MessageModel>() {
-            @Override
-            public void success(MessageModel messageModel, retrofit.client.Response response) {
-                parseMessages(messageModel);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-            }
-        });
-    }
-
     public void parseMessages(MessageModel response) {
-        if (response!=null)
-        {
+        if (response!=null) {
             ArrayList<FloatsMessageModel> bizData 	= response.floats;
             Constants.moreStorebizFloatsAvailable 	= response.moreFloatsAvailable;
             for(int i = 0 ; i < bizData.size() ;i++){
                 FloatsMessageModel data = bizData.get(i);
-                if (HomeActivity.StorebizFloats!=null) {
+                if (Card_Full_View_MainActivity.getMessageList(isDashboard)!=null) {
                     String formatted = Methods.getFormattedDate(data.createdOn);
                     data.createdOn = formatted;
 
-                    for (int j = 0; j < HomeActivity.StorebizFloats.size(); j++) {
-                        if (HomeActivity.StorebizFloats.get(j)._id.equals(data._id)) {
+                    for (int j = 0; j < Card_Full_View_MainActivity.getMessageList(isDashboard).size(); j++) {
+                        if (Card_Full_View_MainActivity.getMessageList(isDashboard).get(j)._id.equals(data._id)) {
                             dataExists = true; break;
                         }else{
                             dataExists = false;
                         }
                     }
                     if(!dataExists) {
-                        HomeActivity.StorebizFloats.add(data);
+                        Card_Full_View_MainActivity.getMessageList(isDashboard).add(data);
                     }
                 }
             }
-            if(HomeActivity.StorebizFloats!=null && HomeActivity.StorebizFloats.size()==0){
+            if(Card_Full_View_MainActivity.getMessageList(isDashboard)!=null && Card_Full_View_MainActivity.getMessageList(isDashboard).size()==0){
                 if (Home_Main_Fragment.emptyMsgLayout!=null && !Constants.isWelcomScreenToBeShown)
                     Home_Main_Fragment.emptyMsgLayout.setVisibility(View.VISIBLE);
             }
-            if (cardrefresh!=null)
-                cardrefresh.cardrefresh(true);
+            if (cardrefresh!=null) cardrefresh.cardrefresh(true);
+        }else  if (cardrefresh!=null) cardrefresh.error(true);
+    }
+
+    public interface CardRefresh{
+        public void cardrefresh(boolean flag);
+        default void error(boolean flag){
+
         }
     }
 }

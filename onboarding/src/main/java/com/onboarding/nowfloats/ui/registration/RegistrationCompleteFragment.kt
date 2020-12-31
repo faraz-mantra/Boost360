@@ -38,12 +38,10 @@ import com.onboarding.nowfloats.model.uploadfile.UploadFileProfileRequest
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
 import com.onboarding.nowfloats.utils.WebEngageController
-import com.webengage.sdk.android.WebEngage
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import java.io.File
 import java.util.*
-import kotlin.collections.ArrayList
 
 class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrationCompleteBinding>() {
 
@@ -149,7 +147,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
       binding?.businessClick -> openImagePicker(false)
       binding?.websiteBtnClick -> {
         try {
-          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Business website view clicked", "REGISTRATION COMPLETE",it) }
+          requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Business website view clicked", "REGISTRATION COMPLETE", it) }
           val bundle = Bundle()
           bundle.putString(IntentConstant.DOMAIN_URL.name, "${requestFloatsModel?.contactInfo?.domainName?.toLowerCase(Locale.ROOT)}.nowfloats.com")
           navigator?.startActivity(WebViewActivity::class.java, bundle)
@@ -241,15 +239,14 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
           showLongToast(resources.getString(R.string.business_image_uploaded))
           requestFloatsModel?.businessUrl = it.stringResponse
           updateInfo()
-        } else showLongToast(it.message)
+        } else showLongToast(it.message())
       })
     }
   }
 
   private fun getRequestBusinessDate(businessImage: File): UploadFileBusinessRequest {
-    val responseBody = RequestBody.create(MediaType.parse("image/png"), businessImage.readBytes())
-    val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name }
-        ?: "BUSINESS_${requestFloatsModel?.contactInfo?.domainName}.png"
+    val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), businessImage.readBytes())
+    val fileName = takeIf { businessImage.name.isNullOrEmpty().not() }?.let { businessImage.name } ?: "BUSINESS_${requestFloatsModel?.contactInfo?.domainName}.png"
     return UploadFileBusinessRequest(clientId, requestFloatsModel?.floatingPointId, UploadFileBusinessRequest.Type.SINGLE.name, fileName, responseBody)
   }
 
@@ -268,9 +265,8 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
   }
 
   private fun getRequestProfileData(profileImage: File): UploadFileProfileRequest {
-    val responseBody = RequestBody.create(MediaType.parse("image/png"), profileImage.readBytes())
-    val fileName = takeIf { profileImage.name.isNullOrEmpty().not() }?.let { profileImage.name }
-        ?: "PROFILE_${requestFloatsModel?.contactInfo?.domainName}.png"
+    val responseBody = RequestBody.create("image/png".toMediaTypeOrNull(), profileImage.readBytes())
+    val fileName = takeIf { profileImage.name.isNullOrEmpty().not() }?.let { profileImage.name } ?: "PROFILE_${requestFloatsModel?.contactInfo?.domainName}.png"
     return UploadFileProfileRequest(clientId, userProfileId, fileName, responseBody)
   }
 }

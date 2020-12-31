@@ -55,7 +55,6 @@ import com.nowfloats.NavigationDrawer.model.WhatsNewDataModel;
 import com.nowfloats.ProductGallery.ManageProductActivity;
 import com.nowfloats.ProductGallery.Model.ImageListModel;
 import com.nowfloats.ProductGallery.Model.Product;
-import com.nowfloats.ProductGallery.ProductCatalogActivity;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.sync.model.Updates;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -82,6 +81,7 @@ import java.util.List;
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
 import static com.appservice.ui.catlogService.CatlogServiceContainerActivityKt.startFragmentActivityNew;
+import static com.nowfloats.NavigationDrawer.floating_view.FloatingViewBottomSheetDialog.FLOATING_CLICK_TYPE.WRITE_UPDATE;
 
 
 public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetch_Home_Data_Interface {
@@ -125,6 +125,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
 
     TextView addProductText;
 
+    public static ArrayList<FloatsMessageModel> StorebizFloats = new ArrayList<FloatsMessageModel>();
 
     public Home_Main_Fragment() {
     }
@@ -240,27 +241,19 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         }
     }
 
+    public static ArrayList<FloatsMessageModel> getMessageList(Activity activity) {
+        if (activity instanceof HomeActivity) return HomeActivity.StorebizFloats;
+        else return StorebizFloats;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mCallback = (HomeActivity) context;
+            if (getActivity() instanceof HomeActivity) mCallback = (HomeActivity) context;
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        bus = BusProvider.getInstance().getBus();
-        bus.register(this);
-        current_Activity = getActivity();
-        session = new UserSessionManager(getActivity(), getActivity());
-
-        mPref = current_Activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        mDbController = DbController.getDbController(current_Activity);
-        HomeActivity.StorebizFloats.clear();
     }
 
     @Override
@@ -269,6 +262,76 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
 
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        bus = BusProvider.getInstance().getBus();
+        bus.register(this);
+        current_Activity = getActivity();
+        session = new UserSessionManager(getActivity(), current_Activity);
+        mPref = current_Activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        mDbController = DbController.getDbController(current_Activity);
+        getMessageList(current_Activity).clear();
+    }
+
+    private void onClickFloatingView(FLOATING_CLICK_TYPE type) {
+        switch (type) {
+            case ADD_PRODUCT_SERVICE:
+                addInventory();
+                break;
+            case ADD_IMAGE:
+                addImage();
+                break;
+            case CREATE_CUSTOM_PAGE:
+                addCustomPage();
+                break;
+            case ADD_TESTIMONIAL:
+                addTestimonial();
+                break;
+            case WRITE_UPDATE:
+                addUpdate();
+                break;
+        }
+    }
+
+    private void processOnClickOfFabButton() {
+        isRotate = ViewAnimation.rotateFab(fabButton, !isRotate);
+        if (isRotate) {
+            updatesLayout.setAlpha(0.2f);
+            emptyLayout.setAlpha(0.2f);
+            ViewAnimation.showIn(addOptions);
+        } else {
+            updatesLayout.setAlpha(1f);
+            emptyLayout.setAlpha(1f);
+            ViewAnimation.showOut(addOptions);
+        }
+    }
+
+//    intent = new Intent(ImageMenuActivity.this, ImageGalleryActivity .class);
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        BoostLog.d("Home_Main_Fragment", "onViewCreated");
+
+        /**
+         * Call this API to get visitsCount list and display in Analytics
+         */
+        //new Fetch_Home_Data(getActivity(),session).getVisitors();
+    }
+
+    private void startSync() {
+
+        progressBar.setVisibility(View.VISIBLE);
+        fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
+        fetch_home_data.getMessages(session.getFPID(), "0");
+    }
+
+    private void getNewAvailableUpdates() {
+        fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
+        BoostLog.d("Latest Message Id: ", mDbController.getLatestMessageId());
+        fetch_home_data.getNewAvailableMessage(mDbController.getLatestMessageId(), session.getFPID());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -277,7 +340,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         mainView = inflater.inflate(R.layout.fragment_home__main_, container, false);
         fetch_home_data = new Fetch_Home_Data(getActivity(), 0);
 
-        HomeActivity.StorebizFloats.clear();
+        getMessageList(current_Activity).clear();
         progressCrd = mainView.findViewById(R.id.progressCard);
         progressBar = mainView.findViewById(R.id.progressbar);
         retryLayout = mainView.findViewById(R.id.postRetryLayout);
@@ -355,10 +418,10 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         }
 
 
-        for (int i = 0; i < HomeActivity.StorebizFloats.size(); i++) {
-            Image_Text_Model image_text_model_1 = new Image_Text_Model();
-            mNewWelcomeTextImageList.add(image_text_model_1);
-        }
+            for (int i = 0; i < getMessageList(current_Activity).size(); i++) {
+                Image_Text_Model image_text_model_1 = new Image_Text_Model();
+                mNewWelcomeTextImageList.add(image_text_model_1);
+            }
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new FadeInUpAnimator());
@@ -413,9 +476,13 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         ViewAnimation.init(addOptions);
 
         fabButton.setOnClickListener(v -> {
+            if (getActivity() instanceof HomeActivity){
+                FloatingViewBottomSheetDialog dialog = new FloatingViewBottomSheetDialog(session, this::onClickFloatingView);
+                dialog.show(getParentFragmentManager(), FloatingViewBottomSheetDialog.class.getName());
+            }else {
+                onClickFloatingView(WRITE_UPDATE);
+            }
 //            processOnClickOfFabButton()
-            FloatingViewBottomSheetDialog dialog = new FloatingViewBottomSheetDialog(session, this::onClickFloatingView);
-            dialog.show(getParentFragmentManager(), FloatingViewBottomSheetDialog.class.getName());
         });
         addUpdate.setOnClickListener(v -> {
             addUpdate();
@@ -439,115 +506,6 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         });
 
         return mainView;
-    }
-
-    private void onClickFloatingView(FLOATING_CLICK_TYPE type) {
-        switch (type) {
-            case ADD_PRODUCT_SERVICE:
-                addInventory();
-                break;
-            case ADD_IMAGE:
-                addImage();
-                break;
-            case CREATE_CUSTOM_PAGE:
-                addCustomPage();
-                break;
-            case ADD_TESTIMONIAL:
-                addTestimonial();
-                break;
-            case WRITE_UPDATE:
-                addUpdate();
-                break;
-        }
-    }
-
-    private void processOnClickOfFabButton() {
-        isRotate = ViewAnimation.rotateFab(fabButton, !isRotate);
-        if (isRotate) {
-            updatesLayout.setAlpha(0.2f);
-            emptyLayout.setAlpha(0.2f);
-            ViewAnimation.showIn(addOptions);
-        } else {
-            updatesLayout.setAlpha(1f);
-            emptyLayout.setAlpha(1f);
-            ViewAnimation.showOut(addOptions);
-        }
-    }
-
-//    intent = new Intent(ImageMenuActivity.this, ImageGalleryActivity .class);
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        BoostLog.d("Home_Main_Fragment", "onViewCreated");
-
-        /**
-         * Call this API to get visitsCount list and display in Analytics
-         */
-        //new Fetch_Home_Data(getActivity(),session).getVisitors();
-    }
-
-    private void startSync() {
-
-        progressBar.setVisibility(View.VISIBLE);
-        fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
-        fetch_home_data.getMessages(session.getFPID(), "0");
-    }
-
-    private void getNewAvailableUpdates() {
-        fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
-        BoostLog.d("Latest Message Id: ", mDbController.getLatestMessageId());
-        fetch_home_data.getNewAvailableMessage(mDbController.getLatestMessageId(), session.getFPID());
-    }
-
-    private boolean loadDataFromDb(int skip, boolean isNewMessage) {
-
-        if (mIsNewMsg) {
-            mIsNewMsg = false;
-            HomeActivity.StorebizFloats.clear();
-
-
-            cAdapter.notifyDataSetChanged();
-            recyclerView.setAdapter(cAdapter);
-            Constants.createMsg = false;
-        }
-        List<Updates> updates = null;
-        try {
-            updates = mDbController.getAllUpdates(skip);
-        } catch (Exception e) {
-            MixPanelController.track(MixPanelController.UPDATE_DB_CRASH, null);
-            mPref.edit().putBoolean(com.nowfloats.util.Constants.SYNCED, false).apply();
-            mDbController.deleteDataBase();
-            startSync();
-            return true;
-        }
-        if (updates == null || updates.isEmpty()) {
-            if (skip == 0 && maxSyncCall > 0) {
-                maxSyncCall--;
-                startSync();
-            }
-            return false;
-        }
-        if (emptyMsgLayout.getVisibility() == View.VISIBLE) {
-            emptyMsgLayout.setVisibility(View.GONE);
-        }
-
-
-        for (Updates update : updates) {
-            FloatsMessageModel floatModel = new FloatsMessageModel(update.getServerId(), update.getDate(),
-                    update.getImageUrl(), update.getUpdateText(), update.getTileImageUrl(), update.getType(), update.getUrl());
-            HomeActivity.StorebizFloats.add(floatModel);
-        }
-
-
-        SharedPreferences.Editor editor = mPref.edit();
-        editor.putBoolean(Constants.SYNCED, true);
-        editor.apply();
-
-        cAdapter.notifyDataSetChanged();
-        progressBar.setVisibility(View.GONE);
-        return true;
-
     }
 
     @Override
@@ -675,26 +633,53 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    private void addInventory() {
-        WebEngageController.trackEvent("DASHBOARD - Fab - Inventory", "Fab", null);
-        String type = Utils.getProductType(session.getFP_AppExperienceCode());
-        Product newProduct = new Product();
-        newProduct.setProductType(type);
-        switch (type.toUpperCase()){
-            case "SERVICES":
-                Bundle bundle = getBundleData(newProduct);
-                startFragmentActivityNew(getActivity(), FragmentType.SERVICE_DETAIL_VIEW, bundle, false, true);
-                break;
-            default:
-                Intent intent = new Intent(getContext(), ManageProductActivity.class);
-                intent.putExtra("PRODUCT", newProduct);
-                startActivityForResult(intent, 300);
-                break;
+    private boolean loadDataFromDb(int skip, boolean isNewMessage) {
+
+        if (mIsNewMsg) {
+            mIsNewMsg = false;
+            getMessageList(current_Activity).clear();
+
+            cAdapter.notifyDataSetChanged();
+            recyclerView.setAdapter(cAdapter);
+            Constants.createMsg = false;
         }
-//        Intent webIntent = new Intent(getActivity(), ProductCatalogActivity.class);
-//        webIntent.putExtra("IS_ADD", true);
-//        startActivity(webIntent);
-//        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        List<Updates> updates = null;
+        try {
+            updates = mDbController.getAllUpdates(skip);
+        } catch (Exception e) {
+            MixPanelController.track(MixPanelController.UPDATE_DB_CRASH, null);
+            mPref.edit().putBoolean(com.nowfloats.util.Constants.SYNCED, false).apply();
+            mDbController.deleteDataBase();
+            startSync();
+            return true;
+        }
+        if (updates == null || updates.isEmpty()) {
+            if (skip == 0 && maxSyncCall > 0) {
+                maxSyncCall--;
+                startSync();
+            }
+            return false;
+        }
+        if (emptyMsgLayout.getVisibility() == View.VISIBLE) {
+            emptyMsgLayout.setVisibility(View.GONE);
+        }
+
+
+        for (Updates update : updates) {
+            FloatsMessageModel floatModel = new FloatsMessageModel(update.getServerId(), update.getDate(),
+                    update.getImageUrl(), update.getUpdateText(), update.getTileImageUrl(), update.getType(), update.getUrl());
+            getMessageList(current_Activity).add(floatModel);
+        }
+
+
+        SharedPreferences.Editor editor = mPref.edit();
+        editor.putBoolean(Constants.SYNCED, true);
+        editor.apply();
+
+        cAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
+        return true;
+
     }
 
     private void openAddUpdateActivity() {
@@ -850,6 +835,28 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         void onRenewPlanSelected();
     }
 
+    private void addInventory() {
+        WebEngageController.trackEvent("DASHBOARD - Fab - Inventory", "Fab", null);
+        String type = Utils.getProductType(session.getFP_AppExperienceCode());
+        Product newProduct = new Product();
+        newProduct.setProductType(type);
+        switch (type.toUpperCase()) {
+            case "SERVICES":
+                Bundle bundle = getBundleData(newProduct);
+                startFragmentActivityNew(getActivity(), FragmentType.SERVICE_DETAIL_VIEW, bundle, false, true);
+                break;
+            default:
+                Intent intent = new Intent(getContext(), ManageProductActivity.class);
+                intent.putExtra("PRODUCT", newProduct);
+                startActivityForResult(intent, 300);
+                break;
+        }
+//        Intent webIntent = new Intent(getActivity(), ProductCatalogActivity.class);
+//        webIntent.putExtra("IS_ADD", true);
+//        startActivity(webIntent);
+//        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
     public class MyOnClickListener implements View.OnClickListener {
         private final Context context;
 
@@ -863,6 +870,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
             int selectedItemPosition = recyclerView.getChildPosition(v);
             Intent webIntent = new Intent(context, Card_Full_View_MainActivity.class);
             webIntent.putExtra("POSITION", selectedItemPosition);
+            webIntent.putExtra("IS_DASHBOARD", true);
             startActivity(webIntent);
             getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 

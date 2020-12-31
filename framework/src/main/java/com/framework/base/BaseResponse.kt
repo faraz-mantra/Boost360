@@ -23,4 +23,8 @@ open class BaseResponse(
       message
     }
   }
+
+  fun isSuccess(): Boolean {
+    return status == 200 || status == 201 || status == 202
+  }
 }
