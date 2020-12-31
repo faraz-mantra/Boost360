@@ -113,4 +113,7 @@ dependencies {
     //Firebase analytics
     api 'com.google.firebase:firebase-analytics-ktx:18.0.0'
 
+    // Referral Library: invitereferrals
+    api 'com.android.installreferrer:installreferrer:2.2'
+    implementation 'com.appsflyer:af-android-sdk:6.0.0'
 }
