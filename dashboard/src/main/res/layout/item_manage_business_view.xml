@@ -31,7 +31,8 @@
           android:layout_height="wrap_content"
           android:text="@string/manage_your_business"
           android:id="@+id/title"
-          android:textColor="@color/black_4f4f4f"
+          android:textColor="@color/black_4a4a4a"
+          app:fontFamily="@font/semi_bold"
           app:textType="HEADING_6" />
 
         <com.framework.views.customViews.CustomTextView
@@ -41,7 +42,7 @@
           android:ellipsize="end"
           android:maxLines="2"
           android:text="@string/access_all_activated_features_in_your_plan"
-          android:textColor="@color/warm_grey"
+          android:textColor="@color/black_4a4a4a"
           app:textType="CAPTION" />
       </LinearLayout>
 

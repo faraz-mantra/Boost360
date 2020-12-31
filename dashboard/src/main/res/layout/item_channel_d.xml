@@ -3,28 +3,45 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/main_content"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/size_12"
-    android:id="@+id/main_content"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <com.framework.views.customViews.CustomCardView
-      android:layout_width="@dimen/size_40"
-      android:layout_height="@dimen/size_40"
-      android:layout_margin="@dimen/size_4"
-      app:cardBackgroundColor="@color/white"
-      app:cardCornerRadius="@dimen/size_20"
-      app:cardElevation="2dp">
+    <FrameLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/size_2">
+
+      <com.framework.views.customViews.CustomCardView
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
+        android:layout_margin="2dp"
+        android:layout_marginEnd="@dimen/size_3"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/size_20"
+        app:cardElevation="1dp">
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/image"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:srcCompat="@drawable/ic_google_n" />
+
+      </com.framework.views.customViews.CustomCardView>
 
       <com.framework.views.customViews.CustomImageView
-        android:id="@+id/image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srcCompat="@drawable/ic_google_n" />
+        android:id="@+id/tick_status_icon"
+        android:layout_width="@dimen/size_14"
+        android:layout_height="@dimen/size_14"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/size_1"
+        android:elevation="2dp"
+        app:srcCompat="@drawable/ic_tick_ok_d"/>
+    </FrameLayout>
 
-    </com.framework.views.customViews.CustomCardView>
 
     <com.framework.views.customViews.CustomTextView
       android:id="@+id/title"

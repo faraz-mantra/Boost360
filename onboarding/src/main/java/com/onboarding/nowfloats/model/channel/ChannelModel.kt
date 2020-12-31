@@ -117,7 +117,7 @@ fun ChannelModel.isTwitterChannel(): Boolean {
 
 fun ChannelModel.getName(): String {
   return when (getType()) {
-    ChannelType.G_SEARCH -> instance.resources.getString(R.string.google_search)
+    ChannelType.G_SEARCH -> instance.resources.getString(R.string.website)
     ChannelType.FB_PAGE -> instance.resources.getString(R.string.fb_page)
     ChannelType.G_MAPS -> instance.resources.getString(R.string.google_maps)
     ChannelType.FB_SHOP -> instance.resources.getString(R.string.fb_shop)
@@ -167,6 +167,34 @@ fun ChannelModel.getDrawable(context: Context?): Drawable? {
     else -> null
   }
 }
+
+fun ChannelModel.getDrawableActiveNew(context: Context?): Drawable? {
+  if (context == null) return null
+  return when (getType()) {
+    ChannelType.G_SEARCH -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_website_active, context.theme)
+    ChannelType.FB_PAGE -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_facebook_page_active, context.theme)
+    ChannelType.G_MAPS -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_maps_active, context.theme)
+    ChannelType.FB_SHOP -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_facebook_shop_active, context.theme)
+    ChannelType.WAB -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_whatsapp_business_active, context.theme)
+    ChannelType.T_FEED -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_twitter_active, context.theme)
+    ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_maps_active, context.theme)
+    else -> null
+  }
+}
+fun ChannelModel.getDrawableInActiveNew(context: Context?): Drawable? {
+  if (context == null) return null
+  return when (getType()) {
+    ChannelType.G_SEARCH -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_website_inactive, context.theme)
+    ChannelType.FB_PAGE -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_facebook_page_inactive, context.theme)
+    ChannelType.G_MAPS -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_maps_inactive, context.theme)
+    ChannelType.FB_SHOP -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_facebook_shop_inactive, context.theme)
+    ChannelType.WAB -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_whatsapp_business_inactive, context.theme)
+    ChannelType.T_FEED -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_twitter_inactive, context.theme)
+    ChannelType.G_BUSINESS -> ResourcesCompat.getDrawable(context.resources, R.drawable.ic_google_maps_inactive, context.theme)
+    else -> null
+  }
+}
+
 
 fun Iterable<ChannelModel>.haveFacebookShop(): Boolean {
   return filterTo(ArrayList(), { it.isFacebookShop() }).isNotEmpty()
