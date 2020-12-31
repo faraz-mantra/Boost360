@@ -31,7 +31,7 @@
       android:layout_marginTop="@dimen/size_4"
       android:gravity="center"
       android:textAlignment="gravity"
-      android:textColor="@color/warm_grey_two"
+      android:textColor="@color/black_4a4a4a"
       app:textType="CAPTION"
       tools:text="Add photo\nto gallery" />
   </LinearLayout>

@@ -11,7 +11,6 @@ enum class RecyclerViewItemType {
   MANAGE_BUSINESS_ITEM_VIEW,
   QUICK_ACTION_ITEM_VIEW,
   RIA_ACADEMY_ITEM_VIEW,
-  RIA_ACADEMY_ITEM_NEW_VIEW,
   BOOST_PREMIUM_ITEM_VIEW,
   BOOST_CUSTOMER_ITEM_VIEW,
   ROI_SUMMARY_ITEM_VIEW,
@@ -31,7 +30,6 @@ enum class RecyclerViewItemType {
       MANAGE_BUSINESS_ITEM_VIEW -> R.layout.item_manage_business_d
       QUICK_ACTION_ITEM_VIEW -> R.layout.item_quick_action
       RIA_ACADEMY_ITEM_VIEW -> R.layout.item_ria_academy
-      RIA_ACADEMY_ITEM_NEW_VIEW -> R.layout.item_ria_academy_new
       BOOST_PREMIUM_ITEM_VIEW -> R.layout.item_boost_premium
       BOOST_CUSTOMER_ITEM_VIEW -> R.layout.item_customer_patient_item
       ROI_SUMMARY_ITEM_VIEW -> R.layout.item_roi_summary

@@ -22,6 +22,10 @@ import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
+import com.dashboard.model.live.dashboardBanner.DashboardAcademyBanner
+import com.dashboard.model.live.dashboardBanner.DashboardPremiumBannerResponse
+import com.dashboard.model.live.dashboardBanner.getAcademyBanners
+import com.dashboard.model.live.dashboardBanner.saveDataAcademy
 import com.dashboard.model.live.premiumBanner.*
 import com.dashboard.model.live.quickAction.QuickActionData
 import com.dashboard.model.live.quickAction.QuickActionItem
@@ -79,7 +83,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterRoi: AppBaseRecyclerViewAdapter<RoiSummaryData>? = null
   private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
   private var adapterMarketBanner: AppBaseRecyclerViewAdapter<PromoAcademyBanner>? = null
-  private var adapterAcademy: AppBaseRecyclerViewAdapter<PromoAcademyBanner>? = null
+  private var adapterAcademy: AppBaseRecyclerViewAdapter<DashboardAcademyBanner>? = null
   private var siteMeterData: SiteMeterScoreDetails? = null
   private var quickActionPosition = 0
   private var isFirsLoad = true
@@ -106,8 +110,18 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun getPremiumBanner() {
-    setDataMarketBanner(PremiumFeatureData().getMarketPlaceBanners() ?: ArrayList())
-    setDataRiaAcademy(PremiumFeatureData().getAcademyBanners() ?: ArrayList())
+    setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
+    setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
+    viewModel?.getUpgradeDashboardBanner()?.observeOnce(viewLifecycleOwner, {
+      val response = it as? DashboardPremiumBannerResponse
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        val data = response.data?.get(0)
+        if (data?.academyBanners.isNullOrEmpty().not()) {
+          saveDataAcademy(data?.academyBanners!!)
+          setDataRiaAcademy(data.academyBanners!!)
+        }
+      }
+    })
     viewModel?.getUpgradePremiumBanner()?.observeOnce(viewLifecycleOwner, {
       val response = it as? UpgradePremiumFeatureResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
@@ -115,9 +129,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         val promoBannersFilter = (data?.promoBanners ?: ArrayList()).marketBannerFilter(session)
         saveDataMarketPlace(promoBannersFilter)
         setDataMarketBanner(promoBannersFilter)
-        val academyBannerFilter = (data?.academyBanner ?: ArrayList()).marketBannerFilter(session)
-        saveDataAcademy(academyBannerFilter)
-        setDataRiaAcademy(academyBannerFilter)
       }
     })
   }
@@ -354,16 +365,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     binding?.imgBusinessLogo?.let { baseActivity.glideLoad(it, imageLogoUri, R.drawable.ic_add_logo_d, isCrop = true) }
   }
 
-  private fun setDataRiaAcademy(academyBanner: ArrayList<PromoAcademyBanner>) {
+  private fun setDataRiaAcademy(academyBanner: ArrayList<DashboardAcademyBanner>) {
     binding?.pagerRiaAcademy?.apply {
       if (academyBanner.isNotEmpty()) {
-        academyBanner.map { it.recyclerViewItemType = RecyclerViewItemType.RIA_ACADEMY_ITEM_VIEW.getLayout() }
         binding?.riaAcademyView?.visible()
         if (adapterAcademy == null) {
           adapterAcademy = AppBaseRecyclerViewAdapter(baseActivity, academyBanner, this@DashboardFragment)
           offscreenPageLimit = 3
-//          clipToPadding = false
-//          setPadding(37, 0, 37, 0)
           adapter = adapterAcademy
           setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
         } else adapterAcademy?.notify(academyBanner)
@@ -493,6 +501,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       RecyclerViewActionType.PROMO_BANNER_CLICK.ordinal -> {
         val data = item as? PromoAcademyBanner ?: return
         session?.let { baseActivity.promoBannerMarketplace(it, data) }
+      }
+      RecyclerViewActionType.PROMO_BOOST_ACADEMY_CLICK.ordinal -> {
+        val data = item as? DashboardAcademyBanner ?: return
+        academyBannerBoostClick(data)
       }
     }
   }
@@ -657,6 +669,16 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     val webViewBottomDialog = WebViewBottomDialog()
     webViewBottomDialog.setData(title, domainUrl)
     webViewBottomDialog.show(this@DashboardFragment.parentFragmentManager, WebViewBottomDialog::class.java.name)
+  }
+
+  private fun academyBannerBoostClick(data: DashboardAcademyBanner) {
+    if (data.ctaFileLink.isNullOrEmpty().not()){
+
+    }else if (data.ctaWebLink.isNullOrEmpty().not()){
+
+    }else if (data.ctaYoutubeLink.isNullOrEmpty().not()){
+
+    }
   }
 
   override fun showProgress(title: String?, cancelable: Boolean?) {

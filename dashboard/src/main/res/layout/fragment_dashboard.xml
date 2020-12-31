@@ -190,7 +190,7 @@
               <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_1"
-                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginTop="@dimen/size_10"
                 android:background="@color/grey_dim" />
 
               <LinearLayout
@@ -667,7 +667,8 @@
                 android:drawableEnd="@drawable/ic_summary_alert_d"
                 android:drawablePadding="@dimen/size_8"
                 android:text="@string/ria_academy"
-                android:textColor="@color/black_4f4f4f"
+                android:textColor="@color/black_4a4a4a"
+                app:fontFamily="@font/semi_bold"
                 app:textType="HEADING_6" />
 
               <com.framework.views.customViews.CustomTextView
@@ -679,13 +680,13 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="@string/learn_boost_360"
-                android:textColor="@color/warm_grey"
+                android:textColor="@color/black_4a4a4a"
                 app:textType="CAPTION" />
 
               <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pager_ria_academy"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_130"
+                android:layout_height="@dimen/size_210"
                 android:layout_marginTop="@dimen/size_14"
                 android:clipChildren="false"
                 android:clipToPadding="false" />
@@ -720,25 +721,36 @@
                     android:drawableEnd="@drawable/ic_summary_alert_d"
                     android:drawablePadding="@dimen/size_8"
                     android:includeFontPadding="false"
-                    android:text="@string/roi_summary"
-                    android:textColor="@color/black_4f4f4f"
+                    android:text="@string/business_statistics"
+                    android:textColor="@color/black_4a4a4a"
+                    app:fontFamily="@font/semi_bold"
                     app:textType="HEADING_6" />
 
                   <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:drawableEnd="@drawable/ic_arrow_down_d"
-                    android:drawablePadding="@dimen/size_6"
+                    android:layout_marginTop="@dimen/size_4"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
-                    android:text="@string/last_60_days"
-                    android:textColor="@color/grey_dark_2"
-                    android:visibility="invisible"
-                    app:fontFamily="@font/light"
+                    android:text="@string/till_date"
+                    android:textColor="@color/black_4a4a4a"
                     app:textType="CAPTION" />
-
+                  <!--                  android:drawableEnd="@drawable/ic_arrow_down_d"-->
+                  <!--                  android:drawablePadding="@dimen/size_6"-->
                 </FrameLayout>
+
+                <com.framework.views.customViews.CustomTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="@dimen/size_18"
+                  android:layout_marginTop="@dimen/size_2"
+                  android:layout_marginEnd="@dimen/size_18"
+                  android:ellipsize="end"
+                  android:maxLines="2"
+                  android:text="@string/perform_online_business"
+                  android:textColor="@color/warm_grey"
+                  app:textType="CAPTION" />
 
                 <com.framework.views.viewgroups.BaseRecyclerView
                   android:id="@+id/rv_roi_summary"
@@ -770,8 +782,9 @@
                   android:layout_marginEnd="@dimen/size_18"
                   android:drawableEnd="@drawable/ic_summary_alert_d"
                   android:drawablePadding="@dimen/size_8"
-                  android:text="@string/ria_academy"
-                  android:textColor="@color/black_4f4f4f"
+                  android:text="@string/add_on_marketplace_banner"
+                  android:textColor="@color/black_4a4a4a"
+                  app:fontFamily="@font/semi_bold"
                   app:textType="HEADING_6" />
 
                 <com.framework.views.customViews.CustomTextView
@@ -783,7 +796,7 @@
                   android:ellipsize="end"
                   android:maxLines="2"
                   android:text="@string/learn_boost_360"
-                  android:textColor="@color/warm_grey"
+                  android:textColor="@color/black_4a4a4a"
                   app:textType="CAPTION" />
 
                 <androidx.viewpager2.widget.ViewPager2
@@ -818,24 +831,36 @@
                     android:drawablePadding="@dimen/size_8"
                     android:includeFontPadding="false"
                     android:text="@string/online_growth_stats"
-                    android:textColor="@color/black_4f4f4f"
+                    android:textColor="@color/black_4a4a4a"
+                    app:fontFamily="@font/semi_bold"
                     app:textType="HEADING_6" />
 
                   <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:drawableEnd="@drawable/ic_arrow_down_d"
-                    android:drawablePadding="@dimen/size_6"
+                    android:layout_marginTop="@dimen/size_4"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
-                    android:text="@string/last_60_days"
-                    android:visibility="invisible"
-                    android:textColor="@color/grey_dark_2"
-                    app:fontFamily="@font/light"
+                    android:text="@string/till_date"
+                    android:textColor="@color/black_4a4a4a"
                     app:textType="CAPTION" />
+                  <!--                    android:drawableEnd="@drawable/ic_arrow_down_d"-->
+                  <!--                    android:drawablePadding="@dimen/size_6"-->
 
                 </FrameLayout>
+
+                <com.framework.views.customViews.CustomTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="@dimen/size_18"
+                  android:layout_marginTop="@dimen/size_2"
+                  android:layout_marginEnd="@dimen/size_18"
+                  android:ellipsize="end"
+                  android:maxLines="2"
+                  android:text="@string/perform_online_business"
+                  android:textColor="@color/warm_grey"
+                  app:textType="CAPTION" />
 
                 <com.framework.views.viewgroups.BaseRecyclerView
                   android:id="@+id/rv_growth_state"
