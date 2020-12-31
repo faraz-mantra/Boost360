@@ -37,11 +37,20 @@
     <item name="android:layout_height">@dimen/_46sdp</item>
     <item name="android:foreground">@null</item>
   </style>
-
+  <style name="GenderSpinnerStyle" parent="@style/ThemeOverlay.AppCompat.Light">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:textColor">@color/black_2A2A2A</item>
+    <item name="android:maxLines">1</item>
+    <item name="android:spinnerMode">dropdown</item>
+  </style>
+  <style parent="@android:style/Widget.Spinner" name="SpinnerWithNoArrow">
+    <item name="android:background">@drawable/input_background</item>
+  </style>
   <style name="ButtonStyle.Rounded" parent="ButtonStyle">
     <item name="android:background">@drawable/bg_button_rounded_orange</item>
   </style>
-  <!--staff module styles-->
   <style name="ButtonStyle.Rounded.Solid" parent="ButtonStyle.Rounded">
     <item name="android:background">@drawable/bg_button_rounded_primary</item>
     <item name="android:paddingStart">@dimen/_30sdp</item>
@@ -52,7 +61,17 @@
     <item name="android:layout_height">wrap_content</item>
     <item name="android:paddingEnd">@dimen/_30sdp</item>
   </style>
-
+  <style name="EditTextStyle" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:textColor">@color/primaryTextColor</item>
+    <item name="android:padding">10dp</item>
+    <item name="android:maxLines">1</item>
+    <item name="android:inputType">textCapSentences</item>
+    <item name="android:textColorHint">@color/hintTextColor</item>
+    <item name="android:background">@drawable/input_background</item>
+  </style>
   <style name="TextDescription">
     <item name="android:layout_width">wrap_content</item>
     <item name="android:paddingStart">30dp</item>
@@ -65,7 +84,6 @@
     <item name="android:textAlignment">center</item>
     <item name="android:layout_height">wrap_content</item>
   </style>
-  <!--end of staff module styles-->
   <style name="BottomDialog" parent="Theme.MaterialComponents.Light.Dialog">
     <item name="android:windowIsTranslucent">true</item>
     <item name="android:windowIsFloating">true</item>
