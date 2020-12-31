@@ -24,7 +24,7 @@ import com.facebook.appevents.AppEventsLogger;
 import com.inventoryorder.BaseOrderApplication;
 import com.invitereferrals.invitereferrals.InviteReferralsApplication;
 import com.nowfloats.education.koindi.KoinBaseApplication;
-import com.nowfloats.util.AppsFlyerUtils;
+import com.framework.utils.AppsFlyerUtils;
 import com.nowfloats.util.Constants;
 import com.onboarding.nowfloats.BaseBoardingApplication;
 import com.thinksity.R;

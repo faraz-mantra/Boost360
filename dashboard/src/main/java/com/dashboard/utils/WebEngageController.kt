@@ -48,6 +48,7 @@ object WebEngageController {
         trackEvent["fptag/event_value"] = event_value
         trackEvent["event_label"] = event_label
         weAnalytics.track(event_name, trackEvent)
+
     }
 
 
