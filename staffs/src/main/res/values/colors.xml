@@ -105,4 +105,8 @@
     <color name="pinkish_grey">#BBBBBB</color>
     <color name="pinkish_grey_ten_alpha">#BBBBBB</color>
     <color name="marigold">#ffc800</color>
+    <color name="gray_979797">#979797</color>
+    <color name="gray_bbb">#BBBBBB</color>
+    <color name="blue_4889f8">#4889F8</color>
+    <color name="gray_66666">#666666</color>
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -110,6 +111,7 @@
                                 android:layout_height="@dimen/_30sdp"
                                 android:layout_weight=".7"
                                 android:background="@null"
+                                android:paddingEnd="@dimen/_4sdp"
                                 android:entries="@array/gender"
                                 android:paddingStart="@dimen/_4sdp" />
 
@@ -169,6 +171,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="start"
+                        android:inputType="textMultiLine"
                         android:hint="@string/describe_this_staff_in_around_2000_characters_at_max"
                         android:maxHeight="@dimen/_64sdp"
                         android:minHeight="@dimen/_64sdp" />
@@ -202,6 +205,7 @@
                             android:layout_weight=".7"
                             android:background="@null"
                             android:entries="@array/Years"
+                            android:paddingEnd="@dimen/_10sdp"
                             android:paddingStart="@dimen/_10sdp" />
 
                         <com.framework.views.customViews.CustomImageView
@@ -232,7 +236,8 @@
                         android:text="@string/services_provided"
                         android:textColor="@color/black_4a4a4a"
                         android:textSize="@dimen/_12sdp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        tools:ignore="RelativeOverlap" />
 
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="wrap_content"
@@ -317,12 +322,15 @@
                         android:id="@+id/tv_heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="10dp"
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:fontFamily="@font/open_sans"
                         android:text="@string/staff_timing"
                         android:textColor="@color/black_4a4a4a"
                         android:textSize="@dimen/_12sdp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        tools:ignore="RelativeOverlap" />
 
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="wrap_content"
@@ -360,7 +368,8 @@
                         android:text="@string/scheduled_break"
                         android:textColor="@color/black_4a4a4a"
                         android:textSize="@dimen/_12sdp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        tools:ignore="RelativeOverlap" />
 
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="wrap_content"
