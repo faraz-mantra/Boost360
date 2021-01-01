@@ -205,21 +205,21 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.viewLowTaskManageBusiness?.visible()
       val listContent = ArrayList(listDigitalScore.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout();it })
       binding?.pagerBusinessSetupLow?.apply {
-        binding?.motionOne?.transitionToStart()
-        adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, listContent, this@DashboardFragment)
-        offscreenPageLimit = 3
-        adapter = adapterBusinessContent
-        postInvalidateOnAnimation()
-        binding?.dotIndicator?.setViewPager2(this)
-        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-          override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-            binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
-          }
-        })
-        binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
-        binding?.motionOne?.transitionToStart()
+//        binding?.motionOne?.transitionToStart()
+//        adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, listContent, this@DashboardFragment)
+//        offscreenPageLimit = 3
+//        adapter = adapterBusinessContent
+//        postInvalidateOnAnimation()
+//        binding?.dotIndicator?.setViewPager2(this)
+//        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+//        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//          override fun onPageSelected(position: Int) {
+//            super.onPageSelected(position)
+//            binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
+//          }
+//        })
+//        binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
+//        binding?.motionOne?.transitionToStart()
       }
       baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
       baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
@@ -471,7 +471,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (actionType) {
       RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> {
         WebEngageController.trackEvent("SITE HEALTH Page", "SITE_HEALTH", session?.fpTag);
-        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+        session?.let { baseActivity.startOldSiteMeter(it) }
+//        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
       }
       RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, position) })
       RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal -> {
@@ -526,7 +527,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.btnDigitalChannel -> session?.let { baseActivity.startDigitalChannel(it) }
       binding?.btnShowDigitalScore -> {
         WebEngageController.trackEvent("SITE HEALTH Page", "SITE_HEALTH", session?.fpTag);
-        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+        session?.let { baseActivity.startOldSiteMeter(it) }
+//        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
       }
       binding?.btnShareWhatsapp -> shareVisitingCard(true)
       binding?.btnShareMore -> shareVisitingCard(false)

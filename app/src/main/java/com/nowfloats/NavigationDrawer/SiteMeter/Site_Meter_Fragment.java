@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,6 +101,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
 
     private ProgressDialog progressDialog;
     private boolean isAlreadyCalled = false, isDomainDetailsAvali;
+    private Integer storebizFloats;
     //private ScaleInAnimationAdapter scaleAdapter;
 
     @Override
@@ -143,6 +146,10 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         domainApiService = new DomainApiService(this);
+        if (getArguments() != null) {
+            storebizFloats = getArguments().getInt("StorebizFloats", 0);
+        }
+
         return inflater.inflate(R.layout.fragment_site__meter, container, false);
     }
 
@@ -246,7 +253,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
             siteData.add(new SiteMeterModel(email, "Email", "Add your email", "+5%", false, 4));
         //9
         if (!(getResources().getString(R.string.postUpdate_percentage).equals("0"))) {
-            int val = HomeActivity.StorebizFloats.size() < 5 ? 20 - HomeActivity.StorebizFloats.size() * onUpdate : 20;
+            int val = getStorebizFloats() < 5 ? 20 - getStorebizFloats() * onUpdate : 20;
             siteData.add(new SiteMeterModel(post, "Post 5 Updates", "Message regularly and relevantly", "+" + val + "%", false, 10));
         }
 
@@ -351,8 +358,8 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                     siteData.get(email).setSortChar(2);
                 }
             } else if (siteData.get(i).position == post) {
-                if (HomeActivity.StorebizFloats.size() < 5 && fiveUpdatesDone == false) {
-                    siteMeterTotalWeight += (HomeActivity.StorebizFloats.size() * onUpdate);
+                if (getStorebizFloats() < 5 && fiveUpdatesDone == false) {
+                    siteMeterTotalWeight += (getStorebizFloats() * onUpdate);
                     siteData.get(post).setStatus(false);
                     siteData.get(post).setSortChar(2);
                 } else {
@@ -382,7 +389,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
             }
         }
 
-        WebEngageController.trackEvent( "Clicked on site health", "SITE HEALTH",String.valueOf(siteMeterTotalWeight));
+        WebEngageController.trackEvent("Clicked on site health", "SITE HEALTH", String.valueOf(siteMeterTotalWeight));
 
         activity.runOnUiThread(new Runnable() {
             @Override
@@ -410,7 +417,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
     @Override
     public void onResume() {
         super.onResume();
-        if (HomeActivity.headerText != null) {
+        if (activity instanceof HomeActivity && HomeActivity.headerText != null) {
             HomeActivity.headerText.setText("Site Health");
         }
         try {
@@ -450,7 +457,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                 break;
             case post:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_POST_5_UPDATES, null);
-                if (HomeActivity.StorebizFloats.size() < 5 && !fiveUpdatesDone) {
+                if (getStorebizFloats() < 5 && !fiveUpdatesDone) {
                     Intent in = new Intent(activity, Create_Message_Activity.class);
                     startActivity(in);
                 }
@@ -461,11 +468,47 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
 //                    Intent in = new Intent(activity, Social_Sharing_Activity.class);
 //                    startActivity(in);
 //                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    if(activity instanceof HomeActivity)
-                        ((HomeActivity) activity).onClick(getString(R.string.title_activity_social__sharing_));
-                    else{
-                        Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
+                if (activity instanceof HomeActivity)
+                    ((HomeActivity) activity).onClick(getString(R.string.title_activity_social__sharing_));
+                else {
+                    try {
+                        Bundle bundle = new Bundle();
+                        Intent channelIntent = new Intent(activity, Class.forName("com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity"));
+                        String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+                        session.setHeader(Constants.WA_KEY);
+                        bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
+                        bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
+                        bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
+                        bundle.putBoolean("IsUpdate", true);
+                        bundle.putString("business_name", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+
+                        String imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
+                        if (!TextUtils.isEmpty(imageUri) && !imageUri.contains("http")) {
+                            imageUri = "https://content.withfloats.com" + imageUri;
+                        }
+                        bundle.putString("business_image", imageUri);
+                        bundle.putString("business_type", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
+
+                        String city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY);
+                        String country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
+                        String location = "";
+                        if (!TextUtils.isEmpty(city) && !TextUtils.isEmpty(country)) location = city + " " + country;
+                        else location = city + country;
+                        bundle.putString("location", location);
+
+                        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
+                        if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) bundle.putString("website_url", rootAlisasURI);
+                        else bundle.putString("website_url", normalURI);
+                        bundle.putString("primary_number", session.getUserPrimaryMobile());
+                        bundle.putString("primary_email", session.getFPEmail());
+                        channelIntent.putExtras(bundle);
+                        channelIntent.putExtra("FRAGMENT_TYPE", "MY_DIGITAL_CHANNEL");
+                        startActivity(channelIntent);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
                     }
+//                    Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
                     /*Intent in = new Intent(activity, Social_Sharing_Activity.class);
                     startActivity(in);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
@@ -869,5 +912,11 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
 
         TextView tvMessage = (TextView) maView.findViewById(R.id.toast_message_to_contact);
         tvMessage.setText(message);
+    }
+
+    public int getStorebizFloats() {
+        if (storebizFloats != null)
+            return storebizFloats;
+        else return HomeActivity.StorebizFloats.size();
     }
 }

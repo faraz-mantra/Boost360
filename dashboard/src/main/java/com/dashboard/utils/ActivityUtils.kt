@@ -21,6 +21,7 @@ import com.dashboard.model.live.premiumBanner.PromoAcademyBanner
 import com.dashboard.pref.*
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
+import com.inventoryorder.model.floatMessage.MessageModel
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
@@ -279,6 +280,10 @@ fun AppCompatActivity.startNotification(session: UserSessionManager) {
 fun AppCompatActivity.startUpdateLatestStory(session: UserSessionManager) {
   WebEngageController.trackEvent("Update Latest Story Page", "startview", session.fpTag);
   startAppActivity(fragmentType = "UPDATE_LATEST_STORY_VIEW")
+}
+
+fun AppCompatActivity.startOldSiteMeter(session: UserSessionManager) {
+  startAppActivity(bundle = Bundle().apply { putInt("StorebizFloats",MessageModel().getStoreBizFloatSize()) },fragmentType = "SITE_METER_OLD_VIEW")
 }
 
 fun AppCompatActivity.startAppActivity(bundle: Bundle = Bundle(), fragmentType: String) {
@@ -783,13 +788,6 @@ fun AppCompatActivity.startFacultyMember(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startOldSiteMeter(session: UserSessionManager?) {
-  try {
-    WebEngageController.trackEvent("Site meter", "startview", session?.fpTag)
-  } catch (e: ClassNotFoundException) {
-    e.printStackTrace()
-  }
-}
 fun AppCompatActivity.startYouTube(session: UserSessionManager?, url: String) {
   try {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url));
