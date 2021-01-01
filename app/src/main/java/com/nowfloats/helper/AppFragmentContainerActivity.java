@@ -32,6 +32,7 @@ import com.nowfloats.util.Utils;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityFragmentContainerAppBinding;
 
+
 public class AppFragmentContainerActivity extends AppCompatActivity {
 
     public static String FRAGMENT_TYPE = "FRAGMENT_TYPE";

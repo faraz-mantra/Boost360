@@ -59,16 +59,22 @@ class MyDigitalCardShareDialog : BaseDialogFragment<DialogDigitalCardShareBindin
     viewModel?.getMerchantProfile(localSessionModel?.floatingPoint)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         val response = it as? MerchantProfileResponse
-        val userProfile: ProfileProperties?
-        userProfile = if (response?.result?.channelProfileProperties.isNullOrEmpty().not()) response?.result?.channelProfileProperties!![0].profileProperties
-        else ProfileProperties(userName = localSessionModel?.fpTag, userMobile = localSessionModel?.primaryNumber, userEmail = localSessionModel?.primaryEmail)
+        val userDetail = response?.result?.getUserDetail()
+        localSessionModel?.contactName = when {
+          localSessionModel?.contactName.isNullOrEmpty().not() -> localSessionModel?.contactName
+          userDetail?.userName.isNullOrEmpty().not() -> userDetail?.userName
+          else -> localSessionModel?.fpTag
+        }
+        localSessionModel?.primaryNumber = if (localSessionModel?.primaryNumber.isNullOrEmpty().not()) localSessionModel?.primaryNumber else if (userDetail?.userMobile.isNullOrEmpty().not()) userDetail?.userMobile else ""
+        localSessionModel?.primaryEmail = if (localSessionModel?.primaryEmail.isNullOrEmpty().not()) localSessionModel?.primaryEmail else if (userDetail?.userEmail.isNullOrEmpty().not()) userDetail?.userEmail else ""
 
+        val userProfile = ProfileProperties(userName = localSessionModel?.contactName, userMobile = localSessionModel?.primaryNumber, userEmail = localSessionModel?.primaryEmail)
         val cardList = ArrayList<DigitalCardData>()
-        cardList.add(DigitalCardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, (userProfile?.userName ?: localSessionModel?.fpTag)?.capitalizeWords(),
-            userProfile?.userMobile ?: localSessionModel?.primaryNumber, userProfile?.userEmail ?: localSessionModel?.primaryEmail,
+        cardList.add(DigitalCardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
+            userProfile.userMobile, userProfile.userEmail,
             localSessionModel?.businessType, localSessionModel?.websiteUrl, R.color.darkslategray, R.color.goldenrod, R.color.white, R.color.white))
-        cardList.add(DigitalCardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, (userProfile?.userName ?: localSessionModel?.fpTag)?.capitalizeWords(),
-            userProfile?.userMobile ?: localSessionModel?.primaryNumber, userProfile?.userEmail ?: localSessionModel?.primaryEmail,
+        cardList.add(DigitalCardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
+            userProfile.userMobile, userProfile.userEmail,
             localSessionModel?.businessType, localSessionModel?.websiteUrl, R.color.linen, R.color.lightskyblue, R.color.textGreyLight, R.color.textGreyDark))
         setAdapterCard(cardList)
       } else {
@@ -157,6 +163,7 @@ class MyDigitalCardShareDialog : BaseDialogFragment<DialogDigitalCardShareBindin
 
 data class LocalSessionModel(
     var floatingPoint: String? = null,
+    var contactName: String? = null,
     var businessName: String? = null,
     var businessImage: String? = null,
     var location: String? = null,

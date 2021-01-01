@@ -48,29 +48,36 @@ class MyDigitalCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Channe
   override fun onCreateView() {
     super.onCreateView()
     val floatingPoint = arguments?.getString(PreferenceConstant.KEY_FP_ID)
-    val businessName = arguments?.getString(PreferenceConstant.BUSINESS_NAME)?.capitalizeWords()
-    val businessImage = arguments?.getString(PreferenceConstant.BUSINESS_IMAGE)
+    var contactName: String? = arguments?.getString(PreferenceConstant.CONTACT_NAME)?.capitalizeWords()
+    val businessName: String? = arguments?.getString(PreferenceConstant.BUSINESS_NAME)?.capitalizeWords()
+    val businessImage: String? = arguments?.getString(PreferenceConstant.BUSINESS_IMAGE)
     val location = arguments?.getString(PreferenceConstant.LOCATION)
     val websiteUrl = arguments?.getString(PreferenceConstant.WEBSITE_URL)
     val businessType = arguments?.getString(PreferenceConstant.BUSINESS_TYPE)
     //Optional
-    val primaryNumber = arguments?.getString(PreferenceConstant.PRIMARY_NUMBER)
-    val primaryEmail = arguments?.getString(PreferenceConstant.PRIMARY_EMAIL)
+    var primaryNumber: String? = arguments?.getString(PreferenceConstant.PRIMARY_NUMBER)
+    var primaryEmail: String? = arguments?.getString(PreferenceConstant.PRIMARY_EMAIL)
     val fpTag = arguments?.getString(PreferenceConstant.GET_FP_DETAILS_TAG)
     showProgress()
     viewModel?.getMerchantProfile(floatingPoint)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         val response = it as? MerchantProfileResponse
-        val userProfile: ProfileProperties?
-        userProfile = if (response?.result?.channelProfileProperties.isNullOrEmpty().not()) response?.result?.channelProfileProperties!![0].profileProperties
-        else ProfileProperties(userName = fpTag, userMobile = primaryNumber, userEmail = primaryEmail)
+        val userDetail = response?.result?.getUserDetail()
+        contactName = when {
+          contactName.isNullOrEmpty().not() -> contactName
+          userDetail?.userName.isNullOrEmpty().not() -> userDetail?.userName
+          else -> fpTag
+        }
+        primaryNumber = if (primaryNumber.isNullOrEmpty().not()) primaryNumber else if (userDetail?.userMobile.isNullOrEmpty().not()) userDetail?.userMobile else ""
+        primaryEmail = if (primaryEmail.isNullOrEmpty().not()) primaryEmail else if (userDetail?.userEmail.isNullOrEmpty().not()) userDetail?.userEmail else ""
 
+        val userProfile = ProfileProperties(userName = contactName, userMobile = primaryNumber, userEmail = primaryEmail)
         val cardList = ArrayList<DigitalCardData>()
-        cardList.add(DigitalCardData(businessName, businessImage, location, (userProfile?.userName ?: fpTag)?.capitalizeWords(),
-            userProfile?.userMobile ?: primaryNumber, userProfile?.userEmail ?: primaryEmail,
+        cardList.add(DigitalCardData(businessName, businessImage, location, userProfile.userName?.capitalizeWords(),
+            userProfile.userMobile, userProfile.userEmail,
             businessType, websiteUrl, R.color.darkslategray, R.color.goldenrod, R.color.white, R.color.white))
-        cardList.add(DigitalCardData(businessName, businessImage, location, (userProfile?.userName ?: fpTag)?.capitalizeWords(),
-            userProfile?.userMobile ?: primaryNumber, userProfile?.userEmail ?: primaryEmail,
+        cardList.add(DigitalCardData(businessName, businessImage, location, userProfile.userName?.capitalizeWords(),
+            userProfile.userMobile, userProfile.userEmail,
             businessType, websiteUrl, R.color.linen, R.color.lightskyblue, R.color.textGreyLight, R.color.textGreyDark))
         setAdapterCard(cardList)
       } else showShortToast(it.message())
@@ -96,7 +103,7 @@ class MyDigitalCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Channe
       waIntent.type = "image/*"
       if (isWhatsApp) waIntent.setPackage("com.whatsapp")
       waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
-      waIntent.putExtra(Intent.EXTRA_TEXT, messageN?:"")
+      waIntent.putExtra(Intent.EXTRA_TEXT, messageN ?: "")
       baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
       hideProgress()
     } catch (e: Exception) {

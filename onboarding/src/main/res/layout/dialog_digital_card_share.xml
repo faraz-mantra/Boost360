@@ -47,7 +47,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/size_9"
         android:layout_marginBottom="@dimen/size_12"
-        app:dotsColor="@color/white_50"
+        app:dotsColor="@color/light_grey_1"
         app:dotsCornerRadius="@dimen/_6dp"
         app:dotsSize="@dimen/size_5"
         app:dotsSpacing="@dimen/size_2"
