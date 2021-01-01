@@ -272,7 +272,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding?.drawerView?.btnSiteMeter -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+      binding?.drawerView?.btnSiteMeter ->{
+        session?.let { this.startOldSiteMeter(it) }
+//        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+      }
       binding?.drawerView?.imgBusinessLogo -> this.startBusinessDescriptionEdit(session)
       binding?.drawerView?.txtDomainName -> this.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.drawerView?.backgroundImage -> openImagePicker(true)
