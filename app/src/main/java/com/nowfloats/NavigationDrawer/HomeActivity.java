@@ -120,6 +120,7 @@ import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
 import com.nowfloats.helper.BuyItemKey;
+import com.nowfloats.helper.DigitalChannelUtil;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInboxFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
@@ -595,19 +596,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent purchasedPlans = new Intent(HomeActivity.this, YourPurchasedPlansActivity.class);
                 startActivity(purchasedPlans);
             } else if (url.contains(getResources().getString(R.string.deeplink_digital_channels))) {
-                Bundle bundle = getBundleData();
-                String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
-                session.setHeader(Constants.WA_KEY);
-                bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
-                bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
-                bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
-                bundle.putBoolean("IsUpdate", true);
-                if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) bundle.putString("website_url", rootAlisasURI);
-                else bundle.putString("website_url", normalURI);
-
-                startFragmentActivityNew(this,
-                        com.onboarding.nowfloats.constant.FragmentType.MY_DIGITAL_CHANNEL, bundle, false);
+                DigitalChannelUtil.startDigitalChannel(HomeActivity.this,session);
             } else if (url.contains(getResources().getString(R.string.deeplink_call_tracker_add_on))) {
 //                WebEngageController.trackEvent("NAV - CALLS", "CALLS", null);
                 Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
@@ -1393,24 +1382,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     /*Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                     startActivity(socialSharingIntent);*/
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
-                    try {
-                        Bundle bundle = new Bundle();
-                        Intent channelIntent = new Intent(HomeActivity.this, Class.forName("com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity"));
-                        String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                        session.setHeader(Constants.WA_KEY);
-                        bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
-                        bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
-                        bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
-                        bundle.putBoolean("IsUpdate", true);
-                        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
-                        if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) bundle.putString("website_url", rootAlisasURI);
-                        else bundle.putString("website_url", normalURI);
-                        channelIntent.putExtras(bundle);
-                        channelIntent.putExtra("FRAGMENT_TYPE", "MY_DIGITAL_CHANNEL");
-                        startActivity(channelIntent);
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    DigitalChannelUtil.startDigitalChannel(HomeActivity.this,session);
                 } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
                     WebEngageController.trackEvent("NAV - ORDERS", "ORDERS", null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")

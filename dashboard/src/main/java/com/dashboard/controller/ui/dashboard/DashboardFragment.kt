@@ -735,12 +735,12 @@ fun UserSessionManager?.checkIsPremiumUnlock(value: String?): Boolean {
 }
 
 fun getLocalSession(session: UserSessionManager): LocalSessionModel {
-  var imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
+  var imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl)
   if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) imageUri = BASE_IMAGE_URL + imageUri
   val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
   val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
   val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
-  return LocalSessionModel(floatingPoint = session.fPID, businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME),
+  return LocalSessionModel(floatingPoint = session.fPID,contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME), businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME),
       businessImage = imageUri, location = location, websiteUrl = session.getDomainName(false),
       businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), primaryNumber = session.userPrimaryMobile,
       primaryEmail = session.fPEmail, fpTag = session.fpTag)

@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.checkSelfPermission
@@ -42,7 +43,8 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
     bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.fP_AppExperienceCode)
     bundle.putBoolean(Key_Preferences.IS_UPDATE, true)
     bundle.putString(Key_Preferences.BUSINESS_NAME, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
-    var imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
+    bundle.putString(Key_Preferences.CONTACT_NAME, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME))
+    var imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl)
     if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
@@ -804,16 +806,18 @@ fun AppCompatActivity.startDownloadUri(session: UserSessionManager?, url: String
     if (checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED ||
         checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
       ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+    }else {
+      val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+      val uri = Uri.parse(url)
+      val request = DownloadManager.Request(uri)
+      request.setTitle(uri.path?.getFileName() ?: "boost_file")
+      request.setDescription("boost360 File")
+      request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+      request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+      request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
+      downloader.enqueue(request)
+      Toast.makeText(this, "File downloading.. ", Toast.LENGTH_SHORT).show()
     }
-    val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-    val uri = Uri.parse(url)
-    val request = DownloadManager.Request(uri)
-    request.setTitle(uri.path?.getFileName() ?: "boost_file")
-    request.setDescription("boost360 File")
-    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
-    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
-    downloader.enqueue(request)
   } catch (e: Exception) {
     e.printStackTrace()
   }

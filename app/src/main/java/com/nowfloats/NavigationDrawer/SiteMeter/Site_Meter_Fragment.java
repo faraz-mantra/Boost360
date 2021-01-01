@@ -45,6 +45,7 @@ import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.AccrossVerticals.domain.DomainDetailsActivity;
+import com.nowfloats.helper.DigitalChannelUtil;
 import com.nowfloats.on_boarding.OnBoardingApiCalls;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
@@ -471,42 +472,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                 if (activity instanceof HomeActivity)
                     ((HomeActivity) activity).onClick(getString(R.string.title_activity_social__sharing_));
                 else {
-                    try {
-                        Bundle bundle = new Bundle();
-                        Intent channelIntent = new Intent(activity, Class.forName("com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity"));
-                        String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                        session.setHeader(Constants.WA_KEY);
-                        bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
-                        bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
-                        bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
-                        bundle.putBoolean("IsUpdate", true);
-                        bundle.putString("business_name", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-
-                        String imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
-                        if (!TextUtils.isEmpty(imageUri) && !imageUri.contains("http")) {
-                            imageUri = "https://content.withfloats.com" + imageUri;
-                        }
-                        bundle.putString("business_image", imageUri);
-                        bundle.putString("business_type", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
-
-                        String city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY);
-                        String country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
-                        String location = "";
-                        if (!TextUtils.isEmpty(city) && !TextUtils.isEmpty(country)) location = city + " " + country;
-                        else location = city + country;
-                        bundle.putString("location", location);
-
-                        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
-                        if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) bundle.putString("website_url", rootAlisasURI);
-                        else bundle.putString("website_url", normalURI);
-                        bundle.putString("primary_number", session.getUserPrimaryMobile());
-                        bundle.putString("primary_email", session.getFPEmail());
-                        channelIntent.putExtras(bundle);
-                        channelIntent.putExtra("FRAGMENT_TYPE", "MY_DIGITAL_CHANNEL");
-                        startActivity(channelIntent);
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    DigitalChannelUtil.startDigitalChannel(activity, session);
 //                    Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
                     /*Intent in = new Intent(activity, Social_Sharing_Activity.class);
