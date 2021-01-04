@@ -85,7 +85,6 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     }
 
     private void init(){
-
         getWindow().setBackgroundDrawable(new BitmapDrawable(getResources(),Methods.decodeSampledBitmap(getResources(),R.drawable.facebook_chat_bg1,720,720)));//ContextCompat.getDrawable(this, R.drawable.facebook_chat_bg2));
         Toolbar toolbar  = (Toolbar) findViewById(R.id.facebook_toolbar);
         setSupportActionBar(toolbar);
