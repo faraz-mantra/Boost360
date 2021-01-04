@@ -42,11 +42,25 @@ object WebEngageController {
                 val event = FirebaseEvent(event_name)
                 event.putDoubleMap(event_attributes)
                 FirebaseAnalyticsUtils.logEvent(event.getName(), event.getBundle())
+
+                //AppsFlyerEvent...
+                try {
+                    AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, event_attributes.toMap())
+                } catch (e: Exception) {
+                }
+
             } else {
                 weAnalytics.track(event_name)
 
                 //Firebase Analytics Event...
                 FirebaseAnalyticsUtils.logEvent(event_name, "", "")
+
+                //AppsFlyerEvent...
+                try {
+                    AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, null)
+                } catch (e: Exception) {
+                }
+
             }
 
         }
@@ -68,7 +82,7 @@ object WebEngageController {
 
                 //AppsFlyerEvent...
                 try {
-                    AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, event_attributes as Map<String, Any>?)
+                    AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, event_attributes.toMap())
                 } catch (e: Exception) {
                 }
 
@@ -99,6 +113,13 @@ object WebEngageController {
 
                 //Firebase Analytics Event...
                 FirebaseAnalyticsUtils.logEvent(event_name, "", "")
+
+                //AppsFlyerEvent...
+                try {
+                    AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, event_attributes.toMap())
+                } catch (e: Exception) {
+                }
+
             } else {
                 weAnalytics.track(event_name)
             }

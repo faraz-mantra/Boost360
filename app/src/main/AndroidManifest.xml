@@ -764,10 +764,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="nowfloat.onelink.me"
-                    android:pathPrefix="/FX0L"
-                    android:scheme="https" />
 
             </intent-filter>
             <intent-filter

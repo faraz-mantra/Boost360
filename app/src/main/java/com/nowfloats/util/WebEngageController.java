@@ -28,7 +28,10 @@ public class WebEngageController {
         FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, TextUtils.isEmpty(event_value) ? "null" : event_value);
 
         //AppsFlyerEvent...
-        AppsFlyerLib.getInstance().logEvent(weAnalytics.getActivity().get().getApplicationContext(), event_name, trackEvent);
+        try {
+            AppsFlyerLib.getInstance().logEvent(weAnalytics.getActivity().get().getApplicationContext(), event_name, trackEvent);
+        } catch (Exception e) {
+        }
 
     }
 

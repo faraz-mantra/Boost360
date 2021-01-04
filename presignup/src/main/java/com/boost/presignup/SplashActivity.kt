@@ -35,11 +35,11 @@ class SplashActivity : AppCompatActivity() {
             val uri = intent.data ?: null
             if (uri == null) {
                 if (uri.toString().contains("onelink", true)) {
-                    if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType)) {
-                        deepLinkViewType = AppsFlyerUtils.sAttributionData.get(DynamicLinkParams.viewType) ?: ""
-                        deepLinkFpId = AppsFlyerUtils.sAttributionData.get(DynamicLinkParams.fpId) ?: ""
-                        deepLinkFpTag = AppsFlyerUtils.sAttributionData.get(DynamicLinkParams.fpTag) ?: ""
-                        deepLinkDay = AppsFlyerUtils.sAttributionData.get(DynamicLinkParams.day) ?: ""
+                    if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
+                        deepLinkViewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+                        deepLinkFpId = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpId.name] ?: ""
+                        deepLinkFpTag = AppsFlyerUtils.sAttributionData[DynamicLinkParams.fpTag.name] ?: ""
+                        deepLinkDay = AppsFlyerUtils.sAttributionData[DynamicLinkParams.day.name] ?: ""
                     }
                 } else {
                     val deepHashMap = FirebaseDynamicLinksManager().getURILinkParams(uri)

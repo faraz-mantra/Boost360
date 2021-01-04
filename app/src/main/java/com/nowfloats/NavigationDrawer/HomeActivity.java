@@ -1910,9 +1910,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             BoostLog.d("Data: ", data + "  " + action);
             if (session.isLoginCheck()) {
                 if (uri != null && uri.toString().contains("onelink")) {
-                    if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType)) {
-                        String viewType = AppsFlyerUtils.sAttributionData.get(DynamicLinkParams.viewType);
-                        String buyItemKey = AppsFlyerUtils.sAttributionData.get(DynamicLinkParams.buyItemKey);
+                    if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name())) {
+                        String viewType = AppsFlyerUtils.sAttributionData.get(DynamicLinkParams.viewType.name());
+                        String buyItemKey = AppsFlyerUtils.sAttributionData.get(DynamicLinkParams.buyItemKey.name());
                         DeepLinkPage(viewType, buyItemKey, false);
                     }
                 } else {

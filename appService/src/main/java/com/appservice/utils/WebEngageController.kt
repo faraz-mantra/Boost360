@@ -1,9 +1,10 @@
 package com.appservice.utils
 
+import com.appsflyer.AppsFlyerLib
 import com.framework.analytics.FirebaseAnalyticsUtils
 import com.webengage.sdk.android.User
 import com.webengage.sdk.android.WebEngage
-import java.util.HashMap
+import java.util.*
 
 object WebEngageController {
     var weAnalytics = WebEngage.get().analytics()
@@ -69,6 +70,14 @@ object WebEngageController {
 
         //Firebase Analytics Event...
         FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, event_value)
+
+        //AppsFlyerEvent...
+        try {
+            AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap())
+        } catch (e: Exception) {
+        }
+
+
     }
 
 
