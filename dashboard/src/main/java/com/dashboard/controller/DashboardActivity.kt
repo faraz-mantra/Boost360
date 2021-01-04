@@ -102,9 +102,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
                 //Appsflyer Deep Link...
                 if (uri.toString().contains("onelink", true)) {
-                    if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType)) {
-                        val viewType = AppsFlyerUtils.sAttributionData.get(DynamicLinkParams.viewType) ?: ""
-                        val buyItemKey = AppsFlyerUtils.sAttributionData.get(DynamicLinkParams.buyItemKey) ?: ""
+                    if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
+                        val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+                        val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
 
                         if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
                     }

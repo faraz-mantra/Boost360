@@ -1,6 +1,7 @@
 package com.appservice.utils
 
 import com.appsflyer.AppsFlyerLib
+import com.framework.analytics.FirebaseAnalyticsUtils
 import com.webengage.sdk.android.User
 import com.webengage.sdk.android.WebEngage
 import java.util.*
@@ -51,8 +52,14 @@ object WebEngageController {
         trackEvent["event_label"] = event_label
         weAnalytics.track(event_name, trackEvent)
 
+        //Firebase Analytics Event...
+        FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, event_value)
+
         //AppsFlyerEvent...
-        AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent);
+        try {
+            AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent);
+        } catch (e: Exception) {
+        }
 
     }
 

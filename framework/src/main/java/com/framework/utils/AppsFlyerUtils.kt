@@ -6,6 +6,24 @@ import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
 
 class AppsFlyerUtils : AppsFlyerConversionListener {
+
+    companion object {
+        private val TAG = AppsFlyerUtils::class.java.name
+
+        @JvmField
+        var sAttributionData: Map<String, String> = mapOf()
+
+        @JvmStatic
+        fun initAppsFlyer(context: Context?, devKey: String?) {
+            AppsFlyerLib.getInstance().init(devKey!!, AppsFlyerUtils(), context!!)
+            //Start the SDK
+            AppsFlyerLib.getInstance().start(context)
+            //Enable Debugging
+            AppsFlyerLib.getInstance().setDebugLog(true)
+        }
+
+    }
+
     override fun onConversionDataSuccess(conversionData: Map<String, Any>) {
         for (attrName in conversionData.keys) {
             Log.d(TAG, "attribute: " + attrName + " = " + conversionData[attrName])
@@ -27,19 +45,5 @@ class AppsFlyerUtils : AppsFlyerConversionListener {
         Log.d(TAG, "error onAttributionFailure : $errorMessage")
     }
 
-    companion object {
-        private val TAG = AppsFlyerUtils::class.java.name
 
-        @JvmField
-         var sAttributionData: Map<String, String> = mapOf()
-
-        @JvmStatic
-        fun initAppsFlyer(context: Context?, devKey: String?) {
-            AppsFlyerLib.getInstance().init(devKey!!, AppsFlyerUtils(), context!!)
-            //Start the SDK
-            AppsFlyerLib.getInstance().start(context)
-            //Enable Debugging
-            AppsFlyerLib.getInstance().setDebugLog(true)
-        }
-    }
 }
