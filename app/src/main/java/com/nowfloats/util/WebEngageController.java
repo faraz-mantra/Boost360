@@ -2,6 +2,7 @@ package com.nowfloats.util;
 
 import android.text.TextUtils;
 
+import com.appsflyer.AppsFlyerLib;
 import com.framework.analytics.FirebaseAnalyticsUtils;
 import com.nowfloats.Login.UserSessionManager;
 import com.webengage.sdk.android.Analytics;
@@ -25,6 +26,9 @@ public class WebEngageController {
 
         //Firebase Analytics Event...
         FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, TextUtils.isEmpty(event_value) ? "null" : event_value);
+
+        //AppsFlyerEvent...
+        AppsFlyerLib.getInstance().logEvent(weAnalytics.getActivity().get().getApplicationContext(), event_name, trackEvent);
 
     }
 
