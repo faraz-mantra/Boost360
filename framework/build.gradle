@@ -115,5 +115,5 @@ dependencies {
 
     // Referral Library: invitereferrals
     api 'com.android.installreferrer:installreferrer:2.2'
-    implementation 'com.appsflyer:af-android-sdk:6.0.0'
+    api 'com.appsflyer:af-android-sdk:6.0.0'
 }
