@@ -15,10 +15,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
 import com.appservice.ui.catlogService.widgets.ClickType
 import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
+import com.dashboard.utils.WebEngageController
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
-import com.dashboard.constant.FragmentType
-import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
 import com.dashboard.databinding.ActivityDashboardBinding
@@ -100,7 +99,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     WebEngageController.initiateUserLogin(session?.userProfileId)
     WebEngageController.setUserContactAttributes(session?.userProfileEmail, session?.userPrimaryMobile, session?.userProfileName, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
     WebEngageController.setFPTag(session?.fpTag)
-    WebEngageController.trackEvent("DASHBOARD HOME", "pageview", session?.fpTag)
+    WebEngageController.trackEvent("DASHBOARD HOME", "pageview", session?.fpTag?:"")
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
       WebEngage.get().setRegistrationID(token)
