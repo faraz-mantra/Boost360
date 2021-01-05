@@ -101,7 +101,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
             if (session?.isLoginCheck == true) {
 
                 //Appsflyer Deep Link...
-                if (uri.toString().contains("onelink", true)) {
+                if (uri!=null && uri.toString().contains("onelink", true)) {
                     if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
                         val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
                         val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
