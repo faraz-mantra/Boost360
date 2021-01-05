@@ -12,6 +12,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.boost.presignup.utils.PresignupManager;
 import com.boost.upgrades.UpgradeActivity;
+import com.framework.analytics.FirebaseAnalyticsUtils;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Login_MainActivity;
 import com.nowfloats.Login.Model.FloatsMessageModel;
@@ -42,12 +43,13 @@ import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
 import static java.lang.String.format;
 
 public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface, PresignupManager.SignUpLoginHandler {
+    public static ProgressDialog pd;
     UserSessionManager session;
     Bus bus;
     LottieAnimationView animationView;
-    public static ProgressDialog pd;
     private String loginCheck = null, deepLink;
     private String deepLinkViewType = "", deepLinkFpId = "", deepLinkDay = "", deepLinkFpTag = "";
+    private Thread mThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +70,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(), SplashScreen_Activity.this);
         initLottieAnimation();
-    }
 
-    private Thread mThread;
+    }
 
     private void initLottieAnimation() {
         if (animationView == null)
@@ -88,28 +89,6 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         intent.putExtras(getIntent());
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-
-    private class DataRunnable implements Runnable {
-
-        @Override
-        public void run() {
-            try {
-                Thread.sleep(3100);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        displayHomeScreen();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
     }
 
     private void Start() {
@@ -353,5 +332,27 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     @Override
     public void sendFetched(FloatsMessageModel jsonObject) {
 
+    }
+
+    private class DataRunnable implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(3100);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        displayHomeScreen();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
     }
 }

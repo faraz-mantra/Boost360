@@ -33,6 +33,7 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
@@ -121,14 +122,25 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val action = intent.action
       val data = intent.dataString
       val uri = intent.data
-      val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(uri)
       Log.d("Data: ", "$data  $action")
       if (session?.isLoginCheck == true) {
+        //Appsflyer Deep Link...
+        if (uri!=null && uri.toString().contains("onelink", true)) {
+          if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
+            val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+            val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
+
+            if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+          }
+        } else {
+          //Default Deep Link..
+          val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(uri)
         if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
           val viewType = deepHashMap[DynamicLinkParams.viewType]
           val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
           if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
         } else deepLinkUtil?.deepLinkPage(data?.substring(data?.lastIndexOf("/") + 1) ?: "", "", false)
+      }
       } else this.startPreSignUp(session)
     } else {
       if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
