@@ -6,14 +6,23 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.newfloats.staffs.R;
 
-public class BaseFragmentStaff extends Fragment {
+public class BaseFragmentStaff extends Fragment implements BaseStaffActivity.ToolBarAction {
     protected void launchFragment(Fragment fragment) {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-        transaction.addToBackStack(null);
         transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
+    @Override
+    public void onBackButtonClick() {
+        requireActivity().onBackPressed();
+    }
+
+    @Override
+    public void onAddButtonClick() {
+
+    }
 }

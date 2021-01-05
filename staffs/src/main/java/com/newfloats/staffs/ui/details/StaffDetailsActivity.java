@@ -33,7 +33,6 @@ public class StaffDetailsActivity extends BaseStaffActivity implements BaseStaff
 
     @Override
     public void onBackButtonClick() {
-        Toast.makeText(this, "back", Toast.LENGTH_SHORT).show();
         super.onBackPressed();
     }
 

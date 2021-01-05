@@ -1,39 +1,28 @@
-package com.newfloats.staffs.ui.services;
+package com.appservice.ui.staffs.ui.services
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.appservice.R
+import com.framework.views.customViews.CustomCheckBox
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.framework.views.customViews.CustomCheckBox;
-import com.newfloats.staffs.R;
-
-public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.ViewHolder> {
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item_service, null, false);
-        return new ViewHolder(view);
+class ServicesAdapter : RecyclerView.Adapter<ServicesAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_service, null, false)
+        return ViewHolder(view)
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.customCheckBox.setText(ServicesModel.getAllServices().get(position));
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.customCheckBox.text = ServicesModel.allServices[position]
     }
 
-    @Override
-    public int getItemCount() {
-        return ServicesModel.getAllServices().size();
+    override fun getItemCount(): Int {
+        return ServicesModel.allServices.size
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        CustomCheckBox customCheckBox;
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var customCheckBox: CustomCheckBox = itemView.findViewById(R.id.ccb_services)
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            customCheckBox = itemView.findViewById(R.id.ccb_services);
-        }
     }
 }

@@ -1,5 +1,4 @@
-
-package com.newfloats.staffs.ui.customviews;
+package com.appservice.ui.staffs.ui.customviews;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -14,7 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.newfloats.staffs.R;
+import com.appservice.R;
 
 public class LabeledToggle extends ToggleableView {
     private int padding;

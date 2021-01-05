@@ -17,15 +17,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/size_16"
             android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/size_16"
             android:orientation="vertical">
 
             <FrameLayout
                 android:layout_width="wrap_content"
+                android:id="@+id/fl_add_staff_img"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_16sdp">
+                android:layout_marginBottom="@dimen/size_16">
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/civ_staff_img"
@@ -129,7 +130,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/size_16"
                     android:baselineAligned="false"
                     android:orientation="vertical">
 
@@ -153,7 +154,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/size_16"
                     android:orientation="vertical">
 
                     <com.framework.views.customViews.CustomTextView
@@ -180,7 +181,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/size_16"
                     android:orientation="vertical">
 
                     <com.framework.views.customViews.CustomTextView
@@ -221,8 +222,9 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+                    android:id="@+id/rl_service_provided"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/size_16"
                     android:background="@drawable/rounded_gray_border_8dp"
                     android:padding="@dimen/_8sdp">
 
@@ -262,8 +264,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/size_16"
+                    android:layout_marginBottom="@dimen/size_16"
                     android:orientation="vertical">
 
                     <com.framework.views.customViews.CustomTextView
@@ -314,7 +316,7 @@
                     android:id="@+id/rl_staff_timing"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/size_16"
                     android:background="@drawable/rounded_gray_border_8dp"
                     android:padding="@dimen/_8sdp">
 
@@ -355,7 +357,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:id="@+id/rl_scheduled_breaks"
+                    android:layout_marginBottom="@dimen/size_16"
                     android:background="@drawable/rounded_gray_border_8dp"
                     android:padding="@dimen/_8sdp">
 
@@ -395,7 +398,7 @@
             <FrameLayout
                 style="@style/ButtonStyle.Rounded.Solid"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/_16sdp">
+                android:layout_marginBottom="@dimen/size_16">
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/ctv_text"

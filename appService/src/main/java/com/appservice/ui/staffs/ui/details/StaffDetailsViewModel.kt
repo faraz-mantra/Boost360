@@ -1,7 +1,6 @@
-package com.newfloats.staffs.ui.details;
+package com.appservice.ui.staffs.ui.details
 
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel
 
-public class StaffDetailsViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+class StaffDetailsViewModel : ViewModel() { // TODO: Implement the ViewModel
 }

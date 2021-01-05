@@ -1,4 +1,4 @@
-package com.newfloats.staffs.ui.details.timing.model;
+package com.appservice.ui.staffs.ui.details.timing.model;
 
 import java.util.ArrayList;
 
