@@ -4,7 +4,6 @@ import com.appsflyer.AppsFlyerLib
 import com.framework.analytics.FirebaseAnalyticsUtils
 import com.webengage.sdk.android.User
 import com.webengage.sdk.android.WebEngage
-import java.util.*
 
 object WebEngageController {
     var weAnalytics = WebEngage.get().analytics()
@@ -17,6 +16,10 @@ object WebEngageController {
 
             //Firebase Analytics User Session Event.
             FirebaseAnalyticsUtils.identifyUser(userId)
+
+            //AppsFlyer Analytics User Session Event.
+            AppsFlyerLib.getInstance().logSession(weAnalytics.activity.get()?.application)
+            AppsFlyerLib.getInstance().setCustomerUserId(userId)
 
             isUserLogedIn = true
         }
@@ -52,6 +55,12 @@ object WebEngageController {
 
                 //Firebase Analytics User Property.
                 FirebaseAnalyticsUtils.setUserProperty("Category", userCategory)
+
+                //AppsFlyer User Property
+                val params = HashMap<String, Any>()
+                params["Category"] = userCategory
+                AppsFlyerLib.getInstance().setAdditionalData(params)
+
             }
 
         } catch (e: Exception) {
@@ -91,5 +100,9 @@ object WebEngageController {
 
         //Reset Firebase Analytics User Session Event.
         FirebaseAnalyticsUtils.resetIdentifyUser()
+
+        //End AppsFlyer Analytics User Session Event.
+        AppsFlyerLib.getInstance().setCustomerUserId(null)
+
     }
 }

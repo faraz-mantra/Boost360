@@ -42,6 +42,10 @@ public class WebEngageController {
         //Firebase Analytics User Session Event.
         FirebaseAnalyticsUtils.identifyUser(profileId);
 
+        //AppsFlyer Analytics User Session Event.
+        AppsFlyerLib.getInstance().logSession(weAnalytics.getActivity().get().getApplicationContext());
+        AppsFlyerLib.getInstance().setCustomerUserId(profileId);
+
     }
 
     public static void setUserContactInfoProperties(String profileId, String email, String mobile, String name) {
@@ -93,6 +97,15 @@ public class WebEngageController {
             FirebaseAnalyticsUtils.setUserProperty("mobile", session.getUserPrimaryMobile());
             FirebaseAnalyticsUtils.setUserProperty("Company", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
 
+            //AppsFlyer Analytics User Property.
+            AppsFlyerLib.getInstance().setUserEmails(session.getUserProfileEmail());
+            HashMap<String,Object> params=new HashMap<>();
+            params.put("name",session.getUserProfileName());
+            params.put("mobile",session.getUserPrimaryMobile());
+            params.put("Company",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+            AppsFlyerLib.getInstance().setAdditionalData(params);
+
+
         } catch (Exception e) {
         }
     }
@@ -106,6 +119,11 @@ public class WebEngageController {
             //Firebase Analytics User Property.
             FirebaseAnalyticsUtils.setUserProperty("fpTag", fpTag);
 
+            //AppsFlyer User Property
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("fpTag", fpTag);
+            AppsFlyerLib.getInstance().setAdditionalData(params);
+
         } catch (Exception e) {
         }
     }
@@ -116,5 +134,8 @@ public class WebEngageController {
 
         //Reset Firebase Analytics User Session Event.
         FirebaseAnalyticsUtils.resetIdentifyUser();
+
+        //End AppsFlyer Analytics User Session Event.
+        AppsFlyerLib.getInstance().setCustomerUserId(null);
     }
 }

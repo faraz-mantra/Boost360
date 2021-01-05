@@ -66,5 +66,11 @@ object WebEngageController {
 
     fun logout() {
         weUser!!.logout()
+
+        //Reset Firebase Analytics User Session Event.
+        FirebaseAnalyticsUtils.resetIdentifyUser()
+
+        //End AppsFlyer Analytics User Session Event.
+        AppsFlyerLib.getInstance().setCustomerUserId(null)
     }
 }
