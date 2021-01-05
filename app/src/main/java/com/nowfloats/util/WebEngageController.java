@@ -2,6 +2,7 @@ package com.nowfloats.util;
 
 import android.text.TextUtils;
 
+import com.appsflyer.AppsFlyerLib;
 import com.framework.analytics.FirebaseAnalyticsUtils;
 import com.nowfloats.Login.UserSessionManager;
 import com.webengage.sdk.android.Analytics;
@@ -17,18 +18,21 @@ public class WebEngageController {
     static Analytics weAnalytics = WebEngage.get().analytics();
 
     public static void trackEvent(String event_name, String event_label, String event_value) {
-        try {
-            Map<String, Object> trackEvent = new HashMap<>();
-            trackEvent.put("event_name", event_name);
-            trackEvent.put("event_label", event_label);
-            trackEvent.put("event_value", event_value);
-            weAnalytics.track(event_name, trackEvent);
+        Map<String, Object> trackEvent = new HashMap<>();
+        trackEvent.put("event_name", event_name);
+        trackEvent.put("event_label", event_label);
+        trackEvent.put("event_value", event_value);
+        weAnalytics.track(event_name, trackEvent);
 
-            //Firebase Analytics Event...
-            FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, TextUtils.isEmpty(event_value) ? "" : event_value);
+        //Firebase Analytics Event...
+        FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, TextUtils.isEmpty(event_value) ? "null" : event_value);
+
+        //AppsFlyerEvent...
+        try {
+            AppsFlyerLib.getInstance().logEvent(weAnalytics.getActivity().get().getApplicationContext(), event_name, trackEvent);
         } catch (Exception e) {
-            e.printStackTrace();
         }
+
     }
 
     public static void initiateUserLogin(String profileId) {
@@ -37,6 +41,10 @@ public class WebEngageController {
 
         //Firebase Analytics User Session Event.
         FirebaseAnalyticsUtils.identifyUser(profileId);
+
+        //AppsFlyer Analytics User Session Event.
+        AppsFlyerLib.getInstance().logSession(weAnalytics.getActivity().get().getApplicationContext());
+        AppsFlyerLib.getInstance().setCustomerUserId(profileId);
 
     }
 
@@ -68,7 +76,6 @@ public class WebEngageController {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -90,8 +97,16 @@ public class WebEngageController {
             FirebaseAnalyticsUtils.setUserProperty("mobile", session.getUserPrimaryMobile());
             FirebaseAnalyticsUtils.setUserProperty("Company", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
 
+            //AppsFlyer Analytics User Property.
+            AppsFlyerLib.getInstance().setUserEmails(session.getUserProfileEmail());
+            HashMap<String,Object> params=new HashMap<>();
+            params.put("name",session.getUserProfileName());
+            params.put("mobile",session.getUserPrimaryMobile());
+            params.put("Company",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+            AppsFlyerLib.getInstance().setAdditionalData(params);
+
+
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -104,14 +119,23 @@ public class WebEngageController {
             //Firebase Analytics User Property.
             FirebaseAnalyticsUtils.setUserProperty("fpTag", fpTag);
 
+            //AppsFlyer User Property
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("fpTag", fpTag);
+            AppsFlyerLib.getInstance().setAdditionalData(params);
+
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
     public static void logout() {
-        if (weUser != null) weUser.logout();
+        if (weUser != null)
+            weUser.logout();
+
         //Reset Firebase Analytics User Session Event.
         FirebaseAnalyticsUtils.resetIdentifyUser();
+
+        //End AppsFlyer Analytics User Session Event.
+        AppsFlyerLib.getInstance().setCustomerUserId(null);
     }
 }
