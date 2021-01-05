@@ -1,33 +1,34 @@
-package com.newfloats.staffs.ui.services;
+package com.appservice.ui.staffs.ui.services
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.os.Bundle
+import android.text.Html
+import com.appservice.R
+import com.appservice.base.AppBaseFragment
+import com.appservice.databinding.FragmentSelectServicesBinding
+import com.framework.models.BaseViewModel
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
+class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, BaseViewModel>() {
 
-import com.newfloats.staffs.R;
-import com.newfloats.staffs.ui.BaseFragmentStaff;
-import com.newfloats.staffs.ui.details.StaffDetailsActivity;
 
-public class StaffServicesFragment extends BaseFragmentStaff {
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        return super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_select_services, container, false);
-        ((StaffDetailsActivity) requireActivity()).setToolBarTitle("Select Services", false);
-        RecyclerView recyclerView = view.findViewById(R.id.rv_service_provided);
-        recyclerView.setAdapter(new ServicesAdapter());
-        return view;
+    companion object {
+        fun newInstance(): StaffServicesFragment {
+            val args = Bundle()
+            val fragment = StaffServicesFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
-    public static StaffServicesFragment newInstance() {
-        Bundle args = new Bundle();
-        StaffServicesFragment fragment = new StaffServicesFragment();
-        fragment.setArguments(args);
-        return fragment;
+
+    override fun getLayout(): Int {
+        return R.layout.fragment_select_services
+    }
+
+    override fun getViewModelClass(): Class<BaseViewModel> {
+        return BaseViewModel::class.java
+    }
+
+    override fun onCreateView() {
+        binding?.ctvHeading?.text = Html.fromHtml(getString(R.string.select_what_services_that_the_staff))
+        binding?.rvServiceProvided?.adapter = ServicesAdapter()
     }
 }

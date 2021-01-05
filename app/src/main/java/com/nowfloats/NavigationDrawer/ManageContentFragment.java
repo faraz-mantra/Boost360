@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appservice.ui.staffs.ui.home.StaffHomeActivity;
 import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.Login.UserSessionManager;
@@ -155,6 +156,10 @@ public class ManageContentFragment extends Fragment {
         adapter.setItems(adapterImages, adapterTexts);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setAdapter(adapter);
+        //todo remove this
+        Button btnStaff = view.findViewById(R.id.btn_launch_staff);
+        btnStaff.setOnClickListener(view1 -> startActivity(new Intent(requireActivity(), StaffHomeActivity.class)));
+
     }
 
     @Override

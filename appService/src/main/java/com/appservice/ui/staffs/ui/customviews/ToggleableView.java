@@ -1,5 +1,4 @@
-
-package com.newfloats.staffs.ui.customviews;
+package com.appservice.ui.staffs.ui.customviews;
 
 import android.content.Context;
 import android.util.AttributeSet;

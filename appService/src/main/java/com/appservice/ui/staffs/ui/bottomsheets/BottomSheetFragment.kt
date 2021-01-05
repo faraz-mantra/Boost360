@@ -1,42 +1,32 @@
-package com.newfloats.staffs.ui.bottomsheets;
+package com.appservice.ui.staffs.ui.bottomsheets
 
-import android.app.Dialog;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.app.Dialog
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.appservice.R
+import com.appservice.databinding.BottomSheeetPlanningBreakBinding
+import com.framework.base.BaseBottomSheetDialog
+import com.framework.models.BaseViewModel
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.newfloats.staffs.R;
-
-public class BottomSheetFragment extends BottomSheetDialogFragment {
-    public BottomSheetFragment() {
-        super();
+class BottomSheetFragment : BaseBottomSheetDialog<BottomSheeetPlanningBreakBinding, BaseViewModel>() {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.bottom_sheeet_planning_break, container, false)
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.bottom_sheeet_planning_break, container, false);
-        return v;
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return super.onCreateDialog(savedInstanceState)
     }
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        return super.onCreateDialog(savedInstanceState);
+    override fun getViewModelClass(): Class<BaseViewModel> {
+        return BaseViewModel::class.java
     }
 
-    @Override
-    public void dismiss() {
-        super.dismiss();
+    override fun getLayout(): Int {
+        return R.layout.bottom_sheeet_planning_break
     }
 
-    @Override
-    public void dismissAllowingStateLoss() {
-        super.dismissAllowingStateLoss();
+    override fun onCreateView() {
     }
 }

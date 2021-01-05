@@ -9,4 +9,13 @@
         android:id="@+id/rv_upgrade"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_launch_staff"
+        style="@style/ButtonStyle.Rounded.Solid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="Launch Staff Flow" />
 </LinearLayout>

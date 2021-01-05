@@ -1,61 +1,39 @@
-package com.newfloats.staffs.ui.details.timing;
+package com.appservice.ui.staffs.ui.details.timing
 
-import android.os.Bundle;
-import android.text.Html;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.os.Bundle
+import android.text.Html
+import com.appservice.R
+import com.appservice.base.AppBaseFragment
+import com.appservice.databinding.FragmentStaffTimingBinding
+import com.appservice.ui.staffs.ui.details.timing.adapter.RecyclerSessionAdapter
+import com.appservice.ui.staffs.ui.details.timing.adapter.RecyclerSessionAdapter.RecyclerItemClick
+import com.framework.models.BaseViewModel
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+class StaffTimingFragment : AppBaseFragment<FragmentStaffTimingBinding, BaseViewModel>(), RecyclerItemClick {
+    override fun onToggle() {}
+    override fun onAddSession() {}
+    override fun onApplyAllDays() {}
 
-import com.framework.views.customViews.CustomTextView;
-import com.framework.views.viewgroups.BaseRecyclerView;
-import com.newfloats.staffs.R;
-import com.newfloats.staffs.ui.details.StaffDetailsActivity;
-import com.newfloats.staffs.ui.details.timing.adapter.RecyclerSessionAdapter;
-
-public class StaffTimingFragment extends Fragment implements RecyclerSessionAdapter.RecyclerItemClick {
-    View view;
-
-    public static StaffTimingFragment newInstance() {
-        Bundle args = new Bundle();
-        StaffTimingFragment fragment = new StaffTimingFragment();
-        fragment.setArguments(args);
-        return fragment;
+    companion object {
+        fun newInstance(): StaffTimingFragment {
+            val args = Bundle()
+            val fragment = StaffTimingFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.view = inflater.inflate(R.layout.fragment_staff_timing, container, false);
-        BaseRecyclerView recyclerView = view.findViewById(R.id.rv_staff_timing);
-        recyclerView.setAdapter(new RecyclerSessionAdapter(this));
-        CustomTextView headerText = view.findViewById(R.id.ctv_text_header);
-        headerText.setText(Html.fromHtml(getString(R.string.clinic_businesses_hour)));
-        ((StaffDetailsActivity) requireActivity()).setToolBarTitle("Staff Timing", false);
-        return view;
+    override fun getLayout(): Int {
+        return R.layout.fragment_staff_timing
     }
 
-    @Override
-    public void onToggle() {
-
+    override fun getViewModelClass(): Class<BaseViewModel> {
+        return BaseViewModel::class.java
     }
 
-    @Override
-    public void onAddSession() {
-
+    override fun onCreateView() {
+        super.onCreateView()
+        binding!!.ctvTextHeader.text = Html.fromHtml(getString(R.string.clinic_businesses_hour))
+        binding!!.rvStaffTiming.adapter = RecyclerSessionAdapter(this, requireActivity())
     }
-
-    @Override
-    public void onApplyAllDays() {
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
 }

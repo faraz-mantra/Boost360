@@ -1,7 +1,5 @@
-package com.newfloats.staffs.ui.home;
+package com.appservice.ui.staffs.ui.home
 
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel
 
-public class StaffHomeViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
-}
+class StaffHomeViewModel : ViewModel()

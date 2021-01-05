@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data><RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="@dimen/size_8"
     android:background="@color/white"
-    android:paddingHorizontal="@dimen/_16sdp"
+    android:paddingHorizontal="@dimen/size_16"
     android:paddingVertical="@dimen/size_8">
 
     <com.framework.views.CircularImageView
         android:id="@+id/civ_image"
-        android:layout_width="@dimen/_45sdp"
-        android:layout_height="@dimen/_45sdp"
+        android:layout_width="@dimen/size_45"
+        android:layout_height="@dimen/size_45"
         app:layout_constraintStart_toStartOf="parent"
         tools:src="@drawable/ic_staff_image" />
 
@@ -25,7 +29,7 @@
         android:fontFamily="@font/open_sans"
         android:textColor="@color/black"
         android:textFontWeight="600"
-        android:textSize="@dimen/_17sdp"
+        app:textType="HEADING_5"
         android:textStyle="normal"
         tools:text="Sukhran Singh" />
 
@@ -38,7 +42,7 @@
         android:fontFamily="@font/open_sans"
         android:textColor="#828282"
         android:textFontWeight="600"
-        android:textSize="@dimen/_12sdp"
+        app:textType="BODY_1"
         android:textStyle="normal"
         tools:text="Anti-aging Expert" />
 
@@ -53,7 +57,7 @@
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_height="@dimen/size_30"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:background="@drawable/rounded_button_yellow">
@@ -63,9 +67,10 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:paddingHorizontal="@dimen/size_16"
-            android:shadowColor="@color/home_yellow"
+            android:shadowColor="@color/yellow_ffb900"
             android:text="@string/view_profile"
             android:textColor="@color/yellow_ffb900" />
     </FrameLayout>
 
 </RelativeLayout>
+</layout>

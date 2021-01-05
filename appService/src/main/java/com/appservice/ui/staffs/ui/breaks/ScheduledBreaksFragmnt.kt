@@ -1,51 +1,55 @@
-package com.newfloats.staffs.ui.breaks;
+package com.appservice.ui.staffs.ui.breaks
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-
-import androidx.fragment.app.Fragment;
-
-import com.newfloats.staffs.R;
-import com.newfloats.staffs.ui.bottomsheets.BottomSheetFragment;
-import com.newfloats.staffs.ui.details.StaffDetailsActivity;
+import android.text.Html
+import android.view.View
+import androidx.fragment.app.Fragment
+import com.appservice.R
+import com.appservice.base.AppBaseFragment
+import com.appservice.databinding.FragmentScheduleBreaksBinding
+import com.appservice.ui.staffs.ui.bottomsheets.BottomSheetFragment
+import com.framework.models.BaseViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ScheduledBreaksFragmnt#newInstance} factory method to
+ * A simple [Fragment] subclass.
+ * Use the [ScheduledBreaksFragmnt.newInstance] factory method to
  * create an instance of this fragment.
  */
-public class ScheduledBreaksFragmnt extends Fragment {
+class ScheduledBreaksFragmnt : AppBaseFragment<FragmentScheduleBreaksBinding, BaseViewModel>() {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    public static ScheduledBreaksFragmnt newInstance() {
-        ScheduledBreaksFragmnt fragment = new ScheduledBreaksFragmnt();
-        return fragment;
+    companion object {
+        // TODO: Rename parameter arguments, choose names that match
+        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+        private const val ARG_PARAM1 = "param1"
+        private const val ARG_PARAM2 = "param2"
+        fun newInstance(): ScheduledBreaksFragmnt {
+            return ScheduledBreaksFragmnt()
+        }
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    override fun getLayout(): Int {
+        return R.layout.fragment_schedule_breaks
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_schedule_breaks, container, false);
-        FrameLayout addBreaks = v.findViewById(R.id.fl_add_breaks);
-        addBreaks.setOnClickListener(v1 -> {
-            BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
-            bottomSheetFragment.show(requireActivity().getSupportFragmentManager(), bottomSheetFragment.getTag());
-        });
-        ((StaffDetailsActivity) requireActivity()).setToolBarTitle("Scheduled Breaks", false);
-        return v;
+    override fun getViewModelClass(): Class<BaseViewModel> {
+        return BaseViewModel::class.java
     }
 
+    override fun onCreateView() {
+        super.onCreateView()
+        setOnClickListener(binding!!.flAddBreaks)
+        binding!!.ctvHeading.text = Html.fromHtml(getString(R.string.add_a_leave_break_for_br_gaurav_sharma))
+    }
+
+    override fun onClick(v: View) {
+        super.onClick(v)
+//        val bundle: Bundle = Bundle.EMPTY
+        when (v) {
+            binding?.flAddBreaks -> {
+                val bottomSheet = BottomSheetFragment()
+                bottomSheet.show(requireActivity().supportFragmentManager, null)
+            }
+        }
+    }
 }

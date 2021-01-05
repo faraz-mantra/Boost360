@@ -49,6 +49,9 @@
     <string name="friend_s_wedding">Friend\'s wedding</string>
     <string name="additional_break_info">Additional break info</string>
     <string name="add_another_break">Add Another Break</string>
+    <string name="view_info">VIEW INFO</string>
+    <string name="u_edit_info_u"><![CDATA[<u>EDIT INFO</u>]]></string>
+    <string name="view_profile">VIEW PROFILE</string>
     <array name="gender">
         <item>Please select</item>
         <item>Male</item>
@@ -64,4 +67,6 @@
         <item>8:30 PM</item>
         <item>9:30 PM</item>
     </array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

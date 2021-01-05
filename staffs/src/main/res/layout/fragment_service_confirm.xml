@@ -54,7 +54,7 @@
                 android:id="@+id/rl_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:paddingHorizontal="@dimen/_16sdp">
+                android:paddingHorizontal="@dimen/size_16">
 
                 <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
@@ -107,11 +107,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ctv_from"
-                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/size_16"
                     android:layout_toEndOf="@id/civ_calendar"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textColor="@color/black_4a4a4a"
-                    android:textSize="@dimen/_16sdp"
+                    android:textSize="@dimen/size_16"
                     tools:text="22 Jul 2020 . 10:00 AM" />
 
                 <com.framework.views.customViews.CustomImageView
@@ -148,11 +148,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ctv_till"
-                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/size_16"
                     android:layout_toEndOf="@id/civ_calendar"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textColor="@color/black_4a4a4a"
-                    android:textSize="@dimen/_16sdp"
+                    android:textSize="@dimen/size_16"
                     tools:text="22 Jul 2020 . 10:00 AM" />
                 <!---->
                 <com.framework.views.customViews.CustomTextView
@@ -180,11 +180,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ctv_duration"
-                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/size_16"
                     android:layout_toEndOf="@id/civ_calendar"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textColor="@color/gray_66666"
-                    android:textSize="@dimen/_16sdp"
+                    android:textSize="@dimen/size_16"
                     tools:text="6 Days 8 hrs" />
 
             </RelativeLayout>
@@ -213,7 +213,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/friend_s_wedding"
                 android:textColor="@color/black_4a4a4a"
-                android:textSize="@dimen/_16sdp" />
+                android:textSize="@dimen/size_16" />
         </LinearLayout>
 
     </com.framework.views.customViews.CustomCardView>
