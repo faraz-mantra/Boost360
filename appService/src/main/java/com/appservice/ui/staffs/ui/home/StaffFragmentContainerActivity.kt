@@ -11,6 +11,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
 import com.appservice.ui.catlogService.setFragmentType
+import com.appservice.ui.staffs.ui.Constants
 import com.appservice.ui.staffs.ui.breaks.ScheduledBreaksFragmnt
 import com.appservice.ui.staffs.ui.details.StaffDetailsFragment
 import com.appservice.ui.staffs.ui.details.timing.StaffTimingFragment
@@ -171,12 +172,12 @@ fun Fragment.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bun
     if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
-fun startStaffFragmentActivity(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false) {
+fun startStaffFragmentActivity(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false, requestCode: Int= Constants.REQUEST_CODE) {
     val intent = Intent(activity, StaffHomeActivity::class.java)
     intent.putExtras(bundle)
     intent.setFragmentType(type)
     if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-    if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(intent, 300)
+    if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(intent, requestCode)
 }
 
 fun AppCompatActivity.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {

@@ -11,7 +11,7 @@
     android:layout_height="match_parent">
 
     <com.framework.views.customViews.CustomTextView
-        android:id="@+id/tv_services_count"
+        android:id="@+id/ctv_services_count_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/size_16"
         tools:text="@string/select_what_services_that_the_staff"
-        app:layout_constraintTop_toBottomOf="@+id/tv_services_count"/>
+        app:layout_constraintTop_toBottomOf="@+id/ctv_services_count_title"/>
 
     <com.framework.views.viewgroups.BaseRecyclerView
         android:layout_width="match_parent"
@@ -41,13 +41,13 @@
         android:layout_marginEnd="@dimen/size_16"
         android:layout_marginBottom="@dimen/size_16"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/btn_take_to_listing"
+        app:layout_constraintBottom_toTopOf="@+id/fl_confirm_services"
         app:layout_constraintTop_toBottomOf="@+id/ctv_heading"
         tools:itemCount="7"
         tools:listitem="@layout/recycler_item_service" />
 
     <FrameLayout
-        android:id="@+id/btn_take_to_listing"
+        android:id="@+id/fl_confirm_services"
         style="@style/ButtonStyle.Rounded.Solid"
         android:layout_width="match_parent"
         android:layout_marginStart="@dimen/size_16"
@@ -58,7 +58,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.framework.views.customViews.CustomTextView
-            android:id="@+id/ctv_text"
+            android:id="@+id/ctv_services_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans"

@@ -13,6 +13,7 @@ import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentStaffDetailsBinding
 import com.appservice.ui.catlogService.widgets.ClickType
 import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
+import com.appservice.ui.staffs.ui.Constants
 import com.appservice.ui.staffs.ui.home.startStaffFragmentActivity
 import com.framework.imagepicker.ImagePicker
 import com.framework.models.BaseViewModel
@@ -38,10 +39,10 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, BaseVi
         setOnClickListener(binding?.rlStaffTiming)
         setOnClickListener(binding?.rlServiceProvided)
         setOnClickListener(binding?.rlScheduledBreaks)
-        setOnClickListener(binding!!.toggleYesNo)
-        setOnClickListener(binding!!.csExperience)
-        setOnClickListener(binding!!.csGender)
-        setOnClickListener(binding!!.flSavePublish)
+//        setOnClickListener(binding!!.toggleYesNo)
+//        setOnClickListener(binding!!.csExperience)
+//        setOnClickListener(binding!!.csGender)
+//        setOnClickListener(binding!!.flSavePublish)
     }
 
     override fun onClick(v: View) {
@@ -52,13 +53,13 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, BaseVi
                 openImagePicker()
             }
             binding?.rlStaffTiming -> {
-                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, bundle, clearTop = false, isResult = true)
+                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE)
             }
             binding?.rlServiceProvided -> {
-                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, bundle, clearTop = false, isResult = true)
+                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SERVICES_PROVIDED)
             }
             binding?.rlScheduledBreaks -> {
-                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT, bundle, clearTop = false, isResult = true)
+                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SCHEDULED_BREAK)
             }
             binding?.toggleYesNo -> {
             }
@@ -90,12 +91,15 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, BaseVi
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
-            val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
-            setImage(mPaths)
-
+        when {
+            requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK -> {
+                val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
+                setImage(mPaths)
+            }
+            requestCode == Constants.REQUEST_CODE_SERVICES_PROVIDED && resultCode == AppCompatActivity.RESULT_OK -> {
+                val servicesList: List<String> = data!!.extras!![Constants.SERVICES_LIST] as List<String>
+            }
         }
-
 
     }
 

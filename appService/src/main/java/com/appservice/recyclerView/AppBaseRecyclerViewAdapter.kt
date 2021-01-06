@@ -8,6 +8,10 @@ import com.appservice.R
 import com.appservice.constant.RecyclerViewItemType.*
 import com.appservice.databinding.*
 import com.appservice.holder.*
+import com.appservice.ui.staffs.recycler.StaffFilterViewHolder
+import com.appservice.ui.staffs.recycler.StaffListingViewHolder
+import com.appservice.ui.staffs.recycler.StaffServiceViewHolder
+import com.appservice.ui.staffs.recycler.StaffSessionViewHolder
 import com.framework.base.BaseActivity
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
@@ -22,6 +26,10 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       IMAGE_PREVIEW -> ImagePreviewViewHolder(binding as ItemPreviewImageBinding)
       GST_DETAILS_VIEW -> GstDetailViewHolder(binding as ItemGstDetailBinding)
       ADDITIONAL_FILE_VIEW -> AdditionalFileViewHolder(binding as ItemPdfFileBinding)
+      SERVICE_ITEM_VIEW -> StaffServiceViewHolder(binding as RecyclerItemServiceBinding)
+      SESSION_ITEM_VIEW -> StaffSessionViewHolder(binding as RecyclerItemSessionBinding)
+      STAFF_LISTING_VIEW -> StaffListingViewHolder(binding as RecyclerItemStaffListingBinding)
+      STAFF_FILTER_VIEW -> StaffFilterViewHolder(binding as RecyclerItemStaffFilterBinding)
     }
   }
 
