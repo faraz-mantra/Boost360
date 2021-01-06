@@ -1,12 +1,9 @@
 package com.dashboard.controller.ui.dashboard
 
-import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.dashboard.R
@@ -14,7 +11,6 @@ import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
 import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
-import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.DashboardActivity
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
@@ -48,7 +44,6 @@ import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY_N
 import com.framework.utils.DateUtils.getCurrentDate
 import com.framework.utils.DateUtils.getDateMillSecond
 import com.framework.utils.DateUtils.parseDate
-import com.framework.utils.fromHtml
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.inventoryorder.model.floatMessage.MessageModel
 import com.inventoryorder.model.mapDetail.VisitsModelResponse
@@ -57,26 +52,16 @@ import com.inventoryorder.model.summary.SummaryEntity
 import com.inventoryorder.model.summary.UserSummaryResponse
 import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
-import com.onboarding.nowfloats.model.category.CategoryDataModel
 import com.onboarding.nowfloats.model.channel.*
-import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
-import com.onboarding.nowfloats.model.channel.request.ChannelActionData
-import com.onboarding.nowfloats.model.channel.respose.NFXAccessToken
-import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
-import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
-import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.LocalSessionModel
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyDigitalCardShareDialog
 import com.onboarding.nowfloats.ui.webview.WebViewBottomDialog
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.concurrent.schedule
 
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
-  private var isRecreate: Boolean? = null
-  private var isHigh = false
   private var adapterBusinessContent: AppBaseRecyclerViewAdapter<BusinessContentSetupData>? = null
   private var channelAdapter: AppBaseRecyclerViewAdapter<ChannelData>? = null
   private var adapterPagerBusinessUpdate: AppBaseRecyclerViewAdapter<BusinessSetupHighData>? = null
@@ -87,7 +72,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var siteMeterData: SiteMeterScoreDetails? = null
   private var quickActionPosition = 0
   private var isFirsLoad = true
-  private var isExpendCard = false
 
   override fun getLayout(): Int {
     return R.layout.fragment_dashboard
@@ -100,10 +84,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnVisitingCardUp, binding?.btnVisitingCardDown, binding?.btnShowDigitalScore, binding?.btnDigitalChannel, binding?.btnBusinessLogo, binding?.txtDomainName, binding?.btnNotofication, binding?.btnShareWhatsapp, binding?.btnShareMore)
+    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
-    getCategoryData()
     apiSellerSummary()
     getPremiumBanner()
     WebEngageController.trackEvent("Dashboard Home Page", "pageview", session?.fpTag)
@@ -152,18 +135,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun refreshData(siteMeterData: SiteMeterScoreDetails) {
     this.siteMeterData = siteMeterData
     (baseActivity as? DashboardActivity)?.setPercentageData(siteMeterData.siteMeterTotalWeight)
-    isHigh = (siteMeterData.siteMeterTotalWeight >= 80)
-    if (isExpendCard.not()) visitingCardShowHide(isDown = true, isStart = true)
-    if (isRecreate != null && this.isHigh != this.isRecreate) {
-      getCategoryData()
-      apiSellerSummary()
-      getPremiumBanner()
-      setUserBusinessAllData(siteMeterData)
-    } else setUserBusinessAllData(siteMeterData)
-    isRecreate = this.isHigh
-  }
-
-  private fun setUserBusinessAllData(siteMeterData: SiteMeterScoreDetails) {
     setUserData()
     setRecBusinessManageTask()
     getNotificationCount()
@@ -171,60 +142,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     setDataSellerSummary(OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
   }
 
-  private fun visitingCardShowHide(isDown: Boolean, isStart: Boolean = false) {
-    Timer().schedule(when {
-      isStart -> 0
-      isDown -> 60
-      isHigh -> 200
-      else -> 150
-    }) {
-      binding?.viewDigitalScore?.post {
-        binding?.viewDigitalScore?.elevation = resources.getDimension(if (isDown) R.dimen.size_2 else R.dimen.size_0)
-        binding?.viewAllBusinessContact?.visibility = if (isDown) View.GONE else View.VISIBLE
-        binding?.viewVisitingCardProduct?.visibility = if (isDown) View.VISIBLE else View.GONE
-        if (isHigh) {
-          binding?.viewUpBusinessShadow?.background = if (isDown) ContextCompat.getDrawable(baseActivity, R.drawable.up_shadow_d) else null
-          binding?.viewBusinessBgScore?.background = if (isDown) null else ContextCompat.getDrawable(baseActivity, R.drawable.ic_bg_dark_white_vertical)
-        }
-      }
-    }
-    binding?.viewDigitalScore?.animateViewTopPadding(isDown, isStart)
-  }
-
   private fun getSiteMeter(siteMeterData: SiteMeterScoreDetails) {
     val listDigitalScore = siteMeterData.getListDigitalScore()
-    if (isHigh) {
-      binding?.viewLowDigitalReadiness?.gone()
-      binding?.viewLowTaskManageBusiness?.gone()
-      binding?.viewHighDigitalReadiness?.visible()
-    } else {
-      binding?.txtReadinessScore?.text = "${siteMeterData.siteMeterTotalWeight}"
-      binding?.progressScore?.progress = siteMeterData.siteMeterTotalWeight
-      binding?.viewHighDigitalReadiness?.gone()
-      binding?.viewLowDigitalReadiness?.visible()
-      binding?.viewLowTaskManageBusiness?.visible()
-      val listContent = ArrayList(listDigitalScore.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout();it })
-      binding?.pagerBusinessSetupLow?.apply {
-//        binding?.motionOne?.transitionToStart()
-//        adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, listContent, this@DashboardFragment)
-//        offscreenPageLimit = 3
-//        adapter = adapterBusinessContent
-//        postInvalidateOnAnimation()
-//        binding?.dotIndicator?.setViewPager2(this)
-//        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-//        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-//          override fun onPageSelected(position: Int) {
-//            super.onPageSelected(position)
-//            binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
-//          }
-//        })
-//        binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
-//        binding?.motionOne?.transitionToStart()
-      }
-      baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
-      baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
-    }
-
     if (session?.siteHealth != siteMeterData.siteMeterTotalWeight) {
       session?.siteHealth = siteMeterData.siteMeterTotalWeight
       val data = OnBoardingUpdateModel()
@@ -236,10 +155,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setRecBusinessManageTask() {
-    (if (isHigh) binding?.highRecommendedTask else binding?.lowRecommendedTask)?.apply {
+    binding?.lowRecommendedTask?.apply {
       viewModel?.getQuickActionData(baseActivity)?.observeOnce(viewLifecycleOwner, {
         val response = it as? QuickActionResponse
-        val listAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT) }
+        val listAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
         if (response?.isSuccess() == true && listAction?.actionItem.isNullOrEmpty().not()) {
           val position = quickActionPosition
           pagerQuickAction.apply {
@@ -260,12 +179,12 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       })
 
     }
-    (if (isHigh) binding?.highManageBusiness else binding?.lowManageBusiness)?.apply {
+    binding?.lowManageBusiness?.apply {
       title.text = if (getRoiSummaryType(session?.fP_AppExperienceCode) == "DOC") baseActivity.getString(R.string.manage_your_clinic) else baseActivity.getString(R.string.manage_your_business)
       rvManageBusiness.apply {
         viewModel?.getBoostAddOnsTop(baseActivity)?.observeOnce(viewLifecycleOwner, {
           val response = it as? ManageBusinessDataResponse
-          val dataAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT) }
+          val dataAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
           if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
             dataAction.actionItem?.map { it1 -> if (it1.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it1.premiumCode).not()) it1.isLock = true }
             val adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@DashboardFragment)
@@ -314,50 +233,36 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setDataSellerSummary(sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, callSummary: CallSummaryResponse?) {
-    if (isHigh) {
-      binding?.viewHighSummaryBottom?.apply { visible() }
-      val data = BusinessSetupHighData().getData(siteMeterData?.siteMeterTotalWeight ?: 0,
-          summary?.getNoOfUniqueViews() ?: "0", sellerOrder?.getTotalOrders() ?: "0", getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
-      if (adapterPagerBusinessUpdate == null) {
-        binding?.pagerBusinessSetupHigh?.apply {
-          adapterPagerBusinessUpdate = AppBaseRecyclerViewAdapter(baseActivity, data, this@DashboardFragment)
-          offscreenPageLimit = 3
-          adapter = adapterPagerBusinessUpdate
-          binding?.dotIndicatorBusinessHigh?.setViewPager2(this)
-          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-        }
-      } else adapterPagerBusinessUpdate?.notify(data)
-      val roiData = RoiSummaryData().getData(summary?.getNoOfMessages() ?: "0", callSummary?.getTotalCalls() ?: "0", sellerOrder, getRoiSummaryType(session?.fP_AppExperienceCode))
-      if (adapterRoi == null) {
-        binding?.rvRoiSummary?.apply {
-          adapterRoi = AppBaseRecyclerViewAdapter(baseActivity, roiData, this@DashboardFragment)
-          adapter = adapterRoi
-        }
-      } else adapterRoi?.notify(roiData)
-      val growthStatsList = GrowthStatsData().getData(summary, session)
-      if (adapterGrowth == null) {
-        binding?.rvGrowthState?.apply {
-          adapterGrowth = AppBaseRecyclerViewAdapter(baseActivity, growthStatsList, this@DashboardFragment)
-          adapter = adapterGrowth
-        }
-      } else adapterGrowth?.notify(growthStatsList)
-    } else binding?.viewHighSummaryBottom?.apply { gone() }
-  }
-
-  private fun setViewChannels(channels: ArrayList<ChannelModel>?) {
-    val list = ArrayList<ChannelData>()
-    channels?.forEach { list.add(ChannelData(it)) }
-    if (channelAdapter == null) {
-      binding?.rvChannelList?.apply {
-        channelAdapter = AppBaseRecyclerViewAdapter(baseActivity, list, this@DashboardFragment)
-        adapter = channelAdapter
+    val data = BusinessSetupHighData().getData(siteMeterData?.siteMeterTotalWeight ?: 0,
+        summary?.getNoOfUniqueViews() ?: "0", sellerOrder?.getTotalOrders() ?: "0", getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
+    if (adapterPagerBusinessUpdate == null) {
+      binding?.pagerBusinessSetupHigh?.apply {
+        adapterPagerBusinessUpdate = AppBaseRecyclerViewAdapter(baseActivity, data, this@DashboardFragment)
+        offscreenPageLimit = 3
+        adapter = adapterPagerBusinessUpdate
+        binding?.dotIndicatorBusinessHigh?.setViewPager2(this)
+        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
       }
-    } else channelAdapter?.notify(list)
+    } else adapterPagerBusinessUpdate?.notify(data)
+    val roiData = RoiSummaryData().getData(summary?.getNoOfMessages() ?: "0", callSummary?.getTotalCalls() ?: "0", sellerOrder, getRoiSummaryType(session?.fP_AppExperienceCode))
+    if (adapterRoi == null) {
+      binding?.rvRoiSummary?.apply {
+        adapterRoi = AppBaseRecyclerViewAdapter(baseActivity, roiData, this@DashboardFragment)
+        adapter = adapterRoi
+      }
+    } else adapterRoi?.notify(roiData)
+    val growthStatsList = GrowthStatsData().getData(summary, session)
+    if (adapterGrowth == null) {
+      binding?.rvGrowthState?.apply {
+        adapterGrowth = AppBaseRecyclerViewAdapter(baseActivity, growthStatsList, this@DashboardFragment)
+        adapter = adapterGrowth
+      }
+    } else adapterGrowth?.notify(growthStatsList)
   }
 
   private fun setUserData() {
     binding?.txtBusinessName?.text = session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
-    binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(true)}</u>")
+//    binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(true)}</u>")
     var imageLogoUri = session?.getFPDetails(GET_FP_DETAILS_LogoUrl)
     if (imageLogoUri.isNullOrEmpty().not() && imageLogoUri!!.contains("http").not()) {
       imageLogoUri = BASE_IMAGE_URL + imageLogoUri
@@ -380,86 +285,17 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setDataMarketBanner(marketBannerFilter: ArrayList<PromoAcademyBanner>) {
-    if (isHigh) {
-      binding?.pagerBoostPremium?.apply {
-        if (marketBannerFilter.isNotEmpty()) {
-          binding?.boostPremiumView?.visible()
-          if (adapterMarketBanner == null) {
-            adapterMarketBanner = AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
-            offscreenPageLimit = 3
-            adapter = adapterMarketBanner
-            setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-          } else adapterMarketBanner?.notify(marketBannerFilter)
-        } else binding?.boostPremiumView?.gone()
-      }
+    binding?.pagerBoostPremium?.apply {
+      if (marketBannerFilter.isNotEmpty()) {
+        binding?.boostPremiumView?.visible()
+        if (adapterMarketBanner == null) {
+          adapterMarketBanner = AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
+          offscreenPageLimit = 3
+          adapter = adapterMarketBanner
+          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+        } else adapterMarketBanner?.notify(marketBannerFilter)
+      } else binding?.boostPremiumView?.gone()
     }
-  }
-
-  private fun getCategoryData() {
-    val data = CategoryDataModel().getCategoryChannelData()
-    if (data != null && data.channels.isNullOrEmpty().not()) {
-      setViewChannels(data.channels)
-    } else showProgress()
-    viewModel?.getCategories(baseActivity)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        val categoryData = (it as? ResponseDataCategory)?.data?.singleOrNull { c -> c.experienceCode() == session?.fP_AppExperienceCode }
-        if (categoryData != null) {
-          getChannelAccessToken(categoryData)
-        } else showErrorChannel("Category not found.")
-      } else showErrorChannel(it.message())
-    })
-  }
-
-  private fun getChannelAccessToken(categoryData: CategoryDataModel) {
-    viewModel?.getChannelsAccessToken(session?.fPID)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) {
-        setDataRequestChannels(categoryData, (it as? ChannelsAccessTokenResponse)?.NFXAccessTokens)
-      } else setDataRequestChannels(categoryData, ArrayList())
-    })
-  }
-
-  private fun setDataRequestChannels(categoryData: CategoryDataModel, channelsAccessToken: List<NFXAccessToken>?) {
-    if (channelsAccessToken.isNullOrEmpty().not()) {
-      channelsAccessToken?.forEach {
-        var data: ChannelAccessToken? = null
-        when (it.type()) {
-          ChannelAccessToken.AccessTokenType.facebookpage.name,
-          ChannelAccessToken.AccessTokenType.twitter.name,
-          -> {
-            if (it.isValidType()) {
-              data = ChannelAccessToken(type = it.type(), userAccessTokenKey = it.UserAccessTokenKey, userAccountId = it.UserAccountId, userAccountName = it.UserAccountName)
-            }
-          }
-          ChannelAccessToken.AccessTokenType.facebookshop.name -> {
-            if (it.isValidTypeShop()) {
-              data = ChannelAccessToken(type = it.type(), userAccessTokenKey = it.UserAccessTokenKey,
-                  userAccountId = it.UserAccountId, userAccountName = it.UserAccountName, pixelId = it.PixelId, catalogId = it.CatalogId, merchantSettingsId = it.MerchantSettingsId)
-            }
-          }
-          ChannelAccessToken.AccessTokenType.googlemybusiness.name.toLowerCase(Locale.ROOT) -> {
-            val tokenResponse = ChannelTokenResponse(it.token_response?.access_token, it.token_response?.token_type, it.token_response?.expires_in, it.token_response?.refresh_token)
-            data = ChannelAccessToken(type = it.type(), token_expiry = it.token_expiry, invalid = it.invalid, token_response = tokenResponse, refresh_token = it.refresh_token, userAccountName = it.account_name,
-                userAccountId = it.account_id, LocationId = it.location_id, LocationName = it.location_name, userAccessTokenKey = it.token_response?.access_token, verified_location = it.verified_location)
-          }
-        }
-        categoryData.channels?.forEach { it1 -> if (it1.getAccessTokenType() == it.type()) it1.channelAccessToken = data }
-      }
-    }
-    getWhatsAppData(categoryData)
-  }
-
-  private fun getWhatsAppData(categoryData: CategoryDataModel) {
-    viewModel?.getWhatsappBusiness(session?.fpTag, WA_KEY)?.observeOnce(this, {
-      if (it.isSuccess()) {
-        val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
-        if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
-          categoryData.channels?.forEach { it1 -> if (it1.isWhatsAppChannel()) it1.channelActionData = ChannelActionData(response.active_whatsapp_number?.trim()) }
-        }
-      }
-      categoryData.saveData()
-      setViewChannels(categoryData.channels)
-      hideProgress()
-    })
   }
 
   private fun showErrorChannel(message: String) {
@@ -514,25 +350,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     super.onClick(v)
     when (v) {
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
-      binding?.btnVisitingCardUp -> {
-        isExpendCard = false
-        visitingCardShowHide(true)
-      }
-      binding?.btnVisitingCardDown -> {
-        isExpendCard = true
-        visitingCardShowHide(false)
-      }
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)
-      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
-      binding?.btnDigitalChannel -> session?.let { baseActivity.startDigitalChannel(it) }
-      binding?.btnShowDigitalScore -> {
-        WebEngageController.trackEvent("SITE HEALTH Page", "SITE_HEALTH", session?.fpTag);
-        session?.let { baseActivity.startOldSiteMeter(it) }
-//        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
-      }
-      binding?.btnShareWhatsapp -> shareVisitingCard(true)
-      binding?.btnShareMore -> shareVisitingCard(false)
-      //shareUserDetail(false)
+//      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
     }
   }
 
@@ -548,7 +367,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     viewModel?.getBoostUserDetailMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? ShareUserDetailResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-        val messageDetail = response.data?.firstOrNull { it1 -> it1.type?.toLowerCase(Locale.ROOT) == session?.fP_AppExperienceCode?.toLowerCase(Locale.ROOT) }?.message
+        val messageDetail = response.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.message
         if (messageDetail.isNullOrEmpty().not()) {
           val txt = String.format(messageDetail!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), session?.userPrimaryMobile, session?.fPEmail)
           try {
@@ -700,15 +519,6 @@ private fun UserSessionManager.saveUserSummary(summary: SummaryEntity?) {
 }
 
 
-private fun LinearLayoutCompat?.animateViewTopPadding(isDown: Boolean, isStart: Boolean = false) {
-  this?.apply {
-    val animator: ValueAnimator = ValueAnimator.ofInt(paddingTop, resources.getDimensionPixelSize(if (isDown) R.dimen.size_0 else R.dimen.size_164))
-    animator.addUpdateListener { valueAnimator -> setPadding(0, (valueAnimator.animatedValue as Int), 0, 0) }
-    animator.duration = if (isStart) 0 else 280
-    animator.start()
-  }
-}
-
 fun UserSessionManager.getRequestMap(): Map<String, String> {
   val map = HashMap<String, String>()
   var startDate = ""
@@ -735,12 +545,12 @@ fun UserSessionManager?.checkIsPremiumUnlock(value: String?): Boolean {
 }
 
 fun getLocalSession(session: UserSessionManager): LocalSessionModel {
-  var imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl)
+  var imageUri = session.getFPDetails(GET_FP_DETAILS_LogoUrl)
   if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) imageUri = BASE_IMAGE_URL + imageUri
   val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
   val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
   val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
-  return LocalSessionModel(floatingPoint = session.fPID,contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME), businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME),
+  return LocalSessionModel(floatingPoint = session.fPID, contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME), businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME),
       businessImage = imageUri, location = location, websiteUrl = session.getDomainName(false),
       businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), primaryNumber = session.userPrimaryMobile,
       primaryEmail = session.fPEmail, fpTag = session.fpTag)
