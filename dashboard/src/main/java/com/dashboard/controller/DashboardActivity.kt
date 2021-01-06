@@ -15,7 +15,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
 import com.appservice.ui.catlogService.widgets.ClickType
 import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
-import com.dashboard.utils.WebEngageController
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
@@ -58,7 +57,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private lateinit var mNavController: NavController
   private var session: UserSessionManager? = null
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
-  private var isHigh = false
   private var isSecondaryImage = false
   private val navHostFragment: NavHostFragment?
     get() {
@@ -99,15 +97,15 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     WebEngageController.initiateUserLogin(session?.userProfileId)
     WebEngageController.setUserContactAttributes(session?.userProfileEmail, session?.userPrimaryMobile, session?.userProfileName, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
     WebEngageController.setFPTag(session?.fpTag)
-    WebEngageController.trackEvent("DASHBOARD HOME", "pageview", session?.fpTag?:"")
+    WebEngageController.trackEvent("DASHBOARD HOME", "pageview", session?.fpTag ?: "")
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
       WebEngage.get().setRegistrationID(token)
     }
     initialiseZendeskSupportSdk()
     if (FirebaseInstanceId.getInstance().token != null) {
-      AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().token?:"")
-      AnaCore.registerUser(this, session?.fpTag?:"", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
+      AnaCore.saveFcmToken(this, FirebaseInstanceId.getInstance().token ?: "")
+      AnaCore.registerUser(this, session?.fpTag ?: "", ANA_BUSINESS_ID, ANA_CHAT_API_URL)
     }
     //checkCustomerAssistantService()
   }
@@ -124,7 +122,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       Log.d("Data: ", "$data  $action")
       if (session?.isLoginCheck == true) {
         //Appsflyer Deep Link...
-        if (uri!=null && uri.toString().contains("onelink", true)) {
+        if (uri != null && uri.toString().contains("onelink", true)) {
           if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
             val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
             val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
@@ -134,12 +132,12 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         } else {
           //Default Deep Link..
           val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(uri)
-        if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
-          val viewType = deepHashMap[DynamicLinkParams.viewType]
-          val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
-          if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
-        } else deepLinkUtil?.deepLinkPage(data?.substring(data?.lastIndexOf("/") + 1) ?: "", "", false)
-      }
+          if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
+            val viewType = deepHashMap[DynamicLinkParams.viewType]
+            val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
+            if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+          } else deepLinkUtil?.deepLinkPage(data?.substring(data?.lastIndexOf("/") + 1) ?: "", "", false)
+        }
       } else this.startPreSignUp(session)
     } else {
       if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
@@ -158,11 +156,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   fun setPercentageData(score: Int) {
-    isHigh = (score >= 80)
     binding?.drawerView?.txtPercentage?.text = "$score%"
     binding?.drawerView?.progressBar?.progress = score
-    binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-    binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+    binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, R.color.accent_dark))
+    binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, R.drawable.progress_bar_horizontal)
   }
 
   private fun setUserData() {
@@ -283,7 +280,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding?.drawerView?.btnSiteMeter ->{
+      binding?.drawerView?.btnSiteMeter -> {
         session?.let { this.startOldSiteMeter(it) }
 //        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
       }
