@@ -319,7 +319,7 @@
                                 android:textFontWeight="600"
                                 android:textSize="10sp" />
 
-                            <com.appservice.ui.staffs.ui.customviews.LabeledToggle
+                            <com.appservice.staffs.ui.customviews.LabeledToggle
                                 android:id="@+id/toggle_yes_no"
                                 android:layout_width="@dimen/size_45"
                                 android:layout_height="@dimen/size_20"

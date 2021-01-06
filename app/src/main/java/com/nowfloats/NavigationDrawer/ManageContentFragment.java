@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appservice.ui.staffs.ui.home.StaffHomeActivity;
+import com.appservice.staffs.ui.home.StaffHomeActivity;
 import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.Login.UserSessionManager;

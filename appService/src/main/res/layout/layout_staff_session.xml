@@ -2,11 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <data>
-
     </data>
-
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -33,19 +30,20 @@
                     android:fontFamily="@font/open_sans"
                     android:text="@string/from"
                     android:textColor="@color/black_4a4a4a"
-                    android:textSize="@dimen/size_8"
+                    android:textSize="8sp"
                     android:textStyle="normal" />
 
                 <LinearLayout
                     style="@style/SpinnerWithNoArrow"
                     android:layout_width="match_parent"
+                    android:id="@+id/ll_spinner_f1"
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/size_5"
                     android:orientation="horizontal">
 
                     <com.framework.views.customViews.customSpinner.SonicSpinner
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/size_30"
+                        android:layout_height="@dimen/size_40"
                         android:layout_weight=".7"
                         android:background="@null"
                         android:entries="@array/Time"
@@ -65,8 +63,8 @@
             <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="@dimen/size_5"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/size_10"
                 android:alpha="0.2"
                 android:text="@string/to"
                 android:textColor="@color/black_2A2A2A"
@@ -76,6 +74,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_4"
+                android:id="@+id/ll_spinner_f2"
                 android:layout_marginEnd="@dimen/size_18"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -98,7 +97,7 @@
 
                     <com.framework.views.customViews.customSpinner.SonicSpinner
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/size_30"
+                        android:layout_height="@dimen/size_40"
                         android:layout_weight=".7"
                         android:background="@null"
                         android:entries="@array/Time"
@@ -128,6 +127,7 @@
 
         <com.framework.views.customViews.CustomCheckBox
             android:layout_width="wrap_content"
+            android:id="@+id/cb_all_day_apply"
             android:layout_height="wrap_content"
             android:layout_below="@id/ctv_add_session"
             android:layout_alignStart="@id/ctv_add_session"
