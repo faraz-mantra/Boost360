@@ -37,9 +37,9 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:orientation="vertical"
-          android:paddingStart="@dimen/size_12"
+          android:paddingStart="@dimen/size_10"
           android:paddingTop="@dimen/size_10"
-          android:paddingEnd="@dimen/size_10"
+          android:paddingEnd="@dimen/size_8"
           android:paddingBottom="@dimen/size_8">
 
           <com.framework.views.customViews.CustomCardView

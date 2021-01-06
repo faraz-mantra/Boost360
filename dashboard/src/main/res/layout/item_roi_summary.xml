@@ -36,7 +36,7 @@
           android:ellipsize="end"
           android:includeFontPadding="false"
           android:maxLines="2"
-          android:textColor="@color/grey_dark_3"
+          android:textColor="@color/black_4a4a4a"
           app:fontFamily="@font/light"
           app:textType="BODY_1"
           tools:text="Patient Enquiries" />
@@ -79,7 +79,7 @@
             android:layout_marginEnd="@dimen/size_1"
             android:includeFontPadding="false"
             android:text="₹"
-            android:textColor="@color/grey_dark_2"
+            android:textColor="@color/black_4a4a4a"
             app:fontFamily="@font/regular"
             app:textType="OVERLINE" />
 
@@ -90,7 +90,7 @@
             android:layout_marginBottom="@dimen/size_2"
             android:includeFontPadding="false"
             android:text="1,579"
-            android:textColor="@color/dimgray"
+            android:textColor="@color/black_4a4a4a"
             app:fontFamily="@font/regular"
             app:textType="HEADING_4" />
         </LinearLayout>

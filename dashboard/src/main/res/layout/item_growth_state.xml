@@ -34,6 +34,7 @@
       android:layout_marginEnd="@dimen/size_10"
       android:layout_weight="1"
       app:textType="BODY_1"
+      android:textColor="@color/light_blue_grey"
       tools:text="Appointment\nBookings Worth" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -57,7 +58,7 @@
           android:includeFontPadding="false"
           android:paddingTop="@dimen/size_6"
           android:text="INR"
-          android:textColor="@color/dimgray"
+          android:textColor="@color/black_4a4a4a"
           app:fontFamily="@font/regular"
           app:textType="CAPTION" />
 
@@ -67,7 +68,7 @@
           android:layout_height="match_parent"
           android:layout_marginEnd="@dimen/size_6"
           android:includeFontPadding="false"
-          android:textColor="@color/dimgray"
+          android:textColor="@color/black_4a4a4a"
           app:fontFamily="@font/regular"
           android:textSize="26sp"
           tools:text="1,579" />

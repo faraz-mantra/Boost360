@@ -15,10 +15,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
 import com.appservice.ui.catlogService.widgets.ClickType
 import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
+import com.dashboard.utils.WebEngageController
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
-import com.dashboard.constant.FragmentType
-import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
 import com.dashboard.databinding.ActivityDashboardBinding
@@ -33,6 +32,7 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
 import com.framework.views.customViews.CustomToolbar
@@ -99,7 +99,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     WebEngageController.initiateUserLogin(session?.userProfileId)
     WebEngageController.setUserContactAttributes(session?.userProfileEmail, session?.userPrimaryMobile, session?.userProfileName, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
     WebEngageController.setFPTag(session?.fpTag)
-    WebEngageController.trackEvent("DASHBOARD HOME", "pageview", session?.fpTag)
+    WebEngageController.trackEvent("DASHBOARD HOME", "pageview", session?.fpTag?:"")
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
       WebEngage.get().setRegistrationID(token)
@@ -121,14 +121,25 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       val action = intent.action
       val data = intent.dataString
       val uri = intent.data
-      val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(uri)
       Log.d("Data: ", "$data  $action")
       if (session?.isLoginCheck == true) {
+        //Appsflyer Deep Link...
+        if (uri!=null && uri.toString().contains("onelink", true)) {
+          if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name)) {
+            val viewType = AppsFlyerUtils.sAttributionData[DynamicLinkParams.viewType.name] ?: ""
+            val buyItemKey = AppsFlyerUtils.sAttributionData[DynamicLinkParams.buyItemKey.name] ?: ""
+
+            if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
+          }
+        } else {
+          //Default Deep Link..
+          val deepHashMap: HashMap<DynamicLinkParams, String> = DynamicLinksManager().getURILinkParams(uri)
         if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
           val viewType = deepHashMap[DynamicLinkParams.viewType]
           val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
           if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
         } else deepLinkUtil?.deepLinkPage(data?.substring(data?.lastIndexOf("/") + 1) ?: "", "", false)
+      }
       } else this.startPreSignUp(session)
     } else {
       if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
@@ -272,7 +283,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding?.drawerView?.btnSiteMeter -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+      binding?.drawerView?.btnSiteMeter ->{
+        session?.let { this.startOldSiteMeter(it) }
+//        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+      }
       binding?.drawerView?.imgBusinessLogo -> this.startBusinessDescriptionEdit(session)
       binding?.drawerView?.txtDomainName -> this.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.drawerView?.backgroundImage -> openImagePicker(true)

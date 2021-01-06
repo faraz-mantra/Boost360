@@ -24,6 +24,7 @@ import com.facebook.appevents.AppEventsLogger;
 import com.inventoryorder.BaseOrderApplication;
 import com.invitereferrals.invitereferrals.InviteReferralsApplication;
 import com.nowfloats.education.koindi.KoinBaseApplication;
+import com.framework.utils.AppsFlyerUtils;
 import com.nowfloats.util.Constants;
 import com.onboarding.nowfloats.BaseBoardingApplication;
 import com.thinksity.R;
@@ -36,86 +37,12 @@ import java.lang.reflect.Method;
 public class AppController extends MultiDexApplication/* implements IAviaryClientCredentials*/ {
 
     public static final String TAG = AppController.class.getSimpleName();
+    private static AppController mInstance;
+    private final String APPSFLAYER_DEV_KEY = "8PD2DC7BbVdr7aLnRE8wHY";
+    String webEngageKey = "~10a5cad2d";
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
-    private static AppController mInstance;
-    String webEngageKey = "~10a5cad2d";
     private LocaleManager localeManager;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        BaseOrderApplication.instance = this;
-        SmartLookController.initiateSmartLook(this.getString(R.string.samrt_look_api_key));
-        BaseOrderApplication.initModule(this);
-        BaseBoardingApplication.instance = this;
-        BaseBoardingApplication.initModule(this);
-        AppServiceApplication.instance = this;
-        AppServiceApplication.initModule(this);
-        AppDashboardApplication.instance = this;
-        AppDashboardApplication.initModule(this);
-        initWebEngage();
-
-        InviteReferralsApplication.register(this);
-//        InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
-
-        //Koin
-        KoinBaseApplication.initModule(this);
-//        ContextApplication.initSdk(this, this);
-
-        //AppIce SDk
-        //       ContextApplication.initSdk(getApplicationContext(), this);
-
-        //AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
-        try {
-            //Fabric.with(this, new Crashlytics());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-//        if (!BuildConfig.DEBUG) {
-//
-//            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//            StrictMode.setThreadPolicy(policy);
-//        }
-//        ApxorSDK.initialize(BuildConfig.APXOR_BUNDLED_ID, getApplicationContext());
-        String deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-
-        //Log.d("Device ID","Device ID : "+deviceId);
-
-        /*CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("Roboto-Light.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build());*/
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this));
-        //WebEngage.registerPushNotificationCallback(new PushNotificationCallbacksImpl());
-        AppEventsLogger.activateApp(this);
-
-        mInstance = this;
-        try {
-          /*  MobihelpConfig config = new MobihelpConfig("https://nowfloats.freshdesk.com",
-                    "nowfloatsboost-1-eb43cfea648e2fd8a088c756519cb4d6",
-                    "e13c031f28ba356a76110e8d1e2c4543c84670d5");
-            Mobihelp.init(this, config);*/
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "open_sans_hebrew_bold.ttf");
-    }
-
-    void initWebEngage() {
-        WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
-                .setWebEngageKey(webEngageKey)
-                .setDebugMode(true)
-                .build();
-        registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
-
-
-    }
-
 
     public static synchronized AppController getInstance() {
         return mInstance;
@@ -125,49 +52,6 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         ApplicationInfo applicationInfo = context.getApplicationInfo();
         int stringId = applicationInfo.labelRes;
         return stringId == 0 ? applicationInfo.nonLocalizedLabel.toString() : context.getString(stringId);
-    }
-
-    public RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
-        }
-
-        return mRequestQueue;
-    }
-
-    public ImageLoader getImageLoader() {
-        getRequestQueue();
-        if (mImageLoader == null) {
-            mImageLoader = new ImageLoader(this.mRequestQueue,
-                    new LruBitmapCache());
-        }
-        return this.mImageLoader;
-    }
-
-    public void clearApplicationData() {
-        deleteCACHE();
-
-        // com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
-//   mImageLoader.clearDiskCache();
-//        mImageLoader.clearMemoryCache();
-
-        String dir = Constants.dataDirectory;
-        File sdcard = getExternalCacheDir();
-
-
-        File pictureDir = new File(sdcard, dir);
-
-        // File cache = getCacheDir();
-        // File appDir = new File(cache.getParent());
-        if (pictureDir.exists()) {
-            String[] children = pictureDir.list();
-            for (String s : children) {
-                if (!s.equals("lib")) {
-                    deleteDir(new File(pictureDir, s));
-                    Log.i("TAG", "File /data/data/com.thinksity/ :" + pictureDir + " , " + s + " DELETED");
-                }
-            }
-        }
     }
 
     /*public class PushNotificationCallbacksImpl implements PushNotificationCallbacks {
@@ -217,6 +101,126 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         return dir.delete();
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        BaseOrderApplication.instance = this;
+        SmartLookController.initiateSmartLook(this.getString(R.string.samrt_look_api_key));
+        BaseOrderApplication.initModule(this);
+        BaseBoardingApplication.instance = this;
+        BaseBoardingApplication.initModule(this);
+        AppServiceApplication.instance = this;
+        AppServiceApplication.initModule(this);
+        AppDashboardApplication.instance = this;
+        AppDashboardApplication.initModule(this);
+        initWebEngage();
+
+        InviteReferralsApplication.register(this);
+//        InviteReferralsApi.getInstance(this).tracking("install", null, 0, null, null);
+
+        //Koin
+        KoinBaseApplication.initModule(this);
+//        ContextApplication.initSdk(this, this);
+
+        //AppIce SDk
+        //       ContextApplication.initSdk(getApplicationContext(), this);
+
+        //AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
+
+        /* Init AppsFlyer SDK */
+        AppsFlyerUtils.initAppsFlyer(this, APPSFLAYER_DEV_KEY);
+
+        try {
+            //Fabric.with(this, new Crashlytics());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+//        if (!BuildConfig.DEBUG) {
+//
+//            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//            StrictMode.setThreadPolicy(policy);
+//        }
+//        ApxorSDK.initialize(BuildConfig.APXOR_BUNDLED_ID, getApplicationContext());
+        String deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        //Log.d("Device ID","Device ID : "+deviceId);
+
+        /*CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("Roboto-Light.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());*/
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this));
+        //WebEngage.registerPushNotificationCallback(new PushNotificationCallbacksImpl());
+        AppEventsLogger.activateApp(this);
+
+        mInstance = this;
+        try {
+          /*  MobihelpConfig config = new MobihelpConfig("https://nowfloats.freshdesk.com",
+                    "nowfloatsboost-1-eb43cfea648e2fd8a088c756519cb4d6",
+                    "e13c031f28ba356a76110e8d1e2c4543c84670d5");
+            Mobihelp.init(this, config);*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "open_sans_hebrew_bold.ttf");
+    }
+
+    void initWebEngage() {
+        WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
+                .setWebEngageKey(webEngageKey)
+                .setDebugMode(true)
+                .build();
+        registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
+
+
+    }
+
+    public RequestQueue getRequestQueue() {
+        if (mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+        }
+
+        return mRequestQueue;
+    }
+
+    public ImageLoader getImageLoader() {
+        getRequestQueue();
+        if (mImageLoader == null) {
+            mImageLoader = new ImageLoader(this.mRequestQueue,
+                    new LruBitmapCache());
+        }
+        return this.mImageLoader;
+    }
+
+    public void clearApplicationData() {
+        deleteCACHE();
+
+        // com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
+//   mImageLoader.clearDiskCache();
+//        mImageLoader.clearMemoryCache();
+
+        String dir = Constants.dataDirectory;
+        File sdcard = getExternalCacheDir();
+
+
+        File pictureDir = new File(sdcard, dir);
+
+        // File cache = getCacheDir();
+        // File appDir = new File(cache.getParent());
+        if (pictureDir.exists()) {
+            String[] children = pictureDir.list();
+            for (String s : children) {
+                if (!s.equals("lib")) {
+                    deleteDir(new File(pictureDir, s));
+                    Log.i("TAG", "File /data/data/com.thinksity/ :" + pictureDir + " , " + s + " DELETED");
+                }
+            }
+        }
+    }
 
     public void deleteCACHE() {
         PackageManager pm = getPackageManager();

@@ -21,8 +21,8 @@
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/back_btn"
-        android:layout_width="@dimen/size_34"
-        android:layout_height="@dimen/size_34"
+        android:layout_width="@dimen/size_30"
+        android:layout_height="@dimen/size_30"
         android:layout_gravity="end"
         android:layout_marginTop="@dimen/size_10"
         android:layout_marginEnd="@dimen/size_10"
@@ -47,7 +47,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/size_9"
         android:layout_marginBottom="@dimen/size_12"
-        app:dotsColor="@color/white_50"
+        app:dotsColor="@color/light_grey_1"
         app:dotsCornerRadius="@dimen/_6dp"
         app:dotsSize="@dimen/size_5"
         app:dotsSpacing="@dimen/size_2"

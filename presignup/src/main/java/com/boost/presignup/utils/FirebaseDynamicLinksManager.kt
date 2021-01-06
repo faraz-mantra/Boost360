@@ -74,7 +74,7 @@ class FirebaseDynamicLinksManager {
     val link = "${"StoreUrl.PLAY.toString()"}&referral_code=$uid"
     FirebaseDynamicLinks.getInstance().createDynamicLink().setLink(Uri.parse(link)).setDomainUriPrefix("https://nowfloats.page.link")
         .setAndroidParameters(DynamicLink.AndroidParameters.Builder("com.biz2.nowfloats")
-            .setMinimumVersion(BuildConfig.VERSION_CODE)
+//            .setMinimumVersion(BuildConfig.VERSION_CODE)
             .build())
         .buildShortDynamicLink().addOnSuccessListener { shortDynamicLink ->
           onResult(null, shortDynamicLink.shortLink.toString())

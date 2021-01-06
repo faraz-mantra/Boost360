@@ -12,4 +12,8 @@ data class MerchantResult(
     var fpIds: ArrayList<String>? = null,
     @SerializedName("LoginId")
     var loginId: String? = null,
-) : Serializable
+) : Serializable{
+    fun getUserDetail():ProfileProperties?{
+       return channelProfileProperties?.firstOrNull()?.profileProperties
+    }
+}
