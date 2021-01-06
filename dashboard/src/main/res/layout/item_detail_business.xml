@@ -31,6 +31,7 @@
         android:layout_marginTop="@dimen/size_1"
         android:text="3,45,890"
         android:id="@+id/txt_value"
+        app:fontFamily="@font/barlow_semi_bold"
         android:textColor="@color/colorAccent"
         app:textType="HEADING_6" />
     </LinearLayout>

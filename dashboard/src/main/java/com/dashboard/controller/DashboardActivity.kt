@@ -155,11 +155,14 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     return binding?.toolbar
   }
 
+
+
   fun setPercentageData(score: Int) {
+    val isHigh = (score >= 80)
     binding?.drawerView?.txtPercentage?.text = "$score%"
     binding?.drawerView?.progressBar?.progress = score
-    binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, R.color.accent_dark))
-    binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, R.drawable.progress_bar_horizontal)
+    binding?.drawerView?.txtSiteHelth?.setTextColor(ContextCompat.getColor(this, if (isHigh) R.color.light_green_3 else R.color.accent_dark))
+    binding?.drawerView?.progressBar?.progressDrawable = ContextCompat.getDrawable(this, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
   }
 
   private fun setUserData() {

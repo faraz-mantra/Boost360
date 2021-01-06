@@ -37,7 +37,7 @@
           android:includeFontPadding="false"
           android:maxLines="2"
           android:textColor="@color/black_4a4a4a"
-          app:fontFamily="@font/light"
+          app:fontFamily="@font/regular"
           app:textType="BODY_1"
           tools:text="Patient Enquiries" />
 
@@ -91,7 +91,7 @@
             android:includeFontPadding="false"
             android:text="1,579"
             android:textColor="@color/black_4a4a4a"
-            app:fontFamily="@font/regular"
+            app:fontFamily="@font/barlow_medium"
             app:textType="HEADING_4" />
         </LinearLayout>
 

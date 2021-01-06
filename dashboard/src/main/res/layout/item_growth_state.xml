@@ -69,7 +69,7 @@
           android:layout_marginEnd="@dimen/size_6"
           android:includeFontPadding="false"
           android:textColor="@color/black_4a4a4a"
-          app:fontFamily="@font/regular"
+          app:fontFamily="@font/barlow_regular"
           android:textSize="26sp"
           tools:text="1,579" />
       </androidx.appcompat.widget.LinearLayoutCompat>

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.viewpager2.widget.ViewPager2
 import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -23,7 +22,6 @@ import com.dashboard.model.live.dashboardBanner.DashboardPremiumBannerResponse
 import com.dashboard.model.live.dashboardBanner.getAcademyBanners
 import com.dashboard.model.live.dashboardBanner.saveDataAcademy
 import com.dashboard.model.live.premiumBanner.*
-import com.dashboard.model.live.quickAction.QuickActionData
 import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.model.live.quickAction.QuickActionResponse
 import com.dashboard.model.live.shareUser.ShareUserDetailResponse
@@ -70,7 +68,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterMarketBanner: AppBaseRecyclerViewAdapter<PromoAcademyBanner>? = null
   private var adapterAcademy: AppBaseRecyclerViewAdapter<DashboardAcademyBanner>? = null
   private var siteMeterData: SiteMeterScoreDetails? = null
-  private var quickActionPosition = 0
   private var isFirsLoad = true
 
   override fun getLayout(): Int {
@@ -160,20 +157,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         val response = it as? QuickActionResponse
         val listAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
         if (response?.isSuccess() == true && listAction?.actionItem.isNullOrEmpty().not()) {
-          val position = quickActionPosition
-          pagerQuickAction.apply {
+          rvQuickAction.apply {
             val adapterQuickAction = AppBaseRecyclerViewAdapter(baseActivity, listAction?.actionItem!!, this@DashboardFragment)
-            offscreenPageLimit = 3
             adapter = adapterQuickAction
-            dotIndicatorAction.setViewPager2(this)
-            post { setCurrentItem(position, false) }
-            setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-              override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                quickActionPosition = position
-              }
-            })
           }
         } else showShortToast(baseActivity.getString(R.string.quick_action_data_error))
       })
@@ -233,7 +219,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setDataSellerSummary(sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, callSummary: CallSummaryResponse?) {
-    val data = BusinessSetupHighData().getData(siteMeterData?.siteMeterTotalWeight ?: 0,
+    val  data = BusinessSetupHighData().getData(siteMeterData?.siteMeterTotalWeight ?: 0,
         summary?.getNoOfUniqueViews() ?: "0", sellerOrder?.getTotalOrders() ?: "0", getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
     if (adapterPagerBusinessUpdate == null) {
       binding?.pagerBusinessSetupHigh?.apply {
@@ -313,7 +299,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, position) })
       RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal -> {
         val data = item as? QuickActionItem ?: return
-        QuickActionData.QuickActionType.from(data.quickActionType)?.let { quickActionClick(it) }
+        QuickActionItem.QuickActionType.from(data.quickActionType)?.let { quickActionClick(it) }
       }
       RecyclerViewActionType.BUSINESS_ADD_ONS_CLICK.ordinal -> {
         val data = item as? ManageBusinessData ?: return
@@ -384,51 +370,51 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     })
   }
 
-  private fun quickActionClick(type: QuickActionData.QuickActionType) {
+  private fun quickActionClick(type: QuickActionItem.QuickActionType) {
     when (type) {
-      QuickActionData.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
-      QuickActionData.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
-      QuickActionData.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startAddTestimonial(session, true)
-      QuickActionData.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCreateCustomPage(session, true)
-      QuickActionData.QuickActionType.LIST_SERVICES,
-      QuickActionData.QuickActionType.LIST_PRODUCT,
-      QuickActionData.QuickActionType.LIST_DRUG_MEDICINE,
+      QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
+      QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
+      QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startAddTestimonial(session, true)
+      QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCreateCustomPage(session, true)
+      QuickActionItem.QuickActionType.LIST_SERVICES,
+      QuickActionItem.QuickActionType.LIST_PRODUCT,
+      QuickActionItem.QuickActionType.LIST_DRUG_MEDICINE,
       -> baseActivity.startListServiceProduct(session)
-      QuickActionData.QuickActionType.ADD_SERVICE,
-      QuickActionData.QuickActionType.ADD_PRODUCT,
-      QuickActionData.QuickActionType.ADD_COURSE,
-      QuickActionData.QuickActionType.ADD_MENU,
-      QuickActionData.QuickActionType.ADD_ROOM_TYPE,
+      QuickActionItem.QuickActionType.ADD_SERVICE,
+      QuickActionItem.QuickActionType.ADD_PRODUCT,
+      QuickActionItem.QuickActionType.ADD_COURSE,
+      QuickActionItem.QuickActionType.ADD_MENU,
+      QuickActionItem.QuickActionType.ADD_ROOM_TYPE,
       -> baseActivity.startAddServiceProduct(session)
-      QuickActionData.QuickActionType.PLACE_APPOINTMENT -> baseActivity.startBookAppointmentConsult(session, false)
-      QuickActionData.QuickActionType.PLACE_CONSULT -> baseActivity.startBookAppointmentConsult(session, true)
-      QuickActionData.QuickActionType.ADD_PROJECT -> {
+      QuickActionItem.QuickActionType.PLACE_APPOINTMENT -> baseActivity.startBookAppointmentConsult(session, false)
+      QuickActionItem.QuickActionType.PLACE_CONSULT -> baseActivity.startBookAppointmentConsult(session, true)
+      QuickActionItem.QuickActionType.ADD_PROJECT -> {
         if (session?.getStoreWidgets()?.equals(PremiumCode.PROJECTTEAM.value) == true) {
           baseActivity.startListProject(session)
         } else baseActivity.startListProjectAndTeams(session)
       }
-      QuickActionData.QuickActionType.ADD_TEAM_MEMBER -> {
+      QuickActionItem.QuickActionType.ADD_TEAM_MEMBER -> {
         if (session?.getStoreWidgets()?.equals(PremiumCode.PROJECTTEAM.value) == true) {
           baseActivity.startListTeams(session)
         } else baseActivity.startListProjectAndTeams(session)
       }
-      QuickActionData.QuickActionType.UPLOAD_BROCHURE -> {
+      QuickActionItem.QuickActionType.UPLOAD_BROCHURE -> {
         if (session?.getStoreWidgets()?.equals(PremiumCode.BROCHURE.value) == true) {
           baseActivity.startAddDigitalBrochure(session)
         } else baseActivity.startListDigitalBrochure(session)
       }
-      QuickActionData.QuickActionType.POST_SEASONAL_OFFER -> baseActivity.startAddSeasonalOffer(session)
-      QuickActionData.QuickActionType.LIST_TOPPER -> baseActivity.startListToppers(session)
-      QuickActionData.QuickActionType.ADD_UPCOMING_BATCH -> baseActivity.startListBatches(session)
-      QuickActionData.QuickActionType.ADD_NEARBY_ATTRACTION -> baseActivity.startNearByView(session)
-      QuickActionData.QuickActionType.ADD_FACULTY_MEMBER -> baseActivity.startFacultyMember(session)
+      QuickActionItem.QuickActionType.POST_SEASONAL_OFFER -> baseActivity.startAddSeasonalOffer(session)
+      QuickActionItem.QuickActionType.LIST_TOPPER -> baseActivity.startListToppers(session)
+      QuickActionItem.QuickActionType.ADD_UPCOMING_BATCH -> baseActivity.startListBatches(session)
+      QuickActionItem.QuickActionType.ADD_NEARBY_ATTRACTION -> baseActivity.startNearByView(session)
+      QuickActionItem.QuickActionType.ADD_FACULTY_MEMBER -> baseActivity.startFacultyMember(session)
 
-      QuickActionData.QuickActionType.POST_STATUS_STORY,
-      QuickActionData.QuickActionType.ADD_SLIDER_BANNER,
-      QuickActionData.QuickActionType.PLACE_ORDER_BOOKING,
-      QuickActionData.QuickActionType.ADD_TABLE_BOOKING,
-      QuickActionData.QuickActionType.ADD_STAFF_MEMBER,
-      QuickActionData.QuickActionType.MAKE_ANNOUNCEMENT,
+      QuickActionItem.QuickActionType.POST_STATUS_STORY,
+      QuickActionItem.QuickActionType.ADD_SLIDER_BANNER,
+      QuickActionItem.QuickActionType.PLACE_ORDER_BOOKING,
+      QuickActionItem.QuickActionType.ADD_TABLE_BOOKING,
+      QuickActionItem.QuickActionType.ADD_STAFF_MEMBER,
+      QuickActionItem.QuickActionType.MAKE_ANNOUNCEMENT,
       -> {
         showShortToast("Coming soon...")
       }
