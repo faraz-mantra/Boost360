@@ -7,7 +7,6 @@ import java.io.Serializable
 
 data class BusinessSetupHighData(
     var title1: String? = null,
-    var title2: String? = null,
     var siteVisitor: Specification? = null,
     var booking: Specification? = null,
     var enquiry: Specification? = null,
@@ -22,8 +21,8 @@ data class BusinessSetupHighData(
 
   fun getData(score: Int, visitor: String, order: String, orderText: String = "Bookings", enquiry: String): ArrayList<BusinessSetupHighData> {
     val list = ArrayList<BusinessSetupHighData>()
-    list.add(BusinessSetupHighData(title1 = "Business", title2 = "Update", siteVisitor = Specification("Site visitors", visitor, BusinessClickEvent.WEBSITE_VISITOR.name), booking = Specification(orderText, order, BusinessClickEvent.ODER_APT.name), enquiry = Specification("Enquiries", enquiry, BusinessClickEvent.ENQUIRIES.name), type = ActiveViewType.IS_BUSINESS_UPDATE.name))
-    list.add(BusinessSetupHighData(title1 = "Digital readiness score: $score%", score = score, type = ActiveViewType.IS_PROGRESS.name))
+    list.add(BusinessSetupHighData(title1 = "Business\nSnapshot", siteVisitor = Specification("Site visitors", visitor, BusinessClickEvent.WEBSITE_VISITOR.name), booking = Specification("All $orderText", order, BusinessClickEvent.ODER_APT.name), enquiry = Specification("All enquiries", enquiry, BusinessClickEvent.ENQUIRIES.name), type = ActiveViewType.IS_BUSINESS_UPDATE.name))
+    list.add(BusinessSetupHighData(title1 = "Your site health: ", score = score, type = ActiveViewType.IS_PROGRESS.name))
     return list
   }
 

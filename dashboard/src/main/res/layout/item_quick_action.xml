@@ -1,44 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
   </data>
 
-  <androidx.appcompat.widget.LinearLayoutCompat
+
+  <LinearLayout
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginEnd="@dimen/size_30"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:focusable="true"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/size_6"
+    android:paddingBottom="@dimen/size_6">
 
-    <include
-      android:id="@+id/include_one"
-      layout="@layout/item_action"
-      android:layout_width="match_parent"
+    <FrameLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content">
+
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/img_icon"
+        android:layout_width="@dimen/size_36"
+        android:layout_height="@dimen/size_36"
+        android:layout_marginTop="@dimen/size_6"
+        tools:srcCompat="@drawable/ic_add_photo_d" />
+      <com.framework.views.customViews.CustomImageView
+        android:id="@+id/is_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="@dimen/size_20"
+        app:srcCompat="@drawable/ic_new_label_d"/>
+    </FrameLayout>
+
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/txt_title"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_weight="1" />
-
-    <include
-      android:id="@+id/include_two"
-      layout="@layout/item_action"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_weight="1" />
-
-    <include
-      android:id="@+id/include_three"
-      layout="@layout/item_action"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_weight="1" />
-
-    <include
-      android:id="@+id/include_four"
-      layout="@layout/item_action"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_weight="1" />
-
-  </androidx.appcompat.widget.LinearLayoutCompat>
+      android:layout_marginTop="@dimen/size_4"
+      android:layout_marginEnd="@dimen/size_4"
+      android:gravity="center"
+      android:textAlignment="gravity"
+      android:textColor="@color/black_4a4a4a"
+      app:textType="CAPTION"
+      tools:text="Add photo\nto gallery" />
+  </LinearLayout>
 </layout>
