@@ -240,7 +240,7 @@
                         android:padding="@dimen/size_8">
 
                         <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/tv_service_provided"
+                            android:id="@+id/ctv_service_provided_heading"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/size_5"
@@ -254,11 +254,24 @@
 
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
+                            android:id="@+id/ctv_services_subheading"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_service_provided"
+                            android:layout_below="@id/ctv_service_provided_heading"
                             android:layout_gravity="center_vertical"
                             android:fontFamily="@font/open_sans"
                             android:text="@string/map_the_employee_to_one_or_multiple_services"
+                            android:textFontWeight="600"
+                            android:textSize="10sp" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@id/ctv_services"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ctv_services_subheading"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/size_8"
+                            android:fontFamily="@font/open_sans"
+                            android:textColor="@color/blue_4a90e2"
                             android:textFontWeight="600"
                             android:textSize="10sp" />
 
@@ -315,7 +328,7 @@
                                 android:textSize="8sp"
                                 app:colorBorder="#0DC920"
                                 app:colorOn="#0DC920"
-                                app:on="true"
+                                app:on="false"
                                 app:textOff="No"
                                 app:textOn="Yes" />
                         </com.framework.views.customViews.CustomCardView>

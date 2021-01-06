@@ -190,7 +190,6 @@
   <string name="years_of_experience">Years of Experience*</string>
   <string name="is_available">Is Available*</string>
   <string name="is_the_staff_available_for_home_service">Is the staff available for home service?</string>
-  <string name="staff_timing">Staff Timing</string>
   <string name="services_provided">Services provided</string>
   <string name="map_the_employee_to_one_or_multiple_services">Map the employee to one or multiple services.</string>
   <string name="scheduled_break">Scheduled Break</string>
@@ -233,7 +232,8 @@
   <string name="staff_timing">Staff Timing</string>
   <string name="upcoming_leaves">Upcoming Leaves</string>
   <string name="upcoming_leave_s">Upcoming Leave(s)</string>
-  <array name="gender">
+    <string name="confirm_services">CONFIRM 0 SERVICES</string>
+    <array name="gender">
     <item>Please select</item>
     <item>Male</item>
     <item>Female</item>

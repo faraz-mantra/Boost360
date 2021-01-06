@@ -36,15 +36,12 @@
 
             <com.appservice.ui.staffs.ui.customviews.LabeledToggle
                 android:id="@+id/toggle_on_off"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/size_45"
+                android:layout_height="@dimen/size_20"
                 android:layout_gravity="center_vertical|end"
                 android:layout_marginEnd="@dimen/size_8"
-                android:textSize="12sp"
-                app:colorBorder="#0DC920"
-                app:colorDisabled="#EC9A81"
-                app:colorOn="#0DC920"
-                app:on="true"
+                android:textSize="8sp"
+                app:on="false"
                 app:textOff="NO"
                 app:textOn="YES" />
         </com.framework.views.customViews.CustomCardView>

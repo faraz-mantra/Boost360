@@ -7,6 +7,7 @@ import android.view.MenuItem
 import com.appservice.R
 import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentStaffAddBinding
+import com.appservice.ui.staffs.ui.Constants
 import com.framework.base.BaseFragment
 import com.framework.models.BaseViewModel
 
@@ -42,7 +43,7 @@ class StaffAddFragment : BaseFragment<FragmentStaffAddBinding, BaseViewModel>() 
         return when (item.itemId) {
             R.id.menu_add -> {
                 val bundle: Bundle = Bundle.EMPTY
-                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_DETAILS_FRAGMENT, bundle, clearTop = false, isResult =false)
+                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_DETAILS_FRAGMENT, bundle, clearTop = false, isResult =false,requestCode = Constants.REQUEST_CODE)
                 true
             }
             else -> super.onOptionsItemSelected(item)
