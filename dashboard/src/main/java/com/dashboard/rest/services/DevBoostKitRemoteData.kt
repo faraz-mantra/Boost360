@@ -1,5 +1,6 @@
 package com.dashboard.rest.services
 
+import com.dashboard.model.live.dashboardBanner.DashboardPremiumBannerResponse
 import com.dashboard.model.live.premiumBanner.UpgradePremiumFeatureResponse
 import com.dashboard.rest.EndPoints
 import io.reactivex.Observable
@@ -15,4 +16,10 @@ interface DevBoostKitRemoteData {
       @Header("Authorization") auth: String,
       @Query("website") website_id: String?,
   ): Observable<Response<UpgradePremiumFeatureResponse>>
+
+  @GET(EndPoints.UPGRADE_DASHBOARD_BANNER)
+  fun getUpgradeDashboardBanner(
+      @Header("Authorization") auth: String,
+      @Query("website") website_id: String?,
+  ): Observable<Response<DashboardPremiumBannerResponse>>
 }

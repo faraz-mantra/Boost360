@@ -95,6 +95,10 @@ class DashboardViewModel : BaseViewModel() {
     return DevBoostKitRepository.getUpgradePremiumBanner(website_id = website_id).toLiveData()
   }
 
+  fun getUpgradeDashboardBanner(website_id: String? = "5fd88e1fb456eb000133ad31"): LiveData<BaseResponse> {
+    return DevBoostKitRepository.getUpgradeDashboardBanner(website_id = website_id).toLiveData()
+  }
+
   fun getDomainDetailsForFloatingPoint(fpTag: String?, map: Map<String, String>?): LiveData<BaseResponse> {
     return PluginFloatRepository.getDomainDetailsForFloatingPoint(fpTag, map).toLiveData()
   }

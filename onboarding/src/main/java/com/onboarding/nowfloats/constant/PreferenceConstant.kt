@@ -19,6 +19,7 @@ object PreferenceConstant {
   const val KEY_FACEBOOK_PAGE = "facebookpage"
   const val FP_PAGE_SHARE_ENABLED = "fbPageShareEnabled"
   const val FP_PAGE_STATUS = "fbPageStatus"
+  const val CONTACT_NAME = "contact_name"
   const val BUSINESS_NAME = "business_name"
   const val BUSINESS_IMAGE = "business_image"
   const val LOCATION = "location"

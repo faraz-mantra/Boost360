@@ -57,6 +57,7 @@ import com.boost.presignup.utils.FirebaseDynamicLinksManager;
 import com.boost.upgrades.UpgradeActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.framework.utils.AppsFlyerUtils;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -120,6 +121,7 @@ import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
 import com.nowfloats.helper.BuyItemKey;
+import com.nowfloats.helper.DigitalChannelUtil;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInboxFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
@@ -187,9 +189,20 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         API_Login.API_Login_Interface {
 
 
-    private Toolbar toolbar;
-    private SharedPreferences pref = null;
-    private DrawerLayout mDrawerLayout;
+    private static final int DEMO_DAYS_LEFT = 4;
+    private static final int LIGHT_HOUSE_DAYS_LEFT = 5;
+    private static final int WILD_FIRE_PURCHASE = 2;
+    /*private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
+            , Manifest.permission.READ_PHONE_STATE};*/
+    private final static int READ_MESSAGES_ID = 221;
+    public static TextView headerText;
+    public static ImageView plusAddButton;
+    public static ImageView shareButton;
+    public static ArrayList<FloatsMessageModel> StorebizFloats = new ArrayList<FloatsMessageModel>();
+    private final int LIGHT_HOUSE_EXPIRE = 0;
+    private final int WILD_FIRE_EXPIRE = 1;
+    private final int DEMO_EXPIRE = 3;
+    public CustomPageFragment customPageActivity;
     SidePanelFragment drawerFragment;
     Home_Fragment_Tab homeFragment;
     KeyboardFragment keyboardFragment;
@@ -213,47 +226,24 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     Typeface robotoMedium;
     Typeface robotoLight;
     MaterialDialog mExpireDialog;
-    public static TextView headerText;
-    public static ImageView plusAddButton;
-    public static ImageView shareButton;
+    SharedPreferences.Editor prefsEditor;
+    private Toolbar toolbar;
+    private SharedPreferences pref = null;
+    private DrawerLayout mDrawerLayout;
     private boolean isExpiredCheck = false;
-    public static ArrayList<FloatsMessageModel> StorebizFloats = new ArrayList<FloatsMessageModel>();
     private boolean showLookupDomain = false;
     private int clickCnt = 0;
-    public CustomPageFragment customPageActivity;
     private boolean backChk = false;
-    private final int LIGHT_HOUSE_EXPIRE = 0;
-    private final int WILD_FIRE_EXPIRE = 1;
-    private final int DEMO_EXPIRE = 3;
-    private static final int DEMO_DAYS_LEFT = 4;
-    private static final int LIGHT_HOUSE_DAYS_LEFT = 5;
-    private static final int WILD_FIRE_PURCHASE = 2;
-    SharedPreferences.Editor prefsEditor;
     private boolean isShownExpireDialog = false;
     private RiaNodeDataModel mRiaNodeDataModel;
     private String mDeepLinkUrl, mPayload;
     private String TAG = HomeActivity.class.getSimpleName();
-    /*private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
-            , Manifest.permission.READ_PHONE_STATE};*/
-    private final static int READ_MESSAGES_ID = 221;
     //private ArrayList<AccountDetailModel> accountDetailsModel = new ArrayList<>();
-
     private ProgressDialog progressDialog;
 
     private boolean doubleBackToExitPressedOnce = false;
-
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
-    }
-
-    private static boolean newer_version_available(String local_version_string, String
-            online_version_string) {
-        DefaultArtifactVersion local_version_mvn = new DefaultArtifactVersion(local_version_string);
-        DefaultArtifactVersion online_version_mvn = new DefaultArtifactVersion(online_version_string);
-        return local_version_mvn.compareTo(online_version_mvn) == -1 && !local_version_string.equals("");
-    }
+    private Bus bus;
+    private boolean isCalled = false;
 
 
     /*private void getPermissions() {
@@ -272,22 +262,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }*/
 
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == READ_MESSAGES_ID) {
-
-            /*List<Integer> intList = new ArrayList<Integer>();
-            for (int i : grantResults) {
-                intList.add(i);
-            }
-            if (!intList.contains(PackageManager.PERMISSION_DENIED)) {
-                Intent intent = new Intent(this, ReadMessages.class);
-                startService(intent);
-            }*/
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
+    private static boolean newer_version_available(String local_version_string, String
+            online_version_string) {
+        DefaultArtifactVersion local_version_mvn = new DefaultArtifactVersion(local_version_string);
+        DefaultArtifactVersion online_version_mvn = new DefaultArtifactVersion(online_version_string);
+        return local_version_mvn.compareTo(online_version_mvn) == -1 && !local_version_string.equals("");
     }
 
     public static void registerChat(String userId) {
@@ -338,6 +317,28 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             BoostLog.i("GCM chat ","reg exp");
             e.printStackTrace();
         }*/
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == READ_MESSAGES_ID) {
+
+            /*List<Integer> intList = new ArrayList<Integer>();
+            for (int i : grantResults) {
+                intList.add(i);
+            }
+            if (!intList.contains(PackageManager.PERMISSION_DENIED)) {
+                Intent intent = new Intent(this, ReadMessages.class);
+                startService(intent);
+            }*/
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     @Override
@@ -595,19 +596,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent purchasedPlans = new Intent(HomeActivity.this, YourPurchasedPlansActivity.class);
                 startActivity(purchasedPlans);
             } else if (url.contains(getResources().getString(R.string.deeplink_digital_channels))) {
-                Bundle bundle = getBundleData();
-                String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
-                session.setHeader(Constants.WA_KEY);
-                bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
-                bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
-                bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
-                bundle.putBoolean("IsUpdate", true);
-                if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) bundle.putString("website_url", rootAlisasURI);
-                else bundle.putString("website_url", normalURI);
-
-                startFragmentActivityNew(this,
-                        com.onboarding.nowfloats.constant.FragmentType.MY_DIGITAL_CHANNEL, bundle, false);
+                DigitalChannelUtil.startDigitalChannel(HomeActivity.this,session);
             } else if (url.contains(getResources().getString(R.string.deeplink_call_tracker_add_on))) {
 //                WebEngageController.trackEvent("NAV - CALLS", "CALLS", null);
                 Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
@@ -668,8 +657,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) url = rootAlisasURI;
         else url = normalURI;
         PreferenceData data = new PreferenceData(Constants.clientId_ORDER, session.getUserProfileId(),
-                Constants.WA_KEY, session.getFpTag(), session.getUserPrimaryMobile(),url,session.getFPEmail(),
-                session.getFPDetails(Key_Preferences.LATITUDE),session.getFPDetails(Key_Preferences.LONGITUDE),
+                Constants.WA_KEY, session.getFpTag(), session.getUserPrimaryMobile(), url, session.getFPEmail(),
+                session.getFPDetails(Key_Preferences.LATITUDE), session.getFPDetails(Key_Preferences.LONGITUDE),
                 session.getFP_AppExperienceCode());
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name(), data);
         bundle.putString(IntentConstant.EXPERIENCE_CODE.name(), session.getFP_AppExperienceCode());
@@ -717,6 +706,21 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        // super.onBackPressed();
+////        Methods.isOnline(HomeActivity.this);
+//        BoostLog.i("back---", "" + backChk);
+//        if (backChk) {
+//            finish();
+//        }
+//        if (!backChk) {
+//            start_backclick();
+//            backChk = true;
+//            Methods.showSnackBar(HomeActivity.this, getString(R.string.click_again_to_exit));
+//        }
+//    }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -736,6 +740,22 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         isExpiredCheck = false;
     }
 
+
+//    private void start_backclick() {
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(4000);
+//                    backChk = false;
+//                    BoostLog.i("INSIDE---", "" + backChk);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
+//    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -746,21 +766,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         prefsEditor.apply();
 
     }
-
-//    @Override
-//    public void onBackPressed() {
-//        // super.onBackPressed();
-////        Methods.isOnline(HomeActivity.this);
-//        BoostLog.i("back---", "" + backChk);
-//        if (backChk) {
-//            finish();
-//        }
-//        if (!backChk) {
-//            start_backclick();
-//            backChk = true;
-//            Methods.showSnackBar(HomeActivity.this, getString(R.string.click_again_to_exit));
-//        }
-//    }
 
     private void initialiseZendeskSupportSdk() {
         try {
@@ -785,22 +790,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         }
     }
-
-
-//    private void start_backclick() {
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    Thread.sleep(4000);
-//                    backChk = false;
-//                    BoostLog.i("INSIDE---", "" + backChk);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
-//    }
 
     public void appUpdateAlertDialog(final Activity mContext) {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
@@ -912,9 +901,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (CardAdapter_V3.pd != null)
             CardAdapter_V3.pd.dismiss();
     }
-
-
-    private Bus bus;
 
     @Override
     protected void onResume() {
@@ -1393,24 +1379,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     /*Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                     startActivity(socialSharingIntent);*/
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
-                    try {
-                        Bundle bundle = new Bundle();
-                        Intent channelIntent = new Intent(HomeActivity.this, Class.forName("com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity"));
-                        String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                        session.setHeader(Constants.WA_KEY);
-                        bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
-                        bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
-                        bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
-                        bundle.putBoolean("IsUpdate", true);
-                        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
-                        if (rootAlisasURI != null && !rootAlisasURI.isEmpty()) bundle.putString("website_url", rootAlisasURI);
-                        else bundle.putString("website_url", normalURI);
-                        channelIntent.putExtras(bundle);
-                        channelIntent.putExtra("FRAGMENT_TYPE", "MY_DIGITAL_CHANNEL");
-                        startActivity(channelIntent);
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    DigitalChannelUtil.startDigitalChannel(HomeActivity.this,session);
                 } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
                     WebEngageController.trackEvent("NAV - ORDERS", "ORDERS", null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
@@ -1455,8 +1424,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     WebEngageController.trackEvent("NAV - SUBSCRIPTIONS", "SUBSCRIPTIONS", null);
                     Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
                     startActivity(subscribers);
-                }else if(nextScreen.equals(getString(R.string.referrals_button))){
-                    if(!TextUtils.isEmpty(session.getFPEmail())){
+                } else if (nextScreen.equals(getString(R.string.referrals_button))) {
+                    if (!TextUtils.isEmpty(session.getFPEmail())) {
                         InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
                                 session.getUserProfileName(),
                                 session.getFPEmail(),
@@ -1464,7 +1433,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                                 REFERRAL_CAMPAIGN_CODE, null, null
                         );
                         inviteReferralLogin();
-                    } else if(!TextUtils.isEmpty(session.getUserProfileEmail())){
+                    } else if (!TextUtils.isEmpty(session.getUserProfileEmail())) {
                         InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
                                 session.getUserProfileName(),
                                 session.getUserProfileEmail(),
@@ -1472,7 +1441,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                                 REFERRAL_CAMPAIGN_CODE, null, null
                         );
                         inviteReferralLogin();
-                    }else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "An unexpected error occured.", Toast.LENGTH_LONG).show();
                     }
 //                    InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
@@ -1488,16 +1457,16 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     }
 
-    private void inviteReferralLogin(){
+    private void inviteReferralLogin() {
         InviteReferralsApi.getInstance(getApplicationContext()).userDetailListener(new UserDetailsCallback() {
             @Override
             public void userDetails(JSONObject jsonObject) {
                 Log.d("Referral Details", jsonObject.toString());
                 try {
                     String status = jsonObject.get("Authentication").toString();
-                    if(status.toLowerCase().equals("success")){
+                    if (status.toLowerCase().equals("success")) {
                         InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
-                    }else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "Authentication failed. Please try later.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
@@ -1585,7 +1554,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         startActivity(intent);
     }
 
-
     @Override
     public void deepLink(String url) {
         DeepLinkPage(url, "", false);
@@ -1644,9 +1612,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         mRiaNodeDataModel = nodeDataModel;
         DeepLinkPage(deepLinkUrl, "", isFromRia);
     }
-
-
-    private boolean isCalled = false;
 
     private void navigateView() {
         isCalled = true;
@@ -1913,14 +1878,23 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             String action = intent.getAction();
             String data = intent.getDataString();
             Uri uri = intent.getData();
-            HashMap<DynamicLinkParams, String> deepHashMap = new FirebaseDynamicLinksManager().getURILinkParams(uri);
+
             BoostLog.d("Data: ", data + "  " + action);
             if (session.isLoginCheck()) {
-                if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
-                    String viewType = deepHashMap.get(DynamicLinkParams.viewType);
-                    String buyItemKey = deepHashMap.get(DynamicLinkParams.buyItemKey);
-                    DeepLinkPage(viewType, buyItemKey, false);
-                } else deepLink(data.substring(data.lastIndexOf("/") + 1));
+                if (uri != null && uri.toString().contains("onelink")) {
+                    if (AppsFlyerUtils.sAttributionData.containsKey(DynamicLinkParams.viewType.name())) {
+                        String viewType = AppsFlyerUtils.sAttributionData.get(DynamicLinkParams.viewType.name());
+                        String buyItemKey = AppsFlyerUtils.sAttributionData.get(DynamicLinkParams.buyItemKey.name());
+                        DeepLinkPage(viewType, buyItemKey, false);
+                    }
+                } else {
+                    HashMap<DynamicLinkParams, String> deepHashMap = new FirebaseDynamicLinksManager().getURILinkParams(uri);
+                    if (deepHashMap.containsKey(DynamicLinkParams.viewType)) {
+                        String viewType = deepHashMap.get(DynamicLinkParams.viewType);
+                        String buyItemKey = deepHashMap.get(DynamicLinkParams.buyItemKey);
+                        DeepLinkPage(viewType, buyItemKey, false);
+                    } else deepLink(data.substring(data.lastIndexOf("/") + 1));
+                }
             } else startPreSignUpActivity();
         }
     }

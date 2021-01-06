@@ -11,7 +11,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 const val MARKETPLACE_BANNER_DATA = "MARKETPLACE_BANNER_DATA"
-const val ACADEMY_BANNER_DATA = "ACADEMY_BANNER_DATA"
+//const val ACADEMY_BANNER_DATA = "ACADEMY_BANNER_DATA"
 
 data class PremiumFeatureData(
     @SerializedName("bundles")
@@ -52,15 +52,6 @@ data class PremiumFeatureData(
     var websiteid: String? = null,
 ) : Serializable {
 
-  fun getMarketPlaceBanners(): ArrayList<PromoAcademyBanner>? {
-    val resp = PreferencesUtils.instance.getData(MARKETPLACE_BANNER_DATA, "") ?: ""
-    return ArrayList(convertStringToList(resp) ?: ArrayList())
-  }
-
-  fun getAcademyBanners(): ArrayList<PromoAcademyBanner>? {
-    val resp = PreferencesUtils.instance.getData(ACADEMY_BANNER_DATA, "") ?: ""
-    return ArrayList(convertStringToList(resp) ?: ArrayList())
-  }
 }
 
 fun ArrayList<PromoAcademyBanner>.marketBannerFilter(session: UserSessionManager?): ArrayList<PromoAcademyBanner> {
@@ -75,10 +66,11 @@ fun ArrayList<PromoAcademyBanner>.marketBannerFilter(session: UserSessionManager
   return list
 }
 
-fun saveDataMarketPlace(promoBanners: ArrayList<PromoAcademyBanner>?) {
-  PreferencesUtils.instance.saveDataN(MARKETPLACE_BANNER_DATA, convertListObjToString(promoBanners ?: ArrayList()) ?: "")
+fun getMarketPlaceBanners(): ArrayList<PromoAcademyBanner>? {
+  val resp = PreferencesUtils.instance.getData(MARKETPLACE_BANNER_DATA, "") ?: ""
+  return ArrayList(convertStringToList(resp) ?: ArrayList())
 }
 
-fun saveDataAcademy(academyBanner: ArrayList<PromoAcademyBanner>?) {
-  PreferencesUtils.instance.saveDataN(ACADEMY_BANNER_DATA, convertListObjToString(academyBanner ?: ArrayList()) ?: "")
+fun saveDataMarketPlace(promoBanners: ArrayList<PromoAcademyBanner>?) {
+  PreferencesUtils.instance.saveDataN(MARKETPLACE_BANNER_DATA, convertListObjToString(promoBanners ?: ArrayList()) ?: "")
 }

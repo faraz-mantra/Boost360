@@ -17,6 +17,9 @@ object DevBoostKitRepository : AppBaseRepository<DevBoostKitRemoteData, AppBaseL
     return makeRemoteRequest(remoteDataSource.getUpgradePremiumBanner(auth, website_id), TaskCode.GET_UPGRADE_PREMIUM_BANNER)
   }
 
+  fun getUpgradeDashboardBanner(auth: String = DEVELOPER_ID, website_id: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getUpgradeDashboardBanner(auth, website_id), TaskCode.GET_UPGRADE_DASHBOARD_BANNER)
+  }
   override fun getRemoteDataSourceClass(): Class<DevBoostKitRemoteData> {
     return DevBoostKitRemoteData::class.java
   }

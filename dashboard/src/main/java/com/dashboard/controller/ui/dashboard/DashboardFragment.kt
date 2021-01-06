@@ -22,6 +22,10 @@ import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
+import com.dashboard.model.live.dashboardBanner.DashboardAcademyBanner
+import com.dashboard.model.live.dashboardBanner.DashboardPremiumBannerResponse
+import com.dashboard.model.live.dashboardBanner.getAcademyBanners
+import com.dashboard.model.live.dashboardBanner.saveDataAcademy
 import com.dashboard.model.live.premiumBanner.*
 import com.dashboard.model.live.quickAction.QuickActionData
 import com.dashboard.model.live.quickAction.QuickActionItem
@@ -79,7 +83,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterRoi: AppBaseRecyclerViewAdapter<RoiSummaryData>? = null
   private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
   private var adapterMarketBanner: AppBaseRecyclerViewAdapter<PromoAcademyBanner>? = null
-  private var adapterAcademy: AppBaseRecyclerViewAdapter<PromoAcademyBanner>? = null
+  private var adapterAcademy: AppBaseRecyclerViewAdapter<DashboardAcademyBanner>? = null
   private var siteMeterData: SiteMeterScoreDetails? = null
   private var quickActionPosition = 0
   private var isFirsLoad = true
@@ -106,8 +110,18 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun getPremiumBanner() {
-    setDataMarketBanner(PremiumFeatureData().getMarketPlaceBanners() ?: ArrayList())
-    setDataRiaAcademy(PremiumFeatureData().getAcademyBanners() ?: ArrayList())
+    setDataMarketBanner(getMarketPlaceBanners() ?: ArrayList())
+    setDataRiaAcademy(getAcademyBanners() ?: ArrayList())
+    viewModel?.getUpgradeDashboardBanner()?.observeOnce(viewLifecycleOwner, {
+      val response = it as? DashboardPremiumBannerResponse
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        val data = response.data?.get(0)
+        if (data?.academyBanners.isNullOrEmpty().not()) {
+          saveDataAcademy(data?.academyBanners!!)
+          setDataRiaAcademy(data.academyBanners!!)
+        }
+      }
+    })
     viewModel?.getUpgradePremiumBanner()?.observeOnce(viewLifecycleOwner, {
       val response = it as? UpgradePremiumFeatureResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
@@ -115,9 +129,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         val promoBannersFilter = (data?.promoBanners ?: ArrayList()).marketBannerFilter(session)
         saveDataMarketPlace(promoBannersFilter)
         setDataMarketBanner(promoBannersFilter)
-        val academyBannerFilter = (data?.academyBanner ?: ArrayList()).marketBannerFilter(session)
-        saveDataAcademy(academyBannerFilter)
-        setDataRiaAcademy(academyBannerFilter)
       }
     })
   }
@@ -194,21 +205,21 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.viewLowTaskManageBusiness?.visible()
       val listContent = ArrayList(listDigitalScore.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout();it })
       binding?.pagerBusinessSetupLow?.apply {
-        binding?.motionOne?.transitionToStart()
-        adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, listContent, this@DashboardFragment)
-        offscreenPageLimit = 3
-        adapter = adapterBusinessContent
-        postInvalidateOnAnimation()
-        binding?.dotIndicator?.setViewPager2(this)
-        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-          override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-            binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
-          }
-        })
-        binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
-        binding?.motionOne?.transitionToStart()
+//        binding?.motionOne?.transitionToStart()
+//        adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, listContent, this@DashboardFragment)
+//        offscreenPageLimit = 3
+//        adapter = adapterBusinessContent
+//        postInvalidateOnAnimation()
+//        binding?.dotIndicator?.setViewPager2(this)
+//        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+//        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//          override fun onPageSelected(position: Int) {
+//            super.onPageSelected(position)
+//            binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
+//          }
+//        })
+//        binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
+//        binding?.motionOne?.transitionToStart()
       }
       baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
       baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
@@ -354,16 +365,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     binding?.imgBusinessLogo?.let { baseActivity.glideLoad(it, imageLogoUri, R.drawable.ic_add_logo_d, isCrop = true) }
   }
 
-  private fun setDataRiaAcademy(academyBanner: ArrayList<PromoAcademyBanner>) {
+  private fun setDataRiaAcademy(academyBanner: ArrayList<DashboardAcademyBanner>) {
     binding?.pagerRiaAcademy?.apply {
       if (academyBanner.isNotEmpty()) {
-        academyBanner.map { it.recyclerViewItemType = RecyclerViewItemType.RIA_ACADEMY_ITEM_VIEW.getLayout() }
         binding?.riaAcademyView?.visible()
         if (adapterAcademy == null) {
           adapterAcademy = AppBaseRecyclerViewAdapter(baseActivity, academyBanner, this@DashboardFragment)
           offscreenPageLimit = 3
-//          clipToPadding = false
-//          setPadding(37, 0, 37, 0)
           adapter = adapterAcademy
           setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
         } else adapterAcademy?.notify(academyBanner)
@@ -463,7 +471,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (actionType) {
       RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> {
         WebEngageController.trackEvent("SITE HEALTH Page", "SITE_HEALTH", session?.fpTag);
-        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+        session?.let { baseActivity.startOldSiteMeter(it) }
+//        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
       }
       RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, position) })
       RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal -> {
@@ -494,6 +503,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         val data = item as? PromoAcademyBanner ?: return
         session?.let { baseActivity.promoBannerMarketplace(it, data) }
       }
+      RecyclerViewActionType.PROMO_BOOST_ACADEMY_CLICK.ordinal -> {
+        val data = item as? DashboardAcademyBanner ?: return
+        academyBannerBoostClick(data)
+      }
     }
   }
 
@@ -514,7 +527,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.btnDigitalChannel -> session?.let { baseActivity.startDigitalChannel(it) }
       binding?.btnShowDigitalScore -> {
         WebEngageController.trackEvent("SITE HEALTH Page", "SITE_HEALTH", session?.fpTag);
-        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+        session?.let { baseActivity.startOldSiteMeter(it) }
+//        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
       }
       binding?.btnShareWhatsapp -> shareVisitingCard(true)
       binding?.btnShareMore -> shareVisitingCard(false)
@@ -659,6 +673,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     webViewBottomDialog.show(this@DashboardFragment.parentFragmentManager, WebViewBottomDialog::class.java.name)
   }
 
+  private fun academyBannerBoostClick(data: DashboardAcademyBanner) {
+    when {
+      data.ctaFileLink.isNullOrEmpty().not() -> baseActivity.startDownloadUri(session, data.ctaFileLink?.trim()!!)
+      data.ctaWebLink.isNullOrEmpty().not() -> baseActivity.startWebViewPageLoad(session, data.ctaWebLink?.trim()!!)
+      data.ctaYoutubeLink.isNullOrEmpty().not() -> baseActivity.startYouTube(session, data.ctaYoutubeLink?.trim()!!)
+    }
+  }
+
   override fun showProgress(title: String?, cancelable: Boolean?) {
     binding?.nestedScrollView?.gone()
     binding?.progress?.visible()
@@ -713,12 +735,12 @@ fun UserSessionManager?.checkIsPremiumUnlock(value: String?): Boolean {
 }
 
 fun getLocalSession(session: UserSessionManager): LocalSessionModel {
-  var imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
+  var imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl)
   if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) imageUri = BASE_IMAGE_URL + imageUri
   val city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY)
   val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
   val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
-  return LocalSessionModel(floatingPoint = session.fPID, businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME),
+  return LocalSessionModel(floatingPoint = session.fPID,contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME), businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME),
       businessImage = imageUri, location = location, websiteUrl = session.getDomainName(false),
       businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), primaryNumber = session.userPrimaryMobile,
       primaryEmail = session.fPEmail, fpTag = session.fpTag)

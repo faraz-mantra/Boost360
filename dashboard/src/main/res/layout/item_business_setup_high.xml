@@ -28,20 +28,22 @@
         android:orientation="vertical">
 
         <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_title1"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="Business"
-          android:id="@+id/txt_title1"
           android:textColor="@color/black_4f4f4f"
+          app:fontFamily="@font/semi_bold"
           app:textType="BODY_1" />
 
         <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_title2"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:drawableEnd="@drawable/ic_summary_alert_8_d"
           android:text="Update"
-          android:id="@+id/txt_title2"
           android:textColor="@color/black_4f4f4f"
+          app:fontFamily="@font/semi_bold"
           app:textType="BODY_1" />
       </LinearLayout>
 
@@ -94,12 +96,12 @@
         android:orientation="horizontal">
 
         <com.framework.views.customViews.CustomTextView
+          android:id="@+id/txt_title3"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
           android:paddingTop="@dimen/size_2"
           android:paddingBottom="@dimen/size_2"
-          android:id="@+id/txt_title3"
           android:text="Digital Readiness score: 82%"
           android:textColor="@color/black_4f4f4f"
           app:textType="BODY_1" />

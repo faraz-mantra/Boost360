@@ -99,7 +99,7 @@ dependencies {
     api "com.squareup.retrofit2:converter-scalars:2.8.1"
 
     // Multi Dex
-    api'androidx.multidex:multidex:2.0.1'
+    api 'androidx.multidex:multidex:2.0.1'
 
     // lottie animation
     api "com.airbnb.android:lottie:3.3.1"
@@ -113,4 +113,7 @@ dependencies {
     //Firebase analytics
     api 'com.google.firebase:firebase-analytics-ktx:18.0.0'
 
+    // Referral Library: invitereferrals
+    api 'com.android.installreferrer:installreferrer:2.2'
+    api 'com.appsflyer:af-android-sdk:6.0.0'
 }

@@ -6,10 +6,9 @@ import com.dashboard.databinding.ItemChannelDBinding
 import com.dashboard.model.ChannelData
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
-import com.onboarding.nowfloats.model.channel.getDrawable
-import com.onboarding.nowfloats.model.channel.getNameAlternate
-import com.onboarding.nowfloats.model.channel.isGoogleSearch
-import com.onboarding.nowfloats.model.channel.isWhatsAppChannel
+import com.framework.extensions.gone
+import com.framework.extensions.visible
+import com.onboarding.nowfloats.model.channel.*
 
 class ChannelViewHolder(binding: ItemChannelDBinding) : AppBaseRecyclerViewHolder<ItemChannelDBinding>(binding) {
 
@@ -19,8 +18,13 @@ class ChannelViewHolder(binding: ItemChannelDBinding) : AppBaseRecyclerViewHolde
     binding.title.text = data.getNameAlternate()
     val isConnect = ((data.isWhatsAppChannel() && data.channelActionData != null) || data.channelAccessToken != null || data.isGoogleSearch())
     getColor(if (isConnect) R.color.black_4f4f4f else R.color.warm_grey_two)?.let { binding.title.setTextColor(it) }
-    data.getDrawable(activity)?.let { binding.image.setImageDrawable(it) }
-    binding.image.apply { if (!isConnect) makeGreyscale() else removeGreyscale() }
+    (if (!isConnect) data.getDrawableInActiveNew(activity) else data.getDrawableActiveNew(activity))?.let { binding.image.setImageDrawable(it) }
+    binding.tickStatusIcon.visible()
+    if (isConnect && data.isGoogleSearch()) {
+      binding.tickStatusIcon.gone()
+    } else if (isConnect) binding.tickStatusIcon.setImageResource(R.drawable.ic_tick_ok_d)
+    else binding.tickStatusIcon.setImageResource(R.drawable.ic_tick_d)
+
     binding.mainContent.setOnClickListener { if (isConnect) listener?.onItemClick(position, item, RecyclerViewActionType.CHANNEL_ITEM_CLICK.ordinal) }
     binding.executePendingBindings()
   }
