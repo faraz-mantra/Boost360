@@ -3,7 +3,11 @@ package com.inventoryorder.holders
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
 import android.view.View
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
 import com.framework.utils.DateUtils.parseDate
@@ -18,7 +22,6 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import java.math.BigDecimal
 import java.text.DecimalFormat
-import java.text.NumberFormat
 import java.util.*
 
 
@@ -73,20 +76,14 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
 //            val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
 //            binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
 
-//            val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
-//            val ss = SpannableString("$currency ${bill.AmountPayableByBuyer}")
-//            ss.setSpan(RelativeSizeSpan(0.5f), "$currency ${bill.AmountPayableByBuyer}".indexOf(".") + 1, "$currency ${bill.AmountPayableByBuyer}".length, 0)
-//            binding.txtRupees.text = ss
-
-            val format = NumberFormat.getCurrencyInstance(Locale("en", "in"))
-            val ss = SpannableString("${format.format(bill.AmountPayableByBuyer?.let { BigDecimal(it) })}")
-            ss.setSpan(RelativeSizeSpan(0.5f), "${format.format(bill.AmountPayableByBuyer?.let { BigDecimal(it) })}".indexOf(".") + 1, "${format.format(bill.AmountPayableByBuyer?.let { BigDecimal(it) })}".length, 0)
-//            ss.setSpan(RelativeSizeSpan(0.7f), "${format.format(bill.AmountPayableByBuyer?.let { BigDecimal(it) })}".indexOf("₹"), "${format.format(bill.AmountPayableByBuyer?.let { BigDecimal(it) })}".indexOf("₹") + 1, 0)
+            val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
+            val formatAmount = "${DecimalFormat("##,##,##0.00").format(BigDecimal(bill.AmountPayableByBuyer!!))}"
+            val ss = SpannableString("$currency $formatAmount")
+            ss.setSpan(RelativeSizeSpan(0.5f), "$currency $formatAmount".indexOf(".") + 1, "$currency $formatAmount".length, 0)
             binding.txtRupees.text = ss
 
         }
 
-//    binding.orderDate.value.text = parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL, timeZone = TimeZone.getTimeZone("IST"))
         binding.txtOrderDate.text = "${activity?.resources?.getString(R.string.at)} ${parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL, timeZone = TimeZone.getTimeZone("IST"))}"
 
         binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
@@ -99,20 +96,54 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
             binding.itemMore.text = "${sizeItem - 3} more"
             View.VISIBLE
         } ?: View.GONE
+
         OrderSummaryModel.OrderStatus.from(order.status())?.let {
             when (it) {
+                OrderSummaryModel.OrderStatus.ORDER_INITIATED -> {
+                    //Order Initiated..
+                    changeButtonStatus(R.string.confirm_order_normal, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
+                }
+                OrderSummaryModel.OrderStatus.ORDER_CONFIRMED -> {
+                    //Order Confirmed
+                    changeButtonStatus(R.string.mark_as_Ready_for_Pickup, R.drawable.ic_confirmed_order_btn_bkg, R.color.orange, R.drawable.ic_arrow_down_orange)
+                }
+                OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED -> {
+                    //Order Placed
+                    changeButtonStatus(R.string.confirm_order_normal, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
+                }
+                OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS -> {
+                    //Order In-Transit
+                    changeButtonStatus(R.string.mark_as_delivered, R.drawable.ic_in_transit_order_btn_bkg, R.color.blue_52AAC6, R.drawable.ic_arrow_down_blue)
+                }
                 OrderSummaryModel.OrderStatus.ORDER_CANCELLED -> {
-                    changeBackground(View.GONE, View.VISIBLE, R.drawable.new_order_bg, R.color.primary_grey)
-                    //TODO change button status
-//                    binding.btnConfirm.gone()
+                    //Order Cancelled
+                    changeButtonStatus(R.string.send_re_booking_reminder, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
+                }
+                OrderSummaryModel.OrderStatus.ORDER_COMPLETED -> {
+                    //Order Completed
+                    changeButtonStatus(R.string.send_payment_link, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
                 }
                 else -> {
-                    changeBackground(View.VISIBLE, View.GONE, R.drawable.new_order_bg, R.color.black_4a4a4a)
-                    checkConfirmBtn(order)
+                    changeButtonStatus(R.string.confirm_order_normal, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
                 }
             }
         }
+    }
 
+
+    private fun changeButtonStatus(@StringRes dropDownText: Int, @DrawableRes buttonBkg: Int, @ColorRes dropDownDividerColor: Int, @DrawableRes resId: Int) {
+        activity?.let {
+            //Set Text...
+            binding.tvDropdownOrderStatus.text = it.resources.getString(dropDownText)
+
+            //Set Drawables and color...
+            binding.tvDropdownOrderStatus.setTextColor(ContextCompat.getColor(it, dropDownDividerColor))
+            binding.lytStatusBtn.background = ContextCompat.getDrawable(it, buttonBkg)
+            binding.vwDividerDropdownOrderStatus.setBackgroundColor(ContextCompat.getColor(it, dropDownDividerColor))
+            binding.ivDropdownOrderStatus.setImageResource(resId)
+
+//            DrawableCompat.setTint(binding.ivDropdownOrderStatus.drawable, ContextCompat.getColor(it.applicationContext, dropDownArrowColor))
+        }
     }
 
     private fun checkConfirmBtn(order: OrderItem) {
@@ -131,12 +162,5 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
         }
     }
 
-    private fun changeBackground(detaile: Int, btn: Int, orderBg: Int, rupeesColor: Int) {
-        binding.detailsOrder.visibility = detaile
-        binding.next2.visibility = btn
-        activity?.let {
-            binding.orderType.background = ContextCompat.getDrawable(it, orderBg)
-            binding.txtRupees.setTextColor(ContextCompat.getColor(it, rupeesColor))
-        }
-    }
+
 }

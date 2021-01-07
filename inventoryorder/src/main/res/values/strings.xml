@@ -119,7 +119,14 @@
     <string name="send_payment_link">Send payment link</string>
     <string name="email">Email</string>
     <string name="call_buyer">Call buyer</string>
+    <string name="confirm_order_normal">Confirm Order</string>
+    <string name="mark_as_Ready_for_Pickup">Mark as ‘Ready for Pickup’</string>
+    <string name="send_re_booking_reminder">Send Re-booking Reminder</string>
+    <string name="mark_as_delivered">MARK AS ‘DELIVERED’</string>
+    <string name="mark_as_picked_by_customer">Mark as ‘Picked by Customer’</string>
     <string name="cancel_order_normal">Cancel Order</string>
     <string name="invoice">Invoice</string>
+    <string name="customer_feedback_received">Customer feedback received</string>
+    <string name="change">Change</string>
 
 </resources>
