@@ -42,9 +42,10 @@
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_2"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <com.framework.views.customViews.CustomTextView
@@ -66,41 +67,74 @@
                             tools:text="New Order" />
 
                         <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/order_id"
+                            android:id="@+id/txt_order_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingStart="@dimen/size_8"
-                            android:textColor="@color/primary_grey"
-                            app:textType="BODY_2"
+                            android:layout_marginStart="@dimen/size_2"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/black_4a4a4a"
+                            app:textType="BODY_1"
+                            tools:text="at 25-12-2020,2:00PM" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/order_id"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black_4a4a4a"
+                            app:textType="BODY_1"
+                            app:fontFamily="@font/semi_bold"
                             tools:text="# GK7C4FM" />
+
+
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/txt_rupees"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_marginStart="@dimen/size_10"
                         android:layout_marginTop="@dimen/size_8"
-                        android:gravity="center"
-                        android:textAlignment="center"
-                        android:textColor="@color/black_4a4a4a"
-                        app:fontFamily="@font/bold"
-                        app:textType="HEADING_4"
-                        tools:text="₹ 9,761" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/txt_rupees"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:textAlignment="center"
+                            android:textColor="@color/black_4a4a4a"
+                            app:fontFamily="@font/bold"
+                            app:textType="HEADING_4"
+                            tools:text="₹ 9,761" />
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/txt_order_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_2"
-                    android:layout_marginTop="@dimen/size_8"
-                    android:gravity="end"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/black_4a4a4a"
-                    app:textType="BODY_1"
-                    tools:text="at 25-12-2020,2:00PM" />
+<!--                <com.framework.views.customViews.CustomTextView-->
+<!--                    android:id="@+id/order_id"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingStart="@dimen/size_8"-->
+<!--                    android:textColor="@color/primary_grey"-->
+<!--                    app:textType="BODY_2"-->
+<!--                    tools:text="# GK7C4FM" />-->
+
+<!--                <com.framework.views.customViews.CustomTextView-->
+<!--                    android:id="@+id/txt_order_date"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/size_2"-->
+<!--                    android:layout_marginTop="@dimen/size_8"-->
+<!--                    android:gravity="end"-->
+<!--                    android:textAlignment="textEnd"-->
+<!--                    android:textColor="@color/black_4a4a4a"-->
+<!--                    app:textType="BODY_1"-->
+<!--                    tools:text="at 25-12-2020,2:00PM" />-->
 
 
                 <com.framework.views.customViews.CustomImageView
@@ -252,40 +286,41 @@
                 android:layout_marginStart="@dimen/size_10"
                 android:layout_marginTop="@dimen/size_16"
                 android:layout_marginEnd="@dimen/size_10"
-                android:background="@drawable/ic_confirm_order_bkg"
+                tools:background="@drawable/ic_initiated_order_btn_bkg"
                 android:gravity="center"
                 android:minHeight="@dimen/size_40"
                 android:orientation="horizontal">
 
                 <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_dropdown_order_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center"
-                    android:text="CONFIRM ORDER"
+                    tools:text="CONFIRM ORDER"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/divider"
+                    app:layout_constraintRight_toLeftOf="@id/vwDivider_dropdown_order_status"
                     app:layout_constraintTop_toTopOf="parent"
                     app:textType="HEADING_6" />
 
 
                 <View
-                    android:id="@+id/divider"
+                    android:id="@+id/vwDivider_dropdown_order_status"
                     android:layout_width="@dimen/size_1"
                     android:layout_height="0dp"
                     android:layout_marginEnd="@dimen/size_16"
                     android:background="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/dropdown_order_status"
+                    app:layout_constraintRight_toLeftOf="@id/iv_dropdown_order_status"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/dropdown_order_status"
+                    android:id="@+id/iv_dropdown_order_status"
                     android:layout_width="@dimen/size_30"
                     android:layout_height="@dimen/size_30"
                     android:layout_marginEnd="@dimen/size_16"
