@@ -62,6 +62,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.home_fragment.*
+import kotlinx.android.synthetic.main.view_all_features_fragment.*
 import retrofit2.Retrofit
 import java.lang.Exception
 import java.util.*
@@ -138,7 +139,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         initMvvm()
         (activity as UpgradeActivity)setBackListener(this)
 //    initYouTube()
-
+        shimmer_view_package.startShimmer()
+        shimmer_view_banner.startShimmer()
+        shimmer_view_recommended.startShimmer()
+        shimmer_view_recomm_addons.startShimmer()
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Loaded", "ADDONS_MARKETPLACE", "")
 //        Glide.with(this).load(R.drawable.back_beau).apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3))).into(back_image)
 
@@ -161,8 +165,16 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         if ((activity as UpgradeActivity).accountType != null) {
             recommended_features_account_type.setText((activity as UpgradeActivity).accountType!!.toLowerCase())
             recommended_features_section.visibility = View.VISIBLE
+            if(shimmer_view_recommended.isShimmerStarted) {
+                shimmer_view_recommended.stopShimmer()
+                shimmer_view_recommended.visibility = View.GONE
+            }
         } else {
             recommended_features_section.visibility = View.GONE
+            if(shimmer_view_recommended.isShimmerStarted) {
+                shimmer_view_recommended.stopShimmer()
+                shimmer_view_recommended.visibility = View.GONE
+            }
         }
 
         share_refferal_code_btn.setOnClickListener {
@@ -432,6 +444,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 //        })
 
         viewModel.getAllAvailableFeatures().observe(this, androidx.lifecycle.Observer {
+            all_recommended_addons.visibility = View.VISIBLE
             updateRecycler(it)
             updateAddonCategoryRecycler(it)
         })
@@ -453,9 +466,17 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 ))
             }
             if (list.size > 0) {
+                if(shimmer_view_package.isShimmerStarted) {
+                    shimmer_view_package.stopShimmer()
+                    shimmer_view_package.visibility = View.GONE
+                }
                 package_layout.visibility = View.VISIBLE
                 updatePackageViewPager(list)
             } else {
+                if(shimmer_view_package.isShimmerStarted) {
+                    shimmer_view_package.stopShimmer()
+                    shimmer_view_package.visibility = View.GONE
+                }
                 package_layout.visibility = View.GONE
             }
         })
@@ -643,11 +664,27 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         viewModel.getPromoBanners().observe(this, androidx.lifecycle.Observer {
             Log.e("getPromoBanners", it.toString())
             if (it.size > 0) {
+                if(shimmer_view_banner.isShimmerStarted) {
+                    shimmer_view_banner.stopShimmer()
+                    shimmer_view_banner.visibility = View.GONE
+                }
+               /* if(shimmer_view_package.isShimmerStarted) {
+                    shimmer_view_package.stopShimmer()
+                    shimmer_view_package.visibility = View.GONE
+                }*/
 //                checkBannerDetails(it as ArrayList<PromoBanners>)
                 checkBannerDetailsNew(it as ArrayList<PromoBanners>)
 //                updateBannerViewPager(it)
                 banner_layout.visibility = View.VISIBLE
             } else {
+                if(shimmer_view_banner.isShimmerStarted) {
+                    shimmer_view_banner.stopShimmer()
+                    shimmer_view_banner.visibility = View.GONE
+                }
+               /* if(shimmer_view_package.isShimmerStarted) {
+                    shimmer_view_package.stopShimmer()
+                    shimmer_view_package.visibility = View.GONE
+                }*/
                 banner_layout.visibility = View.GONE
             }
         })
@@ -669,6 +706,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     fun updateRecycler(list: List<FeaturesModel>) {
+        if(shimmer_view_recomm_addons.isShimmerStarted) {
+            shimmer_view_recomm_addons.stopShimmer()
+            shimmer_view_recomm_addons.visibility = View.GONE
+        }
         upgradeAdapter.addupdates(list)
         recycler.adapter = upgradeAdapter
         upgradeAdapter.notifyDataSetChanged()
@@ -682,6 +723,11 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             if (!addonsCategoryTypes.contains(singleFeaturesModel.target_business_usecase)) {
                 addonsCategoryTypes.add(singleFeaturesModel.target_business_usecase!!)
             }
+        }
+
+        if(shimmer_view_recomm_addons.isShimmerStarted) {
+            shimmer_view_recomm_addons.stopShimmer()
+            shimmer_view_recomm_addons.visibility = View.GONE
         }
         addonsCategoryAdapter.addupdates(addonsCategoryTypes)
         addons_category_recycler.adapter = addonsCategoryAdapter
