@@ -2,8 +2,8 @@ package com.appservice.rest.apiClients
 
 import com.framework.rest.BaseApiClient
 
-class StaffWithFloatsApiClient : BaseApiClient() {
+class StaffNowFloatsApiClient : BaseApiClient() {
     companion object {
-        val shared = StaffWithFloatsApiClient()
+        val shared = StaffNowFloatsApiClient()
     }
 }

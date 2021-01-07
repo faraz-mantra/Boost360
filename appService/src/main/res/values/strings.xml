@@ -239,9 +239,17 @@
     <item>Female</item>
   </array>
   <array name="Years">
-    <item>0 - 1 Years</item>
-    <item>1 - 2 Years</item>
-    <item>2 - 3 Years</item>
+    <item>0 Years</item>
+    <item>1 Years</item>
+    <item>2 Years</item>
+    <item>3 Years</item>
+    <item>4 Years</item>
+    <item>5 Years</item>
+    <item>6 Years</item>
+    <item>7 Years</item>
+    <item>8 Years</item>
+    <item>9 Years</item>
+    <item>10 Years</item>
   </array>
   <array name="Time">
     <item>7:30 PM</item>

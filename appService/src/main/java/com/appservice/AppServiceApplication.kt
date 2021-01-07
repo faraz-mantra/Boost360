@@ -21,6 +21,7 @@ open class AppServiceApplication : BaseApplication() {
       RazorApiClient.shared.init(EndPoints.RAZOR_API_BASE)
       WebActionBoostKitApiClient.shared.init(EndPoints.WEB_ACTION_BOOST_KIT_BASE)
       AssuredWithFloatsApiClient.shared.init(EndPoints.ASSURED_WITH_FLOATS_BASE_URL)
+      StaffNowFloatsApiClient.shared.init(EndPoints.STAFF_BASE_URL)
       KitWebActionApiClient.shared.init(EndPoints.KIT_WEB_ACTION_WITH_FLOATS_BASE_URL)
       BaseApplication.instance = application
     }
