@@ -250,6 +250,50 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/top_line_view" />
 
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmer_view_freeaddon"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toTopOf="@id/myaddons_view1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/free_addons_title"
+                        tools:visibility="visible">
+
+                        <!-- Adding 7 rows of placeholders -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:orientation="vertical">
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+
+                        </LinearLayout>
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_freeaddons"
                     android:layout_width="match_parent"
@@ -430,6 +474,49 @@
                     </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_view_paidaddon"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@id/myaddons_view2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/paid_addons_title"
+                    tools:visibility="visible">
+
+                    <!-- Adding 7 rows of placeholders -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/data_place2" />
+
+                        <include layout="@layout/data_place2" />
+
+                        <include layout="@layout/data_place2" />
+
+                        <include layout="@layout/data_place2" />
+
+                        <include layout="@layout/data_place2" />
+
+                        <include layout="@layout/data_place2" />
+
+                        <include layout="@layout/data_place2" />
+
+                        <include layout="@layout/data_place2" />
+
+                        <include layout="@layout/data_place2" />
+
+
+                    </LinearLayout>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_paidaddons"

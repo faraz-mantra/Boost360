@@ -22,6 +22,7 @@ import com.boost.upgrades.ui.historydetails.HistoryDetailsFragment
 import com.boost.upgrades.utils.Constants.Companion.HISTORY_DETAILS_FRAGMENT
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.history_fragment.*
+import kotlinx.android.synthetic.main.my_addons_fragment.*
 
 class HistoryFragment : BaseFragment(), HistoryFragmentListener {
 
@@ -51,7 +52,7 @@ class HistoryFragment : BaseFragment(), HistoryFragmentListener {
         loadData()
         initMVVM()
         initRecyclerView()
-
+        shimmer_view_history.startShimmer()
         history_back.setOnClickListener {
             (activity as UpgradeActivity).popFragmentFromBackStack()
         }
@@ -70,12 +71,20 @@ class HistoryFragment : BaseFragment(), HistoryFragmentListener {
 
     fun updateRecycler(result: GetPurchaseOrderResponse) {
         if(result.StatusCode == 200 && result.Result != null){
+            if (shimmer_view_history.isShimmerStarted) {
+                shimmer_view_history.stopShimmer()
+                shimmer_view_history.visibility = View.GONE
+            }
             historyAdapter.addupdates(result.Result)
             historyAdapter.notifyDataSetChanged()
             order_history_recycler.setFocusable(false)
             order_history_recycler.visibility = View.VISIBLE
             empty_history.visibility = View.GONE
         }else{
+            if (shimmer_view_history.isShimmerStarted) {
+                shimmer_view_history.stopShimmer()
+                shimmer_view_history.visibility = View.GONE
+            }
             order_history_recycler.visibility = View.GONE
             empty_history.visibility = View.VISIBLE
         }
