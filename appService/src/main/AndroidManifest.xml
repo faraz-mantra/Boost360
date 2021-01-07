@@ -31,7 +31,7 @@
         android:theme="@style/AppTheme.payment"
         android:windowSoftInputMode="adjustPan" />
     <activity
-        android:name="com.appservice.staffs.ui.home.StaffHomeActivity"
+        android:name=".staffs.ui.home.StaffFragmentContainerActivity"
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme_staff_home"
         android:windowSoftInputMode="adjustPan" />

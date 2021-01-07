@@ -7,13 +7,14 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.databinding.StaffHomeActivityBinding
+import com.appservice.staffs.ui.services.StaffServicesViewModel
 import com.framework.models.BaseViewModel
 
 class StaffHomeFragment : AppBaseFragment<StaffHomeActivityBinding, BaseViewModel>() {
-    private var mViewModel: StaffHomeViewModel? = null
+    private var mServicesViewModel: StaffServicesViewModel? = null
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mViewModel = ViewModelProvider(this).get(StaffHomeViewModel::class.java)
+        mServicesViewModel = ViewModelProvider(this).get(StaffServicesViewModel::class.java)
     }
 
     companion object {

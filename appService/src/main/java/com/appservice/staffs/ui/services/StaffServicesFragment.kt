@@ -11,18 +11,16 @@ import com.appservice.databinding.FragmentSelectServicesBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
+import com.appservice.staffs.model.*
 import com.appservice.staffs.ui.Constants
-import com.appservice.staffs.model.ServiceModel
-import com.framework.models.BaseViewModel
+import com.appservice.staffs.ui.home.UserSession
+import kotlinx.android.synthetic.main.fragment_kyc_details.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, BaseViewModel>(), RecyclerItemClickListener {
-
-
-    private lateinit var serviceData: ArrayList<ServiceModel>
-    private var listservices: ArrayList<String> = ArrayList()
-
+class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, StaffServicesViewModel>(), RecyclerItemClickListener {
+    lateinit var data: List<DataItem?>
+    private var listservices: ArrayList<DataItem> = ArrayList()
 
     companion object {
         fun newInstance(): StaffServicesFragment {
@@ -37,39 +35,50 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Bas
         return R.layout.fragment_select_services
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<StaffServicesViewModel> {
+        return StaffServicesViewModel::class.java
     }
 
     override fun onCreateView() {
-        initView()
+        init()
     }
 
-    private fun initView() {
-        this.serviceData = ServiceModel().serviceData()
+    private fun fetchServices() {
+
+        showProgress("FetchingServices")
+        viewModel!!.getServiceListing(ServiceListRequest(
+                FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpId)
+        ).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            hideProgress()
+            data = (it as ServiceListResponse).result!!.data!!
+            binding!!.ctvServicesCountTitle.text = "0/${data!!.size} services Selected"
+            binding!!.ctvServicesCount.text = getString(R.string.confirm_services)
+            binding?.rvServiceProvided?.adapter = AppBaseRecyclerViewAdapter(baseActivity, data as ArrayList<DataItem>, this@StaffServicesFragment)
+        })
+    }
+
+    private fun init() {
         binding?.ctvHeading?.text = Html.fromHtml(getString(R.string.select_what_services_that_the_staff))
-        binding!!.ctvServicesCountTitle.text = "0/${serviceData.size} services Selected"
-        binding!!.ctvServicesCount.text = getString(R.string.confirm_services)
-        binding?.rvServiceProvided?.adapter = AppBaseRecyclerViewAdapter(baseActivity, serviceData, this@StaffServicesFragment)
+        fetchServices()
         setOnClickListener(binding!!.flConfirmServices)
     }
 
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        val serviceModel = item as ServiceModel
-        when (serviceModel.isChecked) {
+        val dataItem = item as DataItem
+        when (dataItem.isChecked) {
             true -> {
-                serviceModel.isChecked = false
+                dataItem.isChecked = false
             }
             else -> {
-                serviceModel.isChecked = true
+                dataItem.isChecked = true
             }
         }
-        when (serviceModel.isChecked) {
-            true -> listservices.add(serviceModel.serviceName!!)
-            false -> listservices.remove(serviceModel.serviceName)
+        when (dataItem.isChecked) {
+            true -> listservices.add(dataItem)
+            false -> listservices.remove(dataItem)
         }
-        val serviceCount = "${listservices.size}/${serviceData.size} services selected"
+        val serviceCount = "${listservices.size}/${data.size} services selected"
         val serviceConfirm = "CONFIRM ${listservices.size} SERVICES"
         binding!!.ctvServicesCountTitle.text = serviceCount
         binding!!.ctvServicesCount.text = serviceConfirm

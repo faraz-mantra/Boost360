@@ -15,7 +15,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appservice.staffs.ui.home.StaffHomeActivity;
+import com.appservice.constant.FragmentType;
+import com.appservice.constant.IntentConstant;
+import com.appservice.staffs.ui.home.StaffFragmentContainerActivity;
 import com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.Login.UserSessionManager;
@@ -34,6 +36,8 @@ import com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivi
 import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
+
+import static com.framework.base.FragmentContainerActivityKt.FRAGMENT_TYPE;
 
 /**
  * Created by Admin on 29-01-2018.
@@ -158,7 +162,11 @@ public class ManageContentFragment extends Fragment {
         mRecyclerView.setAdapter(adapter);
         //todo remove this
         Button btnStaff = view.findViewById(R.id.btn_launch_staff);
-        btnStaff.setOnClickListener(view1 -> startActivity(new Intent(requireActivity(), StaffHomeActivity.class)));
+        Intent intent = new Intent(requireActivity(), StaffFragmentContainerActivity.class);
+        intent.putExtra(IntentConstant.FP_TAG.name(), session.getFpTag());
+        intent.putExtra(FRAGMENT_TYPE, FragmentType.STAFF_HOME_FRAGMENT.ordinal());
+        intent.putExtra(IntentConstant.CLIENT_ID.name(), session.getSourceClientId());
+        btnStaff.setOnClickListener(view1 -> startActivity(intent));
 
     }
 

@@ -10,15 +10,16 @@ import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
-import com.appservice.ui.catlogService.setFragmentType
+import com.appservice.constant.IntentConstant
 import com.appservice.staffs.ui.Constants
 import com.appservice.staffs.ui.breaks.ScheduledBreaksFragmnt
+import com.appservice.staffs.ui.breaks.StaffBreakConfirmFragment
 import com.appservice.staffs.ui.details.StaffDetailsFragment
 import com.appservice.staffs.ui.details.timing.StaffTimingFragment
 import com.appservice.staffs.ui.profile.StaffProfileDetailsFragment
 import com.appservice.staffs.ui.profile.StaffProfileListingFragment
-import com.appservice.staffs.ui.breaks.StaffBreakConfirmFragment
 import com.appservice.staffs.ui.services.StaffServicesFragment
+import com.appservice.ui.catlogService.setFragmentType
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
@@ -26,7 +27,7 @@ import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
 
-class StaffHomeActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
     private var fragmentType: FragmentType? = null
     private var staffAddFragment: StaffAddFragment? = null
     private var staffHomeFragment: StaffHomeFragment? = null
@@ -47,8 +48,20 @@ class StaffHomeActivity : AppBaseActivity<ActivityFragmentContainerBinding, Base
 
     override fun onCreateView() {
         super.onCreateView()
+        getBundle()
         setFragment()
     }
+
+    private fun getBundle() {
+        when {
+            intent.extras?.get(IntentConstant.FP_TAG.name)!= null -> {
+                UserSession.fpId = intent.extras!!.getString(IntentConstant.FP_TAG.name)!!
+                UserSession.customerID = intent.extras!!.getString(IntentConstant.CLIENT_ID.name)!!
+            }
+
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         when (intent.extras) {
@@ -162,10 +175,11 @@ class StaffHomeActivity : AppBaseActivity<ActivityFragmentContainerBinding, Base
         super.onActivityResult(requestCode, resultCode, data)
         staffDetailsFragment?.onActivityResult(requestCode, resultCode, data)
     }
+
 }
 
 fun Fragment.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
-    val intent = Intent(activity, StaffHomeActivity::class.java)
+    val intent = Intent(activity, StaffFragmentContainerActivity::class.java)
     intent.putExtras(bundle)
     intent.setFragmentType(type)
     if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -173,7 +187,7 @@ fun Fragment.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bun
 }
 
 fun startStaffFragmentActivity(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false, requestCode: Int= Constants.REQUEST_CODE) {
-    val intent = Intent(activity, StaffHomeActivity::class.java)
+    val intent = Intent(activity, StaffFragmentContainerActivity::class.java)
     intent.putExtras(bundle)
     intent.setFragmentType(type)
     if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -181,7 +195,7 @@ fun startStaffFragmentActivity(activity: Activity, type: FragmentType, bundle: B
 }
 
 fun AppCompatActivity.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
-    val intent = Intent(this, StaffHomeActivity::class.java)
+    val intent = Intent(this, StaffFragmentContainerActivity::class.java)
     intent.putExtras(bundle)
     intent.setFragmentType(type)
     if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
