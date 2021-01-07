@@ -46,6 +46,7 @@ import kotlinx.android.synthetic.main.compare_package_fragment.package_back
 import kotlinx.android.synthetic.main.compare_package_fragment.package_cart_icon
 import kotlinx.android.synthetic.main.compare_package_fragment.package_indicator2
 import kotlinx.android.synthetic.main.compare_package_fragment.package_viewpager
+import kotlinx.android.synthetic.main.home_fragment.*
 import org.json.JSONObject
 
 
@@ -115,7 +116,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
                 R.dimen.viewpager_current_item_horizontal_margin
         )
         package_viewpager.addItemDecoration(itemDecoration)
-
+        shimmer_view_compare.startShimmer()
         if(arguments!!.containsKey("showCartIcon")){
             package_cart_icon.visibility = View.INVISIBLE
         }
@@ -254,6 +255,10 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
                 }
 
                 featureCount++
+                if(shimmer_view_compare.isShimmerStarted) {
+                    shimmer_view_compare.stopShimmer()
+                    shimmer_view_compare.visibility = View.GONE
+                }
                 updatePackageViewPager(upgradeList)
 //                updateBannerViewPager(upgradeList, it as ArrayList<FeaturesModel>)
             }

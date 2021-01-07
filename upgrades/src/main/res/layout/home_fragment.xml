@@ -234,11 +234,56 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <RelativeLayout
+            android:id="@+id/banner_rl_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header">
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_banner"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible">
+
+                <!-- Adding 7 rows of placeholders -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/data_placeholder_layout" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/banner_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/header"
                 android:layout_marginTop="16dp"
                 android:clickable="true"
                 android:focusable="true"
@@ -275,12 +320,57 @@
                     app:progressMode="false"
                     app:selectedDotColor="@color/app_yellow_1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/package_rl_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/banner_rl_layout">
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_package"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible">
 
+                <!-- Adding 7 rows of placeholders -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/package_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/banner_layout"
                 android:layout_marginTop="16dp"
                 android:clickable="true"
                 android:focusable="true"
@@ -357,12 +447,57 @@
                     app:progressMode="false"
                     app:selectedDotColor="@color/app_yellow_1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/recommended_features_rl_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/package_rl_layout">
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_recommended"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible">
 
+                <!-- Adding 7 rows of placeholders -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/data_placeholder_layout" />
+
+                    <include layout="@layout/data_placeholder_layout" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
             <LinearLayout
                 android:id="@+id/recommended_features_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/package_layout"
                 android:layout_marginTop="16dp"
                 android:visibility="gone">
 
@@ -376,7 +511,7 @@
                     android:textStyle="bold"
                     android:textColor="@color/common_text_color"
                     android:textFontWeight="600"
-                    android:textSize="@dimen/_14sdp" />
+                    android:textSize="@dimen/txt_16sp" />
 
                 <TextView
                     android:id="@+id/recommended_features_account_type"
@@ -389,15 +524,61 @@
                     android:textAllCaps="false"
                     android:textColor="#FFB900"
                     android:textFontWeight="600"
-                    android:textSize="@dimen/_14sdp" />
+                    android:textSize="@dimen/txt_16sp" />
             </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/recommended_addons_rl_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/package_rl_layout">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_recomm_addons"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible">
+
+                <!-- Adding 7 rows of placeholders -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/data_placeholder_layout" />
+
+                    <include layout="@layout/data_placeholder_layout" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
+
+                    <include layout="@layout/data_place2" />
 
 
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
             <LinearLayout
                 android:id="@+id/recommended_addons_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/recommended_features_section"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/home_gradient_bg"
                 android:orientation="vertical"
@@ -428,6 +609,7 @@
                     android:focusable="true"
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:paddingStart="@dimen/_20sdp"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_20sdp"
@@ -440,13 +622,13 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
             </LinearLayout>
-
+        </RelativeLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/feature_deals_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/recommended_addons_layout"
+                android:layout_below="@+id/recommended_addons_rl_layout"
                 android:layout_marginTop="16dp"
                 android:clickable="true"
                 android:focusable="true"
