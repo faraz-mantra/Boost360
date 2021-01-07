@@ -32,6 +32,7 @@ import com.bumptech.glide.request.RequestOptions
 import es.dmoral.toasty.Toasty
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.my_addons_fragment.*
+import kotlinx.android.synthetic.main.view_all_features_fragment.*
 
 class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
@@ -88,7 +89,10 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
         loadData()
         initMVVM()
-
+        initializeFreeAddonsRecyclerView()
+        initializePaidAddonsRecyclerView()
+        shimmer_view_paidaddon.startShimmer()
+        shimmer_view_freeaddon.startShimmer()
         val profileURL = (activity as UpgradeActivity).profileUrl
 
         if (profileURL.isNullOrEmpty() || profileURL.length < 2) {
@@ -231,11 +235,15 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
 
             setHeadlineTexts()
 
-            initializeFreeAddonsRecyclerView()
-            initializePaidAddonsRecyclerView()
+//            initializeFreeAddonsRecyclerView()
+//            initializePaidAddonsRecyclerView()
 
             if (totalFreeItemList != null) {
                 if (totalFreeItemList!!.size > 6) {
+                    if (shimmer_view_freeaddon.isShimmerStarted) {
+                        shimmer_view_freeaddon.stopShimmer()
+                        shimmer_view_freeaddon.visibility = View.GONE
+                    }
                     val lessList = totalFreeItemList!!.subList(0, 6)
                     updateFreeAddonsRecycler(lessList)
                     myaddons_view1.visibility = View.VISIBLE
@@ -259,6 +267,10 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
             val paidItemsCount = totalPaidItemList!!.size
 
             if (paidItemsCount != null && paidItemsCount > 0) {
+                if (shimmer_view_paidaddon.isShimmerStarted) {
+                    shimmer_view_paidaddon.stopShimmer()
+                    shimmer_view_paidaddon.visibility = View.GONE
+                }
                 paid_title.setText(totalPaidItemList!!.size.toString() + " Premium add-ons")
                 paid_subtitle.setText(totalPaidItemList!!.size.toString() + " Activated, 0 Syncing and 0 needs Attention")
                 read_more_less_paid_addons.visibility = View.VISIBLE
