@@ -13,6 +13,14 @@ object EndPoints {
   const val CREATE_STAFF_PROFILE = "staff/v1/Create"
   const val FETCH_STAFF_SERVICES = "product/v13/GetServiceListings"
   const val GET_STAFF_LISTING = "staff/v1/GetStaffListing"
+  const val STAFF_PROFILE_UPDATE ="staff/v1/Update"
+  const val STAFF_PROFILE_DELETE ="staff/v1/Delete"
+  const val STAFF_ADD_TIMING ="staff/v1/AddStaffTiming"
+  const val STAFF_UPDATE_TIMING ="staff/v1/UpdateStaffTiming"
+  const val STAFF_UPDATE_IMAGE ="staff/v1/UpdateStaffImage"
+  const val STAFF_DELETE_IMAGE ="staff/v1/DeleteStaffImage"
+  const val GET_STAFF_DETAILS ="staff/v1/GetStaff?staffId=<string>"
+
 
   //TODO NFX API 2 WITH FLOAT
   const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"

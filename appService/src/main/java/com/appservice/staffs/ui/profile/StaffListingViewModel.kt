@@ -1,4 +1,4 @@
-package com.appservice.staffs.ui.home
+package com.appservice.staffs.ui.profile
 
 import androidx.lifecycle.LiveData
 import com.appservice.rest.repository.StaffNowFloatsRepository
@@ -8,7 +8,7 @@ import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 import retrofit2.http.Body
 
-class StaffHomeViewModel : BaseViewModel() {
+class StaffListingViewModel : BaseViewModel() {
     fun getStaffList(@Body request: GetStaffListingRequest?): LiveData<BaseResponse> {
         return StaffNowFloatsRepository.getStaffListing(request = request).toLiveData()
     }
