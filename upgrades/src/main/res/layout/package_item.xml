@@ -69,10 +69,10 @@
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="2.3sp"
                     android:text="Get 6 more add-ons"
-                    android:fontFamily="sans-serif"
-                    android:textColor="#000"
-                    android:textFontWeight="500"
-                    android:textSize="@dimen/_11ssp"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/common_text_color"
+                    android:textFontWeight="600"
+                    android:textSize="@dimen/txt_16sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -104,7 +104,7 @@
                         android:gravity="center"
                         android:text="0%"
                         android:textColor="@color/common_text_color"
-                        android:textSize="@dimen/_6sdp"
+                        android:textSize="@dimen/txt_10sp"
                         android:visibility="gone" />
 
                     <TextView
@@ -114,10 +114,10 @@
                         android:paddingStart="0dp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:text="₹2,099/month"
-                        android:textColor="#707070"
-                        android:fontFamily="sans-serif"
-                        android:textFontWeight="400"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textColor="#828282"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:textFontWeight="600"
+                        android:textSize="@dimen/txt_11sp" />
 
                     <TextView
                         android:id="@+id/orig_cost"
@@ -126,8 +126,10 @@
                         android:paddingStart="0dp"
                         android:paddingEnd="@dimen/_5sdp"
                         android:text="₹2,559/month"
-                        android:textColor="#9b9b9b"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textColor="#828282"
+                        android:textFontWeight="400"
+                        android:fontFamily="@font/open_sans"
+                        android:textSize="@dimen/txt_11sp" />
 
                 </LinearLayout>
 
@@ -152,7 +154,7 @@
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textFontWeight="800"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/txt_10sp" />
                     <TextView
                         android:id="@+id/details_button"
                         android:layout_width="wrap_content"
@@ -171,7 +173,7 @@
                         android:textAllCaps="true"
                         android:textColor="#FFB900"
                         android:textFontWeight="800"
-                        android:textSize="@dimen/_8sdp" />
+                        android:textSize="@dimen/txt_10sp" />
                 </LinearLayout>
 
             </LinearLayout>
