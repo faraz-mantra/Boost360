@@ -114,7 +114,7 @@
                                 android:layout_marginTop="@dimen/size_5"
                                 android:orientation="horizontal">
 
-                                <com.framework.views.customViews.customSpinner.SonicSpinner
+                                <androidx.appcompat.widget.AppCompatSpinner
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight=".7"
@@ -210,7 +210,7 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
-                            <com.framework.views.customViews.customSpinner.SonicSpinner
+                            <androidx.appcompat.widget.AppCompatSpinner
                                 android:layout_width="0dp"
                                 android:layout_height="@dimen/size_40"
                                 android:layout_weight=".7"

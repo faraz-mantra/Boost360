@@ -15,7 +15,7 @@ data class StaffCreateProfileRequest (
 	var description: String? = null,
 
 	@SerializedName("Specialisations")
-	var specialisations: List<SpecialisationsItem?>? = null,
+	var specialisations: List<SpecialisationsItemStaffRequest?>? = null,
 
 	@SerializedName("IsAvailable")
 	var isAvailable: Boolean? = null,
@@ -30,10 +30,10 @@ data class StaffCreateProfileRequest (
 	var name: String? = null
 )
 
-data class SpecialisationsItem(
+data class SpecialisationsItemStaffRequest(
 
-	@SerializedName("varue")
-	var varue: String? = null,
+	@SerializedName("Value")
+	var value: String? = null,
 
 	@SerializedName("Key")
 	var key: String? = null

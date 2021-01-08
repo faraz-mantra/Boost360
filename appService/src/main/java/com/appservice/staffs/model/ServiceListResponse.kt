@@ -1,6 +1,5 @@
 package com.appservice.staffs.model
 
-import android.os.Parcelable
 import com.appservice.R
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
@@ -14,23 +13,23 @@ data class ServiceListResponse(
 		val statusCode: Int? = null,
 
 		@field:SerializedName("Result")
-		val result: Result? = null
+		val result: ResultService? = null
 ) : BaseResponse(), AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
         return R.layout.recycler_item_service
     }
 }
 
-data class Result(
+data class ResultService(
 
 		@field:SerializedName("Paging")
-		val paging: Paging? = null,
+		val paging: PagingService? = null,
 
 		@field:SerializedName("Data")
-		val data: List<DataItem?>? = null
+		val data: List<DataItemService?>? = null
 )
 
-data class Paging(
+data class PagingService(
 
 		@field:SerializedName("Skip")
 		val skip: Int? = null,
@@ -42,7 +41,7 @@ data class Paging(
 		val count: Int? = null
 )
 
-data class DataItem(
+data class DataItemService(
 		var isChecked: Boolean? = null,
 		@field:SerializedName("Type")
 		val type: Any? = null,

@@ -1,20 +1,38 @@
 package com.appservice.staffs.ui.home
 
 import android.os.Bundle
-import android.view.*
-import androidx.lifecycle.ViewModelProvider
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.databinding.StaffHomeActivityBinding
+import com.appservice.staffs.model.GetStaffListingRequest
+import com.appservice.staffs.model.GetStaffListingResponse
 import com.appservice.staffs.ui.services.StaffServicesViewModel
-import com.framework.models.BaseViewModel
+import java.io.Serializable
 
-class StaffHomeFragment : AppBaseFragment<StaffHomeActivityBinding, BaseViewModel>() {
-    private var mServicesViewModel: StaffServicesViewModel? = null
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        mServicesViewModel = ViewModelProvider(this).get(StaffServicesViewModel::class.java)
+class StaffHomeFragment : AppBaseFragment<StaffHomeActivityBinding, StaffHomeViewModel>() {
+    override fun onCreateView() {
+        super.onCreateView()
+        setHasOptionsMenu(true)
+        fetchStaffListing()
+    }
+
+    private fun fetchStaffListing() {
+        viewModel?.getStaffList(GetStaffListingRequest(UserSession.fpId, 0, "", 0))?.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                200 -> {
+                    val getStaffListingResponse = it as GetStaffListingResponse
+                    val data = getStaffListingResponse.result?.data
+                    val bundle = Bundle()
+                    bundle.putSerializable("STAFF_LIST", data as Serializable)
+                    startStaffFragmentActivity(FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, bundle, false, isResult = false)
+                }
+            }
+        })
     }
 
     companion object {
@@ -27,13 +45,8 @@ class StaffHomeFragment : AppBaseFragment<StaffHomeActivityBinding, BaseViewMode
         return R.layout.fragment_staff_home
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
-        return super.onCreateView(inflater, container, savedInstanceState)
+    override fun getViewModelClass(): Class<StaffHomeViewModel> {
+        return StaffHomeViewModel::class.java
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
