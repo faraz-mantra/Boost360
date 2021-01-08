@@ -19,8 +19,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, StaffServicesViewModel>(), RecyclerItemClickListener {
-    lateinit var data: List<DataItem?>
-    private var listservices: ArrayList<DataItem> = ArrayList()
+    lateinit var data: List<DataItemService?>
+    private var listservices: ArrayList<DataItemService> = ArrayList()
 
     companion object {
         fun newInstance(): StaffServicesFragment {
@@ -51,9 +51,9 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
         ).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             hideProgress()
             data = (it as ServiceListResponse).result!!.data!!
-            binding!!.ctvServicesCountTitle.text = "0/${data!!.size} services Selected"
+            binding!!.ctvServicesCountTitle.text = "0/${data.size} services selected"
             binding!!.ctvServicesCount.text = getString(R.string.confirm_services)
-            binding?.rvServiceProvided?.adapter = AppBaseRecyclerViewAdapter(baseActivity, data as ArrayList<DataItem>, this@StaffServicesFragment)
+            binding?.rvServiceProvided?.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data as ArrayList<DataItemService>, itemClickListener = this@StaffServicesFragment)
         })
     }
 
@@ -65,7 +65,7 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
 
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        val dataItem = item as DataItem
+        val dataItem = item as DataItemService
         when (dataItem.isChecked) {
             true -> {
                 dataItem.isChecked = false

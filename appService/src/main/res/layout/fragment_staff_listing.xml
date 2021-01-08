@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <com.framework.views.viewgroups.BaseRecyclerView
-            android:id="@+id/baseRecyclerView"
+            android:id="@+id/rv_filer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/white"
@@ -26,13 +26,14 @@
 
         <com.framework.views.viewgroups.BaseRecyclerView
             android:layout_width="match_parent"
+            android:id="@+id/rv_staff_list"
             android:layout_height="@dimen/size_0"
             android:layout_marginTop="@dimen/size_8"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/baseRecyclerView"
+            app:layout_constraintTop_toBottomOf="@+id/rv_filer"
             tools:listitem="@layout/recycler_item_staff_listing" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

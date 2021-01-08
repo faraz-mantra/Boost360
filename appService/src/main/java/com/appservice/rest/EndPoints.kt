@@ -12,6 +12,7 @@ object EndPoints {
   const val STAFF_BASE_URL = "https://api.nowfloats.com/"
   const val CREATE_STAFF_PROFILE = "staff/v1/Create"
   const val FETCH_STAFF_SERVICES = "product/v13/GetServiceListings"
+  const val GET_STAFF_LISTING = "staff/v1/GetStaffListing"
 
   //TODO NFX API 2 WITH FLOAT
   const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"

@@ -87,17 +87,17 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
     override fun customTheme(): Int? {
         return when (fragmentType) {
-            FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT -> R.style.AppTheme_staff_home
+            FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT -> R.style.AppTheme_staff_home
             FragmentType.STAFF_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT,
-            FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT -> R.style.AppTheme_staff_details
+            FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT
+            -> R.style.AppTheme_staff_details
             else -> super.customTheme()
         }
     }
 
     override fun getToolbarBackgroundColor(): Int? {
         return when (fragmentType) {
-            FragmentType.STAFF_HOME_FRAGMENT -> ContextCompat.getColor(this, R.color.yellow_ffb900)
-            FragmentType.STAFF_ADD_FRAGMENT -> ContextCompat.getColor(this, R.color.yellow_ffb900)
+            FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT, FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> ContextCompat.getColor(this, R.color.yellow_ffb900)
             else -> super.getToolbarBackgroundColor()
         }
     }
@@ -143,6 +143,10 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
     private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
         return when (type) {
+            FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> {
+                staffProfileListingFragment = StaffProfileListingFragment.newInstance()
+                staffProfileListingFragment
+            }
             FragmentType.STAFF_ADD_FRAGMENT -> {
                 staffAddFragment = StaffAddFragment.newInstance()
                 staffAddFragment

@@ -5,6 +5,7 @@ import com.appservice.base.rest.AppBaseRepository
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.StaffNowFloatsApiClient
 import com.appservice.rest.services.StaffNowFloatsRemoteData
+import com.appservice.staffs.model.GetStaffListingRequest
 import com.appservice.staffs.model.ServiceListRequest
 import com.appservice.staffs.model.StaffCreateProfileRequest
 import com.framework.base.BaseResponse
@@ -30,5 +31,8 @@ object StaffNowFloatsRepository : AppBaseRepository<StaffNowFloatsRemoteData, Ap
 
     fun getServicesListing(request: ServiceListRequest?): Observable<BaseResponse> {
         return makeRemoteRequest(remoteDataSource.fetchServices(request), TaskCode.GET_SERVICE_LISTING)
+    }
+    fun getStaffListing(request: GetStaffListingRequest?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.fetchStaffList(request), TaskCode.GET_STAFFS_PROFILE_LIST)
     }
 }

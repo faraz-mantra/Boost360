@@ -1,10 +1,7 @@
 package com.appservice.rest.services
 
 import com.appservice.rest.EndPoints
-import com.appservice.staffs.model.ServiceListRequest
-import com.appservice.staffs.model.ServiceListResponse
-import com.appservice.staffs.model.StaffCreateProfileRequest
-import com.appservice.staffs.model.StaffCreateProfileResponse
+import com.appservice.staffs.model.*
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.Body
@@ -16,5 +13,9 @@ interface StaffNowFloatsRemoteData {
 
     @POST(EndPoints.FETCH_STAFF_SERVICES)
     fun fetchServices(@Body request: ServiceListRequest?): Observable<Response<ServiceListResponse>>
+
+    @POST(EndPoints.GET_STAFF_LISTING)
+    fun fetchStaffList(@Body request: GetStaffListingRequest?): Observable<Response<GetStaffListingResponse>>
+
 
 }
