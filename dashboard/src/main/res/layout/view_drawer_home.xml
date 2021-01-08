@@ -136,6 +136,7 @@
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
                 android:textColor="@color/greyish_brown"
+                app:fontFamily="@font/barlow_medium"
                 app:textType="HEADING_6"
                 tools:text="43%" />
 
