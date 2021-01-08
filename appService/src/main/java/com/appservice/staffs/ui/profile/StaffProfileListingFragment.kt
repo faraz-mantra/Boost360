@@ -12,17 +12,19 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.model.DataItem
+import com.appservice.staffs.model.GetStaffListingRequest
+import com.appservice.staffs.model.GetStaffListingResponse
+import com.appservice.staffs.ui.home.UserSession
 import com.appservice.staffs.ui.home.startStaffFragmentActivity
-import com.framework.models.BaseViewModel
 import java.util.*
 
-class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, BaseViewModel>(), RecyclerItemClickListener {
+class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffListingViewModel>(), RecyclerItemClickListener {
     override fun getLayout(): Int {
         return R.layout.fragment_staff_listing
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<StaffListingViewModel> {
+        return StaffListingViewModel::class.java
     }
 
     companion object {
@@ -33,12 +35,35 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
     override fun onCreateView() {
         setHasOptionsMenu(true)
-        val get = arguments?.get("STAFF_LIST")
-        binding?.rvStaffList?.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = get as ArrayList<DataItem>, itemClickListener = this@StaffProfileListingFragment)
+        fetchStaffListing()
+    }
+
+    private fun fetchStaffListing() {
+        showProgress("Loading")
+        viewModel?.getStaffList(GetStaffListingRequest(UserSession.fpId, 0, "", 0))?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            hideProgress()
+            when (it.status) {
+                200 -> {
+                    val getStaffListingResponse = it as GetStaffListingResponse
+                    val data = getStaffListingResponse.result?.data
+                    binding?.rvStaffList?.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data as ArrayList<DataItem>, itemClickListener = this@StaffProfileListingFragment)
+
+                }
+                else -> {
+                    hideProgress()
+                }
+            }
+        })
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+        val staff = item as DataItem
+        val bundle = Bundle()
+        bundle.putSerializable("STAFF_DETAILS", staff)
+        startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, bundle, clearTop = false, isResult = false)
+
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_stafflisting, menu)
         super.onCreateOptionsMenu(menu, inflater)

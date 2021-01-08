@@ -1,10 +1,12 @@
 package com.appservice.staffs.ui.profile
 
+import android.os.Bundle
 import android.text.Html
 import android.view.View
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.databinding.FragmentStaffProfileBinding
+import com.appservice.staffs.model.DataItem
 import com.framework.models.BaseViewModel
 
 class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding, BaseViewModel>() {
@@ -15,15 +17,28 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         return BaseViewModel::class.java
     }
 
+    companion object {
+        fun newInstance(): StaffProfileDetailsFragment {
+            val args = Bundle()
+            val fragment = StaffProfileDetailsFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
     override fun onCreateView() {
         super.onCreateView()
-        setOnClickListener(binding!!.civMenu)
-        setOnClickListener(binding!!.ctvEdit)
-        setOnClickListener(binding!!.ctvEditLeaves)
-        setOnClickListener(binding!!.ctvEditServices)
-        setOnClickListener(binding!!.ctvEditTiming)
-        binding!!.ctvEdit.text = Html.fromHtml(getString(R.string.u_edit_info_u))
+        setOnClickListener(binding!!.civMenu,binding!!.ctvEdit,binding!!.ctvEditLeaves,binding!!.ctvEditServices,binding!!.ctvEditTiming)
+        setData()
 
+
+    }
+
+    private fun setData() {
+        binding!!.ctvEdit.text = Html.fromHtml(getString(R.string.u_edit_info_u))
+        val get = arguments?.get("STAFF_DETAILS") as DataItem
+        binding?.ctvTiming?.text = get.timings.toString()
+        binding?.ctvStaffName?.text = get.name
+        binding?.ctvExperience?.text=get.experience.toString()
     }
 
     override fun onClick(v: View) {

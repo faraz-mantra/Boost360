@@ -36,7 +36,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     private var staffTimingFragment: StaffTimingFragment? = null
     private var scheduledBreaksFragment: ScheduledBreaksFragmnt? = null
     private var breakConfirmFragment: StaffBreakConfirmFragment? = null
-    private var profileDetailsFragment: StaffProfileDetailsFragment? = null
+    private var staffProfileDetailsFragment: StaffProfileDetailsFragment? = null
     private var staffProfileListingFragment: StaffProfileListingFragment? = null
     override fun getLayout(): Int {
         return R.layout.activity_fragment_container
@@ -88,7 +88,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     override fun customTheme(): Int? {
         return when (fragmentType) {
             FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT -> R.style.AppTheme_staff_home
-            FragmentType.STAFF_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT,
+            FragmentType.STAFF_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT,FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT,
             FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT
             -> R.style.AppTheme_staff_details
             else -> super.customTheme()
@@ -97,7 +97,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
     override fun getToolbarBackgroundColor(): Int? {
         return when (fragmentType) {
-            FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT, FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> ContextCompat.getColor(this, R.color.yellow_ffb900)
+            FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT, FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> ContextCompat.getColor(this, R.color.yellow_ffb900)
             else -> super.getToolbarBackgroundColor()
         }
     }
@@ -135,7 +135,6 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
             FragmentType.STAFF_TIMING_FRAGMENT -> "Staff Timing"
             FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT -> "Scheduled Breaks"
             FragmentType.STAFF_SERVICES_CONFIRM_FRAGMENT -> "Scheduled Breaks"
-            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> "Scheduled Breaks"
             FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> "STAFF LISTING"
             else -> super.getToolbarTitle()
         }
@@ -143,6 +142,10 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
     private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
         return when (type) {
+            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> {
+                staffProfileDetailsFragment = StaffProfileDetailsFragment.newInstance()
+                staffProfileDetailsFragment
+            }
             FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> {
                 staffProfileListingFragment = StaffProfileListingFragment.newInstance()
                 staffProfileListingFragment

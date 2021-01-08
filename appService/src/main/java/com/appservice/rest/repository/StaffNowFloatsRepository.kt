@@ -8,6 +8,7 @@ import com.appservice.rest.services.StaffNowFloatsRemoteData
 import com.appservice.staffs.model.GetStaffListingRequest
 import com.appservice.staffs.model.ServiceListRequest
 import com.appservice.staffs.model.StaffCreateProfileRequest
+import com.appservice.staffs.model.StaffProfileUpdateRequest
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -34,5 +35,8 @@ object StaffNowFloatsRepository : AppBaseRepository<StaffNowFloatsRemoteData, Ap
     }
     fun getStaffListing(request: GetStaffListingRequest?): Observable<BaseResponse> {
         return makeRemoteRequest(remoteDataSource.fetchStaffList(request), TaskCode.GET_STAFFS_PROFILE_LIST)
+    }
+    fun updateProfile(request: StaffProfileUpdateRequest?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.staffProfileUpdate(request), TaskCode.GET_STAFFS_PROFILE_LIST)
     }
 }
