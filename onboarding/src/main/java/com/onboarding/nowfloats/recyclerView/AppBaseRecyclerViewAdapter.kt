@@ -47,7 +47,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       VISITING_CARD_TWO_ITEM -> VisitingCardTwoViewHolder(binding as ItemVisitingCardTwoBinding)
       VISITING_CARD_THREE_ITEM -> VisitingCardThreeViewHolder(binding as ItemVisitingCardThreeBinding)
       VISITING_CARD_FOUR_ITEM -> VisitingCardFourViewHolder(binding as ItemVisitingCardFourBinding)
-      VISITING_CARD_FIVE_ITEM -> VisitingCardFiveViewHolder(binding as ItemVisitingCardOneBinding)
+      VISITING_CARD_FIVE_ITEM -> VisitingCardFiveViewHolder(binding as ItemVisitingCardFiveBinding)
       VISITING_CARD_SIX_ITEM -> VisitingCardSixViewHolder(binding as ItemVisitingCardOneBinding)
       VISITING_CARD_SEVEN_ITEM -> VisitingCardOneViewHolder(binding as ItemVisitingCardOneBinding)
       VISITING_CARD_EIGHT_ITEM -> VisitingCardOneViewHolder(binding as ItemVisitingCardOneBinding)
