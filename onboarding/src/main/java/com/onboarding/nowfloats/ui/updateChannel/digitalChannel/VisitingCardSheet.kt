@@ -65,9 +65,10 @@ class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardShareBin
             userProfile.userMobile, userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl,recyclerViewType = RecyclerViewItemType.VISITING_CARD_TWO_ITEM.getLayout()))
         cardList.add(DigitalCardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
             userProfile.userMobile, userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl,recyclerViewType = RecyclerViewItemType.VISITING_CARD_THREE_ITEM.getLayout()))
-
         cardList.add(DigitalCardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
             userProfile.userMobile, userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl,recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()))
+        cardList.add(DigitalCardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
+            userProfile.userMobile, userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl,recyclerViewType = RecyclerViewItemType.VISITING_CARD_FIVE_ITEM.getLayout()))
 
         setAdapterCard(cardList)
       } else {
