@@ -73,12 +73,8 @@ class MyDigitalCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Channe
 
         val userProfile = ProfileProperties(userName = contactName, userMobile = primaryNumber, userEmail = primaryEmail)
         val cardList = ArrayList<DigitalCardData>()
-        cardList.add(DigitalCardData(businessName, businessImage, location, userProfile.userName?.capitalizeWords(),
-            userProfile.userMobile, userProfile.userEmail,
-            businessType, websiteUrl, R.color.darkslategray, R.color.goldenrod, R.color.white, R.color.white))
-        cardList.add(DigitalCardData(businessName, businessImage, location, userProfile.userName?.capitalizeWords(),
-            userProfile.userMobile, userProfile.userEmail,
-            businessType, websiteUrl, R.color.linen, R.color.lightskyblue, R.color.textGreyLight, R.color.textGreyDark))
+        cardList.add(DigitalCardData(businessName, businessImage, location, userProfile.userName?.capitalizeWords(), userProfile.userMobile, userProfile.userEmail, businessType, websiteUrl))
+
         setAdapterCard(cardList)
       } else showShortToast(it.message())
       hideProgress()
