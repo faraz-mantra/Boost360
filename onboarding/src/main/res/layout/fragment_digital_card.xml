@@ -51,7 +51,6 @@
       android:layout_gravity="bottom"
       android:layout_margin="@dimen/size_14"
       android:gravity="bottom"
-
       android:orientation="vertical">
 
       <com.framework.views.customViews.CustomButton
@@ -61,7 +60,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
-        android:backgroundTint="@color/light_green_new"
+        android:backgroundTint="@color/green_light_2"
         android:drawableStart="@drawable/ic_whatsapp_white_transparent"
         android:stateListAnimator="@null"
         android:text="Share via WhatsApp"

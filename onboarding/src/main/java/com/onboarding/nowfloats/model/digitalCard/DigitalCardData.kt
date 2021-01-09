@@ -13,13 +13,8 @@ data class DigitalCardData(
     var email: String? = null,
     var businessType: String? = null,
     var website: String? = null,
-    var color1: Int? = null,
-    var color2: Int? = null,
-    var textColor1: Int? = null,
-    var textColor2: Int? = null,
+    var recyclerViewType :Int = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()
 ) : Serializable, AppBaseRecyclerViewItem {
-
-  var recyclerViewType = RecyclerViewItemType.DIGITAL_CARD_ITEM.getLayout()
 
   override fun getViewType(): Int {
     return recyclerViewType

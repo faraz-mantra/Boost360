@@ -81,7 +81,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication)
+    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.btnVisitingCard)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     apiSellerSummary()
@@ -219,7 +219,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setDataSellerSummary(sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, callSummary: CallSummaryResponse?) {
-    val  data = BusinessSetupHighData().getData(siteMeterData?.siteMeterTotalWeight ?: 0,
+    val data = BusinessSetupHighData().getData(siteMeterData?.siteMeterTotalWeight ?: 0,
         summary?.getNoOfUniqueViews() ?: "0", sellerOrder?.getTotalOrders() ?: "0", getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
     if (adapterPagerBusinessUpdate == null) {
       binding?.pagerBusinessSetupHigh?.apply {
@@ -337,16 +337,23 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (v) {
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)
+      binding?.btnVisitingCard -> visitingCard()
 //      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
     }
   }
 
-  private fun shareVisitingCard(isWhatsApp: Boolean) {
+  private fun visitingCard() {
     session?.let {
-      val dialogCard = MyDigitalCardShareDialog.newInstance()
-      dialogCard.setData(getLocalSession(it), isWhatsApp)
-      dialogCard.showDialog(baseActivity.supportFragmentManager)
+      val dialogCard = MyDigitalCardShareDialog()
+      dialogCard.setData(getLocalSession(it))
+      dialogCard.show(this@DashboardFragment.parentFragmentManager, MyDigitalCardShareDialog::class.java.name)
     }
+  }
+
+  private fun bottomSheetWebView(title: String, domainUrl: String) {
+    val webViewBottomDialog = WebViewBottomDialog()
+    webViewBottomDialog.setData(title, domainUrl)
+    webViewBottomDialog.show(this@DashboardFragment.parentFragmentManager, WebViewBottomDialog::class.java.name)
   }
 
   private fun shareUserDetail(isWhatsApp: Boolean) {
@@ -472,11 +479,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  private fun bottomSheetWebView(title: String, domainUrl: String) {
-    val webViewBottomDialog = WebViewBottomDialog()
-    webViewBottomDialog.setData(title, domainUrl)
-    webViewBottomDialog.show(this@DashboardFragment.parentFragmentManager, WebViewBottomDialog::class.java.name)
-  }
 
   private fun academyBannerBoostClick(data: DashboardAcademyBanner) {
     when {

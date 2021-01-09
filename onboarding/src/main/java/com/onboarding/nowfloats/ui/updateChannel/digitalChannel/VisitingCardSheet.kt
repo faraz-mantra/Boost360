@@ -7,16 +7,14 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
-import com.framework.base.BaseDialogFragment
+import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
-import com.framework.utils.ConversionUtils
-import com.framework.utils.ScreenUtils
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.onboarding.nowfloats.R
+import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.DialogDigitalCardShareBinding
 import com.onboarding.nowfloats.extensions.capitalizeWords
 import com.onboarding.nowfloats.model.digitalCard.DigitalCardData
@@ -28,22 +26,13 @@ import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
 import com.onboarding.nowfloats.utils.viewToBitmap
 import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
 
-class MyDigitalCardShareDialog : BaseDialogFragment<DialogDigitalCardShareBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
+class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
 
   private var cardPosition = 0
   private var localSessionModel: LocalSessionModel? = null
-  private var isWhatsApp: Boolean = false
 
-  companion object {
-    @JvmStatic
-    fun newInstance(): MyDigitalCardShareDialog {
-      return MyDigitalCardShareDialog()
-    }
-  }
-
-  fun setData(localSessionModel: LocalSessionModel, isWhatsApp: Boolean = false) {
+  fun setData(localSessionModel: LocalSessionModel) {
     this.localSessionModel = localSessionModel
-    this.isWhatsApp = isWhatsApp
   }
 
   override fun getLayout(): Int {
@@ -71,26 +60,30 @@ class MyDigitalCardShareDialog : BaseDialogFragment<DialogDigitalCardShareBindin
         val userProfile = ProfileProperties(userName = localSessionModel?.contactName, userMobile = localSessionModel?.primaryNumber, userEmail = localSessionModel?.primaryEmail)
         val cardList = ArrayList<DigitalCardData>()
         cardList.add(DigitalCardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
-            userProfile.userMobile, userProfile.userEmail,
-            localSessionModel?.businessType, localSessionModel?.websiteUrl, R.color.darkslategray, R.color.goldenrod, R.color.white, R.color.white))
+            userProfile.userMobile, userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl,recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()))
         cardList.add(DigitalCardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
-            userProfile.userMobile, userProfile.userEmail,
-            localSessionModel?.businessType, localSessionModel?.websiteUrl, R.color.linen, R.color.lightskyblue, R.color.textGreyLight, R.color.textGreyDark))
+            userProfile.userMobile, userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl,recyclerViewType = RecyclerViewItemType.VISITING_CARD_TWO_ITEM.getLayout()))
+        cardList.add(DigitalCardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
+            userProfile.userMobile, userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl,recyclerViewType = RecyclerViewItemType.VISITING_CARD_THREE_ITEM.getLayout()))
+
+        cardList.add(DigitalCardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
+            userProfile.userMobile, userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl,recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()))
+
         setAdapterCard(cardList)
       } else {
         showShortToast(it.message())
-        hideDialog()
+        dismiss()
       }
       binding?.progress?.gone()
-      binding?.shareCard?.visible()
+//      binding?.shareCard?.visible()
     })
-    binding?.backBtn?.setOnClickListener { hideDialog() }
-    binding?.shareCard?.setOnClickListener { shareCardWhatsApp("Business Card",isWhatsApp)  }
+    binding?.backBtn?.setOnClickListener { dismiss() }
+//    binding?.shareCard?.setOnClickListener { shareCardWhatsApp("Business Card",isWhatsApp)  }
   }
 
-  private fun setAdapterCard(cardList: java.util.ArrayList<DigitalCardData>) {
+  private fun setAdapterCard(cardList: ArrayList<DigitalCardData>) {
     binding?.pagerDigitalCard?.apply {
-      val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, cardList, this@MyDigitalCardShareDialog )
+      val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, cardList, this@MyDigitalCardShareDialog)
       offscreenPageLimit = 3
       isUserInputEnabled = true
       adapter = adapterPager3
@@ -121,38 +114,14 @@ class MyDigitalCardShareDialog : BaseDialogFragment<DialogDigitalCardShareBindin
       waIntent.type = "image/*"
       if (isWhatsApp) waIntent.setPackage("com.whatsapp")
       waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
-      waIntent.putExtra(Intent.EXTRA_TEXT, messageN?:"")
+      waIntent.putExtra(Intent.EXTRA_TEXT, messageN ?: "")
       baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
       binding?.progress?.gone()
-      hideDialog()
+      dismiss()
     } catch (e: Exception) {
       showLongToast("App not Installed")
       binding?.progress?.gone()
-      hideDialog()
-    }
-  }
-
-  override fun getWidth(): Int? {
-    return ScreenUtils.instance.getWidth(activity) - ConversionUtils.dp2px(8f)
-  }
-
-  override fun getTheme(): Int {
-    return R.style.MaterialDialogTheme
-  }
-
-  fun showDialog(manager: FragmentManager) {
-    try {
-      if (this.isVisible.not()) show(manager, "")
-    } catch (e: IllegalStateException) {
-      e.printStackTrace()
-    }
-  }
-
-  private fun hideDialog() {
-    try {
-      if (isRemoving.not()) dismiss()
-    } catch (e: IllegalStateException) {
-      e.printStackTrace()
+      dismiss()
     }
   }
 
