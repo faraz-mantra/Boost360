@@ -101,7 +101,7 @@ class OrderSummaryModel(
   }
 
   fun saveData() {
-    PreferencesUtils.instance.saveDataN(SELLER_SUMMARY_DATA, convertObjToString(this) ?: "")
+    PreferencesUtils.instance.saveData(SELLER_SUMMARY_DATA, convertObjToString(this) ?: "")
   }
 }
 

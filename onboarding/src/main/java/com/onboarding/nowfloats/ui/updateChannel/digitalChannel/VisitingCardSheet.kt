@@ -38,12 +38,12 @@ import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
 
 const val WA_KEY = "58ede4d4ee786c1604f6c535"
 
-class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
+open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
 
   private var cardPosition = 0
   private var localSessionModel: LocalSessionModel? = null
 
-  protected val pref: SharedPreferences?
+  private val pref: SharedPreferences?
     get() {
       return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
     }
@@ -77,7 +77,7 @@ class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardShareBin
         val userProfile = ProfileProperties(userName = localSessionModel?.contactName, userMobile = localSessionModel?.primaryNumber, userEmail = localSessionModel?.primaryEmail)
         val cardList = ArrayList<DigitalCardData>()
         val cardData = CardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
-            userProfile.userMobile, userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl)
+            addPlus91(userProfile.userMobile), userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl)
 
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_TWO_ITEM.getLayout()))
@@ -96,6 +96,7 @@ class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardShareBin
       }
       binding?.progress?.gone()
       binding?.btnMainView?.visible()
+      binding?.borderView?.visible()
     })
     binding?.backBtn?.setOnClickListener {
       val popup = PopupMenu(baseActivity, it)
@@ -169,7 +170,7 @@ class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardShareBin
 
   }
 
-  fun getBundle(): Bundle {
+  private fun getBundle(): Bundle {
     val bundle = Bundle()
     pref?.edit()?.putString(PreferenceConstant.AUTHORIZATION, WA_KEY)?.apply()
     bundle.putString(PreferenceConstant.KEY_FP_ID, localSessionModel?.floatingPoint)
@@ -188,6 +189,22 @@ class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardShareBin
   }
 }
 
+fun AppCompatActivity.startDigitalChannel(bundle: Bundle) {
+  try {
+    WebEngageController.trackEvent("Digital Channel Page", "startview", "");
+    startFragmentActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun addPlus91(userMobile: String?): String? {
+  if ((userMobile?.contains("+91") == true || userMobile?.contains("+91-") == true).not()) {
+    return "+91-$userMobile"
+  }
+  return userMobile
+}
+
 data class LocalSessionModel(
     var floatingPoint: String? = null,
     var contactName: String? = null,
@@ -202,11 +219,3 @@ data class LocalSessionModel(
     var experienceCode: String? = null,
 )
 
-fun AppCompatActivity.startDigitalChannel(bundle: Bundle) {
-  try {
-    WebEngageController.trackEvent("Digital Channel Page", "startview", "");
-    startFragmentActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
-  } catch (e: Exception) {
-    e.printStackTrace()
-  }
-}

@@ -19,9 +19,13 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
+import com.dashboard.controller.ui.dialogWelcome.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.model.live.drawerData.DrawerHomeData
 import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
+import com.dashboard.model.live.welcomeData.WelcomeDashboardResponse
+import com.dashboard.model.live.welcomeData.WelcomeData
+import com.dashboard.model.live.welcomeData.getIsShowWelcome
 import com.dashboard.pref.*
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
@@ -68,6 +72,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       return navHostFragment?.childFragmentManager?.fragments
     }
 
+  private var welcomeData: ArrayList<WelcomeData>? = null
+
   override fun getLayout(): Int {
     return R.layout.activity_dashboard
   }
@@ -88,6 +94,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     val versionName: String = packageManager.getPackageInfo(packageName, 0).versionName
     binding?.drawerView?.txtVersion?.text = "Version $versionName"
     intentDataCheckAndDeepLink()
+    getWelcomeData()
     initialize()
   }
 
@@ -154,7 +161,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun getToolbar(): CustomToolbar? {
     return binding?.toolbar
   }
-
 
 
   fun setPercentageData(score: Int) {
@@ -226,6 +232,32 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       else -> mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
     }
     toolbarPropertySet(pos)
+    checkWelcomeShowScreen(pos)
+  }
+
+  private fun checkWelcomeShowScreen(pos: Int) {
+    when (pos) {
+      1 -> {
+        val dataWebsite = welcomeData?.get(0)
+        if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let { showWelcomeDialog(it) }
+      }
+      2 -> {
+        val dataCustomer = welcomeData?.get(1)
+        if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let { showWelcomeDialog(it) }
+      }
+      3 -> {
+        val dataAddOns = welcomeData?.get(2)
+        if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
+        else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+      }
+    }
+  }
+
+  private fun showWelcomeDialog(data: WelcomeData) {
+    val dialog = WelcomeHomeDialog.newInstance()
+    dialog.setData(data)
+    dialog.onClicked={ session?.let { this.initiateAddonMarketplace(it, false, "", "") } }
+    dialog.showProgress(supportFragmentManager)
   }
 
   private fun toolbarPropertySet(pos: Int) {
@@ -248,9 +280,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onItemClick(pos: Int) {
     super.onItemClick(pos)
     when (pos) {
-      3 -> session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+      3 -> checkWelcomeShowScreen(pos)
       4 -> binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
     }
+
   }
 
 
@@ -374,6 +407,16 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       ZopimChat.init("MJwgUJn9SKy2m9ooxsQgJSeTSR5hU3A5")
     } catch (e: Exception) {
     }
+  }
+
+  private fun getWelcomeData() {
+    viewModel.getWelcomeDashboardData(this).observeOnce(this, {
+      val response = it as? WelcomeDashboardResponse
+      val data = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.actionItem
+      if (response?.isSuccess() == true && data.isNullOrEmpty().not()) {
+        this.welcomeData = data
+      }
+    })
   }
 }
 

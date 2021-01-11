@@ -97,7 +97,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           saveDataAcademy(data?.academyBanners!!)
           setDataRiaAcademy(data.academyBanners!!)
         }
-        if (data?.marketplaceBanners.isNullOrEmpty().not()){
+        if (data?.marketplaceBanners.isNullOrEmpty().not()) {
           val marketBannerFilter = (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
           saveDataMarketPlace(marketBannerFilter)
           setDataMarketBanner(marketBannerFilter)
@@ -316,7 +316,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
       RecyclerViewActionType.PROMO_BANNER_CLICK.ordinal -> {
         val data = item as? DashboardMarketplaceBanner ?: return
-        if (data.ctaFeatureKey.isNullOrEmpty().not()){
+        if (data.ctaFeatureKey.isNullOrEmpty().not()) {
           session?.let { baseActivity.initiateAddonMarketplace(it, false, "", data.ctaFeatureKey) }
         }
       }
@@ -536,5 +536,5 @@ fun getLocalSession(session: UserSessionManager): LocalSessionModel {
   return LocalSessionModel(floatingPoint = session.fPID, contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME), businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME),
       businessImage = imageUri, location = location, websiteUrl = session.getDomainName(false),
       businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), primaryNumber = session.userPrimaryMobile,
-      primaryEmail = session.fPEmail, fpTag = session.fpTag,experienceCode = session.fP_AppExperienceCode)
+      primaryEmail = session.fPEmail, fpTag = session.fpTag, experienceCode = session.fP_AppExperienceCode)
 }
