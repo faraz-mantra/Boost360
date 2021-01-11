@@ -1,5 +1,6 @@
 package com.appservice.staffs.ui.details
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
@@ -9,8 +10,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.appservice.R
@@ -33,11 +37,11 @@ import java.io.ByteArrayOutputStream
 class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffDetailsViewModel>() {
     private var imageUri: Uri? = null
     private var gender: String? = null
-    private var experience: Int = 0
+    private var experience: Double = 0.0
     private var isAvailable: Boolean = true
     private var isImageChosen: Boolean = false
-
-    private lateinit var servicesList: List<DataItemService>
+    private var allMandatoryFieldFilled = false
+    private var servicesList: List<DataItemService>? = null
 
     companion object {
         fun newInstance(): StaffDetailsFragment {
@@ -54,24 +58,22 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffD
     }
 
     override fun onCreateView() {
+        setOnClickListener(binding?.flAddStaffImg, binding?.rlStaffTiming, binding?.rlServiceProvided,
+                binding?.rlScheduledBreaks, binding!!.flSavePublish)
+        initViews()
+    }
 
-        setOnClickListener(binding?.flAddStaffImg, binding?.rlStaffTiming, binding?.rlServiceProvided, binding?.rlScheduledBreaks, binding!!.flSavePublish)
-        binding!!.toggleYesNo.setOnToggledListener { toggleableView, isOn ->
+    private fun initViews() {
+        binding!!.toggleYesNo.setOnToggledListener { _, isOn ->
             isAvailable = when (isOn) {
                 true -> true
                 else -> false
             }
         }
-        val genderAdapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, mutableListOf("Select Gender", "Male", "Female"))
-        binding!!.csGender.adapter = genderAdapter
+        binding!!.csGender.setHintAdapter(requireContext(), arrayOf("Male", "Female", "Please select"))
         binding!!.csGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                when {
-                    p2 > 0 -> {
-                        gender = p0?.getItemAtPosition(p2).toString()
-                    }
-                }
-
+                gender = p0?.getItemAtPosition(p2).toString()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -79,21 +81,19 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffD
             }
 
         }
-        val experienceAdapter = ArrayAdapter(requireContext(), R.layout.support_simple_spinner_dropdown_item, (1..10).toMutableList())
-        binding!!.csExperience.adapter = experienceAdapter
+        // set hint always to last element
+        val ageMap = mutableMapOf("<1" to 0.6, "1" to 1.0, "2" to 2.0, "3" to 3.0, "4" to 4.0, "5" to 5.0, "5+" to 5.0, "Select Experience" to 0.0)
+        binding!!.csExperience.setHintAdapter(context = requireContext(), list = ageMap.keys.toTypedArray())
         binding!!.csExperience.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                experience = p0?.getItemAtPosition(p2) as Int
+                experience = ageMap.values.toMutableList()[p2]
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
         }
-
-
     }
-
 
     override fun onClick(v: View) {
         super.onClick(v)
@@ -113,40 +113,87 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffD
             }
             binding?.flSavePublish -> {
                 //validation
-                when {
-                    binding!!.etvName.text.isNullOrBlank()
-                            || binding!!.etvStaffDescription.text.isNullOrBlank()
-                            || gender.isNullOrBlank() || experience.equals(0) || !isImageChosen || binding?.etvSpecialization?.text.isNullOrBlank() -> {
-                        showShortToast("Don't Leave fields Blank")
+                var imageToByteArray: ByteArray? = null
+                var imageExtension: String? = null
+                val specialization = binding?.etvSpecialization?.text.toString()
+                var staffName: String? = null
+                val serviceListId = ArrayList<String>()
+                val staffDescription: String? = null
+                val specializationList = ArrayList<SpecialisationsItemStaffRequest>()
+                when (binding!!.etvName.text.isNullOrBlank()) {
+                    false -> {
+                        staffName = binding?.etvName?.text.toString()
+                        allMandatoryFieldFilled = true
                     }
-                    else -> {
-                        val imageExtension: String = imageUri.toString().substring(imageUri.toString().lastIndexOf("."))
-                        val byteArrayImage: ByteArray = imageToByteArray()
-                        val specialization = binding?.etvSpecialization?.text.toString()
-                        val staffName = binding?.etvName?.text.toString()
-                        val specializationList = ArrayList<SpecialisationsItemStaffRequest>()
+                    true -> {
+                        showShortToast("please enter name")
+                    }
+                }
+                when (gender.isNullOrBlank() || gender.equals("Please select")) {
+                    true -> showShortToast("please choose gender")
+                    false -> allMandatoryFieldFilled = true
+
+                }
+                when (experience == 0.0) {
+                    true -> showShortToast("please choose experience")
+                    false -> allMandatoryFieldFilled = true
+
+                }
+                when (isImageChosen) {
+                    false -> showShortToast("please choose image")
+                    true -> {
+                        allMandatoryFieldFilled = true
+                        imageExtension = imageUri!!.toString().substring(imageUri.toString().lastIndexOf("."))
+                        imageToByteArray = imageToByteArray()
+
+                    }
+                }
+                when (binding!!.etvSpecialization.text.isNullOrBlank()) {
+                    true -> showShortToast("please enter specialization")
+                    false -> {
                         for ((index, s) in specialization.split(" ").withIndex()) {
                             specializationList.add(SpecialisationsItemStaffRequest(s, "key$index"))
                         }
-                        val description = binding?.etvStaffDescription?.text.toString()
-                        val serviceListId = ArrayList<String>()
-                        servicesList.forEach { serviceListId.add(it.id!!) }
-                        val staffCreateProfileRequest = StaffCreateProfileRequest(serviceIds = serviceListId, experience = experience.toDouble(), description = description,
-                                specialisations = specializationList, isAvailable = isAvailable, floatingPointTag = UserSession.fpId, image = Image(imageFileType = imageExtension,
-                                fileName = "$staffName.$imageExtension", image = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)), name = staffName)
-                        viewModel?.createStaffProfile(staffCreateProfileRequest)?.observe(viewLifecycleOwner, Observer { t ->
-                            println(t.message + " " + t.status)
-                            showLongToast("created successfully")
-                        })
+                        allMandatoryFieldFilled = true
                     }
                 }
+//                when (servicesList.isNullOrEmpty()) {
+//                    true -> {
+//                        servicesList?.forEach { serviceListId.add(it.id!!) }
+//                    }
+//                    false -> {
+//                        showShortToast("please choose services")
+//                    }
+//                }
+                when (allMandatoryFieldFilled) {
+                    true -> when {
+                        imageExtension != null -> when {
+                            imageToByteArray != null -> {
+                                createStaffProfile(serviceListId, staffDescription, specializationList, imageExtension, staffName, imageToByteArray)
+                            }
+                        }
+                    }
+                    else -> {
+                        showShortToast("something went wrong")
+                    }
+                }
+
 
             }
         }
     }
 
+    private fun createStaffProfile(serviceListId: ArrayList<String>, staffDescription: String?, specializationList: ArrayList<SpecialisationsItemStaffRequest>, imageExtension: String, staffName: String?, byteArrayImage: ByteArray) {
+        val staffCreateProfileRequest = StaffCreateProfileRequest(serviceIds = serviceListId, experience = experience, description = staffDescription,
+                specialisations = specializationList, isAvailable = isAvailable, floatingPointTag = UserSession.fpId, image = Image(imageFileType = imageExtension,
+                fileName = "$staffName.$imageExtension", image = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)), name = staffName)
+        viewModel?.createStaffProfile(staffCreateProfileRequest)?.observe(viewLifecycleOwner, Observer { t ->
+            println(t.message + " " + t.status)
+        })
+    }
+
     private fun imageToByteArray(): ByteArray {
-        val bm: Bitmap = BitmapFactory.decodeFile(imageUri.toString())
+        val bm: Bitmap = BitmapFactory.decodeFile(imageUri!!.toString())
         val byteArrayOutStream = ByteArrayOutputStream()
         bm.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutStream) // bm is the bitmap object
         return byteArrayOutStream.toByteArray()
@@ -187,7 +234,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffD
 
     private fun setServicesList() {
         val services = StringBuilder()
-        servicesList.forEach { dataItem -> services.append("${dataItem.name}, ") }
+        servicesList?.forEach { dataItem -> services.append("${dataItem.name}, ") }
         binding!!.ctvServices.text = services
     }
 
@@ -202,4 +249,43 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffD
         binding?.flAddStaffImg?.backgroundTintList = ColorStateList.valueOf(getColor(R.color.gray_light_4))
 
     }
+
+}
+
+class HintAdapter<T>(context: Context, resource: Int, objects: Array<T>) :
+        ArrayAdapter<T>(context, resource, objects) {
+    override fun getCount(): Int {
+        val count = super.getCount()
+        // The last item will be the hint.
+        return if (count > 0) count - 1 else count
+    }
+
+    override fun isEnabled(position: Int): Boolean {
+        return when (position) {
+            count -> false
+            else -> true
+        }
+    }
+
+    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val view = super.getDropDownView(position, convertView, parent)
+        val textView = view as TextView
+        if (position == count+1)
+            textView.setTextColor(Color.GRAY)
+        else textView.setTextColor(Color.BLACK)
+        return view
+    }
+
+}
+
+fun Spinner.setHintAdapter(context: Context, list: Array<String>) {
+    val hintAdapter =
+            HintAdapter(
+                    context,
+                    android.R.layout.simple_spinner_dropdown_item,
+                    list
+            )
+    adapter = hintAdapter
+    setSelection(count)
+
 }

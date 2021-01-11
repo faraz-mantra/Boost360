@@ -44,14 +44,13 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
     }
 
     private fun fetchServices() {
-
-        showProgress("FetchingServices")
+        showProgress("Loading...")
         viewModel!!.getServiceListing(ServiceListRequest(
                 FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpId)
         ).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             hideProgress()
             data = (it as ServiceListResponse).result!!.data!!
-            binding!!.ctvServicesCountTitle.text = "0/${data.size} services selected"
+            binding!!.ctvServicesCountTitle.text = "0/${data.size} service selected"
             binding!!.ctvServicesCount.text = getString(R.string.confirm_services)
             binding?.rvServiceProvided?.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data as ArrayList<DataItemService>, itemClickListener = this@StaffServicesFragment)
         })

@@ -31,6 +31,10 @@ class StaffAddFragment : BaseFragment<FragmentStaffAddBinding, BaseViewModel>() 
     }
 
     override fun onCreateView() {
+        binding!!.flAddStaff.setOnClickListener {
+            startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_DETAILS_FRAGMENT, Bundle(), clearTop = false, isResult = false, requestCode = Constants.REQUEST_CODE)
+
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

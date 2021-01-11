@@ -45,7 +45,7 @@
             android:layout_marginEnd="@dimen/size_16"
             android:src="@drawable/ic_menu_dotted" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/civ_staff_profile_img"
@@ -54,7 +54,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:paddingHorizontal="@dimen/size_16"
                 android:paddingVertical="@dimen/size_16">
 
@@ -243,7 +243,7 @@
                     android:textSize="14sp" />
 
             </RelativeLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/civ_staff_profile_img"
