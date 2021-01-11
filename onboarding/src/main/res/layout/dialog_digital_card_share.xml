@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <data>
 
   </data>
-  <!--  android:background="@drawable/bg_rounded_white_20"-->
   <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:backgroundTint="@color/white"
+    android:background="@color/white_snow"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -87,12 +86,15 @@
         app:selectedDotColor="@color/colorAccent" />
 
       <LinearLayout
+        android:id="@+id/btn_main_view"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/size_18"
         android:gravity="bottom"
-        android:orientation="vertical">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/share_whatsapp"
@@ -105,7 +107,7 @@
           android:backgroundTint="@color/green_light_1"
           android:drawableStart="@drawable/ic_whatsapp_white_transparent"
           android:stateListAnimator="@null"
-          android:text="Share on WhatsApp"
+          android:text="@string/share_on_whatsapp"
           app:textType="HEADING_6" />
 
         <com.framework.views.customViews.CustomButton
@@ -117,7 +119,7 @@
           android:layout_marginBottom="0dp"
           android:background="@drawable/bg_button_outlined_grey"
           android:stateListAnimator="@null"
-          android:text="Share on more..."
+          android:text="@string/share_on_more"
           app:textType="HEADING_6" />
       </LinearLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>

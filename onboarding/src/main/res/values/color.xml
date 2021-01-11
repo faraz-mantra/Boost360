@@ -12,7 +12,13 @@
   <!-- visiting card color -->
 
   <color name="linen">#f3f2f1</color>
-  <color name="indianred">#DE4D3D</color>
+  <color name="light_red">#DE4D3D</color>
   <color name="blue_light">#4889F8</color>
   <color name="black_light">#25252F</color>
+  <color name="dark_late_gray">#172933</color>
+  <color name="white_30">#4DFFFFFF</color>
+  <color name="white_grey">#DAD4D4</color>
+  <color name="white_grey_1">#E3DDDD</color>
+  <color name="seagreen">#07A361</color>
+  <color name="darkslateblue">#475993</color>
 </resources>

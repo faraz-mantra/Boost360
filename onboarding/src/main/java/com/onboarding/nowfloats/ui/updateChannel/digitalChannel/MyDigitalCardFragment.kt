@@ -16,8 +16,10 @@ import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.PreferenceConstant
+import com.onboarding.nowfloats.constant.RecyclerViewItemType
 import com.onboarding.nowfloats.databinding.FragmentDigitalCardBinding
 import com.onboarding.nowfloats.extensions.capitalizeWords
+import com.onboarding.nowfloats.model.digitalCard.CardData
 import com.onboarding.nowfloats.model.digitalCard.DigitalCardData
 import com.onboarding.nowfloats.model.profile.MerchantProfileResponse
 import com.onboarding.nowfloats.model.profile.ProfileProperties
@@ -73,7 +75,18 @@ class MyDigitalCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Channe
 
         val userProfile = ProfileProperties(userName = contactName, userMobile = primaryNumber, userEmail = primaryEmail)
         val cardList = ArrayList<DigitalCardData>()
-        cardList.add(DigitalCardData(businessName, businessImage, location, userProfile.userName?.capitalizeWords(), userProfile.userMobile, userProfile.userEmail, businessType, websiteUrl))
+        val cardData = CardData(businessName, businessImage, location, userProfile.userName?.capitalizeWords(),
+            userProfile.userMobile, userProfile.userEmail, businessType, websiteUrl)
+
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_TWO_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_THREE_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FIVE_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SIX_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SEVEN_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_EIGHT_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_NINE_ITEM.getLayout()))
 
         setAdapterCard(cardList)
       } else showShortToast(it.message())
