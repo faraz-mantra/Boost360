@@ -6,10 +6,11 @@
   <data>
 
   </data>
+
   <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white_snow"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -59,16 +60,33 @@
           app:srcCompat="@drawable/ic_more_vert" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
-      <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/pager_digital_card"
+      <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_200"
-        android:layout_marginTop="@dimen/size_18"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="horizontal" />
+        android:layout_height="wrap_content">
+
+        <View
+          android:id="@+id/border_view"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_210"
+          android:layout_marginStart="@dimen/size_15"
+          android:layout_marginTop="@dimen/size_13"
+          android:layout_marginEnd="@dimen/size_16"
+          android:background="@drawable/ic_card_border"
+          android:visibility="gone"
+          tools:visibility="visible" />
+
+        <androidx.viewpager2.widget.ViewPager2
+          android:id="@+id/pager_digital_card"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/size_200"
+          android:layout_marginTop="@dimen/size_18"
+          android:clipChildren="false"
+          android:clipToPadding="false"
+          android:focusable="true"
+          android:focusableInTouchMode="true"
+          android:orientation="horizontal" />
+      </RelativeLayout>
+
 
       <com.framework.views.dotsindicator.DotsIndicator
         android:id="@+id/dot_indicator_card"
@@ -87,28 +105,37 @@
 
       <LinearLayout
         android:id="@+id/btn_main_view"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/size_18"
         android:gravity="bottom"
+        android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible">
 
-        <com.framework.views.customViews.CustomButton
+        <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/share_whatsapp"
-          style="@style/ButtonStyle.Rounded"
           android:layout_width="match_parent"
-          android:layout_marginStart="0dp"
-          android:layout_marginEnd="0dp"
-          android:layout_marginBottom="0dp"
+          android:layout_height="@dimen/size_46"
           android:background="@drawable/bg_rounded_20"
           android:backgroundTint="@color/green_light_1"
-          android:drawableStart="@drawable/ic_whatsapp_white_transparent"
-          android:stateListAnimator="@null"
-          android:text="@string/share_on_whatsapp"
-          app:textType="HEADING_6" />
+          android:gravity="center">
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_whatsapp_white_transparent" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_8"
+            android:text="@string/share_on_whatsapp"
+            android:textColor="@color/white"
+            app:fontFamily="@font/semi_bold"
+            app:textType="HEADING_6" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/share_other"

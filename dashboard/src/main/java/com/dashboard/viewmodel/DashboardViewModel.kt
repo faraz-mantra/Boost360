@@ -63,6 +63,10 @@ class DashboardViewModel : BaseViewModel() {
     return WithFloatRepository.getBoostAddOnsTop(context).toLiveData()
   }
 
+  fun getWelcomeDashboardData(context: Context): LiveData<BaseResponse> {
+    return WithFloatRepository.getWelcomeDashboardData(context).toLiveData()
+  }
+
   fun getBoostUserDetailMessage(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getBoostUserDetailMessage(context).toLiveData()
   }

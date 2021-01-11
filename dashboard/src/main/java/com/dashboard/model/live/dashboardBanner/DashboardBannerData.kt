@@ -1,10 +1,7 @@
 package com.dashboard.model.live.dashboardBanner
 
 import com.dashboard.pref.UserSessionManager
-import com.framework.utils.PreferencesUtils
-import com.framework.utils.convertListObjToString
-import com.framework.utils.convertStringToList
-import com.framework.utils.getData
+import com.framework.utils.*
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
@@ -43,7 +40,7 @@ fun getAcademyBanners(): ArrayList<DashboardAcademyBanner>? {
 }
 
 fun saveDataAcademy(academyBanner: ArrayList<DashboardAcademyBanner>?) {
-    PreferencesUtils.instance.saveDataN(ACADEMY_BANNER_DATA, convertListObjToString(academyBanner ?: ArrayList()) ?: "")
+    PreferencesUtils.instance.saveData(ACADEMY_BANNER_DATA, convertListObjToString(academyBanner ?: ArrayList()) ?: "")
 }
 
 fun getMarketPlaceBanners(): ArrayList<DashboardMarketplaceBanner>? {
@@ -52,7 +49,7 @@ fun getMarketPlaceBanners(): ArrayList<DashboardMarketplaceBanner>? {
 }
 
 fun saveDataMarketPlace(marketBanners: ArrayList<DashboardMarketplaceBanner>?) {
-    PreferencesUtils.instance.saveDataN(MARKETPLACE_BANNER_DATA, convertListObjToString(marketBanners ?: ArrayList()) ?: "")
+    PreferencesUtils.instance.saveData(MARKETPLACE_BANNER_DATA, convertListObjToString(marketBanners ?: ArrayList()) ?: "")
 }
 
 fun ArrayList<DashboardMarketplaceBanner>.marketBannerFilter(session: UserSessionManager?): ArrayList<DashboardMarketplaceBanner> {

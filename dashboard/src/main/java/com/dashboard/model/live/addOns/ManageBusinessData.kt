@@ -7,6 +7,7 @@ import com.framework.base.BaseResponse
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.convertListObjToString
 import com.framework.utils.convertStringToList
+import com.framework.utils.saveData
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -110,7 +111,7 @@ class ManageBusinessData(
     matchData?.let { addOnsLast.remove(matchData) }
     addOnsLast.add(0, data)
     if (addOnsLast.size > 8) addOnsLast.removeLast()
-    PreferencesUtils.instance.saveDataN(LAST_SEEN_DATA, convertListObjToString(addOnsLast) ?: "")
+    PreferencesUtils.instance.saveData(LAST_SEEN_DATA, convertListObjToString(addOnsLast) ?: "")
   }
 
 }

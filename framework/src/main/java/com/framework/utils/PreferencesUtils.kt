@@ -41,14 +41,6 @@ class PreferencesUtils {
     return getData(PreferencesKey.FACEBOOK_USER_TOKEN)
   }
 
-  fun saveData(key: PreferencesKey, value: String): Boolean {
-    return saveData(key.name, value)
-  }
-
-  fun saveDataN(key: String, value: String): Boolean {
-    return saveData(key, value)
-  }
-
   fun getData(key: PreferencesKey): String? {
     return getData(key.name, null)
   }
@@ -61,6 +53,12 @@ class PreferencesUtils {
 @Synchronized
 fun PreferencesUtils.saveData(key: String, value: String?): Boolean {
   editor?.putString(key, value)
+  return editor?.commit() ?: false
+}
+
+@Synchronized
+fun PreferencesUtils.saveData(key: PreferencesKey, value: String?): Boolean {
+  editor?.putString(key.name, value)
   return editor?.commit() ?: false
 }
 

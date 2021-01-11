@@ -76,7 +76,7 @@ class MyDigitalCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Channe
         val userProfile = ProfileProperties(userName = contactName, userMobile = primaryNumber, userEmail = primaryEmail)
         val cardList = ArrayList<DigitalCardData>()
         val cardData = CardData(businessName, businessImage, location, userProfile.userName?.capitalizeWords(),
-            userProfile.userMobile, userProfile.userEmail, businessType, websiteUrl)
+            addPlus91(userProfile.userMobile), userProfile.userEmail, businessType, websiteUrl)
 
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_TWO_ITEM.getLayout()))
