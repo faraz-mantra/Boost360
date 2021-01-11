@@ -35,6 +35,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.utils.*
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY_N
 import com.framework.utils.DateUtils.getCurrentDate
 import com.framework.utils.DateUtils.getDateMillSecond
@@ -54,6 +55,8 @@ import com.onboarding.nowfloats.ui.webview.WebViewBottomDialog
 import java.util.*
 import kotlin.collections.ArrayList
 
+const val IS_FIRST_LOAD = "isFirsLoad"
+
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
@@ -65,7 +68,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterMarketBanner: AppBaseRecyclerViewAdapter<DashboardMarketplaceBanner>? = null
   private var adapterAcademy: AppBaseRecyclerViewAdapter<DashboardAcademyBanner>? = null
   private var siteMeterData: SiteMeterScoreDetails? = null
-  private var isFirsLoad = true
 
   override fun getLayout(): Int {
     return R.layout.fragment_dashboard
@@ -78,7 +80,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.btnVisitingCard)
+    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.btnVisitingCard,binding?.txtDomainName)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     apiSellerSummary()
@@ -112,13 +114,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun getFloatMessage() {
-    if (isFirsLoad) session?.siteMeterData { it?.let { it1 -> refreshData(it1) } }
-    binding?.progress?.visible()
+    if (isFirstLoad().not()) binding?.progress?.visible()
+    session?.siteMeterData { it?.let { it1 -> refreshData(it1) } }
     viewModel?.getBizFloatMessage(session!!.getRequestFloat())?.observeOnce(this, {
-      isFirsLoad = false
       if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
       session?.siteMeterData { it1 -> it1?.let { it2 -> refreshData(it2) } }
-      binding?.progress?.gone()
+      if (isFirstLoad().not()) binding?.progress?.gone()
+      saveFirstLoad()
     })
   }
 
@@ -133,7 +135,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun getSiteMeter(siteMeterData: SiteMeterScoreDetails) {
-    val listDigitalScore = siteMeterData.getListDigitalScore()
     if (session?.siteHealth != siteMeterData.siteMeterTotalWeight) {
       session?.siteHealth = siteMeterData.siteMeterTotalWeight
       val data = OnBoardingUpdateModel()
@@ -241,7 +242,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun setUserData() {
     binding?.txtBusinessName?.text = session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
-//    binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(true)}</u>")
+    binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(true)}</u>")
     var imageLogoUri = session?.getFPDetails(GET_FP_DETAILS_LogoUrl)
     if (imageLogoUri.isNullOrEmpty().not() && imageLogoUri!!.contains("http").not()) {
       imageLogoUri = BASE_IMAGE_URL + imageLogoUri
@@ -333,7 +334,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)
       binding?.btnVisitingCard -> visitingCard()
-//      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
+      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
     }
   }
 
@@ -474,7 +475,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-
   private fun academyBannerBoostClick(data: DashboardAcademyBanner) {
     when {
       data.ctaFileLink.isNullOrEmpty().not() -> baseActivity.startDownloadUri(session, data.ctaFileLink?.trim()!!)
@@ -537,4 +537,12 @@ fun getLocalSession(session: UserSessionManager): LocalSessionModel {
       businessImage = imageUri, location = location, websiteUrl = session.getDomainName(false),
       businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), primaryNumber = session.userPrimaryMobile,
       primaryEmail = session.fPEmail, fpTag = session.fpTag, experienceCode = session.fP_AppExperienceCode)
+}
+
+fun saveFirstLoad() {
+  PreferencesUtils.instance.saveData(IS_FIRST_LOAD, true)
+}
+
+fun isFirstLoad(): Boolean {
+  return PreferencesUtils.instance.getData(IS_FIRST_LOAD, false)
 }

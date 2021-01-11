@@ -40,14 +40,6 @@ class PreferencesUtils {
   fun getFacebookUserToken(): String? {
     return getData(PreferencesKey.FACEBOOK_USER_TOKEN)
   }
-
-  fun getData(key: PreferencesKey): String? {
-    return getData(key.name, null)
-  }
-
-  fun getDataN(key: String): String? {
-    return getData(key, null)
-  }
 }
 
 @Synchronized
@@ -100,13 +92,18 @@ fun PreferencesUtils.removeData(key: String): Boolean {
 }
 
 @Synchronized
-fun PreferencesUtils.getData(key: String, defaultValue: Boolean): Boolean {
+fun PreferencesUtils.getData(key: String, defaultValue: Boolean = false): Boolean {
   return sharedPref.getBoolean(key, defaultValue)
 }
 
 @Synchronized
-fun PreferencesUtils.getData(key: String, defaultValue: String?): String? {
+fun PreferencesUtils.getData(key: String, defaultValue: String? = ""): String? {
   return sharedPref.getString(key, defaultValue)
+}
+
+@Synchronized
+fun PreferencesUtils.getData(key: PreferencesKey, defaultValue: String? = ""): String? {
+  return sharedPref.getString(key.name, defaultValue)
 }
 
 @Synchronized
@@ -121,7 +118,7 @@ fun PreferencesUtils.getData(key: String, defaultValue: Float): Float {
 }
 
 @Synchronized
-fun PreferencesUtils.getData(key: String, defaultValue: Int): Int {
+fun PreferencesUtils.getData(key: String, defaultValue: Int=0): Int {
   return sharedPref.getInt(key, defaultValue)
 }
 
