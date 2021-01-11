@@ -63,7 +63,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Retrofit
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -323,8 +322,6 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     COMPARE_FRAGMENT,args
             )
         }
-        val promoBanners=arguments?.getSerializable("PROMO_BANNER_CLICK") as? PromoBanners
-        if (promoBanners!=null) onPromoBannerClicked(promoBanners)
 
     }
 

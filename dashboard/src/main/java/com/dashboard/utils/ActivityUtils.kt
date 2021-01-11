@@ -18,7 +18,6 @@ import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
-import com.dashboard.model.live.premiumBanner.PromoAcademyBanner
 import com.dashboard.pref.*
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
@@ -187,31 +186,10 @@ fun AppCompatActivity.startAnalytics(session: UserSessionManager?, table_name: I
   }
 }
 
-fun AppCompatActivity.promoBannerMarketplace(session: UserSessionManager, promoBanner: PromoAcademyBanner?) {
-  WebEngageController.trackEvent("Promo banner Addons", "startview", session.fpTag);
-  val bundle = Bundle()
-  bundle.putString("_kid", promoBanner?.kid)
-  bundle.putString("_parentClassId", promoBanner?.parentClassId)
-  bundle.putString("_parentClassName", promoBanner?.parentClassName)
-  bundle.putString("_propertyName", promoBanner?.propertyName)
-  bundle.putString("createdon", promoBanner?.createdon)
-  bundle.putString("cta_feature_key", promoBanner?.ctaFeatureKey)
-  bundle.putString("cta_web_link", promoBanner?.ctaWebLink)
-  bundle.putString("cta_bundle_identifier", promoBanner?.ctaBundleIdentifier)
-  bundle.putStringArrayList("exclusive_to_categories", promoBanner?.exclusiveToCategories)
-  bundle.putStringArrayList("exclusive_to_customers", promoBanner?.exclusiveToCustomers)
-  bundle.putBoolean("isarchived", promoBanner?.isarchived ?: false)
-  bundle.putString("title", promoBanner?.title)
-  bundle.putString("updatedon", promoBanner?.updatedon)
-  bundle.putString("websiteid", promoBanner?.websiteid)
-  this.initiateAddonMarketplace(session, false, "", "", promoBundle = bundle)
-}
-
-fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOpenCardFragment: Boolean, screenType: String, buyItemKey: String?, promoBundle: Bundle? = null) {
+fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOpenCardFragment: Boolean, screenType: String, buyItemKey: String?) {
   try {
     WebEngageController.trackEvent("Addon Marketplace Page", "startview", session.fpTag);
     val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
-    promoBundle?.let { intent.putExtra("PROMO_BANNER_CLICK", it) }
     intent.putExtra("expCode", session.fP_AppExperienceCode)
     intent.putExtra("fpName", session.fPName)
     intent.putExtra("fpid", session.fPID)

@@ -49,10 +49,10 @@ enum class RecyclerViewItemType {
       VISITING_CARD_THREE_ITEM-> R.layout.item_visiting_card_three
       VISITING_CARD_FOUR_ITEM-> R.layout.item_visiting_card_four
       VISITING_CARD_FIVE_ITEM-> R.layout.item_visiting_card_five
-      VISITING_CARD_SIX_ITEM-> R.layout.item_visiting_card_one
-      VISITING_CARD_SEVEN_ITEM-> R.layout.item_visiting_card_one
-      VISITING_CARD_EIGHT_ITEM-> R.layout.item_visiting_card_one
-      VISITING_CARD_NINE_ITEM-> R.layout.item_visiting_card_one
+      VISITING_CARD_SIX_ITEM-> R.layout.item_visiting_card_six
+      VISITING_CARD_SEVEN_ITEM-> R.layout.item_visiting_card_seven
+      VISITING_CARD_EIGHT_ITEM-> R.layout.item_visiting_card_eight
+      VISITING_CARD_NINE_ITEM-> R.layout.item_visiting_card_nine
       VISITING_CARD_TEN_ITEM-> R.layout.item_visiting_card_one
     }
   }

@@ -13,7 +13,7 @@ class VisitingCardFiveViewHolder(binding: ItemVisitingCardFiveBinding) : AppBase
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    val data = item as? DigitalCardData ?: return
+    val data = (item as? DigitalCardData)?.cardData ?: return
     binding.businessName.text = data.businessName
     binding.number.text = data.number
     if (data.businessLogo.isNullOrEmpty().not()) {

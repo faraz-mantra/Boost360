@@ -17,10 +17,7 @@ import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
-import com.dashboard.model.live.dashboardBanner.DashboardAcademyBanner
-import com.dashboard.model.live.dashboardBanner.DashboardPremiumBannerResponse
-import com.dashboard.model.live.dashboardBanner.getAcademyBanners
-import com.dashboard.model.live.dashboardBanner.saveDataAcademy
+import com.dashboard.model.live.dashboardBanner.*
 import com.dashboard.model.live.premiumBanner.*
 import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.model.live.quickAction.QuickActionResponse
@@ -65,7 +62,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterPagerBusinessUpdate: AppBaseRecyclerViewAdapter<BusinessSetupHighData>? = null
   private var adapterRoi: AppBaseRecyclerViewAdapter<RoiSummaryData>? = null
   private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
-  private var adapterMarketBanner: AppBaseRecyclerViewAdapter<PromoAcademyBanner>? = null
+  private var adapterMarketBanner: AppBaseRecyclerViewAdapter<DashboardMarketplaceBanner>? = null
   private var adapterAcademy: AppBaseRecyclerViewAdapter<DashboardAcademyBanner>? = null
   private var siteMeterData: SiteMeterScoreDetails? = null
   private var isFirsLoad = true
@@ -100,15 +97,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           saveDataAcademy(data?.academyBanners!!)
           setDataRiaAcademy(data.academyBanners!!)
         }
-      }
-    })
-    viewModel?.getUpgradePremiumBanner()?.observeOnce(viewLifecycleOwner, {
-      val response = it as? UpgradePremiumFeatureResponse
-      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-        val data = response.data?.get(0)
-        val promoBannersFilter = (data?.promoBanners ?: ArrayList()).marketBannerFilter(session)
-        saveDataMarketPlace(promoBannersFilter)
-        setDataMarketBanner(promoBannersFilter)
+        if (data?.marketplaceBanners.isNullOrEmpty().not()){
+          val marketBannerFilter = (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
+          saveDataMarketPlace(marketBannerFilter)
+          setDataMarketBanner(marketBannerFilter)
+        }
       }
     })
   }
@@ -270,7 +263,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  private fun setDataMarketBanner(marketBannerFilter: ArrayList<PromoAcademyBanner>) {
+  private fun setDataMarketBanner(marketBannerFilter: ArrayList<DashboardMarketplaceBanner>) {
     binding?.pagerBoostPremium?.apply {
       if (marketBannerFilter.isNotEmpty()) {
         binding?.boostPremiumView?.visible()
@@ -322,8 +315,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         actionChannelClick(data)
       }
       RecyclerViewActionType.PROMO_BANNER_CLICK.ordinal -> {
-        val data = item as? PromoAcademyBanner ?: return
-        session?.let { baseActivity.promoBannerMarketplace(it, data) }
+        val data = item as? DashboardMarketplaceBanner ?: return
+        if (data.ctaFeatureKey.isNullOrEmpty().not()){
+          session?.let { baseActivity.initiateAddonMarketplace(it, false, "", data.ctaFeatureKey) }
+        }
       }
       RecyclerViewActionType.PROMO_BOOST_ACADEMY_CLICK.ordinal -> {
         val data = item as? DashboardAcademyBanner ?: return
@@ -541,5 +536,5 @@ fun getLocalSession(session: UserSessionManager): LocalSessionModel {
   return LocalSessionModel(floatingPoint = session.fPID, contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME), businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME),
       businessImage = imageUri, location = location, websiteUrl = session.getDomainName(false),
       businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), primaryNumber = session.userPrimaryMobile,
-      primaryEmail = session.fPEmail, fpTag = session.fpTag)
+      primaryEmail = session.fPEmail, fpTag = session.fpTag,experienceCode = session.fP_AppExperienceCode)
 }

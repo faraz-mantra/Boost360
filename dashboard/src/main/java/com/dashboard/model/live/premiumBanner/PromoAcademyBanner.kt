@@ -1,7 +1,5 @@
 package com.dashboard.model.live.premiumBanner
 
-import com.dashboard.constant.RecyclerViewItemType
-import com.dashboard.recyclerView.AppBaseRecyclerViewItem
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -36,10 +34,4 @@ data class PromoAcademyBanner(
   var updatedon: String? = null,
   @SerializedName("websiteid")
   var websiteid: String? = null
-): Serializable, AppBaseRecyclerViewItem{
-
-  var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_PREMIUM_ITEM_VIEW.getLayout()
-  override fun getViewType(): Int {
-    return recyclerViewItemType
-  }
-}
+): Serializable

@@ -23,16 +23,15 @@
     <androidx.appcompat.widget.LinearLayoutCompat
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@drawable/ic_visiting_card_five"
+      android:background="@color/dark_late_gray"
       android:orientation="horizontal">
 
       <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.3"
-        android:orientation="vertical"
-        android:padding="@dimen/size_10">
-
+        android:layout_margin="@dimen/size_10"
+        android:layout_weight="1.6"
+        android:orientation="vertical">
         <com.framework.views.customViews.CustomCardView
           android:id="@+id/profile_view"
           android:layout_width="@dimen/size_54"
@@ -69,7 +68,7 @@
           android:ellipsize="end"
           android:includeFontPadding="false"
           android:maxLines="3"
-          android:textColor="@color/light_red"
+          android:textColor="@color/white"
           app:fontFamily="@font/bold"
           app:textType="HEADING_6"
           tools:text="PLASTO INDIA AND POLYMERS" />
@@ -85,6 +84,32 @@
       </androidx.appcompat.widget.LinearLayoutCompat>
 
       <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="@dimen/size_16"
+        android:layout_height="match_parent"
+        android:background="@color/white_30"
+        android:gravity="bottom|center_horizontal"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="@dimen/size_5"
+          app:srcCompat="@drawable/ic_call_card_new" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="@dimen/size_6"
+          app:srcCompat="@drawable/ic_email_card_new" />
+
+        <com.framework.views.customViews.CustomImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="@dimen/size_12"
+          app:srcCompat="@drawable/ic_website_card_new" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -92,10 +117,8 @@
 
         <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_marginStart="@dimen/size_20"
+          android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_16"
-          android:layout_weight="1"
           android:gravity="center_horizontal">
 
           <com.framework.views.customViews.CustomImageView
@@ -106,44 +129,53 @@
             app:srcCompat="@drawable/ic_category_spa_n" />
         </LinearLayout>
 
-
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/number"
+        <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:ellipsize="end"
-          android:gravity="start"
-          android:maxLines="1"
-          android:textColor="@color/white"
-          app:textType="CAPTION"
-          tools:text="0801234567890" />
+          android:layout_height="match_parent"
+          android:layout_marginStart="@dimen/size_10"
+          android:layout_marginEnd="@dimen/size_10"
+          android:gravity="bottom"
+          android:orientation="vertical">
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/email"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_4"
-          android:ellipsize="end"
-          android:gravity="start"
-          android:maxLines="1"
-          android:textColor="@color/white"
-          app:textType="CAPTION"
-          tools:text="plastoindia@gmail.com" />
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_10"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:textColor="@color/white_grey"
+            app:textType="CAPTION"
+            tools:text="0801234567890" />
 
-        <com.framework.views.customViews.CustomTextView
-          android:id="@+id/website"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/size_4"
-          android:layout_marginBottom="@dimen/size_16"
-          android:ellipsize="end"
-          android:gravity="start"
-          android:maxLines="1"
-          android:textColor="@color/white"
-          app:textType="CAPTION"
-          app:fontFamily="@font/semi_bold"
-          tools:text="https://plastoindiaandpolymers.com" />
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_10"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:textColor="@color/white_grey"
+            app:textType="CAPTION"
+            tools:text="plastoindia@gmail.com" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/website"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_14"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:textColor="@color/white_grey"
+            app:fontFamily="@font/semi_bold"
+            app:textType="CAPTION"
+            tools:text="https://plastoindiaandpolymers.com" />
+        </LinearLayout>
       </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
   </com.framework.views.customViews.CustomCardView>

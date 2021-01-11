@@ -1,13 +1,19 @@
 package com.dashboard.model.live.dashboardBanner
 
+import com.dashboard.pref.UserSessionManager
 import com.framework.utils.PreferencesUtils
 import com.framework.utils.convertListObjToString
 import com.framework.utils.convertStringToList
 import com.framework.utils.getData
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.util.*
+import kotlin.collections.ArrayList
 
 const val ACADEMY_BANNER_DATA = "ACADEMY_BANNER_DATA"
+
+const val MARKETPLACE_BANNER_DATA = "MARKETPLACE_BANNER_DATA"
+
 data class DashboardBannerData(
     @SerializedName("academy_banners")
     var academyBanners:ArrayList<DashboardAcademyBanner>? = null,
@@ -38,4 +44,25 @@ fun getAcademyBanners(): ArrayList<DashboardAcademyBanner>? {
 
 fun saveDataAcademy(academyBanner: ArrayList<DashboardAcademyBanner>?) {
     PreferencesUtils.instance.saveDataN(ACADEMY_BANNER_DATA, convertListObjToString(academyBanner ?: ArrayList()) ?: "")
+}
+
+fun getMarketPlaceBanners(): ArrayList<DashboardMarketplaceBanner>? {
+    val resp = PreferencesUtils.instance.getData(MARKETPLACE_BANNER_DATA, "") ?: ""
+    return ArrayList(convertStringToList(resp) ?: ArrayList())
+}
+
+fun saveDataMarketPlace(marketBanners: ArrayList<DashboardMarketplaceBanner>?) {
+    PreferencesUtils.instance.saveDataN(MARKETPLACE_BANNER_DATA, convertListObjToString(marketBanners ?: ArrayList()) ?: "")
+}
+
+fun ArrayList<DashboardMarketplaceBanner>.marketBannerFilter(session: UserSessionManager?): ArrayList<DashboardMarketplaceBanner> {
+    if (isNullOrEmpty()) return ArrayList()
+    val list = ArrayList<DashboardMarketplaceBanner>()
+    val expCode = session?.fP_AppExperienceCode?.toLowerCase(Locale.ROOT)?.trim()
+    forEach {
+        if (it.exclusiveToCategories.isNullOrEmpty().not()) {
+            if (it.exclusiveToCategories!!.firstOrNull { it1 -> it1.toLowerCase(Locale.ROOT).trim() == expCode } != null) list.add(it)
+        }else list.add(it)
+    }
+    return list
 }
