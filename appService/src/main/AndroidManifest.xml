@@ -14,7 +14,7 @@
     android:requestLegacyExternalStorage="true"
     tools:ignore="UnusedAttribute">
     <activity
-      android:name="com.appservice.ui.catlogService.FragmentContainerServiceActivity"
+      android:name=".ui.catalog.CatalogServiceContainerActivity"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.cataloge"
       android:windowSoftInputMode="adjustPan" />

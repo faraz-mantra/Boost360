@@ -1,37 +1,34 @@
-package com.appservice.ui.catlogService
+package com.appservice.ui.catalog
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
-import com.appservice.model.serviceProduct.delete.DeleteProductRequest
-import com.appservice.ui.catlogService.information.ServiceInformationFragment
-import com.appservice.ui.catlogService.service.ServiceDetailFragment
+import com.appservice.ui.catalog.catalogProduct.information.ProductInformationFragment
+import com.appservice.ui.catalog.catalogProduct.product.ProductDetailFragment
+import com.appservice.ui.catalog.catalogService.information.ServiceInformationFragment
+import com.appservice.ui.catalog.catalogService.service.ServiceDetailFragment
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
-import com.framework.exceptions.NoNetworkException
-import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
-open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
+open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
   private var type: FragmentType? = null
   private var serviceDetailFragment: ServiceDetailFragment? = null
   private var serviceInformationFragment: ServiceInformationFragment? = null
-
+  private var productDetailFragment: ProductDetailFragment? = null
+  private var productInformationFragment: ProductInformationFragment? = null
 
   override fun getLayout(): Int {
     return com.framework.R.layout.activity_fragment_container
@@ -132,7 +129,7 @@ open class FragmentContainerServiceActivity : AppBaseActivity<ActivityFragmentCo
 }
 
 fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
-  val intent = Intent(activity, FragmentContainerServiceActivity::class.java)
+  val intent = Intent(activity, CatalogServiceContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -140,7 +137,7 @@ fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle()
 }
 
 fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false) {
-  val intent = Intent(activity, FragmentContainerServiceActivity::class.java)
+  val intent = Intent(activity, CatalogServiceContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -148,7 +145,7 @@ fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bun
 }
 
 fun AppCompatActivity.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
-  val intent = Intent(this, FragmentContainerServiceActivity::class.java)
+  val intent = Intent(this, CatalogServiceContainerActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

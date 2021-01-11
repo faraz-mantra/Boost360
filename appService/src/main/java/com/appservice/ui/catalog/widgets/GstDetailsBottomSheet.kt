@@ -1,4 +1,4 @@
-package com.appservice.ui.catlogService.widgets
+package com.appservice.ui.catalog.widgets
 
 import com.appservice.R
 import com.appservice.databinding.BottomSheetGstDetailBinding

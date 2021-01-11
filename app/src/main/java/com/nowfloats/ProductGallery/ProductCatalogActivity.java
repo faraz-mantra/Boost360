@@ -51,7 +51,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import static com.appservice.ui.catlogService.CatlogServiceContainerActivityKt.startFragmentActivityNew;
+import static com.appservice.ui.catalog.CatalogServiceContainerActivityKt.startFragmentActivityNew;
 
 public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener {
 
