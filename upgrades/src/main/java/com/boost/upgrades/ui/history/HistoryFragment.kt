@@ -67,6 +67,14 @@ class HistoryFragment : BaseFragment(), HistoryFragmentListener {
         viewModel.updateResult().observe(this, Observer {
             updateRecycler(it)
         })
+        viewModel.updatesLoader().observe(this, Observer {
+            if(!it){
+                if (shimmer_view_history.isShimmerStarted) {
+                    shimmer_view_history.stopShimmer()
+                    shimmer_view_history.visibility = View.GONE
+                }
+            }
+        })
     }
 
     fun updateRecycler(result: GetPurchaseOrderResponse) {
