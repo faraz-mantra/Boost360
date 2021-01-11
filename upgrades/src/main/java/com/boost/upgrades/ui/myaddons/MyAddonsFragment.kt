@@ -249,6 +249,10 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                     myaddons_view1.visibility = View.VISIBLE
                     read_more_less_free_addons.visibility = View.VISIBLE
                 } else {
+                    if (shimmer_view_freeaddon.isShimmerStarted) {
+                        shimmer_view_freeaddon.stopShimmer()
+                        shimmer_view_freeaddon.visibility = View.GONE
+                    }
                     myaddons_view1.visibility = View.INVISIBLE
                     read_more_less_free_addons.visibility = View.GONE
                     updateFreeAddonsRecycler(totalFreeItemList!!)
@@ -276,6 +280,10 @@ class MyAddonsFragment : BaseFragment(), MyAddonsListener {
                 read_more_less_paid_addons.visibility = View.VISIBLE
                 premium_account_flag.visibility = View.VISIBLE
             } else {
+                if (shimmer_view_paidaddon.isShimmerStarted) {
+                    shimmer_view_paidaddon.stopShimmer()
+                    shimmer_view_paidaddon.visibility = View.GONE
+                }
                 paid_title.setText("No Premium add-ons active.")
                 paid_subtitle.setText("check out the recommended add-ons for your business")
                 read_more_less_paid_addons.visibility = View.GONE
