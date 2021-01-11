@@ -1,6 +1,5 @@
 package com.newfloats.staffs.ui.details;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,15 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.framework.imagepicker.ImageActivity;
-import com.framework.imagepicker.ImageTags;
 import com.newfloats.staffs.R;
 import com.newfloats.staffs.ui.BaseFragmentStaff;
 import com.newfloats.staffs.ui.breaks.ScheduledBreaksFragmnt;
 import com.newfloats.staffs.ui.details.timing.StaffTimingFragment;
 import com.newfloats.staffs.ui.services.StaffServicesFragment;
-import com.nguyenhoanglam.imagepicker.model.Config;
-import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePickerActivity;
 
 
 public class StaffDetailsFragment extends BaseFragmentStaff {

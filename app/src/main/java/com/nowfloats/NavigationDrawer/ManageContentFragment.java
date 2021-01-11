@@ -164,7 +164,7 @@ public class ManageContentFragment extends Fragment {
         Button btnStaff = view.findViewById(R.id.btn_launch_staff);
         Intent intent = new Intent(requireActivity(), StaffFragmentContainerActivity.class);
         intent.putExtra(IntentConstant.FP_TAG.name(), session.getFpTag());
-        intent.putExtra(FRAGMENT_TYPE, FragmentType.STAFF_HOME_FRAGMENT.ordinal());
+        intent.putExtra(FRAGMENT_TYPE, FragmentType.STAFF_PROFILE_LISTING_FRAGMENT.ordinal());
         intent.putExtra(IntentConstant.CLIENT_ID.name(), session.getSourceClientId());
         btnStaff.setOnClickListener(view1 -> startActivity(intent));
 

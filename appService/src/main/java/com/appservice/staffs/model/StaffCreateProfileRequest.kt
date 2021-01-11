@@ -39,14 +39,4 @@ data class SpecialisationsItemStaffRequest(
 	var key: String? = null
 ): BaseRequest(), Serializable {}
 
-data class Image(
 
-	@SerializedName("ImageFileType")
-	var imageFileType: String? = null,
-
-	@SerializedName("FileName")
-	var fileName: String? = null,
-
-	@SerializedName("Image")
-	var image: String? = null
-)

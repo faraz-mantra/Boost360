@@ -77,7 +77,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans"
-                                android:text="@string/select_gender"
+                                android:text="@string/staff_member_name"
                                 android:textColor="@color/black_4a4a4a"
                                 android:textStyle="normal"
                                 app:textType="BODY_1" />

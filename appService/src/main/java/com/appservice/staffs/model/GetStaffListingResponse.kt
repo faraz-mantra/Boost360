@@ -43,7 +43,7 @@ data class DataItem(
         val description: String? = null,
 
         @field:SerializedName("Specialisations")
-        val specialisations: List<SpecialisationsItem?>? = null,
+        val specialisations: List<SpecialisationsItem>? = null,
 
         @field:SerializedName("IsAvailable")
         val isAvailable: Boolean? = null,
@@ -60,6 +60,7 @@ data class DataItem(
         override fun getViewType(): Int {
                 return R.layout.recycler_item_staff_listing
         }
+
 }
 
 data class Paging(
@@ -81,4 +82,5 @@ data class SpecialisationsItem(
 
         @field:SerializedName("Key")
         val key: String? = null
-): Serializable, BaseResponse()
+) : Serializable, BaseResponse() {
+}

@@ -16,6 +16,7 @@ import com.framework.base.BaseActivity
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
 
+
   override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
     val inflater = LayoutInflater.from(parent.context)
     val recyclerViewItemType = values().first { it.getLayout() == viewType }
@@ -103,5 +104,4 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
   open fun list(): ArrayList<T> {
     return list
   }
-
 }

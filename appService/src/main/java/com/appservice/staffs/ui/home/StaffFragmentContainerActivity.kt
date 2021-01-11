@@ -17,7 +17,6 @@ import com.appservice.staffs.ui.breaks.StaffBreakConfirmFragment
 import com.appservice.staffs.ui.details.StaffDetailsFragment
 import com.appservice.staffs.ui.details.timing.StaffTimingFragment
 import com.appservice.staffs.ui.profile.StaffProfileDetailsFragment
-import com.appservice.staffs.ui.profile.StaffProfileListingFragment
 import com.appservice.staffs.ui.services.StaffServicesFragment
 import com.appservice.ui.catlogService.setFragmentType
 import com.framework.base.BaseFragment
@@ -87,8 +86,8 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
     override fun customTheme(): Int? {
         return when (fragmentType) {
-            FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT -> R.style.AppTheme_staff_home
-            FragmentType.STAFF_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT,FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT,
+            FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT ,FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT-> R.style.AppTheme_staff_home
+            FragmentType.STAFF_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT,
             FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT
             -> R.style.AppTheme_staff_details
             else -> super.customTheme()

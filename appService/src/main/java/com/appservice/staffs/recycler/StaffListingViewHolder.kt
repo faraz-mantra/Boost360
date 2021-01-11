@@ -14,7 +14,8 @@ class StaffListingViewHolder(binding: RecyclerItemStaffListingBinding) : AppBase
         if (position == 0)
             binding.civImage.setImageResource(R.drawable.dummy_staff_img)
         binding.ctvLeaves.text = "Leaves"
-        binding.ctvSpecialization.text = data.specialisations?.get(0)?.value.toString()
+        binding.ctvSpecialization.text = "5 year expereience"
         binding.flViewProfile.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.STAFF_LISTING_CLICK.ordinal) }
     }
+
 }
