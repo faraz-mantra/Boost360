@@ -1,4 +1,4 @@
-package com.appservice.ui.catlogService.service
+package com.appservice.ui.catalog.catalogService.service
 
 import android.app.Activity
 import android.content.Intent
@@ -42,8 +42,8 @@ import com.appservice.model.serviceProduct.gstProduct.update.UpdateValueU
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.serviceProduct.update.UpdateValue
 import com.appservice.ui.bankaccount.startFragmentAccountActivity
-import com.appservice.ui.catlogService.startFragmentActivity
-import com.appservice.ui.catlogService.widgets.*
+import com.appservice.ui.catalog.catalogService.startFragmentActivity
+import com.appservice.ui.catalog.widgets.*
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.ServiceViewModel

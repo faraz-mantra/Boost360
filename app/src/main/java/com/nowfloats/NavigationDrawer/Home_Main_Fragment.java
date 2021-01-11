@@ -80,7 +80,7 @@ import java.util.List;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
-import static com.appservice.ui.catlogService.CatlogServiceContainerActivityKt.startFragmentActivityNew;
+import static com.appservice.ui.catalog.catalogService.CatalogServiceContainerActivityKt.startFragmentActivityNew;
 import static com.nowfloats.NavigationDrawer.floating_view.FloatingViewBottomSheetDialog.FLOATING_CLICK_TYPE.WRITE_UPDATE;
 
 

@@ -1,4 +1,4 @@
-package com.appservice.ui.catlogService.information
+package com.appservice.ui.catalog.catalogProduct.information
 
 import android.content.Intent
 import android.view.View
@@ -19,9 +19,9 @@ import com.appservice.model.serviceProduct.gstProduct.response.DataG
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.catlogService.widgets.ClickType
-import com.appservice.ui.catlogService.widgets.GstDetailsBottomSheet
-import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
+import com.appservice.ui.catalog.widgets.ClickType
+import com.appservice.ui.catalog.widgets.GstDetailsBottomSheet
+import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.observeOnce
@@ -30,7 +30,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
-class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
+class ProductInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
   private var product: Product? = null
   private var isEdit: Boolean? = null
@@ -44,8 +44,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private var gstProductData: DataG? = null
 
   companion object {
-    fun newInstance(): ServiceInformationFragment {
-      return ServiceInformationFragment()
+    fun newInstance(): ProductInformationFragment {
+      return ProductInformationFragment()
     }
   }
 
@@ -90,7 +90,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   private fun specificationAdapter() {
     binding?.rvSpecification?.apply {
-      adapterSpec = AppBaseRecyclerViewAdapter(baseActivity, specList, this@ServiceInformationFragment)
+      adapterSpec = AppBaseRecyclerViewAdapter(baseActivity, specList, this@ProductInformationFragment)
       adapter = adapterSpec
     }
   }
@@ -122,7 +122,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     val filterSheet = ImagePickerBottomSheet()
     filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(this@ServiceInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
+    filterSheet.show(this@ProductInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   private fun openImagePicker(it: ClickType) {
@@ -217,7 +217,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private fun setAdapter() {
     if (adapterImage == null) {
       binding?.rvAdditionalDocs?.apply {
-        adapterImage = AppBaseRecyclerViewAdapter(baseActivity, secondaryImage, this@ServiceInformationFragment)
+        adapterImage = AppBaseRecyclerViewAdapter(baseActivity, secondaryImage, this@ProductInformationFragment)
         adapter = adapterImage
       }
     } else adapterImage?.notifyDataSetChanged()
@@ -266,7 +266,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private fun openGStDetail() {
     val gstSheet = GstDetailsBottomSheet()
     gstSheet.onClicked = { binding?.edtGst?.setText("$it %") }
-    gstSheet.show(this@ServiceInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
+    gstSheet.show(this@ProductInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   fun onNavPressed() {
