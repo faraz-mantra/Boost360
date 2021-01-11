@@ -154,26 +154,35 @@
                   app:textType="HEADING_5"
                   tools:text="PLASTO INDIA AND POLYMERS" />
 
-                <com.framework.views.customViews.CustomImageView
-                  android:id="@+id/txt_gst_status"
-                  android:layout_width="@dimen/size_82"
-                  android:layout_height="@dimen/size_17"
-                  android:layout_marginStart="@dimen/size_2"
-                  android:layout_marginTop="@dimen/size_1"
-                  app:srcCompat="@drawable/ic_gst_verfied_d" />
-                <!--              <com.framework.views.customViews.CustomTextView-->
-                <!--                android:id="@+id/txt_domain_name"-->
-                <!--                android:layout_width="wrap_content"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_marginStart="@dimen/size_2"-->
-                <!--                android:drawableStart="@drawable/ic_edit_d"-->
-                <!--                android:drawablePadding="@dimen/size_4"-->
-                <!--                android:ellipsize="end"-->
-                <!--                android:includeFontPadding="false"-->
-                <!--                android:maxLines="1"-->
-                <!--                android:textColor="@color/greyish_brown"-->
-                <!--                app:textType="BODY_1"-->
-                <!--                tools:text="@string/www_sravansclinic_com" />-->
+                <FrameLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+                  <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/txt_gst_status"
+                    android:layout_width="@dimen/size_82"
+                    android:layout_height="@dimen/size_17"
+                    android:layout_marginStart="@dimen/size_2"
+                    android:layout_marginTop="@dimen/size_1"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_gst_verfied_d" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/txt_domain_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_2"
+                    android:layout_marginTop="@dimen/size_1"
+                    android:drawableStart="@drawable/ic_edit_d"
+                    android:drawablePadding="@dimen/size_4"
+                    android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textColor="@color/greyish_brown"
+                    app:textType="BODY_1"
+                    tools:text="@string/www_sravansclinic_com" />
+                </FrameLayout>
+
               </androidx.appcompat.widget.LinearLayoutCompat>
 
               <FrameLayout
@@ -182,7 +191,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_4"
                 android:layout_marginEnd="@dimen/size_14"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true">
 

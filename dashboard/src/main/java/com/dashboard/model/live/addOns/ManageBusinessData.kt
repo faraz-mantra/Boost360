@@ -4,10 +4,7 @@ import com.dashboard.R
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
-import com.framework.utils.PreferencesUtils
-import com.framework.utils.convertListObjToString
-import com.framework.utils.convertStringToList
-import com.framework.utils.saveData
+import com.framework.utils.*
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -102,7 +99,7 @@ class ManageBusinessData(
   }
 
   fun getLastSeenData(): ArrayList<ManageBusinessData> {
-    return ArrayList(convertStringToList(PreferencesUtils.instance.getDataN(LAST_SEEN_DATA) ?: "") ?: ArrayList())
+    return ArrayList(convertStringToList(PreferencesUtils.instance.getData(LAST_SEEN_DATA,"") ?: "") ?: ArrayList())
   }
 
   fun saveLastSeenData(data: ManageBusinessData) {

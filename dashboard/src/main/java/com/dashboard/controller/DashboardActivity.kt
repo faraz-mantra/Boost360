@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -53,8 +54,10 @@ import zendesk.support.Support
 import java.io.File
 import java.util.*
 
+
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
+  private var exitToast: Toast? = null
   private var mDeepLinkUrl: String? = null;
   private var mPayload: String? = null
   private var deepLinkUtil: DeepLinkUtil? = null
@@ -256,7 +259,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun showWelcomeDialog(data: WelcomeData) {
     val dialog = WelcomeHomeDialog.newInstance()
     dialog.setData(data)
-    dialog.onClicked={ session?.let { this.initiateAddonMarketplace(it, false, "", "") } }
+    dialog.onClicked = { session?.let { this.initiateAddonMarketplace(it, false, "", "") } }
     dialog.showProgress(supportFragmentManager)
   }
 
@@ -308,7 +311,15 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   override fun onBackPressed() {
     when {
       (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) -> binding?.drawerLayout?.closeDrawers()
-      (mNavController.currentDestination?.id == R.id.navigation_dashboard) -> this.finish()
+      (mNavController.currentDestination?.id == R.id.navigation_dashboard) -> {
+        if (exitToast == null || exitToast?.view == null || exitToast?.view?.windowToken == null) {
+          exitToast = Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT)
+          exitToast?.show()
+        } else {
+          exitToast?.cancel()
+          this.finish()
+        }
+      }
       else -> openDashboard()
     }
   }
