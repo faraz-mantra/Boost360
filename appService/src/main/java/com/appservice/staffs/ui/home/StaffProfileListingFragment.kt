@@ -20,10 +20,11 @@ import com.appservice.staffs.model.GetStaffListingResponse
 import com.appservice.staffs.ui.profile.StaffListingViewModel
 import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffListingViewModel>(), RecyclerItemClickListener, SearchView.OnQueryTextListener {
-    private lateinit var list: MutableList<DataItem>
-    private lateinit var copyList: MutableList<DataItem>
+    private val list: ArrayList<DataItem> = ArrayList()
+    private val copyList: ArrayList<DataItem> = ArrayList()
     private lateinit var adapter: AppBaseRecyclerViewAdapter<DataItem>
     private var isSearchShowing: Boolean = false
     override fun getLayout(): Int {
@@ -32,6 +33,14 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
     override fun getViewModelClass(): Class<StaffListingViewModel> {
         return StaffListingViewModel::class.java
+    }
+
+    private fun showMenuItem() {
+        appBaseActivity?.getToolbar()?.menu?.findItem(R.id.app_bar_search)?.isVisible = true
+    }
+
+    private fun hideMenuItem() {
+        appBaseActivity?.getToolbar()?.menu?.findItem(R.id.app_bar_search)?.isVisible = false
     }
 
     companion object {
@@ -61,7 +70,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
                             binding?.layoutStaffListing!!.root.visibility = View.VISIBLE
                             binding?.fragmentStaffAdd!!.root.visibility = View.GONE
                             isSearchShowing = true
-                            this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data as ArrayList<DataItem>, itemClickListener = this@StaffProfileListingFragment)
+                            data as ArrayList<DataItem>
+                            this.list.addAll(data)
+                            this.copyList.addAll(data)
+                            this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data, itemClickListener = this@StaffProfileListingFragment)
                             binding?.layoutStaffListing?.rvStaffList?.adapter = adapter
                         }
                         else -> {
@@ -77,6 +89,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
                 }
             }
+            when (isSearchShowing) {
+                true -> showMenuItem()
+                false -> hideMenuItem()
+            }
         })
         hideProgress()
     }
@@ -91,10 +107,6 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_stafflisting, menu)
-        if (!isSearchShowing) {
-            val findItem = menu.findItem(R.id.app_bar_search)
-            findItem.isVisible = false
-        }
         val searchItem = menu.findItem(R.id.app_bar_search)
         val searchView: SearchView = searchItem.actionView as SearchView
         searchView.queryHint = "Search Staff"
@@ -126,6 +138,10 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         }
     }
 
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return true
+    }
+
 
     override fun onQueryTextChange(newText: String?): Boolean {
         if (newText != null) {
@@ -139,12 +155,12 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         if (queryText.isEmpty()) {
             list.addAll(copyList)
         } else {
-            for (name in copyList) {
-                if (name.contains(queryText.toLowerCase(Locale.ROOT))) {
-                    list.add(name)
+            for (dataItem in copyList) {
+                if (dataItem.name?.toLowerCase(Locale.ROOT)?.contains(queryText.toLowerCase(Locale.ROOT))!!) {
+                    list.add(dataItem)
                 }
             }
         }
-        adapter.notifyDataSetChanged()
+        adapter.updateList(list)
     }
 }
