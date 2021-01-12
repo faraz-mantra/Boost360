@@ -140,13 +140,14 @@ class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Chann
   }
 
   private fun setAdapterCard(cardList: ArrayList<DigitalCardData>) {
+    cardList.add(0, cardList.removeAt(getLastShareCard()))
     binding?.pagerDigitalCard?.apply {
       val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, cardList, this@MyVisitingCardFragment)
       offscreenPageLimit = 3
       isUserInputEnabled = true
       adapter = adapterPager3
       binding?.dotIndicatorCard?.setViewPager2(this)
-      post { setCurrentItem(getLastShareCard(), false) }
+//      post { setCurrentItem(getLastShareCard(), false) }
       setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
       registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {

@@ -131,13 +131,14 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
   }
 
   private fun setAdapterCard(cardList: ArrayList<DigitalCardData>) {
+    cardList.add(0, cardList.removeAt(getLastShareCard()))
     binding?.pagerDigitalCard?.apply {
       val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, cardList, this@MyDigitalCardShareDialog)
       offscreenPageLimit = 3
       isUserInputEnabled = true
       adapter = adapterPager3
       binding?.dotIndicatorCard?.setViewPager2(this)
-      post { setCurrentItem(getLastShareCard(), false) }
+//      post { setCurrentItem(getLastShareCard(), false) }
       setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
       registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -152,7 +153,7 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
     this.messageCard = messageCard
     this.isWhatsApp = isWhatsApp
     if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-      requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),100)
+      requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
       return
     }
     binding?.progress?.visible()
@@ -203,7 +204,7 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
     when (requestCode) {
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-          shareCardWhatsApp(this.messageCard, this.isWhatsApp?:false)
+          shareCardWhatsApp(this.messageCard, this.isWhatsApp ?: false)
         } else showShortToast("Permission denied to read your External storage")
         return
       }
