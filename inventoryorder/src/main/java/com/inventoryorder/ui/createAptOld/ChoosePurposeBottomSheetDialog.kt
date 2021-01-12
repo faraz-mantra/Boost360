@@ -1,11 +1,10 @@
-package com.inventoryorder.ui.createappointment
+package com.inventoryorder.ui.createAptOld
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
 import com.inventoryorder.databinding.BottomSheetChoosePurposeBinding
-import com.inventoryorder.databinding.ItemBottomSheetChoosePurposeBinding
 import com.inventoryorder.model.bottomsheet.ChoosePurposeModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem

@@ -5,33 +5,33 @@ import android.view.View
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.databinding.FragmentOrderOnBoardingBinding
 import com.inventoryorder.ui.BaseInventoryFragment
-import com.inventoryorder.ui.startFragmentActivity
+import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
 
 class CreateOrderOnBoardingFragment : BaseInventoryFragment<FragmentOrderOnBoardingBinding>() {
 
-    companion object {
-        @JvmStatic
-        fun newInstance(bundle: Bundle? = null): CreateOrderOnBoardingFragment {
-            val fragment = CreateOrderOnBoardingFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
+  companion object {
+    @JvmStatic
+    fun newInstance(bundle: Bundle? = null): CreateOrderOnBoardingFragment {
+      val fragment = CreateOrderOnBoardingFragment()
+      fragment.arguments = bundle
+      return fragment
     }
+  }
 
-    override fun onCreateView() {
-        super.onCreateView()
-        fpTag?.let { WebEngageController.trackEvent("Clicked on Orders Creation", "ORDERS", it) }
+  override fun onCreateView() {
+    super.onCreateView()
+    fpTag?.let { WebEngageController.trackEvent("Clicked on Orders Creation", "ORDERS", it) }
 
-        setOnClickListener(binding?.tvGetStarted)
+    setOnClickListener(binding?.tvGetStarted)
+  }
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.tvGetStarted -> {
+        startFragmentOrderActivity(FragmentType.ADD_CUSTOMER, Bundle())
+      }
     }
-
-    override fun onClick(v: View) {
-        super.onClick(v)
-        when(v){
-            binding?.tvGetStarted->{startFragmentActivity(FragmentType.ADD_CUSTOMER, Bundle())}
-        }
-    }
-
-
+  }
 }

@@ -1,4 +1,4 @@
-package com.inventoryorder.ui.createappointment
+package com.inventoryorder.ui.createAptOld
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.base.BaseBottomSheetDialog
