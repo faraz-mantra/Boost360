@@ -81,8 +81,8 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
         super.onClick(v)
         when (v) {
             binding?.btnAdd -> {
-                showLongToast("Coming soon...")
-//        startFragmentActivity(FragmentType.CREATE_NEW_BOOKING, Bundle())
+//                showLongToast("Coming soon...")
+                startFragmentActivity(FragmentType.CREATE_NEW_ORDER, Bundle())
             }
         }
     }

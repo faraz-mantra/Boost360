@@ -7,7 +7,6 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
 import com.framework.utils.DateUtils.parseDate
@@ -54,7 +53,8 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
                 binding.orderType.text = OrderStatusValue.ESCALATED_1.value
                 binding.orderType.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             } else {
-                binding.orderType.text = statusValue.plus(order.cancelledText())
+//                binding.orderType.text = statusValue.plus(order.cancelledText())
+                binding.orderType.text = statusValue
                 if (statusIcon != null) {
                     binding.orderType.setCompoundDrawablesWithIntrinsicBounds(statusIcon, 0, 0, 0)
                 } else {
@@ -102,6 +102,11 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
                 OrderSummaryModel.OrderStatus.ORDER_INITIATED -> {
                     //Order Initiated..
                     changeButtonStatus(R.string.confirm_order_normal, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
+                    binding.tvDropdownOrderStatus.setOnClickListener {
+                        if (order.isConfirmActionBtn()) {
+                            listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.ORDER_CONFIRM_CLICKED.ordinal)
+                        }
+                    }
                 }
                 OrderSummaryModel.OrderStatus.ORDER_CONFIRMED -> {
                     //Order Confirmed
@@ -141,6 +146,7 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
             binding.lytStatusBtn.background = ContextCompat.getDrawable(it, buttonBkg)
             binding.vwDividerDropdownOrderStatus.setBackgroundColor(ContextCompat.getColor(it, dropDownDividerColor))
             binding.ivDropdownOrderStatus.setImageResource(resId)
+
 
 //            DrawableCompat.setTint(binding.ivDropdownOrderStatus.drawable, ContextCompat.getColor(it.applicationContext, dropDownArrowColor))
         }
