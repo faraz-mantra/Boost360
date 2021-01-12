@@ -10,12 +10,12 @@ import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.ui.appointment.AppointmentDetailsFragment
 import com.inventoryorder.ui.appointment.AppointmentsFragment
-import com.inventoryorder.ui.appointment.CreateAppointmentFragment
 import com.inventoryorder.ui.consultation.VideoConsultDetailsFragment
 import com.inventoryorder.ui.consultation.VideoConsultFragment
-import com.inventoryorder.ui.createappointment.BookingSuccessfulFragment
-import com.inventoryorder.ui.createappointment.NewBookingFragmentOne
-import com.inventoryorder.ui.createappointment.NewBookingFragmentTwo
+import com.inventoryorder.ui.createAptConsult.CreateAppointmentFragment
+import com.inventoryorder.ui.createAptOld.BookingSuccessfulFragment
+import com.inventoryorder.ui.createAptOld.NewBookingFragmentOne
+import com.inventoryorder.ui.createAptOld.NewBookingFragmentTwo
 import com.inventoryorder.ui.order.OrderDetailFragment
 import com.inventoryorder.ui.order.OrdersFragment
 import com.inventoryorder.ui.order.createorder.AddCustomerFragment
