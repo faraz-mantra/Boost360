@@ -76,7 +76,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
         super.onCreate(savedInstanceState)
     }
 
-    override fun getToolbar(): CustomToolbar {
+   public override fun getToolbar(): CustomToolbar {
         return binding!!.appBarLayout.toolbar
     }
 
