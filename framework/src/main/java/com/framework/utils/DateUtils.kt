@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
 object DateUtils {
 
   const val FORMAT_SERVER_DATE = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -83,7 +82,7 @@ object DateUtils {
     return cal.time
   }
 
-  fun  Date.toCalendar(): Calendar? {
+  fun Date.toCalendar(): Calendar? {
     val cal = Calendar.getInstance()
     cal.time = this
     return cal

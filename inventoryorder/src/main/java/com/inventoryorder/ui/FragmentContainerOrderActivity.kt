@@ -79,7 +79,6 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.CREATE_NEW_ORDER, FragmentType.ADD_CUSTOMER, FragmentType.ADD_PRODUCT, FragmentType.BILLING_DETAIL,
       FragmentType.VIDEO_CONSULT_DETAIL_VIEW, FragmentType.ORDER_DETAIL_VIEW,
       -> R.style.AppTheme_Order_create_appointment
-
       else -> super.customTheme()
     }
   }
@@ -88,9 +87,9 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return binding?.appBarLayout?.toolbar
   }
 
-  override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.body_2)
-  }
+//  override fun getToolbarTitleSize(): Float? {
+//    return resources.getDimension(R.dimen.body_2)
+//  }
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
@@ -146,7 +145,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ALL_VIDEO_CONSULT_VIEW -> resources.getString(R.string.video_consultation)
       FragmentType.ORDER_DETAIL_VIEW,
       FragmentType.APPOINTMENT_DETAIL_VIEW,
-      FragmentType.VIDEO_CONSULT_DETAIL_VIEW, -> "# XXXXXXX"
+      FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
+      -> "# XXXXXXX"
       FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking)
       FragmentType.CREATE_NEW_BOOKING_PAGE_2 -> resources.getString(R.string.new_booking)
       FragmentType.CREATE_APPOINTMENT_VIEW -> getString(R.string.new_apppointment_camel_case)
