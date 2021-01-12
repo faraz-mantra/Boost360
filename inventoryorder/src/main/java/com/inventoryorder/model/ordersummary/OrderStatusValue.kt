@@ -1,7 +1,6 @@
 package com.inventoryorder.model.ordersummary
 
 import com.inventoryorder.R
-import java.util.*
 
 enum class OrderStatusValue(val type: String, val status: String, val value: String, val icon: Int = 0) {
     ORDER_INITIATED_1(OrderSummaryModel.OrderType.ORDER.name, OrderSummaryModel.OrderStatus.ORDER_INITIATED.name, "Initiated", R.drawable.ic_order_initiated),
@@ -49,19 +48,15 @@ enum class OrderStatusValue(val type: String, val status: String, val value: Str
 
     companion object {
         fun fromStatusOrder(status: String): OrderStatusValue? = values().firstOrNull {
-            (it.status.toLowerCase(Locale.ROOT) == status.toLowerCase(Locale.ROOT) && it.type == OrderSummaryModel.OrderType.ORDER.name)
+            (it.status.equals(status, ignoreCase = true) && it.type == OrderSummaryModel.OrderType.ORDER.name)
         }
 
         fun fromStatusAppointment(status: String): OrderStatusValue? = values().firstOrNull {
-            (it.status.toLowerCase(Locale.ROOT) == status.toLowerCase(Locale.ROOT) && it.type == OrderSummaryModel.OrderType.APPOINTMENT.name)
+            (it.status.equals(status, ignoreCase = true) && it.type == OrderSummaryModel.OrderType.APPOINTMENT.name)
         }
 
         fun fromStatusConsultation(status: String): OrderStatusValue? = values().firstOrNull {
-            (it.status.toLowerCase(Locale.ROOT) == status.toLowerCase(Locale.ROOT) && it.type == OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name)
-        }
-
-        fun iconFromStatusOrder(status: String): Int {
-            return R.drawable.ic_order_initiated
+            (it.status.equals(status, ignoreCase = true) && it.type == OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name)
         }
 
     }
