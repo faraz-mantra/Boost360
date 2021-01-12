@@ -174,4 +174,8 @@
   <string name="other_information">Other Information</string>
   <string name="why_do_we_need_your_bank_account">Why do we need your bank account?</string>
   <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
+    <string name="product_category">Product Category*</string>
+  <string name="select_or_create_a_service_category">Select or create a service category</string>
+    <string name="write_the_name_of_your_product">Write the name of your product</string>
+  <string name="product_name">Product Name*</string>
 </resources>

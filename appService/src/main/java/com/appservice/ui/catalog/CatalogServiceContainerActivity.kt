@@ -34,6 +34,13 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     return com.framework.R.layout.activity_fragment_container
   }
 
+//  override fun customTheme(): Int? {
+//    return when (type) {
+//      FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION -> R.style.AppBaseTheme
+//      else -> super.customTheme()
+//    }
+//  }
+
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
   }
@@ -48,6 +55,13 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     setFragment()
   }
 
+  override fun customTheme(): Int? {
+    return when (type) {
+      FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW -> R.style.CatalogTheme
+      else -> super.customTheme()
+    }
+  }
+
   override fun getToolbar(): CustomToolbar? {
     return binding?.appBarLayout?.toolbar
   }
@@ -59,6 +73,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.color_primary)
+      FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.orange)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -72,7 +87,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
       else -> super.getNavigationIcon()
     }
   }
@@ -81,6 +96,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     return when (type) {
       FragmentType.SERVICE_INFORMATION -> resources.getString(R.string.other_information)
       FragmentType.SERVICE_DETAIL_VIEW -> resources.getString(R.string.service_details)
+      FragmentType.PRODUCT_DETAIL_VIEW -> "Adding a product"
+      FragmentType.PRODUCT_INFORMATION -> "Other Info"
       else -> super.getToolbarTitle()
     }
   }
@@ -108,6 +125,14 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
         serviceInformationFragment = ServiceInformationFragment.newInstance()
         serviceInformationFragment
       }
+      FragmentType.PRODUCT_DETAIL_VIEW -> {
+        productDetailFragment = ProductDetailFragment.newInstance()
+        productDetailFragment
+      }
+      FragmentType.PRODUCT_INFORMATION -> {
+        productInformationFragment = ProductInformationFragment.newInstance()
+        productInformationFragment
+      }
       else -> throw IllegalFragmentTypeException()
     }
   }
@@ -117,12 +142,16 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     super.onActivityResult(requestCode, resultCode, data)
     serviceDetailFragment?.onActivityResult(requestCode, resultCode, data)
     serviceInformationFragment?.onActivityResult(requestCode, resultCode, data)
+    serviceDetailFragment?.onActivityResult(requestCode, resultCode, data)
+    serviceInformationFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onBackPressed() {
     when (type) {
       FragmentType.SERVICE_DETAIL_VIEW -> serviceDetailFragment?.onNavPressed()
       FragmentType.SERVICE_INFORMATION -> serviceInformationFragment?.onNavPressed()
+      FragmentType.PRODUCT_INFORMATION -> productInformationFragment?.onNavPressed()
+      FragmentType.PRODUCT_DETAIL_VIEW -> productDetailFragment?.onNavPressed()
       else -> super.onBackPressed()
     }
   }

@@ -33,8 +33,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import static com.appservice.ui.catalog.catalogService.CatalogServiceContainerActivityKt.startFragmentActivityNew;
-
+import static com.appservice.ui.catalog.CatalogServiceContainerActivityKt.startFragmentActivityNew;
 
 public class ProductCategoryFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 

@@ -87,8 +87,8 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             getSupportActionBar().setDisplayShowHomeEnabled(true);
 
             getSupportActionBar().setTitle("");
-
             binding.layoutToolbar.toolbarTitle.setText(Utils.getProductCatalogTaxonomyFromServiceCode(session.getFP_AppExperienceCode()));
+            binding.layoutToolbar.toolbar.setNavigationIcon(R.drawable.ic_back_arrow_white);
             binding.tvMessage.setText(String.format(getString(R.string.product_empty_view_message),
                     Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase()));
         }
@@ -183,15 +183,12 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         binding.productList.setLayoutManager(layoutManager);
         binding.productList.setAdapter(adapter);
 
-        adapter.onShareClickListener(new ProductCategoryRecyclerAdapter.OnShareClicked() {
-            @Override
-            public void onShareClicked(boolean defaultShare, int type, Product product) {
-                defaultShareGlobal = defaultShare;
-                shareType = type;
-                shareProduct = product;
-                if(checkStoragePermission()) {
-                    share(defaultShare, type, product);
-                }
+        adapter.onShareClickListener((defaultShare, type, product) -> {
+            defaultShareGlobal = defaultShare;
+            shareType = type;
+            shareProduct = product;
+            if (checkStoragePermission()) {
+                share(defaultShare, type, product);
             }
         });
         adapter.SetOnItemClickListener(product -> {
@@ -269,18 +266,16 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 //            type = p.productType;
 //        } else
         type = Utils.getProductType(session.getFP_AppExperienceCode());
-        switch (type.toUpperCase()) {
-            case "SERVICES":
-                p.setProductType(type);
-                Bundle bundle = getBundleData(p);
-                startFragmentActivityNew(this, FragmentType.SERVICE_DETAIL_VIEW, bundle, false, true);
-                break;
-            default:
-                p.setProductType(type);
-                Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
-                intent.putExtra("PRODUCT", p);
-                startActivityForResult(intent, 300);
-                break;
+        if ("SERVICES".equals(type.toUpperCase())) {
+            p.setProductType(type);
+            Bundle bundle = getBundleData(p);
+            Toast.makeText(this, "services", Toast.LENGTH_SHORT).show();
+            startFragmentActivityNew(this, FragmentType.SERVICE_DETAIL_VIEW, bundle, false, true);
+        } else {
+            p.setProductType(type);
+            Bundle bundle1 = getBundleData(p);
+            Toast.makeText(this, "product", Toast.LENGTH_SHORT).show();
+            startFragmentActivityNew(this, FragmentType.PRODUCT_DETAIL_VIEW, bundle1, false, true);
         }
     }
 
