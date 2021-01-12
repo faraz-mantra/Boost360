@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tvCustomerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_6"
+        android:drawableStart="@drawable/ic_shipping_address"
+        android:drawablePadding="@dimen/size_16"
+        android:includeFontPadding="false"
+        android:text="Shipping Address"
+        android:textColor="@color/warm_grey"
+        app:fontFamily="@font/bold"
+        app:textType="BODY_1" />
+
+    <com.framework.views.customViews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_3"
+        android:includeFontPadding="false"
+        android:layout_marginStart="@dimen/size_32"
+        android:textColor="@color/warm_grey"
+        app:fontFamily="@font/regular"
+        app:textType="BODY_1"
+        android:text="24/10 City Center, B-Zone, Kolkata, West Bengal - 100023" />
+
+
+    <com.framework.views.customViews.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:drawableStart="@drawable/ic_billing_address"
+        android:drawablePadding="@dimen/size_16"
+        android:includeFontPadding="false"
+        android:text="Billing Address"
+        android:textColor="@color/warm_grey"
+        app:fontFamily="@font/bold"
+        app:textType="BODY_1" />
+
+    <com.framework.views.customViews.CustomTextView
+        android:layout_marginStart="@dimen/size_32"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_3"
+        android:includeFontPadding="false"
+        android:textColor="@color/warm_grey"
+        app:fontFamily="@font/regular"
+        app:textType="BODY_1"
+        android:text="24/10 City Center, B-Zone, Kolkata, West Bengal - 100023" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

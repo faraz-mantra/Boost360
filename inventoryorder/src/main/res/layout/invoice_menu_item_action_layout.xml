@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingEnd="@dimen/size_10"
+    tools:ignore="RtlSymmetry">
+
+  <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tvInvoice"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:text="@string/invoice"
+      app:fontFamily="@font/semi_bold"
+      android:textAllCaps="true"
+      android:textColor="@color/white"
+      app:textType="BODY_2" />
+</LinearLayout>
