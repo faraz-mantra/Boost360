@@ -15,7 +15,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
-import com.appservice.databinding.FragmentServiceDetailBinding
+import com.appservice.databinding.FragmentProductDetailsBinding
 import com.appservice.extension.afterTextChanged
 import com.appservice.model.FileModel
 import com.appservice.model.accountDetails.AccountDetailsResponse
@@ -42,7 +42,7 @@ import com.appservice.model.serviceProduct.gstProduct.update.UpdateValueU
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.serviceProduct.update.UpdateValue
 import com.appservice.ui.bankaccount.startFragmentAccountActivity
-import com.appservice.ui.catalog.catalogService.startFragmentActivity
+import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
@@ -69,7 +69,7 @@ import java.nio.charset.Charset
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ProductDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, ServiceViewModel>() {
+class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, ServiceViewModel>() {
 
   private var menuDelete: MenuItem? = null
   private var serviceImage: File? = null
@@ -102,7 +102,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   override fun getLayout(): Int {
-    return R.layout.fragment_service_detail
+    return R.layout.fragment_product_details
   }
 
   override fun getViewModelClass(): Class<ServiceViewModel> {
@@ -118,9 +118,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     setOnClickListener(binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation, binding?.vwPaymentConfig,
         binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
-    binding?.toggleService?.setOnToggledListener { _, isOn ->
-      binding?.payServiceView?.visibility = if (isOn) View.VISIBLE else View.GONE
-      binding?.freeServiceView?.visibility = if (isOn) View.GONE else View.VISIBLE
+    binding?.toggleProduct?.setOnToggledListener { _, isOn ->
+      binding?.payProductView?.visibility = if (isOn) View.VISIBLE else View.GONE
+      binding?.payProductView?.visibility = if (isOn) View.GONE else View.VISIBLE
     }
     listenerEditText()
   }
@@ -215,7 +215,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun updateUiPreviousDat() {
-    binding?.tvServiceName?.setText(product?.Name)
+    binding?.tvProductName?.setText(product?.Name)
     binding?.tvDesc?.setText(product?.Description)
     binding?.tvDesc?.setText(product?.Description)
     if (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) {
@@ -237,17 +237,17 @@ class ProductDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
     }
     if (product?.Price ?: 0.0 <= 0.0) {
-      binding?.toggleService?.isOn = false
-      binding?.payServiceView?.gone()
-      binding?.freeServiceView?.visible()
+      binding?.toggleProduct?.isOn = false
+      binding?.payProductView?.gone()
+      binding?.freeProductView?.visible()
     }
     binding?.amountEdt?.setText("${product?.Price ?: 0}")
     binding?.discountEdt?.setText("${product?.DiscountAmount ?: 0.0}")
     if (product?.ImageUri.isNullOrEmpty().not()) {
       binding?.imageAddBtn?.gone()
       binding?.clearImage?.visible()
-      binding?.serviceImageView?.visible()
-      binding?.serviceImageView?.let { activity?.glideLoad(it, product?.ImageUri!!, R.drawable.placeholder_image) }
+      binding?.productImageView?.visible()
+      binding?.productImageView?.let { activity?.glideLoad(it, product?.ImageUri!!, R.drawable.placeholder_image) }
     }
   }
 
@@ -288,7 +288,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         bundle.putSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
         bundle.putSerializable(IntentConstant.PRODUCT_IMAGE.name, secondaryDataImage)
         bundle.putSerializable(IntentConstant.PRODUCT_GST_DETAIL.name, gstProductData)
-        startFragmentActivity(FragmentType.SERVICE_INFORMATION, bundle, isResult = true)
+        startFragmentActivity(FragmentType.PRODUCT_INFORMATION, bundle, isResult = true)
       }
       binding?.vwSavePublish -> if (isValid()) createUpdateApi()
     }
@@ -392,11 +392,11 @@ class ProductDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     })
   }
 
-  private fun getRequestServiceImage(serviceImage: File?): RequestBody? {
+  private fun getRequestServiceImage(serviceImage: File?): RequestBody {
     val responseBody = serviceImage?.readBytes()?.let { it.toRequestBody("image/png".toMediaTypeOrNull(), 0, it.size) }
     val fileName = takeIf { serviceImage?.name.isNullOrEmpty().not() }?.let { serviceImage?.name }
         ?: "service_${Date().time}.png"
-    return responseBody
+    return responseBody!!
   }
 
   private fun uploadSecondaryImage(productId: String?) {
@@ -466,11 +466,11 @@ class ProductDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
 
   private fun isValid(): Boolean {
-    val serviceName = binding?.tvServiceName?.text.toString()
+    val serviceName = binding?.tvProductName?.text.toString()
     val serviceDesc = binding?.tvDesc?.text.toString()
     val amount = binding?.amountEdt?.text.toString().toDoubleOrNull() ?: 0.0
     val discount = binding?.discountEdt?.text.toString().toDoubleOrNull() ?: 0.0
-    val tongle = binding?.toggleService?.isOn ?: false
+    val toggle = binding?.toggleProduct?.isOn ?: false
     val externalUrlName = binding?.edtNameDesc?.text?.toString() ?: ""
     val externalUrl = binding?.edtUrl?.text?.toString() ?: ""
 
@@ -483,16 +483,16 @@ class ProductDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     } else if (serviceDesc.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_service_desc))
       return false
-    } else if (tongle && amount <= 0.0) {
+    } else if (toggle && amount <= 0.0) {
       showLongToast(resources.getString(R.string.enter_valid_price))
       return false
-    } else if (tongle && (discount > amount)) {
+    } else if (toggle && (discount > amount)) {
       showLongToast(resources.getString(R.string.discount_amount_not_greater_than_price))
       return false
-    } else if (tongle && (product?.paymentType.isNullOrEmpty() || (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null))) {
+    } else if (toggle && (product?.paymentType.isNullOrEmpty() || (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null))) {
       showLongToast(resources.getString(R.string.please_add_bank_detail))
       return false
-    } else if (tongle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty()))) {
+    } else if (toggle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty()))) {
       showLongToast(resources.getString(R.string.please_enter_valid_url_name))
       return false
     } else if (product?.category.isNullOrEmpty()) {
@@ -504,9 +504,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     product?.CurrencyCode = currencyType
     product?.Name = serviceName
     product?.Description = serviceDesc
-    product?.Price = if (tongle) amount else 0.0
-    product?.DiscountAmount = if (tongle) discount else 0.0
-    if (tongle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)) {
+    product?.Price = if (toggle) amount else 0.0
+    product?.DiscountAmount = if (toggle) discount else 0.0
+    if (toggle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)) {
       product?.BuyOnlineLink = BuyOnlineLink(externalUrl, externalUrlName)
     } else product?.BuyOnlineLink = BuyOnlineLink()
 
@@ -527,7 +527,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private fun clearImage() {
     binding?.imageAddBtn?.visible()
     binding?.clearImage?.gone()
-    binding?.serviceImageView?.gone()
+    binding?.productImageView?.gone()
     product?.ImageUri = null
     serviceImage = null
   }
@@ -558,8 +558,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         serviceImage = File(mPaths[0])
         binding?.imageAddBtn?.gone()
         binding?.clearImage?.visible()
-        binding?.serviceImageView?.visible()
-        serviceImage?.getBitmap()?.let { binding?.serviceImageView?.setImageBitmap(it) }
+        binding?.productImageView?.visible()
+        serviceImage?.getBitmap()?.let { binding?.productImageView?.setImageBitmap(it) }
       }
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
       product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? Product

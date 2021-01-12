@@ -8,7 +8,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
-import com.appservice.databinding.FragmentServiceInformationBinding
+import com.appservice.databinding.FragmentProductInformationBinding
 import com.appservice.model.FileModel
 import com.appservice.model.KeySpecification
 import com.appservice.model.auth_3
@@ -30,7 +30,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
-class ProductInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
+class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
   private var product: Product? = null
   private var isEdit: Boolean? = null
@@ -50,7 +50,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   override fun getLayout(): Int {
-    return R.layout.fragment_service_information
+    return R.layout.fragment_product_information
   }
 
   override fun getViewModelClass(): Class<ServiceViewModel> {
@@ -82,7 +82,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun setUiText() {
-    binding?.edtServiceCategory?.setText(product?.category ?: "")
+    binding?.edtProductCategory?.setText(product?.category ?: "")
     binding?.edtBrand?.setText(product?.brandName ?: "")
     if (gstProductData != null) binding?.edtGst?.setText("${(gstProductData?.gstSlab ?: 0.0).toInt()} %")
     setAdapter()
@@ -100,11 +100,11 @@ class ProductInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     when (v) {
       binding?.edtGst -> openGStDetail()
       binding?.btnAddTag -> {
-        val txtTag = binding?.edtServiceTag?.text.toString()
+        val txtTag = binding?.edtProductTag?.text.toString()
         if (txtTag.isNotEmpty()) {
           tagList.add(txtTag)
           serviceTagsSet()
-          binding?.edtServiceTag?.setText("")
+          binding?.edtProductTag?.setText("")
         }
       }
       binding?.btnAddSpecification -> {
@@ -136,7 +136,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun validateAnnGoBack() {
-    val serviceCategory = binding?.edtServiceCategory?.text?.toString() ?: ""
+    val serviceCategory = binding?.edtProductCategory?.text?.toString() ?: ""
     val brand = binding?.edtBrand?.text?.toString() ?: ""
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
     val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>) ?: ArrayList()
@@ -181,15 +181,15 @@ class ProductInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun serviceTagsSet() {
-    binding?.chipsService?.removeAllViews()
+    binding?.chipsproduct?.removeAllViews()
     tagList.forEach { tag ->
-      val mChip: Chip = baseActivity.layoutInflater.inflate(R.layout.item_chip, binding?.chipsService, false) as Chip
+      val mChip: Chip = baseActivity.layoutInflater.inflate(R.layout.item_chip, binding?.chipsproduct, false) as Chip
       mChip.text = tag
       mChip.setOnCloseIconClickListener {
-        binding?.chipsService?.removeView(mChip)
+        binding?.chipsproduct?.removeView(mChip)
         tagList.remove(tag)
       }
-      binding?.chipsService?.addView(mChip)
+      binding?.chipsproduct?.addView(mChip)
     }
   }
 

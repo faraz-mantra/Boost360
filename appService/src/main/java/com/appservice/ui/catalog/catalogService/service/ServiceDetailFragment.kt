@@ -42,7 +42,7 @@ import com.appservice.model.serviceProduct.gstProduct.update.UpdateValueU
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.serviceProduct.update.UpdateValue
 import com.appservice.ui.bankaccount.startFragmentAccountActivity
-import com.appservice.ui.catalog.catalogService.startFragmentActivity
+import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
