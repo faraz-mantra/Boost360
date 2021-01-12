@@ -117,4 +117,13 @@
   <color name="grey_f9f9f9">#f9f9f9</color>
   <color name="colorLightGrey">#E4E4E4</color>
   <color name="light_blue_grey">#54617A</color>
+
+  <color name="green_27AE60">#27AE60</color>
+  <color name="green_78AF00">#78AF00</color>
+  <color name="white_80FFFFFF">#80FFFFFF</color>
+  <color name="blue_4A90E2">#4A90E2</color>
+  <color name="blue_52AAC6">#52AAC6</color>
+  <color name="red_F40000">#F40000</color>
+  <color name="black_202A2A2A">#202A2A2A</color>
+  <color name="black_3C3C3C">#3C3C3C</color>
 </resources>
