@@ -72,7 +72,7 @@ import kotlin.collections.ArrayList
 class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, ServiceViewModel>() {
 
   private var menuDelete: MenuItem? = null
-  private var serviceImage: File? = null
+  private var productImage: File? = null
   private var product: Product? = null
   private var isNonPhysicalExperience: Boolean? = null
   private var currencyType: String? = null
@@ -309,7 +309,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
             if ((it.status == 200 || it.status == 201 || it.status == 202) && productId.isNullOrEmpty().not()) {
               productIdAdd = productId
               addGstService(productId)
-            } else showError("Service adding error, please try again.")
+            } else showError("Product adding error, please try again.")
           } else showError(resources.getString(R.string.internet_connection_not_available))
         })
       }
@@ -327,7 +327,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
         if ((it.error is NoNetworkException).not()) {
           if ((it.status == 200 || it.status == 201 || it.status == 202)) {
             updateGstService(product?.productId)
-          } else showError("Service updating error, please try again.")
+          } else showError("Product updating error, please try again.")
         } else showError(resources.getString(R.string.internet_connection_not_available))
       })
     }
@@ -344,7 +344,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {
           hideProgress()
           uploadImageSingle(productId)
-        } else showError("Service updating error, please try again.")
+        } else showError("Product updating error, please try again.")
       } else showError(resources.getString(R.string.internet_connection_not_available))
     })
   }
@@ -360,7 +360,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
           uploadImageSingle(productId)
         } else {
           if (isEdit == false) errorType = "addGstService"
-          showError("Service adding error, please try again.")
+          showError("Product adding error, please try again.")
         }
       } else {
         if (isEdit == false) errorType = "addGstService"
@@ -370,20 +370,20 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
   }
 
   private fun uploadImageSingle(productId: String?) {
-    showProgress("Uploading service image, please wait...")
-    if (isEdit == true && serviceImage == null) {
+    showProgress("Uploading product image, please wait...")
+    if (isEdit == true && productImage == null) {
       uploadSecondaryImage(productId)
       return
     }
     viewModel?.addUpdateImageProductService(clientId, "sequential", deviceId,
-        1, 1, productId, getRequestServiceImage(serviceImage))?.observeOnce(viewLifecycleOwner, Observer {
+        1, 1, productId, getRequestServiceImage(productImage))?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           WebEngageController.trackEvent("Product added to catalogue", "MANAGE CONTENT", "null")
           uploadSecondaryImage(productId)
         } else {
           if (isEdit == false) errorType = "uploadImageSingle"
-          showError("Service image uploading error, please try again.")
+          showError("Product image uploading error, please try again.")
         }
       } else {
         if (isEdit == false) errorType = "uploadImageSingle"
@@ -415,7 +415,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               val response = getResponse(it.responseBody) ?: ""
               if (response.isNotEmpty()) secondaryImageList.add(response)
-            } else showError("Secondary Service image uploading error, please try again.")
+            } else showError("Secondary Product image uploading error, please try again.")
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == images.size) {
             addImageToProduct(productId, secondaryImageList)
@@ -438,13 +438,13 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
             } else showLongToast("Add secondary image data error, please try again.")
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == secondaryImageList.size) {
-            showLongToast(if (isEdit == true) "Service updated successfully." else "Service saved successfully.")
+            showLongToast(if (isEdit == true) "Product updated successfully." else "Product saved successfully.")
             goBack()
           }
         })
       }
     } else {
-      showLongToast(if (isEdit == true) "Service updated successfully." else "Service saved successfully.")
+      showLongToast(if (isEdit == true) "Product updated successfully." else "Product saved successfully.")
       goBack()
     }
   }
@@ -474,14 +474,14 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
     val externalUrlName = binding?.edtNameDesc?.text?.toString() ?: ""
     val externalUrl = binding?.edtUrl?.text?.toString() ?: ""
 
-    if (serviceImage == null && product?.ImageUri.isNullOrEmpty()) {
+    if (productImage == null && product?.ImageUri.isNullOrEmpty()) {
       showLongToast(resources.getString(R.string.add_service_image))
       return false
     } else if (serviceName.isEmpty()) {
-      showLongToast(resources.getString(R.string.enter_service_name))
+      showLongToast(resources.getString(R.string.enter_product_name))
       return false
     } else if (serviceDesc.isEmpty()) {
-      showLongToast(resources.getString(R.string.enter_service_desc))
+      showLongToast(resources.getString(R.string.enter_product_desc))
       return false
     } else if (toggle && amount <= 0.0) {
       showLongToast(resources.getString(R.string.enter_valid_price))
@@ -529,7 +529,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
     binding?.clearImage?.gone()
     binding?.productImageView?.gone()
     product?.ImageUri = null
-    serviceImage = null
+    productImage = null
   }
 
   private fun openImagePicker() {
@@ -541,7 +541,10 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
 
 
   private fun openImagePicker(it: ClickType) {
-    val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
+    val type = when (it) {
+        ClickType.CAMERA -> ImagePicker.Mode.CAMERA
+        else -> ImagePicker.Mode.GALLERY
+    }
     ImagePicker.Builder(baseActivity)
         .mode(type)
         .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
@@ -555,11 +558,11 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
       if (mPaths.isNotEmpty()) {
-        serviceImage = File(mPaths[0])
+        productImage = File(mPaths[0])
         binding?.imageAddBtn?.gone()
         binding?.clearImage?.visible()
         binding?.productImageView?.visible()
-        serviceImage?.getBitmap()?.let { binding?.productImageView?.setImageBitmap(it) }
+        productImage?.getBitmap()?.let { binding?.productImageView?.setImageBitmap(it) }
       }
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
       product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? Product
@@ -665,9 +668,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
                 hideProgress()
                 if ((it.error is NoNetworkException).not()) {
                   if ((it.status == 200 || it.status == 201 || it.status == 202)) {
-                    showLongToast("Service removed successfully.")
+                    showLongToast("Product removed successfully.")
                     goBack()
-                  } else showError("Removing service failed, please try again.")
+                  } else showError("Removing product failed, please try again.")
                 } else showError(resources.getString(R.string.internet_connection_not_available))
               })
             }.show()

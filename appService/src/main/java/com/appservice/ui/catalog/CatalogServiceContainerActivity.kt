@@ -142,8 +142,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     super.onActivityResult(requestCode, resultCode, data)
     serviceDetailFragment?.onActivityResult(requestCode, resultCode, data)
     serviceInformationFragment?.onActivityResult(requestCode, resultCode, data)
-    serviceDetailFragment?.onActivityResult(requestCode, resultCode, data)
-    serviceInformationFragment?.onActivityResult(requestCode, resultCode, data)
+    productInformationFragment?.onActivityResult(requestCode, resultCode, data)
+    productDetailFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onBackPressed() {

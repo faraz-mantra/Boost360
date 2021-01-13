@@ -269,12 +269,10 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         if ("SERVICES".equals(type.toUpperCase())) {
             p.setProductType(type);
             Bundle bundle = getBundleData(p);
-            Toast.makeText(this, "services", Toast.LENGTH_SHORT).show();
             startFragmentActivityNew(this, FragmentType.SERVICE_DETAIL_VIEW, bundle, false, true);
         } else {
             p.setProductType(type);
             Bundle bundle1 = getBundleData(p);
-            Toast.makeText(this, "product", Toast.LENGTH_SHORT).show();
             startFragmentActivityNew(this, FragmentType.PRODUCT_DETAIL_VIEW, bundle1, false, true);
         }
     }
