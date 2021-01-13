@@ -20,20 +20,22 @@ import okhttp3.RequestBody
 
 class ProductViewModel :BaseViewModel() {
     fun createProduct(request: Product?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.createService(request).toLiveData()
+        return WithFloatTwoRepository.createProduct(request).toLiveData()
     }
 
     fun updateProduct(request: ProductUpdate?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.updateService(request).toLiveData()
+        return WithFloatTwoRepository.updateProduct(request).toLiveData()
     }
 
     fun deleteService(request: DeleteProductRequest?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.deleteService(request).toLiveData()
+        return WithFloatTwoRepository.deleteProduct(request).toLiveData()
     }
 
-    fun addUpdateImageProductService(clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
-                                     productId: String?, requestBody: RequestBody?): LiveData<BaseResponse> {
-        return WithFloatTwoRepository.addUpdateImageProductService(clientId, requestType, requestId, totalChunks,
+    fun addUpdateProductImage(
+            clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
+            productId: String?, requestBody: RequestBody?,
+    ): LiveData<BaseResponse> {
+        return WithFloatTwoRepository.addUpdateImageProduct(clientId, requestType, requestId, totalChunks,
                 currentChunkNumber, productId, requestBody).toLiveData()
     }
 

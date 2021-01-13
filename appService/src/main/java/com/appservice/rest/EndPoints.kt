@@ -17,6 +17,12 @@ object EndPoints {
   const val ADD_IMAGE = "Product/v1/AddImage"
   const val GET_TAGS = "Product/v1/tags"
   const val GET_NOTIFICATION = "Discover/v1/floatingpoint/notificationscount"
+  //TODO PRODUCT API 2 WITH FLOAT
+  const val CREATE_PRODUCT= "Product/v1/Create"
+  const val GET_PRODUCT_LISTING= "Product/v1/GetListingsWithInventorySync"
+  const val UPDATE_PRODUCT = "Product/v1/Update"
+  const val DELETE_PRODUCT = "Product/v1/Delete"
+
 
   //TODO NFX API 2 WITH FLOAT
   const val RAZOR_API_BASE = "https://ifsc.razorpay.com/"

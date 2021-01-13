@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -100,6 +101,10 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.PRODUCT_INFORMATION -> "Other Info"
       else -> super.getToolbarTitle()
     }
+  }
+
+  override fun getToolbarTitleGravity(): Int {
+    return Gravity.START
   }
 
 

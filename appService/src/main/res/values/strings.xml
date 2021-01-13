@@ -180,4 +180,26 @@
   <string name="select_or_create_a_service_category">Select or create a service category</string>
     <string name="write_the_name_of_your_product">Write the name of your product</string>
   <string name="product_name">Product Name*</string>
+    <string name="this_information_is_required_if_you_select">This information is required if you select delivery service.</string>
+  <string name="product_specifications">Product specifications</string>
+  <string name="in_case_this_product_is_associated_with_certified_by_any_brand">In case this product is associated with/certified by any brand.</string>
+  <string name="add_specification">Add specification</string>
+  <string name="invoice_gst_details">Invoice GST details</string>
+  <string name="select_the_appropriate_gst_slab_at_which_this_product_is_taxable">Select the appropriate GST slab at which this product is taxable.</string>
+  <string name="_0">0 %</string>
+  <string name="confirm">Confirm</string>
+  <string name="add_secondary_images">Add secondary images</string>
+  <string name="_8_max_jpeg_png_800x800px">(8 max, Jpeg/png, 800x800px)</string>
+  <string name="secondary_images">Secondary images</string>
+  <string name="twitter_page">Twitter Page</string>
+  <string name="type_product_category">Type product category</string>
+  <string name="brand_name">Brand Name</string>
+  <string name="type_a_brand_name">Type a brand name</string>
+  <string name="stock_availability">Stock Availability</string>
+    <string name="add_change_warehouse"><u>ADD/CHANGE WAREHOUSE</u></string>
+    <array name="stock_availbility">
+    <item>"Unlimited stock"</item>
+    <item>"Limited stock"</item>
+
+  </array>
 </resources>
