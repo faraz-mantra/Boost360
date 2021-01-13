@@ -359,7 +359,7 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_6"
               android:includeFontPadding="false"
-              android:lineSpacingExtra="6dp"
+              android:lineSpacingExtra="4dp"
               android:textColor="@color/grey_dark_2"
               app:textType="BODY_1"
               tools:text="+91 654323 54546\nazgarhn@gmail.com" />

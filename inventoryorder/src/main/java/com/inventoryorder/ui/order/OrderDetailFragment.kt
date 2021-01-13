@@ -321,9 +321,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     orderItem?.Status = statusOrder.name
     orderItem?.let { orderItem ->
       binding?.orderType?.text = getStatusText(orderItem)
-      OrderStatusValue.fromStatusOrder(orderItem.status())?.icon?.let {
-        binding?.orderType?.setCompoundDrawablesWithIntrinsicBounds(it, 0, 0, 0)
-      }
+      OrderStatusValue.fromStatusOrder(orderItem.status())?.icon?.let { binding?.statusIcon?.setImageResource(it) }
     }
     orderItem?.let { checkStatusOrder(it) }
   }
