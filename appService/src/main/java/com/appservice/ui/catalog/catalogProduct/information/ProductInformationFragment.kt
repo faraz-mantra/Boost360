@@ -146,7 +146,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 //        return
 //      }
       serviceCategory.isNullOrEmpty() -> {
-        showLongToast("Service category field can't empty.")
+        showLongToast("Product category field can't empty.")
         return
       }
 //      brand.isNullOrEmpty() -> {
