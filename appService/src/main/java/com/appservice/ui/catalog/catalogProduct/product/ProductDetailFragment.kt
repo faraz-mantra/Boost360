@@ -46,7 +46,7 @@ import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
-import com.appservice.viewmodel.ServiceViewModel
+import com.appservice.viewmodel.ProductViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -69,7 +69,7 @@ import java.nio.charset.Charset
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, ServiceViewModel>() {
+class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, ProductViewModel>() {
 
   private var menuDelete: MenuItem? = null
   private var productImage: File? = null
@@ -105,8 +105,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
     return R.layout.fragment_product_details
   }
 
-  override fun getViewModelClass(): Class<ServiceViewModel> {
-    return ServiceViewModel::class.java
+  override fun getViewModelClass(): Class<ProductViewModel> {
+    return ProductViewModel::class.java
   }
 
   override fun onCreateView() {
@@ -117,10 +117,17 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
     binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     setOnClickListener(binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation, binding?.vwPaymentConfig,
-        binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
+            binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
+    binding?.toggleProduct?.isOn = false
     binding?.toggleProduct?.setOnToggledListener { _, isOn ->
-      binding?.payProductView?.visibility = if (isOn) View.VISIBLE else View.GONE
-      binding?.payProductView?.visibility = if (isOn) View.GONE else View.VISIBLE
+      when (isOn){
+        true -> binding?.payProductView?.visibility = View.VISIBLE
+        false -> binding?.payProductView?.visibility = View.GONE
+      }
+//      binding?.payProductView?.visibility = when {
+//          isOn -> View.GONE
+//          else -> View.VISIBLE
+//      }
     }
     listenerEditText()
   }
@@ -217,7 +224,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
   private fun updateUiPreviousDat() {
     binding?.tvProductName?.setText(product?.Name)
     binding?.tvDesc?.setText(product?.Description)
-    binding?.tvDesc?.setText(product?.Description)
+    binding?.edtProductCategory?.setText(product?.category)
     if (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) {
       binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
       binding?.bankAccountName?.visible()
@@ -303,7 +310,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
       } else if (productIdAdd.isNullOrEmpty().not() && errorType == "uploadImageSingle") {
         uploadImageSingle(productIdAdd)
       } else {
-        viewModel?.createService(product)?.observeOnce(viewLifecycleOwner, Observer {
+        viewModel?.createProduct(product)?.observeOnce(viewLifecycleOwner, Observer {
           if ((it.error is NoNetworkException).not()) {
             val productId = it.stringResponse
             if ((it.status == 200 || it.status == 201 || it.status == 202) && productId.isNullOrEmpty().not()) {
@@ -323,7 +330,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
         updates.add(UpdateValue(key, json[key].toString()))
       }
       val request = ProductUpdate(clientId, productId = product?.productId, productType = product?.productType, updates = updates)
-      viewModel?.updateService(request)?.observeOnce(viewLifecycleOwner, Observer {
+      viewModel?.updateProduct(request)?.observeOnce(viewLifecycleOwner, Observer {
         if ((it.error is NoNetworkException).not()) {
           if ((it.status == 200 || it.status == 201 || it.status == 202)) {
             updateGstService(product?.productId)
@@ -375,8 +382,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
       uploadSecondaryImage(productId)
       return
     }
-    viewModel?.addUpdateImageProductService(clientId, "sequential", deviceId,
-        1, 1, productId, getRequestServiceImage(productImage))?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.addUpdateProductImage(clientId, "sequential", deviceId,
+            1, 1, productId, getRequestServiceImage(productImage))?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           WebEngageController.trackEvent("Product added to catalogue", "MANAGE CONTENT", "null")
@@ -466,8 +473,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
 
 
   private fun isValid(): Boolean {
-    val serviceName = binding?.tvProductName?.text.toString()
-    val serviceDesc = binding?.tvDesc?.text.toString()
+    val productName = binding?.tvProductName?.text.toString()
+    val productCategory = binding?.edtProductCategory?.text.toString()
+    val productDesc = binding?.tvDesc?.text.toString()
     val amount = binding?.amountEdt?.text.toString().toDoubleOrNull() ?: 0.0
     val discount = binding?.discountEdt?.text.toString().toDoubleOrNull() ?: 0.0
     val toggle = binding?.toggleProduct?.isOn ?: false
@@ -477,10 +485,13 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
     if (productImage == null && product?.ImageUri.isNullOrEmpty()) {
       showLongToast(resources.getString(R.string.add_service_image))
       return false
-    } else if (serviceName.isEmpty()) {
+    } else if (productName.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_product_name))
       return false
-    } else if (serviceDesc.isEmpty()) {
+    } else if (productCategory.isEmpty()) {
+      showLongToast("Please add product category")
+      return false
+    } else if (productDesc.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_product_desc))
       return false
     } else if (toggle && amount <= 0.0) {
@@ -502,8 +513,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
     product?.ClientId = clientId
     product?.FPTag = fpTag
     product?.CurrencyCode = currencyType
-    product?.Name = serviceName
-    product?.Description = serviceDesc
+    product?.Name = productName
+    product?.category = productCategory
+    product?.Description = productDesc
     product?.Price = if (toggle) amount else 0.0
     product?.DiscountAmount = if (toggle) discount else 0.0
     if (toggle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)) {
@@ -649,9 +661,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Ser
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.ic_menu_delete_new, menu)
-    menuDelete = menu.findItem(R.id.id_delete)
-    menuDelete?.isVisible = isEdit ?: false
+    inflater.inflate(R.menu.menu_help, menu)
+//    menuDelete = menu.findItem(R.id.id_delete)
+//    menuDelete?.isVisible = isEdit ?: false
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

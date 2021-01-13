@@ -8,13 +8,13 @@
     <item name="colorControlNormal">@color/colorAccent</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
-    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="android:homeAsUpIndicator">@drawable/ic_arrow_left_30</item>
     <item name="searchViewStyle">@style/SearchView</item>
   </style>
   <style name="CatalogTheme" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="colorAccent">@color/colorAccent</item>
   </style>
   <style name="AppTheme.account" parent="AppTheme.cataloge">
@@ -30,6 +30,14 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="android:editTextColor">@color/black</item>
+  </style>
+  <style name="SpinnerStyle" parent="@style/ThemeOverlay.AppCompat.Light">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">match_parent</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:textColor">@color/black_2A2A2A</item>
+    <item name="android:maxLines">1</item>
+    <item name="android:spinnerMode">dropdown</item>
   </style>
 
   <style name="AppTheme_add_account" parent="AppTheme.account">
