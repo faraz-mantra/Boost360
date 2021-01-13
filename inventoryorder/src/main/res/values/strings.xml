@@ -12,7 +12,7 @@
     <string name="payment_type">Payment Type</string>
     <string name="payment_mode">Payment mode:</string>
     <string name="delivery">"Delivery: &#160;"</string>
-    <string name="delivery_mode">Delivery mode:</string>
+    <string name="delivery_mode_n">Delivery mode: &#160;</string>
     <string name="delivery_type_colon">Delivery Type:</string>
     <string name="delivery_type">Delivery Type</string>
     <string name="cancel_order"><u>Cancel Order</u></string>

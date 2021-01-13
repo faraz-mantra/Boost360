@@ -163,21 +163,15 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun setOrderDetails(order: OrderItem) {
     binding?.orderType?.text = getStatusText(order)
-    binding?.orderId?.text = "#${order.ReferenceNumber}"
-    OrderStatusValue.fromStatusOrder(order.status())?.icon?.let {
-      binding?.orderType?.setCompoundDrawablesWithIntrinsicBounds(it, 0, 0, 0)
-    }
-
-
-//        val b = (PaymentDetailsN.STATUS.from(order.PaymentDetails?.Status ?: "") == PaymentDetailsN.STATUS.PENDING)
-//        if (b) binding?.tvOrderStatus?.setTextColor(getColor(R.color.watermelon_light_10))
+    OrderStatusValue.fromStatusOrder(order.status())?.icon?.let { binding?.statusIcon?.setImageResource(it) }
     binding?.tvOrderStatus?.text = order.PaymentDetails?.status()
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
     binding?.tvDeliveryType?.text = order.deliveryType()
+    binding?.tvItemCount?.visibility = if (order.Items.isNullOrEmpty().not()) View.VISIBLE else View.GONE
+    binding?.tvItemCount?.text = if (order.Items?.size ?: 0 > 1) "(${order.Items?.size} items)" else "(${order.Items?.size} item)"
 
     order.BillingDetails?.let { bill ->
-      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() }
-          ?: "INR"
+      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding?.tvOrderAmount?.text = "$currency ${DecimalFormat("##,##,##0").format(bill.AmountPayableByBuyer)}"
 //            binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
@@ -185,17 +179,19 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
-    binding?.tvCustomerAddress?.text = order.BuyerDetails?.getAddressFull()
+    binding?.tvCustomerDetail?.text = order.BuyerDetails?.getPhoneEmailFull()
+    binding?.userAddress?.tvShippingAddress?.text = order.BuyerDetails?.address()?.addressLine1()
+    binding?.userAddress?.tvBillingAddress?.text = order.BuyerDetails?.address()?.addressLine1()
 
 //        binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
 //        binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
 //        binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
 
-    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) }!!)
+    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) }==true)
       binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
-    if (order.BuyerDetails.ContactDetails.EmailId.isNullOrEmpty().not()) {
+    if (order.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty().not()) {
 //            binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
-      if (!checkValidEmail(order.BuyerDetails.ContactDetails.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
+      if (!checkValidEmail(order.BuyerDetails?.ContactDetails?.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
     } else binding?.tvCustomerEmail?.isGone = true
 
 
@@ -223,7 +219,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     return when (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name) {
       order.status().toUpperCase(Locale.ROOT) -> {
         return if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-          OrderStatusValue.ESCALATED_1.value
+          OrderStatusValue.ABANDONED_1.value
         } else statusValue.plus(order.cancelledText())
       }
       else -> statusValue

@@ -1,5 +1,6 @@
 package com.inventoryorder.model.ordersdetails
 
+
 import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.getCurrentDate
@@ -11,6 +12,7 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import com.inventoryorder.utils.capitalizeUtil
 import java.io.Serializable
 import java.util.*
+
 
 data class OrderItem(
     val BillingDetails: BillingDetailsN? = null,
@@ -75,9 +77,8 @@ data class OrderItem(
   fun getTitles(): String {
     var title = ""
     Items?.forEachIndexed { index, item ->
-      if (index < 3) title += takeIf { index != 0 }?.let { "\n \u25CF  ${item.Quantity} x  ${item.Product?.Name?.trim()}" } ?: ("\u25CF  ${item.Quantity} x  ${item.Product?.Name?.trim()}")
+      if (index < 3) title += takeIf { index != 0 }?.let { "\n●  ${item.Quantity} x  ${item.Product?.Name?.trim()}" } ?: ("●  ${item.Quantity} x  ${item.Product?.Name?.trim()}")
     }
-
     return title
   }
 

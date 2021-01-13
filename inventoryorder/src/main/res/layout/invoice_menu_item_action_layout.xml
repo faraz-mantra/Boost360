@@ -16,5 +16,5 @@
       app:fontFamily="@font/semi_bold"
       android:textAllCaps="true"
       android:textColor="@color/white"
-      app:textType="BODY_2" />
+      app:textType="BODY_1" />
 </LinearLayout>
