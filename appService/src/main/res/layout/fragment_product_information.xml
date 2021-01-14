@@ -1139,7 +1139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
-                        android:text="This will help you group multiple products under this category"
+                        android:text="It appears at the end of the product name as it’s variant"
                         android:textColor="@color/warm_grey"
                         android:textSize="12sp"
                         app:fontFamily="@font/regular" />
@@ -1161,7 +1161,7 @@
                             android:background="@android:color/transparent"
                             android:hint="e.g. Color"
                             android:maxLines="1"
-                            android:paddingLeft="@dimen/size_8"
+                            android:paddingStart="@dimen/size_8"
                             android:singleLine="true"
                             android:textColor="@color/greyish_brown"
                             android:textColorHint="@color/primary_grey"

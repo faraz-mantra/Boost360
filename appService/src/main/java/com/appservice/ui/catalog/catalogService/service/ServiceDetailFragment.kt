@@ -114,10 +114,10 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     WebEngageController.trackEvent("Service product catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
     getBundleData()
     getPickUpAddress()
-    binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+//    binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-    setOnClickListener(binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation, binding?.vwPaymentConfig,
-        binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
+    setOnClickListener(binding?.selectDeliveryConfig, binding?.vwPaymentConfig,
+            binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
     binding?.toggleService?.setOnToggledListener { _, isOn ->
       binding?.payServiceView?.visibility = if (isOn) View.VISIBLE else View.GONE
       binding?.freeServiceView?.visibility = if (isOn) View.GONE else View.VISIBLE
@@ -217,6 +217,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private fun updateUiPreviousDat() {
     binding?.tvServiceName?.setText(product?.Name)
     binding?.tvDesc?.setText(product?.Description)
+    binding?.edtServiceCategory?.setText(product?.category)
     binding?.tvDesc?.setText(product?.Description)
     if (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) {
       binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
@@ -278,7 +279,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       }
       binding?.imageAddBtn -> openImagePicker()
       binding?.clearImage -> clearImage()
-      binding?.vwChangeDeliverConfig -> showServiceDeliveryConfigBottomSheet()
+      binding?.selectDeliveryConfig -> showServiceDeliveryConfigBottomSheet()
 //      binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
       binding?.vwPaymentConfig -> showPaymentConfigBottomSheet()
       binding?.btnOtherInfo -> {
@@ -467,6 +468,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun isValid(): Boolean {
     val serviceName = binding?.tvServiceName?.text.toString()
+    val serviceCategory = binding?.edtServiceCategory?.text.toString()
     val serviceDesc = binding?.tvDesc?.text.toString()
     val amount = binding?.amountEdt?.text.toString().toDoubleOrNull() ?: 0.0
     val discount = binding?.discountEdt?.text.toString().toDoubleOrNull() ?: 0.0
@@ -479,6 +481,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       return false
     } else if (serviceName.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_service_name))
+      return false
+    } else if (serviceCategory.isBlank()) {
+      showLongToast("Enter service category")
       return false
     } else if (serviceDesc.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_service_desc))
@@ -495,14 +500,12 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     } else if (tongle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty()))) {
       showLongToast(resources.getString(R.string.please_enter_valid_url_name))
       return false
-    } else if (product?.category.isNullOrEmpty()) {
-      showLongToast(resources.getString(R.string.please_fill_other_info))
-      return false
     }
     product?.ClientId = clientId
     product?.FPTag = fpTag
     product?.CurrencyCode = currencyType
     product?.Name = serviceName
+    product?.category=serviceCategory
     product?.Description = serviceDesc
     product?.Price = if (tongle) amount else 0.0
     product?.DiscountAmount = if (tongle) discount else 0.0
@@ -646,9 +649,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.ic_menu_delete_new, menu)
-    menuDelete = menu.findItem(R.id.id_delete)
-    menuDelete?.isVisible = isEdit ?: false
+    inflater.inflate(R.menu.menu_help, menu)
+//    menuDelete = menu.findItem(R.id.id_delete)
+//    menuDelete?.isVisible = isEdit ?: false
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
