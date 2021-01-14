@@ -58,7 +58,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun customTheme(): Int? {
     return when (type) {
-      FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW -> R.style.CatalogTheme
+      FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW -> R.style.CatalogTheme
+      FragmentType.SERVICE_INFORMATION -> R.style.AppTheme_cataloge
       else -> super.customTheme()
     }
   }
@@ -73,8 +74,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.color_primary)
-      FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.orange)
+      FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.orange)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -89,6 +89,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+
       else -> super.getNavigationIcon()
     }
   }

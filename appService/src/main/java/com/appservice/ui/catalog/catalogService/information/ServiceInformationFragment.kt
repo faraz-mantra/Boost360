@@ -82,7 +82,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun setUiText() {
-    binding?.edtServiceCategory?.setText(product?.category ?: "")
+//    binding?.edtServiceCategory?.setText(product?.category ?: "")
     binding?.edtBrand?.setText(product?.brandName ?: "")
     if (gstProductData != null) binding?.edtGst?.setText("${(gstProductData?.gstSlab ?: 0.0).toInt()} %")
     setAdapter()
@@ -136,7 +136,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun validateAnnGoBack() {
-    val serviceCategory = binding?.edtServiceCategory?.text?.toString() ?: ""
+//    val serviceCategory = binding?.edtServiceCategory?.text?.toString() ?: ""
     val brand = binding?.edtBrand?.text?.toString() ?: ""
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
     val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>) ?: ArrayList()
@@ -145,10 +145,10 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 //        showLongToast("Please select at least one secondary image.")
 //        return
 //      }
-      serviceCategory.isNullOrEmpty() -> {
-        showLongToast("Service category field can't empty.")
-        return
-      }
+//      serviceCategory.isNullOrEmpty() -> {
+//        showLongToast("Service category field can't empty.")
+//        return
+//      }
 //      brand.isNullOrEmpty() -> {
 //        showLongToast("Brand name field can't empty.")
 //        return
@@ -163,7 +163,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 //      }
       else -> {
         WebEngageController.trackEvent("Other information confirm", "SERVICE CATALOGUE ADD/UPDATE", "")
-        product?.category = serviceCategory
+//        product?.category = serviceCategory
         product?.brandName = brand
         product?.tags = tagList
         product?.otherSpecification = otherSpec
