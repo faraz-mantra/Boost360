@@ -290,6 +290,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/open_sans"
+                                    android:visibility="gone"
                                     android:text="Price includes taxes"
                                     android:textColor="@color/primary_text"
                                     android:textFontWeight="400"
@@ -627,6 +628,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/size_10"
+
                             android:background="@drawable/shape_grey_stroke_rect_bkg"
                             android:orientation="vertical">
 
@@ -666,6 +668,7 @@
 
                             <RelativeLayout
                                 android:layout_width="wrap_content"
+                                android:visibility="gone"
                                 android:layout_height="wrap_content">
                                 <androidx.core.widget.NestedScrollView
                                     android:layout_width="match_parent"
@@ -773,18 +776,17 @@
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/vw_changeDeliverLocation"
                                 android:layout_width="match_parent"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/size_10">
 
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:layout_width="0dp"
-                                    android:visibility="gone"
+                                    android:visibility="visible"
                                     android:layout_height="wrap_content"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintRight_toLeftOf="@+id/iv_dropDown"
                                     app:layout_constraintTop_toTopOf="parent">
 
                                     <com.framework.views.customViews.CustomTextView

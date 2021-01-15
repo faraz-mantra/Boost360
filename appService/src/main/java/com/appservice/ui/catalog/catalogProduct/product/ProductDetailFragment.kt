@@ -661,9 +661,12 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_help, menu)
-//    menuDelete = menu.findItem(R.id.id_delete)
-//    menuDelete?.isVisible = isEdit ?: false
+//    inflater.inflate(R.menu.menu_help, menu)
+////    menuDelete = menu.findItem(R.id.id_delete)
+////    menuDelete?.isVisible = isEdit ?: false
+    inflater.inflate(R.menu.ic_menu_delete_new, menu)
+    menuDelete = menu.findItem(R.id.id_delete)
+    menuDelete?.isVisible = isEdit ?: false
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

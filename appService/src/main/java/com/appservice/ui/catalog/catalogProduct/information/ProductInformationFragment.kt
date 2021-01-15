@@ -89,6 +89,8 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
   private fun setUiText() {
 //    binding?.edtProductCategory?.setText(product?.category ?: "")
     maxOrder = product?.maxCodOrders!!
+    binding?.specKey?.setText(product?.keySpecification?.key)
+    binding?.specValue?.setText(product?.keySpecification?.value)
     availableStock = product?.availableUnits!!
     binding?.edtBrand?.setText(product?.brandName ?: "")
     binding?.ctvCurrentStock?.text = product?.availableUnits.toString()
@@ -132,10 +134,12 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
         maxOrder++
         binding?.ctvQuantityOrderStatus?.text = maxOrder.toString()
       }
-      binding?.civDecreseStock -> {
-        availableStock--
-        binding?.ctvCurrentStock?.text = availableStock.toString()
+      binding?.civDecreseStock -> when{
+        availableStock>0 ->{
+          availableStock--
+          binding?.ctvCurrentStock?.text = availableStock.toString()
 
+        }
       }
       binding?.civIncreaseStock -> {
         availableStock++
@@ -165,9 +169,12 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
   private fun validateAnnGoBack() {
 //    val serviceCategory = binding?.edtProductCategory?.text?.toString() ?: ""
     val brand = binding?.edtBrand?.text?.toString() ?: ""
+    val keySpecification = binding?.specKey?.text?.toString() ?: ""
+    val valueSpecification = binding?.specValue?.text?.toString() ?: ""
 
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
-    val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>) ?: ArrayList()
+    val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>)
+            ?: ArrayList()
     when {
 //      secondaryImage.isNullOrEmpty() -> {
 //        showLongToast("Please select at least one secondary image.")
@@ -193,6 +200,8 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
         WebEngageController.trackEvent("Other information confirm", "SERVICE CATALOGUE ADD/UPDATE", "")
 //        product?.category = serviceCategory
         product?.brandName = brand
+        product?.keySpecification?.key = keySpecification
+        product?.keySpecification?.value = valueSpecification
         product?.tags = tagList
         product?.maxCodOrders = maxOrder
         product?.availableUnits = availableStock
@@ -305,7 +314,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_product_info, menu)
+//    inflater.inflate(R.menu.menu_product_info, menu)
   }
 
   private fun dialogLogout() {
