@@ -15,4 +15,5 @@ enum class FragmentType {
   KYC_STATUS,
   CROP_IMAGE,
   KYC_DETAIL_NEW,
+  TIMING_STAFF
 }

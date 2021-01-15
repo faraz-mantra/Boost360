@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_8"
+        android:background="@drawable/rounded_stroke_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.framework.views.customViews.CustomCardView
+            android:id="@+id/ccv_day"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:backgroundTint="#1A4889F8"
+            app:cardElevation="0dp"
+            app:corner_radius="RADIUS_6">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ccv_title_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/size_8"
+                android:fontFamily="@font/open_sans"
+                android:text="monday"
+                android:textFontWeight="600"
+                android:textSize="10sp" />
+
+            <com.appservice.views.toggle.widget.LabeledSwitch
+                android:id="@+id/toggle_on_off"
+                android:layout_width="@dimen/size_54"
+                android:layout_height="@dimen/size_24"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/size_8"
+                app:colorBorder="@android:color/transparent"
+                app:colorOff="@color/light_lemon"
+                app:colorOn="@color/light_green_1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:textOff="NO"
+                app:textOn="YES"
+                app:txtColorOff="@color/white"
+                app:txtColorOn="@color/white" />
+        </com.framework.views.customViews.CustomCardView>
+
+        <include
+            android:id="@+id/layout_session_create"
+            layout="@layout/layout_staff_session"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ccv_day"
+            android:layout_marginTop="-2dp"
+            android:visibility="visible" />
+    </RelativeLayout>
+</layout>

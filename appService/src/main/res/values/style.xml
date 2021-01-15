@@ -17,6 +17,11 @@
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="colorAccent">@color/colorAccent</item>
   </style>
+  <style name="CatalogTheme.Information" parent="CatalogTheme">
+    <item name="colorPrimary">@color/color_primary</item>
+    <item name="colorPrimaryDark">@color/color_primary_dark</item>
+    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
+  </style>
   <style name="AppTheme.account" parent="AppTheme.cataloge">
     <item name="android:editTextColor">@color/black</item>
     <item name="android:textColorHint">@color/light_grey_two</item>

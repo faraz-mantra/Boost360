@@ -54,14 +54,15 @@
               app:fontFamily="@font/regular" />
 
           <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_10"
-            android:background="@drawable/shape_grey_stroke_rect_bkg"
-            android:paddingLeft="@dimen/size_10"
-            android:paddingTop="@dimen/size_8"
-            android:paddingRight="@dimen/size_10"
-            android:paddingBottom="@dimen/size_8">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_10"
+              android:background="@drawable/shape_grey_stroke_rect_bkg"
+              android:paddingLeft="@dimen/size_10"
+              android:paddingTop="@dimen/size_8"
+              android:paddingRight="@dimen/size_10"
+              android:paddingBottom="@dimen/size_8"
+              android:visibility="gone">
 
             <com.framework.views.customViews.CustomTextView
                 android:layout_width="match_parent"
@@ -415,7 +416,7 @@
 
           <androidx.appcompat.widget.LinearLayoutCompat
               android:layout_width="match_parent"
-              android:layout_height="@dimen/size_38"
+              android:layout_height="@dimen/size_40"
               android:layout_marginTop="@dimen/size_5"
               android:layout_marginBottom="@dimen/size_5"
               android:background="@drawable/shape_grey_stroke_rect_bkg"
@@ -423,7 +424,7 @@
               android:orientation="horizontal">
 
             <com.framework.views.customViews.CustomEditText
-                android:id="@+id/type"
+                android:id="@+id/cet_spec_type"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
@@ -442,7 +443,7 @@
                 android:background="@color/placeholder_bg" />
 
             <com.framework.views.customViews.CustomEditText
-                android:id="@+id/value"
+                android:id="@+id/cet_spec_value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -506,6 +507,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_26"
+              android:visibility="gone"
               android:drawablePadding="@dimen/size_4"
               android:drawableTint="@color/orange"
               android:includeFontPadding="false"
@@ -518,6 +520,7 @@
           <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:visibility="gone"
               android:includeFontPadding="false"
               android:text="If this item is also listed on some other website, enter the URL below"
               android:textColor="@color/warm_grey"
@@ -529,6 +532,7 @@
               android:layout_height="@dimen/size_38"
               android:layout_marginTop="@dimen/size_5"
               android:layout_marginBottom="@dimen/size_5"
+              android:visibility="gone"
               android:background="@drawable/shape_grey_stroke_rect_bkg"
               android:gravity="center_vertical"
               android:orientation="horizontal">
@@ -604,7 +608,6 @@
                 android:id="@+id/ll_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_6dp"
                 android:orientation="horizontal">
 
               <com.framework.views.customViews.CustomTextView
@@ -613,6 +616,7 @@
                   android:layout_gravity="start|bottom"
                   android:layout_marginStart="@dimen/size_4"
                   android:layout_weight="1"
+                  android:visibility="gone"
                   android:drawablePadding="4dp"
                   android:includeFontPadding="false"
                   android:text="Accept online payment"
@@ -622,21 +626,23 @@
 
               <Space
                   android:layout_width="@dimen/size_0"
+                  android:visibility="gone"
                   android:layout_height="@dimen/size_0"
                   android:layout_weight=".1" />
 
-              <com.framework.views.customViews.CustomTextView
-                  android:layout_width="0dp"
-                  android:layout_height="wrap_content"
-                  android:layout_gravity="start|bottom"
-                  android:layout_marginStart="@dimen/size_4"
-                  android:layout_weight="1"
-                  android:drawablePadding="4dp"
-                  android:includeFontPadding="false"
-                  android:text="Max quantity per order"
-                  android:textColor="@color/warm_grey"
-                  android:textSize="12sp"
-                  app:fontFamily="@font/regular" />
+              <!--              <com.framework.views.customViews.CustomTextView-->
+              <!--                  android:layout_width="0dp"-->
+              <!--                  android:layout_height="wrap_content"-->
+              <!--                  android:layout_gravity="start|bottom"-->
+              <!--                  android:layout_marginStart="@dimen/size_4"-->
+              <!--                  android:layout_weight="1"-->
+              <!--                  android:drawablePadding="4dp"-->
+              <!--                  android:gravity="center_horizontal"-->
+              <!--                  android:includeFontPadding="false"-->
+              <!--                  android:text="Max quantity per order"-->
+              <!--                  android:textColor="@color/warm_grey"-->
+              <!--                  android:textSize="12sp"-->
+              <!--                  app:fontFamily="@font/regular" />-->
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <com.framework.views.customViews.CustomTextView
@@ -646,7 +652,7 @@
                 android:layout_below="@id/ll_btop"
                 android:layout_gravity="start|bottom"
                 android:layout_marginStart="@dimen/size_4"
-                android:layout_marginTop="@dimen/_6dp"
+                android:visibility="gone"
                 android:drawablePadding="4dp"
                 android:includeFontPadding="false"
                 android:text="Accept COD payment"
@@ -658,6 +664,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cet_cod"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_6dp"
                 android:orientation="horizontal">
 
@@ -696,6 +703,7 @@
               <Space
                   android:layout_width="@dimen/size_0"
                   android:layout_height="@dimen/size_0"
+                  android:visibility="gone"
                   android:layout_weight="1" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -704,13 +712,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ll_top"
-                android:layout_marginTop="@dimen/_6dp"
                 android:orientation="horizontal">
 
               <LinearLayout
                   android:layout_width="@dimen/size_0"
                   android:layout_height="@dimen/size_40"
                   android:layout_weight="1"
+                  android:visibility="gone"
                   android:background="@drawable/rounded_edit_stroke"
                   android:orientation="horizontal">
 
@@ -737,6 +745,18 @@
                     android:layout_marginEnd="@dimen/size_8"
                     android:src="@drawable/ic_arrow_down_grey" />
               </LinearLayout>
+
+              <com.framework.views.customViews.CustomTextView
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="start|center_vertical"
+                  android:layout_weight="1"
+                  android:gravity="start|center_horizontal"
+                  android:includeFontPadding="false"
+                  android:text="Max quantity per order"
+                  android:textColor="@color/warm_grey"
+                  android:textSize="12sp"
+                  app:fontFamily="@font/regular" />
 
               <Space
                   android:layout_width="@dimen/size_0"
@@ -771,7 +791,6 @@
                     android:layout_weight="1.3"
                     android:background="@drawable/bg_text_rounded"
                     android:gravity="center"
-                    android:text="10"
                     android:textColor="@color/gray_text_hint"
                     android:textSize="12.57sp" />
 
@@ -839,6 +858,8 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_marginTop="@dimen/size_26"
+              android:id="@+id/weekly_appointment_schedule"
+              android:visibility="gone"
               android:background="@drawable/rounded_stroke_grey"
               android:foreground="?selectableItemBackground"
               android:paddingHorizontal="@dimen/size_10"
