@@ -903,6 +903,11 @@ public class SidePanelFragment extends Fragment {
             keyboardLock.setVisibility(View.GONE);
         else
             keyboardLock.setVisibility(View.VISIBLE);
+
+        if (Constants.currentActivePackageId.contains("59ce2ae56431a80b009cb1fa"))
+            keyboardLock.setVisibility(View.GONE);
+        else
+            keyboardLock.setVisibility(View.VISIBLE);
     }
 
     public void siteMeterCalculation() {

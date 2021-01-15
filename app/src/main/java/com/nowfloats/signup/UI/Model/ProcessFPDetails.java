@@ -148,7 +148,7 @@ public class ProcessFPDetails {
             Constants.StorePackageIds = get_fp_details_model.PackageIds;
             Constants.StoreWidgets = get_fp_details_model.FPWebWidgets;
             session.storeFPDetails(Key_Preferences.STORE_WIDGETS, convertListObjToString(get_fp_details_model.FPWebWidgets));
-            Log.d("Constants.storeWidgets", "widgets : " + widgetsList);
+            Log.d("Constants.storeWidgets", "widgets : " + Constants.StoreWidgets + " "+ Constants.StorePackageIds);
             Constants.storeSecondaryImages = get_fp_details_model.SecondaryTileImages;
 
 //        for(String widget : widgetsList)
