@@ -60,7 +60,6 @@ import static com.nfx.leadmessages.Constants.SMS_REGEX;
 public class Get_FP_Details_Service {
 
 public Get_FP_Details_Service(final Activity activity, String fpID, String clientID, final Bus bus) {
-    UserSessionManager mSession;
         HashMap<String, String> map = new HashMap<>();
         map.put("clientId", clientID);
         Retro_Signup_Interface getFPDetails = Constants.restAdapter.create(Retro_Signup_Interface.class);
@@ -175,44 +174,6 @@ public Get_FP_Details_Service(final Activity activity, String fpID, String clien
 
             }
         });
-
-/*    mSession = new UserSessionManager(activity.getApplicationContext(), activity);
-
-    String accId = mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
-    String appId = mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID);
-    String country = mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
-
-    Map<String, String> params = new HashMap<>();
-    if (accId.length() > 0) {
-        params.put("identifier", accId);
-    } else {
-        params.put("identifier", appId);
-    }
-    params.put("clientId", Constants.clientId);
-    params.put("fpId", mSession.getFPID());
-    params.put("country", country.toLowerCase());
-    params.put("fpCategory", mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toUpperCase());
-    Log.v("UserSessionManager", " value : "+ mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID));
-    Constants.restAdapter.create(StoreInterface.class).getStoreList(params, new Callback<PricingPlansModel>() {
-        @Override
-        public void success(PricingPlansModel storeMainModel, Response response) {
-            if (storeMainModel != null) {
-                preProcessAndDispatchPlans(storeMainModel,mSession);
-            } else {
-                Log.d("getStoreList_null", String.valueOf(response.getStatus()));
-            }
-            // zeroth screen
-        }
-
-        @Override
-        public void failure(RetrofitError error) {
-
-            Log.d("getStoreList_fail", error.getMessage());
-        }
-    });*/
-
-
-
 
 
     }
