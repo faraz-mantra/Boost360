@@ -118,9 +118,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     setOnClickListener(binding?.selectDeliveryConfig, binding?.vwPaymentConfig,
             binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
+    binding?.toggleService?.isOn = false
+    binding?.payServiceView?.visibility = View.GONE
+    binding?.ccbPayextra?.visibility = View.GONE
     binding?.toggleService?.setOnToggledListener { _, isOn ->
       binding?.payServiceView?.visibility = if (isOn) View.VISIBLE else View.GONE
       binding?.freeServiceView?.visibility = if (isOn) View.GONE else View.VISIBLE
+      binding?.ccbPayextra?.visibility = if (isOn) View.VISIBLE else View.GONE
     }
     listenerEditText()
   }
