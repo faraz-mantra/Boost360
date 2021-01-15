@@ -1,6 +1,8 @@
 package com.appservice.ui.catalog.catalogService.information
 
 import android.content.Intent
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -39,6 +41,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private var secondaryImage: ArrayList<FileModel> = ArrayList()
   private var adapterSpec: AppBaseRecyclerViewAdapter<KeySpecification>? = null
   private var adapterImage: AppBaseRecyclerViewAdapter<FileModel>? = null
+  private var ordersQuantity: Int = 0
 
   private var secondaryDataImage: ArrayList<DataImage>? = null
   private var gstProductData: DataG? = null
@@ -61,12 +64,12 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     super.onCreateView()
     WebEngageController.trackEvent("Service other information catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
 
-    setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage,
-        binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst)
+    setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage, binding?.civIncreaseQuantityOrder, binding?.civDecreseQuantityOrder, binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst)
     product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? Product
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? DataG
-    secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
+    secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
+            ?: ArrayList()
     tagList = product?.tags ?: ArrayList()
     specList = if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
     if (isEdit == true) {
@@ -82,8 +85,10 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun setUiText() {
+    ordersQuantity = product?.maxCodOrders!!
 //    binding?.edtServiceCategory?.setText(product?.category ?: "")
     binding?.edtBrand?.setText(product?.brandName ?: "")
+    binding?.ctvQuantityOrderStatus?.setText(ordersQuantity.toString())
     if (gstProductData != null) binding?.edtGst?.setText("${(gstProductData?.gstSlab ?: 0.0).toInt()} %")
     setAdapter()
   }
@@ -93,6 +98,11 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
       adapterSpec = AppBaseRecyclerViewAdapter(baseActivity, specList, this@ServiceInformationFragment)
       adapter = adapterSpec
     }
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+    inflater.inflate(R.menu.menu_product_info, menu)
   }
 
   override fun onClick(v: View) {
@@ -115,6 +125,16 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
       }
       binding?.btnConfirm -> validateAnnGoBack()
       binding?.btnClickPhoto -> openImagePicker()
+      binding?.civIncreaseQuantityOrder -> {
+        ++ordersQuantity
+        binding?.ctvQuantityOrderStatus?.text = ordersQuantity.toString()
+
+      }
+      binding?.civDecreseQuantityOrder -> {
+        --ordersQuantity
+        binding?.ctvQuantityOrderStatus?.text = ordersQuantity.toString()
+
+      }
     }
   }
 
@@ -166,6 +186,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 //        product?.category = serviceCategory
         product?.brandName = brand
         product?.tags = tagList
+        product?.maxCodOrders = ordersQuantity
         product?.otherSpecification = otherSpec
         if (gstProductData == null) gstProductData = DataG()
         gstProductData?.gstSlab = gst.toDoubleOrNull() ?: 0.0
