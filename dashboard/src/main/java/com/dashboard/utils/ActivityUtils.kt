@@ -20,6 +20,7 @@ import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.model.live.premiumBanner.PromoAcademyBanner
 import com.dashboard.pref.*
+import com.framework.utils.convertStringToList
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.floatMessage.MessageModel
@@ -27,6 +28,7 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
+import java.util.ArrayList
 
 
 const val VISITS_TYPE_STRING = "visits_type_string"
@@ -219,7 +221,7 @@ fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOp
     intent.putExtra("isOpenCardFragment", isOpenCardFragment)
     intent.putExtra("screenType", screenType)
     intent.putExtra("accountType", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
-    intent.putStringArrayListExtra("userPurchsedWidgets", StoreWidgets)
+    intent.putStringArrayListExtra("userPurchsedWidgets", session.getStoreWidgets() as ArrayList<String>)
     if (session.fPEmail != null) {
       intent.putExtra("email", session.fPEmail)
     } else {

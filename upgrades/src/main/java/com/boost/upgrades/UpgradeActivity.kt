@@ -107,7 +107,7 @@ class UpgradeActivity : AppCompatActivity() {
     userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")
     if(userPurchsedWidgets != null){
     for (a in userPurchsedWidgets)  {
-//      println("userPurchsedWidgets  ${userPurchsedWidgets}")
+      println("userPurchsedWidgets  ${userPurchsedWidgets}")
     }
 
     }
