@@ -312,16 +312,16 @@
                 android:padding="@dimen/size_10">
 
                 <com.framework.views.customViews.CustomTextView
-                  android:layout_width="0dp"
-                  android:layout_height="wrap_content"
-                  android:text="Want your clients to pay for this service?"
-                  android:textColor="@color/black_4f4f4f"
-                  android:textSize="12sp"
-                  app:fontFamily="@font/semi_bold"
-                  app:layout_constraintBottom_toBottomOf="parent"
-                  app:layout_constraintLeft_toLeftOf="parent"
-                  app:layout_constraintRight_toLeftOf="@id/toggle_service"
-                  app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Appointment for this service is paid?"
+                    android:textColor="@color/black_4f4f4f"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/semi_bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/toggle_service"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.appservice.views.toggle.widget.LabeledSwitch
                   android:id="@+id/toggle_service"
