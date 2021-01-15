@@ -202,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_3"
                 android:layout_marginTop="@dimen/size_20"
-                android:text="Service Description*"
+                android:text="Service description*"
                 android:textColor="@color/black_4a4a4a"
                 app:fontFamily="@font/semi_bold"
                 app:textType="BODY_3" />
@@ -257,7 +257,7 @@
                 android:drawableStart="@drawable/ic_clock_gray"
                 android:drawablePadding="@dimen/size_8"
                 android:hint="Enter duration in minutes"
-                android:inputType="textCapWords"
+                android:inputType="number"
                 android:padding="@dimen/size_12"
                 android:singleLine="true"
                 android:textColor="@color/warm_grey_10"
@@ -268,6 +268,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_5"
+                android:visibility="gone"
                 android:text="Add buffer time before and after"
                 android:textColor="@color/primary_grey"
                 android:theme="@style/ActiveTheme" />
@@ -279,8 +280,8 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_20"
               android:drawablePadding="@dimen/size_4"
-              android:includeFontPadding="false"
-              android:text="Payment info"
+                android:includeFontPadding="false"
+                android:text="Pricing info"
                 android:drawableTint="@color/orange"
               android:textColor="@color/black_4a4a4a"
               app:drawableEndCompat="@drawable/ic_question_circular_blue"
@@ -344,6 +345,7 @@
                   android:textColor="@color/primary_grey"
                   android:id="@+id/ccb_payextra"
                   android:theme="@style/ActiveTheme"
+                  android:visibility="gone"
                   android:text="Price includes taxes"
                   android:layout_height="wrap_content"/>
 

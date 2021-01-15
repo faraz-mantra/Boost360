@@ -198,6 +198,7 @@
   <string name="stock_availability">Stock Availability</string>
     <string name="add_change_warehouse"><u>ADD/CHANGE WAREHOUSE</u></string>
     <string name="service_delivery_configuration">Service Delivery Configuration*</string>
+    <string name="u_add_session_u"><u>Add Session</u></string>
     <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>

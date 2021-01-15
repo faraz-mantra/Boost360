@@ -120,11 +120,11 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
             binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
     binding?.toggleService?.isOn = false
     binding?.payServiceView?.visibility = View.GONE
-    binding?.ccbPayextra?.visibility = View.GONE
+//    binding?.ccbPayextra?.visibility = View.GONE
     binding?.toggleService?.setOnToggledListener { _, isOn ->
       binding?.payServiceView?.visibility = if (isOn) View.VISIBLE else View.GONE
       binding?.freeServiceView?.visibility = if (isOn) View.GONE else View.VISIBLE
-      binding?.ccbPayextra?.visibility = if (isOn) View.VISIBLE else View.GONE
+//      binding?.ccbPayextra?.visibility = if (isOn) View.VISIBLE else View.GONE
     }
     listenerEditText()
   }
@@ -222,7 +222,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     binding?.tvServiceName?.setText(product?.Name)
     binding?.tvDesc?.setText(product?.Description)
     binding?.edtServiceCategory?.setText(product?.category)
-    binding?.tvDesc?.setText(product?.Description)
+    binding?.edtServiceTime?.setText(product?.ShipmentDuration)
     if (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) {
       binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
       binding?.bankAccountName?.visible()
@@ -472,16 +472,22 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun isValid(): Boolean {
     val serviceName = binding?.tvServiceName?.text.toString()
+    val shipmentDuration = binding?.edtServiceTime?.text
     val serviceCategory = binding?.edtServiceCategory?.text.toString()
     val serviceDesc = binding?.tvDesc?.text.toString()
     val amount = binding?.amountEdt?.text.toString().toDoubleOrNull() ?: 0.0
     val discount = binding?.discountEdt?.text.toString().toDoubleOrNull() ?: 0.0
-    val tongle = binding?.toggleService?.isOn ?: false
+    val toggle = binding?.toggleService?.isOn ?: false
     val externalUrlName = binding?.edtNameDesc?.text?.toString() ?: ""
     val externalUrl = binding?.edtUrl?.text?.toString() ?: ""
 
     if (serviceImage == null && product?.ImageUri.isNullOrEmpty()) {
       showLongToast(resources.getString(R.string.add_service_image))
+      return false
+    }
+
+    if (shipmentDuration.isNullOrEmpty()) {
+      showLongToast("Enter service duration.")
       return false
     } else if (serviceName.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_service_name))
@@ -492,16 +498,16 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     } else if (serviceDesc.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_service_desc))
       return false
-    } else if (tongle && amount <= 0.0) {
+    } else if (toggle && amount <= 0.0) {
       showLongToast(resources.getString(R.string.enter_valid_price))
       return false
-    } else if (tongle && (discount > amount)) {
+    } else if (toggle && (discount > amount)) {
       showLongToast(resources.getString(R.string.discount_amount_not_greater_than_price))
       return false
-    } else if (tongle && (product?.paymentType.isNullOrEmpty() || (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null))) {
+    } else if (toggle && (product?.paymentType.isNullOrEmpty() || (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null))) {
       showLongToast(resources.getString(R.string.please_add_bank_detail))
       return false
-    } else if (tongle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty()))) {
+    } else if (toggle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty()))) {
       showLongToast(resources.getString(R.string.please_enter_valid_url_name))
       return false
     }
@@ -509,11 +515,12 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     product?.FPTag = fpTag
     product?.CurrencyCode = currencyType
     product?.Name = serviceName
-    product?.category=serviceCategory
+    product?.ShipmentDuration = shipmentDuration.toString()
+    product?.category = serviceCategory
     product?.Description = serviceDesc
-    product?.Price = if (tongle) amount else 0.0
-    product?.DiscountAmount = if (tongle) discount else 0.0
-    if (tongle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)) {
+    product?.Price = if (toggle) amount else 0.0
+    product?.DiscountAmount = if (toggle) discount else 0.0
+    if (toggle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)) {
       product?.BuyOnlineLink = BuyOnlineLink(externalUrl, externalUrlName)
     } else product?.BuyOnlineLink = BuyOnlineLink()
 
@@ -653,9 +660,10 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    inflater.inflate(R.menu.menu_help, menu)
-//    menuDelete = menu.findItem(R.id.id_delete)
-//    menuDelete?.isVisible = isEdit ?: false
+//    inflater.inflate(R.menu.menu_help, menu)
+    inflater.inflate(R.menu.ic_menu_delete_new, menu)
+    menuDelete = menu.findItem(R.id.id_delete)
+    menuDelete?.isVisible = isEdit ?: false
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

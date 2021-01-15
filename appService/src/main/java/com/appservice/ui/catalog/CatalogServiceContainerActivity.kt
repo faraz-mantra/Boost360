@@ -30,17 +30,12 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   private var serviceInformationFragment: ServiceInformationFragment? = null
   private var productDetailFragment: ProductDetailFragment? = null
   private var productInformationFragment: ProductInformationFragment? = null
+  private var weeklyAppointmentFragment: StaffTimingFragment? = null
 
   override fun getLayout(): Int {
     return com.framework.R.layout.activity_fragment_container
   }
 
-//  override fun customTheme(): Int? {
-//    return when (type) {
-//      FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION -> R.style.AppBaseTheme
-//      else -> super.customTheme()
-//    }
-//  }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
     return BaseViewModel::class.java
@@ -59,7 +54,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW -> R.style.CatalogTheme
-      FragmentType.SERVICE_INFORMATION -> R.style.AppTheme_cataloge
+      FragmentType.SERVICE_INFORMATION, FragmentType.TIMING_STAFF -> R.style.CatalogTheme_Information
       else -> super.customTheme()
     }
   }
@@ -88,7 +83,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.TIMING_STAFF -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
 
       else -> super.getNavigationIcon()
     }
@@ -100,12 +95,19 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.SERVICE_DETAIL_VIEW -> resources.getString(R.string.service_details)
       FragmentType.PRODUCT_DETAIL_VIEW -> "Adding a product"
       FragmentType.PRODUCT_INFORMATION -> "Other Info"
+      FragmentType.TIMING_STAFF -> "Weekly appointment schedule"
       else -> super.getToolbarTitle()
     }
   }
 
   override fun getToolbarTitleGravity(): Int {
-    return Gravity.START
+    return when (type) {
+      FragmentType.TIMING_STAFF -> Gravity.CENTER
+      else -> {
+        Gravity.START
+      }
+    }
+
   }
 
 
@@ -123,6 +125,10 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   private fun getFragmentInstance(type: FragmentType?): BaseFragment<*, *>? {
     return when (type) {
+      FragmentType.TIMING_STAFF -> {
+        weeklyAppointmentFragment = StaffTimingFragment.newInstance()
+        weeklyAppointmentFragment
+      }
       FragmentType.SERVICE_DETAIL_VIEW -> {
         serviceDetailFragment = ServiceDetailFragment.newInstance()
         serviceDetailFragment
@@ -150,6 +156,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     serviceInformationFragment?.onActivityResult(requestCode, resultCode, data)
     productInformationFragment?.onActivityResult(requestCode, resultCode, data)
     productDetailFragment?.onActivityResult(requestCode, resultCode, data)
+    weeklyAppointmentFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onBackPressed() {
@@ -158,6 +165,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.SERVICE_INFORMATION -> serviceInformationFragment?.onNavPressed()
       FragmentType.PRODUCT_INFORMATION -> productInformationFragment?.onNavPressed()
       FragmentType.PRODUCT_DETAIL_VIEW -> productDetailFragment?.onNavPressed()
+//      FragmentType.TIMING_STAFF -> weeklyAppointmentFragment.
       else -> super.onBackPressed()
     }
   }
