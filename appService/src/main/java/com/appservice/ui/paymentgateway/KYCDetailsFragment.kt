@@ -32,8 +32,8 @@ import com.appservice.model.razor.RazorDataResponse
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.catlogService.widgets.ClickType
-import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
+import com.appservice.ui.catalog.widgets.ClickType
+import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.*
 import com.appservice.viewmodel.WebBoostKitViewModel
 import com.framework.exceptions.NoNetworkException

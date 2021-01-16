@@ -95,64 +95,61 @@ public class ManageContentFragment extends Fragment {
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
-        SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, new OnItemClickCallback() {
-            @Override
-            public void onItemClick(int pos) {
-                Intent intent = null;
-                switch (pos) {
-                    case 0:
-                        WebEngageController.trackEvent("Clicked on products catalogue", "MANAGE CONTENT", session.getFpTag());
-                        intent = new Intent(mContext, ProductCatalogActivity.class);
-                        break;
-                    case 1:
-                        AppFragmentContainerActivity.startFragmentAppActivity(getActivity(), UPDATE_LATEST_STORY_VIEW, new Bundle(), false);
+        SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, pos -> {
+            Intent intent = null;
+            switch (pos) {
+                case 0:
+                    WebEngageController.trackEvent("Clicked on products catalogue", "MANAGE CONTENT", session.getFpTag());
+                    intent = new Intent(mContext, ProductCatalogActivity.class);
+                    break;
+                case 1:
+                    AppFragmentContainerActivity.startFragmentAppActivity(getActivity(), UPDATE_LATEST_STORY_VIEW, new Bundle(), false);
 //                        ((SidePanelFragment.OnItemClickListener) mContext).onClick(getString(R.string.update));
-                        return;
-                    case 2:
-                        intent = new Intent(mContext, ImageMenuActivity.class);
-                        break;
-                    case 3:
-                        intent = new Intent(mContext, FragmentsFactoryActivity.class);
-                        intent.putExtra("fragmentName", "Business_Profile_Fragment_V2");
-                        break;
-                    case 4:
-                        intent = new Intent(mContext, TestimonialsActivity.class);
-                        break;
-                    case 5:
-                        intent = new Intent(mContext, CustomPageActivity.class);
-                        break;
-                    case 6:
-                        if (experience_code.equals("HOT")) {
-                            intent = new Intent(mContext, PlacesNearByActivity.class);
-                        } else if (experience_code.equals("MFG")) {
-                            intent = new Intent(mContext, ProjectAndTermsActivity.class);
-                        } else if (experience_code.equals("EDU")) {
-                            intent = new Intent(mContext, ToppersActivity.class);
-                        }
-                        break;
-                    case 7:
-                        if (experience_code.equals("HOT")) {
-                            intent = new Intent(mContext, TripAdvisorActivity.class);
-                        } else if (experience_code.equals("MFG")) {
-                            intent = new Intent(mContext, DigitalBrochuresActivity.class);
-                        } else if (experience_code.equals("EDU")) {
-                            intent = new Intent(mContext, BatchesActivity.class);
-                        }
-                        break;
-                    case 8:
-                        if (experience_code.equals("HOT")) {
-                            intent = new Intent(mContext, SeasonalOffersActivity.class);
-                        } else if (experience_code.equals("EDU")) {
-                            intent = new Intent(mContext, FacultyActivity.class);
-                        }
-                        break;
-                    default:
-                        return;
-                }
-                if (intent != null) {
-                    startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
+                    return;
+                case 2:
+                    intent = new Intent(mContext, ImageMenuActivity.class);
+                    break;
+                case 3:
+                    intent = new Intent(mContext, FragmentsFactoryActivity.class);
+                    intent.putExtra("fragmentName", "Business_Profile_Fragment_V2");
+                    break;
+                case 4:
+                    intent = new Intent(mContext, TestimonialsActivity.class);
+                    break;
+                case 5:
+                    intent = new Intent(mContext, CustomPageActivity.class);
+                    break;
+                case 6:
+                    if (experience_code.equals("HOT")) {
+                        intent = new Intent(mContext, PlacesNearByActivity.class);
+                    } else if (experience_code.equals("MFG")) {
+                        intent = new Intent(mContext, ProjectAndTermsActivity.class);
+                    } else if (experience_code.equals("EDU")) {
+                        intent = new Intent(mContext, ToppersActivity.class);
+                    }
+                    break;
+                case 7:
+                    if (experience_code.equals("HOT")) {
+                        intent = new Intent(mContext, TripAdvisorActivity.class);
+                    } else if (experience_code.equals("MFG")) {
+                        intent = new Intent(mContext, DigitalBrochuresActivity.class);
+                    } else if (experience_code.equals("EDU")) {
+                        intent = new Intent(mContext, BatchesActivity.class);
+                    }
+                    break;
+                case 8:
+                    if (experience_code.equals("HOT")) {
+                        intent = new Intent(mContext, SeasonalOffersActivity.class);
+                    } else if (experience_code.equals("EDU")) {
+                        intent = new Intent(mContext, FacultyActivity.class);
+                    }
+                    break;
+                default:
+                    return;
+            }
+            if (intent != null) {
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         adapter.setItems(adapterImages, adapterTexts);

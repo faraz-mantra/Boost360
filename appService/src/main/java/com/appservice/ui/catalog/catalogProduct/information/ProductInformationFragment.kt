@@ -1,6 +1,8 @@
-package com.appservice.ui.catlogService.information
+package com.appservice.ui.catalog.catalogProduct.information
 
 import android.content.Intent
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -8,7 +10,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
-import com.appservice.databinding.FragmentServiceInformationBinding
+import com.appservice.databinding.FragmentProductInformationBinding
 import com.appservice.model.FileModel
 import com.appservice.model.KeySpecification
 import com.appservice.model.auth_3
@@ -19,9 +21,9 @@ import com.appservice.model.serviceProduct.gstProduct.response.DataG
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.catlogService.widgets.ClickType
-import com.appservice.ui.catlogService.widgets.GstDetailsBottomSheet
-import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
+import com.appservice.ui.catalog.widgets.ClickType
+import com.appservice.ui.catalog.widgets.GstDetailsBottomSheet
+import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.observeOnce
@@ -30,7 +32,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
-class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
+class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
   private var product: Product? = null
   private var isEdit: Boolean? = null
@@ -39,18 +41,20 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private var secondaryImage: ArrayList<FileModel> = ArrayList()
   private var adapterSpec: AppBaseRecyclerViewAdapter<KeySpecification>? = null
   private var adapterImage: AppBaseRecyclerViewAdapter<FileModel>? = null
+  private var availableStock = 0;
+  private var maxOrder = 0;
 
   private var secondaryDataImage: ArrayList<DataImage>? = null
   private var gstProductData: DataG? = null
 
   companion object {
-    fun newInstance(): ServiceInformationFragment {
-      return ServiceInformationFragment()
+    fun newInstance(): ProductInformationFragment {
+      return ProductInformationFragment()
     }
   }
 
   override fun getLayout(): Int {
-    return R.layout.fragment_service_information
+    return R.layout.fragment_product_information
   }
 
   override fun getViewModelClass(): Class<ServiceViewModel> {
@@ -62,7 +66,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     WebEngageController.trackEvent("Service other information catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
 
     setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage,
-        binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst)
+            binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.civDecreseStock,
+            binding?.civIncreaseStock, binding?.civIncreaseQuantityOrder, binding?.civDecreseQuantityOrder)
     product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? Product
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? DataG
@@ -82,15 +87,21 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun setUiText() {
-    binding?.edtServiceCategory?.setText(product?.category ?: "")
+//    binding?.edtProductCategory?.setText(product?.category ?: "")
+    maxOrder = product?.maxCodOrders!!
+    binding?.specKey?.setText(product?.keySpecification?.key)
+    binding?.specValue?.setText(product?.keySpecification?.value)
+    availableStock = product?.availableUnits!!
     binding?.edtBrand?.setText(product?.brandName ?: "")
+    binding?.ctvCurrentStock?.text = product?.availableUnits.toString()
+    binding?.ctvQuantityOrderStatus?.text = product?.maxCodOrders.toString()
     if (gstProductData != null) binding?.edtGst?.setText("${(gstProductData?.gstSlab ?: 0.0).toInt()} %")
     setAdapter()
   }
 
   private fun specificationAdapter() {
     binding?.rvSpecification?.apply {
-      adapterSpec = AppBaseRecyclerViewAdapter(baseActivity, specList, this@ServiceInformationFragment)
+      adapterSpec = AppBaseRecyclerViewAdapter(baseActivity, specList, this@ProductInformationFragment)
       adapter = adapterSpec
     }
   }
@@ -100,11 +111,11 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     when (v) {
       binding?.edtGst -> openGStDetail()
       binding?.btnAddTag -> {
-        val txtTag = binding?.edtServiceTag?.text.toString()
+        val txtTag = binding?.edtProductTag?.text.toString()
         if (txtTag.isNotEmpty()) {
           tagList.add(txtTag)
           serviceTagsSet()
-          binding?.edtServiceTag?.setText("")
+          binding?.edtProductTag?.setText("")
         }
       }
       binding?.btnAddSpecification -> {
@@ -115,6 +126,26 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
       }
       binding?.btnConfirm -> validateAnnGoBack()
       binding?.btnClickPhoto -> openImagePicker()
+      binding?.civDecreseQuantityOrder -> {
+        maxOrder--
+        binding?.ctvQuantityOrderStatus?.text = maxOrder.toString()
+      }
+      binding?.civIncreaseQuantityOrder -> {
+        maxOrder++
+        binding?.ctvQuantityOrderStatus?.text = maxOrder.toString()
+      }
+      binding?.civDecreseStock -> when{
+        availableStock>0 ->{
+          availableStock--
+          binding?.ctvCurrentStock?.text = availableStock.toString()
+
+        }
+      }
+      binding?.civIncreaseStock -> {
+        availableStock++
+        binding?.ctvCurrentStock?.text = availableStock.toString()
+
+      }
     }
   }
 
@@ -122,7 +153,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     val filterSheet = ImagePickerBottomSheet()
     filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(this@ServiceInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
+    filterSheet.show(this@ProductInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   private fun openImagePicker(it: ClickType) {
@@ -136,19 +167,23 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun validateAnnGoBack() {
-    val serviceCategory = binding?.edtServiceCategory?.text?.toString() ?: ""
+//    val serviceCategory = binding?.edtProductCategory?.text?.toString() ?: ""
     val brand = binding?.edtBrand?.text?.toString() ?: ""
+    val keySpecification = binding?.specKey?.text?.toString() ?: ""
+    val valueSpecification = binding?.specValue?.text?.toString() ?: ""
+
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
-    val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>) ?: ArrayList()
+    val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>)
+            ?: ArrayList()
     when {
 //      secondaryImage.isNullOrEmpty() -> {
 //        showLongToast("Please select at least one secondary image.")
 //        return
 //      }
-      serviceCategory.isNullOrEmpty() -> {
-        showLongToast("Service category field can't empty.")
-        return
-      }
+//      serviceCategory.isNullOrEmpty() -> {
+//        showLongToast("Product category field can't empty.")
+//        return
+//      }
 //      brand.isNullOrEmpty() -> {
 //        showLongToast("Brand name field can't empty.")
 //        return
@@ -163,9 +198,13 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 //      }
       else -> {
         WebEngageController.trackEvent("Other information confirm", "SERVICE CATALOGUE ADD/UPDATE", "")
-        product?.category = serviceCategory
+//        product?.category = serviceCategory
         product?.brandName = brand
+        product?.keySpecification?.key = keySpecification
+        product?.keySpecification?.value = valueSpecification
         product?.tags = tagList
+        product?.maxCodOrders = maxOrder
+        product?.availableUnits = availableStock
         product?.otherSpecification = otherSpec
         if (gstProductData == null) gstProductData = DataG()
         gstProductData?.gstSlab = gst.toDoubleOrNull() ?: 0.0
@@ -181,15 +220,15 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun serviceTagsSet() {
-    binding?.chipsService?.removeAllViews()
+    binding?.chipsproduct?.removeAllViews()
     tagList.forEach { tag ->
-      val mChip: Chip = baseActivity.layoutInflater.inflate(R.layout.item_chip, binding?.chipsService, false) as Chip
+      val mChip: Chip = baseActivity.layoutInflater.inflate(R.layout.item_chip, binding?.chipsproduct, false) as Chip
       mChip.text = tag
       mChip.setOnCloseIconClickListener {
-        binding?.chipsService?.removeView(mChip)
+        binding?.chipsproduct?.removeView(mChip)
         tagList.remove(tag)
       }
-      binding?.chipsService?.addView(mChip)
+      binding?.chipsproduct?.addView(mChip)
     }
   }
 
@@ -217,7 +256,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private fun setAdapter() {
     if (adapterImage == null) {
       binding?.rvAdditionalDocs?.apply {
-        adapterImage = AppBaseRecyclerViewAdapter(baseActivity, secondaryImage, this@ServiceInformationFragment)
+        adapterImage = AppBaseRecyclerViewAdapter(baseActivity, secondaryImage, this@ProductInformationFragment)
         adapter = adapterImage
       }
     } else adapterImage?.notifyDataSetChanged()
@@ -266,19 +305,24 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private fun openGStDetail() {
     val gstSheet = GstDetailsBottomSheet()
     gstSheet.onClicked = { binding?.edtGst?.setText("$it %") }
-    gstSheet.show(this@ServiceInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
+    gstSheet.show(this@ProductInformationFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
   fun onNavPressed() {
     dialogLogout()
   }
 
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+//    inflater.inflate(R.menu.menu_product_info, menu)
+  }
+
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-        .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
-        .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
-          baseActivity.finish()
-          d.dismiss()
-        }.show()
+            .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
+            .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
+              baseActivity.finish()
+              d.dismiss()
+            }.show()
   }
 }

@@ -1,4 +1,4 @@
-package com.appservice.ui.catlogService.widgets
+package com.appservice.ui.catalog.widgets
 
 import android.view.View
 import com.appservice.R
