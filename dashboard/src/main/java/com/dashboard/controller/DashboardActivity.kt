@@ -14,8 +14,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.anachat.chatsdk.AnaCore
-import com.appservice.ui.catlogService.widgets.ClickType
-import com.appservice.ui.catlogService.widgets.ImagePickerBottomSheet
+import com.appservice.ui.catalog.widgets.ClickType
+import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType

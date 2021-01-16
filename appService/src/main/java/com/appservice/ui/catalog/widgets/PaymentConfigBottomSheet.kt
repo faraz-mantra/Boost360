@@ -1,4 +1,4 @@
-package com.appservice.ui.catlogService.widgets
+package com.appservice.ui.catalog.widgets
 
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
