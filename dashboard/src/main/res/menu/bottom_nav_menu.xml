@@ -13,8 +13,8 @@
 
   <item
     android:id="@+id/navigation_customer"
-    android:icon="@drawable/ic_customers_inactive_nav"
-    android:title="@string/customer" />
+    android:icon="@drawable/ic_enquiry_inactive_nav"
+    android:title="@string/enquiry" />
 
   <item
     android:id="@+id/navigation_add_ons"

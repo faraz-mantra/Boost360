@@ -167,8 +167,7 @@ class NiceBottomBar : View {
 
       if (itemsActive.isNullOrEmpty().not() && (itemsActive.size == items.size)) {
         item.icon = if (i == activeItem) itemsActive[i].icon else itemsInActive[i].icon
-        val title = if (i == 2 && (pref?.getString("GET_FP_EXPERIENCE_CODE", "") == "DOC" || pref?.getString("GET_FP_EXPERIENCE_CODE", "") == "HOS")) "Patient" else ""
-        item.title = if (i == 2 && title.isNotEmpty()) title else if (i == activeItem) itemsActive[i].title else itemsInActive[i].title
+        item.title = if (i == activeItem) itemsActive[i].title else itemsInActive[i].title
       } else DrawableCompat.setTint(item.icon, if (i == activeItem) currentActiveItemColor else itemTextColor)
 
       item.icon.mutate()

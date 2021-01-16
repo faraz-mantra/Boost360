@@ -1,9 +1,12 @@
 package com.dashboard.controller.ui.dashboard
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.app.ActivityCompat
 import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -68,6 +71,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterMarketBanner: AppBaseRecyclerViewAdapter<DashboardMarketplaceBanner>? = null
   private var adapterAcademy: AppBaseRecyclerViewAdapter<DashboardAcademyBanner>? = null
   private var siteMeterData: SiteMeterScoreDetails? = null
+  private var ctaFileLink: String? = null
 
   override fun getLayout(): Int {
     return R.layout.fragment_dashboard
@@ -80,7 +84,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.btnVisitingCard,binding?.txtDomainName)
+    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.btnVisitingCard, binding?.txtDomainName)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     apiSellerSummary()
@@ -110,7 +114,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onResume() {
     super.onResume()
-    baseActivity.runOnUiThread { getFloatMessage() }
+    binding?.mainContent?.post { getFloatMessage() }
   }
 
   private fun getFloatMessage() {
@@ -242,7 +246,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun setUserData() {
     binding?.txtBusinessName?.text = session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
-    binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(true)}</u>")
+    binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName()}</u>")
     var imageLogoUri = session?.getFPDetails(GET_FP_DETAILS_LogoUrl)
     if (imageLogoUri.isNullOrEmpty().not() && imageLogoUri!!.contains("http").not()) {
       imageLogoUri = BASE_IMAGE_URL + imageLogoUri
@@ -377,8 +381,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (type) {
       QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
-      QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startAddTestimonial(session, true)
-      QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCreateCustomPage(session, true)
+      QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
+      QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)
       QuickActionItem.QuickActionType.LIST_SERVICES,
       QuickActionItem.QuickActionType.LIST_PRODUCT,
       QuickActionItem.QuickActionType.LIST_DRUG_MEDICINE,
@@ -477,9 +481,26 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun academyBannerBoostClick(data: DashboardAcademyBanner) {
     when {
-      data.ctaFileLink.isNullOrEmpty().not() -> baseActivity.startDownloadUri(session, data.ctaFileLink?.trim()!!)
+      data.ctaFileLink.isNullOrEmpty().not() -> {
+        this.ctaFileLink = data.ctaFileLink
+        if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED ||
+            ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+          requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
+        } else baseActivity.startDownloadUri(data.ctaFileLink?.trim()!!)
+      }
       data.ctaWebLink.isNullOrEmpty().not() -> baseActivity.startWebViewPageLoad(session, data.ctaWebLink?.trim()!!)
       data.ctaYoutubeLink.isNullOrEmpty().not() -> baseActivity.startYouTube(session, data.ctaYoutubeLink?.trim()!!)
+    }
+  }
+
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    when (requestCode) {
+      100 -> {
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+          if (ctaFileLink.isNullOrEmpty().not()) baseActivity.startDownloadUri(ctaFileLink?.trim()!!)
+        } else showShortToast("Permission denied to read your External storage")
+        return
+      }
     }
   }
 
@@ -494,7 +515,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 }
 
-private fun UserSessionManager.saveUserSummary(summary: SummaryEntity?) {
+fun UserSessionManager.saveUserSummary(summary: SummaryEntity?) {
   enquiryCount = (summary?.noOfMessages ?: 0).toString()
   subcribersCount = summary?.noOfSubscribers.toString()
   visitorsCount = (summary?.noOfUniqueViews ?: 0).toString()

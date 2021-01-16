@@ -50,6 +50,10 @@ data class OrderItem(
     return parseDate(CreatedOn, FORMAT_SERVER_DATE, format, timeZone = TimeZone.getTimeZone("IST"))?.parseDate(DateUtils.FORMAT_DD_MM_YYYY)
   }
 
+  fun getInvoiceUrl(): String {
+    return BillingDetails?.InvoiceUrl?.trim() ?: ""
+  }
+
   fun referenceNumber(): String {
     return ReferenceNumber?.trim()?.toLowerCase() ?: ""
   }

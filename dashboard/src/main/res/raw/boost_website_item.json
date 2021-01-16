@@ -1,0 +1,498 @@
+{
+  "data": [
+    {
+      "type": "DOC",
+      "action_item": [
+        {
+          "title": "Service Catalogue",
+          "desc": "Service Catalogue",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Latest Updates & Health Tips",
+          "desc": "Latest Updates & Health Tips",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All Images",
+          "desc": "All Images",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Business Profile",
+          "desc": "Business Profile",
+          "type": "business_profile",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "desc": "Testimonials",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom Page",
+          "desc": "Custom Page",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "HOS",
+      "action_item": [
+        {
+          "title": "Service Catalogue",
+          "desc": "Service Catalogue",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Latest Updates & Health Tips",
+          "desc": "Latest Updates & Health Tips",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All Images",
+          "desc": "All Images",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Business Profile",
+          "desc": "Business Profile",
+          "type": "business_profile",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "desc": "Testimonials",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom Page",
+          "desc": "Custom Page",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "RTL",
+      "action_item": [
+        {
+          "title": "Product Catalogue",
+          "desc": "Product Catalogue",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Latest Updates & News",
+          "desc": "Latest Updates & News",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All Images",
+          "desc": "All Images",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Business Profile",
+          "desc": "Business Profile",
+          "type": "business_profile",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "desc": "Testimonials",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom Page",
+          "desc": "Custom Page",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Project & Teams",
+          "desc": "Project & Teams",
+          "type": "project_teams",
+          "isLock": false,
+          "premiumCode": "PROJECTTEAM"
+        },
+        {
+          "title": "Unlimited digital brochures",
+          "desc": "Unlimited digital brochures",
+          "type": "unlimited_digital_brochures",
+          "isLock": false,
+          "premiumCode": "BROCHURE"
+        }
+      ]
+    },
+    {
+      "type": "EDU",
+      "action_item": [
+        {
+          "title": "Course Catalogue",
+          "desc": "Course Catalogue",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Latest Updates & Tips",
+          "desc": "Latest Updates & Tips",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All Images",
+          "desc": "All Images",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Business Profile",
+          "desc": "Business Profile",
+          "type": "business_profile",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "desc": "Testimonials",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom Page",
+          "desc": "Custom Page",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Toppers of Institute",
+          "desc": "Toppers of Institute",
+          "type": "toppers_institute",
+          "isLock": false,
+          "premiumCode": "OUR-TOPPERS"
+        },
+        {
+          "title": "Upcoming Batches",
+          "desc": "Upcoming Batches",
+          "type": "upcoming_batches",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Faculty Management",
+          "desc": "Faculty Management",
+          "type": "faculty_management",
+          "isLock": false,
+          "premiumCode": "FACULTY"
+        }
+      ]
+    },
+    {
+      "type": "HOT",
+      "action_item": [
+        {
+          "title": "Room Catalogue",
+          "desc": "Room Catalogue",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Latest Updates, News & Events",
+          "desc": "Latest Updates, News & Events",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All Images",
+          "desc": "All Images",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Business Profile",
+          "desc": "Business Profile",
+          "type": "business_profile",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "desc": "Testimonials",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom Page",
+          "desc": "Custom Page",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Places to look around",
+          "desc": "Places to look around",
+          "type": "places_look_around",
+          "isLock": false,
+          "premiumCode": "PLACES-TO-LOOK-AROUND"
+        },
+        {
+          "title": "Tripadviser Ratings",
+          "desc": "Tripadviser Ratings",
+          "type": "trip_adviser_ratings",
+          "isLock": false,
+          "premiumCode": "TRIPADVISOR-REVIEWS"
+        },
+        {
+          "title": "Seasonal Offers",
+          "desc": "Seasonal Offers",
+          "type": "seasonal_offers",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "MFG",
+      "action_item": [
+        {
+          "title": "Product Catalogue",
+          "desc": "Product Catalogue",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Latest Updates & News",
+          "desc": "Latest Updates & News",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All Images",
+          "desc": "All Images",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Business Profile",
+          "desc": "Business Profile",
+          "type": "business_profile",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "desc": "Testimonials",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom Page",
+          "desc": "Custom Page",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Project & Teams",
+          "desc": "Project & Teams",
+          "type": "project_teams",
+          "isLock": false,
+          "premiumCode": "PROJECTTEAM"
+        },
+        {
+          "title": "Unlimited digital brochures",
+          "desc": "Unlimited digital brochures",
+          "type": "unlimited_digital_brochures",
+          "isLock": false,
+          "premiumCode": "BROCHURE"
+        }
+      ]
+    },
+    {
+      "type": "CAF",
+      "action_item": [
+        {
+          "title": "Digital Food Menu",
+          "desc": "Digital Food Menu",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Latest Updates & Tips",
+          "desc": "Latest Updates & Tips",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All Images",
+          "desc": "All Images",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Business Profile",
+          "desc": "Business Profile",
+          "type": "business_profile",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "desc": "Testimonials",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom Page",
+          "desc": "Custom Page",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "SVC",
+      "action_item": [
+        {
+          "title": "Service Catalogue",
+          "desc": "Service Catalogue",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Latest Updates",
+          "desc": "Latest Updates",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All Images",
+          "desc": "All Images",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Business Profile",
+          "desc": "Business Profile",
+          "type": "business_profile",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "desc": "Testimonials",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom Page",
+          "desc": "Custom Page",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
+      "type": "SPA",
+      "action_item": [
+        {
+          "title": "Service Catalogue",
+          "desc": "Service Catalogue",
+          "type": "service_product_catalogue",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Latest Updates & Offers",
+          "desc": "Latest Updates & Offers",
+          "type": "latest_update_tips",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "All Images",
+          "desc": "All Images",
+          "type": "all_images",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Business Profile",
+          "desc": "Business Profile",
+          "type": "business_profile",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Testimonials",
+          "desc": "Testimonials",
+          "type": "testimonials",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Custom Page",
+          "desc": "Custom Page",
+          "type": "custom_page",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    }
+  ]
+}
+

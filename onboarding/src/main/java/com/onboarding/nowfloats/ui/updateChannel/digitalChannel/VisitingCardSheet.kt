@@ -40,7 +40,6 @@ import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
-
 const val WA_KEY = "58ede4d4ee786c1604f6c535"
 
 open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {

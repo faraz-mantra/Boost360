@@ -1,17 +1,13 @@
 package com.dashboard.utils
 
-import android.Manifest
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.checkSelfPermission
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
@@ -263,7 +259,7 @@ fun AppCompatActivity.startUpdateLatestStory(session: UserSessionManager) {
 }
 
 fun AppCompatActivity.startOldSiteMeter(session: UserSessionManager) {
-  startAppActivity(bundle = Bundle().apply { putInt("StorebizFloats",MessageModel().getStoreBizFloatSize()) },fragmentType = "SITE_METER_OLD_VIEW")
+  startAppActivity(bundle = Bundle().apply { putInt("StorebizFloats", MessageModel().getStoreBizFloatSize()) }, fragmentType = "SITE_METER_OLD_VIEW")
 }
 
 fun AppCompatActivity.startAppActivity(bundle: Bundle = Bundle(), fragmentType: String) {
@@ -356,7 +352,7 @@ fun AppCompatActivity.startProductGallery(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startAddTestimonial(session: UserSessionManager?, isAdd: Boolean) {
+fun AppCompatActivity.startTestimonial(session: UserSessionManager?, isAdd: Boolean=false) {
   try {
     val text = if (isAdd) "Add Testimonial Page" else "Testimonial Page"
     WebEngageController.trackEvent(text, "startview", session?.fpTag);
@@ -369,7 +365,7 @@ fun AppCompatActivity.startAddTestimonial(session: UserSessionManager?, isAdd: B
   }
 }
 
-fun AppCompatActivity.startCreateCustomPage(session: UserSessionManager?, isAdd: Boolean) {
+fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boolean=false) {
   try {
     val text = if (isAdd) "Add Custom Page" else "Custom Page"
     WebEngageController.trackEvent(text, "startview", session?.fpTag)
@@ -501,6 +497,17 @@ fun AppCompatActivity.startBusinessInfoEmail(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent("Business Info Page", "startview", session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent("Image Menu Page", "startview", session?.fpTag)
+    val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.ImageMenuActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -779,23 +786,18 @@ fun AppCompatActivity.startYouTube(session: UserSessionManager?, url: String) {
   }
 }
 
-fun AppCompatActivity.startDownloadUri(session: UserSessionManager?, url: String) {
+fun AppCompatActivity.startDownloadUri(url: String) {
   try {
-    if (checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED ||
-        checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
-    }else {
-      val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-      val uri = Uri.parse(url)
-      val request = DownloadManager.Request(uri)
-      request.setTitle(uri.path?.getFileName() ?: "boost_file")
-      request.setDescription("boost360 File")
-      request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
-      request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-      request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
-      downloader.enqueue(request)
-      Toast.makeText(this, "File downloading.. ", Toast.LENGTH_SHORT).show()
-    }
+    val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+    val uri = Uri.parse(url)
+    val request = DownloadManager.Request(uri)
+    request.setTitle(uri.path?.getFileName() ?: "boost_file")
+    request.setDescription("boost360 File")
+    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
+    downloader.enqueue(request)
+    Toast.makeText(this, "File downloading.. ", Toast.LENGTH_SHORT).show()
   } catch (e: Exception) {
     e.printStackTrace()
   }

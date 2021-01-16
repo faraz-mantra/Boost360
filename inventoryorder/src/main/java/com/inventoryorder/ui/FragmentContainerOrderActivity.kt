@@ -28,6 +28,7 @@ import com.inventoryorder.ui.createAptOld.BookingSuccessfulFragment
 import com.inventoryorder.ui.createAptOld.NewBookingFragmentOne
 import com.inventoryorder.ui.createAptOld.NewBookingFragmentTwo
 import com.inventoryorder.ui.order.OrderDetailFragment
+import com.inventoryorder.ui.order.OrderInvoiceFragment
 import com.inventoryorder.ui.order.OrdersFragment
 import com.inventoryorder.ui.order.createorder.AddCustomerFragment
 import com.inventoryorder.ui.order.createorder.AddProductFragment
@@ -51,6 +52,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   private var bookingSuccessfulFragment: BookingSuccessfulFragment? = null
   private var videoConsultFragment: VideoConsultFragment? = null
   private var videoConsultDetailsFragment: VideoConsultDetailsFragment? = null
+  private var orderInvoiceFragment: OrderInvoiceFragment? = null
 
   override fun getLayout(): Int {
     return com.framework.R.layout.activity_fragment_container
@@ -105,6 +107,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ADD_PRODUCT,
       FragmentType.BILLING_DETAIL,
       FragmentType.CREATE_APPOINTMENT_VIEW,
+      FragmentType.ORDER_INVOICE_VIEW
       -> ContextCompat.getColor(this, R.color.colorPrimary)
       else -> super.getToolbarBackgroundColor()
     }
@@ -124,6 +127,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ADD_PRODUCT,
       FragmentType.BILLING_DETAIL,
       FragmentType.CREATE_APPOINTMENT_VIEW,
+      FragmentType.ORDER_INVOICE_VIEW
       -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
@@ -153,6 +157,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ADD_CUSTOMER -> getString(R.string.add_a_customer)
       FragmentType.ADD_PRODUCT -> getString(R.string.add_product)
       FragmentType.BILLING_DETAIL -> getString(R.string.review_billing_details)
+      FragmentType.ORDER_INVOICE_VIEW -> getString(R.string.invoice_preview)
       else -> super.getToolbarTitle()
     }
   }
@@ -172,6 +177,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ADD_PRODUCT,
       FragmentType.BILLING_DETAIL,
       FragmentType.CREATE_APPOINTMENT_VIEW,
+      FragmentType.ORDER_INVOICE_VIEW,
       -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
       else -> super.getNavigationIcon()
     }
@@ -260,6 +266,10 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
         createAppointmentFragment = CreateAppointmentFragment.newInstance()
         createAppointmentFragment
       }
+      FragmentType.ORDER_INVOICE_VIEW -> {
+        orderInvoiceFragment = OrderInvoiceFragment.newInstance()
+        orderInvoiceFragment
+      }
       else -> throw IllegalFragmentTypeException()
     }
   }
@@ -271,6 +281,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     videoConsultFragment?.onActivityResult(requestCode, resultCode, data)
     createAppointmentFragment?.onActivityResult(requestCode, resultCode, data)
     videoConsultDetailsFragment?.onActivityResult(requestCode, resultCode, data)
+    orderInvoiceFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

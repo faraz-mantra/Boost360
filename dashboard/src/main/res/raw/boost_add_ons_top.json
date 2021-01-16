@@ -136,7 +136,7 @@
       "type": "HOT",
       "action_item": [
         {
-          "businessType": "customer_order_d",
+          "businessType": "customer_booking_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",

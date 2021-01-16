@@ -3,6 +3,7 @@ package com.inventoryorder.constant
 enum class FragmentType {
   ALL_ORDER_VIEW,
   ORDER_DETAIL_VIEW,
+  ORDER_INVOICE_VIEW,
   ALL_APPOINTMENT_VIEW,
   APPOINTMENT_DETAIL_VIEW,
   CREATE_NEW_BOOKING,
