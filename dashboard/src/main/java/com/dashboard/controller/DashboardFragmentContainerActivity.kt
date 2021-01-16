@@ -57,7 +57,7 @@ open class DashboardFragmentContainerActivity : AppBaseActivity<ActivityFragment
 
   override fun customTheme(): Int? {
     return when (type) {
-      FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeScore
+      FragmentType.DIGITAL_READINESS_SCORE -> R.style.DashboardThemeNew
       else -> super.customTheme()
     }
   }

@@ -14,7 +14,6 @@ import com.framework.extensions.visible
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.DialogWebviewTncBinding
 import com.onboarding.nowfloats.utils.getWebViewUrl
-import kotlinx.android.synthetic.main.dialog_progress.*
 
 class WebViewTNCDialog : DialogFragment() {
 
@@ -45,7 +44,7 @@ class WebViewTNCDialog : DialogFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     loadData(domainUrl)
-    if (title.isNullOrEmpty()) title = resources.getString(R.string.boost360_terms_conditions)
+    if (title.isEmpty()) title = resources.getString(R.string.boost360_terms_conditions)
     binding.title.text = title
     binding.backBtn.setOnClickListener { dismiss() }
     binding.decline.setOnClickListener {

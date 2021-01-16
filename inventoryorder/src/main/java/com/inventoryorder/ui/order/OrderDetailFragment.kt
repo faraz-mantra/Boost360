@@ -1,7 +1,6 @@
 package com.inventoryorder.ui.order
 
 import android.content.Intent
-import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -20,9 +19,10 @@ import com.framework.extensions.visible
 import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
-import com.framework.views.customViews.CustomButton
+import com.framework.views.customViews.CustomTextView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
+import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentOrderDetailBinding
 import com.inventoryorder.model.OrderConfirmStatus
@@ -36,6 +36,8 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.startFragmentOrderActivity
+import java.text.DecimalFormat
 import java.util.*
 import java.util.regex.Pattern
 import kotlin.collections.ArrayList
@@ -60,7 +62,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   override fun onCreateView() {
     super.onCreateView()
     arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
-    setOnClickListener(binding?.btnPickUp, binding?.tvCustomerContactNumber, binding?.tvCustomerEmail)
+    setOnClickListener(binding?.tvCustomerContactNumber, binding?.tvCustomerEmail) //binding?.btnPickUp,
   }
 
   private fun apiGetOrderDetails(orderId: String) {
@@ -112,7 +114,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   }
 
   private fun setDetails(order: OrderItem) {
-    setToolbarTitle("# ${order.ReferenceNumber}")
+    setToolbarTitle("${getString(R.string.orders)}: #${order.ReferenceNumber}")
     checkStatusOrder(order)
     setOrderDetails(order)
     order.Items?.let { setAdapter(it) }
@@ -120,15 +122,14 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun checkStatusOrder(order: OrderItem) {
     if (order.isConfirmActionBtn()) {
-      binding?.bottomBtn?.visible()
+      binding?.buttonConfirmOrder?.visible()
       binding?.buttonConfirmOrder?.setOnClickListener(this)
-    } else binding?.bottomBtn?.gone()
+    } else binding?.buttonConfirmOrder?.gone()
     if (order.isCancelActionBtn()) {
       binding?.tvCancelOrder?.visible()
       binding?.tvCancelOrder?.setOnClickListener(this)
     } else binding?.tvCancelOrder?.gone()
   }
-
 
   private fun setAdapter(orderItems: ArrayList<ItemN>) {
     binding?.recyclerViewOrderDetails?.post {
@@ -139,9 +140,9 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    val item: MenuItem = menu.findItem(R.id.menu_item_share)
-    item.actionView.findViewById<CustomButton>(R.id.button_share).setOnClickListener {
-      showLongToast("Coming soon..")
+    val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
+    item.actionView.findViewById<CustomTextView>(R.id.tvInvoice).setOnClickListener {
+      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
     }
   }
 
@@ -164,31 +165,35 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun setOrderDetails(order: OrderItem) {
     binding?.orderType?.text = getStatusText(order)
+    OrderStatusValue.fromStatusOrder(order.status())?.icon?.let { binding?.statusIcon?.setImageResource(it) }
     binding?.tvOrderStatus?.text = order.PaymentDetails?.status()
-    val b = (PaymentDetailsN.STATUS.from(order.PaymentDetails?.Status ?: "") == PaymentDetailsN.STATUS.PENDING)
-    if (b) binding?.tvOrderStatus?.setTextColor(getColor(R.color.watermelon_light_10))
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
-    binding?.btnPickUp?.text = order.deliveryType()
+    binding?.tvDeliveryType?.text = order.deliveryType()
+    binding?.tvItemCount?.visibility = if (order.Items.isNullOrEmpty().not()) View.VISIBLE else View.GONE
+    binding?.tvItemCount?.text = if (order.Items?.size ?: 0 > 1) "(${order.Items?.size} items)" else "(${order.Items?.size} item)"
+
     order.BillingDetails?.let { bill ->
-      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() }
-          ?: "INR"
-      binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
+      val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
+      binding?.tvOrderAmount?.text = "$currency ${DecimalFormat("##,##,##0").format(bill.AmountPayableByBuyer)}"
+//            binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
     binding?.orderDate?.text = DateUtils.parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
 
     // customer details
     binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
-    binding?.tvCustomerAddress?.text = order.BuyerDetails?.getAddressFull()
+    binding?.tvCustomerDetail?.text = order.BuyerDetails?.getPhoneEmailFull()
+    binding?.userAddress?.tvShippingAddress?.text = order.BuyerDetails?.address()?.addressLine1()
+    binding?.userAddress?.tvBillingAddress?.text = order.BuyerDetails?.address()?.addressLine1()
 
-    binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
-    binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
-    binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
+//        binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
+//        binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
+//        binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
 
-    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) }!!)
+    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) } == true)
       binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
-    if (order.BuyerDetails.ContactDetails.EmailId.isNullOrEmpty().not()) {
-      binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
-      if (!checkValidEmail(order.BuyerDetails.ContactDetails.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
+    if (order.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty().not()) {
+//            binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
+      if (!checkValidEmail(order.BuyerDetails?.ContactDetails?.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
     } else binding?.tvCustomerEmail?.isGone = true
 
 
@@ -202,8 +207,12 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
           ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }
-    binding?.tvShippingCost?.text = "Shipping Cost: $currency $shippingCost"
-    binding?.tvTotalOrderAmount?.text = "Total Amount: $currency ${salePrice + shippingCost}"
+
+    binding?.tvShippingCost?.text = "Shipping Cost: $currency ${DecimalFormat("##,##,##0").format(shippingCost)}"
+    binding?.tvTotalOrderAmount?.text = "Total Amount: $currency ${DecimalFormat("##,##,##0").format(salePrice + shippingCost)}"
+
+//        binding?.tvShippingCost?.text = "Shipping Cost: $currency $shippingCost"
+//        binding?.tvTotalOrderAmount?.text = "Total Amount: $currency ${salePrice + shippingCost}"
 
   }
 
@@ -212,7 +221,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     return when (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name) {
       order.status().toUpperCase(Locale.ROOT) -> {
         return if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-          OrderStatusValue.ESCALATED_1.value
+          OrderStatusValue.ABANDONED_1.value
         } else statusValue.plus(order.cancelledText())
       }
       else -> statusValue
@@ -222,7 +231,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnPickUp -> showBottomSheetDialog()
+//            binding?.btnPickUp -> showBottomSheetDialog()
       binding?.buttonConfirmOrder -> apiConfirmOrder()
       binding?.tvCancelOrder -> cancelOrderDialog()
       binding?.tvCustomerContactNumber -> {
@@ -265,7 +274,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   }
 
   private fun cancelOrderDialog() {
-    MaterialAlertDialogBuilder(baseActivity)
+    MaterialAlertDialogBuilder(requireContext())
         .setTitle(getString(R.string.cancel_order_confirmation_message))
         .setNeutralButton(getString(R.string.no)) { dialog, _ ->
           dialog.dismiss()
@@ -312,7 +321,10 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private fun refreshStatus(statusOrder: OrderSummaryModel.OrderStatus) {
     isRefresh = true
     orderItem?.Status = statusOrder.name
-    orderItem?.let { binding?.orderType?.text = getStatusText(it) }
+    orderItem?.let { orderItem ->
+      binding?.orderType?.text = getStatusText(orderItem)
+      OrderStatusValue.fromStatusOrder(orderItem.status())?.icon?.let { binding?.statusIcon?.setImageResource(it) }
+    }
     orderItem?.let { checkStatusOrder(it) }
   }
 

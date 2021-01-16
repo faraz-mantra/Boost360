@@ -2,6 +2,7 @@ package com.appservice.rest.repository
 
 import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
+import com.appservice.model.serviceProduct.CreateProductRequest
 import com.appservice.model.serviceProduct.Product
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
@@ -49,5 +50,22 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
 
   override fun getApiClient(): Retrofit {
     return WithFloatsApiTwoClient.shared.retrofit
+  }
+
+  fun createProduct(request: Product?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.createProduct(request = request), TaskCode.POST_CREATE_PRODUCT)
+  }
+  fun updateProduct(request: ProductUpdate?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.updateProduct(request), TaskCode.POST_UPDATE_PRODUCT)
+  }
+  fun deleteProduct(request: DeleteProductRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.deleteProduct(request), TaskCode.POST_UPDATE_PRODUCT)
+  }
+  fun addUpdateImageProduct(
+          clientId: String?, requestType: String?, requestId: String?, totalChunks: Int?, currentChunkNumber: Int?,
+          productId: String?, requestBody: RequestBody?,
+  ): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.addUpdateImageProduct(clientId, requestType, requestId, totalChunks,
+            currentChunkNumber, productId, requestBody), TaskCode.ADD_UPDATE_IMAGE_PRODUCT_SERVICE)
   }
 }
