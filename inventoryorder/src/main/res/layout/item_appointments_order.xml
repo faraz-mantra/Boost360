@@ -44,7 +44,7 @@
                 android:id="@+id/orderType"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/size_30"
-                android:background="@drawable/new_order_bg"
+                android:background="@drawable/ic_apt_order_bg"
                 android:gravity="center"
                 android:paddingStart="@dimen/size_8"
                 android:paddingEnd="@dimen/size_14"
