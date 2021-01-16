@@ -81,6 +81,7 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:focusable="true"
+        android:visibility="gone"
         app:fabBackground="@drawable/bg_button_rounded_orange"
         app:fabIcon="@drawable/ic_add_white"
         app:fabSize="normal" />
