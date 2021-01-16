@@ -32,7 +32,7 @@ data class WebsiteActionItem(
     testimonials(R.drawable.ic_customer_testimonial_d),
     custom_page(R.drawable.ic_custom_page_add),
     project_teams(R.drawable.ic_project_teams_d),
-    unlimited_digital_brochures(R.drawable.ic_digital_brochures),
+    unlimited_digital_brochures(R.drawable.ic_digital_brochures_d),
     toppers_institute(R.drawable.toppers_institute_d),
     upcoming_batches(R.drawable.ic_upcoming_batch_d),
     faculty_management(R.drawable.ic_upcoming_batch_d),

@@ -71,7 +71,7 @@ class ManageBusinessData(
     chatbot_analytics("chatbot_analytics", R.drawable.ic_chatbot_v2_d),
     ria_digital_assistant("ria_digital_assistant", R.drawable.ria_digital_assistant),
     premium_boost_support("premium_boost_support", R.drawable.premium_boost_support),
-    ic_digital_brochures("ic_digital_brochures", R.drawable.ic_digital_brochures),
+    ic_digital_brochures("ic_digital_brochures", R.drawable.ic_digital_brochures_d),
     ic_product_cataloge_d("ic_product_cataloge_d", R.drawable.ic_product_cataloge_d),
     project_portfolio_d("project_portfolio_d", R.drawable.ic_project_teams_d),
     team_page_d("team_page_d", R.drawable.ic_project_teams_d),
