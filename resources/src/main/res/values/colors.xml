@@ -103,6 +103,7 @@
   <color name="black_4a4a4a">#4a4a4a</color>
   <color name="black_4f4f4f">#4f4f4f</color>
   <color name="grey_dark_1">#787878</color>
+  <color name="bg_grey_light">#E3E3E3</color>
   <color name="toolbar_grey">#848484</color>
   <color name="taskbar_dark_grey">#64625C</color>
   <color name="white_3">#e5e5e5</color>

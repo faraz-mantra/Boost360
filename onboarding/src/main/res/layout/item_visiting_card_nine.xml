@@ -92,7 +92,7 @@
           android:layout_width="@dimen/size_62"
           android:layout_height="@dimen/size_56"
           android:layout_gravity="bottom"
-          android:layout_marginBottom="@dimen/size_26"
+          android:layout_marginBottom="@dimen/size_14"
           app:srcCompat="@drawable/ic_category_spa_blue" />
 
         <androidx.appcompat.widget.LinearLayoutCompat

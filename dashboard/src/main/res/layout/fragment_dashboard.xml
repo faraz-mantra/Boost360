@@ -9,6 +9,7 @@
 
   <FrameLayout
     android:layout_width="match_parent"
+    android:id="@+id/main_content"
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
@@ -173,13 +174,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_2"
                     android:layout_marginTop="@dimen/size_1"
-                    android:drawableStart="@drawable/ic_edit_d"
+                    android:drawableStart="@drawable/ic_website_d"
                     android:drawablePadding="@dimen/size_4"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:textColor="@color/greyish_brown"
-                    app:textType="BODY_1"
+                    app:autoSizeMaxTextSize="16sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform"
                     tools:text="@string/www_sravansclinic_com" />
                 </FrameLayout>
 
@@ -232,7 +236,7 @@
               <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/my_visiting_card"
+                android:text="@string/share_business_card"
                 android:textColor="@color/white"
                 app:textAllCaps="true"
                 app:textType="HEADING_6" />
@@ -241,6 +245,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_6"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_arrow_down_white_12_d" />
             </LinearLayout>
           </LinearLayout>

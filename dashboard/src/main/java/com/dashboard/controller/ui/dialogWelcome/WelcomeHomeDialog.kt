@@ -13,7 +13,7 @@ import com.framework.models.BaseViewModel
 class WelcomeHomeDialog : BaseDialogFragment<DialogWelcomeHomeBinding, BaseViewModel>() {
 
   private var welcomeData: WelcomeData? = null
-  var onClicked: () -> Unit = { }
+  var onClicked: (type: String?) -> Unit = { }
 
   companion object {
     @JvmStatic
@@ -47,8 +47,8 @@ class WelcomeHomeDialog : BaseDialogFragment<DialogWelcomeHomeBinding, BaseViewM
       val type = WelcomeData.WelcomeType.fromName(welcomeData!!.welcomeType)
       type?.icon?.let { binding?.image?.setImageResource(it) }
       binding?.btnManage?.setOnClickListener {
+        onClicked(type?.name)
         hideProgress()
-        if (type == WelcomeData.WelcomeType.ADD_ON_MARKETPLACE) onClicked()
       }
       welcomeData!!.welcomeType?.let { saveWelcomeData(it, true) }
     } else hideProgress()

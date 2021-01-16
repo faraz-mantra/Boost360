@@ -164,6 +164,7 @@
     <string name="item_total">Item Total</string>
     <string name="proceed">Proceed</string>
     <string name="review_billing_details">Review billing details</string>
+    <string name="invoice_preview">Invoice preview</string>
     <string name="please_edit_review_the_order_details_and_confirm">Please edit/review the order details and confirm</string>
     <string name="billing_to">Billing to</string>
     <string name="items_included">Items included</string>

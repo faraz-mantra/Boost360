@@ -22,6 +22,7 @@ import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
 import com.framework.views.customViews.CustomTextView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
+import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentOrderDetailBinding
 import com.inventoryorder.model.OrderConfirmStatus
@@ -35,6 +36,7 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.startFragmentOrderActivity
 import java.text.DecimalFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -140,7 +142,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     super.onCreateOptionsMenu(menu, inflater)
     val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
     item.actionView.findViewById<CustomTextView>(R.id.tvInvoice).setOnClickListener {
-      showLongToast("Coming soon..")
+      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
     }
   }
 
@@ -187,7 +189,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 //        binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
 //        binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
 
-    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) }==true)
+    if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) } == true)
       binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
     if (order.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty().not()) {
 //            binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()

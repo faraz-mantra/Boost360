@@ -17,6 +17,7 @@ import com.inventoryorder.ui.createAptOld.BookingSuccessfulFragment
 import com.inventoryorder.ui.createAptOld.NewBookingFragmentOne
 import com.inventoryorder.ui.createAptOld.NewBookingFragmentTwo
 import com.inventoryorder.ui.order.OrderDetailFragment
+import com.inventoryorder.ui.order.OrderInvoiceFragment
 import com.inventoryorder.ui.order.OrdersFragment
 import com.inventoryorder.ui.order.createorder.AddCustomerFragment
 import com.inventoryorder.ui.order.createorder.AddProductFragment
@@ -57,6 +58,7 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
       is AddCustomerFragment -> R.layout.fragment_add_customer
       is AddProductFragment -> R.layout.fragment_add_product
       is BillingDetailFragment -> R.layout.fragment_billing_detail
+      is OrderInvoiceFragment -> R.layout.fragment_order_inoice
       else -> throw IllegalFragmentTypeException()
     }
   }
@@ -81,6 +83,7 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
       is VideoConsultDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
       is NewBookingFragmentOne -> inflater.inflate(R.menu.menu_toolbar, menu)
       is NewBookingFragmentTwo -> inflater.inflate(R.menu.menu_toolbar, menu)
+      is OrderInvoiceFragment -> inflater.inflate(R.menu.menu_order_invoice, menu)
     }
   }
 }

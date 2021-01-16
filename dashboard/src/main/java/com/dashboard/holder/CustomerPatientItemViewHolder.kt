@@ -13,9 +13,11 @@ class CustomerPatientItemViewHolder(binding: ItemCustomerPatientItemBinding) : A
     super.bind(position, item)
     val data = item as? CustomerActionItem ?: return
     binding.textViewName.text = data.title
+    val count = data.getCountValue()
+    binding.txtCount.visibility = if (count.isNullOrEmpty() || count == "0") View.GONE else View.VISIBLE
+    binding.txtCount.text = count
     val iconType = data.type?.let { CustomerActionItem.IconType.fromName(it) }
     iconType?.let { binding.imageViewIcon.setImageResource(iconType.icon) }
-    binding.viewLock.visibility = if (data.isLock == true) View.VISIBLE else View.GONE
     binding.mainContent.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.CUSTOMER_PATIENT_ITEM_CLICK.ordinal) }
   }
 }

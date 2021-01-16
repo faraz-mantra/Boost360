@@ -37,7 +37,7 @@
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My business card"
+            android:text="@string/my_business_card"
             android:textColor="@color/black_4a4a4a"
             app:fontFamily="@font/semi_bold"
             app:textType="HEADING_6" />
@@ -45,7 +45,7 @@
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="One tap to share your all business contact points with anyone"
+            android:text="@string/share_your_website_address_desc"
             android:textColor="@color/black_4a4a4a"
             app:textType="CAPTION" />
         </LinearLayout>

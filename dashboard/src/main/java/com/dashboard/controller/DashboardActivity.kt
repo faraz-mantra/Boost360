@@ -54,7 +54,6 @@ import zendesk.support.Support
 import java.io.File
 import java.util.*
 
-
 class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardViewModel>(), OnItemSelectedListener, RecyclerItemClickListener {
 
   private var exitToast: Toast? = null
@@ -229,13 +228,18 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
   override fun onItemSelect(pos: Int) {
     when (pos) {
-      0 -> mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-      1 -> mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
-      2 -> mNavController.navigate(R.id.navigation_customer, Bundle(), getNavOptions())
-      else -> mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
+      0 -> {
+        mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
+        toolbarPropertySet(pos)
+      }
+      1 -> checkWelcomeShowScreen(pos)
+      2 -> checkWelcomeShowScreen(pos)
+      else -> {
+        mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
+        toolbarPropertySet(pos)
+      }
     }
-    toolbarPropertySet(pos)
-    checkWelcomeShowScreen(pos)
+
   }
 
   private fun checkWelcomeShowScreen(pos: Int) {
@@ -243,10 +247,18 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       1 -> {
         val dataWebsite = welcomeData?.get(0)
         if (dataWebsite?.welcomeType?.let { getIsShowWelcome(it) } != true) dataWebsite?.let { showWelcomeDialog(it) }
+        else {
+          mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
+          toolbarPropertySet(pos)
+        }
       }
       2 -> {
         val dataCustomer = welcomeData?.get(1)
         if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let { showWelcomeDialog(it) }
+        else {
+          mNavController.navigate(R.id.navigation_customer, Bundle(), getNavOptions())
+          toolbarPropertySet(pos)
+        }
       }
       3 -> {
         val dataAddOns = welcomeData?.get(2)
@@ -259,23 +271,40 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun showWelcomeDialog(data: WelcomeData) {
     val dialog = WelcomeHomeDialog.newInstance()
     dialog.setData(data)
-    dialog.onClicked = { session?.let { this.initiateAddonMarketplace(it, false, "", "") } }
+    dialog.onClicked = { type ->
+      when (type) {
+        WelcomeData.WelcomeType.ADD_ON_MARKETPLACE.name -> {
+          session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+        }
+        WelcomeData.WelcomeType.WEBSITE_CONTENT.name -> {
+          mNavController.navigate(R.id.navigation_website, Bundle(), getNavOptions())
+          toolbarPropertySet(1)
+        }
+        WelcomeData.WelcomeType.MANAGE_INTERACTION.name -> {
+          mNavController.navigate(R.id.navigation_customer, Bundle(), getNavOptions())
+          toolbarPropertySet(2)
+        }
+      }
+    }
     dialog.showProgress(supportFragmentManager)
   }
 
   private fun toolbarPropertySet(pos: Int) {
     when (pos) {
-      1 -> showToolbar(getString(R.string.website))
-      2 -> showToolbar((if (session?.fP_AppExperienceCode == "DOC" || session?.fP_AppExperienceCode == "HOS") getString(R.string.patient) else getString(R.string.customer)).plus(" Interaction"))
-      else -> getToolbar()?.apply { visibility = View.GONE }
+      1 -> showToolbar(getString(R.string.my_website))
+      2 -> showToolbar(getString(R.string.my_enquiry))
+      else -> {
+        changeTheme(R.color.colorPrimary, R.color.colorPrimary)
+        getToolbar()?.apply { visibility = View.GONE }
+      }
     }
   }
 
   private fun showToolbar(title: String) {
+    changeTheme(R.color.black_4a4a4a, R.color.black_4a4a4a)
     getToolbar()?.apply {
       visibility = View.VISIBLE
       setTitle(title)
-      setBackgroundColor(ContextCompat.getColor(this@DashboardActivity, R.color.colorPrimary))
       supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
   }
@@ -286,7 +315,6 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       3 -> checkWelcomeShowScreen(pos)
       4 -> binding?.drawerLayout?.openDrawer(GravityCompat.END, true)
     }
-
   }
 
 
@@ -434,7 +462,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 
 fun UserSessionManager.getDomainName(isRemoveHttp: Boolean = false): String? {
   val rootAliasUri = getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI)?.toLowerCase(Locale.ROOT)
-  val normalUri = "${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
+  val normalUri = "https://${getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)?.toLowerCase(Locale.ROOT)}.nowfloats.com"
   return if (rootAliasUri.isNullOrEmpty().not() && rootAliasUri != "null") {
     return if (isRemoveHttp && rootAliasUri!!.contains("http://")) rootAliasUri.replace("http://", "")
     else if (isRemoveHttp && rootAliasUri!!.contains("https://")) rootAliasUri.replace("https://", "") else rootAliasUri
