@@ -160,6 +160,10 @@
   <string name="associated_with_your_google_account">associated with your Google account</string>
   <string name="you_ve_connected_all_digital_channels_for_your_business">You\'ve connected all digital channels for your Business.</string>
   <string name="share_visiting_card">Share Visiting Card</string>
+  <string name="share_on_whatsapp">Share on WhatsApp</string>
+  <string name="share_on_more">Share on more...</string>
+  <string name="my_business_card">My business card</string>
+  <string name="share_your_website_address_desc">Share your website address and business contact details on WhatsApp and social media, to attract new customers daily.</string>
 
 </resources>
 

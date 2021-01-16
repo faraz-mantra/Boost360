@@ -21,6 +21,9 @@ object WithFloatRepository : AppBaseRepository<WithFloatRemoteData, DashboardLoc
     return makeLocalRequest(DashboardLocalDataSource.getBoostAddOnsTop(context), TaskCode.GET_BOOST_ADD_ONS_TOP)
   }
 
+  fun getWelcomeDashboardData(context: Context): Observable<BaseResponse> {
+    return makeLocalRequest(DashboardLocalDataSource.getWelcomeDashboardData(context), TaskCode.GET_WELCOME_DASHBOARD)
+  }
   fun getBoostUserDetailMessage(context: Context): Observable<BaseResponse> {
     return makeLocalRequest(DashboardLocalDataSource.getBoostUserDetailMessage(context), TaskCode.GET_USER_DETAIL_SHARE_DATA)
   }
@@ -29,6 +32,9 @@ object WithFloatRepository : AppBaseRepository<WithFloatRemoteData, DashboardLoc
     return makeLocalRequest(DashboardLocalDataSource.getBoostCustomerItem(context), TaskCode.GET_CUSTOMER_ITEM_DATA)
   }
 
+  fun getBoostWebsiteItem(context: Context): Observable<BaseResponse> {
+    return makeLocalRequest(DashboardLocalDataSource.getBoostWebsiteItem(context), TaskCode.GET_WEBSITE_ITEM_DATA)
+  }
   fun getNavDashboardData(context: Context): Observable<BaseResponse> {
     return makeLocalRequest(DashboardLocalDataSource.getNavDashboardData(context), TaskCode.GET_NAV_DASHBOARD_DATA)
   }

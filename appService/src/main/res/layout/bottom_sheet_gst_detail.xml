@@ -38,7 +38,7 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:includeFontPadding="false"
-          android:text="Select the appropriate GST slab at which this service is taxable."
+          android:text="Select the appropriate GST slab at which this product is taxable."
           android:textColor="@color/white"
           android:textSize="12sp"
           app:fontFamily="@font/italic"

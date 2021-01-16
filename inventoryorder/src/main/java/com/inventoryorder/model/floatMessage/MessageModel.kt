@@ -1,10 +1,7 @@
 package com.inventoryorder.model.floatMessage
 
 import com.framework.base.BaseResponse
-import com.framework.utils.PreferencesUtils
-import com.framework.utils.convertObjToString
-import com.framework.utils.convertStringToObj
-import com.framework.utils.getData
+import com.framework.utils.*
 import java.io.Serializable
 import java.util.*
 
@@ -21,7 +18,7 @@ data class MessageModel(
   }
 
   fun saveData() {
-    PreferencesUtils.instance.saveDataN(MESSAGE_FLOAT_DATA, convertObjToString(this) ?: "")
+    PreferencesUtils.instance.saveData(MESSAGE_FLOAT_DATA, convertObjToString(this) ?: "")
   }
 
   fun getStoreBizFloatSize(): Int {

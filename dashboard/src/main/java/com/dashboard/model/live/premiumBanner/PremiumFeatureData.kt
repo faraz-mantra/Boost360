@@ -1,17 +1,10 @@
 package com.dashboard.model.live.premiumBanner
 
 import com.dashboard.pref.UserSessionManager
-import com.framework.utils.PreferencesUtils
-import com.framework.utils.convertListObjToString
-import com.framework.utils.convertStringToList
-import com.framework.utils.getData
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
-
-const val MARKETPLACE_BANNER_DATA = "MARKETPLACE_BANNER_DATA"
-//const val ACADEMY_BANNER_DATA = "ACADEMY_BANNER_DATA"
 
 data class PremiumFeatureData(
     @SerializedName("bundles")
@@ -64,13 +57,4 @@ fun ArrayList<PromoAcademyBanner>.marketBannerFilter(session: UserSessionManager
     }else list.add(it)
   }
   return list
-}
-
-fun getMarketPlaceBanners(): ArrayList<PromoAcademyBanner>? {
-  val resp = PreferencesUtils.instance.getData(MARKETPLACE_BANNER_DATA, "") ?: ""
-  return ArrayList(convertStringToList(resp) ?: ArrayList())
-}
-
-fun saveDataMarketPlace(promoBanners: ArrayList<PromoAcademyBanner>?) {
-  PreferencesUtils.instance.saveDataN(MARKETPLACE_BANNER_DATA, convertListObjToString(promoBanners ?: ArrayList()) ?: "")
 }

@@ -5,6 +5,8 @@ import android.os.Bundle
 import com.framework.utils.PreferencesKey.NAVIGATION_STACK
 import com.framework.utils.PreferencesKey.REQUEST_FLOAT
 import com.framework.utils.PreferencesUtils
+import com.framework.utils.getData
+import com.framework.utils.saveData
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.onboarding.nowfloats.constant.IntentConstant
@@ -19,7 +21,7 @@ object NavigatorManager {
 
   fun initialize() {
     try {
-      val stackJson = PreferencesUtils.instance.getData(NAVIGATION_STACK) ?: return
+      val stackJson = PreferencesUtils.instance.getData(NAVIGATION_STACK,"") ?: return
       stack = ArrayList(Gson().fromJson(stackJson, Array<ScreenModel>::class.java).toList())
     } catch (e: Exception) {
       e.printStackTrace()
@@ -50,7 +52,7 @@ object NavigatorManager {
 
   fun getRequest(): RequestFloatsModel? {
     return try {
-      Gson().fromJson(PreferencesUtils.instance.getData(REQUEST_FLOAT) ?: "", RequestFloatsModel::class.java)
+      Gson().fromJson(PreferencesUtils.instance.getData(REQUEST_FLOAT,"") ?: "", RequestFloatsModel::class.java)
     } catch (e: JsonSyntaxException) {
       e.printStackTrace()
       null

@@ -26,6 +26,6 @@ data class CallSummaryResponse(
   }
 
   fun saveData() {
-    PreferencesUtils.instance.saveDataN(CALL_SUMMARY_DATA, convertObjToString(this) ?: "")
+    PreferencesUtils.instance.saveData(CALL_SUMMARY_DATA, convertObjToString(this) ?: "")
   }
 }

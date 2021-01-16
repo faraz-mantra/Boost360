@@ -310,6 +310,7 @@ public final class BinaryDictionary extends Dictionary {
                 session.mOutputCodePoints, session.mOutputScores, session.mSpaceIndices,
                 session.mOutputTypes, session.mOutputAutoCommitFirstWordConfidence,
                 session.mInputOutputLanguageWeight);
+
         if (inOutLanguageWeight != null) {
             inOutLanguageWeight[0] = session.mInputOutputLanguageWeight[0];
         }

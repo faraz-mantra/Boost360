@@ -16,7 +16,7 @@
     <item name="colorSurface">@color/white</item>
   </style>
 
-  <style name="DashboardThemeScore" parent="DashboardTheme">
+  <style name="DashboardThemeNew" parent="DashboardTheme">
     <item name="colorPrimary">@color/color_primary</item>
     <item name="colorPrimaryDark">@color/color_primary_dark</item>
     <item name="colorAccent">@color/colorAccent</item>
