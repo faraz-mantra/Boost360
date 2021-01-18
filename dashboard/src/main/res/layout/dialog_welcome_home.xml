@@ -43,7 +43,7 @@
         android:textSize="24sp"
         android:textColor="@color/colorAccent"
         app:fontFamily="@font/bold"
-       tools:text="Easy access to all your website content" />
+       tools:text="Add-ons to make your website more powerful" />
 
       <com.framework.views.customViews.CustomTextView
         android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
         android:gravity="center"
         android:id="@+id/desc"
         app:textType="HEADING_6"
-        tools:text="Find and make content changes to all the pages of your clinic website including business profille, updates products/services etc." />
+        tools:text="You can explore and purchase add-ons for your website starting at ₹50/month." />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -71,7 +71,7 @@
         android:layout_marginBottom="@dimen/size_50"
         android:background="@drawable/bg_rounded_10"
         android:gravity="center"
-        tools:text="manage my website content"
+        tools:text="@string/get_started"
         android:textAllCaps="true"
         app:textType="HEADING_6" />
     </androidx.appcompat.widget.LinearLayoutCompat>
