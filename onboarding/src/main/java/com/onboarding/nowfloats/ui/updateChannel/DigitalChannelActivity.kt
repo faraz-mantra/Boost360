@@ -21,7 +21,7 @@ import com.onboarding.nowfloats.databinding.ActivityFragmentContainerUpdateBindi
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyDigitalChannelFragment
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyVisitingCardFragment
 
-open class ContainerUpdateChannelActivity : AppBaseActivity<ActivityFragmentContainerUpdateBinding, BaseViewModel>() {
+open class DigitalChannelActivity : AppBaseActivity<ActivityFragmentContainerUpdateBinding, BaseViewModel>() {
 
   private var isStartActivity: Boolean? = null
 
@@ -51,7 +51,7 @@ open class ContainerUpdateChannelActivity : AppBaseActivity<ActivityFragmentCont
     val titleList = arrayListOf("Channels", "Visiting card")
     binding?.container?.apply {
       isUserInputEnabled = false
-      val adapterInfo = FragmentAdapter(fragments, this@ContainerUpdateChannelActivity)
+      val adapterInfo = FragmentAdapter(fragments, this@DigitalChannelActivity)
       adapter = adapterInfo
       val tabLayout = binding?.tabMode ?: return@apply
       TabLayoutMediator(tabLayout, this) { tab: TabLayout.Tab, position: Int ->
@@ -88,7 +88,7 @@ open class ContainerUpdateChannelActivity : AppBaseActivity<ActivityFragmentCont
 }
 
 fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
-  val intent = Intent(activity, ContainerUpdateChannelActivity::class.java)
+  val intent = Intent(activity, DigitalChannelActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -96,7 +96,7 @@ fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle()
 }
 
 fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean) {
-  val intent = Intent(activity, ContainerUpdateChannelActivity::class.java)
+  val intent = Intent(activity, DigitalChannelActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -104,7 +104,7 @@ fun startFragmentActivityNew(activity: Activity, type: FragmentType, bundle: Bun
 }
 
 fun AppCompatActivity.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false) {
-  val intent = Intent(this, ContainerUpdateChannelActivity::class.java)
+  val intent = Intent(this, DigitalChannelActivity::class.java)
   intent.putExtras(bundle)
   intent.setFragmentType(type)
   if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

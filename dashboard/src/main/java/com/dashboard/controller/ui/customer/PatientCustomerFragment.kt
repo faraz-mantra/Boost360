@@ -3,8 +3,8 @@ package com.dashboard.controller.ui.customer
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
+import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
-import com.dashboard.controller.ui.dashboard.getRequestMap
 import com.dashboard.controller.ui.dashboard.saveUserSummary
 import com.dashboard.databinding.FragmentPatientsCustomerBinding
 import com.dashboard.model.live.customerItem.BoostCustomerItemResponse
@@ -18,7 +18,6 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
-import com.inventoryorder.model.mapDetail.VisitsModelResponse
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.summary.SummaryEntity
 import com.inventoryorder.model.summary.UserSummaryResponse
@@ -64,11 +63,7 @@ class PatientCustomerFragment : AppBaseFragment<FragmentPatientsCustomerBinding,
         viewModel?.getUserCallSummary(clientId, session?.fPParentId, identifierType)?.observeOnce(viewLifecycleOwner, { it2 ->
           val response3 = it2 as? CallSummaryResponse
           response3?.saveData()
-          viewModel?.getMapVisits(session?.fpTag, session?.getRequestMap())?.observeOnce(viewLifecycleOwner, { it3 ->
-            val response4 = it3 as? VisitsModelResponse
-            session?.mapVisitsCount = response4?.getTotalCount() ?: "0"
-            setDataSellerSummary(response1?.Data, response2?.getSummary(), response3)
-          })
+          setDataSellerSummary(response1?.Data, response2?.getSummary(), response3)
         })
       })
     })
@@ -99,6 +94,7 @@ class PatientCustomerFragment : AppBaseFragment<FragmentPatientsCustomerBinding,
   }
 
   private fun setAdapterCustomer(actionItem: ArrayList<CustomerActionItem>) {
+    actionItem.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_CUSTOMER_ITEM_VIEW.getLayout() }
     binding?.rvCustomer?.apply {
       if (adapterACustomer == null) {
         adapterACustomer = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@PatientCustomerFragment)
