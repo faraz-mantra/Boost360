@@ -1,5 +1,6 @@
 package com.onboarding.nowfloats.constant
 
+
 enum class FragmentType {
   CATEGORY_VIEW,
   CHANNEL_PICKER,
@@ -12,5 +13,9 @@ enum class FragmentType {
   REGISTRATION_BUSINESS_WHATSAPP,
   REGISTRATION_BUSINESS_API_CALL,
   REGISTRATION_COMPLETE,
-  MY_DIGITAL_CHANNEL
+  MY_DIGITAL_CHANNEL;
+
+  companion object {
+    fun fromName(name: String?): FragmentType? = values().firstOrNull { it.name.equals(name, ignoreCase = true) }
+  }
 }

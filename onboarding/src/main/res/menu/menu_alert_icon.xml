@@ -4,7 +4,7 @@
 
   <item
       android:id="@+id/menu_info"
-      android:icon="@drawable/ic_round_error_white"
+      android:icon="@drawable/ic_round_alert_n"
       android:title="Info"
       app:showAsAction="ifRoom" />
 </menu>

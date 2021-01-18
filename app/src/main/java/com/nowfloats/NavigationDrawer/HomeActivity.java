@@ -178,7 +178,6 @@ import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.B
 import static com.nowfloats.manageinventory.ManageInventoryFragment.getExperienceType;
 import static com.nowfloats.util.Constants.REFERRAL_CAMPAIGN_CODE;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
-import static com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivityKt.startFragmentActivityNew;
 
 //import com.nfx.leadmessages.ReadMessages;
 

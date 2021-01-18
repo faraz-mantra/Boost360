@@ -20,7 +20,7 @@ import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.floatMessage.MessageModel
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.onboarding.nowfloats.constant.FragmentType
-import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
+import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
 
 
@@ -52,7 +52,7 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
     bundle.putString(Key_Preferences.WEBSITE_URL, session.getDomainName(false))
     bundle.putString(Key_Preferences.PRIMARY_NUMBER, session.userPrimaryMobile)
     bundle.putString(Key_Preferences.PRIMARY_EMAIL, session.fPEmail)
-    startFragmentActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
+    startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()
   }
