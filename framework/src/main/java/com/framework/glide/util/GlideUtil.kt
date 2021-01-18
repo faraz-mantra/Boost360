@@ -1,42 +1,54 @@
 package com.framework.glide.util
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.DrawableImageViewTarget
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
 import com.framework.R
 import com.framework.views.CircularImageView
 import com.framework.views.customViews.CustomImageView
 import com.framework.views.roundedimageview.RoundedImageView
 import jp.wasabeef.glide.transformations.BlurTransformation
 
-fun Context.glideLoad(mImageView: CustomImageView?, url: String) {
+fun View.getRequestOptionImage(placeholder: Int): RequestOptions {
+  return RequestOptions().priority(Priority.IMMEDIATE).placeholder(placeholder).error(placeholder).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+      .override(width, height).skipMemoryCache(true).dontAnimate().dontTransform().encodeFormat(Bitmap.CompressFormat.PNG).format(DecodeFormat.DEFAULT)
+}
+
+fun Context.glideLoad(mImageView: CustomImageView?, url: String?) {
   if (mImageView == null) return
   Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
 }
 
-fun Context.glideLoad(mImageView: CircularImageView, url: String, placeholder: Int?, isCrop: Boolean = false) {
-  if (url.isEmpty()) return
+fun Context.glideLoad(mImageView: CircularImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
+  if (url.isNullOrEmpty()) return
   val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
   placeholder?.let { glide.placeholder(it) }
   if (isCrop) glide.centerCrop()
   glide.into(mImageView)
 }
 
-fun Context.glideLoad(mImageView: RoundedImageView, url: String, placeholder: Int?, isCrop: Boolean = false) {
-  if (url.isEmpty()) return
+
+fun Context.glideLoad(mImageView: RoundedImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
+  if (url.isNullOrEmpty()) return
   val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
   placeholder?.let { glide.placeholder(it) }
   if (isCrop) glide.centerCrop()
@@ -44,8 +56,8 @@ fun Context.glideLoad(mImageView: RoundedImageView, url: String, placeholder: In
 }
 
 fun Context.glideLoad(mImageView: CustomImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
-  if (url?.isEmpty() == true) return
-  val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+  if (url.isNullOrEmpty()) return
+  val glide = Glide.with(this).load(url).skipMemoryCache(true).thumbnail(0.1f).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
   placeholder?.let { glide.placeholder(it) }
   if (isCrop) glide.centerCrop()
   glide.into(mImageView)
@@ -57,6 +69,21 @@ fun Context.loadGifGlide(mImageView: CustomImageView, gif_file: Int?, placeholde
   glide.into(DrawableImageViewTarget(mImageView))
 }
 
+fun Activity.glideLoad(mImageView: CustomImageView, url: String, placeholder: Int, isCenterCrop: Boolean = false, isLoadBitmap: Boolean = false) {
+  val options: RequestOptions = mImageView.getRequestOptionImage(placeholder)
+  val glideImage = Glide.with(this).load(url).apply(options)
+  if (isCenterCrop) glideImage.centerCrop()
+  if (isLoadBitmap) {
+    glideImage.into(object : CustomTarget<Drawable>() {
+      override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+        mImageView.setImageDrawable(resource)
+      }
+
+      override fun onLoadCleared(placeholder: Drawable?) {
+      }
+    })
+  } else glideImage.into(mImageView)
+}
 
 fun Context.glideLoadCircle(mImageView: CustomImageView, url: String) {
   Glide.with(this).load(url)

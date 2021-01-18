@@ -33,7 +33,7 @@ import com.onboarding.nowfloats.model.profile.ProfileProperties
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
-import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
+import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.utils.WebEngageController
 import com.onboarding.nowfloats.utils.viewToBitmap
 import com.onboarding.nowfloats.viewmodel.channel.ChannelPlanViewModel
@@ -67,7 +67,7 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
   }
 
   override fun onCreateView() {
-    binding?.progress?.visible()
+    showSimmer(true)
     viewModel?.getMerchantProfile(localSessionModel?.floatingPoint)?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
         val response = it as? MerchantProfileResponse
@@ -101,7 +101,7 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
         showShortToast(it.message())
         dismiss()
       }
-      binding?.progress?.gone()
+      showSimmer(false)
       binding?.btnMainView?.visible()
       binding?.borderView?.visible()
     })
@@ -127,6 +127,17 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
     }
     binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp("Business Card", true) }
     binding?.shareOther?.setOnClickListener { shareCardWhatsApp("Business Card", false) }
+  }
+
+  private fun showSimmer(isSimmer: Boolean) {
+    if (isSimmer){
+      binding?.viewMain?.gone()
+      binding?.progressSimmer?.parentShimmerLayout?.visible()
+    }else{
+      binding?.viewMain?.visible()
+      binding?.progressSimmer?.parentShimmerLayout?.gone()
+      binding?.progressSimmer?.parentShimmerLayout?.hideShimmer()
+    }
   }
 
   private fun setAdapterCard(cardList: ArrayList<DigitalCardData>) {
@@ -155,7 +166,6 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
       requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
       return
     }
-    binding?.progress?.visible()
     val bitmap = binding?.pagerDigitalCard?.getChildAt(0)?.let { viewToBitmap(it) }
     try {
       val cropBitmap = bitmap?.let { Bitmap.createBitmap(it, 33, 0, bitmap.width - 66, bitmap.height) }
@@ -167,12 +177,10 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
       waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
       waIntent.putExtra(Intent.EXTRA_TEXT, messageCard ?: "")
       baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
-      binding?.progress?.gone()
       dismiss()
       savePositionCard(cardPosition)
     } catch (e: Exception) {
       showLongToast("Error sharing visiting card, please try again.")
-      binding?.progress?.gone()
       dismiss()
     }
   }
@@ -214,7 +222,7 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
 fun AppCompatActivity.startDigitalChannel(bundle: Bundle) {
   try {
     WebEngageController.trackEvent("Digital Channel Page", "startview", "");
-    startFragmentActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
+    startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()
   }

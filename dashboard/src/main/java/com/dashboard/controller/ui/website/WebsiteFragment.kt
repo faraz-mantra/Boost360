@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat.getColor
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
+import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
 import com.dashboard.databinding.FragmentWebsiteBinding
@@ -41,7 +42,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     session = UserSessionManager(baseActivity)
     getWebsiteData()
     setUserData()
-    setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo,binding?.editProfile)
+    setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile)
     WebEngageController.trackEvent("Website Page", "pageview", session?.fpTag)
   }
 
@@ -54,7 +55,11 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
-    binding?.imgProfileLogo?.let { baseActivity.glideLoad(it, imageUri, R.drawable.ic_add_logo_d, isCrop = true) }
+    binding?.imgProfileLogo?.let {
+      if (imageUri.isNullOrEmpty().not()) {
+        baseActivity.glideLoad(mImageView = it, url = imageUri!!,placeholder = R.drawable.gradient_white,isLoadBitmap = true)
+      } else it.setImageResource(R.drawable.ic_add_logo_d)
+    }
   }
 
   private fun getWebsiteData() {
@@ -72,6 +77,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   }
 
   private fun setAdapterCustomer(actionItem: ArrayList<WebsiteActionItem>) {
+    actionItem.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout() }
     binding?.rvEnquiries?.apply {
       if (adapterWebsite == null) {
         adapterWebsite = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@WebsiteFragment)
@@ -112,7 +118,9 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     super.onClick(v)
     when (v) {
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
-      binding?.btnProfileLogo,binding?.editProfile -> baseActivity.startBusinessDescriptionEdit(session)
+      binding?.btnProfileLogo -> baseActivity.startBusinessDescriptionEdit(session)
+      binding?.editProfile -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
+
     }
   }
 }

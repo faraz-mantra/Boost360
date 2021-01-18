@@ -17,7 +17,8 @@ public class DigitalChannelUtil {
         try {
             if (activity == null && session == null) return;
             Bundle bundle = new Bundle();
-            Intent channelIntent = new Intent(activity, Class.forName("com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity"));
+//            Intent channelIntent = new Intent(activity, Class.forName("com.onboarding.nowfloats.ui.updateChannel.DigitalChannelActivity"));
+            Intent channelIntent = new Intent(activity, Class.forName("com.onboarding.nowfloats.ui.updateChannel.ContainerDigitalChannelActivity"));
             String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
             session.setHeader(Constants.WA_KEY);
             bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
