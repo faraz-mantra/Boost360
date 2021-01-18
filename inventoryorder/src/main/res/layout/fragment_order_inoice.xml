@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+
+  </data>
+
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+      <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_3"
+        android:indeterminate="true"
+        android:scaleY="4"
+        android:theme="@style/ActiveTheme" />
+
+      <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+    <com.framework.views.fabButton.FloatingActionButton
+      android:id="@+id/btn_share"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|right"
+      android:layout_margin="16dp"
+      android:clickable="true"
+      android:focusable="true"
+      app:fabBackground="@drawable/bg_button_rounded_orange"
+      app:fabIcon="@drawable/ic_share_order"
+      app:fabSize="normal" />
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

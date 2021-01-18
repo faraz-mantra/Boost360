@@ -16,11 +16,12 @@ data class GstDetailModel(
 
   fun gstData(): ArrayList<GstDetailModel> {
     val list = ArrayList<GstDetailModel>()
-    list.add(GstDetailModel(value = "0"))
-    list.add(GstDetailModel(value = "05"))
-    list.add(GstDetailModel(value = "12"))
-    list.add(GstDetailModel(value = "18"))
-    list.add(GstDetailModel(value = "28"))
+    list.add(GstDetailModel(value = "0.0"))
+    list.add(GstDetailModel(value = "3.0"))
+    list.add(GstDetailModel(value = "5.0"))
+    list.add(GstDetailModel(value = "12.0"))
+    list.add(GstDetailModel(value = "18.0"))
+    list.add(GstDetailModel(value = "28.0"))
     return list
   }
 }

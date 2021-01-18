@@ -135,6 +135,7 @@ public class Key_Preferences {
     public static final String WEBSITE_URL = "website_url";
     public static final String IS_UPDATE = "IsUpdate";
     public static final String BUSINESS_NAME = "business_name";
+    public static final String CONTACT_NAME = "contact_name";
     public static final String BUSINESS_IMAGE = "business_image";
     public static final String BUSINESS_TYPE = "business_type";
     public static final String LOCATION = "location";

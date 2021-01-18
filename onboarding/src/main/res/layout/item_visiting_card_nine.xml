@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+  <com.framework.views.customViews.CustomCardView
+    android:id="@+id/maim_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/size_22"
+    android:layout_marginTop="@dimen/size_2"
+    android:layout_marginEnd="@dimen/size_22"
+    android:layout_marginBottom="@dimen/size_2"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="@dimen/size_10"
+    app:cardElevation="0dp"
+    tools:layout_height="@dimen/size_200">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@drawable/bac_round_card"
+      android:backgroundTint="@color/white"
+      android:orientation="vertical">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginEnd="@dimen/size_16"
+        android:orientation="horizontal">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/business_name"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/size_14"
+          android:layout_weight="1"
+          android:ellipsize="end"
+          android:includeFontPadding="false"
+          android:maxLines="2"
+          android:textColor="@color/darkslateblue"
+          app:fontFamily="@font/patua_one_regular"
+          app:textType="HEADING_6"
+          tools:text="PLASTO INDIA AND POLYMERS" />
+
+        <com.framework.views.customViews.CustomCardView
+          android:id="@+id/profile_view"
+          android:layout_width="@dimen/size_54"
+          android:layout_height="@dimen/size_52"
+          app:cardBackgroundColor="@color/placeholder_bg"
+          app:cardCornerRadius="@dimen/size_4"
+          app:cardElevation="@dimen/size_0">
+
+          <com.framework.views.customViews.CustomCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/size_2"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/size_4"
+            app:cardElevation="@dimen/size_0">
+
+            <com.framework.views.customViews.CustomImageView
+              android:id="@+id/img_business_logo"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_gravity="center"
+              android:background="@color/white"
+              android:scaleType="centerCrop" />
+          </com.framework.views.customViews.CustomCardView>
+
+        </com.framework.views.customViews.CustomCardView>
+
+      </LinearLayout>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/size_14"
+        android:layout_marginEnd="@dimen/size_10"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <com.framework.views.customViews.CustomImageView
+          android:id="@+id/img_logo"
+          android:layout_width="@dimen/size_62"
+          android:layout_height="@dimen/size_56"
+          android:layout_gravity="bottom"
+          android:layout_marginBottom="@dimen/size_14"
+          app:srcCompat="@drawable/ic_category_spa_blue" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="wrap_content"
+          android:layout_height="@dimen/size_100"
+          android:layout_gravity="bottom"
+          android:layout_marginStart="@dimen/size_14"
+          android:background="@drawable/ic_rectangle_top_blue_new"
+          android:gravity="bottom|center_horizontal"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_call_card_new" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_2"
+            app:srcCompat="@drawable/ic_email_card_new" />
+
+          <com.framework.views.customViews.CustomImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_10"
+            app:srcCompat="@drawable/ic_website_card_new" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom"
+          android:layout_marginStart="@dimen/size_10"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_4"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/darkslateblue"
+            app:textType="CAPTION"
+            tools:text="0801234567890" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_4"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/darkslateblue"
+            app:autoSizeMaxTextSize="12sp"
+            app:autoSizeMinTextSize="6sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            tools:text="plastoindia@gmail.com" />
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/website"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_8"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/darkslateblue"
+            app:fontFamily="@font/semi_bold"
+            app:autoSizeMaxTextSize="11sp"
+            app:autoSizeMinTextSize="6sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            tools:text="https://plastoindiaandpolymers.com" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+  </com.framework.views.customViews.CustomCardView>
+</layout>

@@ -108,6 +108,7 @@ object Key_Preferences {
   const val WEBSITE_URL = "website_url"
   const val IS_UPDATE = "IsUpdate"
   const val BUSINESS_NAME = "business_name"
+  const val CONTACT_NAME = "contact_name"
   const val BUSINESS_IMAGE = "business_image"
   const val BUSINESS_TYPE = "business_type"
   const val LOCATION = "location"

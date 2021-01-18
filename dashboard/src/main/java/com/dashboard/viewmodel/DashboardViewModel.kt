@@ -63,12 +63,20 @@ class DashboardViewModel : BaseViewModel() {
     return WithFloatRepository.getBoostAddOnsTop(context).toLiveData()
   }
 
+  fun getWelcomeDashboardData(context: Context): LiveData<BaseResponse> {
+    return WithFloatRepository.getWelcomeDashboardData(context).toLiveData()
+  }
+
   fun getBoostUserDetailMessage(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getBoostUserDetailMessage(context).toLiveData()
   }
 
   fun getBoostCustomerItem(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getBoostCustomerItem(context).toLiveData()
+  }
+
+  fun getBoostWebsiteItem(context: Context): LiveData<BaseResponse> {
+    return WithFloatRepository.getBoostWebsiteItem(context).toLiveData()
   }
 
   fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {

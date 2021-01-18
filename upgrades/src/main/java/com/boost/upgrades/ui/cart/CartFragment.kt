@@ -1020,10 +1020,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 }
                 totalCalculation()
 
-                var event_attributes: HashMap<String, Double> = HashMap()
+//                var event_attributes: HashMap<String, Double> = HashMap()
+                var event_attributes: HashMap<String, Any> = HashMap()
                 event_attributes.put("total amount", grandTotal)
                 event_attributes.put("cart size", it.size.toDouble())
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
+//                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
+                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", "ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
 
             } else {
                 WebEngageController.trackEvent("ADDONS_MARKETPLACE Empty_Cart Loaded", "ADDONS_MARKETPLACE Empty_Cart Loaded", "")

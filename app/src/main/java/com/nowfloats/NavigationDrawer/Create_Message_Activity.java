@@ -48,6 +48,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.nowfloats.Analytics_Screen.Fragments.SocialMediaConnectPromptFragment;
 import com.nowfloats.CustomWidget.CustomTagLayout;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Model.FloatsMessageModel;
@@ -59,6 +60,7 @@ import com.nowfloats.NavigationDrawer.model.PostTaskModel;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NotificationCenter.AlertArchive;
+import com.nowfloats.helper.DigitalChannelUtil;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.BoostLog;
@@ -612,41 +614,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     }
 
     private void openDigitalChannel() {
-        try {
-            Bundle bundle = new Bundle();
-            Intent channelIntent = new Intent(Create_Message_Activity.this, Class.forName("com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity"));
-            String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-            session.setHeader(Constants.WA_KEY);
-            bundle.putString(UserSessionManager.KEY_FP_ID, session.getFPID());
-            bundle.putString(Key_Preferences.GET_FP_DETAILS_TAG, session.getFpTag());
-            bundle.putString(Key_Preferences.GET_FP_EXPERIENCE_CODE, session.getFP_AppExperienceCode());
-            bundle.putBoolean(Key_Preferences.IS_UPDATE, true);
-            bundle.putString(Key_Preferences.BUSINESS_NAME, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-            String imageUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
-            if (!TextUtils.isEmpty(imageUri) && !imageUri.contains("http")) {
-                imageUri = BASE_IMAGE_URL + imageUri;
-            }
-            bundle.putString(Key_Preferences.BUSINESS_IMAGE, imageUri);
-            bundle.putString(Key_Preferences.BUSINESS_TYPE, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
-
-            String city = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY);
-            String country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
-            String location = "";
-            if (!TextUtils.isEmpty(city) && !TextUtils.isEmpty(country)) location = city + ", " + country;
-            else location = city + country;
-            bundle.putString(Key_Preferences.LOCATION, location);
-
-            String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getString(R.string.tag_for_partners);
-            if (!TextUtils.isEmpty(rootAlisasURI)) bundle.putString(Key_Preferences.WEBSITE_URL, rootAlisasURI);
-            else bundle.putString(Key_Preferences.WEBSITE_URL, normalURI);
-            bundle.putString(Key_Preferences.PRIMARY_NUMBER, session.getUserPrimaryMobile());
-            bundle.putString(Key_Preferences.PRIMARY_EMAIL, session.getFPEmail());
-            channelIntent.putExtras(bundle);
-            channelIntent.putExtra("FRAGMENT_TYPE", "MY_DIGITAL_CHANNEL");
-            startActivity(channelIntent);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        DigitalChannelUtil.startDigitalChannel(activity,session);
     }
 
     private void showLoader(final String message) {

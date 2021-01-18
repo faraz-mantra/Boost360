@@ -21,6 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Business"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:id="@+id/txt_title"
         android:textColor="@color/black_4f4f4f"
         app:textType="CAPTION" />
@@ -31,6 +33,7 @@
         android:layout_marginTop="@dimen/size_1"
         android:text="3,45,890"
         android:id="@+id/txt_value"
+        app:fontFamily="@font/barlow_semi_bold"
         android:textColor="@color/colorAccent"
         app:textType="HEADING_6" />
     </LinearLayout>
