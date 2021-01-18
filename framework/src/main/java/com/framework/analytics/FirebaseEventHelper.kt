@@ -3,7 +3,7 @@ package com.framework.analytics
 import android.os.Bundle
 
 
-class FirebaseEvent(private var name: String, private var bundle: Bundle = Bundle()) {
+class FirebaseEventHelper(private var name: String, private var bundle: Bundle = Bundle()) {
 
     fun getBundle(): Bundle {
         return bundle
