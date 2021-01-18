@@ -1,6 +1,7 @@
 package com.nowfloats.Business_Enquiries;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
@@ -190,13 +191,12 @@ public class API_Business_enquiries {
 
                 //data.createdOn = Methods.getFormattedDate(dateString);
                 //long timestamp = Long.valueOf(dateString);
-
-                String formattedDate = Methods.getUTC_To_Local(Long.valueOf(dateString));
-
-                if (formattedDate != null) {
-                    data.createdOn = formattedDate;
+                try {
+                    String formattedDate = Methods.getUTC_To_Local(Long.parseLong(dateString));
+                    if (formattedDate != null) data.createdOn = formattedDate;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
                 Constants.StorebizQueries.add(data);
             }
         }

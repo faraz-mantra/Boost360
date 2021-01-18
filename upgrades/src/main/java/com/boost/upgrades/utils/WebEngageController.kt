@@ -1,5 +1,6 @@
 package com.boost.upgrades.utils
 
+import com.appsflyer.AppsFlyerLib
 import com.framework.analytics.FirebaseAnalyticsUtils
 import com.framework.analytics.FirebaseEvent
 import com.webengage.sdk.android.WebEngage
@@ -41,11 +42,25 @@ object WebEngageController {
                 val event = FirebaseEvent(event_name)
                 event.putDoubleMap(event_attributes)
                 FirebaseAnalyticsUtils.logEvent(event.getName(), event.getBundle())
+
+                //AppsFlyerEvent...
+                try {
+                    AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, event_attributes.toMap())
+                } catch (e: Exception) {
+                }
+
             } else {
                 weAnalytics.track(event_name)
 
                 //Firebase Analytics Event...
                 FirebaseAnalyticsUtils.logEvent(event_name, "", "")
+
+                //AppsFlyerEvent...
+                try {
+                    AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, null)
+                } catch (e: Exception) {
+                }
+
             }
 
         }
@@ -64,11 +79,24 @@ object WebEngageController {
                 val event = FirebaseEvent(event_name)
                 event.putIntMap(event_attributes)
                 FirebaseAnalyticsUtils.logEvent(event.getName(), event.getBundle())
+
+                //AppsFlyerEvent...
+                try {
+                    AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, event_attributes.toMap())
+                } catch (e: Exception) {
+                }
+
             } else {
                 weAnalytics.track(event_name)
 
                 //Firebase Analytics Event...
                 FirebaseAnalyticsUtils.logEvent(event_name, "", "")
+
+                //AppsFlyerEvent...
+                try {
+                    AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, null)
+                } catch (e: Exception) {
+                }
             }
 
         }
@@ -81,6 +109,17 @@ object WebEngageController {
 
             if (event_attributes.size > 0) {
                 weAnalytics.track(event_name, event_attributes)
+
+
+                //Firebase Analytics Event...
+                FirebaseAnalyticsUtils.logEvent(event_name, "", "")
+
+                //AppsFlyerEvent...
+                try {
+                    AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, event_attributes.toMap())
+                } catch (e: Exception) {
+                }
+
             } else {
                 weAnalytics.track(event_name)
             }

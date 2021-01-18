@@ -125,7 +125,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(addProduct)) {
           baseActivity.startAddServiceProduct(session)
         } else if (url.contains(addCustomPage)) {
-          baseActivity.startCreateCustomPage(session, true)
+          baseActivity.startCustomPage(session, true)
         } else if (url.contains(myorders)) {
           baseActivity.startOrderAptConsultList(session, isOrder = true)
         } else if (url.contains(myorderdetail)) {

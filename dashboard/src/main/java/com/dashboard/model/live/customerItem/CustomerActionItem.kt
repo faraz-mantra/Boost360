@@ -5,7 +5,6 @@ import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.recyclerView.AppBaseRecyclerViewItem
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
-import java.util.*
 
 data class CustomerActionItem(
     @SerializedName("title")
@@ -15,7 +14,17 @@ data class CustomerActionItem(
     @SerializedName("isLock")
     var isLock: Boolean? = null,
     @SerializedName("premiumCode")
-    var premiumCode: String? = null
+    var premiumCode: String? = null,
+    @SerializedName("orderCount")
+    var orderCount: String? = null,
+    @SerializedName("consultCount")
+    var consultCount: String? = null,
+    @SerializedName("customerCalls")
+    var customerCalls: String? = null,
+    @SerializedName("messageCount")
+    var messageCount: String? = null,
+    @SerializedName("subscriptionCount")
+    var subscriptionCount: String? = null,
 ) : Serializable, AppBaseRecyclerViewItem {
 
   var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_CUSTOMER_ITEM_VIEW.getLayout()
@@ -23,16 +32,29 @@ data class CustomerActionItem(
     return recyclerViewItemType
   }
 
+  fun getCountValue(): String? {
+    return when (CustomerActionItem.IconType.fromName(type)) {
+      CustomerActionItem.IconType.customer_orders,
+      CustomerActionItem.IconType.in_clinic_appointments,
+      -> orderCount
+      CustomerActionItem.IconType.video_consultations -> consultCount
+      CustomerActionItem.IconType.patient_customer_calls -> customerCalls
+      CustomerActionItem.IconType.patient_customer_messages -> messageCount
+      CustomerActionItem.IconType.newsletter_subscribers -> subscriptionCount
+      else -> ""
+    }
+  }
+
   enum class IconType(var icon: Int) {
-    in_clinic_appointments(R.drawable.ic_all_orders_d),
-    video_consultations(R.drawable.ic_consult_d),
-    patient_customer_calls(R.drawable.ic_nav_calls_d),
-    patient_customer_messages(R.drawable.ic_nav_enquiries_d),
-    newsletter_subscribers(R.drawable.ic_nav_inbox_d),
-    customer_orders(R.drawable.ic_all_orders_d);
+    in_clinic_appointments(R.drawable.in_clinic_appointments),
+    video_consultations(R.drawable.video_consultations),
+    patient_customer_calls(R.drawable.ic_customer_call_d),
+    patient_customer_messages(R.drawable.ic_customer_enquiries_d),
+    newsletter_subscribers(R.drawable.newsletter_subscription),
+    customer_orders(R.drawable.in_clinic_appointments);
 
     companion object {
-      fun fromName(name: String): IconType? = values().firstOrNull { it.name.toLowerCase(Locale.ROOT) == name.toLowerCase(Locale.ROOT) }
+      fun fromName(name: String?): IconType? = values().firstOrNull { it.name.equals(name, ignoreCase = true) }
     }
   }
 }

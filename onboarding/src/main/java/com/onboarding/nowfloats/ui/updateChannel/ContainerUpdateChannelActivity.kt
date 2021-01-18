@@ -18,8 +18,8 @@ import com.onboarding.nowfloats.base.AppBaseActivity
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.PreferenceConstant
 import com.onboarding.nowfloats.databinding.ActivityFragmentContainerUpdateBinding
-import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyDigitalCardFragment
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyDigitalChannelFragment
+import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyVisitingCardFragment
 
 open class ContainerUpdateChannelActivity : AppBaseActivity<ActivityFragmentContainerUpdateBinding, BaseViewModel>() {
 
@@ -62,7 +62,7 @@ open class ContainerUpdateChannelActivity : AppBaseActivity<ActivityFragmentCont
   }
 
   private fun getFragments(bundle: Bundle?): ArrayList<BaseFragment<*, *>> {
-    return arrayListOf(MyDigitalChannelFragment.newInstance(bundle), MyDigitalCardFragment.newInstance(bundle))
+    return arrayListOf(MyDigitalChannelFragment.newInstance(bundle), MyVisitingCardFragment.newInstance(bundle))
   }
 
   override fun onBackPressed() {

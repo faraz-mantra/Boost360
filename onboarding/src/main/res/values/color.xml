@@ -2,9 +2,24 @@
 <resources>
   <color name="darkslategray">#262630</color>
   <color name="goldenrod">#faaa38</color>
-  <color name="linen">#ecebea</color>
+
   <color name="lightskyblue">#9bbbf5</color>
   <color name="textGreyLight">#4F4F5B</color>
   <color name="textGreyDark">#0D0D11</color>
-  <color name="light_green_new">#64B161</color>
+  <color name="green_light_2">#64B161</color>
+  <color name="green_light_1">#48C56C</color>
+
+  <!-- visiting card color -->
+
+  <color name="linen">#f3f2f1</color>
+  <color name="light_red">#DE4D3D</color>
+  <color name="blue_light">#4889F8</color>
+  <color name="black_light">#25252F</color>
+  <color name="dark_late_gray">#172933</color>
+  <color name="white_30">#4DFFFFFF</color>
+  <color name="white_grey">#DAD4D4</color>
+  <color name="white_grey_1">#E3DDDD</color>
+  <color name="seagreen">#07A361</color>
+  <color name="darkslateblue">#475993</color>
+  <color name="grey_light_dark">#656565</color>
 </resources>

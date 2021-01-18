@@ -1,12 +1,12 @@
 package com.inventoryorder.model.ordersummary
 
+import androidx.annotation.ColorRes
 import com.framework.base.BaseResponse
 import com.framework.utils.*
+import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
-import java.util.*
-import kotlin.collections.ArrayList
 
 const val SELLER_SUMMARY_DATA = "SELLER_SUMMARY_DATA"
 
@@ -26,6 +26,7 @@ class OrderSummaryModel(
 
     val type: String? = null,
     val count: Int? = null,
+    @ColorRes val color: Int? = null,
     var isSelected: Boolean = false,
 ) : BaseResponse(), Serializable, AppBaseRecyclerViewItem {
 
@@ -43,12 +44,12 @@ class OrderSummaryModel(
 
   fun getOrderType(): ArrayList<OrderSummaryModel> {
     val list = ArrayList<OrderSummaryModel>()
-    list.add(OrderSummaryModel(type = OrderSummaryType.TOTAL.type, count = TotalOrders, isSelected = true))
-    list.add(OrderSummaryModel(type = OrderSummaryType.RECEIVED.type, count = TotalOrdersInProgress))
-    list.add(OrderSummaryModel(type = OrderSummaryType.SUCCESSFUL.type, count = TotalOrdersCompleted))
-    list.add(OrderSummaryModel(type = OrderSummaryType.CANCELLED.type, count = TotalOrdersCancelled))
-    list.add(OrderSummaryModel(type = OrderSummaryType.ABANDONED.type, count = TotalOrdersAbandoned))
-    list.add(OrderSummaryModel(type = OrderSummaryType.ESCALATED.type, count = TotalOrdersEscalated))
+    list.add(OrderSummaryModel(type = OrderSummaryType.TOTAL.type, count = TotalOrders, isSelected = true, color = R.color.orange))
+    list.add(OrderSummaryModel(type = OrderSummaryType.RECEIVED.type, count = TotalOrdersInProgress, color = R.color.watermelon_light))
+    list.add(OrderSummaryModel(type = OrderSummaryType.SUCCESSFUL.type, count = TotalOrdersCompleted, color = R.color.green_27AE60))
+    list.add(OrderSummaryModel(type = OrderSummaryType.CANCELLED.type, count = TotalOrdersCancelled, color = R.color.pinkish_grey))
+    list.add(OrderSummaryModel(type = OrderSummaryType.ABANDONED.type, count = TotalOrdersAbandoned, color = R.color.red_F40000))
+    list.add(OrderSummaryModel(type = OrderSummaryType.ESCALATED.type, count = TotalOrdersEscalated, color = R.color.red_F40000))
     return list
   }
 
@@ -77,8 +78,8 @@ class OrderSummaryModel(
 
 
     companion object {
-      fun fromType(type: String): OrderSummaryType? = values().firstOrNull { it.type.toLowerCase(Locale.ROOT) == type.toLowerCase(Locale.ROOT) }
-      fun fromValue(value: String): OrderSummaryType? = values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+      fun fromType(type: String): OrderSummaryType? = values().firstOrNull { it.type.equals(type, ignoreCase = true) }
+      fun fromValue(value: String): OrderSummaryType? = values().firstOrNull { it.value.equals(value, ignoreCase = true) }
     }
   }
 
@@ -87,7 +88,7 @@ class OrderSummaryModel(
     FEEDBACK_PENDING, FEEDBACK_RECEIVED, DELIVERY_DELAYED, DELIVERY_FAILED, ORDER_COMPLETED, ORDER_CANCELLED, ESCALATED;
 
     companion object {
-      fun from(value: String): OrderStatus? = values().firstOrNull { it.name.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+      fun from(value: String): OrderStatus? = values().firstOrNull { it.name.equals(value, ignoreCase = true) }
     }
   }
 
@@ -101,7 +102,7 @@ class OrderSummaryModel(
   }
 
   fun saveData() {
-    PreferencesUtils.instance.saveDataN(SELLER_SUMMARY_DATA, convertObjToString(this) ?: "")
+    PreferencesUtils.instance.saveData(SELLER_SUMMARY_DATA, convertObjToString(this) ?: "")
   }
 }
 

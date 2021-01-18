@@ -23,6 +23,7 @@ import com.nowfloats.NavigationDrawer.AccountSettingsFragment;
 import com.nowfloats.NavigationDrawer.HelpAndSupportFragment;
 import com.nowfloats.NavigationDrawer.Home_Main_Fragment;
 import com.nowfloats.NavigationDrawer.ManageContentFragment;
+import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.nowfloats.enablekeyboard.KeyboardFragment;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
@@ -30,6 +31,7 @@ import com.nowfloats.manageinventory.ManageInventoryFragment;
 import com.nowfloats.util.Utils;
 import com.thinksity.R;
 import com.thinksity.databinding.ActivityFragmentContainerAppBinding;
+
 
 public class AppFragmentContainerActivity extends AppCompatActivity {
 
@@ -47,6 +49,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
     private NotificationFragment notificationFragment = null;
     private Home_Main_Fragment homeMainFragment = null;
     private ManageCustomerFragment manageCustomerFragment = null;
+    private Site_Meter_Fragment site_Meter_Fragment = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,6 +116,8 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
                 return Utils.getLatestUpdatesTaxonomyFromServiceCode(session.getFP_AppExperienceCode());
             case MANAGE_CUSTOMER_VIEW:
                 return getString(R.string.manage_customers);
+            case SITE_METER_OLD_VIEW:
+                return "Site Meter";
             default:
                 return "";
         }
@@ -129,6 +134,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case NOTIFICATION_VIEW:
             case UPDATE_LATEST_STORY_VIEW:
             case MANAGE_CUSTOMER_VIEW:
+            case SITE_METER_OLD_VIEW:
             default:
                 return R.color.white;
         }
@@ -145,6 +151,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case NOTIFICATION_VIEW:
             case UPDATE_LATEST_STORY_VIEW:
             case MANAGE_CUSTOMER_VIEW:
+            case SITE_METER_OLD_VIEW:
             default:
                 return ContextCompat.getDrawable(this, R.drawable.ic_arrow_back);
         }
@@ -185,6 +192,7 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case UPDATE_LATEST_STORY_VIEW:
             case NOTIFICATION_VIEW:
             case MANAGE_CUSTOMER_VIEW:
+            case SITE_METER_OLD_VIEW:
             default:
                 return ContextCompat.getColor(this, R.color.colorAccent);
 
@@ -253,6 +261,9 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
             case MANAGE_CUSTOMER_VIEW:
                 manageCustomerFragment =  new ManageCustomerFragment();
                 return manageCustomerFragment;
+            case SITE_METER_OLD_VIEW:
+                site_Meter_Fragment =  new Site_Meter_Fragment();
+                return site_Meter_Fragment;
             default:
                 return null;
         }

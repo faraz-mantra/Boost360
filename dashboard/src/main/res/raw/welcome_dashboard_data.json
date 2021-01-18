@@ -1,0 +1,211 @@
+{
+  "data": [
+    {
+      "type": "DOC",
+      "action_item": [
+        {
+          "title": "Easy access to all your website content",
+          "btnTitle": "manage my website content",
+          "desc": "Find and make content changes to all the pages of your clinic website including business profile, updates products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your clinic and patient interactions at one place",
+          "btnTitle": "Manage My Clinic interactions",
+          "desc": "Single place from where you can view and manage all kind of clinic and patient interactions on your clinic website. ",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium add-ons to get most out of Boost",
+          "btnTitle": "View Add-on Marketplace",
+          "desc": "Find what all tools can help you grow your business digitally and help you be on top of your business operations.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "HOS",
+      "action_item": [
+        {
+          "title": "Easy access to all your website content",
+          "btnTitle": "manage my website content",
+          "desc": "Find and make content changes to all the pages of your clinic website including business profile, updates products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your clinic and patient interactions at one place",
+          "btnTitle": "Manage My Clinic interactions",
+          "desc": "Single place from where you can view and manage all kind of clinic and patient interactions on your clinic website. ",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium add-ons to get most out of Boost",
+          "btnTitle": "View Add-on Marketplace",
+          "desc": "Find what all tools can help you grow your business digitally and help you be on top of your business operations.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "RTL",
+      "action_item": [
+        {
+          "title": "Easy access to all your website content",
+          "btnTitle": "manage my website content",
+          "desc": "Find and make content changes to all the pages of your business website including business profile, updates products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business and customer interactions at one place",
+          "btnTitle": "Manage My business interactions",
+          "desc": "Single place from where you can view and manage all kind of business and customer interactions on your business website. ",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium add-ons to get most out of Boost",
+          "btnTitle": "View Add-on Marketplace",
+          "desc": "Find what all tools can help you grow your business digitally and help you be on top of your business operations.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "EDU",
+      "action_item": [
+        {
+          "title": "Easy access to all your website content",
+          "btnTitle": "manage my website content",
+          "desc": "Find and make content changes to all the pages of your business website including business profile, updates products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business and student interactions at one place",
+          "btnTitle": "Manage My business interactions",
+          "desc": "Single place from where you can view and manage all kind of business and student interactions on your business website. ",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium add-ons to get most out of Boost",
+          "btnTitle": "View Add-on Marketplace",
+          "desc": "Find what all tools can help you grow your business digitally and help you be on top of your business operations.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "HOT",
+      "action_item": [
+        {
+          "title": "Easy access to all your website content",
+          "btnTitle": "manage my website content",
+          "desc": "Find and make content changes to all the pages of your business website including business profile, updates products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business and customer interactions at one place",
+          "btnTitle": "Manage My business interactions",
+          "desc": "Single place from where you can view and manage all kind of business and customer interactions on your business website. ",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium add-ons to get most out of Boost",
+          "btnTitle": "View Add-on Marketplace",
+          "desc": "Find what all tools can help you grow your business digitally and help you be on top of your business operations.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "MFG",
+      "action_item": [
+        {
+          "title": "Easy access to all your website content",
+          "btnTitle": "manage my website content",
+          "desc": "Find and make content changes to all the pages of your business website including business profile, updates products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business and customer interactions at one place",
+          "btnTitle": "Manage My business interactions",
+          "desc": "Single place from where you can view and manage all kind of business and customer interactions on your business website. ",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium add-ons to get most out of Boost",
+          "btnTitle": "View Add-on Marketplace",
+          "desc": "Find what all tools can help you grow your business digitally and help you be on top of your business operations.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "CAF",
+      "action_item": [
+        {
+          "title": "Easy access to all your website content",
+          "btnTitle": "manage my website content",
+          "desc": "Find and make content changes to all the pages of your business website including business profile, updates products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business and customer interactions at one place",
+          "btnTitle": "Manage My business interactions",
+          "desc": "Single place from where you can view and manage all kind of business and customer interactions on your business website. ",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium add-ons to get most out of Boost",
+          "btnTitle": "View Add-on Marketplace",
+          "desc": "Find what all tools can help you grow your business digitally and help you be on top of your business operations.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "SVC",
+      "action_item": [
+        {
+          "title": "Easy access to all your website content",
+          "btnTitle": "manage my website content",
+          "desc": "Find and make content changes to all the pages of your business website including business profile, updates products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business and customer interactions at one place",
+          "btnTitle": "Manage My business interactions",
+          "desc": "Single place from where you can view and manage all kind of business and customer interactions on your business website. ",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium add-ons to get most out of Boost",
+          "btnTitle": "View Add-on Marketplace",
+          "desc": "Find what all tools can help you grow your business digitally and help you be on top of your business operations.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
+      "type": "SPA",
+      "action_item": [
+        {
+          "title": "Easy access to all your website content",
+          "btnTitle": "manage my website content",
+          "desc": "Find and make content changes to all the pages of your business website including business profile, updates products/services etc.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "All your business and customer interactions at one place",
+          "btnTitle": "Manage My business interactions",
+          "desc": "Single place from where you can view and manage all kind of business and customer interactions on your business website. ",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Explore premium add-ons to get most out of Boost",
+          "btnTitle": "View Add-on Marketplace",
+          "desc": "Find what all tools can help you grow your business digitally and help you be on top of your business operations.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    }
+  ]
+}

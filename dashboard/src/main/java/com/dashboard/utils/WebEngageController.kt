@@ -1,5 +1,7 @@
 package com.dashboard.utils
 
+import com.appsflyer.AppsFlyerLib
+import com.framework.analytics.FirebaseAnalyticsUtils
 import com.webengage.sdk.android.User
 import com.webengage.sdk.android.WebEngage
 import java.util.*
@@ -20,35 +22,36 @@ object WebEngageController {
     if (isUserLogedIn) {
       if (!email.isNullOrEmpty()) {
         weUser.setEmail(email)
+
+        //Firebase Analytics User Property.
+        FirebaseAnalyticsUtils.setUserProperty("emailId", email)
       }
       if (!mobile.isNullOrEmpty()) {
         weUser.setPhoneNumber(mobile)
+
+        //Firebase Analytics User Property.
+        FirebaseAnalyticsUtils.setUserProperty("mobile", mobile)
       }
       if (!name.isNullOrEmpty()) {
         weUser.setFirstName(name)
-      }
 
+        //Firebase Analytics User Property.
+        FirebaseAnalyticsUtils.setUserProperty("name", name)
+      }
       if (!company.isNullOrEmpty()) {
         weUser.setCompany(company)
+
+        //Firebase Analytics User Property.
+        FirebaseAnalyticsUtils.setUserProperty("company", company)
       }
-
-//            //Firebase Analytics User Property.
-//            FirebaseAnalyticsUtils.setUserProperty("emailId", session.getUserProfileEmail())
-//            FirebaseAnalyticsUtils.setUserProperty("name", session.getUserProfileName())
-//            FirebaseAnalyticsUtils.setUserProperty("mobile", session.getUserPrimaryMobile())
-//            FirebaseAnalyticsUtils.setUserProperty("Company", session.getFPDetails(com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
-
     }
   }
 
   fun setFPTag(fpTag: String?) {
     try {
-//            if (com.nowfloats.util.WebEngageController.weUser != null) {
-//                com.nowfloats.util.WebEngageController.weUser.setAttribute("fpTag", fpTag)
-//            }
-//
-//            //Firebase Analytics User Property.
-//            FirebaseAnalyticsUtils.setUserProperty("fpTag", fpTag)
+//      weUser.setAttribute("fpTag", fpTag)
+//      //Firebase Analytics User Property.
+//      FirebaseAnalyticsUtils.setUserProperty("fpTag", fpTag?:"")
     } catch (e: java.lang.Exception) {
     }
   }
@@ -66,20 +69,32 @@ object WebEngageController {
     isUserLogedIn = false
   }
 
-  fun trackEvent(event_name: String, event_label: String, event_value: String?) {
+  fun trackEvent(event_name: String = "", event_label: String = "", event_value: String? = "") {
     try {
       val trackEvent: MutableMap<String, Any> = HashMap()
       trackEvent["event_name"] = event_name
       trackEvent["fptag/event_value"] = event_value?:""
       trackEvent["event_label"] = event_label
       weAnalytics.track(event_name, trackEvent)
-    }catch (e:Exception){
-      e.printStackTrace()
+
+      //Firebase Analytics Event...
+      FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, event_value?:"")
+
+      //AppsFlyerEvent...
+      AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent);
+    } catch (e: Exception) {
     }
   }
 
 
   fun logout() {
-    weUser.logout()
+    try {
+      weUser.logout()
+      //Reset Firebase Analytics User Session Event.
+      FirebaseAnalyticsUtils.resetIdentifyUser()
+      //End AppsFlyer Analytics User Session Event.
+      AppsFlyerLib.getInstance().setCustomerUserId(null)
+    } catch (e: Exception) {
+    }
   }
 }
