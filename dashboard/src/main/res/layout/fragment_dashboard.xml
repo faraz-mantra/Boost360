@@ -421,7 +421,7 @@
                   android:layout_marginEnd="@dimen/size_18"
                   android:ellipsize="end"
                   android:maxLines="2"
-                  android:text="@string/learn_boost_360"
+                  android:text="@string/addon_marketplace_description"
                   android:textColor="@color/black_4a4a4a"
                   app:textType="CAPTION" />
 
@@ -484,7 +484,7 @@
                   android:layout_marginEnd="@dimen/size_18"
                   android:ellipsize="end"
                   android:maxLines="2"
-                  android:text="@string/perform_online_business"
+                  android:text="@string/website_report_description"
                   android:textColor="@color/warm_grey"
                   app:textType="CAPTION" />
 

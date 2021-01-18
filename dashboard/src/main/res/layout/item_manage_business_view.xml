@@ -42,7 +42,7 @@
           android:layout_marginTop="@dimen/size_2"
           android:ellipsize="end"
           android:maxLines="2"
-          android:text="@string/access_all_activated_features_in_your_plan"
+          android:text="@string/manage_business_description"
           android:textColor="@color/black_4a4a4a"
           app:textType="CAPTION" />
       </LinearLayout>
