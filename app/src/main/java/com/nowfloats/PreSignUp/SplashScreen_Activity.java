@@ -12,7 +12,6 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.boost.presignup.utils.PresignupManager;
 import com.boost.upgrades.UpgradeActivity;
-import com.framework.analytics.FirebaseAnalyticsUtils;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Login_MainActivity;
 import com.nowfloats.Login.Model.FloatsMessageModel;

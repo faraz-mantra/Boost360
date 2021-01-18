@@ -1,7 +1,7 @@
 package com.inventoryorder.utils
 
 import com.appsflyer.AppsFlyerLib
-import com.framework.analytics.FirebaseAnalyticsUtils
+import com.framework.analytics.FirebaseAnalyticsUtilsHelper
 import com.webengage.sdk.android.User
 import com.webengage.sdk.android.WebEngage
 import java.util.*
@@ -16,7 +16,7 @@ object WebEngageController {
       weUser.login(userId)
 
       //Firebase Analytics User Session Event.
-      FirebaseAnalyticsUtils.identifyUser(userId)
+      FirebaseAnalyticsUtilsHelper.identifyUser(userId)
 
       isUserLogedIn = true
     }
@@ -28,19 +28,19 @@ object WebEngageController {
         weUser.setEmail(email)
 
         //Firebase Analytics User Property.
-        FirebaseAnalyticsUtils.setUserProperty("emailId", email)
+        FirebaseAnalyticsUtilsHelper.setUserProperty("emailId", email)
       }
       if (!mobile.isNullOrEmpty()) {
         weUser.setPhoneNumber(mobile)
 
         //Firebase Analytics User Property.
-        FirebaseAnalyticsUtils.setUserProperty("mobile", mobile)
+        FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", mobile)
       }
       if (!name.isNullOrEmpty()) {
         weUser.setFirstName(name)
 
         //Firebase Analytics User Property.
-        FirebaseAnalyticsUtils.setUserProperty("name", name)
+        FirebaseAnalyticsUtilsHelper.setUserProperty("name", name)
       }
     }
   }
@@ -67,7 +67,7 @@ object WebEngageController {
       weAnalytics.track(event_name, trackEvent)
 
       //Firebase Analytics Event...
-      FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, event_value)
+      FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value)
 
       //AppsFlyerEvent...
       AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent.toMap());
@@ -80,7 +80,7 @@ object WebEngageController {
     try {
       weUser.logout()
       //Reset Firebase Analytics User Session Event.
-      FirebaseAnalyticsUtils.resetIdentifyUser()
+      FirebaseAnalyticsUtilsHelper.resetIdentifyUser()
     } catch (e: Exception) {
     }
   }
