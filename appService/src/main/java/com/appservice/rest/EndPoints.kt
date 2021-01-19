@@ -22,6 +22,8 @@ object EndPoints {
   const val GET_PRODUCT_LISTING= "Product/v1/GetListingsWithInventorySync"
   const val UPDATE_PRODUCT = "Product/v1/Update"
   const val DELETE_PRODUCT = "Product/v1/Delete"
+  //TODO SERVICE API WITH NOWFLOATS API
+  const val GET_SERVICE_LISTING = "product/v13/GetAllServiceListings"
 
 
   //TODO NFX API 2 WITH FLOAT

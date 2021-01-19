@@ -1,11 +1,11 @@
-package com.appservice.ui.catalog
+package com.appservice.holder
 
 import android.view.View
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.RecyclerItemSessionBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
-import com.appservice.staffs.model.StaffTimingModel
+import com.appservice.ui.catalog.common.StaffTimingModel
 
 class StaffSessionViewHolder(binding: RecyclerItemSessionBinding) : AppBaseRecyclerViewHolder<RecyclerItemSessionBinding>(binding) {
     private lateinit var data: StaffTimingModel
