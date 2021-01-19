@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+
+  </data>
+
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_100"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <com.framework.views.customViews.CustomImageView
+      android:id="@+id/imageViewIcon"
+      android:layout_width="@dimen/size_48"
+      android:layout_height="@dimen/size_48"
+      android:layout_gravity="center|center_horizontal"
+      android:layout_marginStart="@dimen/size_14"
+      tools:srcCompat="@drawable/ic_customer_call_d" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginStart="@dimen/size_14"
+      android:layout_marginEnd="@dimen/size_10"
+      android:layout_weight="1"
+      android:gravity="center_vertical"
+      android:orientation="vertical">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black_4a4a4a"
+        app:textType="HEADING_6"
+        tools:text="Updates" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/txt_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_4"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="2"
+        android:textColor="@color/grey_dark_2"
+        app:textType="CAPTION"
+        tools:text="Description of this asset Description of this assetDescription of this asset" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginEnd="@dimen/size_8"
+      android:gravity="center_vertical"
+      android:orientation="horizontal">
+
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="@dimen/size_13"
+        android:layout_height="@dimen/size_12"
+        android:layout_gravity="center"
+        android:tint="@color/pinkish_grey_ten_alpha"
+        app:srcCompat="@drawable/ic_arrow_right_9_d" />
+    </LinearLayout>
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

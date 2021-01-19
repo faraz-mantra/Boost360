@@ -1,10 +1,7 @@
 package com.dashboard.model.live.domainDetail
 
 import com.framework.base.BaseResponse
-import com.framework.utils.PreferencesUtils
-import com.framework.utils.convertObjToString
-import com.framework.utils.convertStringToObj
-import com.framework.utils.getData
+import com.framework.utils.*
 import java.io.Serializable
 import java.util.*
 
@@ -31,6 +28,6 @@ data class DomainDetailResponse(
   }
 
   fun saveDomainDetail() {
-    PreferencesUtils.instance.saveDataN(DOMAIN_DETAIL_DATA, convertObjToString(this) ?: "")
+    PreferencesUtils.instance.saveData(DOMAIN_DETAIL_DATA, convertObjToString(this) ?: "")
   }
 }

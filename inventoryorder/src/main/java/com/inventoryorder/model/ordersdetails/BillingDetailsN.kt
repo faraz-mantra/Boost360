@@ -15,5 +15,7 @@ data class BillingDetailsN(
     val InvoiceUrl: String? = null,
     val NFDeliveryCharges: Double? = null,
     val SellerDeliveryCharges: Double? = null,
-    val TransactionCharges: Double? = null
+    var NetAmount: Double? = null,
+    var TaxDetails: Any? = null,
+    val TransactionCharges: Double? = null,
 ) : Serializable

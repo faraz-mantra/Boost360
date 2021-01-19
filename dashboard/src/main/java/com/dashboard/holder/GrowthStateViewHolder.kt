@@ -1,6 +1,7 @@
 package com.dashboard.holder
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.dashboard.R
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.ItemGrowthStateBinding
@@ -13,7 +14,7 @@ class GrowthStateViewHolder(binding: ItemGrowthStateBinding) : AppBaseRecyclerVi
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as? GrowthStatsData ?: return
-    getColor(if (position % 2 == 0) R.color.light_grey_4 else R.color.white)?.let { binding.mainContent.setBackgroundColor(it) }
+    ContextCompat.getColorStateList(activity!!,if (position % 2 == 0) R.color.light_grey_4 else R.color.white)?.let { binding.mainContent.backgroundTintList=it }
     binding.txtTitle.text = data.title
     binding.txtAmount.text = data.value
     binding.txtAmountCountDay.text = data.dayAmountTitle

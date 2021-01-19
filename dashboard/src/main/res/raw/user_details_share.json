@@ -2,39 +2,39 @@
   "data": [
     {
       "type": "DOC",
-      "message": "Hi Please have a look at visiting card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
+      "message": "Hi, Please have a look at business card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
     },
     {
       "type": "HOS",
-      "message": "Hi Please have a look at visiting card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
+      "message": "Hi, Please have a look at business card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
     },
     {
       "type": "RTL",
-      "message": "Hi Please have a look at visiting card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
+      "message": "Hi, Please have a look at business card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
     },
     {
       "type": "EDU",
-      "message": "Hi Please have a look at visiting card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
+      "message": "Hi, Please have a look at business card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
     },
     {
       "type": "HOT",
-      "message": "Hi Please have a look at visiting card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
+      "message": "Hi, Please have a look at business card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
     },
     {
       "type": "MFG",
-      "message": "Hi Please have a look at visiting card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
+      "message": "Hi, Please have a look at business card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
     },
     {
       "type": "CAF",
-      "message": "Hi Please have a look at visiting card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
+      "message": "Hi, Please have a look at business card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
     },
     {
       "type": "SVC",
-      "message": "Hi Please have a look at visiting card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
+      "message": "Hi, Please have a look at business card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
     },
     {
       "type": "SPA",
-      "message": "Hi Please have a look at visiting card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
+      "message": "Hi, Please have a look at business card of %s and visit %s for more details.\n\nYou can contact us at %s \n\nif you have any questions contact with mail %s"
     }
   ]
 }
