@@ -323,8 +323,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun openDashboard() {
-    binding?.navView?.setActiveItem(0)
     mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
+    binding?.navView?.setActiveItem(0)
     toolbarPropertySet(0)
   }
 
@@ -341,7 +341,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       (binding?.drawerLayout?.isDrawerOpen(GravityCompat.END) == true) -> binding?.drawerLayout?.closeDrawers()
       (mNavController.currentDestination?.id == R.id.navigation_dashboard) -> {
         if (exitToast == null || exitToast?.view == null || exitToast?.view?.windowToken == null) {
-          exitToast = Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT)
+          exitToast = Toast.makeText(this, resources.getString(R.string.press_again_exit), Toast.LENGTH_SHORT)
           exitToast?.show()
         } else {
           exitToast?.cancel()

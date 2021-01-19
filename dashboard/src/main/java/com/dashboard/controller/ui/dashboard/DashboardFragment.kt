@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -13,6 +14,7 @@ import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
 import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
+import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.DashboardActivity
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
@@ -83,6 +85,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onCreateView() {
     super.onCreateView()
+    showProgress()
     session = UserSessionManager(baseActivity)
     setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.btnVisitingCard, binding?.txtDomainName)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
@@ -114,16 +117,16 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onResume() {
     super.onResume()
-    binding?.mainContent?.post { getFloatMessage() }
+    getFloatMessage()
   }
 
   private fun getFloatMessage() {
-    if (isFirstLoad().not()) binding?.progress?.visible()
+    Handler().postDelayed({ if (isFirstLoad()) hideProgress() }, 500)
     session?.siteMeterData { it?.let { it1 -> refreshData(it1) } }
     viewModel?.getBizFloatMessage(session!!.getRequestFloat())?.observeOnce(this, {
       if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
       session?.siteMeterData { it1 -> it1?.let { it2 -> refreshData(it2) } }
-      if (isFirstLoad().not()) binding?.progress?.gone()
+      if (isFirstLoad().not()) hideProgress()
       saveFirstLoad()
     })
   }
@@ -219,6 +222,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun setDataSellerSummary(sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, callSummary: CallSummaryResponse?) {
     val data = BusinessSetupHighData().getData(siteMeterData?.siteMeterTotalWeight ?: 0,
         summary?.getNoOfUniqueViews() ?: "0", sellerOrder?.getTotalOrders() ?: "0", getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
+    data.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_HIGH_ITEM_VIEW.getLayout() }
     if (adapterPagerBusinessUpdate == null) {
       binding?.pagerBusinessSetupHigh?.apply {
         adapterPagerBusinessUpdate = AppBaseRecyclerViewAdapter(baseActivity, data, this@DashboardFragment)
@@ -229,6 +233,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
     } else adapterPagerBusinessUpdate?.notify(data)
     val roiData = RoiSummaryData().getData(summary?.getNoOfMessages() ?: "0", callSummary?.getTotalCalls() ?: "0", sellerOrder, getRoiSummaryType(session?.fP_AppExperienceCode))
+    roiData.map { it.recyclerViewItemType = RecyclerViewItemType.ROI_SUMMARY_ITEM_VIEW.getLayout() }
     if (adapterRoi == null) {
       binding?.rvRoiSummary?.apply {
         adapterRoi = AppBaseRecyclerViewAdapter(baseActivity, roiData, this@DashboardFragment)
@@ -236,6 +241,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
     } else adapterRoi?.notify(roiData)
     val growthStatsList = GrowthStatsData().getData(summary, session)
+    growthStatsList.map { it.recyclerViewItemType = RecyclerViewItemType.GROWTH_STATE_ITEM_VIEW.getLayout() }
     if (adapterGrowth == null) {
       binding?.rvGrowthState?.apply {
         adapterGrowth = AppBaseRecyclerViewAdapter(baseActivity, growthStatsList, this@DashboardFragment)
@@ -251,12 +257,18 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     if (imageLogoUri.isNullOrEmpty().not() && imageLogoUri!!.contains("http").not()) {
       imageLogoUri = BASE_IMAGE_URL + imageLogoUri
     }
-    binding?.imgBusinessLogo?.let { baseActivity.glideLoad(it, imageLogoUri, R.drawable.ic_add_logo_d, isCrop = true) }
+
+    binding?.imgBusinessLogo?.let {
+      if (imageLogoUri.isNullOrEmpty().not()) {
+        baseActivity.glideLoad(mImageView = it, url = imageLogoUri!!, placeholder = R.drawable.gradient_white, isLoadBitmap = true)
+      } else it.setImageResource(R.drawable.ic_add_logo_d)
+    }
   }
 
   private fun setDataRiaAcademy(academyBanner: ArrayList<DashboardAcademyBanner>) {
     binding?.pagerRiaAcademy?.apply {
       if (academyBanner.isNotEmpty()) {
+        academyBanner.map { it.recyclerViewItemType = RecyclerViewItemType.RIA_ACADEMY_ITEM_VIEW.getLayout() }
         binding?.riaAcademyView?.visible()
         if (adapterAcademy == null) {
           adapterAcademy = AppBaseRecyclerViewAdapter(baseActivity, academyBanner, this@DashboardFragment)
@@ -271,6 +283,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun setDataMarketBanner(marketBannerFilter: ArrayList<DashboardMarketplaceBanner>) {
     binding?.pagerBoostPremium?.apply {
       if (marketBannerFilter.isNotEmpty()) {
+        marketBannerFilter.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_PREMIUM_ITEM_VIEW.getLayout() }
         binding?.boostPremiumView?.visible()
         if (adapterMarketBanner == null) {
           adapterMarketBanner = AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
@@ -505,13 +518,25 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   override fun showProgress(title: String?, cancelable: Boolean?) {
-    binding?.nestedScrollView?.gone()
-    binding?.progress?.visible()
+    showSimmer(true)
   }
 
   override fun hideProgress() {
-    binding?.nestedScrollView?.visible()
-    binding?.progress?.gone()
+    showSimmer(false)
+  }
+
+  private fun showSimmer(isSimmer: Boolean) {
+    binding?.mainContent?.post {
+      if (isSimmer) {
+        binding?.nestedScrollView?.gone()
+        binding?.progressSimmer?.parentShimmerLayout?.startShimmer()
+        binding?.progressSimmer?.parentShimmerLayout?.visible()
+      } else {
+        binding?.progressSimmer?.parentShimmerLayout?.gone()
+        binding?.progressSimmer?.parentShimmerLayout?.stopShimmer()
+        binding?.nestedScrollView?.visible()
+      }
+    }
   }
 }
 

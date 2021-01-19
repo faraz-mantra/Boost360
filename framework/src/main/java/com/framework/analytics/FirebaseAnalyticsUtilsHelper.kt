@@ -6,7 +6,7 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 
 
-object FirebaseAnalyticsUtils {
+object FirebaseAnalyticsUtilsHelper {
 
     // Obtain the FirebaseAnalytics instance.
     private var firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
@@ -29,14 +29,14 @@ object FirebaseAnalyticsUtils {
 
     @JvmStatic
     fun logEvent(eventName: String, eventLabel: String, eventValue: String) {
-        val event = FirebaseEvent(eventName)
+        val event = FirebaseEventHelper(eventName)
         event.putString(eventLabel, eventValue)
         logFirebaseEvent(event.getName(), event.getBundle())
     }
 
     @JvmStatic
     fun logDefinedEvent(eventName: String, eventLabel: String, eventValue: String) {
-        val event = FirebaseEvent(eventName)
+        val event = FirebaseEventHelper(eventName)
         event.putString("event_name", eventName)
         event.putString("fptag/event_value", eventLabel)
         event.putString("event_label", eventValue)
