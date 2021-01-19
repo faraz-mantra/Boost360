@@ -1,4 +1,4 @@
-package com.appservice.ui.catalog
+package com.appservice.ui.catalog.common
 
 import android.os.Bundle
 import com.appservice.R
@@ -7,7 +7,6 @@ import com.appservice.databinding.FragmentStaffTimingBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.staffs.model.StaffTimingModel
 import com.framework.models.BaseViewModel
 
 class StaffTimingFragment : AppBaseFragment<FragmentStaffTimingBinding, BaseViewModel>(), RecyclerItemClickListener {
