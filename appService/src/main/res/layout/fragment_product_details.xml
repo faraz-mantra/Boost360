@@ -619,6 +619,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/size_20"
                             android:drawablePadding="@dimen/size_4"
+                            android:visibility="gone"
                             android:includeFontPadding="false"
                             android:text="Product Delivery Configuration"
                             android:textColor="@color/black_4a4a4a"
@@ -628,7 +629,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/size_10"
-
+android:visibility="gone"
                             android:background="@drawable/shape_grey_stroke_rect_bkg"
                             android:orientation="vertical">
 
@@ -888,17 +889,16 @@
                 android:layout_marginStart="@dimen/size_20"
                 android:layout_marginEnd="@dimen/size_20"
                 android:layout_marginBottom="@dimen/size_12"
-                android:background="@drawable/button_proceed"
                 android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <com.framework.views.customViews.CustomButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:background="@null"
+                    android:background="@drawable/bg_button_proceed"
                     android:clickable="false"
                     android:drawablePadding="@dimen/size_6"
                     android:fontFamily="@font/semi_bold"
