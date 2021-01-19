@@ -39,7 +39,7 @@ import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewAdapter
 import com.onboarding.nowfloats.recyclerView.BaseRecyclerViewItem
 import com.onboarding.nowfloats.recyclerView.RecyclerItemClickListener
 import com.onboarding.nowfloats.ui.InternetErrorDialog
-import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
+import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.utils.WebEngageController
 import com.onboarding.nowfloats.viewmodel.business.BusinessCreateViewModel
 import java.util.*
@@ -349,7 +349,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
     bundle.putString(PreferenceConstant.KEY_FP_ID, requestFloatsModel?.floatingPointId)
     bundle.putString(PreferenceConstant.GET_FP_DETAILS_TAG, requestFloatsModel?.fpTag)
     bundle.putString(PreferenceConstant.WEBSITE_URL, requestFloatsModel?.websiteUrl)
-    startFragmentActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle, clearTop = true)
+    startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle, clearTop = true)
     NavigatorManager.clearStackAndFormData()
   }
 

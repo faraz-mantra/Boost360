@@ -27,15 +27,44 @@ interface WithFloatTwoRemoteData {
   @Headers("Accept: application/json", "Content-Type: application/octet-stream")
   @PUT(EndPoints.ADD_IMAGE)
   fun addUpdateImageProductService(
-      @Query("clientId") clientId: String?,
-      @Query("requestType") requestType: String?,
-      @Query("requestId") requestId: String?,
-      @Query("totalChunks") totalChunks: Int?,
-      @Query("currentChunkNumber") currentChunkNumber: Int?,
-      @Query("productId") productId: String?,
-      @Body requestBody: RequestBody?,
+          @Query("clientId") clientId: String?,
+          @Query("requestType") requestType: String?,
+          @Query("requestId") requestId: String?,
+          @Query("totalChunks") totalChunks: Int?,
+          @Query("currentChunkNumber") currentChunkNumber: Int?,
+          @Query("productId") productId: String?,
+          @Body requestBody: RequestBody?,
   ): Observable<Response<String>>
 
   @GET(EndPoints.GET_NOTIFICATION)
   fun getNotificationCount(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?, @Query("isRead") isRead: Boolean = false): Observable<Response<Any>>
+
+  @POST(EndPoints.CREATE_PRODUCT)
+  fun createProduct(@Body request: Product?): Observable<Response<String>>
+
+  @GET(EndPoints.GET_PRODUCT_LISTING)
+  fun getAllProducts(
+          @Query("clientId") clientId: String?,
+          @Query("skipBy") skipBy: Int?,
+          @Query("fpTag") fpTag: String?,
+  )
+
+  @PUT(EndPoints.UPDATE_PRODUCT)
+  fun updateProduct(@Body request: ProductUpdate?): Observable<Response<ResponseBody>>
+
+  @HTTP(method = "DELETE", path = EndPoints.DELETE_PRODUCT, hasBody = true)
+  fun deleteProduct(@Body request: DeleteProductRequest?): Observable<Response<String>>
+
+  @Headers("Accept: application/json", "Content-Type: application/octet-stream")
+  @PUT(EndPoints.ADD_IMAGE)
+  fun addUpdateImageProduct(
+          @Query("clientId") clientId: String?,
+          @Query("requestType") requestType: String?,
+          @Query("requestId") requestId: String?,
+          @Query("totalChunks") totalChunks: Int?,
+          @Query("currentChunkNumber") currentChunkNumber: Int?,
+          @Query("productId") productId: String?,
+          @Body requestBody: RequestBody?,
+  ): Observable<Response<String>>
+
 }

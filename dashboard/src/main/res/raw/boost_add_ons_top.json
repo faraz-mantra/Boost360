@@ -30,34 +30,6 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Patient\nEnquiries"
-        },
-        {
-          "businessType": "ic_daily_business_update_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Business\nUpdates"
-        },
-        {
-          "businessType": "ic_service_cataloge_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Service\nCatalogue"
-        },
-        {
-          "businessType": "ic_customer_testimonial_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Testimonials"
-        },
-        {
-          "businessType": "doctor_profile",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Doctor\ne-Profile"
         }
       ]
     },
@@ -91,34 +63,6 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Patient\nEnquiries"
-        },
-        {
-          "businessType": "ic_daily_business_update_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Business\nUpdates"
-        },
-        {
-          "businessType": "ic_service_cataloge_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Service\nCatalogue"
-        },
-        {
-          "businessType": "ic_customer_testimonial_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Testimonials"
-        },
-        {
-          "businessType": "doctor_profile",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Doctor\ne-Profile"
         }
       ]
     },
@@ -133,13 +77,6 @@
           "title": "Customer\nOrders"
         },
         {
-          "businessType": "ic_custom_page_add",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Custom\nPages"
-        },
-        {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
@@ -152,34 +89,6 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Customer\nEnquiries"
-        },
-        {
-          "businessType": "ic_daily_business_update_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Business\nUpdates"
-        },
-        {
-          "businessType": "ic_product_cataloge_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Product\nCatalogue"
-        },
-        {
-          "businessType": "ic_customer_testimonial_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Testimonials"
-        },
-        {
-          "businessType": "ic_business_keyboard_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "BOOSTKEYBOARD",
-          "title": "Boost\nKeyboard"
         }
       ]
     },
@@ -194,13 +103,6 @@
           "title": "Admission\nRequests"
         },
         {
-          "businessType": "ic_custom_page_add",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Custom\nPages"
-        },
-        {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
@@ -213,34 +115,6 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Student\nEnquiries"
-        },
-        {
-          "businessType": "ic_daily_business_update_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Business\nUpdates"
-        },
-        {
-          "businessType": "ic_product_cataloge_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Product\nCatalogue"
-        },
-        {
-          "businessType": "ic_customer_testimonial_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Testimonials"
-        },
-        {
-          "businessType": "ic_business_keyboard_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "BOOSTKEYBOARD",
-          "title": "Boost\nKeyboard"
         }
       ]
     },
@@ -248,18 +122,11 @@
       "type": "HOT",
       "action_item": [
         {
-          "businessType": "customer_order_d",
+          "businessType": "customer_booking_d",
           "isLock": false,
           "isHide": false,
           "premiumCode": "",
           "title": "Room\nBookings"
-        },
-        {
-          "businessType": "ic_custom_page_add",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Custom\nPages"
         },
         {
           "businessType": "ic_customer_call_d",
@@ -274,34 +141,6 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Customer\nEnquiries"
-        },
-        {
-          "businessType": "ic_daily_business_update_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Business\nUpdates"
-        },
-        {
-          "businessType": "ic_product_cataloge_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Product\nCatalogue"
-        },
-        {
-          "businessType": "ic_customer_testimonial_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Testimonials"
-        },
-        {
-          "businessType": "ic_business_keyboard_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "BOOSTKEYBOARD",
-          "title": "Boost\nKeyboard"
         }
       ]
     },
@@ -316,13 +155,6 @@
           "title": "Customer\nOrders"
         },
         {
-          "businessType": "ic_digital_brochures",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "BROCHURE",
-          "title": "E-Brochures For Your Business"
-        },
-        {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
@@ -335,34 +167,6 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Customer\nEnquiries"
-        },
-        {
-          "businessType": "ic_daily_business_update_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Business\nUpdates"
-        },
-        {
-          "businessType": "ic_product_cataloge_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Product\nCatalogue"
-        },
-        {
-          "businessType": "ic_customer_testimonial_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Testimonials"
-        },
-        {
-          "businessType": "ic_business_keyboard_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "BOOSTKEYBOARD",
-          "title": "Boost\nKeyboard"
         }
       ]
     },
@@ -377,13 +181,6 @@
           "title": "Customer\nOrders"
         },
         {
-          "businessType": "ic_custom_page_add",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Custom\nPages"
-        },
-        {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
@@ -396,34 +193,6 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Customer\nEnquiries"
-        },
-        {
-          "businessType": "ic_daily_business_update_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Business\nUpdates"
-        },
-        {
-          "businessType": "ic_product_cataloge_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Product\nCatalogue"
-        },
-        {
-          "businessType": "ic_customer_testimonial_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Testimonials"
-        },
-        {
-          "businessType": "ic_business_keyboard_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "BOOSTKEYBOARD",
-          "title": "Boost\nKeyboard"
         }
       ]
     },
@@ -438,13 +207,6 @@
           "title": "Appointments"
         },
         {
-          "businessType": "ic_custom_page_add",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Custom\nPages"
-        },
-        {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
@@ -457,34 +219,6 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Customer\nEnquiries"
-        },
-        {
-          "businessType": "ic_daily_business_update_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Business\nUpdates"
-        },
-        {
-          "businessType": "ic_product_cataloge_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Product\nCatalogue"
-        },
-        {
-          "businessType": "ic_customer_testimonial_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Testimonials"
-        },
-        {
-          "businessType": "ic_business_keyboard_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "BOOSTKEYBOARD",
-          "title": "Boost\nKeyboard"
         }
       ]
     },
@@ -499,13 +233,6 @@
           "title": "Appointments"
         },
         {
-          "businessType": "ic_custom_page_add",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Custom\nPages"
-        },
-        {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
@@ -518,34 +245,6 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Customer\nEnquiries"
-        },
-        {
-          "businessType": "ic_daily_business_update_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Business\nUpdates"
-        },
-        {
-          "businessType": "ic_product_cataloge_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Product\nCatalogue"
-        },
-        {
-          "businessType": "ic_customer_testimonial_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Testimonials"
-        },
-        {
-          "businessType": "ic_business_keyboard_d",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "BOOSTKEYBOARD",
-          "title": "Boost\nKeyboard"
         }
       ]
     }

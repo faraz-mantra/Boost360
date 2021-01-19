@@ -8,10 +8,11 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import androidx.lifecycle.Observer
 import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
@@ -40,7 +41,8 @@ import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
 import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
 import com.onboarding.nowfloats.ui.startFragmentActivity
-import com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivity
+import com.onboarding.nowfloats.ui.updateChannel.ContainerDigitalChannelActivity
+import com.onboarding.nowfloats.ui.updateChannel.DigitalChannelActivity
 import com.onboarding.nowfloats.utils.WebEngageController
 import com.onboarding.nowfloats.viewmodel.category.CategoryViewModel
 import io.reactivex.Completable
@@ -73,7 +75,6 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   private var adapterDisconnect: AppBaseRecyclerViewAdapter<ChannelModel>? = null
   private var listDisconnect: ArrayList<ChannelModel>? = null
   private var listConnect: ArrayList<ChannelModel>? = null
-  var isStartActivity: Boolean = false
   var websiteUrl: String = ""
   private lateinit var progress: ProgressChannelDialog
 
@@ -118,7 +119,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         val floatingPoint = bundle.getString(PreferenceConstant.KEY_FP_ID)
         val fpTag = bundle.getString(PreferenceConstant.GET_FP_DETAILS_TAG)
         showProgress("Refreshing your channels...", false)
-        viewModel?.getCategories(baseActivity)?.observeOnce(this, Observer {
+        viewModel?.getCategories(baseActivity)?.observeOnce(this, {
           if (it?.error != null) errorMessage(it.error?.localizedMessage ?: resources.getString(R.string.error_getting_category_data))
           else {
             val categoryList = (it as? ResponseDataCategory)?.data
@@ -133,7 +134,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   }
 
   private fun getChannelAccessToken(categoryData: CategoryDataModel?, floatingPoint: String?, fpTag: String?) {
-    viewModel?.getChannelsAccessToken(floatingPoint)?.observeOnce(this, Observer { it1 ->
+    viewModel?.getChannelsAccessToken(floatingPoint)?.observeOnce(this, { it1 ->
       if (it1.error is NoNetworkException) errorMessage(resources.getString(R.string.internet_connection_not_available))
       else if (it1.status == 200 || it1.status == 201 || it1.status == 202) {
         val channelsAccessToken = (it1 as? ChannelsAccessTokenResponse)?.NFXAccessTokens
@@ -194,7 +195,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   }
 
   private fun getWhatsAppData(requestFloatsNew: RequestFloatsModel) {
-    viewModel?.getWhatsappBusiness(requestFloatsNew.fpTag, auth!!)?.observeOnce(this, Observer {
+    viewModel?.getWhatsappBusiness(requestFloatsNew.fpTag, auth!!)?.observeOnce(this, {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
@@ -269,7 +270,8 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   }
 
   private fun changeView(isConnect: Boolean) {
-    (baseActivity as? ContainerUpdateChannelActivity)?.changeTheme(if (isConnect) R.color.colorAccent else R.color.bg_dark_grey)
+    (baseActivity as? DigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorAccent else R.color.bg_dark_grey)
+    (baseActivity as? ContainerDigitalChannelActivity)?.changeTheme(if (isConnect) R.color.colorAccent else R.color.bg_dark_grey)
     binding?.disconnectedBg?.visibility = if (isConnect) View.GONE else View.VISIBLE
     binding?.viewConnect?.visibility = if (isConnect) View.GONE else View.VISIBLE
     binding?.connectedRiya?.visibility = if (isConnect) View.VISIBLE else View.GONE
@@ -389,6 +391,10 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     progress.hideProgress()
   }
 
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+    inflater.inflate(R.menu.menu_alert_icon, menu)
+  }
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.menu_info -> {
@@ -415,11 +421,10 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     showProgress("Disconnecting your channel...", false)
     if (channel.isWhatsAppChannel()) {
       val request = UpdateChannelActionDataRequest(ChannelActionData(), requestFloatsModel?.getWebSiteId())
-      viewModel?.postUpdateWhatsappRequest(request, auth!!)?.observeOnce(viewLifecycleOwner, Observer { responseManage(it) })
+      viewModel?.postUpdateWhatsappRequest(request, auth!!)?.observeOnce(viewLifecycleOwner, { responseManage(it) })
     } else {
       val request = UpdateChannelAccessTokenRequest(ChannelAccessToken(type = channel.getAccessTokenType()), clientId!!, requestFloatsModel?.floatingPointId!!)
-      viewModel?.updateChannelAccessToken(request)?.observeOnce(viewLifecycleOwner, Observer { responseManage(it) })
+      viewModel?.updateChannelAccessToken(request)?.observeOnce(viewLifecycleOwner, { responseManage(it) })
     }
   }
-
 }

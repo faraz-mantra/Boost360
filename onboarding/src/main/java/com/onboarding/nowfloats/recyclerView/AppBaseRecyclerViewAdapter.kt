@@ -9,7 +9,6 @@ import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.RecyclerViewItemType.*
 import com.onboarding.nowfloats.databinding.*
 import com.onboarding.nowfloats.holders.CityRecyclerViewHolder
-import com.onboarding.nowfloats.holders.DigitalCardViewHolder
 import com.onboarding.nowfloats.holders.apiprocess.ApiProcessChannelRecyclerViewHolder
 import com.onboarding.nowfloats.holders.apiprocess.ApiProcessRecyclerViewHolder
 import com.onboarding.nowfloats.holders.category.CategoryRecyclerViewHolder
@@ -17,12 +16,13 @@ import com.onboarding.nowfloats.holders.channel.*
 import com.onboarding.nowfloats.holders.common.SectionHeaderRecyclerViewHolder
 import com.onboarding.nowfloats.holders.features.ChannelFeatureRecyclerViewHolder
 import com.onboarding.nowfloats.holders.features.FeatureDetailsRecyclerViewHolder
+import com.onboarding.nowfloats.holders.visitingCard.*
 
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
     activity: BaseActivity<*, *>,
     list: ArrayList<T>,
-    itemClickListener: RecyclerItemClickListener? = null
+    itemClickListener: RecyclerItemClickListener? = null,
 ) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
 
   override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
@@ -43,7 +43,16 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       CITY_DETAILS_ITEM -> CityRecyclerViewHolder(binding as CityItemDataBinding)
       CHANNEL_ITEM_CONNECT -> ChannelsConnectViewHolder(binding as ItemChannelsConnectedBinding)
       CHANNEL_ITEM_DISCONNECT -> ChannelsDisconnectViewHolder(binding as ItemChannelsDisconnectBinding)
-      DIGITAL_CARD_ITEM -> DigitalCardViewHolder(binding as ItemDigitalCardBinding)
+      VISITING_CARD_ONE_ITEM -> VisitingCardOneViewHolder(binding as ItemVisitingCardOneBinding)
+      VISITING_CARD_TWO_ITEM -> VisitingCardTwoViewHolder(binding as ItemVisitingCardTwoBinding)
+      VISITING_CARD_THREE_ITEM -> VisitingCardThreeViewHolder(binding as ItemVisitingCardThreeBinding)
+      VISITING_CARD_FOUR_ITEM -> VisitingCardFourViewHolder(binding as ItemVisitingCardFourBinding)
+      VISITING_CARD_FIVE_ITEM -> VisitingCardFiveViewHolder(binding as ItemVisitingCardFiveBinding)
+      VISITING_CARD_SIX_ITEM -> VisitingCardSixViewHolder(binding as ItemVisitingCardSixBinding)
+      VISITING_CARD_SEVEN_ITEM -> VisitingCardSevenViewHolder(binding as ItemVisitingCardSevenBinding)
+      VISITING_CARD_EIGHT_ITEM -> VisitingCardEightViewHolder(binding as ItemVisitingCardEightBinding)
+      VISITING_CARD_NINE_ITEM -> VisitingCardNineViewHolder(binding as ItemVisitingCardNineBinding)
+      VISITING_CARD_TEN_ITEM -> VisitingCardTenViewHolder(binding as ItemVisitingCardTenBinding)
     }
   }
 

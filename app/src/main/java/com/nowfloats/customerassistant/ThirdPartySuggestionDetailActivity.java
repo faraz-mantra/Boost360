@@ -139,13 +139,13 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         if (mSuggestionDO.getProducts().size() == 0){
             productButton.setVisibility(View.GONE);
         }else{
-            productButton.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(this,R.drawable.ic_plus),null,null,null);
+            productButton.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(this,R.drawable.ic_plus_btn),null,null,null);
             productButton.setOnClickListener(this);
         }
         if (mSuggestionDO.getUpdates().size() == 0){
             updateButton.setVisibility(View.GONE);
         }else{
-            updateButton.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(this,R.drawable.ic_plus),null,null,null);
+            updateButton.setCompoundDrawablesWithIntrinsicBounds(AppCompatResources.getDrawable(this,R.drawable.ic_plus_btn),null,null,null);
             updateButton.setOnClickListener(this);
         }
     }

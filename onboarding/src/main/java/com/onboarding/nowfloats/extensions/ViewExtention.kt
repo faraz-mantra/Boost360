@@ -50,7 +50,7 @@ fun String.getFileExt(): String? {
 }
 
 fun String.checkIsFile(): Boolean {
-  val ext = getFileExt()?.toLowerCase()
+  val ext = getFileExt()?.toLowerCase(Locale.ROOT)
   return ext == "pdf" || ext == "doc" || ext == "docx" || ext == "odt" || ext == "rtf" || ext == "txt" ||
       ext == "xml" || ext == "xps" || ext == "csv" || ext == "dbf" || ext == "ods" || ext == "xla" ||
       ext == "xls" || ext == "xlsx" || ext == "xla" || ext == "ppt"

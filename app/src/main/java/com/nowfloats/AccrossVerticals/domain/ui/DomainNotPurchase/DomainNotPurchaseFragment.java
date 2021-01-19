@@ -1,27 +1,22 @@
 package com.nowfloats.AccrossVerticals.domain.ui.DomainNotPurchase;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.boost.upgrades.UpgradeActivity;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
