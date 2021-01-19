@@ -41,11 +41,14 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     super.onCreateView()
     session = UserSessionManager(baseActivity)
     getWebsiteData()
-    setUserData()
     setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile)
     WebEngageController.trackEvent("Website Page", "pageview", session?.fpTag)
   }
 
+  override fun onResume() {
+    super.onResume()
+    setUserData()
+  }
   private fun setUserData() {
     val desc = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)
     binding?.txtDesc?.text = if (desc.isNullOrEmpty().not()) desc else ""
@@ -55,10 +58,10 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri
     }
-    binding?.imgProfileLogo?.let {
+    binding?.imgProfileLogo?.apply {
       if (imageUri.isNullOrEmpty().not()) {
-        baseActivity.glideLoad(mImageView = it, url = imageUri!!,placeholder = R.drawable.gradient_white,isLoadBitmap = true)
-      } else it.setImageResource(R.drawable.ic_add_logo_d)
+        baseActivity.glideLoad(mImageView = this, url = imageUri!!, placeholder = R.drawable.gradient_white, isLoadBitmap = true)
+      } else setImageResource(R.drawable.ic_add_logo_d)
     }
   }
 
@@ -78,12 +81,12 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
 
   private fun setAdapterCustomer(actionItem: ArrayList<WebsiteActionItem>) {
     actionItem.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_WEBSITE_ITEM_VIEW.getLayout() }
-    binding?.rvEnquiries?.apply {
-      if (adapterWebsite == null) {
+    if (adapterWebsite == null) {
+      binding?.rvEnquiries?.apply {
         adapterWebsite = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@WebsiteFragment)
         adapter = adapterWebsite
-      } else adapterWebsite?.notify(actionItem)
-    }
+      }
+    } else adapterWebsite?.notify(actionItem)
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -104,7 +107,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       WebsiteActionItem.IconType.testimonials -> baseActivity.startTestimonial(session)
       WebsiteActionItem.IconType.custom_page -> baseActivity.startCustomPage(session)
       WebsiteActionItem.IconType.project_teams -> baseActivity.startListProjectAndTeams(session)
-      WebsiteActionItem.IconType.unlimited_digital_brochures -> baseActivity.startAddDigitalBrochure(session)
+      WebsiteActionItem.IconType.unlimited_digital_brochures -> baseActivity.startListDigitalBrochure(session)
       WebsiteActionItem.IconType.toppers_institute -> baseActivity.startListToppers(session)
       WebsiteActionItem.IconType.upcoming_batches -> baseActivity.startListBatches(session)
       WebsiteActionItem.IconType.faculty_management -> baseActivity.startFacultyMember(session)
@@ -120,7 +123,6 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.btnProfileLogo -> baseActivity.startBusinessDescriptionEdit(session)
       binding?.editProfile -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
-
     }
   }
 }

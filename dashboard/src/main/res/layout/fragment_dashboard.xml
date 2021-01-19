@@ -257,11 +257,11 @@
             android:orientation="vertical">
 
             <include
-              android:id="@+id/low_recommended_task"
+              android:id="@+id/recommended_task"
               layout="@layout/item_recommended_task_view" />
 
             <include
-              android:id="@+id/low_manage_business"
+              android:id="@+id/manage_business"
               layout="@layout/item_manage_business_view" />
           </LinearLayout>
 

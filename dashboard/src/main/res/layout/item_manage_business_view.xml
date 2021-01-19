@@ -68,6 +68,7 @@
     <com.framework.views.customViews.CustomCardView
       android:layout_width="@dimen/size_110"
       android:layout_height="@dimen/size_28"
+      android:id="@+id/btn_show_all"
       android:layout_gravity="center_horizontal|bottom"
       android:layout_marginBottom="@dimen/size_22"
       app:cardBackgroundColor="@color/white"
@@ -80,12 +81,9 @@
         android:orientation="horizontal">
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/btn_show_all"
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
           android:layout_gravity="center_vertical"
-          android:clickable="true"
-          android:focusable="true"
           android:gravity="center"
           android:includeFontPadding="false"
           android:text="@string/show_all"
