@@ -92,6 +92,7 @@ const val deeplink_book_table = "book_table"
 const val deeplink_my_add_ons = "my_add_ons"
 const val deeplink_recommended_add_ons = "recommended_add_ons"
 const val deeplink_item_on_market_place = "ITEM_ONS_MARKETPLACE"
+const val deeplink_compare_package = "compare_package_selection"
 
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
@@ -241,6 +242,8 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.initiateAddonMarketplace(session, false, "recommendedAddOns", "")
         } else if (buyItemKey.isNotEmpty() && url.contains(deeplink_item_on_market_place)) {
           baseActivity.initiateAddonMarketplace(session, false, "", buyItemKey)
+        }else if (url.contains(deeplink_compare_package)) {
+          baseActivity.initiateAddonMarketplace(session, false, "comparePackageSelection", "")
         }
       }
     } catch (e: Exception) {
