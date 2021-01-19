@@ -297,6 +297,16 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     ViewAllFeaturesFragment.newInstance(),
                     VIEW_ALL_FEATURE,args
             )
+        }else if (arguments?.getString("screenType") == "comparePackageSelection") {
+            if (progressDialog.isShowing) {
+                progressDialog.hide()
+            }
+            val args = Bundle()
+            args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
+            (activity as UpgradeActivity).addFragmentHome(
+                    ComparePackageFragment.newInstance(),
+                    COMPARE_FRAGMENT,args
+            )
         }
 
         //chat bot view button clicked
