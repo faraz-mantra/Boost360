@@ -23,7 +23,7 @@ class StaffSessionViewHolder(binding: RecyclerItemSessionBinding) : AppBaseRecyc
             data.isTurnedOn = isOn
             listener?.onItemClick(position, data, RecyclerViewActionType.TOGGLE_STATE_CHANGED.ordinal)
         }
-        binding.layoutSessionCreate?.ccbAllDay.isChecked = data.isAppliedOnAllDays
+        binding.ccbAllDay.isChecked = data.isAppliedOnAllDays
 
     }
 }
