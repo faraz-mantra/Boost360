@@ -2,6 +2,7 @@ package com.boost.upgrades.utils
 
 import com.boost.upgrades.ui.autorenew.AutoRenewSubsFragment
 import com.boost.upgrades.ui.cart.CartFragment
+import com.boost.upgrades.ui.checkoutkyc.CheckoutKycFragment
 import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.ui.confirmation.AutoRenewOrderConfirmationFragment
 import com.boost.upgrades.ui.confirmation.OrderConfirmationFragment
@@ -71,6 +72,7 @@ class Constants {
         var AUTO_RENEW_ORDER_CONFIRMATION_FRAGMENT: String = AutoRenewOrderConfirmationFragment::class.java.getName()
         var COMPARE_FRAGMENT: String = ComparePackageFragment::class.java.getName()
         var FREEADDONS_FRAGMENT: String = FreeAddonsFragment::class.java.getName()
+        var CHECKOUT_KYC_FRAGMENT: String = CheckoutKycFragment::class.java.getName()
 
     }
 }
