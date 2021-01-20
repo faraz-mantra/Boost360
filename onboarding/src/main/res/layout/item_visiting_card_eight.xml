@@ -67,7 +67,7 @@
             android:layout_width="@dimen/size_54"
             android:layout_height="@dimen/size_52"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="@dimen/size_26"
+            android:layout_marginBottom="@dimen/size_14"
             app:cardBackgroundColor="@color/placeholder_bg"
             app:cardCornerRadius="@dimen/size_4"
             app:cardElevation="@dimen/size_0">
@@ -103,7 +103,6 @@
             <com.framework.views.customViews.CustomImageView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="@dimen/size_1"
               app:srcCompat="@drawable/ic_call_card_new" />
 
             <com.framework.views.customViews.CustomImageView

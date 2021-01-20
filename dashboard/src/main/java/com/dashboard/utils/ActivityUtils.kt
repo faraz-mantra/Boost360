@@ -1,17 +1,13 @@
 package com.dashboard.utils
 
-import android.Manifest
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.checkSelfPermission
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
@@ -19,13 +15,15 @@ import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.pref.*
+import com.framework.utils.convertStringToList
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.floatMessage.MessageModel
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.onboarding.nowfloats.constant.FragmentType
-import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
+import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
+import java.util.ArrayList
 
 
 const val VISITS_TYPE_STRING = "visits_type_string"
@@ -56,7 +54,7 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
     bundle.putString(Key_Preferences.WEBSITE_URL, session.getDomainName(false))
     bundle.putString(Key_Preferences.PRIMARY_NUMBER, session.userPrimaryMobile)
     bundle.putString(Key_Preferences.PRIMARY_EMAIL, session.fPEmail)
-    startFragmentActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
+    startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()
   }
@@ -186,8 +184,9 @@ fun AppCompatActivity.startAnalytics(session: UserSessionManager?, table_name: I
   }
 }
 
-fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOpenCardFragment: Boolean, screenType: String, buyItemKey: String?) {
+fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOpenCardFragment: Boolean, screenType: String, buyItemKey: String?,isLoadingShow:Boolean=true) {
   try {
+    if (isLoadingShow) delayProgressShow()
     WebEngageController.trackEvent("Addon Marketplace Page", "startview", session.fpTag);
     val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
     intent.putExtra("expCode", session.fP_AppExperienceCode)
@@ -197,7 +196,7 @@ fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOp
     intent.putExtra("isOpenCardFragment", isOpenCardFragment)
     intent.putExtra("screenType", screenType)
     intent.putExtra("accountType", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
-    intent.putStringArrayListExtra("userPurchsedWidgets", StoreWidgets)
+    intent.putStringArrayListExtra("userPurchsedWidgets", session.getStoreWidgets() as ArrayList<String>)
     if (session.fPEmail != null) {
       intent.putExtra("email", session.fPEmail)
     } else {
@@ -215,6 +214,10 @@ fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOp
   } catch (e: Exception) {
     e.printStackTrace()
   }
+}
+
+fun AppCompatActivity.delayProgressShow() {
+  ProgressAsyncTask(this).execute();
 }
 
 fun AppCompatActivity.startSettingActivity(session: UserSessionManager) {
@@ -263,7 +266,7 @@ fun AppCompatActivity.startUpdateLatestStory(session: UserSessionManager) {
 }
 
 fun AppCompatActivity.startOldSiteMeter(session: UserSessionManager) {
-  startAppActivity(bundle = Bundle().apply { putInt("StorebizFloats",MessageModel().getStoreBizFloatSize()) },fragmentType = "SITE_METER_OLD_VIEW")
+  startAppActivity(bundle = Bundle().apply { putInt("StorebizFloats", MessageModel().getStoreBizFloatSize()) }, fragmentType = "SITE_METER_OLD_VIEW")
 }
 
 fun AppCompatActivity.startAppActivity(bundle: Bundle = Bundle(), fragmentType: String) {
@@ -356,7 +359,7 @@ fun AppCompatActivity.startProductGallery(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startAddTestimonial(session: UserSessionManager?, isAdd: Boolean) {
+fun AppCompatActivity.startTestimonial(session: UserSessionManager?, isAdd: Boolean = false) {
   try {
     val text = if (isAdd) "Add Testimonial Page" else "Testimonial Page"
     WebEngageController.trackEvent(text, "startview", session?.fpTag);
@@ -369,7 +372,7 @@ fun AppCompatActivity.startAddTestimonial(session: UserSessionManager?, isAdd: B
   }
 }
 
-fun AppCompatActivity.startCreateCustomPage(session: UserSessionManager?, isAdd: Boolean) {
+fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boolean = false) {
   try {
     val text = if (isAdd) "Add Custom Page" else "Custom Page"
     WebEngageController.trackEvent(text, "startview", session?.fpTag)
@@ -501,6 +504,17 @@ fun AppCompatActivity.startBusinessInfoEmail(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent("Business Info Page", "startview", session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.ContactInformationActivity"))
+    startActivity(webIntent)
+    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+  } catch (e: ClassNotFoundException) {
+    e.printStackTrace()
+  }
+}
+
+fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
+  try {
+    WebEngageController.trackEvent("Image Menu Page", "startview", session?.fpTag)
+    val webIntent = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.ImageMenuActivity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
   } catch (e: ClassNotFoundException) {
@@ -779,23 +793,18 @@ fun AppCompatActivity.startYouTube(session: UserSessionManager?, url: String) {
   }
 }
 
-fun AppCompatActivity.startDownloadUri(session: UserSessionManager?, url: String) {
+fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
   try {
-    if (checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED ||
-        checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
-    }else {
-      val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-      val uri = Uri.parse(url)
-      val request = DownloadManager.Request(uri)
-      request.setTitle(uri.path?.getFileName() ?: "boost_file")
-      request.setDescription("boost360 File")
-      request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
-      request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-      request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
-      downloader.enqueue(request)
-      Toast.makeText(this, "File downloading.. ", Toast.LENGTH_SHORT).show()
-    }
+    val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+    val uri = Uri.parse(url)
+    val request = DownloadManager.Request(uri)
+    request.setTitle(uri.path?.getFileName() ?: "boost_file")
+    request.setDescription("boost360 File")
+    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
+    downloader.enqueue(request)
+    if (isToast) Toast.makeText(this, "File downloading.. ", Toast.LENGTH_SHORT).show()
   } catch (e: Exception) {
     e.printStackTrace()
   }

@@ -21,4 +21,5 @@
   <color name="white_grey_1">#E3DDDD</color>
   <color name="seagreen">#07A361</color>
   <color name="darkslateblue">#475993</color>
+  <color name="grey_light_dark">#656565</color>
 </resources>

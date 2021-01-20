@@ -223,7 +223,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     binding?.tvDesc?.setText(product?.Description)
     binding?.edtServiceCategory?.setText(product?.category)
     binding?.edtServiceTime?.setText(product?.ShipmentDuration)
-    if (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) {
+    if (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty()
+            || !bankAccountDetail?.accountNumber.isNullOrEmpty()) {
       binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
       binding?.bankAccountName?.visible()
       binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
@@ -592,7 +593,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         binding?.bankAccountName?.visible()
         binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
         binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-        binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_added)
+        binding?.titleBankAdded?.text =  "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
       }
     }
   }
@@ -626,8 +627,17 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
           binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
           binding?.bankAccountName?.visible()
           binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
-          binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-          binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
+          when{
+            bankAccountDetail?.accountNumber.isNullOrBlank()||bankAccountDetail?.accountName.isNullOrBlank()->{
+              binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
+              binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
+            }else->{
+            binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
+            binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
+            }
+          }
+
+
         }
         Product.PaymentType.UNIQUE_PAYMENT_URL.value -> {
           binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
@@ -658,7 +668,10 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
     bundle.putString(IntentConstant.FP_ID.name, fpId)
     bundle.putBoolean(IntentConstant.IS_SERVICE_CREATION.name, true)
-    val fragment = if (bankAccountDetail != null) FragmentType.BANK_ACCOUNT_DETAILS else FragmentType.ADD_BANK_ACCOUNT_START
+    val fragment = when {
+        bankAccountDetail != null && bankAccountDetail?.accountNumber.isNullOrEmpty().not() && bankAccountDetail?.iFSC.isNullOrEmpty().not() -> FragmentType.BANK_ACCOUNT_DETAILS
+        else -> FragmentType.ADD_BANK_ACCOUNT_START
+    }
     startFragmentAccountActivity(fragment, bundle, isResult = true, requestCode = 202)
   }
 

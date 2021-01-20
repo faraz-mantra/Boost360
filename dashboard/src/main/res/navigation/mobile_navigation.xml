@@ -13,20 +13,14 @@
 
   <fragment
     android:id="@+id/navigation_website"
-    android:name="com.nowfloats.NavigationDrawer.ManageContentFragment"
-    android:label="@string/website"
-    tools:layout="@layout/fragment_patients_customer" />
+    android:name="com.dashboard.controller.ui.website.WebsiteFragment"
+    android:label="@string/my_website"
+    tools:layout="@layout/fragment_website" />
 
   <fragment
-    android:id="@+id/navigation_customer"
-    android:name="com.dashboard.controller.ui.customer.PatientCustomerFragment"
-    android:label="@string/customer"
+    android:id="@+id/navigation_enquiries"
+    android:name="com.dashboard.controller.ui.enquiries.EnquiriesFragment"
+    android:label="@string/my_enquiry"
     tools:layout="@layout/fragment_patients_customer" />
-
-  <!--  <fragment-->
-  <!--    android:id="@+id/navigation_patients"-->
-  <!--    android:name="com.dashboard.controller.ui.patients.PatientsFragment"-->
-  <!--    android:label="@string/my_clinic"-->
-  <!--    tools:layout="@layout/fragment_patients" />-->
 
 </navigation>

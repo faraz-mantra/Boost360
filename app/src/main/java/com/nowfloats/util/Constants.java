@@ -389,6 +389,7 @@ public class Constants {
     public static String requestedDomainType;
     public static Boolean isDirectlyCameToMainScreen = false;
 //	public static Boolean websiteShared = false;
+    public static String currentActivePackageId = "currentActivePackageId";
 
     // Database Version
     public static final int DATABASE_VERSION = 1;

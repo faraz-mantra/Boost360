@@ -114,7 +114,13 @@ import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.AddOnFragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.FlavourFivePlansActivity;
+import com.nowfloats.Store.Model.ActivePackage;
+import com.nowfloats.Store.Model.AllPackage;
+import com.nowfloats.Store.Model.PackageDetails;
+import com.nowfloats.Store.Model.PricingPlansModel;
+import com.nowfloats.Store.Model.WidgetPacks;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.Store.UpgradesFragment;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
 import com.nowfloats.bubble.CustomerAssistantService;
@@ -158,6 +164,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
@@ -178,7 +186,6 @@ import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.B
 import static com.nowfloats.manageinventory.ManageInventoryFragment.getExperienceType;
 import static com.nowfloats.util.Constants.REFERRAL_CAMPAIGN_CODE;
 import static com.nowfloats.util.Key_Preferences.GET_FP_DETAILS_CATEGORY;
-import static com.onboarding.nowfloats.ui.updateChannel.ContainerUpdateChannelActivityKt.startFragmentActivityNew;
 
 //import com.nfx.leadmessages.ReadMessages;
 
@@ -380,7 +387,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         } else {
             createView();
         }
-
+        getPricingPlanDetails();
         initialiseZendeskSupportSdk();
         //WidgetKey.getWidgets(session, this);
     }
@@ -1939,4 +1946,97 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
 
     }
+
+    private void getPricingPlanDetails() {
+
+        String accId = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
+        String appId = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID);
+        String country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY);
+        Map<String, String> params = new HashMap<>();
+        if (accId.length() > 0) {
+            params.put("identifier", accId);
+        } else {
+            params.put("identifier", appId);
+        }
+        params.put("clientId", Constants.clientId);
+        params.put("fpId", session.getFPID());
+        params.put("country", country.toLowerCase());
+        params.put("fpCategory", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toUpperCase());
+
+        Constants.restAdapter.create(StoreInterface.class).getStoreList(params, new Callback<PricingPlansModel>() {
+            @Override
+            public void success(PricingPlansModel storeMainModel, Response response) {
+                if (storeMainModel != null) {
+                    preProcessAndDispatchPlans(storeMainModel);
+                } else {
+//                    Toast.makeText(HomeActivity.this, "Oops, Pricing plans not found.", Toast.LENGTH_SHORT).show();
+                }
+                // zeroth screen
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Log.d("Test", error.getMessage());
+            }
+        });
+
+    }
+
+    private void preProcessAndDispatchPlans(final PricingPlansModel storeMainModel) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (ActivePackage activePackage : storeMainModel.activePackages) {
+                    int featuresCount = 0;
+                    StringBuilder featuresBuilder = new StringBuilder("");
+                    if (activePackage.getWidgetPacks() != null) {
+                        for (WidgetPacks widget : activePackage.getWidgetPacks()) {
+                            if (widget.Name != null) {
+                                featuresBuilder.append("• " + widget.Name + "\n");
+                                featuresCount++;
+
+                            }
+                        }
+                        if (featuresCount > 0) {
+                            featuresBuilder.delete(featuresBuilder.lastIndexOf("\n"), featuresBuilder.length());
+                        }
+                    }
+                    activePackage.setFeatures(featuresBuilder.toString());
+                    Log.v("getActivatedon"," active: "+ getMilliseconds(activePackage.getToBeActivatedOn()) +" current:" + Calendar.getInstance().getTimeInMillis());
+                    if (Calendar.getInstance().getTimeInMillis() < getMilliseconds(activePackage.getToBeActivatedOn())) {
+//                        toBeActivatedPlans.add(activePackage);
+                        activePackage.setActiveStatus("Not Active");
+                    } else if (!isPackageExpired(activePackage)) {
+//                        activePlans.add(activePackage);
+                        activePackage.setActiveStatus("Active");
+                        Log.v("getcurentPackageID", "ID; "+ activePackage.getClientProductId());
+                        Constants.currentActivePackageId = activePackage.getClientProductId();
+                    } else {
+                        activePackage.setActiveStatus("Expired");
+                    }
+                }
+
+            }
+        }).start();
+    }
+
+    private long getMilliseconds(String date) {
+        if (date.contains("/Date")) {
+            date = date.replace("/Date(", "").replace(")/", "");
+        }
+        return Long.valueOf(date);
+    }
+
+    private boolean isPackageExpired(ActivePackage activePackage) {
+        long time = Long.parseLong(activePackage.getToBeActivatedOn().replaceAll("[^\\d]", ""));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        double totalMonthsValidity = activePackage.getTotalMonthsValidity();
+        calendar.add(Calendar.MONTH, (int) Math.floor(totalMonthsValidity));
+        calendar.add(Calendar.DATE, (int) ((totalMonthsValidity - Math.floor(totalMonthsValidity)) * 30));
+        Log.v("isPackageExpired"," time: "+ calendar.getTime() + " new date: "+ new Date());
+        return calendar.getTime().before(new Date());
+    }
+
 }

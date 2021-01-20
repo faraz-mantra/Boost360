@@ -4,11 +4,6 @@
       "type": "DOC",
       "action_item": [
         {
-          "quickActionType": "POST_STATUS_STORY",
-          "title": "Daily\nstatus/story",
-          "isNew": true
-        },
-        {
           "quickActionType": "POST_NEW_UPDATE",
           "title": "Post today's\nupdate"
         },
@@ -22,7 +17,8 @@
         },
         {
           "quickActionType": "PLACE_CONSULT",
-          "title": "Book a video\nconsultation"
+          "title": "Book a video\nconsultation",
+          "isNew": true
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",
@@ -42,11 +38,6 @@
       "type": "HOS",
       "action_item": [
         {
-          "quickActionType": "POST_STATUS_STORY",
-          "title": "Daily\nstatus/story",
-          "isNew": true
-        },
-        {
           "quickActionType": "POST_NEW_UPDATE",
           "title": "Post today's\nupdate"
         },
@@ -60,7 +51,8 @@
         },
         {
           "quickActionType": "PLACE_CONSULT",
-          "title": "Book a video\nconsultation"
+          "title": "Book a video\nconsultation",
+          "isNew": true
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",
@@ -84,11 +76,6 @@
       "type": "SPA",
       "action_item": [
         {
-          "quickActionType": "POST_STATUS_STORY",
-          "title": "Daily\nstatus/story",
-          "isNew": true
-        },
-        {
           "quickActionType": "POST_NEW_UPDATE",
           "title": "Post today's\nupdate"
         },
@@ -98,16 +85,17 @@
         },
         {
           "quickActionType": "PLACE_APPOINTMENT",
-          "title": "Add an\nappointment"
+          "title": "Add an\nappointment",
+          "isNew": true
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add customer\ntestimonial"
         },
-        {
-          "quickActionType": "ADD_FACULTY_MEMBER",
-          "title": "Add a\nstaff member"
-        },
+//        {
+//          "quickActionType": "ADD_FACULTY_MEMBER",
+//          "title": "Add a\nstaff member"
+//        },
         {
           "quickActionType": "LIST_SERVICES",
           "title": "List a\nservice"
@@ -122,11 +110,6 @@
       "type": "SAL",
       "action_item": [
         {
-          "quickActionType": "POST_STATUS_STORY",
-          "title": "Daily\nstatus/story",
-          "isNew": true
-        },
-        {
           "quickActionType": "POST_NEW_UPDATE",
           "title": "Post today's\nupdate"
         },
@@ -136,16 +119,17 @@
         },
         {
           "quickActionType": "PLACE_APPOINTMENT",
-          "title": "Add an\nappointment"
+          "title": "Add an\nappointment",
+          "isNew": true
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add customer\ntestimonial"
         },
-        {
-          "quickActionType": "ADD_FACULTY_MEMBER",
-          "title": "Add a\nstaff member"
-        },
+//        {
+//          "quickActionType": "ADD_FACULTY_MEMBER",
+//          "title": "Add a\nstaff member"
+//        },
         {
           "quickActionType": "LIST_SERVICES",
           "title": "List a\nservice"
@@ -160,11 +144,6 @@
       "type": "CAF",
       "action_item": [
         {
-          "quickActionType": "POST_STATUS_STORY",
-          "title": "Today's\nstatus/story",
-          "isNew": true
-        },
-        {
           "quickActionType": "POST_NEW_UPDATE",
           "title": "Post today's\nupdate"
         },
@@ -174,7 +153,8 @@
         },
         {
           "quickActionType": "PLACE_ORDER_BOOKING",
-          "title": "Add an\norder"
+          "title": "Add an\norder",
+          "isNew": true
         },
         {
           "quickActionType": "ADD_TABLE_BOOKING",
@@ -197,11 +177,6 @@
     {
       "type": "MFG",
       "action_item": [
-        {
-          "quickActionType": "POST_STATUS_STORY",
-          "title": "Today's\nstatus/story",
-          "isNew": true
-        },
         {
           "quickActionType": "POST_NEW_UPDATE",
           "title": "Post today's\nupdate"
@@ -240,11 +215,6 @@
       "type": "EDU",
       "action_item": [
         {
-          "quickActionType": "POST_STATUS_STORY",
-          "title": "Today's\nstatus/story",
-          "isNew": true
-        },
-        {
           "quickActionType": "POST_NEW_UPDATE",
           "title": "Post today's\nupdate"
         },
@@ -266,7 +236,8 @@
         },
         {
           "quickActionType": "ADD_UPCOMING_BATCH",
-          "title": "Add an\nupcoming batch"
+          "title": "Add an\nupcoming batch",
+          "isNew": true
         },
         {
           "quickActionType": "ADD_FACULTY_MEMBER",
@@ -285,11 +256,11 @@
     {
       "type": "HOT",
       "action_item": [
-        {
-          "quickActionType": "POST_STATUS_STORY",
-          "title": "Today's\nstatus/story",
-          "isNew": true
-        },
+//        {
+//          "quickActionType": "POST_STATUS_STORY",
+//          "title": "Today's\nstatus/story",
+//          "isNew": true
+//        },
         {
           "quickActionType": "POST_NEW_UPDATE",
           "title": "Post today's\nupdate"
@@ -308,7 +279,8 @@
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",
-          "title": "Add guest\ntestimonials"
+          "title": "Add guest\ntestimonials",
+          "isNew": true
         },
         {
           "quickActionType": "ADD_NEARBY_ATTRACTION",
@@ -324,11 +296,6 @@
       "type": "RTL",
       "action_item": [
         {
-          "quickActionType": "POST_STATUS_STORY",
-          "title": "Today's\nstatus/story",
-          "isNew": true
-        },
-        {
           "quickActionType": "POST_NEW_UPDATE",
           "title": "Post today's\nupdate"
         },
@@ -336,10 +303,11 @@
           "quickActionType": "ADD_PHOTO_GALLERY",
           "title": "Post new\nphotos"
         },
-        {
-          "quickActionType": "PLACE_ORDER_BOOKING",
-          "title": "Add an\norder"
-        },
+//        {
+//          "quickActionType": "PLACE_ORDER_BOOKING",
+//          "title": "Add an\norder",
+//          "isNew": true
+//        },
         {
           "quickActionType": "ADD_PRODUCT",
           "title": "Add a\nproduct"
@@ -358,11 +326,6 @@
       "type": "SVC",
       "action_item": [
         {
-          "quickActionType": "POST_STATUS_STORY",
-          "title": "Daily\nstatus/story",
-          "isNew": true
-        },
-        {
           "quickActionType": "POST_NEW_UPDATE",
           "title": "Post today's\nupdate"
         },
@@ -372,7 +335,8 @@
         },
         {
           "quickActionType": "PLACE_APPOINTMENT",
-          "title": "Book an\nappointment"
+          "title": "Book an\nappointment",
+          "isNew": true
         },
         {
           "quickActionType": "ADD_TESTIMONIAL",

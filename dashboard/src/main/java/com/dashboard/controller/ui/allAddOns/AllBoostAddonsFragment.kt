@@ -170,7 +170,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.ic_product_cataloge_d,
     ManageBusinessData.BusinessType.ic_service_cataloge_d,
     -> baseActivity.startListServiceProduct(session)
-    ManageBusinessData.BusinessType.ic_customer_testimonial_d -> baseActivity.startAddTestimonial(session, false)
+    ManageBusinessData.BusinessType.ic_customer_testimonial_d -> baseActivity.startTestimonial(session, false)
     ManageBusinessData.BusinessType.ic_business_keyboard_d -> session?.let { baseActivity.startKeyboardActivity(it) }
     ManageBusinessData.BusinessType.clinic_logo -> baseActivity.startBusinessLogo(session)
     ManageBusinessData.BusinessType.featured_image_video -> baseActivity.startFeatureLogo(session)
@@ -178,11 +178,13 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.doctor_profile,
     ManageBusinessData.BusinessType.faculty_profiles_d,
     -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
-    ManageBusinessData.BusinessType.contact_details->baseActivity.startBusinessInfoEmail(session)
+    ManageBusinessData.BusinessType.contact_details -> baseActivity.startBusinessInfoEmail(session)
     ManageBusinessData.BusinessType.content_sync_acros_channels -> session?.let { baseActivity.startDigitalChannel(it) }
-    ManageBusinessData.BusinessType.ic_custom_page_add -> baseActivity.startCreateCustomPage(session, false)
+    ManageBusinessData.BusinessType.ic_custom_page_add -> baseActivity.startCustomPage(session, false)
     ManageBusinessData.BusinessType.in_clinic_appointments -> baseActivity.startOrderAptConsultList(session, isConsult = false)
-    ManageBusinessData.BusinessType.customer_order_d -> baseActivity.startOrderAptConsultList(session, isOrder = true)
+    ManageBusinessData.BusinessType.customer_order_d,
+    ManageBusinessData.BusinessType.customer_booking_d,
+    -> baseActivity.startOrderAptConsultList(session, isOrder = true)
     ManageBusinessData.BusinessType.video_consultations -> baseActivity.startOrderAptConsultList(session, isConsult = true)
     ManageBusinessData.BusinessType.newsletter_subscription -> baseActivity.startSubscriber(session)
     ManageBusinessData.BusinessType.picture_gallery,

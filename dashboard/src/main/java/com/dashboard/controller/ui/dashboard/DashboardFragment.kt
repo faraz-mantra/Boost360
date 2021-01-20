@@ -1,18 +1,24 @@
 package com.dashboard.controller.ui.dashboard
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
+import androidx.core.app.ActivityCompat
 import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
 import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
+import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.DashboardActivity
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
+import com.dashboard.controller.ui.dialog.ProgressDashboardDialog
 import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
@@ -35,6 +41,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.utils.*
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY_N
 import com.framework.utils.DateUtils.getCurrentDate
 import com.framework.utils.DateUtils.getDateMillSecond
@@ -54,18 +61,20 @@ import com.onboarding.nowfloats.ui.webview.WebViewBottomDialog
 import java.util.*
 import kotlin.collections.ArrayList
 
+const val IS_FIRST_LOAD = "isFirsLoad"
+
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
-  private var adapterBusinessContent: AppBaseRecyclerViewAdapter<BusinessContentSetupData>? = null
-  private var channelAdapter: AppBaseRecyclerViewAdapter<ChannelData>? = null
   private var adapterPagerBusinessUpdate: AppBaseRecyclerViewAdapter<BusinessSetupHighData>? = null
   private var adapterRoi: AppBaseRecyclerViewAdapter<RoiSummaryData>? = null
   private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
   private var adapterMarketBanner: AppBaseRecyclerViewAdapter<DashboardMarketplaceBanner>? = null
   private var adapterAcademy: AppBaseRecyclerViewAdapter<DashboardAcademyBanner>? = null
+  private var adapterQuickAction: AppBaseRecyclerViewAdapter<QuickActionItem>? = null
+  private var adapterBusinessData: AppBaseRecyclerViewAdapter<ManageBusinessData>? = null
   private var siteMeterData: SiteMeterScoreDetails? = null
-  private var isFirsLoad = true
+  private var ctaFileLink: String? = null
 
   override fun getLayout(): Int {
     return R.layout.fragment_dashboard
@@ -77,13 +86,19 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onCreateView() {
     super.onCreateView()
+    if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showProgress()
     session = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.btnVisitingCard)
+    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.btnVisitingCard, binding?.txtDomainName)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     apiSellerSummary()
     getPremiumBanner()
     WebEngageController.trackEvent("Dashboard Home Page", "pageview", session?.fpTag)
+  }
+
+  override fun onResume() {
+    super.onResume()
+    getFloatMessage()
   }
 
   private fun getPremiumBanner() {
@@ -106,19 +121,16 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     })
   }
 
-  override fun onResume() {
-    super.onResume()
-    baseActivity.runOnUiThread { getFloatMessage() }
-  }
-
   private fun getFloatMessage() {
-    if (isFirsLoad) session?.siteMeterData { it?.let { it1 -> refreshData(it1) } }
-    binding?.progress?.visible()
+    session?.siteMeterData { it?.let { it1 -> refreshData(it1) } }
     viewModel?.getBizFloatMessage(session!!.getRequestFloat())?.observeOnce(this, {
-      isFirsLoad = false
       if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
       session?.siteMeterData { it1 -> it1?.let { it2 -> refreshData(it2) } }
-      binding?.progress?.gone()
+      if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true){
+        (baseActivity as? DashboardActivity)?.isLoadShimmer=false
+        hideProgress()
+      }
+      saveFirstLoad()
     })
   }
 
@@ -126,14 +138,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     this.siteMeterData = siteMeterData
     (baseActivity as? DashboardActivity)?.setPercentageData(siteMeterData.siteMeterTotalWeight)
     setUserData()
-    setRecBusinessManageTask()
+    setBusinessManageTask()
     getNotificationCount()
     getSiteMeter(siteMeterData)
     setDataSellerSummary(OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
   }
 
   private fun getSiteMeter(siteMeterData: SiteMeterScoreDetails) {
-    val listDigitalScore = siteMeterData.getListDigitalScore()
     if (session?.siteHealth != siteMeterData.siteMeterTotalWeight) {
       session?.siteHealth = siteMeterData.siteMeterTotalWeight
       val data = OnBoardingUpdateModel()
@@ -144,33 +155,38 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  private fun setRecBusinessManageTask() {
-    binding?.lowRecommendedTask?.apply {
+  private fun setBusinessManageTask() {
+    binding?.recommendedTask?.apply {
       viewModel?.getQuickActionData(baseActivity)?.observeOnce(viewLifecycleOwner, {
         val response = it as? QuickActionResponse
         val listAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
         if (response?.isSuccess() == true && listAction?.actionItem.isNullOrEmpty().not()) {
-          rvQuickAction.apply {
-            val adapterQuickAction = AppBaseRecyclerViewAdapter(baseActivity, listAction?.actionItem!!, this@DashboardFragment)
-            adapter = adapterQuickAction
-          }
+          if (adapterQuickAction == null) {
+            rvQuickAction.apply {
+              adapterQuickAction = AppBaseRecyclerViewAdapter(baseActivity, listAction?.actionItem!!, this@DashboardFragment)
+              adapter = adapterQuickAction
+            }
+          } else adapterQuickAction?.notify(listAction?.actionItem!!)
         } else showShortToast(baseActivity.getString(R.string.quick_action_data_error))
       })
 
     }
-    binding?.lowManageBusiness?.apply {
+    binding?.manageBusiness?.apply {
       title.text = if (getRoiSummaryType(session?.fP_AppExperienceCode) == "DOC") baseActivity.getString(R.string.manage_your_clinic) else baseActivity.getString(R.string.manage_your_business)
-      rvManageBusiness.apply {
-        viewModel?.getBoostAddOnsTop(baseActivity)?.observeOnce(viewLifecycleOwner, {
-          val response = it as? ManageBusinessDataResponse
-          val dataAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
-          if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
-            dataAction.actionItem?.map { it1 -> if (it1.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it1.premiumCode).not()) it1.isLock = true }
-            val adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@DashboardFragment)
-            adapter = adapterBusinessData
-          } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
-        })
-      }
+
+      viewModel?.getBoostAddOnsTop(baseActivity)?.observeOnce(viewLifecycleOwner, {
+        val response = it as? ManageBusinessDataResponse
+        val dataAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
+        if (dataAction?.actionItem.isNullOrEmpty().not()) {
+          dataAction!!.actionItem!!.map { it1 -> if (it1.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it1.premiumCode).not()) it1.isLock = true }
+          if (adapterBusinessData == null) {
+            rvManageBusiness.apply {
+              adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@DashboardFragment)
+              adapter = adapterBusinessData
+            }
+          } else adapterBusinessData?.notify(dataAction.actionItem!!)
+        } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
+      })
       btnShowAll.setOnClickListener {
         WebEngageController.trackEvent("Business Add-ons Page", "Add-ons", session?.fpTag)
         startFragmentDashboardActivity(FragmentType.ALL_BOOST_ADD_ONS)
@@ -214,6 +230,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun setDataSellerSummary(sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, callSummary: CallSummaryResponse?) {
     val data = BusinessSetupHighData().getData(siteMeterData?.siteMeterTotalWeight ?: 0,
         summary?.getNoOfUniqueViews() ?: "0", sellerOrder?.getTotalOrders() ?: "0", getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
+    data.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_HIGH_ITEM_VIEW.getLayout() }
     if (adapterPagerBusinessUpdate == null) {
       binding?.pagerBusinessSetupHigh?.apply {
         adapterPagerBusinessUpdate = AppBaseRecyclerViewAdapter(baseActivity, data, this@DashboardFragment)
@@ -224,6 +241,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
     } else adapterPagerBusinessUpdate?.notify(data)
     val roiData = RoiSummaryData().getData(summary?.getNoOfMessages() ?: "0", callSummary?.getTotalCalls() ?: "0", sellerOrder, getRoiSummaryType(session?.fP_AppExperienceCode))
+    roiData.map { it.recyclerViewItemType = RecyclerViewItemType.ROI_SUMMARY_ITEM_VIEW.getLayout() }
     if (adapterRoi == null) {
       binding?.rvRoiSummary?.apply {
         adapterRoi = AppBaseRecyclerViewAdapter(baseActivity, roiData, this@DashboardFragment)
@@ -231,6 +249,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       }
     } else adapterRoi?.notify(roiData)
     val growthStatsList = GrowthStatsData().getData(summary, session)
+    growthStatsList.map { it.recyclerViewItemType = RecyclerViewItemType.GROWTH_STATE_ITEM_VIEW.getLayout() }
     if (adapterGrowth == null) {
       binding?.rvGrowthState?.apply {
         adapterGrowth = AppBaseRecyclerViewAdapter(baseActivity, growthStatsList, this@DashboardFragment)
@@ -241,17 +260,23 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun setUserData() {
     binding?.txtBusinessName?.text = session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
-//    binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(true)}</u>")
+    binding?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName()}</u>")
     var imageLogoUri = session?.getFPDetails(GET_FP_DETAILS_LogoUrl)
     if (imageLogoUri.isNullOrEmpty().not() && imageLogoUri!!.contains("http").not()) {
       imageLogoUri = BASE_IMAGE_URL + imageLogoUri
     }
-    binding?.imgBusinessLogo?.let { baseActivity.glideLoad(it, imageLogoUri, R.drawable.ic_add_logo_d, isCrop = true) }
+
+    binding?.imgBusinessLogo?.let {
+      if (imageLogoUri.isNullOrEmpty().not()) {
+        baseActivity.glideLoad(mImageView = it, url = imageLogoUri!!, placeholder = R.drawable.gradient_white, isLoadBitmap = true)
+      } else it.setImageResource(R.drawable.ic_add_logo_d)
+    }
   }
 
   private fun setDataRiaAcademy(academyBanner: ArrayList<DashboardAcademyBanner>) {
     binding?.pagerRiaAcademy?.apply {
       if (academyBanner.isNotEmpty()) {
+        academyBanner.map { it.recyclerViewItemType = RecyclerViewItemType.RIA_ACADEMY_ITEM_VIEW.getLayout() }
         binding?.riaAcademyView?.visible()
         if (adapterAcademy == null) {
           adapterAcademy = AppBaseRecyclerViewAdapter(baseActivity, academyBanner, this@DashboardFragment)
@@ -266,6 +291,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun setDataMarketBanner(marketBannerFilter: ArrayList<DashboardMarketplaceBanner>) {
     binding?.pagerBoostPremium?.apply {
       if (marketBannerFilter.isNotEmpty()) {
+        marketBannerFilter.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_PREMIUM_ITEM_VIEW.getLayout() }
         binding?.boostPremiumView?.visible()
         if (adapterMarketBanner == null) {
           adapterMarketBanner = AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
@@ -275,11 +301,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         } else adapterMarketBanner?.notify(marketBannerFilter)
       } else binding?.boostPremiumView?.gone()
     }
-  }
-
-  private fun showErrorChannel(message: String) {
-    showShortToast(message)
-    hideProgress()
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -317,7 +338,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       RecyclerViewActionType.PROMO_BANNER_CLICK.ordinal -> {
         val data = item as? DashboardMarketplaceBanner ?: return
         if (data.ctaFeatureKey.isNullOrEmpty().not()) {
-          session?.let { baseActivity.initiateAddonMarketplace(it, false, "", data.ctaFeatureKey) }
+          session?.let {
+            baseActivity.initiateAddonMarketplace(it, false, "", data.ctaFeatureKey)
+          }
         }
       }
       RecyclerViewActionType.PROMO_BOOST_ACADEMY_CLICK.ordinal -> {
@@ -333,7 +356,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)
       binding?.btnVisitingCard -> visitingCard()
-//      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
+      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
     }
   }
 
@@ -376,8 +399,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (type) {
       QuickActionItem.QuickActionType.POST_NEW_UPDATE -> baseActivity.startPostUpdate(session)
       QuickActionItem.QuickActionType.ADD_PHOTO_GALLERY -> baseActivity.startAddImageGallery(session)
-      QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startAddTestimonial(session, true)
-      QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCreateCustomPage(session, true)
+      QuickActionItem.QuickActionType.ADD_TESTIMONIAL -> baseActivity.startTestimonial(session, true)
+      QuickActionItem.QuickActionType.ADD_CUSTOM_PAGE -> baseActivity.startCustomPage(session, true)
       QuickActionItem.QuickActionType.LIST_SERVICES,
       QuickActionItem.QuickActionType.LIST_PRODUCT,
       QuickActionItem.QuickActionType.LIST_DRUG_MEDICINE,
@@ -474,27 +497,82 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-
   private fun academyBannerBoostClick(data: DashboardAcademyBanner) {
+    val loader = ProgressDashboardDialog.newInstance()
     when {
-      data.ctaFileLink.isNullOrEmpty().not() -> baseActivity.startDownloadUri(session, data.ctaFileLink?.trim()!!)
-      data.ctaWebLink.isNullOrEmpty().not() -> baseActivity.startWebViewPageLoad(session, data.ctaWebLink?.trim()!!)
-      data.ctaYoutubeLink.isNullOrEmpty().not() -> baseActivity.startYouTube(session, data.ctaYoutubeLink?.trim()!!)
+      data.ctaFileLink.isNullOrEmpty().not() -> {
+        this.ctaFileLink = data.ctaFileLink
+        if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED ||
+            ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+          requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
+        } else {
+          loader.setData(R.raw.download_gif, resources.getString(R.string.download_file_banner))
+          loader.showProgress(baseActivity.supportFragmentManager)
+          baseActivity.startDownloadUri(data.ctaFileLink?.trim()!!)
+          Handler().postDelayed({ loader.hideProgress() }, 1000)
+        }
+      }
+      data.ctaWebLink.isNullOrEmpty().not() -> {
+        loader.setData(R.raw.activity_browser_gif, resources.getString(R.string.opening_browser_banner))
+        loader.showProgress(baseActivity.supportFragmentManager)
+        Handler().postDelayed({
+          baseActivity.startWebViewPageLoad(session, data.ctaWebLink?.trim()!!)
+          loader.hideProgress()
+
+        }, 1000)
+      }
+      data.ctaYoutubeLink.isNullOrEmpty().not() -> {
+        loader.setData(R.raw.video_gif, resources.getString(R.string.taking_video_banner))
+        loader.showProgress(baseActivity.supportFragmentManager)
+        Handler().postDelayed({
+          baseActivity.startYouTube(session, data.ctaYoutubeLink?.trim()!!)
+          loader.hideProgress()
+        }, 1000)
+      }
+    }
+  }
+
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    when (requestCode) {
+      100 -> {
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+          if (ctaFileLink.isNullOrEmpty().not()) {
+            val loader = ProgressDashboardDialog.newInstance()
+            loader.setData(R.raw.download_gif, resources.getString(R.string.download_file_banner))
+            loader.showProgress(baseActivity.supportFragmentManager)
+            baseActivity.startDownloadUri(ctaFileLink?.trim()!!)
+            Handler().postDelayed({ loader.hideProgress() }, 1000)
+          }
+        } else showShortToast("Permission denied to read your External storage")
+        return
+      }
     }
   }
 
   override fun showProgress(title: String?, cancelable: Boolean?) {
-    binding?.nestedScrollView?.gone()
-    binding?.progress?.visible()
+    showSimmer(true)
   }
 
   override fun hideProgress() {
-    binding?.nestedScrollView?.visible()
-    binding?.progress?.gone()
+    showSimmer(false)
+  }
+
+  private fun showSimmer(isSimmer: Boolean) {
+    binding?.mainContent?.post {
+      if (isSimmer) {
+        binding?.progressSimmer?.parentShimmerLayout?.visible()
+        binding?.progressSimmer?.parentShimmerLayout?.startShimmer()
+        binding?.nestedScrollView?.gone()
+      } else {
+        binding?.progressSimmer?.parentShimmerLayout?.gone()
+        binding?.nestedScrollView?.visible()
+        binding?.progressSimmer?.parentShimmerLayout?.stopShimmer()
+      }
+    }
   }
 }
 
-private fun UserSessionManager.saveUserSummary(summary: SummaryEntity?) {
+fun UserSessionManager.saveUserSummary(summary: SummaryEntity?) {
   enquiryCount = (summary?.noOfMessages ?: 0).toString()
   subcribersCount = summary?.noOfSubscribers.toString()
   visitorsCount = (summary?.noOfUniqueViews ?: 0).toString()
@@ -537,4 +615,12 @@ fun getLocalSession(session: UserSessionManager): LocalSessionModel {
       businessImage = imageUri, location = location, websiteUrl = session.getDomainName(false),
       businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), primaryNumber = session.userPrimaryMobile,
       primaryEmail = session.fPEmail, fpTag = session.fpTag, experienceCode = session.fP_AppExperienceCode)
+}
+
+fun saveFirstLoad() {
+  PreferencesUtils.instance.saveData(IS_FIRST_LOAD, true)
+}
+
+fun isFirstLoad(): Boolean {
+  return PreferencesUtils.instance.getData(IS_FIRST_LOAD, false)
 }

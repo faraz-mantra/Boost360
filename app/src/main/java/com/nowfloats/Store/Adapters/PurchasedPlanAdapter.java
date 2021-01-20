@@ -24,7 +24,10 @@ import com.nowfloats.util.Methods;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.nowfloats.Store.YourPurchasedPlansActivity.PlansType.YOUR_ORDERS;
 
@@ -77,7 +80,18 @@ public class PurchasedPlanAdapter extends RecyclerView.Adapter<RecyclerView.View
             holder.tvCliamId.setTypeface(null, Typeface.NORMAL);
             holder.tvPaymentStatus.setTypeface(null, Typeface.NORMAL);
             holder.tvSerialNumber.setText(position + " ");
-            holder.tvPaymentDate.setText(Methods.getFormattedDate(activePackage.getPaymentDate(), "dd-MM-yyyy"));
+//            holder.tvPaymentDate.setText(Methods.getFormattedDate(activePackage.getPaymentDate(), "dd-MM-yyyy"));
+//            holder.tvPaymentDate.setText(Methods.getFormattedDateFromFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "dd-MM-yyyy",activePackage.getPaymentDate()));
+            SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            SimpleDateFormat output = new SimpleDateFormat("dd-MM-yyyy");
+
+            Date date = null;
+            try {
+                date = input.parse(activePackage.getPaymentDate());
+                holder.tvPaymentDate.setText(output.format(date));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             holder.tvOrderId.setText(activePackage.getId());
             if (activePackage.getPackageDetails() != null && !activePackage.getPackageDetails().isEmpty()) {
                 holder.tvPackageName.setText(activePackage.getPackageDetails().get(0).getPackageName());

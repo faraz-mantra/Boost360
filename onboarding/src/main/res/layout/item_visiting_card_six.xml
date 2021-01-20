@@ -67,7 +67,7 @@
           android:layout_weight="1"
           android:ellipsize="end"
           android:includeFontPadding="false"
-          android:maxLines="3"
+          android:maxLines="4"
           android:textColor="@color/white"
           app:fontFamily="@font/patua_one_regular"
           app:textType="HEADING_6"
@@ -93,19 +93,19 @@
         <com.framework.views.customViews.CustomImageView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="@dimen/size_5"
+          android:layout_marginBottom="@dimen/size_3"
           app:srcCompat="@drawable/ic_call_card_new" />
 
         <com.framework.views.customViews.CustomImageView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="@dimen/size_6"
+          android:layout_marginBottom="@dimen/size_4"
           app:srcCompat="@drawable/ic_email_card_new" />
 
         <com.framework.views.customViews.CustomImageView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="@dimen/size_12"
+          android:layout_marginBottom="@dimen/size_10"
           app:srcCompat="@drawable/ic_website_card_new" />
       </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -141,7 +141,7 @@
             android:id="@+id/number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/size_8"
+            android:layout_marginBottom="@dimen/size_6"
             android:ellipsize="end"
             android:gravity="start"
             android:maxLines="1"
@@ -153,7 +153,7 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/size_8"
+            android:layout_marginBottom="@dimen/size_6"
             android:ellipsize="end"
             android:gravity="start"
             android:maxLines="1"
@@ -168,7 +168,7 @@
             android:id="@+id/website"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/size_10"
+            android:layout_marginBottom="@dimen/size_8"
             android:ellipsize="end"
             android:gravity="start"
             android:maxLines="1"

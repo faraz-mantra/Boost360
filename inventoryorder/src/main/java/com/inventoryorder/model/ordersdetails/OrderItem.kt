@@ -1,5 +1,6 @@
 package com.inventoryorder.model.ordersdetails
 
+
 import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.getCurrentDate
@@ -11,6 +12,7 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import com.inventoryorder.utils.capitalizeUtil
 import java.io.Serializable
 import java.util.*
+
 
 data class OrderItem(
     val BillingDetails: BillingDetailsN? = null,
@@ -30,7 +32,7 @@ data class OrderItem(
     val SettlementDetails: SettlementDetailsN? = null,
     var Status: String? = null,
     val UpdatedOn: String? = null,
-    val _id: String? = null
+    val _id: String? = null,
 ) : AppBaseRecyclerViewItem, Serializable {
 
   var dateKey: Date? = null
@@ -46,6 +48,10 @@ data class OrderItem(
 
   fun stringToDate(format: String = DateUtils.FORMAT_DD_MM_YYYY): Date? {
     return parseDate(CreatedOn, FORMAT_SERVER_DATE, format, timeZone = TimeZone.getTimeZone("IST"))?.parseDate(DateUtils.FORMAT_DD_MM_YYYY)
+  }
+
+  fun getInvoiceUrl(): String {
+    return BillingDetails?.InvoiceUrl?.trim() ?: ""
   }
 
   fun referenceNumber(): String {
@@ -75,7 +81,7 @@ data class OrderItem(
   fun getTitles(): String {
     var title = ""
     Items?.forEachIndexed { index, item ->
-      if (index < 3) title += takeIf { index != 0 }?.let { "\n${item.Product?.Name?.trim()}" } ?: (item.Product?.Name?.trim())
+      if (index < 3) title += takeIf { index != 0 }?.let { "\n●  ${item.Quantity} x  ${item.Product?.Name?.trim()}" } ?: ("●  ${item.Quantity} x  ${item.Product?.Name?.trim()}")
     }
     return title
   }
@@ -124,6 +130,7 @@ data class OrderItem(
   fun consultationWindowUrlForDoctor(): String {
     return "https://d.nflo.at/consult?appt=$_id"
   }
+
   fun consultationJoiningUrl(webSiteUrl: String?): String {
     return "https://$webSiteUrl/consult/$_id"
   }

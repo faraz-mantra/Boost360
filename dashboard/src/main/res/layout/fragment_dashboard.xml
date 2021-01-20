@@ -8,6 +8,7 @@
   </data>
 
   <FrameLayout
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -46,7 +47,6 @@
           </FrameLayout>
 
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/view_digital_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_180"
@@ -54,42 +54,33 @@
             android:orientation="vertical"
             android:paddingTop="@dimen/size_12">
 
-
             <androidx.appcompat.widget.LinearLayoutCompat
-              android:id="@+id/view_business_bg_score"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_18"
               android:orientation="vertical">
 
-              <androidx.appcompat.widget.LinearLayoutCompat
+              <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/pager_business_setup_high"
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/size_50"
+                android:clipChildren="false"
+                android:clipToPadding="false" />
+
+              <com.framework.views.dotsindicator.DotsIndicator
+                android:id="@+id/dot_indicator_business_high"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_18"
-                android:orientation="vertical">
-
-                <androidx.viewpager2.widget.ViewPager2
-                  android:id="@+id/pager_business_setup_high"
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/size_50"
-                  android:clipChildren="false"
-                  android:clipToPadding="false" />
-
-                <com.framework.views.dotsindicator.DotsIndicator
-                  android:id="@+id/dot_indicator_business_high"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_gravity="center_horizontal"
-                  android:layout_marginTop="@dimen/size_12"
-                  android:layout_marginBottom="@dimen/size_12"
-                  app:dotsColor="@color/light_grey_1"
-                  app:dotsCornerRadius="@dimen/_6dp"
-                  app:dotsSize="@dimen/size_5"
-                  app:dotsSpacing="@dimen/size_2"
-                  app:dotsWidthFactor="2.5"
-                  app:progressMode="false"
-                  app:selectedDotColor="@color/grey_dark_2" />
-              </androidx.appcompat.widget.LinearLayoutCompat>
-
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/size_12"
+                android:layout_marginBottom="@dimen/size_12"
+                app:dotsColor="@color/light_grey_1"
+                app:dotsCornerRadius="@dimen/_6dp"
+                app:dotsSize="@dimen/size_5"
+                app:dotsSpacing="@dimen/size_2"
+                app:dotsWidthFactor="2.5"
+                app:progressMode="false"
+                app:selectedDotColor="@color/grey_dark_2" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
           </androidx.appcompat.widget.LinearLayoutCompat>
@@ -128,6 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:scaleType="centerCrop"
                     app:srcCompat="@drawable/ic_add_logo_d" />
                 </com.framework.views.customViews.CustomCardView>
 
@@ -154,26 +146,38 @@
                   app:textType="HEADING_5"
                   tools:text="PLASTO INDIA AND POLYMERS" />
 
-                <com.framework.views.customViews.CustomImageView
-                  android:id="@+id/txt_gst_status"
-                  android:layout_width="@dimen/size_82"
-                  android:layout_height="@dimen/size_17"
-                  android:layout_marginStart="@dimen/size_2"
-                  android:layout_marginTop="@dimen/size_1"
-                  app:srcCompat="@drawable/ic_gst_verfied_d" />
-                <!--              <com.framework.views.customViews.CustomTextView-->
-                <!--                android:id="@+id/txt_domain_name"-->
-                <!--                android:layout_width="wrap_content"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_marginStart="@dimen/size_2"-->
-                <!--                android:drawableStart="@drawable/ic_edit_d"-->
-                <!--                android:drawablePadding="@dimen/size_4"-->
-                <!--                android:ellipsize="end"-->
-                <!--                android:includeFontPadding="false"-->
-                <!--                android:maxLines="1"-->
-                <!--                android:textColor="@color/greyish_brown"-->
-                <!--                app:textType="BODY_1"-->
-                <!--                tools:text="@string/www_sravansclinic_com" />-->
+                <FrameLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+                  <com.framework.views.customViews.CustomImageView
+                    android:id="@+id/txt_gst_status"
+                    android:layout_width="@dimen/size_82"
+                    android:layout_height="@dimen/size_17"
+                    android:layout_marginStart="@dimen/size_2"
+                    android:layout_marginTop="@dimen/size_1"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_gst_verfied_d" />
+
+                  <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/txt_domain_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_2"
+                    android:layout_marginTop="@dimen/size_1"
+                    android:drawableStart="@drawable/ic_website_d"
+                    android:drawablePadding="@dimen/size_4"
+                    android:ellipsize="end"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:textColor="@color/greyish_brown"
+                    app:autoSizeMaxTextSize="16sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform"
+                    tools:text="@string/www_sravansclinic_com" />
+                </FrameLayout>
+
               </androidx.appcompat.widget.LinearLayoutCompat>
 
               <FrameLayout
@@ -182,7 +186,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_4"
                 android:layout_marginEnd="@dimen/size_14"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true">
 
@@ -224,7 +227,7 @@
               <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/my_visiting_card"
+                android:text="@string/share_business_card"
                 android:textColor="@color/white"
                 app:textAllCaps="true"
                 app:textType="HEADING_6" />
@@ -233,6 +236,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_6"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_arrow_down_white_12_d" />
             </LinearLayout>
           </LinearLayout>
@@ -246,17 +250,16 @@
           android:orientation="vertical">
 
           <LinearLayout
-            android:id="@+id/view_low_task_manage_business"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <include
-              android:id="@+id/low_recommended_task"
+              android:id="@+id/recommended_task"
               layout="@layout/item_recommended_task_view" />
 
             <include
-              android:id="@+id/low_manage_business"
+              android:id="@+id/manage_business"
               layout="@layout/item_manage_business_view" />
           </LinearLayout>
 
@@ -272,13 +275,14 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
+<!--              android:drawableEnd="@drawable/ic_summary_alert_d"-->
+<!--              android:drawablePadding="@dimen/size_8"-->
+
               <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_18"
                 android:layout_marginEnd="@dimen/size_18"
-                android:drawableEnd="@drawable/ic_summary_alert_d"
-                android:drawablePadding="@dimen/size_8"
                 android:text="@string/ria_academy"
                 android:textColor="@color/black_4a4a4a"
                 app:fontFamily="@font/semi_bold"
@@ -327,12 +331,13 @@
                   android:layout_marginEnd="@dimen/size_18"
                   android:orientation="horizontal">
 
+<!--                  android:drawableEnd="@drawable/ic_summary_alert_d"-->
+<!--                  android:drawablePadding="@dimen/size_8"-->
+
                   <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:drawableEnd="@drawable/ic_summary_alert_d"
-                    android:drawablePadding="@dimen/size_8"
                     android:includeFontPadding="false"
                     android:text="@string/business_statistics"
                     android:textColor="@color/black_4a4a4a"
@@ -387,14 +392,15 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
+<!--                android:drawableEnd="@drawable/ic_summary_alert_d"-->
+<!--                android:drawablePadding="@dimen/size_8"-->
+
                 <com.framework.views.customViews.CustomTextView
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginStart="@dimen/size_18"
                   android:layout_marginTop="@dimen/size_16"
                   android:layout_marginEnd="@dimen/size_18"
-                  android:drawableEnd="@drawable/ic_summary_alert_d"
-                  android:drawablePadding="@dimen/size_8"
                   android:text="@string/add_on_marketplace_banner"
                   android:textColor="@color/black_4a4a4a"
                   app:fontFamily="@font/semi_bold"
@@ -408,7 +414,7 @@
                   android:layout_marginEnd="@dimen/size_18"
                   android:ellipsize="end"
                   android:maxLines="2"
-                  android:text="@string/learn_boost_360"
+                  android:text="@string/addon_marketplace_description"
                   android:textColor="@color/black_4a4a4a"
                   app:textType="CAPTION" />
 
@@ -436,12 +442,13 @@
                   android:layout_marginEnd="@dimen/size_18"
                   android:orientation="horizontal">
 
+<!--                  android:drawableEnd="@drawable/ic_summary_alert_d"-->
+<!--                  android:drawablePadding="@dimen/size_8"-->
+
                   <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:drawableEnd="@drawable/ic_summary_alert_d"
-                    android:drawablePadding="@dimen/size_8"
                     android:includeFontPadding="false"
                     android:text="@string/online_growth_stats"
                     android:textColor="@color/black_4a4a4a"
@@ -471,7 +478,7 @@
                   android:layout_marginEnd="@dimen/size_18"
                   android:ellipsize="end"
                   android:maxLines="2"
-                  android:text="@string/perform_online_business"
+                  android:text="@string/website_report_description"
                   android:textColor="@color/warm_grey"
                   app:textType="CAPTION" />
 
@@ -516,14 +523,11 @@
       </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 
-    <ProgressBar
-      android:id="@+id/progress"
-      android:layout_width="wrap_content"
+    <include android:id="@+id/progress_simmer"
+      layout="@layout/view_dashboard_simmer"
       android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:indeterminate="true"
-      android:theme="@style/progressBar"
-      android:visibility="gone" />
+      android:layout_width="match_parent"
+      android:visibility="gone"/>
   </FrameLayout>
 
 </layout>

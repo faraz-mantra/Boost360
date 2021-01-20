@@ -65,12 +65,15 @@
                 android:maxLines="2"
                 android:ellipsize="end"
                 tools:text="Facebook Ads (upto 75 leads)"
-                android:textColor="#2a2a2a"
-                android:textSize="@dimen/_9sdp" />
+                android:textColor="@color/common_text_color"
+                android:fontFamily="@font/open_sans_semibold"
+                android:textFontWeight="600"
+                android:textSize="@dimen/txt_12sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pad_10dp"
                 android:layout_gravity="center_vertical">
 
                 <TextView
@@ -79,7 +82,9 @@
                     android:layout_height="wrap_content"
                     tools:text="₹400/month"
                     android:textColor="#FFB900"
-                    android:textSize="@dimen/_9sdp"
+                    android:textFontWeight="400"
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="@dimen/txt_11sp"
                     android:layout_marginEnd="@dimen/_7sdp"/>
 
             </LinearLayout>

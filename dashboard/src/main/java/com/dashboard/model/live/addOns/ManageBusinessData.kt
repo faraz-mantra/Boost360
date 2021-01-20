@@ -4,10 +4,7 @@ import com.dashboard.R
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
-import com.framework.utils.PreferencesUtils
-import com.framework.utils.convertListObjToString
-import com.framework.utils.convertStringToList
-import com.framework.utils.saveData
+import com.framework.utils.*
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -44,9 +41,9 @@ class ManageBusinessData(
     website_social_share_plugin("website_social_share_plugin", R.drawable.website_social_share_plugin),
     autamated_seo_d("autamated_seo_d", R.drawable.autamated_seo_d),
     unlimited_website_bandwidth("unlimited_website_bandwidth", R.drawable.unlimited_website_bandwidth),
-    clinic_basic_info("clinic_basic_info", 0),
+    clinic_basic_info("clinic_basic_info", R.drawable.ic_business_info_n),
     clinic_logo("clinic_logo", R.drawable.clinic_logo),
-    featured_image_video("featured_image_video", 0),
+    featured_image_video("featured_image_video", R.drawable.picture_gallery),
     business_hours("business_hours", R.drawable.business_hours),
     contact_details("contact_details", R.drawable.contact_details),
     business_kyc_verification("business_kyc_verification", R.drawable.boost_payment_gateway),
@@ -54,45 +51,46 @@ class ManageBusinessData(
     domain_name_ssl("domain_name_ssl", R.drawable.domain_name_ssl),
     my_email_accounts("my_email_accounts", R.drawable.my_email_accounts),
     boost_data_security("boost_data_security", R.drawable.boost_data_security),
-    my_bank_account("my_bank_account", 0),
+    my_bank_account("my_bank_account", R.drawable.my_bank_account),
     custom_payment_gateway("custom_payment_gateway", R.drawable.custom_payment_gateway),
     e_commerce_website("e_commerce_website", R.drawable.e_commerce_website),
     content_sync_acros_channels("content_sync_acros_channels", R.drawable.content_sync_acros_channels),
     facebook_likebox_plugin("facebook_likebox_plugin", R.drawable.facebook_likebox_plugin),
     ic_customer_call_tracker_d("ic_customer_call_tracker_d", R.drawable.ic_customer_call_d),
-    ic_ivr_faculty("ic_ivr_faculty", 0),
+    ic_ivr_faculty("ic_ivr_faculty", R.drawable.ic_tracker_ivr_d),
     ic_business_keyboard_d("ic_business_keyboard_d", R.drawable.ic_business_keyboard_d),
     newsletter_subscription("newsletter_subscription", R.drawable.newsletter_subscription),
     website_chatbot("website_chatbot", R.drawable.website_chatbot),
     assisted_content_creation("assisted_content_creation", R.drawable.assisted_content_creation),
     advertising_google_fb("advertising_google_fb", R.drawable.advertising_google_fb),
     facebook_lead_ads("facebook_lead_ads", R.drawable.facebook_lead_ads),
-    website_visits_visitors("website_visits_visitors", 0),
-    social_sharing_analytics("social_sharing_analytics", 0),
-    sales_analytics("sales_analytics", 0),
-    search_analytics("search_analytics", 0),
-    chatbot_analytics("chatbot_analytics", 0),
+    website_visits_visitors("website_visits_visitors", R.drawable.website_visits_visitors_d),
+    social_sharing_analytics("social_sharing_analytics", R.drawable.social_sharing_analytics),
+    sales_analytics("sales_analytics", R.drawable.sales_analytics),
+    search_analytics("search_analytics", R.drawable.search_analytics),
+    chatbot_analytics("chatbot_analytics", R.drawable.ic_chatbot_v2_d),
     ria_digital_assistant("ria_digital_assistant", R.drawable.ria_digital_assistant),
     premium_boost_support("premium_boost_support", R.drawable.premium_boost_support),
-    ic_digital_brochures("ic_digital_brochures", R.drawable.ic_digital_brochures),
+    ic_digital_brochures("ic_digital_brochures", R.drawable.ic_digital_brochures_d),
     ic_product_cataloge_d("ic_product_cataloge_d", R.drawable.ic_product_cataloge_d),
-    project_portfolio_d("project_portfolio_d", 0),
-    team_page_d("team_page_d", 0),
-    ic_my_business_faqs("ic_my_business_faqs", 0),
-    membership_plans("membership_plans", 0),
-    upcoming_batches_d("upcoming_batches_d", 0),
-    toppers_institute_d("toppers_institute_d", 0),
-    business_name_d("business_name_d", 0),
-    restaurant_story_d("restaurant_story_d", 0),
-    faculty_profiles_d("faculty_profiles_d", 0),
-    business_description_d("business_description_d", 0),
-    client_logos_d("client_logos_d", 0),
-    customer_order_d("customer_order_d", 0),
+    project_portfolio_d("project_portfolio_d", R.drawable.ic_project_teams_d),
+    team_page_d("team_page_d", R.drawable.ic_project_teams_d),
+    ic_my_business_faqs("ic_my_business_faqs", R.drawable.ic_faqs_d),
+    membership_plans("membership_plans", R.drawable.ic_memberships_d),
+    upcoming_batches_d("upcoming_batches_d", R.drawable.ic_upcoming_batch_d),
+    toppers_institute_d("toppers_institute_d", R.drawable.toppers_institute_d),
+    business_name_d("business_name_d", R.drawable.ic_business_info_n),
+    restaurant_story_d("restaurant_story_d", R.drawable.restaurant_story),
+    faculty_profiles_d("faculty_profiles_d", R.drawable.faculty_profiles),
+    business_description_d("business_descriptio_d", R.drawable.ic_business_info_n),
+    client_logos_d("client_logos_d", R.drawable.client_logos),
+    customer_order_d("customer_order_d", R.drawable.in_clinic_appointments),
+    customer_booking_d("customer_booking_d", R.drawable.customer_booking_d),
     sync_otas_channel_manager_d("sync_otas_channel_manager_d", 0),
-    places_look_around_d("places_look_around_d", 0),
-    trip_advisor_reviews_d("trip_advisor_reviews_d", 0),
-    room_booking_engine_d("room_booking_engine_d", 0),
-    table_reservations_d("table_reservations_d", 0);
+    places_look_around_d("places_look_around_d", R.drawable.places_look_around_d),
+    trip_advisor_reviews_d("trip_advisor_reviews_d", R.drawable.trip_advisor_reviews_d),
+    room_booking_engine_d("room_booking_engine_d", R.drawable.room_inventory_d),
+    table_reservations_d("table_reservations_d", R.drawable.table_reservations_d);
 
    //R.drawable.ic_project_terms_d
 
@@ -102,7 +100,7 @@ class ManageBusinessData(
   }
 
   fun getLastSeenData(): ArrayList<ManageBusinessData> {
-    return ArrayList(convertStringToList(PreferencesUtils.instance.getDataN(LAST_SEEN_DATA) ?: "") ?: ArrayList())
+    return ArrayList(convertStringToList(PreferencesUtils.instance.getData(LAST_SEEN_DATA,"") ?: "") ?: ArrayList())
   }
 
   fun saveLastSeenData(data: ManageBusinessData) {
