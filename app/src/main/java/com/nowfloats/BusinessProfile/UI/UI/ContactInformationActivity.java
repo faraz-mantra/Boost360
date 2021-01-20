@@ -6,6 +6,7 @@ import android.content.Intent;
 import androidx.databinding.DataBindingUtil;
 
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -142,6 +143,10 @@ public class ContactInformationActivity extends BaseActivity {
         this.initProgressBar();
         this.setData();
         this.getWhatsAppNumber(session.getFpTag());
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
     }
 
 
