@@ -69,7 +69,7 @@ class HistoryDetailsFragment : BaseFragment() {
         val outputDate = SimpleDateFormat("dd-MMM-yyyy")
         val outputTime = SimpleDateFormat("hh:mm a")
 
-        var date: Date? = null
+        /*var date: Date? = null
         var time: Date? = null
         try {
             date = inputDate.parse(data.CreatedOn)
@@ -79,14 +79,14 @@ class HistoryDetailsFragment : BaseFragment() {
             layout1_time.setText(outputTime.format(time))
         } catch (e: ParseException) {
             e.printStackTrace()
-        }
+        }*/
 
-        /*val dataString = data.CreatedOn
+        val dataString = data.CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
         val dateFormat = SimpleDateFormat("dd-MMM-yyyy")
         val timeFormat = SimpleDateFormat("hh:mm a")
         layout1_date.setText(dateFormat.format(date))
-        layout1_time.setText(timeFormat.format(date))*/
+        layout1_time.setText(timeFormat.format(date))
         val amountLayout1 = StringBuilder()
         amountLayout1.append("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(data.paidAmount))
         if (data.purchasedPackageDetails.WidgetPacks.size > 1) {

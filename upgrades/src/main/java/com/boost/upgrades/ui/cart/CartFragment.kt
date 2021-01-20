@@ -322,7 +322,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         prefs.storeMonthsValidity(totalValidityDays)
         months_validity_edit_inc.setOnClickListener {
             if (!bundles_in_cart) {
-                if (default_validity_months < 12){
+//                if (default_validity_months < 12){
                     default_validity_months++
                 months_validity.text = default_validity_months.toString() + " months"
                 totalValidityDays = 30 * default_validity_months
@@ -331,7 +331,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 totalCalculation()
 
                 Toasty.success(requireContext(), "Validity increased by 1 month.", Toast.LENGTH_SHORT, true).show()
-            }
+//            }
             }
         }
 
