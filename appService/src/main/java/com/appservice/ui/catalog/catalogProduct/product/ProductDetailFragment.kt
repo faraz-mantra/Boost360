@@ -122,6 +122,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     binding?.payProductView?.visibility = View.GONE
     binding?.toggleProduct?.setOnToggledListener { _, isOn ->
       binding?.payProductView?.visibility = if (isOn) View.VISIBLE else View.GONE
+      binding?.freeProductView?.visibility = if (isOn) View.GONE else View.VISIBLE
     }
     listenerEditText()
   }
