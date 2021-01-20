@@ -62,7 +62,7 @@
       <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/size_8"
+        android:layout_marginTop="@dimen/size_4"
         android:background="@color/white" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -71,7 +71,7 @@
       android:layout_width="@dimen/size_110"
       android:layout_height="@dimen/size_28"
       android:layout_gravity="center_horizontal|bottom"
-      android:layout_marginBottom="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_24"
       app:cardBackgroundColor="@color/white"
       app:cardCornerRadius="@dimen/size_14">
 
