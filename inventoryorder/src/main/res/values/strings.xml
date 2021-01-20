@@ -170,4 +170,7 @@
     <string name="items_included">Items included</string>
     <string name="add_more">Add more</string>
 
+    <string name="no_appointments">No appointments booked yet.</string>
+    <string name="no_appointments_desc">Once your customers start booking appointment from your website, they will appear here. You can also add your offline appointments and manage them efficiently using Boost.</string>
+
 </resources>
