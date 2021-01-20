@@ -1315,7 +1315,7 @@
                         android:clickable="true"
                         android:drawableEnd="@drawable/ic_grey_drop_down"
                         android:drawableTint="@color/pinkish_grey"
-                        android:focusable="true"
+                        android:focusable="false"
                         android:hint="@string/_0"
                         android:editable="false"
                         android:padding="@dimen/size_12"
