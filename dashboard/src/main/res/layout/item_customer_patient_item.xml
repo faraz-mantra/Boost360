@@ -49,8 +49,9 @@
           android:id="@+id/textViewName"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:textColor="@color/black_4a4a4a"
+          android:textColor="@color/grey_dark_2"
           app:textType="HEADING_6"
+          app:fontFamily="@font/regular"
           tools:text="My digital channels" />
 
         <com.framework.views.customViews.CustomTextView
@@ -89,8 +90,8 @@
           tools:text="9" />
 
         <com.framework.views.customViews.CustomImageView
-          android:layout_width="@dimen/size_13"
-          android:layout_height="@dimen/size_12"
+          android:layout_width="@dimen/size_14"
+          android:layout_height="@dimen/size_14"
           android:layout_gravity="center"
           android:tint="@color/pinkish_grey_ten_alpha"
           app:srcCompat="@drawable/ic_arrow_right_9_d" />

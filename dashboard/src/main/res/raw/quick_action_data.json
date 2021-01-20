@@ -92,10 +92,10 @@
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add customer\ntestimonial"
         },
-        {
-          "quickActionType": "ADD_FACULTY_MEMBER",
-          "title": "Add a\nstaff member"
-        },
+//        {
+//          "quickActionType": "ADD_FACULTY_MEMBER",
+//          "title": "Add a\nstaff member"
+//        },
         {
           "quickActionType": "LIST_SERVICES",
           "title": "List a\nservice"
@@ -126,10 +126,10 @@
           "quickActionType": "ADD_TESTIMONIAL",
           "title": "Add customer\ntestimonial"
         },
-        {
-          "quickActionType": "ADD_FACULTY_MEMBER",
-          "title": "Add a\nstaff member"
-        },
+//        {
+//          "quickActionType": "ADD_FACULTY_MEMBER",
+//          "title": "Add a\nstaff member"
+//        },
         {
           "quickActionType": "LIST_SERVICES",
           "title": "List a\nservice"
