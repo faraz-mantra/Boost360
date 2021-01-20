@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -65,13 +64,13 @@ const val IS_FIRST_LOAD = "isFirsLoad"
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
-  private var adapterBusinessContent: AppBaseRecyclerViewAdapter<BusinessContentSetupData>? = null
-  private var channelAdapter: AppBaseRecyclerViewAdapter<ChannelData>? = null
   private var adapterPagerBusinessUpdate: AppBaseRecyclerViewAdapter<BusinessSetupHighData>? = null
   private var adapterRoi: AppBaseRecyclerViewAdapter<RoiSummaryData>? = null
   private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
   private var adapterMarketBanner: AppBaseRecyclerViewAdapter<DashboardMarketplaceBanner>? = null
   private var adapterAcademy: AppBaseRecyclerViewAdapter<DashboardAcademyBanner>? = null
+  private var adapterQuickAction: AppBaseRecyclerViewAdapter<QuickActionItem>? = null
+  private var adapterBusinessData: AppBaseRecyclerViewAdapter<ManageBusinessData>? = null
   private var siteMeterData: SiteMeterScoreDetails? = null
   private var ctaFileLink: String? = null
 
@@ -121,12 +120,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun getFloatMessage() {
-    Handler().postDelayed({ if (isFirstLoad()) hideProgress() }, 500)
     session?.siteMeterData { it?.let { it1 -> refreshData(it1) } }
     viewModel?.getBizFloatMessage(session!!.getRequestFloat())?.observeOnce(this, {
       if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
       session?.siteMeterData { it1 -> it1?.let { it2 -> refreshData(it2) } }
-      if (isFirstLoad().not()) hideProgress()
+      hideProgress()
       saveFirstLoad()
     })
   }
@@ -135,7 +133,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     this.siteMeterData = siteMeterData
     (baseActivity as? DashboardActivity)?.setPercentageData(siteMeterData.siteMeterTotalWeight)
     setUserData()
-    setRecBusinessManageTask()
+    setBusinessManageTask()
     getNotificationCount()
     getSiteMeter(siteMeterData)
     setDataSellerSummary(OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
@@ -152,33 +150,38 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  private fun setRecBusinessManageTask() {
-    binding?.lowRecommendedTask?.apply {
+  private fun setBusinessManageTask() {
+    binding?.recommendedTask?.apply {
       viewModel?.getQuickActionData(baseActivity)?.observeOnce(viewLifecycleOwner, {
         val response = it as? QuickActionResponse
         val listAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
         if (response?.isSuccess() == true && listAction?.actionItem.isNullOrEmpty().not()) {
-          rvQuickAction.apply {
-            val adapterQuickAction = AppBaseRecyclerViewAdapter(baseActivity, listAction?.actionItem!!, this@DashboardFragment)
-            adapter = adapterQuickAction
-          }
+          if (adapterQuickAction == null) {
+            rvQuickAction.apply {
+              adapterQuickAction = AppBaseRecyclerViewAdapter(baseActivity, listAction?.actionItem!!, this@DashboardFragment)
+              adapter = adapterQuickAction
+            }
+          } else adapterQuickAction?.notify(listAction?.actionItem!!)
         } else showShortToast(baseActivity.getString(R.string.quick_action_data_error))
       })
 
     }
-    binding?.lowManageBusiness?.apply {
+    binding?.manageBusiness?.apply {
       title.text = if (getRoiSummaryType(session?.fP_AppExperienceCode) == "DOC") baseActivity.getString(R.string.manage_your_clinic) else baseActivity.getString(R.string.manage_your_business)
-      rvManageBusiness.apply {
-        viewModel?.getBoostAddOnsTop(baseActivity)?.observeOnce(viewLifecycleOwner, {
-          val response = it as? ManageBusinessDataResponse
-          val dataAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
-          if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
-            dataAction.actionItem?.map { it1 -> if (it1.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it1.premiumCode).not()) it1.isLock = true }
-            val adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@DashboardFragment)
-            adapter = adapterBusinessData
-          } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
-        })
-      }
+
+      viewModel?.getBoostAddOnsTop(baseActivity)?.observeOnce(viewLifecycleOwner, {
+        val response = it as? ManageBusinessDataResponse
+        val dataAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
+        if (dataAction?.actionItem.isNullOrEmpty().not()) {
+          dataAction!!.actionItem!!.map { it1 -> if (it1.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it1.premiumCode).not()) it1.isLock = true }
+          if (adapterBusinessData == null) {
+            rvManageBusiness.apply {
+              adapterBusinessData = AppBaseRecyclerViewAdapter(baseActivity, dataAction.actionItem!!, this@DashboardFragment)
+              adapter = adapterBusinessData
+            }
+          } else adapterBusinessData?.notify(dataAction.actionItem!!)
+        } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
+      })
       btnShowAll.setOnClickListener {
         WebEngageController.trackEvent("Business Add-ons Page", "Add-ons", session?.fpTag)
         startFragmentDashboardActivity(FragmentType.ALL_BOOST_ADD_ONS)
