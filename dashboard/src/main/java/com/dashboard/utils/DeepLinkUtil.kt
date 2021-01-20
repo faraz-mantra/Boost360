@@ -223,7 +223,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_service_catalogue)) {
           baseActivity.startListServiceProduct(session)
         } else if (url.contains(deeplink_all_custom_pages)) {
-          //pending
+          baseActivity.startCustomPage(session, false)
         } else if (url.contains(deeplink_analytics_website_visits)) {
           baseActivity.startSiteViewAnalytic(session, "TOTAL")
         } else if (url.contains(deeplink_analytics_website_visitors)) {
