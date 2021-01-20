@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
-import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentServiceInformationBinding
@@ -20,7 +19,6 @@ import com.appservice.model.serviceProduct.gstProduct.response.DataG
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.GstDetailsBottomSheet
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
@@ -155,8 +153,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
       }
       binding?.weeklyAppointmentSchedule -> {
-        startFragmentActivity(FragmentType.TIMING_STAFF, isResult = true)
-
+//        startFragmentActivity(FragmentType.TIMING_STAFF, isResult = true)
       }
     }
   }
