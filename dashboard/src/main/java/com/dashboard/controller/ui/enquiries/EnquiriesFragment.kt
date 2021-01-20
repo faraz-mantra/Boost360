@@ -1,4 +1,4 @@
-package com.dashboard.controller.ui.customer
+package com.dashboard.controller.ui.enquiries
 
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -25,7 +25,7 @@ import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
 import java.util.*
 
-class PatientCustomerFragment : AppBaseFragment<FragmentPatientsCustomerBinding, DashboardViewModel>(), RecyclerItemClickListener {
+class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
   private var adapterACustomer: AppBaseRecyclerViewAdapter<CustomerActionItem>? = null
@@ -42,7 +42,7 @@ class PatientCustomerFragment : AppBaseFragment<FragmentPatientsCustomerBinding,
     super.onCreateView()
     session = UserSessionManager(baseActivity)
     setDataSellerSummary(OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
-    WebEngageController.trackEvent("Customer Page", "pageview", session?.fpTag)
+    WebEngageController.trackEvent("Enquiries Page", "pageview", session?.fpTag)
   }
 
   override fun onResume() {
@@ -97,7 +97,7 @@ class PatientCustomerFragment : AppBaseFragment<FragmentPatientsCustomerBinding,
     actionItem.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_CUSTOMER_ITEM_VIEW.getLayout() }
     binding?.rvCustomer?.apply {
       if (adapterACustomer == null) {
-        adapterACustomer = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@PatientCustomerFragment)
+        adapterACustomer = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@EnquiriesFragment)
 //        addItemDecoration(DividerItemDecoration(baseActivity, DividerItemDecoration.VERTICAL))
         adapter = adapterACustomer
       } else adapterACustomer?.notify(actionItem)
