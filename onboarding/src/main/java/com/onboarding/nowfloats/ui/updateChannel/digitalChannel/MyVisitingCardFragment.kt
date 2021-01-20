@@ -9,7 +9,9 @@ import android.os.Bundle
 import android.provider.MediaStore.Images.Media.insertImage
 import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
