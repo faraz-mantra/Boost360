@@ -1,4 +1,4 @@
-package com.dashboard.controller.ui.dialogWelcome
+package com.dashboard.controller.ui.dialog
 
 import android.util.Log
 import androidx.fragment.app.FragmentManager
