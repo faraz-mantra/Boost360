@@ -12,10 +12,8 @@ class QuickActionItem(
     var isNew: Boolean = false,
 ) : BaseResponse(), Serializable, AppBaseRecyclerViewItem {
 
-  var recyclerViewItemType: Int = RecyclerViewItemType.QUICK_ACTION_ITEM_VIEW.getLayout()
-
   override fun getViewType(): Int {
-    return recyclerViewItemType
+    return RecyclerViewItemType.QUICK_ACTION_ITEM_VIEW.getLayout()
   }
 
   enum class QuickActionType(var icon: Int) {

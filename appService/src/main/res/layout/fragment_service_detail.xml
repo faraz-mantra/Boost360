@@ -188,14 +188,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_5"
-                android:background="@drawable/bg_rect_edit_txt"
+                android:clickable="true"
                 android:hint="Create a service category"
                 android:inputType="textCapWords"
                 android:padding="@dimen/size_12"
                 android:singleLine="true"
+                android:background="@drawable/bg_rect_edit_txt"
                 android:textColor="@color/warm_grey_10"
                 android:textColorHint="@color/primary_grey"
-                tools:ignore="UnusedAttribute" />
+                tools:ignore="UnusedAttribute"
+                android:focusable="true" />
 
             <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
@@ -675,6 +677,7 @@
                 android:layout_marginTop="@dimen/size_20"
                 android:drawablePadding="@dimen/size_4"
                 android:includeFontPadding="false"
+                android:visibility="gone"
                 android:text="@string/service_delivery_configuration"
                 android:textColor="@color/black_4a4a4a"
                 app:fontFamily="@font/semi_bold"
@@ -684,6 +687,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_5"
+                android:visibility="gone"
                 android:background="@drawable/bg_rect_edit_txt"
                 android:clickable="true"
                 android:drawableEnd="@drawable/ic_grey_drop_down"

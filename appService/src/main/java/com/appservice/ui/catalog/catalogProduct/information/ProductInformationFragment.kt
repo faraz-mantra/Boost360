@@ -21,6 +21,8 @@ import com.appservice.model.serviceProduct.gstProduct.response.DataG
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
+import com.appservice.ui.catalog.catalogService.information.CustomDropDownAdapter
+import com.appservice.ui.catalog.catalogService.information.SpinnerImageModel
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.GstDetailsBottomSheet
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
@@ -97,6 +99,19 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
     binding?.ctvQuantityOrderStatus?.text = product?.maxCodOrders.toString()
     if (gstProductData != null) binding?.edtGst?.setText("${(gstProductData?.gstSlab ?: 0.0).toInt()} %")
     setAdapter()
+    val listYesNo = mutableListOf(SpinnerImageModel("YES" to true, R.drawable.ic_dot_green), SpinnerImageModel("NO" to false, R.drawable.ic_dot_red))
+    binding?.spinnerOnlinePayment?.adapter = CustomDropDownAdapter(baseActivity, listYesNo)
+    binding?.spinnerCod?.adapter = CustomDropDownAdapter(baseActivity, listYesNo)
+    when (product?.codAvailable) {
+      true -> binding?.spinnerCod?.setSelection(0)
+      else -> binding?.spinnerCod?.setSelection(1)
+    }
+    when (product?.prepaidOnlineAvailable) {
+      true -> binding?.spinnerOnlinePayment?.setSelection(0)
+      else -> binding?.spinnerOnlinePayment?.setSelection(1)
+    }
+    binding?.specKey?.setText(product?.keySpecification?.key)
+    binding?.specValue?.setText(product?.keySpecification?.value)
   }
 
   private fun specificationAdapter() {
@@ -127,8 +142,12 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
       binding?.btnConfirm -> validateAnnGoBack()
       binding?.btnClickPhoto -> openImagePicker()
       binding?.civDecreseQuantityOrder -> {
-        maxOrder--
-        binding?.ctvQuantityOrderStatus?.text = maxOrder.toString()
+        when {
+          maxOrder > 0 -> {
+            maxOrder--
+            binding?.ctvQuantityOrderStatus?.text = maxOrder.toString()
+          }
+        }
       }
       binding?.civIncreaseQuantityOrder -> {
         maxOrder++
@@ -168,9 +187,11 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
   private fun validateAnnGoBack() {
 //    val serviceCategory = binding?.edtProductCategory?.text?.toString() ?: ""
+    val spinnerCod = binding?.spinnerCod?.selectedItem as SpinnerImageModel
+    val spinnerOnlinePayment = binding?.spinnerOnlinePayment?.selectedItem as SpinnerImageModel
     val brand = binding?.edtBrand?.text?.toString() ?: ""
-    val keySpecification = binding?.specKey?.text?.toString() ?: ""
-    val valueSpecification = binding?.specValue?.text?.toString() ?: ""
+    val keySpecification = binding?.specKey?.text.toString()
+    val valueSpecification = binding?.specValue?.text?.toString()
 
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
     val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>)
@@ -200,6 +221,15 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
         WebEngageController.trackEvent("Other information confirm", "SERVICE CATALOGUE ADD/UPDATE", "")
 //        product?.category = serviceCategory
         product?.brandName = brand
+        product?.tags = tagList
+        when (spinnerCod.state.first) {
+          "YES" -> product?.codAvailable = true
+          "NO" -> product?.codAvailable = false
+        }
+        when (spinnerOnlinePayment.state.first) {
+          "YES" -> product?.prepaidOnlineAvailable = true
+          "NO" -> product?.prepaidOnlineAvailable = false
+        }
         product?.keySpecification?.key = keySpecification
         product?.keySpecification?.value = valueSpecification
         product?.tags = tagList

@@ -145,14 +145,14 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
             val viewType = deepHashMap[DynamicLinkParams.viewType]
             val buyItemKey = deepHashMap[DynamicLinkParams.buyItemKey]
             if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(viewType ?: "", buyItemKey ?: "", false)
-          } else deepLinkUtil?.deepLinkPage(data?.substring(data?.lastIndexOf("/") + 1) ?: "", "", false)
+          } else deepLinkUtil?.deepLinkPage(data?.substring(data.lastIndexOf("/") + 1) ?: "", "", false)
         }
       } else this.startPreSignUp(session)
     } else {
       if (deepLinkUtil != null) deepLinkUtil?.deepLinkPage(mDeepLinkUrl ?: "", "", false)
     }
-  }
 
+  }
 
   override fun onResume() {
     super.onResume()
