@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <data>
+
+  </data>
+
+  <LinearLayout
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/size_6"
+    android:paddingBottom="@dimen/size_6">
+
+    <FrameLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content">
+
+      <View
+        android:layout_width="@dimen/size_36"
+        android:layout_height="@dimen/size_36"
+        android:layout_marginTop="@dimen/size_6"
+        android:background="@drawable/circle_bakground"
+        android:backgroundTint="@color/placeholder_bg"/>
+      <View
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_12"
+        android:layout_gravity="end"
+        android:layout_marginStart="@dimen/size_20"
+        android:background="@color/placeholder_bg" />
+    </FrameLayout>
+
+
+    <View
+      android:layout_width="@dimen/size_80"
+      android:layout_height="@dimen/size_14"
+      android:layout_gravity="center"
+      android:layout_marginTop="@dimen/size_6"
+      android:layout_marginEnd="@dimen/size_4"
+      android:background="@color/placeholder_bg"/>
+  </LinearLayout>
+</layout>

@@ -103,10 +103,12 @@ class UpgradeActivity : AppCompatActivity() {
     //user buying item directly
     widgetFeatureCode = intent.getStringExtra("buyItemKey")
     userPurchsedWidgets = intent.getStringArrayListExtra("userPurchsedWidgets")
+
     if (userPurchsedWidgets != null) {
       for (a in userPurchsedWidgets) {
 //      println("userPurchsedWidgets  ${userPurchsedWidgets}")
       }
+
 
     }
 

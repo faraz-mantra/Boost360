@@ -77,13 +77,6 @@
           "title": "Customer\nOrders"
         },
         {
-          "businessType": "ic_custom_page_add",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Custom\nPages"
-        },
-        {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
@@ -108,13 +101,6 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Admission\nRequests"
-        },
-        {
-          "businessType": "ic_custom_page_add",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Custom\nPages"
         },
         {
           "businessType": "ic_customer_call_d",
@@ -143,13 +129,6 @@
           "title": "Room\nBookings"
         },
         {
-          "businessType": "ic_custom_page_add",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Custom\nPages"
-        },
-        {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
@@ -174,13 +153,6 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Customer\nOrders"
-        },
-        {
-          "businessType": "ic_digital_brochures",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "BROCHURE",
-          "title": "E-Brochures For Your Business"
         },
         {
           "businessType": "ic_customer_call_d",
@@ -209,13 +181,6 @@
           "title": "Customer\nOrders"
         },
         {
-          "businessType": "ic_custom_page_add",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Custom\nPages"
-        },
-        {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
@@ -242,13 +207,6 @@
           "title": "Appointments"
         },
         {
-          "businessType": "ic_custom_page_add",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Custom\nPages"
-        },
-        {
           "businessType": "ic_customer_call_d",
           "isLock": false,
           "isHide": false,
@@ -273,13 +231,6 @@
           "isHide": false,
           "premiumCode": "",
           "title": "Appointments"
-        },
-        {
-          "businessType": "ic_custom_page_add",
-          "isLock": false,
-          "isHide": false,
-          "premiumCode": "",
-          "title": "Custom\nPages"
         },
         {
           "businessType": "ic_customer_call_d",

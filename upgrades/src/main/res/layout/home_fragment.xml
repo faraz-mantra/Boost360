@@ -86,8 +86,9 @@
                         android:text="ADD-ONS STORE"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/txt_14sp"
+                        android:textSize="@dimen/txt_15sp"
                         android:textStyle="bold"
+                        android:textFontWeight="700"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageViewCart1"
                         app:layout_constraintStart_toEndOf="@+id/imageView21"
@@ -294,8 +295,7 @@
                     android:id="@+id/banner_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
+
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -384,7 +384,7 @@
                     android:layout_marginStart="@dimen/_15sdp"
                     android:fontFamily="@font/open_sans"
                     android:text="Featured Packs"
-                    android:textColor="#4a4a4a"
+                    android:textColor="@color/common_text_color"
                     android:textFontWeight="600"
                     android:textStyle="bold"
                     android:textSize="@dimen/txt_16sp"
@@ -395,13 +395,14 @@
                     android:id="@+id/package_compare_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="2dp"
                         android:src="@drawable/ic_compare" />
                     <TextView
                         android:id="@+id/package_name1"
@@ -413,7 +414,7 @@
                         android:textColor="#FFB900"
                         android:textFontWeight="600"
                         android:textAllCaps="true"
-                        android:layout_marginLeft="@dimen/_7sdp"
+                        android:layout_marginLeft="@dimen/_4sdp"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:textSize="@dimen/txt_12sp"/>
                 </LinearLayout>
@@ -498,7 +499,7 @@
                 android:id="@+id/recommended_features_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:visibility="gone">
 
                 <TextView
@@ -532,7 +533,7 @@
             android:id="@+id/recommended_addons_rl_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/package_rl_layout">
+            android:layout_below="@+id/recommended_features_rl_layout">
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/shimmer_view_recomm_addons"
@@ -684,18 +685,66 @@
                     android:textColor="@color/common_text_color"
                     android:textFontWeight="600"
                     android:textSize="@dimen/txt_16sp" />
+                <FrameLayout
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/addons_category_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/all_side_curve_bg"
-                    android:elevation="@dimen/_2sdp"
-                    android:overScrollMode="never" />
+                    android:id="@+id/fl_addon_cat_view">
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmer_view_addon_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:visibility="visible">
+
+                        <!-- Adding 7 rows of placeholders -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+                            <include layout="@layout/data_place2" />
+
+
+                        </LinearLayout>
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/addons_category_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@drawable/all_side_curve_bg"
+                        android:elevation="@dimen/_2sdp"
+                        android:overScrollMode="never" />
+                </FrameLayout>
+
 
             </LinearLayout>
 
@@ -709,7 +758,7 @@
                 <TextView
                     android:id="@+id/expert_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_25sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:background="@drawable/top_right_curve_grey_bg"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingTop="@dimen/_5sdp"
@@ -764,8 +813,8 @@
                         android:layout_marginTop="16dp"
                         android:background="@drawable/orange_button_click_effect"
                         android:drawableStart="@drawable/ic_call_white"
-                        android:drawablePadding="@dimen/_10sdp"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:fontFamily="@font/open_sans_bold"
                         android:gravity="center"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingTop="@dimen/_5sdp"
@@ -776,7 +825,7 @@
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textFontWeight="800"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textSize="@dimen/txt_10sp" />
 
                 </LinearLayout>
 
@@ -1010,7 +1059,8 @@
                             android:fontFamily="@font/open_sans"
                             android:text="Watch how a chatbot makes your site 2x interactive "
                             android:textColor="@color/common_text_color"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/txt_11sp"
+                            android:textFontWeight="700"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -1201,7 +1251,6 @@
                                 android:layout_marginStart="32dp"
                                 android:layout_marginTop="9dp"
                                 android:layout_marginEnd="32dp"
-                                android:layout_marginBottom="24dp"
                                 android:background="@drawable/invitation_code_bg"
                                 android:padding="1dp">
 
@@ -1213,8 +1262,9 @@
                                     android:fontFamily="@font/open_sans"
                                     android:paddingStart="@dimen/_10sdp"
                                     android:text="Invitation code: "
-                                    android:textColor="#9b9b9b"
-                                    android:textSize="@dimen/_10sdp"
+                                    android:textColor="@color/common_text_color"
+                                    android:textSize="@dimen/txt_14sp"
+                                    android:textFontWeight="400"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toStartOf="@+id/referral_code"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -1224,11 +1274,12 @@
                                     android:id="@+id/referral_code"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:fontFamily="@font/open_sans"
                                     android:gravity="center_vertical"
                                     android:text="565GH345"
-                                    android:textColor="#9b9b9b"
-                                    android:textSize="@dimen/_10sdp"
+                                    android:textColor="@color/common_text_color"
+                                    android:textSize="@dimen/txt_14sp"
+                                    android:textFontWeight="400"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/veqrifybtn1"
@@ -1274,8 +1325,9 @@
                         android:gravity="center_horizontal"
                         android:paddingTop="@dimen/_10sdp"
                         android:text="Refer NOW via:"
+                        android:fontFamily="@font/open_sans"
                         android:textColor="#747474"
-                        android:textSize="@dimen/_10sdp"
+                        android:textSize="@dimen/txt_11sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -1323,7 +1375,7 @@
                         android:padding="@dimen/_20sdp"
                         android:text="Read how referral works"
                         android:textColor="#747474"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/txt_10sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/share_fb_1" />
@@ -1392,7 +1444,7 @@
                         android:layout_marginTop="@dimen/_15sdp"
                         android:fontFamily="@font/open_sans"
                         android:text="Help us make Boost better"
-                        android:textSize="@dimen/_15sdp" />
+                        android:textSize="@dimen/txt_18sp" />
 
                     <TextView
                         android:id="@+id/share_feedback_button"
@@ -1415,7 +1467,7 @@
                         android:text="Share your feedback"
                         android:textColor="#FFB900"
                         android:textStyle="bold"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/txt_13sp"
                         android:textFontWeight="700"/>
 
                 </LinearLayout>

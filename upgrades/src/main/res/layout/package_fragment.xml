@@ -301,7 +301,6 @@
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
-
     <TextView
         android:id="@+id/package_submit"
         android:layout_width="0dp"
