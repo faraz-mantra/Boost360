@@ -424,7 +424,7 @@
               android:orientation="horizontal">
 
             <com.framework.views.customViews.CustomEditText
-                android:id="@+id/cet_spec_type"
+                android:id="@+id/cet_spec_key"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
@@ -616,7 +616,7 @@
                   android:layout_gravity="start|bottom"
                   android:layout_marginStart="@dimen/size_4"
                   android:layout_weight="1"
-                  android:visibility="gone"
+                  android:visibility="visible"
                   android:drawablePadding="4dp"
                   android:includeFontPadding="false"
                   android:text="Accept online payment"
@@ -626,23 +626,23 @@
 
               <Space
                   android:layout_width="@dimen/size_0"
-                  android:visibility="gone"
+                  android:visibility="visible"
                   android:layout_height="@dimen/size_0"
                   android:layout_weight=".1" />
 
-              <!--              <com.framework.views.customViews.CustomTextView-->
-              <!--                  android:layout_width="0dp"-->
-              <!--                  android:layout_height="wrap_content"-->
-              <!--                  android:layout_gravity="start|bottom"-->
-              <!--                  android:layout_marginStart="@dimen/size_4"-->
-              <!--                  android:layout_weight="1"-->
-              <!--                  android:drawablePadding="4dp"-->
-              <!--                  android:gravity="center_horizontal"-->
-              <!--                  android:includeFontPadding="false"-->
-              <!--                  android:text="Max quantity per order"-->
-              <!--                  android:textColor="@color/warm_grey"-->
-              <!--                  android:textSize="12sp"-->
-              <!--                  app:fontFamily="@font/regular" />-->
+              <com.framework.views.customViews.CustomTextView
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="start|bottom"
+                  android:layout_marginStart="@dimen/size_4"
+                  android:layout_weight="1"
+                  android:drawablePadding="4dp"
+                  android:gravity="center_horizontal"
+                  android:includeFontPadding="false"
+                  android:text="Max quantity per order"
+                  android:textColor="@color/warm_grey"
+                  android:textSize="12sp"
+                  app:fontFamily="@font/regular" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <com.framework.views.customViews.CustomTextView
@@ -652,7 +652,8 @@
                 android:layout_below="@id/ll_btop"
                 android:layout_gravity="start|bottom"
                 android:layout_marginStart="@dimen/size_4"
-                android:visibility="gone"
+                android:visibility="visible"
+                android:layout_marginTop="@dimen/_6dp"
                 android:drawablePadding="4dp"
                 android:includeFontPadding="false"
                 android:text="Accept COD payment"
@@ -664,100 +665,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cet_cod"
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/_6dp"
+                android:visibility="visible"
                 android:orientation="horizontal">
 
-              <LinearLayout
+              <androidx.appcompat.widget.AppCompatSpinner
+                  android:id="@+id/spinner_cod"
                   android:layout_width="@dimen/size_0"
                   android:layout_height="@dimen/size_40"
                   android:layout_weight="1"
-                  android:background="@drawable/rounded_edit_stroke"
-                  android:orientation="horizontal">
-
-                <com.framework.views.customViews.CustomImageView
-                    android:layout_width="@dimen/size_10"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/size_8"
-                    android:src="@drawable/ic_dot_green"
-                    android:tint="#FB4100" />
-
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/size_8"
-                    android:layout_weight="1.3"
-                    android:gravity="start|center_vertical"
-                    android:text="No"
-                    android:textColor="@color/gray_text_hint"
-                    android:textSize="12.57sp" />
-
-                <com.framework.views.customViews.CustomImageView
-                    android:layout_width="@dimen/_14dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/size_8"
-                    android:src="@drawable/ic_arrow_down_grey" />
-              </LinearLayout>
+                  android:background="@drawable/spinner_catalog" />
 
               <Space
                   android:layout_width="@dimen/size_0"
                   android:layout_height="@dimen/size_0"
-                  android:visibility="gone"
-                  android:layout_weight="1" />
+                  android:layout_weight="1.1"
+                  android:visibility="visible" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/ll_btop"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ll_top"
                 android:orientation="horizontal">
 
-              <LinearLayout
-                  android:layout_width="@dimen/size_0"
-                  android:layout_height="@dimen/size_40"
-                  android:layout_weight="1"
-                  android:visibility="gone"
-                  android:background="@drawable/rounded_edit_stroke"
-                  android:orientation="horizontal">
-
-                <com.framework.views.customViews.CustomImageView
-                    android:layout_width="@dimen/size_10"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/size_8"
-                    android:src="@drawable/ic_dot_green" />
-
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/size_8"
-                    android:layout_weight="1.3"
-                    android:gravity="start|center_vertical"
-                    android:text="Yes"
-                    android:textColor="@color/gray_text_hint"
-                    android:textSize="12.57sp" />
-
-                <com.framework.views.customViews.CustomImageView
-                    android:layout_width="@dimen/_14dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/size_8"
-                    android:src="@drawable/ic_arrow_down_grey" />
-              </LinearLayout>
-
-              <com.framework.views.customViews.CustomTextView
-                  android:layout_width="0dp"
-                  android:layout_height="wrap_content"
-                  android:layout_gravity="start|center_vertical"
-                  android:layout_weight="1"
-                  android:gravity="start|center_horizontal"
-                  android:includeFontPadding="false"
-                  android:text="Max quantity per order"
-                  android:textColor="@color/warm_grey"
-                  android:textSize="12sp"
-                  app:fontFamily="@font/regular" />
-
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner_online_payment"
+                    android:layout_width="@dimen/size_0"
+                    android:layout_height="@dimen/size_40"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_catalog" />
               <Space
                   android:layout_width="@dimen/size_0"
                   android:layout_height="@dimen/size_0"
@@ -846,8 +784,9 @@
               android:background="@drawable/bg_rect_edit_txt"
               android:clickable="true"
               android:drawableEnd="@drawable/ic_arrow_right_grey"
-              android:focusable="true"
+              android:focusable="false"
               android:hint="@string/_0"
+              android:editable="false"
               android:padding="@dimen/size_12"
               android:singleLine="true"
               android:textColor="@color/warm_grey_10"

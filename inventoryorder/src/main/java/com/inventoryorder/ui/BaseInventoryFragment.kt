@@ -10,14 +10,19 @@ import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.ui.appointment.AppointmentDetailsFragment
 import com.inventoryorder.ui.appointment.AppointmentsFragment
-import com.inventoryorder.ui.appointment.CreateAppointmentFragment
 import com.inventoryorder.ui.consultation.VideoConsultDetailsFragment
 import com.inventoryorder.ui.consultation.VideoConsultFragment
-import com.inventoryorder.ui.createappointment.BookingSuccessfulFragment
-import com.inventoryorder.ui.createappointment.NewBookingFragmentOne
-import com.inventoryorder.ui.createappointment.NewBookingFragmentTwo
+import com.inventoryorder.ui.createAptConsult.CreateAppointmentFragment
+import com.inventoryorder.ui.createAptOld.BookingSuccessfulFragment
+import com.inventoryorder.ui.createAptOld.NewBookingFragmentOne
+import com.inventoryorder.ui.createAptOld.NewBookingFragmentTwo
 import com.inventoryorder.ui.order.OrderDetailFragment
+import com.inventoryorder.ui.order.OrderInvoiceFragment
 import com.inventoryorder.ui.order.OrdersFragment
+import com.inventoryorder.ui.order.createorder.AddCustomerFragment
+import com.inventoryorder.ui.order.createorder.AddProductFragment
+import com.inventoryorder.ui.order.createorder.BillingDetailFragment
+import com.inventoryorder.ui.order.createorder.CreateOrderOnBoardingFragment
 import com.inventoryorder.viewmodel.OrderCreateViewModel
 
 open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<binding, OrderCreateViewModel>() {
@@ -49,6 +54,11 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
       is NewBookingFragmentTwo -> R.layout.fragment_new_booking_two
       is BookingSuccessfulFragment -> R.layout.fragment_booking_successful
       is CreateAppointmentFragment -> R.layout.fragment_new_appointment
+      is CreateOrderOnBoardingFragment -> R.layout.fragment_order_on_boarding
+      is AddCustomerFragment -> R.layout.fragment_add_customer
+      is AddProductFragment -> R.layout.fragment_add_product
+      is BillingDetailFragment -> R.layout.fragment_billing_detail
+      is OrderInvoiceFragment -> R.layout.fragment_order_inoice
       else -> throw IllegalFragmentTypeException()
     }
   }
@@ -66,13 +76,14 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
     super.onCreateOptionsMenu(menu, inflater)
     when (this) {
       is OrdersFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
-      is OrderDetailFragment -> inflater.inflate(R.menu.menu_share_button, menu)
+      is OrderDetailFragment -> inflater.inflate(R.menu.menu_invoice, menu)
       is AppointmentsFragment -> inflater.inflate(R.menu.menu_search_filter_icon, menu)
       is AppointmentDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
       is VideoConsultFragment -> inflater.inflate(R.menu.menu_search_filter_icon, menu)
       is VideoConsultDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
       is NewBookingFragmentOne -> inflater.inflate(R.menu.menu_toolbar, menu)
       is NewBookingFragmentTwo -> inflater.inflate(R.menu.menu_toolbar, menu)
+      is OrderInvoiceFragment -> inflater.inflate(R.menu.menu_order_invoice, menu)
     }
   }
 }

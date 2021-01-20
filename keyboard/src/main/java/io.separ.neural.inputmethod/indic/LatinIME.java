@@ -755,7 +755,7 @@ public class LatinIME extends InputMethodService implements KeyboardActionListen
     @Override
     public void onCreate() {
         mAppContext = this;
-        Fabric.with(this, new Crashlytics());
+//        Fabric.with(this, new Crashlytics());
         Settings.init(this);
         DebugFlags.init(PreferenceManager.getDefaultSharedPreferences(this));
         RichInputMethodManager.init(this);

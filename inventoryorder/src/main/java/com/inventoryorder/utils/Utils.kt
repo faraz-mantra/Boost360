@@ -1,11 +1,15 @@
 package com.inventoryorder.utils
 
+import android.app.DownloadManager
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 import android.text.TextUtils
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -178,4 +182,45 @@ fun AddSuffixForDay(originalDay: String): String {
   if (originalDayN.startsWith("0")) originalDayN = originalDayN.replace("0", "")
   day = originalDayN + ""
   return day
+}
+
+
+fun String.getWebViewUrl(): String {
+  return (takeIf { checkIsFile().not() }?.let { this } ?: "https://docs.google.com/viewer?url=$this").checkHttp()
+}
+
+fun String.checkHttp(): String {
+  return if ((this.startsWith("http://") || this.startsWith("https://")).not()) "http://$this" else this
+}
+
+fun String.checkIsFile(): Boolean {
+  val ext = getFileExt().toLowerCase(Locale.ROOT)
+  return ext == "pdf" || ext == "doc" || ext == "docx" || ext == "odt" || ext == "rtf" || ext == "txt" ||
+      ext == "xml" || ext == "xps" || ext == "csv" || ext == "dbf" || ext == "ods" || ext == "xla" ||
+      ext == "xls" || ext == "xlsx" || ext == "xla" || ext == "ppt"
+}
+
+fun String.getFileExt(): String {
+  return if (this.isNotEmpty()) this.substring(this.lastIndexOf(".") + 1, this.length) else ""
+}
+
+fun String.getFileName(): String? {
+  return substring(lastIndexOf("/") + 1)
+}
+
+fun AppCompatActivity.startDownloadUri(url: String) {
+  try {
+    val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+    val uri = Uri.parse(url)
+    val request = DownloadManager.Request(uri)
+    request.setTitle(uri.path?.getFileName() ?: "boost_file")
+    request.setDescription("boost360 File")
+    request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
+    downloader.enqueue(request)
+    Toast.makeText(this, "Invoice downloading.. ", Toast.LENGTH_SHORT).show()
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
 }

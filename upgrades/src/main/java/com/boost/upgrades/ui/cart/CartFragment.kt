@@ -322,7 +322,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         prefs.storeMonthsValidity(totalValidityDays)
         months_validity_edit_inc.setOnClickListener {
             if (!bundles_in_cart) {
-                if (default_validity_months < 12){
+//                if (default_validity_months < 12){
                     default_validity_months++
                 months_validity.text = default_validity_months.toString() + " months"
                 totalValidityDays = 30 * default_validity_months
@@ -331,7 +331,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 totalCalculation()
 
                 Toasty.success(requireContext(), "Validity increased by 1 month.", Toast.LENGTH_SHORT, true).show()
-            }
+//            }
             }
         }
 
@@ -1020,10 +1020,12 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 }
                 totalCalculation()
 
-                var event_attributes: HashMap<String, Double> = HashMap()
+//                var event_attributes: HashMap<String, Double> = HashMap()
+                var event_attributes: HashMap<String, Any> = HashMap()
                 event_attributes.put("total amount", grandTotal)
                 event_attributes.put("cart size", it.size.toDouble())
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
+//                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
+                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", "ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
 
             } else {
                 WebEngageController.trackEvent("ADDONS_MARKETPLACE Empty_Cart Loaded", "ADDONS_MARKETPLACE Empty_Cart Loaded", "")

@@ -20,6 +20,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.history_details_fragment.*
 import java.lang.Long
 import java.text.NumberFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -63,6 +64,23 @@ class HistoryDetailsFragment : BaseFragment() {
         }else{
             layout1_order_id.setText("####")
         }
+        val inputDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val inputTime = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val outputDate = SimpleDateFormat("dd-MMM-yyyy")
+        val outputTime = SimpleDateFormat("hh:mm a")
+
+        /*var date: Date? = null
+        var time: Date? = null
+        try {
+            date = inputDate.parse(data.CreatedOn)
+            time = inputTime.parse(data.CreatedOn)
+
+            layout1_date.setText(outputDate.format(date))
+            layout1_time.setText(outputTime.format(time))
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }*/
+
         val dataString = data.CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
         val dateFormat = SimpleDateFormat("dd-MMM-yyyy")

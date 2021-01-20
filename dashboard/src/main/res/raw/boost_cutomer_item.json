@@ -4,7 +4,7 @@
       "type": "DOC",
       "action_item": [
         {
-          "title": "In-clinic Appointments",
+          "title": "In-clinic appointments",
           "type": "in_clinic_appointments",
           "isLock": false,
           "premiumCode": ""
@@ -22,13 +22,13 @@
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Patient messages",
+          "title": "Patient enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "Newsletter Subscribers",
+          "title": "Newsletter subscribers",
           "type": "newsletter_subscribers",
           "isLock": false,
           "premiumCode": ""
@@ -39,7 +39,7 @@
       "type": "HOS",
       "action_item": [
         {
-          "title": "In-clinic Appointments",
+          "title": "In-clinic appointments",
           "type": "in_clinic_appointments",
           "isLock": false,
           "premiumCode": ""
@@ -57,13 +57,13 @@
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Patient messages",
+          "title": "Patient enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "Newsletter Subscribers",
+          "title": "Newsletter subscribers",
           "type": "newsletter_subscribers",
           "isLock": false,
           "premiumCode": ""
@@ -74,7 +74,7 @@
       "type": "RTL",
       "action_item": [
         {
-          "title": "Customer Orders",
+          "title": "Customer orders",
           "type": "customer_orders",
           "isLock": false,
           "premiumCode": ""
@@ -86,13 +86,13 @@
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Customer messages",
+          "title": "Customer enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "Newsletter Subscribers",
+          "title": "Newsletter subscribers",
           "type": "newsletter_subscribers",
           "isLock": false,
           "premiumCode": ""
@@ -103,25 +103,25 @@
       "type": "EDU",
       "action_item": [
         {
-          "title": "Admission Requests",
+          "title": "Admission requests",
           "type": "customer_orders",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "Customer calls",
+          "title": "Student calls",
           "type": "patient_customer_calls",
           "isLock": false,
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Customer messages",
+          "title": "Student enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "Newsletter Subscribers",
+          "title": "Newsletter subscribers",
           "type": "newsletter_subscribers",
           "isLock": false,
           "premiumCode": ""
@@ -132,7 +132,7 @@
       "type": "HOT",
       "action_item": [
         {
-          "title": "Room Bookings",
+          "title": "Room bookings",
           "type": "customer_orders",
           "isLock": false,
           "premiumCode": ""
@@ -144,13 +144,13 @@
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Customer messages",
+          "title": "Customer enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "Newsletter Subscribers",
+          "title": "Newsletter subscribers",
           "type": "newsletter_subscribers",
           "isLock": false,
           "premiumCode": ""
@@ -161,7 +161,7 @@
       "type": "MFG",
       "action_item": [
         {
-          "title": "Customer Orders",
+          "title": "Customer orders",
           "type": "customer_orders",
           "isLock": false,
           "premiumCode": ""
@@ -173,13 +173,13 @@
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Customer messages",
+          "title": "Customer enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "Newsletter Subscribers",
+          "title": "Newsletter subscribers",
           "type": "newsletter_subscribers",
           "isLock": false,
           "premiumCode": ""
@@ -190,7 +190,7 @@
       "type": "CAF",
       "action_item": [
         {
-          "title": "Customer Orders",
+          "title": "Customer orders",
           "type": "customer_orders",
           "isLock": false,
           "premiumCode": ""
@@ -202,13 +202,13 @@
           "premiumCode": "CALLTRACKER"
         },
         {
-          "title": "Customer messages",
+          "title": "Customer enquiries",
           "type": "patient_customer_messages",
           "isLock": false,
           "premiumCode": ""
         },
         {
-          "title": "Newsletter Subscribers",
+          "title": "Newsletter subscribers",
           "type": "newsletter_subscribers",
           "isLock": false,
           "premiumCode": ""
@@ -237,7 +237,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Newsletter Subscribers",
+          "title": "Newsletter subscribers",
           "type": "newsletter_subscribers",
           "isLock": false,
           "premiumCode": ""
@@ -266,7 +266,7 @@
           "premiumCode": ""
         },
         {
-          "title": "Newsletter Subscribers",
+          "title": "Newsletter subscribers",
           "type": "newsletter_subscribers",
           "isLock": false,
           "premiumCode": ""

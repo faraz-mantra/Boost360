@@ -92,6 +92,7 @@ const val deeplink_book_table = "book_table"
 const val deeplink_my_add_ons = "my_add_ons"
 const val deeplink_recommended_add_ons = "recommended_add_ons"
 const val deeplink_item_on_market_place = "ITEM_ONS_MARKETPLACE"
+const val deeplink_compare_package = "compare_package_selection"
 
 const val visit_to_new_website = "Woohoo! We have a new website. Visit it at"
 const val tag_for_partners = ".nowfloats.com"
@@ -125,7 +126,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(addProduct)) {
           baseActivity.startAddServiceProduct(session)
         } else if (url.contains(addCustomPage)) {
-          baseActivity.startCreateCustomPage(session, true)
+          baseActivity.startCustomPage(session, true)
         } else if (url.contains(myorders)) {
           baseActivity.startOrderAptConsultList(session, isOrder = true)
         } else if (url.contains(myorderdetail)) {
@@ -204,8 +205,10 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_uniqueVisitor)) {
           baseActivity.startAnalytics(session, VISITORS_TABLE)
         } else if (url.contains(addon_marketplace) || url.contains(deeplink_add_ons_marketplace)) {
+          baseActivity.delayProgressShow()
           baseActivity.initiateAddonMarketplace(session, false, "", "")
         } else if (url.contains(deeplink_cart_fragment)) {
+          baseActivity.delayProgressShow()
           baseActivity.initiateAddonMarketplace(session, true, "", "")
         } else if (url.contains(deeplink_manage_content)) {
           baseActivity.startManageContentActivity(session)
@@ -222,7 +225,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_service_catalogue)) {
           baseActivity.startListServiceProduct(session)
         } else if (url.contains(deeplink_all_custom_pages)) {
-          //pending
+          baseActivity.startCustomPage(session, false)
         } else if (url.contains(deeplink_analytics_website_visits)) {
           baseActivity.startSiteViewAnalytic(session, "TOTAL")
         } else if (url.contains(deeplink_analytics_website_visitors)) {
@@ -236,11 +239,16 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_book_table)) {
           baseActivity.startBookTable(session)
         } else if (url.contains(deeplink_my_add_ons)) {
+          baseActivity.delayProgressShow()
           baseActivity.initiateAddonMarketplace(session, false, "myAddOns", "")
         } else if (url.contains(deeplink_recommended_add_ons)) {
+          baseActivity.delayProgressShow()
           baseActivity.initiateAddonMarketplace(session, false, "recommendedAddOns", "")
         } else if (buyItemKey.isNotEmpty() && url.contains(deeplink_item_on_market_place)) {
+          baseActivity.delayProgressShow()
           baseActivity.initiateAddonMarketplace(session, false, "", buyItemKey)
+        }else if (url.contains(deeplink_compare_package)) {
+          baseActivity.initiateAddonMarketplace(session, false, "comparePackageSelection", "")
         }
       }
     } catch (e: Exception) {

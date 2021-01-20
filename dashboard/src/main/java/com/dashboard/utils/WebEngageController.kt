@@ -1,7 +1,7 @@
 package com.dashboard.utils
 
 import com.appsflyer.AppsFlyerLib
-import com.framework.analytics.FirebaseAnalyticsUtils
+import com.framework.analytics.FirebaseAnalyticsUtilsHelper
 import com.webengage.sdk.android.User
 import com.webengage.sdk.android.WebEngage
 import java.util.*
@@ -24,25 +24,25 @@ object WebEngageController {
         weUser.setEmail(email)
 
         //Firebase Analytics User Property.
-        FirebaseAnalyticsUtils.setUserProperty("emailId", email)
+        FirebaseAnalyticsUtilsHelper.setUserProperty("emailId", email)
       }
       if (!mobile.isNullOrEmpty()) {
         weUser.setPhoneNumber(mobile)
 
         //Firebase Analytics User Property.
-        FirebaseAnalyticsUtils.setUserProperty("mobile", mobile)
+        FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", mobile)
       }
       if (!name.isNullOrEmpty()) {
         weUser.setFirstName(name)
 
         //Firebase Analytics User Property.
-        FirebaseAnalyticsUtils.setUserProperty("name", name)
+        FirebaseAnalyticsUtilsHelper.setUserProperty("name", name)
       }
       if (!company.isNullOrEmpty()) {
         weUser.setCompany(company)
 
         //Firebase Analytics User Property.
-        FirebaseAnalyticsUtils.setUserProperty("company", company)
+        FirebaseAnalyticsUtilsHelper.setUserProperty("company", company)
       }
     }
   }
@@ -78,7 +78,7 @@ object WebEngageController {
       weAnalytics.track(event_name, trackEvent)
 
       //Firebase Analytics Event...
-      FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, event_value?:"")
+      FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value?:"")
 
       //AppsFlyerEvent...
       AppsFlyerLib.getInstance().logEvent(weAnalytics.activity.get()?.applicationContext, event_name, trackEvent);
@@ -91,7 +91,7 @@ object WebEngageController {
     try {
       weUser.logout()
       //Reset Firebase Analytics User Session Event.
-      FirebaseAnalyticsUtils.resetIdentifyUser()
+      FirebaseAnalyticsUtilsHelper.resetIdentifyUser()
       //End AppsFlyer Analytics User Session Event.
       AppsFlyerLib.getInstance().setCustomerUserId(null)
     } catch (e: Exception) {

@@ -90,6 +90,7 @@
               android:layout_weight="1"
               android:ellipsize="end"
               android:gravity="center"
+              android:textAlignment="gravity"
               android:includeFontPadding="false"
               android:maxLines="2"
               android:textColor="@color/blue_light"
@@ -99,22 +100,26 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/number"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_2"
               android:ellipsize="end"
               android:maxLines="1"
+              android:gravity="center"
+              android:textAlignment="gravity"
               android:textColor="@color/black_light"
               app:textType="CAPTION"
               tools:text="0801234567890" />
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/email"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_4"
               android:ellipsize="end"
               android:maxLines="1"
+              android:gravity="center"
+              android:textAlignment="gravity"
               android:textColor="@color/black_light"
               app:autoSizeMaxTextSize="12sp"
               app:autoSizeMinTextSize="6sp"
@@ -124,11 +129,13 @@
 
             <com.framework.views.customViews.CustomTextView
               android:id="@+id/website"
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_4"
               android:ellipsize="end"
               android:maxLines="1"
+              android:gravity="center"
+              android:textAlignment="gravity"
               android:textColor="@color/black_light"
               app:autoSizeMaxTextSize="11sp"
               app:autoSizeMinTextSize="6sp"

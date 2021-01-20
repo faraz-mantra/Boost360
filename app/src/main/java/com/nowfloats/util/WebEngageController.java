@@ -3,7 +3,7 @@ package com.nowfloats.util;
 import android.text.TextUtils;
 
 import com.appsflyer.AppsFlyerLib;
-import com.framework.analytics.FirebaseAnalyticsUtils;
+import com.framework.analytics.FirebaseAnalyticsUtilsHelper;
 import com.nowfloats.Login.UserSessionManager;
 import com.webengage.sdk.android.Analytics;
 import com.webengage.sdk.android.User;
@@ -25,7 +25,7 @@ public class WebEngageController {
         weAnalytics.track(event_name, trackEvent);
 
         //Firebase Analytics Event...
-        FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, TextUtils.isEmpty(event_value) ? "null" : event_value);
+        FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, TextUtils.isEmpty(event_value) ? "null" : event_value);
 
         //AppsFlyerEvent...
         try {
@@ -40,7 +40,7 @@ public class WebEngageController {
         weUser.login(profileId);
 
         //Firebase Analytics User Session Event.
-        FirebaseAnalyticsUtils.identifyUser(profileId);
+        FirebaseAnalyticsUtilsHelper.identifyUser(profileId);
 
         //AppsFlyer Analytics User Session Event.
         AppsFlyerLib.getInstance().logSession(weAnalytics.getActivity().get().getApplicationContext());
@@ -58,21 +58,21 @@ public class WebEngageController {
                     weUser.setEmail(email);
 
                     //Firebase Analytics User Property.
-                    FirebaseAnalyticsUtils.setUserProperty("emailId", email);
+                    FirebaseAnalyticsUtilsHelper.setUserProperty("emailId", email);
                 }
 
                 if (name != null && name.length() > 0) {
                     weUser.setFirstName(name);
 
                     //Firebase Analytics User Property.
-                    FirebaseAnalyticsUtils.setUserProperty("name", name);
+                    FirebaseAnalyticsUtilsHelper.setUserProperty("name", name);
                 }
 
                 if (mobile != null && mobile.length() > 0) {
                     weUser.setPhoneNumber(mobile);
 
                     //Firebase Analytics User Property.
-                    FirebaseAnalyticsUtils.setUserProperty("mobile", mobile);
+                    FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", mobile);
                 }
             }
         } catch (Exception e) {
@@ -92,10 +92,10 @@ public class WebEngageController {
             }
 
             //Firebase Analytics User Property.
-            FirebaseAnalyticsUtils.setUserProperty("emailId", session.getUserProfileEmail());
-            FirebaseAnalyticsUtils.setUserProperty("name", session.getUserProfileName());
-            FirebaseAnalyticsUtils.setUserProperty("mobile", session.getUserPrimaryMobile());
-            FirebaseAnalyticsUtils.setUserProperty("Company", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+            FirebaseAnalyticsUtilsHelper.setUserProperty("emailId", session.getUserProfileEmail());
+            FirebaseAnalyticsUtilsHelper.setUserProperty("name", session.getUserProfileName());
+            FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", session.getUserPrimaryMobile());
+            FirebaseAnalyticsUtilsHelper.setUserProperty("Company", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
 
             //AppsFlyer Analytics User Property.
             AppsFlyerLib.getInstance().setUserEmails(session.getUserProfileEmail());
@@ -117,7 +117,7 @@ public class WebEngageController {
             }
 
             //Firebase Analytics User Property.
-            FirebaseAnalyticsUtils.setUserProperty("fpTag", fpTag);
+            FirebaseAnalyticsUtilsHelper.setUserProperty("fpTag", fpTag);
 
             //AppsFlyer User Property
             HashMap<String, Object> params = new HashMap<>();
@@ -133,7 +133,7 @@ public class WebEngageController {
             weUser.logout();
 
         //Reset Firebase Analytics User Session Event.
-        FirebaseAnalyticsUtils.resetIdentifyUser();
+        FirebaseAnalyticsUtilsHelper.resetIdentifyUser();
 
         //End AppsFlyer Analytics User Session Event.
         AppsFlyerLib.getInstance().setCustomerUserId(null);

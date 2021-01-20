@@ -119,15 +119,10 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     setOnClickListener(binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation, binding?.vwPaymentConfig,
             binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
     binding?.toggleProduct?.isOn = false
+    binding?.payProductView?.visibility = View.GONE
     binding?.toggleProduct?.setOnToggledListener { _, isOn ->
-      when (isOn){
-        true -> binding?.payProductView?.visibility = View.VISIBLE
-        false -> binding?.payProductView?.visibility = View.GONE
-      }
-//      binding?.payProductView?.visibility = when {
-//          isOn -> View.GONE
-//          else -> View.VISIBLE
-//      }
+      binding?.payProductView?.visibility = if (isOn) View.VISIBLE else View.GONE
+      binding?.freeProductView?.visibility = if (isOn) View.GONE else View.VISIBLE
     }
     listenerEditText()
   }
@@ -225,36 +220,44 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     binding?.tvProductName?.setText(product?.Name)
     binding?.tvDesc?.setText(product?.Description)
     binding?.edtProductCategory?.setText(product?.category)
-    if (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) {
-      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-      binding?.bankAccountName?.visible()
-      binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
-      binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-      binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
-    } else if (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value) {
-      binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
-      binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
-      binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
-      binding?.bankAccountView?.gone()
-      binding?.externalUrlView?.visible()
-    } else {
-      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-      binding?.bankAccountName?.gone()
-      binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
-      binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
+    when {
+        product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty() || !bankAccountDetail?.accountNumber.isNullOrEmpty() -> {
+          binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
+          binding?.bankAccountName?.visible()
+          binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
+          binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
+          binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
+        }
+        product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value -> {
+          binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
+          binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
+          binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
+          binding?.bankAccountView?.gone()
+          binding?.externalUrlView?.visible()
+        }
+        else -> {
+          binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
+          binding?.bankAccountName?.gone()
+          binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
+          binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
+        }
     }
-    if (product?.Price ?: 0.0 <= 0.0) {
-      binding?.toggleProduct?.isOn = false
-      binding?.payProductView?.gone()
-      binding?.freeProductView?.visible()
+    when {
+        product?.Price ?: 0.0 <= 0.0 -> {
+          binding?.toggleProduct?.isOn = false
+          binding?.payProductView?.gone()
+          binding?.freeProductView?.visible()
+        }
     }
     binding?.amountEdt?.setText("${product?.Price ?: 0}")
     binding?.discountEdt?.setText("${product?.DiscountAmount ?: 0.0}")
-    if (product?.ImageUri.isNullOrEmpty().not()) {
-      binding?.imageAddBtn?.gone()
-      binding?.clearImage?.visible()
-      binding?.productImageView?.visible()
-      binding?.productImageView?.let { activity?.glideLoad(it, product?.ImageUri!!, R.drawable.placeholder_image) }
+    when {
+        product?.ImageUri.isNullOrEmpty().not() -> {
+          binding?.imageAddBtn?.gone()
+          binding?.clearImage?.visible()
+          binding?.productImageView?.visible()
+          binding?.productImageView?.let { activity?.glideLoad(it, product?.ImageUri!!, R.drawable.placeholder_image) }
+        }
     }
   }
 
@@ -623,8 +626,18 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
           binding?.bankAccountName?.visible()
           binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
-          binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-          binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
+          when {
+            bankAccountDetail?.accountNumber.isNullOrBlank() || bankAccountDetail?.accountName.isNullOrBlank() -> {
+              binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
+              binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
+            }
+            else -> {
+              binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
+              binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
+            }
+          }
+
+
         }
         Product.PaymentType.UNIQUE_PAYMENT_URL.value -> {
           binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
@@ -641,7 +654,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     }
     dialog.onListenerChange = { goAddBankView() }
     if (((product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) ||
-            (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)).not()) {
+                    (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)).not()) {
       product?.paymentType = ""
     }
     dialog.setDataPaymentGateway(bankAccountDetail, product?.paymentType)
@@ -655,7 +668,10 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
     bundle.putString(IntentConstant.FP_ID.name, fpId)
     bundle.putBoolean(IntentConstant.IS_SERVICE_CREATION.name, true)
-    val fragment = if (bankAccountDetail != null) FragmentType.BANK_ACCOUNT_DETAILS else FragmentType.ADD_BANK_ACCOUNT_START
+    val fragment = when {
+      bankAccountDetail != null && bankAccountDetail?.accountNumber.isNullOrEmpty().not() && bankAccountDetail?.iFSC.isNullOrEmpty().not() -> FragmentType.BANK_ACCOUNT_DETAILS
+      else -> FragmentType.ADD_BANK_ACCOUNT_START
+    }
     startFragmentAccountActivity(fragment, bundle, isResult = true, requestCode = 202)
   }
 
