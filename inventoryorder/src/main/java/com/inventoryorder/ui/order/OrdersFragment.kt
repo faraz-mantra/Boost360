@@ -70,20 +70,18 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
   override fun onCreateView() {
     super.onCreateView()
     fpTag?.let { WebEngageController.trackEvent("Clicked on Orders", "ORDERS", it) }
-    setOnClickListener(binding?.btnAdd)
+//    setOnClickListener(binding?.btnAdd)
     apiSellerSummary()
     layoutManager = LinearLayoutManager(baseActivity)
     layoutManager?.let { scrollPagingListener(it) }
-    setOnClickListener(binding?.btnAdd)
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.btnAdd -> {
-//                showLongToast("Coming soon...")
-        startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, Bundle())
-      }
+//      binding?.btnAdd -> {
+//        startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, Bundle())
+//      }
     }
   }
 
@@ -91,8 +89,8 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
     binding?.orderRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
       override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
-        if (dy > 0 && binding?.btnAdd?.visibility === View.VISIBLE) binding?.btnAdd?.hide()
-        else if (dy < 0 && binding?.btnAdd?.visibility !== View.VISIBLE) binding?.btnAdd?.show()
+//        if (dy > 0 && binding?.btnAdd?.visibility === View.VISIBLE) binding?.btnAdd?.hide()
+//        else if (dy < 0 && binding?.btnAdd?.visibility !== View.VISIBLE) binding?.btnAdd?.show()
       }
 
       override fun loadMoreItems() {

@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -19,10 +18,8 @@ import com.framework.extensions.visible
 import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
-import com.framework.views.customViews.CustomTextView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
-import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentOrderDetailBinding
 import com.inventoryorder.model.OrderConfirmStatus
@@ -36,7 +33,6 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
-import com.inventoryorder.ui.startFragmentOrderActivity
 import java.text.DecimalFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -140,10 +136,10 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-    val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
-    item.actionView.findViewById<CustomTextView>(R.id.tvInvoice).setOnClickListener {
-      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
-    }
+//    val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
+//    item.actionView.findViewById<CustomTextView>(R.id.tvInvoice).setOnClickListener {
+//      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
+//    }
   }
 
   fun getBundleData(): Bundle? {
