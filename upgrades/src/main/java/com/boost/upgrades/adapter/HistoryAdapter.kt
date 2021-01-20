@@ -60,11 +60,11 @@ class HistoryAdapter(itemList: List<Result>?, val listener: HistoryFragmentListe
         }
         holder.itemLists.setText(itemLists)
 
-/*        val dataString = list.get(position).CreatedOn
+        val dataString = list.get(position).CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
         val dateFormat = SimpleDateFormat("dd-MMM-yyyy (HH:mm)")
-        holder.itemDate.setText(dateFormat.format(date))*/
-        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        holder.itemDate.setText(dateFormat.format(date))
+        /*val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         val output = SimpleDateFormat("dd-MMM-yyyy (hh:mm a)")
 
         var d: Date? = null
@@ -73,7 +73,7 @@ class HistoryAdapter(itemList: List<Result>?, val listener: HistoryFragmentListe
             holder.itemDate.setText(output.format(d))
         } catch (e: ParseException) {
             e.printStackTrace()
-        }
+        }*/
 
 
         holder.amount.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(list.get(position).paidAmount))
