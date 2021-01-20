@@ -182,8 +182,9 @@ fun AppCompatActivity.startAnalytics(session: UserSessionManager?, table_name: I
   }
 }
 
-fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOpenCardFragment: Boolean, screenType: String, buyItemKey: String?) {
+fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOpenCardFragment: Boolean, screenType: String, buyItemKey: String?,isLoadingShow:Boolean=true) {
   try {
+    if (isLoadingShow) delayProgressShow()
     WebEngageController.trackEvent("Addon Marketplace Page", "startview", session.fpTag);
     val intent = Intent(this, Class.forName("com.boost.upgrades.UpgradeActivity"))
     intent.putExtra("expCode", session.fP_AppExperienceCode)
@@ -211,6 +212,10 @@ fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOp
   } catch (e: Exception) {
     e.printStackTrace()
   }
+}
+
+fun AppCompatActivity.delayProgressShow() {
+  ProgressAsyncTask(this).execute();
 }
 
 fun AppCompatActivity.startSettingActivity(session: UserSessionManager) {
@@ -352,7 +357,7 @@ fun AppCompatActivity.startProductGallery(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startTestimonial(session: UserSessionManager?, isAdd: Boolean=false) {
+fun AppCompatActivity.startTestimonial(session: UserSessionManager?, isAdd: Boolean = false) {
   try {
     val text = if (isAdd) "Add Testimonial Page" else "Testimonial Page"
     WebEngageController.trackEvent(text, "startview", session?.fpTag);
@@ -365,7 +370,7 @@ fun AppCompatActivity.startTestimonial(session: UserSessionManager?, isAdd: Bool
   }
 }
 
-fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boolean=false) {
+fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boolean = false) {
   try {
     val text = if (isAdd) "Add Custom Page" else "Custom Page"
     WebEngageController.trackEvent(text, "startview", session?.fpTag)
@@ -786,7 +791,7 @@ fun AppCompatActivity.startYouTube(session: UserSessionManager?, url: String) {
   }
 }
 
-fun AppCompatActivity.startDownloadUri(url: String) {
+fun AppCompatActivity.startDownloadUri(url: String, isToast: Boolean = false) {
   try {
     val downloader = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
     val uri = Uri.parse(url)
@@ -797,7 +802,7 @@ fun AppCompatActivity.startDownloadUri(url: String) {
     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
     request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "boost360")
     downloader.enqueue(request)
-    Toast.makeText(this, "File downloading.. ", Toast.LENGTH_SHORT).show()
+    if (isToast) Toast.makeText(this, "File downloading.. ", Toast.LENGTH_SHORT).show()
   } catch (e: Exception) {
     e.printStackTrace()
   }

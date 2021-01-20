@@ -18,7 +18,7 @@
     tools:layout="@layout/fragment_website" />
 
   <fragment
-    android:id="@+id/navigation_customer"
+    android:id="@+id/navigation_enquiries"
     android:name="com.dashboard.controller.ui.enquiries.EnquiriesFragment"
     android:label="@string/my_enquiry"
     tools:layout="@layout/fragment_patients_customer" />
