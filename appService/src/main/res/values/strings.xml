@@ -199,9 +199,64 @@
     <string name="add_change_warehouse"><u>ADD/CHANGE WAREHOUSE</u></string>
     <string name="service_delivery_configuration">Service Delivery Configuration*</string>
     <string name="u_add_session_u"><u>Add Session</u></string>
-    <array name="stock_availbility">
+    <string name="business_hours_timing"><b>Note:</b> Since the business hours are from 9:30am to 7:30 pm, the appointments can be booked within this duration</string>
+  <string name="from">From</string>
+  <string name="to">to</string>
+  <string name="apply_same_on_all_days">Apply same on all days</string>
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
 
   </array>
+  <string-array name="business_hours_arrays">
+    <item>12:00AM</item>
+    <item>12:30AM</item>
+    <item>01:00AM</item>
+    <item>01:30AM</item>
+    <item>02:00AM</item>
+    <item>02:30AM</item>
+    <item>03:00AM</item>
+    <item>03:30AM</item>
+    <item>04:00AM</item>
+    <item>04:30AM</item>
+    <item>05:00AM</item>
+    <item>05:30AM</item>
+    <item>06:00AM</item>
+    <item>06:30AM</item>
+    <item>07:00AM</item>
+    <item>07:30AM</item>
+    <item>08:00AM</item>
+    <item>08:30AM</item>
+    <item>09:00AM</item>
+    <item>09:30AM</item>
+    <item>10:00AM</item>
+    <item>10:30AM</item>
+    <item>11:00AM</item>
+    <item>11:30AM</item>
+    <item>12:00PM</item>
+    <item>12:30PM</item>
+    <item>01:00PM</item>
+    <item>01:30PM</item>
+    <item>02:00PM</item>
+    <item>02:30PM</item>
+    <item>03:00PM</item>
+    <item>03:30PM</item>
+    <item>04:00PM</item>
+    <item>04:30PM</item>
+    <item>05:00PM</item>
+    <item>05:30PM</item>
+    <item>06:00PM</item>
+    <item>06:30PM</item>
+    <item>07:00PM</item>
+    <item>07:30PM</item>
+    <item>08:00PM</item>
+    <item>08:30PM</item>
+    <item>09:00PM</item>
+    <item>09:30PM</item>
+    <item>10:00PM</item>
+    <item>10:30PM</item>
+    <item>11:00PM</item>
+    <item>11:30PM</item>
+  </string-array>
+
 </resources>

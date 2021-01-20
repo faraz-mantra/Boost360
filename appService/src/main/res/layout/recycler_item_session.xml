@@ -37,6 +37,7 @@
             <com.appservice.views.toggle.widget.LabeledSwitch
                 android:id="@+id/toggle_on_off"
                 android:layout_width="@dimen/size_54"
+                app:on="false"
                 android:layout_height="@dimen/size_24"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginEnd="@dimen/size_8"
@@ -54,7 +55,7 @@
 
         <include
             android:id="@+id/layout_session_create"
-            layout="@layout/layout_staff_session"
+            layout="@layout/layout_timing_session"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ccv_day"
