@@ -35,6 +35,7 @@ import com.boost.upgrades.data.renewalcart.RenewalResult
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
 import com.boost.upgrades.ui.autorenew.AutoRenewSubsFragment
+import com.boost.upgrades.ui.checkoutkyc.CheckoutKycFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.payment.PaymentFragment
 import com.boost.upgrades.ui.popup.CouponPopUpFragment
@@ -43,6 +44,7 @@ import com.boost.upgrades.ui.popup.RenewalPopUpFragment
 import com.boost.upgrades.ui.popup.TANPopUpFragment
 import com.boost.upgrades.ui.splash.SplashFragment
 import com.boost.upgrades.utils.*
+import com.boost.upgrades.utils.Constants.Companion.CHECKOUT_KYC_FRAGMENT
 import com.boost.upgrades.utils.Constants.Companion.COUPON_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.GSTIN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.RENEW_POPUP_FRAGEMENT
@@ -113,6 +115,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
     lateinit var prefs: SharedPrefs
     var totalValidityDays = 0
+    val checkoutKycFragment = CheckoutKycFragment()
 
     companion object {
         fun newInstance() = CartFragment()
@@ -154,7 +157,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
         Constants.COMPARE_BACK_VALUE = 1
         prefs.storeCompareState(1)
-        showpopup()
+//        showpopup()
         initializePackageRecycler()
         initializeAddonsRecycler()
         initializeRenewalRecycler()
@@ -190,10 +193,24 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         }
 
         cart_continue_submit.setOnClickListener {
-            renewPopUpFragment.show(
+
+            if (prefs.getInitialLoadMarketPlace()) {
+
+                checkoutKycFragment.show(
+                        (activity as UpgradeActivity).supportFragmentManager,
+                        CHECKOUT_KYC_FRAGMENT
+                )
+            }else{
+                            renewPopUpFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     RENEW_POPUP_FRAGEMENT
             )
+            }
+
+/*            renewPopUpFragment.show(
+                    (activity as UpgradeActivity).supportFragmentManager,
+                    RENEW_POPUP_FRAGEMENT
+            )*/
 
             /*viewModel.getRenewValue().observeOnce(this, Observer {
                 if (it != null) {
