@@ -15,13 +15,15 @@ import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.pref.*
+import com.framework.utils.convertStringToList
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.floatMessage.MessageModel
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.onboarding.nowfloats.constant.FragmentType
-import com.onboarding.nowfloats.ui.updateChannel.startFragmentActivity
+import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
+import java.util.ArrayList
 
 
 const val VISITS_TYPE_STRING = "visits_type_string"
@@ -52,7 +54,7 @@ fun AppCompatActivity.startDigitalChannel(session: UserSessionManager) {
     bundle.putString(Key_Preferences.WEBSITE_URL, session.getDomainName(false))
     bundle.putString(Key_Preferences.PRIMARY_NUMBER, session.userPrimaryMobile)
     bundle.putString(Key_Preferences.PRIMARY_EMAIL, session.fPEmail)
-    startFragmentActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
+    startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()
   }
@@ -193,7 +195,7 @@ fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOp
     intent.putExtra("isOpenCardFragment", isOpenCardFragment)
     intent.putExtra("screenType", screenType)
     intent.putExtra("accountType", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
-    intent.putStringArrayListExtra("userPurchsedWidgets", StoreWidgets)
+    intent.putStringArrayListExtra("userPurchsedWidgets", session.getStoreWidgets() as ArrayList<String>)
     if (session.fPEmail != null) {
       intent.putExtra("email", session.fPEmail)
     } else {

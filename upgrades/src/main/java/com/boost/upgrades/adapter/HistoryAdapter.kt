@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boost.upgrades.R
 import com.boost.upgrades.data.api_model.GetPurchaseOrder.Result
 import com.boost.upgrades.interfaces.HistoryFragmentListener
-import com.google.gson.Gson
 import java.lang.Long
 import java.text.NumberFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -43,7 +43,7 @@ class HistoryAdapter(itemList: List<Result>?, val listener: HistoryFragmentListe
 
         val itemLists = StringBuilder()
         if (list.get(position).orderId != null) {
-            holder.orderId.setText("Order id #"+list.get(position).orderId!!.replace("order_", ""))
+            holder.orderId.setText("Order id #" + list.get(position).orderId!!.replace("order_", ""))
         }
         if (list.get(position).purchasedPackageDetails.WidgetPacks.size > 1) {
             for (item in 0 until list.get(position).purchasedPackageDetails.WidgetPacks.size) {
@@ -52,7 +52,7 @@ class HistoryAdapter(itemList: List<Result>?, val listener: HistoryFragmentListe
                     itemLists.append(", ")
                 }
             }
-            holder.itemCount.setText("+"+(list.size-1)+" more")
+            holder.itemCount.setText("+" + (list.size - 1) + " more")
             holder.itemCount.visibility = View.VISIBLE
         } else {
             itemLists.append(list.get(position).purchasedPackageDetails.WidgetPacks.get(0).Name)
@@ -60,11 +60,23 @@ class HistoryAdapter(itemList: List<Result>?, val listener: HistoryFragmentListe
         }
         holder.itemLists.setText(itemLists)
 
-        val dataString = list.get(position).CreatedOn
+/*        val dataString = list.get(position).CreatedOn
         val date = Date(Long.parseLong(dataString.substring(6, dataString.length - 2)))
         val dateFormat = SimpleDateFormat("dd-MMM-yyyy (HH:mm)")
-        holder.itemDate.setText(dateFormat.format(date))
-        holder.amount.setText("₹"+ NumberFormat.getNumberInstance(Locale.ENGLISH).format(list.get(position).paidAmount))
+        holder.itemDate.setText(dateFormat.format(date))*/
+        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val output = SimpleDateFormat("dd-MMM-yyyy (hh:mm a)")
+
+        var d: Date? = null
+        try {
+            d = input.parse(list.get(position).CreatedOn)
+            holder.itemDate.setText(output.format(d))
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+
+        holder.amount.setText("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(list.get(position).paidAmount))
         holder.itemView.setOnClickListener {
             listener.viewHistoryItem(list.get(position))
         }

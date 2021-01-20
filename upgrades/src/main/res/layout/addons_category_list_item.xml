@@ -46,8 +46,10 @@
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:text="Facebook Ads (upto 75 leads)"
-                android:textColor="#2a2a2a"
-                android:textSize="@dimen/_12ssp" />
+                android:textColor="@color/common_text_color"
+                android:textFontWeight="400"
+                android:fontFamily="@font/open_sans"
+                android:textSize="@dimen/txt_15sp" />
 
         </LinearLayout>
 

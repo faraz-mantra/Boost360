@@ -114,6 +114,13 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
             mainLayout.setVisibility(View.GONE);
             secondaryLayout.setVisibility(View.VISIBLE);
         }
+        if (Constants.currentActivePackageId.contains("59ce2ae56431a80b009cb1fa")) {
+            mainLayout.setVisibility(View.VISIBLE);
+            secondaryLayout.setVisibility(View.GONE);
+        } else {
+            mainLayout.setVisibility(View.GONE);
+            secondaryLayout.setVisibility(View.VISIBLE);
+        }
         buyItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

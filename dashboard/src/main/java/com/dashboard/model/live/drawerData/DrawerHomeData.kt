@@ -9,7 +9,6 @@ data class DrawerHomeDataResponse(
     val data: ArrayList<DrawerHomeData>? = null,
 ) : BaseResponse()
 
-
 class DrawerHomeData(
     var title: String? = null,
     var newBtnText: String? = null,
@@ -20,9 +19,8 @@ class DrawerHomeData(
     var navType: String = "",
 ) : BaseResponse(), AppBaseRecyclerViewItem {
 
-  var recyclerViewItemType: Int = RecyclerViewItemType.HOME_DRAWER_VIEW.getLayout()
   override fun getViewType(): Int {
-    return recyclerViewItemType
+    return RecyclerViewItemType.HOME_DRAWER_VIEW.getLayout()
   }
 
   enum class NavType(var icon: Int) {

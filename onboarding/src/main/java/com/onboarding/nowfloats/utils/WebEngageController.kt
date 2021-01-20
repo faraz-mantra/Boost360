@@ -1,7 +1,7 @@
 package com.onboarding.nowfloats.utils
 
 import com.appsflyer.AppsFlyerLib
-import com.framework.analytics.FirebaseAnalyticsUtils
+import com.framework.analytics.FirebaseAnalyticsUtilsHelper
 import com.webengage.sdk.android.User
 import com.webengage.sdk.android.WebEngage
 
@@ -15,7 +15,7 @@ object WebEngageController {
             weUser.login(userId)
 
             //Firebase Analytics User Session Event.
-            FirebaseAnalyticsUtils.identifyUser(userId)
+            FirebaseAnalyticsUtilsHelper.identifyUser(userId)
 
             //AppsFlyer Analytics User Session Event.
             AppsFlyerLib.getInstance().logSession(weAnalytics.activity.get()?.application)
@@ -31,19 +31,19 @@ object WebEngageController {
                 weUser.setEmail(email)
 
                 //Firebase Analytics User Property.
-                FirebaseAnalyticsUtils.setUserProperty("emailId", email)
+                FirebaseAnalyticsUtilsHelper.setUserProperty("emailId", email)
             }
             if (!mobile.isNullOrEmpty()) {
                 weUser.setPhoneNumber(mobile)
 
                 //Firebase Analytics User Property.
-                FirebaseAnalyticsUtils.setUserProperty("mobile", mobile)
+                FirebaseAnalyticsUtilsHelper.setUserProperty("mobile", mobile)
             }
             if (!name.isNullOrEmpty()) {
                 weUser.setFirstName(name)
 
                 //Firebase Analytics User Property.
-                FirebaseAnalyticsUtils.setUserProperty("name", name)
+                FirebaseAnalyticsUtilsHelper.setUserProperty("name", name)
             }
         }
     }
@@ -54,7 +54,7 @@ object WebEngageController {
                 weUser.setAttribute("Category", userCategory)
 
                 //Firebase Analytics User Property.
-                FirebaseAnalyticsUtils.setUserProperty("Category", userCategory)
+                FirebaseAnalyticsUtilsHelper.setUserProperty("Category", userCategory)
 
                 //AppsFlyer User Property
                 val params = HashMap<String, Any>()
@@ -71,7 +71,7 @@ object WebEngageController {
         weUser.logout()
 
         //Reset Firebase Analytics User Session Event.
-        FirebaseAnalyticsUtils.resetIdentifyUser()
+        FirebaseAnalyticsUtilsHelper.resetIdentifyUser()
 
         isUserLogedIn = false
     }
@@ -84,7 +84,7 @@ object WebEngageController {
         weAnalytics.track(event_name, trackEvent)
 
         //Firebase Analytics Event...
-        FirebaseAnalyticsUtils.logDefinedEvent(event_name, event_label, event_value)
+        FirebaseAnalyticsUtilsHelper.logDefinedEvent(event_name, event_label, event_value)
 
         //AppsFlyerEvent...
         try {
@@ -99,7 +99,7 @@ object WebEngageController {
         weUser!!.logout()
 
         //Reset Firebase Analytics User Session Event.
-        FirebaseAnalyticsUtils.resetIdentifyUser()
+        FirebaseAnalyticsUtilsHelper.resetIdentifyUser()
 
         //End AppsFlyer Analytics User Session Event.
         AppsFlyerLib.getInstance().setCustomerUserId(null)

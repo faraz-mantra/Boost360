@@ -142,6 +142,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         shimmer_view_banner.startShimmer()
         shimmer_view_recommended.startShimmer()
         shimmer_view_recomm_addons.startShimmer()
+        shimmer_view_addon_category.startShimmer()
         WebEngageController.trackEvent("ADDONS_MARKETPLACE Loaded", "ADDONS_MARKETPLACE", "")
 //        Glide.with(this).load(R.drawable.back_beau).apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3))).into(back_image)
 
@@ -725,6 +726,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         if(shimmer_view_recomm_addons.isShimmerStarted) {
             shimmer_view_recomm_addons.stopShimmer()
             shimmer_view_recomm_addons.visibility = View.GONE
+        }
+        if(shimmer_view_addon_category.isShimmerStarted) {
+            shimmer_view_addon_category.stopShimmer()
+            shimmer_view_addon_category.visibility = View.GONE
         }
         addonsCategoryAdapter.addupdates(addonsCategoryTypes)
         addons_category_recycler.adapter = addonsCategoryAdapter
