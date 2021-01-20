@@ -784,7 +784,7 @@
               android:background="@drawable/bg_rect_edit_txt"
               android:clickable="true"
               android:drawableEnd="@drawable/ic_arrow_right_grey"
-              android:focusable="true"
+              android:focusable="false"
               android:hint="@string/_0"
               android:editable="false"
               android:padding="@dimen/size_12"

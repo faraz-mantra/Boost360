@@ -190,8 +190,8 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
     val spinnerCod = binding?.spinnerCod?.selectedItem as SpinnerImageModel
     val spinnerOnlinePayment = binding?.spinnerOnlinePayment?.selectedItem as SpinnerImageModel
     val brand = binding?.edtBrand?.text?.toString() ?: ""
-    val keySpecification = binding?.specKey?.text.toString()
-    val valueSpecification = binding?.specValue?.text?.toString()
+    val keySpecification = binding?.specKey?.text?.toString() ?: ""
+    val valueSpecification = binding?.specValue?.text?.toString() ?: ""
 
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
     val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>)
