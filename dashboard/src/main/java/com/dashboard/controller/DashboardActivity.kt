@@ -20,7 +20,7 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseActivity
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.DashboardFragment
-import com.dashboard.controller.ui.dialogWelcome.WelcomeHomeDialog
+import com.dashboard.controller.ui.dialog.WelcomeHomeDialog
 import com.dashboard.databinding.ActivityDashboardBinding
 import com.dashboard.model.live.drawerData.DrawerHomeData
 import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
@@ -64,6 +64,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private var session: UserSessionManager? = null
   private var adapterDrawer: AppBaseRecyclerViewAdapter<DrawerHomeData>? = null
   private var isSecondaryImage = false
+  var isLoadShimmer = true
   private val navHostFragment: NavHostFragment?
     get() {
       return supportFragmentManager.fragments.first() as? NavHostFragment
@@ -236,7 +237,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       2 -> checkWelcomeShowScreen(pos)
       else -> {
         mNavController.navigate(R.id.navigation_dashboard, Bundle(), getNavOptions())
-        toolbarPropertySet(pos)
+        toolbarPropertySet(0)
       }
     }
 
@@ -256,7 +257,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         val dataCustomer = welcomeData?.get(1)
         if (dataCustomer?.welcomeType?.let { getIsShowWelcome(it) } != true) dataCustomer?.let { showWelcomeDialog(it) }
         else {
-          mNavController.navigate(R.id.navigation_customer, Bundle(), getNavOptions())
+          mNavController.navigate(R.id.navigation_enquiries, Bundle(), getNavOptions())
           toolbarPropertySet(pos)
         }
       }
@@ -264,6 +265,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
         val dataAddOns = welcomeData?.get(2)
         if (dataAddOns?.welcomeType?.let { getIsShowWelcome(it) } != true) dataAddOns?.let { showWelcomeDialog(it) }
         else session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+
       }
     }
   }
@@ -281,7 +283,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
           toolbarPropertySet(1)
         }
         WelcomeData.WelcomeType.MANAGE_INTERACTION.name -> {
-          mNavController.navigate(R.id.navigation_customer, Bundle(), getNavOptions())
+          mNavController.navigate(R.id.navigation_enquiries, Bundle(), getNavOptions())
           toolbarPropertySet(2)
         }
       }
@@ -317,9 +319,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     }
   }
 
-
-  private fun getNavOptions(): NavOptions? {
-    return NavOptions.Builder().setLaunchSingleTop(true).build()
+  private fun getNavOptions(): NavOptions {
+    return NavOptions.Builder().setExitAnim(R.anim.slide_out_left).setEnterAnim(R.anim.slide_in_right).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right).setLaunchSingleTop(true).build()
   }
 
   private fun openDashboard() {
@@ -384,7 +385,9 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       DrawerHomeData.NavType.NAV_ORDER_APT_BOOKING -> session?.let { this.startManageInventoryActivity(it) }
       DrawerHomeData.NavType.NAV_NEWS_LETTER_SUB -> this.startSubscriber(session)
       DrawerHomeData.NavType.NAV_BOOST_KEYBOARD -> session?.let { this.startKeyboardActivity(it) }
-      DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let { this.initiateAddonMarketplace(it, false, "", "") }
+      DrawerHomeData.NavType.NAV_ADD_ONS_MARKET -> session?.let {
+        this.initiateAddonMarketplace(it, false, "", "")
+      }
       DrawerHomeData.NavType.NAV_SETTING -> session?.let { this.startSettingActivity(it) }
       DrawerHomeData.NavType.NAV_HELP_SUPPORT -> session?.let { this.startHelpAndSupportActivity(it) }
       DrawerHomeData.NavType.NAV_ABOUT_BOOST -> session?.let { this.startAboutBoostActivity(it) }

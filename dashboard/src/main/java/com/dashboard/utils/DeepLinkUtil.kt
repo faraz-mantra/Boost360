@@ -205,8 +205,10 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_uniqueVisitor)) {
           baseActivity.startAnalytics(session, VISITORS_TABLE)
         } else if (url.contains(addon_marketplace) || url.contains(deeplink_add_ons_marketplace)) {
+          baseActivity.delayProgressShow()
           baseActivity.initiateAddonMarketplace(session, false, "", "")
         } else if (url.contains(deeplink_cart_fragment)) {
+          baseActivity.delayProgressShow()
           baseActivity.initiateAddonMarketplace(session, true, "", "")
         } else if (url.contains(deeplink_manage_content)) {
           baseActivity.startManageContentActivity(session)
@@ -237,10 +239,13 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_book_table)) {
           baseActivity.startBookTable(session)
         } else if (url.contains(deeplink_my_add_ons)) {
+          baseActivity.delayProgressShow()
           baseActivity.initiateAddonMarketplace(session, false, "myAddOns", "")
         } else if (url.contains(deeplink_recommended_add_ons)) {
+          baseActivity.delayProgressShow()
           baseActivity.initiateAddonMarketplace(session, false, "recommendedAddOns", "")
         } else if (buyItemKey.isNotEmpty() && url.contains(deeplink_item_on_market_place)) {
+          baseActivity.delayProgressShow()
           baseActivity.initiateAddonMarketplace(session, false, "", buyItemKey)
         }else if (url.contains(deeplink_compare_package)) {
           baseActivity.initiateAddonMarketplace(session, false, "comparePackageSelection", "")
