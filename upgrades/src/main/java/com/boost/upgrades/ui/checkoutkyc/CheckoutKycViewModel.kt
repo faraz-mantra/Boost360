@@ -1,6 +1,7 @@
 package com.boost.upgrades.ui.checkoutkyc
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -10,9 +11,13 @@ import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerI
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Utils
+import com.framework.base.BaseResponse
+import com.framework.models.toLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.luminaire.apolloar.base_class.BaseViewModel
+import com.onboarding.nowfloats.rest.repositories.CategoryRepository
+import com.onboarding.nowfloats.rest.repositories.CityRepository
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -42,6 +47,10 @@ class CheckoutKycViewModel(application: Application) : BaseViewModel(application
 
     fun getCustomerInfoResult(): LiveData<GetCustomerIDResponse> {
         return updateCustomerInfo
+    }
+
+    fun getCity(context: Context): LiveData<BaseResponse> {
+        return CityRepository.getCities(context).toLiveData()
     }
 
     fun getCustomerInfo(InternalSourceId: String, clientId: String) {

@@ -2,6 +2,7 @@ package com.boost.upgrades.ui.checkoutkyc
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Html
 import android.text.InputFilter
 import android.util.Log
 import android.view.KeyEvent
@@ -22,8 +23,12 @@ import com.boost.upgrades.data.api_model.customerId.get.Result
 import com.boost.upgrades.utils.Utils.isValidGSTIN
 import com.boost.upgrades.utils.Utils.isValidMail
 import com.boost.upgrades.utils.Utils.isValidMobile
+import com.framework.extensions.observeOnce
+import com.onboarding.nowfloats.rest.response.ResponseDataCity
+import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.checkoutkyc_fragment.*
+import kotlinx.android.synthetic.main.home_fragment.*
 import java.io.*
 import java.util.*
 
@@ -58,6 +63,7 @@ class CheckoutKycFragment : DialogFragment() {
 
         loadCustomerInfo()
         initMvvm()
+        getCities()
         business_gst_number.setFilters(business_gst_number.filters + InputFilter.AllCaps())
 
         confirm_btn.setOnClickListener {
@@ -143,15 +149,15 @@ class CheckoutKycFragment : DialogFragment() {
 
     private fun validateAgreement(): Boolean {
         if (business_contact_number.text.isEmpty() || business_email_address.text.isEmpty() || business_city_name.text.isEmpty()
-                /*|| user_contact_number.text.isEmpty()|| user_email_address.text.isEmpty() */ ) {
+        /*|| user_contact_number.text.isEmpty()|| user_email_address.text.isEmpty() */) {
             Toasty.error(requireContext(), "Fields are Empty!!", Toast.LENGTH_LONG).show();
             return false
         }
-        if(!isValidMobile(business_contact_number.text.toString()) /*|| !isValidMobile(user_contact_number.text.toString())*/){
+        if (!isValidMobile(business_contact_number.text.toString()) /*|| !isValidMobile(user_contact_number.text.toString())*/) {
             Toasty.error(requireContext(), "Entered Mobile Number is not valid!!", Toast.LENGTH_LONG).show()
             return false
         }
-        if(!isValidMail(business_email_address.text.toString()) /*|| !isValidMail(user_email_address.text.toString())*/){
+        if (!isValidMail(business_email_address.text.toString()) /*|| !isValidMail(user_email_address.text.toString())*/) {
             Toasty.error(requireContext(), "Entered EmailId is not valid!!", Toast.LENGTH_LONG).show()
             return false
         }
@@ -205,6 +211,14 @@ class CheckoutKycFragment : DialogFragment() {
         viewModel.getCustomerInfo((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
     }
 
+    private fun getCities() {
+        viewModel?.getCity(activity!!)?.observeOnce(this, {
+            val categoryList = (it as? ResponseDataCity)?.data
+            for(cat in categoryList!!){
+                Log.v("getCities", " "+ cat.name)
+            }
 
+        })
+    }
 
 }
