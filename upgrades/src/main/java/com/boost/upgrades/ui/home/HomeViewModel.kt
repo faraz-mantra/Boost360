@@ -1,6 +1,7 @@
 package com.boost.upgrades.ui.home
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,8 +10,11 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
 import com.boost.upgrades.data.model.*
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.utils.Utils
+import com.framework.base.BaseResponse
+import com.framework.models.toLiveData
 import com.google.gson.Gson
 import com.luminaire.apolloar.base_class.BaseViewModel
+import com.onboarding.nowfloats.rest.repositories.CategoryRepository
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -104,6 +108,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         experienceCode = code
         _fpTag = fpTag
 
+    }
+
+    fun getCategories(context: Context): LiveData<BaseResponse> {
+        return CategoryRepository.getCategories(context).toLiveData()
     }
 
     fun loadUpdates(fpid: String, clientId: String) {

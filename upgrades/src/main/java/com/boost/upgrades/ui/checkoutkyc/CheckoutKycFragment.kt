@@ -1,9 +1,9 @@
 package com.boost.upgrades.ui.checkoutkyc
 
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.InputFilter
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-
+import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.customerId.customerInfo.AddressDetails
@@ -20,13 +19,13 @@ import com.boost.upgrades.data.api_model.customerId.customerInfo.BusinessDetails
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.customerInfo.TaxDetails
 import com.boost.upgrades.data.api_model.customerId.get.Result
-import com.boost.upgrades.ui.home.HomeFragment
-import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Utils.isValidGSTIN
 import com.boost.upgrades.utils.Utils.isValidMail
 import com.boost.upgrades.utils.Utils.isValidMobile
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.checkoutkyc_fragment.*
+import java.io.*
+import java.util.*
 
 class CheckoutKycFragment : DialogFragment() {
 
@@ -59,7 +58,6 @@ class CheckoutKycFragment : DialogFragment() {
 
         loadCustomerInfo()
         initMvvm()
-
         business_gst_number.setFilters(business_gst_number.filters + InputFilter.AllCaps())
 
         confirm_btn.setOnClickListener {
@@ -206,5 +204,7 @@ class CheckoutKycFragment : DialogFragment() {
     private fun loadCustomerInfo() {
         viewModel.getCustomerInfo((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
     }
+
+
 
 }
