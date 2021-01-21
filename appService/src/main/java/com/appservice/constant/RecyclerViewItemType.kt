@@ -10,7 +10,10 @@ enum class RecyclerViewItemType {
   GST_DETAILS_VIEW,
   SESSION_ITEM_VIEW,
   CREATE_CATEGORY_ITEM_VIEW,
-  ADDITIONAL_FILE_VIEW;
+  ADDITIONAL_FILE_VIEW,
+  SERVICE_ITEM_VIEW,
+  STAFF_LISTING_VIEW,
+  STAFF_FILTER_VIEW;
 
 
     @LayoutRes
@@ -23,6 +26,9 @@ enum class RecyclerViewItemType {
       ADDITIONAL_FILE_VIEW -> R.layout.item_pdf_file
       SESSION_ITEM_VIEW -> R.layout.recycler_item_session
       CREATE_CATEGORY_ITEM_VIEW -> R.layout.item_create_category
+      SERVICE_ITEM_VIEW -> R.layout.recycler_item_service
+      STAFF_LISTING_VIEW -> R.layout.recycler_item_staff_listing
+      STAFF_FILTER_VIEW -> R.layout.recycler_item_staff_filter
     }
   }
 }
