@@ -156,8 +156,8 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                         }
                     }, 200);
                 } else {
-                    Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, "Please upload an image.");
-//                    uploadDataToServer();
+                    //Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, "Please upload an image.");
+                    uploadDataToServer();
                 }
             }
         });
