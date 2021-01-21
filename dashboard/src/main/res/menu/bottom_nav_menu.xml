@@ -12,7 +12,7 @@
     android:title="@string/website" />
 
   <item
-    android:id="@+id/navigation_customer"
+    android:id="@+id/navigation_enquiries"
     android:icon="@drawable/ic_enquiry_inactive_nav"
     android:title="@string/enquiry" />
 

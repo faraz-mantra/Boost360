@@ -121,7 +121,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
             setAdapterNotify(orderList)
           } else {
             setHasOptionsMenu(false)
-            errorView("No appointment available.")
+            errorView(resources.getString(R.string.no_appointments))
           }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
@@ -132,12 +132,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
           } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
           else {
             setHasOptionsMenu(false)
-            errorView("No appointment available.")
+            errorView(resources.getString(R.string.no_appointments))
           }
         }
       } else {
         setHasOptionsMenu(false)
-        errorView("No appointment available.")
+        errorView(resources.getString(R.string.no_appointments))
       }
     })
   }
