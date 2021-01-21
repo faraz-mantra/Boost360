@@ -16,8 +16,6 @@
       android:id="@+id/nestedScrollView"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:visibility="gone"
-      tools:visibility="visible"
       android:background="@color/white"
       android:fillViewport="true">
 
@@ -277,13 +275,14 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
+<!--              android:drawableEnd="@drawable/ic_summary_alert_d"-->
+<!--              android:drawablePadding="@dimen/size_8"-->
+
               <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_18"
                 android:layout_marginEnd="@dimen/size_18"
-                android:drawableEnd="@drawable/ic_summary_alert_d"
-                android:drawablePadding="@dimen/size_8"
                 android:text="@string/ria_academy"
                 android:textColor="@color/black_4a4a4a"
                 app:fontFamily="@font/semi_bold"
@@ -332,12 +331,13 @@
                   android:layout_marginEnd="@dimen/size_18"
                   android:orientation="horizontal">
 
+<!--                  android:drawableEnd="@drawable/ic_summary_alert_d"-->
+<!--                  android:drawablePadding="@dimen/size_8"-->
+
                   <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:drawableEnd="@drawable/ic_summary_alert_d"
-                    android:drawablePadding="@dimen/size_8"
                     android:includeFontPadding="false"
                     android:text="@string/business_statistics"
                     android:textColor="@color/black_4a4a4a"
@@ -392,14 +392,15 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
+<!--                android:drawableEnd="@drawable/ic_summary_alert_d"-->
+<!--                android:drawablePadding="@dimen/size_8"-->
+
                 <com.framework.views.customViews.CustomTextView
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginStart="@dimen/size_18"
                   android:layout_marginTop="@dimen/size_16"
                   android:layout_marginEnd="@dimen/size_18"
-                  android:drawableEnd="@drawable/ic_summary_alert_d"
-                  android:drawablePadding="@dimen/size_8"
                   android:text="@string/add_on_marketplace_banner"
                   android:textColor="@color/black_4a4a4a"
                   app:fontFamily="@font/semi_bold"
@@ -441,12 +442,13 @@
                   android:layout_marginEnd="@dimen/size_18"
                   android:orientation="horizontal">
 
+<!--                  android:drawableEnd="@drawable/ic_summary_alert_d"-->
+<!--                  android:drawablePadding="@dimen/size_8"-->
+
                   <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:drawableEnd="@drawable/ic_summary_alert_d"
-                    android:drawablePadding="@dimen/size_8"
                     android:includeFontPadding="false"
                     android:text="@string/online_growth_stats"
                     android:textColor="@color/black_4a4a4a"
@@ -525,8 +527,7 @@
       layout="@layout/view_dashboard_simmer"
       android:layout_height="wrap_content"
       android:layout_width="match_parent"
-      android:visibility="visible"
-      tools:visibility="gone"/>
+      android:visibility="gone"/>
   </FrameLayout>
 
 </layout>

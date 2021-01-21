@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -17,6 +18,7 @@ import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.DashboardActivity
 import com.dashboard.controller.getDomainName
 import com.dashboard.controller.startFragmentDashboardActivity
+import com.dashboard.controller.ui.dialog.ProgressDashboardDialog
 import com.dashboard.databinding.FragmentDashboardBinding
 import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
@@ -84,7 +86,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onCreateView() {
     super.onCreateView()
-    showProgress()
+    if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showProgress()
     session = UserSessionManager(baseActivity)
     setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.btnVisitingCard, binding?.txtDomainName)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
@@ -92,6 +94,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     apiSellerSummary()
     getPremiumBanner()
     WebEngageController.trackEvent("Dashboard Home Page", "pageview", session?.fpTag)
+  }
+
+  override fun onResume() {
+    super.onResume()
+    getFloatMessage()
   }
 
   private fun getPremiumBanner() {
@@ -114,17 +121,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     })
   }
 
-  override fun onResume() {
-    super.onResume()
-    getFloatMessage()
-  }
-
   private fun getFloatMessage() {
     session?.siteMeterData { it?.let { it1 -> refreshData(it1) } }
     viewModel?.getBizFloatMessage(session!!.getRequestFloat())?.observeOnce(this, {
       if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
       session?.siteMeterData { it1 -> it1?.let { it2 -> refreshData(it2) } }
-      hideProgress()
+      if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true){
+        (baseActivity as? DashboardActivity)?.isLoadShimmer=false
+        hideProgress()
+      }
       saveFirstLoad()
     })
   }
@@ -298,11 +303,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  private fun showErrorChannel(message: String) {
-    showShortToast(message)
-    hideProgress()
-  }
-
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> {
@@ -338,7 +338,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       RecyclerViewActionType.PROMO_BANNER_CLICK.ordinal -> {
         val data = item as? DashboardMarketplaceBanner ?: return
         if (data.ctaFeatureKey.isNullOrEmpty().not()) {
-          session?.let { baseActivity.initiateAddonMarketplace(it, false, "", data.ctaFeatureKey) }
+          session?.let {
+            baseActivity.initiateAddonMarketplace(it, false, "", data.ctaFeatureKey)
+          }
         }
       }
       RecyclerViewActionType.PROMO_BOOST_ACADEMY_CLICK.ordinal -> {
@@ -458,9 +460,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       RoiSummaryData.RoiType.TRACK_CALL -> baseActivity.startVmnCallCard(session)
       RoiSummaryData.RoiType.APT_ORDER -> baseActivity.startAptOrderSummary(session)
       RoiSummaryData.RoiType.CONSULTATION -> {
+        showShortToast("Video Consultation analytics coming soon...")
       }
-      RoiSummaryData.RoiType.APT_ORDER_WORTH -> baseActivity.startRevenueSummary(session)
+      RoiSummaryData.RoiType.APT_ORDER_WORTH -> {
+//        baseActivity.startRevenueSummary(session)
+        showShortToast("Collection analytics coming soon...")
+      }
       RoiSummaryData.RoiType.COLLECTION_WORTH -> {
+        showShortToast("Collection analytics coming soon...")
       }
     }
   }
@@ -496,16 +503,37 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun academyBannerBoostClick(data: DashboardAcademyBanner) {
+    val loader = ProgressDashboardDialog.newInstance()
     when {
       data.ctaFileLink.isNullOrEmpty().not() -> {
         this.ctaFileLink = data.ctaFileLink
         if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED ||
             ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
           requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
-        } else baseActivity.startDownloadUri(data.ctaFileLink?.trim()!!)
+        } else {
+          loader.setData(R.raw.download_gif, resources.getString(R.string.download_file_banner))
+          loader.showProgress(baseActivity.supportFragmentManager)
+          baseActivity.startDownloadUri(data.ctaFileLink?.trim()!!)
+          Handler().postDelayed({ loader.hideProgress() }, 1000)
+        }
       }
-      data.ctaWebLink.isNullOrEmpty().not() -> baseActivity.startWebViewPageLoad(session, data.ctaWebLink?.trim()!!)
-      data.ctaYoutubeLink.isNullOrEmpty().not() -> baseActivity.startYouTube(session, data.ctaYoutubeLink?.trim()!!)
+      data.ctaWebLink.isNullOrEmpty().not() -> {
+        loader.setData(R.raw.activity_browser_gif, resources.getString(R.string.opening_browser_banner))
+        loader.showProgress(baseActivity.supportFragmentManager)
+        Handler().postDelayed({
+          baseActivity.startWebViewPageLoad(session, data.ctaWebLink?.trim()!!)
+          loader.hideProgress()
+
+        }, 1000)
+      }
+      data.ctaYoutubeLink.isNullOrEmpty().not() -> {
+        loader.setData(R.raw.video_gif, resources.getString(R.string.taking_video_banner))
+        loader.showProgress(baseActivity.supportFragmentManager)
+        Handler().postDelayed({
+          baseActivity.startYouTube(session, data.ctaYoutubeLink?.trim()!!)
+          loader.hideProgress()
+        }, 1000)
+      }
     }
   }
 
@@ -513,7 +541,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (requestCode) {
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-          if (ctaFileLink.isNullOrEmpty().not()) baseActivity.startDownloadUri(ctaFileLink?.trim()!!)
+          if (ctaFileLink.isNullOrEmpty().not()) {
+            val loader = ProgressDashboardDialog.newInstance()
+            loader.setData(R.raw.download_gif, resources.getString(R.string.download_file_banner))
+            loader.showProgress(baseActivity.supportFragmentManager)
+            baseActivity.startDownloadUri(ctaFileLink?.trim()!!)
+            Handler().postDelayed({ loader.hideProgress() }, 1000)
+          }
         } else showShortToast("Permission denied to read your External storage")
         return
       }
@@ -531,13 +565,13 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private fun showSimmer(isSimmer: Boolean) {
     binding?.mainContent?.post {
       if (isSimmer) {
-        binding?.nestedScrollView?.gone()
-        binding?.progressSimmer?.parentShimmerLayout?.startShimmer()
         binding?.progressSimmer?.parentShimmerLayout?.visible()
+        binding?.progressSimmer?.parentShimmerLayout?.startShimmer()
+        binding?.nestedScrollView?.gone()
       } else {
         binding?.progressSimmer?.parentShimmerLayout?.gone()
-        binding?.progressSimmer?.parentShimmerLayout?.stopShimmer()
         binding?.nestedScrollView?.visible()
+        binding?.progressSimmer?.parentShimmerLayout?.stopShimmer()
       }
     }
   }

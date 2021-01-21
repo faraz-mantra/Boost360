@@ -95,11 +95,12 @@ fun getProductType(category_code: String?): String {
 }
 
 fun getRoiSummaryType(category_code: String?): String? {
-  return when (category_code) {
-    "DOC", "HOS" -> "DOC"
-    "SVC", "SPA", "SAL" -> "SPA"
-    else -> "MFG"
-  }
+  return category_code
+//  return when (category_code) {
+//    "DOC", "HOS" -> "DOC"
+//    "SVC", "SPA", "SAL" -> "SPA"
+//    else -> "MFG"
+//  }
 }
 
 enum class PremiumCode(val value: String) {

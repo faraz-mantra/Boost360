@@ -74,4 +74,7 @@
   <string name="website_pages_and_widgets">Website pages and widgets</string>
   <string name="for_better_engagement_and_traffic_desc">Keep updating these regularly for better engagement and traffic.</string>
   <string name="press_again_exit">Press again to exit</string>
+  <string name="download_file_banner">Downloading the file...</string>
+  <string name="opening_browser_banner">Opening in browser....</string>
+  <string name="taking_video_banner">Taking you to the video....</string>
 </resources>

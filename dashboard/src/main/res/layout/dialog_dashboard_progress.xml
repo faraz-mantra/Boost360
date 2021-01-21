@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_200"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <com.framework.views.customViews.CustomCardView
+      android:id="@+id/view_1"
+      android:layout_width="@dimen/size_100"
+      android:layout_height="@dimen/size_100"
+      android:layout_margin="@dimen/size_4"
+      app:cardBackgroundColor="@color/white"
+      app:cardCornerRadius="@dimen/size_50">
+
+      <com.framework.views.GifView
+        android:id="@+id/gif_anim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/size_4"
+        app:paused="false"
+        tools:gif="@raw/loading_view_lotty" />
+    </com.framework.views.customViews.CustomCardView>
+
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_2"
+      android:layout_marginTop="@dimen/size_10"
+      android:text="@string/please_wait_"
+      android:textColor="@color/white"
+      app:fontFamily="@font/regular"
+      app:textType="HEADING_6"
+      tools:textColor="@color/greyish_brown" />
+
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

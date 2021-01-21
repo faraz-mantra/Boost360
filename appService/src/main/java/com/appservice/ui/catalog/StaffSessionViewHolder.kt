@@ -11,34 +11,22 @@ class StaffSessionViewHolder(binding: RecyclerItemSessionBinding) : AppBaseRecyc
     private lateinit var data: StaffTimingModel
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
+        setIsRecyclable(false)
         this.data = item as StaffTimingModel
-        when (data.isAppliedOnAllDays) {
+        when (data.isTurnedOn) {
             false -> binding.layoutSessionCreate.visibility = View.GONE
+            true -> binding.layoutSessionCreate.visibility = View.VISIBLE
         }
         binding.ccvTitleDay.text = "${data.day}"
-        binding.root.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.SESSION_ITEM_CLICK.ordinal) }
-        setClickListeners(binding.toggleOnOff)
+        binding.toggleOnOff.isOn = data.isTurnedOn
         binding.toggleOnOff.setOnToggledListener { _, isOn ->
-            when (isOn) {
-                true -> {
-
-                }
-            }
-
+            data.isTurnedOn = isOn
+            listener?.onItemClick(position, data, RecyclerViewActionType.TOGGLE_STATE_CHANGED.ordinal)
         }
-    }
+        binding.ccbAllDay.isChecked = data.isAppliedOnAllDays
 
-    override fun onClick(v: View?) {
-        super.onClick(v)
-        when (v) {
-            binding.toggleOnOff -> {
-//                Toast.makeText(getApplicationContext(), data.day, Toast.LENGTH_SHORT).show()
-                when (data.isAppliedOnAllDays) {
-                    true -> {
-                        data.isAppliedOnAllDays = false
-                    }
-                }
-            }
-        }
     }
 }
+
+
+
