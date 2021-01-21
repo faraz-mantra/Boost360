@@ -460,9 +460,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       RoiSummaryData.RoiType.TRACK_CALL -> baseActivity.startVmnCallCard(session)
       RoiSummaryData.RoiType.APT_ORDER -> baseActivity.startAptOrderSummary(session)
       RoiSummaryData.RoiType.CONSULTATION -> {
+        showShortToast("Video Consultation analytics coming soon...")
       }
-      RoiSummaryData.RoiType.APT_ORDER_WORTH -> baseActivity.startRevenueSummary(session)
+      RoiSummaryData.RoiType.APT_ORDER_WORTH -> {
+//        baseActivity.startRevenueSummary(session)
+        showShortToast("Collection analytics coming soon...")
+      }
       RoiSummaryData.RoiType.COLLECTION_WORTH -> {
+        showShortToast("Collection analytics coming soon...")
       }
     }
   }
