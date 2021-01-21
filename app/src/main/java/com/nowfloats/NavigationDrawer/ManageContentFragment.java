@@ -19,7 +19,6 @@ import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.businessApps.FragmentsFactoryActivity;
 import com.nowfloats.ProductGallery.ProductCatalogActivity;
-import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.education.batches.BatchesActivity;
 import com.nowfloats.education.faculty.FacultyActivity;
@@ -155,6 +154,7 @@ public class ManageContentFragment extends Fragment {
         adapter.setItems(adapterImages, adapterTexts);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setAdapter(adapter);
+
     }
 
     @Override
