@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -55,8 +56,10 @@ import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.extensions.observeOnce
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -163,7 +166,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         initializeAddonCategoryRecycler()
 
         if ((activity as UpgradeActivity).accountType != null) {
-            recommended_features_account_type.setText((activity as UpgradeActivity).accountType!!.toLowerCase())
+//            recommended_features_account_type.setText((activity as UpgradeActivity).accountType!!.toLowerCase())
             recommended_features_section.visibility = View.VISIBLE
             if(shimmer_view_recommended.isShimmerStarted) {
                 shimmer_view_recommended.stopShimmer()
@@ -176,7 +179,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 shimmer_view_recommended.visibility = View.GONE
             }
         }
-
+        geCategoriesFromExpCode()
         share_refferal_code_btn.setOnClickListener {
             WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "Generic", "")
             val sendIntent = Intent()
@@ -262,7 +265,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
             (activity as UpgradeActivity).addFragmentHome(
                     MyAddonsFragment.newInstance(),
-                    MYADDONS_FRAGMENT,args
+                    MYADDONS_FRAGMENT, args
             )
         }
 
@@ -273,7 +276,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
             (activity as UpgradeActivity).addFragmentHome(
                     ViewAllFeaturesFragment.newInstance(),
-                    VIEW_ALL_FEATURE,args
+                    VIEW_ALL_FEATURE, args
             )
         }
 
@@ -285,7 +288,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
             (activity as UpgradeActivity).addFragmentHome(
                     MyAddonsFragment.newInstance(),
-                    MYADDONS_FRAGMENT,args
+                    MYADDONS_FRAGMENT, args
             )
         } else if (arguments?.getString("screenType") == "recommendedAddOns") {
             if (progressDialog.isShowing) {
@@ -295,7 +298,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
             (activity as UpgradeActivity).addFragmentHome(
                     ViewAllFeaturesFragment.newInstance(),
-                    VIEW_ALL_FEATURE,args
+                    VIEW_ALL_FEATURE, args
             )
         }else if (arguments?.getString("screenType") == "comparePackageSelection") {
             if (progressDialog.isShowing) {
@@ -305,7 +308,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
             (activity as UpgradeActivity).addFragmentHome(
                     ComparePackageFragment.newInstance(),
-                    COMPARE_FRAGMENT,args
+                    COMPARE_FRAGMENT, args
             )
         }
 
@@ -342,7 +345,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
             (activity as UpgradeActivity).addFragmentHome(
                     ComparePackageFragment.newInstance(),
-                    COMPARE_FRAGMENT,args
+                    COMPARE_FRAGMENT, args
             )
         }
 
@@ -470,18 +473,18 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                         PrimaryImage(item.primary_image),
                         item.target_business_usecase,
                         Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                        null,item.desc
+                        null, item.desc
                 ))
             }
             if (list.size > 0) {
-                if(shimmer_view_package.isShimmerStarted) {
+                if (shimmer_view_package.isShimmerStarted) {
                     shimmer_view_package.stopShimmer()
                     shimmer_view_package.visibility = View.GONE
                 }
                 package_layout.visibility = View.VISIBLE
                 updatePackageViewPager(list)
             } else {
-                if(shimmer_view_package.isShimmerStarted) {
+                if (shimmer_view_package.isShimmerStarted) {
                     shimmer_view_package.stopShimmer()
                     shimmer_view_package.visibility = View.GONE
                 }
@@ -502,7 +505,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                         PrimaryImage(item.primary_image),
                         item.target_business_usecase,
                         Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                        null,item.desc
+                        null, item.desc
                 ))
             }
             if (list.size > 0) {
@@ -603,7 +606,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     updateFeatureDealsViewPager(list, it)
                 }
             }
-            if(Constants.COMPARE_BACK_VALUE == 1) {
+            if (Constants.COMPARE_BACK_VALUE == 1) {
                 Constants.COMPARE_BACK_VALUE = 0
                 if (viewModel.allBundleResult.value != null) {
 
@@ -672,11 +675,11 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         viewModel.getPromoBanners().observe(this, androidx.lifecycle.Observer {
             Log.e("getPromoBanners", it.toString())
             if (it.size > 0) {
-                if(shimmer_view_banner.isShimmerStarted) {
+                if (shimmer_view_banner.isShimmerStarted) {
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
-               /* if(shimmer_view_package.isShimmerStarted) {
+                /* if(shimmer_view_package.isShimmerStarted) {
                     shimmer_view_package.stopShimmer()
                     shimmer_view_package.visibility = View.GONE
                 }*/
@@ -685,11 +688,11 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 //                updateBannerViewPager(it)
                 banner_layout.visibility = View.VISIBLE
             } else {
-                if(shimmer_view_banner.isShimmerStarted) {
+                if (shimmer_view_banner.isShimmerStarted) {
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
-               /* if(shimmer_view_package.isShimmerStarted) {
+                /* if(shimmer_view_package.isShimmerStarted) {
                     shimmer_view_package.stopShimmer()
                     shimmer_view_package.visibility = View.GONE
                 }*/
@@ -925,7 +928,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPackageClicked(item: Bundles?) {
-        WebEngageController.trackEvent("Feature packs Clicked", "ADDONS_MARKETPLACE", item?.name?:"")
+        WebEngageController.trackEvent("Feature packs Clicked", "ADDONS_MARKETPLACE", item?.name
+                ?: "")
         val packageFragment = PackageFragment.newInstance()
         val args = Bundle()
         args.putString("bundleData", Gson().toJson(item))
@@ -970,18 +974,18 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                                                 var selectedBundle: Bundles? = null
                                                                 var item = it
 
-                                                                        val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
-                                                                        selectedBundle = Bundles(
-                                                                                item.bundle_id,
-                                                                                temp,
-                                                                                item.min_purchase_months,
-                                                                                item.name,
-                                                                                item.overall_discount_percent,
-                                                                                PrimaryImage(item.primary_image),
-                                                                                item.target_business_usecase,
-                                                                                Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
-                                                                                null,
-                                                                                item.desc)
+                                                                val temp = Gson().fromJson<List<IncludedFeature>>(item.included_features, object : TypeToken<List<IncludedFeature>>() {}.type)
+                                                                selectedBundle = Bundles(
+                                                                        item.bundle_id,
+                                                                        temp,
+                                                                        item.min_purchase_months,
+                                                                        item.name,
+                                                                        item.overall_discount_percent,
+                                                                        PrimaryImage(item.primary_image),
+                                                                        item.target_business_usecase,
+                                                                        Gson().fromJson<List<String>>(item.exclusive_to_categories, object : TypeToken<List<String>>() {}.type),
+                                                                        null,
+                                                                        item.desc)
                                                                 val packageFragment = PackageFragment.newInstance()
                                                                 val args = Bundle()
                                                                 args.putString("bundleData", Gson().toJson(selectedBundle))
@@ -1080,7 +1084,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPartnerZoneClicked(item: PartnerZone?) {
-        WebEngageController.trackEvent("Partner's Promo banners Clicked", "ADDONS_MARKETPLACE", item?.title?:"")
+        WebEngageController.trackEvent("Partner's Promo banners Clicked", "ADDONS_MARKETPLACE", item?.title
+                ?: "")
         Log.i("onPartnerZoneClicked >>", item.toString())
         if (item!!.cta_feature_key.isNullOrEmpty().not()) {
 
@@ -1148,7 +1153,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     override fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int) {
         if (item != null) {
-            WebEngageController.trackEvent("Feature deals add cart Clicked", "ADDONS_MARKETPLACE", item.name?:"")
+            WebEngageController.trackEvent("Feature deals add cart Clicked", "ADDONS_MARKETPLACE", item.name
+                    ?: "")
             viewModel.addItemToCart(item, minMonth)
         }
     }
@@ -1166,7 +1172,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
-        WebEngageController.trackEvent("Video gallery Clicked", "ADDONS_MARKETPLACE", videoItem.title?:"")
+        WebEngageController.trackEvent("Video gallery Clicked", "ADDONS_MARKETPLACE", videoItem.title
+                ?: "")
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link)
         val link: List<String> = videoItem.youtube_link!!.split('/')
         videoPlayerWebView.getSettings().setJavaScriptEnabled(true)
@@ -1177,7 +1184,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPackageAddToCart(item: Bundles?) {
-        Log.v("onPackageAddToCart", " "+ item.toString())
+        Log.v("onPackageAddToCart", " " + item.toString())
 //        var bundleData = Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type)
 //        var bundleData =  Gson().fromJson<PackageBundles>(item.toString(), object : TypeToken<PackageBundles>() {}.type)
         if (!packageInCartStatus) {
@@ -1198,7 +1205,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                         {
                                             featuresList = it
                                             var bundleMonthlyMRP = 0
-                                            val minMonth:Int = if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
+                                            val minMonth: Int = if (item!!.min_purchase_months != null && item!!.min_purchase_months!! > 1) item!!.min_purchase_months!! else 1
 
                                             for (singleItem in it) {
                                                 for (item in item!!.included_features) {
@@ -1211,8 +1218,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                             offeredBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
                                             originalBundlePrice = (bundleMonthlyMRP * minMonth).toInt()
 
-                                            if(item!!.overall_discount_percent > 0)
-                                                offeredBundlePrice = originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent/100)
+                                            if (item!!.overall_discount_percent > 0)
+                                                offeredBundlePrice = originalBundlePrice - (originalBundlePrice * item!!.overall_discount_percent / 100)
                                             else
                                                 offeredBundlePrice = originalBundlePrice
 
@@ -1348,10 +1355,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                             }
                                         }
 
-                                    } catch (e: Exception){
+                                    } catch (e: Exception) {
                                         e.printStackTrace()
                                     }
-                                },{
+                                }, {
                                     it.printStackTrace()
                                 })
                 )
@@ -1385,10 +1392,10 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                                 }
                                             }
                                         }
-                                    }catch (e: Exception){
+                                    } catch (e: Exception) {
                                         e.printStackTrace()
                                     }
-                                },{
+                                }, {
                                     it.printStackTrace()
                                 })
                 )
@@ -1510,4 +1517,21 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         }
     }
 
+    private fun geCategoriesFromExpCode(){
+        viewModel?.getCategories(activity!!)?.observeOnce(this, {
+            if (it?.error != null) errorMessage(it.error?.localizedMessage
+                    ?: resources.getString(com.onboarding.nowfloats.R.string.error_getting_category_data))
+            else {
+                val categoryList = (it as? ResponseDataCategory)?.data
+                val categoryData = categoryList?.singleOrNull { c -> c.experienceCode() == (activity as UpgradeActivity).experienceCode }
+                if (categoryData != null) {
+                    recommended_features_account_type.setText(Html.fromHtml(categoryData.category_Name))
+                    Log.v("geCategoriesFrom", " geCategoriesFromExpCode: " + Html.fromHtml(categoryData.category_Name))
+                } else errorMessage(resources.getString(com.onboarding.nowfloats.R.string.error_getting_category_data))
+            }
+        })
+    }
+    private fun errorMessage(message: String) {
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+    }
 }
