@@ -8,7 +8,7 @@ import com.appservice.R
 import com.appservice.constant.RecyclerViewItemType.*
 import com.appservice.databinding.*
 import com.appservice.holder.*
-import com.appservice.holder.StaffSessionViewHolder
+import com.appservice.holder.WeeklyAppointmentViewHolder
 import com.framework.base.BaseActivity
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
@@ -23,7 +23,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       IMAGE_PREVIEW -> ImagePreviewViewHolder(binding as ItemPreviewImageBinding)
       GST_DETAILS_VIEW -> GstDetailViewHolder(binding as ItemGstDetailBinding)
       ADDITIONAL_FILE_VIEW -> AdditionalFileViewHolder(binding as ItemPdfFileBinding)
-      SESSION_ITEM_VIEW -> StaffSessionViewHolder(binding as RecyclerItemSessionBinding)
+      SESSION_ITEM_VIEW -> WeeklyAppointmentViewHolder(binding as RecyclerItemSessionBinding)
       CREATE_CATEGORY_ITEM_VIEW->CreateCategoryViewHolder(binding as ItemCreateCategoryBinding)
 
     }

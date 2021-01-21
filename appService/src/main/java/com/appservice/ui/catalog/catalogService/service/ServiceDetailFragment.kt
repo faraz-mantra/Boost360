@@ -116,7 +116,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     getPickUpAddress()
 //    binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-    setOnClickListener(binding?.selectDeliveryConfig, binding?.vwPaymentConfig, binding?.edtServiceCategory,
+    setOnClickListener(binding?.selectDeliveryConfig, binding?.vwPaymentConfig,
             binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
     binding?.toggleService?.isOn = false
     binding?.payServiceView?.visibility = View.GONE
@@ -295,10 +295,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         bundle.putSerializable(IntentConstant.PRODUCT_IMAGE.name, secondaryDataImage)
         bundle.putSerializable(IntentConstant.PRODUCT_GST_DETAIL.name, gstProductData)
         startFragmentActivity(FragmentType.SERVICE_INFORMATION, bundle, isResult = true)
-      }
-      binding?.edtServiceCategory -> {
-        startFragmentActivity(FragmentType.CREATE_CATEGORY, Bundle(), isResult = true)
-
       }
       binding?.vwSavePublish -> if (isValid()) createUpdateApi()
     }

@@ -66,7 +66,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
     setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage,
             binding?.civIncreaseQuantityOrder, binding?.civDecreseQuantityOrder, binding?.btnAddTag, binding?.btnAddSpecification,
-            binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst)
+            binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst,binding?.weeklyAppointmentSchedule)
     product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? Product
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? DataG
@@ -154,10 +154,10 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         binding?.ctvQuantityOrderStatus?.text = ordersQuantity.toString()
 
       }
-//      binding?.weeklyAppointmentSchedule -> {
-//        startFragmentActivity(FragmentType.TIMING_STAFF, isResult = true)
-//
-//      }
+      binding?.weeklyAppointmentSchedule -> {
+        startFragmentActivity(FragmentType.WEEKLY_APPOINTMENT_FRAGMENT, isResult = true)
+
+      }
     }
   }
 
