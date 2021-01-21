@@ -1525,7 +1525,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 val categoryList = (it as? ResponseDataCategory)?.data
                 val categoryData = categoryList?.singleOrNull { c -> c.experienceCode() == (activity as UpgradeActivity).experienceCode }
                 if (categoryData != null) {
-                    recommended_features_account_type.setText(Html.fromHtml(categoryData.category_Name))
+                    recommended_features_account_type.setText(Html.fromHtml(categoryData.category_Name!!.toLowerCase()))
                 } else errorMessage(resources.getString(com.onboarding.nowfloats.R.string.error_getting_category_data))
             }
         })
