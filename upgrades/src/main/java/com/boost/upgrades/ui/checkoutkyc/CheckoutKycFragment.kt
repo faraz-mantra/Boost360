@@ -27,14 +27,6 @@ import com.boost.upgrades.utils.Utils.isValidMail
 import com.boost.upgrades.utils.Utils.isValidMobile
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.checkoutkyc_fragment.*
-import kotlinx.android.synthetic.main.splash_fragment.*
-import kotlinx.android.synthetic.main.splash_fragment.business_city_name
-import kotlinx.android.synthetic.main.splash_fragment.business_contact_number
-import kotlinx.android.synthetic.main.splash_fragment.business_email_address
-import kotlinx.android.synthetic.main.splash_fragment.business_gst_number
-import kotlinx.android.synthetic.main.splash_fragment.cancle_button
-import kotlinx.android.synthetic.main.splash_fragment.confirm_btn
-import kotlinx.android.synthetic.main.splash_fragment.confirm_checkbox
 
 class CheckoutKycFragment : DialogFragment() {
 
@@ -93,7 +85,7 @@ class CheckoutKycFragment : DialogFragment() {
                             "ANDROID",
                             "",
                             (activity as UpgradeActivity).fpid!!,
-                            "",
+                            if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString(),
                             null,
                             TaxDetails(
                                     if (business_gst_number.text.isEmpty()) null else business_gst_number.text.toString(),
