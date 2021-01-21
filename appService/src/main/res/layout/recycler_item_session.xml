@@ -134,11 +134,13 @@
                 android:id="@+id/ctv_add_session"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:layout_below="@id/ll_time_dropdown_group"
                 android:layout_marginStart="@dimen/size_18"
                 android:layout_marginTop="@dimen/size_8"
                 android:text="@string/u_add_session_u"
-                android:textColor="#4889F8" />
+                android:textColor="#4889F8"
+                android:focusable="true" />
 
             <com.framework.views.customViews.CustomCheckBox
                 android:layout_width="wrap_content"

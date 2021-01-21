@@ -16,7 +16,7 @@ import com.appservice.ui.catalog.catalogProduct.product.ProductDetailFragment
 import com.appservice.ui.catalog.catalogService.information.ServiceInformationFragment
 import com.appservice.ui.catalog.catalogService.service.ServiceDetailFragment
 import com.appservice.ui.catalog.common.CreateCategoryFragment
-import com.appservice.ui.catalog.common.StaffTimingFragment
+import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
 import com.framework.base.BaseFragment
 import com.framework.base.FRAGMENT_TYPE
 import com.framework.databinding.ActivityFragmentContainerBinding
@@ -32,7 +32,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   private var serviceInformationFragment: ServiceInformationFragment? = null
   private var productDetailFragment: ProductDetailFragment? = null
   private var productInformationFragment: ProductInformationFragment? = null
-  private var weeklyAppointmentFragment: StaffTimingFragment? = null
+  private var weeklyAppointmentFragment: WeeklyAppointmentFragment? = null
   private var createCategoryFragment: CreateCategoryFragment? = null
 
   override fun getLayout(): Int {
@@ -57,7 +57,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,FragmentType.CREATE_CATEGORY -> R.style.CatalogTheme
-      FragmentType.SERVICE_INFORMATION, FragmentType.TIMING_STAFF -> R.style.CatalogTheme_Information
+      FragmentType.SERVICE_INFORMATION, FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> R.style.CatalogTheme_Information
       else -> super.customTheme()
     }
   }
@@ -86,7 +86,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.TIMING_STAFF,FragmentType.CREATE_CATEGORY -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.WEEKLY_APPOINTMENT_FRAGMENT,FragmentType.CREATE_CATEGORY -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
 
       else -> super.getNavigationIcon()
     }
@@ -98,7 +98,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.SERVICE_DETAIL_VIEW -> resources.getString(R.string.service_details)
       FragmentType.PRODUCT_DETAIL_VIEW -> "Adding a product"
       FragmentType.PRODUCT_INFORMATION -> "Other Info"
-      FragmentType.TIMING_STAFF -> "Weekly appointment schedule"
+      FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> "Weekly appointment schedule"
       FragmentType.CREATE_CATEGORY->"Categories"
       else -> super.getToolbarTitle()
     }
@@ -106,7 +106,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarTitleGravity(): Int {
     return when (type) {
-      FragmentType.TIMING_STAFF -> Gravity.CENTER
+      FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> Gravity.CENTER
       else -> {
         Gravity.START
       }
@@ -132,8 +132,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.CREATE_CATEGORY -> {
         createCategoryFragment = CreateCategoryFragment.newInstance()
         createCategoryFragment
-      } FragmentType.TIMING_STAFF -> {
-        weeklyAppointmentFragment = StaffTimingFragment.newInstance()
+      } FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> {
+        weeklyAppointmentFragment = WeeklyAppointmentFragment.newInstance()
         weeklyAppointmentFragment
       }
       FragmentType.SERVICE_DETAIL_VIEW -> {

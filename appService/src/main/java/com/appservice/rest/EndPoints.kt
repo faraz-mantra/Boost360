@@ -17,13 +17,20 @@ object EndPoints {
   const val ADD_IMAGE = "Product/v1/AddImage"
   const val GET_TAGS = "Product/v1/tags"
   const val GET_NOTIFICATION = "Discover/v1/floatingpoint/notificationscount"
+
   //TODO PRODUCT API 2 WITH FLOAT
-  const val CREATE_PRODUCT= "Product/v1/Create"
-  const val GET_PRODUCT_LISTING= "Product/v1/GetListingsWithInventorySync"
+  const val CREATE_PRODUCT = "Product/v1/Create"
+  const val GET_PRODUCT_LISTING = "Product/v1/GetListingsWithInventorySync"
   const val UPDATE_PRODUCT = "Product/v1/Update"
   const val DELETE_PRODUCT = "Product/v1/Delete"
+
   //TODO SERVICE API WITH NOWFLOATS API
   const val GET_SERVICE_LISTING = "product/v13/GetAllServiceListings"
+
+  //TODO WEEKLY APPOINTMENT APIS
+  const val POST_UPDATE_SERVICE_TIMING = "Service/v1/UpdateServiceTiming"
+  const val POST_ADD_SERVICE_TIMING = "Service/v1/AddServiceTiming"
+  const val GET_SERVICE_TIMING = "Service/v1/GetServiceTiming"
 
 
   //TODO NFX API 2 WITH FLOAT
