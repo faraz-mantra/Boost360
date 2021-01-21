@@ -1,9 +1,10 @@
 package com.boost.upgrades.ui.checkoutkyc
 
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.text.Html
 import android.text.InputFilter
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-
+import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.customerId.customerInfo.AddressDetails
@@ -20,21 +20,17 @@ import com.boost.upgrades.data.api_model.customerId.customerInfo.BusinessDetails
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.customerInfo.TaxDetails
 import com.boost.upgrades.data.api_model.customerId.get.Result
-import com.boost.upgrades.ui.home.HomeFragment
-import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.Utils.isValidGSTIN
 import com.boost.upgrades.utils.Utils.isValidMail
 import com.boost.upgrades.utils.Utils.isValidMobile
+import com.framework.extensions.observeOnce
+import com.onboarding.nowfloats.rest.response.ResponseDataCity
+import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.checkoutkyc_fragment.*
-import kotlinx.android.synthetic.main.splash_fragment.*
-import kotlinx.android.synthetic.main.splash_fragment.business_city_name
-import kotlinx.android.synthetic.main.splash_fragment.business_contact_number
-import kotlinx.android.synthetic.main.splash_fragment.business_email_address
-import kotlinx.android.synthetic.main.splash_fragment.business_gst_number
-import kotlinx.android.synthetic.main.splash_fragment.cancle_button
-import kotlinx.android.synthetic.main.splash_fragment.confirm_btn
-import kotlinx.android.synthetic.main.splash_fragment.confirm_checkbox
+import kotlinx.android.synthetic.main.home_fragment.*
+import java.io.*
+import java.util.*
 
 class CheckoutKycFragment : DialogFragment() {
 
@@ -67,7 +63,7 @@ class CheckoutKycFragment : DialogFragment() {
 
         loadCustomerInfo()
         initMvvm()
-
+        getCities()
         business_gst_number.setFilters(business_gst_number.filters + InputFilter.AllCaps())
 
         confirm_btn.setOnClickListener {
@@ -93,7 +89,7 @@ class CheckoutKycFragment : DialogFragment() {
                             "ANDROID",
                             "",
                             (activity as UpgradeActivity).fpid!!,
-                            "",
+                            if (business_contact_number.text.isEmpty()) null else business_contact_number.text.toString(),
                             null,
                             TaxDetails(
                                     if (business_gst_number.text.isEmpty()) null else business_gst_number.text.toString(),
@@ -153,15 +149,15 @@ class CheckoutKycFragment : DialogFragment() {
 
     private fun validateAgreement(): Boolean {
         if (business_contact_number.text.isEmpty() || business_email_address.text.isEmpty() || business_city_name.text.isEmpty()
-                /*|| user_contact_number.text.isEmpty()|| user_email_address.text.isEmpty() */ ) {
+        /*|| user_contact_number.text.isEmpty()|| user_email_address.text.isEmpty() */) {
             Toasty.error(requireContext(), "Fields are Empty!!", Toast.LENGTH_LONG).show();
             return false
         }
-        if(!isValidMobile(business_contact_number.text.toString()) /*|| !isValidMobile(user_contact_number.text.toString())*/){
+        if (!isValidMobile(business_contact_number.text.toString()) /*|| !isValidMobile(user_contact_number.text.toString())*/) {
             Toasty.error(requireContext(), "Entered Mobile Number is not valid!!", Toast.LENGTH_LONG).show()
             return false
         }
-        if(!isValidMail(business_email_address.text.toString()) /*|| !isValidMail(user_email_address.text.toString())*/){
+        if (!isValidMail(business_email_address.text.toString()) /*|| !isValidMail(user_email_address.text.toString())*/) {
             Toasty.error(requireContext(), "Entered EmailId is not valid!!", Toast.LENGTH_LONG).show()
             return false
         }
@@ -213,6 +209,16 @@ class CheckoutKycFragment : DialogFragment() {
 
     private fun loadCustomerInfo() {
         viewModel.getCustomerInfo((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
+    }
+
+    private fun getCities() {
+        viewModel?.getCity(activity!!)?.observeOnce(this, {
+            val categoryList = (it as? ResponseDataCity)?.data
+            for(cat in categoryList!!){
+                Log.v("getCities", " "+ cat.name)
+            }
+
+        })
     }
 
 }
