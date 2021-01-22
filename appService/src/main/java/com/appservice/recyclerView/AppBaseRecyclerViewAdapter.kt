@@ -9,10 +9,7 @@ import com.appservice.constant.RecyclerViewItemType.*
 import com.appservice.databinding.*
 import com.appservice.holder.*
 import com.appservice.holder.WeeklyAppointmentViewHolder
-import com.appservice.staffs.recycler.StaffFilterViewHolder
-import com.appservice.staffs.recycler.StaffListingViewHolder
-import com.appservice.staffs.recycler.StaffServiceViewHolder
-import com.appservice.staffs.recycler.StaffSessionViewHolder
+import com.appservice.staffs.recycler.*
 import com.framework.base.BaseActivity
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
@@ -32,7 +29,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       CREATE_CATEGORY_ITEM_VIEW->CreateCategoryViewHolder(binding as ItemCreateCategoryBinding)
 
       SERVICE_ITEM_VIEW -> StaffServiceViewHolder(binding as RecyclerItemServiceBinding)
-      SESSION_ITEM_VIEW -> StaffSessionViewHolder(binding as RecyclerItemSessionBinding)
+      EXPERIENCE_RECYCLER_ITEM -> StaffExperienceViewHolder(binding as ItemExperienceDetailsBinding)
       STAFF_LISTING_VIEW -> StaffListingViewHolder(binding as RecyclerItemStaffListingBinding)
       STAFF_FILTER_VIEW -> StaffFilterViewHolder(binding as RecyclerItemStaffFilterBinding)
     }

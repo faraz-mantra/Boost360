@@ -47,7 +47,6 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, Ba
                 list = defaultTimings,
                 itemClickListener = this@WeeklyAppointmentFragment
         )
-        adapter.setHasStableIds(true)
         binding!!.rvStaffTiming.adapter = adapter
     }
 

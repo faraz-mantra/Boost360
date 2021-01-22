@@ -27,7 +27,6 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     private val list: ArrayList<DataItem> = ArrayList()
     private val copyList: ArrayList<DataItem> = ArrayList()
     private lateinit var adapter: AppBaseRecyclerViewAdapter<DataItem>
-    private var isSearchShowing: Boolean = false
     override fun getLayout(): Int {
         return R.layout.fragment_staff_listing
     }
@@ -53,49 +52,46 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     override fun onCreateView() {
         super.onCreateView()
         setHasOptionsMenu(true)
+        hideMenuItem()
         setOnClickListener(binding?.fragmentStaffAdd?.flAddStaff)
         fetchStaffListing()
     }
 
     private fun fetchStaffListing() {
         showProgress("Loading")
-        viewModel?.getStaffList(GetStaffListingRequest(FilterBy("", 0, 0), UserSession.fpId, ""))?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            hideProgress()
+        viewModel?.getStaffList(GetStaffListingRequest(FilterBy("", 0, 0), UserSession.fpId, ""))?.observe(viewLifecycleOwner, {
             when (it.status) {
                 200 -> {
                     val getStaffListingResponse = it as GetStaffListingResponse
                     val data = getStaffListingResponse.result?.data
                     when {
-
                         data?.isNotEmpty()!! -> {
                             binding?.layoutStaffListing!!.root.visibility = View.VISIBLE
                             binding?.fragmentStaffAdd!!.root.visibility = View.GONE
-                            isSearchShowing = true
                             data as ArrayList<DataItem>
                             this.list.addAll(data)
+                            showMenuItem()
                             this.copyList.addAll(data)
                             this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data, itemClickListener = this@StaffProfileListingFragment)
                             binding?.layoutStaffListing?.rvStaffList?.adapter = adapter
+                            hideProgress()
                         }
                         else -> {
                             binding?.layoutStaffListing?.root?.visibility = View.GONE
                             binding?.fragmentStaffAdd!!.root.visibility = View.VISIBLE
-
+                            hideProgress()
                         }
                     }
                 }
                 else -> {
                     binding?.layoutStaffListing!!.root.visibility = View.GONE
                     binding?.fragmentStaffAdd!!.root.visibility = View.VISIBLE
+                    hideProgress()
 
                 }
             }
-            when (isSearchShowing) {
-                true -> showMenuItem()
-                false -> hideMenuItem()
-            }
+
         })
-        hideProgress()
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -109,10 +105,11 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_stafflisting, menu)
         val searchItem = menu.findItem(R.id.app_bar_search)
+        searchItem.isVisible = list.isNullOrEmpty().not()
         val searchView: SearchView = searchItem.actionView as SearchView
         searchView.queryHint = "Search Staff"
         searchView.setOnQueryTextListener(this)
-        searchView.isIconified = false
+        searchView.clearFocus()
         super.onCreateOptionsMenu(menu, inflater)
     }
 

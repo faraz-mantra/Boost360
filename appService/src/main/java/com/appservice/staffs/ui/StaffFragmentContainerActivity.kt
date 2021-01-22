@@ -27,6 +27,7 @@ import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
+import kotlinx.android.synthetic.main.toolbar_catalog.*
 
 class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
     private var fragmentType: FragmentType? = null
@@ -79,7 +80,10 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     }
 
     public override fun getToolbar(): CustomToolbar {
-        return binding!!.appBarLayout.toolbar
+        return when (fragmentType) {
+            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> toolbar
+            else -> binding!!.appBarLayout.toolbar
+        }
     }
 
     override fun getToolbarTitleSize(): Float {

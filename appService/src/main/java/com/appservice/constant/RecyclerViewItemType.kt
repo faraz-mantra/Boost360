@@ -13,10 +13,11 @@ enum class RecyclerViewItemType {
   ADDITIONAL_FILE_VIEW,
   SERVICE_ITEM_VIEW,
   STAFF_LISTING_VIEW,
+  EXPERIENCE_RECYCLER_ITEM,
   STAFF_FILTER_VIEW;
 
 
-    @LayoutRes
+  @LayoutRes
   fun getLayout(): Int {
     return when (this) {
       PAGINATION_LOADER -> R.layout.pagination_loader
@@ -29,6 +30,7 @@ enum class RecyclerViewItemType {
       SERVICE_ITEM_VIEW -> R.layout.recycler_item_service
       STAFF_LISTING_VIEW -> R.layout.recycler_item_staff_listing
       STAFF_FILTER_VIEW -> R.layout.recycler_item_staff_filter
+      EXPERIENCE_RECYCLER_ITEM -> R.layout.item_experience_details
     }
   }
 }
