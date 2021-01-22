@@ -20,6 +20,7 @@ import com.boost.upgrades.data.api_model.customerId.customerInfo.BusinessDetails
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.customerInfo.TaxDetails
 import com.boost.upgrades.data.api_model.customerId.get.Result
+import com.boost.upgrades.ui.cart.CartViewModel
 import com.boost.upgrades.utils.Utils.isValidGSTIN
 import com.boost.upgrades.utils.Utils.isValidMail
 import com.boost.upgrades.utils.Utils.isValidMobile
@@ -42,7 +43,8 @@ class CheckoutKycFragment : DialogFragment() {
         fun newInstance() = CheckoutKycFragment()
     }
 
-    private lateinit var viewModel: CheckoutKycViewModel
+//    private lateinit var viewModel: CheckoutKycViewModel
+    private lateinit var viewModel: CartViewModel
 
     override fun onStart() {
         super.onStart()
@@ -59,7 +61,8 @@ class CheckoutKycFragment : DialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(requireActivity()).get(CheckoutKycViewModel::class.java)
+//        viewModel = ViewModelProviders.of(requireActivity()).get(CheckoutKycViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
 
         loadCustomerInfo()
         initMvvm()
@@ -136,6 +139,7 @@ class CheckoutKycFragment : DialogFragment() {
         }
 
         close_popup.setOnClickListener {
+            viewModel.updateCheckoutKycClose(true)
             dismiss()
         }
         dialog!!.setOnKeyListener { dialog, keyCode, event ->
