@@ -284,7 +284,8 @@
   <string name="from">From</string>
   <string name="to">to</string>
   <string name="apply_same_on_all_days">Apply same on all days</string>
-  <array name="stock_availbility">
+    <string name="dropdown_options_1_1_2_3_4_5_5"><![CDATA[Dropdown options: <1, 1, 2, 3, 4, 5, 5+]]></string>
+    <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
 

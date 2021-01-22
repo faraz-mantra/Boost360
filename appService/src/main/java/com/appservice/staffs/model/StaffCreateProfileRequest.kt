@@ -1,42 +1,57 @@
 package com.appservice.staffs.model
 
-import com.framework.base.BaseRequest
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 
-data class StaffCreateProfileRequest (
+data class StaffCreateProfileRequest(
 
-	@SerializedName("ServiceIds")
-	var serviceIds: List<String?>? = null,
-	@SerializedName("Experience")
-	var experience: Double? = null,
+		@field:SerializedName("image")
+		val image: StaffImage? = null,
 
-	@SerializedName("Description")
-	var description: String? = null,
+		@field:SerializedName("isAvailable")
+		val isAvailable: Boolean? = null,
 
-	@SerializedName("Specialisations")
-	var specialisations: List<SpecialisationsItemStaffRequest?>? = null,
+		@field:SerializedName("serviceIds")
+		val serviceIds: List<String?>? = null,
 
-	@SerializedName("IsAvailable")
-	var isAvailable: Boolean? = null,
+		@field:SerializedName("gender")
+		val gender: String? = null,
 
-	@SerializedName("FloatingPointTag")
-	var floatingPointTag: String? = null,
+		@field:SerializedName("floatingPointTag")
+		val floatingPointTag: String? = null,
 
-	@SerializedName("Image")
-	var image: Image? = null,
+		@field:SerializedName("name")
+		val name: String? = null,
 
-	@SerializedName("Name")
-	var name: String? = null
+		@field:SerializedName("description")
+		val description: String? = null,
+
+		@field:SerializedName("experience")
+		val experience: Int? = null,
+
+		@field:SerializedName("age")
+		val age: Int? = null,
+
+		@field:SerializedName("specialisations")
+		val specialisations: List<StaffSpecialisationsItem?>? = null
 )
 
-data class SpecialisationsItemStaffRequest(
+data class StaffSpecialisationsItem(
 
-	@SerializedName("Value")
-	var value: String? = null,
+		@field:SerializedName("value")
+		val value: String? = null,
 
-	@SerializedName("Key")
-	var key: String? = null
-): BaseRequest(), Serializable {}
+		@field:SerializedName("key")
+		val key: String? = null
+)
 
+data class StaffImage(
 
+		@field:SerializedName("image")
+		val image: String? = null,
+
+		@field:SerializedName("fileName")
+		val fileName: String? = null,
+
+		@field:SerializedName("imageFileType")
+		val imageFileType: String? = null
+)

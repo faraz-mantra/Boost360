@@ -202,30 +202,23 @@
                             android:textStyle="normal"
                             app:textType="BODY_1" />
 
-                        <LinearLayout
-                            style="@style/SpinnerWithNoArrow"
+                        <com.framework.views.customViews.CustomTextField
+                            android:id="@+id/edt_experience"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <androidx.appcompat.widget.AppCompatSpinner
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/size_40"
-                                android:layout_weight=".7"
-                                android:background="@null"
-                                android:id="@+id/cs_experience"
-                                android:entries="@array/Years"
-                                android:paddingStart="@dimen/size_10"
-                                android:paddingEnd="@dimen/size_10" />
-
-                            <com.framework.views.customViews.CustomImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginEnd="@dimen/size_8"
-                                app:srcCompat="@drawable/ic_dropdown_arrow" />
-
-                        </LinearLayout>
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_5"
+                            android:background="@drawable/bg_rect_edit_txt"
+                            android:clickable="true"
+                            android:drawableEnd="@drawable/ic_grey_drop_down"
+                            android:drawableTint="@color/pinkish_grey"
+                            android:focusable="false"
+                            android:hint="@string/dropdown_options_1_1_2_3_4_5_5"
+                            android:editable="false"
+                            android:padding="@dimen/size_12"
+                            android:singleLine="true"
+                            android:textColor="@color/warm_grey_10"
+                            android:textColorHint="@color/primary_grey"
+                            tools:ignore="UnusedAttribute" />
 
                     </LinearLayout>
 
@@ -318,7 +311,7 @@
                                 android:textSize="10sp" />
 
                             <com.appservice.views.toggle.widget.LabeledSwitch
-                                android:id="@+id/toggle_yes_no"
+                                android:id="@+id/toggle_is_available"
                                 android:layout_width="@dimen/size_54"
                                 android:layout_height="@dimen/size_24"
                                 app:colorBorder="@android:color/transparent"

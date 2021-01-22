@@ -1,6 +1,5 @@
 package com.appservice.staffs.ui.profile
 
-import android.os.Bundle
 import android.text.Html
 import android.view.View
 import com.appservice.R
@@ -19,10 +18,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
     companion object {
         fun newInstance(): StaffProfileDetailsFragment {
-            val args = Bundle()
-            val fragment = StaffProfileDetailsFragment()
-            fragment.arguments = args
-            return fragment
+            return StaffProfileDetailsFragment()
         }
     }
     override fun onCreateView() {

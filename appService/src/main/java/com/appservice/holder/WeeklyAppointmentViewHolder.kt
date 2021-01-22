@@ -11,12 +11,13 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
     private lateinit var data: AppointmentModel
 
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
+        setIsRecyclable(false)
         this.data = item as AppointmentModel
         when (data.isAppliedOnAllDaysViewVisible && data.isTurnedOn) {
             false -> binding.layoutSessionCreate.visibility = View.GONE
             true -> binding.layoutSessionCreate.visibility = View.VISIBLE
         }
-        binding.ccvTitleDay.text = "${data.day}"
+        binding.ctvTitleDay.text = "${data.day}"
         binding.toggleOnOff.isOn = data.isTurnedOn
         binding.toggleOnOff.setOnToggledListener { _, isOn ->
             data.isAppliedOnAllDaysViewVisible = isOn

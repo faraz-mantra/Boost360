@@ -10,7 +10,7 @@ object EndPoints {
 
   //TODO STAFF API WITH FLOAT
   const val STAFF_BASE_URL = "https://api.nowfloats.com/"
-  const val CREATE_STAFF_PROFILE = "staff/v1/Create"
+  const val CREATE_STAFF_PROFILE = "Staff/v1/Create"
   const val FETCH_STAFF_SERVICES = "product/v13/GetServiceListings"
   const val GET_STAFF_LISTING = "staff/v1/GetStaffListing"
   const val STAFF_PROFILE_UPDATE ="staff/v1/Update"
