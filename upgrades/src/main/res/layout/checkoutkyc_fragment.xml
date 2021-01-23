@@ -171,8 +171,6 @@ Please confirm below details."
                     android:textColor="#4A4A4A"
                     android:textColorHint="#4A4A4A" />
 
-
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
