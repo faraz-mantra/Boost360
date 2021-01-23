@@ -2,7 +2,6 @@ package com.boost.upgrades.ui.checkoutkyc
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Html
 import android.text.InputFilter
 import android.util.Log
 import android.view.KeyEvent
@@ -26,7 +25,6 @@ import com.boost.upgrades.utils.Utils.isValidMail
 import com.boost.upgrades.utils.Utils.isValidMobile
 import com.framework.extensions.observeOnce
 import com.onboarding.nowfloats.rest.response.ResponseDataCity
-import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.checkoutkyc_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -66,7 +64,6 @@ class CheckoutKycFragment : DialogFragment() {
 
         loadCustomerInfo()
         initMvvm()
-        getCities()
         business_gst_number.setFilters(business_gst_number.filters + InputFilter.AllCaps())
 
         confirm_btn.setOnClickListener {
@@ -215,14 +212,5 @@ class CheckoutKycFragment : DialogFragment() {
         viewModel.getCustomerInfo((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
     }
 
-    private fun getCities() {
-        viewModel?.getCity(activity!!)?.observeOnce(this, {
-            val categoryList = (it as? ResponseDataCity)?.data
-            for(cat in categoryList!!){
-                Log.v("getCities", " "+ cat.name)
-            }
-
-        })
-    }
 
 }
