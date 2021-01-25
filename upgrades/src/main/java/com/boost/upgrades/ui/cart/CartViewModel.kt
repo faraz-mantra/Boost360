@@ -20,12 +20,9 @@ import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.data.renewalcart.*
 import com.boost.upgrades.utils.SingleLiveEvent
 import com.boost.upgrades.utils.Utils
-import com.framework.base.BaseResponse
-import com.framework.models.toLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.luminaire.apolloar.base_class.BaseViewModel
-import com.onboarding.nowfloats.rest.repositories.CityRepository
 import es.dmoral.toasty.Toasty
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -486,10 +483,6 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     fun getCustomerInfoResult(): LiveData<GetCustomerIDResponse> {
         return updateCustomerInfo
-    }
-
-    fun getCity(context: Context): LiveData<BaseResponse> {
-        return CityRepository.getCities(context).toLiveData()
     }
 
     fun getCustomerInfo(InternalSourceId: String, clientId: String) {
