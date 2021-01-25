@@ -56,7 +56,7 @@ import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.onboarding.nowfloats.model.channel.*
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.LocalSessionModel
-import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyDigitalCardShareDialog
+import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 import com.onboarding.nowfloats.ui.webview.WebViewBottomDialog
 import java.util.*
 import kotlin.collections.ArrayList
@@ -362,9 +362,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun visitingCard() {
     session?.let {
-      val dialogCard = MyDigitalCardShareDialog()
+      val dialogCard = VisitingCardSheet()
       dialogCard.setData(getLocalSession(it))
-      dialogCard.show(this@DashboardFragment.parentFragmentManager, MyDigitalCardShareDialog::class.java.name)
+      dialogCard.show(this@DashboardFragment.parentFragmentManager, VisitingCardSheet::class.java.name)
     }
   }
 

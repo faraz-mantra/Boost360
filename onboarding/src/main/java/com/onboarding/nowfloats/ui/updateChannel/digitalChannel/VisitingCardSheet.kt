@@ -42,7 +42,7 @@ import kotlin.collections.ArrayList
 
 const val WA_KEY = "58ede4d4ee786c1604f6c535"
 
-open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
+open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
 
   private var messageCard: String? = null
   private var isWhatsApp: Boolean? = null
@@ -143,7 +143,7 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
   private fun setAdapterCard(cardList: ArrayList<DigitalCardData>) {
     cardList.add(0, cardList.removeAt(getLastShareCard()))
     binding?.pagerDigitalCard?.apply {
-      val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, cardList, this@MyDigitalCardShareDialog)
+      val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, cardList, this@VisitingCardSheet)
       offscreenPageLimit = 3
       isUserInputEnabled = true
       adapter = adapterPager3
