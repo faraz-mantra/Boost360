@@ -23,8 +23,6 @@ import com.boost.upgrades.ui.cart.CartViewModel
 import com.boost.upgrades.utils.Utils.isValidGSTIN
 import com.boost.upgrades.utils.Utils.isValidMail
 import com.boost.upgrades.utils.Utils.isValidMobile
-import com.framework.extensions.observeOnce
-import com.onboarding.nowfloats.rest.response.ResponseDataCity
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.checkoutkyc_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.*
