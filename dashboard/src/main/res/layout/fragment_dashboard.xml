@@ -260,6 +260,7 @@
     android:layout_marginHorizontal="@dimen/size_16"
     android:background="@drawable/bg_button_proceed"
     android:text="DUMMY STAFF FLOW"
+
     android:textColor="@color/white" />
             <include
               android:id="@+id/recommended_task"

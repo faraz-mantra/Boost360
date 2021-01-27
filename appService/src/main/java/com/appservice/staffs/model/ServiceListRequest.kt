@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class ServiceListRequest(
 
 	@field:SerializedName("FilterBy")
-	val filterBy: FilterBy? = null,
+	val filterBy: FilterBy? = FilterBy("ALL",0,0),
 
 	@field:SerializedName("Category")
 	val category: String? = null,

@@ -607,10 +607,10 @@
                                 android:layout_marginTop="@dimen/size_10"
                                 android:layout_marginBottom="@dimen/size_14"
                                 android:includeFontPadding="false"
-                                android:text="Clients can book this product for FREE."
+                                android:text="@string/customers_can_only_view_and_enquire_about_this_product"
                                 android:textColor="@color/warm_grey"
                                 android:textSize="12sp"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 app:fontFamily="@font/regular" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>

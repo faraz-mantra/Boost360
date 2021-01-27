@@ -34,26 +34,6 @@ data class StaffCreateProfileRequest(
 		var age: Int? = null,
 
 		@field:SerializedName("specialisations")
-		var specialisations: List<StaffSpecialisationsItem?>? = null,
+		var specialisations: List<SpecialisationsItem?>? = null,
 ) : Serializable, BaseResponse()
 
-data class StaffSpecialisationsItem(
-
-		@field:SerializedName("value")
-		var value: String? = null,
-
-		@field:SerializedName("key")
-		var key: String? = null,
-) : Serializable, BaseResponse()
-
-data class StaffImage(
-
-		@field:SerializedName("image")
-		var image: String? = null,
-
-		@field:SerializedName("fileName")
-		var fileName: String? = null,
-
-		@field:SerializedName("imageFileType")
-		var imageFileType: String? = null,
-) : Serializable, BaseResponse()

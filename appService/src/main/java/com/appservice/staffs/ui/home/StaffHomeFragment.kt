@@ -43,8 +43,7 @@ class StaffHomeFragment : AppBaseFragment<FragmentStaffHomeBinding, BaseViewMode
         // Handle item selection
         return when (item.itemId) {
             R.id.menu_add -> {
-                val bundle: Bundle = Bundle.EMPTY
-                startStaffFragmentActivity(baseActivity, FragmentType.STAFF_ADD_FRAGMENT, bundle, clearTop = false, isResult = false)
+                startStaffFragmentActivity(baseActivity, FragmentType.STAFF_ADD_FRAGMENT, clearTop = false, isResult = false)
                 true
             }
             else -> super.onOptionsItemSelected(item)

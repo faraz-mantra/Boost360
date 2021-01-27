@@ -36,11 +36,21 @@ import kotlinx.android.synthetic.main.item_preview_image.view.*
 import java.io.ByteArrayOutputStream
 
 class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffViewModel>() {
+    private var resultCode: Int? = 0
+    private var isAvailable: Boolean? = false
+    private lateinit var yearOfExperience: String
+    private lateinit var staffDescription: String
+    private var staffAge: Int = 0
+    private lateinit var staffName: String
+    private lateinit var specializationList: ArrayList<SpecialisationsItem>
+    private lateinit var serviceListId: java.util.ArrayList<String>
+    private lateinit var specialization: String
+    private lateinit var staffImage: StaffImage
     private lateinit var genderArray: Array<String>
     private var imageUri: Uri? = null
     private var isEdit: Boolean? = null
     private var staffProfile: StaffCreateProfileRequest? = StaffCreateProfileRequest()
-    private var servicesList: List<DataItemService>? = null
+    private var servicesList: ArrayList<DataItemService>? = null
     private var staffDetails: StaffDetailsResult? = null
 
     companion object {
@@ -74,14 +84,18 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     }
 
     private fun updatePreviousData() {
-//        let { activity?.glideLoad(binding?.civStaffImg!!, staffDetails?.tileImageUrl.toString(), R.drawable.dummy_staff_img) }
+        val specialisations = staffDetails?.specialisations
         setImage(listOf(staffDetails?.tileImageUrl.toString()))
         binding?.etvName?.setText(staffDetails?.name.toString())
         binding?.etvStaffDescription?.setText(staffDetails?.description.toString())
         binding?.spinnerGender?.setSelection(genderArray.toList().indexOf(staffDetails?.gender))
         binding?.cetAge?.setText(staffDetails?.age.toString())
-        binding?.etvSpecialization?.setText(staffDetails?.specialisations?.joinToString { "" })
+        if (specialisations?.isNullOrEmpty() == false)
+            binding?.etvSpecialization?.setText(specialisations[0]?.value)
         binding?.edtExperience?.setText(staffDetails?.experience.toString())
+        binding?.btnSave?.text = "UPDATE"
+        binding?.toggleIsAvailable?.isOn = staffDetails?.isAvailable!!
+        setServicesList()
 
 
     }
@@ -107,6 +121,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
             }
             binding?.rlServiceProvided -> {
+
                 startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SERVICES_PROVIDED)
             }
             binding?.rlScheduledBreaks -> {
@@ -116,23 +131,73 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 openExperienceDetail()
             }
             binding?.btnSave -> {
-                if (isValid()) {
-                    createStaffProfile()
+                when {
+                    (isEdit == false || isEdit == null) && isValid() -> {
+                        createStaffProfile()
+                    }
+                }
+                when {
+                    isEdit == true && isValid() -> {
+                        updateStaffProfile()
+                    }
                 }
             }
         }
     }
 
+    private fun updateStaffImage() {
+        viewModel?.updateStaffImage(StaffUpdateImageRequest(staffDetails?.id, staffImage))?.observe(viewLifecycleOwner, {
+            when (it.status) {
+                200 -> {
+
+                }
+                else -> {
+                }
+            }
+
+        })
+    }
+
+    private fun updateStaffProfile() {
+        val staffGender = binding?.spinnerGender?.selectedItem.toString()
+        viewModel?.updateStaffProfile(
+                StaffProfileUpdateRequest(isAvailable, getServiceIds(), staffGender, UserSession.fpId, name = staffName, staffDescription,
+                        experience = yearOfExperience.toInt(), staffDetails?.id, staffAge, specializationList
+                ))?.observe(viewLifecycleOwner, { t ->
+            when (t.status) {
+                200 -> {
+                    showShortToast("profile updated")
+                    baseActivity.setResult(AppCompatActivity.RESULT_OK)
+                    baseActivity.finish()
+
+                }
+                else -> {
+                    showShortToast("something went wrong")
+                }
+            }
+
+
+        })
+
+    }
+
+    private fun getServiceIds(): ArrayList<String> {
+        val serviceIds = ArrayList<String>()
+        servicesList?.filter { serviceIds.add(it.id!!) }
+        return serviceIds
+    }
+
+
     private fun isValid(): Boolean {
-        val specialization = binding?.etvSpecialization?.text.toString()
-        val serviceListId = ArrayList<String>()
-        val specializationList = ArrayList<StaffSpecialisationsItem>()
-        val staffName = binding?.etvName?.text.toString()
-        val staffAge = binding?.cetAge?.text.toString().toIntOrNull() ?: 0
-        val staffDescription = binding?.etvStaffDescription?.text.toString()
+        this.specialization = binding?.etvSpecialization?.text.toString()
+        this.serviceListId = ArrayList()
+        this.specializationList = ArrayList()
+        this.staffName = binding?.etvName?.text.toString()
+        this.staffAge = binding?.cetAge?.text.toString().toIntOrNull() ?: 0
+        this.staffDescription = binding?.etvStaffDescription?.text.toString()
         val staffGender = binding?.spinnerGender?.isHintSelected()
-        val yearOfExperience = binding?.edtExperience?.text.toString()
-        val isAvailable = binding?.toggleIsAvailable?.isOn
+        this.yearOfExperience = binding?.edtExperience?.text.toString()
+        this.isAvailable = binding?.toggleIsAvailable?.isOn
 
         if (staffName.isBlank()) {
             showLongToast("Enter Staff Name")
@@ -153,60 +218,52 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             showLongToast("please choose image")
             return false
         }
+        specializationList.add(SpecialisationsItem(specialization, "key"))
         val imageExtension: String = imageUri!!.toString().substring(imageUri.toString().lastIndexOf("."))
-        val imageToByteArray: ByteArray = imageToByteArray()
-        servicesList?.forEach { serviceListId.add(it.id!!) }
-        staffProfile?.age = staffAge
-        staffProfile?.isAvailable = isAvailable
-        staffProfile?.description = staffDescription
-        staffProfile?.gender = binding?.spinnerGender?.selectedItem.toString()
-        staffProfile?.experience = yearOfExperience.toIntOrNull() ?: 0
-        staffProfile?.floatingPointTag = UserSession.fpId
-        staffProfile?.name = staffName
-        staffProfile?.serviceIds = serviceListId
-        staffProfile?.image = StaffImage(image = "data:image/png;base64,${Base64.encodeToString(imageToByteArray, Base64.DEFAULT)}",
-                fileName = "$staffName$imageExtension", imageFileType = imageExtension.removePrefix("."))
-        for ((index, s) in specialization.split(" ").withIndex()) {
-            specializationList.add(StaffSpecialisationsItem(s, "key$index"))
+        if (isEdit == null || isEdit == false) {
+            val imageToByteArray: ByteArray = imageToByteArray()
+            servicesList?.forEach { serviceListId.add(it.id!!) }
+            staffProfile?.age = staffAge
+            staffProfile?.isAvailable = isAvailable
+            staffProfile?.description = staffDescription
+            staffProfile?.gender = binding?.spinnerGender?.selectedItem.toString()
+            staffProfile?.experience = yearOfExperience.toIntOrNull() ?: 0
+            staffProfile?.floatingPointTag = UserSession.fpId
+            staffProfile?.name = staffName
+            staffProfile?.serviceIds = serviceListId
+            this.staffImage = StaffImage(image = "data:image/png;base64,${Base64.encodeToString(imageToByteArray, Base64.DEFAULT)}",
+                    fileName = "$staffName$imageExtension", imageFileType = imageExtension.removePrefix("."))
+            staffProfile?.image = staffImage
+            staffProfile?.specialisations = specializationList
         }
-        staffProfile?.specialisations = specializationList
-
         return true
-
-
     }
-
     private fun createStaffProfile() {
         viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, { t ->
             when (t.status) {
                 200 -> {
                     showShortToast("profile created")
-
+                    baseActivity.setResult(AppCompatActivity.RESULT_OK)
+                    baseActivity.finish()
                 }
                 else -> {
                     showShortToast("something went wrong")
                 }
             }
-
-
         })
-        showShortToast("creating profile")
     }
-
     private fun imageToByteArray(): ByteArray {
         val bm: Bitmap = BitmapFactory.decodeFile(imageUri!!.toString())
         val byteArrayOutStream = ByteArrayOutputStream()
         bm.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutStream) // bm is the bitmap object
         return byteArrayOutStream.toByteArray()
     }
-
     private fun openImagePicker() {
         val filterSheet = ImagePickerBottomSheet()
         filterSheet.isHidePdf(true)
         filterSheet.onClicked = { openImagePicker(it) }
         filterSheet.show(this@StaffDetailsFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
     }
-
     private fun openImagePicker(it: ClickType) {
         val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
         ImagePicker.Builder(baseActivity)
@@ -215,7 +272,6 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
                 .enableDebuggingMode(true).build()
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when {
@@ -224,21 +280,36 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 setImage(mPaths)
             }
             requestCode == Constants.REQUEST_CODE_SERVICES_PROVIDED && resultCode == AppCompatActivity.RESULT_OK -> {
-                this.servicesList = data!!.extras!![Constants.SERVICES_LIST] as List<DataItemService>
-                setServicesList()
+                this.servicesList?.clear()
+                this.resultCode = resultCode
+                this.servicesList = data!!.extras!![Constants.SERVICES_LIST] as ArrayList<DataItemService>
+                val serviceName = ArrayList<String>()
+                servicesList?.forEach { dataItem -> serviceName.add(dataItem.name!!) }
+                binding!!.ctvServices.text = serviceName.joinToString(" ,", limit = 5, truncated = "5 more")
             }
             requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
             }
         }
 
     }
-
     private fun setServicesList() {
-        val services = StringBuilder()
-        servicesList?.forEach { dataItem -> services.append("${dataItem.name}, ") }
-        binding!!.ctvServices.text = services
+        val serviceName = ArrayList<String>()
+        if (isEdit == true && 0== resultCode) {
+            viewModel!!.getServiceListing(ServiceListRequest(floatingPointTag = UserSession.fpId)
+            ).observe(viewLifecycleOwner, {
+                when (it.status) {
+                    200 -> {
+                        val data = (it as ServiceListResponse).result!!.data!!
+                        val servicesProvided = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
+                        servicesProvided.forEach { itemService -> serviceName.add(itemService.name!!) }
+                        binding!!.ctvServices.text = serviceName.joinToString(" ,", limit = 5, truncated = "5 more")
+                    }
+                    else -> {
+                    }
+                }
+            })
+        }
     }
-
     private fun setImage(mPaths: List<String>) {
         this.imageUri = Uri.parse(mPaths[0])
         let { activity?.glideLoad(binding?.civStaffImg!!, imageUri.toString(), R.drawable.ic_staff_img_blue) }
@@ -259,7 +330,6 @@ class HintAdapter<T>(context: Context, resource: Int, objects: Array<T>) :
         // The last item will be the hint.
         return if (count > 0) count - 1 else count
     }
-
     override fun isEnabled(position: Int): Boolean {
         return when (position) {
             count -> false
@@ -275,7 +345,6 @@ class HintAdapter<T>(context: Context, resource: Int, objects: Array<T>) :
         else textView.setTextColor(Color.BLACK)
         return view
     }
-
 }
 
 fun Spinner.setHintAdapter(context: Context, list: Array<String>) {
