@@ -2,6 +2,7 @@ package com.appservice.rest.repository
 
 import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
+import com.appservice.model.ProductDimensionRequest
 import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
@@ -60,4 +61,8 @@ object KitWebActionRepository : AppBaseRepository<KitWebActionRemoteData, AppBas
   override fun getApiClient(): Retrofit {
     return KitWebActionApiClient.shared.retrofit
   }
+
+//  fun productAddData(request: ProductDimensionRequest): Observable<BaseResponse> {
+//    return makeRemoteRequest(remoteDataSource.addProductDimensionDetails(request),TaskCode.POST_UPDATE_PRODUCT)
+//  }
 }

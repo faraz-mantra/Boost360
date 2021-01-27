@@ -1,6 +1,7 @@
 package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
+import com.appservice.model.ProductDimensionRequest
 import com.appservice.model.serviceProduct.Product
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
@@ -73,4 +74,7 @@ class ServiceViewModel : BaseViewModel() {
   fun userAccountDetails(fpId: String?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatRepository.userAccountDetail(fpId, clientId).toLiveData()
   }
+//  fun addProductDetails(request:ProductDimensionRequest): LiveData<BaseResponse> {
+//    return KitWebActionRepository.productAddData(request).toLiveData()
+//  }
 }

@@ -38,7 +38,9 @@ object StaffNowFloatsRepository : AppBaseRepository<StaffNowFloatsRemoteData, Ap
     fun updateProfile(request: StaffProfileUpdateRequest?): Observable<BaseResponse> {
         return makeRemoteRequest(remoteDataSource.staffProfileUpdate(request), TaskCode.GET_STAFFS_PROFILE_LIST)
     }
-
+    fun updateImage(request: StaffUpdateImageRequest?): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.staffUpdateImage(request), TaskCode.UPDATE_ACCOUNT)
+    }
     fun addStaffTiming(request: StaffTimingAddUpdateRequest?): Observable<BaseResponse> {
         return makeRemoteRequest(remoteDataSource.staffAddTimings(request), TaskCode.POST_ADD_SERVICE_TIMING)
     }

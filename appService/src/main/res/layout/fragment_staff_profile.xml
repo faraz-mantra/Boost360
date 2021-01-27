@@ -76,7 +76,7 @@
                 android:layout_below="@id/ctv_edit"
                 android:layout_marginTop="@dimen/size_10"
                 android:fontFamily="@font/open_sans"
-                android:text="About Gaurav Singh"
+                tools:text="About Gaurav Singh"
                 android:textColor="@color/black"
                 android:textFontWeight="600"
                 android:textSize="14sp" />
@@ -89,7 +89,7 @@
                 android:layout_marginTop="@dimen/size_5"
                 android:maxHeight="240dp"
                 android:fontFamily="@font/open_sans"
-                android:text="Gaurav is from Mumbai, Maharashtra. He works full-time at All in one  Spa. He is 24 years old. He likes to play table tennis and Cricket. His hobbies are playing gittar and singing songs."
+                tools:text="Gaurav is from Mumbai, Maharashtra. He works full-time at All in one  Spa. He is 24 years old. He likes to play table tennis and Cricket. His hobbies are playing gittar and singing songs."
                 android:textColor="@color/gray_4e4e4e"
                 android:textSize="14sp" />
 
@@ -112,7 +112,7 @@
                 android:layout_below="@id/ctv_heading_specialization"
                 android:layout_marginTop="@dimen/size_5"
                 android:fontFamily="@font/open_sans"
-                android:text="Ani-aging Therapy, Hair fall treatment, face massage therapy."
+                tools:text="Ani-aging Therapy, Hair fall treatment, face massage therapy."
                 android:textColor="@color/gray_4e4e4e"
                 android:textSize="14sp" />
 
@@ -135,7 +135,7 @@
                 android:layout_below="@id/ctv_heading_experience"
                 android:layout_marginTop="@dimen/size_5"
                 android:fontFamily="@font/open_sans"
-                android:text="2-3 Years"
+                tools:text="2-3 Years"
                 android:textColor="@color/gray_4e4e4e"
                 android:textSize="14sp" />
 
@@ -205,6 +205,7 @@
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/ctv_edit_leaves"
                 android:layout_width="wrap_content"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@id/ctv_heading_leaves"
                 android:layout_alignParentEnd="true"
@@ -217,6 +218,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rv_timing"
                 android:layout_marginTop="@dimen/size_10"
+                android:visibility="gone"
                 android:fontFamily="@font/open_sans"
                 android:text="@string/upcoming_leaves"
                 android:textColor="@color/black"
@@ -230,6 +232,7 @@
                 android:layout_below="@id/ctv_heading_leaves"
                 android:layout_marginTop="@dimen/size_5"
                 android:fontFamily="@font/open_sans"
+                android:visibility="gone"
                 android:text="@string/upcoming_leave_s"
                 android:textColor="#4A90E2"
                 android:textSize="12sp" />
@@ -241,6 +244,7 @@
                 android:layout_below="@id/ctv_leaves_subheading"
                 android:layout_marginTop="@dimen/size_10"
                 android:fontFamily="@font/open_sans"
+                android:visibility="gone"
                 android:text="🔵 Mon, 23 Dec 2020 - Wed, 25 Dec 2020"
                 android:textColor="@color/gray_4e4e4e"
                 android:textSize="14sp" />

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.appservice.R
@@ -36,6 +38,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
+  private var length: Double? = 0.0
+  private var height: Double? = 0.0
+  private var thickness: Double? = 0.0
+  private var weight: Double? = 0.0
   private var product: Product? = null
   private var isEdit: Boolean? = null
   private var tagList = ArrayList<String>()
@@ -44,7 +50,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
   private var adapterSpec: AppBaseRecyclerViewAdapter<KeySpecification>? = null
   private var adapterImage: AppBaseRecyclerViewAdapter<FileModel>? = null
   private var availableStock = 0;
-  private var maxOrder = 0;
+//  private var maxOrder = 0;
 
   private var secondaryDataImage: ArrayList<DataImage>? = null
   private var gstProductData: DataG? = null
@@ -67,9 +73,9 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
     super.onCreateView()
     WebEngageController.trackEvent("Service other information catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
 
-    setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage,
+    setOnClickListener(
             binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.civDecreseStock,
-            binding?.civIncreaseStock, binding?.civIncreaseQuantityOrder, binding?.civDecreseQuantityOrder)
+            binding?.civIncreaseStock)
     product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? Product
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? DataG
@@ -89,29 +95,144 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
   }
 
   private fun setUiText() {
+    length = gstProductData?.length.toString().toDoubleOrNull() ?: 0.0
+    height = gstProductData?.height.toString().toDoubleOrNull() ?: 0.0
+    thickness = gstProductData?.width.toString().toDoubleOrNull() ?: 0.0
+    weight = gstProductData?.weight.toString().toDoubleOrNull() ?: 0.0
 //    binding?.edtProductCategory?.setText(product?.category ?: "")
-    maxOrder = product?.maxCodOrders!!
+//    maxOrder = product?.maxCodOrders!!
     binding?.specKey?.setText(product?.keySpecification?.key)
     binding?.specValue?.setText(product?.keySpecification?.value)
     availableStock = product?.availableUnits!!
     binding?.edtBrand?.setText(product?.brandName ?: "")
     binding?.ctvCurrentStock?.text = product?.availableUnits.toString()
-    binding?.ctvQuantityOrderStatus?.text = product?.maxCodOrders.toString()
-    if (gstProductData != null) binding?.edtGst?.setText("${(gstProductData?.gstSlab ?: 0.0).toInt()} %")
+//    binding?.ctvQuantityOrderStatus?.text = product?.maxCodOrders.toString()
+    if (gstProductData != null) {
+      binding?.edtGst?.setText("${(gstProductData?.gstSlab ?: 0.0).toInt()} %")
+    }
+    binding?.cetLength?.setText(length.toString())
+    binding?.cetThickness?.setText(thickness.toString())
+    binding?.cetHeight?.setText(height.toString())
+    binding?.cetWeight?.setText(weight.toString())
     setAdapter()
-    val listYesNo = mutableListOf(SpinnerImageModel("YES" to true, R.drawable.ic_dot_green), SpinnerImageModel("NO" to false, R.drawable.ic_dot_red))
-    binding?.spinnerOnlinePayment?.adapter = CustomDropDownAdapter(baseActivity, listYesNo)
-    binding?.spinnerCod?.adapter = CustomDropDownAdapter(baseActivity, listYesNo)
-    when (product?.codAvailable) {
-      true -> binding?.spinnerCod?.setSelection(0)
-      else -> binding?.spinnerCod?.setSelection(1)
+    val stockAdapter = mutableListOf(SpinnerImageModel("Limited Stock" to true, R.drawable.ic_dot_green), SpinnerImageModel("Unlimited Stock" to false, R.drawable.ic_infinite))
+    binding?.spinnerStock?.adapter = CustomDropDownAdapter(baseActivity, stockAdapter)
+    binding?.spinnerStock?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        return when (stockAdapter[p2] == stockAdapter[1]) {
+          true -> {
+            binding?.llStockChange?.visibility = View.INVISIBLE
+          }
+          else -> {
+            binding?.llStockChange?.visibility = View.VISIBLE
+
+          }
+        }
+      }
+
+      override fun onNothingSelected(p0: AdapterView<*>?) {
+        //implementation not required
+      }
+
     }
-    when (product?.prepaidOnlineAvailable) {
-      true -> binding?.spinnerOnlinePayment?.setSelection(0)
-      else -> binding?.spinnerOnlinePayment?.setSelection(1)
-    }
+    setSpinners()
+    //    binding?.spinnerCod?.adapter = CustomDropDownAdapter(baseActivity, stockAdapter)
+//    when (product?.codAvailable) {
+//      true -> binding?.spinnerCod?.setSelection(0)
+//      else -> binding?.spinnerCod?.setSelection(1)
+//    }
+//    when (product?.prepaidOnlineAvailable) {
+//      true -> binding?.spinnerOnlinePayment?.setSelection(0)
+//      else -> binding?.spinnerOnlinePayment?.setSelection(1)
+//    }
+
     binding?.specKey?.setText(product?.keySpecification?.key)
     binding?.specValue?.setText(product?.keySpecification?.value)
+  }
+
+  private fun setSpinners() {
+    val lengthArray = mutableListOf("INCH", "METERS")
+    val weightArray = mutableListOf("KGS", "MGS")
+    binding?.spinnerHeight?.adapter = ArrayAdapter(baseActivity, R.layout.support_simple_spinner_dropdown_item, lengthArray)
+    binding?.spinnerThickness?.adapter = ArrayAdapter(baseActivity, R.layout.support_simple_spinner_dropdown_item, lengthArray)
+    binding?.spinnerWeight?.adapter = ArrayAdapter(baseActivity, R.layout.support_simple_spinner_dropdown_item, weightArray)
+    binding?.spinnerLength?.adapter = ArrayAdapter(baseActivity, R.layout.support_simple_spinner_dropdown_item, lengthArray)
+    binding?.spinnerHeight?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        if (p0?.selectedItem.toString() == lengthArray[0]) {
+          height = binding?.cetHeight?.text.toString().toDoubleOrNull() ?: 0.0
+          binding?.cetHeight?.setText(convertInchToMeters(height).toString())
+        } else {
+          binding?.cetHeight?.setText(convertMetersToInch(height).toString())
+        }
+
+      }
+
+      override fun onNothingSelected(p0: AdapterView<*>?) {
+      }
+
+    }
+    binding?.spinnerLength?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        if (p0?.selectedItem.toString() == lengthArray[0]) {
+          length = binding?.cetLength?.text.toString().toDoubleOrNull() ?: 0.0
+          binding?.cetLength?.setText(convertInchToMeters(length).toString())
+        } else {
+          binding?.cetLength?.setText(convertMetersToInch(length).toString())
+        }
+      }
+
+      override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
+      }
+
+    }
+    binding?.spinnerWeight?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        if (p0?.selectedItem.toString() == weightArray[0]) {
+          weight = binding?.cetWeight?.text.toString().toDoubleOrNull() ?: 0.0
+          binding?.cetWeight?.setText(convertMgToKilo(weight).toString())
+        } else {
+          binding?.cetWeight?.setText(convertKiloToMg(weight).toString())
+        }
+      }
+
+      override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
+      }
+
+    }
+    binding?.spinnerThickness?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        if (p0?.selectedItem.toString() == lengthArray[0]) {
+          thickness = binding?.cetThickness?.text.toString().toDoubleOrNull() ?: 0.0
+          binding?.cetThickness?.setText(convertInchToMeters(thickness).toString())
+        } else {
+          binding?.cetThickness?.setText(convertMetersToInch(thickness).toString())
+        }
+      }
+
+      override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
+      }
+
+    }
+  }
+
+  private fun convertMgToKilo(mg: Double?): Double? {
+    return mg?.div(1000)
+  }
+
+  private fun convertKiloToMg(kg: Double?): Double? {
+    return kg?.times(1000)
+  }
+
+  private fun convertMetersToInch(length: Double?): Double? {
+    return length?.times(39.3701)
+  }
+
+  private fun convertInchToMeters(length: Double?): Double? {
+    return length?.div(39.3701)
   }
 
   private fun specificationAdapter() {
@@ -141,18 +262,6 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
       }
       binding?.btnConfirm -> validateAnnGoBack()
       binding?.btnClickPhoto -> openImagePicker()
-      binding?.civDecreseQuantityOrder -> {
-        when {
-          maxOrder > 0 -> {
-            maxOrder--
-            binding?.ctvQuantityOrderStatus?.text = maxOrder.toString()
-          }
-        }
-      }
-      binding?.civIncreaseQuantityOrder -> {
-        maxOrder++
-        binding?.ctvQuantityOrderStatus?.text = maxOrder.toString()
-      }
       binding?.civDecreseStock -> when{
         availableStock>0 ->{
           availableStock--
@@ -187,8 +296,8 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
   private fun validateAnnGoBack() {
 //    val serviceCategory = binding?.edtProductCategory?.text?.toString() ?: ""
-    val spinnerCod = binding?.spinnerCod?.selectedItem as SpinnerImageModel
-    val spinnerOnlinePayment = binding?.spinnerOnlinePayment?.selectedItem as SpinnerImageModel
+//    val spinnerCod = binding?.spinnerCod?.selectedItem as SpinnerImageModel
+//    val spinnerOnlinePayment = binding?.spinnerOnlinePayment?.selectedItem as SpinnerImageModel
     val brand = binding?.edtBrand?.text?.toString() ?: ""
     val keySpecification = binding?.specKey?.text?.toString() ?: ""
     val valueSpecification = binding?.specValue?.text?.toString() ?: ""
@@ -221,23 +330,27 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
         WebEngageController.trackEvent("Other information confirm", "SERVICE CATALOGUE ADD/UPDATE", "")
 //        product?.category = serviceCategory
         product?.brandName = brand
-        product?.tags = tagList
-        when (spinnerCod.state.first) {
-          "YES" -> product?.codAvailable = true
-          "NO" -> product?.codAvailable = false
-        }
-        when (spinnerOnlinePayment.state.first) {
-          "YES" -> product?.prepaidOnlineAvailable = true
-          "NO" -> product?.prepaidOnlineAvailable = false
-        }
+//        product?.tags = tagList
+//        when (spinnerCod.state.first) {
+//          "YES" -> product?.codAvailable = true
+//          "NO" -> product?.codAvailable = false
+//        }
+//        when (spinnerOnlinePayment.state.first) {
+//          "YES" -> product?.prepaidOnlineAvailable = true
+//          "NO" -> product?.prepaidOnlineAvailable = false
+//        }
         product?.keySpecification?.key = keySpecification
         product?.keySpecification?.value = valueSpecification
         product?.tags = tagList
-        product?.maxCodOrders = maxOrder
+//        product?.maxCodOrders = maxOrder
         product?.availableUnits = availableStock
         product?.otherSpecification = otherSpec
         if (gstProductData == null) gstProductData = DataG()
         gstProductData?.gstSlab = gst.toDoubleOrNull() ?: 0.0
+        gstProductData?.height = height ?: 0.0
+        gstProductData?.length = length ?: 0.0
+        gstProductData?.width = thickness ?: 0.0
+        gstProductData?.weight = weight ?: 0.0
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)
         output.putExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)

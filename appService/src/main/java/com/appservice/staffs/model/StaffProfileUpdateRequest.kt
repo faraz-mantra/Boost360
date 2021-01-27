@@ -4,28 +4,35 @@ import com.google.gson.annotations.SerializedName
 
 data class StaffProfileUpdateRequest(
 
-	@field:SerializedName("ServiceIds")
-	val serviceIds: List<String?>? = null,
+	@field:SerializedName("isAvailable")
+	var isAvailable: Boolean? = null,
 
-	@field:SerializedName("Experience")
-	val experience: Int? = null,
+	@field:SerializedName("serviceIds")
+	var serviceIds: List<String?>? = null,
 
-	@field:SerializedName("Description")
-	val description: String? = null,
+	@field:SerializedName("gender")
+	var gender: String? = null,
 
-	@field:SerializedName("Specialisations")
-	val specialisations: List<SpecialisationsItem?>? = null,
+	@field:SerializedName("floatingPointTag")
+	var floatingPointTag: String? = null,
 
-	@field:SerializedName("StaffId")
-	val staffId: String? = null,
+	@field:SerializedName("name")
+	var name: String? = null,
 
-	@field:SerializedName("IsAvailable")
-	val isAvailable: Boolean? = null,
+	@field:SerializedName("description")
+	var description: String? = null,
 
-	@field:SerializedName("FloatingPointTag")
-	val floatingPointTag: String? = null,
+	@field:SerializedName("experience")
+	var experience: Int? = null,
 
-	@field:SerializedName("Name")
-	val name: String? = null
+	@field:SerializedName("staffId")
+	var staffId: String? = null,
+
+	@field:SerializedName("age")
+	var age: Int? = null,
+
+	@field:SerializedName("specialisations")
+	var specialisations: List<SpecialisationsItem?>? = null
 )
+
 
