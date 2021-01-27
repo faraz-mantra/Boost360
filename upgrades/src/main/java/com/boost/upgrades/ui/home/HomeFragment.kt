@@ -94,17 +94,6 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     var offeredBundlePrice = 0
     var originalBundlePrice = 0
     var featuresList: List<FeaturesModel>? = null
-    var categoryMap: HashMap<String, String> = hashMapOf(
-            "DOC" to "Doctors & Health Specialists",
-            "EDU" to "Education & e-Coaching",
-            "HOS" to "Clinics & Hospitals",
-            "SPA" to "Spas & Wellness",
-            "HOT" to "Hotels & Motels",
-            "CAF" to "Restaurants & Cafes",
-            "SAL" to  "Beauty & Salons",
-            "MFG" to "Manufacturing & Equipment",
-            "RTL" to  "Other & Retail Business",
-            "SVC" to "Other & Service Business")
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -185,7 +174,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
         }
 
-//        viewModel.getCategoriesFromAssetJson(activity!!, (activity as UpgradeActivity).experienceCode)
+        viewModel.getCategoriesFromAssetJson(activity!!, (activity as UpgradeActivity).experienceCode)
 
         share_refferal_code_btn.setOnClickListener {
             WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "Generic", "")
@@ -443,9 +432,6 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         }
 
         viewModel.loadUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
-        if(categoryMap.contains((activity as UpgradeActivity).experienceCode) ){
-        recommended_features_account_type.setText(categoryMap.get((activity as UpgradeActivity).experienceCode)!!.toLowerCase())
-        }
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -539,6 +525,13 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
         viewModel.getTotalActiveWidgetCount().observe(this, androidx.lifecycle.Observer {
             total_active_widget_count.text = it.toString()
+        })
+
+        viewModel.categoryResult().observe(this, androidx.lifecycle.Observer {
+            if(it != null){
+                recommended_features_account_type.setText(Html.fromHtml(it!!.toLowerCase()))
+            }
+
         })
 
         viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {

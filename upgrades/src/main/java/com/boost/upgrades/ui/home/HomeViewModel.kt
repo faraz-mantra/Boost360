@@ -47,6 +47,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var experienceCode: String = "SVC"
     var _fpTag: String = "ABC"
 
+    var categoryResult: MutableLiveData<String> = MutableLiveData()
+
     fun upgradeResult(): LiveData<List<WidgetModel>> {
         return updatesResult
     }
@@ -111,6 +113,28 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         experienceCode = code
         _fpTag = fpTag
 
+    }
+
+    fun categoryResult(): LiveData<String> {
+        return categoryResult
+    }
+
+    fun getCategoriesFromAssetJson(context: Context, expCode: String?) {
+        val data: String? = Utils.getAssetJsonData(context)
+        try {
+            val json_contact: JSONObject = JSONObject(data)
+            var jsonarray_info: JSONArray = json_contact.getJSONArray("data")
+            var i:Int = 0
+            var size:Int = jsonarray_info.length()
+            for (i in 0.. size-1) {
+                var json_objectdetail: JSONObject =jsonarray_info.getJSONObject(i)
+                if(json_objectdetail.getString("experience_code") == expCode){
+                    categoryResult.postValue(json_objectdetail.getString("category_Name") )
+                }
+            }
+        } catch (ioException: JSONException) {
+            ioException.printStackTrace()
+        }
     }
 
     fun loadUpdates(fpid: String, clientId: String) {
