@@ -77,7 +77,6 @@
                         app:textType="BODY_1" />
 
                     <com.framework.views.customViews.CustomTextView
-                        style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_30"
                         android:layout_marginTop="@dimen/size_5"
@@ -105,7 +104,6 @@
                         app:textType="BODY_1" />
 
                     <com.framework.views.customViews.CustomTextView
-                        style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_30"
                         android:layout_marginTop="@dimen/size_5"
@@ -141,7 +139,6 @@
                         app:textType="BODY_1" />
 
                     <com.framework.views.customViews.CustomTextView
-                        style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_30"
                         android:layout_marginTop="@dimen/size_5"
@@ -169,7 +166,6 @@
                         app:textType="BODY_1" />
 
                     <com.framework.views.customViews.CustomTextView
-                        style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_30"
                         android:layout_marginTop="@dimen/size_5"
@@ -198,7 +194,6 @@
                     app:textType="BODY_1" />
 
                 <com.framework.views.customViews.CustomEditText
-                    style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -226,7 +221,6 @@
                     app:textType="BODY_1" />
 
                 <com.framework.views.customViews.CustomTextView
-                    style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -235,24 +229,17 @@
                     tools:text="6 days 8 hrs" />
             </LinearLayout>
 
-            <FrameLayout
-                style="@style/ButtonStyle.Rounded.Solid"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/size_32"
-                android:layout_marginBottom="@dimen/size_16">
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/ctv_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="opensans"
-                    android:gravity="center"
-                    android:text="@string/confirm_block_calender"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textFontWeight="600"
-                    app:textType="BODY_1" />
-            </FrameLayout>
+            <com.framework.views.customViews.CustomButton
+                android:layout_width="match_parent"
+                android:textFontWeight="600"
+                android:id="@+id/btn_save"
+                android:textColor="@color/white"
+                android:fontFamily="@font/semi_bold"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:text="@string/confirm_block_calender"
+                android:background="@drawable/bg_button_proceed"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

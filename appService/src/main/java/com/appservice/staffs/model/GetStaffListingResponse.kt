@@ -75,12 +75,3 @@ data class Paging(
         val count: Int? = null
 ): Serializable, BaseResponse()
 
-data class SpecialisationsItem(
-
-        @field:SerializedName("Value")
-        val value: String? = null,
-
-        @field:SerializedName("Key")
-        val key: String? = null
-) : Serializable, BaseResponse() {
-}

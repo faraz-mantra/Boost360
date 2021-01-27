@@ -12,4 +12,5 @@ class StaffServiceViewHolder(binding: RecyclerItemServiceBinding) : AppBaseRecyc
         binding.ccbServices.text = "${data.name}"
         binding.ccbServices.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.SERVICE_ITEM_CLICK.ordinal) }
     }
+
 }

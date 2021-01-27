@@ -19,7 +19,7 @@ object EndPoints {
   const val STAFF_UPDATE_TIMING ="staff/v1/UpdateStaffTiming"
   const val STAFF_UPDATE_IMAGE ="staff/v1/UpdateStaffImage"
   const val STAFF_DELETE_IMAGE ="staff/v1/DeleteStaffImage"
-  const val GET_STAFF_DETAILS ="staff/v1/GetStaff?staffId=<string>"
+  const val GET_STAFF_DETAILS ="Staff/v1/GetStaffDetails"
 
 
   //TODO NFX API 2 WITH FLOAT

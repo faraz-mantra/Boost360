@@ -1,4 +1,4 @@
-package com.appservice.staffs.ui.home
+package com.appservice.staffs.ui
 
 object UserSession {
     var fpId: String? = null

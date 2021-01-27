@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Gravity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -17,7 +18,6 @@ import com.appservice.staffs.ui.details.StaffDetailsFragment
 import com.appservice.staffs.ui.home.StaffAddFragment
 import com.appservice.staffs.ui.home.StaffHomeFragment
 import com.appservice.staffs.ui.home.StaffProfileListingFragment
-import com.appservice.staffs.ui.home.UserSession
 import com.appservice.staffs.ui.profile.StaffProfileDetailsFragment
 import com.appservice.staffs.ui.services.StaffServicesFragment
 import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
@@ -42,6 +42,14 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     private var staffProfileListingFragment: StaffProfileListingFragment? = null
     override fun getLayout(): Int {
         return R.layout.activity_fragment_container
+    }
+
+    override fun getToolbarTitleGravity(): Int {
+        return when (fragmentType) {
+            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> Gravity.START
+            else -> super.getToolbarTitleGravity()
+        }
+
     }
 
     override fun getViewModelClass(): Class<BaseViewModel> {
@@ -81,7 +89,6 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
     public override fun getToolbar(): CustomToolbar {
         return when (fragmentType) {
-            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> toolbar
             else -> binding!!.appBarLayout.toolbar
         }
     }
@@ -143,6 +150,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
             FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT -> "Scheduled Breaks"
             FragmentType.STAFF_SERVICES_CONFIRM_FRAGMENT -> "Scheduled Breaks"
             FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> "STAFF LISTING"
+            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> "Staff Details"
             else -> super.getToolbarTitle()
         }
     }

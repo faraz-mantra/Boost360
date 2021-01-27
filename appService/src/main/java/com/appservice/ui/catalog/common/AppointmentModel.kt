@@ -2,11 +2,14 @@ package com.appservice.ui.catalog.common
 
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
 data class AppointmentModel(
-        var day: String? = null, var isTurnedOn: Boolean = false, var isAppliedOnAllDays: Boolean = false, var isAppliedOnAllDaysViewVisible: Boolean = false, var toTiming: String? = null, var fromTiming: String? = null, var recyclerViewItem: Int = RecyclerViewItemType.SESSION_ITEM_VIEW.getLayout(),
+        var day: String? = null,
+        var timeSlots: ArrayList<TimeSlot>? = null,
+        var isTurnedOn: Boolean = false, var isAppliedOnAllDays: Boolean = false, var isAppliedOnAllDaysViewVisible: Boolean = false, var toTiming: String? = null, var fromTiming: String? = null, var recyclerViewItem: Int = RecyclerViewItemType.SESSION_ITEM_VIEW.getLayout(),
 ) : AppBaseRecyclerViewItem, Serializable {
     override fun getViewType(): Int {
         return recyclerViewItem
@@ -21,17 +24,76 @@ data class AppointmentModel(
         return m
     }
 
-    fun getDefaultTimings(): ArrayList<AppointmentModel> {
-        val list = ArrayList<AppointmentModel>()
-        list.add(AppointmentModel(day = "Monday", isTurnedOn = false, isAppliedOnAllDays = false))
-        list.add(AppointmentModel(day = "Tuesday", isTurnedOn = false, isAppliedOnAllDays = false))
-        list.add(AppointmentModel(day = "Wednesday", isTurnedOn = false, isAppliedOnAllDays = false))
-        list.add(AppointmentModel(day = "Thursday", isTurnedOn = false, isAppliedOnAllDays = false))
-        list.add(AppointmentModel(day = "Friday", isTurnedOn = false, isAppliedOnAllDays = false))
-        list.add(AppointmentModel(day = "Saturday", isTurnedOn = false, isAppliedOnAllDays = false))
-        list.add(AppointmentModel(day = "Sunday", isTurnedOn = false, isAppliedOnAllDays = false))
-        return list
+    private fun isDayTurnedOn() {
+        timeSlots = ArrayList()
+        this.isTurnedOn = true
+        timeSlots?.add(TimeSlot())
+    }
+
+    fun applyOnAllDays(startTime: String, endTime: String) {
+        getDefaultTimings().forEach {
+            it.fromTiming = startTime
+            it.toTiming = endTime
+        }
+
+    }
+
+    fun deleteSession(sessionIndex: Int) {
+        timeSlots?.removeAt(sessionIndex)
+
+    }
+
+    fun changeDayTurned(dayTurned: Boolean) {
+        when {
+            dayTurned -> isDayTurnedOn()
+            else -> isDayTurnedOff()
+        }
+    }
+
+    private fun isDayTurnedOff() {
+        this.isTurnedOn = false
+        timeSlots?.clear()
+
+    }
+
+    fun addSession(data: AppointmentModel) {
+        timeSlots?.add(TimeSlot(data.fromTiming, data.toTiming))
+    }
+
+    fun removeApplyOnAllDays(data: AppointmentModel) {
+        getDefaultTimings().forEach { if (it != data) it.isTurnedOn = false }
+    }
+
+    companion object {
+        fun getDefaultTimings(): ArrayList<AppointmentModel> {
+            val list = ArrayList<AppointmentModel>()
+            list.add(AppointmentModel(day = "Monday", isTurnedOn = false, isAppliedOnAllDays = false))
+            list.add(AppointmentModel(day = "Tuesday", isTurnedOn = false, isAppliedOnAllDays = false))
+            list.add(AppointmentModel(day = "Wednesday", isTurnedOn = false, isAppliedOnAllDays = false))
+            list.add(AppointmentModel(day = "Thursday", isTurnedOn = false, isAppliedOnAllDays = false))
+            list.add(AppointmentModel(day = "Friday", isTurnedOn = false, isAppliedOnAllDays = false))
+            list.add(AppointmentModel(day = "Saturday", isTurnedOn = false, isAppliedOnAllDays = false))
+            list.add(AppointmentModel(day = "Sunday", isTurnedOn = false, isAppliedOnAllDays = false))
+            return list
+        }
     }
 }
 
+data class TimingsItem(
+
+        @field:SerializedName("time")
+        val time: TimeSlot? = null,
+
+        @field:SerializedName("day")
+        val day: String? = null,
+)
+
+data class TimeSlot(
+
+        @field:SerializedName("from")
+        var from: String? = null,
+
+        @field:SerializedName("to")
+        var to: String? = null,
+) : Serializable
 
