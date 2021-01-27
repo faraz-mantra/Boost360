@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "experience_code": "DOC",
+      "category_Name": "Doctors &\nHealth Specialists"
+    },
+    {
+      "experience_code": "EDU",
+      "category_Name": "Education\n& e-Coaching"
+    },
+    {
+      "experience_code": "HOS",
+      "category_Name": "Clinics &\nHospitals"
+    },
+    {
+      "experience_code": "SPA",
+      "category_Name": "Spas\n& Wellness"
+    },
+    {
+      "experience_code": "HOT",
+      "category_Name": "Hotels\n& Motels"
+    },
+    {
+      "experience_code": "CAF",
+      "category_Name": "Restaurants\n& Cafes"
+    },
+    {
+      "experience_code": "SAL",
+      "category_Name": "Beauty\n& Salons"
+    },
+    {
+      "experience_code": "MFG",
+      "category_Name": "Manufacturing\n& Equipment"
+    },
+    {
+      "experience_code": "RTL",
+      "category_Name": "Other\n& Retail Business"
+    },
+    {
+      "experience_code": "SVC",
+      "category_Name": "Other\n& Service Business"
+    }
+  ]
+}

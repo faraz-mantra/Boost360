@@ -165,4 +165,34 @@ object Utils {
       else -> "th"
     }
   }
+
+  fun getAssetJsonData(context: Context): String? {
+    val json: String
+    try {
+      val inputStream = context.getAssets().open("category_model_v3.json")
+      val size = inputStream.available()
+      val buffer = ByteArray(size)
+      inputStream.use { it.read(buffer) }
+      json = String(buffer)
+    } catch (ioException: IOException) {
+      ioException.printStackTrace()
+      return null
+    }
+    return json
+  }
+
+  fun getCityFromAssetJsonData(context: Context): String? {
+    val json: String
+    try {
+      val inputStream = context.getAssets().open("cities.json")
+      val size = inputStream.available()
+      val buffer = ByteArray(size)
+      inputStream.use { it.read(buffer) }
+      json = String(buffer)
+    } catch (ioException: IOException) {
+      ioException.printStackTrace()
+      return null
+    }
+    return json
+  }
 }
