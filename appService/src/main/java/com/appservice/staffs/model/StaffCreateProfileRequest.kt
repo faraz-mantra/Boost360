@@ -1,57 +1,59 @@
 package com.appservice.staffs.model
 
+import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class StaffCreateProfileRequest(
 
 		@field:SerializedName("image")
-		val image: StaffImage? = null,
+		var image: StaffImage? = null,
 
 		@field:SerializedName("isAvailable")
-		val isAvailable: Boolean? = null,
+		var isAvailable: Boolean? = null,
 
 		@field:SerializedName("serviceIds")
-		val serviceIds: List<String?>? = null,
+		var serviceIds: List<String?>? = null,
 
 		@field:SerializedName("gender")
-		val gender: String? = null,
+		var gender: String? = null,
 
 		@field:SerializedName("floatingPointTag")
-		val floatingPointTag: String? = null,
+		var floatingPointTag: String? = null,
 
 		@field:SerializedName("name")
-		val name: String? = null,
+		var name: String? = null,
 
 		@field:SerializedName("description")
-		val description: String? = null,
+		var description: String? = null,
 
 		@field:SerializedName("experience")
-		val experience: Int? = null,
+		var experience: Int? = null,
 
 		@field:SerializedName("age")
-		val age: Int? = null,
+		var age: Int? = null,
 
 		@field:SerializedName("specialisations")
-		val specialisations: List<StaffSpecialisationsItem?>? = null
-)
+		var specialisations: List<StaffSpecialisationsItem?>? = null,
+) : Serializable, BaseResponse()
 
 data class StaffSpecialisationsItem(
 
 		@field:SerializedName("value")
-		val value: String? = null,
+		var value: String? = null,
 
 		@field:SerializedName("key")
-		val key: String? = null
-)
+		var key: String? = null,
+) : Serializable, BaseResponse()
 
 data class StaffImage(
 
 		@field:SerializedName("image")
-		val image: String? = null,
+		var image: String? = null,
 
 		@field:SerializedName("fileName")
-		val fileName: String? = null,
+		var fileName: String? = null,
 
 		@field:SerializedName("imageFileType")
-		val imageFileType: String? = null
-)
+		var imageFileType: String? = null,
+) : Serializable, BaseResponse()

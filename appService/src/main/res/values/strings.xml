@@ -184,7 +184,6 @@
   <string name="staff_member_name">Staff member Name*</string>
   <string name="select_gender">Select gender*</string>
   <string name="add_staff_image">Add Staff Image</string>
-  <string name="full_name">Full name</string>
   <string name="write_the_this_staff_specialises_in">Write the this staff specialises in</string>
   <string name="specialization">Specialization*</string>
   <string name="staff_description_optional">Staff Description (optional)</string>
@@ -211,7 +210,7 @@
   <string name="start_time">Start time</string>
   <string name="till">Till</string>
   <string name="time">Time</string>
-  <string name="confirm_block_calender">"Confirm &amp; Block Calender"</string>
+  <string name="confirm_block_calender">Confirm &amp; Block Calender</string>
   <string name="break_duration">Break Duration</string>
   <string name="read_how_breaks_work">Read how breaks work</string>
   <string name="break_111">Break 111</string>
@@ -285,7 +284,10 @@
   <string name="to">to</string>
   <string name="apply_same_on_all_days">Apply same on all days</string>
     <string name="dropdown_options_1_1_2_3_4_5_5"><![CDATA[Dropdown options: <1, 1, 2, 3, 4, 5, 5+]]></string>
-    <array name="stock_availbility">
+    <string name="enter_age">Enter Age</string>
+  <string name="age">Age*</string>
+  <string name="full_name">Full name</string>
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
 

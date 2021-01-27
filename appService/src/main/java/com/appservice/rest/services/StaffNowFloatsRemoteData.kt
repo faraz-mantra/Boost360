@@ -6,7 +6,9 @@ import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface StaffNowFloatsRemoteData {
     @POST(EndPoints.CREATE_STAFF_PROFILE)
@@ -35,8 +37,9 @@ interface StaffNowFloatsRemoteData {
 
     @POST(EndPoints.STAFF_UPDATE_IMAGE)
     fun staffUpdateImage(@Body request: StaffUpdateImageRequest?): Observable<Response<BaseResponse>>
-//    @GET(EndPoints.GET_STAFF_DETAILS)
-//    fun staffGetDetails(@Query(value = "staffId"): Observable<Response<BaseResponse>>
+
+    @GET(EndPoints.GET_STAFF_DETAILS)
+    fun staffDetails(@Query(value = "staffId") staffId: String?): Observable<Response<StaffDetailsResponse>>
 
 
 }

@@ -17,13 +17,14 @@ import com.appservice.staffs.model.DataItem
 import com.appservice.staffs.model.FilterBy
 import com.appservice.staffs.model.GetStaffListingRequest
 import com.appservice.staffs.model.GetStaffListingResponse
-import com.appservice.staffs.ui.profile.StaffListingViewModel
+import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
+import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffListingViewModel>(), RecyclerItemClickListener, SearchView.OnQueryTextListener {
+class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(), RecyclerItemClickListener, SearchView.OnQueryTextListener {
     private val list: ArrayList<DataItem> = ArrayList()
     private val copyList: ArrayList<DataItem> = ArrayList()
     private lateinit var adapter: AppBaseRecyclerViewAdapter<DataItem>
@@ -31,8 +32,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         return R.layout.fragment_staff_listing
     }
 
-    override fun getViewModelClass(): Class<StaffListingViewModel> {
-        return StaffListingViewModel::class.java
+    override fun getViewModelClass(): Class<StaffViewModel> {
+        return StaffViewModel::class.java
     }
 
     private fun showMenuItem() {
@@ -71,6 +72,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
                             data as ArrayList<DataItem>
                             this.list.addAll(data)
                             showMenuItem()
+                            this.copyList.clear()
                             this.copyList.addAll(data)
                             this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data, itemClickListener = this@StaffProfileListingFragment)
                             binding?.layoutStaffListing?.rvStaffList?.adapter = adapter
@@ -121,7 +123,6 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
                 true
             }
             R.id.app_bar_search -> {
-                showShortToast("Search here")
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -150,7 +151,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
     fun filter(queryText: String) {
         list.clear()
-        if (queryText.isEmpty()) {
+        if (queryText.isEmpty() && queryText.isBlank()) {
             list.addAll(copyList)
         } else {
             for (dataItem in copyList) {

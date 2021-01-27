@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -42,13 +43,14 @@
 
         <com.framework.views.customViews.CustomImageView
             android:id="@+id/civ_menu"
-            android:layout_width="@dimen/size_30"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/size_25"
+            android:layout_height="@dimen/size_25"
+            android:paddingVertical="@dimen/size_4"
+            android:src="@drawable/ic_menu_dotted"
+            android:background="?selectableItemBackgroundBorderless"
             android:layout_below="@id/ctv_staff_name"
-            android:foreground="?selectableItemBackground"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/size_16"
-            android:src="@drawable/ic_menu_dotted" />
+            android:layout_marginEnd="@dimen/size_16" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -85,6 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ctv_about_heading"
                 android:layout_marginTop="@dimen/size_5"
+                android:maxHeight="240dp"
                 android:fontFamily="@font/open_sans"
                 android:text="Gaurav is from Mumbai, Maharashtra. He works full-time at All in one  Spa. He is 24 years old. He likes to play table tennis and Cricket. His hobbies are playing gittar and singing songs."
                 android:textColor="@color/gray_4e4e4e"
@@ -148,16 +151,15 @@
                 android:textFontWeight="600"
                 android:textSize="14sp" />
 
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_services"
-                android:layout_width="wrap_content"
+            <com.framework.views.viewgroups.BaseRecyclerView
+                android:id="@+id/rv_services"
+                android:layout_width="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_height="wrap_content"
+                tools:listitem="@layout/recycler_item_service_timing"
+                tools:itemCount="3"
                 android:layout_below="@id/ctv_heading_services"
-                android:layout_marginTop="@dimen/size_5"
-                android:fontFamily="@font/open_sans"
-                android:text="🔵 Anti wrinkle therapy \n🔵 Hair cut for all ages\n🔵 Hair Removal \n🔵 Waxing"
-                android:textColor="@color/gray_4e4e4e"
-                android:textSize="14sp" />
+                android:layout_marginTop="@dimen/size_5" />
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/ctv_edit_timing"
@@ -172,7 +174,7 @@
                 android:id="@+id/ctv_heading_timing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ctv_services"
+                android:layout_below="@id/rv_services"
                 android:layout_marginTop="@dimen/size_10"
                 android:fontFamily="@font/open_sans"
                 android:text="Staff Timing"
@@ -180,16 +182,16 @@
                 android:textFontWeight="600"
                 android:textSize="14sp" />
 
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_timing"
-                android:layout_width="wrap_content"
+            <com.framework.views.viewgroups.BaseRecyclerView
+                android:id="@+id/rv_timing"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:itemCount="3"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/recycler_item_service_timing"
                 android:layout_below="@id/ctv_heading_timing"
                 android:layout_marginTop="@dimen/size_5"
-                android:fontFamily="@font/open_sans"
-                android:text="🔵 Mon:  8:00 AM to 12:00 PM, 2:00 PM to ....\n🔵 Tue:    8:00 AM to 12:00 PM\n🔵 Wed:   8:00 AM to 12:00 PM\n🔵 Thu:    8:00 AM to 12:00 PM\n🔵 Fri:      8:00 AM to 12:00 PM"
-                android:textColor="@color/gray_4e4e4e"
-                android:textSize="14sp" />
+           />
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/ctv_edit_services"
@@ -213,7 +215,7 @@
                 android:id="@+id/ctv_heading_leaves"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ctv_timing"
+                android:layout_below="@id/rv_timing"
                 android:layout_marginTop="@dimen/size_10"
                 android:fontFamily="@font/open_sans"
                 android:text="@string/upcoming_leaves"
@@ -249,6 +251,7 @@
             android:id="@+id/civ_staff_profile_img"
             android:layout_width="@dimen/size_110"
             android:layout_height="@dimen/size_110"
+            android:scaleType="fitXY"
             android:layout_marginStart="@dimen/size_16"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/dummy_staff_img" />

@@ -10,7 +10,6 @@ import android.net.Uri
 import android.util.Base64
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
@@ -18,33 +17,31 @@ import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
+import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentStaffDetailsBinding
-import com.appservice.model.serviceProduct.BuyOnlineLink
-import com.appservice.model.serviceProduct.Product
 import com.appservice.staffs.model.*
 import com.appservice.staffs.ui.Constants
-import com.appservice.staffs.ui.home.UserSession
+import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
+import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.staffs.widgets.ExperienceBottomSheet
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_staff_details.*
 import kotlinx.android.synthetic.main.item_preview_image.*
 import kotlinx.android.synthetic.main.item_preview_image.view.*
-import okhttp3.internal.platform.Jdk9Platform.Companion.isAvailable
 import java.io.ByteArrayOutputStream
 
-class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffDetailsViewModel>() {
-    private val isEdit: Boolean? = null
+class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffViewModel>() {
+    private lateinit var genderArray: Array<String>
     private var imageUri: Uri? = null
-    private var gender: String? = null
-    private var experience: Int? = null
-    private var staffProfile: StaffCreateProfileRequest? = null
-    private var isAvailable: Boolean = true
-    private var isImageChosen: Boolean = false
+    private var isEdit: Boolean? = null
+    private var staffProfile: StaffCreateProfileRequest? = StaffCreateProfileRequest()
     private var servicesList: List<DataItemService>? = null
+    private var staffDetails: StaffDetailsResult? = null
 
     companion object {
         fun newInstance(): StaffDetailsFragment {
@@ -56,14 +53,37 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffD
         return R.layout.fragment_staff_details
     }
 
-    override fun getViewModelClass(): Class<StaffDetailsViewModel> {
-        return StaffDetailsViewModel::class.java
+    override fun getViewModelClass(): Class<StaffViewModel> {
+        return StaffViewModel::class.java
     }
 
     override fun onCreateView() {
         setOnClickListener(binding?.flAddStaffImg, binding?.rlStaffTiming, binding?.rlServiceProvided,
                 binding?.rlScheduledBreaks, binding!!.btnSave, binding?.edtExperience)
         initViews()
+        getBundleData()
+
+    }
+
+    private fun getBundleData() {
+        staffDetails = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
+        isEdit = (staffDetails != null && staffDetails?.id.isNullOrEmpty().not())
+        when {
+            isEdit!! -> updatePreviousData()
+        }
+    }
+
+    private fun updatePreviousData() {
+//        let { activity?.glideLoad(binding?.civStaffImg!!, staffDetails?.tileImageUrl.toString(), R.drawable.dummy_staff_img) }
+        setImage(listOf(staffDetails?.tileImageUrl.toString()))
+        binding?.etvName?.setText(staffDetails?.name.toString())
+        binding?.etvStaffDescription?.setText(staffDetails?.description.toString())
+        binding?.spinnerGender?.setSelection(genderArray.toList().indexOf(staffDetails?.gender))
+        binding?.cetAge?.setText(staffDetails?.age.toString())
+        binding?.etvSpecialization?.setText(staffDetails?.specialisations?.joinToString { "" })
+        binding?.edtExperience?.setText(staffDetails?.experience.toString())
+
+
     }
 
     private fun openExperienceDetail() {
@@ -73,17 +93,8 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffD
     }
 
     private fun initViews() {
-        binding!!.csGender.setHintAdapter(requireContext(), arrayOf("Male", "Female", "Please select"))
-        binding!!.csGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                gender = p0?.getItemAtPosition(p2).toString()
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                gender = null
-            }
-
-        }
+        this.genderArray = arrayOf("Male", "Female", "Please select")
+        binding!!.spinnerGender.setHintAdapter(requireContext(), list = genderArray)
     }
 
     override fun onClick(v: View) {
@@ -104,90 +115,29 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffD
             binding?.edtExperience -> {
                 openExperienceDetail()
             }
-
-
             binding?.btnSave -> {
-                //validation
-
-//                when (binding!!.etvName.text.isNullOrBlank()) {
-//                    false -> {
-//                        staffName = binding?.etvName?.text.toString()
-//                    }
-//                    true -> {
-//                        showShortToast("please enter name")
-//                    }
-//                }
-//                when (gender.isNullOrBlank() || gender.equals("Please select")) {
-//                    true -> showShortToast("please choose gender")
-//
-//                }
-//                when (experience != null) {
-//                    true -> showShortToast("please choose experience")
-//                    false -> allMandatoryFieldFilled = true
-//
-//                }
-//                when (isImageChosen) {
-//                    false -> showShortToast("please choose image")
-//                    true -> {
-//                        allMandatoryFieldFilled = true
-//                        imageExtension = imageUri!!.toString().substring(imageUri.toString().lastIndexOf("."))
-//                        imageToByteArray = imageToByteArray()
-//
-//                    }
-//                }
-//                when (binding!!.etvSpecialization.text.isNullOrBlank()) {
-//                    true -> showShortToast("please enter specialization")
-//                    false -> {
-//                        for ((index, s) in specialization.split(" ").withIndex()) {
-//                            specializationList.add(StaffSpecialisationsItem(s, "key$index"))
-//                        }
-//                        allMandatoryFieldFilled = true
-//                    }
-//                }
-////                when (servicesList.isNullOrEmpty()) {
-////                    true -> {
-////                        servicesList?.forEach { serviceListId.add(it.id!!) }
-////                    }
-////                    false -> {
-////                        showShortToast("please choose services")
-////                    }
-////                }
-//                when (allMandatoryFieldFilled) {
-//                    true -> when {
-//                        imageExtension != null -> when {
-//                            imageToByteArray != null -> {
-//                                createStaffProfile(serviceListId, staffDescription, specializationList, imageExtension, staffName, imageToByteArray)
-//                            }
-//                        }
-//                    }
-//                    else -> {
-//                        showShortToast("something went wrong")
-//                    }
-//                }
-//
-//
-//            }
+                if (isValid()) {
+                    createStaffProfile()
+                }
             }
         }
     }
 
     private fun isValid(): Boolean {
-        var imageToByteArray: ByteArray? = null
-        var imageExtension: String? = null
         val specialization = binding?.etvSpecialization?.text.toString()
         val serviceListId = ArrayList<String>()
         val specializationList = ArrayList<StaffSpecialisationsItem>()
         val staffName = binding?.etvName?.text.toString()
+        val staffAge = binding?.cetAge?.text.toString().toIntOrNull() ?: 0
         val staffDescription = binding?.etvStaffDescription?.text.toString()
-        val staffGender = binding?.csGender?.selectedItem.toString()
+        val staffGender = binding?.spinnerGender?.isHintSelected()
         val yearOfExperience = binding?.edtExperience?.text.toString()
         val isAvailable = binding?.toggleIsAvailable?.isOn
 
-
-        if (staffName.isEmpty()) {
+        if (staffName.isBlank()) {
             showLongToast("Enter Staff Name")
             return false
-        } else if (staffGender == "Please select") {
+        } else if (staffGender == null || staffGender) {
             showLongToast("Select Staff Gender")
             return false
         } else if (specialization.isEmpty()) {
@@ -196,31 +146,65 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffD
         } else if (yearOfExperience.isBlank()) {
             showLongToast("select year of experience")
             return false
+        } else if (staffAge == 0) {
+            showLongToast("please enter your age")
+            return false
+        } else if (imageUri == null) {
+            showLongToast("please choose image")
+            return false
         }
+        val imageExtension: String = imageUri!!.toString().substring(imageUri.toString().lastIndexOf("."))
+        val imageToByteArray: ByteArray = imageToByteArray()
+        servicesList?.forEach { serviceListId.add(it.id!!) }
+        staffProfile?.age = staffAge
+        staffProfile?.isAvailable = isAvailable
+        staffProfile?.description = staffDescription
+        staffProfile?.gender = binding?.spinnerGender?.selectedItem.toString()
+        staffProfile?.experience = yearOfExperience.toIntOrNull() ?: 0
+        staffProfile?.floatingPointTag = UserSession.fpId
+        staffProfile?.name = staffName
+        staffProfile?.serviceIds = serviceListId
+        staffProfile?.image = StaffImage(image = "data:image/png;base64,${Base64.encodeToString(imageToByteArray, Base64.DEFAULT)}",
+                fileName = "$staffName$imageExtension", imageFileType = imageExtension.removePrefix("."))
+        for ((index, s) in specialization.split(" ").withIndex()) {
+            specializationList.add(StaffSpecialisationsItem(s, "key$index"))
+        }
+        staffProfile?.specialisations = specializationList
+
         return true
+
+
     }
 
-        private fun createStaffProfile(serviceListId: ArrayList<String>, staffDescription: String?, specializationList: ArrayList<StaffSpecialisationsItem>, imageExtension: String, staffName: String?, byteArrayImage: ByteArray) {
-            val staffCreateProfileRequest = StaffCreateProfileRequest(serviceIds = serviceListId, experience = experience, description = staffDescription,
-                    specialisations = specializationList, isAvailable = isAvailable, floatingPointTag = UserSession.fpId, image = StaffImage(imageFileType = imageExtension,
-                    fileName = "$staffName.$imageExtension", image = Base64.encodeToString(byteArrayImage, Base64.DEFAULT)), name = staffName)
-            viewModel?.createStaffProfile(staffCreateProfileRequest)?.observe(viewLifecycleOwner, { t ->
-                println(t.message + " " + t.status)
-            })
-        }
+    private fun createStaffProfile() {
+        viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, { t ->
+            when (t.status) {
+                200 -> {
+                    showShortToast("profile created")
 
-        private fun imageToByteArray(): ByteArray {
-            val bm: Bitmap = BitmapFactory.decodeFile(imageUri!!.toString())
-            val byteArrayOutStream = ByteArrayOutputStream()
-            bm.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutStream) // bm is the bitmap object
-            return byteArrayOutStream.toByteArray()
-        }
+                }
+                else -> {
+                    showShortToast("something went wrong")
+                }
+            }
 
-        private fun openImagePicker() {
-            val filterSheet = ImagePickerBottomSheet()
-            filterSheet.isHidePdf(true)
-            filterSheet.onClicked = { openImagePicker(it) }
-            filterSheet.show(this@StaffDetailsFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
+
+        })
+        showShortToast("creating profile")
+    }
+
+    private fun imageToByteArray(): ByteArray {
+        val bm: Bitmap = BitmapFactory.decodeFile(imageUri!!.toString())
+        val byteArrayOutStream = ByteArrayOutputStream()
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutStream) // bm is the bitmap object
+        return byteArrayOutStream.toByteArray()
+    }
+
+    private fun openImagePicker() {
+        val filterSheet = ImagePickerBottomSheet()
+        filterSheet.isHidePdf(true)
+        filterSheet.onClicked = { openImagePicker(it) }
+        filterSheet.show(this@StaffDetailsFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
     }
 
     private fun openImagePicker(it: ClickType) {
@@ -256,13 +240,12 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffD
     }
 
     private fun setImage(mPaths: List<String>) {
-        isImageChosen = true
         this.imageUri = Uri.parse(mPaths[0])
-        binding?.civStaffImg?.setImageURI(imageUri)
+        let { activity?.glideLoad(binding?.civStaffImg!!, imageUri.toString(), R.drawable.ic_staff_img_blue) }
         binding?.ctvImgChange?.text = getString(R.string.change_picture)
         binding?.ctvImgChange?.setTextColor(getColor(R.color.black_4a4a4a))
         binding?.ctvImgChange?.setBackgroundColor(Color.WHITE)
-        binding?.flAddStaffImg?.setPadding(2, 2, 2, 2);
+        binding?.flAddStaffImg?.setPadding(2, 2, 2, 2)
         binding?.flAddStaffImg?.backgroundTintList = ColorStateList.valueOf(getColor(R.color.gray_light_4))
 
     }
@@ -287,7 +270,7 @@ class HintAdapter<T>(context: Context, resource: Int, objects: Array<T>) :
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = super.getDropDownView(position, convertView, parent)
         val textView = view as TextView
-        if (position == count+1)
+        if (position == count)
             textView.setTextColor(Color.GRAY)
         else textView.setTextColor(Color.BLACK)
         return view
@@ -305,4 +288,9 @@ fun Spinner.setHintAdapter(context: Context, list: Array<String>) {
     adapter = hintAdapter
     setSelection(count)
 
+
+}
+
+fun Spinner.isHintSelected(): Boolean {
+    return selectedItemPosition == count
 }

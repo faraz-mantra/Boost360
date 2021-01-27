@@ -13,12 +13,13 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.model.*
 import com.appservice.staffs.ui.Constants
-import com.appservice.staffs.ui.home.UserSession
+import com.appservice.staffs.ui.UserSession
+import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import kotlinx.android.synthetic.main.fragment_kyc_details.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, StaffServicesViewModel>(), RecyclerItemClickListener {
+class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, StaffViewModel>(), RecyclerItemClickListener {
     lateinit var data: List<DataItemService?>
     private var listservices: ArrayList<DataItemService> = ArrayList()
 
@@ -35,8 +36,8 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
         return R.layout.fragment_select_services
     }
 
-    override fun getViewModelClass(): Class<StaffServicesViewModel> {
-        return StaffServicesViewModel::class.java
+    override fun getViewModelClass(): Class<StaffViewModel> {
+        return StaffViewModel::class.java
     }
 
     override fun onCreateView() {
@@ -47,7 +48,7 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
         showProgress("Loading...")
         viewModel!!.getServiceListing(ServiceListRequest(
                 FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpId)
-        ).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        ).observe(viewLifecycleOwner, {
             hideProgress()
             data = (it as ServiceListResponse).result!!.data!!
             binding!!.ctvServicesCountTitle.text = "0/${data.size} service selected"

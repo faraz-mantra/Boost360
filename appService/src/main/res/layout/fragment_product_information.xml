@@ -1008,7 +1008,7 @@
                             android:visibility="visible"
                             android:orientation="horizontal">
 
-                            <androidx.appcompat.widget.AppCompatSpinner
+                            <com.framework.views.customViews.customSpinner.SonicSpinner
                                 android:id="@+id/spinner_cod"
                                 android:layout_width="@dimen/size_0"
                                 android:layout_height="@dimen/size_40"
