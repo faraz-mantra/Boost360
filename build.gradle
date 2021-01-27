@@ -20,7 +20,6 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url "https://sdk.smartlook.com/android/release" }
         maven { url "https://jitpack.io" }
         google()
         jcenter()
@@ -30,9 +29,6 @@ allprojects {
         }
         maven {
             url  "http://dl.bintray.com/lukaville/maven"
-        }
-        maven {
-            url "https://sdk.smartlook.com/android/release"
         }
         flatDir {
             dirs 'libs'
