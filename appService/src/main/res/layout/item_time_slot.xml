@@ -3,9 +3,9 @@
     android:id="@+id/ll_time_dropdown_group"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/size_11"
     android:baselineAligned="false"
     android:orientation="horizontal"
+    android:paddingVertical="@dimen/size_4"
     android:paddingHorizontal="@dimen/size_18">
 
     <LinearLayout

@@ -150,6 +150,7 @@
   <string name="delete">Delete</string>
   <string name="enter_service_name">Enter service name</string>
   <string name="enter_product_name">Enter product name</string>
+  <string name="enter_category_catalog_product">Please add product category</string>
   <string name="enter_service_desc">Enter service description</string>
   <string name="enter_product_desc">Enter product description</string>
   <string name="enter_valid_price">Enter valid price</string>
@@ -290,7 +291,11 @@
   <string name="age">Age*</string>
   <string name="full_name">Full name</string>
     <string name="customers_can_only_view_and_enquire_about_this_product">Customers can only view and enquire about this product.</string>
-    <array name="stock_availbility">
+    <string name="remove_product_failed">Removing product failed, please try again.</string>
+  <string name="product_removed_success">Product removed successfully.</string>
+  <string name="information_not_saved">\"Information not saved!\"</string>
+  <string name="you_have_unsaved_info">\"You have unsaved information. Do you still want to close?\"</string>
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
 

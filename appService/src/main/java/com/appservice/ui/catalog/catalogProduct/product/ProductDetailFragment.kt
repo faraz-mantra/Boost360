@@ -127,7 +127,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     listenerEditText()
   }
 
-  fun initProductToggleView() {
+  private fun initProductToggleView() {
     binding?.payProductView?.visibility = if (binding?.toggleProduct?.isOn!!) View.VISIBLE else View.GONE
     binding?.freeProductView?.visibility = if (binding?.toggleProduct?.isOn!!) View.GONE else View.VISIBLE
   }
@@ -141,7 +141,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     val amountD = amount.toFloatOrNull() ?: 0F
     val distD = dist.toFloatOrNull() ?: 0F
     if (distD > amountD) {
-      showLongToast("Discount amount can't be greater than price")
+      showLongToast(resources.getString(R.string.discount_amount_not_greater_than_price))
       binding?.discountEdt?.setText("")
       return
     }
@@ -233,7 +233,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
           binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
         }
-        product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value -> {
+    }
+    when (product?.paymentType) {
+        Product.PaymentType.UNIQUE_PAYMENT_URL.value -> {
           binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
           binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
           binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
@@ -497,7 +499,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       showLongToast(resources.getString(R.string.enter_product_name))
       return false
     } else if (productCategory.isEmpty()) {
-      showLongToast("Please add product category")
+      showLongToast(resources.getString(R.string.enter_category_catalog_product))
       return false
     } else if (productDesc.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_product_desc))
@@ -513,9 +515,6 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       return false
     } else if (toggle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty()))) {
       showLongToast(resources.getString(R.string.please_enter_valid_url_name))
-      return false
-    } else if (product?.category.isNullOrEmpty()) {
-      showLongToast(resources.getString(R.string.please_fill_other_info))
       return false
     }
     product?.ClientId = clientId
@@ -704,9 +703,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
                 hideProgress()
                 if ((it.error is NoNetworkException).not()) {
                   if ((it.status == 200 || it.status == 201 || it.status == 202)) {
-                    showLongToast("Product removed successfully.")
+                    showLongToast(resources.getString(R.string.product_removed_success))
                     goBack()
-                  } else showError("Removing product failed, please try again.")
+                  } else showError(resources.getString(R.string.remove_product_failed))
                 } else showError(resources.getString(R.string.internet_connection_not_available))
               })
             }.show()
@@ -722,7 +721,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-        .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
+        .setTitle(resources.getString(R.string.information_not_saved)).setMessage(resources.getString(R.string.you_have_unsaved_info))
         .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
           baseActivity.finish()
           d.dismiss()
