@@ -96,8 +96,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     return when (type) {
       FragmentType.SERVICE_INFORMATION -> resources.getString(R.string.other_information)
       FragmentType.SERVICE_DETAIL_VIEW -> resources.getString(R.string.service_details)
-      FragmentType.PRODUCT_DETAIL_VIEW -> "Adding a product"
-      FragmentType.PRODUCT_INFORMATION -> "Other Info"
+      FragmentType.PRODUCT_DETAIL_VIEW -> resources.getString(R.string.product_details)
+      FragmentType.PRODUCT_INFORMATION -> resources.getString(R.string.additional_information)
       FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> "Weekly appointment schedule"
       FragmentType.CREATE_CATEGORY->"Categories"
       else -> super.getToolbarTitle()
