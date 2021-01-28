@@ -749,7 +749,7 @@
         </activity> <!-- PreSignUp module -->
         <activity
             android:name="com.boost.presignup.SplashActivity"
-            android:label="@string/title_activity_splash_screen_"
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash"
             tools:replace="android:theme">
