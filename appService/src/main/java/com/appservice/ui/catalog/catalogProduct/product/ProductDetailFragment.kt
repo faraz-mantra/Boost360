@@ -361,8 +361,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
   private fun addGstService(productId: String?) {
     val gstData = gstProductData ?: DataG()
-    val request = ProductGstDetailRequest(ActionDataG(gstData.gstSlab ?: 0.0, 0.0, 0.0,
-        merchantId = fpId, productId = productId, weight = 0.0, width = 0.0), fpId)
+    val request = ProductGstDetailRequest(ActionDataG(gstData.gstSlab ?: 0.0, gstData.height?:0.0, gstData.length?:0.0,
+        merchantId = fpId, productId = productId, gstData.weight?:0.0, gstData.height?:0.0), fpId)
     viewModel?.addProductGstDetail(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {

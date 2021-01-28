@@ -95,10 +95,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
   }
 
   private fun setUiText() {
-    length = gstProductData?.length.toString().toDoubleOrNull() ?: 0.0
-    height = gstProductData?.height.toString().toDoubleOrNull() ?: 0.0
-    thickness = gstProductData?.width.toString().toDoubleOrNull() ?: 0.0
-    weight = gstProductData?.weight.toString().toDoubleOrNull() ?: 0.0
+
 //    binding?.edtProductCategory?.setText(product?.category ?: "")
 //    maxOrder = product?.maxCodOrders!!
     binding?.specKey?.setText(product?.keySpecification?.key)
@@ -109,11 +106,11 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 //    binding?.ctvQuantityOrderStatus?.text = product?.maxCodOrders.toString()
     if (gstProductData != null) {
       binding?.edtGst?.setText("${(gstProductData?.gstSlab ?: 0.0).toInt()} %")
+      binding?.cetLength?.setText("${gstProductData?.length?:0.0}")
+       binding?.cetHeight?.setText("${gstProductData?.height?:0.0}")
+     binding?.cetThickness?.setText("${gstProductData?.width?:0.0}")
+      binding?.cetWeight?.setText("${gstProductData?.weight?:0.0}")
     }
-    binding?.cetLength?.setText(length.toString())
-    binding?.cetThickness?.setText(thickness.toString())
-    binding?.cetHeight?.setText(height.toString())
-    binding?.cetWeight?.setText(weight.toString())
     setAdapter()
     val stockAdapter = mutableListOf(SpinnerImageModel("Limited Stock" to true, R.drawable.ic_dot_green), SpinnerImageModel("Unlimited Stock" to false, R.drawable.ic_infinite))
     binding?.spinnerStock?.adapter = CustomDropDownAdapter(baseActivity, stockAdapter)
@@ -198,7 +195,6 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
       }
 
       override fun onNothingSelected(p0: AdapterView<*>?) {
-        TODO("Not yet implemented")
       }
 
     }
@@ -213,7 +209,6 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
       }
 
       override fun onNothingSelected(p0: AdapterView<*>?) {
-        TODO("Not yet implemented")
       }
 
     }
@@ -298,6 +293,10 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 //    val serviceCategory = binding?.edtProductCategory?.text?.toString() ?: ""
 //    val spinnerCod = binding?.spinnerCod?.selectedItem as SpinnerImageModel
 //    val spinnerOnlinePayment = binding?.spinnerOnlinePayment?.selectedItem as SpinnerImageModel
+    val specLength = binding?.cetLength?.text.toString().toDoubleOrNull() ?: 0.0
+    val specHeight = binding?.cetHeight?.text.toString().toDoubleOrNull() ?: 0.0
+    val specThickness = binding?.cetThickness?.text.toString().toDoubleOrNull() ?: 0.0
+    val specWeight = binding?.cetWeight?.text.toString().toDoubleOrNull() ?: 0.0
     val brand = binding?.edtBrand?.text?.toString() ?: ""
     val keySpecification = binding?.specKey?.text?.toString() ?: ""
     val valueSpecification = binding?.specValue?.text?.toString() ?: ""
@@ -347,10 +346,10 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
         product?.otherSpecification = otherSpec
         if (gstProductData == null) gstProductData = DataG()
         gstProductData?.gstSlab = gst.toDoubleOrNull() ?: 0.0
-        gstProductData?.height = height ?: 0.0
-        gstProductData?.length = length ?: 0.0
-        gstProductData?.width = thickness ?: 0.0
-        gstProductData?.weight = weight ?: 0.0
+        gstProductData?.height = specHeight
+        gstProductData?.length = specLength
+        gstProductData?.width = specThickness
+        gstProductData?.weight = specWeight
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)
         output.putExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
