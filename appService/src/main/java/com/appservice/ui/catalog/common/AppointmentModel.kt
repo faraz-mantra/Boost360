@@ -27,7 +27,7 @@ data class AppointmentModel(
     private fun isDayTurnedOn() {
         timeSlots = ArrayList()
         this.isTurnedOn = true
-        timeSlots?.add(TimeSlot())
+        timeSlots?.add(TimeSlot.getDefaultTimeSlotObject());
     }
 
     fun applyOnAllDays(startTime: String, endTime: String) {
@@ -35,7 +35,6 @@ data class AppointmentModel(
             it.fromTiming = startTime
             it.toTiming = endTime
         }
-
     }
 
     fun deleteSession(sessionIndex: Int) {
@@ -56,8 +55,12 @@ data class AppointmentModel(
 
     }
 
-    fun addSession(data: AppointmentModel) {
-        timeSlots?.add(TimeSlot(data.fromTiming, data.toTiming))
+    fun addSession() {
+        timeSlots?.add(TimeSlot())
+    }
+
+    fun removeSession(index: Int){
+        timeSlots?.removeAt(index);
     }
 
     fun removeApplyOnAllDays(data: AppointmentModel) {
@@ -67,7 +70,9 @@ data class AppointmentModel(
     companion object {
         fun getDefaultTimings(): ArrayList<AppointmentModel> {
             val list = ArrayList<AppointmentModel>()
-            list.add(AppointmentModel(day = "Monday", isTurnedOn = false, isAppliedOnAllDays = false))
+            val monday = AppointmentModel(day = "Monday", isTurnedOn = false, isAppliedOnAllDays = false);
+            monday.isAppliedOnAllDaysViewVisible = true;
+            list.add(monday);
             list.add(AppointmentModel(day = "Tuesday", isTurnedOn = false, isAppliedOnAllDays = false))
             list.add(AppointmentModel(day = "Wednesday", isTurnedOn = false, isAppliedOnAllDays = false))
             list.add(AppointmentModel(day = "Thursday", isTurnedOn = false, isAppliedOnAllDays = false))
@@ -95,5 +100,14 @@ data class TimeSlot(
 
         @field:SerializedName("to")
         var to: String? = null,
-) : Serializable
+) : Serializable{
+    companion object{
+        fun getDefaultTimeSlotObject(): TimeSlot{
+            val timeSlot = TimeSlot();
+            timeSlot.from = "9:30 AM"
+            timeSlot.to = "7:00 PM"
+            return timeSlot;
+        }
+    }
+}
 

@@ -2,6 +2,7 @@ package com.appservice.ui.catalog.common
 
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentStaffTimingBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
@@ -48,16 +49,17 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         adapter.notifyDataSetChanged()
-//        when (actionType) {
-//            RecyclerViewActionType.TOGGLE_STATE_CHANGED.ordinal -> {
-//                adapter.notifyDataSetChanged()
-//            }
-//            RecyclerViewActionType.CHECK_BOX_APPLY_ALL.ordinal -> {
-//                val (_, _, isAppliedOnAllDays, _, _, _, _) = item as AppointmentModel
-//                defaultTimings.forEach { if (it != item) it.isTurnedOn = isAppliedOnAllDays }
-//                adapter.notifyDataSetChanged()
-//            }
-//            RecyclerViewActionType.ADD_SESSION.ordinal -> {
+        when (actionType) {
+            RecyclerViewActionType.TOGGLE_STATE_CHANGED.ordinal -> {
+                adapter.notifyDataSetChanged()
+            }
+            RecyclerViewActionType.CHECK_BOX_APPLY_ALL.ordinal -> {
+                val (_, _, isAppliedOnAllDays, _, _, _, _) = item as AppointmentModel
+                applyOnAllDays(item);
+                adapter.notifyDataSetChanged()
+            }
+            RecyclerViewActionType.ADD_SESSION.ordinal -> {
+                adapter.notifyDataSetChanged()
 //                val (day, _, isAppliedOnAllDays, _, toTiming, fromTiming,_) = item as AppointmentModel
 //                when (isAppliedOnAllDays) {
 //                    true -> {
@@ -69,8 +71,35 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
 //                          this.requestWeeklyAppointment = RequestWeeklyAppointment(duration = 45,timingsItem,serviceId = "")
 //                    }
 //                }
-//            }
-//        }
+            }
+        }
 
+    }
+
+    fun applyOnAllDays(data: AppointmentModel){
+        if(data.isAppliedOnAllDays){
+            applyOnAllDaysTurnedOn(data)
+        }else{
+            applyOnAllDaysTurnedOff(data)
+        }
+    }
+
+    fun applyOnAllDaysTurnedOn(data: AppointmentModel){
+        for (i in 1..defaultTimings.size!!-1){
+            val item = defaultTimings.get(i);
+            item.isTurnedOn = true;
+            item.timeSlots = ArrayList<TimeSlot>()
+            for(t in data.timeSlots!!){
+                item.timeSlots?.add(t);
+            }
+        }
+    }
+
+    fun applyOnAllDaysTurnedOff(data: AppointmentModel){
+        for (i in 1..defaultTimings.size!!-1){
+            val item = defaultTimings.get(i);
+            item.isTurnedOn = false;
+            item.timeSlots = ArrayList<TimeSlot>()
+        }
     }
 }
