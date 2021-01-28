@@ -222,6 +222,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
           "YES" -> product?.prepaidOnlineAvailable = true
           "NO" -> product?.prepaidOnlineAvailable = false
         }
+        if (product?.keySpecification == null) product?.keySpecification = KeySpecification()
         product?.keySpecification?.key = keySpecification
         product?.keySpecification?.value = valSpecification
         product?.maxCodOrders = ordersQuantity

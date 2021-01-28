@@ -122,6 +122,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     binding?.toggleService?.setOnToggledListener { _, _ ->
       initServiceToggle()
     }
+    initServiceToggle()
     listenerEditText()
   }
 
@@ -231,7 +232,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
       binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
       binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
-    } else if (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value) {
+    }
+    if (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value) {
       binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
       binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
       binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
