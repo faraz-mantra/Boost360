@@ -118,13 +118,18 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     setOnClickListener(binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation, binding?.vwPaymentConfig,
             binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
-    binding?.toggleProduct?.isOn = false
+    binding?.toggleProduct?.isOn = product?.isPriceToggleOn()!!
     binding?.payProductView?.visibility = View.GONE
-    binding?.toggleProduct?.setOnToggledListener { _, isOn ->
-      binding?.payProductView?.visibility = if (isOn) View.VISIBLE else View.GONE
-      binding?.freeProductView?.visibility = if (isOn) View.GONE else View.VISIBLE
+    binding?.toggleProduct?.setOnToggledListener { _, _ ->
+    initProductToggleView()
     }
+    initProductToggleView()
     listenerEditText()
+  }
+
+  fun initProductToggleView() {
+    binding?.payProductView?.visibility = if (binding?.toggleProduct?.isOn!!) View.VISIBLE else View.GONE
+    binding?.freeProductView?.visibility = if (binding?.toggleProduct?.isOn!!) View.GONE else View.VISIBLE
   }
 
   private fun listenerEditText() {
