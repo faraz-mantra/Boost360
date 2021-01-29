@@ -21,6 +21,15 @@ object EndPoints {
   const val STAFF_DELETE_IMAGE ="staff/v1/DeleteStaffImage"
   const val GET_STAFF_DETAILS ="Staff/v1/GetStaffDetails"
 
+  //TODO API.NOWFLOATS.COM FLOAT
+  const val API_NOWFLOATS_COM_BASE = "https://api.nowfloats.com/"
+  const val CREATE_SERVICE_V1 = "service/v1/create"
+  const val UPDATE_SERVICE_V1 = "service/v1/update"
+  const val DELETE_SERVICE_V1 = "service/v1/delete"
+  const val ADD_IMAGE_V1 = "service/v1/AddImage"
+  const val GET_TAGS_V1 = "service/v1/tags"
+  const val GET_SERVICE_DETAILS = "Service/v1/GetServiceDetails"
+  const val  DELETE_SECONDARY_IMAGE = "service/v1/DeleteSecondaryImage"
 
   //TODO NFX API 2 WITH FLOAT
   const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"

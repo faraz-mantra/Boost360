@@ -358,7 +358,9 @@
   <string name="yellow_and_orange">Yellow and Orange</string>
   <string name="other_specifications">Other specifications</string>
   <string name="this_list_appears_inside_the_product_details_page_on_your_website">This list appears inside the product details page on your website.</string>
-  <array name="stock_availbility">
+    <string name="error_service_image">Service image uploading error, please try again.</string>
+    <string name="error_getting_service_details">Error while getting the service details.</string>
+    <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
 

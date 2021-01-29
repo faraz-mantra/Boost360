@@ -13,6 +13,7 @@ open class BaseResponse(
     var arrayResponse: Array<*>? = null,
     var anyResponse: Any? = null,
     var responseBody: ResponseBody? = null
+
 ) {
   fun message(): String {
     val message = message ?: ""
