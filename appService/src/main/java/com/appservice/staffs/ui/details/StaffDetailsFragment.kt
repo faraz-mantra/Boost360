@@ -214,12 +214,12 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         } else if (staffAge == 0) {
             showLongToast("please enter your age")
             return false
-        } else if (imageUri == null) {
+        } else if (imageUri == null || imageUri.toString().isEmpty()||imageUri.toString().isBlank()) {
             showLongToast("please choose image")
             return false
         }
         specializationList.add(SpecialisationsItem(specialization, "key"))
-        val imageExtension: String = imageUri!!.toString().substring(imageUri.toString().lastIndexOf("."))
+        val imageExtension: String? = imageUri?.toString()?.substring(imageUri.toString().lastIndexOf("."))
         if (isEdit == null || isEdit == false) {
             val imageToByteArray: ByteArray = imageToByteArray()
             servicesList?.forEach { serviceListId.add(it.id!!) }
@@ -232,7 +232,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             staffProfile?.name = staffName
             staffProfile?.serviceIds = serviceListId
             this.staffImage = StaffImage(image = "data:image/png;base64,${Base64.encodeToString(imageToByteArray, Base64.DEFAULT)}",
-                    fileName = "$staffName$imageExtension", imageFileType = imageExtension.removePrefix("."))
+                    fileName = "$staffName$imageExtension", imageFileType = imageExtension?.removePrefix("."))
             staffProfile?.image = staffImage
             staffProfile?.specialisations = specializationList
         }

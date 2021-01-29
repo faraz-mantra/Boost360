@@ -378,7 +378,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
   private fun secondaryImage(mPaths: ArrayList<String>) {
     if (secondaryImage.size < 8) {
-      if (mPaths.size + secondaryImage.size > 8) showLongToast("Only 8 files are allowed. Discarding the rest.")
+      if (mPaths.size + secondaryImage.size > 8) showLongToast(resources.getString(R.string.only_eight_files_are_allowed_discarding))
       var index: Int = secondaryImage.size
       while (index < 8 && mPaths.isNotEmpty()) {
         secondaryImage.add(FileModel(path = mPaths[0]))
@@ -386,7 +386,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
         index++
       }
       setAdapter()
-    } else showLongToast("Only 8 files are allowed.")
+    } else showLongToast(resources.getString(R.string.only_eight_files_allowed))
   }
 
   private fun setAdapter() {
@@ -404,7 +404,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
         val data = item as? FileModel
         if (isEdit == true && data?.pathUrl.isNullOrEmpty().not()) {
           val dataImage = secondaryDataImage?.firstOrNull { it.image?.url == data?.pathUrl } ?: return
-          showProgress("Removing image...")
+          showProgress(resources.getString(R.string.removing_image))
           val request = ProductImageDeleteRequest()
           request.setQueryData(dataImage.id)
           viewModel?.deleteProductImage(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
@@ -412,7 +412,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
               secondaryDataImage?.remove(dataImage)
               secondaryImage.remove(data)
               setAdapter()
-            } else showLongToast("Removing image failed, please try again.")
+            } else showLongToast(resources.getString(R.string.removing_image_failed))
             hideProgress()
           })
         } else {
