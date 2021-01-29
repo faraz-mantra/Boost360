@@ -71,7 +71,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent("Service other information catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
+    WebEngageController.trackEvent("Product other information catalogue load", "PRODUCT CATALOGUE ADD/UPDATE", "")
 
     setOnClickListener(
             binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.civDecreseStock,
