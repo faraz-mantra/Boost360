@@ -140,7 +140,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val amountD = amount.toFloatOrNull() ?: 0F
     val distD = dist.toFloatOrNull() ?: 0F
     if (distD > amountD) {
-      showLongToast("Discount amount can't be greater than price")
+      showLongToast(resources.getString(R.string.discount_amount_cant_be_grater))
       binding?.discountEdt?.setText("")
       return
     }

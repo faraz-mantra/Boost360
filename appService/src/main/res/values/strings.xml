@@ -338,6 +338,22 @@
   <string name="only_eight_files_allowed">Only 8 files are allowed.</string>
   <string name="removing_image">Removing image...</string>
   <string name="removing_image_failed">Removing image failed, please try again.</string>
+    <string name="discount_amount_cant_be_grater">Discount amount can\'t be greater than price</string>
+    <string name="manage_your_product_s_availability_on_your_website">Manage your product’s availability on your website.</string>
+  <string name="brand_name_if_available">Brand Name (if available)</string>
+  <string name="add_the_brand_name_associated_with_this_product">Add the brand name associated with this product.</string>
+  <string name="add_more_images_for_the_product">Add more images for the product.</string>
+  <string name="applicable_gst_slab">Applicable GST Slab</string>
+  <string name="for_invoice">(for invoice)</string>
+  <string name="product_tags">Product Tags</string>
+  <string name="tags_help_site_visitors_filter_products_in_your_catalogue">Tags help site visitors filter products in your catalogue.</string>
+  <string name="type_a_tag_and_press_add">Type a tag and press \'ADD\'</string>
+  <string name="add">Add</string>
+  <string name="it_appears_at_the_end_of_the_product_name_as_it_s_variant">It appears at the end of the product name as it’s variant</string>
+  <string name="e_g_color">e.g. Color</string>
+  <string name="yellow_and_orange">Yellow and Orange</string>
+  <string name="other_specifications">Other specifications</string>
+  <string name="this_list_appears_inside_the_product_details_page_on_your_website">This list appears inside the product details page on your website.</string>
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
