@@ -272,7 +272,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
   private fun secondaryImage(mPaths: ArrayList<String>) {
     if (secondaryImage.size < 8) {
-      if (mPaths.size + secondaryImage.size > 8) showLongToast("Only 8 files are allowed. Discarding the rest.")
+      if (mPaths.size + secondaryImage.size > 8) showLongToast(getString(R.string.only_8_files_are_allowed_discarding_the_rest))
       var index: Int = secondaryImage.size
       while (index < 8 && mPaths.isNotEmpty()) {
         secondaryImage.add(FileModel(path = mPaths[0]))
@@ -280,7 +280,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
         index++
       }
       setAdapter()
-    } else showLongToast("Only 8 files are allowed.")
+    } else showLongToast(getString(R.string.only_8_files_are_allowed))
   }
 
   private fun setAdapter() {
@@ -298,7 +298,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
         val data = item as? FileModel
         if (isEdit == true && data?.pathUrl.isNullOrEmpty().not()) {
           val dataImage = secondaryDataImage?.firstOrNull { it.image?.url == data?.pathUrl } ?: return
-          showProgress("Removing image...")
+          showProgress(getString(R.string.removing_image))
           val request = ProductImageDeleteRequest()
           request.setQueryData(dataImage.id)
           viewModel?.deleteProductImage(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
@@ -306,7 +306,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
               secondaryDataImage?.remove(dataImage)
               secondaryImage.remove(data)
               setAdapter()
-            } else showLongToast("Removing image failed, please try again.")
+            } else showLongToast(getString(R.string.removing_image_failed_please_try_again))
             hideProgress()
           })
         } else {
@@ -349,8 +349,8 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-            .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
-            .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
+            .setTitle(getString(R.string.information_not_saved)).setMessage(getString(R.string.you_have_unsaved_information_do_you_still_want_to_close))
+            .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }.setPositiveButton(getString(R.string.yes)) { d, _ ->
               baseActivity.finish()
               d.dismiss()
             }.show()

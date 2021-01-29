@@ -306,7 +306,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
             baseActivity.startActivity(intent)
           } else requestPermissions(arrayOf(CALL_PHONE), 1)
         } catch (e: ActivityNotFoundException) {
-          showLongToast("Error in your phone call!")
+          showLongToast(getString(R.string.error_in_your_phone_call))
         }
       }
       binding?.retry -> apiHitBusiness()

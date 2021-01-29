@@ -202,7 +202,7 @@ class RegistrationCompleteFragment : BaseRegistrationFragment<FragmentRegistrati
       when (item!!.itemId) {
         R.id.menu_logout -> {
           NavigatorManager.clearStackAndFormData()
-          showShortToast("Logout...")
+          showShortToast(getString(R.string.str_logout))
         }
       }
       true

@@ -118,7 +118,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       if (experienceCode.isNullOrEmpty().not()) {
         val floatingPoint = bundle.getString(PreferenceConstant.KEY_FP_ID)
         val fpTag = bundle.getString(PreferenceConstant.GET_FP_DETAILS_TAG)
-        showProgress("Refreshing your channels...", false)
+        showProgress(context?.getString(R.string.refreshing_your_channels), false)
         viewModel?.getCategories(baseActivity)?.observeOnce(this, {
           if (it?.error != null) errorMessage(it.error?.localizedMessage ?: resources.getString(R.string.error_getting_category_data))
           else {
@@ -325,9 +325,9 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
         val count = listDisconnect?.filter { it.isSelected == true }?.size ?: 0
         if (count > 0) {
           if (count == 1)
-            binding?.syncBtn?.text = "Continue Syncing $count Channel"
+            binding?.syncBtn?.text = "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channel)}"
           else
-            binding?.syncBtn?.text = "Continue Syncing $count Channels"
+            binding?.syncBtn?.text = "${resources.getString(R.string.continue_syncing)} $count ${resources.getString(R.string.string_channels)}"
           binding?.syncBtn?.visible()
         } else binding?.syncBtn?.gone()
       }
@@ -343,7 +343,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     if (it.status == 200 || it.status == 201 || it.status == 202) {
       getChannelAccessToken(requestFloatsModel?.categoryDataModel, requestFloatsModel?.floatingPointId, requestFloatsModel?.fpTag)
     } else {
-      showLongToast("Failed to disconnecting!")
+      showLongToast(context?.getString(R.string.failed_to_disconnecting))
       hideProgress()
     }
   }
@@ -418,7 +418,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   }
 
   private fun disConnectChannel(channel: ChannelModel) {
-    showProgress("Disconnecting your channel...", false)
+    showProgress(context?.getString(R.string.disconnecting_your_channel), false)
     if (channel.isWhatsAppChannel()) {
       val request = UpdateChannelActionDataRequest(ChannelActionData(), requestFloatsModel?.getWebSiteId())
       viewModel?.postUpdateWhatsappRequest(request, auth!!)?.observeOnce(viewLifecycleOwner, { responseManage(it) })

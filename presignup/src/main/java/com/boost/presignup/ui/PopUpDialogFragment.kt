@@ -327,7 +327,7 @@ class PopUpDialogFragment : DialogFragment(), FacebookLoginHelper, FacebookGraph
   }
 
   override fun onFacebookLoginCancel() {
-    Toast.makeText(activity, "Login cancel.", Toast.LENGTH_SHORT).show()
+    Toast.makeText(activity, getString(R.string.login_cancel), Toast.LENGTH_SHORT).show()
   }
 
   override fun onFacebookLoginError(error: FacebookException?) {

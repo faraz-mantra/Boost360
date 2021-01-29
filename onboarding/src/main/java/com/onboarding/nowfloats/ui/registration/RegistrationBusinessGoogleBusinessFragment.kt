@@ -198,7 +198,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
     val singleItems = ArrayList<String>()
     locations?.forEach { it.locationName?.let { it1 -> singleItems.add(it1) } }
     var checkedItem = 0
-    AlertDialog.Builder(baseActivity, R.style.DialogTheme).setTitle("Select the location to map")
+    AlertDialog.Builder(baseActivity, R.style.DialogTheme).setTitle(getString(R.string.select_the_location_on_map))
         .setPositiveButton(resources.getString(R.string.ok)) { dialog, _ ->
           dialog.dismiss()
           val data = locations?.firstOrNull { singleItems[checkedItem] == it.locationName }
@@ -229,7 +229,7 @@ class RegistrationBusinessGoogleBusinessFragment : BaseRegistrationFragment<Frag
   }
 
   override fun onGoogleLoginError(error: ApiException?) {
-    showLongToast("Google login error.")
+    showLongToast(getString(R.string.google_login_error))
   }
 
   override fun updateInfo() {

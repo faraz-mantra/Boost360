@@ -176,11 +176,11 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
       if (isWhatsApp) waIntent.setPackage("com.whatsapp")
       waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
       waIntent.putExtra(Intent.EXTRA_TEXT, messageCard ?: "")
-      baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
+      baseActivity.startActivity(Intent.createChooser(waIntent, getString(R.string.share_your_business_card)))
       dismiss()
       savePositionCard(cardPosition)
     } catch (e: Exception) {
-      showLongToast("Error sharing visiting card, please try again.")
+      showLongToast(getString(R.string.error_sharing_visiting_card_please_try_again))
       dismiss()
     }
   }
@@ -212,7 +212,7 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
           shareCardWhatsApp(this.messageCard, this.isWhatsApp ?: false)
-        } else showShortToast("Permission denied to read your External storage")
+        } else showShortToast(getString(R.string.permission_denied_to_read_your_external_storage))
         return
       }
     }
