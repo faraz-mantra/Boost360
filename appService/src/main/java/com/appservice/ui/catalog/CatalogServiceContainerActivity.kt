@@ -169,10 +169,10 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun onBackPressed() {
     when (type) {
-      FragmentType.SERVICE_DETAIL_VIEW -> serviceDetailFragment?.onNavPressed()
-      FragmentType.SERVICE_INFORMATION -> serviceInformationFragment?.onNavPressed()
-      FragmentType.PRODUCT_INFORMATION -> productInformationFragment?.onNavPressed()
-      FragmentType.PRODUCT_DETAIL_VIEW -> productDetailFragment?.onNavPressed()
+//      FragmentType.SERVICE_DETAIL_VIEW -> serviceDetailFragment?.onNavPressed()
+//      FragmentType.SERVICE_INFORMATION -> serviceInformationFragment?.onNavPressed()
+//      FragmentType.PRODUCT_INFORMATION -> productInformationFragment?.onNavPressed()
+//      FragmentType.PRODUCT_DETAIL_VIEW -> productDetailFragment?.onNavPressed()
 //      FragmentType.TIMING_STAFF -> weeklyAppointmentFragment.
       else -> super.onBackPressed()
     }
