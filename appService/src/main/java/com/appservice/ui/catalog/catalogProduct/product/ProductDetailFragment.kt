@@ -136,7 +136,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     val amountD = amount.toFloatOrNull() ?: 0F
     val distD = dist.toFloatOrNull() ?: 0F
     if (distD > amountD) {
-      showLongToast("Discount amount can't be greater than price")
+      showLongToast(getString(R.string.discount_amount_can_t_be_greater_than_price))
       binding?.discountEdt?.setText("")
       return
     }
@@ -319,7 +319,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             if ((it.status == 200 || it.status == 201 || it.status == 202) && productId.isNullOrEmpty().not()) {
               productIdAdd = productId
               addGstService(productId)
-            } else showError("Product adding error, please try again.")
+            } else showError(getString(R.string.product_adding_error_please_try_again))
           } else showError(resources.getString(R.string.internet_connection_not_available))
         })
       }
@@ -337,7 +337,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         if ((it.error is NoNetworkException).not()) {
           if ((it.status == 200 || it.status == 201 || it.status == 202)) {
             updateGstService(product?.productId)
-          } else showError("Product updating error, please try again.")
+          } else showError(getString(R.string.product_updating_error_please_try_again))
         } else showError(resources.getString(R.string.internet_connection_not_available))
       })
     }
@@ -354,7 +354,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {
           hideProgress()
           uploadImageSingle(productId)
-        } else showError("Product updating error, please try again.")
+        } else showError(getString(R.string.product_updating_error_please_try_again))
       } else showError(resources.getString(R.string.internet_connection_not_available))
     })
   }
@@ -370,7 +370,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           uploadImageSingle(productId)
         } else {
           if (isEdit == false) errorType = "addGstService"
-          showError("Product adding error, please try again.")
+          showError(getString(R.string.product_adding_error_please_try_again))
         }
       } else {
         if (isEdit == false) errorType = "addGstService"
@@ -380,7 +380,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun uploadImageSingle(productId: String?) {
-    showProgress("Uploading product image, please wait...")
+    showProgress(getString(R.string.uploading_product_image_please_wait))
     if (isEdit == true && productImage == null) {
       uploadSecondaryImage(productId)
       return
@@ -393,7 +393,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           uploadSecondaryImage(productId)
         } else {
           if (isEdit == false) errorType = "uploadImageSingle"
-          showError("Product image uploading error, please try again.")
+          showError(getString(R.string.product_image_uploading_error_please_try_again))
         }
       } else {
         if (isEdit == false) errorType = "uploadImageSingle"
@@ -425,7 +425,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               val response = getResponse(it.responseBody) ?: ""
               if (response.isNotEmpty()) secondaryImageList.add(response)
-            } else showError("Secondary Product image uploading error, please try again.")
+            } else showError(getString(R.string.secondary_product_image_uploading_error_please_try_again))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == images.size) {
             addImageToProduct(productId, secondaryImageList)
@@ -445,16 +445,16 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           if ((it.error is NoNetworkException).not()) {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               Log.d(ProductDetailFragment::class.java.name, "$it")
-            } else showLongToast("Add secondary image data error, please try again.")
+            } else showLongToast(getString(R.string.add_secondary_image_data_error_please_try_again))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == secondaryImageList.size) {
-            showLongToast(if (isEdit == true) "Product updated successfully." else "Product saved successfully.")
+            showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(R.string.product_saved_successfully))
             goBack()
           }
         })
       }
     } else {
-      showLongToast(if (isEdit == true) "Product updated successfully." else "Product saved successfully.")
+      showLongToast(if (isEdit == true) getString(R.string.product_updated_successfully) else getString(R.string.product_saved_successfully))
       goBack()
     }
   }
@@ -492,7 +492,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       showLongToast(resources.getString(R.string.enter_product_name))
       return false
     } else if (productCategory.isEmpty()) {
-      showLongToast("Please add product category")
+      showLongToast(getString(R.string.please_add_product_category))
       return false
     } else if (productDesc.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_product_desc))
@@ -699,9 +699,9 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
                 hideProgress()
                 if ((it.error is NoNetworkException).not()) {
                   if ((it.status == 200 || it.status == 201 || it.status == 202)) {
-                    showLongToast("Product removed successfully.")
+                    showLongToast(getString(R.string.product_removed_successfully))
                     goBack()
-                  } else showError("Removing product failed, please try again.")
+                  } else showError(getString(R.string.removing_product_failed_please_try_again))
                 } else showError(resources.getString(R.string.internet_connection_not_available))
               })
             }.show()
@@ -717,8 +717,8 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-        .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
-        .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
+        .setTitle(getString(R.string.information_not_saved)).setMessage(getString(R.string.you_have_unsaved_information_do_you_still_want_to_close))
+        .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }.setPositiveButton(getString(R.string.yes)) { d, _ ->
           baseActivity.finish()
           d.dismiss()
         }.show()

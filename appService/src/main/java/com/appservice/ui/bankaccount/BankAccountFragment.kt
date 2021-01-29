@@ -272,25 +272,25 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     val alias = binding?.edtAlias?.text?.toString()
     val ifsc = binding?.edtIfsc?.text?.toString()
     if (nameAccount.isNullOrEmpty()) {
-      showShortToast("Bank account name can't empty.")
+      showShortToast(getString(R.string.bank_account_name_can_t_be_empty))
       return false
     } else if (accountNumber.isNullOrEmpty()) {
-      showShortToast("Bank account number can't empty.")
+      showShortToast(getString(R.string.bank_account_number_can_t_be_empty))
       return false
     } else if (confirmNumber.isNullOrEmpty()) {
-      showShortToast("Confirm bank account number can't empty.")
+      showShortToast(getString(R.string.confirm_bank_account_number_can_t_be_empty))
       return false
     } else if ((confirmNumber == accountNumber).not()) {
-      showShortToast("Enter valid confirm account number.")
+      showShortToast(getString(R.string.enter_valid_confirm_account_number))
       return false
     } else if (ifsc.isNullOrEmpty()) {
-      showShortToast("Bank IFSC can't empty.")
+      showShortToast(getString(R.string.bank_ifsc_can_t_be_empty))
       return false
     } else if (ifsc.length < 11 || !isValidIfsc) {
-      showLongToast("Please enter valid IFSC code")
+      showLongToast(getString(R.string.please_enter_valid_ifsc_code))
       return false
     } else if (bankName.isNullOrEmpty()) {
-      showShortToast("Bank name can't empty.")
+      showShortToast(getString(R.string.bank_name_can_t_be_empty))
       return false
     }
     requestAccount = BankAccountDetailsN(accountName = nameAccount, accountNumber = accountNumber, iFSC = ifsc, bankName = bankName, accountAlias = alias, kYCDetails = BankAccountDetailsN().kycObj())
