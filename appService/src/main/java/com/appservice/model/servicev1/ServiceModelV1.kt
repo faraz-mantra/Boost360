@@ -28,7 +28,7 @@ class ServiceModelV1(
 
 
 
-        @SerializedName(value = "Price", alternate = ["Price"])
+        @SerializedName(value = "Price", alternate = ["price"])
         var Price: Double = 0.0,
 
         @SerializedName(value = "priority", alternate = ["Priority"])
