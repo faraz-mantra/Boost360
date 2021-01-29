@@ -9,6 +9,7 @@ import java.io.Serializable
 data class AppointmentModel(
         var day: String? = null,
         var timeSlots: ArrayList<TimeSlot>? = null,
+        var isDataAppliedOnMyDay: Boolean? = false,
         var isTurnedOn: Boolean = false, var isAppliedOnAllDays: Boolean = false, var isAppliedOnAllDaysViewVisible: Boolean = false, var toTiming: String? = null, var fromTiming: String? = null, var recyclerViewItem: Int = RecyclerViewItemType.SESSION_ITEM_VIEW.getLayout(),
 ) : AppBaseRecyclerViewItem, Serializable {
     override fun getViewType(): Int {

@@ -38,10 +38,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
-  private var length: Double? = 0.0
-  private var height: Double? = 0.0
-  private var thickness: Double? = 0.0
-  private var weight: Double? = 0.0
   private var product: Product? = null
   private var isEdit: Boolean? = null
   private var tagList = ArrayList<String>()
@@ -114,6 +110,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
     setAdapter()
     val stockAdapter = mutableListOf(SpinnerImageModel("Limited Stock" to true, R.drawable.ic_dot_green), SpinnerImageModel("Unlimited Stock" to false, R.drawable.ic_infinite))
     binding?.spinnerStock?.adapter = CustomDropDownAdapter(baseActivity, stockAdapter)
+    binding?.spinnerStock?.setSelection(1)
     binding?.spinnerStock?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
       override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         return when (stockAdapter[p2] == stockAdapter[1]) {
@@ -132,103 +129,99 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
       }
 
     }
-    setSpinners()
-    //    binding?.spinnerCod?.adapter = CustomDropDownAdapter(baseActivity, stockAdapter)
-//    when (product?.codAvailable) {
-//      true -> binding?.spinnerCod?.setSelection(0)
-//      else -> binding?.spinnerCod?.setSelection(1)
-//    }
-//    when (product?.prepaidOnlineAvailable) {
-//      true -> binding?.spinnerOnlinePayment?.setSelection(0)
-//      else -> binding?.spinnerOnlinePayment?.setSelection(1)
-//    }
-
     binding?.specKey?.setText(product?.keySpecification?.key)
     binding?.specValue?.setText(product?.keySpecification?.value)
   }
 
-  private fun setSpinners() {
-    val lengthArray = mutableListOf("INCH", "METERS")
-    val weightArray = mutableListOf("KGS", "MGS")
-    binding?.spinnerHeight?.adapter = ArrayAdapter(baseActivity, R.layout.support_simple_spinner_dropdown_item, lengthArray)
-    binding?.spinnerThickness?.adapter = ArrayAdapter(baseActivity, R.layout.support_simple_spinner_dropdown_item, lengthArray)
-    binding?.spinnerWeight?.adapter = ArrayAdapter(baseActivity, R.layout.support_simple_spinner_dropdown_item, weightArray)
-    binding?.spinnerLength?.adapter = ArrayAdapter(baseActivity, R.layout.support_simple_spinner_dropdown_item, lengthArray)
-    binding?.spinnerHeight?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        if (p0?.selectedItem.toString() == lengthArray[0]) {
-          height = binding?.cetHeight?.text.toString().toDoubleOrNull() ?: 0.0
-          binding?.cetHeight?.setText(convertInchToMeters(height).toString())
-        } else {
-          binding?.cetHeight?.setText(convertMetersToInch(height).toString())
-        }
-
-      }
-
-      override fun onNothingSelected(p0: AdapterView<*>?) {
-      }
-
-    }
-    binding?.spinnerLength?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        if (p0?.selectedItem.toString() == lengthArray[0]) {
-          length = binding?.cetLength?.text.toString().toDoubleOrNull() ?: 0.0
-          binding?.cetLength?.setText(convertInchToMeters(length).toString())
-        } else {
-          binding?.cetLength?.setText(convertMetersToInch(length).toString())
-        }
-      }
-
-      override fun onNothingSelected(p0: AdapterView<*>?) {
-        TODO("Not yet implemented")
-      }
-
-    }
-    binding?.spinnerWeight?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        if (p0?.selectedItem.toString() == weightArray[0]) {
-          weight = binding?.cetWeight?.text.toString().toDoubleOrNull() ?: 0.0
-          binding?.cetWeight?.setText(convertMgToKilo(weight).toString())
-        } else {
-          binding?.cetWeight?.setText(convertKiloToMg(weight).toString())
-        }
-      }
-
-      override fun onNothingSelected(p0: AdapterView<*>?) {
-      }
-
-    }
-    binding?.spinnerThickness?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        if (p0?.selectedItem.toString() == lengthArray[0]) {
-          thickness = binding?.cetThickness?.text.toString().toDoubleOrNull() ?: 0.0
-          binding?.cetThickness?.setText(convertInchToMeters(thickness).toString())
-        } else {
-          binding?.cetThickness?.setText(convertMetersToInch(thickness).toString())
-        }
-      }
-
-      override fun onNothingSelected(p0: AdapterView<*>?) {
-      }
-
-    }
-  }
-
-  private fun convertMgToKilo(mg: Double?): Double? {
-    return mg?.div(1000)
-  }
-
-  private fun convertKiloToMg(kg: Double?): Double? {
-    return kg?.times(1000)
-  }
-
-  private fun convertMetersToInch(length: Double?): Double? {
-    return length?.times(39.3701)
-  }
-
-  private fun convertInchToMeters(length: Double?): Double? {
-    return length?.div(39.3701)
-  }
+//  private fun setSpinners() {
+//    val lengthArray = mutableListOf("INCH", "METERS")
+//    val weightArray = mutableListOf("KGS", "MGS")
+//    binding?.spinnerHeight?.adapter = ArrayAdapter(baseActivity, R.layout.support_simple_spinner_dropdown_item, lengthArray)
+//    binding?.spinnerHeight?.isSelected = false
+//    binding?.spinnerThickness?.adapter = ArrayAdapter(baseActivity, R.layout.support_simple_spinner_dropdown_item, lengthArray)
+//    binding?.spinnerThickness?.isSelected = false
+//    binding?.spinnerWeight?.adapter = ArrayAdapter(baseActivity, R.layout.support_simple_spinner_dropdown_item, weightArray)
+//    binding?.spinnerWeight?.isSelected = false
+//    binding?.spinnerLength?.adapter = ArrayAdapter(baseActivity, R.layout.support_simple_spinner_dropdown_item, lengthArray)
+//    binding?.spinnerLength?.isSelected = false
+//    binding?.spinnerHeight?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//        if (p0?.selectedItem.toString() == lengthArray[0]) {
+//          binding?.cetHeight?.setText(convertInchToMeters(binding?.cetHeight!!.text.toString().toDoubleOrNull()
+//                  ?: 0.0).toString())
+//        } else {
+//          binding?.cetHeight?.setText(convertMetersToInch(binding?.cetHeight!!.text.toString().toDoubleOrNull()
+//                  ?: 0.0).toString())
+//        }
+//
+//      }
+//
+//      override fun onNothingSelected(p0: AdapterView<*>?) {
+//      }
+//
+//    }
+//    binding?.spinnerLength?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//        if (p0?.selectedItem.toString() == lengthArray[0]) {
+//          binding?.cetLength?.setText(convertInchToMeters(binding?.cetLength!!.text.toString().toDoubleOrNull()
+//                  ?: 0.0).toString())
+//        } else {
+//          binding?.cetLength?.setText(convertMetersToInch(binding?.cetLength!!.text.toString().toDoubleOrNull()
+//                  ?: 0.0).toString())
+//        }
+//      }
+//
+//      override fun onNothingSelected(p0: AdapterView<*>?) {
+//      }
+//
+//    }
+//    binding?.spinnerWeight?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//        if (p0?.selectedItem.toString() == weightArray[0]) {
+//          binding?.cetWeight?.setText(convertMgToKilo(binding?.cetWeight!!.text.toString().toDoubleOrNull()
+//                  ?: 0.0).toString())
+//        } else {
+//          binding?.cetWeight?.setText(convertKiloToMg(binding?.cetWeight!!.text.toString().toDoubleOrNull()
+//                  ?: 0.0).toString())
+//        }
+//      }
+//
+//      override fun onNothingSelected(p0: AdapterView<*>?) {
+//      }
+//
+//    }
+//    binding?.spinnerThickness?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//      override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//        if (p0?.selectedItem.toString() == lengthArray[0]) {
+//          binding?.cetThickness?.setText(convertInchToMeters(binding?.cetThickness!!.text.toString().toDoubleOrNull()
+//                  ?: 0.0).toString())
+//        } else {
+//          binding?.cetThickness?.setText(convertMetersToInch(binding?.cetThickness!!.text.toString().toDoubleOrNull()
+//                  ?: 0.0).toString())
+//        }
+//      }
+//
+//      override fun onNothingSelected(p0: AdapterView<*>?) {
+//      }
+//
+//    }
+//  }
+//
+//  private fun convertMgToKilo(mg: Double?): Double? {
+//    return mg?.div(1000)
+//  }
+//
+//  private fun convertKiloToMg(kg: Double?): Double? {
+//    return kg?.times(1000)
+//  }
+//
+//  private fun convertMetersToInch(length: Double?): Double? {
+//    return length?.times(39.3701)
+//  }
+//
+//  private fun convertInchToMeters(length: Double?): Double? {
+//    return length?.div(39.3701)
+//  }
 
   private fun specificationAdapter() {
     binding?.rvSpecification?.apply {
@@ -338,6 +331,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 //          "YES" -> product?.prepaidOnlineAvailable = true
 //          "NO" -> product?.prepaidOnlineAvailable = false
 //        }
+        if (product?.keySpecification == null) product?.keySpecification = KeySpecification()
         product?.keySpecification?.key = keySpecification
         product?.keySpecification?.value = valueSpecification
         product?.tags = tagList

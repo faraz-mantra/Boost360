@@ -577,10 +577,14 @@
                                 android:background="@drawable/rounded_stroke_grey"
                                 android:orientation="horizontal">
 
-                                <androidx.appcompat.widget.AppCompatSpinner
+                                <com.framework.views.customViews.CustomTextView
                                     android:id="@+id/spinner_weight"
                                     android:layout_width="0dp"
                                     android:layout_height="@dimen/size_40"
+                                    android:gravity="start|center_vertical"
+                                    android:paddingStart="@dimen/size_16"
+                                    android:text="KGS"
+                                    android:textSize="12sp"
                                     android:layout_gravity="center_vertical"
                                     android:layout_weight="0.3"
                                     android:background="@drawable/bg_spinner_gray" />
@@ -617,14 +621,17 @@
                                 android:background="@drawable/rounded_stroke_grey"
                                 android:orientation="horizontal">
 
-                                <androidx.appcompat.widget.AppCompatSpinner
+                                <com.framework.views.customViews.CustomTextView
                                     android:id="@+id/spinner_length"
                                     android:layout_height="@dimen/size_40"
                                     android:layout_width="0dp"
+                                    android:background="@drawable/bg_spinner_gray"
+                                    android:gravity="start|center_vertical"
+                                    android:paddingStart="@dimen/size_16"
+                                    android:text="INCH"
                                     android:layout_gravity="center_vertical"
                                     android:layout_weight="0.3"
-                                    android:background="@drawable/bg_spinner_gray"
-                                 />
+                                    android:textSize="12sp" />
 
 
                                 <com.framework.views.customViews.CustomEditText
@@ -701,14 +708,17 @@
                                 android:background="@drawable/rounded_stroke_grey"
                                 android:orientation="horizontal">
 
-                                <androidx.appcompat.widget.AppCompatSpinner
+                                <com.framework.views.customViews.CustomTextView
                                     android:id="@+id/spinner_height"
                                     android:layout_width="0dp"
+                                    android:background="@drawable/bg_spinner_gray"
+                                    android:gravity="start|center_vertical"
+                                    android:paddingStart="@dimen/size_16"
+                                    android:text="INCH"
                                     android:layout_height="@dimen/size_40"
                                     android:layout_gravity="center_vertical"
                                     android:layout_weight="0.3"
-                                    android:background="@drawable/bg_spinner_gray"
-                                    />
+                                    android:textSize="12sp" />
 
                                 <com.framework.views.customViews.CustomEditText
                                     android:id="@+id/cet_height"
@@ -739,10 +749,14 @@
                                 android:background="@drawable/rounded_stroke_grey"
                                 android:orientation="horizontal">
 
-                                <androidx.appcompat.widget.AppCompatSpinner
+                                <com.framework.views.customViews.CustomTextView
                                     android:id="@+id/spinner_thickness"
                                     android:layout_width="0dp"
                                     android:layout_height="@dimen/size_40"
+                                    android:gravity="start|center_vertical"
+                                    android:paddingStart="@dimen/size_16"
+                                    android:text="INCH"
+                                    android:textSize="12sp"
                                     android:layout_gravity="center_vertical"
                                     android:layout_weight="0.3"
                                     android:background="@drawable/bg_spinner_gray" />

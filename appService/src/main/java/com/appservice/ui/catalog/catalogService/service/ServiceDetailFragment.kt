@@ -114,19 +114,21 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     WebEngageController.trackEvent("Service product catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
     getBundleData()
     getPickUpAddress()
-//    binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     setOnClickListener(binding?.selectDeliveryConfig, binding?.vwPaymentConfig,
             binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
-    binding?.toggleService?.isOn = false
+    binding?.toggleService?.isOn = product?.isPriceToggleOn()!!
     binding?.payServiceView?.visibility = View.GONE
-//    binding?.ccbPayextra?.visibility = View.GONE
-    binding?.toggleService?.setOnToggledListener { _, isOn ->
-      binding?.payServiceView?.visibility = if (isOn) View.VISIBLE else View.GONE
-      binding?.freeServiceView?.visibility = if (isOn) View.GONE else View.VISIBLE
-//      binding?.ccbPayextra?.visibility = if (isOn) View.VISIBLE else View.GONE
+    binding?.toggleService?.setOnToggledListener { _, _ ->
+      initServiceToggle()
     }
+    initServiceToggle()
     listenerEditText()
+  }
+
+  private fun initServiceToggle() {
+    binding?.payServiceView?.visibility = if (binding?.toggleService?.isOn!!) View.VISIBLE else View.GONE
+    binding?.freeServiceView?.visibility = if (binding?.toggleService?.isOn!!) View.GONE else View.VISIBLE
   }
 
   private fun listenerEditText() {
@@ -230,7 +232,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
       binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
       binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
-    } else if (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value) {
+    }
+    if (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value) {
       binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
       binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
       binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
