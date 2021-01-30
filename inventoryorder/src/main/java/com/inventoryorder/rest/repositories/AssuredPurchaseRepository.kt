@@ -3,6 +3,7 @@ package com.inventoryorder.rest.repositories
 import com.framework.base.BaseResponse
 import com.inventoryorder.base.rest.AppBaseLocalService
 import com.inventoryorder.base.rest.AppBaseRepository
+import com.inventoryorder.model.UpdateCancelPropertyRequest
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.rest.TaskCode
@@ -11,29 +12,30 @@ import com.inventoryorder.rest.services.AssuredPurchaseDataSource
 import io.reactivex.Observable
 import retrofit2.Retrofit
 
-object AssuredPurchaseRepository: AppBaseRepository<AssuredPurchaseDataSource, AppBaseLocalService>(){
+object AssuredPurchaseRepository : AppBaseRepository<AssuredPurchaseDataSource, AppBaseLocalService>() {
 
-    fun postOrderInitiate(clientId: String?, request: OrderInitiateRequest?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.initiateOrder(clientId, request), TaskCode.POST_ORDER_INITIATE)
-    }
+  fun postOrderInitiate(clientId: String?, request: OrderInitiateRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.initiateOrder(clientId, request), TaskCode.POST_ORDER_INITIATE)
+  }
 
-    fun postOrderUpdate(clientId: String?, request: OrderInitiateRequest?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.updateOrder(clientId, request), TaskCode.POST_ORDER_UPDATE)
-    }
+  fun postOrderUpdate(clientId: String?, request: OrderInitiateRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.updateOrder(clientId, request), TaskCode.POST_ORDER_UPDATE)
+  }
 
-    fun updateExtraPropertyOrder(clientId: String?, request: UpdateExtraPropertyRequest?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.updateExtraPropertyOrder(clientId, request), TaskCode.POST_ORDER_EXTRA_FILED_UPDATE)
-    }
+  fun updateExtraPropertyOrder(clientId: String?, request: UpdateExtraPropertyRequest?, requestCancel: UpdateCancelPropertyRequest? = null): Observable<BaseResponse> {
+    return if (request != null) makeRemoteRequest(remoteDataSource.updateExtraPropertyOrder(clientId, request), TaskCode.POST_ORDER_EXTRA_FILED_UPDATE)
+    else makeRemoteRequest(remoteDataSource.updateExtraPropertyCancelOrder(clientId, requestCancel), TaskCode.POST_ORDER_EXTRA_FILED_UPDATE)
+  }
 
-    override fun getRemoteDataSourceClass(): Class<AssuredPurchaseDataSource> {
-        return AssuredPurchaseDataSource::class.java
-    }
+  override fun getRemoteDataSourceClass(): Class<AssuredPurchaseDataSource> {
+    return AssuredPurchaseDataSource::class.java
+  }
 
-    override fun getLocalDataSourceInstance(): AppBaseLocalService {
-        return AppBaseLocalService()
-    }
+  override fun getLocalDataSourceInstance(): AppBaseLocalService {
+    return AppBaseLocalService()
+  }
 
-    override fun getApiClient(): Retrofit {
-        return AssuredPurchaseClient.shared.retrofit
-    }
+  override fun getApiClient(): Retrofit {
+    return AssuredPurchaseClient.shared.retrofit
+  }
 }

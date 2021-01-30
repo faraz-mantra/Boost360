@@ -457,7 +457,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
   private fun updateBooking() {
     showProgress()
-    viewModel?.updateExtraPropertyOrder(AppConstant.CLIENT_ID_2, updateExtraPropertyRequest)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+    viewModel?.updateExtraPropertyOrder(AppConstant.CLIENT_ID_2, request = updateExtraPropertyRequest)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
       if (it.error is NoNetworkException) {
         hideProgress()
         showLongToast(resources.getString(R.string.internet_connection_not_available))

@@ -6,7 +6,7 @@ import com.inventoryorder.base.rest.AppBaseRepository
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.rest.TaskCode
-import com.inventoryorder.rest.apiClients.WithFloatsApiClient
+import com.inventoryorder.rest.apiClients.AssuredPurchaseClient
 import com.inventoryorder.rest.services.InventoryOrderRemoteDataSource
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -58,6 +58,6 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
   }
 
   override fun getApiClient(): Retrofit {
-    return WithFloatsApiClient.shared.retrofit
+    return AssuredPurchaseClient.shared.retrofit
   }
 }

@@ -1,18 +1,19 @@
-package com.inventoryorder.model.orderRequest
+package com.inventoryorder.model
 
 import com.framework.base.BaseRequest
 import com.google.gson.annotations.SerializedName
+import com.inventoryorder.model.orderRequest.extraProperty.ExtraPropertiesCancel
 import java.io.Serializable
 
-data class UpdateExtraPropertyRequest(
+data class UpdateCancelPropertyRequest(
     @SerializedName("existingKeyName")
     var existingKeyName: String? = null,
-    @SerializedName("extraProperties")
-    var extraProperties: ExtraProperties? = null,
     @SerializedName("orderId")
     var orderId: String? = null,
     @SerializedName("updateExtraPropertyType")
-    var updateExtraPropertyType: String? = PropertyType.ITEM.name
+    var updateExtraPropertyType: String? = PropertyType.ITEM.name,
+    @SerializedName("extraProperties")
+    var extraPropertiesCancel: ExtraPropertiesCancel? = null,
 ) : BaseRequest(), Serializable {
 
   enum class PropertyType {
