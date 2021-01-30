@@ -5,6 +5,7 @@ import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 import com.inventoryorder.model.SendMailRequest
+import com.inventoryorder.model.UpdateCancelPropertyRequest
 import com.inventoryorder.model.apointmentData.addRequest.AddAptConsultRequest
 import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultRequest
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
@@ -67,8 +68,8 @@ class OrderCreateViewModel : BaseViewModel() {
     return AssuredPurchaseRepository.postOrderInitiate(clientId, request).toLiveData()
   }
 
-  fun updateExtraPropertyOrder(clientId: String?, request: UpdateExtraPropertyRequest?): LiveData<BaseResponse> {
-    return AssuredPurchaseRepository.updateExtraPropertyOrder(clientId, request).toLiveData()
+  fun updateExtraPropertyOrder(clientId: String?, request: UpdateExtraPropertyRequest?=null,requestCancel: UpdateCancelPropertyRequest?=null): LiveData<BaseResponse> {
+    return AssuredPurchaseRepository.updateExtraPropertyOrder(clientId, request,requestCancel).toLiveData()
   }
 
   fun postOrderUpdate(clientId: String?, request: OrderInitiateRequest?): LiveData<BaseResponse> {
