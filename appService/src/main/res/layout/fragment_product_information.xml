@@ -874,7 +874,7 @@
                         android:background="@drawable/bg_transparent_orange"
                         android:fontFamily="@font/semi_bold"
                         android:gravity="center"
-                        android:padding="15dp"
+                        android:padding="@dimen/size_12"
                         android:stateListAnimator="@null"
                         android:text="DONE"
                         android:textAllCaps="true"
