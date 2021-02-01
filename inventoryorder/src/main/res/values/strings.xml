@@ -108,7 +108,8 @@
   <string name="copy_video_call_link">Copy video call link</string>
   <string name="open_consultation_window">OPEN CONSULTATION WINDOW</string>
   <string name="appointment_confirmed">Appointment confirmed.</string>
-  <string name="order_confirmed">Order confirmed.</string>
+  <string name="order_confirmed">Order confirmed successfully!</string>
+  <string name="payment_request_send">Payment reminder sent successfully!</string>
   <string name="time_remaining">Time remaining</string>
   <string name="_00_00_00">00:00:00</string>
   <string name="the_video_consultation_has_been_cancelled">The video consultation has been cancelled</string>
@@ -209,7 +210,7 @@
   <string name="paste_consignment_id">Paste Consignment ID</string>
   <string name="consignment_tracking_url_provided_by_vendor">Consignment tracking URL (provided by vendor)</string>
   <string name="paste_consignment_tracking_url">Paste consignment tracking URL</string>
-  <string name="order_cancel">Order cancel!</string>
+  <string name="order_cancel">Order cancel successfully!</string>
   <string name="cancellation_reason_not_update">Cancellation reason not update</string>
 
 </resources>

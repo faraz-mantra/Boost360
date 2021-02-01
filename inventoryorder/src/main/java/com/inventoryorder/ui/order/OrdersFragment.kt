@@ -4,7 +4,6 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -62,6 +61,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   /* Paging */
   private var isLoadingD = false
+  private var isSerchItem = false
   private var TOTAL_ELEMENTS = 0
   private var currentPage = PAGE_START
   private var isLastPageD = false
@@ -97,7 +97,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
     binding?.orderRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
       override fun loadMoreItems() {
-        if (!isLastPageD) {
+        if (!isLastPageD && !isSerchItem) {
           isLoadingD = true
           currentPage += requestFilter.limit ?: 0
           orderAdapter?.addLoadingFooter(OrderItem().getLoaderItem())
@@ -124,6 +124,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val response = it as? OrderSummaryResponse
+        setToolbarTitle(resources.getString(R.string.orders) + " (${response?.Data?.TotalOrders ?: 0})")
         typeList = response?.Data?.getOrderType()
         typeList?.let { it1 -> setAdapterSellerSummary(it1) } ?: errorOnSummary(null)
       } else errorOnSummary(it?.message)
@@ -215,7 +216,10 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {
         val sheetRequestPayment = RequestPaymentBottomSheetDialog()
         sheetRequestPayment.setData(orderItem)
-        sheetRequestPayment.onClicked = { }
+        sheetRequestPayment.onClicked = {
+          showProgress()
+          sendPaymentLinkOrder(getString(R.string.payment_request_send))
+        }
         sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentBottomSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.CANCEL_ORDER -> {
@@ -284,7 +288,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       }
       if (it.isSuccess()) {
         val data = it as? OrderConfirmStatus
-        if (isSendPaymentLink) sendPaymentLinkOrder()
+        if (isSendPaymentLink) sendPaymentLinkOrder(getString(R.string.order_confirmed))
         else {
           apiGetOrderDetails()
           showLongToast(getString(R.string.order_confirmed))
@@ -296,11 +300,11 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     })
   }
 
-  private fun sendPaymentLinkOrder() {
+  private fun sendPaymentLinkOrder(message: String) {
     viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, { it1 ->
       if (it1.isSuccess()) {
         apiGetOrderDetails()
-        showLongToast(getString(R.string.order_confirmed))
+        showLongToast(message)
       } else apiGetOrderDetails()
     })
   }
@@ -424,10 +428,6 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     if (searchItem != null) {
       val searchView = searchItem.actionView as SearchView
       searchView.queryHint = resources.getString(R.string.queryHintOrder)
-      val ll = searchView.getChildAt(0) as? LinearLayout
-      val ll2 = ll?.getChildAt(2) as? LinearLayout
-      val ll3 = ll2?.getChildAt(1) as? LinearLayout
-      val autoComplete = ll3?.getChildAt(0) as? SearchView.SearchAutoComplete
       searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(newText: String?): Boolean {
           newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
@@ -439,17 +439,15 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
           return false
         }
       })
-
-//      searchView.setOnQueryTextFocusChangeListener { _, _ ->
-//        if (autoComplete?.text.isNullOrEmpty().not()) searchView.setQuery(autoComplete?.text, true)
-//      }
     }
   }
 
   private fun startFilter(query: String) {
     if (query.isNotEmpty() && query.length > 2) {
-      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = true)
+      isSerchItem = true
+      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = isSerchItem)
     } else {
+      isSerchItem = false
       orderList.clear()
       orderList.addAll(orderListFinalList)
       setAdapterNotify(orderList)
