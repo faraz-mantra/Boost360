@@ -195,6 +195,7 @@
   <string name="type_the_message_that_you_want_to_include">Type the message that you want to include...</string>
   <string name="boost_will_send_an_email_and_an_sms_feedback_of_their_overall_buying_experiance">Boost will send an email and an SMS to the customer on your behalf, informing them about the order successfully getting delivered and requesting a feedback of their overall buying experience.</string>
   <string name="request_feedback">REQUEST FEEDBACK</string>
+  <string name="confirmed_delivered">Delivered</string>
   <string name="marking_as_shipped">Marking as Shipped</string>
   <string name="order_shipped_via">Order shipped via</string>
   <string name="local_delivery_person">Local Delivery Person</string>
@@ -211,6 +212,9 @@
   <string name="consignment_tracking_url_provided_by_vendor">Consignment tracking URL (provided by vendor)</string>
   <string name="paste_consignment_tracking_url">Paste consignment tracking URL</string>
   <string name="order_cancel">Order cancel successfully!</string>
+  <string name="order_shipped">Order shipped successfully!</string>
+  <string name="order_delivery">Order delivery successfully!</string>
   <string name="cancellation_reason_not_update">Cancellation reason not update</string>
+  <string name="include_a_message_optional">Include a Message (optional)</string>
 
 </resources>
