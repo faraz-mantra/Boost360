@@ -8,7 +8,7 @@ data class ExperienceModel(
         var title: String? = null,
         var value: Int? = null,
         var isSelected: Boolean = false,
-        var recyclerViewItem: Int = RecyclerViewItemType.EXPERIENCE_RECYCLER_ITEM.getLayout(),
+        var recyclerViewItem: Int = RecyclerViewItemType.EXPERIENCE_RECYCLER_ITEM.getLayout()
 ) : AppBaseRecyclerViewItem, Serializable {
 
     override fun getViewType(): Int {
