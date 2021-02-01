@@ -43,7 +43,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     private var staffAge: Int = 0
     private lateinit var staffName: String
     private lateinit var specializationList: ArrayList<SpecialisationsItem>
-    private lateinit var serviceListId: java.util.ArrayList<String>
+    private  var serviceListId: java.util.ArrayList<String>? = null
     private lateinit var specialization: String
     private lateinit var staffImage: StaffImage
     private lateinit var genderArray: Array<String>
@@ -95,7 +95,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         binding?.edtExperience?.setText(staffDetails?.experience.toString())
         binding?.btnSave?.text = getString(R.string.update)
         binding?.toggleIsAvailable?.isOn = staffDetails?.isAvailable!!
-        setServicesList()
+//        setServicesList()
 
 
     }
@@ -222,7 +222,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         val imageExtension: String? = imageUri?.toString()?.substring(imageUri.toString().lastIndexOf("."))
         if (isEdit == null || isEdit == false) {
             val imageToByteArray: ByteArray = imageToByteArray()
-            servicesList?.forEach { serviceListId.add(it.id!!) }
+            servicesList?.forEach { serviceListId?.add(it.id!!) }
             staffProfile?.age = staffAge
             staffProfile?.isAvailable = isAvailable
             staffProfile?.description = staffDescription
@@ -230,6 +230,9 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             staffProfile?.experience = yearOfExperience.toIntOrNull() ?: 0
             staffProfile?.floatingPointTag = UserSession.fpId
             staffProfile?.name = staffName
+            when {
+                serviceListId.isNullOrEmpty() -> serviceListId = null
+            }
             staffProfile?.serviceIds = serviceListId
             this.staffImage = StaffImage(image = "data:image/png;base64,${Base64.encodeToString(imageToByteArray, Base64.DEFAULT)}",
                     fileName = "$staffName$imageExtension", imageFileType = imageExtension?.removePrefix("."))
@@ -291,24 +294,25 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         }
 
     }
-    private fun setServicesList() {
-        val serviceName = ArrayList<String>()
-        if (isEdit == true) {
-            viewModel!!.getServiceListing(ServiceListRequest(floatingPointTag = UserSession.fpId)
-            ).observe(viewLifecycleOwner, {
-                when (it.status) {
-                    200 -> {
-                        val data = (it as ServiceListResponse).result!!.data!!
-                        val servicesProvided = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
-                        servicesProvided.forEach { itemService -> serviceName.add(itemService.name!!) }
-                        binding!!.ctvServices.text = serviceName.joinToString(" ,", limit = 5, truncated = "5 more")
-                    }
-                    else -> {
-                    }
-                }
-            })
-        }
-    }
+
+    //    private fun setServicesList() {
+//        val serviceName = ArrayList<String>()
+//        if (isEdit == true) {
+//            viewModel!!.getServiceListing(ServiceListRequest(floatingPointTag = UserSession.fpId)
+//            ).observe(viewLifecycleOwner, {
+//                when (it.status) {
+//                    200 -> {
+//                        val data = (it as ServiceListResponse).result!!.data!!
+//                        val servicesProvided = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
+//                        servicesProvided.forEach { itemService -> serviceName.add(itemService.name!!) }
+//                        binding!!.ctvServices.text = serviceName.joinToString(" ,", limit = 5, truncated = "5 more")
+//                    }
+//                    else -> {
+//                    }
+//                }
+//            })
+//        }
+//    }
     private fun setImage(mPaths: List<String>) {
         this.imageUri = Uri.parse(mPaths[0])
         let { activity?.glideLoad(binding?.civStaffImg!!, imageUri.toString(), R.drawable.ic_staff_img_blue) }
