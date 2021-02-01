@@ -607,10 +607,10 @@
                                 android:layout_marginTop="@dimen/size_10"
                                 android:layout_marginBottom="@dimen/size_14"
                                 android:includeFontPadding="false"
-                                android:text="Clients can book this product for FREE."
+                                android:text="@string/customers_can_only_view_and_enquire_about_this_product"
                                 android:textColor="@color/warm_grey"
                                 android:textSize="12sp"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 app:fontFamily="@font/regular" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -873,8 +873,38 @@ android:visibility="gone"
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/size_80" />
+                            android:layout_height="@dimen/size_50" />
 
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/vw_savePublish"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/size_20"
+                            android:layout_marginEnd="@dimen/size_20"
+                            android:layout_marginBottom="@dimen/size_12"
+                            android:clickable="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent">
+
+                            <com.framework.views.customViews.CustomButton
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:background="@drawable/bg_button_proceed"
+                                android:clickable="false"
+                                android:drawablePadding="@dimen/size_6"
+                                android:fontFamily="@font/semi_bold"
+                                android:gravity="center"
+                                android:text="@string/save_amp_publish"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:textType="HEADING_6" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -882,36 +912,6 @@ android:visibility="gone"
 
             </androidx.core.widget.NestedScrollView>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/vw_savePublish"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_20"
-                android:layout_marginEnd="@dimen/size_20"
-                android:layout_marginBottom="@dimen/size_12"
-                android:clickable="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <com.framework.views.customViews.CustomButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/bg_button_proceed"
-                    android:clickable="false"
-                    android:drawablePadding="@dimen/size_6"
-                    android:fontFamily="@font/semi_bold"
-                    android:gravity="center"
-                    android:text="@string/save_amp_publish"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:textType="HEADING_6" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
