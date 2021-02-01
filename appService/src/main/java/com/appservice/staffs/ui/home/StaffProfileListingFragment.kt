@@ -155,7 +155,13 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
                         }
                     }
                 }
+                204 -> {
+                    hideProgress()
+                    binding?.fragmentStaffAdd?.root?.visibility = View.VISIBLE
+                    binding?.layoutStaffListing?.root?.visibility = View.GONE
+                }
             }
+
         })
 
 
