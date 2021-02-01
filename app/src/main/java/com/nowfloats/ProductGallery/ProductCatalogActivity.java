@@ -308,6 +308,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         if (!WidgetKey.isNewPricingPlan) {
             if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                 Methods.showFeatureNotAvailDialog(this);
+//                Utils.initiateAddonMarketplace(getApplicationContext(), session,false,"comparePackageSelection","",true);
             } else {
                 WebEngageController.trackEvent("Clicked on products catalogue add new", "PRODUCT CATALOGUE", "");
                 openAddProductActivity(new Product());

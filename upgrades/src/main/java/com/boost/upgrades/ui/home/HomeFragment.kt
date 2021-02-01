@@ -779,6 +779,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + link.get(link.size - 1) + "?autoplay=1&vq=small")
         videosListAdapter.addUpdates(list)
         videosListAdapter.notifyDataSetChanged()
+        video_sub_title.text = list.get(0).title
+        video_sub_desc.text = list.get(0).desc
     }
 
     fun updatePartnerViewPager(list: List<PartnerZone>) {
@@ -1184,6 +1186,8 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         videoPlayerWebView.setWebViewClient(WebViewClient())
         videoPlayerWebView.loadUrl("http://www.youtube.com/embed/" + link.get(link.size - 1) + "?autoplay=1&vq=small")
 //    videoPlayerWebView.setWebChromeClient(WebChromeClient())
+        video_sub_title.text = videoItem.title
+        video_sub_desc.text = videoItem.desc
     }
 
     override fun onPackageAddToCart(item: Bundles?) {
