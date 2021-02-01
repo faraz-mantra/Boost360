@@ -109,6 +109,7 @@
   <string name="open_consultation_window">OPEN CONSULTATION WINDOW</string>
   <string name="appointment_confirmed">Appointment confirmed.</string>
   <string name="order_confirmed">Order confirmed successfully!</string>
+  <string name="order_payment_done">Payment confirmed successfully!</string>
   <string name="payment_request_send">Payment reminder sent successfully!</string>
   <string name="time_remaining">Time remaining</string>
   <string name="_00_00_00">00:00:00</string>

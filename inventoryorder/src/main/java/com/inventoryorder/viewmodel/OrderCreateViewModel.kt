@@ -61,6 +61,10 @@ class OrderCreateViewModel : BaseViewModel() {
     return InventoryOrderRepository.markAsDelivered(clientId, orderId).toLiveData()
   }
 
+  fun markCodPaymentDone(clientId: String?, orderId: String?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.markCodPaymentDone(clientId, orderId).toLiveData()
+  }
+
   fun markAsShipped(clientId: String?, request: MarkAsShippedRequest?): LiveData<BaseResponse> {
     return InventoryOrderRepository.markAsShipped(clientId, request).toLiveData()
   }
