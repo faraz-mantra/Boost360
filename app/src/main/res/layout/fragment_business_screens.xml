@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:id="@+id/imageview_circle"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/businessapp_third"
+                android:src="@drawable/businessapp_fourth"
                 android:scaleType="fitEnd"
                 android:layout_height="match_parent"/>
         </LinearLayout>

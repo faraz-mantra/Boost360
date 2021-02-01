@@ -1,10 +1,13 @@
 package com.boost.upgrades.ui.home
 
 import android.app.Application
+import android.content.Context
+import android.text.Html
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
 import com.boost.upgrades.data.model.*
 import com.boost.upgrades.data.remote.ApiInterface
@@ -15,6 +18,10 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.home_fragment.*
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 
 class HomeViewModel(application: Application) : BaseViewModel(application) {
     var updatesResult: MutableLiveData<List<WidgetModel>> = MutableLiveData()
@@ -39,6 +46,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     var experienceCode: String = "SVC"
     var _fpTag: String = "ABC"
+
+    var categoryResult: MutableLiveData<String> = MutableLiveData()
 
     fun upgradeResult(): LiveData<List<WidgetModel>> {
         return updatesResult
@@ -104,6 +113,28 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         experienceCode = code
         _fpTag = fpTag
 
+    }
+
+    fun categoryResult(): LiveData<String> {
+        return categoryResult
+    }
+
+    fun getCategoriesFromAssetJson(context: Context, expCode: String?) {
+        val data: String? = Utils.getAssetJsonData(context)
+        try {
+            val json_contact: JSONObject = JSONObject(data)
+            var jsonarray_info: JSONArray = json_contact.getJSONArray("data")
+            var i:Int = 0
+            var size:Int = jsonarray_info.length()
+            for (i in 0.. size-1) {
+                var json_objectdetail: JSONObject =jsonarray_info.getJSONObject(i)
+                if(json_objectdetail.getString("experience_code") == expCode){
+                    categoryResult.postValue(json_objectdetail.getString("category_Name") )
+                }
+            }
+        } catch (ioException: JSONException) {
+            ioException.printStackTrace()
+        }
     }
 
     fun loadUpdates(fpid: String, clientId: String) {
