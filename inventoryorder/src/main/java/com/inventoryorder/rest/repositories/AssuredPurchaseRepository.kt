@@ -3,7 +3,7 @@ package com.inventoryorder.rest.repositories
 import com.framework.base.BaseResponse
 import com.inventoryorder.base.rest.AppBaseLocalService
 import com.inventoryorder.base.rest.AppBaseRepository
-import com.inventoryorder.model.UpdateCancelPropertyRequest
+import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.rest.TaskCode
@@ -22,7 +22,7 @@ object AssuredPurchaseRepository : AppBaseRepository<AssuredPurchaseDataSource, 
     return makeRemoteRequest(remoteDataSource.updateOrder(clientId, request), TaskCode.POST_ORDER_UPDATE)
   }
 
-  fun updateExtraPropertyOrder(clientId: String?, request: UpdateExtraPropertyRequest?, requestCancel: UpdateCancelPropertyRequest? = null): Observable<BaseResponse> {
+  fun updateExtraPropertyOrder(clientId: String?, request: UpdateExtraPropertyRequest?, requestCancel: UpdateOrderNPropertyRequest? = null): Observable<BaseResponse> {
     return if (request != null) makeRemoteRequest(remoteDataSource.updateExtraPropertyOrder(clientId, request), TaskCode.POST_ORDER_EXTRA_FILED_UPDATE)
     else makeRemoteRequest(remoteDataSource.updateExtraPropertyCancelOrder(clientId, requestCancel), TaskCode.POST_ORDER_EXTRA_FILED_UPDATE)
   }

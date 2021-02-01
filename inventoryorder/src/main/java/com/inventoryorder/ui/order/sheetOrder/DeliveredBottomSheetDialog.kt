@@ -10,7 +10,7 @@ import com.inventoryorder.model.ordersdetails.OrderItem
 class DeliveredBottomSheetDialog : BaseBottomSheetDialog<BottomSheetDeliveredOrderBinding, BaseViewModel>() {
 
   private var orderItem: OrderItem? = null
-  var onClicked: () -> Unit = {}
+  var onClicked: (message: String) -> Unit = {}
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_delivered_order
@@ -26,14 +26,14 @@ class DeliveredBottomSheetDialog : BaseBottomSheetDialog<BottomSheetDeliveredOrd
 
   override fun onCreateView() {
     setOnClickListener(binding?.buttonDone, binding?.tvCancel)
+    binding?.tvSubTitle?.text = "Order ID #${orderItem?.ReferenceNumber ?: ""}"
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
+    dismiss()
     when (v) {
-      binding?.buttonDone -> dismiss()
-      binding?.tvCancel -> dismiss()
+      binding?.buttonDone -> onClicked(binding?.tvDesc?.text?.toString() ?: "")
     }
   }
-
 }
