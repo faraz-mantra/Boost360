@@ -142,15 +142,15 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
     override fun getToolbarTitle(): String? {
         return when (fragmentType) {
-            FragmentType.STAFF_ADD_FRAGMENT -> "STAFF LISTING"
-            FragmentType.STAFF_HOME_FRAGMENT -> "STAFF LISTING"
-            FragmentType.STAFF_DETAILS_FRAGMENT -> "Staff Details"
-            FragmentType.STAFF_SELECT_SERVICES_FRAGMENT -> "Select Services"
-            FragmentType.STAFF_TIMING_FRAGMENT -> "Staff Timing"
-            FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT -> "Scheduled Breaks"
-            FragmentType.STAFF_SERVICES_CONFIRM_FRAGMENT -> "Scheduled Breaks"
-            FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> "STAFF LISTING"
-            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> "Staff Details"
+            FragmentType.STAFF_ADD_FRAGMENT -> getString(R.string.toolbar_staff_listing)
+            FragmentType.STAFF_HOME_FRAGMENT -> getString(R.string.toolbar_staff_listing)
+            FragmentType.STAFF_DETAILS_FRAGMENT -> getString(R.string.toolbar_staff_details)
+            FragmentType.STAFF_SELECT_SERVICES_FRAGMENT -> getString(R.string.toolbar_select_services)
+            FragmentType.STAFF_TIMING_FRAGMENT -> getString(R.string.toolbar_staff_timing)
+            FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT -> getString(R.string.toolbar_schedule_break)
+            FragmentType.STAFF_SERVICES_CONFIRM_FRAGMENT -> getString(R.string.toolbar_schedule_breaks)
+            FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> getString(R.string.toolbar_staff_listing)
+            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> getString(R.string.toolbar_staff_details)
             else -> super.getToolbarTitle()
         }
     }

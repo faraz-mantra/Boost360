@@ -36,7 +36,7 @@ import kotlinx.android.synthetic.main.item_preview_image.view.*
 import java.io.ByteArrayOutputStream
 
 class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffViewModel>() {
-    private var resultCode: Int? = 0
+    private var resultCode: Int = 1
     private var isAvailable: Boolean? = false
     private lateinit var yearOfExperience: String
     private lateinit var staffDescription: String
@@ -93,7 +93,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         if (specialisations?.isNullOrEmpty() == false)
             binding?.etvSpecialization?.setText(specialisations[0]?.value)
         binding?.edtExperience?.setText(staffDetails?.experience.toString())
-        binding?.btnSave?.text = "UPDATE"
+        binding?.btnSave?.text = getString(R.string.update)
         binding?.toggleIsAvailable?.isOn = staffDetails?.isAvailable!!
         setServicesList()
 
@@ -166,13 +166,13 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 ))?.observe(viewLifecycleOwner, { t ->
             when (t.status) {
                 200 -> {
-                    showShortToast("profile updated")
+                    showShortToast(getString(R.string.profile_updated))
                     baseActivity.setResult(AppCompatActivity.RESULT_OK)
                     baseActivity.finish()
 
                 }
                 else -> {
-                    showShortToast("something went wrong")
+                    showShortToast(getString(R.string.something_went_wrong))
                 }
             }
 
@@ -200,22 +200,22 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         this.isAvailable = binding?.toggleIsAvailable?.isOn
 
         if (staffName.isBlank()) {
-            showLongToast("Enter Staff Name")
+            showLongToast(getString(R.string.enter_staff_name))
             return false
         } else if (staffGender == null || staffGender) {
-            showLongToast("Select Staff Gender")
+            showLongToast(getString(R.string.select_staff_gender))
             return false
         } else if (specialization.isEmpty()) {
-            showLongToast("Please add specialization")
+            showLongToast(getString(R.string.please_add_specialization))
             return false
         } else if (yearOfExperience.isBlank()) {
-            showLongToast("select year of experience")
+            showLongToast(getString(R.string.select_year_of_experience))
             return false
         } else if (staffAge == 0) {
-            showLongToast("please enter your age")
+            showLongToast(getString(R.string.please_enter_your_age))
             return false
         } else if (imageUri == null || imageUri.toString().isEmpty()||imageUri.toString().isBlank()) {
-            showLongToast("please choose image")
+            showLongToast(getString(R.string.please_choose_image))
             return false
         }
         specializationList.add(SpecialisationsItem(specialization, "key"))
@@ -242,12 +242,12 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, { t ->
             when (t.status) {
                 200 -> {
-                    showShortToast("profile created")
+                    showShortToast(getString(R.string.profile_created))
                     baseActivity.setResult(AppCompatActivity.RESULT_OK)
                     baseActivity.finish()
                 }
                 else -> {
-                    showShortToast("something went wrong")
+                    showShortToast(getString(R.string.something_went_wrong))
                 }
             }
         })
@@ -280,8 +280,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 setImage(mPaths)
             }
             requestCode == Constants.REQUEST_CODE_SERVICES_PROVIDED && resultCode == AppCompatActivity.RESULT_OK -> {
-                this.servicesList?.clear()
-                this.resultCode = resultCode
+                this.resultCode = 0
                 this.servicesList = data!!.extras!![Constants.SERVICES_LIST] as ArrayList<DataItemService>
                 val serviceName = ArrayList<String>()
                 servicesList?.forEach { dataItem -> serviceName.add(dataItem.name!!) }
@@ -294,7 +293,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     }
     private fun setServicesList() {
         val serviceName = ArrayList<String>()
-        if (isEdit == true && 0== resultCode) {
+        if (isEdit == true) {
             viewModel!!.getServiceListing(ServiceListRequest(floatingPointTag = UserSession.fpId)
             ).observe(viewLifecycleOwner, {
                 when (it.status) {

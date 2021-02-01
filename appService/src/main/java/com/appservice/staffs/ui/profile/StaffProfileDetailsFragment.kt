@@ -48,7 +48,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         binding!!.ctvEdit.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         binding!!.ctvEdit.text = getString(R.string.u_edit_info_u)
         val get = arguments?.get("STAFF_DETAILS") as DataItem
-        showProgress("Loading")
+        showProgress(getString(R.string.loading))
         viewModel?.getStaffDetails(get.id)?.observe(viewLifecycleOwner, {
             when (it.status) {
                 200 -> {
@@ -81,7 +81,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
     private fun fetchServices() {
         viewModel?.getServiceListing(ServiceListRequest(
-                FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpId))?.observe(viewLifecycleOwner, { response ->
+                filterBy = FilterBy("ALL", 0, 0), category = "", floatingPointTag = UserSession.fpId))?.observe(viewLifecycleOwner, { response ->
             when (response.status) {
                 200 -> {
                     val data = (response as ServiceListResponse).result?.data
@@ -134,7 +134,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
                     staffDetails?.isAvailable = false
                 }
                 R.id.action_menu_remove_staff -> {
-                    showProgress("Removing Staff")
+                    showProgress(getString(R.string.removing_staff))
                     viewModel?.deleteStaffProfile(StaffDeleteImageProfileRequest(staffDetails?.id, UserSession.fpId))?.observe(viewLifecycleOwner, { response ->
                         when (response.status) {
                             200 -> {
@@ -143,7 +143,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
                                 hideProgress()
                             }
                             else -> {
-                                showShortToast("Unable to delete")
+                                showShortToast(getString(R.string.unable_to_delete))
                             }
                         }
                     })

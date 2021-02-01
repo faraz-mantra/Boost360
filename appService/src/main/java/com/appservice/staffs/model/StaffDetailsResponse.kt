@@ -11,7 +11,7 @@ data class StaffDetailsResponse(
 		val statusCode: Int? = null,
 
 		@field:SerializedName("Result")
-		val result: StaffDetailsResult? = null,
+		val result: StaffDetailsResult? = null
 ) : Serializable, BaseResponse()
 
 
@@ -51,5 +51,5 @@ data class StaffDetailsResult(
 		val age: Int? = null,
 
 		@field:SerializedName("Name")
-		val name: String? = null,
+		val name: String? = null
 ):Serializable
