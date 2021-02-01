@@ -66,6 +66,9 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
   fun markAsDelivered(clientId: String?, orderId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.markAsDelivered(clientId, orderId), TaskCode.DELIVERED_ORDER_TASK)
   }
+  fun markCodPaymentDone(clientId: String?, orderId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.markCodPaymentDone(clientId, orderId), TaskCode.DELIVERED_ORDER_TASK)
+  }
 
   fun markAsShipped(clientId: String?, request: MarkAsShippedRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.markAsShipped(clientId, request), TaskCode.SHIPPED_ORDER_TASK)

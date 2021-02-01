@@ -96,6 +96,12 @@ interface InventoryOrderRemoteDataSource {
       @Query("orderId") orderId: String?
   ): Observable<Response<ResponseBody>>
 
+  @GET(EndPoints.MARK_COD_PAYMENT_DONE)
+  fun markCodPaymentDone(
+      @Query("clientId") clientId: String?,
+      @Query("orderId") orderId: String?
+  ): Observable<Response<ResponseBody>>
+
   @GET(EndPoints.SEND_PAYMENT_REMINDER)
   fun sendPaymentReminder(
       @Query("clientId") clientId: String?,

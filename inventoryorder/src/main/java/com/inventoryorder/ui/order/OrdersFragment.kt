@@ -229,8 +229,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
         sheetCancel.onClicked = this@OrdersFragment::apiCancelOrder
         sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
       }
-      OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> {//
-      }
+      OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> markCodPaymentRequest()
       OrderMenuModel.MenuStatus.MARK_AS_DELIVERED -> {
         val sheetDelivered = DeliveredBottomSheetDialog()
         sheetDelivered.setData(orderItem)
@@ -346,6 +345,24 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     })
   }
 
+
+  private fun markCodPaymentRequest() {
+    showProgress()
+    viewModel?.markCodPaymentDone(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        hideProgress()
+        return@Observer
+      }
+      if (it.isSuccess()) {
+        apiGetOrderDetails()
+        showLongToast(getString(R.string.order_payment_done))
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
+  }
 
   private fun apiGetOrderDetails() {
     viewModel?.getOrderDetails(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
