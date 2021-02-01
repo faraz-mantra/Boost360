@@ -44,7 +44,7 @@ const val WA_KEY = "58ede4d4ee786c1604f6c535"
 
 open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
 
-  private var messageCard: String? = null
+  private var shareChannelText: String? = null
   private var isWhatsApp: Boolean? = null
   private var cardPosition = 0
   private var localSessionModel: LocalSessionModel? = null
@@ -54,8 +54,9 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
     }
 
-  fun setData(localSessionModel: LocalSessionModel) {
+  fun setData(localSessionModel: LocalSessionModel,shareChannelText:String) {
     this.localSessionModel = localSessionModel
+    this.shareChannelText = shareChannelText
   }
 
   override fun getLayout(): Int {
@@ -125,8 +126,8 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       }
       popup.show()
     }
-    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp("Business Card", true) }
-    binding?.shareOther?.setOnClickListener { shareCardWhatsApp("Business Card", false) }
+    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp(shareChannelText, true) }
+    binding?.shareOther?.setOnClickListener { shareCardWhatsApp(shareChannelText, false) }
   }
 
   private fun showSimmer(isSimmer: Boolean) {
@@ -160,7 +161,6 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
   }
 
   private fun shareCardWhatsApp(messageCard: String?, isWhatsApp: Boolean) {
-    this.messageCard = messageCard
     this.isWhatsApp = isWhatsApp
     if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
       requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
@@ -211,7 +211,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
     when (requestCode) {
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-          shareCardWhatsApp(this.messageCard, this.isWhatsApp ?: false)
+          shareCardWhatsApp(shareChannelText, this.isWhatsApp ?: false)
         } else showShortToast("Permission denied to read your External storage")
         return
       }
