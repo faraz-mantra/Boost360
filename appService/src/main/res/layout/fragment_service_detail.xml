@@ -134,7 +134,7 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_3"
               android:layout_marginTop="@dimen/size_36"
-              android:text="Service Name*"
+              android:text="@string/service_name"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_3" />
@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_5"
                 android:background="@drawable/bg_rect_edit_txt"
-                android:hint="Write the name of your service"
+                android:hint="@string/write_the_name_of_your_service"
                 android:inputType="textCapWords"
                 android:padding="@dimen/size_12"
                 android:singleLine="true"
@@ -164,7 +164,7 @@
                   android:layout_height="wrap_content"
                   android:drawablePadding="@dimen/size_4"
                   android:includeFontPadding="false"
-                  android:text="Service category*"
+                  android:text="@string/service_category"
                   android:textColor="@color/black_4a4a4a"
                   app:drawableEndCompat="@drawable/ic_question_circular_blue"
                   app:drawableTint="@color/orange"
@@ -175,7 +175,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:includeFontPadding="false"
-                  android:text="This will help you group multiple services under this category"
+                  android:text="@string/this_will_help_you_group_multiple_services_under_this_category"
                   android:textColor="@color/warm_grey"
                   android:textSize="12sp"
                   android:visibility="gone"
@@ -189,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_5"
                 android:clickable="true"
-                android:hint="Create a service category"
+                android:hint="@string/create_a_service_category"
                 android:inputType="textCapWords"
                 android:padding="@dimen/size_12"
                 android:singleLine="true"
@@ -204,7 +204,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_3"
                 android:layout_marginTop="@dimen/size_20"
-                android:text="Service description*"
+                android:text="@string/service_description"
                 android:textColor="@color/black_4a4a4a"
                 app:fontFamily="@font/semi_bold"
                 app:textType="BODY_3" />
@@ -215,7 +215,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_5"
                 android:background="@drawable/bg_rect_edit_txt"
-                android:hint="Describe this service in around 2000 characters at max..."
+                android:hint="@string/describe_this_service_in_around_2000_characters_at_max"
                 android:inputType="textMultiLine"
                 android:padding="@dimen/size_12"
                 android:textColor="@color/warm_grey_10"
@@ -233,7 +233,7 @@
                   android:layout_height="wrap_content"
                   android:drawablePadding="@dimen/size_4"
                   android:includeFontPadding="false"
-                  android:text="Service duration (minutes)*"
+                  android:text="@string/service_duration_minutes"
                   android:textColor="@color/black_4a4a4a"
                   app:fontFamily="@font/semi_bold"
                   app:textType="BODY_3" />
@@ -242,7 +242,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:includeFontPadding="false"
-                  android:text="This will help you group multiple services under this category"
+                  android:text="@string/this_will_help_you_group_multiple_services_under_this_category"
                   android:textColor="@color/warm_grey"
                   android:textSize="12sp"
                   android:visibility="gone"
@@ -258,7 +258,7 @@
                 android:background="@drawable/bg_rect_edit_txt"
                 android:drawableStart="@drawable/ic_clock_gray"
                 android:drawablePadding="@dimen/size_8"
-                android:hint="Enter duration in minutes"
+                android:hint="@string/enter_duration_in_minutes"
                 android:inputType="number"
                 android:padding="@dimen/size_12"
                 android:singleLine="true"
@@ -271,7 +271,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_5"
                 android:visibility="gone"
-                android:text="Add buffer time before and after"
+                android:text="@string/add_buffer_time_before_and_after"
                 android:textColor="@color/primary_grey"
                 android:theme="@style/ActiveTheme" />
 
@@ -283,7 +283,7 @@
               android:layout_marginTop="@dimen/size_20"
               android:drawablePadding="@dimen/size_4"
                 android:includeFontPadding="false"
-                android:text="Pricing info"
+                android:text="@string/pricing_info"
                 android:drawableTint="@color/orange"
               android:textColor="@color/black_4a4a4a"
               app:drawableEndCompat="@drawable/ic_question_circular_blue"
@@ -294,7 +294,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:includeFontPadding="false"
-              android:text="Select, how do you want to give this service to your clients."
+              android:text="@string/select_how_do_you_want_to_give_this_service_to_your_clients"
               android:textColor="@color/warm_grey"
               android:textSize="12sp"
               app:fontFamily="@font/regular" />
@@ -316,7 +316,7 @@
                 <com.framework.views.customViews.CustomTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Appointment for this service is paid?"
+                    android:text="@string/appointment_for_this_service_is_paid"
                     android:textColor="@color/black_4f4f4f"
                     android:textSize="12sp"
                     app:fontFamily="@font/semi_bold"
@@ -348,7 +348,7 @@
                   android:id="@+id/ccb_payextra"
                   android:theme="@style/ActiveTheme"
                   android:visibility="gone"
-                  android:text="Price includes taxes"
+                  android:text="@string/price_includes_taxes"
                   android:layout_height="wrap_content"/>
 
               <LinearLayout
@@ -361,9 +361,9 @@
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="horizontal"
-                  android:paddingLeft="@dimen/size_8"
+                  android:paddingStart="@dimen/size_8"
                   android:paddingTop="@dimen/size_10"
-                  android:paddingRight="@dimen/size_5"
+                  android:paddingEnd="@dimen/size_5"
                   android:paddingBottom="@dimen/size_10">
 
                   <androidx.appcompat.widget.LinearLayoutCompat
@@ -374,7 +374,7 @@
                     <com.framework.views.customViews.CustomTextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="Price with tax (INR)"
+                      android:text="@string/price_with_tax_inr"
                       android:textColor="@color/black_4a4a4a"
                       android:textSize="12sp"
                       app:fontFamily="@font/light" />
@@ -385,7 +385,7 @@
                       android:layout_height="wrap_content"
                       android:layout_marginTop="@dimen/size_5"
                       android:background="@drawable/bg_rect_edit_txt"
-                      android:hint="XX,XXX"
+                      android:hint="@string/xx_xxx"
                       android:inputType="number"
                       android:maxLength="7"
                       android:padding="@dimen/size_8"
@@ -410,7 +410,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:singleLine="true"
-                      android:text="Discount amt. (INR)"
+                      android:text="@string/discount_amt_inr"
                       android:textColor="@color/black_4a4a4a"
                       android:textSize="12sp"
                       app:fontFamily="@font/light" />
@@ -421,7 +421,7 @@
                       android:layout_height="wrap_content"
                       android:layout_marginTop="@dimen/size_5"
                       android:background="@drawable/bg_rect_edit_txt"
-                      android:hint="XXX"
+                      android:hint="@string/xxx"
                       android:inputType="number"
                       android:maxLength="6"
                       android:padding="@dimen/size_8"
@@ -446,7 +446,7 @@
                     <com.framework.views.customViews.CustomTextView
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="Final Price"
+                      android:text="@string/final_price"
                       android:textColor="@color/black_4a4a4a"
                       android:textSize="12sp"
                       app:fontFamily="@font/light" />
@@ -458,7 +458,7 @@
                       android:layout_marginTop="@dimen/size_5"
                       android:background="@null"
                       android:enabled="false"
-                      android:hint="INR XX,XXX"
+                      android:hint="@string/inr_xx_xxx"
                       android:inputType="number"
                       android:paddingTop="@dimen/size_8"
                       android:paddingRight="@dimen/size_8"
@@ -479,7 +479,7 @@
                   android:layout_marginStart="@dimen/size_8"
                   android:layout_marginTop="@dimen/size_10"
                   android:includeFontPadding="false"
-                  android:text="Select, how you want to receive money for your bookings."
+                  android:text="@string/select_how_you_want_to_receive_money_for_your_bookings"
                   android:textColor="@color/warm_grey"
                   android:textSize="12sp"
                   app:fontFamily="@font/regular" />
@@ -487,8 +487,8 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_marginLeft="@dimen/size_8"
-                  android:layout_marginRight="@dimen/size_10"
+                  android:layout_marginStart="@dimen/size_8"
+                  android:layout_marginEnd="@dimen/size_10"
                   android:layout_marginBottom="@dimen/size_10"
                   android:background="@drawable/shape_grey_stroke_rect_bkg"
                   android:orientation="vertical">
@@ -565,7 +565,7 @@
                           android:layout_marginTop="@dimen/size_3"
                           android:drawablePadding="@dimen/size_4"
                           android:includeFontPadding="false"
-                          android:text="Kotak Mahindra Bnak - 345547684878"
+                          android:text="@string/kotak_mahindra_bnak_345547684878"
                           android:textColor="@color/light_blue"
                           android:textSize="12sp"
                           android:visibility="gone"
@@ -596,7 +596,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/size_4"
                         android:includeFontPadding="false"
-                        android:text="Add External URL"
+                        android:text="@string/add_external_url"
                         android:textColor="@color/warm_grey"
                         android:textSize="12sp"
                         app:fontFamily="@font/regular" />
@@ -620,7 +620,7 @@
                           android:layout_height="wrap_content"
                           android:layout_weight="1.5"
                           android:background="@android:color/transparent"
-                          android:hint="Website name"
+                          android:hint="@string/website_name"
                           android:maxLines="1"
                           android:paddingLeft="@dimen/size_8"
                           android:singleLine="true"
@@ -639,9 +639,9 @@
                           android:layout_height="wrap_content"
                           android:layout_weight="1"
                           android:background="@android:color/transparent"
-                          android:hint="Paste your URL here"
+                          android:hint="@string/paste_your_url_here"
                           android:maxLines="1"
-                          android:paddingLeft="@dimen/size_8"
+                          android:paddingStart="@dimen/size_8"
                           android:singleLine="true"
                           android:textColor="@color/greyish_brown"
                           android:textColorHint="@color/primary_grey"
@@ -664,7 +664,7 @@
                 android:layout_marginTop="@dimen/size_10"
                 android:layout_marginBottom="@dimen/size_14"
                 android:includeFontPadding="false"
-                android:text="Clients can book this service for FREE."
+                android:text="@string/clients_can_book_this_service_for_free"
                 android:textColor="@color/warm_grey"
                 android:textSize="12sp"
                 android:visibility="gone"
@@ -693,7 +693,7 @@
                 android:drawableEnd="@drawable/ic_grey_drop_down"
                 android:drawableTint="@color/pinkish_grey"
                 android:focusable="true"
-                android:hint="Select service delivery config"
+                android:hint="@string/select_service_delivery_config"
                 android:padding="@dimen/size_12"
                 android:singleLine="true"
                 android:textColor="@color/warm_grey_10"
@@ -826,7 +826,7 @@
                     android:drawablePadding="@dimen/size_4"
                     android:drawableTint="@color/orange"
                     android:includeFontPadding="false"
-                    android:text="Other Information"
+                    android:text="@string/other_information"
                     android:textColor="@color/black_4a4a4a"
                     app:drawableEndCompat="@drawable/ic_question_circular_blue"
                     app:fontFamily="@font/semi_bold"
@@ -836,7 +836,7 @@
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:includeFontPadding="false"
-                  android:text="Channels, Service Specifications, Service category, etc."
+                  android:text="@string/channels_service_specifications_service_category_etc"
                   android:textColor="@color/warm_grey"
                   android:textSize="12sp"
                   app:fontFamily="@font/regular" />
@@ -857,45 +857,45 @@
 
             <View
               android:layout_width="match_parent"
-              android:layout_height="@dimen/size_80" />
+              android:layout_height="@dimen/size_50" />
 
 
           </androidx.appcompat.widget.LinearLayoutCompat>
+          <androidx.constraintlayout.widget.ConstraintLayout
+              android:id="@+id/vw_savePublish"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_20"
+              android:layout_marginEnd="@dimen/size_20"
+              android:layout_marginBottom="@dimen/size_12"
+              android:clickable="true"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent">
 
+            <com.framework.views.customViews.CustomButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_button_proceed"
+                android:clickable="false"
+                android:drawablePadding="@dimen/size_6"
+                android:fontFamily="@font/semi_bold"
+                android:gravity="center"
+                android:text="@string/save_amp_publish"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:textType="HEADING_6" />
+
+          </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
       </androidx.core.widget.NestedScrollView>
 
-      <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/vw_savePublish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/size_20"
-        android:layout_marginEnd="@dimen/size_20"
-        android:layout_marginBottom="@dimen/size_12"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
 
-        <com.framework.views.customViews.CustomButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/bg_button_proceed"
-            android:clickable="false"
-          android:drawablePadding="@dimen/size_6"
-          android:fontFamily="@font/semi_bold"
-          android:gravity="center"
-          android:text="@string/save_amp_publish"
-          android:textAllCaps="true"
-          android:textColor="@color/white"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          app:textType="HEADING_6" />
-
-      </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -34,6 +34,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_36"
+              android:visibility="gone"
               android:drawablePadding="@dimen/size_4"
               android:drawableTint="@color/orange"
               android:includeFontPadding="false"
@@ -93,6 +94,7 @@
           <androidx.constraintlayout.widget.ConstraintLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:visibility="gone"
               android:layout_marginTop="@dimen/size_10"
               android:background="@drawable/shape_grey_stroke_rect_bkg"
               android:paddingLeft="@dimen/size_10"
@@ -130,6 +132,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_10"
+              android:visibility="gone"
               android:background="@drawable/shape_grey_stroke_rect_bkg"
               android:paddingLeft="@dimen/size_4"
               android:paddingTop="@dimen/size_8"
@@ -176,6 +179,7 @@
           <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+              android:visibility="gone"
             android:layout_marginTop="@dimen/size_10"
             android:background="@drawable/shape_grey_stroke_rect_bkg"
             android:paddingLeft="@dimen/size_10"
@@ -841,7 +845,33 @@
 
           <View
               android:layout_width="match_parent"
-              android:layout_height="@dimen/size_80" />
+              android:layout_height="@dimen/size_50" />
+          <androidx.appcompat.widget.LinearLayoutCompat
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_20"
+              android:layout_marginEnd="@dimen/size_20"
+              android:layout_marginBottom="@dimen/size_12"
+              android:orientation="vertical"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintLeft_toLeftOf="parent"
+              app:layout_constraintRight_toRightOf="parent">
+
+            <com.framework.views.customViews.CustomButton
+                android:id="@+id/btn_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_button_proceed"
+                android:fontFamily="@font/semi_bold"
+                android:gravity="center"
+                android:padding="15dp"
+                android:stateListAnimator="@null"
+                android:text="Confirm"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                app:textType="HEADING_6" />
+          </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -849,32 +879,6 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="@dimen/size_20"
-      android:layout_marginEnd="@dimen/size_20"
-      android:layout_marginBottom="@dimen/size_12"
-      android:orientation="vertical"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent">
-
-      <com.framework.views.customViews.CustomButton
-          android:id="@+id/btn_confirm"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:background="@drawable/bg_button_proceed"
-          android:fontFamily="@font/semi_bold"
-          android:gravity="center"
-          android:padding="15dp"
-          android:stateListAnimator="@null"
-          android:text="Confirm"
-          android:textAllCaps="true"
-          android:textColor="@color/white"
-          app:textType="HEADING_6" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
