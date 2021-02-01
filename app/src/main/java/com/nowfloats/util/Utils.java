@@ -2,6 +2,7 @@ package com.nowfloats.util;
 
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,13 +15,17 @@ import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.nowfloats.Login.UserSessionManager;
 import com.thinksity.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -392,5 +397,38 @@ public class Utils {
      */
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    public static void initiateAddonMarketplace(Context context,
+    UserSessionManager session, boolean isOpenCardFragment,  String screenType, String buyItemKey ,Boolean isLoadingShow) {
+        try {
+//            if (isLoadingShow) delayProgressShow()
+            WebEngageController.trackEvent("Addon Marketplace Page", "startview", session.getFpTag());
+            Intent intent = new Intent(context, Class.forName("com.boost.upgrades.UpgradeActivity"));
+            intent.putExtra("expCode", session.getFP_AppExperienceCode());
+            intent.putExtra("fpName", session.getFPName());
+            intent.putExtra("fpid", session.getFPID());
+            intent.putExtra("fpTag", session.getFpTag());
+            intent.putExtra("isOpenCardFragment", isOpenCardFragment);
+            intent.putExtra("screenType", screenType);
+            intent.putExtra("accountType", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
+            intent.putStringArrayListExtra("userPurchsedWidgets", (ArrayList<String>) session.getStoreWidgets());
+            if (session.getFPEmail() != null) {
+                intent.putExtra("email", session.getFPEmail());
+            } else {
+                intent.putExtra("email", "ria@nowfloats.com");
+            }
+            if (session.getFPPrimaryContactNumber() != null) {
+                intent.putExtra("mobileNo", session.getFPPrimaryContactNumber());
+            } else {
+                intent.putExtra("mobileNo", "9160004303");
+            }
+            if (buyItemKey != null /*&& buyItemKey.isNotEmpty()*/) intent.putExtra("buyItemKey", buyItemKey);
+            intent.putExtra("profileUrl", session.getFPLogo());
+            context.startActivity(intent);
+//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
