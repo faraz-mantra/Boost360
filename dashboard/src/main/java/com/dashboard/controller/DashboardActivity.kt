@@ -36,6 +36,7 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.models.firestore.FirestoreManager
 import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
@@ -99,6 +100,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     intentDataCheckAndDeepLink()
     getWelcomeData()
     initialize()
+    FirestoreManager.initData(session?.fpTag!!, session?.fPID!!)
   }
 
   private fun initialize() {
@@ -191,7 +193,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun setDrawerHome() {
-    viewModel.getNavDashboardData(this).observeOnce(this, {
+    viewModel.getNavDashboardData(this).observeOnce(this, androidx.lifecycle.Observer{
       val response = it as? DrawerHomeDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         binding?.drawerView?.rvLeftDrawer?.apply {
@@ -309,6 +311,10 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
       setTitle(title)
       supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
+  }
+
+  override fun getNavIconScale(): Float {
+    return 1.4f
   }
 
   override fun onItemClick(pos: Int) {
@@ -452,7 +458,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getWelcomeData() {
-    viewModel.getWelcomeDashboardData(this).observeOnce(this, {
+    viewModel.getWelcomeDashboardData(this).observeOnce(this, androidx.lifecycle.Observer{
       val response = it as? WelcomeDashboardResponse
       val data = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.actionItem
       if (response?.isSuccess() == true && data.isNullOrEmpty().not()) {
