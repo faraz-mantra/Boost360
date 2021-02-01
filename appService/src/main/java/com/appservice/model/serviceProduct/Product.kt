@@ -86,11 +86,15 @@ class Product(
         var pickupAddressReferenceId: String? = null,
 ) : Serializable {
 
-  enum class PaymentType(val value: String) {
-    ASSURED_PURCHASE("AssuredPurchase"), MY_PAYMENT_GATEWAY("MyPaymentGateWay"), UNIQUE_PAYMENT_URL("UniquePaymentUrl"), DONT_WANT_TO_SELL("None");
-
-    companion object {
-      fun fromValue(value: String): PaymentType? = values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+    fun isPriceToggleOn(): Boolean {
+        return this.Price > 0
     }
-  }
+
+    enum class PaymentType(val value: String) {
+        ASSURED_PURCHASE("AssuredPurchase"), MY_PAYMENT_GATEWAY("MyPaymentGateWay"), UNIQUE_PAYMENT_URL("UniquePaymentUrl"), DONT_WANT_TO_SELL("None");
+
+        companion object {
+            fun fromValue(value: String): PaymentType? = values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+        }
+    }
 }
