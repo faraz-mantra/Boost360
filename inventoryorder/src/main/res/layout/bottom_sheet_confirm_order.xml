@@ -86,7 +86,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="@dimen/size_20"
           android:layout_marginTop="@dimen/size_6"
-          android:drawableStart="@drawable/ic_order_status_pending"
+          tools:drawableStart="@drawable/ic_order_status_pending"
           android:drawablePadding="@dimen/size_10"
           android:text="@string/delivery_mode_store_pickup"
           android:textColor="@color/black_4a4a4a"
@@ -126,7 +126,7 @@
 
           <com.framework.views.customViews.CustomCheckBox
             android:id="@+id/checkbox_sms"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:buttonTint="@color/colorAccent"
             android:checked="true"
@@ -138,7 +138,7 @@
 
           <com.framework.views.customViews.CustomCheckBox
             android:id="@+id/checkbox_email"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_4"
             android:buttonTint="@color/colorAccent"
