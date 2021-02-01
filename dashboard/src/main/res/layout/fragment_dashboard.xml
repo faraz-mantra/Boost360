@@ -253,7 +253,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+<com.framework.views.customViews.CustomButton
+    android:id="@+id/dummy_staff_btn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    android:layout_marginHorizontal="@dimen/size_16"
+    android:background="@drawable/bg_button_proceed"
+    android:text="DUMMY STAFF FLOW"
 
+    android:textColor="@color/white" />
             <include
               android:id="@+id/recommended_task"
               layout="@layout/item_recommended_task_view" />
@@ -308,8 +317,6 @@
                 android:clipChildren="false"
                 android:clipToPadding="false" />
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-
             <androidx.appcompat.widget.LinearLayoutCompat
               android:layout_width="match_parent"
               android:layout_height="wrap_content"

@@ -66,7 +66,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
     setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage,
             binding?.civIncreaseQuantityOrder, binding?.civDecreseQuantityOrder, binding?.btnAddTag, binding?.btnAddSpecification,
-            binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst)
+            binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst,binding?.weeklyAppointmentSchedule)
     product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? Product
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? DataG
@@ -154,10 +154,10 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         binding?.ctvQuantityOrderStatus?.text = ordersQuantity.toString()
 
       }
-//      binding?.weeklyAppointmentSchedule -> {
-//        startFragmentActivity(FragmentType.TIMING_STAFF, isResult = true)
-//
-//      }
+      binding?.weeklyAppointmentSchedule -> {
+        startFragmentActivity(FragmentType.WEEKLY_APPOINTMENT_FRAGMENT, isResult = true)
+
+      }
     }
   }
 
@@ -222,6 +222,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
           "YES" -> product?.prepaidOnlineAvailable = true
           "NO" -> product?.prepaidOnlineAvailable = false
         }
+        if (product?.keySpecification == null) product?.keySpecification = KeySpecification()
         product?.keySpecification?.key = keySpecification
         product?.keySpecification?.value = valSpecification
         product?.maxCodOrders = ordersQuantity
@@ -262,7 +263,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   private fun secondaryImage(mPaths: ArrayList<String>) {
     if (secondaryImage.size < 8) {
-      if (mPaths.size + secondaryImage.size > 8) showLongToast("Only 8 files are allowed. Discarding the rest.")
+      if (mPaths.size + secondaryImage.size > 8) showLongToast(resources.getString(R.string.only_eight_files_are_allowed_discarding))
       var index: Int = secondaryImage.size
       while (index < 8 && mPaths.isNotEmpty()) {
         secondaryImage.add(FileModel(path = mPaths[0]))
@@ -270,7 +271,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         index++
       }
       setAdapter()
-    } else showLongToast("Only 8 files are allowed.")
+    } else showLongToast(resources.getString(R.string.only_eight_files_allowed))
   }
 
   private fun setAdapter() {
@@ -289,7 +290,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         if (isEdit == true && data?.pathUrl.isNullOrEmpty().not()) {
           val dataImage = secondaryDataImage?.firstOrNull { it.image?.url == data?.pathUrl }
                   ?: return
-          showProgress("Removing image...")
+          showProgress(resources.getString(R.string.removing_image))
           val request = ProductImageDeleteRequest()
           request.setQueryData(dataImage.id)
           viewModel?.deleteProductImage(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
@@ -297,7 +298,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
               secondaryDataImage?.remove(dataImage)
               secondaryImage.remove(data)
               setAdapter()
-            } else showLongToast("Removing image failed, please try again.")
+            } else showLongToast(resources.getString(R.string.removing_image_failed))
             hideProgress()
           })
         } else {

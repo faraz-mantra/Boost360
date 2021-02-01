@@ -24,7 +24,7 @@
             app:corner_radius="RADIUS_6">
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ccv_title_day"
+                android:id="@+id/ctv_title_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -61,84 +61,22 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/ll_time_dropdown_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_11"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/size_18">
+                style="@style/ll_match_wrap_vertical"
+                android:id="@+id/ll_time_slot">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/size_4"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/size_2"
-                        android:fontFamily="@font/open_sans"
-                        android:text="@string/from"
-                        android:textColor="@color/black_4a4a4a"
-                        android:textSize="9sp"
-                        android:textStyle="normal" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/spinner_start_timing"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_40"
-                        android:background="@drawable/spinner_catalog"
-                        android:entries="@array/business_hours_arrays" />
-                </LinearLayout>
-
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/size_40"
-                    android:layout_gravity="center_vertical|bottom"
-                    android:alpha="0.2"
-                    android:gravity="center_vertical"
-                    android:text="@string/to"
-                    android:textColor="@color/black_2A2A2A"
-                    android:textSize="14sp" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_4"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <com.framework.views.customViews.CustomTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans"
-                        android:layout_marginBottom="@dimen/size_2"
-                        android:text="@string/from"
-                        android:textColor="@color/black_4a4a4a"
-                        android:textSize="9sp"
-                        android:textStyle="normal" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/spinner_end_timing"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_40"
-                        android:background="@drawable/spinner_catalog"
-                        android:entries="@array/business_hours_arrays" />
-                </LinearLayout>
             </LinearLayout>
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/ctv_add_session"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ll_time_dropdown_group"
+                android:clickable="true"
+                android:layout_below="@id/ll_time_slot"
                 android:layout_marginStart="@dimen/size_18"
                 android:layout_marginTop="@dimen/size_8"
                 android:text="@string/u_add_session_u"
-                android:textColor="#4889F8" />
+                android:textColor="#4889F8"
+                android:focusable="true" />
 
             <com.framework.views.customViews.CustomCheckBox
                 android:layout_width="wrap_content"

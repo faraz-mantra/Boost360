@@ -4,4 +4,11 @@
     <color name="light_green_6dca07">#6dca07</color>
     <color name="red_fe946f">#FE946F</color>
     <color name="grey_787878">#787878</color>
+    <color name="gray_979797">#979797</color>
+    <color name="gray_bbb">#BBBBBB</color>
+    <color name="blue_4889f8">#4889F8</color>
+    <color name="gray_66666">#666666</color>
+    <color name="yellow_ffb900">#FFB900</color>
+    <color name="blue_4a90e2">#4A90E2</color>
+    <color name="gray_4e4e4e">#4e4e4e</color>
 </resources>
