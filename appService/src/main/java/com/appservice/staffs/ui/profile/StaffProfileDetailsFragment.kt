@@ -1,11 +1,16 @@
 package com.appservice.staffs.ui.profile
 
+import android.content.Context
+import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -21,6 +26,7 @@ import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
+
 
 class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBinding, StaffViewModel>(), RecyclerItemClickListener {
     private  var serviceIds: ArrayList<String>? = null
@@ -69,7 +75,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
     private fun setData() {
         binding!!.ctvEdit.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         binding!!.ctvEdit.text = getString(R.string.u_edit_info_u)
-        val get = arguments?.get("STAFF_DETAILS") as DataItem
+        val get = arguments?.get(IntentConstant.STAFF_DATA.name) as DataItem
         showProgress(getString(R.string.loading))
         viewModel?.getStaffDetails(get.id)?.observe(viewLifecycleOwner, {
             when (it.status) {
@@ -107,12 +113,15 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
             when (response.status) {
                 200 -> {
                     val data = (response as ServiceListResponse).result?.data
-                    val servicesProvided = data?.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
-                    this.serviceIds = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<String>
-                    val services = ArrayList<ServiceTimingModel>()
-                    servicesProvided.forEach { itemService -> services.add(ServiceTimingModel(itemService.name!!)) }
-                    this.serviceAdapter = AppBaseRecyclerViewAdapter(baseActivity, services)
-                    binding?.rvServices?.adapter = serviceAdapter
+                    if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
+                        val servicesProvided = data?.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
+                        this.serviceIds = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<String>
+                        val services = ArrayList<ServiceTimingModel>()
+                        servicesProvided.forEach { itemService -> services.add(ServiceTimingModel(itemService.name!!)) }
+                        this.serviceAdapter = AppBaseRecyclerViewAdapter(baseActivity, services)
+                        binding?.rvServices?.adapter = serviceAdapter
+                    }
+
                 }
                 else -> {
                 }
@@ -149,8 +158,11 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
 
     private fun showPopUp(view: View) {
         val popupMenu = PopupMenu(activity, view)
-        val inflater = popupMenu.menuInflater
-        inflater.inflate(R.menu.menu_staff_status, popupMenu.menu)
+        // inflate the layout of the popup window
+        // inflate the layout of the popup window
+        val inflater = ContextCompat.getSystemService(baseActivity)
+        val popupView = inflater.inflate(R.layout.popup_window, null)
+        inflater.inflate(R.layout.popup_window, popupMenu.menu)
         popupMenu.show()
 
         popupMenu.setOnMenuItemClickListener {
