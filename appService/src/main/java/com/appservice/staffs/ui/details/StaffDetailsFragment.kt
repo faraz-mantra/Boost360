@@ -124,8 +124,10 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             }
             binding?.rlServiceProvided -> {
                 val bundle = Bundle()
-                val serviceIds = staffDetails?.serviceIds as ArrayList
-                bundle.putSerializable(IntentConstant.STAFF_SERVICES.name, serviceIds)
+                if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
+                    val serviceIds = staffDetails?.serviceIds as ArrayList
+                    bundle.putSerializable(IntentConstant.STAFF_SERVICES.name, serviceIds)
+                }
                 startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SERVICES_PROVIDED)
             }
             binding?.rlScheduledBreaks -> {
@@ -163,7 +165,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     private fun updateStaffProfile() {
         val staffGender = binding?.spinnerGender?.selectedItem.toString()
         viewModel?.updateStaffProfile(
-                StaffProfileUpdateRequest(isAvailable, getServiceIds(), staffGender, UserSession.fpId, name = staffName, staffDescription,
+                StaffProfileUpdateRequest(isAvailable, serviceListId, staffGender, UserSession.fpId, name = staffName, staffDescription,
                         experience = yearOfExperience.toInt(), staffDetails?.id, staffAge, specializationList
                 ))?.observe(viewLifecycleOwner, { t ->
             when (t.status) {
@@ -178,12 +180,6 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
         })
 
-    }
-
-    private fun getServiceIds(): ArrayList<String> {
-        val serviceIds = ArrayList<String>()
-        servicesList?.filter { serviceIds.add(it.id!!) }
-        return serviceIds
     }
 
 
@@ -299,6 +295,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 this.servicesList = data!!.extras!![IntentConstant.STAFF_SERVICES.name] as ArrayList<DataItemService>
                 val servicesName = ArrayList<String>()
                 servicesList?.forEach { dataItem -> servicesName.add(dataItem.name!!) }
+                servicesList?.forEach { dataItem -> serviceListId?.add(dataItem.id!!) }
                 binding!!.ctvServices.text = servicesName.joinToString(" ,", limit = 5, truncated = "5 more")
             }
             requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
@@ -318,9 +315,11 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 when (it.status) {
                     200 -> {
                         val data = (it as ServiceListResponse).result!!.data!!
-                        val servicesProvided = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
-                        servicesProvided.forEach { itemService -> serviceName.add(itemService.name!!) }
-                        binding!!.ctvServices.text = serviceName.joinToString(" ,", limit = 5, truncated = "5 more")
+                        if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
+                            val servicesProvided = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
+                            servicesProvided.forEach { itemService -> serviceName.add(itemService.name!!) }
+                            binding!!.ctvServices.text = serviceName.joinToString(" ,", limit = 5, truncated = "5 more")
+                        }
                     }
                     else -> {
                     }

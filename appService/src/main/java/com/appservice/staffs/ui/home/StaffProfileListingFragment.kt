@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
+import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentStaffListingBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
@@ -99,7 +100,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         val staff = item as DataItem
         val bundle = Bundle()
-        bundle.putSerializable("STAFF_DETAILS", staff)
+        bundle.putSerializable(IntentConstant.STAFF_DATA.name, staff)
         startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, bundle, clearTop = false, isResult = false)
 
     }
