@@ -10,6 +10,7 @@ class StaffServiceViewHolder(binding: RecyclerItemServiceBinding) : AppBaseRecyc
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val data = item as DataItemService
         binding.ccbServices.text = "${data.name}"
+        binding.ccbServices.isChecked = data.isChecked ?: false
         binding.ccbServices.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.SERVICE_ITEM_CLICK.ordinal) }
     }
 
