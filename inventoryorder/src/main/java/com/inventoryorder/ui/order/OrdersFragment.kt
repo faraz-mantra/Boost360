@@ -56,7 +56,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private var typeList: ArrayList<OrderSummaryModel>? = null
   private var orderList = ArrayList<OrderItem>()
   private var orderListFinalList = ArrayList<OrderItem>()
-  private var layoutManager: LinearLayoutManager? = null
+  private var layoutManagerN: LinearLayoutManager? = null
   private var orderItem: OrderItem? = null
   private var position: Int? = null
 
@@ -81,8 +81,8 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     fpTag?.let { WebEngageController.trackEvent("Clicked on Orders", "ORDERS", it) }
 //    setOnClickListener(binding?.btnAdd)
     apiSellerSummary()
-    layoutManager = LinearLayoutManager(baseActivity)
-    layoutManager?.let { scrollPagingListener(it) }
+    layoutManagerN = LinearLayoutManager(baseActivity)
+    layoutManagerN?.let { scrollPagingListener(it) }
   }
 
   override fun onClick(v: View) {
@@ -96,10 +96,6 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
     binding?.orderRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
-      override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-        super.onScrolled(recyclerView, dx, dy)
-      }
-
       override fun loadMoreItems() {
         if (!isLastPageD) {
           isLoadingD = true
@@ -137,7 +133,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun setAdapterOrderList(list: ArrayList<OrderItem>) {
     binding?.orderRecycler?.apply {
       orderAdapter = AppBaseRecyclerViewAdapter(baseActivity, list, this@OrdersFragment)
-      layoutManager = layoutManager
+      layoutManager = layoutManagerN
       adapter = orderAdapter
       orderAdapter?.runLayoutAnimation(this)
     }
@@ -391,7 +387,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
             orderList.clear()
             orderList.addAll(response.Items!!)
             setAdapterNotify(orderList)
-          } else if (orderListFinalList.isNullOrEmpty().not()){
+          } else if (orderListFinalList.isNullOrEmpty().not()) {
             orderList.clear()
             orderList.addAll(orderListFinalList)
             setAdapterNotify(orderList)
@@ -453,7 +449,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun startFilter(query: String) {
     if (query.isNotEmpty() && query.length > 2) {
       getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = true)
-    } else{
+    } else {
       orderList.clear()
       orderList.addAll(orderListFinalList)
       setAdapterNotify(orderList)
