@@ -48,6 +48,10 @@ class OrderCreateViewModel : BaseViewModel() {
     return InventoryOrderRepository.confirmOrder(clientId, orderId).toLiveData()
   }
 
+  fun sendPaymentReminder(clientId: String?, orderId: String?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.sendPaymentReminder(clientId, orderId).toLiveData()
+  }
+
   fun cancelOrder(clientId: String?, orderId: String?, cancellingEntity: String?): LiveData<BaseResponse> {
     return InventoryOrderRepository.cancelOrder(clientId, orderId, cancellingEntity).toLiveData()
   }

@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -46,7 +47,7 @@ import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
 
-class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener {
+open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerItemClickListener {
 
   lateinit var mPopupWindow: PopupWindow
   private lateinit var requestFilter: OrderFilterRequest
@@ -54,6 +55,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
   private var typeList: ArrayList<OrderSummaryModel>? = null
   private var orderList = ArrayList<OrderItem>()
+  private var orderListFinalList = ArrayList<OrderItem>()
   private var layoutManager: LinearLayoutManager? = null
   private var orderItem: OrderItem? = null
   private var position: Int? = null
@@ -96,8 +98,6 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
     binding?.orderRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
       override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
-//        if (dy > 0 && binding?.btnAdd?.visibility === View.VISIBLE) binding?.btnAdd?.hide()
-//        else if (dy < 0 && binding?.btnAdd?.visibility !== View.VISIBLE) binding?.btnAdd?.show()
       }
 
       override fun loadMoreItems() {
@@ -135,11 +135,11 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
   }
 
   private fun setAdapterOrderList(list: ArrayList<OrderItem>) {
-    binding?.orderRecycler?.post {
-      orderAdapter = AppBaseRecyclerViewAdapter(baseActivity, list, this)
-      binding?.orderRecycler?.layoutManager = layoutManager
-      binding?.orderRecycler?.adapter = orderAdapter
-      binding?.orderRecycler?.let { orderAdapter?.runLayoutAnimation(it) }
+    binding?.orderRecycler?.apply {
+      orderAdapter = AppBaseRecyclerViewAdapter(baseActivity, list, this@OrdersFragment)
+      layoutManager = layoutManager
+      adapter = orderAdapter
+      orderAdapter?.runLayoutAnimation(this)
     }
   }
 
@@ -147,6 +147,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
     binding?.typeRecycler?.visible()
     binding?.viewShadow?.visible()
     orderList.clear()
+    orderListFinalList.clear()
     requestFilter = getRequestFilterData(arrayListOf())
     getSellerOrdersFilterApi(requestFilter, isFirst = true)
     binding?.typeRecycler?.post {
@@ -212,7 +213,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
       OrderMenuModel.MenuStatus.CONFIRM_ORDER -> {
         val sheetConfirm = ConfirmBottomSheetDialog()
         sheetConfirm.setData(orderItem)
-        sheetConfirm.onClicked = { }
+        sheetConfirm.onClicked = { apiConfirmOrder(it) }
         sheetConfirm.show(this.parentFragmentManager, ConfirmBottomSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {
@@ -248,8 +249,8 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
     showProgress()
     viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
-        hideProgress()
         showShortToast(resources.getString(R.string.internet_connection_not_available))
+        hideProgress()
         return@Observer
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
@@ -257,12 +258,12 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
         if (reasonText.isNotEmpty()) {
           updateReason(reasonText)
         } else {
-          hideProgress()
           showLongToast(resources.getString(R.string.order_cancel))
+          hideProgress()
         }
       } else {
-        hideProgress()
         showLongToast(it.message())
+        hideProgress()
       }
     })
   }
@@ -277,23 +278,34 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
     })
   }
 
-  private fun apiConfirmOrder(position: Int, order: OrderItem?) {
+  private fun apiConfirmOrder(isSendPaymentLink: Boolean) {
     showProgress()
-    viewModel?.confirmOrder(clientId, order?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      hideProgress()
+    viewModel?.confirmOrder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
         showShortToast(resources.getString(R.string.internet_connection_not_available))
+        hideProgress()
         return@Observer
       }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
+      if (it.isSuccess()) {
         val data = it as? OrderConfirmStatus
-        showLongToast(getString(R.string.order_confirmed))
-        val itemList = orderAdapter?.list() as ArrayList<OrderItem>
-        if (itemList.size > position) {
-          itemList[position].Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
-          orderAdapter?.notifyItemChanged(position)
-        } else showLongToast(it.message())
+        if (isSendPaymentLink) sendPaymentLinkOrder()
+        else {
+          apiGetOrderDetails()
+          showLongToast(getString(R.string.order_confirmed))
+        }
+      } else {
+        showLongToast(it.message())
+        hideProgress()
       }
+    })
+  }
+
+  private fun sendPaymentLinkOrder() {
+    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, { it1 ->
+      if (it1.isSuccess()) {
+        apiGetOrderDetails()
+        showLongToast(getString(R.string.order_confirmed))
+      } else apiGetOrderDetails()
     })
   }
 
@@ -314,6 +326,7 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
     isLoadingD = false
     isLastPageD = false
     orderAdapter?.clear()
+    orderListFinalList.clear()
     orderList.clear()
     apiOrderListCall()
   }
@@ -362,20 +375,27 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val response = (it as? InventoryOrderListResponse)?.Data
         if (isSearch.not()) {
-          if (isRefresh) orderList.clear()
+          if (isRefresh) orderListFinalList.clear()
           if (response != null && response.Items.isNullOrEmpty().not()) {
+            orderList.clear()
             removeLoader()
             val list = response.Items ?: ArrayList()
             TOTAL_ELEMENTS = response.total()
-            orderList.addAll(list)
-            isLastPageD = (orderList.size == TOTAL_ELEMENTS)
+            orderListFinalList.addAll(list)
+            orderList.addAll(orderListFinalList)
+            isLastPageD = (orderListFinalList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
           } else errorView("No order available.")
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
-            setAdapterNotify(response.Items!!)
-          } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
-          else errorView("No order available.")
+            orderList.clear()
+            orderList.addAll(response.Items!!)
+            setAdapterNotify(orderList)
+          } else if (orderListFinalList.isNullOrEmpty().not()){
+            orderList.clear()
+            orderList.addAll(orderListFinalList)
+            setAdapterNotify(orderList)
+          } else errorView("No order available.")
         }
       } else errorView(it.message ?: "No order available.")
     })
@@ -408,8 +428,13 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
     if (searchItem != null) {
       val searchView = searchItem.actionView as SearchView
       searchView.queryHint = resources.getString(R.string.queryHintOrder)
+      val ll = searchView.getChildAt(0) as? LinearLayout
+      val ll2 = ll?.getChildAt(2) as? LinearLayout
+      val ll3 = ll2?.getChildAt(1) as? LinearLayout
+      val autoComplete = ll3?.getChildAt(0) as? SearchView.SearchAutoComplete
       searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(query: String?): Boolean {
+        override fun onQueryTextSubmit(newText: String?): Boolean {
+          newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
           return false
         }
 
@@ -418,13 +443,21 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
           return false
         }
       })
+
+//      searchView.setOnQueryTextFocusChangeListener { _, _ ->
+//        if (autoComplete?.text.isNullOrEmpty().not()) searchView.setQuery(autoComplete?.text, true)
+//      }
     }
   }
 
   private fun startFilter(query: String) {
     if (query.isNotEmpty() && query.length > 2) {
       getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = true)
-    } else setAdapterNotify(orderList)
+    } else{
+      orderList.clear()
+      orderList.addAll(orderListFinalList)
+      setAdapterNotify(orderList)
+    }
   }
 
   private fun errorOnSummary(message: String?) {
@@ -484,5 +517,4 @@ class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), RecyclerI
     statusList.forEach { queryList.add(QueryObject(QueryObject.QueryKey.Status.value, it, QueryObject.Operator.EQ.name)) }
     return queryList
   }
-
 }

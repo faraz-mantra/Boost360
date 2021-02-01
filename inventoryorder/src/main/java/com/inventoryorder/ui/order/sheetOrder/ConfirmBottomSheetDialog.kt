@@ -1,6 +1,7 @@
 package com.inventoryorder.ui.order.sheetOrder
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -13,8 +14,8 @@ import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 
 class ConfirmBottomSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmOrderBinding, BaseViewModel>() {
 
-  var isCheckLink: Boolean = false
-  var onClicked: () -> Unit = {}
+  var isCheckLink: Boolean = true
+  var onClicked: (isCheckLink: Boolean) -> Unit = {}
   private var orderItem: OrderItem? = null
 
   override fun getLayout(): Int {
@@ -30,14 +31,29 @@ class ConfirmBottomSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmOrderBi
   }
 
   override fun onCreateView() {
-    setOnClickListener(binding?.buttonDone, binding?.tvCancel)
+    setOnClickListener(binding?.buttonDone, binding?.buttonDoneN, binding?.tvCancel, binding?.tvCancelN)
     binding?.tvSubTitle?.text = "Order ID #${orderItem?.ReferenceNumber ?: ""}"
     val method = PaymentDetailsN.METHOD.fromType(orderItem?.PaymentDetails?.method())
     val statusPayment = PaymentDetailsN.STATUS.from(orderItem?.PaymentDetails?.status())
+    val number = orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber
+    val email = orderItem?.BuyerDetails?.ContactDetails?.EmailId
+    if (number.isNullOrEmpty().not()) {
+      binding?.checkboxSms?.visible()
+      binding?.checkboxSms?.text = "via SMS ($number)"
+    } else binding?.checkboxSms?.gone()
+
+    if (email.isNullOrEmpty().not()) {
+      binding?.checkboxEmail?.visible()
+      binding?.checkboxEmail?.text = "via Email ($email)"
+    } else binding?.checkboxEmail?.gone()
+
+
     val isPaymentDone = (method == PaymentDetailsN.METHOD.FREE || (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))
     binding?.txtDeliveryMode?.text = fromHtml("Delivery mode: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.deliveryType()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
     binding?.txtPaymentMode?.text = fromHtml("Payment mode: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.PaymentDetails?.methodValue()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
     binding?.txtPaymentStatus?.text = fromHtml("Payment status: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.PaymentDetails?.status()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
+    val iconPayment = ContextCompat.getDrawable(baseActivity, if (isPaymentDone) R.drawable.ic_order_status_success else R.drawable.ic_order_status_pending)
+    binding?.txtPaymentStatus?.setCompoundDrawablesWithIntrinsicBounds(iconPayment, null, null, null)
     if (isPaymentDone.not()) {
       checkUi()
       binding?.btnCheckOnlineLink?.setOnClickListener {
@@ -77,8 +93,8 @@ class ConfirmBottomSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmOrderBi
     super.onClick(v)
     dismiss()
     when (v) {
-      binding?.buttonDone -> {
-      }
+      binding?.buttonDone -> onClicked(false)
+      binding?.buttonDoneN -> onClicked(isCheckLink)
     }
   }
 }
