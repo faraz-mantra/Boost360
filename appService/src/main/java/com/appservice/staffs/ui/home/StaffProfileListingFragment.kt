@@ -76,10 +76,8 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     override fun onResume() {
         super.onResume()
 
-        if (this::adapter.isInitialized) {
-            list.clear()
-            copyList.clear()
-        }
+        list.clear()
+        copyList.clear()
 
         filter = FilterBy("", 10, 0)
         fetchStaffListing()
@@ -129,7 +127,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
                     }
                 }
                 else -> {
-                    showLongToast(it.message())
+
                 }
             }
 
