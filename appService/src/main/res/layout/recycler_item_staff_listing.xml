@@ -10,14 +10,14 @@
         android:layout_marginVertical="@dimen/size_8"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:paddingEnd="@dimen/size_8"
+        android:paddingVertical="@dimen/size_8"
         android:paddingStart="@dimen/size_16"
-        android:paddingVertical="@dimen/size_8">
+        android:paddingEnd="@dimen/size_8">
 
         <com.framework.views.CircularImageView
             android:id="@+id/civ_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_80"
+            android:layout_height="@dimen/size_70"
             tools:src="@drawable/ic_staff_image" />
 
         <LinearLayout
@@ -67,19 +67,20 @@
         </LinearLayout>
 
         <com.framework.views.customViews.CustomButton
-            android:layout_width="0dp"
             android:id="@+id/btn_view_profile"
-            android:textFontWeight="600"
-            android:textStyle="normal"
-            android:fontFamily="@font/open_sans"
-            android:text="VIEW INFO"
-            android:letterSpacing="0.04"
-            android:gravity="center"
-            android:layout_marginStart="@dimen/size_8"
-            android:textColor="@color/orange"
-            android:background="@drawable/rounded_stroke_orange_4"
+            android:layout_width="0dp"
             android:layout_height="@dimen/size_30"
             android:layout_gravity="center"
-            android:layout_weight="0.60" />
+            android:layout_marginStart="@dimen/size_8"
+            android:layout_weight="0.60"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/rounded_stroke_orange_4"
+            android:fontFamily="@font/open_sans"
+            android:gravity="center"
+            android:letterSpacing="0.04"
+            android:text="VIEW INFO"
+            android:textColor="@color/orange"
+            android:textFontWeight="600"
+            android:textStyle="normal" />
     </LinearLayout>
 </layout>
