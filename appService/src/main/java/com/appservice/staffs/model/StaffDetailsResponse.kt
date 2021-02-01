@@ -52,4 +52,4 @@ data class StaffDetailsResult(
 
 		@field:SerializedName("Name")
 		val name: String? = null
-):Serializable
+):Serializable,BaseResponse()

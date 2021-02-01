@@ -1,5 +1,6 @@
 package com.appservice.staffs.ui.profile
 
+import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
@@ -14,14 +15,18 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.model.*
+import com.appservice.staffs.ui.Constants
 import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
+import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 
-class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding, StaffViewModel>(), RecyclerItemClickListener {
+class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBinding, StaffViewModel>(), RecyclerItemClickListener {
+    private  var serviceIds: ArrayList<String>? = null
     private var staffDetails: StaffDetailsResult? = null
-
+    var serviceAdapter: AppBaseRecyclerViewAdapter<ServiceTimingModel>? = null
+    private var servicesList: ArrayList<ServiceTimingModel>? = null
     override fun getLayout(): Int {
         return R.layout.fragment_staff_profile
     }
@@ -41,6 +46,23 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         setOnClickListener(binding!!.civMenu, binding!!.ctvEdit, binding!!.ctvEditLeaves, binding!!.ctvEditServices, binding!!.ctvEditTiming)
         setData()
 
+
+    }
+
+    private fun updateStaffProfile() {
+        viewModel?.updateStaffProfile(
+                StaffProfileUpdateRequest(serviceIds = serviceIds))?.observe(viewLifecycleOwner, { t ->
+            when (t.status) {
+                200 -> {
+
+                }
+                else -> {
+                    showShortToast(getString(R.string.something_went_wrong))
+                }
+            }
+
+
+        })
 
     }
 
@@ -81,14 +103,16 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
     private fun fetchServices() {
         viewModel?.getServiceListing(ServiceListRequest(
-                filterBy = FilterBy("ALL", 0, 0), category = "", floatingPointTag = UserSession.fpId))?.observe(viewLifecycleOwner, { response ->
+                filterBy = FilterBy("ALL", 0, 0), category = "", floatingPointTag = UserSession.fpId))?.observeOnce(viewLifecycleOwner, { response ->
             when (response.status) {
                 200 -> {
                     val data = (response as ServiceListResponse).result?.data
                     val servicesProvided = data?.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
+                    this.serviceIds = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<String>
                     val services = ArrayList<ServiceTimingModel>()
                     servicesProvided.forEach { itemService -> services.add(ServiceTimingModel(itemService.name!!)) }
-                    binding?.rvServices?.adapter = AppBaseRecyclerViewAdapter(baseActivity, services, itemClickListener = this@StaffProfileDetailsFragment)
+                    this.serviceAdapter = AppBaseRecyclerViewAdapter(baseActivity, services)
+                    binding?.rvServices?.adapter = serviceAdapter
                 }
                 else -> {
                 }
@@ -113,8 +137,9 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
             }
             binding!!.ctvEditServices -> {
                 val bundle = Bundle()
-                bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
-                startStaffFragmentActivity(FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, bundle, false, isResult = false)
+                val serviceIds = staffDetails?.serviceIds as ArrayList
+                bundle.putSerializable(IntentConstant.STAFF_SERVICES.name, serviceIds)
+                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SERVICES_PROVIDED)
             }
             binding!!.ctvEditTiming -> {
 
@@ -156,6 +181,22 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when {
+            requestCode == Constants.REQUEST_CODE_SERVICES_PROVIDED && resultCode == AppCompatActivity.RESULT_OK -> {
+                val resultServices = data!!.extras!![IntentConstant.STAFF_SERVICES.name] as ArrayList<DataItemService>
+                resultServices.forEach { itemService -> servicesList?.add(ServiceTimingModel(itemService.name!!)) }
+                serviceAdapter?.clear()
+                serviceAdapter?.addItems(servicesList)
+                serviceAdapter?.notifyDataSetChanged()
+                updateStaffProfile()
+            }
+            requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
+            }
+        }
+
+    }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
 
