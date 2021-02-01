@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -18,8 +19,10 @@ import com.framework.extensions.visible
 import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
+import com.framework.views.customViews.CustomTextView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
+import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentOrderDetailBinding
 import com.inventoryorder.model.OrderConfirmStatus
@@ -27,12 +30,14 @@ import com.inventoryorder.model.bottomsheet.DeliveryModel
 import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersummary.OrderMenuModel
 import com.inventoryorder.model.ordersummary.OrderStatusValue
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.startFragmentOrderActivity
 import java.text.DecimalFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -45,6 +50,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private var deliveryList = DeliveryModel().getData()
   private var isRefresh: Boolean? = null
   private var productList: ArrayList<ProductResponse>? = null
+  private var bottomButtonStatus: List<OrderMenuModel.MenuStatus>? = null
 
   companion object {
     @JvmStatic
@@ -117,14 +123,33 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   }
 
   private fun checkStatusOrder(order: OrderItem) {
-    if (order.isConfirmActionBtn()) {
-      binding?.buttonConfirmOrder?.visible()
-      binding?.buttonConfirmOrder?.setOnClickListener(this)
-    } else binding?.buttonConfirmOrder?.gone()
-    if (order.isCancelActionBtn()) {
+    val btnStatusMenu = order.orderBtnStatus()
+    val requestPayment = btnStatusMenu.firstOrNull { it == OrderMenuModel.MenuStatus.REQUEST_PAYMENT }
+    val cancelOrder = btnStatusMenu.firstOrNull { it == OrderMenuModel.MenuStatus.CANCEL_ORDER }
+    bottomButtonStatus = btnStatusMenu.filter { (it == OrderMenuModel.MenuStatus.CANCEL_ORDER || it == OrderMenuModel.MenuStatus.REQUEST_PAYMENT).not() }
+    if (cancelOrder != null) {
       binding?.tvCancelOrder?.visible()
+      binding?.tvCancelOrder?.text = cancelOrder.title
       binding?.tvCancelOrder?.setOnClickListener(this)
-    } else binding?.tvCancelOrder?.gone()
+    } else {
+      binding?.tvCancelOrder?.gone()
+    }
+    if (requestPayment != null) {
+      binding?.btnSendPaymentLink?.visible()
+      binding?.viewLine1?.visible()
+      binding?.btnSendPaymentLink?.text = requestPayment.title
+      binding?.btnSendPaymentLink?.setOnClickListener(this)
+    } else {
+      binding?.btnSendPaymentLink?.gone()
+      binding?.viewLine1?.gone()
+    }
+    if (bottomButtonStatus.isNullOrEmpty().not()) {
+      binding?.buttonBottom?.visible()
+      binding?.buttonBottom?.setOnClickListener(this)
+      binding?.buttonBottom?.text = bottomButtonStatus!!.first().title
+    } else {
+      binding?.buttonBottom?.gone()
+    }
   }
 
   private fun setAdapter(orderItems: ArrayList<ItemN>) {
@@ -136,10 +161,10 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-//    val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
-//    item.actionView.findViewById<CustomTextView>(R.id.tvInvoice).setOnClickListener {
-//      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
-//    }
+    val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
+    item.actionView.findViewById<CustomTextView>(R.id.tvInvoice).setOnClickListener {
+      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
+    }
   }
 
   fun getBundleData(): Bundle? {
@@ -149,14 +174,6 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       return bundle
     }
     return null
-  }
-
-  private fun buttonDisable(color: Int) {
-    activity?.let {
-      val newDrawable: Drawable? = binding?.buttonConfirmOrder?.background
-      newDrawable?.let { it1 -> DrawableCompat.setTint(it1, ContextCompat.getColor(it, color)) }
-      binding?.buttonConfirmOrder?.background = newDrawable
-    }
   }
 
   private fun setOrderDetails(order: OrderItem) {
@@ -171,7 +188,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding?.tvOrderAmount?.text = "$currency ${DecimalFormat("##,##,##0").format(bill.AmountPayableByBuyer)}"
-//            binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
+      //binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
     binding?.orderDate?.text = DateUtils.parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
 
@@ -188,7 +205,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) } == true)
       binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
     if (order.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty().not()) {
-//            binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
+    //binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
       if (!checkValidEmail(order.BuyerDetails?.ContactDetails?.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
     } else binding?.tvCustomerEmail?.isGone = true
 
@@ -203,10 +220,8 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
           ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }
-
     binding?.tvShippingCost?.text = "Shipping Cost: $currency ${DecimalFormat("##,##,##0").format(shippingCost)}"
     binding?.tvTotalOrderAmount?.text = "Total Amount: $currency ${DecimalFormat("##,##,##0").format(salePrice + shippingCost)}"
-
 //        binding?.tvShippingCost?.text = "Shipping Cost: $currency $shippingCost"
 //        binding?.tvTotalOrderAmount?.text = "Total Amount: $currency ${salePrice + shippingCost}"
 
@@ -214,21 +229,16 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun getStatusText(order: OrderItem): String? {
     val statusValue = OrderStatusValue.fromStatusOrder(order.status())?.value
-    return when (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name) {
-      order.status().toUpperCase(Locale.ROOT) -> {
-        return if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-          OrderStatusValue.ABANDONED_1.value
-        } else statusValue.plus(order.cancelledText())
-      }
-      else -> statusValue
-    }
+    return if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT)) {
+      statusValue.plus(order.cancelledText())
+    } else statusValue
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-//            binding?.btnPickUp -> showBottomSheetDialog()
-      binding?.buttonConfirmOrder -> apiConfirmOrder()
+//      binding?.btnPickUp -> showBottomSheetDialog()
+      binding?.buttonBottom -> apiConfirmOrder()
       binding?.tvCancelOrder -> cancelOrderDialog()
       binding?.tvCustomerContactNumber -> {
         if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { checkValidMobile(it) }!!)
@@ -245,8 +255,6 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
         }
       }
     }
-//      binding?.tvCustomerContactNumber -> openDialer()
-//      binding?.tvCustomerEmail -> openEmailApp()
   }
 
   private fun openEmailApp() {

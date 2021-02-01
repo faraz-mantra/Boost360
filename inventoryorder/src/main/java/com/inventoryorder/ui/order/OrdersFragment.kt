@@ -80,7 +80,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   override fun onCreateView() {
     super.onCreateView()
     fpTag?.let { WebEngageController.trackEvent("Clicked on Orders", "ORDERS", it) }
-//    setOnClickListener(binding?.btnAdd)
+    //setOnClickListener(binding?.btnAdd)
     apiSellerSummary()
     layoutManagerN = LinearLayoutManager(baseActivity)
     layoutManagerN?.let { scrollPagingListener(it) }
