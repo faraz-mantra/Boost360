@@ -24,8 +24,8 @@ object WithFloatRepository : AppBaseRepository<WithFloatRemoteData, DashboardLoc
   fun getWelcomeDashboardData(context: Context): Observable<BaseResponse> {
     return makeLocalRequest(DashboardLocalDataSource.getWelcomeDashboardData(context), TaskCode.GET_WELCOME_DASHBOARD)
   }
-  fun getBoostUserDetailMessage(context: Context): Observable<BaseResponse> {
-    return makeLocalRequest(DashboardLocalDataSource.getBoostUserDetailMessage(context), TaskCode.GET_USER_DETAIL_SHARE_DATA)
+  fun getBoostVisitingMessage(context: Context): Observable<BaseResponse> {
+    return makeLocalRequest(DashboardLocalDataSource.getBoostVisitingMessage(context), TaskCode.GET_USER_DETAIL_SHARE_DATA)
   }
 
   fun getBoostCustomerItem(context: Context): Observable<BaseResponse> {

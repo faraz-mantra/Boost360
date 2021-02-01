@@ -1,7 +1,6 @@
 package com.dashboard.controller.ui.dashboard
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
@@ -13,6 +12,7 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
 import com.dashboard.constant.IntentConstant
+import com.dashboard.constant.PreferenceConstant.CHANNEL_SHARE_URL
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.DashboardActivity
@@ -55,6 +55,9 @@ import com.inventoryorder.model.summary.UserSummaryResponse
 import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.onboarding.nowfloats.model.channel.*
+import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
+import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
+import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.LocalSessionModel
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 import com.onboarding.nowfloats.ui.webview.WebViewBottomDialog
@@ -93,6 +96,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     binding?.txtVersion?.text = "Version $versionName"
     apiSellerSummary()
     getPremiumBanner()
+    getChannelAccessToken()
     WebEngageController.trackEvent("Dashboard Home Page", "pageview", session?.fpTag)
   }
 
@@ -126,8 +130,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     viewModel?.getBizFloatMessage(session!!.getRequestFloat())?.observeOnce(this, {
       if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
       session?.siteMeterData { it1 -> it1?.let { it2 -> refreshData(it2) } }
-      if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true){
-        (baseActivity as? DashboardActivity)?.isLoadShimmer=false
+      if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) {
+        (baseActivity as? DashboardActivity)?.isLoadShimmer = false
         hideProgress()
       }
       saveFirstLoad()
@@ -355,15 +359,36 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (v) {
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)
-      binding?.btnVisitingCard -> visitingCard()
+      binding?.btnVisitingCard -> {
+        val messageChannelUrl = PreferencesUtils.instance.getData(CHANNEL_SHARE_URL, "")
+        if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
+        else getChannelAccessToken(true)
+      }
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
     }
   }
 
-  private fun visitingCard() {
+  private fun visitingCardDetailText(shareChannelText: String?) {
+    viewModel?.getBoostVisitingMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
+      val response = it as? ShareUserDetailResponse
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        val messageDetail = response.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.message
+        if (messageDetail.isNullOrEmpty().not()) {
+          val lat = session?.getFPDetails(Key_Preferences.LATITUDE)
+          val long = session?.getFPDetails(Key_Preferences.LONGITUDE)
+          var location = ""
+          if (lat != null && long != null) location = "${if (shareChannelText.isNullOrEmpty().not()) "\n\n" else ""}\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"
+          val txt = String.format(messageDetail!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), shareChannelText, location)
+          visitingCard(txt)
+        }
+      } else visitingCard("Business Card")
+    })
+  }
+
+  private fun visitingCard(shareChannelText: String) {
     session?.let {
       val dialogCard = VisitingCardSheet()
-      dialogCard.setData(getLocalSession(it))
+      dialogCard.setData(getLocalSession(it), shareChannelText)
       dialogCard.show(this@DashboardFragment.parentFragmentManager, VisitingCardSheet::class.java.name)
     }
   }
@@ -374,26 +399,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     webViewBottomDialog.show(this@DashboardFragment.parentFragmentManager, WebViewBottomDialog::class.java.name)
   }
 
-  private fun shareUserDetail(isWhatsApp: Boolean) {
-    viewModel?.getBoostUserDetailMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
-      val response = it as? ShareUserDetailResponse
-      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-        val messageDetail = response.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.message
-        if (messageDetail.isNullOrEmpty().not()) {
-          val txt = String.format(messageDetail!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), session?.userPrimaryMobile, session?.fPEmail)
-          try {
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "text/plain"
-            if (isWhatsApp) intent.setPackage("com.whatsapp")
-            intent.putExtra(Intent.EXTRA_TEXT, txt)
-            baseActivity.startActivity(Intent.createChooser(intent, "Share your business detail..."))
-          } catch (e: Exception) {
-            e.printStackTrace()
-          }
-        }
-      }
-    })
-  }
 
   private fun quickActionClick(type: QuickActionItem.QuickActionType) {
     when (type) {
@@ -574,6 +579,40 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         binding?.progressSimmer?.parentShimmerLayout?.stopShimmer()
       }
     }
+  }
+
+  private fun getChannelAccessToken(isShowLoader: Boolean = false) {
+    if (isShowLoader) showProgress()
+    viewModel?.getChannelsAccessToken(session?.fPID)?.observeOnce(this, {
+      var urlString = ""
+      if (it.isSuccess()) {
+        val channelsAccessToken = (it as? ChannelsAccessTokenResponse)?.NFXAccessTokens
+        channelsAccessToken?.forEach { it1 ->
+          when (it1.type()) {
+            ChannelAccessToken.AccessTokenType.facebookpage.name ->
+              if (it1.UserAccountId.isNullOrEmpty().not()) urlString = "\n⚡ *Facebook: https://www.facebook.com/${it1.UserAccountId}*"
+            ChannelAccessToken.AccessTokenType.twitter.name ->
+              if (it1.UserAccountName.isNullOrEmpty().not()) urlString += "\n⚡ *Twitter: https://twitter.com/${it1.UserAccountName?.trim()}*"
+          }
+        }
+      }
+      getWhatsAppData(urlString, isShowLoader)
+    })
+  }
+
+  private fun getWhatsAppData(urlString: String, isShowLoader: Boolean = false) {
+    var urlStringN = urlString
+    viewModel?.getWhatsappBusiness(session?.fpTag, WA_KEY)?.observeOnce(this, {
+      if (isShowLoader) hideProgress()
+      if (it.isSuccess()) {
+        val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
+        if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
+          urlStringN += "\n⚡ *WhatsApp: https://wa.me/${response.active_whatsapp_number}*"
+        }
+      }
+      PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)
+      if (isShowLoader) visitingCardDetailText(urlStringN)
+    })
   }
 }
 

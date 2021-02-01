@@ -24,8 +24,8 @@ object DashboardLocalDataSource : AppBaseLocalService() {
     return fromJsonRes(context, R.raw.boost_add_ons_top, ManageBusinessDataResponse::class.java)
   }
 
-  fun getBoostUserDetailMessage(context: Context): Observable<BaseResponse> {
-    return fromJsonRes(context, R.raw.user_details_share, ShareUserDetailResponse::class.java)
+  fun getBoostVisitingMessage(context: Context): Observable<BaseResponse> {
+    return fromJsonRes(context, R.raw.visiting_card_data_share, ShareUserDetailResponse::class.java)
   }
 
   fun getBoostCustomerItem(context: Context): Observable<BaseResponse> {
