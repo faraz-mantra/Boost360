@@ -31,6 +31,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.framework.models.firestore.FirestoreManager;
 import com.nowfloats.BusinessProfile.UI.API.Upload_Logo;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.EditImageActivity;
@@ -381,6 +382,12 @@ public class Business_Logo_Activity extends AppCompatActivity {
             String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(Business_Logo_Activity.this,errorMessage);
         }
+    }
+
+    private void onBusinessLogoAddedOrUpdated(){
+        FirestoreManager instance = FirestoreManager.INSTANCE;
+        instance.getDrScoreData().getMetricdetail().setBoolean_add_business_description(true);
+        instance.updateDocument();
     }
 
 

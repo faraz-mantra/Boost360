@@ -17,5 +17,5 @@ data class Drs_segment (
 
 		@SerializedName("id") val id : String,
 		@SerializedName("segment_score") val segment_score : Double,
-		@SerializedName("events") val events : Events
+		@SerializedName("events") val events : Map<String, Events>
 )

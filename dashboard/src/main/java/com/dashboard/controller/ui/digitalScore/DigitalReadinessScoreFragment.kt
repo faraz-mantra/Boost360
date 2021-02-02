@@ -3,6 +3,7 @@ package com.dashboard.controller.ui.digitalScore
 import android.app.AlertDialog
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.IntentConstant
@@ -94,7 +95,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
   private fun getFloatMessage(isReload: Boolean) {
     if (isReload) showProgress()
     else getSiteMeter()
-    viewModel?.getBizFloatMessage(session!!.getRequestFloat())?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getBizFloatMessage(session!!.getRequestFloat())?.observeOnce(viewLifecycleOwner, Observer{
       if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
       getSiteMeter()
       if (isReload) {
