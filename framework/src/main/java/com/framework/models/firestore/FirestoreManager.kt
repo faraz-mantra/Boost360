@@ -1,6 +1,5 @@
 package com.framework.models.firestore
 
-import android.app.Activity
 import android.util.Log
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,8 +9,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-
-open class FirestoreManager {
+object FirestoreManager {
   var db: FirebaseFirestore? = null;
   val gson = Gson();
   var model: DrScoreModel? = null;
@@ -19,15 +17,6 @@ open class FirestoreManager {
   var clientId: String = "";
   var TAG = "FirestoreManager";
   val COLLECTION_NAME = "drsMerchants";
-
-  companion object {
-    lateinit var instance: FirestoreManager
-
-    @JvmStatic
-    fun initFirebase(activity: Activity) {
-      instance = FirestoreManager()
-    }
-  }
 
   fun initData(fpTag: String, clientId: String) {
     this.fpTag = fpTag;
@@ -49,7 +38,6 @@ open class FirestoreManager {
 //                ?.addOnFailureListener { exception ->
 //                    Log.w("FirestoreManager", "Error getting documents.", exception)
 //                }
-//
 //    }
 
   fun readDrScoreDocument() {

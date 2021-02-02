@@ -3,17 +3,14 @@ package com.dashboard.controller.ui.digitalScore
 import android.app.AlertDialog
 import android.os.Bundle
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
-import com.dashboard.controller.ui.dashboard.getRequestFloat
 import com.dashboard.databinding.FragmentDigitalReadinessScoreBinding
-import com.dashboard.model.BusinessContentSetupData
-import com.dashboard.model.getListDigitalScore
-import com.dashboard.model.live.SiteMeterModel
+import com.dashboard.model.live.drScore.*
+import com.dashboard.model.live.drScore.siteMeter.SiteMeterModel
 import com.dashboard.pref.Key_Preferences
 import com.dashboard.pref.UserSessionManager
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
@@ -24,16 +21,16 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.inventoryorder.model.floatMessage.MessageModel
 
 class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessScoreBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
-  private var adapterPager: AppBaseRecyclerViewAdapter<BusinessContentSetupData>? = null
+  private var adapterPager: AppBaseRecyclerViewAdapter<DrScoreSetupData>? = null
   private var session: UserSessionManager? = null
   private var position = 0
   private var isHigh = false
-  private var isReload = false
 
   companion object {
     @JvmStatic
@@ -62,55 +59,75 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
 
   override fun onResume() {
     super.onResume()
-    getFloatMessage(isReload)
+    getSiteMeter()
   }
 
   private fun getSiteMeter() {
-    session?.siteMeterData { siteMeterData ->
-      if (siteMeterData == null) return@siteMeterData
-      isHigh = (siteMeterData.siteMeterTotalWeight >= 80)
-      val listDigitalScore = siteMeterData.getListDigitalScore()
-      val list = ArrayList(listDigitalScore.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout();it })
-      if (adapterPager == null) {
-        binding?.pagerBusinessContentSetup?.apply {
-          adapterPager = AppBaseRecyclerViewAdapter(baseActivity, list, this@DigitalReadinessScoreFragment)
-          offscreenPageLimit = 3
-          clipToPadding = false
-          setPadding(34, 0, 34, 0)
-          adapter = adapterPager
-          currentItem = position
-          binding?.dotBusinessContentSetup?.setViewPager2(this)
-          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+    if (FirestoreManager.getDrScoreData()?.drs_segment.isNullOrEmpty()) FirestoreManager.readDrScoreDocument()
+    viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
+      val response = it as? DrScoreUiDataResponse
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        FirestoreManager.getDrScoreData()?.let {drScoreData->
+          isHigh = (drScoreData.getDrsTotal() >= 80)
+          val drScoreSetupList = drScoreData.getDrScoreData(response.data)
+          drScoreSetupList.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }
+          if (adapterPager == null) {
+            binding?.pagerBusinessContentSetup?.apply {
+              adapterPager = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList, this@DigitalReadinessScoreFragment)
+              offscreenPageLimit = 3
+              clipToPadding = false
+              setPadding(34, 0, 34, 0)
+              adapter = adapterPager
+              currentItem = position
+              binding?.dotBusinessContentSetup?.setViewPager2(this)
+              setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+            }
+          } else adapterPager?.notify(drScoreSetupList)
+
+          binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "90%")
+          binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
+          binding?.txtPercentage?.text = "${drScoreData.getDrsTotal()}%"
+          binding?.progressBar?.progress = drScoreData.getDrsTotal()
+          binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
         }
-      } else adapterPager?.notify(list)
-
-      binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "90%")
-      binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-      binding?.txtPercentage?.text = "${siteMeterData.siteMeterTotalWeight}%"
-      binding?.progressBar?.progress = siteMeterData.siteMeterTotalWeight
-      binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
-    }
-  }
-
-  private fun getFloatMessage(isReload: Boolean) {
-    if (isReload) showProgress()
-    else getSiteMeter()
-    viewModel?.getBizFloatMessage(session!!.getRequestFloat())?.observeOnce(viewLifecycleOwner, Observer{
-      if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
-      getSiteMeter()
-      if (isReload) {
-        hideProgress()
-      }
-      this.isReload = true
+      }else showShortToast("Getting error digital readiness!")
     })
+
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.DIGITAL_SCORE_READINESS_CLICK.ordinal -> {
-        val data = item as? SiteMeterModel ?: return
-        clickEventUpdateScore(SiteMeterModel.TypePosition.fromValue(data.position))
+        val data = item as? DrScoreItem ?: return
+        clickEventUpdateScoreN(DrScoreItem.DrScoreItemType.fromName(data.drScoreUiData?.id))
+//        clickEventUpdateScore(SiteMeterModel.TypePosition.fromValue(data.position))
       }
+    }
+  }
+
+  private fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?) {
+    when(type){
+      DrScoreItem.DrScoreItemType.boolean_add_business_name->{}
+      DrScoreItem.DrScoreItemType.boolean_add_business_description->{}
+      DrScoreItem.DrScoreItemType.boolean_add_clinic_logo->{}
+      DrScoreItem.DrScoreItemType.boolean_add_featured_image_video->{}
+      DrScoreItem.DrScoreItemType.boolean_select_what_you_sell->{}
+      DrScoreItem.DrScoreItemType.boolean_add_business_hours->{}
+      DrScoreItem.DrScoreItemType.boolean_add_contact_details->{}
+      DrScoreItem.DrScoreItemType.boolean_add_custom_domain_name_and_ssl->{}
+      DrScoreItem.DrScoreItemType.number_updates_posted->{}
+      DrScoreItem.DrScoreItemType.boolean_social_channel_connected->{}
+      DrScoreItem.DrScoreItemType.number_services_added->{}
+      DrScoreItem.DrScoreItemType.number_products_added->{}
+      DrScoreItem.DrScoreItemType.boolean_add_bank_account->{}
+      DrScoreItem.DrScoreItemType.boolean_image_uploaded_to_gallery->{}
+      DrScoreItem.DrScoreItemType.boolean_create_custom_page->{}
+      DrScoreItem.DrScoreItemType.boolean_share_business_card->{}
+      DrScoreItem.DrScoreItemType.boolean_create_doctor_e_profile->{}
+      DrScoreItem.DrScoreItemType.boolean_create_sample_in_clinic_appointment->{}
+      DrScoreItem.DrScoreItemType.boolean_create_sample_video_consultation->{}
+      DrScoreItem.DrScoreItemType.boolean_manage_appointment_settings->{}
+      DrScoreItem.DrScoreItemType.boolean_respond_to_customer_enquiries->{}
     }
   }
 

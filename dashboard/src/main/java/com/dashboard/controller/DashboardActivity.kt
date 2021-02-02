@@ -36,7 +36,8 @@ import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import com.framework.models.firestore.FirestoreManager
+import com.framework.models.firestore.FirestoreManager.getDrScoreData
+import com.framework.models.firestore.FirestoreManager.initData
 import com.framework.utils.AppsFlyerUtils
 import com.framework.utils.fromHtml
 import com.framework.views.bottombar.OnItemSelectedListener
@@ -100,10 +101,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     intentDataCheckAndDeepLink()
     getWelcomeData()
     initialize()
-    session?.let {
-      FirestoreManager.initFirebase(this)
-      FirestoreManager.instance.initData(it.fpTag!!, it.fPID!!)
-    }
+
+    session?.let { initData(it.fpTag!!, it.fPID!!) }
   }
 
   private fun initialize() {
@@ -182,7 +181,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   private fun setUserData() {
     binding?.drawerView?.txtBusinessName?.text = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)
     binding?.drawerView?.txtDomainName?.text = fromHtml("<u>${session!!.getDomainName(false)}</u>")
-    setPercentageData(session?.siteMeterCalculation() ?: 0)
+    setPercentageData(getDrScoreData()?.getDrsTotal()?:0)
     var imageUri = session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)
     if (imageUri.isNullOrEmpty().not() && imageUri!!.contains("http").not()) {
       imageUri = BASE_IMAGE_URL + imageUri

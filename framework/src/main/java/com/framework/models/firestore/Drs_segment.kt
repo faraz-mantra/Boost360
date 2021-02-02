@@ -1,5 +1,7 @@
 package com.framework.models.firestore;
+
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /*
 Copyright (c) 2021 Kotlin Data Classes Generated from JSON powered by http://www.json2kotlin.com
@@ -13,9 +15,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar */
 
 
-data class Drs_segment (
+data class Drs_segment(
 
-		@SerializedName("id") val id : String,
-		@SerializedName("segment_score") val segment_score : Double,
-		@SerializedName("events") val events : Map<String, Events>
-)
+    @SerializedName("id") val id: String,
+    @SerializedName("segment_score") val segment_score: Double,
+    @SerializedName("events") val events: Map<String, Events>,
+) : Serializable {
+
+  fun getScore(): Int {
+    return (segment_score ?: 0.0).toInt()
+  }
+}
