@@ -42,7 +42,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
                 itemClickListener = this@WeeklyAppointmentFragment
         )
         binding!!.rvStaffTiming.adapter = adapter
-        viewModel?.getStaffTimings()?.observe(viewLifecycleOwner, {
+        viewModel?.getStaffTimings()?.observe(viewLifecycleOwner, androidx.lifecycle.Observer{
             adapter.updateList(it)
         })
     }
