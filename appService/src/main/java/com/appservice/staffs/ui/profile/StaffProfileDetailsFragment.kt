@@ -160,9 +160,9 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
         val popupMenu = PopupMenu(activity, view)
         // inflate the layout of the popup window
         // inflate the layout of the popup window
-        val inflater = ContextCompat.getSystemService(baseActivity)
+        val inflater = LayoutInflater.from(baseActivity)
         val popupView = inflater.inflate(R.layout.popup_window, null)
-        inflater.inflate(R.layout.popup_window, popupMenu.menu)
+//        inflater.inflate(R.layout.popup_window, popupMenu.menu)
         popupMenu.show()
 
         popupMenu.setOnMenuItemClickListener {
