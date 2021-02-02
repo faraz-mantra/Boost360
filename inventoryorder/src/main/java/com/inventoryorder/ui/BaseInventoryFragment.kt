@@ -35,6 +35,7 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
     get() {
       return preferenceData?.clientId
     }
+
   protected val auth: String
     get() {
       return preferenceData?.authorization ?: ""
