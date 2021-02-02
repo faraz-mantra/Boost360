@@ -1,5 +1,6 @@
 package com.appservice.staffs.model
 
+import com.appservice.ui.catalog.common.AppointmentModel
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -18,7 +19,7 @@ data class StaffDetailsResponse(
 data class StaffDetailsResult(
 
 		@field:SerializedName("Timings")
-		val timings: Any? = null,
+		val timings: List<AppointmentModel?>? = null,
 
 		@field:SerializedName("ServiceIds")
 		val serviceIds: List<String?>? = null,

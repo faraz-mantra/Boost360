@@ -375,7 +375,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_marginBottom="@dimen/size_5"
                             android:fontFamily="@font/open_sans"
-                            android:text="@string/staff_timing"
+                            android:text="@string/weekly_schedule"
                             android:textColor="@color/black_4a4a4a"
                             android:textStyle="normal"
                             app:textType="BODY_1"
@@ -384,13 +384,25 @@
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/ctv_timing_subheading"
                             android:layout_below="@id/tv_heading"
                             android:layout_gravity="center_vertical"
                             android:fontFamily="@font/open_sans"
-                            android:text="@string/is_the_staff_available_for_home_service"
+                            android:text="@string/staff_will_available_for_clients"
                             android:textFontWeight="600"
                             android:textSize="10sp" />
-
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/ctv_timing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ctv_timing_subheading"
+                            android:layout_gravity="center_vertical"
+                            tools:text="dasadasdsadsa"
+                            android:layout_marginTop="@dimen/size_8"
+                            android:fontFamily="@font/open_sans"
+                            android:textColor="@color/blue_4a90e2"
+                            android:textFontWeight="600"
+                            android:textSize="10sp" />
                         <com.framework.views.customViews.CustomImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

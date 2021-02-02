@@ -8,7 +8,7 @@ data class StaffTimingAddUpdateRequest(
 		@field:SerializedName("StaffId", alternate = ["staffId"])
 		val staffId: String? = null,
 
-		@field:SerializedName("WorkTimings",alternate = ["workTimings"])
+		@field:SerializedName("WorkTimings",alternate = ["workTimings","Timings"])
 		val workTimings: List<AppointmentModel?>? = null,
 )
 
