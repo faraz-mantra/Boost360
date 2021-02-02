@@ -377,6 +377,9 @@
     <string name="staff_timing_add">Adding staff timing...</string>
   <string name="staff_timings_added">staff timings added</string>
   <string name="staff_timings">STAFF_TIMINGS</string>
+  <string name="uploading_image">Uploading Image</string>
+    <string name="weekly_schedule">Weekly Schedule</string>
+  <string name="staff_will_available_for_clients">Time the staff will be available for the clients.</string>
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>

@@ -91,19 +91,20 @@ data class AppointmentModel(
 
 data class TimeSlot(
 
-        @field:SerializedName("from")
+        @field:SerializedName("from",alternate = ["From"])
         var from: String? = null,
 
-        @field:SerializedName("to")
+        @field:SerializedName("to",alternate = ["To"])
         var to: String? = null,
 ) : Serializable{
-    companion object{
-        fun getDefaultTimeSlotObject(): TimeSlot{
+    companion object {
+       fun getDefaultTimeSlotObject(): TimeSlot {
             val timeSlot = TimeSlot();
-            timeSlot.from = "9:30 AM"
-            timeSlot.to = "7:00 PM"
+            timeSlot.from = "09:30AM"
+            timeSlot.to = "07:00PM"
             return timeSlot;
         }
+
     }
 }
 

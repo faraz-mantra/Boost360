@@ -8,19 +8,25 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentStaffTimingBinding
+import com.appservice.holder.WeeklyAppointmentViewHolder
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
+import com.appservice.staffs.model.StaffDetailsResult
 import com.appservice.staffs.model.StaffTimingAddUpdateRequest
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
+import com.appservice.utils.cast
 import com.framework.extensions.observeOnce
 import java.util.*
 import kotlin.collections.ArrayList
 
 class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, StaffViewModel>(), RecyclerItemClickListener {
-    private var staffId: String? = null
+    private var isEdit: Boolean? = null
+    private var staffData: StaffDetailsResult? = null
+
     private lateinit var defaultTimings: ArrayList<AppointmentModel>
     private lateinit var adapter: AppBaseRecyclerViewAdapter<AppointmentModel>
+
     companion object {
         fun newInstance(): WeeklyAppointmentFragment = WeeklyAppointmentFragment()
     }
@@ -34,7 +40,21 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     }
 
     private fun getBundleData() {
-        staffId = arguments?.getSerializable(IntentConstant.STAFF_ID.name) as? String
+        staffData = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
+        isEdit = (staffData != null && staffData?.id.isNullOrEmpty())
+
+
+    }
+
+    private fun setPreviousData() {
+//       defaultTimings = staffData?.timings as ArrayList<AppointmentModel>
+        defaultTimings.forEachIndexed { index, model ->
+            defaultTimings[index].timeSlots = staffData?.timings?.get(index)?.timeSlots!!
+//            val viewHolder = adapter.cast<WeeklyAppointmentViewHolder>()
+//            viewHolder?.addTimeSlots(defaultTimings.get(index))
+
+        }
+        adapter.notifyDataSetChanged()
     }
 
     override fun onCreateView() {
@@ -48,7 +68,9 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
                 itemClickListener = this@WeeklyAppointmentFragment
         )
         binding!!.rvStaffTiming.adapter = adapter
-
+        if (isEdit == true) {
+            setPreviousData()
+        }
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -107,13 +129,32 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
         when (v) {
             binding?.btnSave -> {
                 addStaffTimings()
+                if (isEdit == true) {
+                    updateStaffTimings()
+                }
             }
         }
     }
 
     private fun addStaffTimings() {
         showProgress(getString(R.string.staff_timing_add))
-        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffId, defaultTimings))?.observeOnce(viewLifecycleOwner, {
+        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffData?.id, defaultTimings))?.observeOnce(viewLifecycleOwner, {
+            when (it.status) {
+                200 -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
+                    hideProgress()
+                    finishAndGoBack()
+                }
+                else -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.something_went_wrong))
+                }
+            }
+        })
+    }
+
+    private fun updateStaffTimings() {
+        showProgress(getString(R.string.staff_timing_add))
+        viewModel?.updateStaffTiming(StaffTimingAddUpdateRequest(staffId = staffData?.id, defaultTimings))?.observeOnce(viewLifecycleOwner, {
             when (it.status) {
                 200 -> {
                     Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))

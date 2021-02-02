@@ -94,6 +94,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         binding?.etvStaffDescription?.setText(staffDetails?.description.toString())
         binding?.spinnerGender?.setSelection(genderArray.toList().indexOf(staffDetails?.gender))
         binding?.cetAge?.setText(staffDetails?.age.toString())
+        binding?.ctvTiming?.text = staffDetails?.timings?.map { it?.day }?.joinToString(" ,")
         if (specialisations?.isNullOrEmpty() == false)
             binding?.etvSpecialization?.setText(specialisations[0]?.value)
         binding?.edtExperience?.setText(staffDetails?.experience.toString())
@@ -121,7 +122,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             }
             binding?.rlStaffTiming -> {
                 val bundle = Bundle()
-                bundle.putString(IntentConstant.STAFF_ID.name, staffDetails?.id)
+                bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
                 startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, bundle,clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
             }
             binding?.rlServiceProvided -> {
@@ -151,7 +152,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     }
 
     private fun updateStaffImage() {
-        showProgress("Uploading Image")
+        showProgress(getString(R.string.uploading_image))
         viewModel?.updateStaffImage(StaffUpdateImageRequest(staffDetails?.id, staffImage))?.observe(viewLifecycleOwner, {
             when (it.status) {
                 200 -> {
