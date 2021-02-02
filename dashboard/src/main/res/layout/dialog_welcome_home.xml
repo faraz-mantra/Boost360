@@ -19,7 +19,7 @@
       android:layout_height="match_parent"
       android:layout_weight="1"
       android:background="@drawable/rounded_bottom_white_d"
-      android:gravity="center_horizontal"
+      android:gravity="center"
       android:orientation="vertical"
       android:paddingStart="@dimen/size_20"
       android:paddingEnd="@dimen/size_20"
@@ -31,7 +31,6 @@
         android:id="@+id/image"
         android:layout_width="@dimen/size_180"
         android:layout_height="@dimen/size_180"
-        android:layout_marginTop="@dimen/size_30"
         tools:srcCompat="@drawable/ic_website_content_d" />
 
       <com.framework.views.customViews.CustomTextView

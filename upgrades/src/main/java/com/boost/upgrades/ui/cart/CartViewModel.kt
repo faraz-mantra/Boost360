@@ -1,6 +1,7 @@
 package com.boost.upgrades.ui.cart
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -10,6 +11,7 @@ import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.CreatePurchaseO
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
+import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
 import com.boost.upgrades.data.model.BundlesModel
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.CouponsModel
@@ -60,6 +62,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
   val compositeDisposable = CompositeDisposable()
 
+    var customerInfoState: MutableLiveData<Boolean> = MutableLiveData()
+
+    var updateCustomerInfo: MutableLiveData<GetCustomerIDResponse> = MutableLiveData()
+    private var customerInfo: MutableLiveData<CreateCustomerIDResponse> = MutableLiveData()
+
+    var _updateCheckoutClose: MutableLiveData<Boolean> = MutableLiveData()
 
   fun updatesError(): LiveData<String> {
     return updatesError
@@ -163,6 +171,14 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     fun getPurchaseOrderAutoRenewResponse(): LiveData<CreatePurchaseOrderResponse> {
         return _initiateAutoRenewOrder
+    }
+
+    fun getCheckoutKycClose(): LiveData<Boolean> {
+        return _updateCheckoutClose
+    }
+
+    fun updateCheckoutKycClose(checkoutCloseValue: Boolean) {
+        _updateCheckoutClose.postValue(checkoutCloseValue)
     }
 
   fun InitiatePurchaseOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
@@ -456,4 +472,89 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   fun loaderShow() {
     updatesLoader.postValue(true)
   }
+
+    fun getUpdatedCustomerResult(): LiveData<CreateCustomerIDResponse> {
+        return customerInfo
+    }
+
+    fun getCustomerInfoStateResult(): LiveData<Boolean> {
+        return customerInfoState
+    }
+
+    fun getCustomerInfoResult(): LiveData<GetCustomerIDResponse> {
+        return updateCustomerInfo
+    }
+
+    fun getCustomerInfo(InternalSourceId: String, clientId: String) {
+        if (Utils.isConnectedToInternet(getApplication())) {
+            updatesLoader.postValue(true)
+            APIRequestStatus = "Retrieving your payment profile..."
+            CompositeDisposable().add(
+                    ApiService.getCustomerId(InternalSourceId, clientId)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    {
+                                        Log.i("getCustomerId>>", it.toString())
+                                        updateCustomerInfo.postValue(it)
+                                        customerInfoState.postValue(true)
+                                        updatesLoader.postValue(false)
+                                    },
+                                    {
+                                        val temp = (it as HttpException).response()!!.errorBody()!!.string()
+                                        val errorBody: CreateCustomerIDResponse = Gson().fromJson(
+                                                temp, object : TypeToken<CreateCustomerIDResponse>() {}.type
+                                        )
+                                        if (errorBody != null && errorBody.Error.ErrorCode.equals("INVALID CUSTOMER") && errorBody.StatusCode == 400) {
+                                            customerInfoState.postValue(false)
+                                        }
+                                        updatesLoader.postValue(false)
+                                        updatesError.postValue(it.message())
+                                    }
+                            )
+            )
+        }
+    }
+
+    fun createCustomerInfo(createCustomerInfoRequest: CreateCustomerInfoRequest){
+        APIRequestStatus = "Creating a new payment profile..."
+        CompositeDisposable().add(
+                ApiService.createCustomerId(createCustomerInfoRequest)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                {
+                                    Log.i("CreateCustomerId>>", it.toString())
+                                    customerInfo.postValue(it)
+                                    updatesLoader.postValue(false)
+                                },
+                                {
+                                    Toasty.error(getApplication(), "Failed to create new payment profile for your account - " + it.message, Toast.LENGTH_LONG).show()
+                                    updatesError.postValue(it.message)
+                                    updatesLoader.postValue(false)
+                                }
+                        )
+        )
+    }
+
+    fun updateCustomerInfo(createCustomerInfoRequest: CreateCustomerInfoRequest){
+        APIRequestStatus = "Creating a new payment profile..."
+        CompositeDisposable().add(
+                ApiService.updateCustomerId(createCustomerInfoRequest)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                {
+                                    Log.i("CreateCustomerId>>", it.toString())
+                                    customerInfo.postValue(it)
+                                    updatesLoader.postValue(false)
+                                },
+                                {
+                                    Toasty.error(getApplication(), "Failed to create new payment profile for your account - " + it.message, Toast.LENGTH_LONG).show()
+                                    updatesError.postValue(it.message)
+                                    updatesLoader.postValue(false)
+                                }
+                        )
+        )
+    }
 }

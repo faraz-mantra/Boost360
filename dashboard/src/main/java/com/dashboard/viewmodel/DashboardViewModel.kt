@@ -67,8 +67,8 @@ class DashboardViewModel : BaseViewModel() {
     return WithFloatRepository.getWelcomeDashboardData(context).toLiveData()
   }
 
-  fun getBoostUserDetailMessage(context: Context): LiveData<BaseResponse> {
-    return WithFloatRepository.getBoostUserDetailMessage(context).toLiveData()
+  fun getBoostVisitingMessage(context: Context): LiveData<BaseResponse> {
+    return WithFloatRepository.getBoostVisitingMessage(context).toLiveData()
   }
 
   fun getBoostCustomerItem(context: Context): LiveData<BaseResponse> {
