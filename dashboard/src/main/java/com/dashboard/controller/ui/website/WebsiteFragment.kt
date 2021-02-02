@@ -42,7 +42,10 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     session = UserSessionManager(baseActivity)
     getWebsiteData()
     setOnClickListener(binding?.txtDomainName, binding?.btnProfileLogo, binding?.editProfile)
+    // TODO to change the event to only one
     WebEngageController.trackEvent("Website Page", "pageview", session?.fpTag)
+    WebEngageController.trackEvent("Manage Content", "pageview", session?.fpTag)
+    WebEngageController.trackEvent("Manage Content", "screen_name", session?.fpTag)
   }
 
   override fun onResume() {
@@ -66,7 +69,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
   }
 
   private fun getWebsiteData() {
-    viewModel?.getBoostWebsiteItem(baseActivity)?.observeOnce(viewLifecycleOwner, { it0 ->
+    viewModel?.getBoostWebsiteItem(baseActivity)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer{ it0 ->
       val response = it0 as? WebsiteDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         val data = response.data?.firstOrNull { it.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
