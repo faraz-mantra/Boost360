@@ -17,6 +17,7 @@ object FirestoreManager {
     var fpTag: String = "";
     var clientId: String = "";
     var TAG = "FirestoreManager";
+    const val COLLECTION_NAME = "drsMerchants";
 
 
     fun initData(fpTag: String, clientId: String){
@@ -45,7 +46,7 @@ object FirestoreManager {
     fun readDrScoreDocument(){
         val docRef = getDocumentReference();
         docRef?.addSnapshotListener(MetadataChanges.INCLUDE) { snapshot, e ->
-            if(e != null){
+            if(e == null){
                 Log.d(TAG, "No Exception")
                 model = snapshot?.data?.toDataClass<DrScoreModel>();
                 Log.d(TAG, "document result snapshot"+snapshot!!)
@@ -57,15 +58,16 @@ object FirestoreManager {
     }
 
     fun getDocumentReference(): DocumentReference?{
-        return db?.collection("drsMerchants")?.document(this.fpTag);
+        return db?.collection(COLLECTION_NAME)?.document(this.fpTag);
     }
 
     fun updateDrScoreIfNull(){
         if(this.model == null){
             this.model = DrScoreModel();
         }
-        if(this.model?.fp_tag == null){
-            this.model?.fp_id = this.fpTag;
+        if(this.model?.fp_tag == null && this.model?.client_id == null){
+            this.model?.fp_id = this.clientId;
+            this.model?.fp_tag = this.fpTag;
             this.model?.client_id = this.clientId;
             val docRef = getDocumentReference();
             updateDocument(docRef, this.model.serializeToMap());
@@ -84,6 +86,10 @@ object FirestoreManager {
 
     fun updateDrScoreData(model: DrScoreModel){
         this.model = model;
+        updateDocument(getDocumentReference(), this.model.serializeToMap());
+    }
+
+    fun updateDocument(){
         updateDocument(getDocumentReference(), this.model.serializeToMap());
     }
 
