@@ -70,8 +70,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(), SplashScreen_Activity.this);
 
-        FirestoreManager.initFirebase(this);
-        FirestoreManager.instance.initData(session.getFpTag(), session.getFPID());
+        FirestoreManager.INSTANCE.initData(session.getFpTag(), session.getFPID());
         initLottieAnimation();
     }
 

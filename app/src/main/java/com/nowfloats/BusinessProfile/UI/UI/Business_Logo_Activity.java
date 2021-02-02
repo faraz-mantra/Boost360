@@ -77,7 +77,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_business__logo);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_business_logo);
         //setContentView(R.layout.activity_business__logo);
 
         setSupportActionBar(binding.appBar.toolbar);
@@ -385,7 +385,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
     }
 
     private void onBusinessLogoAddedOrUpdated(){
-        FirestoreManager instance = FirestoreManager.instance;
+        FirestoreManager instance = FirestoreManager.INSTANCE;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_business_description(true);
         instance.updateDocument();
     }

@@ -137,7 +137,7 @@
             android:layout_height="@dimen/size_22"
             android:layout_gravity="center_vertical"
             app:paused="true"
-            tools:gif="@raw/ic_next_arrow_gif_d" />
+            app:gif="@raw/ic_next_arrow_gif_d" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.appcompat.widget.LinearLayoutCompat>
 

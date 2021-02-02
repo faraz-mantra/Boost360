@@ -1,6 +1,5 @@
-package com.dashboard.model.live.siteMeter
+package com.dashboard.model.live.drScore.siteMeter
 
-import com.dashboard.model.live.SiteMeterModel
 import java.io.Serializable
 
 data class SiteMeterScoreDetails(
