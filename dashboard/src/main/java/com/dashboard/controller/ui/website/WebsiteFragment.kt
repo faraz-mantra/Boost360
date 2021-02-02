@@ -72,7 +72,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
         val data = response.data?.firstOrNull { it.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
         if (data != null && data.actionItem.isNullOrEmpty().not()) {
           data.actionItem!!.map { it2 -> if (it2.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it2.premiumCode).not()) it2.isLock = true }
-          binding?.mainContent?.setBackgroundColor(getColor(baseActivity, if (data.actionItem!!.size % 2 != 0) R.color.bg_grey_light else R.color.white))
+          binding?.mainContent?.setBackgroundColor(getColor(baseActivity, if (data.actionItem!!.size % 2 != 0) R.color.white_smoke_1 else R.color.white))
           setAdapterCustomer(data.actionItem!!)
         }
       }

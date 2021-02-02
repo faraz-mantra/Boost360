@@ -117,6 +117,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
     var totalValidityDays = 0
     val checkoutKycFragment = CheckoutKycFragment()
 
+    var proceedCheckoutPopup: Boolean? = false
+
     companion object {
         fun newInstance() = CartFragment()
     }
@@ -194,14 +196,14 @@ class CartFragment : BaseFragment(), CartFragmentListener {
 
         cart_continue_submit.setOnClickListener {
 
-            if (prefs.getInitialLoadMarketPlace()) {
+            if (prefs.getInitialLoadMarketPlace() && proceedCheckoutPopup == false) {
 
                 checkoutKycFragment.show(
                         (activity as UpgradeActivity).supportFragmentManager,
                         CHECKOUT_KYC_FRAGMENT
                 )
             }else{
-                            renewPopUpFragment.show(
+                    renewPopUpFragment.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     RENEW_POPUP_FRAGEMENT
             )
@@ -1224,6 +1226,9 @@ class CartFragment : BaseFragment(), CartFragmentListener {
             }
         })
 
+        viewModel.getCheckoutKycClose().observe(this, Observer {
+            proceedCheckoutPopup = it
+        })
         //get customerId
 //        viewModel.getCustomerId().observe(this, Observer {
 //            if (it != null && it.isNotEmpty()) {

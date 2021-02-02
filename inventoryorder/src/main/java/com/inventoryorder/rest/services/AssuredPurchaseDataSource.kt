@@ -1,7 +1,7 @@
 package com.inventoryorder.rest.services
 
 import com.inventoryorder.model.OrderInitiateResponse
-import com.inventoryorder.model.UpdateCancelPropertyRequest
+import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.rest.EndPoints
@@ -35,6 +35,6 @@ interface AssuredPurchaseDataSource {
   @POST(EndPoints.POST_UPDATE_EXTRA_FIELD_ORDER)
   fun updateExtraPropertyCancelOrder(
       @Query("clientId") clientId: String?,
-      @Body request: UpdateCancelPropertyRequest?
+      @Body request: UpdateOrderNPropertyRequest?
   ): Observable<Response<Any>>
 }
