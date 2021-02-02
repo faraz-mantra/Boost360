@@ -9,12 +9,14 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -94,6 +96,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         binding?.etvStaffDescription?.setText(staffDetails?.description.toString())
         binding?.spinnerGender?.setSelection(genderArray.toList().indexOf(staffDetails?.gender))
         binding?.cetAge?.setText(staffDetails?.age.toString())
+        binding?.ctvTiming?.text = staffDetails?.timings?.map { it?.day }?.joinToString(" ,")
         if (specialisations?.isNullOrEmpty() == false)
             binding?.etvSpecialization?.setText(specialisations[0]?.value)
         binding?.edtExperience?.setText(staffDetails?.experience.toString())
@@ -121,7 +124,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             }
             binding?.rlStaffTiming -> {
                 val bundle = Bundle()
-                bundle.putString(IntentConstant.STAFF_ID.name, staffDetails?.id)
+                bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
                 startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, bundle,clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
             }
             binding?.rlServiceProvided -> {
@@ -151,8 +154,8 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     }
 
     private fun updateStaffImage() {
-        showProgress("Uploading Image")
-        viewModel?.updateStaffImage(StaffUpdateImageRequest(staffDetails?.id, staffImage))?.observe(viewLifecycleOwner, {
+        showProgress(getString(R.string.uploading_image))
+        viewModel?.updateStaffImage(StaffUpdateImageRequest(staffDetails?.id, staffImage))?.observe(viewLifecycleOwner, Observer{
             when (it.status) {
                 200 -> {
                 }
@@ -169,7 +172,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         viewModel?.updateStaffProfile(
                 StaffProfileUpdateRequest(isAvailable, serviceListId, staffGender, UserSession.fpId, name = staffName, staffDescription,
                         experience = yearOfExperience.toInt(), staffDetails?.id, staffAge, specializationList
-                ))?.observe(viewLifecycleOwner, { t ->
+                ))?.observe(viewLifecycleOwner, Observer{ t ->
             when (t.status) {
                 200 -> {
                     finishAndGoBack()
@@ -240,11 +243,12 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         return true
     }
     private fun createStaffProfile() {
-        viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, { t ->
+        viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, Observer{ t ->
             when (t.status) {
                 200 -> {
                     showShortToast(getString(R.string.profile_created))
-                    finishAndGoBack()
+                    // get the id from result
+//                    addStaffTimings()
                 }
                 else -> {
                     showShortToast(getString(R.string.something_went_wrong))
@@ -252,6 +256,47 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             }
         })
     }
+
+    private fun addStaffTimings(id: String) {
+        if(staffDetails?.timings == null){
+            finishAndGoBack();
+            return;
+        }
+        showProgress(getString(R.string.staff_timing_add))
+        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = id, this.staffDetails?.timings!!))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+            hideProgress()
+            when (it.status) {
+                200 -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
+                    finishAndGoBack()
+                }
+                else -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.something_went_wrong))
+                }
+            }
+        })
+    }
+
+    private fun updateStaffTimings() {
+        if(staffDetails?.timings == null){
+            finishAndGoBack();
+            return;
+        }
+        showProgress(getString(R.string.staff_timing_add))
+        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id, this.staffDetails?.timings!!))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+            hideProgress()
+            when (it.status) {
+                200 -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
+                    finishAndGoBack()
+                }
+                else -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.something_went_wrong))
+                }
+            }
+        })
+    }
+
 
     private fun finishAndGoBack() {
         baseActivity.setResult(AppCompatActivity.RESULT_OK)
@@ -301,6 +346,8 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 binding!!.ctvServices.text = servicesName.joinToString(" ,", limit = 5, truncated = "5 more")
             }
             requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
+                // get staff data from intent and set it back
+//                this.staffDetails =
             }
         }
         when (isEdit == true && imageIsChange != null && imageIsChange == true && isValid()) {
@@ -311,9 +358,10 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
     private fun setServicesList() {
         val serviceName = ArrayList<String>()
+
         if (isEdit == true) {
             viewModel!!.getServiceListing(ServiceListRequest(floatingPointTag = UserSession.fpId)
-            ).observeOnce(viewLifecycleOwner, {
+            ).observeOnce(viewLifecycleOwner, Observer{
                 when (it.status) {
                     200 -> {
                         val data = (it as ServiceListResponse).result!!.data!!
