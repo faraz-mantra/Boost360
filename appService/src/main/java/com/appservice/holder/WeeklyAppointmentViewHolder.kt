@@ -14,7 +14,6 @@ import com.appservice.ui.catalog.common.TimeSlot
 import okhttp3.internal.indexOf
 
 class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBaseRecyclerViewHolder<RecyclerItemSessionBinding>(binding) {
-    val businessHours: Array<String>? = getResources()?.getStringArray(R.array.business_hours_arrays)
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         setIsRecyclable(false)
         val data = item as AppointmentModel
@@ -25,6 +24,7 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
         //isdataAPpliedonmy day true -> make all views unresponsive -- disable modification
         //
 
+        binding.toggleOnOff.isEnabled = data.isViewEnabled ?: true
         when (data.isTurnedOn) {
             false -> binding.layoutSessionCreate.visibility = View.GONE
             true -> binding.layoutSessionCreate.visibility = View.VISIBLE
@@ -60,11 +60,6 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
 
     }
 
-//    private fun disableAllViews(data: AppointmentModel) {
-//        for (item in data.) {
-//            binding.llTimeSlot.addView(getTimeSlotView(item));
-//        }
-//    }
 
     private fun addTimeSlots(data: AppointmentModel) {
         if (data.timeSlots.isNullOrEmpty()) {
@@ -88,6 +83,7 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
     }
 
     private fun sessionTimingHandler(fromSpinner: AppCompatSpinner, timeSlot: TimeSlot, toSpinner: AppCompatSpinner) {
+        val businessHours: Array<String>? = getResources()?.getStringArray(R.array.business_hours_arrays)
         fromSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 timeSlot.from = businessHours?.get(position)
