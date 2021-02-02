@@ -4,7 +4,6 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -20,9 +19,10 @@ import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentOrdersBinding
 import com.inventoryorder.model.OrderConfirmStatus
-import com.inventoryorder.model.UpdateCancelPropertyRequest
+import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
-import com.inventoryorder.model.orderRequest.extraProperty.ExtraPropertiesCancel
+import com.inventoryorder.model.orderRequest.extraProperty.ExtraPropertiesOrder
+import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequestItem
 import com.inventoryorder.model.orderfilter.QueryObject
@@ -62,6 +62,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   /* Paging */
   private var isLoadingD = false
+  private var isSerchItem = false
   private var TOTAL_ELEMENTS = 0
   private var currentPage = PAGE_START
   private var isLastPageD = false
@@ -79,7 +80,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   override fun onCreateView() {
     super.onCreateView()
     fpTag?.let { WebEngageController.trackEvent("Clicked on Orders", "ORDERS", it) }
-//    setOnClickListener(binding?.btnAdd)
+    //setOnClickListener(binding?.btnAdd)
     apiSellerSummary()
     layoutManagerN = LinearLayoutManager(baseActivity)
     layoutManagerN?.let { scrollPagingListener(it) }
@@ -97,7 +98,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
     binding?.orderRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
       override fun loadMoreItems() {
-        if (!isLastPageD) {
+        if (!isLastPageD && !isSerchItem) {
           isLoadingD = true
           currentPage += requestFilter.limit ?: 0
           orderAdapter?.addLoadingFooter(OrderItem().getLoaderItem())
@@ -124,6 +125,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       }
       if (it.status == 200 || it.status == 201 || it.status == 202) {
         val response = it as? OrderSummaryResponse
+        setToolbarTitle(resources.getString(R.string.orders) + " (${response?.Data?.TotalOrders ?: 0})")
         typeList = response?.Data?.getOrderType()
         typeList?.let { it1 -> setAdapterSellerSummary(it1) } ?: errorOnSummary(null)
       } else errorOnSummary(it?.message)
@@ -215,7 +217,10 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
       OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {
         val sheetRequestPayment = RequestPaymentBottomSheetDialog()
         sheetRequestPayment.setData(orderItem)
-        sheetRequestPayment.onClicked = { }
+        sheetRequestPayment.onClicked = {
+          showProgress()
+          sendPaymentLinkOrder(getString(R.string.payment_request_send))
+        }
         sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentBottomSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.CANCEL_ORDER -> {
@@ -224,21 +229,60 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
         sheetCancel.onClicked = this@OrdersFragment::apiCancelOrder
         sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
       }
-      OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> {//
-      }
+      OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> markCodPaymentRequest()
       OrderMenuModel.MenuStatus.MARK_AS_DELIVERED -> {
         val sheetDelivered = DeliveredBottomSheetDialog()
         sheetDelivered.setData(orderItem)
-        sheetDelivered.onClicked = { }
+        sheetDelivered.onClicked = { deliveredOrder(it) }
         sheetDelivered.show(this.parentFragmentManager, DeliveredBottomSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.MARK_AS_SHIPPED -> {
         val sheetShipped = ShippedBottomSheetDialog()
         sheetShipped.setData(orderItem)
-        sheetShipped.onClicked = { }
+        sheetShipped.onClicked = { shippedOrder(it) }
         sheetShipped.show(this.parentFragmentManager, ShippedBottomSheetDialog::class.java.name)
       }
     }
+  }
+
+  private fun shippedOrder(markAsShippedRequest: MarkAsShippedRequest) {
+    showProgress()
+    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, Observer {
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        hideProgress()
+        return@Observer
+      }
+      if (it.isSuccess()) {
+        apiGetOrderDetails()
+        showLongToast(resources.getString(R.string.order_shipped))
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
+  }
+
+  private fun deliveredOrder(message: String) {
+    showProgress()
+    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        hideProgress()
+        return@Observer
+      }
+      if (it.isSuccess()) {
+        if (message.isNotEmpty()) {
+          updateReason(resources.getString(R.string.order_delivery), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
+        } else {
+          apiGetOrderDetails()
+          showLongToast(resources.getString(R.string.order_cancel))
+        }
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
   }
 
   private fun apiCancelOrder(cancellingEntity: String, reasonText: String) {
@@ -249,13 +293,13 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
         hideProgress()
         return@Observer
       }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
+      if (it.isSuccess()) {
         val data = it as? OrderConfirmStatus
         if (reasonText.isNotEmpty()) {
-          updateReason(reasonText)
+          updateReason(resources.getString(R.string.order_cancel), UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name, ExtraPropertiesOrder(cancellationRemark = reasonText))
         } else {
+          apiGetOrderDetails()
           showLongToast(resources.getString(R.string.order_cancel))
-          hideProgress()
         }
       } else {
         showLongToast(it.message())
@@ -264,12 +308,11 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     })
   }
 
-  private fun updateReason(reasonText: String) {
-    val propertyRequest = UpdateCancelPropertyRequest(updateExtraPropertyType = UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name,
-        existingKeyName = "", orderId = this.orderItem?._id, extraPropertiesCancel = ExtraPropertiesCancel(cancellationRemark = reasonText))
+  private fun updateReason(message: String, type: String, extraPropertiesOrder: ExtraPropertiesOrder) {
+    val propertyRequest = UpdateOrderNPropertyRequest(updateExtraPropertyType = type,
+        existingKeyName = "", orderId = this.orderItem?._id, extraPropertiesOrder = extraPropertiesOrder)
     viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)?.observeOnce(viewLifecycleOwner, {
-      if (it.isSuccess()) showLongToast(resources.getString(R.string.order_cancel))
-      else showLongToast(resources.getString(R.string.cancellation_reason_not_update))
+      if (it.isSuccess()) showLongToast(message)
       apiGetOrderDetails()
     })
   }
@@ -283,8 +326,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
         return@Observer
       }
       if (it.isSuccess()) {
-        val data = it as? OrderConfirmStatus
-        if (isSendPaymentLink) sendPaymentLinkOrder()
+        if (isSendPaymentLink) sendPaymentLinkOrder(getString(R.string.order_confirmed))
         else {
           apiGetOrderDetails()
           showLongToast(getString(R.string.order_confirmed))
@@ -296,15 +338,31 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     })
   }
 
-  private fun sendPaymentLinkOrder() {
+  private fun sendPaymentLinkOrder(message: String) {
     viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, { it1 ->
-      if (it1.isSuccess()) {
-        apiGetOrderDetails()
-        showLongToast(getString(R.string.order_confirmed))
-      } else apiGetOrderDetails()
+      if (it1.isSuccess()) showLongToast(message)
+      apiGetOrderDetails()
     })
   }
 
+
+  private fun markCodPaymentRequest() {
+    showProgress()
+    viewModel?.markCodPaymentDone(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        hideProgress()
+        return@Observer
+      }
+      if (it.isSuccess()) {
+        apiGetOrderDetails()
+        showLongToast(getString(R.string.order_payment_done))
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
+  }
 
   private fun apiGetOrderDetails() {
     viewModel?.getOrderDetails(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
@@ -424,10 +482,6 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     if (searchItem != null) {
       val searchView = searchItem.actionView as SearchView
       searchView.queryHint = resources.getString(R.string.queryHintOrder)
-      val ll = searchView.getChildAt(0) as? LinearLayout
-      val ll2 = ll?.getChildAt(2) as? LinearLayout
-      val ll3 = ll2?.getChildAt(1) as? LinearLayout
-      val autoComplete = ll3?.getChildAt(0) as? SearchView.SearchAutoComplete
       searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(newText: String?): Boolean {
           newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }
@@ -439,17 +493,15 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
           return false
         }
       })
-
-//      searchView.setOnQueryTextFocusChangeListener { _, _ ->
-//        if (autoComplete?.text.isNullOrEmpty().not()) searchView.setQuery(autoComplete?.text, true)
-//      }
     }
   }
 
   private fun startFilter(query: String) {
     if (query.isNotEmpty() && query.length > 2) {
-      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = true)
+      isSerchItem = true
+      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = isSerchItem)
     } else {
+      isSerchItem = false
       orderList.clear()
       orderList.addAll(orderListFinalList)
       setAdapterNotify(orderList)

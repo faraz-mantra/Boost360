@@ -99,8 +99,7 @@
           android:id="@+id/local_edt_view"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:visibility="gone">
+          android:orientation="vertical">
 
           <com.framework.views.customViews.CustomTextView
             android:layout_width="match_parent"
@@ -112,7 +111,7 @@
             app:textType="HEADING_6" />
 
           <com.framework.views.customViews.CustomTextField
-            android:id="@+id/tv_product_name"
+            android:id="@+id/tv_delivery_person_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/size_20"
@@ -142,11 +141,13 @@
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_20"
+            android:id="@+id/edt_number"
             android:background="@drawable/bg_rect_edit_txt"
             android:hint="@string/_91_xxxxx_xxxxx"
-            android:inputType="textCapWords"
+            android:inputType="number"
             android:padding="@dimen/size_12"
             android:singleLine="true"
+            android:maxLength="10"
             android:textColor="@color/warm_grey_10"
             android:textColorHint="@color/primary_grey"
             tools:ignore="UnusedAttribute" />
@@ -155,6 +156,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
           android:id="@+id/partner_edt_view"
           android:layout_width="match_parent"
+          android:visibility="gone"
           android:layout_height="wrap_content"
           android:orientation="vertical">
 
@@ -173,9 +175,9 @@
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_20"
+            android:id="@+id/edt_consignment_id"
             android:background="@drawable/bg_rect_edit_txt"
             android:hint="@string/paste_consignment_id"
-            android:inputType="textCapWords"
             android:padding="@dimen/size_12"
             android:singleLine="true"
             android:textColor="@color/warm_grey_10"
@@ -197,9 +199,9 @@
             android:layout_marginStart="@dimen/size_20"
             android:layout_marginTop="@dimen/size_10"
             android:layout_marginEnd="@dimen/size_20"
+            android:id="@+id/edt_tracking_url"
             android:background="@drawable/bg_rect_edit_txt"
             android:hint="@string/paste_consignment_tracking_url"
-            android:inputType="textCapWords"
             android:padding="@dimen/size_12"
             android:singleLine="true"
             android:textColor="@color/warm_grey_10"

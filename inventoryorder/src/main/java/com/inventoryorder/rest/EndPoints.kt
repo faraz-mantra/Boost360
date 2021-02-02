@@ -41,6 +41,7 @@ object EndPoints {
   const val MARK_AS_DELIVERED = "api/assuredPurchase/v2/MarkOrderAsDelivered"
   const val MARK_AS_SHIPPED = "api/assuredPurchase/v2/MarkOrderAsShipped"
   const val SEND_PAYMENT_REMINDER = "api/assuredPurchase/v2/SendPaymentReminder"
+  const val MARK_COD_PAYMENT_DONE = "api/assuredPurchase/v2/MarkPaymentReceivedForCODOrder"
   //new API order
 
 

@@ -3,6 +3,7 @@ package com.inventoryorder.rest.repositories
 import com.framework.base.BaseResponse
 import com.inventoryorder.base.rest.AppBaseLocalService
 import com.inventoryorder.base.rest.AppBaseRepository
+import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.rest.TaskCode
@@ -60,6 +61,17 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
 
   fun cancelOrder(clientId: String?, orderId: String?, cancellingEntity: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.cancelOrder(clientId, orderId, cancellingEntity), TaskCode.CANCEL_ORDER_TASK)
+  }
+
+  fun markAsDelivered(clientId: String?, orderId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.markAsDelivered(clientId, orderId), TaskCode.DELIVERED_ORDER_TASK)
+  }
+  fun markCodPaymentDone(clientId: String?, orderId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.markCodPaymentDone(clientId, orderId), TaskCode.DELIVERED_ORDER_TASK)
+  }
+
+  fun markAsShipped(clientId: String?, request: MarkAsShippedRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.markAsShipped(clientId, request), TaskCode.SHIPPED_ORDER_TASK)
   }
 
   override fun getApiClient(): Retrofit {
