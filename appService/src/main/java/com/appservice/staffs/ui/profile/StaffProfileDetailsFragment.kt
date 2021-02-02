@@ -40,8 +40,6 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         super.onCreateView()
         setOnClickListener(binding!!.civMenu, binding!!.ctvEdit, binding!!.ctvEditLeaves, binding!!.ctvEditServices, binding!!.ctvEditTiming)
         setData()
-
-
     }
 
     private fun setData() {
@@ -123,6 +121,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
     }
 
     private fun showPopUp(view: View) {
+
         val popupMenu = PopupMenu(activity, view)
         val inflater = popupMenu.menuInflater
         inflater.inflate(R.menu.menu_staff_status, popupMenu.menu)

@@ -2,10 +2,7 @@ package com.appservice.staffs.ui.home
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -41,6 +38,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
     /* Paging */
     private var isLastPageD = false
+    private var pageNumber = 0
 
     override fun getLayout(): Int {
         return R.layout.fragment_staff_listing
@@ -71,30 +69,24 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         setOnClickListener(binding?.fragmentStaffAdd?.flAddStaff)
 
         layoutManager = LinearLayoutManager(baseActivity)
-    }
 
-    override fun onResume() {
-        super.onResume()
-
-        list.clear()
-        copyList.clear()
-
-        filter = FilterBy("", 10, 0)
         fetchStaffListing()
         setupOnScrollListener()
     }
 
     private fun fetchStaffListing() {
 
-        if (copyList.size == 0)
-            showProgress("Loading")
+        if (copyList.size == 0) showProgress("Loading")
 
-        viewModel?.getStaffList(GetStaffListingRequest(filter, UserSession.fpId, ""))?.observe(viewLifecycleOwner, {
+        viewModel?.getStaffList(GetStaffListingRequest(filter, UserSession.fpId, ""))?.observe(this.requireActivity(), {
 
             hideProgress()
-            if (this::adapter.isInitialized) adapter.removeLoadingFooter()
+            if (this::adapter.isInitialized) {
+                adapter.removeLoadingFooter()
+            }
 
             when (it.status) {
+
                 200 -> {
                     val getStaffListingResponse = it as GetStaffListingResponse
                     val data = getStaffListingResponse.result?.data
@@ -102,10 +94,11 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
                     if (data?.isNotEmpty() == true) {
                         binding?.layoutStaffListing!!.root.visibility = View.VISIBLE
                         binding?.fragmentStaffAdd!!.root.visibility = View.GONE
+                        showMenuItem()
 
                         data as ArrayList<DataItem>
+                        if (pageNumber == 0) list.clear()
                         list.addAll(data)
-                        showMenuItem()
                         copyList.clear()
                         copyList.addAll(data)
 
@@ -118,16 +111,20 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
                         isLastPageD = data.size < 10
                     } else {
-                        if (this.list.size == 0) {
+                        if (list.size == 0) {
                             binding?.layoutStaffListing?.root?.visibility = View.GONE
                             binding?.fragmentStaffAdd!!.root.visibility = View.VISIBLE
                         }
 
                         isLastPageD = data?.size!! < 10
                     }
+                    Log.e("list_size", list.size.toString())
                 }
-                else -> {
 
+
+
+                else -> {
+                    isLastPageD = true
                 }
             }
 
@@ -148,9 +145,11 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
                 if (LayoutM.findLastCompletelyVisibleItemPosition() == copyList.size - 1) {
 
                     if (!isLastPageD) {
+                        pageNumber++
+                        adapter?.addLoadingFooter(DataItem())
                         filter.offset = filter.offset?.plus(10)
                         fetchStaffListing()
-                        adapter?.addLoadingFooter(DataItem())
+                        Log.e("scroller", "---> called")
                     }
                 }
             }
@@ -162,7 +161,6 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         val bundle = Bundle()
         bundle.putSerializable("STAFF_DETAILS", staff)
         startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, bundle, clearTop = false, isResult = false)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -216,11 +214,11 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
             list.addAll(copyList)
         } else {
             for (dataItem in copyList) {
-                if (dataItem.name?.toLowerCase(Locale.ROOT)?.contains(queryText.toLowerCase(Locale.ROOT))!!) {
+                if (dataItem.name?.toLowerCase()?.contains(queryText.toLowerCase())!!) {
                     list.add(dataItem)
                 }
             }
         }
-        adapter.updateList(list)
+        adapter.notifyDataSetChanged()
     }
 }
