@@ -11,6 +11,7 @@ import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.ui.catalog.common.AppointmentModel
 import com.appservice.ui.catalog.common.TimeSlot
+import okhttp3.internal.indexOf
 
 class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBaseRecyclerViewHolder<RecyclerItemSessionBinding>(binding) {
     val businessHours: Array<String>? = getResources()?.getStringArray(R.array.business_hours_arrays)
@@ -82,6 +83,7 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
         sessionTimingHandler(fromSpinner, timeSlot, toSpinner)
 //        timeSlot.from = fromSpinner.selectedItem.toString()
 //        timeSlot.to = toSpinner.selectedItem.toString()
+
         return itemView;
     }
 
