@@ -385,7 +385,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
     }
 
     private void onBusinessLogoAddedOrUpdated(){
-        FirestoreManager instance = FirestoreManager.INSTANCE;
+        FirestoreManager instance = FirestoreManager.instance;
         instance.getDrScoreData().getMetricdetail().setBoolean_add_business_description(true);
         instance.updateDocument();
     }

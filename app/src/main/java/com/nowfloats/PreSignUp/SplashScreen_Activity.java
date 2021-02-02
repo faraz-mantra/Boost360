@@ -12,6 +12,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.boost.presignup.utils.PresignupManager;
 import com.boost.upgrades.UpgradeActivity;
+import com.framework.models.firestore.FirestoreManager;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Login_MainActivity;
 import com.nowfloats.Login.Model.FloatsMessageModel;
@@ -68,8 +69,10 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         }
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(), SplashScreen_Activity.this);
-        initLottieAnimation();
 
+        FirestoreManager.initFirebase(this);
+        FirestoreManager.instance.initData(session.getFpTag(), session.getFPID());
+        initLottieAnimation();
     }
 
     private void initLottieAnimation() {

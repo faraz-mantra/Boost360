@@ -1,0 +1,92 @@
+{
+  "data": {
+    "boolean_add_business_name": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_add_business_description": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_add_clinic_logo": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_add_featured_image_video": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_select_what_you_sell": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_add_business_hours": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_add_contact_details": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_add_custom_domain_name_and_ssl": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "number_updates_posted": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_social_channel_connected": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "number_services_added": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "number_products_added": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "number_products_added": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_add_bank_account": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_image_uploaded_to_gallery": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_create_custom_page": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_share_business_card": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_create_doctor_e_profile": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_create_sample_in_clinic_appointment": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_create_sample_video_consultation": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_manage_appointment_settings": {
+      "title": "Add Business Name",
+      "desc": ""
+    },
+    "boolean_respond_to_customer_enquiries": {
+      "title": "Add Business Name",
+      "desc": ""
+    }
+  }
+}
