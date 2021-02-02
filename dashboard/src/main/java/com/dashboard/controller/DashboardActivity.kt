@@ -107,7 +107,8 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     WebEngageController.initiateUserLogin(session?.userProfileId)
     WebEngageController.setUserContactAttributes(session?.userProfileEmail, session?.userPrimaryMobile, session?.userProfileName, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
     WebEngageController.setFPTag(session?.fpTag)
-    WebEngageController.trackEvent("DASHBOARD HOME", "pageview", session?.fpTag ?: "")
+    WebEngageController.trackEvent("Home Page", "pageview", session?.fpTag ?: "")
+    WebEngageController.trackEvent("Home Page", "screen_name", session?.fpTag ?: "")
     FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
       val token = instanceIdResult.token
       WebEngage.get().setRegistrationID(token)
@@ -191,7 +192,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun setDrawerHome() {
-    viewModel.getNavDashboardData(this).observeOnce(this, {
+    viewModel.getNavDashboardData(this).observeOnce(this, androidx.lifecycle.Observer{
       val response = it as? DrawerHomeDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         binding?.drawerView?.rvLeftDrawer?.apply {
@@ -418,7 +419,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     val imageFile = File(path)
     isSecondaryImage = false
     showProgress()
-    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, {
+    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, androidx.lifecycle.Observer{
       if (it.isSuccess()) {
         if (it.stringResponse.isNullOrEmpty().not()) {
           session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)
@@ -452,7 +453,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
   }
 
   private fun getWelcomeData() {
-    viewModel.getWelcomeDashboardData(this).observeOnce(this, {
+    viewModel.getWelcomeDashboardData(this).observeOnce(this, androidx.lifecycle.Observer{
       val response = it as? WelcomeDashboardResponse
       val data = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.actionItem
       if (response?.isSuccess() == true && data.isNullOrEmpty().not()) {
