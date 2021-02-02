@@ -2,16 +2,15 @@ package com.dashboard.controller.ui.dashboard
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.viewpager2.widget.ViewPager2
 import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
-import com.dashboard.constant.IntentConstant
 import com.dashboard.constant.PreferenceConstant.CHANNEL_SHARE_URL
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
@@ -69,6 +68,7 @@ const val IS_FIRST_LOAD = "isFirsLoad"
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
+  private var adapterBusinessContent: AppBaseRecyclerViewAdapter<BusinessContentSetupData>? = null
   private var adapterPagerBusinessUpdate: AppBaseRecyclerViewAdapter<BusinessSetupHighData>? = null
   private var adapterRoi: AppBaseRecyclerViewAdapter<RoiSummaryData>? = null
   private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
@@ -91,7 +91,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     super.onCreateView()
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showProgress()
     session = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.btnVisitingCard, binding?.txtDomainName)
+    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     apiSellerSummary()
@@ -140,12 +140,46 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun refreshData(siteMeterData: SiteMeterScoreDetails) {
     this.siteMeterData = siteMeterData
+    setSiteMeterData(this.siteMeterData!!)
     (baseActivity as? DashboardActivity)?.setPercentageData(siteMeterData.siteMeterTotalWeight)
     setUserData()
     setBusinessManageTask()
     getNotificationCount()
     getSiteMeter(siteMeterData)
     setDataSellerSummary(OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
+  }
+
+  private fun setSiteMeterData(siteMeterData: SiteMeterScoreDetails) {
+    if (siteMeterData.siteMeterTotalWeight > 40) {
+      val listDigitalScore = siteMeterData.getListDigitalScore()
+      binding?.highReadinessScoreView?.gone()
+      binding?.lowReadinessScoreView?.visible()
+      binding?.txtReadinessScore?.text = "${siteMeterData.siteMeterTotalWeight}"
+      binding?.progressScore?.progress = siteMeterData.siteMeterTotalWeight
+      val listContent = ArrayList(listDigitalScore.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout();it })
+      binding?.pagerBusinessSetupLow?.apply {
+        binding?.motionOne?.transitionToStart()
+        adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, listContent, this@DashboardFragment)
+        offscreenPageLimit = 3
+        adapter = adapterBusinessContent
+        postInvalidateOnAnimation()
+        binding?.dotIndicator?.setViewPager2(this)
+        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+          override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
+          }
+        })
+        binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
+        binding?.motionOne?.transitionToStart()
+      }
+      baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
+      baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
+    } else {
+      binding?.highReadinessScoreView?.visible()
+      binding?.lowReadinessScoreView?.gone()
+    }
   }
 
   private fun getSiteMeter(siteMeterData: SiteMeterScoreDetails) {
@@ -311,17 +345,19 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (actionType) {
       RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> {
         WebEngageController.trackEvent("SITE HEALTH Page", "SITE_HEALTH", session?.fpTag);
-        session?.let { baseActivity.startOldSiteMeter(it) }
-//        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+//        session?.let { baseActivity.startOldSiteMeter(it) }
+        baseActivity.startReadinessScoreView(session, 0)
       }
-      RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, position) })
+      RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> baseActivity.startReadinessScoreView(session, position)
       RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal -> {
         val data = item as? QuickActionItem ?: return
         QuickActionItem.QuickActionType.from(data.quickActionType)?.let { quickActionClick(it) }
       }
       RecyclerViewActionType.BUSINESS_ADD_ONS_CLICK.ordinal -> {
         val data = item as? ManageBusinessData ?: return
-        ManageBusinessData.BusinessType.fromName(data.businessType)?.let { com.dashboard.controller.ui.allAddOns.businessAddOnsClick(it, baseActivity, session) }
+        ManageBusinessData.BusinessType.fromName(data.businessType)?.let {
+          com.dashboard.controller.ui.allAddOns.businessAddOnsClick(it, baseActivity, session)
+        }
       }
       RecyclerViewActionType.BUSINESS_UPDATE_CLICK.ordinal -> {
         val data = item as? Specification ?: return
@@ -359,6 +395,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (v) {
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)
+      binding?.btnShowDigitalScore -> baseActivity.startReadinessScoreView(session, 0)
       binding?.btnVisitingCard -> {
         val messageChannelUrl = PreferencesUtils.instance.getData(CHANNEL_SHARE_URL, "")
         if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
