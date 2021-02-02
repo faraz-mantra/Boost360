@@ -81,6 +81,8 @@
             android:layout_height="wrap_content"
             android:buttonTint="@color/colorAccent"
             android:checked="true"
+            android:clickable="false"
+            android:focusable="false"
             android:textColor="@color/black_4a4a4a"
             app:textType="HEADING_6"
             tools:text="via SMS (+91-9876543243)" />
@@ -93,6 +95,9 @@
             android:buttonTint="@color/colorAccent"
             android:textColor="@color/black_4a4a4a"
             app:textType="HEADING_6"
+            android:checked="true"
+            android:clickable="false"
+            android:focusable="false"
             tools:text="via Email (brajmadhav@gmail.com)" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 

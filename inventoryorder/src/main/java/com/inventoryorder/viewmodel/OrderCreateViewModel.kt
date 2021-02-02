@@ -5,11 +5,12 @@ import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 import com.inventoryorder.model.SendMailRequest
-import com.inventoryorder.model.UpdateCancelPropertyRequest
+import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.apointmentData.addRequest.AddAptConsultRequest
 import com.inventoryorder.model.apointmentData.updateRequest.UpdateConsultRequest
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
+import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.rest.repositories.*
@@ -56,6 +57,18 @@ class OrderCreateViewModel : BaseViewModel() {
     return InventoryOrderRepository.cancelOrder(clientId, orderId, cancellingEntity).toLiveData()
   }
 
+  fun markAsDelivered(clientId: String?, orderId: String?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.markAsDelivered(clientId, orderId).toLiveData()
+  }
+
+  fun markCodPaymentDone(clientId: String?, orderId: String?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.markCodPaymentDone(clientId, orderId).toLiveData()
+  }
+
+  fun markAsShipped(clientId: String?, request: MarkAsShippedRequest?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.markAsShipped(clientId, request).toLiveData()
+  }
+
   fun getProductDetails(productId: String?): LiveData<BaseResponse> {
     return ProductOrderRepository.getProductDetails(productId).toLiveData()
   }
@@ -72,8 +85,8 @@ class OrderCreateViewModel : BaseViewModel() {
     return AssuredPurchaseRepository.postOrderInitiate(clientId, request).toLiveData()
   }
 
-  fun updateExtraPropertyOrder(clientId: String?, request: UpdateExtraPropertyRequest?=null,requestCancel: UpdateCancelPropertyRequest?=null): LiveData<BaseResponse> {
-    return AssuredPurchaseRepository.updateExtraPropertyOrder(clientId, request,requestCancel).toLiveData()
+  fun updateExtraPropertyOrder(clientId: String?, request: UpdateExtraPropertyRequest? = null, requestCancel: UpdateOrderNPropertyRequest? = null): LiveData<BaseResponse> {
+    return AssuredPurchaseRepository.updateExtraPropertyOrder(clientId, request, requestCancel).toLiveData()
   }
 
   fun postOrderUpdate(clientId: String?, request: OrderInitiateRequest?): LiveData<BaseResponse> {
@@ -95,12 +108,13 @@ class OrderCreateViewModel : BaseViewModel() {
   fun updateAptConsultData(auth: String?, request: UpdateConsultRequest?): LiveData<BaseResponse> {
     return WebActionBoostRepository.updateAptConsultData(auth, request).toLiveData()
   }
-  fun sendSMS(mobile: String?, message: String?, clientId: String?): LiveData<BaseResponse>{
+
+  fun sendSMS(mobile: String?, message: String?, clientId: String?): LiveData<BaseResponse> {
     return ApiTwoWithFloatRepository.sendSMS(mobile, message, clientId).toLiveData()
   }
 
 
-  fun sendMail(request: SendMailRequest?): LiveData<BaseResponse>{
+  fun sendMail(request: SendMailRequest?): LiveData<BaseResponse> {
     return ProductOrderRepository.sendMail(request).toLiveData()
   }
 }

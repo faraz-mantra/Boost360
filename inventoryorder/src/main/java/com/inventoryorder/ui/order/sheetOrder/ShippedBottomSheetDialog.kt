@@ -2,15 +2,24 @@ package com.inventoryorder.ui.order.sheetOrder
 
 import android.view.View
 import com.framework.base.BaseBottomSheetDialog
+import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
+import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
+import com.framework.utils.DateUtils.getCurrentDate
+import com.framework.utils.DateUtils.parseDate
+import com.framework.utils.ValidationUtils.isMobileNumberValid
 import com.inventoryorder.R
 import com.inventoryorder.databinding.BottomSheetShippedOrderBinding
+import com.inventoryorder.model.orderRequest.shippedRequest.Address
+import com.inventoryorder.model.orderRequest.shippedRequest.DeliveryPersonDetails
+import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.ordersdetails.OrderItem
 
 class ShippedBottomSheetDialog : BaseBottomSheetDialog<BottomSheetShippedOrderBinding, BaseViewModel>() {
 
   private var orderItem: OrderItem? = null
-  var onClicked: () -> Unit = {}
+  private var deliveryProvider: String = MarkAsShippedRequest.ShippedBy.LOCAL_PERSON.value
+  var onClicked: (markAsShippedRequest: MarkAsShippedRequest) -> Unit = {}
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_shipped_order
@@ -26,12 +35,73 @@ class ShippedBottomSheetDialog : BaseBottomSheetDialog<BottomSheetShippedOrderBi
 
   override fun onCreateView() {
     setOnClickListener(binding?.buttonDone, binding?.tvCancel)
+    binding?.localEdtView?.visible()
+    binding?.tvSubTitle?.text = "Order ID #${orderItem?.ReferenceNumber ?: ""}"
+    binding?.radioGroup?.setOnCheckedChangeListener { group, checkedId ->
+      val radioButton: View = group.findViewById(checkedId)
+      deliveryProvider = when (radioButton) {
+        binding?.radioLocal -> {
+          changeUi(true)
+          MarkAsShippedRequest.ShippedBy.LOCAL_PERSON.value
+        }
+        binding?.radioPartner -> {
+          changeUi(false)
+          MarkAsShippedRequest.ShippedBy.SELLER.value
+        }
+        else -> MarkAsShippedRequest.ShippedBy.LOCAL_PERSON.value
+      }
+    }
+  }
+
+  private fun changeUi(isLocal: Boolean) {
+    binding?.localEdtView?.visibility = if (isLocal) View.VISIBLE else View.GONE
+    binding?.partnerEdtView?.visibility = if (!isLocal) View.VISIBLE else View.GONE
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.buttonDone -> dismiss()
+      binding?.buttonDone -> {
+        val request: MarkAsShippedRequest
+        val date = getCurrentDate().parseDate(FORMAT_SERVER_DATE)
+        val address = Address(addressLine1 = orderItem?.BuyerDetails?.address()?.addressLine1(),
+            addressLine2 = orderItem?.BuyerDetails?.address()?.AddressLine2, city = orderItem?.BuyerDetails?.address()?.City,
+            country = orderItem?.BuyerDetails?.address()?.Country, region = orderItem?.BuyerDetails?.address()?.Region,
+            zipcode = orderItem?.BuyerDetails?.address()?.Zipcode)
+        if (deliveryProvider == MarkAsShippedRequest.ShippedBy.LOCAL_PERSON.value) {
+          val name = binding?.tvDeliveryPersonName?.text?.toString() ?: ""
+          val number = binding?.edtNumber?.text?.toString() ?: ""
+          if (name.isEmpty()) {
+            showShortToast("Delivery person name can't be empty.")
+            return
+          }
+          if (number.isEmpty()) {
+            showShortToast("Delivery person number can't be empty.")
+            return
+          }
+          if (!isMobileNumberValid(number)) {
+            showShortToast("Invalid delivery person number.")
+            return
+          }
+          request = MarkAsShippedRequest(orderId = orderItem?._id, shippedOn = date, deliveryProvider = deliveryProvider,
+              deliveryPersonDetails = DeliveryPersonDetails(fullName = name, primaryContactNumber = number, emailId = ""), address = address)
+        } else {
+          val id = binding?.edtConsignmentId?.text?.toString() ?: ""
+          val url = binding?.edtTrackingUrl?.text?.toString() ?: ""
+          if (id.isEmpty()) {
+            showShortToast("Consignment ID name can't be empty.")
+            return
+          }
+          if (url.isEmpty()) {
+            showShortToast("Consignment tracking URL can't be empty.")
+            return
+          }
+          request = MarkAsShippedRequest(orderId = orderItem?._id, shippedOn = date, deliveryProvider = deliveryProvider,
+              trackingNumber = id, trackingURL = url, address = address)
+        }
+        dismiss()
+        onClicked(request)
+      }
       binding?.tvCancel -> dismiss()
     }
   }

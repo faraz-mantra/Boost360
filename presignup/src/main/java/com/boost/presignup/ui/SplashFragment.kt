@@ -32,7 +32,7 @@ class SplashFragment : Fragment() {
         // Inflate the layout for this fragment
         root =  inflater.inflate(R.layout.fragment_splash, container, false)
 
-        root.animation_view.setAnimation(R.raw.splash_globe)
+//        root.animation_view.setAnimation(R.raw.splash_globe)
         root.animation_view.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {
                 Log.d("onAnimationRepeat", "")

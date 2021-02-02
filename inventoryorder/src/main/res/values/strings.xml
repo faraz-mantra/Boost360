@@ -108,7 +108,9 @@
   <string name="copy_video_call_link">Copy video call link</string>
   <string name="open_consultation_window">OPEN CONSULTATION WINDOW</string>
   <string name="appointment_confirmed">Appointment confirmed.</string>
-  <string name="order_confirmed">Order confirmed.</string>
+  <string name="order_confirmed">Order confirmed successfully!</string>
+  <string name="order_payment_done">Payment confirmed successfully!</string>
+  <string name="payment_request_send">Payment reminder sent successfully!</string>
   <string name="time_remaining">Time remaining</string>
   <string name="_00_00_00">00:00:00</string>
   <string name="the_video_consultation_has_been_cancelled">The video consultation has been cancelled</string>
@@ -194,6 +196,7 @@
   <string name="type_the_message_that_you_want_to_include">Type the message that you want to include...</string>
   <string name="boost_will_send_an_email_and_an_sms_feedback_of_their_overall_buying_experiance">Boost will send an email and an SMS to the customer on your behalf, informing them about the order successfully getting delivered and requesting a feedback of their overall buying experience.</string>
   <string name="request_feedback">REQUEST FEEDBACK</string>
+  <string name="confirmed_delivered">Delivered</string>
   <string name="marking_as_shipped">Marking as Shipped</string>
   <string name="order_shipped_via">Order shipped via</string>
   <string name="local_delivery_person">Local Delivery Person</string>
@@ -209,7 +212,10 @@
   <string name="paste_consignment_id">Paste Consignment ID</string>
   <string name="consignment_tracking_url_provided_by_vendor">Consignment tracking URL (provided by vendor)</string>
   <string name="paste_consignment_tracking_url">Paste consignment tracking URL</string>
-  <string name="order_cancel">Order cancel!</string>
+  <string name="order_cancel">Order cancel successfully!</string>
+  <string name="order_shipped">Order shipped successfully!</string>
+  <string name="order_delivery">Order delivery successfully!</string>
   <string name="cancellation_reason_not_update">Cancellation reason not update</string>
+  <string name="include_a_message_optional">Include a Message (optional)</string>
 
 </resources>

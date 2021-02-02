@@ -69,7 +69,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 2020020080
+        versionCode 2020020081
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -141,7 +141,7 @@ android {
             buildConfigField "String", "APXOR_BUNDLED_ID", '"0092e23d-20a6-49b9-82f9-afdc2d4872d3"'
         }
         partone {
-            versionName "5.3.58"
+            versionName "5.3.59"
             applicationId "com.biz2.nowfloats"
             dimension "default"
             buildConfigField "String", "APXOR_BUNDLED_ID", '"cb3f3ca6-524e-4cc8-bab4-62a9c2a51c07"'
@@ -282,8 +282,7 @@ dependencies {
     // Referral Library: invitereferrals
 //    implementation 'com.android.installreferrer:installreferrer:2.2'
     implementation 'com.invitereferrals.invitereferrals:invitereferrals:v29-1.0.5'
-//    implementation files('libs/libraries/AF-Android-SDK.jar')
-
+//    implementation files('libs/libraries/AF-Android-SDK.jar'
     //AppsFlyer SDK
 //    implementation 'com.appsflyer:af-android-sdk:6.1.1'
 //    implementation 'com.android.installreferrer:installreferrer:2.1'
