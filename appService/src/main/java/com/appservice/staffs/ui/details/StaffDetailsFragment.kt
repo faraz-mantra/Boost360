@@ -120,7 +120,9 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 openImagePicker()
             }
             binding?.rlStaffTiming -> {
-                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
+                val bundle = Bundle()
+                bundle.putString(IntentConstant.STAFF_ID.name, staffDetails?.id)
+                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, bundle,clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
             }
             binding?.rlServiceProvided -> {
                 val bundle = Bundle()

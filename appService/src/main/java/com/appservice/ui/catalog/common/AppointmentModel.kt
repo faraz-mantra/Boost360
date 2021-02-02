@@ -7,8 +7,11 @@ import java.io.Serializable
 
 
 data class AppointmentModel(
+        @field:SerializedName("day", alternate = ["Day"])
         var day: String? = null,
-        var timeSlots: ArrayList<TimeSlot>? = null,
+        var isViewEnabled: Boolean? = true,
+        @field:SerializedName("timing", alternate = ["Timing"])
+        var timeSlots: ArrayList<TimeSlot> = arrayListOf(),
         var isDataAppliedOnMyDay: Boolean? = false,
         var isTurnedOn: Boolean = false, var isAppliedOnAllDays: Boolean = false, var isAppliedOnAllDaysViewVisible: Boolean = false, var toTiming: String? = null, var fromTiming: String? = null, var recyclerViewItem: Int = RecyclerViewItemType.SESSION_ITEM_VIEW.getLayout(),
 ) : AppBaseRecyclerViewItem, Serializable {
@@ -28,7 +31,7 @@ data class AppointmentModel(
     private fun isDayTurnedOn() {
         timeSlots = ArrayList()
         this.isTurnedOn = true
-        timeSlots?.add(TimeSlot.getDefaultTimeSlotObject());
+        timeSlots.add(TimeSlot.getDefaultTimeSlotObject());
     }
 
     fun applyOnAllDays(startTime: String, endTime: String) {
@@ -39,7 +42,7 @@ data class AppointmentModel(
     }
 
     fun deleteSession(sessionIndex: Int) {
-        timeSlots?.removeAt(sessionIndex)
+        timeSlots.removeAt(sessionIndex)
 
     }
 
@@ -52,16 +55,16 @@ data class AppointmentModel(
 
     private fun isDayTurnedOff() {
         this.isTurnedOn = false
-        timeSlots?.clear()
+        timeSlots.clear()
 
     }
 
     fun addSession() {
-        timeSlots?.add(TimeSlot())
+        timeSlots.add(TimeSlot())
     }
 
     fun removeSession(index: Int){
-        timeSlots?.removeAt(index);
+        timeSlots.removeAt(index);
     }
 
     fun removeApplyOnAllDays(data: AppointmentModel) {
@@ -85,14 +88,6 @@ data class AppointmentModel(
     }
 }
 
-data class TimingsItem(
-
-        @field:SerializedName("time")
-        val time: TimeSlot? = null,
-
-        @field:SerializedName("day")
-        val day: String? = null,
-)
 
 data class TimeSlot(
 
