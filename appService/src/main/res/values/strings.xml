@@ -374,7 +374,10 @@
   <string name="toolbar_schedule_breaks">Scheduled Breaks</string>
   <string name="toolbar_staff_details">Staff Details</string>
     <string name="search_staff">Search Staff</string>
-    <array name="stock_availbility">
+    <string name="staff_timing_add">Adding staff timing...</string>
+  <string name="staff_timings_added">staff timings added</string>
+  <string name="staff_timings">STAFF_TIMINGS</string>
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
 
