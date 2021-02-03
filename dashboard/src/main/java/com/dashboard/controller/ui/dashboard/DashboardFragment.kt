@@ -568,7 +568,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun showSimmer(isSimmer: Boolean) {
-    binding?.mainContent?.post {
+    binding?.mainContent?.apply {
       if (isSimmer) {
         binding?.progressSimmer?.parentShimmerLayout?.visible()
         binding?.progressSimmer?.parentShimmerLayout?.startShimmer()
