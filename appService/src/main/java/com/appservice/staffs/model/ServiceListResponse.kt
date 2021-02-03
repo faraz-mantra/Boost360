@@ -10,10 +10,10 @@ import java.io.Serializable
 data class ServiceListResponse(
 
 		@field:SerializedName("StatusCode")
-		val statusCode: Int? = null,
+		var statusCode: Int? = null,
 
 		@field:SerializedName("Result")
-		val result: ResultService? = null
+		var result: ResultService? = null,
 ) : BaseResponse(), AppBaseRecyclerViewItem {
     override fun getViewType(): Int {
         return R.layout.recycler_item_service
@@ -23,11 +23,17 @@ data class ServiceListResponse(
 data class ResultService(
 
 		@field:SerializedName("Paging")
-		val paging: PagingService? = null,
+		var paging: PagingService? = null,
 
 		@field:SerializedName("Data")
-		val data: List<DataItemService?>? = null
-)
+		var data: List<DataItemService?>? = null,
+
+
+		) {
+	fun getSelectedServicesCount(): Int {
+		return this.data?.size ?: 0
+	}
+}
 
 data class PagingService(
 
@@ -78,9 +84,12 @@ data class DataItemService(
 
 		@field:SerializedName("TileImage")
 		val tileImage: String? = null,
-		var recyclerViewItem: Int = RecyclerViewItemType.SERVICE_ITEM_VIEW.getLayout()
-) : AppBaseRecyclerViewItem,Serializable {
-    override fun getViewType(): Int {
-        return recyclerViewItem
-    }
+		var recyclerViewItem: Int = RecyclerViewItemType.SERVICE_ITEM_VIEW.getLayout(),
+
+		) : AppBaseRecyclerViewItem, Serializable {
+	override fun getViewType(): Int {
+		return recyclerViewItem
+	}
+
+
 }
