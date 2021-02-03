@@ -107,7 +107,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onResume() {
     super.onResume()
     if (getDrScoreData()?.drs_segment.isNullOrEmpty()) readDrScoreDocument()
-    getDrScoreData()?.let { refreshData(it) }
+    refreshData(getDrScoreData())
   }
 
   private fun getPremiumBanner() {
@@ -127,24 +127,20 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           setDataMarketBanner(marketBannerFilter)
         }
       }
-      hideProgress()
-      (baseActivity as? DashboardActivity)?.isLoadShimmer = false
-      saveFirstLoad()
     })
   }
 
-  private fun refreshData(drScoreData: DrScoreModel) {
+  private fun refreshData(drScoreData: DrScoreModel?) {
     setDrScoreData(drScoreData)
-    (baseActivity as? DashboardActivity)?.setPercentageData(drScoreData.getDrsTotal())
+    (baseActivity as? DashboardActivity)?.setPercentageData(drScoreData?.getDrsTotal()?:0)
     setUserData()
     setBusinessManageTask()
     getNotificationCount()
-    setDataSellerSummary(drScoreData.getDrsTotal(), OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
+    setDataSellerSummary(drScoreData?.getDrsTotal()?:0, OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
   }
 
-  private fun setDrScoreData(drScoreData: DrScoreModel) {
-    val isHigh = (drScoreData.getDrsTotal() >= 80)
-    if (isHigh.not()) {
+  private fun setDrScoreData(drScoreData: DrScoreModel?) {
+    if (drScoreData!=null && (drScoreData.getDrsTotal() >= 80).not()) {
       viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
         val response = it as? DrScoreUiDataResponse
         if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
@@ -253,6 +249,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
             val response4 = it3 as? VisitsModelResponse
             session?.mapVisitsCount = response4?.getTotalCount() ?: "0"
             setDataSellerSummary(getDrScoreData()?.getDrsTotal() ?: 0, response1?.Data, response2?.getSummary(), response3)
+            hideProgress()
+            (baseActivity as? DashboardActivity)?.isLoadShimmer = false
+            saveFirstLoad()
           })
         })
       })
@@ -609,14 +608,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun showSimmer(isSimmer: Boolean) {
-    binding?.mainContent?.post {
+    binding?.mainContent?.apply {
       if (isSimmer) {
         binding?.progressSimmer?.parentShimmerLayout?.visible()
         binding?.progressSimmer?.parentShimmerLayout?.startShimmer()
         binding?.nestedScrollView?.gone()
       } else {
-        binding?.progressSimmer?.parentShimmerLayout?.gone()
         binding?.nestedScrollView?.visible()
+        binding?.progressSimmer?.parentShimmerLayout?.gone()
         binding?.progressSimmer?.parentShimmerLayout?.stopShimmer()
       }
     }

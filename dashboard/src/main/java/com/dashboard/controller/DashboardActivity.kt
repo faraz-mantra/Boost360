@@ -102,7 +102,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     getWelcomeData()
     initialize()
 
-    session?.let { initData(it.fpTag!!, it.fPID!!) }
+    session?.let { initData(it.fpTag!!, it.fPID!!, clientId) }
   }
 
   private fun initialize() {
