@@ -88,6 +88,9 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         when {
             isEdit!! -> updatePreviousData()
         }
+        if (staffDetails == null) {
+            staffDetails = StaffDetailsResult()
+        }
     }
 
     private fun updatePreviousData() {
@@ -172,7 +175,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
     private fun updateStaffImage() {
         showProgress(getString(R.string.uploading_image))
-        viewModel?.updateStaffImage(StaffUpdateImageRequest(staffDetails?.id, staffImage))?.observe(viewLifecycleOwner, Observer {
+        viewModel?.updateStaffImage(StaffUpdateImageRequest(staffDetails?.id, staffImage))?.observeOnce(viewLifecycleOwner, Observer {
             when (it.status) {
                 200 -> {
                 }
@@ -187,9 +190,9 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     private fun updateStaffProfile() {
         val staffGender = binding?.spinnerGender?.selectedItem.toString()
         viewModel?.updateStaffProfile(
-                StaffProfileUpdateRequest(isAvailable, serviceListId, staffGender, UserSession.fpId, name = staffName, staffDescription,
+                StaffProfileUpdateRequest(isAvailable, staffDetails?.serviceIds, staffGender, UserSession.fpId, name = staffName, staffDescription,
                         experience = yearOfExperience.toInt(), staffDetails?.id, staffAge, specializationList
-                ))?.observe(viewLifecycleOwner, Observer { t ->
+                ))?.observeOnce(viewLifecycleOwner, Observer { t ->
             when (t.status) {
                 200 -> {
                     updateStaffTimings()
@@ -260,13 +263,16 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     }
 
     private fun createStaffProfile() {
+        showProgress(getString(R.string.profile_created))
         viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, Observer { t ->
+            hideProgress()
             when (t.status) {
                 200 -> {
                     showShortToast(getString(R.string.profile_created))
                     // get the id from result
 //                    addStaffTimings()
-                    addStaffTimings()
+
+                    addStaffTimings((t as StaffCreateProfileResponse).result)
                 }
                 else -> {
                     showShortToast(getString(R.string.something_went_wrong))
@@ -277,12 +283,12 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
 
     private fun updateStaffTimings() {
-        if (staffDetails?.timings == null && isTimingUpdated == true) {
+        if (staffDetails?.timings == null && isTimingUpdated == null || isTimingUpdated == false) {
             finishAndGoBack();
             return;
         }
-        showProgress(getString(R.string.staff_timing_add))
-        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id, this.staffDetails?.timings!!))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+        showProgress(getString(R.string.staff_timings_updating))
+        viewModel?.updateStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id, this.staffDetails?.timings!!))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
             hideProgress()
             when (it.status) {
                 200 -> {
@@ -298,8 +304,10 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
 
     private fun finishAndGoBack() {
-        baseActivity.setResult(AppCompatActivity.RESULT_OK)
-        baseActivity.finish()
+        val intent = Intent();
+        intent.putExtra(IntentConstant.STAFF_DATA.name, staffDetails);
+        requireActivity().setResult(AppCompatActivity.RESULT_OK, intent);
+        requireActivity().finish();
     }
 
     private fun imageToByteArray(): ByteArray {
@@ -309,13 +317,14 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         return byteArrayOutStream.toByteArray()
     }
 
-    private fun addStaffTimings() {
+    private fun addStaffTimings(staffId: String?) {
         if (staffDetails?.timings == null) {
             finishAndGoBack();
             return;
         }
         showProgress(getString(R.string.staff_timing_add))
-        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id, staffDetails?.timings))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id
+                ?: staffId, staffDetails?.timings))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
             hideProgress()
             when (it.status) {
                 200 -> {
@@ -361,13 +370,14 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 this.servicesList?.clear()
                 this.servicesList = data!!.extras!![IntentConstant.STAFF_SERVICES.name] as ArrayList<DataItemService>
                 servicesList?.forEach { dataItem -> serviceListId?.add(dataItem.id!!) }
+                if (staffDetails?.serviceIds == null) staffDetails?.serviceIds = arrayListOf()
                 staffDetails?.serviceIds = servicesList?.map { it.id }
-                binding!!.ctvServices.text = (servicesList?.map { it.name })?.joinToString(" ,", limit = 5, truncated = "5 more")
+                binding!!.ctvServices.text = (servicesList?.map { it.name })?.joinToString(", ", limit = 5, truncated = "5 more")
                 showHideServicesText()
             }
             requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
                 this.staffDetails = data!!.extras!![IntentConstant.STAFF_TIMINGS.name] as StaffDetailsResult
-                this.staffDetails?.timings?.map { it.day }?.joinToString(", ")
+                binding?.ctvTiming?.text = staffDetails?.timings?.map { it.day }?.joinToString(" ,")
                 showHideTimingText()
                 isTimingUpdated = true
             }

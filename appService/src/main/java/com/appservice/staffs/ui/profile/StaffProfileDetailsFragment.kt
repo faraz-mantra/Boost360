@@ -1,6 +1,5 @@
 package com.appservice.staffs.ui.profile
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
@@ -25,7 +24,6 @@ import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.common.AppointmentModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
-import com.webengage.sdk.android.WebEngage.getApplicationContext
 
 
 class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBinding, StaffViewModel>(), RecyclerItemClickListener {
@@ -137,7 +135,14 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
             binding!!.ctvEdit -> {
                 val bundle = Bundle()
                 bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
-                startStaffFragmentActivity(FragmentType.STAFF_DETAILS_FRAGMENT, bundle, false, isResult = false)
+                startStaffFragmentActivity(
+                        requireActivity(),
+                        FragmentType.STAFF_DETAILS_FRAGMENT,
+                        bundle,
+                        false,
+                        isResult = true,
+                        Constants.STAFF_PROFILE_UPDATED_DATA
+                )
 
             }
             binding!!.ctvEditLeaves -> {
@@ -226,7 +231,12 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
             requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
                 val resultTimings = data!!.extras!![IntentConstant.STAFF_TIMINGS.name] as ArrayList<AppointmentModel>
                 staffDetails?.timings = resultTimings
-
+                updateStaffTimings()
+            }
+            requestCode == Constants.STAFF_PROFILE_UPDATED_DATA && resultCode == AppCompatActivity.RESULT_OK -> {
+                val staffDetailsResult = data!!.extras!![IntentConstant.STAFF_DATA.name] as StaffDetailsResult
+                this.staffDetails = staffDetailsResult
+                setData()
 
             }
         }

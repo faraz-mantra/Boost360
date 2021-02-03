@@ -6,5 +6,6 @@ object Constants {
     const val REQUEST_CODE_SERVICES_PROVIDED = 786
     const val REQUEST_CODE_SCHEDULED_BREAK = 787
     const val REQUEST_CODE_STAFF_TIMING = 788
+    const val STAFF_PROFILE_UPDATED_DATA = 763
 
 }
