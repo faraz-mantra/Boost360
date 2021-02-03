@@ -384,7 +384,9 @@
     <string name="staff_timings_updated">Staff Timings Updated</string>
   <string name="staff_timings_unable_to_update">Staff Timings Unable to Update</string>
     <string name="staff_timings_updating">Updating Staff Timings...</string>
-    <array name="stock_availbility">
+    <string name="start_end_can_not_be_same">Start Time and End Time can not be same</string>
+  <string name="time_slots_gap">Two time slots must have gap of 30 Min</string>
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
 

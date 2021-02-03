@@ -2,6 +2,7 @@ package com.appservice.ui.catalog.common
 
 import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -126,6 +127,17 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
 
     fun isValid(): Boolean {
         //todo this portion is left
+        this.defaultTimings.forEachIndexed { index, appointmentModel -> appointmentModel.timeSlots.forEach {  timeSlot ->
+            if (timeSlot.from==timeSlot.to){
+                showLongToast(getString(R.string.start_end_can_not_be_same))
+                return false
+            }
+            if (appointmentModel.timeSlots[index].to==appointmentModel.timeSlots[index+1].from){
+                showLongToast(getString(R.string.time_slots_gap))
+                return false
+            }
+        }
+        }
         staffData?.timings = this.defaultTimings
         return true
     }
