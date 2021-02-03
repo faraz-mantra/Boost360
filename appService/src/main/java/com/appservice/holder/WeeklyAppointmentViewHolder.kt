@@ -68,21 +68,18 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
             binding.llTimeSlot.removeAllViewsInLayout();
         } else {
             for (item in data.timeSlots) {
-                item.from = TimeSlot.getDefaultTimeSlotObject().from
-                item.to = TimeSlot.getDefaultTimeSlotObject().to
                 binding.llTimeSlot.addView(getTimeSlotView(item));
             }
         }
     }
 
     private fun getTimeSlotView(timeSlot: TimeSlot): View {
-        timeSlot.from
         val itemView = LayoutInflater.from(binding.llTimeSlot.context).inflate(R.layout.item_time_slot, null, false);
         val fromSpinner = itemView.findViewById(R.id.spinner_start_timing) as AppCompatSpinner
         val toSpinner = itemView.findViewById(R.id.spinner_end_timing) as AppCompatSpinner
+        sessionTimingHandler(fromSpinner, timeSlot, toSpinner)
         fromSpinner.setSelection(businessHours.indexOf(element =timeSlot.from))
         toSpinner.setSelection(businessHours.indexOf(element= timeSlot.to))
-        sessionTimingHandler(fromSpinner, timeSlot, toSpinner)
         return itemView;
     }
 

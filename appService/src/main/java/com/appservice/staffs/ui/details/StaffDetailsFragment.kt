@@ -94,6 +94,8 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         binding?.etvStaffDescription?.setText(staffDetails?.description.toString())
         binding?.spinnerGender?.setSelection(genderArray.toList().indexOf(staffDetails?.gender))
         binding?.cetAge?.setText(staffDetails?.age.toString())
+        showHideTImingText()
+        showHideServicesText()
         binding?.ctvTiming?.text = staffDetails?.timings?.map { it?.day }?.joinToString(" ,")
         if (specialisations?.isNullOrEmpty() == false)
             binding?.etvSpecialization?.setText(specialisations[0]?.value)
@@ -101,6 +103,20 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         binding?.btnSave?.text = getString(R.string.update)
         binding?.toggleIsAvailable?.isOn = staffDetails?.isAvailable!!
         if (resultCode != AppCompatActivity.RESULT_OK) setServicesList()
+    }
+
+    private fun showHideTImingText() {
+        when (staffDetails?.timings?.size ?: 0 > 0) {
+            true -> binding?.ctvTiming?.visibility = View.VISIBLE
+            else -> binding?.ctvTiming?.visibility = View.GONE
+        }
+    }
+
+    private fun showHideServicesText() {
+        when (staffDetails?.serviceIds?.size ?: 0 > 0) {
+            true -> binding?.ctvServices?.visibility = View.VISIBLE
+            else -> binding?.ctvServices?.visibility = View.GONE
+        }
     }
 
     private fun openExperienceDetail() {
@@ -300,6 +316,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 servicesList?.forEach { dataItem -> servicesName.add(dataItem.name!!) }
                 servicesList?.forEach { dataItem -> serviceListId?.add(dataItem.id!!) }
                 binding!!.ctvServices.text = servicesName.joinToString(" ,", limit = 5, truncated = "5 more")
+                showHideServicesText()
             }
             requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
             }
@@ -322,6 +339,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                             val servicesProvided = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
                             servicesProvided.forEach { itemService -> serviceName.add(itemService.name!!) }
                             binding!!.ctvServices.text = serviceName.joinToString(" ,", limit = 5, truncated = "5 more")
+                            showHideServicesText()
                         }
                     }
                     else -> {

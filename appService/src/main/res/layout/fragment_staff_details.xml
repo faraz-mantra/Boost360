@@ -70,7 +70,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/open_sans"
                             android:text="@string/staff_member_name"
-                            android:textColor="@color/black_4a4a4a"
+                            android:textColor="@color/black"
                                 android:textStyle="normal"
                                 app:textType="BODY_1" />
 
@@ -290,6 +290,7 @@
                             android:id="@+id/ctv_services"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:layout_below="@id/ctv_services_subheading"
                             android:layout_gravity="center_vertical"
                             android:layout_marginTop="@dimen/size_8"
@@ -397,8 +398,8 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/ctv_timing_subheading"
                             android:layout_gravity="center_vertical"
-                            tools:text="dasadasdsadsa"
                             android:layout_marginTop="@dimen/size_8"
+                            android:visibility="gone"
                             android:fontFamily="@font/open_sans"
                             android:textColor="@color/blue_4a90e2"
                             android:textFontWeight="600"
