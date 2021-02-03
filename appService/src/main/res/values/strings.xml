@@ -229,7 +229,6 @@
   <string name="year_of_experience">Year of Experience</string>
   <string name="edit"><u>EDIT</u></string>
   <string name="special">Specialization</string>
-  <string name="staff_timing">Staff Timing</string>
   <string name="upcoming_leaves">Upcoming Leaves</string>
   <string name="upcoming_leave_s">Upcoming Leave(s)</string>
     <string name="confirm_services">CONFIRM 0 SERVICES</string>
@@ -380,7 +379,9 @@
   <string name="uploading_image">Uploading Image</string>
     <string name="weekly_schedule">Weekly Schedule</string>
   <string name="staff_will_available_for_clients">Time the staff will be available for the clients.</string>
-  <array name="stock_availbility">
+    <string name="staff_timing">Staff Timing</string>
+    <string name="updated">Updated Successfully</string>
+    <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
 
