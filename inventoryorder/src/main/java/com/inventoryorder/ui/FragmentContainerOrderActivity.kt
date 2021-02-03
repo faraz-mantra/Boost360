@@ -147,8 +147,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ALL_ORDER_VIEW -> resources.getString(R.string.orders)
       FragmentType.ALL_APPOINTMENT_VIEW -> resources.getString(R.string.appointments)
       FragmentType.ALL_VIDEO_CONSULT_VIEW -> resources.getString(R.string.video_consultation)
+      FragmentType.APPOINTMENT_DETAIL_VIEW -> getString(R.string.appointment_details)
       FragmentType.ORDER_DETAIL_VIEW,
-      FragmentType.APPOINTMENT_DETAIL_VIEW,
       FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
       -> "# XXXXXXX"
       FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking)
@@ -295,12 +295,13 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   }
 
   override fun onBackPressed() {
-    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData() ?: bookingSuccessfulFragment?.getBundleData()
+    //TODO : uncomment after new UI implementation
+   /* val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData() ?: bookingSuccessfulFragment?.getBundleData()
     bundle?.let {
       val intent = Intent()
       intent.putExtra(IntentConstant.RESULT_DATA.name, it)
       setResult(RESULT_OK, intent)
-    }
+    }*/
     super.onBackPressed()
   }
 }
