@@ -13,7 +13,6 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentStaffProfileBinding
-import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.model.*
@@ -24,12 +23,12 @@ import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.common.AppointmentModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
+import com.framework.views.customViews.CustomTextView
 
 
 class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBinding, StaffViewModel>(), RecyclerItemClickListener {
     private  var serviceIds: ArrayList<String>? = null
     private var staffDetails: StaffDetailsResult? = null
-    var serviceAdapter: AppBaseRecyclerViewAdapter<ServiceTimingModel>? = null
     override fun getLayout(): Int {
         return R.layout.fragment_staff_profile
     }
@@ -59,6 +58,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
             when (t.status) {
                 200 -> {
                     showShortToast(getString(R.string.updated))
+                    setData()
                 }
                 else -> {
                     showShortToast(getString(R.string.something_went_wrong))
@@ -88,7 +88,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
                     let { activity?.glideLoad(binding?.civStaffProfileImg!!, staffDetails?.image.toString(), R.drawable.placeholder_image) }
                     binding?.ctvSpecialization?.text = staffDetails?.specialisations?.get(0)?.value
                     fetchServices()
-                    fetchTimings()
+                    setTimings()
                 }
                 else -> {
 
@@ -99,12 +99,20 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
 
     }
 
-    private fun fetchTimings() {
+    private fun setTimings() {
+        staffDetails?.timings?.forEach {
+            binding?.llTimingContainer?.addView(getTimeView(it))
+        }
+    }
 
+    private fun getTimeView(appointmentModel: AppointmentModel): View {
+        val itemView = LayoutInflater.from(binding?.llTimingContainer?.context).inflate(R.layout.recycler_item_service_timing, null, false);
+        val timeTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
+        timeTextView.text = "${appointmentModel.day}${appointmentModel.timeSlots.joinToString(", ").removeSurrounding("[", "]")}"
+        return itemView;
     }
 
     private fun fetchServices() {
-        var servicesList: ArrayList<ServiceTimingModel>? = null
         viewModel?.getServiceListing(ServiceListRequest(
                 filterBy = FilterBy("ALL", 0, 0), category = "", floatingPointTag = UserSession.fpId))?.observeOnce(viewLifecycleOwner, { response ->
             when (response.status) {
@@ -113,10 +121,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
                     if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
                         val servicesProvided = data?.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
                         this.serviceIds = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<String>
-                        if (servicesList == null) servicesList = arrayListOf()
-                        servicesProvided.forEach { itemService -> servicesList?.add(ServiceTimingModel(itemService.name!!)) }
-                        this.serviceAdapter = AppBaseRecyclerViewAdapter(baseActivity, servicesList as ArrayList<ServiceTimingModel>)
-                        binding?.rvServices?.adapter = serviceAdapter
+                        setServices(servicesProvided.map { it.name })
                     }
 
                 }
@@ -124,6 +129,20 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
                 }
             }
         })
+    }
+
+    private fun setServices(map: List<String?>) {
+        binding?.llServices?.removeAllViews()
+        map.forEach {
+            binding?.llServices?.addView(getServiceView(it))
+        }
+    }
+
+    private fun getServiceView(services: String?): View {
+        val itemView = LayoutInflater.from(binding?.llTimingContainer?.context).inflate(R.layout.recycler_item_service_timing, null, false);
+        val timeTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
+        timeTextView.text = services
+        return itemView;
     }
 
     override fun onClick(v: View) {
@@ -157,19 +176,19 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
             }
             binding!!.ctvEditTiming -> {
                 val bundle = Bundle()
-                if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
-                    bundle.putSerializable(IntentConstant.STAFF_TIMINGS.name, staffDetails?.timings as ArrayList<AppointmentModel>)
-                }
+                    bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
                 startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
 
             }
         }
     }
-     fun updateStaffTimings(){
+
+    private fun updateStaffTimings() {
         viewModel?.updateStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id, staffDetails?.timings))?.observeOnce(viewLifecycleOwner, Observer {
             when (it.status) {
                 200 -> {
                     showShortToast(getString(R.string.staff_timings_updated))
+                    setTimings()
                 }
                 else -> {
                     showShortToast(getString(R.string.staff_timings_unable_to_update))
@@ -221,17 +240,15 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
         super.onActivityResult(requestCode, resultCode, data)
         when {
             requestCode == Constants.REQUEST_CODE_SERVICES_PROVIDED && resultCode == AppCompatActivity.RESULT_OK -> {
-                val service: ArrayList<ServiceTimingModel> = arrayListOf()
                 val resultServices = data!!.extras!![IntentConstant.STAFF_SERVICES.name] as ArrayList<DataItemService>
-                resultServices.forEach { itemService -> service.add(ServiceTimingModel(itemService.name!!)) }
                 staffDetails?.serviceIds = resultServices.map { it.id }
-                serviceAdapter?.updateList(service)
                 updateStaffProfile()
             }
             requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
-                val resultTimings = data!!.extras!![IntentConstant.STAFF_TIMINGS.name] as ArrayList<AppointmentModel>
-                staffDetails?.timings = resultTimings
+                val result = data!!.extras!![IntentConstant.STAFF_TIMINGS.name] as StaffDetailsResult
+                staffDetails?.timings = result.timings
                 updateStaffTimings()
+
             }
             requestCode == Constants.STAFF_PROFILE_UPDATED_DATA && resultCode == AppCompatActivity.RESULT_OK -> {
                 val staffDetailsResult = data!!.extras!![IntentConstant.STAFF_DATA.name] as StaffDetailsResult

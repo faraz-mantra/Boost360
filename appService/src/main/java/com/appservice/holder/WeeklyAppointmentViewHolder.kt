@@ -31,7 +31,7 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
             false -> binding.layoutSessionCreate.visibility = View.GONE
             true -> binding.layoutSessionCreate.visibility = View.VISIBLE
         }
-        when (data.isDataAppliedOnMyDay!! && data.isTurnedOn) {
+        when (data.isDataAppliedOnMyDay!! && data.isTurnedOn!!) {
             true -> binding.layoutSessionCreate.visibility = View.GONE
         }
         when (data.isDataAppliedOnMyDay) {
@@ -39,12 +39,12 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
         }
         binding.ctvTitleDay.text = "${data.day}"
 
-        binding.toggleOnOff.isOn = data.isTurnedOn
+        binding.toggleOnOff.isOn = data.isTurnedOn!!
         binding.toggleOnOff.setOnToggledListener { _, isOn ->
             data.changeDayTurned(isOn)
             listener?.onItemClick(position, data, RecyclerViewActionType.TOGGLE_STATE_CHANGED.ordinal)
         }
-        binding.ccbAllDay.isChecked = data.isAppliedOnAllDays
+        binding.ccbAllDay.isChecked = data.isAppliedOnAllDays!!
         binding.ccbAllDay.setOnCheckedChangeListener { _, isChecked ->
             data.isAppliedOnAllDays = isChecked
             listener?.onItemClick(position, data, RecyclerViewActionType.CHECK_BOX_APPLY_ALL.ordinal)
@@ -63,7 +63,7 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
     }
 
 
-    public fun addTimeSlots(data: AppointmentModel) {
+    fun addTimeSlots(data: AppointmentModel) {
         if (data.timeSlots.isNullOrEmpty()) {
             binding.llTimeSlot.removeAllViewsInLayout();
         } else {
