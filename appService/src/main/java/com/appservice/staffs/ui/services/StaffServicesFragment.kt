@@ -1,34 +1,32 @@
 package com.appservice.staffs.ui.services
 
 import android.content.Intent
-import android.os.Bundle
 import android.text.Html
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentSelectServicesBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.model.*
-import com.appservice.staffs.ui.Constants
 import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import kotlinx.android.synthetic.main.fragment_kyc_details.*
 import java.util.*
-import kotlin.collections.ArrayList
 
-class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, StaffViewModel>(), RecyclerItemClickListener {
+class StaffServicesFragment() : AppBaseFragment<FragmentSelectServicesBinding, StaffViewModel>(), RecyclerItemClickListener {
+    private var isEdit: Boolean? = null
     lateinit var data: List<DataItemService?>
-    private var listservices: ArrayList<DataItemService> = ArrayList()
+    var adapter: AppBaseRecyclerViewAdapter<DataItemService>? = null
+    private var listServices: ArrayList<DataItemService>? = null
+    private var serviceIds: ArrayList<String>? = null
 
     companion object {
         fun newInstance(): StaffServicesFragment {
-            val args = Bundle()
-            val fragment = StaffServicesFragment()
-            fragment.arguments = args
-            return fragment
+            return StaffServicesFragment()
         }
     }
 
@@ -42,7 +40,17 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
 
     override fun onCreateView() {
         init()
+        getBundleData()
+
     }
+
+    private fun getBundleData() {
+        if (listServices == null) listServices = arrayListOf()
+        serviceIds = (arguments?.getSerializable(IntentConstant.STAFF_SERVICES.name) as? ArrayList<String>)
+        isEdit = (serviceIds != null && serviceIds?.isNullOrEmpty()?.not()!!)
+
+    }
+
 
     private fun fetchServices() {
         showProgress("Loading...")
@@ -53,7 +61,21 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
             data = (it as ServiceListResponse).result!!.data!!
             binding!!.ctvServicesCountTitle.text = "0/${data.size} service selected"
             binding!!.ctvServicesCount.text = getString(R.string.confirm_services)
-            binding?.rvServiceProvided?.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data as ArrayList<DataItemService>, itemClickListener = this@StaffServicesFragment)
+            this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data as ArrayList<DataItemService>, itemClickListener = this@StaffServicesFragment)
+            binding?.rvServiceProvided?.adapter = adapter
+            when {
+                isEdit!! -> {
+                    data.forEach { datum ->
+                        if (serviceIds?.contains(datum?.id) == true) {
+                            datum?.isChecked = true
+                            listServices?.add(datum!!)
+                        }
+                    }
+                }
+            }
+            setServiceCount()
+            adapter?.notifyDataSetChanged()
+
         })
     }
 
@@ -75,14 +97,18 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
             }
         }
         when (dataItem.isChecked) {
-            true -> listservices.add(dataItem)
-            false -> listservices.remove(dataItem)
+            true -> listServices?.add(dataItem)
+            false -> listServices?.remove(dataItem)
         }
-        val serviceCount = "${listservices.size}/${data.size} services selected"
-        val serviceConfirm = "CONFIRM ${listservices.size} SERVICES"
+        setServiceCount()
+
+    }
+
+    private fun setServiceCount() {
+        val serviceCount = "${listServices?.size}/${data.size} services selected"
+        val serviceConfirm = "CONFIRM ${listServices?.size} SERVICES"
         binding!!.ctvServicesCountTitle.text = serviceCount
         binding!!.ctvServicesCount.text = serviceConfirm
-
     }
 
     override fun onClick(v: View) {
@@ -90,9 +116,9 @@ class StaffServicesFragment : AppBaseFragment<FragmentSelectServicesBinding, Sta
         when (v) {
             binding!!.flConfirmServices -> {
                 when {
-                    listservices.size > 0 -> {
+                    listServices?.size!! > 0 -> {
                         val intent = Intent();
-                        intent.putExtra(Constants.SERVICES_LIST, listservices);
+                        intent.putExtra(IntentConstant.STAFF_SERVICES.name, listServices);
                         requireActivity().setResult(AppCompatActivity.RESULT_OK, intent);
                         requireActivity().finish();
                     }

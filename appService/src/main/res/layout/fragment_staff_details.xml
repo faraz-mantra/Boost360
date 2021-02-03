@@ -49,7 +49,7 @@
                         android:textColor="@color/blue_4a90e2"
                         android:textFontWeight="600"
                         app:textAllCaps="true"
-                        app:textType="BODY_1" />
+                        app:textType="SUBHEADING_2" />
                 </FrameLayout>
 
                 <LinearLayout
@@ -66,13 +66,8 @@
                         android:orientation="vertical">
 
                         <com.framework.views.customViews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/open_sans"
-                            android:text="@string/staff_member_name"
-                            android:textColor="@color/black_4a4a4a"
-                                android:textStyle="normal"
-                                app:textType="BODY_1" />
+                            style="@style/TextStaffHeading"
+                            android:text="@string/staff_member_name" />
 
                         <com.framework.views.customViews.CustomEditText
                             android:id="@+id/etv_name"
@@ -105,13 +100,8 @@
                             app:layout_constraintWidth_percent="0.48">
 
                             <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans"
-                                android:text="@string/select_gender"
-                                android:textColor="@color/black_4a4a4a"
-                                android:textStyle="normal"
-                                app:textType="BODY_1" />
+                                style="@style/TextStaffHeading"
+                                android:text="@string/select_gender" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
                                 android:id="@+id/spinner_gender"
@@ -132,13 +122,8 @@
                             app:layout_constraintWidth_percent="0.45">
 
                             <com.framework.views.customViews.CustomTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans"
-                                android:text="@string/age"
-                                android:textColor="@color/black_4a4a4a"
-                                android:textStyle="normal"
-                                app:textType="BODY_1" />
+                                style="@style/TextStaffHeading"
+                                android:text="@string/age" />
 
                             <com.framework.views.customViews.CustomTextField
                                 android:id="@+id/cet_age"
@@ -164,14 +149,8 @@
                         android:orientation="vertical">
 
                         <com.framework.views.customViews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/size_5"
-                            android:fontFamily="@font/open_sans"
-                            android:text="@string/specialization"
-                            android:textColor="@color/black_4a4a4a"
-                            android:textStyle="normal"
-                            app:textType="BODY_1" />
+                            style="@style/TextStaffHeading"
+                            android:text="@string/specialization" />
 
                         <com.framework.views.customViews.CustomEditText
                             android:id="@+id/etv_specialization"
@@ -195,24 +174,18 @@
                         android:orientation="vertical">
 
                         <com.framework.views.customViews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/size_5"
-                            android:fontFamily="@font/open_sans"
-                            android:text="@string/staff_description_optional"
-                            android:textColor="@color/black_4a4a4a"
-                            android:textStyle="normal"
-                            app:textType="BODY_1" />
+                            style="@style/TextStaffHeading"
+                            android:text="@string/staff_description_optional" />
 
                         <com.framework.views.customViews.CustomTextField
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="start"
+                            android:layout_marginTop="@dimen/size_5"
                             android:background="@drawable/bg_rect_edit_txt"
                             android:hint="@string/describe_this_staff_in_around_2000_characters_at_max"
                             android:inputType="textMultiLine"
-                            android:maxHeight="@dimen/size_240"
-                            android:minHeight="@dimen/size_120"
+                            android:minLines="2"
                             android:id="@+id/etv_staff_description"
                             android:padding="@dimen/size_12"
                             android:singleLine="false"
@@ -226,14 +199,8 @@
                         android:orientation="vertical">
 
                         <com.framework.views.customViews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/size_5"
-                            android:fontFamily="@font/open_sans"
-                            android:text="@string/years_of_experience"
-                            android:textColor="@color/black_4a4a4a"
-                            android:textStyle="normal"
-                            app:textType="BODY_1" />
+                            style="@style/TextStaffHeading"
+                            android:text="@string/years_of_experience" />
 
                         <com.framework.views.customViews.CustomTextField
                             android:id="@+id/edt_experience"
@@ -264,15 +231,8 @@
 
                         <com.framework.views.customViews.CustomTextView
                             android:id="@+id/ctv_service_provided_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/size_5"
-                            android:fontFamily="@font/open_sans"
-                            android:maxLines="1"
+                            style="@style/TextStaffHeading"
                             android:text="@string/services_provided"
-                            android:textColor="@color/black_4a4a4a"
-                            android:textStyle="normal"
-                            app:textType="BODY_1"
                             tools:ignore="RelativeOverlap" />
 
                         <com.framework.views.customViews.CustomTextView
@@ -290,6 +250,7 @@
                             android:id="@+id/ctv_services"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:layout_below="@id/ctv_services_subheading"
                             android:layout_gravity="center_vertical"
                             android:layout_marginTop="@dimen/size_8"
@@ -316,19 +277,14 @@
                         android:orientation="vertical">
 
                         <com.framework.views.customViews.CustomTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/size_5"
-                            android:fontFamily="@font/open_sans"
-                            android:text="@string/is_available"
-                            android:textColor="@color/black_4a4a4a"
-                            android:textStyle="normal"
-                            app:textType="BODY_1" />
+                            style="@style/TextStaffHeading"
+                            android:text="@string/is_available" />
 
                         <com.framework.views.customViews.CustomCardView
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/size_48"
                             android:backgroundTint="#1A4889F8"
+                            android:layout_marginTop="@dimen/size_5"
                             app:cardElevation="0dp"
                             app:corner_radius="RADIUS_6">
 
@@ -370,27 +326,34 @@
 
                         <com.framework.views.customViews.CustomTextView
                             android:id="@+id/tv_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/TextStaffHeading"
                             android:layout_alignParentStart="true"
-                            android:layout_marginBottom="@dimen/size_5"
-                            android:fontFamily="@font/open_sans"
-                            android:text="@string/staff_timing"
-                            android:textColor="@color/black_4a4a4a"
-                            android:textStyle="normal"
-                            app:textType="BODY_1"
+                            android:text="@string/weekly_schedule"
                             tools:ignore="RelativeOverlap" />
 
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/ctv_timing_subheading"
                             android:layout_below="@id/tv_heading"
+                            android:layout_marginTop="@dimen/size_5"
                             android:layout_gravity="center_vertical"
                             android:fontFamily="@font/open_sans"
-                            android:text="@string/is_the_staff_available_for_home_service"
+                            android:text="@string/staff_will_available_for_clients"
                             android:textFontWeight="600"
                             android:textSize="10sp" />
-
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/ctv_timing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ctv_timing_subheading"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/size_8"
+                            android:visibility="gone"
+                            android:fontFamily="@font/open_sans"
+                            android:textColor="@color/blue_4a90e2"
+                            android:textFontWeight="600"
+                            android:textSize="10sp" />
                         <com.framework.views.customViews.CustomImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

@@ -46,9 +46,6 @@ class StaffViewModel : BaseViewModel() {
 
     }
 
-    fun getStaffTimings(): MutableLiveData<ArrayList<AppointmentModel>> {
-        return MutableLiveData(AppointmentModel.getDefaultTimings())
-    }
 
     fun updateStaffImage(@Body request: StaffUpdateImageRequest?): LiveData<BaseResponse> {
         return StaffNowFloatsRepository.updateImage(request = request).toLiveData()
