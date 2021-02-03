@@ -1,5 +1,6 @@
 package com.appservice.ui.catalog.common
 
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -9,14 +10,12 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentStaffTimingBinding
-import com.appservice.holder.WeeklyAppointmentViewHolder
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.model.StaffDetailsResult
 import com.appservice.staffs.model.StaffTimingAddUpdateRequest
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
-import com.appservice.utils.cast
 import com.framework.extensions.observeOnce
 import java.util.*
 import kotlin.collections.ArrayList
@@ -43,7 +42,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     private fun getBundleData() {
         staffData = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
         if (staffData?.timings != null) {
-            this.defaultTimings = ArrayList();
+            this.defaultTimings = arrayListOf()
             this.defaultTimings.addAll(staffData?.timings!!)
         }
         if (this.defaultTimings == null) {
@@ -134,51 +133,34 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
         super.onClick(v)
         when (v) {
             binding?.btnSave -> {
-                staffData?.timings = this.defaultTimings;
+                if (isValid()) {
+                    finishAndGoBack()
+                }
             }
         }
     }
 
-    fun isValid() {
-
+    fun isValid(): Boolean {
+        staffData?.timings = this.defaultTimings
+        return true
     }
 
-    private fun addStaffTimings() {
-        showProgress(getString(R.string.staff_timing_add))
-        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffData?.id, defaultTimings))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-            hideProgress()
-            when (it.status) {
-                200 -> {
-                    Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
-                    finishAndGoBack()
-                }
-                else -> {
-                    Log.v(getString(R.string.staff_timings), getString(R.string.something_went_wrong))
-                }
-            }
-        })
-    }
-
-    private fun updateStaffTimings() {
-        showProgress(getString(R.string.staff_timing_add))
-        viewModel?.updateStaffTiming(StaffTimingAddUpdateRequest(staffId = staffData?.id, defaultTimings))?.observeOnce(viewLifecycleOwner, Observer {
-            when (it.status) {
-                200 -> {
-                    Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
-                    hideProgress()
-                    finishAndGoBack()
-                }
-                else -> {
-                    Log.v(getString(R.string.staff_timings), getString(R.string.something_went_wrong))
-                }
-            }
-        })
-    }
 
     private fun finishAndGoBack() {
         // send staff data to the intent
+        when {
+            staffData?.timings?.size!! > 0 -> {
+                val intent = Intent();
+                intent.putExtra(IntentConstant.STAFF_TIMINGS.name, staffData);
+                requireActivity().setResult(AppCompatActivity.RESULT_OK, intent);
+                requireActivity().finish();
+            }
+
+
+        }
         baseActivity.setResult(AppCompatActivity.RESULT_OK)
         baseActivity.finish()
     }
+
 
 }
