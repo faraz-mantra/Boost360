@@ -159,13 +159,10 @@
                 android:textFontWeight="600"
                 android:textSize="14sp" />
 
-            <com.framework.views.viewgroups.BaseRecyclerView
-                android:id="@+id/rv_services"
-                android:layout_width="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/recycler_item_service_timing"
-                tools:itemCount="3"
+            <LinearLayout
+                android:id="@+id/ll_services"
+                style="@style/ll_match_wrap_vertical"
+                android:orientation="vertical"
                 android:layout_below="@id/ctv_heading_services"
                 android:layout_marginTop="@dimen/size_5" />
 
@@ -183,7 +180,7 @@
                 android:id="@+id/ctv_heading_timing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rv_services"
+                android:layout_below="@id/ll_services"
                 android:layout_marginTop="@dimen/size_16"
                 android:fontFamily="@font/open_sans"
                 android:text="@string/staff_timing"
@@ -192,14 +189,9 @@
                 android:textFontWeight="600"
                 android:textSize="14sp" />
 
-            <com.framework.views.viewgroups.BaseRecyclerView
-                android:id="@+id/rv_timing"
-                android:layout_width="match_parent"
-                android:visibility="visible"
-                android:layout_height="wrap_content"
-                tools:itemCount="3"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/recycler_item_service_timing"
+            <LinearLayout
+                android:id="@+id/ll_timing_container"
+                style="@style/ll_match_wrap_vertical"
                 android:layout_below="@id/ctv_heading_timing"
                 android:layout_marginTop="@dimen/size_5"
            />
@@ -228,7 +220,7 @@
                 android:id="@+id/ctv_heading_leaves"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rv_timing"
+                android:layout_below="@id/ll_timing_container"
                 android:layout_marginTop="@dimen/size_10"
                 android:visibility="gone"
                 android:fontFamily="@font/open_sans"

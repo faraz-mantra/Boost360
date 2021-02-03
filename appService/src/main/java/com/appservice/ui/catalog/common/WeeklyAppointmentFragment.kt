@@ -47,34 +47,19 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
                 this.defaultTimings = AppointmentModel.getDefaultTimings()
             }
         }
-        isEdit = (staffData != null && staffData?.id.isNullOrEmpty().not())
-    }
-
-    private fun setPreviousData() {
-//       defaultTimings = staffData?.timings as ArrayList<AppointmentModel>
-        defaultTimings.forEachIndexed { index, model ->
-            defaultTimings[index].timeSlots = staffData?.timings?.get(index)?.timeSlots!!
-//            val viewHolder = adapter.cast<WeeklyAppointmentViewHolder>()
-//            viewHolder?.addTimeSlots(defaultTimings.get(index))
-
-        }
-        adapter.notifyDataSetChanged()
     }
 
     override fun onCreateView() {
         super.onCreateView()
         getBundleData()
         setOnClickListener(binding?.btnSave)
-
         this.adapter = AppBaseRecyclerViewAdapter(
                 activity = baseActivity,
-                list = defaultTimings,
+                list = this.defaultTimings,
                 itemClickListener = this@WeeklyAppointmentFragment
         )
         binding!!.rvStaffTiming.adapter = adapter
-        if (isEdit == true) {
-            setPreviousData()
-        }
+
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -95,7 +80,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     }
 
     private fun applyOnAllDays(data: AppointmentModel) {
-        if (data.isAppliedOnAllDays) {
+        if (data.isAppliedOnAllDays!!) {
             applyOnAllDaysTurnedOn(data)
         } else {
             applyOnAllDaysTurnedOff(data)
@@ -140,6 +125,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     }
 
     fun isValid(): Boolean {
+        //todo this portion is left
         staffData?.timings = this.defaultTimings
         return true
     }
@@ -147,17 +133,9 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
 
     private fun finishAndGoBack() {
         // send staff data to the intent
-        when {
-            staffData?.timings?.size!! > 0 -> {
                 val intent = Intent();
                 intent.putExtra(IntentConstant.STAFF_TIMINGS.name, staffData);
                 requireActivity().setResult(AppCompatActivity.RESULT_OK, intent);
-                requireActivity().finish();
-            }
-
-
-        }
-        baseActivity.setResult(AppCompatActivity.RESULT_OK)
         baseActivity.finish()
     }
 
