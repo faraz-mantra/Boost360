@@ -37,14 +37,17 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
 
     private fun getBundleData() {
         staffData = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
-        if (staffData?.timings != null) {
-            this.defaultTimings = arrayListOf()
-            this.defaultTimings.addAll(staffData?.timings!!)
+        when {
+            staffData?.timings != null -> {
+                this.defaultTimings = arrayListOf()
+                this.defaultTimings.addAll(staffData?.timings!!)
+            }
+            else -> {
+
+                this.defaultTimings = AppointmentModel.getDefaultTimings()
+            }
         }
-        if (this.defaultTimings == null) {
-            this.defaultTimings = AppointmentModel.getDefaultTimings()
-        }
-        isEdit = (staffData != null && staffData?.id.isNullOrEmpty())
+        isEdit = (staffData != null && staffData?.id.isNullOrEmpty().not())
     }
 
     private fun setPreviousData() {

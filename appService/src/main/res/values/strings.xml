@@ -383,7 +383,8 @@
     <string name="updated">Updated Successfully</string>
     <string name="staff_timings_updated">Staff Timings Updated</string>
   <string name="staff_timings_unable_to_update">Staff Timings Unable to Update</string>
-  <array name="stock_availbility">
+    <string name="staff_timings_updating">Updating Staff Timings...</string>
+    <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
 
