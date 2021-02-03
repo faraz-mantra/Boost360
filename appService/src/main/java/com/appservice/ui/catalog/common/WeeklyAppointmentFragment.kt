@@ -1,10 +1,8 @@
 package com.appservice.ui.catalog.common
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
@@ -14,9 +12,7 @@ import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.model.StaffDetailsResult
-import com.appservice.staffs.model.StaffTimingAddUpdateRequest
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
-import com.framework.extensions.observeOnce
 import java.util.*
 import kotlin.collections.ArrayList
 

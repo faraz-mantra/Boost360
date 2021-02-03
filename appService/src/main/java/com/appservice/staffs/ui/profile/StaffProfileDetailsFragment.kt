@@ -1,7 +1,5 @@
 package com.appservice.staffs.ui.profile
 
-import android.content.Context
-import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
@@ -9,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -57,10 +53,11 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
 
     private fun updateStaffProfile() {
         viewModel?.updateStaffProfile(
-                StaffProfileUpdateRequest(serviceIds = serviceIds))?.observe(viewLifecycleOwner, { t ->
+                StaffProfileUpdateRequest(isAvailable = staffDetails?.isAvailable, serviceIds = staffDetails?.serviceIds, gender = staffDetails?.gender, floatingPointTag = UserSession.fpId, name = staffDetails?.name, description = staffDetails
+                        ?.description, experience = staffDetails?.experience, staffId = staffDetails?.id, age = staffDetails?.age, specialisations = staffDetails?.specialisations))?.observe(viewLifecycleOwner, { t ->
             when (t.status) {
                 200 -> {
-
+                    showShortToast(getString(R.string.updated))
                 }
                 else -> {
                     showShortToast(getString(R.string.something_went_wrong))
@@ -109,7 +106,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
 
     private fun fetchServices() {
         viewModel?.getServiceListing(ServiceListRequest(
-                filterBy = FilterBy("ALL", 0, 0), category = "", floatingPointTag = UserSession.fpId))?.observeOnce(viewLifecycleOwner, { response ->
+                filterBy = FilterBy("ALL", 0, 0), category = "", floatingPointTag = UserSession.fpId))?.observe(viewLifecycleOwner, { response ->
             when (response.status) {
                 200 -> {
                     val data = (response as ServiceListResponse).result?.data
@@ -146,8 +143,9 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
             }
             binding!!.ctvEditServices -> {
                 val bundle = Bundle()
-                val serviceIds = staffDetails?.serviceIds as ArrayList
-                bundle.putSerializable(IntentConstant.STAFF_SERVICES.name, serviceIds)
+                if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
+                    bundle.putSerializable(IntentConstant.STAFF_SERVICES.name, staffDetails?.serviceIds as ArrayList<String>)
+                }
                 startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SERVICES_PROVIDED)
             }
             binding!!.ctvEditTiming -> {
@@ -200,7 +198,8 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
                 val resultServices = data!!.extras!![IntentConstant.STAFF_SERVICES.name] as ArrayList<DataItemService>
                 resultServices.forEach { itemService -> servicesList?.add(ServiceTimingModel(itemService.name!!)) }
                 serviceAdapter?.clear()
-                serviceAdapter?.addItems(servicesList)
+                servicesList?.let { serviceAdapter?.updateList(it) }
+                staffDetails?.serviceIds = resultServices.map { it.id }
                 serviceAdapter?.notifyDataSetChanged()
                 updateStaffProfile()
             }

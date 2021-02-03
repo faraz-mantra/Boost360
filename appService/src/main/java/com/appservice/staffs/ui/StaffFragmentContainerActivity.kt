@@ -192,9 +192,16 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
         }
     }
 
+    override fun isHideToolbar(): Boolean {
+        return super.isHideToolbar()
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         staffDetailsFragment?.onActivityResult(requestCode, resultCode, data)
+        staffHomeFragment?.onActivityResult(requestCode, resultCode, data)
+        staffProfileDetailsFragment?.onActivityResult(requestCode, resultCode, data)
+        staffServicesFragment?.onActivityResult(requestCode, resultCode, data)
+        staffTimingFragment?.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onBackPressed() {
