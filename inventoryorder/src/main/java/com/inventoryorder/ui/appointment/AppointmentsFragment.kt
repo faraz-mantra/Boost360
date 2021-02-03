@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.PopupWindow
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +29,7 @@ import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequestItem
 import com.inventoryorder.model.orderfilter.QueryObject
 import com.inventoryorder.model.ordersdetails.OrderItem
+import com.inventoryorder.model.ordersummary.OrderMenuModel
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
@@ -55,6 +57,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private var filterItem: FilterModel? = null
   private var filterList: ArrayList<FilterModel> = FilterModel().getDataAppointments()
   private var searchView: SearchView? = null
+  lateinit var mPopupWindow: PopupWindow
 
   /* Paging */
   private var isLoadingD = false
@@ -291,6 +294,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
+
       RecyclerViewActionType.ALL_BOOKING_ITEM_CLICKED.ordinal -> {
         val orderItem = item as? OrderItem
         val bundle = Bundle()
@@ -301,6 +305,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
       RecyclerViewActionType.BOOKING_CONFIRM_CLICKED.ordinal -> apiConfirmOrder(position, (item as? OrderItem))
     }
   }
+
 
   private fun apiConfirmOrder(position: Int, order: OrderItem?) {
     showProgress()
