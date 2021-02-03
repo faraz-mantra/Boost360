@@ -100,6 +100,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
     }
 
     private fun setTimings() {
+        binding?.llTimingContainer?.removeAllViews()
         staffDetails?.timings?.forEach {
             binding?.llTimingContainer?.addView(getTimeView(it))
         }
@@ -248,7 +249,6 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
                 val result = data!!.extras!![IntentConstant.STAFF_TIMINGS.name] as StaffDetailsResult
                 staffDetails?.timings = result.timings
                 updateStaffTimings()
-
             }
             requestCode == Constants.STAFF_PROFILE_UPDATED_DATA && resultCode == AppCompatActivity.RESULT_OK -> {
                 val staffDetailsResult = data!!.extras!![IntentConstant.STAFF_DATA.name] as StaffDetailsResult
