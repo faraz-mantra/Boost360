@@ -1,7 +1,10 @@
 package com.inventoryorder.holders
 
 import android.graphics.Paint
+import android.util.Log
 import android.view.View
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import com.framework.extensions.gone
 import com.framework.extensions.visible
@@ -11,12 +14,14 @@ import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
 import com.framework.utils.DateUtils.getCurrentDate
 import com.framework.utils.DateUtils.parseDate
+import com.framework.utils.fromHtml
 import com.framework.views.customViews.CustomTextView
 import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.ItemAppointmentsOrderBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersummary.OrderMenuModel
 import com.inventoryorder.model.ordersummary.OrderStatusValue
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
@@ -111,10 +116,49 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     val todayDate = getCurrentDate().parseDate(FORMAT_DD_MM_YYYY) ?: ""
     val itemDate = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_DD_MM_YYYY) ?: ""
 
+    //settings up button
+    var colorCode = "#4a4a4a"
     val btnStatusMenu = order.orderBtnStatus()
     binding.lytStatusBtn.visible()
+    if (btnStatusMenu.isNullOrEmpty().not()) {
+      when (val btnOrderMenu = btnStatusMenu.removeAt(0)) {
+        OrderMenuModel.MenuStatus.CONFIRM_ORDER -> {
+          colorCode = "#f16629"
+          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
+        }
+        OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {
+          colorCode = "#f16629"
+          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
+        }
+        OrderMenuModel.MenuStatus.CANCEL_ORDER -> {
+          colorCode = "#9B9B9B"
+          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
+        }
+        OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> {
+          colorCode = "#FFB900"
+          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_confirmed_order_btn_bkg, R.color.orange, R.drawable.ic_arrow_down_orange)
+        }
+        OrderMenuModel.MenuStatus.MARK_AS_DELIVERED -> {
+          colorCode = "#52AAC6"
+          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_in_transit_order_btn_bkg, R.color.blue_52AAC6, R.drawable.ic_arrow_down_blue)
+        }
+        OrderMenuModel.MenuStatus.MARK_AS_SHIPPED -> {
+          colorCode = "#52AAC6"
+          changeButtonStatus(btnOrderMenu.title, R.drawable.ic_in_transit_order_btn_bkg, R.color.blue_52AAC6, R.drawable.ic_arrow_down_blue)
+        }
+        else -> binding.lytStatusBtn.gone()
+      }
+      binding.tvDropdownOrderStatus.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.APPOINTMENT_DROPDOWN_CLICKED.ordinal) }
+    } else binding.lytStatusBtn.gone()
 
-   // order.firstItemForConsultation()?.product().().it
+    if (btnStatusMenu.isNullOrEmpty()) {
+      binding.divider.gone()
+      binding.ivDropdownAppointment.gone()
+    } else {
+      binding.ivDropdownAppointment.setOnClickListener { listener?.onItemClickView(adapterPosition, it, order, RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal) }
+      binding.divider.visible()
+      binding.ivDropdownAppointment.visible()
+    }
 
     OrderSummaryModel.OrderStatus.from(order.status())?.let {
       when (it) {
@@ -129,7 +173,20 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
       }
     }
 
+    binding.itemMore.text = "by ${order?.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.staffName}"
     binding.itemMore.paintFlags.or(Paint.UNDERLINE_TEXT_FLAG).let { binding.itemMore.paintFlags = it }
+    binding.itemMore.visibility = if (!order?.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.staffName.isNullOrBlank()) View.VISIBLE else View.GONE
+  }
+
+  private fun changeButtonStatus(btnTitle: String, @DrawableRes buttonBkg: Int, @ColorRes dropDownDividerColor: Int, @DrawableRes resId: Int) {
+    activity?.let {
+      binding.tvDropdownOrderStatus.text = btnTitle
+      binding.tvDropdownOrderStatus.setTextColor(ContextCompat.getColor(it, dropDownDividerColor))
+      binding.lytStatusBtn.background = ContextCompat.getDrawable(it, buttonBkg)
+      binding.divider.setBackgroundColor(ContextCompat.getColor(it, dropDownDividerColor))
+      binding.ivDropdownAppointment.setImageResource(resId)
+      //DrawableCompat.setTint(binding.ivDropdownOrderStatus.drawable, ContextCompat.getColor(it.applicationContext, dropDownArrowColor))
+    }
   }
 
   private fun checkConfirmBtn(order: OrderItem) {
