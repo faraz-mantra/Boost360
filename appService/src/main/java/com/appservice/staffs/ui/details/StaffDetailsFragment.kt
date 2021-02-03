@@ -40,6 +40,7 @@ import kotlinx.android.synthetic.main.item_preview_image.view.*
 import java.io.ByteArrayOutputStream
 
 class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffViewModel>() {
+    private var isTimingUpdated: Boolean? = null
     private var isImageUpdated: Boolean? = null
     private var imageIsChange: Boolean? = null
     private var resultCode: Int = 1
@@ -96,9 +97,9 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         binding?.etvStaffDescription?.setText(staffDetails?.description.toString())
         binding?.spinnerGender?.setSelection(genderArray.toList().indexOf(staffDetails?.gender))
         binding?.cetAge?.setText(staffDetails?.age.toString())
-        showHideTImingText()
+        showHideTimingText()
         showHideServicesText()
-        binding?.ctvTiming?.text = staffDetails?.timings?.map { it?.day }?.joinToString(" ,")
+        binding?.ctvTiming?.text = staffDetails?.timings?.map { it.day }?.joinToString(" ,")
         if (specialisations?.isNullOrEmpty() == false)
             binding?.etvSpecialization?.setText(specialisations[0]?.value)
         binding?.edtExperience?.setText(staffDetails?.experience.toString())
@@ -107,7 +108,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         if (resultCode != AppCompatActivity.RESULT_OK) setServicesList()
     }
 
-    private fun showHideTImingText() {
+    private fun showHideTimingText() {
         when (staffDetails?.timings?.size ?: 0 > 0) {
             true -> binding?.ctvTiming?.visibility = View.VISIBLE
             else -> binding?.ctvTiming?.visibility = View.GONE
@@ -191,7 +192,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 ))?.observe(viewLifecycleOwner, Observer { t ->
             when (t.status) {
                 200 -> {
-                    finishAndGoBack()
+                    updateStaffTimings()
                 }
                 else -> {
                     showShortToast(getString(R.string.something_went_wrong))
@@ -215,7 +216,6 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         val staffGender = binding?.spinnerGender?.isHintSelected()
         this.yearOfExperience = binding?.edtExperience?.text.toString()
         this.isAvailable = binding?.toggleIsAvailable?.isOn
-
         if (staffName.isBlank()) {
             showLongToast(getString(R.string.enter_staff_name))
             return false
@@ -266,6 +266,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                     showShortToast(getString(R.string.profile_created))
                     // get the id from result
 //                    addStaffTimings()
+                    addStaffTimings()
                 }
                 else -> {
                     showShortToast(getString(R.string.something_went_wrong))
@@ -274,28 +275,9 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         })
     }
 
-    private fun addStaffTimings(id: String) {
-        if (staffDetails?.timings == null) {
-            finishAndGoBack();
-            return;
-        }
-        showProgress(getString(R.string.staff_timing_add))
-        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = id, this.staffDetails?.timings!!))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
-            hideProgress()
-            when (it.status) {
-                200 -> {
-                    Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
-                    finishAndGoBack()
-                }
-                else -> {
-                    Log.v(getString(R.string.staff_timings), getString(R.string.something_went_wrong))
-                }
-            }
-        })
-    }
 
     private fun updateStaffTimings() {
-        if (staffDetails?.timings == null) {
+        if (staffDetails?.timings == null && isTimingUpdated == true) {
             finishAndGoBack();
             return;
         }
@@ -327,12 +309,33 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         return byteArrayOutStream.toByteArray()
     }
 
+    private fun addStaffTimings() {
+        if (staffDetails?.timings == null) {
+            finishAndGoBack();
+            return;
+        }
+        showProgress(getString(R.string.staff_timing_add))
+        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id, staffDetails?.timings))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+            hideProgress()
+            when (it.status) {
+                200 -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
+                    finishAndGoBack()
+                }
+                else -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.something_went_wrong))
+                }
+            }
+        })
+    }
+
     private fun openImagePicker() {
         val filterSheet = ImagePickerBottomSheet()
         filterSheet.isHidePdf(true)
         filterSheet.onClicked = { openImagePicker(it) }
         filterSheet.show(this@StaffDetailsFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
     }
+
     private fun openImagePicker(it: ClickType) {
         val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
         ImagePicker.Builder(baseActivity)
@@ -363,19 +366,20 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 showHideServicesText()
             }
             requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
-                // get staff data from intent and set it back
-//                this.staffDetails =
+                this.staffDetails = data!!.extras!![IntentConstant.STAFF_TIMINGS.name] as StaffDetailsResult
+                this.staffDetails?.timings?.map { it.day }?.joinToString(", ")
+                showHideTimingText()
+                isTimingUpdated = true
             }
         }
         when (isEdit == true && imageIsChange != null && imageIsChange == true && isValid()) {
             true -> updateStaffImage()
         }
 
+
     }
 
     private fun setServicesList() {
-        val serviceName = ArrayList<String>()
-
         if (isEdit == true) {
             viewModel!!.getServiceListing(ServiceListRequest(floatingPointTag = UserSession.fpId)
             ).observeOnce(viewLifecycleOwner, Observer {
@@ -384,8 +388,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                         val data = (it as ServiceListResponse).result!!.data!!
                         if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
                             val servicesProvided = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
-                            servicesProvided.forEach { itemService -> serviceName.add(itemService.name!!) }
-                            binding!!.ctvServices.text = serviceName.joinToString(" ,", limit = 5, truncated = "5 more")
+                            binding!!.ctvServices.text = servicesProvided.map { it.name }.joinToString(" ,", limit = 5, truncated = "5 more")
                             showHideServicesText()
                         }
                     }
