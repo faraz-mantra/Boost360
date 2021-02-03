@@ -1,4 +1,4 @@
-package com.dashboard.controller.ui.digitalScore
+package com.dashboard.controller.ui.drScore
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -6,13 +6,18 @@ import androidx.core.content.ContextCompat
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.IntentConstant
+import com.dashboard.constant.PreferenceConstant
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
+import com.dashboard.controller.getDomainName
+import com.dashboard.controller.ui.dashboard.getLocalSession
 import com.dashboard.databinding.FragmentDigitalReadinessScoreBinding
 import com.dashboard.model.live.drScore.*
 import com.dashboard.model.live.drScore.siteMeter.SiteMeterModel
+import com.dashboard.model.live.shareUser.ShareUserDetailResponse
 import com.dashboard.pref.Key_Preferences
 import com.dashboard.pref.UserSessionManager
+import com.dashboard.pref.WA_KEY
 import com.dashboard.recyclerView.AppBaseRecyclerViewAdapter
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
@@ -22,8 +27,15 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.utils.PreferencesUtils
+import com.framework.utils.getData
+import com.framework.utils.saveData
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.inventoryorder.model.floatMessage.MessageModel
+import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
+import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
+import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
+import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 
 class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessScoreBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
@@ -67,7 +79,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
     viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? DrScoreUiDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-        FirestoreManager.getDrScoreData()?.let {drScoreData->
+        FirestoreManager.getDrScoreData()?.let { drScoreData ->
           isHigh = (drScoreData.getDrsTotal() >= 80)
           val drScoreSetupList = drScoreData.getDrScoreData(response.data)
           drScoreSetupList.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }
@@ -90,7 +102,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
           binding?.progressBar?.progress = drScoreData.getDrsTotal()
           binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
         }
-      }else showShortToast("Getting error digital readiness!")
+      } else showShortToast("Getting error digital readiness!")
     })
 
   }
@@ -100,35 +112,136 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       RecyclerViewActionType.DIGITAL_SCORE_READINESS_CLICK.ordinal -> {
         val data = item as? DrScoreItem ?: return
         clickEventUpdateScoreN(DrScoreItem.DrScoreItemType.fromName(data.drScoreUiData?.id))
-//        clickEventUpdateScore(SiteMeterModel.TypePosition.fromValue(data.position))
       }
     }
   }
 
   private fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?) {
-    when(type){
-      DrScoreItem.DrScoreItemType.boolean_add_business_name->{}
-      DrScoreItem.DrScoreItemType.boolean_add_business_description->{}
-      DrScoreItem.DrScoreItemType.boolean_add_clinic_logo->{}
-      DrScoreItem.DrScoreItemType.boolean_add_featured_image_video->{}
-      DrScoreItem.DrScoreItemType.boolean_select_what_you_sell->{}
-      DrScoreItem.DrScoreItemType.boolean_add_business_hours->{}
-      DrScoreItem.DrScoreItemType.boolean_add_contact_details->{}
-      DrScoreItem.DrScoreItemType.boolean_add_custom_domain_name_and_ssl->{}
-      DrScoreItem.DrScoreItemType.number_updates_posted->{}
-      DrScoreItem.DrScoreItemType.boolean_social_channel_connected->{}
-      DrScoreItem.DrScoreItemType.number_services_added->{}
-      DrScoreItem.DrScoreItemType.number_products_added->{}
-      DrScoreItem.DrScoreItemType.boolean_add_bank_account->{}
-      DrScoreItem.DrScoreItemType.boolean_image_uploaded_to_gallery->{}
-      DrScoreItem.DrScoreItemType.boolean_create_custom_page->{}
-      DrScoreItem.DrScoreItemType.boolean_share_business_card->{}
-      DrScoreItem.DrScoreItemType.boolean_create_doctor_e_profile->{}
-      DrScoreItem.DrScoreItemType.boolean_create_sample_in_clinic_appointment->{}
-      DrScoreItem.DrScoreItemType.boolean_create_sample_video_consultation->{}
-      DrScoreItem.DrScoreItemType.boolean_manage_appointment_settings->{}
-      DrScoreItem.DrScoreItemType.boolean_respond_to_customer_enquiries->{}
+    when (type) {
+      DrScoreItem.DrScoreItemType.boolean_add_business_name -> {
+        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty()) baseActivity.startBusinessDescriptionEdit(session)
+      }
+      DrScoreItem.DrScoreItemType.boolean_add_business_description -> {
+        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty()) baseActivity.startBusinessDescriptionEdit(session)
+      }
+      DrScoreItem.DrScoreItemType.boolean_add_clinic_logo -> {
+        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl).isNullOrEmpty()) baseActivity.startBusinessLogo(session)
+      }
+      DrScoreItem.DrScoreItemType.boolean_add_featured_image_video -> {
+        //TODO
+      }
+      DrScoreItem.DrScoreItemType.boolean_select_what_you_sell -> {
+        //TODO
+      }
+      DrScoreItem.DrScoreItemType.boolean_add_business_hours -> {
+        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS) == "TIMINGS") baseActivity.startBusinessHours(session)
+        else alertDialogBusinessHours()
+      }
+      DrScoreItem.DrScoreItemType.boolean_add_contact_details -> {
+        baseActivity.startBusinessInfoEmail(session)
+      }
+      DrScoreItem.DrScoreItemType.boolean_add_custom_domain_name_and_ssl -> {
+        baseActivity.startDomainDetail(session)
+      }
+      DrScoreItem.DrScoreItemType.number_updates_posted -> {
+        session?.let { baseActivity.startUpdateLatestStory(it) }
+      }
+      DrScoreItem.DrScoreItemType.boolean_social_channel_connected -> {
+        session?.let { baseActivity.startDigitalChannel(it) }
+      }
+      DrScoreItem.DrScoreItemType.number_services_added, DrScoreItem.DrScoreItemType.number_products_added -> {
+        baseActivity.startListServiceProduct(session)
+      }
+      DrScoreItem.DrScoreItemType.boolean_add_bank_account -> {
+        baseActivity.startMyBankAccount(session)
+      }
+      DrScoreItem.DrScoreItemType.boolean_image_uploaded_to_gallery -> {
+        baseActivity.startAddImageGallery(session,false)
+      }
+      DrScoreItem.DrScoreItemType.boolean_create_custom_page -> {
+        baseActivity.startCustomPage(session, false)
+      }
+      DrScoreItem.DrScoreItemType.boolean_share_business_card -> {
+        val messageChannelUrl = PreferencesUtils.instance.getData(PreferenceConstant.CHANNEL_SHARE_URL, "")
+        if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
+        else getChannelAccessToken(true)
+      }
+      DrScoreItem.DrScoreItemType.boolean_create_doctor_e_profile -> {
+        //TODO
+      }
+      DrScoreItem.DrScoreItemType.boolean_create_sample_in_clinic_appointment -> {
+        baseActivity.startOrderAptConsultList(session, isConsult = false)
+      }
+      DrScoreItem.DrScoreItemType.boolean_create_sample_video_consultation -> {
+        baseActivity.startOrderAptConsultList(session, isConsult = true)
+      }
+      DrScoreItem.DrScoreItemType.boolean_manage_appointment_settings -> {
+        //TODO
+      }
+      DrScoreItem.DrScoreItemType.boolean_respond_to_customer_enquiries -> {
+        baseActivity.startBusinessEnquiry(session)
+      }
     }
+  }
+
+  private fun visitingCardDetailText(shareChannelText: String?) {
+    viewModel?.getBoostVisitingMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
+      val response = it as? ShareUserDetailResponse
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        val messageDetail = response.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.message
+        if (messageDetail.isNullOrEmpty().not()) {
+          val lat = session?.getFPDetails(Key_Preferences.LATITUDE)
+          val long = session?.getFPDetails(Key_Preferences.LONGITUDE)
+          var location = ""
+          if (lat != null && long != null) location = "${if (shareChannelText.isNullOrEmpty().not()) "\n\n" else ""}\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"
+          val txt = String.format(messageDetail!!, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), shareChannelText, location)
+          visitingCard(txt)
+        }
+      } else visitingCard("Business Card")
+    })
+  }
+
+
+  private fun visitingCard(shareChannelText: String) {
+    session?.let {
+      val dialogCard = VisitingCardSheet()
+      dialogCard.setData(getLocalSession(it), shareChannelText)
+      dialogCard.show(this@DigitalReadinessScoreFragment.parentFragmentManager, VisitingCardSheet::class.java.name)
+    }
+  }
+
+  private fun getChannelAccessToken(isShowLoader: Boolean = false) {
+    if (isShowLoader) showProgress()
+    viewModel?.getChannelsAccessToken(session?.fPID)?.observeOnce(this, {
+      var urlString = ""
+      if (it.isSuccess()) {
+        val channelsAccessToken = (it as? ChannelsAccessTokenResponse)?.NFXAccessTokens
+        channelsAccessToken?.forEach { it1 ->
+          when (it1.type()) {
+            ChannelAccessToken.AccessTokenType.facebookpage.name ->
+              if (it1.UserAccountId.isNullOrEmpty().not()) urlString = "\n⚡ *Facebook: https://www.facebook.com/${it1.UserAccountId}*"
+            ChannelAccessToken.AccessTokenType.twitter.name ->
+              if (it1.UserAccountName.isNullOrEmpty().not()) urlString += "\n⚡ *Twitter: https://twitter.com/${it1.UserAccountName?.trim()}*"
+          }
+        }
+      }
+      getWhatsAppData(urlString, isShowLoader)
+    })
+  }
+
+  private fun getWhatsAppData(urlString: String, isShowLoader: Boolean = false) {
+    var urlStringN = urlString
+    viewModel?.getWhatsappBusiness(session?.fpTag, WA_KEY)?.observeOnce(this, {
+      if (isShowLoader) hideProgress()
+      if (it.isSuccess()) {
+        val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
+        if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
+          urlStringN += "\n⚡ *WhatsApp: https://wa.me/${response.active_whatsapp_number}*"
+        }
+      }
+      PreferencesUtils.instance.saveData(PreferenceConstant.CHANNEL_SHARE_URL, urlStringN)
+      if (isShowLoader) visitingCardDetailText(urlStringN)
+    })
   }
 
   private fun clickEventUpdateScore(value: SiteMeterModel.TypePosition?) {

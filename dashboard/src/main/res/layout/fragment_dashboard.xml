@@ -51,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_190"
+            android:visibility="gone"
             android:background="@drawable/ic_bg_dark_white_top_round"
             android:orientation="vertical">
 
@@ -271,8 +272,7 @@
             android:layout_marginTop="@dimen/size_180"
             android:background="@drawable/ic_business_snapshot_bac_d"
             android:orientation="vertical"
-            android:paddingTop="@dimen/size_12"
-            android:visibility="gone">
+            android:paddingTop="@dimen/size_12">
 
             <androidx.appcompat.widget.LinearLayoutCompat
               android:layout_width="match_parent"
