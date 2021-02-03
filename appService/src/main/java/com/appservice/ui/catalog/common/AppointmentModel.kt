@@ -60,7 +60,7 @@ data class AppointmentModel(
     }
 
     fun addSession() {
-        timeSlots.add(TimeSlot())
+        timeSlots.add(TimeSlot.getDefaultTimeSlotObject())
     }
 
     fun removeSession(index: Int){

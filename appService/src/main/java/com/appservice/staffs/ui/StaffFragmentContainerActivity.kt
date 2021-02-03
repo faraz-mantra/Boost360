@@ -27,7 +27,6 @@ import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
-import kotlinx.android.synthetic.main.toolbar_catalog.*
 
 class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
     private var fragmentType: FragmentType? = null
@@ -198,6 +197,25 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
         staffDetailsFragment?.onActivityResult(requestCode, resultCode, data)
     }
 
+    override fun onBackPressed() {
+        when (fragmentType) {
+            FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> {
+                val fragment =
+                        this.supportFragmentManager.findFragmentById(R.id.container)
+                (fragment as? IOnBackPressed)?.onBackPressed()?.not()?.let {
+                    super.onBackPressed()
+                }
+            }
+            else -> super.onBackPressed()
+
+        }
+
+
+    }
+}
+
+interface IOnBackPressed {
+    fun onBackPressed(): Boolean
 }
 
 fun Fragment.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
