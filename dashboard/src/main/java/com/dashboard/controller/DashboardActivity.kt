@@ -427,7 +427,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     val imageFile = File(path)
     isSecondaryImage = false
     showProgress()
-    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, {
+    viewModel.putUploadSecondaryImage(getRequestImageDate(imageFile)).observeOnce(this, androidx.lifecycle.Observer{
       if (it.isSuccess()) {
         if (it.stringResponse.isNullOrEmpty().not()) {
           session?.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE, it.stringResponse)

@@ -60,7 +60,7 @@ data class AppointmentModel(
         timeSlots?.add(TimeSlot())
     }
 
-    fun removeSession(index: Int){
+    fun removeSession(index: Int) {
         timeSlots?.removeAt(index);
     }
 
@@ -101,9 +101,9 @@ data class TimeSlot(
 
         @field:SerializedName("to")
         var to: String? = null,
-) : Serializable{
-    companion object{
-        fun getDefaultTimeSlotObject(): TimeSlot{
+) : Serializable {
+    companion object {
+        fun getDefaultTimeSlotObject(): TimeSlot {
             val timeSlot = TimeSlot();
             timeSlot.from = "9:30 AM"
             timeSlot.to = "7:00 PM"
