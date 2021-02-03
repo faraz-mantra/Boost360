@@ -19,7 +19,7 @@ data class StaffDetailsResponse(
 data class StaffDetailsResult(
 
 		@field:SerializedName("Timings")
-		val timings: List<AppointmentModel?>? = null,
+		var timings: List<AppointmentModel>? = null,
 
 		@field:SerializedName("ServiceIds")
         var serviceIds: List<String?>? = null,

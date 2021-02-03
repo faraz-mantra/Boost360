@@ -9,12 +9,14 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -169,7 +171,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
     private fun updateStaffImage() {
         showProgress(getString(R.string.uploading_image))
-        viewModel?.updateStaffImage(StaffUpdateImageRequest(staffDetails?.id, staffImage))?.observe(viewLifecycleOwner, {
+        viewModel?.updateStaffImage(StaffUpdateImageRequest(staffDetails?.id, staffImage))?.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 200 -> {
                 }
@@ -186,7 +188,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         viewModel?.updateStaffProfile(
                 StaffProfileUpdateRequest(isAvailable, serviceListId, staffGender, UserSession.fpId, name = staffName, staffDescription,
                         experience = yearOfExperience.toInt(), staffDetails?.id, staffAge, specializationList
-                ))?.observe(viewLifecycleOwner, { t ->
+                ))?.observe(viewLifecycleOwner, Observer { t ->
             when (t.status) {
                 200 -> {
                     finishAndGoBack()
@@ -256,12 +258,14 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         }
         return true
     }
+
     private fun createStaffProfile() {
-        viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, { t ->
+        viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, Observer { t ->
             when (t.status) {
                 200 -> {
                     showShortToast(getString(R.string.profile_created))
-                    finishAndGoBack()
+                    // get the id from result
+//                    addStaffTimings()
                 }
                 else -> {
                     showShortToast(getString(R.string.something_went_wrong))
@@ -269,6 +273,47 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             }
         })
     }
+
+    private fun addStaffTimings(id: String) {
+        if (staffDetails?.timings == null) {
+            finishAndGoBack();
+            return;
+        }
+        showProgress(getString(R.string.staff_timing_add))
+        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = id, this.staffDetails?.timings!!))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+            hideProgress()
+            when (it.status) {
+                200 -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
+                    finishAndGoBack()
+                }
+                else -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.something_went_wrong))
+                }
+            }
+        })
+    }
+
+    private fun updateStaffTimings() {
+        if (staffDetails?.timings == null) {
+            finishAndGoBack();
+            return;
+        }
+        showProgress(getString(R.string.staff_timing_add))
+        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id, this.staffDetails?.timings!!))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+            hideProgress()
+            when (it.status) {
+                200 -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
+                    finishAndGoBack()
+                }
+                else -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.something_went_wrong))
+                }
+            }
+        })
+    }
+
 
     private fun finishAndGoBack() {
         baseActivity.setResult(AppCompatActivity.RESULT_OK)
@@ -312,13 +357,14 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 this.resultCode = resultCode
                 this.servicesList?.clear()
                 this.servicesList = data!!.extras!![IntentConstant.STAFF_SERVICES.name] as ArrayList<DataItemService>
-                val servicesName = ArrayList<String>()
-                servicesList?.forEach { dataItem -> servicesName.add(dataItem.name!!) }
                 servicesList?.forEach { dataItem -> serviceListId?.add(dataItem.id!!) }
-                binding!!.ctvServices.text = servicesName.joinToString(" ,", limit = 5, truncated = "5 more")
+                staffDetails?.serviceIds = servicesList?.map { it.id }
+                binding!!.ctvServices.text = (servicesList?.map { it.name })?.joinToString(" ,", limit = 5, truncated = "5 more")
                 showHideServicesText()
             }
             requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
+                // get staff data from intent and set it back
+//                this.staffDetails =
             }
         }
         when (isEdit == true && imageIsChange != null && imageIsChange == true && isValid()) {
@@ -329,9 +375,10 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
     private fun setServicesList() {
         val serviceName = ArrayList<String>()
+
         if (isEdit == true) {
             viewModel!!.getServiceListing(ServiceListRequest(floatingPointTag = UserSession.fpId)
-            ).observeOnce(viewLifecycleOwner, {
+            ).observeOnce(viewLifecycleOwner, Observer {
                 when (it.status) {
                     200 -> {
                         val data = (it as ServiceListResponse).result!!.data!!

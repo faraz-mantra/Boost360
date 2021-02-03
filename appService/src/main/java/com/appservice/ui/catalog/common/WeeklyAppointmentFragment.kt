@@ -3,6 +3,7 @@ package com.appservice.ui.catalog.common
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
@@ -41,9 +42,14 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
 
     private fun getBundleData() {
         staffData = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
+        if (staffData?.timings != null) {
+            this.defaultTimings = ArrayList();
+            this.defaultTimings.addAll(staffData?.timings!!)
+        }
+        if (this.defaultTimings == null) {
+            this.defaultTimings = AppointmentModel.getDefaultTimings()
+        }
         isEdit = (staffData != null && staffData?.id.isNullOrEmpty())
-
-
     }
 
     private fun setPreviousData() {
@@ -61,7 +67,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
         super.onCreateView()
         getBundleData()
         setOnClickListener(binding?.btnSave)
-        this.defaultTimings = AppointmentModel.getDefaultTimings()
+
         this.adapter = AppBaseRecyclerViewAdapter(
                 activity = baseActivity,
                 list = defaultTimings,
@@ -79,7 +85,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
                 adapter.notifyDataSetChanged()
             }
             RecyclerViewActionType.CHECK_BOX_APPLY_ALL.ordinal -> {
-                  item as AppointmentModel
+                item as AppointmentModel
                 applyOnAllDays(item);
                 adapter.notifyDataSetChanged()
             }
@@ -128,21 +134,22 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
         super.onClick(v)
         when (v) {
             binding?.btnSave -> {
-                addStaffTimings()
-                if (isEdit == true) {
-                    updateStaffTimings()
-                }
+                staffData?.timings = this.defaultTimings;
             }
         }
     }
 
+    fun isValid() {
+
+    }
+
     private fun addStaffTimings() {
         showProgress(getString(R.string.staff_timing_add))
-        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffData?.id, defaultTimings))?.observeOnce(viewLifecycleOwner, {
+        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffData?.id, defaultTimings))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+            hideProgress()
             when (it.status) {
                 200 -> {
                     Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
-                    hideProgress()
                     finishAndGoBack()
                 }
                 else -> {
@@ -154,7 +161,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
 
     private fun updateStaffTimings() {
         showProgress(getString(R.string.staff_timing_add))
-        viewModel?.updateStaffTiming(StaffTimingAddUpdateRequest(staffId = staffData?.id, defaultTimings))?.observeOnce(viewLifecycleOwner, {
+        viewModel?.updateStaffTiming(StaffTimingAddUpdateRequest(staffId = staffData?.id, defaultTimings))?.observeOnce(viewLifecycleOwner, Observer {
             when (it.status) {
                 200 -> {
                     Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
@@ -169,6 +176,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     }
 
     private fun finishAndGoBack() {
+        // send staff data to the intent
         baseActivity.setResult(AppCompatActivity.RESULT_OK)
         baseActivity.finish()
     }
