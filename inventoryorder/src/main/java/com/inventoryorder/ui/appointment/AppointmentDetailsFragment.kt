@@ -57,11 +57,11 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
   override fun onCreateView() {
     super.onCreateView()
-    arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
-    setOnClickListener(binding?.btnBusiness, binding?.tvCustomerContactNumber, binding?.tvCustomerEmail)
+   // arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
+   // setOnClickListener(binding?.btnBusiness, binding?.tvCustomerContactNumber, binding?.tvCustomerEmail)
   }
 
-  private fun apiGetOrderDetails(orderId: String) {
+/*  private fun apiGetOrderDetails(orderId: String) {
     showProgress()
     viewModel?.getOrderDetails(clientId, orderId)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
@@ -328,5 +328,5 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
   private fun clickDeliveryItem(list: LocationsModel?) {
     serviceLocationsList.forEach { it.isSelected = (it.serviceOptionSelectedName == list?.serviceOptionSelectedName) }
-  }
+  }*/
 }

@@ -30,7 +30,7 @@ enum class OrderStatusValue(val type: String, val status: String, val value: Str
     DELIVERY_FAILED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.DELIVERY_FAILED.name, "Failed"),
     ORDER_COMPLETED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name, "Completed"),
     ORDER_CANCELLED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name, "Cancelled By"),
-    ESCALATED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.ESCALATED.name, "Escalated"),
+    ESCALATED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.ESCALATED.name, "Escalated", R.drawable.ic_order_canceled),
 
     ORDER_INITIATED_3(OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name, OrderSummaryModel.OrderStatus.ORDER_INITIATED.name, "Initiated"),
     PAYMENT_MODE_VERIFIED_3(OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name, OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED.name, "Requested"),
