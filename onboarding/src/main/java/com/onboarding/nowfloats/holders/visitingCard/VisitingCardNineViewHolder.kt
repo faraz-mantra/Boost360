@@ -4,6 +4,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.utils.fromHtml
+import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.databinding.ItemVisitingCardNineBinding
 import com.onboarding.nowfloats.model.digitalCard.DigitalCardData
 import com.onboarding.nowfloats.recyclerView.AppBaseRecyclerViewHolder
@@ -16,6 +17,8 @@ class VisitingCardNineViewHolder(binding: ItemVisitingCardNineBinding) : AppBase
     val data = (item as? DigitalCardData)?.cardData ?: return
     binding.businessName.text = data.businessName
     binding.number.text = data.number
+    data.cardIcon?.let { binding.imgLogo.setImageResource(it) }
+    getColor(R.color.dusky_blue_1)?.let { binding.imgLogo.setTintColor(it) }
     if (data.businessLogo.isNullOrEmpty().not()) {
       binding.profileView.visible()
 //      binding.channels.gone()
