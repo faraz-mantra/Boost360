@@ -1,5 +1,6 @@
 package com.appservice.staffs.ui.bottomsheets
 
+import android.view.KeyEvent
 import android.view.View
 import com.appservice.R
 import com.appservice.databinding.BottomsheetInactiveStaffBinding
@@ -19,7 +20,14 @@ class InActiveBottomSheet : BaseBottomSheetDialog<BottomsheetInactiveStaffBindin
 
     override fun onCreateView() {
         setOnClickListener(binding?.btnActivateStaff)
-
+        dialog.setCanceledOnTouchOutside(false)
+        getDialog()!!.setOnKeyListener { dialog, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                // To dismiss the fragment when the back-button is pressed.
+                requireActivity().finish()
+                true
+            } else false
+        }
     }
 
 
@@ -32,4 +40,7 @@ class InActiveBottomSheet : BaseBottomSheetDialog<BottomsheetInactiveStaffBindin
             }
         }
     }
+
+
+
 }
