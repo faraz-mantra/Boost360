@@ -54,7 +54,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
     }
 
-  fun setData(localSessionModel: LocalSessionModel,shareChannelText:String) {
+  fun setData(localSessionModel: LocalSessionModel, shareChannelText: String) {
     this.localSessionModel = localSessionModel
     this.shareChannelText = shareChannelText
   }
@@ -84,16 +84,16 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
         val userProfile = ProfileProperties(userName = localSessionModel?.contactName, userMobile = localSessionModel?.primaryNumber, userEmail = localSessionModel?.primaryEmail)
         val cardList = ArrayList<DigitalCardData>()
         val cardData = CardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
-            addPlus91(userProfile.userMobile), userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl)
+            addPlus91(userProfile.userMobile), userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl,getIconCard())
 
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SIX_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_EIGHT_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_TWO_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_THREE_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FIVE_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SIX_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SEVEN_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_EIGHT_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_NINE_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_TEN_ITEM.getLayout()))
 
@@ -131,10 +131,10 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
   }
 
   private fun showSimmer(isSimmer: Boolean) {
-    if (isSimmer){
+    if (isSimmer) {
       binding?.viewMain?.gone()
       binding?.progressSimmer?.parentShimmerLayout?.visible()
-    }else{
+    } else {
       binding?.viewMain?.visible()
       binding?.progressSimmer?.parentShimmerLayout?.gone()
       binding?.progressSimmer?.parentShimmerLayout?.hideShimmer()
@@ -149,7 +149,6 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       isUserInputEnabled = true
       adapter = adapterPager3
       binding?.dotIndicatorCard?.setViewPager2(this)
-//      post { setCurrentItem(getLastShareCard(), false) }
       setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
       registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -157,6 +156,22 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
           cardPosition = position
         }
       })
+    }
+  }
+
+  private fun getIconCard(): Int {
+    return when (this.localSessionModel?.experienceCode?.toUpperCase(Locale.ROOT)) {
+      "DOC" -> R.drawable.ic_business_card_doctor_hospital_d
+      "HOS" -> R.drawable.ic_business_card_doctor_hospital_d
+      "RTL" -> R.drawable.ic_business_card_retail_d
+      "EDU" -> R.drawable.ic_business_card_education_d
+      "HOT" -> R.drawable.ic_business_card_hotel_d
+      "MFG" -> R.drawable.ic_business_card_manufacture_d
+      "CAF" -> R.drawable.ic_business_card_restaurant_d
+      "SVC" -> R.drawable.ic_business_card_services_d
+      "SPA" -> R.drawable.ic_business_card_spa_n
+      "SAL" -> R.drawable.ic_business_card_spa_n
+      else -> R.drawable.ic_business_card_spa_n
     }
   }
 

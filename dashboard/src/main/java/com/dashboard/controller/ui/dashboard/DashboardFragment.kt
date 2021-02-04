@@ -286,6 +286,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           adapterAcademy = AppBaseRecyclerViewAdapter(baseActivity, academyBanner, this@DashboardFragment)
           offscreenPageLimit = 3
           adapter = adapterAcademy
+          binding?.dotIndicatorAcademy?.setViewPager2(this)
           setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
         } else adapterAcademy?.notify(academyBanner)
       } else binding?.riaAcademyView?.gone()
@@ -301,6 +302,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           adapterMarketBanner = AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
           offscreenPageLimit = 3
           adapter = adapterMarketBanner
+          binding?.dotIndicatorPremium?.setViewPager2(this)
           setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
         } else adapterMarketBanner?.notify(marketBannerFilter)
       } else binding?.boostPremiumView?.gone()

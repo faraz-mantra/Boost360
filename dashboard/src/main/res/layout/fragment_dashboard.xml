@@ -221,10 +221,10 @@
               android:layout_marginStart="@dimen/size_16"
               android:layout_marginTop="@dimen/size_24"
               android:layout_marginEnd="@dimen/size_16"
+              android:background="@drawable/ic_btn_round_white_stroke"
               android:clickable="true"
               android:focusable="true"
               android:foreground="?attr/selectableItemBackground"
-              android:background="@drawable/ic_btn_round_white_stroke"
               android:gravity="center|center_vertical"
               android:orientation="horizontal">
 
@@ -311,6 +311,21 @@
                 android:layout_marginTop="@dimen/size_14"
                 android:clipChildren="false"
                 android:clipToPadding="false" />
+
+              <com.framework.views.dotsindicator.DotsIndicator
+                android:id="@+id/dot_indicator_academy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/size_12"
+                android:layout_marginBottom="@dimen/size_8"
+                app:dotsColor="@color/light_grey_1"
+                app:dotsCornerRadius="@dimen/_6dp"
+                app:dotsSize="@dimen/size_5"
+                app:dotsSpacing="@dimen/size_2"
+                app:dotsWidthFactor="2.5"
+                app:progressMode="false"
+                app:selectedDotColor="@color/black_4a4a4a" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -429,6 +444,21 @@
                   android:layout_marginTop="@dimen/size_14"
                   android:clipChildren="false"
                   android:clipToPadding="false" />
+
+                <com.framework.views.dotsindicator.DotsIndicator
+                  android:id="@+id/dot_indicator_premium"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_horizontal"
+                  android:layout_marginTop="@dimen/size_12"
+                  android:layout_marginBottom="@dimen/size_8"
+                  app:dotsColor="@color/light_grey_1"
+                  app:dotsCornerRadius="@dimen/_6dp"
+                  app:dotsSize="@dimen/size_5"
+                  app:dotsSpacing="@dimen/size_2"
+                  app:dotsWidthFactor="2.5"
+                  app:progressMode="false"
+                  app:selectedDotColor="@color/black_4a4a4a" />
               </LinearLayout>
 
 
@@ -527,11 +557,12 @@
       </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 
-    <include android:id="@+id/progress_simmer"
+    <include
+      android:id="@+id/progress_simmer"
       layout="@layout/view_dashboard_simmer"
-      android:layout_height="wrap_content"
       android:layout_width="match_parent"
-      android:visibility="gone"/>
+      android:layout_height="wrap_content"
+      android:visibility="gone" />
   </FrameLayout>
 
 </layout>
