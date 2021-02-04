@@ -390,11 +390,14 @@
   <string name="services_selected">services selected</string>
   <string name="service">SERVICE</string>
   <string name="services">SERVICES</string>
-    <string name="mark_as_active">MARK AS ACTIVE</string>
     <string name="activate_staff_profile">ACTIVATE Staff PROFILE</string>
   <string name="this_staff_is_marked_inactive">This staff is marked inactive.</string>
     <string name="mark_as_inactive">Mark as Inactive</string>
-    <array name="stock_availbility">
+  <string name="marking_as_inactive_will_hide">Marking as inactive will hide this profile on the website and will unassign him/her from all present booking which were booked against his availability calendar. Please check with customer inform and realign the appointments accordingly if required.</string>
+  <string name="do_you_want_to_permanently_delete_this_staff_member">Do you want to permanently delete this staff member?</string>
+  <string name="removing_the_staff_will_remove">Removing the staff will remove all the present booking assigned to the staff. All his bookings needs to be handled separately.</string>
+  <string name="delete_staff">DELETE STAFF</string>
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
 

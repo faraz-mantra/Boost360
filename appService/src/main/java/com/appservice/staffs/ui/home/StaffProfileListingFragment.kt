@@ -24,6 +24,7 @@ import com.appservice.staffs.ui.IOnBackPressed
 import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
+import com.framework.extensions.observeOnce
 import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -89,7 +90,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         if (copyList.size == 0)
             showProgress("Loading")
 
-        viewModel?.getStaffList(GetStaffListingRequest(filter, UserSession.fpId, ""))?.observe(viewLifecycleOwner, {
+        viewModel?.getStaffList(GetStaffListingRequest(filter, UserSession.fpId, ""))?.observeOnce(viewLifecycleOwner, {
 
             hideProgress()
             if (this::adapter.isInitialized) adapter.removeLoadingFooter()

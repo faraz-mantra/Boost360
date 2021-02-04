@@ -213,11 +213,6 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
                     super.onBackPressed()
                 }
             }
-            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> {
-                val fragment =
-                        this.supportFragmentManager.findFragmentById(R.id.container)
-                (fragment as? IOnBackPressed)?.onBackPressed()
-            }
             else -> super.onBackPressed()
 
         }

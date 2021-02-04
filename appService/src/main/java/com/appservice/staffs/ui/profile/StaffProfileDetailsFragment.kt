@@ -18,11 +18,10 @@ import com.appservice.databinding.FragmentStaffProfileBinding
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.model.*
-import com.appservice.staffs.ui.Constants
-import com.appservice.staffs.ui.IOnBackPressed
-import com.appservice.staffs.ui.UserSession
+import com.appservice.staffs.ui.*
 import com.appservice.staffs.ui.bottomsheets.InActiveBottomSheet
-import com.appservice.staffs.ui.startStaffFragmentActivity
+import com.appservice.staffs.ui.bottomsheets.InActiveStaffConfirmationBottomSheet
+import com.appservice.staffs.ui.bottomsheets.RemoveStaffConfirmationBottomSheet
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.common.AppointmentModel
 import com.framework.extensions.observeOnce
@@ -92,7 +91,8 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
                     binding?.ctvAboutStaff?.text = staffDetails?.description
                     let { activity?.glideLoad(binding?.civStaffProfileImg!!, staffDetails?.image.toString(), R.drawable.placeholder_image) }
                     binding?.ctvSpecialization?.text = staffDetails?.specialisations?.get(0)?.value
-                    if (staffDetails?.isAvailable==false) showInactiveProfile()
+                    if (staffDetails?.isAvailable == false) showInactiveProfile()
+
                     fetchServices()
                     setTimings()
                 }
@@ -101,8 +101,30 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
                 }
             }
         })
+        setViewBackgrounds()
 
+    }
 
+    private fun setViewBackgrounds() {
+        when (staffDetails?.isAvailable) {
+            null, true -> {
+                binding?.ctvEdit?.visibility = View.VISIBLE
+                binding?.ctvEditServices?.visibility = View.VISIBLE
+                binding?.ctvEditTiming?.visibility = View.VISIBLE
+                binding?.rlStaffContainer?.setBackgroundColor(resources.getColor(R.color.yellow_ffb900))
+                (requireActivity() as StaffFragmentContainerActivity).getToolbar().setBackgroundColor(resources.getColor(R.color.yellow_ffb900))
+                (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = resources.getColor(R.color.yellow_ffb900)
+
+            }
+            else -> {
+                binding?.ctvEdit?.visibility = View.INVISIBLE
+                binding?.ctvEditServices?.visibility = View.INVISIBLE
+                binding?.ctvEditTiming?.visibility = View.INVISIBLE
+                binding?.rlStaffContainer?.setBackgroundColor(resources.getColor(R.color.gray_ligh_3))
+                (requireActivity() as StaffFragmentContainerActivity).getToolbar().setBackgroundColor(resources.getColor(R.color.gray_ligh_3))
+                (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = resources.getColor(R.color.gray_ligh_3)
+            }
+        }
     }
 
     private fun setTimings() {
@@ -127,10 +149,10 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
                 200 -> {
                     val data = (response as ServiceListResponse).result?.data
                     if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
-                         servicesProvided = data?.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
+                        servicesProvided = data?.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
                         this.serviceIds = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<String>
                     }
-                    setServices(servicesProvided?.map { it.name }?:null)
+                    setServices(servicesProvided?.map { it.name } ?: null)
 
                 }
                 else -> {
@@ -191,7 +213,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
             }
             binding!!.ctvEditTiming -> {
                 val bundle = Bundle()
-                    bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
+                bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
                 startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
 
             }
@@ -223,18 +245,17 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
             )
         }
         val markAsActive = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.mark_as_active)
-        val markAsInactive = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.mark_as_inactive)
+        val removeStaff = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.remove_staff_profile)
         markAsActive?.setOnClickListener {
             staffDetails?.isAvailable = true
-            markActiveInActive()
+            showInactiveConfirmation()
+            popupWindow?.dismiss()
         }
-        markAsInactive?.setOnClickListener {
-            staffDetails?.isAvailable = false
-            markActiveInActive()
-
+        removeStaff?.setOnClickListener {
+            showRemoveStaffConfirmation()
+            popupWindow?.dismiss()
 
         }
-        // Absolute location of the anchor view
         val location = IntArray(2)
         anchor.getLocationOnScreen(location)
 
@@ -258,10 +279,21 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
         inActiveBottomSheet.show(this@StaffProfileDetailsFragment.parentFragmentManager, InActiveBottomSheet::class.java.name)
     }
 
+    private fun showInactiveConfirmation() {
+        val inActiveStaffConfirmationBottomSheet = InActiveStaffConfirmationBottomSheet()
+        inActiveStaffConfirmationBottomSheet.onClicked = {
+            staffDetails?.isAvailable = false
+            updateStaffProfile()
+        }
+        inActiveStaffConfirmationBottomSheet.show(this@StaffProfileDetailsFragment.parentFragmentManager, InActiveStaffConfirmationBottomSheet::class.java.name)
+    }
 
-    private fun markActiveInActive() {
-        updateStaffProfile()
-        popupWindow?.dismiss()
+    private fun showRemoveStaffConfirmation() {
+        val removeStaffConfirmationBottomSheet = RemoveStaffConfirmationBottomSheet()
+        removeStaffConfirmationBottomSheet.onClicked = {
+            removeStaffProfile()
+        }
+        removeStaffConfirmationBottomSheet.show(this@StaffProfileDetailsFragment.parentFragmentManager, RemoveStaffConfirmationBottomSheet::class.java.name)
     }
 
 
