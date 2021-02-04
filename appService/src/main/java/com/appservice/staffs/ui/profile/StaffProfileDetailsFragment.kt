@@ -114,16 +114,17 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
     }
 
     private fun fetchServices() {
+        var servicesProvided:ArrayList<DataItemService>? = null
         viewModel?.getServiceListing(ServiceListRequest(
                 filterBy = FilterBy("ALL", 0, 0), category = "", floatingPointTag = UserSession.fpId))?.observeOnce(viewLifecycleOwner, { response ->
             when (response.status) {
                 200 -> {
                     val data = (response as ServiceListResponse).result?.data
                     if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
-                        val servicesProvided = data?.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
+                         servicesProvided = data?.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
                         this.serviceIds = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<String>
-                        setServices(servicesProvided.map { it.name })
                     }
+                    setServices(servicesProvided?.map { it.name }?:null)
 
                 }
                 else -> {
@@ -132,15 +133,15 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
         })
     }
 
-    private fun setServices(map: List<String?>) {
+    private fun setServices(map: List<String?>?) {
         binding?.llServices?.removeAllViews()
-        map.forEach {
+        map?.forEach {
             binding?.llServices?.addView(getServiceView(it))
         }
     }
 
     private fun getServiceView(services: String?): View {
-        val itemView = LayoutInflater.from(binding?.llTimingContainer?.context).inflate(R.layout.recycler_item_service_timing, null, false);
+        val itemView = LayoutInflater.from(binding?.llServices?.context).inflate(R.layout.recycler_item_service_timing, null, false);
         val timeTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
         timeTextView.text = services
         return itemView;
@@ -243,6 +244,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
             requestCode == Constants.REQUEST_CODE_SERVICES_PROVIDED && resultCode == AppCompatActivity.RESULT_OK -> {
                 val resultServices = data!!.extras!![IntentConstant.STAFF_SERVICES.name] as ArrayList<DataItemService>
                 staffDetails?.serviceIds = resultServices.map { it.id }
+                if (staffDetails?.serviceIds.isNullOrEmpty()) staffDetails?.serviceIds =null
                 updateStaffProfile()
             }
             requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {

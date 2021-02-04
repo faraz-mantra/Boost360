@@ -386,6 +386,10 @@
     <string name="staff_timings_updating">Updating Staff Timings...</string>
     <string name="start_end_can_not_be_same">Start Time and End Time can not be same</string>
   <string name="time_slots_gap">Two time slots must have gap of 30 Min</string>
+  <string name="service_selected">service selected</string>
+  <string name="services_selected">services selected</string>
+  <string name="service">SERVICE</string>
+  <string name="services">SERVICES</string>
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
