@@ -27,7 +27,7 @@ data class CustomerActionItem(
     var subscriptionCount: String? = null,
 ) : Serializable, AppBaseRecyclerViewItem {
 
-  var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_CUSTOMER_ITEM_VIEW.getLayout()
+  var recyclerViewItemType: Int = RecyclerViewItemType.BOOST_ENQUIRIES_ITEM_VIEW.getLayout()
   override fun getViewType(): Int {
     return recyclerViewItemType
   }

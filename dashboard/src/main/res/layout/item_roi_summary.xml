@@ -93,7 +93,7 @@
             android:maxLines="2"
             android:text="1,579"
             android:textColor="@color/black_4a4a4a"
-            android:textSize="26sp"
+            android:textSize="28sp"
             app:fontFamily="@font/barlow_regular" />
         </LinearLayout>
 
