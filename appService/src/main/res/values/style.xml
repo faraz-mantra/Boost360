@@ -45,6 +45,10 @@
     <item name="android:spinnerMode">dropdown</item>
   </style>
 
+  <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+    <item name="android:popupBackground">@android:color/white</item>
+  </style>
+
   <style name="AppTheme_add_account" parent="AppTheme.account">
     <item name="colorPrimary">@color/white</item>
     <item name="colorPrimaryDark">@color/white</item>

@@ -1,5 +1,8 @@
 package com.appservice.staffs.recycler
 
+import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.appservice.R
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.RecyclerItemStaffListingBinding
@@ -17,6 +20,18 @@ class StaffListingViewHolder(binding: RecyclerItemStaffListingBinding) : AppBase
         data.specialisations?.forEach { specialisationsItem.add(it.value!!) }
         binding.ctvSpecialization.text = specialisationsItem.joinToString(separator = ",")
         binding.btnViewProfile.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.STAFF_LISTING_CLICK.ordinal) }
+
+        if (item.isAvailable == false) {
+            binding.linearRoot.setBackgroundColor(getApplicationContext()?.resources?.getColor(R.color.grey_f9f9f9)!!)
+            binding.btnViewProfile.background = ContextCompat.getDrawable(getApplicationContext()!!, R.drawable.rounded_stroke_grey_4)
+            binding.btnViewProfile.setTextColor(getApplicationContext()?.resources?.getColor(R.color.grey_light_3)!!)
+            binding.cardOverlay.visibility = View.VISIBLE
+        } else {
+            binding.linearRoot.setBackgroundColor(getApplicationContext()?.resources?.getColor(R.color.white)!!)
+            binding.btnViewProfile.background = ContextCompat.getDrawable(getApplicationContext()!!, R.drawable.rounded_stroke_orange_4)
+            binding.btnViewProfile.setTextColor(getApplicationContext()?.resources?.getColor(R.color.orange)!!)
+            binding.cardOverlay.visibility = View.GONE
+        }
     }
 
 }

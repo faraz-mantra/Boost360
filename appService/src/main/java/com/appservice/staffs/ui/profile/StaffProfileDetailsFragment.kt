@@ -19,6 +19,7 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.model.*
 import com.appservice.staffs.ui.Constants
+import com.appservice.staffs.ui.IOnBackPressed
 import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.bottomsheets.InActiveBottomSheet
 import com.appservice.staffs.ui.startStaffFragmentActivity
@@ -29,7 +30,7 @@ import com.framework.glide.util.glideLoad
 import com.framework.views.customViews.CustomTextView
 
 
-class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBinding, StaffViewModel>(), RecyclerItemClickListener {
+class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBinding, StaffViewModel>(), RecyclerItemClickListener, IOnBackPressed {
     private var popupWindow: PopupWindow? = null
     private var serviceIds: ArrayList<String>? = null
     private var staffDetails: StaffDetailsResult? = null
@@ -305,5 +306,10 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
 
+    }
+
+    override fun onBackPressed(): Boolean {
+        activity?.finish()
+        return true
     }
 }
