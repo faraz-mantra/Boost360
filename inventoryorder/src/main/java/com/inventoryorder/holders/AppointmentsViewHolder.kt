@@ -29,6 +29,7 @@ import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.utils.capitalizeUtil
 import com.squareup.picasso.Picasso
 import java.util.*
+import kotlin.math.floor
 
 class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRecyclerViewHolder<ItemAppointmentsOrderBinding>(binding) {
 
@@ -49,6 +50,9 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
 
   private fun setDataResponse(order: OrderItem) {
     val statusValue = OrderStatusValue.fromStatusAppointment(order.status())?.value
+    val statusIcon = OrderStatusValue.fromStatusAppointment(order.status())?.icon
+
+    if (statusIcon != null) binding.statusIcon.setImageResource(statusIcon) else binding.statusIcon.gone()
 
     if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT)) {
       if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
@@ -60,8 +64,14 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
 
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "₹"
-      binding.txtRupees.text = "$currency ${bill.AmountPayableByBuyer}"
+      binding.txtRupees.text = "${bill.AmountPayableByBuyer?.toInt()}"
+      binding.txtRupeesSymbol.text = currency
+
+      val decimalPart = bill.AmountPayableByBuyer?.minus(bill.AmountPayableByBuyer.toInt())
+      binding.txtRupeesDecimalValue.text = decimalPart.toString().replaceBefore(".", "")
+
     }
+
     binding.txtOrderDate.text = "at ${parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL, timeZone = TimeZone.getTimeZone("IST"))}"
     binding.payment.value.text = order.PaymentDetails?.payment()?.trim()
 
@@ -84,37 +94,8 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
       binding.imageServiceProvider.visibility = View.GONE
     }
 
-    binding.textWorkType.text = order.firstItemForConsultation()?.Product?.Description
-
-
-
-    val location = order.SellerDetails?.Address?.City?.capitalizeUtil()
- /*   if (location.isNullOrEmpty().not()) {
-      binding.location.mainView.visible()
-      binding.location.value.text = location
-    } else binding.location.mainView.gone()*/
-
-    val sizeItem = order.Items?.size ?: 0
-   // binding.itemCount.text = takeIf { sizeItem > 1 }?.let { "Services" } ?: "Service"
-//    binding.itemDesc.text = order.getTitlesBooking()
-    val details = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.detailsConsultation()
-    val scheduleDate = order.firstItemForConsultation()?.scheduledStartDate()
-
-    //binding.itemDesc.text = details
-
-    val dateApt = parseDate(scheduleDate, FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)
-/*    if (dateApt.isNullOrEmpty().not()) {
-      binding.aptDate.mainView.visible()
-      binding.aptDate.value.text = dateApt
-    } else binding.aptDate.mainView.gone()*/
-
-    /*binding.itemMore.visibility = takeIf { (sizeItem > 1) }?.let {
-      binding.itemMore.text = "+${sizeItem - 1} more"
-      View.VISIBLE
-    } ?: View.GONE*/
-
-    val todayDate = getCurrentDate().parseDate(FORMAT_DD_MM_YYYY) ?: ""
-    val itemDate = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_DD_MM_YYYY) ?: ""
+    binding.textWorkType.text = order.firstItemForConsultation()?.Product?.Name
+   // binding.itemDateTime.text = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?
 
     //settings up button
     var colorCode = "#4a4a4a"
@@ -148,7 +129,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
         }
         else -> binding.lytStatusBtn.gone()
       }
-      binding.tvDropdownOrderStatus.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.APPOINTMENT_DROPDOWN_CLICKED.ordinal) }
+      binding.ivDropdownAppointment.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.APPOINTMENT_DROPDOWN_CLICKED.ordinal) }
     } else binding.lytStatusBtn.gone()
 
     if (btnStatusMenu.isNullOrEmpty()) {
@@ -164,7 +145,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
       when (it) {
         OrderSummaryModel.OrderStatus.ORDER_CANCELLED -> {
           changeBackground(View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey, R.color.primary_grey)
-         // binding.btnConfirm.gone()
+          // binding.btnConfirm.gone()
         }
         else -> {
           changeBackground(View.VISIBLE, View.GONE, R.drawable.ic_apt_order_bg, R.color.watermelon_light, R.color.light_green)
@@ -173,15 +154,48 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
       }
     }
 
+    binding.itemDateTime.text = order.firstItemForConsultation()?.getScheduleDateAndTime()
+
     binding.itemMore.text = "by ${order?.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.staffName}"
     binding.itemMore.paintFlags.or(Paint.UNDERLINE_TEXT_FLAG).let { binding.itemMore.paintFlags = it }
     binding.itemMore.visibility = if (!order?.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.staffName.isNullOrBlank()) View.VISIBLE else View.GONE
+
+
+    //----------------------------
+
+    val location = order.SellerDetails?.Address?.City?.capitalizeUtil()
+ /*   if (location.isNullOrEmpty().not()) {
+      binding.location.mainView.visible()
+      binding.location.value.text = location
+    } else binding.location.mainView.gone()*/
+
+    val sizeItem = order.Items?.size ?: 0
+   // binding.itemCount.text = takeIf { sizeItem > 1 }?.let { "Services" } ?: "Service"
+//    binding.itemDesc.text = order.getTitlesBooking()
+    val details = order.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.detailsConsultation()
+    val scheduleDate = order.firstItemForConsultation()?.scheduledStartDate()
+
+    //binding.itemDesc.text = details
+
+    val dateApt = parseDate(scheduleDate, FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)
+/*    if (dateApt.isNullOrEmpty().not()) {
+      binding.aptDate.mainView.visible()
+      binding.aptDate.value.text = dateApt
+    } else binding.aptDate.mainView.gone()*/
+
+    /*binding.itemMore.visibility = takeIf { (sizeItem > 1) }?.let {
+      binding.itemMore.text = "+${sizeItem - 1} more"
+      View.VISIBLE
+    } ?: View.GONE*/
+
+    val todayDate = getCurrentDate().parseDate(FORMAT_DD_MM_YYYY) ?: ""
+    val itemDate = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_DD_MM_YYYY) ?: ""
   }
 
   private fun changeButtonStatus(btnTitle: String, @DrawableRes buttonBkg: Int, @ColorRes dropDownDividerColor: Int, @DrawableRes resId: Int) {
     activity?.let {
-      binding.tvDropdownOrderStatus.text = btnTitle
-      binding.tvDropdownOrderStatus.setTextColor(ContextCompat.getColor(it, dropDownDividerColor))
+      binding.tvDropdownAppointmentStatus.text = btnTitle
+      binding.tvDropdownAppointmentStatus.setTextColor(ContextCompat.getColor(it, dropDownDividerColor))
       binding.lytStatusBtn.background = ContextCompat.getDrawable(it, buttonBkg)
       binding.divider.setBackgroundColor(ContextCompat.getColor(it, dropDownDividerColor))
       binding.ivDropdownAppointment.setImageResource(resId)

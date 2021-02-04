@@ -3,10 +3,7 @@ package com.inventoryorder.ui.appointment
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.PopupWindow
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -58,6 +55,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private var filterList: ArrayList<FilterModel> = FilterModel().getDataAppointments()
   private var searchView: SearchView? = null
   lateinit var mPopupWindow: PopupWindow
+  private var orderItem: OrderItem? = null
+  private var position: Int? = null
 
   /* Paging */
   private var isLoadingD = false
@@ -303,9 +302,35 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         startFragmentOrderActivity(FragmentType.APPOINTMENT_DETAIL_VIEW, bundle, isResult = true)
       }
       RecyclerViewActionType.BOOKING_CONFIRM_CLICKED.ordinal -> apiConfirmOrder(position, (item as? OrderItem))
+
+      RecyclerViewActionType.APPOINTMENT_DROPDOWN_CLICKED.ordinal -> {
+        if (::mPopupWindow.isInitialized && mPopupWindow.isShowing) mPopupWindow.dismiss()
+        val orderMenu = OrderMenuModel.MenuStatus.from((item as? OrderMenuModel)?.type) ?: return
+       // clickActionOrderButton(orderMenu, this.orderItem!!)
+      }
     }
   }
 
+  override fun onItemClickView(position: Int, view: View, item: BaseRecyclerViewItem?, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal -> popUpMenuButton(position, view, (item as? OrderItem))
+    }
+  }
+
+  private fun popUpMenuButton(position: Int, view: View, orderItem: OrderItem?) {
+    this.orderItem = orderItem
+    this.position = position
+    val list = OrderMenuModel().getOrderMenu(orderItem)
+    if (list.isNotEmpty()) list.removeAt(0)
+    val orderMenuView: View = LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
+    val rvOrderMenu: RecyclerView? = orderMenuView.findViewById(R.id.rv_menu_order)
+    rvOrderMenu?.apply {
+      val adapterMenu = AppBaseRecyclerViewAdapter(baseActivity, list, this@AppointmentsFragment)
+      adapter = adapterMenu
+    }
+    mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
+    mPopupWindow.showAsDropDown(view, 0, 0)
+  }
 
   private fun apiConfirmOrder(position: Int, order: OrderItem?) {
     showProgress()

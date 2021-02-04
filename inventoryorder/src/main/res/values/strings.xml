@@ -193,7 +193,7 @@
   <string name="no_don_t_need_any_feedback">No, don’t need any feedback</string>
   <string name="yes_send_feedback_link">Yes, send feedback link</string>
   <string name="want_to_request_customer_to_give_feedback">Want to request customer to give feedback?</string>
-  <string name="type_the_message_that_you_want_to_include">Type the message that you want to include...</string>
+  <string name="type_the_message_that_you_want_to_include">Type the message that you want to include…</string>
   <string name="boost_will_send_an_email_and_an_sms_feedback_of_their_overall_buying_experiance">Boost will send an email and an SMS to the customer on your behalf, informing them about the order successfully getting delivered and requesting a feedback of their overall buying experience.</string>
   <string name="request_feedback">REQUEST FEEDBACK</string>
   <string name="confirmed_delivered">Delivered</string>
@@ -220,4 +220,6 @@
     <string name="awaiting_confirmation_since">Awaiting confirmation since</string>
     <string name="appointment_details">Appointment details</string>
   <string name="call_customer">CALL CUSTOMER</string>
+    <string name="contact_number_not_available">Customer contact number not available</string>
+  <string name="customer_email_not_available">Customer email not available</string>
 </resources>

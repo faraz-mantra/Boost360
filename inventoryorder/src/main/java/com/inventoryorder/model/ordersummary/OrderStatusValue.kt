@@ -18,19 +18,23 @@ enum class OrderStatusValue(val type: String, val status: String, val value: Str
     ESCALATED_1(OrderSummaryModel.OrderType.ORDER.name, OrderSummaryModel.OrderStatus.ESCALATED.name, "Order Escalated",R.drawable.ic_order_canceled),
     ABANDONED_1(OrderSummaryModel.OrderType.ORDER.name, OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name, "Abandoned",R.drawable.ic_order_canceled),
 
-    ORDER_INITIATED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.ORDER_INITIATED.name, "Initiated"),
+    ORDER_INITIATED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.ORDER_INITIATED.name, "Initiated", R.drawable.ic_order_initiated),
     PAYMENT_MODE_VERIFIED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED.name, "Requested"),
     PAYMENT_CONFIRMED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name, "Requested"),
-    ORDER_CONFIRMED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name, "Confirmed"),
-    DELIVERY_IN_PROGRESS_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS.name, "In-Progress"),
+    ORDER_CONFIRMED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name, "Confirmed", R.drawable.ic_order_confirmed),
+    DELIVERY_IN_PROGRESS_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS.name, "In-Progress", R.drawable.ic_inprogress),
     DELIVERY_COMPLETED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.DELIVERY_COMPLETED.name, "Completed"),
     FEEDBACK_PENDING_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.FEEDBACK_PENDING.name, "Completed"),
-    FEEDBACK_RECEIVED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name, "Completed"),
+    FEEDBACK_RECEIVED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.FEEDBACK_RECEIVED.name, "Feedback Recieved", R.drawable.ic_chat_bubble),
     DELIVERY_DELAYED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.DELIVERY_DELAYED.name, "Delayed"),
     DELIVERY_FAILED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.DELIVERY_FAILED.name, "Failed"),
     ORDER_COMPLETED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name, "Completed"),
-    ORDER_CANCELLED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name, "Cancelled By"),
+    ORDER_CANCELLED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name, "Cancelled By", R.drawable.ic_order_canceled),
     ESCALATED_2(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.ESCALATED.name, "Escalated", R.drawable.ic_order_canceled),
+
+    CUSTOMER_SERVED(OrderSummaryModel.OrderType.APPOINTMENT.name, OrderSummaryModel.OrderStatus.CUSTOMER_SERVED.name, "customer served", R.drawable.ic_done),
+
+
 
     ORDER_INITIATED_3(OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name, OrderSummaryModel.OrderStatus.ORDER_INITIATED.name, "Initiated"),
     PAYMENT_MODE_VERIFIED_3(OrderSummaryModel.OrderType.VIDEO_CONSULTATION.name, OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED.name, "Requested"),
