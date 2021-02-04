@@ -94,7 +94,7 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
   }
 
   private fun setAdapterCustomer(actionItem: ArrayList<CustomerActionItem>) {
-    actionItem.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_CUSTOMER_ITEM_VIEW.getLayout() }
+    actionItem.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_ENQUIRIES_ITEM_VIEW.getLayout() }
     binding?.rvCustomer?.apply {
       if (adapterACustomer == null) {
         adapterACustomer = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@EnquiriesFragment)

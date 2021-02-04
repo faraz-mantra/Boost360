@@ -109,7 +109,7 @@
                 <com.framework.views.customViews.CustomCardView
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
-                  android:layout_margin="@dimen/size_4"
+                  android:layout_margin="@dimen/size_3"
                   app:cardBackgroundColor="@color/white_one"
                   app:cardCornerRadius="@dimen/size_6"
                   app:cardElevation="@dimen/size_0">
@@ -131,6 +131,7 @@
                 android:layout_marginStart="@dimen/size_6"
                 android:layout_marginEnd="@dimen/size_6"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
@@ -220,6 +221,9 @@
               android:layout_marginStart="@dimen/size_16"
               android:layout_marginTop="@dimen/size_24"
               android:layout_marginEnd="@dimen/size_16"
+              android:clickable="true"
+              android:focusable="true"
+              android:foreground="?attr/selectableItemBackground"
               android:background="@drawable/ic_btn_round_white_stroke"
               android:gravity="center|center_vertical"
               android:orientation="horizontal">
