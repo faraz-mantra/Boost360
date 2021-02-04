@@ -116,13 +116,13 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
   private fun clickEventUpdateScore(value: SiteMeterModel.TypePosition?) {
     when (value) {
       SiteMeterModel.TypePosition.BUSINESS_NAME -> {
-        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty()) baseActivity.startBusinessDescriptionEdit(session)
+        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty()) baseActivity.startBusinessProfileEdit(session)
       }
       SiteMeterModel.TypePosition.DESCRIPTION -> {
-        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty()) baseActivity.startBusinessDescriptionEdit(session)
+        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty()) baseActivity.startBusinessProfileEdit(session)
       }
       SiteMeterModel.TypePosition.CATEGORY -> {
-        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).isNullOrEmpty()) baseActivity.startBusinessDescriptionEdit(session)
+        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).isNullOrEmpty()) baseActivity.startBusinessProfileEdit(session)
       }
       SiteMeterModel.TypePosition.EMAIL -> {
         if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL).isNullOrEmpty()) baseActivity.startBusinessInfoEmail(session)
@@ -140,7 +140,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
         else alertDialogBusinessHours()
       }
       SiteMeterModel.TypePosition.IMAGE -> {
-        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI).isNullOrEmpty()) baseActivity.startBusinessDescriptionEdit(session)
+        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI).isNullOrEmpty()) baseActivity.startBusinessProfileEdit(session)
       }
       SiteMeterModel.TypePosition.LOGO -> {
         if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl).isNullOrEmpty()) baseActivity.startBusinessLogo(session)

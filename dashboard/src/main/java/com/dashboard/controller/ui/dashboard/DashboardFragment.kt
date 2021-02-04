@@ -286,6 +286,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           adapterAcademy = AppBaseRecyclerViewAdapter(baseActivity, academyBanner, this@DashboardFragment)
           offscreenPageLimit = 3
           adapter = adapterAcademy
+          binding?.dotIndicatorAcademy?.setViewPager2(this)
           setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
         } else adapterAcademy?.notify(academyBanner)
       } else binding?.riaAcademyView?.gone()
@@ -301,6 +302,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           adapterMarketBanner = AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
           offscreenPageLimit = 3
           adapter = adapterMarketBanner
+          binding?.dotIndicatorPremium?.setViewPager2(this)
           setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
         } else adapterMarketBanner?.notify(marketBannerFilter)
       } else binding?.boostPremiumView?.gone()
@@ -568,7 +570,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun showSimmer(isSimmer: Boolean) {
-    binding?.mainContent?.post {
+    binding?.mainContent?.apply {
       if (isSimmer) {
         binding?.progressSimmer?.parentShimmerLayout?.visible()
         binding?.progressSimmer?.parentShimmerLayout?.startShimmer()

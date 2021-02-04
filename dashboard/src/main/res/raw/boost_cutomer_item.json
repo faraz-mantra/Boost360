@@ -245,6 +245,35 @@
       ]
     },
     {
+      "type": "SAL",
+      "action_item": [
+        {
+          "title": "Appointments",
+          "type": "in_clinic_appointments",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Customer calls",
+          "type": "patient_customer_calls",
+          "isLock": false,
+          "premiumCode": "CALLTRACKER"
+        },
+        {
+          "title": "Customer messages",
+          "type": "patient_customer_messages",
+          "isLock": false,
+          "premiumCode": ""
+        },
+        {
+          "title": "Newsletter subscribers",
+          "type": "newsletter_subscribers",
+          "isLock": false,
+          "premiumCode": ""
+        }
+      ]
+    },
+    {
       "type": "SPA",
       "action_item": [
         {

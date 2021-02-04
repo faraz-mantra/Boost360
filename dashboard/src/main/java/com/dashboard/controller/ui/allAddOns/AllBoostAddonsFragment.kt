@@ -67,7 +67,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
   private fun getBoostAddOnsData() {
     viewModel?.getBoostAddOns(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? ManageAddOnsBusinessResponse
-      val dataAction = response?.data?.firstOrNull { it1 -> it1.type?.toUpperCase(Locale.ROOT) == session?.fP_AppExperienceCode?.toUpperCase(Locale.ROOT) }
+      val dataAction = response?.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }
       if (dataAction != null && dataAction.actionItem.isNullOrEmpty().not()) {
         dataAction.actionItem?.forEach { it2 -> it2.manageBusinessList = ArrayList(it2.manageBusinessList?.filter { it3 -> !it3.isHide } ?: ArrayList()) }
         dataAction.actionItem?.map { it2 -> it2.manageBusinessList?.map { it3 -> if (it3.premiumCode.isNullOrEmpty().not() && session.checkIsPremiumUnlock(it3.premiumCode).not()) it3.isLock = true } }
@@ -117,6 +117,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
       searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
       searchAutoComplete?.setTextColor(getColor(R.color.white))
+      searchView?.setIconifiedByDefault(true)
       searchView?.queryHint = "Search boost add-ons"
       searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
@@ -204,7 +205,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.business_name_d,
     ManageBusinessData.BusinessType.clinic_basic_info,
     ManageBusinessData.BusinessType.business_description_d,
-    -> baseActivity.startBusinessDescriptionEdit(session)
+    -> baseActivity.startBusinessProfileEdit(session)
     ManageBusinessData.BusinessType.ic_my_business_faqs -> baseActivity.startMobileSite(session, "https://www.getboost360.com/faqs/")
     ManageBusinessData.BusinessType.website_social_share_plugin -> baseActivity.startBoostExtension(session)
     ManageBusinessData.BusinessType.project_portfolio_d -> baseActivity.startListProjectAndTeams(session)
