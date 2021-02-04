@@ -15,7 +15,6 @@ import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
 import com.dashboard.pref.*
-import com.framework.utils.convertStringToList
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.floatMessage.MessageModel
@@ -23,7 +22,7 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
-import java.util.ArrayList
+import java.util.*
 
 
 const val VISITS_TYPE_STRING = "visits_type_string"
@@ -522,9 +521,9 @@ fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startBusinessDescriptionEdit(session: UserSessionManager?) {
+fun AppCompatActivity.startBusinessProfileEdit(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Business Description Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent("Business Profile Page", "startview", session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

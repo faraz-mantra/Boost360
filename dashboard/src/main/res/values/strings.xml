@@ -60,7 +60,8 @@
 
   <string name="add_missing_info_better_online_traction">Add missing info and improve your digital readiness\nscore above %s for better online traction.</string>
   <string name="site_completed">site completed</string>
-  <string name="your_site_health">Your Site Health</string>
+  <string name="your_site_health">Your site helth</string>
+  <string name="site_meter">Site Meter</string>
   <string name="navigation_data_error">Navigation data getting error!</string>
   <string name="quick_action_data_error">Quick action data getting error!</string>
   <string name="manage_business_not_found">Manage business data not found!</string>
@@ -77,4 +78,9 @@
   <string name="download_file_banner">Downloading the file...</string>
   <string name="opening_browser_banner">Opening in browser....</string>
   <string name="taking_video_banner">Taking you to the video....</string>
+  <string name="open_now">Open NOW</string>
+  <string name="close_now">Close NOW</string>
+  <string name="business_timings">Business timings</string>
+  <string name="contact_details">Contact details</string>
+  <string name="business_address">Business address</string>
 </resources>
