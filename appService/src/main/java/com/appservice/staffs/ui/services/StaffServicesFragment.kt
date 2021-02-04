@@ -59,8 +59,7 @@ class StaffServicesFragment() : AppBaseFragment<FragmentSelectServicesBinding, S
         ).observe(viewLifecycleOwner, {
             hideProgress()
             data = (it as ServiceListResponse).result!!.data!!
-            binding!!.ctvServicesCountTitle.text = "0/${data.size} service selected"
-            binding!!.ctvServicesCount.text = getString(R.string.confirm_services)
+            setServiceCount()
             this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data as ArrayList<DataItemService>, itemClickListener = this@StaffServicesFragment)
             binding?.rvServiceProvided?.adapter = adapter
             when {
@@ -105,8 +104,23 @@ class StaffServicesFragment() : AppBaseFragment<FragmentSelectServicesBinding, S
     }
 
     private fun setServiceCount() {
-        val serviceCount = "${listServices?.size}/${data.size} services selected"
-        val serviceConfirm = "CONFIRM ${listServices?.size} SERVICES"
+        val serviceMsg = getString(R.string.service_selected)
+        val servicesMsg = getString(R.string.services_selected)
+        val serviceButtonText = getString(R.string.service)
+        val servicesButtonText = getString(R.string.services)
+        var serviceCount = ""
+        var serviceConfirm = ""
+        when {
+            listServices?.size ?: 0 < 2 -> {
+                serviceCount = "${listServices?.size}/${data.size} $serviceMsg"
+                serviceConfirm = "CONFIRM ${listServices?.size} $serviceButtonText"
+            }
+            else->{
+                serviceCount = "${listServices?.size}/${data.size} $servicesMsg"
+                serviceConfirm = "CONFIRM ${listServices?.size} $servicesButtonText"
+            }
+        }
+
         binding!!.ctvServicesCountTitle.text = serviceCount
         binding!!.ctvServicesCount.text = serviceConfirm
     }
@@ -114,15 +128,11 @@ class StaffServicesFragment() : AppBaseFragment<FragmentSelectServicesBinding, S
     override fun onClick(v: View) {
         super.onClick(v)
         when (v) {
-            binding!!.flConfirmServices -> {
-                when {
-                    listServices?.size!! > 0 -> {
-                        val intent = Intent();
-                        intent.putExtra(IntentConstant.STAFF_SERVICES.name, listServices);
-                        requireActivity().setResult(AppCompatActivity.RESULT_OK, intent);
-                        requireActivity().finish();
-                    }
-                }
+            binding?.flConfirmServices -> {
+                val intent = Intent();
+                intent.putExtra(IntentConstant.STAFF_SERVICES.name, listServices);
+                requireActivity().setResult(AppCompatActivity.RESULT_OK, intent);
+                requireActivity().finish();
             }
         }
     }

@@ -2,7 +2,6 @@ package com.appservice.ui.catalog.common
 
 import android.content.Intent
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -70,7 +69,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
             }
             RecyclerViewActionType.CHECK_BOX_APPLY_ALL.ordinal -> {
                 item as AppointmentModel
-                applyOnAllDays(item);
+                applyOnAllDays(item)
                 adapter.notifyDataSetChanged()
             }
             RecyclerViewActionType.ADD_SESSION.ordinal -> {
@@ -90,15 +89,15 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
 
     private fun applyOnAllDaysTurnedOn(data: AppointmentModel) {
         for (i in 1 until defaultTimings.size) {
-            val item = defaultTimings[i];
-            item.isTurnedOn = true;
+            val item = defaultTimings[i]
+            item.isTurnedOn = true
             item.isViewEnabled = false
-            item.isDataAppliedOnMyDay = true;
+            item.isDataAppliedOnMyDay = true
             item.timeSlots = ArrayList()
             for (t in data.timeSlots) {
                 t.to = data.toTiming
                 t.from = data.fromTiming
-                item.timeSlots.add(t);
+                item.timeSlots.add(t)
             }
         }
     }
@@ -106,7 +105,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
 
     private fun applyOnAllDaysTurnedOff(data: AppointmentModel) {
         for (i in 1 until defaultTimings.size) {
-            val item = defaultTimings[i];
+            val item = defaultTimings[i]
             item.isTurnedOn = false
             item.isViewEnabled = true
             item.isDataAppliedOnMyDay = false
@@ -126,13 +125,16 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     }
 
     fun isValid(): Boolean {
-        //todo this portion is left
+        var i = 0
         this.defaultTimings.forEachIndexed { index, appointmentModel -> appointmentModel.timeSlots.forEach {  timeSlot ->
-            if (timeSlot.from==timeSlot.to){
+            if (timeSlot.from == timeSlot.to) {
                 showLongToast(getString(R.string.start_end_can_not_be_same))
                 return false
             }
-            if (appointmentModel.timeSlots[index].to==appointmentModel.timeSlots[index+1].from){
+            i = index
+            if (index == appointmentModel.timeSlots.size - 1)
+                i = index - 1
+            if (appointmentModel.timeSlots[i].to == appointmentModel.timeSlots.get(i + 1).from) {
                 showLongToast(getString(R.string.time_slots_gap))
                 return false
             }
@@ -145,9 +147,9 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
 
     private fun finishAndGoBack() {
         // send staff data to the intent
-                val intent = Intent();
-                intent.putExtra(IntentConstant.STAFF_TIMINGS.name, staffData);
-                requireActivity().setResult(AppCompatActivity.RESULT_OK, intent);
+        val intent = Intent()
+        intent.putExtra(IntentConstant.STAFF_TIMINGS.name, staffData)
+        requireActivity().setResult(AppCompatActivity.RESULT_OK, intent)
         baseActivity.finish()
     }
 

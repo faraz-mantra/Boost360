@@ -372,6 +372,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 servicesList?.forEach { dataItem -> serviceListId?.add(dataItem.id!!) }
                 if (staffDetails?.serviceIds == null) staffDetails?.serviceIds = arrayListOf()
                 staffDetails?.serviceIds = servicesList?.map { it.id }
+                if (staffDetails?.serviceIds.isNullOrEmpty()) staffDetails?.serviceIds =null
                 binding!!.ctvServices.text = (servicesList?.map { it.name })?.joinToString(", ", limit = 5, truncated = "5 more")
                 showHideServicesText()
             }
