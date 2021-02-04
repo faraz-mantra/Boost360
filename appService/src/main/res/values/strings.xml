@@ -390,6 +390,8 @@
   <string name="services_selected">services selected</string>
   <string name="service">SERVICE</string>
   <string name="services">SERVICES</string>
+    <string name="mark_as_active">MARK AS ACTIVE</string>
+  <string name="mark_as_inactive">MARK AS INACTIVE</string>
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>

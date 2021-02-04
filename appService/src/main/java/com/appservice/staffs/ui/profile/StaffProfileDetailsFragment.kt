@@ -3,9 +3,11 @@ package com.appservice.staffs.ui.profile
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
+import android.util.Size
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.PopupMenu
+import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.appservice.R
@@ -27,7 +29,8 @@ import com.framework.views.customViews.CustomTextView
 
 
 class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBinding, StaffViewModel>(), RecyclerItemClickListener {
-    private  var serviceIds: ArrayList<String>? = null
+    private var popupWindow: PopupWindow? = null
+    private var serviceIds: ArrayList<String>? = null
     private var staffDetails: StaffDetailsResult? = null
     override fun getLayout(): Int {
         return R.layout.fragment_staff_profile
@@ -109,7 +112,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
     private fun getTimeView(appointmentModel: AppointmentModel): View {
         val itemView = LayoutInflater.from(binding?.llTimingContainer?.context).inflate(R.layout.recycler_item_service_timing, null, false);
         val timeTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
-        timeTextView.text = "${appointmentModel.day}${appointmentModel.timeSlots.joinToString(", ").removeSurrounding("[", "]")}"
+        timeTextView.text = "${appointmentModel.day}  ${appointmentModel.timeSlots.joinToString(" ,").removeSurrounding("(", ")")}"
         return itemView;
     }
 
@@ -151,7 +154,14 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
         super.onClick(v)
         when (v) {
             binding!!.civMenu -> {
-                showPopUp(binding!!.civMenu)
+                when (this.popupWindow?.isShowing) {
+                    true -> {
+                        this.popupWindow?.dismiss()
+                    }
+                    null, false -> {
+                        showPopupWindow(binding!!.civMenu)
+                    }
+                }
             }
             binding!!.ctvEdit -> {
                 val bundle = Bundle()
@@ -197,31 +207,49 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
                 }
             }
         })
-     }
-
-    private fun showPopUp(view: View) {
-        val popupMenu = PopupMenu(activity, view)
-        // inflate the layout of the popup window
-        // inflate the layout of the popup window
-        val inflater = LayoutInflater.from(baseActivity)
-        val popupView = inflater.inflate(R.layout.popup_window, null)
-        popupMenu.show()
-
-        popupMenu.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.action_menu_inactive -> {
-                    staffDetails?.isAvailable = false
-                    updateStaffProfile()
-                }
-                R.id.action_menu_remove_staff -> {
-                    showProgress(getString(R.string.removing_staff))
-                    removeStaffProfile()
-
-                }
-            }
-            true
-        }
     }
+
+    private fun showPopupWindow(anchor: View) {
+        if (this.popupWindow == null) this.popupWindow = PopupWindow(anchor.context)
+        this.popupWindow?.isOutsideTouchable = true
+        val inflater = LayoutInflater.from(anchor.context)
+        this.popupWindow?.contentView = inflater.inflate(R.layout.popup_window, null).apply {
+            measure(
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+            )
+        }
+        val markAsActive = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.mark_as_active)
+        val markAsInactive = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.mark_as_inactive)
+        markAsActive?.setOnClickListener {
+            staffDetails?.isAvailable = true
+            markActiveInActive()
+        }
+        markAsInactive?.setOnClickListener {
+            staffDetails?.isAvailable = false
+            markActiveInActive()
+
+
+        }
+        // Absolute location of the anchor view
+        val location = IntArray(2)
+        anchor.getLocationOnScreen(location)
+
+        Size(
+                popupWindow?.contentView?.measuredWidth!!,
+                popupWindow?.contentView?.measuredHeight!!
+        )
+        popupWindow?.setBackgroundDrawable(resources.getDrawable(R.drawable.pop_window_background))
+        this.popupWindow?.showAsDropDown(anchor, -130, 60, Gravity.END)
+
+
+    }
+
+    private fun markActiveInActive() {
+        updateStaffProfile()
+        popupWindow?.dismiss()
+    }
+
 
     private fun removeStaffProfile() {
         viewModel?.deleteStaffProfile(StaffDeleteImageProfileRequest(staffDetails?.id, UserSession.fpId))?.observe(viewLifecycleOwner, { response ->
