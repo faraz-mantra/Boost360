@@ -20,6 +20,7 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.model.*
 import com.appservice.staffs.ui.Constants
 import com.appservice.staffs.ui.UserSession
+import com.appservice.staffs.ui.bottomsheets.InActiveBottomSheet
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.common.AppointmentModel
@@ -90,6 +91,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
                     binding?.ctvAboutStaff?.text = staffDetails?.description
                     let { activity?.glideLoad(binding?.civStaffProfileImg!!, staffDetails?.image.toString(), R.drawable.placeholder_image) }
                     binding?.ctvSpecialization?.text = staffDetails?.specialisations?.get(0)?.value
+                    if (staffDetails?.isAvailable==false) showInactiveProfile()
                     fetchServices()
                     setTimings()
                 }
@@ -244,6 +246,17 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
 
 
     }
+
+    private fun showInactiveProfile() {
+        val inActiveBottomSheet = InActiveBottomSheet()
+        inActiveBottomSheet.onClicked = {
+            staffDetails?.isAvailable = true
+            updateStaffProfile()
+        }
+        inActiveBottomSheet.isCancelable = false
+        inActiveBottomSheet.show(this@StaffProfileDetailsFragment.parentFragmentManager, InActiveBottomSheet::class.java.name)
+    }
+
 
     private fun markActiveInActive() {
         updateStaffProfile()
