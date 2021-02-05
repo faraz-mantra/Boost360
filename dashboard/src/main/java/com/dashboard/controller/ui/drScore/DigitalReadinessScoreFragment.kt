@@ -31,6 +31,7 @@ import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
 import com.framework.utils.saveData
 import com.framework.views.dotsindicator.OffsetPageTransformer
+import com.google.android.material.snackbar.Snackbar
 import com.inventoryorder.model.floatMessage.MessageModel
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
 import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
@@ -80,32 +81,34 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       val response = it as? DrScoreUiDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         FirestoreManager.getDrScoreData()?.let { drScoreData ->
-          isHigh = (drScoreData.getDrsTotal() >= 80)
-          val drScoreSetupList = drScoreData.getDrScoreData(response.data)
-          drScoreSetupList.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }
-          if (adapterPager == null) {
-            binding?.pagerBusinessContentSetup?.apply {
-              adapterPager = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList, this@DigitalReadinessScoreFragment)
-              offscreenPageLimit = 3
-              clipToPadding = false
-              setPadding(34, 0, 34, 0)
-              adapter = adapterPager
-              currentItem = position
-              binding?.dotBusinessContentSetup?.setViewPager2(this)
-              setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-            }
-          } else adapterPager?.notify(drScoreSetupList)
-
           binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "90%")
           binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
           binding?.txtPercentage?.text = "${drScoreData.getDrsTotal()}%"
           binding?.progressBar?.progress = drScoreData.getDrsTotal()
           binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+          if (drScoreData.drs_segment.isNullOrEmpty().not()) {
+            isHigh = (drScoreData.getDrsTotal() >= 80)
+            val drScoreSetupList = drScoreData.getDrScoreData(response.data)
+            drScoreSetupList.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }
+            if (adapterPager == null) {
+              binding?.pagerBusinessContentSetup?.apply {
+                adapterPager = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList, this@DigitalReadinessScoreFragment)
+                offscreenPageLimit = 3
+                clipToPadding = false
+                setPadding(34, 0, 34, 0)
+                adapter = adapterPager
+                currentItem = position
+                binding?.dotBusinessContentSetup?.setViewPager2(this)
+                setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+              }
+            } else adapterPager?.notify(drScoreSetupList)
+          } else Snackbar.make(binding?.root!!, getString(R.string.error_dr_score), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
         }
       } else showShortToast("Getting error digital readiness!")
     })
 
   }
+
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
@@ -134,7 +137,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
         //TODO
       }
       DrScoreItem.DrScoreItemType.boolean_add_business_hours -> {
-        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS) == "TIMINGS") baseActivity.startBusinessHours(session)
+        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS) == "TIMINGS") baseActivity.startBusinessHours(session)
         else alertDialogBusinessHours()
       }
       DrScoreItem.DrScoreItemType.boolean_add_contact_details -> {
@@ -156,7 +159,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
         baseActivity.startMyBankAccount(session)
       }
       DrScoreItem.DrScoreItemType.boolean_image_uploaded_to_gallery -> {
-        baseActivity.startAddImageGallery(session,false)
+        baseActivity.startAddImageGallery(session, false)
       }
       DrScoreItem.DrScoreItemType.boolean_create_custom_page -> {
         baseActivity.startCustomPage(session, false)
