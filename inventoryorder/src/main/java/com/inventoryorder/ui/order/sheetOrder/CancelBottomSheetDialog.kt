@@ -32,7 +32,7 @@ class CancelBottomSheetDialog : BaseBottomSheetDialog<BottomSheetCancelOrderBind
       val radioButton: View = group.findViewById(checkedId)
       cancellingEntity= when (radioButton){
         binding?.radioCustomer -> OrderItem.CancellingEntity.BUYER.name
-        else -> OrderItem.CancellingEntity.BUYER.name
+        else -> OrderItem.CancellingEntity.SELLER.name
       }
     }
   }

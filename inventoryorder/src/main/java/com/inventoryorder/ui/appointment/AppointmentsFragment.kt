@@ -349,6 +349,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentBottomSheetDialog::class.java.name)
       }*/
       OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT -> {
+        this.orderItem = orderItem
         val sheetCancel = CancelBottomSheetDialog()
         sheetCancel.setData(orderItem)
         sheetCancel.onClicked = this@AppointmentsFragment::apiCancelOrder
