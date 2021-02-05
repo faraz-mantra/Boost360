@@ -1,6 +1,5 @@
 package com.inventoryorder.model.ordersdetails
 
-import android.util.Log
 import com.framework.utils.DateUtils
 import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.model.product.Product
@@ -8,7 +7,6 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 data class ItemN(
         var ActualPrice: Double? = null,

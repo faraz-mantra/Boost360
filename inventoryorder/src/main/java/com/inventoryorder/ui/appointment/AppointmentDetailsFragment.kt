@@ -4,32 +4,56 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.WindowManager
+import android.widget.PopupWindow
 import android.widget.Toast
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
+import com.appsflyer.Foreground.listener
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
+import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
+import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentAppointmentDetailsBinding
+import com.inventoryorder.model.OrderConfirmStatus
+import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.bottomsheet.LocationsModel
+import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
+import com.inventoryorder.model.orderRequest.extraProperty.ExtraPropertiesOrder
 import com.inventoryorder.model.ordersdetails.OrderItem
+import com.inventoryorder.model.ordersummary.OrderMenuModel
+import com.inventoryorder.model.ordersummary.OrderSummaryModel
+import com.inventoryorder.model.product.Product
+import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
+import com.inventoryorder.recyclerView.BaseRecyclerViewItem
+import com.inventoryorder.recyclerView.RecyclerItemClickListener
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.order.sheetOrder.CancelBottomSheetDialog
+import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.capitalizeUtil
 import com.squareup.picasso.Picasso
 import java.util.*
 
 
-class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDetailsBinding>() {
+class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDetailsBinding>(), RecyclerItemClickListener {
 
   private var locationsBottomSheetDialog: LocationBottomSheetDialog? = null
   private var orderItem: OrderItem? = null
   private var serviceLocationsList = LocationsModel().getData()
   private var isRefresh: Boolean? = null
+  lateinit var mPopupWindow: PopupWindow
   private var productList: ArrayList<ProductResponse>? = null
 
   companion object {
@@ -131,7 +155,13 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
       binding?.textServiceName?.text = order?.firstItemForConsultation()?.product()?.Name
      // binding?.textDate?.text = order?.firstItemForConsultation()?.product()?.extraItemProductConsultation()?.scheduledDateTime
-      binding?.textDate?.text = DateUtils.parseDate(order?.firstItemForConsultation()?.product()?.extraItemProductConsultation()?.scheduledDateTime, DateUtils.FORMAT_SERVER_1_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_4, timeZone = TimeZone.getTimeZone("IST"))
+
+      var appointmentDate = java.lang.StringBuilder(DateUtils.parseDate(order?.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.startTime(), DateUtils.FORMAT_HH_MM, DateUtils.FORMAT_HH_MM_A) ?: "") /*"${} on ${}"*/
+      if (!DateUtils.parseDate(order?.firstItemForConsultation()?.product()?.extraItemProductConsultation()?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5, timeZone = TimeZone.getTimeZone("IST")).isNullOrEmpty()) {
+        appointmentDate.append(" on ${DateUtils.parseDate(order?.firstItemForConsultation()?.product()?.extraItemProductConsultation()?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5, timeZone = TimeZone.getTimeZone("IST"))}")
+      }
+      binding?.textDate?.text =  appointmentDate
+
       binding?.textStaff?.text = if (!order?.firstItemForConsultation()?.product()?.extraItemProductConsultation()?.staffName.isNullOrBlank())  "Staff : ${order?.firstItemForConsultation()?.product()?.extraItemProductConsultation()?.staffName}" else ""
       binding?.textAppointmentAmount?.text = "${order?.firstItemForConsultation()?.product()?.CurrencyCode} ${order?.firstItemForConsultation()?.product()?.price()}"
 
@@ -151,27 +181,167 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
         var address = StringBuilder()
 
         if (order?.BuyerDetails?.Address?.AddressLine1.isNullOrBlank().not()) {
-          address.append("${order?.BuyerDetails?.Address?.AddressLine1 ?: ""}, ")
+          address.append("${order?.BuyerDetails?.Address?.AddressLine1 ?: ""}")
         }
 
         if (order?.BuyerDetails?.Address?.AddressLine2.isNullOrBlank().not()) {
-          address.append("${order?.BuyerDetails?.Address?.AddressLine2 ?: ""}, ")
+          address.append(", ${order?.BuyerDetails?.Address?.AddressLine2 ?: ""}")
         }
 
         if (order?.BuyerDetails?.Address?.City.isNullOrBlank().not()) {
-          address.append("${order?.BuyerDetails?.Address?.City ?: ""} ")
+          address.append(", ${order?.BuyerDetails?.Address?.City ?: ""} ")
         }
 
-        binding?.textAddrValue?.text = address
+        if (address.isNullOrEmpty()) {
+          binding?.groupCustomerAddress?.visibility = View.GONE
+        } else {
+          binding?.textAddrValue?.text = address
+        }
       }
 
-      // setToolbarTitle("# ${order.ReferenceNumber}")
-     // checkStatusOrder(order)
-     // setOrderDetails(order)
-     /* (order.Items?.map {
-        it.recyclerViewType = RecyclerViewItemType.BOOKING_DETAILS.getLayout();it
-      } as? ArrayList<ItemN>)?.let { setAdapter(it) }*/
+      setButtonStatus(order)
     }
+
+    private fun setButtonStatus(order: OrderItem) {
+      //settings up button
+      var colorCode = "#4a4a4a"
+      val btnStatusMenu = order.appointmentButtonStatus()
+      binding?.lytStatusBtn?.visible()
+      if (btnStatusMenu.isNullOrEmpty().not()) {
+        when (val btnOrderMenu = btnStatusMenu.removeAt(0)) {
+          OrderMenuModel.MenuStatus.CONFIRM_APPOINTMENT -> {
+            colorCode = "#f16629"
+            changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
+          }
+          OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {
+            colorCode = "#f16629"
+            changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
+          }
+          OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT -> {
+            colorCode = "#9B9B9B"
+            changeButtonStatus(btnOrderMenu.title, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
+          }
+          OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> {
+            colorCode = "#FFB900"
+            changeButtonStatus(btnOrderMenu.title, R.drawable.ic_confirmed_order_btn_bkg, R.color.orange, R.drawable.ic_arrow_down_orange)
+          }
+          OrderMenuModel.MenuStatus.CUSTOMER_SERVED -> {
+            colorCode = "#52AAC6"
+            changeButtonStatus(btnOrderMenu.title, R.drawable.ic_in_transit_order_btn_bkg, R.color.blue_52AAC6, R.drawable.ic_arrow_down_blue)
+          }
+          else -> binding?.lytStatusBtn?.gone()
+        }
+        binding?.tvDropdownOrderStatus?.setOnClickListener { onButtonClicked(orderItem!!) }
+      } else binding?.lytStatusBtn?.gone()
+
+      if (btnStatusMenu.isNullOrEmpty()) {
+        binding?.divider?.gone()
+        binding?.ivDropdown?.gone()
+      } else {
+        binding?.ivDropdown?.setOnClickListener { popUpMenuButton(it) }
+        binding?.divider?.visible()
+        binding?.ivDropdown?.visible()
+      }
+
+      OrderSummaryModel.OrderStatus.from(order.status())?.let {
+        when (it) {
+          OrderSummaryModel.OrderStatus.ORDER_CANCELLED -> {
+            // changeBackground(View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey, R.color.primary_grey)
+            // binding.btnConfirm.gone()
+          }
+          else -> {
+            //changeBackground(View.VISIBLE, View.GONE, R.drawable.ic_apt_order_bg, R.color.watermelon_light, R.color.light_green)
+            // checkConfirmBtn(order)
+          }
+        }
+      }
+    }
+
+    private fun onButtonClicked(item: OrderItem) {
+      if (((item as? OrderItem)?.Status?.equals("ORDER_CONFIRMED")) == true) {
+        this.orderItem = item
+        val sheetCancel = CancelBottomSheetDialog()
+        sheetCancel.setData(item)
+        sheetCancel.onClicked = this@AppointmentDetailsFragment::apiCancelOrder
+        sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
+      } else {
+        apiConfirmOrder(item)
+      }
+    }
+
+  private fun popUpMenuButton(view: View) {
+    val list = OrderMenuModel().getAppointmentMenu(orderItem)
+    if (list.isNotEmpty()) list.removeAt(0)
+    val orderMenuView: View = LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
+    val rvOrderMenu: RecyclerView? = orderMenuView.findViewById(R.id.rv_menu_order)
+    rvOrderMenu?.apply {
+      val adapterMenu = AppBaseRecyclerViewAdapter(baseActivity, list, this@AppointmentDetailsFragment)
+      adapter = adapterMenu
+    }
+    mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
+    mPopupWindow.showAsDropDown(view, 0, 0)
+  }
+
+  private fun apiCancelOrder(cancellingEntity: String, reasonText: String) {
+    showProgress()
+    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, Observer {
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        hideProgress()
+        return@Observer
+      }
+      if (it.isSuccess()) {
+        isRefresh = true
+        val data = it as? OrderConfirmStatus
+        if (reasonText.isNotEmpty()) {
+          updateReason(resources.getString(R.string.order_cancel), UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name, ExtraPropertiesOrder(cancellationRemark = reasonText))
+        } else {
+          apiGetOrderDetails(this.orderItem?._id ?: "")
+          showLongToast(resources.getString(R.string.order_cancel))
+        }
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
+  }
+
+  private fun apiConfirmOrder(order: OrderItem) {
+    showProgress()
+    viewModel?.confirmOrder(clientId, order?._id)?.observeOnce(viewLifecycleOwner, Observer {
+      hideProgress()
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (it.status == 200 || it.status == 201 || it.status == 202) {
+        isRefresh = true
+        val data = it as? OrderConfirmStatus
+        showLongToast(getString(R.string.appointment_confirmed))
+        orderItem?.Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
+        setButtonStatus(orderItem!!)
+      }
+    })
+  }
+
+  private fun updateReason(message: String, type: String, extraPropertiesOrder: ExtraPropertiesOrder) {
+    val propertyRequest = UpdateOrderNPropertyRequest(updateExtraPropertyType = type,
+            existingKeyName = "", orderId = this.orderItem?._id, extraPropertiesOrder = extraPropertiesOrder)
+    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) showLongToast(message)
+      apiGetOrderDetails(this.orderItem?._id ?: "")
+    })
+  }
+
+  fun getBundleData(): Bundle? {
+    isRefresh?.let {
+      val bundle = Bundle()
+      bundle.putBoolean(IntentConstant.IS_REFRESH.name, it)
+      return bundle
+    }
+    return null
+  }
+
 
   /*  private fun checkStatusOrder(order: OrderItem) {
       if (order.isConfirmActionBtn()) {
@@ -390,5 +560,66 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     binding?.mainView?.gone()
     binding?.error?.visible()
     binding?.error?.text = message
+  }
+
+  private fun changeButtonStatus(btnTitle: String, @DrawableRes buttonBkg: Int, @ColorRes dropDownDividerColor: Int, @DrawableRes resId: Int) {
+    activity?.let {
+      binding?.tvDropdownOrderStatus?.text = btnTitle
+      binding?.tvDropdownOrderStatus?.visibility = View.VISIBLE
+      binding?.tvDropdownOrderStatus?.setTextColor(ContextCompat.getColor(it, dropDownDividerColor))
+      binding?.lytStatusBtn?.background = ContextCompat.getDrawable(it, buttonBkg)
+      binding?.divider?.setBackgroundColor(ContextCompat.getColor(it, dropDownDividerColor))
+      binding?.ivDropdown?.setImageResource(resId)
+      //DrawableCompat.setTint(binding.ivDropdownOrderStatus.drawable, ContextCompat.getColor(it.applicationContext, dropDownArrowColor))
+    }
+  }
+
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.ORDER_DROPDOWN_CLICKED.ordinal -> {
+        if (::mPopupWindow.isInitialized && mPopupWindow.isShowing) mPopupWindow.dismiss()
+        val orderMenu = OrderMenuModel.MenuStatus.from((item as? OrderMenuModel)?.type) ?: return
+        clickActionOrderButton(orderMenu, this.orderItem!!)
+      }
+    }
+  }
+
+  private fun clickActionOrderButton(orderMenu: OrderMenuModel.MenuStatus, orderItem: OrderItem) {
+    when (orderMenu) {
+      /* OrderMenuModel.MenuStatus.CONFIRM_ORDER -> {
+         val sheetConfirm = ConfirmBottomSheetDialog()
+         sheetConfirm.setData(orderItem)
+         sheetConfirm.onClicked = { apiConfirmOrder(it) }
+         sheetConfirm.show(this.parentFragmentManager, ConfirmBottomSheetDialog::class.java.name)
+       }
+       OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {
+         val sheetRequestPayment = RequestPaymentBottomSheetDialog()
+         sheetRequestPayment.setData(orderItem)
+         sheetRequestPayment.onClicked = {
+           showProgress()
+           sendPaymentLinkOrder(getString(R.string.payment_request_send))
+         }
+         sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentBottomSheetDialog::class.java.name)
+       }*/
+      OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT -> {
+        val sheetCancel = CancelBottomSheetDialog()
+        sheetCancel.setData(orderItem)
+        sheetCancel.onClicked = this@AppointmentDetailsFragment::apiCancelOrder
+        sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
+      }
+      /*  OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> markCodPaymentRequest()
+        OrderMenuModel.MenuStatus.MARK_AS_DELIVERED -> {
+          val sheetDelivered = DeliveredBottomSheetDialog()
+          sheetDelivered.setData(orderItem)
+          sheetDelivered.onClicked = { deliveredOrder(it) }
+          sheetDelivered.show(this.parentFragmentManager, DeliveredBottomSheetDialog::class.java.name)
+        }
+        OrderMenuModel.MenuStatus.MARK_AS_SHIPPED -> {
+          val sheetShipped = ShippedBottomSheetDialog()
+          sheetShipped.setData(orderItem)
+          sheetShipped.onClicked = { shippedOrder(it) }
+          sheetShipped.show(this.parentFragmentManager, ShippedBottomSheetDialog::class.java.name)
+        }*/
+    }
   }
 }

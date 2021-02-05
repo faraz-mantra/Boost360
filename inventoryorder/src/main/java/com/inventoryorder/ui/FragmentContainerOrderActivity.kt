@@ -296,12 +296,12 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
 
   override fun onBackPressed() {
     //TODO : uncomment after new UI implementation
-   /* val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData() ?: bookingSuccessfulFragment?.getBundleData()
+    val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?: videoConsultDetailsFragment?.getBundleData() ?: bookingSuccessfulFragment?.getBundleData()
     bundle?.let {
       val intent = Intent()
       intent.putExtra(IntentConstant.RESULT_DATA.name, it)
       setResult(RESULT_OK, intent)
-    }*/
+    }
     super.onBackPressed()
   }
 }
