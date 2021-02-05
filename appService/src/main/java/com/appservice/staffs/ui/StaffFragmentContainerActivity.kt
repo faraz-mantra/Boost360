@@ -3,8 +3,10 @@ package com.appservice.staffs.ui
 import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -45,11 +47,12 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
     override fun getToolbarTitleGravity(): Int {
         return when (fragmentType) {
-            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> Gravity.START
+            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT,FragmentType.STAFF_TIMING_FRAGMENT,FragmentType.STAFF_SELECT_SERVICES_FRAGMENT ,FragmentType.STAFF_PROFILE_LISTING_FRAGMENT-> Gravity.START
             else -> super.getToolbarTitleGravity()
         }
 
     }
+
 
     override fun getViewModelClass(): Class<BaseViewModel> {
         return BaseViewModel::class.java
@@ -70,7 +73,14 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
         }
     }
-
+    fun changeTheme(color: Int) {
+        getToolbar()?.setBackgroundColor(ContextCompat.getColor(this, color))
+        window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window?.statusBarColor = ContextCompat.getColor(this, color)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         when (intent.extras) {
@@ -86,22 +96,29 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
         super.onCreate(savedInstanceState)
     }
 
-    public override fun getToolbar(): CustomToolbar {
+     override fun getToolbar(): CustomToolbar {
         return when (fragmentType) {
+            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT->{
+                val toolbar = binding!!.appBarLayout.toolbar
+                toolbar.contentInsetStartWithNavigation = 0
+                toolbar
+            }
             else -> binding!!.appBarLayout.toolbar
         }
     }
 
-    override fun getToolbarTitleSize(): Float {
-        return resources.getDimension(R.dimen.body_2)
+    override fun getToolbarTitleSize(): Float? {
+        return resources.getDimension(R.dimen.heading_7)
     }
 
-
+    override fun getNavIconScale(): Float {
+        return 0.9f
+    }
     override fun customTheme(): Int? {
         return when (fragmentType) {
-            FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT, FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> R.style.AppTheme_staff_home
-            FragmentType.STAFF_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT,
-            FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT,
+            FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT,      FragmentType.STAFF_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT,
+            FragmentType.STAFF_SELECT_SERVICES_FRAGMENT,FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> R.style.AppTheme_staff_home
+        FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT,
             -> R.style.AppTheme_staff_details
             else -> super.customTheme()
         }
@@ -109,7 +126,9 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
     override fun getToolbarBackgroundColor(): Int? {
         return when (fragmentType) {
-            FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT, FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> ContextCompat.getColor(this, R.color.yellow_ffb900)
+            FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT, FragmentType.STAFF_PROFILE_LISTING_FRAGMENT,
+            FragmentType.STAFF_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT,
+            FragmentType.STAFF_SELECT_SERVICES_FRAGMENT,FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> ContextCompat.getColor(this, R.color.yellow_ffb900)
             else -> super.getToolbarBackgroundColor()
         }
     }
@@ -124,7 +143,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     }
 
     override fun getNavigationIcon(): Drawable? {
-        return ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+        return ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_toolbar_d)
     }
 
     private fun shouldAddToBackStack(): Boolean {

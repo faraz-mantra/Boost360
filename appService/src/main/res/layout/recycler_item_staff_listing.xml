@@ -4,12 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data />
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/size_8"
+    app:cardCornerRadius="@dimen/size_0"
+    app:cardElevation="@dimen/size_1"
+    app:cardUseCompatPadding="false">
 
     <LinearLayout
         android:id="@+id/linear_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/size_8"
         android:background="@color/white"
         android:orientation="horizontal"
         android:paddingVertical="@dimen/size_8"
@@ -103,4 +109,6 @@
             android:textFontWeight="600"
             android:textStyle="normal" />
     </LinearLayout>
+</androidx.cardview.widget.CardView>
+
 </layout>

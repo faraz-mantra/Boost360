@@ -13,7 +13,7 @@
                 </shape>
             </item>
 
-            <item android:drawable="@drawable/ic_arrow_down_grey" android:gravity="center|right">
+            <item android:drawable="@drawable/ic_arrow_down_grey_staff" android:gravity="center|right">
 
             </item>
 

@@ -28,8 +28,15 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
 
         binding.toggleOnOff.isEnabled = data.isViewEnabled ?: true
         when (data.isTurnedOn) {
-            false -> binding.layoutSessionCreate.visibility = View.GONE
-            true -> binding.layoutSessionCreate.visibility = View.VISIBLE
+            false -> {
+                binding.layoutSessionCreate.visibility = View.GONE
+                binding.rlRoot.background = null
+            }
+            true -> {
+                binding.layoutSessionCreate.visibility = View.VISIBLE
+                binding.rlRoot.setBackgroundResource(R.drawable.rounded_stroke_grey)
+            }
+
         }
         when (data.isDataAppliedOnMyDay!! && data.isTurnedOn!!) {
             true -> binding.layoutSessionCreate.visibility = View.GONE

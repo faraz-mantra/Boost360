@@ -11,20 +11,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/ctv_text_header"
+        <com.framework.views.customViews.CustomCardView
+            android:id="@+id/ccv_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:text="@string/business_hours_timing"
-            android:paddingStart="@dimen/size_20"
-            android:paddingTop="@dimen/size_20"
-            android:textColor="@color/black"
-            android:paddingEnd="@dimen/size_20"
-            android:paddingBottom="@dimen/size_20"
+            app:cardCornerRadius="@dimen/size_0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/ctv_text_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingStart="@dimen/size_20"
+                android:paddingTop="@dimen/size_20"
+                android:paddingEnd="@dimen/size_20"
+                android:paddingBottom="@dimen/size_20"
+                android:text="@string/business_hours_timing"
+                android:textColor="@color/black" />
+        </com.framework.views.customViews.CustomCardView>
+
 
         <com.framework.views.viewgroups.BaseRecyclerView
             android:id="@+id/rv_staff_timing"
@@ -36,7 +44,7 @@
             android:layout_marginBottom="@dimen/size_16"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/btn_save"
-            app:layout_constraintTop_toBottomOf="@+id/ctv_text_header"
+            app:layout_constraintTop_toBottomOf="@+id/ccv_header"
             tools:itemCount="7"
             tools:listitem="@layout/recycler_item_session" />
 
@@ -47,12 +55,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginHorizontal="@dimen/size_16"
-            android:background="@drawable/bg_button_proceed"
+            android:background="@drawable/bg_button_proceed_radius_4dp"
             android:clickable="false"
             android:drawablePadding="@dimen/size_6"
             android:fontFamily="@font/semi_bold"
             android:gravity="center"
-            android:text="@string/save_amp_publish"
+            android:stateListAnimator="@null"
+            android:text="@string/save"
             android:textAllCaps="true"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

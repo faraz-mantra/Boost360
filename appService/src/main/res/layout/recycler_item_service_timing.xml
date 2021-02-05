@@ -20,15 +20,12 @@
             android:src="@drawable/ic_dot_green" />
 
         <com.framework.views.customViews.CustomTextView
+            style="@style/StaffProfileTextContent"
             android:id="@+id/ctv_timing_services"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/open_sans"
             android:maxLines="1"
             android:paddingStart="@dimen/size_8"
-            android:textColor="@color/gray_4e4e4e"
-            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/customImageView" />
     </androidx.appcompat.widget.LinearLayoutCompat>

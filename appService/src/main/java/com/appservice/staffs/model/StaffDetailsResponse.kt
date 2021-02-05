@@ -25,7 +25,7 @@ data class StaffDetailsResult(
         var serviceIds: List<String?>? = null,
 
 		@field:SerializedName("Experience")
-		val experience: Int? = null,
+		var experience: Int? = null,
 
 		@field:SerializedName("TileImageUrl")
 		val tileImageUrl: String? = null,

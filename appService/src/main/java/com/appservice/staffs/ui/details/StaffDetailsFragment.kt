@@ -2,7 +2,6 @@ package com.appservice.staffs.ui.details
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -10,12 +9,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -24,12 +25,14 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentStaffDetailsBinding
 import com.appservice.staffs.model.*
 import com.appservice.staffs.ui.Constants
+import com.appservice.staffs.ui.StaffFragmentContainerActivity
 import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.staffs.widgets.ExperienceBottomSheet
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.appservice.utils.cast
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
@@ -47,7 +50,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     private var isAvailable: Boolean? = false
     private lateinit var yearOfExperience: String
     private lateinit var staffDescription: String
-    private var staffAge: Int? = 0
+    private var staffAge: Int? = null
     private lateinit var staffName: String
     private lateinit var specializationList: ArrayList<SpecialisationsItem>
     private var serviceListId: ArrayList<String>? = null
@@ -86,12 +89,21 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         staffDetails = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
         isEdit = (staffDetails != null && staffDetails?.id.isNullOrEmpty().not())
         when {
-            isEdit!! -> updatePreviousData()
+            isEdit!! -> {
+                updatePreviousData()
+                (requireActivity() as StaffFragmentContainerActivity).getToolbar().getTitleTextView()?.gravity = Gravity.START
+
+            }
+            isEdit == false -> {
+                (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = getColor(R.color.color_primary_dark)
+                (requireActivity() as StaffFragmentContainerActivity).getToolbar().setBackgroundColor(resources.getColor(R.color.color_primary))
+            }
         }
         if (staffDetails == null) {
             staffDetails = StaffDetailsResult()
         }
     }
+
 
     private fun updatePreviousData() {
         val specialisations = staffDetails?.specialisations
@@ -105,7 +117,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         binding?.ctvTiming?.text = staffDetails?.timings?.map { it.day }?.joinToString(" ,")
         if (specialisations?.isNullOrEmpty() == false)
             binding?.etvSpecialization?.setText(specialisations[0]?.value)
-        binding?.edtExperience?.setText(staffDetails?.experience.toString())
+        setExperience()
         binding?.btnSave?.text = getString(R.string.update)
         binding?.toggleIsAvailable?.isOn = staffDetails?.isAvailable!!
         if (resultCode != AppCompatActivity.RESULT_OK) setServicesList()
@@ -118,6 +130,17 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         }
     }
 
+    private fun setExperience() {
+        when {
+            staffDetails?.experience!! < 2 -> {
+                binding?.edtExperience?.setText("${staffDetails?.experience} Year")
+            }
+            else -> {
+                binding?.edtExperience?.setText("${staffDetails?.experience} Years")
+            }
+        }
+    }
+
     private fun showHideServicesText() {
         when (staffDetails?.serviceIds?.size ?: 0 > 0) {
             true -> binding?.ctvServices?.visibility = View.VISIBLE
@@ -127,7 +150,12 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
     private fun openExperienceDetail() {
         val experienceSheet = ExperienceBottomSheet()
-        experienceSheet.onClicked = { binding?.edtExperience?.setText("$it") }
+        experienceSheet.onClicked = {
+            yearOfExperience = it.toString()
+            staffDetails?.experience = it
+            staffProfile?.experience = it
+            setExperience()
+        }
         experienceSheet.show(this@StaffDetailsFragment.parentFragmentManager, ExperienceBottomSheet::class.java.name)
     }
 
@@ -176,6 +204,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     private fun updateStaffImage() {
         showProgress(getString(R.string.uploading_image))
         viewModel?.updateStaffImage(StaffUpdateImageRequest(staffDetails?.id, staffImage))?.observeOnce(viewLifecycleOwner, Observer {
+            hideProgress()
             when (it.status) {
                 200 -> {
                 }
@@ -213,11 +242,11 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         this.specialization = binding?.etvSpecialization?.text.toString()
         this.serviceListId = ArrayList()
         this.specializationList = ArrayList()
+        yearOfExperience = staffDetails?.experience.toString()
         this.staffName = binding?.etvName?.text.toString()
         this.staffAge = binding?.cetAge?.text.toString().toIntOrNull()
         this.staffDescription = binding?.etvStaffDescription?.text.toString()
         val staffGender = binding?.spinnerGender?.isHintSelected()
-        this.yearOfExperience = binding?.edtExperience?.text.toString()
         this.isAvailable = binding?.toggleIsAvailable?.isOn
         if (staffName.isBlank()) {
             showLongToast(getString(R.string.enter_staff_name))
@@ -233,6 +262,9 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             return false
         } else if (staffAge == null) {
             showLongToast(getString(R.string.please_enter_your_age))
+            return false
+        } else if (staffAge == 0 || staffAge ?: 0 < 100) {
+            showLongToast(getString(R.string.please_enter_valid_age))
             return false
         } else if (imageUri.toString() == "null" || imageUri == null || imageUri.toString().isEmpty() || imageUri.toString().isBlank()) {
             showLongToast(getString(R.string.please_choose_image))
@@ -414,10 +446,8 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         this.imageUri = Uri.parse(mPaths[0])
         let { activity?.glideLoad(binding?.civStaffImg!!, imageUri.toString(), R.drawable.ic_staff_img_blue) }
         binding?.ctvImgChange?.text = getString(R.string.change_picture)
+        binding?.ctvImgChange?.visibility = View.VISIBLE
         binding?.ctvImgChange?.setTextColor(getColor(R.color.black_4a4a4a))
-        binding?.ctvImgChange?.setBackgroundColor(Color.WHITE)
-        binding?.flAddStaffImg?.setPadding(2, 2, 2, 2)
-        binding?.flAddStaffImg?.backgroundTintList = ColorStateList.valueOf(getColor(R.color.gray_light_4))
 
     }
 
