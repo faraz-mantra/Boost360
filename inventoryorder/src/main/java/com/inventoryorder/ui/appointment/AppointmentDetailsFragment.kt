@@ -94,9 +94,8 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
   }
 
   private fun emailCustomer(email: String) {
-    val i = Intent(Intent.ACTION_SEND)
-    i.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-    i.setType("message/rfc822");
+    val i = Intent(Intent.ACTION_SENDTO)
+    i.data = Uri.parse("mailto:${email}")
     try {
       startActivity(i)
     } catch (ex: ActivityNotFoundException) {
