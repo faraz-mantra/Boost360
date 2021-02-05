@@ -39,6 +39,9 @@ object WithFloatRepository : AppBaseRepository<WithFloatRemoteData, DashboardLoc
     return makeLocalRequest(DashboardLocalDataSource.getNavDashboardData(context), TaskCode.GET_NAV_DASHBOARD_DATA)
   }
 
+  fun getDrScoreUi(context: Context): Observable<BaseResponse> {
+    return makeLocalRequest(DashboardLocalDataSource.getDrScoreUi(context), TaskCode.GET_DR_SCORE_UI_DATA)
+  }
   fun getQuickActionData(context: Context): Observable<BaseResponse> {
     return makeLocalRequest(DashboardLocalDataSource.getQuickActionData(context), TaskCode.GET_QUICK_ACTION_DATA)
   }

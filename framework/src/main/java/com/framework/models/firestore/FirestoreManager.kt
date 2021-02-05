@@ -1,6 +1,5 @@
 package com.framework.models.firestore
 
-import android.app.Activity
 import android.util.Log
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,27 +9,19 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-
-open class FirestoreManager {
+object FirestoreManager {
   var db: FirebaseFirestore? = null;
   val gson = Gson();
   var model: DrScoreModel? = null;
   var fpTag: String = "";
+  var fpId: String = "";
   var clientId: String = "";
   var TAG = "FirestoreManager";
   val COLLECTION_NAME = "drsMerchants";
 
-  companion object {
-    lateinit var instance: FirestoreManager
-
-    @JvmStatic
-    fun initFirebase(activity: Activity) {
-      instance = FirestoreManager()
-    }
-  }
-
-  fun initData(fpTag: String, clientId: String) {
+  fun initData(fpTag: String, fpId: String, clientId: String) {
     this.fpTag = fpTag;
+    this.fpId = fpId;
     this.clientId = clientId;
     this.db = Firebase.firestore;
     if (this.model == null) {
@@ -49,7 +40,6 @@ open class FirestoreManager {
 //                ?.addOnFailureListener { exception ->
 //                    Log.w("FirestoreManager", "Error getting documents.", exception)
 //                }
-//
 //    }
 
   fun readDrScoreDocument() {
@@ -74,13 +64,13 @@ open class FirestoreManager {
     if (this.model == null) {
       this.model = DrScoreModel();
     }
-    if (this.model?.fp_tag == null && this.model?.client_id == null) {
-      this.model?.fp_id = this.clientId;
-      this.model?.fp_tag = this.fpTag;
-      this.model?.client_id = this.clientId;
-      val docRef = getDocumentReference();
-      updateDocument(docRef, this.model.serializeToMap());
-    }
+//    if (this.model?.fp_tag == null || this.model?.fp_id == null || this.model?.client_id == null) {
+    this.model?.fp_id = this.fpId;
+    this.model?.fp_tag = this.fpTag;
+    this.model?.client_id = this.clientId;
+    val docRef = getDocumentReference();
+    updateDocument(docRef, this.model.serializeToMap());
+//    }
   }
 
   fun updateDocument(doc: DocumentReference?, map: Map<String, Any>) {

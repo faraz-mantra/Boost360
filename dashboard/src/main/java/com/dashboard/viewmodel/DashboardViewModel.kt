@@ -54,6 +54,9 @@ class DashboardViewModel : BaseViewModel() {
   fun getNavDashboardData(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getNavDashboardData(context).toLiveData()
   }
+  fun getDrScoreUi(context: Context): LiveData<BaseResponse> {
+    return WithFloatRepository.getDrScoreUi(context).toLiveData()
+  }
 
   fun getQuickActionData(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getQuickActionData(context).toLiveData()
