@@ -96,8 +96,9 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
   private fun emailCustomer(email: String) {
     val i = Intent(Intent.ACTION_SEND)
     i.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+    i.setType("message/rfc822");
     try {
-      startActivity(Intent.createChooser(i, "Send mail..."))
+      startActivity(i)
     } catch (ex: ActivityNotFoundException) {
       showShortToast("There are no email clients installed.")
     }
@@ -149,7 +150,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
       binding?.textFromBookingValue?.text = "#${order.ReferenceNumber}"
      // binding?.textDateTime?.text = order.CreatedOn
-      binding?.textDateTime?.text = DateUtils.parseDate(order.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
+      binding?.textDateTime?.text = DateUtils.parseDate(order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
 
       binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
 
@@ -158,7 +159,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
       var appointmentDate = java.lang.StringBuilder(DateUtils.parseDate(order?.firstItemForConsultation()?.Product?.extraItemProductConsultation()?.startTime(), DateUtils.FORMAT_HH_MM, DateUtils.FORMAT_HH_MM_A) ?: "") /*"${} on ${}"*/
       if (!DateUtils.parseDate(order?.firstItemForConsultation()?.product()?.extraItemProductConsultation()?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5, timeZone = TimeZone.getTimeZone("IST")).isNullOrEmpty()) {
-        appointmentDate.append(" on ${DateUtils.parseDate(order?.firstItemForConsultation()?.product()?.extraItemProductConsultation()?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5, timeZone = TimeZone.getTimeZone("IST"))}")
+        appointmentDate.append(" on ${DateUtils.parseDate(order?.firstItemForConsultation()?.product()?.extraItemProductConsultation()?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5)}")
       }
       binding?.textDate?.text =  appointmentDate
 
@@ -340,6 +341,74 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
       return bundle
     }
     return null
+  }
+
+  private fun errorUi(message: String) {
+    hideProgress()
+    binding?.mainView?.gone()
+    binding?.error?.visible()
+    binding?.error?.text = message
+  }
+
+  private fun changeButtonStatus(btnTitle: String, @DrawableRes buttonBkg: Int, @ColorRes dropDownDividerColor: Int, @DrawableRes resId: Int) {
+    activity?.let {
+      binding?.tvDropdownOrderStatus?.text = btnTitle
+      binding?.tvDropdownOrderStatus?.visibility = View.VISIBLE
+      binding?.tvDropdownOrderStatus?.setTextColor(ContextCompat.getColor(it, dropDownDividerColor))
+      binding?.lytStatusBtn?.background = ContextCompat.getDrawable(it, buttonBkg)
+      binding?.divider?.setBackgroundColor(ContextCompat.getColor(it, dropDownDividerColor))
+      binding?.ivDropdown?.setImageResource(resId)
+      //DrawableCompat.setTint(binding.ivDropdownOrderStatus.drawable, ContextCompat.getColor(it.applicationContext, dropDownArrowColor))
+    }
+  }
+
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.ORDER_DROPDOWN_CLICKED.ordinal -> {
+        if (::mPopupWindow.isInitialized && mPopupWindow.isShowing) mPopupWindow.dismiss()
+        val orderMenu = OrderMenuModel.MenuStatus.from((item as? OrderMenuModel)?.type) ?: return
+        clickActionOrderButton(orderMenu, this.orderItem!!)
+      }
+    }
+  }
+
+  private fun clickActionOrderButton(orderMenu: OrderMenuModel.MenuStatus, orderItem: OrderItem) {
+    when (orderMenu) {
+      /* OrderMenuModel.MenuStatus.CONFIRM_ORDER -> {
+         val sheetConfirm = ConfirmBottomSheetDialog()
+         sheetConfirm.setData(orderItem)
+         sheetConfirm.onClicked = { apiConfirmOrder(it) }
+         sheetConfirm.show(this.parentFragmentManager, ConfirmBottomSheetDialog::class.java.name)
+       }
+       OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {
+         val sheetRequestPayment = RequestPaymentBottomSheetDialog()
+         sheetRequestPayment.setData(orderItem)
+         sheetRequestPayment.onClicked = {
+           showProgress()
+           sendPaymentLinkOrder(getString(R.string.payment_request_send))
+         }
+         sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentBottomSheetDialog::class.java.name)
+       }*/
+      OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT -> {
+        val sheetCancel = CancelBottomSheetDialog()
+        sheetCancel.setData(orderItem)
+        sheetCancel.onClicked = this@AppointmentDetailsFragment::apiCancelOrder
+        sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
+      }
+      /*  OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> markCodPaymentRequest()
+        OrderMenuModel.MenuStatus.MARK_AS_DELIVERED -> {
+          val sheetDelivered = DeliveredBottomSheetDialog()
+          sheetDelivered.setData(orderItem)
+          sheetDelivered.onClicked = { deliveredOrder(it) }
+          sheetDelivered.show(this.parentFragmentManager, DeliveredBottomSheetDialog::class.java.name)
+        }
+        OrderMenuModel.MenuStatus.MARK_AS_SHIPPED -> {
+          val sheetShipped = ShippedBottomSheetDialog()
+          sheetShipped.setData(orderItem)
+          sheetShipped.onClicked = { shippedOrder(it) }
+          sheetShipped.show(this.parentFragmentManager, ShippedBottomSheetDialog::class.java.name)
+        }*/
+    }
   }
 
 
@@ -554,72 +623,4 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     private fun clickDeliveryItem(list: LocationsModel?) {
       serviceLocationsList.forEach { it.isSelected = (it.serviceOptionSelectedName == list?.serviceOptionSelectedName) }
     }*/
-
-  private fun errorUi(message: String) {
-    hideProgress()
-    binding?.mainView?.gone()
-    binding?.error?.visible()
-    binding?.error?.text = message
-  }
-
-  private fun changeButtonStatus(btnTitle: String, @DrawableRes buttonBkg: Int, @ColorRes dropDownDividerColor: Int, @DrawableRes resId: Int) {
-    activity?.let {
-      binding?.tvDropdownOrderStatus?.text = btnTitle
-      binding?.tvDropdownOrderStatus?.visibility = View.VISIBLE
-      binding?.tvDropdownOrderStatus?.setTextColor(ContextCompat.getColor(it, dropDownDividerColor))
-      binding?.lytStatusBtn?.background = ContextCompat.getDrawable(it, buttonBkg)
-      binding?.divider?.setBackgroundColor(ContextCompat.getColor(it, dropDownDividerColor))
-      binding?.ivDropdown?.setImageResource(resId)
-      //DrawableCompat.setTint(binding.ivDropdownOrderStatus.drawable, ContextCompat.getColor(it.applicationContext, dropDownArrowColor))
-    }
-  }
-
-  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    when (actionType) {
-      RecyclerViewActionType.ORDER_DROPDOWN_CLICKED.ordinal -> {
-        if (::mPopupWindow.isInitialized && mPopupWindow.isShowing) mPopupWindow.dismiss()
-        val orderMenu = OrderMenuModel.MenuStatus.from((item as? OrderMenuModel)?.type) ?: return
-        clickActionOrderButton(orderMenu, this.orderItem!!)
-      }
-    }
-  }
-
-  private fun clickActionOrderButton(orderMenu: OrderMenuModel.MenuStatus, orderItem: OrderItem) {
-    when (orderMenu) {
-      /* OrderMenuModel.MenuStatus.CONFIRM_ORDER -> {
-         val sheetConfirm = ConfirmBottomSheetDialog()
-         sheetConfirm.setData(orderItem)
-         sheetConfirm.onClicked = { apiConfirmOrder(it) }
-         sheetConfirm.show(this.parentFragmentManager, ConfirmBottomSheetDialog::class.java.name)
-       }
-       OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {
-         val sheetRequestPayment = RequestPaymentBottomSheetDialog()
-         sheetRequestPayment.setData(orderItem)
-         sheetRequestPayment.onClicked = {
-           showProgress()
-           sendPaymentLinkOrder(getString(R.string.payment_request_send))
-         }
-         sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentBottomSheetDialog::class.java.name)
-       }*/
-      OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT -> {
-        val sheetCancel = CancelBottomSheetDialog()
-        sheetCancel.setData(orderItem)
-        sheetCancel.onClicked = this@AppointmentDetailsFragment::apiCancelOrder
-        sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
-      }
-      /*  OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> markCodPaymentRequest()
-        OrderMenuModel.MenuStatus.MARK_AS_DELIVERED -> {
-          val sheetDelivered = DeliveredBottomSheetDialog()
-          sheetDelivered.setData(orderItem)
-          sheetDelivered.onClicked = { deliveredOrder(it) }
-          sheetDelivered.show(this.parentFragmentManager, DeliveredBottomSheetDialog::class.java.name)
-        }
-        OrderMenuModel.MenuStatus.MARK_AS_SHIPPED -> {
-          val sheetShipped = ShippedBottomSheetDialog()
-          sheetShipped.setData(orderItem)
-          sheetShipped.onClicked = { shippedOrder(it) }
-          sheetShipped.show(this.parentFragmentManager, ShippedBottomSheetDialog::class.java.name)
-        }*/
-    }
-  }
 }

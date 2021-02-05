@@ -55,9 +55,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     if (statusIcon != null) binding.statusIcon.setImageResource(statusIcon) else binding.statusIcon.gone()
 
     if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT)) {
-      if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-        binding.orderType.text = OrderStatusValue.ESCALATED_2.value
-      } else binding.orderType.text = statusValue.plus(order.cancelledText())
+      binding.orderType.text = statusValue.plus(order.cancelledText())
     } else binding.orderType.text = statusValue
 
     binding.orderId.text = "# ${order.ReferenceNumber}"
