@@ -34,6 +34,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       HOME_DRAWER_VIEW -> HomeDrawerViewHolder(binding as ItemDrawerViewBinding)
       BOOST_ENQUIRIES_ITEM_VIEW -> CustomerPatientItemViewHolder(binding as ItemCustomerPatientItemBinding)
       BOOST_WEBSITE_ITEM_VIEW -> WebsiteItemViewHolder(binding as ItemWebsiteItemBinding)
+      FILTER_DATE_VIEW -> DateFilterViewHolder(binding as ItemFilterDateBinding)
     }
   }
 
