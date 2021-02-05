@@ -23,5 +23,5 @@ data class FilterBy(
 	val limit: Int? = null,
 
 	@field:SerializedName("Offset")
-	val offset: Int? = null
+	var offset: Int? = null
 )

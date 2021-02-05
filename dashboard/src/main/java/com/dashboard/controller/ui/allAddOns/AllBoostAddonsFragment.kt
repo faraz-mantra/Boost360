@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.dashboard.R
+
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
@@ -114,7 +115,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
     val searchItem = menu.findItem(R.id.menu_item_search)
     if (searchItem != null) {
       searchView = searchItem.actionView as SearchView
-      val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
+      val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
       searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
       searchAutoComplete?.setTextColor(getColor(R.color.white))
       searchView?.setIconifiedByDefault(true)
@@ -190,7 +191,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.newsletter_subscription -> baseActivity.startSubscriber(session)
     ManageBusinessData.BusinessType.picture_gallery,
     ManageBusinessData.BusinessType.client_logos_d,
-    -> baseActivity.startAddImageGallery(session)
+    -> baseActivity.startAddImageGallery(session,false)
     ManageBusinessData.BusinessType.ria_digital_assistant -> session?.let { baseActivity.startHelpAndSupportActivity(it) }
     ManageBusinessData.BusinessType.custom_payment_gateway -> baseActivity.startSelfBrandedGateway(session)
     ManageBusinessData.BusinessType.business_kyc_verification -> baseActivity.startBusinessKycBoost(session)

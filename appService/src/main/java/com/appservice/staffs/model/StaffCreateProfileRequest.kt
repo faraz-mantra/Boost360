@@ -6,34 +6,34 @@ import java.io.Serializable
 
 data class StaffCreateProfileRequest(
 
-		@field:SerializedName("image")
+		@field:SerializedName("Image")
 		var image: StaffImage? = null,
 
-		@field:SerializedName("isAvailable")
+		@field:SerializedName("IsAvailable")
 		var isAvailable: Boolean? = null,
 
-		@field:SerializedName("serviceIds")
+		@field:SerializedName("ServiceIds")
 		var serviceIds: List<String?>? = null,
 
-		@field:SerializedName("gender")
+		@field:SerializedName("Gender")
 		var gender: String? = null,
 
-		@field:SerializedName("floatingPointTag")
+		@field:SerializedName("FloatingPointTag")
 		var floatingPointTag: String? = null,
 
-		@field:SerializedName("name")
+		@field:SerializedName("Name")
 		var name: String? = null,
 
-		@field:SerializedName("description")
+		@field:SerializedName("Description")
 		var description: String? = null,
 
-		@field:SerializedName("experience")
+		@field:SerializedName("Experience")
 		var experience: Int? = null,
 
-		@field:SerializedName("age")
+		@field:SerializedName("Age")
 		var age: Int? = null,
 
-		@field:SerializedName("specialisations")
+		@field:SerializedName("Specialisations")
 		var specialisations: List<SpecialisationsItem?>? = null,
 ) : Serializable, BaseResponse()
 

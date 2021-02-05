@@ -1,11 +1,6 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,8 +14,15 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.framework.models.firestore.FirestoreManager;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
@@ -251,88 +253,86 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
         UploadProfileAsyncTask upa = new UploadProfileAsyncTask(BusinessHoursActivity.this,dayData,profilesattr);
         upa.execute();
         session.setBusinessHours(openAtleastOneDayFlag);
+        onBusinessHourAddedOrUpdated(openAtleastOneDayFlag);
+    }
+
+    private void onBusinessHourAddedOrUpdated(Boolean isAdded){
+        FirestoreManager instance = FirestoreManager.INSTANCE;
+        instance.getDrScoreData().getMetricdetail().setBoolean_add_business_hours(isAdded);
+        instance.updateDocument();
     }
 
     private void updateTimings(){
-
+        boolean openOneFlag=false;
         if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME).toLowerCase().endsWith("pm")) {
 
             etMonOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME));
             etMonClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME));
-
+          openOneFlag=true;
         } else {
             switchMon.setChecked(false);
             setTextTimeOnSwitch(R.id.et_mon_open,R.id.et_mon_close,0,0,0,0);
         }
 
         if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME).toLowerCase().endsWith("pm")) {
             etTueOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME));
             etTueClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME));
+          openOneFlag=true;
         } else {
             switchTue.setChecked(false);
             setTextTimeOnSwitch(R.id.et_tue_open,R.id.et_tue_close,0,0,0,0);
-
         }
-
         if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME).toLowerCase().endsWith("pm")) {
 
             etWedOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME));
             etWedClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME));
+          openOneFlag=true;
         } else {
             switchWed.setChecked(false);
             setTextTimeOnSwitch(R.id.et_wed_open,R.id.et_wed_close,0,0,0,0);
-
         }
        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME).toLowerCase().endsWith("pm")) {
             etThuOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME));
             etThuClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME));
+         openOneFlag=true;
         } else {
            switchThu.setChecked(false);
            setTextTimeOnSwitch(R.id.et_thu_open,R.id.et_thu_close,0,0,0,0);
         }
         if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME).toLowerCase().endsWith("pm")) {
 
             etFriOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME));
             etFriClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME));
+          openOneFlag=true;
         } else {
             switchFri.setChecked(false);
             setTextTimeOnSwitch(R.id.et_fri_open,R.id.et_fri_close,0,0,0,0);
-
         }
-
         if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
-
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME).toLowerCase().endsWith("pm")) {
             etSatOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME));
             etSatClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME));
+          openOneFlag=true;
         } else {
-
             switchSat.setChecked(false);
             setTextTimeOnSwitch(R.id.et_sat_open,R.id.et_sat_close,0,0,0,0);
         }
-
         if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME).toLowerCase().endsWith("am")
-                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME).toLowerCase().endsWith("pm"))
-        {
+                || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME).toLowerCase().endsWith("pm")) {
             etSunOpen.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME));
             etSunClose.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME));
-
+          openOneFlag=true;
         } else {
             switchSun.setChecked(false);
             setTextTimeOnSwitch(R.id.et_sun_open,R.id.et_sun_close,0,0,0,0);
         }
 
+      onBusinessHourAddedOrUpdated(openOneFlag);
     }
     private void timePicker(){
        /* TimePickerDialog dialog = TimePickerDialog.newInstance(this,0,0,false);
