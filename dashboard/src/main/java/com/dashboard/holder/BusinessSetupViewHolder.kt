@@ -31,7 +31,7 @@ class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) : AppBaseR
       binding.lottySyncOk.gone()
       startCheckAnimation(false)
       binding.imgArrowGif.apply { play() }
-      binding.progressBar.setProgressWithAnimation((100 - (data.percentage ?: 0)).toFloat(), 1000)
+      binding.progressBar.setProgressWithAnimation((data.percentage ?: 0).toFloat(), 1000)
       data.type?.icon?.let { binding.imgIcon.setImageResource(it) }
     }
     binding.mainContent.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal) }

@@ -42,7 +42,7 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
-import com.framework.models.firestore.DrScoreModel
+import com.framework.models.firestore.FirestoreManager
 import com.framework.models.firestore.FirestoreManager.getDrScoreData
 import com.framework.models.firestore.FirestoreManager.readDrScoreDocument
 import com.framework.utils.*
@@ -107,7 +107,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onResume() {
     super.onResume()
     if (getDrScoreData()?.drs_segment.isNullOrEmpty()) readDrScoreDocument()
-    refreshData(getDrScoreData())
+    refreshData()
   }
 
   private fun getPremiumBanner() {
@@ -130,55 +130,55 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     })
   }
 
-  private fun refreshData(drScoreData: DrScoreModel?) {
-    setDrScoreData(drScoreData)
-    (baseActivity as? DashboardActivity)?.setPercentageData(drScoreData?.getDrsTotal()?:0)
+  private fun refreshData() {
     setUserData()
     setBusinessManageTask()
     getNotificationCount()
-    setDataSellerSummary(drScoreData?.getDrsTotal()?:0, OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
+    setSummaryAndDrScore()
   }
 
-  private fun setDrScoreData(drScoreData: DrScoreModel?) {
-    if (drScoreData!=null && drScoreData.drs_segment.isNullOrEmpty().not() && (drScoreData.getDrsTotal() >= 80).not()) {
-      viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
-        val response = it as? DrScoreUiDataResponse
-        if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-          binding?.highReadinessScoreView?.gone()
-          binding?.lowReadinessScoreView?.visible()
-          binding?.txtReadinessScore?.text = "${drScoreData.getDrsTotal()}"
-          binding?.progressScore?.progress = drScoreData.getDrsTotal()
-          val drScoreSetupList = drScoreData.getDrScoreData(response.data)
-          drScoreSetupList.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
-          binding?.pagerBusinessSetupLow?.apply {
-            binding?.motionOne?.transitionToStart()
-            adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList, this@DashboardFragment)
-            offscreenPageLimit = 3
-            adapter = adapterBusinessContent
-            postInvalidateOnAnimation()
-            binding?.dotIndicator?.setViewPager2(this)
-            setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-              override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
-              }
-            })
-            binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
-            binding?.motionOne?.transitionToStart()
-          }
-          baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
-          baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
-        } else {
-          binding?.highReadinessScoreView?.visible()
-          binding?.lowReadinessScoreView?.gone()
-        }
-      })
+  private fun setSummaryAndDrScore() {
+    (baseActivity as? DashboardActivity)?.setPercentageData(getDrScoreData()?.getDrsTotal() ?: 0)
+    setDataSellerSummary(getDrScoreData()?.getDrsTotal() ?: 0, OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
+    setDrScoreData()
+  }
 
-    } else {
-      binding?.highReadinessScoreView?.visible()
-      binding?.lowReadinessScoreView?.gone()
-    }
+  private fun setDrScoreData() {
+    viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
+      val response = it as? DrScoreUiDataResponse
+      val drScoreData = getDrScoreData()
+      val isHighDrScore = drScoreData != null && drScoreData.drs_segment.isNullOrEmpty().not() && (drScoreData.getDrsTotal() >= 80).not()
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not() && isHighDrScore) {
+        binding?.highReadinessScoreView?.gone()
+        binding?.lowReadinessScoreView?.visible()
+        binding?.txtReadinessScore?.text = "${drScoreData!!.getDrsTotal()}"
+        binding?.progressScore?.progress = drScoreData.getDrsTotal()
+        val drScoreSetupList = drScoreData.getDrScoreData(response.data)
+        drScoreSetupList.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
+        binding?.pagerBusinessSetupLow?.apply {
+          binding?.motionOne?.transitionToStart()
+          adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList, this@DashboardFragment)
+          offscreenPageLimit = 3
+          adapter = adapterBusinessContent
+          postInvalidateOnAnimation()
+          binding?.dotIndicator?.setViewPager2(this)
+          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+          registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+              super.onPageSelected(position)
+              binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
+            }
+          })
+          binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
+          binding?.motionOne?.transitionToStart()
+        }
+        baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
+        baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
+      } else {
+        binding?.highReadinessScoreView?.visible()
+        binding?.lowReadinessScoreView?.gone()
+      }
+    })
 //    updateSiteMeter(drScoreData.getDrsTotal())
   }
 
@@ -653,6 +653,16 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)
       if (isShowLoader) visitingCardDetailText(urlStringN)
     })
+  }
+
+  override fun onStop() {
+    super.onStop()
+    FirestoreManager.listener = null
+  }
+
+  override fun onStart() {
+    super.onStart()
+    FirestoreManager.listener = { setSummaryAndDrScore() }
   }
 }
 

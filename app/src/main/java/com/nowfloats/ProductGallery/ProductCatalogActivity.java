@@ -151,8 +151,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             if (itemToAdd != null) itemToAdd.setVisible(true);
             binding.layoutEmptyView.setVisibility(View.GONE);
             adapter.setData(data, flag);
-            Product p = data.get(0);
-            onProductServiceAddedOrUpdated(data.size(), p.productType);
+            onProductServiceAddedOrUpdated(data.size());
             return;
           }
 
@@ -176,8 +175,9 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
     });
   }
 
-  private void onProductServiceAddedOrUpdated(int count, String type) {
+  private void onProductServiceAddedOrUpdated(int count) {
     FirestoreManager instance = FirestoreManager.INSTANCE;
+    String type = Utils.getProductType(session.getFP_AppExperienceCode());
     if (type.toUpperCase().equals("SERVICES")) {
       instance.getDrScoreData().getMetricdetail().setNumber_services_added(count);
     } else instance.getDrScoreData().getMetricdetail().setNumber_products_added(count);

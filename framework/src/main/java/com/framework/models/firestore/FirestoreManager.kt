@@ -18,6 +18,7 @@ object FirestoreManager {
     var clientId: String = "";
     var TAG = "FirestoreManager";
     val COLLECTION_NAME = "drsMerchants";
+    var listener: (()->Unit)? = null
 
     fun initData(fpTag: String, fpId: String, clientId: String) {
         this.fpTag = fpTag;
@@ -49,6 +50,7 @@ object FirestoreManager {
                 Log.d(TAG, "No Exception")
                 model = snapshot?.data?.toDataClass<DrScoreModel>();
                 updateDrScoreIfNull()
+                listener?.invoke()
             } else {
                 Log.d(TAG, "Exception" + e);
             }
