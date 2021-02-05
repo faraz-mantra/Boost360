@@ -96,6 +96,7 @@
   <color name="grey_text_color">#696969</color>
   <color name="little_light_black">#DE000000</color>
   <color name="view_background_color">#EBEBEB</color>
+  <color name="view_background_1">#F0F0F0</color>
   <color name="khaki_light">#80FFB900</color>
   <color name="light_green">#189943</color>
   <color name="bg_dark_grey">#4A4A4A</color>

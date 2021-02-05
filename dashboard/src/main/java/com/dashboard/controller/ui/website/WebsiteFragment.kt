@@ -164,7 +164,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
     when (v) {
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.btnProfileLogo -> baseActivity.startFeatureLogo(session)
-      binding?.editProfile -> baseActivity.startBusinessProfileEdit(session)
+      binding?.editProfile -> baseActivity.startBusinessProfileDetailEdit(session)
       binding?.businessAddress -> baseActivity.startBusinessAddress(session)
       binding?.contactDetail -> baseActivity.startBusinessInfoEmail(session)
       binding?.businessTiming -> baseActivity.startBusinessHours(session)

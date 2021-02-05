@@ -85,4 +85,6 @@
   <string name="business_address">Business address</string>
   <string name="error_dr_score">Digital readiness score getting error</string>
   <string name="retry">Retry</string>
+  <string name="reset">Reset</string>
+  <string name="select_duration">Select duration</string>
 </resources>

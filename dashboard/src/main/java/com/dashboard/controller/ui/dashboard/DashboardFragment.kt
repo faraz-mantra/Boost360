@@ -95,7 +95,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     super.onCreateView()
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showProgress()
     session = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore)
+    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.dateBusinessReport, binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     apiSellerSummary()
@@ -398,6 +398,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
+      binding?.dateBusinessReport -> bottomSheetFilter("BUSINESS_REPORT")
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)
       binding?.btnShowDigitalScore -> baseActivity.startReadinessScoreView(session, 0)
@@ -655,6 +656,16 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)
       if (isShowLoader) visitingCardDetailText(urlStringN)
     })
+  }
+
+  private fun bottomSheetFilter(type: String) {
+    val filterBottomSheet = FilterBottomSheet()
+    filterBottomSheet.onClicked = { apiFilterCall(it, type) }
+    filterBottomSheet.show(this@DashboardFragment.parentFragmentManager, FilterBottomSheet::class.java.name)
+  }
+
+  private fun apiFilterCall(filterDate: FilterDateModel, type: String) {
+
   }
 
   override fun onStop() {
