@@ -229,7 +229,6 @@
   <string name="year_of_experience">Year of Experience</string>
   <string name="edit"><u>EDIT</u></string>
   <string name="special">Specialization</string>
-  <string name="staff_timing">Staff Timing</string>
   <string name="upcoming_leaves">Upcoming Leaves</string>
   <string name="upcoming_leave_s">Upcoming Leave(s)</string>
     <string name="confirm_services">CONFIRM 0 SERVICES</string>
@@ -354,7 +353,38 @@
   <string name="yellow_and_orange">Yellow and Orange</string>
   <string name="other_specifications">Other specifications</string>
   <string name="this_list_appears_inside_the_product_details_page_on_your_website">This list appears inside the product details page on your website.</string>
-  <array name="stock_availbility">
+    <string name="update">UPDATE</string>
+  <string name="profile_updated">profile updated</string>
+  <string name="something_went_wrong">something went wrong</string>
+  <string name="enter_staff_name">Enter Staff Name</string>
+  <string name="select_staff_gender">Select Staff Gender</string>
+  <string name="please_add_specialization">Please add specialization</string>
+  <string name="select_year_of_experience">select year of experience</string>
+  <string name="please_enter_your_age">please enter your age</string>
+  <string name="please_choose_image">please choose image</string>
+  <string name="profile_created">profile created</string>
+  <string name="removing_staff">Removing Staff</string>
+  <string name="unable_to_delete">Unable to delete</string>
+  <string name="loading">Loading</string>
+  <string name="toolbar_staff_listing">STAFF LISTING</string>
+  <string name="toolbar_select_services">Select Services</string>
+  <string name="toolbar_staff_timing">Staff Timing</string>
+  <string name="toolbar_schedule_break">Scheduled Breaks</string>
+  <string name="toolbar_schedule_breaks">Scheduled Breaks</string>
+  <string name="toolbar_staff_details">Staff Details</string>
+    <string name="search_staff">Search Staff</string>
+    <string name="staff_timing_add">Adding staff timing...</string>
+  <string name="staff_timings_added">staff timings added</string>
+  <string name="staff_timings">STAFF_TIMINGS</string>
+  <string name="uploading_image">Uploading Image</string>
+    <string name="weekly_schedule">Weekly Schedule</string>
+  <string name="staff_will_available_for_clients">Time the staff will be available for the clients.</string>
+    <string name="staff_timing">Staff Timing</string>
+    <string name="updated">Updated Successfully</string>
+    <string name="staff_timings_updated">Staff Timings Updated</string>
+  <string name="staff_timings_unable_to_update">Staff Timings Unable to Update</string>
+    <string name="staff_timings_updating">Updating Staff Timings...</string>
+    <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
 

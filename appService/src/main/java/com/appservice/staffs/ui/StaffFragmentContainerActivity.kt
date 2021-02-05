@@ -27,7 +27,6 @@ import com.framework.databinding.ActivityFragmentContainerBinding
 import com.framework.exceptions.IllegalFragmentTypeException
 import com.framework.models.BaseViewModel
 import com.framework.views.customViews.CustomToolbar
-import kotlinx.android.synthetic.main.toolbar_catalog.*
 
 class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
     private var fragmentType: FragmentType? = null
@@ -142,15 +141,15 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
     override fun getToolbarTitle(): String? {
         return when (fragmentType) {
-            FragmentType.STAFF_ADD_FRAGMENT -> "STAFF LISTING"
-            FragmentType.STAFF_HOME_FRAGMENT -> "STAFF LISTING"
-            FragmentType.STAFF_DETAILS_FRAGMENT -> "Staff Details"
-            FragmentType.STAFF_SELECT_SERVICES_FRAGMENT -> "Select Services"
-            FragmentType.STAFF_TIMING_FRAGMENT -> "Staff Timing"
-            FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT -> "Scheduled Breaks"
-            FragmentType.STAFF_SERVICES_CONFIRM_FRAGMENT -> "Scheduled Breaks"
-            FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> "STAFF LISTING"
-            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> "Staff Details"
+            FragmentType.STAFF_ADD_FRAGMENT -> getString(R.string.toolbar_staff_listing)
+            FragmentType.STAFF_HOME_FRAGMENT -> getString(R.string.toolbar_staff_listing)
+            FragmentType.STAFF_DETAILS_FRAGMENT -> getString(R.string.toolbar_staff_details)
+            FragmentType.STAFF_SELECT_SERVICES_FRAGMENT -> getString(R.string.toolbar_select_services)
+            FragmentType.STAFF_TIMING_FRAGMENT -> getString(R.string.toolbar_staff_timing)
+            FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT -> getString(R.string.toolbar_schedule_break)
+            FragmentType.STAFF_SERVICES_CONFIRM_FRAGMENT -> getString(R.string.toolbar_schedule_breaks)
+            FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> getString(R.string.toolbar_staff_listing)
+            FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> getString(R.string.toolbar_staff_details)
             else -> super.getToolbarTitle()
         }
     }
@@ -193,11 +192,37 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
         }
     }
 
+    override fun isHideToolbar(): Boolean {
+        return super.isHideToolbar()
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         staffDetailsFragment?.onActivityResult(requestCode, resultCode, data)
+        staffHomeFragment?.onActivityResult(requestCode, resultCode, data)
+        staffProfileDetailsFragment?.onActivityResult(requestCode, resultCode, data)
+        staffServicesFragment?.onActivityResult(requestCode, resultCode, data)
+        staffTimingFragment?.onActivityResult(requestCode, resultCode, data)
     }
 
+    override fun onBackPressed() {
+        when (fragmentType) {
+            FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> {
+                val fragment =
+                        this.supportFragmentManager.findFragmentById(R.id.container)
+                (fragment as? IOnBackPressed)?.onBackPressed()?.not()?.let {
+                    super.onBackPressed()
+                }
+            }
+            else -> super.onBackPressed()
+
+        }
+
+
+    }
+}
+
+interface IOnBackPressed {
+    fun onBackPressed(): Boolean
 }
 
 fun Fragment.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {

@@ -32,7 +32,6 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       EXPERIENCE_RECYCLER_ITEM -> StaffExperienceViewHolder(binding as ItemExperienceDetailsBinding)
       STAFF_LISTING_VIEW -> StaffListingViewHolder(binding as RecyclerItemStaffListingBinding)
       STAFF_FILTER_VIEW -> StaffFilterViewHolder(binding as RecyclerItemStaffFilterBinding)
-      STAFF_SERVICE_TIMING_RECYCLER_ITEM->StaffTimingServicesViewHolder(binding as RecyclerItemServiceTimingBinding)
     }
   }
 

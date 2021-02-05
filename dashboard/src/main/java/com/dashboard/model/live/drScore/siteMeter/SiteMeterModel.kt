@@ -1,6 +1,5 @@
-package com.dashboard.model.live
+package com.dashboard.model.live.drScore.siteMeter
 
-import com.dashboard.R
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.recyclerView.AppBaseRecyclerViewItem
 import com.dashboard.utils.*
@@ -27,9 +26,6 @@ class SiteMeterModel(
     return cVal - sortChar
   }
 
-  fun getIcon(): Int {
-    return if (status == true) R.drawable.ic_ok_11_d else R.drawable.ic_circle_grey_9_d
-  }
 
   enum class TypePosition(var value: Int) {
     BUSINESS_NAME(businessName),

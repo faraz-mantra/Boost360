@@ -14,6 +14,7 @@ import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
+import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.pref.*
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
@@ -589,6 +590,15 @@ fun AppCompatActivity.startWebViewPageLoad(session: UserSessionManager?, url: St
   }
 }
 
+
+fun AppCompatActivity.startReadinessScoreView(session: UserSessionManager?,position:Int=0) {
+  try {
+    WebEngageController.trackEvent("Digital readiness score Page", "startview", session?.fpTag)
+    startFragmentDashboardActivity(com.dashboard.constant.FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(com.dashboard.constant.IntentConstant.POSITION.name, position) })
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
 
 fun AppCompatActivity.startSelfBrandedGateway(session: UserSessionManager?) {
   try {

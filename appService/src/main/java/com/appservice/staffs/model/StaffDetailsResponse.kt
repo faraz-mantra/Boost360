@@ -1,5 +1,6 @@
 package com.appservice.staffs.model
 
+import com.appservice.ui.catalog.common.AppointmentModel
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -11,17 +12,17 @@ data class StaffDetailsResponse(
 		val statusCode: Int? = null,
 
 		@field:SerializedName("Result")
-		val result: StaffDetailsResult? = null,
+		val result: StaffDetailsResult? = null
 ) : Serializable, BaseResponse()
 
 
 data class StaffDetailsResult(
 
 		@field:SerializedName("Timings")
-		val timings: Any? = null,
+		var timings: List<AppointmentModel>? = null,
 
 		@field:SerializedName("ServiceIds")
-		val serviceIds: List<String?>? = null,
+        var serviceIds: List<String?>? = null,
 
 		@field:SerializedName("Experience")
 		val experience: Int? = null,
@@ -51,5 +52,5 @@ data class StaffDetailsResult(
 		val age: Int? = null,
 
 		@field:SerializedName("Name")
-		val name: String? = null,
-):Serializable
+		val name: String? = null
+):Serializable,BaseResponse()

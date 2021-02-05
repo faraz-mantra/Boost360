@@ -7,13 +7,16 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
+import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -27,6 +30,7 @@ import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.staffs.widgets.ExperienceBottomSheet
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import kotlinx.android.synthetic.*
@@ -36,16 +40,19 @@ import kotlinx.android.synthetic.main.item_preview_image.view.*
 import java.io.ByteArrayOutputStream
 
 class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffViewModel>() {
-    private var resultCode: Int? = 0
+    private var isTimingUpdated: Boolean? = null
+    private var isImageUpdated: Boolean? = null
+    private var imageIsChange: Boolean? = null
+    private var resultCode: Int = 1
     private var isAvailable: Boolean? = false
     private lateinit var yearOfExperience: String
     private lateinit var staffDescription: String
-    private var staffAge: Int = 0
+    private var staffAge: Int? = 0
     private lateinit var staffName: String
     private lateinit var specializationList: ArrayList<SpecialisationsItem>
-    private lateinit var serviceListId: java.util.ArrayList<String>
+    private var serviceListId: ArrayList<String>? = null
     private lateinit var specialization: String
-    private lateinit var staffImage: StaffImage
+    private var staffImage: StaffImage? = null
     private lateinit var genderArray: Array<String>
     private var imageUri: Uri? = null
     private var isEdit: Boolean? = null
@@ -81,6 +88,9 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         when {
             isEdit!! -> updatePreviousData()
         }
+        if (staffDetails == null) {
+            staffDetails = StaffDetailsResult()
+        }
     }
 
     private fun updatePreviousData() {
@@ -90,14 +100,29 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         binding?.etvStaffDescription?.setText(staffDetails?.description.toString())
         binding?.spinnerGender?.setSelection(genderArray.toList().indexOf(staffDetails?.gender))
         binding?.cetAge?.setText(staffDetails?.age.toString())
+        showHideTimingText()
+        showHideServicesText()
+        binding?.ctvTiming?.text = staffDetails?.timings?.map { it.day }?.joinToString(" ,")
         if (specialisations?.isNullOrEmpty() == false)
             binding?.etvSpecialization?.setText(specialisations[0]?.value)
         binding?.edtExperience?.setText(staffDetails?.experience.toString())
-        binding?.btnSave?.text = "UPDATE"
+        binding?.btnSave?.text = getString(R.string.update)
         binding?.toggleIsAvailable?.isOn = staffDetails?.isAvailable!!
-        setServicesList()
+        if (resultCode != AppCompatActivity.RESULT_OK) setServicesList()
+    }
 
+    private fun showHideTimingText() {
+        when (staffDetails?.timings?.size ?: 0 > 0) {
+            true -> binding?.ctvTiming?.visibility = View.VISIBLE
+            else -> binding?.ctvTiming?.visibility = View.GONE
+        }
+    }
 
+    private fun showHideServicesText() {
+        when (staffDetails?.serviceIds?.size ?: 0 > 0) {
+            true -> binding?.ctvServices?.visibility = View.VISIBLE
+            else -> binding?.ctvServices?.visibility = View.GONE
+        }
     }
 
     private fun openExperienceDetail() {
@@ -118,11 +143,17 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 openImagePicker()
             }
             binding?.rlStaffTiming -> {
-                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
+                val bundle = Bundle()
+                bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
+                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, bundle,clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
             }
             binding?.rlServiceProvided -> {
-
-                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SERVICES_PROVIDED)
+                val bundle = Bundle()
+                if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
+                    val serviceIds = staffDetails?.serviceIds as ArrayList
+                    bundle.putSerializable(IntentConstant.STAFF_SERVICES.name, serviceIds)
+                }
+                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SERVICES_PROVIDED)
             }
             binding?.rlScheduledBreaks -> {
                 startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SCHEDULED_BREAK)
@@ -131,27 +162,25 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 openExperienceDetail()
             }
             binding?.btnSave -> {
-                when {
-                    (isEdit == false || isEdit == null) && isValid() -> {
-                        createStaffProfile()
-                    }
+                if ((isEdit == false || isEdit == null) && isValid()) {
+                    createStaffProfile()
                 }
-                when {
-                    isEdit == true && isValid() -> {
-                        updateStaffProfile()
-                    }
+                if (isEdit == true && isValid()) {
+                    updateStaffProfile()
+
                 }
             }
         }
     }
 
     private fun updateStaffImage() {
-        viewModel?.updateStaffImage(StaffUpdateImageRequest(staffDetails?.id, staffImage))?.observe(viewLifecycleOwner, {
+        showProgress(getString(R.string.uploading_image))
+        viewModel?.updateStaffImage(StaffUpdateImageRequest(staffDetails?.id, staffImage))?.observeOnce(viewLifecycleOwner, Observer {
             when (it.status) {
                 200 -> {
-
                 }
                 else -> {
+
                 }
             }
 
@@ -161,18 +190,15 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     private fun updateStaffProfile() {
         val staffGender = binding?.spinnerGender?.selectedItem.toString()
         viewModel?.updateStaffProfile(
-                StaffProfileUpdateRequest(isAvailable, getServiceIds(), staffGender, UserSession.fpId, name = staffName, staffDescription,
+                StaffProfileUpdateRequest(isAvailable, staffDetails?.serviceIds, staffGender, UserSession.fpId, name = staffName, staffDescription,
                         experience = yearOfExperience.toInt(), staffDetails?.id, staffAge, specializationList
-                ))?.observe(viewLifecycleOwner, { t ->
+                ))?.observeOnce(viewLifecycleOwner, Observer { t ->
             when (t.status) {
                 200 -> {
-                    showShortToast("profile updated")
-                    baseActivity.setResult(AppCompatActivity.RESULT_OK)
-                    baseActivity.finish()
-
+                    updateStaffTimings()
                 }
                 else -> {
-                    showShortToast("something went wrong")
+                    showShortToast(getString(R.string.something_went_wrong))
                 }
             }
 
@@ -181,11 +207,6 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
     }
 
-    private fun getServiceIds(): ArrayList<String> {
-        val serviceIds = ArrayList<String>()
-        servicesList?.filter { serviceIds.add(it.id!!) }
-        return serviceIds
-    }
 
 
     private fun isValid(): Boolean {
@@ -193,36 +214,40 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         this.serviceListId = ArrayList()
         this.specializationList = ArrayList()
         this.staffName = binding?.etvName?.text.toString()
-        this.staffAge = binding?.cetAge?.text.toString().toIntOrNull() ?: 0
+        this.staffAge = binding?.cetAge?.text.toString().toIntOrNull()
         this.staffDescription = binding?.etvStaffDescription?.text.toString()
         val staffGender = binding?.spinnerGender?.isHintSelected()
         this.yearOfExperience = binding?.edtExperience?.text.toString()
         this.isAvailable = binding?.toggleIsAvailable?.isOn
-
         if (staffName.isBlank()) {
-            showLongToast("Enter Staff Name")
+            showLongToast(getString(R.string.enter_staff_name))
             return false
         } else if (staffGender == null || staffGender) {
-            showLongToast("Select Staff Gender")
+            showLongToast(getString(R.string.select_staff_gender))
             return false
         } else if (specialization.isEmpty()) {
-            showLongToast("Please add specialization")
+            showLongToast(getString(R.string.please_add_specialization))
             return false
         } else if (yearOfExperience.isBlank()) {
-            showLongToast("select year of experience")
+            showLongToast(getString(R.string.select_year_of_experience))
             return false
-        } else if (staffAge == 0) {
-            showLongToast("please enter your age")
+        } else if (staffAge == null) {
+            showLongToast(getString(R.string.please_enter_your_age))
             return false
-        } else if (imageUri == null || imageUri.toString().isEmpty()||imageUri.toString().isBlank()) {
-            showLongToast("please choose image")
+        } else if (imageUri.toString() == "null" || imageUri == null || imageUri.toString().isEmpty() || imageUri.toString().isBlank()) {
+            showLongToast(getString(R.string.please_choose_image))
             return false
         }
         specializationList.add(SpecialisationsItem(specialization, "key"))
-        val imageExtension: String? = imageUri?.toString()?.substring(imageUri.toString().lastIndexOf("."))
-        if (isEdit == null || isEdit == false) {
+        servicesList?.forEach { serviceListId?.add(it.id!!) }
+        if (serviceListId.isNullOrEmpty()) serviceListId = null
+        if (isImageUpdated == true) {
+            val imageExtension: String? = imageUri?.toString()?.substring(imageUri.toString().lastIndexOf("."))
             val imageToByteArray: ByteArray = imageToByteArray()
-            servicesList?.forEach { serviceListId.add(it.id!!) }
+            this.staffImage = StaffImage(image = "data:image/png;base64,${Base64.encodeToString(imageToByteArray, Base64.DEFAULT)}", fileName = "$staffName$imageExtension", imageFileType = imageExtension?.removePrefix("."))
+        }
+
+        if (isEdit == null || isEdit == false) {
             staffProfile?.age = staffAge
             staffProfile?.isAvailable = isAvailable
             staffProfile?.description = staffDescription
@@ -231,39 +256,95 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             staffProfile?.floatingPointTag = UserSession.fpId
             staffProfile?.name = staffName
             staffProfile?.serviceIds = serviceListId
-            this.staffImage = StaffImage(image = "data:image/png;base64,${Base64.encodeToString(imageToByteArray, Base64.DEFAULT)}",
-                    fileName = "$staffName$imageExtension", imageFileType = imageExtension?.removePrefix("."))
             staffProfile?.image = staffImage
             staffProfile?.specialisations = specializationList
         }
         return true
     }
+
     private fun createStaffProfile() {
-        viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, { t ->
+        showProgress(getString(R.string.profile_created))
+        viewModel?.createStaffProfile(staffProfile)?.observe(viewLifecycleOwner, Observer { t ->
+            hideProgress()
             when (t.status) {
                 200 -> {
-                    showShortToast("profile created")
-                    baseActivity.setResult(AppCompatActivity.RESULT_OK)
-                    baseActivity.finish()
+                    showShortToast(getString(R.string.profile_created))
+                    // get the id from result
+//                    addStaffTimings()
+
+                    addStaffTimings((t as StaffCreateProfileResponse).result)
                 }
                 else -> {
-                    showShortToast("something went wrong")
+                    showShortToast(getString(R.string.something_went_wrong))
                 }
             }
         })
     }
+
+
+    private fun updateStaffTimings() {
+        if (staffDetails?.timings == null && isTimingUpdated == null || isTimingUpdated == false) {
+            finishAndGoBack();
+            return;
+        }
+        showProgress(getString(R.string.staff_timings_updating))
+        viewModel?.updateStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id, this.staffDetails?.timings!!))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+            hideProgress()
+            when (it.status) {
+                200 -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
+                    finishAndGoBack()
+                }
+                else -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.something_went_wrong))
+                }
+            }
+        })
+    }
+
+
+    private fun finishAndGoBack() {
+        val intent = Intent();
+        intent.putExtra(IntentConstant.STAFF_DATA.name, staffDetails);
+        requireActivity().setResult(AppCompatActivity.RESULT_OK, intent);
+        requireActivity().finish();
+    }
+
     private fun imageToByteArray(): ByteArray {
-        val bm: Bitmap = BitmapFactory.decodeFile(imageUri!!.toString())
+        val bm: Bitmap = BitmapFactory.decodeFile(imageUri?.toString())
         val byteArrayOutStream = ByteArrayOutputStream()
         bm.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutStream) // bm is the bitmap object
         return byteArrayOutStream.toByteArray()
     }
+
+    private fun addStaffTimings(staffId: String?) {
+        if (staffDetails?.timings == null) {
+            finishAndGoBack();
+            return;
+        }
+        showProgress(getString(R.string.staff_timing_add))
+        viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id
+                ?: staffId, staffDetails?.timings))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+            hideProgress()
+            when (it.status) {
+                200 -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
+                    finishAndGoBack()
+                }
+                else -> {
+                    Log.v(getString(R.string.staff_timings), getString(R.string.something_went_wrong))
+                }
+            }
+        })
+    }
+
     private fun openImagePicker() {
         val filterSheet = ImagePickerBottomSheet()
         filterSheet.isHidePdf(true)
         filterSheet.onClicked = { openImagePicker(it) }
         filterSheet.show(this@StaffDetailsFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
     }
+
     private fun openImagePicker(it: ClickType) {
         val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
         ImagePicker.Builder(baseActivity)
@@ -278,31 +359,48 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK -> {
                 val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
                 setImage(mPaths)
+                isImageUpdated = true
+                if (isEdit == true)
+                    imageIsChange = true
+
             }
+
             requestCode == Constants.REQUEST_CODE_SERVICES_PROVIDED && resultCode == AppCompatActivity.RESULT_OK -> {
-                this.servicesList?.clear()
                 this.resultCode = resultCode
-                this.servicesList = data!!.extras!![Constants.SERVICES_LIST] as ArrayList<DataItemService>
-                val serviceName = ArrayList<String>()
-                servicesList?.forEach { dataItem -> serviceName.add(dataItem.name!!) }
-                binding!!.ctvServices.text = serviceName.joinToString(" ,", limit = 5, truncated = "5 more")
+                this.servicesList?.clear()
+                this.servicesList = data!!.extras!![IntentConstant.STAFF_SERVICES.name] as ArrayList<DataItemService>
+                servicesList?.forEach { dataItem -> serviceListId?.add(dataItem.id!!) }
+                if (staffDetails?.serviceIds == null) staffDetails?.serviceIds = arrayListOf()
+                staffDetails?.serviceIds = servicesList?.map { it.id }
+                binding!!.ctvServices.text = (servicesList?.map { it.name })?.joinToString(", ", limit = 5, truncated = "5 more")
+                showHideServicesText()
             }
             requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
+                this.staffDetails = data!!.extras!![IntentConstant.STAFF_TIMINGS.name] as StaffDetailsResult
+                binding?.ctvTiming?.text = staffDetails?.timings?.map { it.day }?.joinToString(" ,")
+                showHideTimingText()
+                isTimingUpdated = true
             }
         }
+        when (isEdit == true && imageIsChange != null && imageIsChange == true && isValid()) {
+            true -> updateStaffImage()
+        }
+
 
     }
+
     private fun setServicesList() {
-        val serviceName = ArrayList<String>()
-        if (isEdit == true && 0== resultCode) {
+        if (isEdit == true) {
             viewModel!!.getServiceListing(ServiceListRequest(floatingPointTag = UserSession.fpId)
-            ).observe(viewLifecycleOwner, {
+            ).observeOnce(viewLifecycleOwner, Observer {
                 when (it.status) {
                     200 -> {
                         val data = (it as ServiceListResponse).result!!.data!!
-                        val servicesProvided = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
-                        servicesProvided.forEach { itemService -> serviceName.add(itemService.name!!) }
-                        binding!!.ctvServices.text = serviceName.joinToString(" ,", limit = 5, truncated = "5 more")
+                        if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
+                            val servicesProvided = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
+                            binding!!.ctvServices.text = servicesProvided.map { it.name }.joinToString(" ,", limit = 5, truncated = "5 more")
+                            showHideServicesText()
+                        }
                     }
                     else -> {
                     }
@@ -310,6 +408,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             })
         }
     }
+
     private fun setImage(mPaths: List<String>) {
         this.imageUri = Uri.parse(mPaths[0])
         let { activity?.glideLoad(binding?.civStaffImg!!, imageUri.toString(), R.drawable.ic_staff_img_blue) }

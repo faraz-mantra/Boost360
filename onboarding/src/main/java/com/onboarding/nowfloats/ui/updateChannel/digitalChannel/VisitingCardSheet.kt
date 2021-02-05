@@ -17,6 +17,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.FragmentType
@@ -194,10 +195,17 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
       dismiss()
       savePositionCard(cardPosition)
+      onBusinessCardAddedOrUpdated(true)
     } catch (e: Exception) {
       showLongToast("Error sharing visiting card, please try again.")
       dismiss()
     }
+  }
+
+  private fun onBusinessCardAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    instance.getDrScoreData()?.metricdetail?.boolean_share_business_card = isAdded
+    instance.updateDocument()
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {

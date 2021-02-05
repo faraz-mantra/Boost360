@@ -1,0 +1,109 @@
+{
+  "data": [
+    {
+      "id": "boolean_add_business_name",
+      "title": "Business Name",
+      "desc": ""
+    },
+    {
+      "id": "boolean_add_business_description",
+      "title": "Business Description",
+      "desc": ""
+    },
+    {
+      "id": "boolean_add_clinic_logo",
+      "title": "Clinic Logo",
+      "desc": ""
+    },
+    {
+      "id": "boolean_add_featured_image_video",
+      "title": "Featured Image Video",
+      "desc": ""
+    },
+    {
+      "id": "boolean_select_what_you_sell",
+      "title": "Select What You Sell",
+      "desc": ""
+    },
+    {
+      "id": "boolean_add_business_hours",
+      "title": "Business Hours",
+      "desc": ""
+    },
+    {
+      "id": "boolean_add_contact_details",
+      "title": "Contact Details",
+      "desc": ""
+    },
+    {
+      "id": "boolean_add_custom_domain_name_and_ssl",
+      "title": "Custom Domain Name And SSL",
+      "desc": ""
+    },
+    {
+      "id": "number_updates_posted",
+      "title": "Updates Posted",
+      "desc": ""
+    },
+    {
+      "id": "boolean_social_channel_connected",
+      "title": "Social Channel Connected",
+      "desc": ""
+    },
+    {
+      "id": "number_services_added",
+      "title": "Service Catalogs",
+      "desc": ""
+    },
+    {
+      "id": "number_products_added",
+      "title": "Product Catalogs",
+      "desc": ""
+    },
+    {
+      "id": "boolean_add_bank_account",
+      "title": "Bank Account",
+      "desc": ""
+    },
+    {
+      "id": "boolean_image_uploaded_to_gallery",
+      "title": "Gallery Image",
+      "desc": ""
+    },
+    {
+      "id": "boolean_create_custom_page",
+      "title": "Custom Page",
+      "desc": ""
+    },
+    {
+      "id": "boolean_share_business_card",
+      "title": "Business Card",
+      "desc": ""
+    },
+    {
+      "id": "boolean_create_doctor_e_profile",
+      "title": "Doctor E-Profile",
+      "desc": ""
+    },
+    {
+      "id": "boolean_create_sample_in_clinic_appointment",
+      "title": "In Clinic Appointment",
+      "desc": ""
+    },
+    {
+      "id": "boolean_create_sample_video_consultation",
+      "title": "Video Consultation",
+      "desc": ""
+    },
+    {
+      "id": "boolean_manage_appointment_settings",
+      "title": "Appointment Settings",
+      "desc": ""
+    },
+    {
+      "id": "boolean_respond_to_customer_enquiries",
+      "title": "Customer Enquiries",
+      "desc": ""
+    }
+  ]
+}

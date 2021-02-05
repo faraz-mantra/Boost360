@@ -46,7 +46,7 @@ object StaffNowFloatsRepository : AppBaseRepository<StaffNowFloatsRemoteData, Ap
     }
 
     fun staffUpdateTimings(request: StaffTimingAddUpdateRequest?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.staffAddTimings(request), TaskCode.POST_ADD_SERVICE_TIMING)
+        return makeRemoteRequest(remoteDataSource.staffUpdateTimings(request), TaskCode.POST_UPDATE_SERVICE_TIMING)
     }
 
 

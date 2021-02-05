@@ -1,30 +1,14 @@
 package com.appservice.staffs.model
 
+import com.appservice.ui.catalog.common.AppointmentModel
 import com.google.gson.annotations.SerializedName
 
 data class StaffTimingAddUpdateRequest(
 
-	@field:SerializedName("StaffId")
-	val staffId: String? = null,
+		@field:SerializedName("StaffId", alternate = ["staffId"])
+		val staffId: String? = null,
 
-	@field:SerializedName("WorkTimings")
-	val workTimings: List<WorkTimingsItem?>? = null
+		@field:SerializedName("WorkTimings",alternate = ["workTimings","Timings"])
+		val workTimings: List<AppointmentModel?>? = null,
 )
 
-data class WorkTimingsItem(
-
-	@field:SerializedName("Timing")
-	val timing: List<TimingItem?>? = null,
-
-	@field:SerializedName("Day")
-	val day: String? = null
-)
-
-data class TimingItem(
-
-	@field:SerializedName("From")
-	val from: String? = null,
-
-	@field:SerializedName("To")
-	val to: String? = null
-)

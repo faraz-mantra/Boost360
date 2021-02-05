@@ -1,14 +1,14 @@
 package com.appservice.staffs.ui.home
 
+import android.content.Context
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
+import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentStaffListingBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
@@ -17,6 +17,7 @@ import com.appservice.staffs.model.DataItem
 import com.appservice.staffs.model.FilterBy
 import com.appservice.staffs.model.GetStaffListingRequest
 import com.appservice.staffs.model.GetStaffListingResponse
+import com.appservice.staffs.ui.IOnBackPressed
 import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
@@ -24,7 +25,8 @@ import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(), RecyclerItemClickListener, SearchView.OnQueryTextListener {
+class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(), RecyclerItemClickListener, SearchView.OnQueryTextListener, IOnBackPressed {
+    private lateinit var searchView: SearchView
     private val list: ArrayList<DataItem> = ArrayList()
     private val copyList: ArrayList<DataItem> = ArrayList()
     private lateinit var adapter: AppBaseRecyclerViewAdapter<DataItem>
@@ -99,7 +101,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
         val staff = item as DataItem
         val bundle = Bundle()
-        bundle.putSerializable("STAFF_DETAILS", staff)
+        bundle.putSerializable(IntentConstant.STAFF_DATA.name, staff)
         startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, bundle, clearTop = false, isResult = false)
 
     }
@@ -108,7 +110,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         inflater.inflate(R.menu.menu_stafflisting, menu)
         val searchItem = menu.findItem(R.id.app_bar_search)
         searchItem.isVisible = list.isNullOrEmpty().not()
-        val searchView: SearchView = searchItem.actionView as SearchView
+         this.searchView = searchItem.actionView as SearchView
         searchView.queryHint = "Search Staff"
         searchView.setOnQueryTextListener(this)
         searchView.clearFocus()
@@ -162,4 +164,17 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         }
         adapter.updateList(list)
     }
+
+    override fun onBackPressed(): Boolean {
+        return when {
+            !searchView.isIconified -> {
+                searchView.isIconified = true;
+                false
+            }
+            else -> {
+                true
+            }
+        }
+    }
+
 }
