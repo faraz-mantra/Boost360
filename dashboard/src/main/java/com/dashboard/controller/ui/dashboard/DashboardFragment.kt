@@ -140,7 +140,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setDrScoreData(drScoreData: DrScoreModel?) {
-    if (drScoreData!=null && (drScoreData.getDrsTotal() >= 80).not()) {
+    if (drScoreData!=null && drScoreData.drs_segment.isNullOrEmpty().not() && (drScoreData.getDrsTotal() >= 80).not()) {
       viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
         val response = it as? DrScoreUiDataResponse
         if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {

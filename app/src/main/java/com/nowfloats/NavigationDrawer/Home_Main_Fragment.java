@@ -542,7 +542,8 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     progressBar.setVisibility(View.GONE);
   }
 
-  private void onBusinessUpdateAddedOrUpdated(int count) {
+  private void onBusinessUpdateAddedOrUpdated(Integer count) {
+    if (count == null) count = 0;
     FirestoreManager instance = FirestoreManager.INSTANCE;
     instance.getDrScoreData().getMetricdetail().setNumber_updates_posted(count);
     instance.updateDocument();
