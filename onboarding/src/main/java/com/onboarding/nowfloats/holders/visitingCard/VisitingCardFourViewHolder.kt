@@ -16,6 +16,7 @@ class VisitingCardFourViewHolder(binding: ItemVisitingCardFourBinding) : AppBase
     super.bind(position, item)
     val data = (item as? DigitalCardData)?.cardData ?: return
     binding.businessName.text = data.businessName
+    data.cardIcon?.let { binding.imgLogo.setImageResource(it) }
     binding.number.text = data.number
     if (data.businessLogo.isNullOrEmpty().not()) {
       binding.profileView.visible()

@@ -33,6 +33,10 @@
       "message": "*\uD83D\uDC4B\uD83C\uDFFC Hey there, Greetings from %s \uD83D\uDE4F\uD83C\uDFFD.*\n\n\uD83D\uDCE7 This is my business card.\n\nCheck our website for latest tips and offers: \uD83C\uDF10%s.\n\nLike, follow and drop us a message anytime \uD83D\uDCAC\n%s%sLooking forward to serve you.\n\n*Have a great day*. \uD83D\uDCAB"
     },
     {
+      "type": "SAL",
+      "message": "*\uD83D\uDC4B\uD83C\uDFFC Hey there, Greetings from %s \uD83D\uDE4F\uD83C\uDFFD.*\n\n\uD83D\uDCE7 This is my business card.\n\nCheck our website for latest tips and offers: \uD83C\uDF10%s.\n\nLike, follow and drop us a message anytime \uD83D\uDCAC\n%s%sLooking forward to serve you.\n\n*Have a great day*. \uD83D\uDCAB"
+    },
+    {
       "type": "SPA",
       "message": "*\uD83D\uDC4B\uD83C\uDFFC Hey there, Greetings from %s \uD83D\uDE4F\uD83C\uDFFD.*\n\n\uD83D\uDCE7 This is my business card.\n\nCheck our website for latest tips and offers: \uD83C\uDF10%s.\n\nLike, follow and drop us a message anytime \uD83D\uDCAC\n%s%sLooking forward to serve you.\n\n*Have a great day*. \uD83D\uDCAB"
     }

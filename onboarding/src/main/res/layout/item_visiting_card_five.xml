@@ -95,15 +95,16 @@
           android:layout_height="match_parent"
           android:layout_marginStart="@dimen/size_20"
           android:layout_marginTop="@dimen/size_16"
+          android:layout_marginEnd="@dimen/size_10"
           android:layout_weight="1"
-          android:gravity="center_horizontal">
+          android:gravity="end">
 
           <com.framework.views.customViews.CustomImageView
             android:id="@+id/img_logo"
-            android:layout_width="@dimen/size_80"
+            android:layout_width="72dp"
             android:layout_height="@dimen/size_74"
             android:layout_gravity="center_horizontal"
-            app:srcCompat="@drawable/ic_category_spa_n" />
+            app:srcCompat="@drawable/ic_business_card_spa_n" />
         </LinearLayout>
 
 
