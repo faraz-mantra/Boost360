@@ -28,6 +28,9 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.HttpException
 
 class CartViewModel(application: Application) : BaseViewModel(application) {
@@ -63,6 +66,8 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
   val compositeDisposable = CompositeDisposable()
 
     var customerInfoState: MutableLiveData<Boolean> = MutableLiveData()
+  var cityResult: MutableLiveData<List<String>> = MutableLiveData()
+    var cityNames = ArrayList<String>()
 
     var updateCustomerInfo: MutableLiveData<GetCustomerIDResponse> = MutableLiveData()
     private var customerInfo: MutableLiveData<CreateCustomerIDResponse> = MutableLiveData()
@@ -179,6 +184,10 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     fun updateCheckoutKycClose(checkoutCloseValue: Boolean) {
         _updateCheckoutClose.postValue(checkoutCloseValue)
+    }
+
+    fun cityResult(): LiveData<List<String>> {
+        return cityResult
     }
 
   fun InitiatePurchaseOrder(createPurchaseOrderV2: CreatePurchaseOrderV2) {
@@ -556,5 +565,24 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
                                 }
                         )
         )
+    }
+
+    fun getCitiesFromAssetJson(context: Context) {
+        val data: String? = Utils.getCityFromAssetJsonData(context)
+        try {
+            val json_contact: JSONObject = JSONObject(data)
+            var jsonarray_info: JSONArray = json_contact.getJSONArray("data")
+            var i:Int = 0
+            var size:Int = jsonarray_info.length()
+            for (i in 0.. size-1) {
+                var json_objectdetail: JSONObject =jsonarray_info.getJSONObject(i)
+                cityNames.add(json_objectdetail.getString("name"))
+
+
+            }
+            cityResult.postValue(cityNames)
+        } catch (ioException: JSONException) {
+            ioException.printStackTrace()
+        }
     }
 }
