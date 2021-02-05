@@ -522,7 +522,7 @@ fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startBusinessProfileEdit(session: UserSessionManager?) {
+fun AppCompatActivity.startBusinessProfileDetailEdit(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent("Business Profile Page", "startview", session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"))

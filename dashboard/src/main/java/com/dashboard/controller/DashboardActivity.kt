@@ -101,8 +101,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
     intentDataCheckAndDeepLink()
     getWelcomeData()
     initialize()
-
-    session?.let { initData(it.fpTag!!, it.fPID!!, clientId) }
+    session?.let { initData(it.fpTag?:"", it.fPID?:"", clientId) }
   }
 
   private fun initialize() {
@@ -369,7 +368,7 @@ class DashboardActivity : AppBaseActivity<ActivityDashboardBinding, DashboardVie
 //        session?.let { this.startOldSiteMeter(it) }
         startReadinessScoreView(session, 0)
       }
-      binding?.drawerView?.imgBusinessLogo -> this.startBusinessProfileEdit(session)
+      binding?.drawerView?.imgBusinessLogo -> this.startBusinessProfileDetailEdit(session)
       binding?.drawerView?.txtDomainName -> this.startWebViewPageLoad(session, session!!.getDomainName(false))
       binding?.drawerView?.backgroundImage -> openImagePicker(true)
     }

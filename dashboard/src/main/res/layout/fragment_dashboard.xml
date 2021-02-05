@@ -51,9 +51,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_190"
-            android:visibility="gone"
             android:background="@drawable/ic_bg_dark_white_top_round"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <androidx.appcompat.widget.LinearLayoutCompat
               android:id="@+id/btn_show_digital_score"
@@ -588,13 +588,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginTop="@dimen/size_4"
+                    android:id="@+id/date_business_report"
+                    android:drawableEnd="@drawable/ic_arrow_down_d"
+                    android:drawablePadding="@dimen/size_6"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
                     android:text="@string/till_date"
                     android:textColor="@color/black_4a4a4a"
                     app:textType="CAPTION" />
-                  <!--                  android:drawableEnd="@drawable/ic_arrow_down_d"-->
-                  <!--                  android:drawablePadding="@dimen/size_6"-->
+
                 </FrameLayout>
 
                 <com.framework.views.customViews.CustomTextView

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rounded_top_white"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/size_10">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/size_6"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:padding="@dimen/size_12"
+      tools:ignore="RtlSymmetry">
+
+      <com.framework.views.customViews.CustomImageView
+        android:layout_width="@dimen/size_22"
+        android:layout_height="@dimen/size_22"
+        android:layout_marginStart="@dimen/size_6"
+        android:tint="@color/black_4a4a4a"
+        app:srcCompat="@drawable/ic_calendar" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16"
+        android:layout_weight="1"
+        android:includeFontPadding="false"
+        android:text="@string/select_duration"
+        android:textColor="@color/black_4a4a4a"
+        app:fontFamily="@font/semi_bold"
+        app:textType="HEADING_7" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/btn_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16"
+        android:includeFontPadding="false"
+        android:padding="@dimen/size_2"
+        android:text="@string/reset"
+        android:textColor="@color/colorAccent"
+        app:textAllCaps="true"
+        app:textType="HEADING_6" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/size_1"
+      android:background="@color/view_background_1" />
+
+    <com.framework.views.viewgroups.BaseRecyclerView
+      android:id="@+id/recyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      tools:itemCount="6"
+      tools:listitem="@layout/item_filter_date" />
+
+    <com.framework.views.customViews.CustomButton
+      android:id="@+id/btn_done"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_margin="@dimen/size_20"
+      android:background="@drawable/bg_button_proceed"
+      android:backgroundTint="@color/bg_grey_light"
+      android:fontFamily="@font/semi_bold"
+      android:gravity="center"
+      android:padding="@dimen/size_12"
+      android:stateListAnimator="@null"
+      android:text="@string/done"
+      android:textAllCaps="true"
+      android:textColor="@color/white"
+      app:textType="HEADING_6" />
+
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
