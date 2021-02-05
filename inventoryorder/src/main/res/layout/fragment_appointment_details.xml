@@ -598,6 +598,7 @@
                         android:layout_marginEnd="@dimen/size_5"
                         android:layout_marginBottom="@dimen/size_2"
                         android:ellipsize="end"
+                        android:visibility="invisible"
                         android:fontFamily="@font/regular"
                         android:gravity="end|center_vertical"
                         android:maxLines="1"
