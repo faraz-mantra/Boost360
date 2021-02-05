@@ -1,12 +1,12 @@
 package com.appservice.staffs.ui.profile
 
 import android.content.Intent
-import android.graphics.Paint
+import android.graphics.*
 import android.os.Bundle
-import android.util.Size
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -15,8 +15,6 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentStaffProfileBinding
-import com.appservice.recyclerView.BaseRecyclerViewItem
-import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.model.*
 import com.appservice.staffs.ui.*
 import com.appservice.staffs.ui.bottomsheets.InActiveBottomSheet
@@ -29,7 +27,7 @@ import com.framework.glide.util.glideLoad
 import com.framework.views.customViews.CustomTextView
 
 
-class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBinding, StaffViewModel>(), RecyclerItemClickListener, IOnBackPressed {
+class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBinding, StaffViewModel>() {
     private var popupWindow: PopupWindow? = null
     private var serviceIds: ArrayList<String>? = null
     private var staffDetails: StaffDetailsResult? = null
@@ -76,33 +74,44 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
 
     private fun setData() {
         binding!!.ctvEdit.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-        binding!!.ctvEdit.text = getString(R.string.u_edit_info_u)
+        binding!!.ctvEditTiming.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        binding!!.ctvEditServices.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         val get = arguments?.get(IntentConstant.STAFF_DATA.name) as DataItem
         showProgress(getString(R.string.loading))
         viewModel?.getStaffDetails(get.id)?.observeOnce(viewLifecycleOwner, {
+            hideProgress()
             when (it.status) {
                 200 -> {
-                    hideProgress()
                     this.staffDetails = (it as StaffDetailsResponse).result
                     binding?.ctvStaffName?.text = staffDetails?.name
-                    binding?.ctvExperience?.text = staffDetails?.experience.toString()
+                    setExperience()
                     binding?.ctvStaffGenderAge?.text = "${staffDetails?.gender}, ${staffDetails?.age}"
                     binding?.ctvAboutHeading?.text = "About ${staffDetails?.name}"
                     binding?.ctvAboutStaff?.text = staffDetails?.description
                     let { activity?.glideLoad(binding?.civStaffProfileImg!!, staffDetails?.image.toString(), R.drawable.placeholder_image) }
                     binding?.ctvSpecialization?.text = staffDetails?.specialisations?.get(0)?.value
                     if (staffDetails?.isAvailable == false) showInactiveProfile()
-
                     fetchServices()
                     setTimings()
+                    setViewBackgrounds()
                 }
                 else -> {
 
                 }
             }
         })
-        setViewBackgrounds()
 
+    }
+
+    private fun setExperience() {
+        when {
+            staffDetails?.experience!! < 2 -> {
+                binding?.ctvExperience?.text = "${staffDetails?.experience} Year"
+            }
+            else -> {
+                binding?.ctvExperience?.text = "${staffDetails?.experience} Years"
+            }
+        }
     }
 
     private fun setViewBackgrounds() {
@@ -110,19 +119,41 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
             null, true -> {
                 binding?.ctvEdit?.visibility = View.VISIBLE
                 binding?.ctvEditServices?.visibility = View.VISIBLE
+                binding?.civMenu?.visibility = View.VISIBLE
+                binding?.civStaffProfileImg?.clearColorFilter()
                 binding?.ctvEditTiming?.visibility = View.VISIBLE
+                binding?.ctvHeadingExperience?.setTextColor(resources.getColor(R.color.black))
+                binding?.ctvExperience?.setTextColor(resources.getColor(R.color.gray_4e4e4e))
+                binding?.ctvAboutStaff?.setTextColor(resources.getColor(R.color.gray_4e4e4e))
+                binding?.ctvExperience?.setTextColor(resources.getColor(R.color.gray_4e4e4e))
+                binding?.ctvAboutHeading?.setTextColor(resources.getColor(R.color.black))
+                binding?.ctvHeadingServices?.setTextColor(resources.getColor(R.color.black))
+                binding?.ctvHeadingSpecialization?.setTextColor(resources.getColor(R.color.black))
+                binding?.ctvSpecialization?.setTextColor(resources.getColor(R.color.gray_4e4e4e))
+                binding?.ctvHeadingTiming?.setTextColor(resources.getColor(R.color.black))
                 binding?.rlStaffContainer?.setBackgroundColor(resources.getColor(R.color.yellow_ffb900))
                 (requireActivity() as StaffFragmentContainerActivity).getToolbar().setBackgroundColor(resources.getColor(R.color.yellow_ffb900))
-                (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = resources.getColor(R.color.yellow_ffb900)
+                (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = resources.getColor(R.color.yellow_f5b200)
 
             }
             else -> {
                 binding?.ctvEdit?.visibility = View.INVISIBLE
                 binding?.ctvEditServices?.visibility = View.INVISIBLE
+                binding?.civMenu?.visibility = View.INVISIBLE
                 binding?.ctvEditTiming?.visibility = View.INVISIBLE
-                binding?.rlStaffContainer?.setBackgroundColor(resources.getColor(R.color.gray_ligh_3))
-                (requireActivity() as StaffFragmentContainerActivity).getToolbar().setBackgroundColor(resources.getColor(R.color.gray_ligh_3))
-                (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = resources.getColor(R.color.gray_ligh_3)
+                binding?.ctvHeadingExperience?.setTextColor(resources.getColor(R.color.pinkish_grey))
+                binding?.ctvExperience?.setTextColor(resources.getColor(R.color.pinkish_grey))
+                binding?.ctvAboutStaff?.setTextColor(resources.getColor(R.color.pinkish_grey))
+                binding?.ctvExperience?.setTextColor(resources.getColor(R.color.pinkish_grey))
+                binding?.ctvAboutHeading?.setTextColor(resources.getColor(R.color.pinkish_grey))
+                binding?.ctvHeadingServices?.setTextColor(resources.getColor(R.color.pinkish_grey))
+                binding?.ctvHeadingSpecialization?.setTextColor(resources.getColor(R.color.pinkish_grey))
+                binding?.ctvSpecialization?.setTextColor(resources.getColor(R.color.pinkish_grey))
+                binding?.ctvHeadingTiming?.setTextColor(resources.getColor(R.color.pinkish_grey))
+                binding?.civStaffProfileImg?.colorFilter = ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
+                binding?.rlStaffContainer?.setBackgroundColor(resources.getColor(R.color.pinkish_grey))
+                (requireActivity() as StaffFragmentContainerActivity).getToolbar().setBackgroundColor(resources.getColor(R.color.pinkish_grey))
+                (requireActivity() as StaffFragmentContainerActivity).window.statusBarColor = Color.parseColor("#ADADAD")
             }
         }
     }
@@ -137,6 +168,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
     private fun getTimeView(appointmentModel: AppointmentModel): View {
         val itemView = LayoutInflater.from(binding?.llTimingContainer?.context).inflate(R.layout.recycler_item_service_timing, null, false);
         val timeTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
+        if (staffDetails?.isAvailable == true) timeTextView.setTextColor(resources.getColor(R.color.gray_4e4e4e)) else timeTextView.setTextColor(resources.getColor(R.color.pinkish_grey))
         timeTextView.text = "${appointmentModel.day}  ${appointmentModel.timeSlots.joinToString(" ,").removeSurrounding("(", ")")}"
         return itemView;
     }
@@ -170,8 +202,9 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
 
     private fun getServiceView(services: String?): View {
         val itemView = LayoutInflater.from(binding?.llServices?.context).inflate(R.layout.recycler_item_service_timing, null, false);
-        val timeTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
-        timeTextView.text = services
+        val serviceTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
+        if (staffDetails?.isAvailable == true) serviceTextView.setTextColor(resources.getColor(R.color.gray_4e4e4e)) else serviceTextView.setTextColor(resources.getColor(R.color.pinkish_grey))
+        serviceTextView.text = services
         return itemView;
     }
 
@@ -184,7 +217,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
                         this.popupWindow?.dismiss()
                     }
                     null, false -> {
-                        showPopupWindow(binding!!.civMenu)
+                        showPopupWindow(v)
                     }
                 }
             }
@@ -235,15 +268,8 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
     }
 
     private fun showPopupWindow(anchor: View) {
-        if (this.popupWindow == null) this.popupWindow = PopupWindow(anchor.context)
-        this.popupWindow?.isOutsideTouchable = true
-        val inflater = LayoutInflater.from(anchor.context)
-        this.popupWindow?.contentView = inflater.inflate(R.layout.popup_window, null).apply {
-            measure(
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-            )
-        }
+        val view = LayoutInflater.from(baseActivity).inflate(R.layout.popup_window_staff_menu, null)
+        this.popupWindow = PopupWindow(view, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
         val markAsActive = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.mark_as_active)
         val removeStaff = this.popupWindow?.contentView?.findViewById<CustomTextView>(R.id.remove_staff_profile)
         markAsActive?.setOnClickListener {
@@ -256,15 +282,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
             popupWindow?.dismiss()
 
         }
-        val location = IntArray(2)
-        anchor.getLocationOnScreen(location)
-
-        Size(
-                popupWindow?.contentView?.measuredWidth!!,
-                popupWindow?.contentView?.measuredHeight!!
-        )
-        popupWindow?.setBackgroundDrawable(resources.getDrawable(R.drawable.pop_window_background))
-        this.popupWindow?.showAsDropDown(anchor, -130, 60, Gravity.END)
+        this.popupWindow?.showAsDropDown(anchor, Gravity.NO_GRAVITY, 60, 60)
 
 
     }
@@ -299,11 +317,12 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
 
     private fun removeStaffProfile() {
         viewModel?.deleteStaffProfile(StaffDeleteImageProfileRequest(staffDetails?.id, UserSession.fpId))?.observe(viewLifecycleOwner, { response ->
+            hideProgress()
             when (response.status) {
                 200 -> {
                     baseActivity.setResult(AppCompatActivity.RESULT_OK)
                     baseActivity.finish()
-                    hideProgress()
+
                 }
                 else -> {
                     showShortToast(getString(R.string.unable_to_delete))
@@ -336,12 +355,5 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
 
     }
 
-    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
 
-    }
-
-    override fun onBackPressed(): Boolean {
-        activity?.finish()
-        return true
-    }
 }

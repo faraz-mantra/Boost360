@@ -1,5 +1,7 @@
 package com.appservice.staffs.recycler
 
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -23,6 +25,7 @@ class StaffListingViewHolder(binding: RecyclerItemStaffListingBinding) : AppBase
 
         if (item.isAvailable == false) {
             binding.linearRoot.setBackgroundColor(getApplicationContext()?.resources?.getColor(R.color.grey_f9f9f9)!!)
+            binding.civImage.colorFilter= ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f)})
             binding.btnViewProfile.background = ContextCompat.getDrawable(getApplicationContext()!!, R.drawable.rounded_stroke_grey_4)
             binding.btnViewProfile.setTextColor(getApplicationContext()?.resources?.getColor(R.color.grey_light_3)!!)
             binding.cardOverlay.visibility = View.VISIBLE
@@ -31,6 +34,7 @@ class StaffListingViewHolder(binding: RecyclerItemStaffListingBinding) : AppBase
             binding.btnViewProfile.background = ContextCompat.getDrawable(getApplicationContext()!!, R.drawable.rounded_stroke_orange_4)
             binding.btnViewProfile.setTextColor(getApplicationContext()?.resources?.getColor(R.color.orange)!!)
             binding.cardOverlay.visibility = View.GONE
+            binding.civImage.clearColorFilter()
         }
     }
 

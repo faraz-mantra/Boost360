@@ -579,7 +579,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_arrow_right_grey" />
+                        app:srcCompat="@drawable/ic_arrow_right_grey_staff" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -850,7 +850,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_arrow_right_grey" />
+                app:srcCompat="@drawable/ic_arrow_right_grey_staff" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

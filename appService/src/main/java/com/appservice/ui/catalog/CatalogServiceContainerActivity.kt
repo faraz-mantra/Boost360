@@ -67,7 +67,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   }
 
   override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.body_2)
+    return resources.getDimension(R.dimen.body_1)
   }
 
   override fun getToolbarBackgroundColor(): Int? {

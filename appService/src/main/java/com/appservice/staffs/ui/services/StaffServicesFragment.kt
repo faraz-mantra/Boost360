@@ -79,7 +79,6 @@ class StaffServicesFragment() : AppBaseFragment<FragmentSelectServicesBinding, S
     }
 
     private fun init() {
-        binding?.ctvHeading?.text = Html.fromHtml(getString(R.string.select_what_services_that_the_staff))
         fetchServices()
         setOnClickListener(binding!!.flConfirmServices)
     }

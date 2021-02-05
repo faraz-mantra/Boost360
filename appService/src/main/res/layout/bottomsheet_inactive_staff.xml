@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_rounded_top_white_2"
-            android:backgroundTint="@color/red_F40000"
+            android:backgroundTint="#D03F3F"
             android:orientation="vertical">
 
             <com.framework.views.customViews.CustomImageView
@@ -18,18 +18,16 @@
                 android:layout_height="@dimen/size_30"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/size_30"
-                android:src="@drawable/ic_info_white" />
+                android:src="@drawable/ic_info_transparent" />
 
             <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/StaffProfileTextContent"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/size_8"
+                android:textColor="@color/white"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/this_staff_is_marked_inactive"
-                android:textColor="@color/white"
-                android:textFontWeight="600"
-                android:textSize="14sp" />
+               />
 
             <com.framework.views.customViews.CustomButton
                 android:layout_width="wrap_content"
@@ -37,10 +35,11 @@
                 android:layout_gravity="center"
                 android:textAllCaps="true"
                 android:id="@+id/btn_activate_staff"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/open_sans"
                 android:textColor="@color/black_4a4a4a"
                 android:paddingHorizontal="@dimen/size_16"
                 android:textSize="10sp"
+                android:stateListAnimator="@null"
                 android:background="@drawable/pop_window_background"
                 android:layout_marginBottom="@dimen/size_30"
                 android:layout_height="@dimen/size_30"

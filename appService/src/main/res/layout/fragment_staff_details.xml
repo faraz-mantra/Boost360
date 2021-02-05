@@ -27,29 +27,34 @@
                 <FrameLayout
                     android:id="@+id/fl_add_staff_img"
                     android:layout_width="wrap_content"
-                    android:background="@drawable/button_rounded_corner_blue"
                     android:layout_height="wrap_content">
 
-                    <com.framework.views.customViews.CustomImageView
+                    <com.framework.views.roundedimageview.RoundedImageView
                         android:id="@+id/civ_staff_img"
-                        android:layout_width="153dp"
+                        android:layout_width="143dp"
+                        android:layout_height="153dp"
                         android:scaleType="fitXY"
-                        android:layout_height="163dp"
-                        android:src="@drawable/ic_staff_img_blue" />
+                        app:riv_oval="false"
+                        android:src="@drawable/ic_staff_img_blue"
+                        app:riv_mutate_background="true"
+                        app:riv_corner_radius="@dimen/size_4"/>
 
                     <com.framework.views.customViews.CustomTextView
-                        android:layout_width="153dp"
+                        android:layout_width="143dp"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:id="@+id/ctv_img_change"
-                        android:padding="@dimen/size_4"
-                        android:layout_gravity="bottom"
+                        android:layout_gravity="bottom|center_horizontal"
                         android:gravity="center"
+                        android:background="@drawable/text_background_staff_profile_image_gray"
+                        android:paddingVertical="8dp"
                         android:fontFamily="@font/open_sans"
                         android:text="@string/add_staff_image"
                         android:textColor="@color/blue_4a90e2"
                         android:textFontWeight="600"
                         app:textAllCaps="true"
-                        app:textType="SUBHEADING_2" />
+                        android:textSize="10sp"
+                         />
                 </FrameLayout>
 
                 <LinearLayout
@@ -69,7 +74,7 @@
                             style="@style/TextStaffHeading"
                             android:text="@string/staff_member_name" />
 
-                        <com.framework.views.customViews.CustomEditText
+                        <com.framework.views.customViews.CustomTextField
                             android:id="@+id/etv_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -152,7 +157,7 @@
                             style="@style/TextStaffHeading"
                             android:text="@string/specialization" />
 
-                        <com.framework.views.customViews.CustomEditText
+                        <com.framework.views.customViews.CustomTextField
                             android:id="@+id/etv_specialization"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -178,17 +183,15 @@
                             android:text="@string/staff_description_optional" />
 
                         <com.framework.views.customViews.CustomTextField
+                            android:id="@+id/etv_staff_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="start"
                             android:layout_marginTop="@dimen/size_5"
                             android:background="@drawable/bg_rect_edit_txt"
+                            android:gravity="start"
                             android:hint="@string/describe_this_staff_in_around_2000_characters_at_max"
                             android:inputType="textMultiLine"
-                            android:minLines="2"
-                            android:id="@+id/etv_staff_description"
                             android:padding="@dimen/size_12"
-                            android:singleLine="false"
                             android:textColor="@color/warm_grey_10" />
                     </LinearLayout>
 
@@ -263,9 +266,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="@dimen/size_8"
                             android:layout_centerVertical="true"
                             android:layout_gravity="end"
-                            android:src="@drawable/ic_arrow_right_grey" />
+                            android:src="@drawable/ic_arrow_right_grey_staff" />
 
                     </RelativeLayout>
 
@@ -282,11 +286,13 @@
 
                         <com.framework.views.customViews.CustomCardView
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/size_48"
+                            android:layout_height="@dimen/size_45"
                             android:backgroundTint="#1A4889F8"
                             android:layout_marginTop="@dimen/size_5"
+                            app:cardUseCompatPadding="false"
+                            android:paddingHorizontal="@dimen/size_8"
                             app:cardElevation="0dp"
-                            app:corner_radius="RADIUS_6">
+                            app:corner_radius="RADIUS_4">
 
                             <com.framework.views.customViews.CustomTextView
                                 android:layout_width="wrap_content"
@@ -294,9 +300,11 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginStart="@dimen/size_8"
                                 android:fontFamily="@font/open_sans"
+                                android:textColor="@color/black_4a4a4a"
+                                android:textStyle="normal"
                                 android:text="@string/is_the_staff_available_for_home_service"
                                 android:textFontWeight="600"
-                                android:textSize="10sp" />
+                                android:textSize="12sp" />
 
                             <com.appservice.views.toggle.widget.LabeledSwitch
                                 android:id="@+id/toggle_is_available"
@@ -360,7 +368,8 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_gravity="end"
-                            android:src="@drawable/ic_arrow_right_grey" />
+                            android:layout_marginEnd="@dimen/size_8"
+                            android:src="@drawable/ic_arrow_right_grey_staff" />
 
                     </RelativeLayout>
                     <!--todo visibility gone in this release only-->
@@ -401,7 +410,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_gravity="end"
-                            android:src="@drawable/ic_arrow_right_grey" />
+                            android:src="@drawable/ic_arrow_right_grey_staff" />
 
                     </RelativeLayout>
                 </LinearLayout>
@@ -409,12 +418,14 @@
                     android:layout_width="match_parent"
                     android:textFontWeight="600"
                     android:id="@+id/btn_save"
+                    android:layout_marginBottom="@dimen/size_30"
                     android:textColor="@color/white"
                     android:fontFamily="@font/semi_bold"
                     android:gravity="center"
                     android:textAllCaps="true"
+                    android:stateListAnimator="@null"
                     android:text="@string/save_amp_publish"
-                    android:background="@drawable/bg_button_proceed"
+                    android:background="@drawable/bg_button_proceed_radius_4dp"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

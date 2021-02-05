@@ -6,12 +6,14 @@
 
     </data>
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/size_8"
-        android:background="@drawable/rounded_stroke_grey"
+        android:id="@+id/rl_root"
+        android:layout_marginTop="@dimen/size_16"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/rounded_stroke_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -19,9 +21,9 @@
             android:id="@+id/ccv_day"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_40"
-            android:backgroundTint="#1A4889F8"
+            app:cardBackgroundColor="#1A4889F8"
             app:cardElevation="0dp"
-            app:corner_radius="RADIUS_6">
+            app:cardCornerRadius="@dimen/_6dp">
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/ctv_title_day"
@@ -29,10 +31,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/size_8"
-                android:fontFamily="@font/open_sans"
+                android:fontFamily="@font/open_sans_semibold"
                 android:text="monday"
+                android:textColor="@color/black_4f4f4f"
                 android:textFontWeight="600"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <com.appservice.views.toggle.widget.LabeledSwitch
                 android:id="@+id/toggle_on_off"
@@ -55,13 +58,13 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="-2dp"
             android:id="@+id/layout_session_create"
             android:layout_below="@id/ccv_day"
             android:layout_height="wrap_content">
 
             <LinearLayout
                 style="@style/ll_match_wrap_vertical"
+                android:layout_marginTop="@dimen/size_8"
                 android:id="@+id/ll_time_slot">
 
             </LinearLayout>
@@ -72,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:layout_below="@id/ll_time_slot"
+                android:textSize="14sp"
                 android:layout_marginStart="@dimen/size_18"
                 android:layout_marginTop="@dimen/size_8"
                 android:text="@string/u_add_session_u"
@@ -86,7 +90,7 @@
                 android:layout_alignStart="@id/ctv_add_session"
                 android:layout_marginTop="@dimen/size_8"
                 android:layout_marginBottom="@dimen/size_8"
-                android:theme="@style/ActiveTheme"
+                android:theme="@style/AppTheme_staff_home"
                 android:fontFamily="@font/open_sans"
                 android:text="@string/apply_same_on_all_days"
                 android:textAlignment="center"
@@ -98,5 +102,6 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
 
 </layout>

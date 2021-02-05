@@ -200,7 +200,6 @@
   <string name="leaves_to_be_taken_by_the_staff">Leaves to be taken by the staff.</string>
   <string name="clinic_businesses_hour"><![CDATA[<b>Note:</b> Since the clinic business hours are from 9:30am to 7:30 pm, all your sessions will be between same.]]></string>
   <string name="monday">Monday</string>
-  <string name="select_what_services_that_the_staff"><![CDATA[<b>Select what services that the staff will provide.</b> While booking a staff for a service/speciality, customer will know which all staff provide service they are looking for.]]></string>
   <string name="save">Save</string>
   <string name="you_can_add_scheduled_breaks_for_your_staff_when_they_need_it">You can add scheduled breaks for your staff when they need it.</string>
   <string name="what_happens_to_already_booked_appoin"><u>What happens to already booked appointments during the leave period of this staff?</u></string>
@@ -366,12 +365,12 @@
   <string name="removing_staff">Removing Staff</string>
   <string name="unable_to_delete">Unable to delete</string>
   <string name="loading">Loading</string>
-  <string name="toolbar_staff_listing">STAFF LISTING</string>
+  <string name="toolbar_staff_listing">Staff listing</string>
   <string name="toolbar_select_services">Select Services</string>
-  <string name="toolbar_staff_timing">Staff Timing</string>
+  <string name="toolbar_staff_timing">Staff timing</string>
   <string name="toolbar_schedule_break">Scheduled Breaks</string>
   <string name="toolbar_schedule_breaks">Scheduled Breaks</string>
-  <string name="toolbar_staff_details">Staff Details</string>
+  <string name="toolbar_staff_details">Staff details</string>
     <string name="search_staff">Search Staff</string>
     <string name="staff_timing_add">Adding staff timing...</string>
   <string name="staff_timings_added">staff timings added</string>
@@ -397,7 +396,11 @@
   <string name="do_you_want_to_permanently_delete_this_staff_member">Do you want to permanently delete this staff member?</string>
   <string name="removing_the_staff_will_remove">Removing the staff will remove all the present booking assigned to the staff. All his bookings needs to be handled separately.</string>
   <string name="delete_staff">DELETE STAFF</string>
-  <array name="stock_availbility">
+    <string name="do_you_want_to_temporarily_mark_this_st">Do you want to temporarily mark this staff as inactive?</string>
+  <string name="select_what_services_that_the_staff_will_provide">Select what services that the staff will provide.</string>
+  <string name="while_booking_a_staff_for_a_service_speciality_customer_will_know_which_all_staff_provide_service_they_are_looking_for">While booking a staff for a service/speciality, customer will know which all staff provide service they are looking for.</string>
+    <string name="please_enter_valid_age">please enter valid age.</string>
+    <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
 

@@ -167,14 +167,16 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_stafflisting, menu)
         val searchItem = menu.findItem(R.id.app_bar_search)
         searchItem.isVisible = list.isNullOrEmpty().not()
         this.searchView = searchItem.actionView as SearchView
+        val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
+        searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
+        searchAutoComplete?.setTextColor(getColor(R.color.white))
         searchView?.queryHint = "Search Staff"
         searchView?.setOnQueryTextListener(this)
-        searchView?.clearFocus()
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -200,7 +202,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        return true
+        return false
     }
 
 
@@ -208,7 +210,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         if (newText != null) {
             filter(newText)
         }
-        return true
+        return false
     }
 
     fun filter(queryText: String) {
