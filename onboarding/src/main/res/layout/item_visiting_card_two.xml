@@ -144,7 +144,7 @@
               android:layout_width="@dimen/size_56"
               android:layout_height="@dimen/size_42"
               android:layout_gravity="center_horizontal"
-              app:srcCompat="@drawable/ic_category_spa_n" />
+              app:srcCompat="@drawable/ic_business_card_spa_n" />
           </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
