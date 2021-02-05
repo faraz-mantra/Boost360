@@ -35,10 +35,10 @@ class BusinessContentSetupViewHolder(binding: ItemBusinessContentSetupBinding) :
       binding.viewImage.visible()
       binding.lottySyncOk.gone()
       startCheckAnimation(false)
-      binding.progressRemaining.setProgressWithAnimation((100 - (data.percentage ?: 0)).toFloat(), 1000)
+      binding.progressRemaining.setProgressWithAnimation((data.percentage ?: 0).toFloat(), 1000)
       data.type?.icon?.let { binding.imgIcon.setImageResource(it) }
-      list = ArrayList(data.drScoreItem?.sortedBy { it.isUpdate } ?: ArrayList())
     }
+    list = ArrayList(data.drScoreItem?.sortedBy { it.isUpdate } ?: ArrayList())
 
     if (adapterSiteMeter == null) {
       binding.rvBusinessItemState.apply {

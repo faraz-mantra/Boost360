@@ -704,7 +704,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.apply();
     }
 
-    public Boolean gisAccountSave() {
+    public Boolean getAccountSave() {
         return pref.getBoolean(IS_ACCOUNT_SAVE, false);
     }
 

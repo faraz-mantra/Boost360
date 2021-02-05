@@ -16,14 +16,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,7 +28,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.framework.models.firestore.FirestoreManager;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.CustomPage.Model.PageDetail;
@@ -56,7 +56,6 @@ import com.thinksity.R;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import jp.wasabeef.richeditor.RichEditor;
@@ -259,6 +258,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                                             WebEngageController.trackEvent("POST A CUSTOMPAGE", "Successfully added custompage", session.getFpTag());
                                             Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
                                             isNewDataAdded = true;
+                                            onCustomPageAddedOrUpdated();
                                             onBackPressed();
                                         } else {
                                             Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
@@ -494,6 +494,12 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                 showUrlDialog(getString(R.string.enter_hyperlink_url), 2);
             }
         });
+    }
+
+    private void onCustomPageAddedOrUpdated() {
+        FirestoreManager instance = FirestoreManager.INSTANCE;
+        instance.getDrScoreData().getMetricdetail().setBoolean_create_custom_page(true);
+        instance.updateDocument();
     }
 
     @Override

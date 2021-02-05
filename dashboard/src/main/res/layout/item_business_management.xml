@@ -69,9 +69,9 @@
             android:layout_width="@dimen/size_94"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:visibility="gone"
             android:repeatCount="infinite"
             android:repeatMode="restart"
+            android:visibility="gone"
             app:lottie_autoPlay="false"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/completed_lottie_animation" />
@@ -101,6 +101,10 @@
             tools:text="40% remaining" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
 
       <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/view_btn"
@@ -136,8 +140,8 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/size_22"
             android:layout_gravity="center_vertical"
-            app:paused="true"
-            app:gif="@raw/ic_next_arrow_gif_d" />
+            app:gif="@raw/ic_next_arrow_gif_d"
+            app:paused="true" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.appcompat.widget.LinearLayoutCompat>
 

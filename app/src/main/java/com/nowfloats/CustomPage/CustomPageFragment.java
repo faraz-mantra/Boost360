@@ -214,13 +214,10 @@ public class CustomPageFragment extends Fragment {
   public void getPageList(CustomPageEvent response) {
     dataModel = (ArrayList<CustomPageModel>) response.model;
     if (dataModel != null) {
-      if (dataModel.size() == 0) {
-        onCustomPageAddedOrUpdated(true);
-        emptylayout.setVisibility(View.VISIBLE);
-      } else {
-        onCustomPageAddedOrUpdated(false);
-        emptylayout.setVisibility(View.GONE);
-      }
+      onCustomPageAddedOrUpdated(!dataModel.isEmpty());
+      if (dataModel.isEmpty()) emptylayout.setVisibility(View.VISIBLE);
+      else emptylayout.setVisibility(View.GONE);
+
       if (!session.getOnBoardingStatus() && dataModel.size() != session.getCustomPageCount()) {
         session.setCustomPageCount(dataModel.size());
         OnBoardingApiCalls.updateData(session.getFpTag(), String.format("custom_page:%s", dataModel.size() > 0 ? "true" : "false"));
@@ -239,7 +236,7 @@ public class CustomPageFragment extends Fragment {
     }
   }
 
-  private void onCustomPageAddedOrUpdated(Boolean isAdded) {
+  private void onCustomPageAddedOrUpdated(boolean isAdded) {
     FirestoreManager instance = FirestoreManager.INSTANCE;
     instance.getDrScoreData().getMetricdetail().setBoolean_create_custom_page(isAdded);
     instance.updateDocument();
