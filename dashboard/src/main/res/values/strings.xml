@@ -77,4 +77,6 @@
   <string name="download_file_banner">Downloading the file...</string>
   <string name="opening_browser_banner">Opening in browser....</string>
   <string name="taking_video_banner">Taking you to the video....</string>
+  <string name="error_dr_score">Digital readiness score getting error</string>
+  <string name="retry">Retry</string>
 </resources>
