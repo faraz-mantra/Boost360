@@ -947,7 +947,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="CONFIRM APPOINTMENT"
+                            tools:text="CONFIRM APPOINTMENT"
                             android:textAllCaps="true"
                             android:textColor="@color/white"
                             app:textType="HEADING_6" />
@@ -1148,6 +1148,12 @@
                         app:layout_constraintStart_toEndOf="@id/image_phone"
                         app:layout_constraintTop_toTopOf="@id/image_phone" />
 
+                    <androidx.constraintlayout.widget.Group
+                        android:id="@+id/group_customer_address"
+                        android:layout_width="wrap_content"
+                        app:constraint_referenced_ids="divider2, image_location_pointer, linear_layout_address"
+                        android:layout_height="wrap_content" />
+
                     <View
                         android:id="@+id/divider2"
                         android:layout_width="match_parent"
@@ -1169,6 +1175,7 @@
                         app:tint="@color/black" />
 
                     <LinearLayout
+                        android:id="@+id/linear_layout_address"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_20"

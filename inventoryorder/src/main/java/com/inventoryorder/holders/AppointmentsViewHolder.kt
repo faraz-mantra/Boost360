@@ -99,11 +99,11 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
 
     //settings up button
     var colorCode = "#4a4a4a"
-    val btnStatusMenu = order.orderBtnStatus()
+    val btnStatusMenu = order.appointmentButtonStatus()
     binding.lytStatusBtn.visible()
     if (btnStatusMenu.isNullOrEmpty().not()) {
       when (val btnOrderMenu = btnStatusMenu.removeAt(0)) {
-        OrderMenuModel.MenuStatus.CONFIRM_ORDER -> {
+        OrderMenuModel.MenuStatus.CONFIRM_APPOINTMENT -> {
           colorCode = "#f16629"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
         }
@@ -111,7 +111,7 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
           colorCode = "#f16629"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_initiated_order_btn_bkg, R.color.white, R.drawable.ic_arrow_down_white)
         }
-        OrderMenuModel.MenuStatus.CANCEL_ORDER -> {
+        OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT -> {
           colorCode = "#9B9B9B"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_cancelled_order_btn_bkg, R.color.warm_grey_two, R.drawable.ic_arrow_down_grey)
         }
@@ -119,17 +119,17 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
           colorCode = "#FFB900"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_confirmed_order_btn_bkg, R.color.orange, R.drawable.ic_arrow_down_orange)
         }
-        OrderMenuModel.MenuStatus.MARK_AS_DELIVERED -> {
+        OrderMenuModel.MenuStatus.CUSTOMER_SERVED -> {
           colorCode = "#52AAC6"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_in_transit_order_btn_bkg, R.color.blue_52AAC6, R.drawable.ic_arrow_down_blue)
         }
-        OrderMenuModel.MenuStatus.MARK_AS_SHIPPED -> {
+        OrderMenuModel.MenuStatus.CUSTOMER_SERVED -> {
           colorCode = "#52AAC6"
           changeButtonStatus(btnOrderMenu.title, R.drawable.ic_in_transit_order_btn_bkg, R.color.blue_52AAC6, R.drawable.ic_arrow_down_blue)
         }
         else -> binding.lytStatusBtn.gone()
       }
-      binding.ivDropdownAppointment.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.APPOINTMENT_DROPDOWN_CLICKED.ordinal) }
+      binding.tvDropdownAppointmentStatus.setOnClickListener { listener?.onItemClick(adapterPosition, order, RecyclerViewActionType.BOOKING_CONFIRM_CLICKED.ordinal) }
     } else binding.lytStatusBtn.gone()
 
     if (btnStatusMenu.isNullOrEmpty()) {
