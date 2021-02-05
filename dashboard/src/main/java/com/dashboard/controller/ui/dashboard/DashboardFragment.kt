@@ -23,11 +23,13 @@ import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
 import com.dashboard.model.live.dashboardBanner.*
+import com.dashboard.model.live.drScore.DrScoreSetupData
+import com.dashboard.model.live.drScore.DrScoreUiDataResponse
+import com.dashboard.model.live.drScore.getDrScoreData
 import com.dashboard.model.live.premiumBanner.*
 import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.model.live.quickAction.QuickActionResponse
 import com.dashboard.model.live.shareUser.ShareUserDetailResponse
-import com.dashboard.model.live.siteMeter.SiteMeterScoreDetails
 import com.dashboard.pref.*
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
@@ -40,13 +42,15 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.models.firestore.DrScoreModel
+import com.framework.models.firestore.FirestoreManager.getDrScoreData
+import com.framework.models.firestore.FirestoreManager.readDrScoreDocument
 import com.framework.utils.*
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY_N
 import com.framework.utils.DateUtils.getCurrentDate
 import com.framework.utils.DateUtils.getDateMillSecond
 import com.framework.utils.DateUtils.parseDate
 import com.framework.views.dotsindicator.OffsetPageTransformer
-import com.inventoryorder.model.floatMessage.MessageModel
 import com.inventoryorder.model.mapDetail.VisitsModelResponse
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.summary.SummaryEntity
@@ -68,7 +72,7 @@ const val IS_FIRST_LOAD = "isFirsLoad"
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
-  private var adapterBusinessContent: AppBaseRecyclerViewAdapter<BusinessContentSetupData>? = null
+  private var adapterBusinessContent: AppBaseRecyclerViewAdapter<DrScoreSetupData>? = null
   private var adapterPagerBusinessUpdate: AppBaseRecyclerViewAdapter<BusinessSetupHighData>? = null
   private var adapterRoi: AppBaseRecyclerViewAdapter<RoiSummaryData>? = null
   private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
@@ -76,7 +80,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterAcademy: AppBaseRecyclerViewAdapter<DashboardAcademyBanner>? = null
   private var adapterQuickAction: AppBaseRecyclerViewAdapter<QuickActionItem>? = null
   private var adapterBusinessData: AppBaseRecyclerViewAdapter<ManageBusinessData>? = null
-  private var siteMeterData: SiteMeterScoreDetails? = null
+
   private var ctaFileLink: String? = null
 
   override fun getLayout(): Int {
@@ -102,7 +106,8 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onResume() {
     super.onResume()
-    getFloatMessage()
+    if (getDrScoreData()?.drs_segment.isNullOrEmpty()) readDrScoreDocument()
+    refreshData(getDrScoreData())
   }
 
   private fun getPremiumBanner() {
@@ -125,68 +130,63 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     })
   }
 
-  private fun getFloatMessage() {
-    session?.siteMeterData { it?.let { it1 -> refreshData(it1) } }
-    viewModel?.getBizFloatMessage(session!!.getRequestFloat())?.observeOnce(this, {
-      if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
-      session?.siteMeterData { it1 -> it1?.let { it2 -> refreshData(it2) } }
-      if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) {
-        (baseActivity as? DashboardActivity)?.isLoadShimmer = false
-        hideProgress()
-      }
-      saveFirstLoad()
-    })
-  }
-
-  private fun refreshData(siteMeterData: SiteMeterScoreDetails) {
-    this.siteMeterData = siteMeterData
-    setSiteMeterData(this.siteMeterData!!)
-    (baseActivity as? DashboardActivity)?.setPercentageData(siteMeterData.siteMeterTotalWeight)
+  private fun refreshData(drScoreData: DrScoreModel?) {
+    setDrScoreData(drScoreData)
+    (baseActivity as? DashboardActivity)?.setPercentageData(drScoreData?.getDrsTotal()?:0)
     setUserData()
     setBusinessManageTask()
     getNotificationCount()
-    getSiteMeter(siteMeterData)
-    setDataSellerSummary(OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
+    setDataSellerSummary(drScoreData?.getDrsTotal()?:0, OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
   }
 
-  private fun setSiteMeterData(siteMeterData: SiteMeterScoreDetails) {
-    if (siteMeterData.siteMeterTotalWeight > 40) {
-      val listDigitalScore = siteMeterData.getListDigitalScore()
-      binding?.highReadinessScoreView?.gone()
-      binding?.lowReadinessScoreView?.visible()
-      binding?.txtReadinessScore?.text = "${siteMeterData.siteMeterTotalWeight}"
-      binding?.progressScore?.progress = siteMeterData.siteMeterTotalWeight
-      val listContent = ArrayList(listDigitalScore.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout();it })
-      binding?.pagerBusinessSetupLow?.apply {
-        binding?.motionOne?.transitionToStart()
-        adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, listContent, this@DashboardFragment)
-        offscreenPageLimit = 3
-        adapter = adapterBusinessContent
-        postInvalidateOnAnimation()
-        binding?.dotIndicator?.setViewPager2(this)
-        setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-          override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-            binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
+  private fun setDrScoreData(drScoreData: DrScoreModel?) {
+    if (drScoreData!=null && (drScoreData.getDrsTotal() >= 80).not()) {
+      viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
+        val response = it as? DrScoreUiDataResponse
+        if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+          binding?.highReadinessScoreView?.gone()
+          binding?.lowReadinessScoreView?.visible()
+          binding?.txtReadinessScore?.text = "${drScoreData.getDrsTotal()}"
+          binding?.progressScore?.progress = drScoreData.getDrsTotal()
+          val drScoreSetupList = drScoreData.getDrScoreData(response.data)
+          drScoreSetupList.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
+          binding?.pagerBusinessSetupLow?.apply {
+            binding?.motionOne?.transitionToStart()
+            adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList, this@DashboardFragment)
+            offscreenPageLimit = 3
+            adapter = adapterBusinessContent
+            postInvalidateOnAnimation()
+            binding?.dotIndicator?.setViewPager2(this)
+            setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+              override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
+              }
+            })
+            binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
+            binding?.motionOne?.transitionToStart()
           }
-        })
-        binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
-        binding?.motionOne?.transitionToStart()
-      }
-      baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
-      baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
+          baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
+          baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
+        } else {
+          binding?.highReadinessScoreView?.visible()
+          binding?.lowReadinessScoreView?.gone()
+        }
+      })
+
     } else {
       binding?.highReadinessScoreView?.visible()
       binding?.lowReadinessScoreView?.gone()
     }
+//    updateSiteMeter(drScoreData.getDrsTotal())
   }
 
-  private fun getSiteMeter(siteMeterData: SiteMeterScoreDetails) {
-    if (session?.siteHealth != siteMeterData.siteMeterTotalWeight) {
-      session?.siteHealth = siteMeterData.siteMeterTotalWeight
+  private fun updateSiteMeter(drScoreTotal: Int) {
+    if (session?.siteHealth != drScoreTotal) {
+      session?.siteHealth = drScoreTotal
       val data = OnBoardingUpdateModel()
-      data.setData(session?.fPID!!, String.format("site_health:%s", siteMeterData.siteMeterTotalWeight))
+      data.setData(session?.fPID!!, String.format("site_health:%s", drScoreTotal))
       viewModel?.fpOnboardingUpdate(WA_KEY, data)?.observeOnce(viewLifecycleOwner, {
         Log.i("DASHBOARD", it.message())
       })
@@ -248,7 +248,10 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           viewModel?.getMapVisits(session?.fpTag, session?.getRequestMap())?.observeOnce(viewLifecycleOwner, { it3 ->
             val response4 = it3 as? VisitsModelResponse
             session?.mapVisitsCount = response4?.getTotalCount() ?: "0"
-            setDataSellerSummary(response1?.Data, response2?.getSummary(), response3)
+            setDataSellerSummary(getDrScoreData()?.getDrsTotal() ?: 0, response1?.Data, response2?.getSummary(), response3)
+            hideProgress()
+            (baseActivity as? DashboardActivity)?.isLoadShimmer = false
+            saveFirstLoad()
           })
         })
       })
@@ -265,9 +268,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     })
   }
 
-  private fun setDataSellerSummary(sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, callSummary: CallSummaryResponse?) {
-    val data = BusinessSetupHighData().getData(siteMeterData?.siteMeterTotalWeight ?: 0,
-        summary?.getNoOfUniqueViews() ?: "0", sellerOrder?.getTotalOrders() ?: "0", getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
+  private fun setDataSellerSummary(drTotal: Int, sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, callSummary: CallSummaryResponse?) {
+    val data = BusinessSetupHighData().getData(drTotal, summary?.getNoOfUniqueViews() ?: "0", sellerOrder?.getTotalOrders() ?: "0",
+        getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages() ?: "0")
     data.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_HIGH_ITEM_VIEW.getLayout() }
     if (adapterPagerBusinessUpdate == null) {
       binding?.pagerBusinessSetupHigh?.apply {
@@ -605,14 +608,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun showSimmer(isSimmer: Boolean) {
-    binding?.mainContent?.post {
+    binding?.mainContent?.apply {
       if (isSimmer) {
         binding?.progressSimmer?.parentShimmerLayout?.visible()
         binding?.progressSimmer?.parentShimmerLayout?.startShimmer()
         binding?.nestedScrollView?.gone()
       } else {
-        binding?.progressSimmer?.parentShimmerLayout?.gone()
         binding?.nestedScrollView?.visible()
+        binding?.progressSimmer?.parentShimmerLayout?.gone()
         binding?.progressSimmer?.parentShimmerLayout?.stopShimmer()
       }
     }
