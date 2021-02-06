@@ -358,6 +358,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onClick(v: View) {
     super.onClick(v)
+    //TODO: Track the share_business_card_initiated even in Firebase & Webengage
     when (v) {
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)
@@ -383,7 +384,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           val txt = String.format(messageDetail!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), shareChannelText, location)
           visitingCard(txt)
         }
-      } else visitingCard("Business Card")
+      } else visitingCard("My Business Card")
     })
   }
 
