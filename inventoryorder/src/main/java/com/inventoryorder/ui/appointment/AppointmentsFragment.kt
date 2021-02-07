@@ -3,10 +3,8 @@ package com.inventoryorder.ui.appointment
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
+import android.widget.PopupWindow
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,11 +22,16 @@ import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.FragmentAppointmentsBinding
 import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.PreferenceData
+import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.bottomsheet.FilterModel
+import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
+import com.inventoryorder.model.orderRequest.extraProperty.ExtraPropertiesOrder
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequestItem
 import com.inventoryorder.model.orderfilter.QueryObject
 import com.inventoryorder.model.ordersdetails.OrderItem
+import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersummary.OrderMenuModel
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
@@ -38,8 +41,10 @@ import com.inventoryorder.recyclerView.PaginationScrollListener.Companion.PAGE_S
 import com.inventoryorder.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 import com.inventoryorder.rest.response.order.InventoryOrderListResponse
+import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.bottomsheet.FilterBottomSheetDialog
+import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
 import java.util.*
@@ -56,6 +61,11 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   private var filterItem: FilterModel? = null
   private var filterList: ArrayList<FilterModel> = FilterModel().getDataAppointments()
   private var searchView: SearchView? = null
+  lateinit var mPopupWindow: PopupWindow
+  private var orderItem: OrderItem? = null
+  private var position: Int? = null
+  private var orderListFinalList = ArrayList<OrderItem>()
+  private var orderItemType = OrderSummaryModel.OrderSummaryType.TOTAL.type
 
   /* Paging */
   private var isLoadingD = false
@@ -300,6 +310,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
+
       RecyclerViewActionType.ALL_BOOKING_ITEM_CLICKED.ordinal -> {
         val orderItem = item as? OrderItem
         val bundle = Bundle()
@@ -307,11 +318,90 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         startFragmentOrderActivity(FragmentType.APPOINTMENT_DETAIL_VIEW, bundle, isResult = true)
       }
-      RecyclerViewActionType.BOOKING_CONFIRM_CLICKED.ordinal -> apiConfirmOrder(position, (item as? OrderItem))
+
+      RecyclerViewActionType.BOOKING_CONFIRM_CLICKED.ordinal -> {
+
+        if (((item as? OrderItem)?.Status?.equals("ORDER_CONFIRMED")) == true) {
+          this.orderItem = item
+          val sheetCancel = CancelBottomSheetDialog()
+          sheetCancel.setData(item)
+          sheetCancel.onClicked = this@AppointmentsFragment::apiCancelOrder
+          sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
+        } else {
+          apiConfirmOrder(position, (item as? OrderItem))
+        }
+      }
+
+      RecyclerViewActionType.ORDER_DROPDOWN_CLICKED.ordinal -> {
+        if (::mPopupWindow.isInitialized && mPopupWindow.isShowing) mPopupWindow.dismiss()
+        val orderMenu = OrderMenuModel.MenuStatus.from((item as? OrderMenuModel)?.type) ?: return
+        clickActionOrderButton(orderMenu, this.orderItem!!)
+      }
     }
   }
 
-  private fun apiConfirmOrder(position: Int, order: OrderItem?) {
+  private fun clickActionOrderButton(orderMenu: OrderMenuModel.MenuStatus, orderItem: OrderItem) {
+    when (orderMenu) {
+     /* OrderMenuModel.MenuStatus.CONFIRM_ORDER -> {
+        val sheetConfirm = ConfirmBottomSheetDialog()
+        sheetConfirm.setData(orderItem)
+        sheetConfirm.onClicked = { apiConfirmOrder(it) }
+        sheetConfirm.show(this.parentFragmentManager, ConfirmBottomSheetDialog::class.java.name)
+      }
+      OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {
+        val sheetRequestPayment = RequestPaymentBottomSheetDialog()
+        sheetRequestPayment.setData(orderItem)
+        sheetRequestPayment.onClicked = {
+          showProgress()
+          sendPaymentLinkOrder(getString(R.string.payment_request_send))
+        }
+        sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentBottomSheetDialog::class.java.name)
+      }*/
+      OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT -> {
+        this.orderItem = orderItem
+        val sheetCancel = CancelBottomSheetDialog()
+        sheetCancel.setData(orderItem)
+        sheetCancel.onClicked = this@AppointmentsFragment::apiCancelOrder
+        sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
+      }
+    /*  OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> markCodPaymentRequest()
+      OrderMenuModel.MenuStatus.MARK_AS_DELIVERED -> {
+        val sheetDelivered = DeliveredBottomSheetDialog()
+        sheetDelivered.setData(orderItem)
+        sheetDelivered.onClicked = { deliveredOrder(it) }
+        sheetDelivered.show(this.parentFragmentManager, DeliveredBottomSheetDialog::class.java.name)
+      }
+      OrderMenuModel.MenuStatus.MARK_AS_SHIPPED -> {
+        val sheetShipped = ShippedBottomSheetDialog()
+        sheetShipped.setData(orderItem)
+        sheetShipped.onClicked = { shippedOrder(it) }
+        sheetShipped.show(this.parentFragmentManager, ShippedBottomSheetDialog::class.java.name)
+      }*/
+    }
+  }
+
+  override fun onItemClickView(position: Int, view: View, item: BaseRecyclerViewItem?, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.BUTTON_ACTION_ITEM.ordinal -> popUpMenuButton(position, view, (item as? OrderItem))
+    }
+  }
+
+  private fun popUpMenuButton(position: Int, view: View, orderItem: OrderItem?) {
+    this.orderItem = orderItem
+    this.position = position
+    val list = OrderMenuModel().getAppointmentMenu(orderItem)
+    if (list.isNotEmpty()) list.removeAt(0)
+    val orderMenuView: View = LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
+    val rvOrderMenu: RecyclerView? = orderMenuView.findViewById(R.id.rv_menu_order)
+    rvOrderMenu?.apply {
+      val adapterMenu = AppBaseRecyclerViewAdapter(baseActivity, list, this@AppointmentsFragment)
+      adapter = adapterMenu
+    }
+    mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
+    mPopupWindow.showAsDropDown(view, 0, 0)
+  }
+
+  private fun  apiConfirmOrder(position: Int, order: OrderItem?) {
     showProgress()
     viewModel?.confirmOrder(clientId, order?._id)?.observeOnce(viewLifecycleOwner, Observer {
       hideProgress()
@@ -381,5 +471,91 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     val queryList = ArrayList<QueryObject>()
     statusList.forEach { queryList.add(QueryObject(QueryObject.QueryKey.Status.value, it, QueryObject.Operator.EQ.name)) }
     return queryList
+  }
+
+  private fun apiCancelOrder(cancellingEntity: String, reasonText: String) {
+    showProgress()
+    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, Observer {
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        hideProgress()
+        return@Observer
+      }
+      if (it.isSuccess()) {
+        val data = it as? OrderConfirmStatus
+        if (reasonText.isNotEmpty()) {
+          updateReason(resources.getString(R.string.order_cancel), UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name, ExtraPropertiesOrder(cancellationRemark = reasonText))
+        } else {
+          apiGetOrderDetails()
+          showLongToast(resources.getString(R.string.order_cancel))
+        }
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
+  }
+
+  private fun updateReason(message: String, type: String, extraPropertiesOrder: ExtraPropertiesOrder) {
+    val propertyRequest = UpdateOrderNPropertyRequest(updateExtraPropertyType = type,
+            existingKeyName = "", orderId = this.orderItem?._id, extraPropertiesOrder = extraPropertiesOrder)
+    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) showLongToast(message)
+      apiGetOrderDetails()
+    })
+  }
+
+  private fun apiGetOrderDetails() {
+    viewModel?.getOrderDetails(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, {
+      hideProgress()
+      val response = (it as? OrderDetailResponse)?.Data
+      if (it.isSuccess() && response != null) {
+        if (position != null && orderList.size > position!!) {
+          orderAdapter?.setRefreshItem(position!!, response)
+        } else loadNewData()
+      } else loadNewData()
+    })
+  }
+
+  private fun loadNewData() {
+    isLoadingD = false
+    isLastPageD = false
+    orderAdapter?.clear()
+    orderListFinalList.clear()
+    orderList.clear()
+    apiOrderListCall()
+  }
+
+  private fun apiOrderListCall() {
+    when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {
+      OrderSummaryModel.OrderSummaryType.RECEIVED -> {
+        val statusList = arrayListOf(OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED.name, OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name)
+        requestFilter = getRequestFilterData(statusList)
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+      OrderSummaryModel.OrderSummaryType.SUCCESSFUL -> {
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_COMPLETED.name))
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+    /*  OrderSummaryModel.OrderSummaryType.CANCELLED -> {
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
+                paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name, operatorType = QueryObject.Operator.NE.name)
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+      OrderSummaryModel.OrderSummaryType.ABANDONED -> {
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name),
+                paymentStatus = PaymentDetailsN.STATUS.CANCELLED.name)
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }*/
+      OrderSummaryModel.OrderSummaryType.ESCALATED -> {
+        requestFilter = getRequestFilterData(arrayListOf(OrderSummaryModel.OrderStatus.ESCALATED.name))
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+      else -> {
+        requestFilter = getRequestFilterData(arrayListOf())
+        getSellerOrdersFilterApi(requestFilter, isFirst = true, isRefresh = true)
+      }
+    }
+
   }
 }
