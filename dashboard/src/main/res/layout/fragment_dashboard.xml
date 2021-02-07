@@ -584,15 +584,18 @@
                     app:textType="HEADING_6" />
 
                   <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/filter_business_report"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/size_4"
-                    android:id="@+id/date_business_report"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
                     android:drawableEnd="@drawable/ic_arrow_down_d"
                     android:drawablePadding="@dimen/size_6"
+                    android:focusable="true"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
+                    android:padding="@dimen/size_4"
                     android:text="@string/till_date"
                     android:textColor="@color/black_4a4a4a"
                     app:textType="CAPTION" />
@@ -712,17 +715,22 @@
                     app:textType="HEADING_6" />
 
                   <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/filter_website_report"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginTop="@dimen/size_4"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/ic_arrow_down_d"
+                    android:drawablePadding="@dimen/size_6"
+                    android:focusable="true"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
+                    android:padding="@dimen/size_4"
                     android:text="@string/till_date"
                     android:textColor="@color/black_4a4a4a"
                     app:textType="CAPTION" />
-                  <!--                    android:drawableEnd="@drawable/ic_arrow_down_d"-->
-                  <!--                    android:drawablePadding="@dimen/size_6"-->
+
 
                 </FrameLayout>
 

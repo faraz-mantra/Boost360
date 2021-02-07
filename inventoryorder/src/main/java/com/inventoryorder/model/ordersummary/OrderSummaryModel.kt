@@ -8,7 +8,9 @@ import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
-const val SELLER_SUMMARY_DATA = "SELLER_SUMMARY_DATA"
+const val TOTAL_SELLER_SUMMARY = "TOTAL_SELLER_SUMMARY"
+const val SELLER_BUSINESS_REPORT = "SELLER_BUSINESS_REPORT"
+const val TOTAL_SELLER_ENQUIRIES = "TOTAL_SELLER_ENQUIRIES"
 
 class OrderSummaryModel(
     val CurrencyCode: String? = null,
@@ -96,13 +98,21 @@ class OrderSummaryModel(
     ORDER, APPOINTMENT, VIDEO_CONSULTATION;
   }
 
-  fun getSellerSummary(): OrderSummaryModel? {
-    val resp = PreferencesUtils.instance.getData(SELLER_SUMMARY_DATA, "") ?: ""
+  fun getSellerSummary(key:String): OrderSummaryModel? {
+    val resp = PreferencesUtils.instance.getData(key, "") ?: ""
     return convertStringToObj(resp)
   }
 
-  fun saveData() {
-    PreferencesUtils.instance.saveData(SELLER_SUMMARY_DATA, convertObjToString(this) ?: "")
+  fun saveData(key:String) {
+    PreferencesUtils.instance.saveData(key, convertObjToString(this) ?: "")
+  }
+
+  fun getTotalOrder(key:String): String? {
+    return PreferencesUtils.instance.getData(key, "")
+  }
+
+  fun saveTotalOrder(key:String) {
+    PreferencesUtils.instance.saveData(key, getTotalOrders())
   }
 }
 
