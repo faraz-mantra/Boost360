@@ -296,7 +296,6 @@ data class OrderItem(
             (method != PaymentDetailsN.METHOD.FREE || (statusPayment == PaymentDetailsN.STATUS.PENDING || statusPayment == PaymentDetailsN.STATUS.FAILED || statusPayment == PaymentDetailsN.STATUS.CANCELLED))) {
 
       return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
-     // else arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.CONFIRM_APPOINTMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
       else arrayListOf(OrderMenuModel.MenuStatus.CONFIRM_APPOINTMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
 
     } else if ((statusOrder == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED || statusOrder == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED) && (method != PaymentDetailsN.METHOD.FREE ||
@@ -323,19 +322,19 @@ data class OrderItem(
             method != PaymentDetailsN.METHOD.FREE && (statusPayment == PaymentDetailsN.STATUS.PENDING ||
                     statusPayment == PaymentDetailsN.STATUS.FAILED || statusPayment == PaymentDetailsN.STATUS.CANCELLED)) {
 
-      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.CUSTOMER_SERVED)
-      else arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.CUSTOMER_SERVED, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
+      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.MARK_AS_SERVED)
+      else arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.MARK_AS_SERVED, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
 
     } else if ((statusOrder == OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS || statusOrder == OrderSummaryModel.OrderStatus.DELIVERY_DELAYED) &&
             (method == PaymentDetailsN.METHOD.FREE || (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))) {
 
-      return arrayListOf(OrderMenuModel.MenuStatus.CUSTOMER_SERVED)
+      return arrayListOf(OrderMenuModel.MenuStatus.MARK_AS_SERVED)
 
     } else if ((statusOrder == OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS || statusOrder == OrderSummaryModel.OrderStatus.DELIVERY_DELAYED) &&
             (method != PaymentDetailsN.METHOD.FREE && (statusPayment == PaymentDetailsN.STATUS.INITIATED || statusPayment == PaymentDetailsN.STATUS.INPROCESS))) {
 
-      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.CUSTOMER_SERVED)
-      else arrayListOf(OrderMenuModel.MenuStatus.CUSTOMER_SERVED, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
+      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.MARK_AS_SERVED)
+      else arrayListOf(OrderMenuModel.MenuStatus.MARK_AS_SERVED, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
 
     } else if (statusOrder == OrderSummaryModel.OrderStatus.ORDER_INITIATED && method != PaymentDetailsN.METHOD.FREE &&
             (statusPayment == PaymentDetailsN.STATUS.PENDING || statusPayment == PaymentDetailsN.STATUS.FAILED || statusPayment == PaymentDetailsN.STATUS.CANCELLED)) {
@@ -368,19 +367,19 @@ data class OrderItem(
     } else if (statusOrder == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED && method != PaymentDetailsN.METHOD.FREE &&
             (statusPayment == PaymentDetailsN.STATUS.PENDING || statusPayment == PaymentDetailsN.STATUS.FAILED || statusPayment == PaymentDetailsN.STATUS.CANCELLED)) {
 
-      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.CUSTOMER_SERVED, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
+      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.MARK_AS_SERVED, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
      // else arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.CUSTOMER_SERVED, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
       else arrayListOf(OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
 
     } else if (statusOrder == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED && (method == PaymentDetailsN.METHOD.FREE ||
                     (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))) {
 
-      return arrayListOf(OrderMenuModel.MenuStatus.CUSTOMER_SERVED, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
+      return arrayListOf(OrderMenuModel.MenuStatus.MARK_AS_SERVED, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
 
     } else if (statusOrder == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED && method != PaymentDetailsN.METHOD.FREE &&
             (statusPayment == PaymentDetailsN.STATUS.INITIATED || statusPayment == PaymentDetailsN.STATUS.INPROCESS)) {
 
-      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.CUSTOMER_SERVED, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
+      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.MARK_AS_SERVED, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
       else arrayListOf(OrderMenuModel.MenuStatus.MARK_AS_SHIPPED, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
 
     }

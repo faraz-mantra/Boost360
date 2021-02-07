@@ -73,7 +73,7 @@ data class ItemN(
 
   private fun getDateDifference(date: Date) : String {
 
-    var cal = Calendar.getInstance()
+    val cal = Calendar.getInstance()
     cal.time = date
 
     val today = Calendar.getInstance()
