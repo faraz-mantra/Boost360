@@ -2,6 +2,7 @@ package com.dashboard.controller.ui.drScore
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
@@ -81,7 +82,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       val response = it as? DrScoreUiDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
         FirestoreManager.getDrScoreData()?.let { drScoreData ->
-         if (drScoreData.drs_segment.isNullOrEmpty().not()) {
+          if (drScoreData.drs_segment.isNullOrEmpty().not()) {
             isHigh = (drScoreData.getDrsTotal() >= 80)
             val drScoreSetupList = drScoreData.getDrScoreData(response.data)
             drScoreSetupList.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }
@@ -130,12 +131,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       DrScoreItem.DrScoreItemType.boolean_add_clinic_logo -> {
         if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl).isNullOrEmpty()) baseActivity.startBusinessLogo(session)
       }
-      DrScoreItem.DrScoreItemType.boolean_add_featured_image_video -> {
-        //TODO
-      }
-      DrScoreItem.DrScoreItemType.boolean_select_what_you_sell -> {
-        //TODO
-      }
+
       DrScoreItem.DrScoreItemType.boolean_add_business_hours -> {
         if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS) == "TIMINGS") baseActivity.startBusinessHours(session)
         else alertDialogBusinessHours()
@@ -169,21 +165,20 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
         if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
         else getChannelAccessToken(true)
       }
-      DrScoreItem.DrScoreItemType.boolean_create_doctor_e_profile -> {
-        //TODO
-      }
       DrScoreItem.DrScoreItemType.boolean_create_sample_in_clinic_appointment -> {
         baseActivity.startOrderAptConsultList(session, isConsult = false)
       }
       DrScoreItem.DrScoreItemType.boolean_create_sample_video_consultation -> {
         baseActivity.startOrderAptConsultList(session, isConsult = true)
       }
-      DrScoreItem.DrScoreItemType.boolean_manage_appointment_settings -> {
-        //TODO
-      }
       DrScoreItem.DrScoreItemType.boolean_respond_to_customer_enquiries -> {
         baseActivity.startBusinessEnquiry(session)
       }
+      DrScoreItem.DrScoreItemType.boolean_add_featured_image_video,
+      DrScoreItem.DrScoreItemType.boolean_select_what_you_sell,
+      DrScoreItem.DrScoreItemType.boolean_create_doctor_e_profile,
+      DrScoreItem.DrScoreItemType.boolean_manage_appointment_settings,
+      -> Toast.makeText(baseActivity, "Coming soon...", Toast.LENGTH_SHORT).show()
     }
   }
 

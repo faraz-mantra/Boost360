@@ -10,6 +10,7 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
+import com.framework.utils.*
 import com.framework.utils.DateUtils.FORMAT_YYYY_MM_DD
 import com.framework.utils.DateUtils.getCurrentDate
 import com.framework.utils.DateUtils.parseDate
@@ -18,14 +19,23 @@ import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
 
+const val BUSINESS_REPORT = "BUSINESS_REPORT"
+const val WEBSITE_REPORT = "WEBSITE_REPORT"
+const val MY_ENQUIRIES = "MY_ENQUIRIES"
 
 class FilterBottomSheet : BaseBottomSheetDialog<BottomSheetFilterDateBinding, BaseViewModel>(), RecyclerItemClickListener {
 
   var onClicked: (filterDateModel: FilterDateModel) -> Unit = { }
   var filterDateModel: FilterDateModel? = null
+  var listFilter: ArrayList<FilterDateModel>? = null
+  var adapterFilter: AppBaseRecyclerViewAdapter<FilterDateModel>? = null
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_filter_date
+  }
+
+  fun setData(filterDateModel: FilterDateModel?) {
+    this.filterDateModel = filterDateModel
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
@@ -34,16 +44,56 @@ class FilterBottomSheet : BaseBottomSheetDialog<BottomSheetFilterDateBinding, Ba
 
   override fun onCreateView() {
     setOnClickListener(binding?.btnDone, binding?.btnReset)
-    val listFilter = getFilterDate()
-    if (filterDateModel != null) listFilter.firstOrNull { it.title.equals(filterDateModel!!.title) }?.isSelect = true
-    else listFilter.last().isSelect = true
+    listFilter = FilterDateModel().getFilterDate()
+    if (filterDateModel != null) listFilter?.map { it.isSelect=it.title.equals(filterDateModel!!.title) }
+    else listFilter?.last()?.isSelect = true
     binding?.recyclerView?.apply {
-      val adapterFilter = AppBaseRecyclerViewAdapter(baseActivity, listFilter, this@FilterBottomSheet)
+      adapterFilter = AppBaseRecyclerViewAdapter(baseActivity, listFilter!!, this@FilterBottomSheet)
       adapter = adapterFilter
     }
   }
 
-  private fun getFilterDate(): ArrayList<FilterDateModel> {
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.btnDone -> {
+        if (filterDateModel != null) {
+          onClicked(filterDateModel!!)
+          dismiss()
+        }
+      }
+      binding?.btnReset -> {
+        this.filterDateModel = listFilter?.lastOrNull()
+        listFilter?.map { it.isSelect = (it.title.equals(this.filterDateModel?.title)) }
+        if (adapterFilter != null) adapterFilter?.notifyDataSetChanged()
+      }
+    }
+  }
+
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    this.filterDateModel = item as? FilterDateModel ?: return
+    listFilter?.map { it.isSelect = (it.title.equals(this.filterDateModel?.title)) }
+    if (adapterFilter != null) adapterFilter?.notifyDataSetChanged()
+  }
+
+}
+
+const val FILTER_BUSINESS_REPORT = "FILTER_BUSINESS_REPORT"
+const val FILTER_WEBSITE_REPORT = "FILTER_WEBSITE_REPORT"
+const val FILTER_MY_ENQUIRIES = "FILTER_MY_ENQUIRIES"
+
+data class FilterDateModel(
+    var title: String? = null,
+    var startDate: String? = null,
+    var endDate: String? = null,
+    var isSelect: Boolean = false,
+) : Serializable, AppBaseRecyclerViewItem {
+
+  override fun getViewType(): Int {
+    return RecyclerViewItemType.FILTER_DATE_VIEW.getLayout()
+  }
+
+  fun getFilterDate(): ArrayList<FilterDateModel> {
     val listFilter = ArrayList<FilterDateModel>()
     val date = getCurrentDate()
     val dateToday = date.parseDate(FORMAT_YYYY_MM_DD)
@@ -57,43 +107,22 @@ class FilterBottomSheet : BaseBottomSheetDialog<BottomSheetFilterDateBinding, Ba
     listFilter.add(FilterDateModel("Last 30 days", last30Days, dateToday))
     listFilter.add(FilterDateModel("Last 90 days", last90Days, dateToday))
     listFilter.add(FilterDateModel("Last 12 months", lastOneYear, dateToday))
-    listFilter.add(FilterDateModel("Till date", "", ""))
+    listFilter.add(FilterDateModel("Till date", "", "", isSelect = true))
     return listFilter
   }
 
-  private fun Date.getPreviousDate(amount: Int): String? {
-    val c = toCalendar()
-    c?.add(Calendar.DAY_OF_MONTH, -amount)
-    return c?.time?.parseDate(FORMAT_YYYY_MM_DD)
+  fun getDateFilter(key: String): FilterDateModel? {
+    val resp = PreferencesUtils.instance.getData(key, "") ?: ""
+    return convertStringToObj(resp)
   }
 
-  override fun onClick(v: View) {
-    super.onClick(v)
-    when (v) {
-      binding?.btnDone -> {
-        if (filterDateModel != null) {
-          onClicked(filterDateModel!!)
-          dismiss()
-        }
-      }
-      binding?.btnReset -> {
-      }
-    }
-  }
-
-  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-    val itemFilter = item as? FilterDateModel ?: return
-    this.filterDateModel = itemFilter
+  fun saveData(key: String) {
+    PreferencesUtils.instance.saveData(key, convertObjToString(this) ?: "")
   }
 }
 
-data class FilterDateModel(
-    var title: String? = null,
-    var startDate: String? = null,
-    var endDate: String? = null,
-    var isSelect: Boolean = false,
-) : Serializable, AppBaseRecyclerViewItem {
-  override fun getViewType(): Int {
-    return RecyclerViewItemType.FILTER_DATE_VIEW.getLayout()
-  }
+private fun Date.getPreviousDate(amount: Int): String? {
+  val c = toCalendar()
+  c?.add(Calendar.DAY_OF_MONTH, -amount)
+  return c?.time?.parseDate(FORMAT_YYYY_MM_DD)
 }

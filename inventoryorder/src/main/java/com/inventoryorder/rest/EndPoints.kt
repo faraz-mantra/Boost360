@@ -9,10 +9,15 @@ object EndPoints {
   const val GET_LIST_INVENTORY_SYNC = "product/v1/GetListingsWithInventorySync"
   const val SEND_SMS = "discover/v1/floatingpoint/CreateSMSHighPriorityIndia"
   const val GET_BIZ_FLOATS_MESSAGE = "/Discover/v1/floatingPoint/bizFloats"
-  const val GET_USER_SUMMARY = "/Dashboard/v1/{fpTag}/summary"
-  const val GET_MAP_ADDRESS_DETAILS = "/Dashboard/v1/{fpTag}/totaladdressviewdetails"
-  const val GET_USER_CALL_SUMMARY = "/WildFire/v1/calls/summary"
 
+
+  // API with float
+  const val BOOST_API_WITH_FLOAT = "https://api.withfloats.com"
+  const val GET_USER_SUMMARY_FILTER = "/Dashboard/v1/{fpTag}/summary"
+  const val GET_USER_MESSAGE_COUNT_FILTER = "/discover/v2/floatingPoint/usermessagescount/{fpId}"
+  const val GET_MAP_ADDRESS_DETAILS_FILTER = "/Dashboard/v1/{fpTag}/totaladdressviewdetails"
+  const val GET_USER_CALL_SUMMARY_FILTER = "/WildFire/v1/calls/summary"
+  const val GET_SUBSCRIBER_COUNT_FILTER = "/discover/v1/floatingPoint/{fpTag}/subscriberCount"
 
   //Boost now float
   const val BOOST_FLOATS_BASE_URL = "https://boost.nowfloats.com/"

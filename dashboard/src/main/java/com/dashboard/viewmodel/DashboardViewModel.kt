@@ -12,6 +12,7 @@ import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
 import com.inventoryorder.rest.repositories.ApiTwoWithFloatRepository
+import com.inventoryorder.rest.repositories.ApiWithFloatRepository
 import com.inventoryorder.rest.repositories.InventoryOrderRepository
 import com.onboarding.nowfloats.model.nfxProcess.NFXProcessRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
@@ -54,6 +55,7 @@ class DashboardViewModel : BaseViewModel() {
   fun getNavDashboardData(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getNavDashboardData(context).toLiveData()
   }
+
   fun getDrScoreUi(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getDrScoreUi(context).toLiveData()
   }
@@ -86,16 +88,20 @@ class DashboardViewModel : BaseViewModel() {
     return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
   }
 
-  fun getUserSummary(clientId: String?, fpIdParent: String?, scope: String?): LiveData<BaseResponse> {
-    return ApiTwoWithFloatRepository.getUserSummary(clientId, fpIdParent, scope).toLiveData()
+  fun getUserSummary(clientId: String?, fpIdParent: String?, scope: String?, startDate: String? = null, endDate: String? = null): LiveData<BaseResponse> {
+    return ApiWithFloatRepository.getUserSummary(clientId, fpIdParent, scope, startDate, endDate).toLiveData()
+  }
+
+  fun  getSubscriberCount(fpTag: String?, clientId: String?, startDate: String?, endDate: String?): LiveData<BaseResponse> {
+    return ApiWithFloatRepository.getSubscriberCount(fpTag, clientId, startDate, endDate).toLiveData()
   }
 
   fun getMapVisits(fpTag: String?, mapData: Map<String, String>?): LiveData<BaseResponse> {
-    return ApiTwoWithFloatRepository.getMapVisits(fpTag, mapData).toLiveData()
+    return ApiWithFloatRepository.getMapVisits(fpTag, mapData).toLiveData()
   }
 
-  fun getUserCallSummary(clientId: String?, fpIdParent: String?, identifierType: String?): LiveData<BaseResponse> {
-    return ApiTwoWithFloatRepository.getUserCallSummary(clientId, fpIdParent, identifierType).toLiveData()
+  fun getUserCallSummary(clientId: String?, fpIdParent: String?, identifierType: String?, startDate: String? = null, endDate: String? = null): LiveData<BaseResponse> {
+    return ApiWithFloatRepository.getUserCallSummary(clientId, fpIdParent, identifierType, startDate, endDate).toLiveData()
   }
 
   fun putUploadSecondaryImage(request: UploadFileBusinessRequest): LiveData<BaseResponse> {
