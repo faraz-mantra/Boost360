@@ -12,11 +12,11 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -32,7 +32,6 @@ import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.staffs.widgets.ExperienceBottomSheet
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
-import com.appservice.utils.cast
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
@@ -162,6 +161,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     private fun initViews() {
         this.genderArray = arrayOf("Male", "Female", "Please select")
         binding!!.spinnerGender.setHintAdapter(requireContext(), list = genderArray)
+
     }
 
     override fun onClick(v: View) {
@@ -173,7 +173,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             binding?.rlStaffTiming -> {
                 val bundle = Bundle()
                 bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
-                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, bundle,clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
+                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
             }
             binding?.rlServiceProvided -> {
                 val bundle = Bundle()
@@ -263,7 +263,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         } else if (staffAge == null) {
             showLongToast(getString(R.string.please_enter_your_age))
             return false
-        } else if (staffAge == 0 || staffAge ?: 0 < 100) {
+        } else if (staffAge == 0 || staffAge ?: 0 >= 100) {
             showLongToast(getString(R.string.please_enter_valid_age))
             return false
         } else if (imageUri.toString() == "null" || imageUri == null || imageUri.toString().isEmpty() || imageUri.toString().isBlank()) {
@@ -475,6 +475,8 @@ class HintAdapter<T>(context: Context, resource: Int, objects: Array<T>) :
         else textView.setTextColor(Color.BLACK)
         return view
     }
+
+
 }
 
 fun Spinner.setHintAdapter(context: Context, list: Array<String>) {
@@ -486,8 +488,19 @@ fun Spinner.setHintAdapter(context: Context, list: Array<String>) {
             )
     adapter = hintAdapter
     setSelection(count)
+    onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            val textView = view as TextView
+            when (position) {
+                count -> textView.setTextColor(Color.GRAY)
+                else -> textView.setTextColor(Color.BLACK)
+            }
+        }
 
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+        }
 
+    }
 }
 
 fun Spinner.isHintSelected(): Boolean {
