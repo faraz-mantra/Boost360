@@ -39,6 +39,17 @@
       android:textColor="@color/black_4a4a4a"
       app:fontFamily="@font/semi_bold"
       app:textType="BODY_1"
-      tools:text="Offline, Pending" />
+      tools:text="Offline" />
+
+    <com.framework.views.customViews.CustomTextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_4"
+        android:textColor="@color/watermelon_light"
+        app:fontFamily="@font/semi_bold"
+        android:visibility="gone"
+        app:textType="BODY_1"
+        tools:text="Pending" />
   </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
