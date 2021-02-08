@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:id="@+id/root"
+        android:layout_height="match_parent">
+        <include
+            android:id="@+id/service_listing_empty"
+            layout="@layout/fragment_service_listing_empty"
+            android:visibility="visible" />
+        <com.framework.views.viewgroups.BaseRecyclerView
+            android:id="@+id/baseRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/size_16"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="2"
+            tools:listitem="@layout/recycler_item_service_listing" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="16dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.framework.views.customViews.CustomButton
+                style="@style/ButtonStyle.Rounded.Solid"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_40"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/add_service" />
+
+            <Space
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_0"
+                android:layout_weight="0.1" />
+
+            <com.framework.views.customViews.CustomButton
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_40"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_stroke_orange_4_transparent"
+                android:gravity="center"
+                android:text="@string/sort_and_filter"
+                android:textAllCaps="true"
+                android:textColor="@color/yellow_ffb900" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
