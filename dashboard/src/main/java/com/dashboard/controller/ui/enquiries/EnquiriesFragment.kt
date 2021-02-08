@@ -4,8 +4,7 @@ import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
-import com.dashboard.controller.ui.dashboard.checkIsPremiumUnlock
-import com.dashboard.controller.ui.dashboard.saveUserSummary
+import com.dashboard.controller.ui.dashboard.*
 import com.dashboard.databinding.FragmentPatientsCustomerBinding
 import com.dashboard.model.live.customerItem.BoostCustomerItemResponse
 import com.dashboard.model.live.customerItem.CustomerActionItem
@@ -19,8 +18,11 @@ import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
 import com.framework.extensions.observeOnce
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
+import com.inventoryorder.model.ordersummary.TOTAL_SELLER_ENQUIRIES
 import com.inventoryorder.model.summary.SummaryEntity
+import com.inventoryorder.model.summary.USER_MY_ENQUIRIES
 import com.inventoryorder.model.summary.UserSummaryResponse
+import com.inventoryorder.model.summaryCall.CALL_MY_ENQUIRIES
 import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
 import java.util.*
@@ -41,35 +43,49 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
   override fun onCreateView() {
     super.onCreateView()
     session = UserSessionManager(baseActivity)
-    setDataSellerSummary(OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
+    setDataSellerSummary(OrderSummaryModel().getTotalOrder(TOTAL_SELLER_ENQUIRIES), SummaryEntity().getUserSummary(USER_MY_ENQUIRIES),
+        CallSummaryResponse().getCallSummary(CALL_MY_ENQUIRIES))
+    binding?.filterBtn?.setOnClickListener { showFilterBottomSheet() }
     WebEngageController.trackEvent("Enquiries Page", "pageview", session?.fpTag)
   }
 
-  override fun onResume() {
-    super.onResume()
-    apiSellerSummary()
+  private fun showFilterBottomSheet() {
+    val filterBottomSheet = FilterBottomSheet()
+    filterBottomSheet.setData(FilterDateModel().getDateFilter(FILTER_MY_ENQUIRIES))
+    filterBottomSheet.onClicked = {
+      apiSellerSummary(it, true)
+      it.saveData(FILTER_MY_ENQUIRIES)
+      binding?.titleFilter?.text = it.title
+    }
+    filterBottomSheet.show(this@EnquiriesFragment.parentFragmentManager, FilterBottomSheet::class.java.name)
   }
 
-  private fun apiSellerSummary() {
+  private fun apiSellerSummary(enquiriesFilter: FilterDateModel, isLoader: Boolean = false) {
+    if (isLoader) showProgress()
     viewModel?.getSellerSummary(clientId_ORDER, session?.fpTag)?.observeOnce(viewLifecycleOwner, {
       val response1 = it as? OrderSummaryResponse
-      if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveData()
+      response1?.Data?.saveTotalOrder(TOTAL_SELLER_ENQUIRIES)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
-      viewModel?.getUserSummary(clientId, session?.fPParentId, scope)?.observeOnce(viewLifecycleOwner, { it1 ->
+      viewModel?.getUserSummary(clientId, session?.fPParentId, scope, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, { it1 ->
         val response2 = it1 as? UserSummaryResponse
-        response2?.getSummary()?.noOfSubscribers = session?.subcribersCount?.toIntOrNull() ?: 0
-        session?.saveUserSummary(response2?.getSummary())
-        val identifierType = if (session?.iSEnterprise == "true") "MULTI" else "SINGLE"
-        viewModel?.getUserCallSummary(clientId, session?.fPParentId, identifierType)?.observeOnce(viewLifecycleOwner, { it2 ->
-          val response3 = it2 as? CallSummaryResponse
-          response3?.saveData()
-          setDataSellerSummary(response1?.Data, response2?.getSummary(), response3)
+        viewModel?.getSubscriberCount(session?.fpTag, clientId, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, { it2 ->
+          val subscriberCount = (it2.anyResponse as? Double)?.toInt() ?: 0
+          val summary = response2?.getSummary()
+          summary?.noOfSubscribers = subscriberCount
+          summary?.saveData(USER_MY_ENQUIRIES)
+          val identifierType = if (session?.iSEnterprise == "true") "MULTI" else "SINGLE"
+          viewModel?.getUserCallSummary(clientId, session?.fPParentId, identifierType, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, { it2 ->
+            val response3 = it2 as? CallSummaryResponse
+            response3?.saveData(CALL_MY_ENQUIRIES)
+            setDataSellerSummary(response1?.Data?.getTotalOrders(), response2?.getSummary(), response3?.getTotalCalls())
+            if (isLoader) hideProgress()
+          })
         })
       })
     })
   }
 
-  private fun setDataSellerSummary(sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, callSummary: CallSummaryResponse?) {
+  private fun setDataSellerSummary(orderCount: String?, summary: SummaryEntity?, callCount: String?) {
     viewModel?.getBoostCustomerItem(baseActivity)?.observeOnce(viewLifecycleOwner, { it0 ->
       val response = it0 as? BoostCustomerItemResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
@@ -80,9 +96,9 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
             when (CustomerActionItem.IconType.fromName(it3.type)) {
               CustomerActionItem.IconType.customer_orders,
               CustomerActionItem.IconType.in_clinic_appointments,
-              -> it3.orderCount = sellerOrder?.getTotalOrders() ?: ""
+              -> it3.orderCount = orderCount ?: ""
               CustomerActionItem.IconType.video_consultations -> it3.consultCount = ""
-              CustomerActionItem.IconType.patient_customer_calls -> it3.customerCalls = callSummary?.getTotalCalls() ?: ""
+              CustomerActionItem.IconType.patient_customer_calls -> it3.customerCalls = callCount ?: ""
               CustomerActionItem.IconType.patient_customer_messages -> it3.messageCount = summary?.getNoOfMessages() ?: ""
               CustomerActionItem.IconType.newsletter_subscribers -> it3.subscriptionCount = summary?.getNoOfSubscribers()
             }
@@ -94,7 +110,7 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
   }
 
   private fun setAdapterCustomer(actionItem: ArrayList<CustomerActionItem>) {
-    actionItem.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_CUSTOMER_ITEM_VIEW.getLayout() }
+    actionItem.map { it.recyclerViewItemType = RecyclerViewItemType.BOOST_ENQUIRIES_ITEM_VIEW.getLayout() }
     binding?.rvCustomer?.apply {
       if (adapterACustomer == null) {
         adapterACustomer = AppBaseRecyclerViewAdapter(baseActivity, actionItem, this@EnquiriesFragment)
@@ -102,10 +118,6 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
         adapter = adapterACustomer
       } else adapterACustomer?.notify(actionItem)
     }
-  }
-
-  private fun getSummaryDetail(): SummaryEntity? {
-    return SummaryEntity(session?.enquiryCount?.toIntOrNull() ?: 0, session?.subcribersCount?.toIntOrNull() ?: 0, session?.visitorsCount?.toIntOrNull() ?: 0, session?.visitsCount?.toIntOrNull() ?: 0)
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -126,5 +138,16 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
       CustomerActionItem.IconType.patient_customer_messages -> baseActivity.startBusinessEnquiry(session)
       CustomerActionItem.IconType.newsletter_subscribers -> baseActivity.startSubscriber(session)
     }
+  }
+
+  override fun onResume() {
+    super.onResume()
+    var enquiriesFilter = FilterDateModel().getDateFilter(FILTER_MY_ENQUIRIES)
+    if (enquiriesFilter == null) {
+      enquiriesFilter = FilterDateModel().getFilterDate().last()
+      enquiriesFilter.saveData(FILTER_MY_ENQUIRIES)
+    }
+    binding?.titleFilter?.apply { text = enquiriesFilter.title }
+    apiSellerSummary(enquiriesFilter)
   }
 }

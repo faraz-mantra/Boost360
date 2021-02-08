@@ -1,19 +1,15 @@
 package com.dashboard.controller.ui.dashboard
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
-import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
-import com.appservice.staffs.ui.StaffFragmentContainerActivity
+import androidx.viewpager2.widget.ViewPager2
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.FragmentType
-import com.dashboard.constant.IntentConstant
+import com.dashboard.constant.PreferenceConstant.CHANNEL_SHARE_URL
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.constant.RecyclerViewItemType
 import com.dashboard.controller.DashboardActivity
@@ -25,11 +21,13 @@ import com.dashboard.model.*
 import com.dashboard.model.live.addOns.ManageBusinessData
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
 import com.dashboard.model.live.dashboardBanner.*
+import com.dashboard.model.live.drScore.DrScoreSetupData
+import com.dashboard.model.live.drScore.DrScoreUiDataResponse
+import com.dashboard.model.live.drScore.getDrScoreData
 import com.dashboard.model.live.premiumBanner.*
 import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.model.live.quickAction.QuickActionResponse
 import com.dashboard.model.live.shareUser.ShareUserDetailResponse
-import com.dashboard.model.live.siteMeter.SiteMeterScoreDetails
 import com.dashboard.pref.*
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME
 import com.dashboard.pref.Key_Preferences.GET_FP_DETAILS_LogoUrl
@@ -38,27 +36,30 @@ import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.DashboardViewModel
-import com.framework.base.FRAGMENT_TYPE
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
+import com.framework.models.firestore.FirestoreManager
+import com.framework.models.firestore.FirestoreManager.getDrScoreData
+import com.framework.models.firestore.FirestoreManager.readDrScoreDocument
 import com.framework.utils.*
-import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY_N
-import com.framework.utils.DateUtils.getCurrentDate
-import com.framework.utils.DateUtils.getDateMillSecond
-import com.framework.utils.DateUtils.parseDate
 import com.framework.views.dotsindicator.OffsetPageTransformer
-import com.inventoryorder.model.floatMessage.MessageModel
+import com.inventoryorder.model.mapDetail.TOTAL_MAP_VISIT
 import com.inventoryorder.model.mapDetail.VisitsModelResponse
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
-import com.inventoryorder.model.summary.SummaryEntity
-import com.inventoryorder.model.summary.UserSummaryResponse
+import com.inventoryorder.model.ordersummary.SELLER_BUSINESS_REPORT
+import com.inventoryorder.model.ordersummary.TOTAL_SELLER_SUMMARY
+import com.inventoryorder.model.summary.*
+import com.inventoryorder.model.summaryCall.CALL_BUSINESS_REPORT
 import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.onboarding.nowfloats.model.channel.*
+import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
+import com.onboarding.nowfloats.rest.response.channel.ChannelWhatsappResponse
+import com.onboarding.nowfloats.rest.response.channel.ChannelsAccessTokenResponse
 import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.LocalSessionModel
-import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.MyDigitalCardShareDialog
+import com.onboarding.nowfloats.ui.updateChannel.digitalChannel.VisitingCardSheet
 import com.onboarding.nowfloats.ui.webview.WebViewBottomDialog
 import java.util.*
 import kotlin.collections.ArrayList
@@ -68,6 +69,7 @@ const val IS_FIRST_LOAD = "isFirsLoad"
 class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardViewModel>(), RecyclerItemClickListener {
 
   private var session: UserSessionManager? = null
+  private var adapterBusinessContent: AppBaseRecyclerViewAdapter<DrScoreSetupData>? = null
   private var adapterPagerBusinessUpdate: AppBaseRecyclerViewAdapter<BusinessSetupHighData>? = null
   private var adapterRoi: AppBaseRecyclerViewAdapter<RoiSummaryData>? = null
   private var adapterGrowth: AppBaseRecyclerViewAdapter<GrowthStatsData>? = null
@@ -75,7 +77,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterAcademy: AppBaseRecyclerViewAdapter<DashboardAcademyBanner>? = null
   private var adapterQuickAction: AppBaseRecyclerViewAdapter<QuickActionItem>? = null
   private var adapterBusinessData: AppBaseRecyclerViewAdapter<ManageBusinessData>? = null
-  private var siteMeterData: SiteMeterScoreDetails? = null
+
   private var ctaFileLink: String? = null
 
   override fun getLayout(): Int {
@@ -88,21 +90,22 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onCreateView() {
     super.onCreateView()
-    if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showProgress()
+    if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
-    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.btnVisitingCard, binding?.txtDomainName)
+    setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport,
+        binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
-    apiSellerSummary()
+    getAllDashboardSummary()
     getPremiumBanner()
+    getChannelAccessToken()
     WebEngageController.trackEvent("Dashboard Home Page", "pageview", session?.fpTag)
-    //todo remove this
-    setOnClickListener(binding?.dummyStaffBtn)
   }
 
   override fun onResume() {
     super.onResume()
-    getFloatMessage()
+    if (getDrScoreData()?.drs_segment.isNullOrEmpty()) readDrScoreDocument()
+    refreshData()
   }
 
   private fun getPremiumBanner() {
@@ -117,8 +120,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           setDataRiaAcademy(data.academyBanners!!)
         }
         if (data?.marketplaceBanners.isNullOrEmpty().not()) {
-          val marketBannerFilter = (data?.marketplaceBanners
-                  ?: ArrayList()).marketBannerFilter(session)
+          val marketBannerFilter = (data?.marketplaceBanners ?: ArrayList()).marketBannerFilter(session)
           saveDataMarketPlace(marketBannerFilter)
           setDataMarketBanner(marketBannerFilter)
         }
@@ -126,38 +128,56 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     })
   }
 
-  private fun getFloatMessage() {
-    session?.siteMeterData { it?.let { it1 -> refreshData(it1) } }
-    viewModel?.getBizFloatMessage(session!!.getRequestFloat())?.observeOnce(this, {
-      if (it?.isSuccess() == true) (it as? MessageModel)?.saveData()
-      session?.siteMeterData { it1 -> it1?.let { it2 -> refreshData(it2) } }
-      if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) {
-        (baseActivity as? DashboardActivity)?.isLoadShimmer = false
-        hideProgress()
-      }
-      saveFirstLoad()
-    })
-  }
-
-  private fun refreshData(siteMeterData: SiteMeterScoreDetails) {
-    this.siteMeterData = siteMeterData
-    (baseActivity as? DashboardActivity)?.setPercentageData(siteMeterData.siteMeterTotalWeight)
+  private fun refreshData() {
     setUserData()
     setBusinessManageTask()
     getNotificationCount()
-    getSiteMeter(siteMeterData)
-    setDataSellerSummary(OrderSummaryModel().getSellerSummary(), getSummaryDetail(), CallSummaryResponse().getCallSummary())
+    setSummaryAndDrScore()
   }
 
-  private fun getSiteMeter(siteMeterData: SiteMeterScoreDetails) {
-    if (session?.siteHealth != siteMeterData.siteMeterTotalWeight) {
-      session?.siteHealth = siteMeterData.siteMeterTotalWeight
-      val data = OnBoardingUpdateModel()
-      data.setData(session?.fPID!!, String.format("site_health:%s", siteMeterData.siteMeterTotalWeight))
-      viewModel?.fpOnboardingUpdate(WA_KEY, data)?.observeOnce(viewLifecycleOwner, {
-        Log.i("DASHBOARD", it.message())
-      })
-    }
+  private fun setSummaryAndDrScore() {
+    (baseActivity as? DashboardActivity)?.setPercentageData(getDrScoreData()?.getDrsTotal() ?: 0)
+    refreshAllDashboardSummary()
+    setDrScoreData()
+  }
+
+
+  private fun setDrScoreData() {
+    viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
+      val response = it as? DrScoreUiDataResponse
+      val drScoreData = getDrScoreData()
+      val isHighDrScore = drScoreData != null && drScoreData.drs_segment.isNullOrEmpty().not() && (drScoreData.getDrsTotal() >= 80).not()
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not() && isHighDrScore) {
+        binding?.highReadinessScoreView?.gone()
+        binding?.lowReadinessScoreView?.visible()
+        binding?.txtReadinessScore?.text = "${drScoreData!!.getDrsTotal()}"
+        binding?.progressScore?.progress = drScoreData.getDrsTotal()
+        val drScoreSetupList = drScoreData.getDrScoreData(response.data)
+        drScoreSetupList.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
+        binding?.pagerBusinessSetupLow?.apply {
+          binding?.motionOne?.transitionToStart()
+          adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList, this@DashboardFragment)
+          offscreenPageLimit = 3
+          adapter = adapterBusinessContent
+          postInvalidateOnAnimation()
+          binding?.dotIndicator?.setViewPager2(this)
+          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+          registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+              super.onPageSelected(position)
+              binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
+            }
+          })
+          binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
+          binding?.motionOne?.transitionToStart()
+        }
+        baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
+        baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
+      } else {
+        binding?.highReadinessScoreView?.visible()
+        binding?.lowReadinessScoreView?.gone()
+      }
+    })
   }
 
   private fun setBusinessManageTask() {
@@ -199,44 +219,48 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  private fun apiSellerSummary() {
+  private fun refreshAllDashboardSummary() {
+    setBusinessSummary(getDrScoreData()?.getDrsTotal() ?: 0, OrderSummaryModel().getTotalOrder(TOTAL_SELLER_SUMMARY)?:"0",
+        SummaryEntity().getUserSummary(USER_BUSINESS_SUMMARY))
+    setRoiBusinessReport(OrderSummaryModel().getSellerSummary(SELLER_BUSINESS_REPORT), SummaryEntity().getTotalUserMessage(TOTAL_USER_MESSAGE).toString(),
+        CallSummaryResponse().getCallSummary(CALL_BUSINESS_REPORT)?:"0")
+    setWebsiteReport(SummaryEntity().getUserSummary(USER_WEBSITE_REPORT), VisitsModelResponse().getTotalOMapVisit(TOTAL_MAP_VISIT) ?: "0")
+  }
+
+  private fun getAllDashboardSummary() {
+    apiBusinessSummary()
+    var businessFilter = FilterDateModel().getDateFilter(FILTER_BUSINESS_REPORT)
+    if (businessFilter == null) {
+      businessFilter = FilterDateModel().getFilterDate().last()
+      businessFilter.saveData(FILTER_BUSINESS_REPORT)
+    }
+    apiRoiBusinessReport(businessFilter)
+    binding?.filterBusinessReport?.text = businessFilter.title
+    var websiteFilter = FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT)
+    if (websiteFilter == null) {
+      websiteFilter = FilterDateModel().getFilterDate().last()
+      websiteFilter.saveData(FILTER_WEBSITE_REPORT)
+    }
+    apiWebsiteReport(websiteFilter)
+    binding?.filterWebsiteReport?.text = websiteFilter.title
+  }
+
+  private fun apiBusinessSummary() {
     viewModel?.getSellerSummary(clientId_ORDER, session?.fpTag)?.observeOnce(viewLifecycleOwner, {
       val response1 = it as? OrderSummaryResponse
-      if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveData()
+      if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveTotalOrder(TOTAL_SELLER_SUMMARY)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
       viewModel?.getUserSummary(clientId, session?.fPParentId, scope)?.observeOnce(viewLifecycleOwner, { it1 ->
         val response2 = it1 as? UserSummaryResponse
-        response2?.getSummary()?.noOfSubscribers = session?.subcribersCount?.toIntOrNull() ?: 0
-        session?.saveUserSummary(response2?.getSummary())
-        val identifierType = if (session?.iSEnterprise == "true") "MULTI" else "SINGLE"
-        viewModel?.getUserCallSummary(clientId, session?.fPParentId, identifierType)?.observeOnce(viewLifecycleOwner, { it2 ->
-          val response3 = it2 as? CallSummaryResponse
-          response3?.saveData()
-          viewModel?.getMapVisits(session?.fpTag, session?.getRequestMap())?.observeOnce(viewLifecycleOwner, { it3 ->
-            val response4 = it3 as? VisitsModelResponse
-            session?.mapVisitsCount = response4?.getTotalCount() ?: "0"
-            setDataSellerSummary(response1?.Data, response2?.getSummary(), response3)
-          })
-        })
+        response2?.getSummary()?.saveData(USER_BUSINESS_SUMMARY)
+        setBusinessSummary(getDrScoreData()?.getDrsTotal() ?: 0, response1?.Data?.getTotalOrders() ?: "0", response2?.getSummary())
       })
     })
   }
 
-  private fun getNotificationCount() {
-    viewModel?.getNotificationCount(clientId, session?.fPID)?.observeOnce(viewLifecycleOwner, {
-      val value = (it.anyResponse as? Double)?.toInt()
-      if (it.isSuccess() && (value != null && value != 0)) {
-        binding?.txtNotification?.visibility = View.VISIBLE
-        binding?.txtNotification?.text = "$value+"
-      } else binding?.txtNotification?.visibility = View.INVISIBLE
-    })
-  }
-
-  private fun setDataSellerSummary(sellerOrder: OrderSummaryModel?, summary: SummaryEntity?, callSummary: CallSummaryResponse?) {
-    val data = BusinessSetupHighData().getData(siteMeterData?.siteMeterTotalWeight ?: 0,
-            summary?.getNoOfUniqueViews() ?: "0", sellerOrder?.getTotalOrders()
-            ?: "0", getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode), summary?.getNoOfMessages()
-            ?: "0")
+  private fun setBusinessSummary(drTotal: Int, totalOrder: String, summary: SummaryEntity?) {
+    val data = BusinessSetupHighData().getData(drTotal, summary?.getNoOfUniqueViews() ?: "0", totalOrder, getCustomerTypeFromServiceCode(session?.fP_AppExperienceCode),
+        summary?.getNoOfMessages() ?: "0")
     data.map { it.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_HIGH_ITEM_VIEW.getLayout() }
     if (adapterPagerBusinessUpdate == null) {
       binding?.pagerBusinessSetupHigh?.apply {
@@ -247,9 +271,30 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
       }
     } else adapterPagerBusinessUpdate?.notify(data)
-    val roiData = RoiSummaryData().getData(summary?.getNoOfMessages()
-            ?: "0", callSummary?.getTotalCalls()
-            ?: "0", sellerOrder, getRoiSummaryType(session?.fP_AppExperienceCode))
+  }
+
+  private fun apiRoiBusinessReport(filterDate: FilterDateModel, isLoader: Boolean = false) {
+    if (isLoader) showProgress()
+    viewModel?.getSellerSummary(clientId_ORDER, session?.fpTag)?.observeOnce(viewLifecycleOwner, {
+      val response1 = it as? OrderSummaryResponse
+      if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveData(SELLER_BUSINESS_REPORT)
+      val scope = if (session?.iSEnterprise == "true") "1" else "0"
+      viewModel?.getUserSummary(clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it1 ->
+        val response2 = it1 as? UserSummaryResponse
+        response2?.getSummary()?.saveTotalMessage(TOTAL_USER_MESSAGE)
+        val identifierType = if (session?.iSEnterprise == "true") "MULTI" else "SINGLE"
+        viewModel?.getUserCallSummary(clientId, session?.fPParentId, identifierType, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it2 ->
+          val response3 = it2 as? CallSummaryResponse
+          response3?.saveData(CALL_BUSINESS_REPORT)
+          setRoiBusinessReport(response1?.Data, response2?.getSummary()?.getNoOfMessages() ?: "0", response3?.getTotalCalls() ?: "0")
+          if (isLoader) hideProgress()
+        })
+      })
+    })
+  }
+
+  private fun setRoiBusinessReport(sellerOrder: OrderSummaryModel?, noOfMessage: String, totlaCalls: String) {
+    val roiData = RoiSummaryData().getData(noOfMessage, totlaCalls, sellerOrder, getRoiSummaryType(session?.fP_AppExperienceCode))
     roiData.map { it.recyclerViewItemType = RecyclerViewItemType.ROI_SUMMARY_ITEM_VIEW.getLayout() }
     if (adapterRoi == null) {
       binding?.rvRoiSummary?.apply {
@@ -257,7 +302,34 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         adapter = adapterRoi
       }
     } else adapterRoi?.notify(roiData)
-    val growthStatsList = GrowthStatsData().getData(summary, session)
+  }
+
+  private fun apiWebsiteReport(filterDate: FilterDateModel, isLoader: Boolean = false) {
+    if (isLoader) showProgress()
+    val scope = if (session?.iSEnterprise == "true") "1" else "0"
+    viewModel?.getUserSummary(clientId, session?.fPParentId, scope, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it1 ->
+      val response1 = it1 as? UserSummaryResponse
+      viewModel?.getSubscriberCount(session?.fpTag, clientId, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, { it2 ->
+        val subscriberCount = (it2.anyResponse as? Double)?.toInt() ?: 0
+        val summary = response1?.getSummary()
+        summary?.noOfSubscribers = subscriberCount
+        summary?.saveData(USER_WEBSITE_REPORT)
+        viewModel?.getMapVisits(session?.fpTag, session?.getRequestMap(filterDate.startDate ?: "", filterDate.endDate ?: ""))?.observeOnce(viewLifecycleOwner, { it3 ->
+          val response3 = it3 as? VisitsModelResponse
+          response3?.saveMapVisit(TOTAL_MAP_VISIT)
+          setWebsiteReport(summary, response3?.getTotalCount() ?: "0")
+          if (isLoader) hideProgress()
+          (baseActivity as? DashboardActivity)?.isLoadShimmer = false
+          showSimmer(false)
+          saveFirstLoad()
+        })
+      })
+    })
+  }
+
+
+  private fun setWebsiteReport(summary: SummaryEntity?, mapVisitCount: String) {
+    val growthStatsList = GrowthStatsData().getData(summary, mapVisitCount, getNumberFormat((session?.searchCount?.toIntOrNull() ?: 0).toString()))
     growthStatsList.map { it.recyclerViewItemType = RecyclerViewItemType.GROWTH_STATE_ITEM_VIEW.getLayout() }
     if (adapterGrowth == null) {
       binding?.rvGrowthState?.apply {
@@ -291,10 +363,21 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           adapterAcademy = AppBaseRecyclerViewAdapter(baseActivity, academyBanner, this@DashboardFragment)
           offscreenPageLimit = 3
           adapter = adapterAcademy
+          binding?.dotIndicatorAcademy?.setViewPager2(this)
           setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
         } else adapterAcademy?.notify(academyBanner)
       } else binding?.riaAcademyView?.gone()
     }
+  }
+
+  private fun getNotificationCount() {
+    viewModel?.getNotificationCount(clientId, session?.fPID)?.observeOnce(viewLifecycleOwner, {
+      val value = (it.anyResponse as? Double)?.toInt()
+      if (it.isSuccess() && (value != null && value != 0)) {
+        binding?.txtNotification?.visibility = View.VISIBLE
+        binding?.txtNotification?.text = "$value+"
+      } else binding?.txtNotification?.visibility = View.INVISIBLE
+    })
   }
 
   private fun setDataMarketBanner(marketBannerFilter: ArrayList<DashboardMarketplaceBanner>) {
@@ -306,6 +389,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           adapterMarketBanner = AppBaseRecyclerViewAdapter(baseActivity, marketBannerFilter, this@DashboardFragment)
           offscreenPageLimit = 3
           adapter = adapterMarketBanner
+          binding?.dotIndicatorPremium?.setViewPager2(this)
           setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
         } else adapterMarketBanner?.notify(marketBannerFilter)
       } else binding?.boostPremiumView?.gone()
@@ -316,17 +400,19 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     when (actionType) {
       RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> {
         WebEngageController.trackEvent("SITE HEALTH Page", "SITE_HEALTH", session?.fpTag);
-        session?.let { baseActivity.startOldSiteMeter(it) }
-//        startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+//        session?.let { baseActivity.startOldSiteMeter(it) }
+        baseActivity.startReadinessScoreView(session, 0)
       }
-      RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, position) })
+      RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal -> baseActivity.startReadinessScoreView(session, position)
       RecyclerViewActionType.QUICK_ACTION_ITEM_CLICK.ordinal -> {
         val data = item as? QuickActionItem ?: return
         QuickActionItem.QuickActionType.from(data.quickActionType)?.let { quickActionClick(it) }
       }
       RecyclerViewActionType.BUSINESS_ADD_ONS_CLICK.ordinal -> {
         val data = item as? ManageBusinessData ?: return
-        ManageBusinessData.BusinessType.fromName(data.businessType)?.let { com.dashboard.controller.ui.allAddOns.businessAddOnsClick(it, baseActivity, session) }
+        ManageBusinessData.BusinessType.fromName(data.businessType)?.let {
+          com.dashboard.controller.ui.allAddOns.businessAddOnsClick(it, baseActivity, session)
+        }
       }
       RecyclerViewActionType.BUSINESS_UPDATE_CLICK.ordinal -> {
         val data = item as? Specification ?: return
@@ -361,29 +447,45 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onClick(v: View) {
     super.onClick(v)
+    //TODO: Track the share_business_card_initiated even in Firebase & Webengage
     when (v) {
+      binding?.filterBusinessReport -> bottomSheetFilter(BUSINESS_REPORT, FilterDateModel().getDateFilter(FILTER_BUSINESS_REPORT))
+      binding?.filterWebsiteReport -> bottomSheetFilter(WEBSITE_REPORT, FilterDateModel().getDateFilter(FILTER_WEBSITE_REPORT))
       binding?.btnNotofication -> session?.let { baseActivity.startNotification(it) }
       binding?.btnBusinessLogo -> baseActivity.startBusinessLogo(session)
-      binding?.btnVisitingCard -> visitingCard()
-      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
-      //todo remove this
-      binding?.dummyStaffBtn -> {
-        //todo remove this
-        val intent = Intent(requireActivity(), StaffFragmentContainerActivity::class.java)
-        intent.putExtra(com.appservice.constant.IntentConstant.FP_TAG.name, session?.fpTag)
-        intent.putExtra(FRAGMENT_TYPE, com.appservice.constant.FragmentType.STAFF_PROFILE_LISTING_FRAGMENT.ordinal)
-        intent.putExtra(com.appservice.constant.IntentConstant.CLIENT_ID.name, session?.sourceClientId)
-        startActivity(intent)
+      binding?.btnShowDigitalScore -> baseActivity.startReadinessScoreView(session, 0)
+      binding?.btnVisitingCard -> {
+        val messageChannelUrl = PreferencesUtils.instance.getData(CHANNEL_SHARE_URL, "")
+        if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
+        else getChannelAccessToken(true)
       }
-    }
 
+      binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
+    }
   }
 
-  private fun visitingCard() {
+  private fun visitingCardDetailText(shareChannelText: String?) {
+    viewModel?.getBoostVisitingMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
+      val response = it as? ShareUserDetailResponse
+      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
+        val messageDetail = response.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.message
+        if (messageDetail.isNullOrEmpty().not()) {
+          val lat = session?.getFPDetails(Key_Preferences.LATITUDE)
+          val long = session?.getFPDetails(Key_Preferences.LONGITUDE)
+          var location = ""
+          if (lat != null && long != null) location = "${if (shareChannelText.isNullOrEmpty().not()) "\n\n" else ""}\uD83D\uDCCD *Find us on map: http://www.google.com/maps/place/$lat,$long*\n\n"
+          val txt = String.format(messageDetail!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), shareChannelText, location)
+          visitingCard(txt)
+        }
+      } else visitingCard("My Business Card")
+    })
+  }
+
+  private fun visitingCard(shareChannelText: String) {
     session?.let {
-      val dialogCard = MyDigitalCardShareDialog()
-      dialogCard.setData(getLocalSession(it))
-      dialogCard.show(this@DashboardFragment.parentFragmentManager, MyDigitalCardShareDialog::class.java.name)
+      val dialogCard = VisitingCardSheet()
+      dialogCard.setData(getLocalSession(it), shareChannelText)
+      dialogCard.show(this@DashboardFragment.parentFragmentManager, VisitingCardSheet::class.java.name)
     }
   }
 
@@ -393,27 +495,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     webViewBottomDialog.show(this@DashboardFragment.parentFragmentManager, WebViewBottomDialog::class.java.name)
   }
 
-  private fun shareUserDetail(isWhatsApp: Boolean) {
-    viewModel?.getBoostUserDetailMessage(baseActivity)?.observeOnce(viewLifecycleOwner, {
-      val response = it as? ShareUserDetailResponse
-      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-        val messageDetail = response.data?.firstOrNull { it1 -> it1.type.equals(session?.fP_AppExperienceCode, ignoreCase = true) }?.message
-        if (messageDetail.isNullOrEmpty().not()) {
-          val txt = String.format(messageDetail!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME)
-                  ?: "", session!!.getDomainName(false), session?.userPrimaryMobile, session?.fPEmail)
-          try {
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "text/plain"
-            if (isWhatsApp) intent.setPackage("com.whatsapp")
-            intent.putExtra(Intent.EXTRA_TEXT, txt)
-            baseActivity.startActivity(Intent.createChooser(intent, "Share your business detail..."))
-          } catch (e: Exception) {
-            e.printStackTrace()
-          }
-        }
-      }
-    })
-  }
 
   private fun quickActionClick(type: QuickActionItem.QuickActionType) {
     when (type) {
@@ -502,13 +583,6 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  private fun getSummaryDetail(): SummaryEntity? {
-    return SummaryEntity(session?.enquiryCount?.toIntOrNull()
-            ?: 0, session?.subcribersCount?.toIntOrNull()
-            ?: 0, session?.visitorsCount?.toIntOrNull() ?: 0, session?.visitsCount?.toIntOrNull()
-            ?: 0)
-  }
-
   private fun actionChannelClick(data: ChannelModel) {
     val title: String
     var website = ""
@@ -577,55 +651,95 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
-  override fun showProgress(title: String?, cancelable: Boolean?) {
-    showSimmer(true)
-  }
-
-  override fun hideProgress() {
-    showSimmer(false)
-  }
-
   private fun showSimmer(isSimmer: Boolean) {
-    binding?.mainContent?.post {
+    binding?.mainContent?.apply {
       if (isSimmer) {
         binding?.progressSimmer?.parentShimmerLayout?.visible()
         binding?.progressSimmer?.parentShimmerLayout?.startShimmer()
         binding?.nestedScrollView?.gone()
       } else {
-        binding?.progressSimmer?.parentShimmerLayout?.gone()
         binding?.nestedScrollView?.visible()
+        binding?.progressSimmer?.parentShimmerLayout?.gone()
         binding?.progressSimmer?.parentShimmerLayout?.stopShimmer()
       }
     }
   }
+
+  private fun getChannelAccessToken(isShowLoader: Boolean = false) {
+    if (isShowLoader) showProgress()
+    viewModel?.getChannelsAccessToken(session?.fPID)?.observeOnce(this, {
+      var urlString = ""
+      if (it.isSuccess()) {
+        val channelsAccessToken = (it as? ChannelsAccessTokenResponse)?.NFXAccessTokens
+        channelsAccessToken?.forEach { it1 ->
+          when (it1.type()) {
+            ChannelAccessToken.AccessTokenType.facebookpage.name ->
+              if (it1.UserAccountId.isNullOrEmpty().not()) urlString = "\n⚡ *Facebook: https://www.facebook.com/${it1.UserAccountId}*"
+            ChannelAccessToken.AccessTokenType.twitter.name ->
+              if (it1.UserAccountName.isNullOrEmpty().not()) urlString += "\n⚡ *Twitter: https://twitter.com/${it1.UserAccountName?.trim()}*"
+          }
+        }
+      }
+      getWhatsAppData(urlString, isShowLoader)
+    })
+  }
+
+  private fun getWhatsAppData(urlString: String, isShowLoader: Boolean = false) {
+    var urlStringN = urlString
+    viewModel?.getWhatsappBusiness(session?.fpTag, WA_KEY)?.observeOnce(this, {
+      if (isShowLoader) hideProgress()
+      if (it.isSuccess()) {
+        val response = ((it as? ChannelWhatsappResponse)?.Data)?.firstOrNull()
+        if (response != null && response.active_whatsapp_number.isNullOrEmpty().not()) {
+          urlStringN += "\n⚡ *WhatsApp: https://wa.me/${response.active_whatsapp_number}*"
+        }
+      }
+      PreferencesUtils.instance.saveData(CHANNEL_SHARE_URL, urlStringN)
+      if (isShowLoader) visitingCardDetailText(urlStringN)
+    })
+  }
+
+  private fun bottomSheetFilter(type: String, dateFilter: FilterDateModel?) {
+    val filterBottomSheet = FilterBottomSheet()
+    filterBottomSheet.setData(dateFilter)
+    filterBottomSheet.onClicked = { apiFilterCall(it, type) }
+    filterBottomSheet.show(this@DashboardFragment.parentFragmentManager, FilterBottomSheet::class.java.name)
+  }
+
+  private fun apiFilterCall(filterDate: FilterDateModel, type: String) {
+    when (type) {
+      BUSINESS_REPORT -> {
+        apiRoiBusinessReport(filterDate, true)
+        filterDate.saveData(FILTER_BUSINESS_REPORT)
+        binding?.filterBusinessReport?.text = filterDate.title
+      }
+      WEBSITE_REPORT -> {
+        apiWebsiteReport(filterDate, true)
+        filterDate.saveData(FILTER_WEBSITE_REPORT)
+        binding?.filterWebsiteReport?.text = filterDate.title
+      }
+    }
+  }
+
+  override fun onStop() {
+    super.onStop()
+    FirestoreManager.listener = null
+  }
+
+  override fun onStart() {
+    super.onStart()
+    FirestoreManager.listener = { setSummaryAndDrScore() }
+  }
 }
 
-fun UserSessionManager.saveUserSummary(summary: SummaryEntity?) {
-  enquiryCount = (summary?.noOfMessages ?: 0).toString()
-  subcribersCount = summary?.noOfSubscribers.toString()
-  visitorsCount = (summary?.noOfUniqueViews ?: 0).toString()
-  visitsCount = (summary?.noOfViews ?: 0).toString()
-}
 
-
-fun UserSessionManager.getRequestMap(): Map<String, String> {
+fun UserSessionManager.getRequestMap(startDate: String, endDate: String): Map<String, String> {
   val map = HashMap<String, String>()
-  var startDate = ""
-  val str = this.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON)
-  if (str.isNullOrEmpty().not()) startDate = Date(getDateMillSecond(str!!)).parseDate(FORMAT_DD_MM_YYYY_N) ?: ""
   map["batchType"] = VisitsModelResponse.BatchType.yy.name
   map["startDate"] = startDate
-  map["endDate"] = getCurrentDate().parseDate(FORMAT_DD_MM_YYYY_N) ?: ""
+  map["endDate"] = endDate
   map["clientId"] = clientId
   map["scope"] = if (this.iSEnterprise == "true") "Enterprise" else "Store"
-  return map
-}
-
-fun UserSessionManager.getRequestFloat(): Map<String, String> {
-  val map = HashMap<String, String>()
-  map["clientId"] = clientId
-  map["skipBy"] = "0"
-  map["fpId"] = this.fPID!!
   return map
 }
 
@@ -640,9 +754,9 @@ fun getLocalSession(session: UserSessionManager): LocalSessionModel {
   val country = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)
   val location = if (city.isNullOrEmpty().not() && country.isNullOrEmpty().not()) "$city, $country" else "$city$country"
   return LocalSessionModel(floatingPoint = session.fPID, contactName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME), businessName = session.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME),
-          businessImage = imageUri, location = location, websiteUrl = session.getDomainName(false),
-          businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), primaryNumber = session.userPrimaryMobile,
-          primaryEmail = session.fPEmail, fpTag = session.fpTag, experienceCode = session.fP_AppExperienceCode)
+      businessImage = imageUri, location = location, websiteUrl = session.getDomainName(false),
+      businessType = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), primaryNumber = session.userPrimaryMobile,
+      primaryEmail = session.fPEmail, fpTag = session.fpTag, experienceCode = session.fP_AppExperienceCode)
 }
 
 fun saveFirstLoad() {

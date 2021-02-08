@@ -4,7 +4,7 @@ import android.view.View
 import com.dashboard.R
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.ItemContentSetupManageBinding
-import com.dashboard.model.live.SiteMeterModel
+import com.dashboard.model.live.drScore.DrScoreItem
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
@@ -14,11 +14,11 @@ class ItemContentSetupHolder(binding: ItemContentSetupManageBinding) : AppBaseRe
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    val data = item as? SiteMeterModel ?: return
-    binding.txtTitle.text = data.Title
-    binding.txtSubtitle.text = data.Desc
+    val data = item as? DrScoreItem ?: return
+    binding.txtTitle.text = data.drScoreUiData?.title
+    binding.txtSubtitle.text = data.drScoreUiData?.getDescValue()
     binding.imgOkCircle.setImageResource(data.getIcon())
-    if (data.status == true) {
+    if (data.isUpdate) {
       binding.imgArrowIcon.visible()
       binding.imgArrowGif.gone()
       binding.imgArrowGif.pause()
@@ -31,7 +31,7 @@ class ItemContentSetupHolder(binding: ItemContentSetupManageBinding) : AppBaseRe
     }
     binding.view2.visibility = if (itemCount != null && position == (itemCount!! - 1)) View.INVISIBLE else View.VISIBLE
     binding.mainContent.setOnClickListener {
-      if (data.status == false) listener?.onItemClick(position, data, RecyclerViewActionType.DIGITAL_SCORE_READINESS_CLICK.ordinal)
+      if (!data.isUpdate) listener?.onItemClick(position, data, RecyclerViewActionType.DIGITAL_SCORE_READINESS_CLICK.ordinal)
     }
   }
 }

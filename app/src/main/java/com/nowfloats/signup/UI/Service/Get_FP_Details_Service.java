@@ -3,11 +3,10 @@ package com.nowfloats.signup.UI.Service;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.framework.models.firestore.FirestoreManager;
 import com.nowfloats.Analytics_Screen.API.NfxFacebbokAnalytics;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.API.Facebook_Auto_Publish_API;
@@ -16,12 +15,9 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetAutoPull;
 import com.nowfloats.PreSignUp.SplashScreen_Activity;
 import com.nowfloats.Store.Model.ActivePackage;
-import com.nowfloats.Store.Model.AllPackage;
-import com.nowfloats.Store.Model.PackageDetails;
 import com.nowfloats.Store.Model.PricingPlansModel;
 import com.nowfloats.Store.Model.WidgetPacks;
 import com.nowfloats.Store.Service.StoreInterface;
-import com.nowfloats.Store.YourPurchasedPlansActivity;
 import com.nowfloats.signup.UI.API.Retro_Signup_Interface;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
@@ -38,7 +34,6 @@ import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -85,6 +80,7 @@ public Get_FP_Details_Service(final Activity activity, String fpID, String clien
                         params.put("country", country.toLowerCase());
                         params.put("fpCategory", get_fp_details_model.getCategory().get(0).getKey());
                         Log.d("getStoreList_fpId: ", mSession.getFPID());
+                        FirestoreManager.INSTANCE.initData( mSession.getFpTag(), mSession.getFPID(),Constants.clientId);
                         Constants.restAdapter.create(StoreInterface.class).getStoreList(params, new Callback<PricingPlansModel>() {
                             @Override
                             public void success(PricingPlansModel storeMainModel, Response response) {

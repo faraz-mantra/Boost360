@@ -8,6 +8,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/ll_timing_item"
         android:layout_marginHorizontal="@dimen/size_8"
         android:orientation="horizontal">
 

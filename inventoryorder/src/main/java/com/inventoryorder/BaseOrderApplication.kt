@@ -5,7 +5,6 @@ import com.framework.BaseApplication
 import com.framework.utils.PreferencesUtils
 import com.inventoryorder.rest.EndPoints
 import com.inventoryorder.rest.apiClients.*
-import com.inventoryorder.rest.repositories.ApiTwoWithFloatRepository
 
 open class BaseOrderApplication : BaseApplication() {
 
@@ -20,6 +19,7 @@ open class BaseOrderApplication : BaseApplication() {
       WithFloatsApiClient.shared.init(EndPoints.WITH_FLOATS_BASE_URL)
       BoostFloatsApiClient.shared.init(EndPoints.BOOST_FLOATS_BASE_URL)
       Api2WithFloatClient.shared.init(EndPoints.BOOST_API2_WITH_FLOAT)
+      ApiWithFloatClient.shared.init(EndPoints.BOOST_API_WITH_FLOAT)
       AssuredPurchaseClient.shared.init(EndPoints.ASSURED_PURCHASE_BASE_URL)
       WebActionBoostKitApiClient.shared.init(EndPoints.WEB_ACTION_BOOST_KIT_BASE_URL)
       BaseApplication.instance = application
