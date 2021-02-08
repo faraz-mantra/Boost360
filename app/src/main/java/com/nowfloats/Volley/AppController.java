@@ -18,7 +18,6 @@ import com.android.volley.toolbox.Volley;
 import com.appservice.AppServiceApplication;
 import com.boost.presignup.locale.LocaleManager;
 import com.dashboard.AppDashboardApplication;
-import com.boost.presignup.utils.SmartLookController;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.inventoryorder.BaseOrderApplication;
@@ -105,7 +104,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     public void onCreate() {
         super.onCreate();
         BaseOrderApplication.instance = this;
-        SmartLookController.initiateSmartLook(this.getString(R.string.samrt_look_api_key));
+//        SmartLookController.initiateSmartLook(this.getString(R.string.samrt_look_api_key));
         BaseOrderApplication.initModule(this);
         BaseBoardingApplication.instance = this;
         BaseBoardingApplication.initModule(this);

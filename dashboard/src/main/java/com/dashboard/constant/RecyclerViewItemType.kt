@@ -12,14 +12,15 @@ enum class RecyclerViewItemType {
   QUICK_ACTION_ITEM_VIEW,
   RIA_ACADEMY_ITEM_VIEW,
   BOOST_PREMIUM_ITEM_VIEW,
-  BOOST_CUSTOMER_ITEM_VIEW,
+  BOOST_ENQUIRIES_ITEM_VIEW,
   BOOST_WEBSITE_ITEM_VIEW,
   ROI_SUMMARY_ITEM_VIEW,
   GROWTH_STATE_ITEM_VIEW,
   BUSINESS_CONTENT_SETUP_ITEM_VIEW,
   ITEMS_CONTENT_SETUP_ITEM_VIEW,
   ALL_BOOST_ADD_ONS_VIEW,
-  HOME_DRAWER_VIEW;
+  HOME_DRAWER_VIEW,
+  FILTER_DATE_VIEW;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -32,7 +33,7 @@ enum class RecyclerViewItemType {
       QUICK_ACTION_ITEM_VIEW -> R.layout.item_quick_action
       RIA_ACADEMY_ITEM_VIEW -> R.layout.item_ria_academy
       BOOST_PREMIUM_ITEM_VIEW -> R.layout.item_boost_premium
-      BOOST_CUSTOMER_ITEM_VIEW -> R.layout.item_customer_patient_item
+      BOOST_ENQUIRIES_ITEM_VIEW -> R.layout.item_customer_patient_item
       BOOST_WEBSITE_ITEM_VIEW -> R.layout.item_website_item
       ROI_SUMMARY_ITEM_VIEW -> R.layout.item_roi_summary
       GROWTH_STATE_ITEM_VIEW -> R.layout.item_growth_state
@@ -40,6 +41,7 @@ enum class RecyclerViewItemType {
       ITEMS_CONTENT_SETUP_ITEM_VIEW -> R.layout.item_content_setup_manage
       ALL_BOOST_ADD_ONS_VIEW -> R.layout.item_boost_add_ons
       HOME_DRAWER_VIEW -> R.layout.item_drawer_view
+      FILTER_DATE_VIEW -> R.layout.item_filter_date
     }
   }
 }

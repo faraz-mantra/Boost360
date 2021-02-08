@@ -6,12 +6,12 @@ import java.io.Serializable
 
 data class StaffImage(
 
-		@field:SerializedName("image")
+		@field:SerializedName("Image")
 		var image: String? = null,
 
-		@field:SerializedName("fileName")
+		@field:SerializedName("FileName")
 		var fileName: String? = null,
 
-		@field:SerializedName("imageFileType")
+		@field:SerializedName("ImageFileType")
 		var imageFileType: String? = null,
 ) : Serializable, BaseResponse()

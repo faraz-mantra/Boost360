@@ -3,8 +3,7 @@ package com.dashboard.holder
 import com.dashboard.R
 import com.dashboard.constant.RecyclerViewActionType
 import com.dashboard.databinding.ItemBusinessManagementBinding
-import com.dashboard.model.BusinessContentSetupData
-import com.dashboard.model.BusinessSetupData
+import com.dashboard.model.live.drScore.DrScoreSetupData
 import com.dashboard.recyclerView.AppBaseRecyclerViewHolder
 import com.dashboard.recyclerView.BaseRecyclerViewItem
 import com.framework.extensions.gone
@@ -14,29 +13,26 @@ class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) : AppBaseR
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
-    val data = item as? BusinessContentSetupData ?: return
-    binding.txtTitle.text = data.title
-    binding.txtDes.text = data.subTitle
-    if (data.type == BusinessSetupData.ActiveViewType.ONLINE_SYNC.name) {
+    val data = item as? DrScoreSetupData ?: return
+    binding.txtTitle.text = data.type?.title
+    binding.txtDes.text = data.getRemainingPercentage()
+    if (data.percentage == 100) {
       getColor(R.color.light_green_2)?.let { binding.txtDes.setTextColor(it) }
       binding.viewBtn.gone()
       binding.viewImage.gone()
       binding.lottySyncOk.visible()
       startCheckAnimation(true)
     } else {
+      val subTitle = data.getPendingText()
+      binding.btnTitle.text = if (subTitle.isNullOrEmpty()) data.type?.title else "Add $subTitle"
       getColor(R.color.light_grey_3)?.let { binding.txtDes.setTextColor(it) }
       binding.viewBtn.visible()
       binding.viewImage.visible()
       binding.lottySyncOk.gone()
       startCheckAnimation(false)
-      val btnTxt = data.getPendingText()
-      binding.btnTitle.text = if (btnTxt.isNullOrEmpty().not()) "Add $btnTxt" else data.getCompleteText()
-      binding.imgArrowGif.apply {
-        data.gifIcon?.let { gifResource = it }
-        play()
-      }
-      binding.progressBar.setProgressWithAnimation((100 - (data.percentage ?: 0)).toFloat(), 1000)
-      data.icon2?.let { binding.imgIcon.setImageResource(it) }
+      binding.imgArrowGif.apply { play() }
+      binding.progressBar.setProgressWithAnimation((data.percentage ?: 0).toFloat(), 1000)
+      data.type?.icon?.let { binding.imgIcon.setImageResource(it) }
     }
     binding.mainContent.setOnClickListener { listener?.onItemClick(position, data, RecyclerViewActionType.BUSINESS_SETUP_SCORE_CLICK.ordinal) }
   }

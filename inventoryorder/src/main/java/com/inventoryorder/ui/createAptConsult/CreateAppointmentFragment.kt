@@ -14,6 +14,7 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
 import com.framework.utils.DateUtils.FORMAT_DD_MM_YYYY
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL
@@ -457,7 +458,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
   private fun updateBooking() {
     showProgress()
-    viewModel?.updateExtraPropertyOrder(AppConstant.CLIENT_ID_2, updateExtraPropertyRequest)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+    viewModel?.updateExtraPropertyOrder(AppConstant.CLIENT_ID_2, request = updateExtraPropertyRequest)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
       if (it.error is NoNetworkException) {
         hideProgress()
         showLongToast(resources.getString(R.string.internet_connection_not_available))
@@ -497,7 +498,8 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
         showLongToast(resources.getString(R.string.internet_connection_not_available))
         return@Observer
       }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
+      if (it.isSuccess()) {
+        onInClinicAptConsultAddedOrUpdated(true);
         hitApiAddAptConsult((it as? OrderInitiateResponse)?.data)
       } else {
         hideProgress()
@@ -802,5 +804,12 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
     binding?.edtPatientName?.setText(extraItemConsult?.patientName ?: "")
     binding?.edtPatientPhone?.setText(extraItemConsult?.getNumberPatient() ?: "")
     binding?.edtPatientEmail?.setText(extraItemConsult?.patientEmailId ?: "")
+  }
+
+  private fun onInClinicAptConsultAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    if (isVideoConsult) instance.getDrScoreData()?.metricdetail?.boolean_create_sample_video_consultation = isAdded
+    else instance.getDrScoreData()?.metricdetail?.boolean_create_sample_in_clinic_appointment = isAdded
+    instance.updateDocument()
   }
 }

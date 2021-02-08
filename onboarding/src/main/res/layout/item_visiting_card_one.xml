@@ -91,7 +91,7 @@
                 android:layout_gravity="end"
                 android:layout_marginTop="@dimen/size_18"
                 android:layout_marginEnd="@dimen/size_14"
-                app:srcCompat="@drawable/ic_category_spa_n" />
+                app:srcCompat="@drawable/ic_business_card_spa_n" />
 
               <com.framework.views.customViews.CustomCardView
                 android:id="@+id/profile_view"

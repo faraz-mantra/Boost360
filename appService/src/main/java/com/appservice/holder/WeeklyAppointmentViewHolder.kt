@@ -11,11 +11,13 @@ import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.ui.catalog.common.AppointmentModel
 import com.appservice.ui.catalog.common.TimeSlot
+import com.framework.BaseApplication
 
 class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBaseRecyclerViewHolder<RecyclerItemSessionBinding>(binding) {
-    val businessHours: Array<String>? = getResources()?.getStringArray(R.array.business_hours_arrays)
+    val businessHours: Array<String> = BaseApplication.instance.applicationContext.resources.getStringArray(R.array.business_hours_arrays)
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         setIsRecyclable(false)
+
         val data = item as AppointmentModel
 
         // turned on or off visibility of checkbox for all days
@@ -24,11 +26,12 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
         //isdataAPpliedonmy day true -> make all views unresponsive -- disable modification
         //
 
+        binding.toggleOnOff.isEnabled = data.isViewEnabled ?: true
         when (data.isTurnedOn) {
             false -> binding.layoutSessionCreate.visibility = View.GONE
             true -> binding.layoutSessionCreate.visibility = View.VISIBLE
         }
-        when (data.isDataAppliedOnMyDay!! && data.isTurnedOn) {
+        when (data.isDataAppliedOnMyDay!! && data.isTurnedOn!!) {
             true -> binding.layoutSessionCreate.visibility = View.GONE
         }
         when (data.isDataAppliedOnMyDay) {
@@ -36,12 +39,12 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
         }
         binding.ctvTitleDay.text = "${data.day}"
 
-        binding.toggleOnOff.isOn = data.isTurnedOn
+        binding.toggleOnOff.isOn = data.isTurnedOn!!
         binding.toggleOnOff.setOnToggledListener { _, isOn ->
             data.changeDayTurned(isOn)
             listener?.onItemClick(position, data, RecyclerViewActionType.TOGGLE_STATE_CHANGED.ordinal)
         }
-        binding.ccbAllDay.isChecked = data.isAppliedOnAllDays
+        binding.ccbAllDay.isChecked = data.isAppliedOnAllDays!!
         binding.ccbAllDay.setOnCheckedChangeListener { _, isChecked ->
             data.isAppliedOnAllDays = isChecked
             listener?.onItemClick(position, data, RecyclerViewActionType.CHECK_BOX_APPLY_ALL.ordinal)
@@ -59,17 +62,12 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
 
     }
 
-//    private fun disableAllViews(data: AppointmentModel) {
-//        for (item in data.) {
-//            binding.llTimeSlot.addView(getTimeSlotView(item));
-//        }
-//    }
 
-    private fun addTimeSlots(data: AppointmentModel) {
+    fun addTimeSlots(data: AppointmentModel) {
         if (data.timeSlots.isNullOrEmpty()) {
             binding.llTimeSlot.removeAllViewsInLayout();
         } else {
-            for (item in data.timeSlots!!) {
+            for (item in data.timeSlots) {
                 binding.llTimeSlot.addView(getTimeSlotView(item));
             }
         }
@@ -80,15 +78,15 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
         val fromSpinner = itemView.findViewById(R.id.spinner_start_timing) as AppCompatSpinner
         val toSpinner = itemView.findViewById(R.id.spinner_end_timing) as AppCompatSpinner
         sessionTimingHandler(fromSpinner, timeSlot, toSpinner)
-//        timeSlot.from = fromSpinner.selectedItem.toString()
-//        timeSlot.to = toSpinner.selectedItem.toString()
+        fromSpinner.setSelection(businessHours.indexOf(element =timeSlot.from))
+        toSpinner.setSelection(businessHours.indexOf(element= timeSlot.to))
         return itemView;
     }
 
     private fun sessionTimingHandler(fromSpinner: AppCompatSpinner, timeSlot: TimeSlot, toSpinner: AppCompatSpinner) {
         fromSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                timeSlot.from = businessHours?.get(position)
+                timeSlot.from = businessHours[position]
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -97,7 +95,7 @@ class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBase
         }
         toSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                timeSlot.to = businessHours?.get(position)
+                timeSlot.to = businessHours[position]
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
