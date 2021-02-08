@@ -165,11 +165,11 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
         }
     }
 
-    private fun getTimeView(appointmentModel: AppointmentModel): View {
+    private fun getTimeView(appointmentModel: AppointmentModel?): View {
         val itemView = LayoutInflater.from(binding?.llTimingContainer?.context).inflate(R.layout.recycler_item_service_timing, null, false);
         val timeTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
         if (staffDetails?.isAvailable == true) timeTextView.setTextColor(resources.getColor(R.color.gray_4e4e4e)) else timeTextView.setTextColor(resources.getColor(R.color.pinkish_grey))
-        timeTextView.text = "${appointmentModel.day}  ${appointmentModel.timeSlots.joinToString(" ,").removeSurrounding("(", ")")}"
+        timeTextView?.text = "${appointmentModel?.day}  ${appointmentModel?.timeSlots?.joinToString(" ,")?.removeSurrounding("(", ")")}"
         return itemView;
     }
 

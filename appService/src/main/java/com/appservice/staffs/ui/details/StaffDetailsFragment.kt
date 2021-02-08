@@ -114,7 +114,19 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         binding?.cetAge?.setText(staffDetails?.age.toString())
         showHideTimingText()
         showHideServicesText()
-        setTimings()
+       // setTimings()
+        var selectedDays = StringBuilder()
+
+        if (staffDetails?.timings != null) {
+            for (item in staffDetails?.timings!!) {
+                if (item != null && !item?.day.isNullOrEmpty() && item?.timeSlots?.isNotEmpty()) {
+                    if (selectedDays.isNotEmpty()) selectedDays.append(", ")
+                    selectedDays.append(item?.day)
+                }
+            }
+            binding?.ctvTiming?.text = selectedDays
+        }
+
         if (specialisations?.isNullOrEmpty() == false)
             binding?.etvSpecialization?.setText(specialisations[0]?.value)
         setExperience()
@@ -162,7 +174,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     private fun initViews() {
         this.genderArray = arrayOf("Male", "Female", "Please select")
         binding!!.spinnerGender.setHintAdapter(requireContext(), list = genderArray)
-
+        binding?.toggleIsAvailable?.isOn = true
     }
 
     override fun onClick(v: View) {
@@ -237,29 +249,25 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
     }
 
-
-
     private fun isValid(): Boolean {
         this.specialization = binding?.etvSpecialization?.text.toString()
         this.serviceListId = ArrayList()
         this.specializationList = ArrayList()
-        yearOfExperience = staffDetails?.experience.toString()
+        this.yearOfExperience = staffDetails?.experience.toString()
         this.staffName = binding?.etvName?.text.toString()
         this.staffAge = binding?.cetAge?.text.toString().toIntOrNull()
         this.staffDescription = binding?.etvStaffDescription?.text.toString()
         val staffGender = binding?.spinnerGender?.isHintSelected()
         this.isAvailable = binding?.toggleIsAvailable?.isOn
-        if (staffName.isBlank()) {
+
+        if (imageUri.toString() == "null" || imageUri == null || imageUri.toString().isEmpty() || imageUri.toString().isBlank()) {
+            showLongToast(getString(R.string.please_choose_image))
+            return false
+        } else if (staffName.isBlank()) {
             showLongToast(getString(R.string.enter_staff_name))
             return false
         } else if (staffGender == null || staffGender) {
             showLongToast(getString(R.string.select_staff_gender))
-            return false
-        } else if (specialization.isEmpty()) {
-            showLongToast(getString(R.string.please_add_specialization))
-            return false
-        } else if (yearOfExperience.isBlank()) {
-            showLongToast(getString(R.string.select_year_of_experience))
             return false
         } else if (staffAge == null) {
             showLongToast(getString(R.string.please_enter_your_age))
@@ -267,10 +275,14 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         } else if (staffAge == 0 || staffAge ?: 0 >= 100) {
             showLongToast(getString(R.string.please_enter_valid_age))
             return false
-        } else if (imageUri.toString() == "null" || imageUri == null || imageUri.toString().isEmpty() || imageUri.toString().isBlank()) {
-            showLongToast(getString(R.string.please_choose_image))
+        } else if (specialization.isEmpty()) {
+            showLongToast(getString(R.string.please_add_specialization))
+            return false
+        } else if (!this::yearOfExperience.isInitialized || yearOfExperience.equals("null", ignoreCase = true)) {
+            showLongToast(getString(R.string.select_year_of_experience))
             return false
         }
+
         specializationList.add(SpecialisationsItem(specialization, "key"))
         servicesList?.forEach { serviceListId?.add(it.id!!) }
         if (serviceListId.isNullOrEmpty()) serviceListId = null
@@ -432,7 +444,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     }
 
     private fun setTimings() {
-        staffDetails?.timings?.filter { it.timeSlots.isNullOrEmpty().not() }?.map { it.day }?.joinToString(separator = ", ", truncated = "...")
+        staffDetails?.timings?.filter { it?.timeSlots?.isNullOrEmpty().not() }?.map { it.day }?.joinToString(separator = ", ", truncated = "...")
     }
 
     private fun setServicesList() {

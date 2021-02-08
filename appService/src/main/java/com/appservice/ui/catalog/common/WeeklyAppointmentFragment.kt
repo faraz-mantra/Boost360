@@ -40,14 +40,32 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     private fun getBundleData() {
         staffData = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
         when {
-            staffData?.timings != null -> {
+            (staffData?.timings != null && staffData?.timings?.isNotEmpty() == true) -> {
                 this.defaultTimings = arrayListOf()
                 this.defaultTimings.addAll(staffData?.timings!!)
+
+                for (item in defaultTimings) {
+                    if (item?.timeSlots != null && item?.timeSlots?.isNotEmpty()) {
+                        item.isTurnedOn = true
+                    }
+                }
+
+                setTimings()
             }
             else -> {
-
                 this.defaultTimings = AppointmentModel.getDefaultTimings()
             }
+        }
+    }
+
+    private fun setTimings() {
+        if (defaultTimings != null && defaultTimings.size > 0) {
+            this.adapter = AppBaseRecyclerViewAdapter(
+                    activity = baseActivity,
+                    list = this.defaultTimings,
+                    itemClickListener = this@WeeklyAppointmentFragment
+            )
+            binding!!.rvStaffTiming.adapter = adapter
         }
     }
 
