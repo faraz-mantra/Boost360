@@ -113,7 +113,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         binding?.cetAge?.setText(staffDetails?.age.toString())
         showHideTimingText()
         showHideServicesText()
-        binding?.ctvTiming?.text = staffDetails?.timings?.map { it.day }?.joinToString(" ,")
+        setTimings()
         if (specialisations?.isNullOrEmpty() == false)
             binding?.etvSpecialization?.setText(specialisations[0]?.value)
         setExperience()
@@ -410,7 +410,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             }
             requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
                 this.staffDetails = data!!.extras!![IntentConstant.STAFF_TIMINGS.name] as StaffDetailsResult
-                binding?.ctvTiming?.text = staffDetails?.timings?.map { it.day }?.joinToString(" ,")
+                setTimings()
                 showHideTimingText()
                 isTimingUpdated = true
             }
@@ -420,6 +420,10 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         }
 
 
+    }
+
+    private fun setTimings() {
+        staffDetails?.timings?.filter { it.timeSlots.isNullOrEmpty().not() }?.map { it.day }?.joinToString(separator = ", ", truncated = "...")
     }
 
     private fun setServicesList() {

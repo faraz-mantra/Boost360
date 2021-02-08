@@ -123,7 +123,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
             }
         }
     }
-
+//todo validation left
     fun isValid(): Boolean {
         var i = 0
         this.defaultTimings.forEachIndexed { index, appointmentModel -> appointmentModel.timeSlots.forEach {  timeSlot ->
@@ -134,7 +134,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
             i = index
             if (index == appointmentModel.timeSlots.size - 1)
                 i = index - 1
-            if (appointmentModel.timeSlots[i].to == appointmentModel.timeSlots.get(i + 1).from) {
+            if (appointmentModel.timeSlots[i].to == appointmentModel.timeSlots[i + 1].from) {
                 showLongToast(getString(R.string.time_slots_gap))
                 return false
             }
