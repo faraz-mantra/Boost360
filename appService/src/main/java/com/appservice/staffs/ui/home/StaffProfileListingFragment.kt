@@ -25,6 +25,7 @@ import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.framework.extensions.observeOnce
+import kotlinx.android.synthetic.main.fragment_staff_listing.*
 import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -83,6 +84,16 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         filter = FilterBy("", 10, 0)
         fetchStaffListing()
         setupOnScrollListener()
+        setUpSwipeRefresh()
+    }
+
+    private fun setUpSwipeRefresh() {
+        binding?.staffListSwipeRefresh?.setOnRefreshListener {
+            filter = FilterBy("", 10, 0)
+            list.clear()
+            copyList.clear()
+            fetchStaffListing()
+        }
     }
 
     private fun fetchStaffListing() {
@@ -93,10 +104,15 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
         viewModel?.getStaffList(GetStaffListingRequest(filter, UserSession.fpId, ""))?.observeOnce(viewLifecycleOwner, {
 
             hideProgress()
+            binding?.staffListSwipeRefresh?.isRefreshing = false
             if (this::adapter.isInitialized) adapter.removeLoadingFooter()
 
             when (it.status) {
                 200 -> {
+
+                    staff_list_swipe_refresh?.visibility = View.VISIBLE
+                    fragment_staff_add?.visibility = View.GONE
+
                     val getStaffListingResponse = it as GetStaffListingResponse
                     val data = getStaffListingResponse.result?.data
 
@@ -120,13 +136,19 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
                         isLastPageD = data.size < 10
                     } else {
                         if (this.list.size == 0) {
-                            binding?.layoutStaffListing?.root?.visibility = View.GONE
-                            binding?.fragmentStaffAdd!!.root.visibility = View.VISIBLE
+                            staff_list_swipe_refresh?.visibility = View.GONE
+                            fragment_staff_add?.visibility = View.VISIBLE
                         }
 
                         isLastPageD = data?.size!! < 10
                     }
                 }
+
+                204 -> {
+                    staff_list_swipe_refresh?.visibility = View.GONE
+                    fragment_staff_add?.visibility = View.VISIBLE
+                }
+
                 else -> {
                     showLongToast(it.message())
                 }

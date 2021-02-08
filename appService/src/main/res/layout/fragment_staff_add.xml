@@ -23,13 +23,26 @@
             app:layout_constraintVertical_bias="0.331" />
 
         <com.framework.views.customViews.CustomTextView
-            android:id="@+id/appCompatTextView"
-            style="@style/TextDescription"
-            android:text="@string/staff_listing_paragraph"
+            android:id="@+id/appCompatTextViewNoStaff"
+            android:textColor="@color/black_4a4a4a"
+            android:text="@string/no_staff_member_listed_yet"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_staff_image"
+            app:layout_constraintVertical_bias="0.067"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:textType="HEADING_6" />
+
+        <com.framework.views.customViews.CustomTextView
+            android:id="@+id/appCompatTextView"
+            style="@style/TextDescription"
+            android:text="@string/staff_listing_paragraph"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/appCompatTextViewNoStaff"
             app:layout_constraintVertical_bias="0.067"
             app:textType="BODY_1" />
 

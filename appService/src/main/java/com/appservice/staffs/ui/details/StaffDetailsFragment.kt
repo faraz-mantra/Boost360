@@ -40,6 +40,7 @@ import kotlinx.android.synthetic.main.fragment_staff_details.*
 import kotlinx.android.synthetic.main.item_preview_image.*
 import kotlinx.android.synthetic.main.item_preview_image.view.*
 import java.io.ByteArrayOutputStream
+import java.lang.StringBuilder
 
 class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffViewModel>() {
     private var isTimingUpdated: Boolean? = null
@@ -405,13 +406,21 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                 if (staffDetails?.serviceIds == null) staffDetails?.serviceIds = arrayListOf()
                 staffDetails?.serviceIds = servicesList?.map { it.id }
                 if (staffDetails?.serviceIds.isNullOrEmpty()) staffDetails?.serviceIds =null
-                binding!!.ctvServices.text = (servicesList?.map { it.name })?.joinToString(", ", limit = 5, truncated = "5 more")
+                binding!!.ctvServices.text = (servicesList?.map { it.name })?.joinToString(", ", limit = 5, truncated = "+${servicesList?.size?.minus(5)} more")
                 showHideServicesText()
             }
             requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK -> {
                 this.staffDetails = data!!.extras!![IntentConstant.STAFF_TIMINGS.name] as StaffDetailsResult
                 setTimings()
                 showHideTimingText()
+                var selectedDays = StringBuilder()
+                for (item in staffDetails?.timings!!) {
+                    if (item.isTurnedOn == true) {
+                        if (selectedDays.isNotEmpty()) selectedDays.append(", ")
+                        selectedDays.append(item.day)
+                    }
+                }
+                binding?.ctvTiming?.text = selectedDays
                 isTimingUpdated = true
             }
         }
@@ -435,7 +444,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                         val data = (it as ServiceListResponse).result!!.data!!
                         if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
                             val servicesProvided = data.filter { item -> staffDetails?.serviceIds!!.contains(item?.id) } as ArrayList<DataItemService>
-                            binding!!.ctvServices.text = servicesProvided.map { it.name }.joinToString(" ,", limit = 5, truncated = "5 more")
+                            binding!!.ctvServices.text = servicesProvided.map { it.name }.joinToString(" ,", limit = 5, truncated = "+5 more")
                             showHideServicesText()
                         }
                     }

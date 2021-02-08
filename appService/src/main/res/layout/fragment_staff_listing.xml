@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data />
 
@@ -8,12 +9,19 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/layout_staff_listing"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/staff_list_swipe_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/layout_staff_listing"
-            android:visibility="gone" />
+            app:swipeRefreshLayoutProgressSpinnerBackgroundColor="@color/orange"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/layout_staff_listing"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/layout_staff_listing"
+                android:visibility="gone" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <include
             android:id="@+id/fragment_staff_add"
@@ -21,7 +29,5 @@
             android:layout_width="match_parent"
             layout="@layout/fragment_staff_add"
             android:visibility="gone" />
-
-
     </LinearLayout>
 </layout>

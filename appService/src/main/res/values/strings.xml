@@ -400,6 +400,9 @@
   <string name="select_what_services_that_the_staff_will_provide">Select what services that the staff will provide.</string>
   <string name="while_booking_a_staff_for_a_service_speciality_customer_will_know_which_all_staff_provide_service_they_are_looking_for">While booking a staff for a service/speciality, customer will know which all staff provide service they are looking for.</string>
     <string name="please_enter_valid_age">please enter valid age.</string>
+    <string name="endtime_cannot_be_before_starttime">Shift end time cannot be before shift start time</string>
+  <string name="starttime_on_one_slot_cannot_be_before_endtime_of_other_slot">Start time on one slot cannot be less than end time of previous slot</string>
+    <string name="no_staff_member_listed_yet">No staff member listed yet</string>
     <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>

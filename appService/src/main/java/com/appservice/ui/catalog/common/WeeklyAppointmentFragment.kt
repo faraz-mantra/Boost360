@@ -13,6 +13,8 @@ import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.model.StaffDetailsResult
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
+import java.lang.Exception
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -123,25 +125,43 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
             }
         }
     }
-//todo validation left
+
+    //todo validation left
     fun isValid(): Boolean {
         var i = 0
-        this.defaultTimings.forEachIndexed { index, appointmentModel -> appointmentModel.timeSlots.forEach {  timeSlot ->
+        this.defaultTimings.forEachIndexed { index, appointmentModel -> appointmentModel.timeSlots.forEachIndexed {pos, timeSlot ->
             if (timeSlot.from == timeSlot.to) {
                 showLongToast(getString(R.string.start_end_can_not_be_same))
                 return false
             }
-            i = index
-            if (index == appointmentModel.timeSlots.size - 1)
-                i = index - 1
-            if (appointmentModel.timeSlots[i].to == appointmentModel.timeSlots[i + 1].from) {
-                showLongToast(getString(R.string.time_slots_gap))
+
+            if (convertAndCompareTime(timeSlot.from!!, timeSlot.to!!)) {
+                showLongToast(getString(R.string.endtime_cannot_be_before_starttime))
                 return false
+            }
+
+            if ((pos + 1) < defaultTimings[index].timeSlots.size && defaultTimings[index].timeSlots[pos + 1].from != null) {
+                if (convertAndCompareTime(defaultTimings[index].timeSlots[pos].to ?: "", defaultTimings[index].timeSlots[pos + 1].from ?: "")) {
+                    showLongToast(getString(R.string.starttime_on_one_slot_cannot_be_before_endtime_of_other_slot))
+                    return false
+                }
             }
         }
         }
         staffData?.timings = this.defaultTimings
         return true
+    }
+
+    private fun convertAndCompareTime(startTime: String, endTime: String) : Boolean {
+        val sdf = SimpleDateFormat("hh:mma")
+        var d1 = Date()
+        var d2 = Date()
+        try {
+             d1 = sdf.parse(startTime)
+             d2 = sdf.parse(endTime)
+        } catch (e : Exception) {}
+
+        return d2.before(d1)
     }
 
 
