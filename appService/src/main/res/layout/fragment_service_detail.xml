@@ -46,19 +46,18 @@
             android:orientation="vertical">
 
             <FrameLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/shape_blue_stroke_rect_title_bkg_no_boarder_radius">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
               <com.framework.views.customViews.CustomImageView
-                android:id="@+id/service_image_view"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_180"
-                android:layout_marginTop="@dimen/size_1"
-                android:layout_marginBottom="@dimen/size_1"
-                android:scaleType="centerCrop"
-                android:visibility="gone"
-                app:srcCompat="@color/placeholder_bg" />
+                  android:id="@+id/service_image_view"
+                  android:layout_width="match_parent"
+                  android:layout_height="@dimen/size_180"
+                  android:layout_marginTop="@dimen/size_1"
+                  android:layout_marginBottom="@dimen/size_1"
+                  android:scaleType="centerCrop"
+                  android:visibility="gone"
+                  app:srcCompat="@color/placeholder_bg" />
 
               <com.framework.views.customViews.CustomImageView
                 android:id="@+id/clear_image"
@@ -113,25 +112,32 @@
                   android:layout_marginTop="@dimen/size_20"
                   android:text="@string/add_service_image"
                   android:textColor="@color/dodger_blue_two"
-                  app:fontFamily="@font/semi_bold"
-                  app:textAllCaps="true"
-                  app:textType="BODY_1" />
+                    app:fontFamily="@font/semi_bold"
+                    app:textAllCaps="true"
+                    app:textType="BODY_1" />
+
               </LinearLayout>
 
             </FrameLayout>
 
           </androidx.appcompat.widget.LinearLayoutCompat>
 
+          <View
+              android:id="@+id/divider2"
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="?android:attr/listDivider" />
+
           <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/size_20"
-            android:orientation="vertical"
-            android:paddingEnd="@dimen/size_20">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="@dimen/size_20"
+              android:orientation="vertical"
+              android:paddingEnd="@dimen/size_20">
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_3"
               android:layout_marginTop="@dimen/size_36"
               android:text="@string/service_name"
@@ -349,7 +355,7 @@
                 android:text="@string/price_includes_taxes"
                 android:textColor="@color/primary_grey"
                 android:theme="@style/ActiveTheme"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
               <LinearLayout
                 android:id="@+id/pay_service_view"
