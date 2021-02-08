@@ -8,9 +8,12 @@ import android.os.Bundle
 import android.os.Environment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
+import com.appservice.ui.catalog.CatalogServiceContainerActivity
+import com.appservice.ui.catalog.setFragmentType
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
@@ -394,6 +397,14 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
+}
+
+fun Fragment.startFragmentActivity(type: com.appservice.constant.FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+  val intent = Intent(activity, CatalogServiceContainerActivity::class.java)
+  intent.putExtras(bundle)
+  intent.setFragmentType(type)
+  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
 }
 
 fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
