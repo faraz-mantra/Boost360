@@ -29,8 +29,6 @@ import com.appservice.constant.FragmentType;
 import com.appservice.constant.IntentConstant;
 import com.appservice.model.SessionData;
 import com.appservice.model.StatusKyc;
-import com.appservice.model.accountDetails.AccountDetailsResponse;
-import com.appservice.model.kycData.PaymentKycDataResponse;
 import com.nowfloats.AccrossVerticals.domain.DomainEmailActivity;
 import com.nowfloats.BusinessProfile.UI.UI.changePasswordAsyncTask;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
@@ -42,11 +40,9 @@ import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.Store.Model.OnItemClickCallback;
 import com.nowfloats.Store.NewPricingPlansActivity;
-import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.Store.SimpleImageTextListAdapter;
 import com.nowfloats.Store.YourPurchasedPlansActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -61,10 +57,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 import static com.appservice.ui.bankaccount.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
 import static com.appservice.ui.paymentgateway.PaymentGatewayContainerActivityKt.startFragmentPaymentActivityNew;
@@ -105,8 +97,6 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         }
         domainApiService = new DomainApiService(this);
         sessionManager = new UserSessionManager(mContext, getActivity());
-        checkSelfBrandedKyc();
-        checkUserAccount();
         final String[] adapterTexts = getResources().getStringArray(R.array.account_setting_tab_items);
         final TypedArray imagesArray = getResources().obtainTypedArray(R.array.account_settings);
         int[] adapterImages = new int[adapterTexts.length];
@@ -133,7 +123,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         bundle.putString(IntentConstant.CLIENT_ID.name(), Constants.clientId);
                         bundle.putString(IntentConstant.USER_PROFILE_ID.name(), sessionManager.getUserProfileId());
                         bundle.putString(IntentConstant.FP_ID.name(), sessionManager.getFPID());
-                        if (sessionManager.gisAccountSave()) {
+                        if (sessionManager.getAccountSave()) {
                             startFragmentAccountActivityNew(requireActivity(), FragmentType.BANK_ACCOUNT_DETAILS, bundle, false);
                         } else {
                             startFragmentAccountActivityNew(requireActivity(), FragmentType.ADD_BANK_ACCOUNT_START, bundle, false);
@@ -211,54 +201,6 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         return bundle;
     }
 
-    private void checkSelfBrandedKyc() {
-        showLoader("Please Wait...");
-        StoreInterface boostKit = Constants.restAdapterBoostKit.create(StoreInterface.class);
-        boostKit.getSelfBrandedKyc(getQuery(), new Callback<PaymentKycDataResponse>() {
-            @Override
-            public void success(PaymentKycDataResponse data, Response response) {
-                if (data.getData() != null && !data.getData().isEmpty()) {
-                    sessionManager.setSelfBrandedKycAdd(true);
-                } else sessionManager.setSelfBrandedKycAdd(false);
-                hideLoader();
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                hideLoader();
-                sessionManager.setSelfBrandedKycAdd(false);
-                BoostLog.d("Error KYC api", "message : " + error.getLocalizedMessage());
-            }
-        });
-    }
-
-    private void checkUserAccount() {
-        StoreInterface getAccountDetail = Constants.restAdapterWithFloat.create(StoreInterface.class);
-        getAccountDetail.userAccountDetail(sessionManager.getFPID(), Constants.clientId, new Callback<AccountDetailsResponse>() {
-            @Override
-            public void success(AccountDetailsResponse data, Response response) {
-                if (!(data.getResult() != null && data.getResult().getBankAccountDetails() != null)) {
-                    sessionManager.setAccountSave(false);
-                } else sessionManager.setAccountSave(true);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                sessionManager.setAccountSave(false);
-                BoostLog.d("Error account api", "message : " + error.getLocalizedMessage());
-            }
-        });
-    }
-
-    private String getQuery() {
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("fpTag", sessionManager.getFpTag());
-            return jsonObject.toString();
-        } catch (JSONException e) {
-            return "";
-        }
-    }
 
 
     public void logoutAlertDialog_Material() {

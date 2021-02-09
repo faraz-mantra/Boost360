@@ -1,5 +1,6 @@
 package com.appservice.rest.services
 
+import com.appservice.model.ProductDimensionRequest
 import com.appservice.model.onboardingUpdate.OnBoardingUpdateModel
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
@@ -47,4 +48,7 @@ interface KitWebActionRemoteData {
 
   @POST(EndPoints.FP_ONBOARDING_UPDATE_DATA)
   fun fpOnboardingUpdate(@Header("Authorization") auth: String?, @Body request: OnBoardingUpdateModel?): Observable<Response<ResponseBody>>
+//  fun addProductDimensionDetails(request: ProductDimensionRequest): Observable<Response<ResponseBody>> {
+//
+//  }
 }

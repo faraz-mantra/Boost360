@@ -28,6 +28,7 @@ data class CardData(
     var email: String? = null,
     var businessType: String? = null,
     var website: String? = null,
+    var cardIcon: Int? = null,
 )
 
 fun savePositionCard(posCard: Int) {

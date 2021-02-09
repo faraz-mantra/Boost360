@@ -114,9 +114,9 @@
               android:layout_marginStart="@dimen/size_14"
               android:layout_marginTop="@dimen/size_6"
               android:drawablePadding="@dimen/size_4"
-              android:visibility="gone"
               android:text="@string/customer_feedback_received"
               android:textColor="@color/green_78AF00"
+              android:visibility="gone"
               app:drawableStartCompat="@drawable/ic_info_green"
               app:textType="BODY_1" />
 
@@ -159,13 +159,13 @@
                     android:textColor="@color/greyish_brown"
                     app:fontFamily="@font/regular"
                     app:textType="BODY_1" />
-
+                  <!--                  android:drawableEnd="@drawable/ic_arrow_down_orange"-->
+                  <!--                  android:drawablePadding="@dimen/size_8"-->
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvDeliveryType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_arrow_down_orange"
-                    android:drawablePadding="@dimen/size_8"
+
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:textColor="@color/orange"
@@ -197,13 +197,12 @@
                     android:textColor="@color/greyish_brown"
                     app:fontFamily="@font/regular"
                     app:textType="BODY_1" />
-
+                  <!--                  android:drawableEnd="@drawable/ic_arrow_down_orange"-->
+                  <!--                  android:drawablePadding="@dimen/size_8"-->
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvPaymentMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_arrow_down_orange"
-                    android:drawablePadding="@dimen/size_8"
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -237,13 +236,13 @@
                     android:textColor="@color/greyish_brown"
                     app:fontFamily="@font/regular"
                     app:textType="BODY_1" />
-
+                  <!--                  android:drawableEnd="@drawable/ic_arrow_down_orange"-->
+                  <!--                  android:drawablePadding="@dimen/size_8"-->
                   <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tvOrderStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_arrow_down_orange"
-                    android:drawablePadding="@dimen/size_8"
+
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="1"
@@ -270,25 +269,28 @@
             android:orientation="horizontal">
 
             <com.framework.views.customViews.CustomButton
+              android:id="@+id/btn_send_payment_link"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:background="@null"
               android:gravity="center"
-              android:id="@+id/btn_send_payment_link"
               android:paddingTop="@dimen/size_14"
               android:paddingBottom="@dimen/size_14"
-              android:visibility="gone"
               android:text="@string/send_payment_link"
               android:textAlignment="gravity"
               android:textAllCaps="true"
-              android:textColor="@color/orange" />
+              android:textColor="@color/orange"
+              android:visibility="gone"
+              tools:visibility="visible" />
 
             <View
+              android:id="@+id/view_line1"
               android:layout_width="1dp"
               android:layout_height="match_parent"
+              android:background="@color/lightest_grey"
               android:visibility="gone"
-              android:background="@color/lightest_grey" />
+              tools:visibility="visible" />
 
             <com.framework.views.customViews.CustomButton
               android:id="@+id/tvCancelOrder"
@@ -302,7 +304,9 @@
               android:text="@string/cancel_order_normal"
               android:textAlignment="gravity"
               android:textAllCaps="true"
-              android:textColor="@color/watermelon_light_10" />
+              android:textColor="@color/watermelon_light_10"
+              android:visibility="gone"
+              tools:visibility="visible" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -340,9 +344,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:text="@string/change"
-                 android:visibility="invisible"
                 android:textAllCaps="true"
                 android:textColor="@color/orange"
+                android:visibility="invisible"
                 app:textAllCaps="true"
                 app:textType="BODY_1" />
 
@@ -454,9 +458,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:text="@string/change"
-                android:visibility="invisible"
                 android:textAllCaps="true"
                 android:textColor="@color/orange"
+                android:visibility="invisible"
                 app:textAllCaps="true"
                 app:textType="BODY_1" />
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -520,7 +524,7 @@
       </androidx.core.widget.NestedScrollView>
 
       <com.framework.views.customViews.CustomButton
-        android:id="@+id/buttonConfirmOrder"
+        android:id="@+id/buttonBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -532,7 +536,9 @@
         android:stateListAnimator="@null"
         android:text="@string/confirm_order_n"
         android:textColor="@color/white"
-        app:textType="HEADING_6" />
+        android:visibility="gone"
+        app:textType="HEADING_6"
+        tools:visibility="visible" />
 
     </FrameLayout>
 

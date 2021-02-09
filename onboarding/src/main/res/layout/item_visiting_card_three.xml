@@ -41,7 +41,7 @@
             android:layout_width="@dimen/size_56"
             android:layout_height="@dimen/size_42"
             android:layout_marginStart="@dimen/size_4"
-            app:srcCompat="@drawable/ic_category_spa_n" />
+            app:srcCompat="@drawable/ic_business_card_spa_n" />
 
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -161,7 +161,7 @@
             android:layout_width="@dimen/size_56"
             android:layout_height="@dimen/size_42"
             android:layout_marginEnd="@dimen/size_4"
-            app:srcCompat="@drawable/ic_category_spa_n" />
+            app:srcCompat="@drawable/ic_business_card_spa_n" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
