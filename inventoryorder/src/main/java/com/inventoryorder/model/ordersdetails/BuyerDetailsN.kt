@@ -8,14 +8,14 @@ data class BuyerDetailsN(
     val ExtraProperties: ExtraPropertiesN? = null,
 ) : Serializable {
 
-  fun getAddressFull(): String? {
+  fun getAddressFull(): String {
     if (ContactDetails?.EmailId.isNullOrEmpty()) {
       return "${ContactDetails?.PrimaryContactNumber?.trim()}\n${address().addressLine1().trim()}"
     }
     return "${ContactDetails?.PrimaryContactNumber?.trim()}, ${ContactDetails?.EmailId?.trim()}\n${address().addressLine1().trim()}"
   }
 
-  fun getPhoneEmailFull(): String? {
+  fun getPhoneEmailFull(): String {
     if (ContactDetails?.EmailId.isNullOrEmpty() || ContactDetails?.PrimaryContactNumber.isNullOrEmpty()) return "${ContactDetails?.PrimaryContactNumber?.trim()}${ContactDetails?.EmailId?.trim()}"
     return "${ContactDetails?.PrimaryContactNumber?.trim()}\n${ContactDetails?.EmailId?.trim()}"
   }

@@ -423,7 +423,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
           updateReason(resources.getString(R.string.apt_served_success), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
         } else {
           apiGetAptDetails()
-          showLongToast(resources.getString(R.string.apt_cancel_success))
+          showLongToast(resources.getString(R.string.apt_served_success))
         }
       } else {
         showLongToast(it.message())
@@ -592,6 +592,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     apiOrderListCall()
   }
 
+ // for filter count api
   private fun apiOrderListCall() {
     when (OrderSummaryModel.OrderSummaryType.fromType(orderItemType)) {
       OrderSummaryModel.OrderSummaryType.RECEIVED -> {
