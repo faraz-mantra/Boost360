@@ -400,6 +400,17 @@
     <string name="share">Share</string>
     <string name="add_service">ADD SERVICE</string>
   <string name="sort_and_filter">Sort and filter</string>
+    <string name="allow_cash_on_delivery">Allow cash-on-delivery</string>
+    <string name="for_invoice">(for invoice)</string>
+  <string name="applicable_gst_slab">Applicable GST Slab</string>
+  <string name="weekly_appointment_schedule">Weekly appointment schedule</string>
+  <string name="customise_the_weekly_timings_when_all_appointment_for_this_servive_can_be_booked">Customise the weekly timings when all, appointment for this servive can be booked.</string>
+  <string name="mon_tue_wed_thu_fri">Mon , Tue , Wed , Thu , Fri</string>
+  <string name="confirm">Confirm</string>
+  <string name="external_url">External URL</string>
+  <string name="if_this_item_is_also_listed_on_some_other_website_enter_the_url_below">If this item is also listed on some other website, enter the URL below</string>
+  <string name="website_name">Website name</string>
+  <string name="payment_collection_and_max_quantity">Payment collection and max quantity</string>
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>

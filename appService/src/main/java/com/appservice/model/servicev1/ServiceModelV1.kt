@@ -81,7 +81,7 @@ class ServiceModelV1(
         @SerializedName("KeySpecifications")
         var keySpecification: KeySpecification? = null,
 
-        @SerializedName("OtherSpecifications")
+        @SerializedName("com.appservice.ui.model.OtherSpecifications")
         var otherSpecification: ArrayList<KeySpecification>? = null,
 
         @SerializedName("Image")
