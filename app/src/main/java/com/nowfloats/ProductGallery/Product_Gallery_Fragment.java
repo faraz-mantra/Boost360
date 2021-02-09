@@ -109,37 +109,34 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
         apiService = new ProductAPIService();
         currencyValue = getString(R.string.currency_text);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (Constants.Currency_Country_Map == null) {
-                    Constants.Currency_Country_Map = new HashMap<String, String>();
-                    Constants.currencyArray = new ArrayList<String>();
-                }
-                if (Constants.Currency_Country_Map.size() == 0) {
-                    for (Locale locale : Locale.getAvailableLocales()) {
-                        try {
-                            if (locale != null && locale.getISO3Country() != null && Currency.getInstance(locale) != null) {
-                                Currency currency = Currency.getInstance(locale);
-                                String loc_currency = currency.getCurrencyCode();
-                                String country = locale.getDisplayCountry();
-                                if (!Constants.Currency_Country_Map.containsKey(country.toLowerCase())) {
-                                    Constants.Currency_Country_Map.put(country.toLowerCase(), loc_currency);
-                                    Constants.currencyArray.add(country + "-" + loc_currency);
-                                }
+        new Thread(() -> {
+            if (Constants.Currency_Country_Map == null) {
+                Constants.Currency_Country_Map = new HashMap<String, String>();
+                Constants.currencyArray = new ArrayList<String>();
+            }
+            if (Constants.Currency_Country_Map.size() == 0) {
+                for (Locale locale : Locale.getAvailableLocales()) {
+                    try {
+                        if (locale != null && locale.getISO3Country() != null && Currency.getInstance(locale) != null) {
+                            Currency currency = Currency.getInstance(locale);
+                            String loc_currency = currency.getCurrencyCode();
+                            String country = locale.getDisplayCountry();
+                            if (!Constants.Currency_Country_Map.containsKey(country.toLowerCase())) {
+                                Constants.Currency_Country_Map.put(country.toLowerCase(), loc_currency);
+                                Constants.currencyArray.add(country + "-" + loc_currency);
                             }
-                        } catch (Exception e) {
-                            System.gc();
-                            e.printStackTrace();
                         }
+                    } catch (Exception e) {
+                        System.gc();
+                        e.printStackTrace();
                     }
                 }
-                try {
-                    currencyValue = Constants.Currency_Country_Map.get(
-                            session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            }
+            try {
+                currencyValue = Constants.Currency_Country_Map.get(
+                        session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }).start();
         Log.d("Product_Gallery", "onCreate");
@@ -248,14 +245,11 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
             }
         });
 
-        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (from == FROM.DEFAULT) {
-                    showOverlay(view);
-                }
-                return true;
+        gridView.setOnItemLongClickListener((parent, view1, position, id) -> {
+            if (from == FROM.DEFAULT) {
+                showOverlay(view1);
             }
+            return true;
         });
         gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override

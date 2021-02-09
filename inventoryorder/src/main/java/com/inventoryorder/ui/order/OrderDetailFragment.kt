@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -18,21 +19,30 @@ import com.framework.extensions.visible
 import com.framework.utils.DateUtils
 import com.framework.utils.DateUtils.FORMAT_SERVER_DATE
 import com.framework.utils.DateUtils.FORMAT_SERVER_TO_LOCAL_2
+import com.framework.views.customViews.CustomTextView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.inventoryorder.R
+import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentOrderDetailBinding
 import com.inventoryorder.model.OrderConfirmStatus
+import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.bottomsheet.DeliveryModel
+import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
+import com.inventoryorder.model.orderRequest.extraProperty.ExtraPropertiesOrder
+import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.ordersdetails.ItemN
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersummary.OrderMenuModel
 import com.inventoryorder.model.ordersummary.OrderStatusValue
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.order.sheetOrder.*
+import com.inventoryorder.ui.startFragmentOrderActivity
 import java.text.DecimalFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -45,6 +55,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private var deliveryList = DeliveryModel().getData()
   private var isRefresh: Boolean? = null
   private var productList: ArrayList<ProductResponse>? = null
+  private var bottomButtonStatus: List<OrderMenuModel.MenuStatus>? = null
 
   companion object {
     @JvmStatic
@@ -57,12 +68,14 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   override fun onCreateView() {
     super.onCreateView()
-    arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
+    arguments?.getString(IntentConstant.ORDER_ID.name)?.let {
+      showProgress()
+      apiGetOrderDetails(it, "")
+    }
     setOnClickListener(binding?.tvCustomerContactNumber, binding?.tvCustomerEmail) //binding?.btnPickUp,
   }
 
-  private fun apiGetOrderDetails(orderId: String) {
-    showProgress()
+  private fun apiGetOrderDetails(orderId: String, message: String) {
     viewModel?.getOrderDetails(clientId, orderId)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
         errorUi(resources.getString(R.string.internet_connection_not_available))
@@ -72,6 +85,10 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
         orderItem = (it as? OrderDetailResponse)?.Data
         if (orderItem != null) {
           getProductAllDetails()
+          if (message.isNotEmpty()) {
+            isRefresh = true
+            showShortToast(message)
+          }
         } else errorUi("Order item null.")
       } else errorUi(it.message())
     })
@@ -117,14 +134,33 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   }
 
   private fun checkStatusOrder(order: OrderItem) {
-    if (order.isConfirmActionBtn()) {
-      binding?.buttonConfirmOrder?.visible()
-      binding?.buttonConfirmOrder?.setOnClickListener(this)
-    } else binding?.buttonConfirmOrder?.gone()
-    if (order.isCancelActionBtn()) {
+    val btnStatusMenu = order.orderBtnStatus()
+    val requestPayment = btnStatusMenu.firstOrNull { it == OrderMenuModel.MenuStatus.REQUEST_PAYMENT }
+    val cancelOrder = btnStatusMenu.firstOrNull { it == OrderMenuModel.MenuStatus.CANCEL_ORDER }
+    bottomButtonStatus = btnStatusMenu.filter { (it == OrderMenuModel.MenuStatus.CANCEL_ORDER || it == OrderMenuModel.MenuStatus.REQUEST_PAYMENT).not() }
+    if (cancelOrder != null) {
       binding?.tvCancelOrder?.visible()
+      binding?.tvCancelOrder?.text = cancelOrder.title
       binding?.tvCancelOrder?.setOnClickListener(this)
-    } else binding?.tvCancelOrder?.gone()
+    } else {
+      binding?.tvCancelOrder?.gone()
+    }
+    if (requestPayment != null) {
+      binding?.btnSendPaymentLink?.visible()
+      binding?.viewLine1?.visible()
+      binding?.btnSendPaymentLink?.text = requestPayment.title
+      binding?.btnSendPaymentLink?.setOnClickListener(this)
+    } else {
+      binding?.btnSendPaymentLink?.gone()
+      binding?.viewLine1?.gone()
+    }
+    if (bottomButtonStatus.isNullOrEmpty().not()) {
+      binding?.buttonBottom?.visible()
+      binding?.buttonBottom?.setOnClickListener(this)
+      binding?.buttonBottom?.text = bottomButtonStatus!!.first().title
+    } else {
+      binding?.buttonBottom?.gone()
+    }
   }
 
   private fun setAdapter(orderItems: ArrayList<ItemN>) {
@@ -136,10 +172,10 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-//    val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
-//    item.actionView.findViewById<CustomTextView>(R.id.tvInvoice).setOnClickListener {
-//      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
-//    }
+    val item: MenuItem = menu.findItem(R.id.menu_item_invoice)
+    item.actionView.findViewById<CustomTextView>(R.id.tvInvoice).setOnClickListener {
+      startFragmentOrderActivity(FragmentType.ORDER_INVOICE_VIEW, Bundle().apply { putString(INVOICE_URL, orderItem?.getInvoiceUrl() ?: "") })
+    }
   }
 
   fun getBundleData(): Bundle? {
@@ -149,14 +185,6 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       return bundle
     }
     return null
-  }
-
-  private fun buttonDisable(color: Int) {
-    activity?.let {
-      val newDrawable: Drawable? = binding?.buttonConfirmOrder?.background
-      newDrawable?.let { it1 -> DrawableCompat.setTint(it1, ContextCompat.getColor(it, color)) }
-      binding?.buttonConfirmOrder?.background = newDrawable
-    }
   }
 
   private fun setOrderDetails(order: OrderItem) {
@@ -171,7 +199,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     order.BillingDetails?.let { bill ->
       val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
       binding?.tvOrderAmount?.text = "$currency ${DecimalFormat("##,##,##0").format(bill.AmountPayableByBuyer)}"
-//            binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
+      //binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
     }
     binding?.orderDate?.text = DateUtils.parseDate(order.UpdatedOn, FORMAT_SERVER_DATE, FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
 
@@ -188,7 +216,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) } == true)
       binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
     if (order.BuyerDetails?.ContactDetails?.EmailId.isNullOrEmpty().not()) {
-//            binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
+      //binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
       if (!checkValidEmail(order.BuyerDetails?.ContactDetails?.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
     } else binding?.tvCustomerEmail?.isGone = true
 
@@ -203,10 +231,8 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
       if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
           ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
     }
-
     binding?.tvShippingCost?.text = "Shipping Cost: $currency ${DecimalFormat("##,##,##0").format(shippingCost)}"
     binding?.tvTotalOrderAmount?.text = "Total Amount: $currency ${DecimalFormat("##,##,##0").format(salePrice + shippingCost)}"
-
 //        binding?.tvShippingCost?.text = "Shipping Cost: $currency $shippingCost"
 //        binding?.tvTotalOrderAmount?.text = "Total Amount: $currency ${salePrice + shippingCost}"
 
@@ -214,22 +240,18 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun getStatusText(order: OrderItem): String? {
     val statusValue = OrderStatusValue.fromStatusOrder(order.status())?.value
-    return when (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name) {
-      order.status().toUpperCase(Locale.ROOT) -> {
-        return if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-          OrderStatusValue.ABANDONED_1.value
-        } else statusValue.plus(order.cancelledText())
-      }
-      else -> statusValue
-    }
+    return if (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name == order.status().toUpperCase(Locale.ROOT)) {
+      statusValue.plus(order.cancelledText())
+    } else statusValue
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-//            binding?.btnPickUp -> showBottomSheetDialog()
-      binding?.buttonConfirmOrder -> apiConfirmOrder()
-      binding?.tvCancelOrder -> cancelOrderDialog()
+//      binding?.btnPickUp -> showBottomSheetDialog()
+      binding?.buttonBottom -> if (bottomButtonStatus.isNullOrEmpty().not()) orderItem?.let { clickActionOrderButton(bottomButtonStatus!!.first(), it) }
+      binding?.btnSendPaymentLink -> orderItem?.let { clickActionOrderButton(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, it) }
+      binding?.tvCancelOrder -> orderItem?.let { clickActionOrderButton(OrderMenuModel.MenuStatus.CANCEL_ORDER, it) }
       binding?.tvCustomerContactNumber -> {
         if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { checkValidMobile(it) }!!)
           openDialer()
@@ -245,9 +267,47 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
         }
       }
     }
-//      binding?.tvCustomerContactNumber -> openDialer()
-//      binding?.tvCustomerEmail -> openEmailApp()
   }
+
+  private fun clickActionOrderButton(orderMenu: OrderMenuModel.MenuStatus, orderItem: OrderItem) {
+    when (orderMenu) {
+      OrderMenuModel.MenuStatus.CONFIRM_ORDER -> {
+        val sheetConfirm = ConfirmBottomSheetDialog()
+        sheetConfirm.setData(orderItem)
+        sheetConfirm.onClicked = { apiConfirmOrder(it) }
+        sheetConfirm.show(this.parentFragmentManager, ConfirmBottomSheetDialog::class.java.name)
+      }
+      OrderMenuModel.MenuStatus.REQUEST_PAYMENT -> {
+        val sheetRequestPayment = RequestPaymentBottomSheetDialog()
+        sheetRequestPayment.setData(orderItem)
+        sheetRequestPayment.onClicked = {
+          showProgress()
+          sendPaymentLinkOrder(getString(R.string.payment_request_send))
+        }
+        sheetRequestPayment.show(this.parentFragmentManager, RequestPaymentBottomSheetDialog::class.java.name)
+      }
+      OrderMenuModel.MenuStatus.CANCEL_ORDER -> {
+        val sheetCancel = CancelBottomSheetDialog()
+        sheetCancel.setData(orderItem)
+        sheetCancel.onClicked = this@OrderDetailFragment::apiCancelOrder
+        sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
+      }
+      OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> markCodPaymentRequest()
+      OrderMenuModel.MenuStatus.MARK_AS_DELIVERED -> {
+        val sheetDelivered = DeliveredBottomSheetDialog()
+        sheetDelivered.setData(orderItem)
+        sheetDelivered.onClicked = { deliveredOrder(it) }
+        sheetDelivered.show(this.parentFragmentManager, DeliveredBottomSheetDialog::class.java.name)
+      }
+      OrderMenuModel.MenuStatus.MARK_AS_SHIPPED -> {
+        val sheetShipped = ShippedBottomSheetDialog()
+        sheetShipped.setData(orderItem)
+        sheetShipped.onClicked = { shippedOrder(it) }
+        sheetShipped.show(this.parentFragmentManager, ShippedBottomSheetDialog::class.java.name)
+      }
+    }
+  }
+
 
   private fun openEmailApp() {
     val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
@@ -269,59 +329,115 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
     return Pattern.compile("^[+]?[0-9]{10,12}\$").matcher(mobile).find()
   }
 
-  private fun cancelOrderDialog() {
-    MaterialAlertDialogBuilder(requireContext())
-        .setTitle(getString(R.string.cancel_order_confirmation_message))
-        .setNeutralButton(getString(R.string.no)) { dialog, _ ->
-          dialog.dismiss()
-        }
-        .setPositiveButton(getString(R.string.yes)) { dialog, which ->
-          apiCancelOrder()
-          dialog.dismiss()
-        }
-        .show()
-  }
-
-  private fun apiCancelOrder() {
+  private fun shippedOrder(markAsShippedRequest: MarkAsShippedRequest) {
     showProgress()
-    viewModel?.cancelOrder(clientId, orderItem?._id, OrderItem.CancellingEntity.SELLER.name)?.observeOnce(viewLifecycleOwner, Observer {
-      hideProgress()
+    viewModel?.markAsShipped(clientId, markAsShippedRequest)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
         showShortToast(resources.getString(R.string.internet_connection_not_available))
+        hideProgress()
         return@Observer
       }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val data = it as? OrderConfirmStatus
-        data?.let { d -> showLongToast(d.Message as String?) }
-        refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CANCELLED)
-      } else showLongToast(it.message())
+      if (it.isSuccess()) {
+        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_shipped)) }
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
     })
   }
 
-  private fun apiConfirmOrder() {
+  private fun deliveredOrder(message: String) {
     showProgress()
-    viewModel?.confirmOrder(clientId, orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      hideProgress()
+    viewModel?.markAsDelivered(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.error is NoNetworkException) {
         showShortToast(resources.getString(R.string.internet_connection_not_available))
+        hideProgress()
         return@Observer
       }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
-        val data = it as? OrderConfirmStatus
-        showLongToast(getString(R.string.order_confirmed))
-        refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED)
-      } else showLongToast(it.message())
+      if (it.isSuccess()) {
+        if (message.isNotEmpty()) {
+          updateReason(resources.getString(R.string.order_delivery), UpdateExtraPropertyRequest.PropertyType.DELIVERY.name, ExtraPropertiesOrder(deliveryRemark = message))
+        } else {
+          orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_cancel)) }
+        }
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
     })
   }
 
-  private fun refreshStatus(statusOrder: OrderSummaryModel.OrderStatus) {
-    isRefresh = true
-    orderItem?.Status = statusOrder.name
-    orderItem?.let { orderItem ->
-      binding?.orderType?.text = getStatusText(orderItem)
-      OrderStatusValue.fromStatusOrder(orderItem.status())?.icon?.let { binding?.statusIcon?.setImageResource(it) }
-    }
-    orderItem?.let { checkStatusOrder(it) }
+  private fun apiCancelOrder(cancellingEntity: String, reasonText: String) {
+    showProgress()
+    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, Observer {
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        hideProgress()
+        return@Observer
+      }
+      if (it.isSuccess()) {
+        val data = it as? OrderConfirmStatus
+        if (reasonText.isNotEmpty()) {
+          updateReason(resources.getString(R.string.order_cancel), UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name, ExtraPropertiesOrder(cancellationRemark = reasonText))
+        } else {
+          orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, resources.getString(R.string.order_cancel)) }
+        }
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
+  }
+
+  private fun updateReason(message: String, type: String, extraPropertiesOrder: ExtraPropertiesOrder) {
+    val propertyRequest = UpdateOrderNPropertyRequest(updateExtraPropertyType = type,
+        existingKeyName = "", orderId = this.orderItem?._id, extraPropertiesOrder = extraPropertiesOrder)
+    viewModel?.updateExtraPropertyOrder(clientId, requestCancel = propertyRequest)?.observeOnce(viewLifecycleOwner, {
+      orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }
+    })
+  }
+
+  private fun markCodPaymentRequest() {
+    showProgress()
+    viewModel?.markCodPaymentDone(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        hideProgress()
+        return@Observer
+      }
+      if (it.isSuccess()) {
+        orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, getString(R.string.order_payment_done)) }
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
+  }
+
+  private fun apiConfirmOrder(isSendPaymentLink: Boolean) {
+    showProgress()
+    viewModel?.confirmOrder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
+      if (it.error is NoNetworkException) {
+        showShortToast(resources.getString(R.string.internet_connection_not_available))
+        hideProgress()
+        return@Observer
+      }
+      if (it.isSuccess()) {
+        if (isSendPaymentLink) sendPaymentLinkOrder(getString(R.string.order_confirmed))
+        else {
+          orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, getString(R.string.order_confirmed)) }
+        }
+      } else {
+        showLongToast(it.message())
+        hideProgress()
+      }
+    })
+  }
+
+  private fun sendPaymentLinkOrder(message: String) {
+    viewModel?.sendPaymentReminder(clientId, this.orderItem?._id)?.observeOnce(viewLifecycleOwner, { it1 ->
+      orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }
+    })
   }
 
   private fun showBottomSheetDialog() {

@@ -16,6 +16,7 @@ class VisitingCardFiveViewHolder(binding: ItemVisitingCardFiveBinding) : AppBase
     val data = (item as? DigitalCardData)?.cardData ?: return
     binding.businessName.text = data.businessName
     binding.number.text = data.number
+    data.cardIcon?.let { binding.imgLogo.setImageResource(it) }
     if (data.businessLogo.isNullOrEmpty().not()) {
       binding.profileView.visible()
       binding.channels.gone()

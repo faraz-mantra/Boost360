@@ -8,6 +8,19 @@ object EndPoints {
   const val CREATE_PAYMENT = "discover/v9/business/paymentProfile/create"
   const val UPDATE_PAYMENT = "discover/v9/business/paymentProfile/bankDetails/update/{fpId}"
 
+  //TODO STAFF API WITH FLOAT
+  const val STAFF_BASE_URL = "https://api.nowfloats.com/"
+  const val CREATE_STAFF_PROFILE = "Staff/v1/Create"
+  const val FETCH_STAFF_SERVICES = "product/v13/GetServiceListings"
+  const val GET_STAFF_LISTING = "staff/v1/GetStaffListing"
+  const val STAFF_PROFILE_UPDATE ="staff/v1/Update"
+  const val STAFF_PROFILE_DELETE ="staff/v1/Delete"
+  const val STAFF_ADD_TIMING ="staff/v1/AddStaffTiming"
+  const val STAFF_UPDATE_TIMING ="staff/v1/UpdateStaffTiming"
+  const val STAFF_UPDATE_IMAGE ="staff/v1/UpdateStaffImage"
+  const val STAFF_DELETE_IMAGE ="staff/v1/DeleteStaffImage"
+  const val GET_STAFF_DETAILS ="Staff/v1/GetStaffDetails"
+
 
   //TODO NFX API 2 WITH FLOAT
   const val WITH_FLOATS_TWO_BASE = "https://api2.withfloats.com/"
@@ -17,11 +30,20 @@ object EndPoints {
   const val ADD_IMAGE = "Product/v1/AddImage"
   const val GET_TAGS = "Product/v1/tags"
   const val GET_NOTIFICATION = "Discover/v1/floatingpoint/notificationscount"
+
   //TODO PRODUCT API 2 WITH FLOAT
-  const val CREATE_PRODUCT= "Product/v1/Create"
-  const val GET_PRODUCT_LISTING= "Product/v1/GetListingsWithInventorySync"
+  const val CREATE_PRODUCT = "Product/v1/Create"
+  const val GET_PRODUCT_LISTING = "Product/v1/GetListingsWithInventorySync"
   const val UPDATE_PRODUCT = "Product/v1/Update"
   const val DELETE_PRODUCT = "Product/v1/Delete"
+
+  //TODO SERVICE API WITH NOWFLOATS API
+  const val GET_SERVICE_LISTING = "product/v13/GetAllServiceListings"
+
+  //TODO WEEKLY APPOINTMENT APIS
+  const val POST_UPDATE_SERVICE_TIMING = "Service/v1/UpdateServiceTiming"
+  const val POST_ADD_SERVICE_TIMING = "Service/v1/AddServiceTiming"
+  const val GET_SERVICE_TIMING = "Service/v1/GetServiceTiming"
 
 
   //TODO NFX API 2 WITH FLOAT

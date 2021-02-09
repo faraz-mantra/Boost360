@@ -169,7 +169,7 @@ class UpgradeActivity : AppCompatActivity() {
 
   private fun goHomeActivity() {
     try {
-      val i = Intent(this, Class.forName("com.nowfloats.NavigationDrawer.HomeActivity"))
+      val i = Intent(this, Class.forName("com.dashboard.controller.DashboardActivity"))
       i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
       startActivity(i)
       overridePendingTransition(0, 0)

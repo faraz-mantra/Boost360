@@ -197,6 +197,32 @@
       ]
     },
     {
+      "type": "SAL",
+      "action_item": [
+        {
+          "businessType": "in_clinic_appointments",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Appointments"
+        },
+        {
+          "businessType": "ic_customer_call_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "CALLTRACKER",
+          "title": "Customer\nCalls"
+        },
+        {
+          "businessType": "ic_customer_enquiries_d",
+          "isLock": false,
+          "isHide": false,
+          "premiumCode": "",
+          "title": "Customer\nEnquiries"
+        }
+      ]
+    },
+    {
       "type": "SVC",
       "action_item": [
         {
