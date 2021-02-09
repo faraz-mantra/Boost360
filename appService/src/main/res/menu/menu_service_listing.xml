@@ -4,10 +4,10 @@
 
     <item
         android:id="@+id/action_search"
-        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
         android:icon="@drawable/ic_group_search_service"
         android:title="Search"
-        app:actionViewClass="android.widget.SearchView" />
+        app:showAsAction="always|collapseActionView" />
     <item
         android:icon="@drawable/ic_service_configuration"
         android:title="Item"

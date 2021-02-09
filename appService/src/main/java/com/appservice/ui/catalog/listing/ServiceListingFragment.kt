@@ -1,5 +1,6 @@
 package com.appservice.ui.catalog.listing
 
+import android.os.Bundle
 import android.text.SpannableString
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
@@ -14,25 +15,38 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.FragmentType
+import com.appservice.constant.IntentConstant
+import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentServiceListingBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.ui.UserSession
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
+import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.model.ItemsItem
 import com.appservice.ui.model.ResultItem
 import com.appservice.ui.model.ServiceListingRequest
 import com.appservice.ui.model.ServiceListingResponse
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.observeOnce
+import com.squareup.picasso.Target
+import kotlinx.android.synthetic.main.recycler_item_service_timing.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(), RecyclerItemClickListener, SearchView.OnQueryTextListener {
+class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(), RecyclerItemClickListener {
+    // For sharing
+    private val STORAGE_CODE = 120
+    var targetMap: Target? = null
+    var defaultShareGlobal = true
+    var shareType = 2
+    var shareProduct: ItemsItem? = null
 
     private lateinit var searchView: SearchView
     private var list: ArrayList<ItemsItem> = arrayListOf()
+    private var copylist: ArrayList<ItemsItem> = arrayListOf()
     private lateinit var adapter: AppBaseRecyclerViewAdapter<ItemsItem>
 
     override fun getLayout(): Int {
@@ -54,18 +68,44 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         setServiceListing()
         setHasOptionsMenu(true)
 
-
+        setOnClickListener(binding?.cbSortAndFilter, binding?.cbAddService)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_service_listing, menu)
         val searchItem = menu.findItem(R.id.action_search)
-        searchItem.isVisible = list.isNullOrEmpty().not()
-        this.searchView = searchItem.actionView as SearchView
-        searchView.queryHint = "Search Product"
-        searchView.setOnQueryTextListener(this)
-        searchView.clearFocus()
-        super.onCreateOptionsMenu(menu, inflater)
+        if (searchItem != null) {
+            searchView = searchItem.actionView as SearchView
+            val searchAutoComplete = searchView.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
+            searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
+            searchAutoComplete?.setTextColor(getColor(R.color.white))
+            searchView.setIconifiedByDefault(true)
+            searchView.queryHint = getString(R.string.search_services)
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    newText?.let { startFilter(it.trim().toLowerCase(Locale.ROOT)) }
+                    return false
+                }
+
+            })
+        }
+    }
+
+    private fun startFilter(query: String) {
+        copylist.removeAll(list)
+        copylist.addAll(list)
+        val searchList = ArrayList<ItemsItem>()
+        if (query.isNotEmpty() || query.isNotBlank()) {
+            list.forEach { if (it.name?.toLowerCase(Locale.ROOT)?.contains(query) == true) searchList.add(it) }
+            adapter.notify(searchList)
+        } else {
+            adapter.notify(copylist)
+        }
     }
 
     private fun setServiceListing() {
@@ -76,7 +116,6 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
                 true -> {
                     val map = (it as ServiceListingResponse).result?.map { resultItem -> (resultItem as ResultItem).services?.items }
                     if (map.isNullOrEmpty().not()) {
-                        this.list = ArrayList<ItemsItem>()
                         map?.forEach { list1 -> list1?.forEach { itemsItem -> list.add(itemsItem!!) } }
                         (requireActivity() as CatalogServiceContainerActivity).getToolbar()?.title = "${resources.getString(R.string.services)} (${list.size})"
                         setEmptyView(View.GONE)
@@ -127,14 +166,32 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+        if (actionType == RecyclerViewActionType.SERVICE_ITEM_CLICK.ordinal) {
+            val bundle = Bundle()
+            bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, item as ItemsItem)
+            startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle, false, isResult = true)
+        }
 
+        if (actionType == RecyclerViewActionType.SERVICE_WHATS_APP_SHARE.ordinal) {
+        }
+        if (actionType == RecyclerViewActionType.SERVICE_DATA_SHARE_CLICK.ordinal) {
+        }
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return false
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when (v) {
+            binding?.cbAddService -> {
+                startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, isResult = true)
+            }
+            binding?.cbSortAndFilter -> {
+                openSortingBottomSheet()
+            }
+        }
     }
 
-    override fun onQueryTextChange(newText: String?): Boolean {
-        return false
+    private fun openSortingBottomSheet() {
+
     }
 }
+

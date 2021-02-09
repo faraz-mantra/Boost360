@@ -1,6 +1,7 @@
 package com.appservice.holder
 
 import android.graphics.Paint
+import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.RecyclerItemServiceListingBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewHolder
 import com.appservice.recyclerView.BaseRecyclerViewItem
@@ -18,6 +19,9 @@ class ServiceListingViewHolder(binding: RecyclerItemServiceListingBinding) : App
         binding.labelBasePrice.text = "${data.currency ?: ""} ${data.discountAmount}"
         binding.labelPrice.text = "${data.currency ?: ""} ${data.price}"
         apply { activity?.glideLoad(binding.cardThumbnail, data.tileImage) }
+        binding.root.setOnClickListener{ listener?.onItemClick(position, data, RecyclerViewActionType.SERVICE_ITEM_CLICK.ordinal) }
+        binding.shareData.setOnClickListener{ listener?.onItemClick(position, data, RecyclerViewActionType.SERVICE_DATA_SHARE_CLICK.ordinal) }
+        binding.shareWhatsapp.setOnClickListener{ listener?.onItemClick(position, data, RecyclerViewActionType.SERVICE_WHATS_APP_SHARE.ordinal) }
 
     }
 
