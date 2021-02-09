@@ -42,7 +42,7 @@ object EndPoints {
 
   //TODO PRODUCT API 2 WITH FLOAT
   const val CREATE_PRODUCT = "Product/v1/Create"
-  const val GET_PRODUCT_LISTING = "Product/v1/GetListingsWithInventorySync"
+  const val GET_LISTING_INVENTORY_SYNC = "Product/v1/GetListingsWithInventorySync"
   const val UPDATE_PRODUCT = "Product/v1/Update"
   const val DELETE_PRODUCT = "Product/v1/Delete"
 
