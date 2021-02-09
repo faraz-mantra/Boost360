@@ -9,14 +9,11 @@ import com.appservice.model.servicev1.DeleteSecondaryImageRequest
 import com.appservice.model.servicev1.DeleteServiceRequest
 import com.appservice.model.servicev1.ServiceModelV1
 import com.appservice.model.servicev1.UploadImageRequest
-import com.appservice.rest.EndPoints.DELETE_SERVICE
-import com.appservice.rest.EndPoints.GET_SERVICE_DETAILS
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.NowfloatsApiClient
-import com.appservice.rest.apiClients.WithFloatsApiTwoClient
 import com.appservice.rest.services.NowfloatsRemoteData
-import com.appservice.rest.services.WithFloatTwoRemoteData
 import com.appservice.ui.catalog.RequestWeeklyAppointment
+import com.appservice.ui.model.ServiceListingRequest
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
@@ -97,16 +94,21 @@ object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, AppBaseLo
     }
 
     fun updateServiceTiming(request: RequestWeeklyAppointment?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.updateServiceTiming(request),TaskCode.GET_SERVICE_TIMING)
+        return makeRemoteRequest(remoteDataSource.updateServiceTiming(request), TaskCode.GET_SERVICE_TIMING)
 
     }
 
     fun getServiceTiming(serviceId: String?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.getServiceTimings(serviceId),TaskCode.GET_SERVICE_TIMING)
+        return makeRemoteRequest(remoteDataSource.getServiceTimings(serviceId), TaskCode.GET_SERVICE_TIMING)
 
     }
 
     fun deleteSecondaryImage(request: DeleteSecondaryImageRequest?): Observable<BaseResponse> {
         return makeRemoteRequest(remoteDataSource.deleteSecondaryImage(request), TaskCode.DELETE_SECONDARY_IMAGE)
     }
+
+    fun getServiceListing(request: ServiceListingRequest): Observable<BaseResponse> {
+        return makeRemoteRequest(remoteDataSource.getServiceListing(request), TaskCode.GET_SERVICE_LISTING)
+    }
+
 }

@@ -4,9 +4,9 @@ import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.servicev1.*
 import com.appservice.rest.EndPoints
-import com.appservice.rest.TaskCode
 import com.appservice.ui.catalog.RequestWeeklyAppointment
-import com.framework.base.BaseResponse
+import com.appservice.ui.model.ServiceListingRequest
+import com.appservice.ui.model.ServiceListingResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -28,6 +28,11 @@ interface NowfloatsRemoteData {
     fun getServiceDetails(
             @Query("serviceId") serviceId: String?,
     ): Observable<Response<ServiceDetailResponse>>
+
+    @POST(EndPoints.GET_SERVICE_LISTING)
+    fun getServiceListing(
+            @Body request: ServiceListingRequest,
+    ): Observable<Response<ServiceListingResponse>>
 
     @HTTP(method = "POST", path = EndPoints.DELETE_SERVICE_V1, hasBody = true)
     fun deleteService(@Body request: DeleteServiceRequest?): Observable<Response<ServiceV1BaseResponse>>
@@ -52,13 +57,13 @@ interface NowfloatsRemoteData {
 
     @POST(EndPoints.CREATE_PRODUCT)
     fun createProduct(@Body request: Product?): Observable<Response<String>>
-
-    @GET(EndPoints.GET_PRODUCT_LISTING)
-    fun getAllProducts(
-            @Query("clientId") clientId: String?,
-            @Query("skipBy") skipBy: Int?,
-            @Query("fpTag") fpTag: String?,
-    )
+//
+//    @GET(EndPoints.GET_PRODUCT_LISTING)
+//    fun getAllProducts(
+//            @Query("clientId") clientId: String?,
+//            @Query("skipBy") skipBy: Int?,
+//            @Query("fpTag") fpTag: String?,
+//    )
 
     @PUT(EndPoints.UPDATE_PRODUCT)
     fun updateProduct(@Body request: ProductUpdate?): Observable<Response<ResponseBody>>

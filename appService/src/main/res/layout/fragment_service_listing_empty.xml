@@ -73,10 +73,12 @@
 
         <com.framework.views.customViews.CustomButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/cb_setup_appointment"
             android:background="@null"
             android:paddingHorizontal="@dimen/size_60"
+            android:layout_height="@dimen/size_36"
             android:stateListAnimator="@null"
+            android:gravity="center"
             android:text="@string/setup_appointment"
             android:textAllCaps="true"
             android:textColor="@color/yellow_ffb900"

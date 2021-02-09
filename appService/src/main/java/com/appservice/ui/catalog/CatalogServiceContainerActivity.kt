@@ -135,7 +135,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.CREATE_CATEGORY -> {
         createCategoryFragment = CreateCategoryFragment.newInstance()
         createCategoryFragment
-      } FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> {
+      }
+      FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> {
         weeklyAppointmentFragment = WeeklyAppointmentFragment.newInstance()
         weeklyAppointmentFragment
       }
