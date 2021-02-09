@@ -17,6 +17,7 @@ import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.ServiceModel
 import com.appservice.ui.catalog.TimeSlot
 import com.appservice.viewmodel.ServiceViewModelV1
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -125,9 +126,22 @@ class ServiceWeeklyScheduleFragment : AppBaseFragment<FragmentStaffTimingBinding
 
     fun isValid(): Boolean {
 
-        /* for (item in serviceModel!!) {
-             if (item.fromTiming)
-         }*/
+        var i = 0
+        this.defaultTimings.forEachIndexed { index, _ -> serviceModel?.forEachIndexed {pos, timeSlot ->
+
+            if (timeSlot.isTurnedOn == true) {
+                if (timeSlot.timeSlots?.from == timeSlot.timeSlots?.to) {
+                    showLongToast("End time cannot be same as start time")
+                    return false
+                }
+
+                if (convertAndCompareTime(timeSlot.timeSlots?.from!!, timeSlot.timeSlots?.to!!)) {
+                    showLongToast("End time cannot be before start time")
+                    return false
+                }
+            }
+          }
+        }
 
         return true
     }
@@ -141,5 +155,15 @@ class ServiceWeeklyScheduleFragment : AppBaseFragment<FragmentStaffTimingBinding
         baseActivity.finish()
     }
 
+    private fun convertAndCompareTime(startTime: String, endTime: String) : Boolean {
+        val sdf = SimpleDateFormat("hh:mma")
+        var d1 = Date()
+        var d2 = Date()
+        try {
+            d1 = sdf.parse(startTime)
+            d2 = sdf.parse(endTime)
+        } catch (e : Exception) {}
 
+        return d2.before(d1)
+    }
 }

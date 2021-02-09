@@ -30,6 +30,7 @@ import com.appservice.model.serviceProduct.gstProduct.response.ProductGstRespons
 import com.appservice.model.servicev1.*
 import com.appservice.rest.TaskCode
 import com.appservice.ui.bankaccount.startFragmentAccountActivity
+import com.appservice.ui.catalog.ServiceModel
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
 import com.appservice.utils.WebEngageController
@@ -63,6 +64,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     private var bankAccountDetail: BankAccountDetails? = null
 
     private var secondaryImage: ArrayList<FileModel> = ArrayList()
+    private var serviceModel : ArrayList<ServiceModel> ?= null
 
     private var productIdAdd: String? = null
     private var errorType: String? = null
@@ -117,7 +119,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         }
 //    val finalAmount = String.format("%.1f", (amountD - ((amountD * distD) / 100))).toFloatOrNull() ?: 0F
         val finalAmount = String.format("%.1f", (amountD - distD)).toFloatOrNull() ?: 0F
-        binding?.finalPriceTxt?.setText("$currencyType $finalAmount")
+        binding?.finalPriceTxt?.setText("${currencyType ?: "INR "} $finalAmount")
     }
 
     private fun getPaymentGatewayKyc() {
@@ -241,6 +243,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
                 val bundle = Bundle()
                 bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, product)
                 bundle.putSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
+                bundle.putSerializable(IntentConstant.TIMESLOT.name, serviceModel)
                 startFragmentActivity(FragmentType.SERVICE_INFORMATION, bundle, isResult = true)
             }
             binding?.vwSavePublish -> if (isValid()) createUpdateApi()
@@ -380,10 +383,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
             return false
         }
 
-        if (shipmentDuration.isNullOrEmpty()) {
-            showLongToast(resources.getString(R.string.enter_service_duration))
-            return false
-        } else if (serviceName.isEmpty()) {
+        if (serviceName.isEmpty()) {
             showLongToast(resources.getString(R.string.enter_service_name))
             return false
         } else if (serviceCategory.isBlank()) {
@@ -391,6 +391,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
             return false
         } else if (serviceDesc.isEmpty()) {
             showLongToast(resources.getString(R.string.enter_service_desc))
+            return false
+        } else if (shipmentDuration.isNullOrEmpty()) {
+            showLongToast(resources.getString(R.string.enter_service_duration))
             return false
         } else if (toggle && amount <= 0.0) {
             showLongToast(resources.getString(R.string.enter_valid_price))
@@ -405,6 +408,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
             showLongToast(resources.getString(R.string.please_enter_valid_url_name))
             return false
         }
+
         product?.ClientId = clientId
         product?.FPTag = fpTag
         product?.CurrencyCode = currencyType
@@ -473,6 +477,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
             product = getServiceModelObjectFromBundle(data?.extras);
             secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
                     ?: ArrayList()
+            serviceModel = data?.getSerializableExtra(IntentConstant.TIMESLOT.name) as ArrayList<ServiceModel>?
         } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 202) {
             bankAccountDetail = data?.getSerializableExtra(IntentConstant.USER_BANK_DETAIL.name) as? BankAccountDetails
             if (bankAccountDetail != null) {

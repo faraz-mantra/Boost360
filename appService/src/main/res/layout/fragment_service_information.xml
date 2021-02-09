@@ -835,15 +835,16 @@
               app:fontFamily="@font/regular" />
 
             <com.framework.views.customViews.CustomTextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_below="@id/tv_subtitle"
-              android:layout_marginTop="@dimen/size_10"
-              android:includeFontPadding="false"
-              android:text="@string/mon_tue_wed_thu_fri"
-              android:textColor="@color/cerulean_blue"
-              android:textSize="12sp"
-              app:fontFamily="@font/regular" />
+                android:id="@+id/timings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_subtitle"
+                android:layout_marginTop="@dimen/size_10"
+                android:includeFontPadding="false"
+                android:text="@string/mon_tue_wed_thu_fri"
+                android:textColor="@color/cerulean_blue"
+                android:textSize="12sp"
+                app:fontFamily="@font/regular" />
           </RelativeLayout>
 
           <View

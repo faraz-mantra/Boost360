@@ -37,6 +37,7 @@ import com.framework.extensions.observeOnce
 import com.framework.imagepicker.ImagePicker
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.lang.StringBuilder
 
 
 class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModelV1>(), RecyclerItemClickListener {
@@ -50,6 +51,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     private var adapterImage: AppBaseRecyclerViewAdapter<FileModel>? = null
     private var ordersQuantity: Int = 0
     private var serviceModel : ArrayList<ServiceModel> ?= null
+    var days = StringBuilder()
 
     private var secondaryDataImage: ArrayList<ImageModel>? = null
 
@@ -75,6 +77,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
                 binding?.civIncreaseQuantityOrder, binding?.civDecreseQuantityOrder, binding?.btnAddTag, binding?.btnAddSpecification,
                 binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.weeklyAppointmentSchedule)
         product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? ServiceModelV1
+        serviceModel = arguments?.getSerializable(IntentConstant.TIMESLOT.name) as ArrayList<ServiceModel>?
+
         isEdit = (product != null && product?.productId.isNullOrEmpty().not())
         secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
                 ?: ArrayList()
@@ -93,6 +97,15 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     }
 
     private fun setUiText() {
+
+        if (serviceModel != null) getSelectedDays()
+        if (days.isNotEmpty()) {
+            binding?.timings?.visibility = View.VISIBLE
+            binding?.timings?.text = days
+        } else {
+            binding?.timings?.visibility = View.GONE
+        }
+
         ordersQuantity = product?.maxCodOrders!!
 //    binding?.edtServiceCategory?.setText(product?.category ?: "")
         binding?.cetSpecKey?.setText(product?.keySpecification?.key ?: "")
@@ -238,6 +251,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
                 val output = Intent()
                 output.putExtra(IntentConstant.PRODUCT_DATA.name, product)
                 output.putExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
+                output.putExtra(IntentConstant.TIMESLOT.name, serviceModel)
                 baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
                 baseActivity.finish()
             }
@@ -267,10 +281,51 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
         if (requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK) {
             serviceModel = data?.extras?.get(IntentConstant.TIMESLOT.name) as ArrayList<ServiceModel>
-           /* this.staffDetails = data!!.extras!![IntentConstant.STAFF_TIMINGS.name] as StaffDetailsResult
-            binding?.ctvTiming?.text = staffDetails?.timings?.map { it.day }?.joinToString(" ,")
-            showHideTimingText()
-            isTimingUpdated = true*/
+            getSelectedDays()
+
+            if (days.isNotEmpty()) {
+                binding?.timings?.visibility = View.VISIBLE
+                binding?.timings?.text = days
+            } else {
+                binding?.timings?.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun getSelectedDays() {
+        days.clear()
+        for (item in serviceModel!!) {
+            if (item.isTurnedOn == true) {
+                if (days.isNotEmpty()) days.append(", ")
+
+                if (item.day.equals("monday", true)) {
+                    days.append("Mon")
+                }
+
+                if (item.day.equals("tuesday", true)) {
+                    days.append("Tue")
+                }
+
+                if (item.day.equals("Wednesday", true)) {
+                    days.append("Wed")
+                }
+
+                if (item.day.equals("Thursday", true)) {
+                    days.append("Thu")
+                }
+
+                if (item.day.equals("Friday", true)) {
+                    days.append("Fri")
+                }
+
+                if (item.day.equals("Saturday", true)) {
+                    days.append("Sat")
+                }
+
+                if (item.day.equals("Sunday", true)) {
+                    days.append("Sun")
+                }
+            }
         }
     }
 
