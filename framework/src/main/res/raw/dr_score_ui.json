@@ -20,11 +20,11 @@
       "title": "Featured Image Video",
       "desc": ""
     },
-    {
-      "id": "boolean_select_what_you_sell",
-      "title": "Select What You Sell",
-      "desc": ""
-    },
+//    {
+//      "id": "boolean_select_what_you_sell",
+//      "title": "Select What You Sell",
+//      "desc": ""
+//    },
     {
       "id": "boolean_add_business_hours",
       "title": "Business Hours",
