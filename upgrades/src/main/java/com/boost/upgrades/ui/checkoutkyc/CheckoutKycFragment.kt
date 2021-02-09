@@ -3,6 +3,7 @@ package com.boost.upgrades.ui.checkoutkyc
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.InputFilter
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -217,6 +218,7 @@ class CheckoutKycFragment : DialogFragment() {
             }
 
         })
+
     }
 
     private fun loadCustomerInfo() {

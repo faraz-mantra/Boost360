@@ -7,6 +7,8 @@ import com.boost.upgrades.data.api_model.PaymentThroughEmail.PaymentThroughEmail
 import com.boost.upgrades.data.api_model.PurchaseOrder.requestV2.CreatePurchaseOrderV2
 import com.boost.upgrades.data.api_model.PurchaseOrder.response.CreatePurchaseOrderResponse
 import com.boost.upgrades.data.api_model.RazorpayToken.RazorpayTokenResponse
+import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponRequest
+import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponResponse
 import com.boost.upgrades.data.api_model.customerId.create.CreateCustomerIDResponse
 import com.boost.upgrades.data.api_model.customerId.customerInfo.CreateCustomerInfoRequest
 import com.boost.upgrades.data.api_model.customerId.get.GetCustomerIDResponse
@@ -76,4 +78,8 @@ interface ApiInterface {
   @Headers("Content-Type: application/json")
   @POST("Payment/v9/floatingpoint/widgets/CartState")
   fun createCartStateRenewal(@Body request: CreateCartStateRequest): Observable<CreateCartResponse>
+
+  @Headers("Authorization: Basic YXBpbW9kaWZpZXI6dkVFQXRudF9yJ0RWZzcofg==", "Content-Type: application/json")
+  @POST("https://si-withfloats-coupons-api-appservice.azurewebsites.net/v1/coupons/redeem")
+  fun redeemCoupon(@Body redeemCouponRequest: RedeemCouponRequest): Observable<RedeemCouponResponse>
 }
