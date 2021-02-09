@@ -12,8 +12,13 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
+import com.appservice.constant.FragmentType
 import com.appservice.databinding.FragmentServiceListingBinding
+import com.appservice.staffs.ui.startStaffFragmentActivity
+import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.viewmodel.ServiceViewModel
+import com.framework.base.FRAGMENT_TYPE
+import kotlinx.android.synthetic.main.fragment_service_listing_empty.*
 
 class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>() {
     override fun getLayout(): Int {
@@ -53,6 +58,10 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         binding?.serviceListingEmpty?.ctvAddServiceSubheading?.movementMethod = LinkMovementMethod.getInstance()
         binding?.serviceListingEmpty?.ctvAddServiceSubheading?.highlightColor = resources.getColor(android.R.color.transparent)
 
+        cb_add_service?.setOnClickListener {
+            var bundle = Bundle()
+            startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle, clearTop = false, isResult = false)
+        }
     }
 
 }

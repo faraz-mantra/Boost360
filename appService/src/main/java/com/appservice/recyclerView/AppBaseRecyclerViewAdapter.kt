@@ -26,6 +26,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       GST_DETAILS_VIEW -> GstDetailViewHolder(binding as ItemGstDetailBinding)
       ADDITIONAL_FILE_VIEW -> AdditionalFileViewHolder(binding as ItemPdfFileBinding)
       SESSION_ITEM_VIEW -> WeeklyAppointmentViewHolder(binding as RecyclerItemSessionBinding)
+      SERVICE_SESSION_ITEM_VIEW -> ServiceWeeklyScheduleViewHolder(binding as RecyclerItemServiceSessionBinding)
       CREATE_CATEGORY_ITEM_VIEW->CreateCategoryViewHolder(binding as ItemCreateCategoryBinding)
 
       SERVICE_ITEM_VIEW -> StaffServiceViewHolder(binding as RecyclerItemServiceBinding)

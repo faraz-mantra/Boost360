@@ -6,13 +6,15 @@
     <data></data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
         android:id="@+id/root"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <include
             android:id="@+id/service_listing_empty"
             layout="@layout/fragment_service_listing_empty"
             android:visibility="visible" />
+
         <com.framework.views.viewgroups.BaseRecyclerView
             android:id="@+id/baseRecyclerView"
             android:layout_width="match_parent"
@@ -61,8 +63,6 @@
                 android:text="@string/sort_and_filter"
                 android:textAllCaps="true"
                 android:textColor="@color/yellow_ffb900" />
-
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -11,10 +11,14 @@ import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
+import com.appservice.staffs.ui.Constants
+import com.appservice.staffs.ui.StaffFragmentContainerActivity
+import com.appservice.staffs.ui.setFragmentType
 import com.appservice.ui.catalog.catalogProduct.information.ProductInformationFragment
 import com.appservice.ui.catalog.catalogProduct.product.ProductDetailFragment
 import com.appservice.ui.catalog.catalogService.information.ServiceInformationFragment
 import com.appservice.ui.catalog.catalogService.service.ServiceDetailFragment
+import com.appservice.ui.catalog.catalogService.service.ServiceWeeklyScheduleFragment
 import com.appservice.ui.catalog.common.CreateCategoryFragment
 import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
 import com.appservice.ui.catalog.listing.ServiceListingFragment
@@ -33,7 +37,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   private var serviceInformationFragment: ServiceInformationFragment? = null
   private var productDetailFragment: ProductDetailFragment? = null
   private var productInformationFragment: ProductInformationFragment? = null
-  private var weeklyAppointmentFragment: WeeklyAppointmentFragment? = null
+ // private var weeklyAppointmentFragment: WeeklyAppointmentFragment? = null
+ private var serviceWeeklyScheduleFragment: ServiceWeeklyScheduleFragment? = null
   private var createCategoryFragment: CreateCategoryFragment? = null
   private var serviceListingFragment: ServiceListingFragment? = null
 
@@ -135,9 +140,13 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.CREATE_CATEGORY -> {
         createCategoryFragment = CreateCategoryFragment.newInstance()
         createCategoryFragment
-      } FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> {
-        weeklyAppointmentFragment = WeeklyAppointmentFragment.newInstance()
+      } /*FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> {
+        weeklyAppointmentFragment = ServiceWeeklyScheduleFragment.newInstance()
         weeklyAppointmentFragment
+      }*/
+      FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> {
+        serviceWeeklyScheduleFragment = ServiceWeeklyScheduleFragment.newInstance()
+        serviceWeeklyScheduleFragment
       }
       FragmentType.SERVICE_DETAIL_VIEW -> {
         serviceDetailFragment = ServiceDetailFragment.newInstance()
@@ -170,7 +179,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     serviceInformationFragment?.onActivityResult(requestCode, resultCode, data)
     productInformationFragment?.onActivityResult(requestCode, resultCode, data)
     productDetailFragment?.onActivityResult(requestCode, resultCode, data)
-    weeklyAppointmentFragment?.onActivityResult(requestCode, resultCode, data)
+    serviceWeeklyScheduleFragment?.onActivityResult(requestCode, resultCode, data)
     createCategoryFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
@@ -184,6 +193,14 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       else -> super.onBackPressed()
     }
   }
+}
+
+fun startServiceFragmentActivity(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean, isResult: Boolean = false, requestCode: Int = Constants.REQUEST_CODE) {
+    val intent = Intent(activity, CatalogServiceContainerActivity::class.java)
+    intent.putExtras(bundle)
+    intent.setFragmentType(type)
+    if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    if (isResult.not()) activity.startActivity(intent) else activity.startActivityForResult(intent, requestCode)
 }
 
 fun Fragment.startFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {

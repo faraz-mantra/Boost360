@@ -1,6 +1,7 @@
 package com.appservice.ui.catalog.catalogService.information
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -20,7 +21,13 @@ import com.appservice.model.servicev1.ServiceModelV1
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
+import com.appservice.staffs.model.StaffDetailsResult
+import com.appservice.staffs.ui.Constants
+import com.appservice.staffs.ui.startStaffFragmentActivity
+import com.appservice.ui.catalog.ServiceModel
+import com.appservice.ui.catalog.TimeSlot
 import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.ui.catalog.startServiceFragmentActivity
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.GstDetailsBottomSheet
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
@@ -42,6 +49,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     private var adapterSpec: AppBaseRecyclerViewAdapter<KeySpecification>? = null
     private var adapterImage: AppBaseRecyclerViewAdapter<FileModel>? = null
     private var ordersQuantity: Int = 0
+    private var serviceModel : ArrayList<ServiceModel> ?= null
 
     private var secondaryDataImage: ArrayList<ImageModel>? = null
 
@@ -153,8 +161,9 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
             }
             binding?.weeklyAppointmentSchedule -> {
-                startFragmentActivity(FragmentType.WEEKLY_APPOINTMENT_FRAGMENT, isResult = true)
-
+                val bundle = Bundle()
+                bundle.putSerializable(IntentConstant.TIMESLOT.name, serviceModel)
+                startServiceFragmentActivity(requireActivity(), FragmentType.WEEKLY_APPOINTMENT_FRAGMENT, isResult = true, bundle = bundle, clearTop = false, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
             }
         }
     }
@@ -254,6 +263,14 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
             val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
             secondaryImage(mPaths)
+        }
+
+        if (requestCode == Constants.REQUEST_CODE_STAFF_TIMING && resultCode == AppCompatActivity.RESULT_OK) {
+            serviceModel = data?.extras?.get(IntentConstant.TIMESLOT.name) as ArrayList<ServiceModel>
+           /* this.staffDetails = data!!.extras!![IntentConstant.STAFF_TIMINGS.name] as StaffDetailsResult
+            binding?.ctvTiming?.text = staffDetails?.timings?.map { it.day }?.joinToString(" ,")
+            showHideTimingText()
+            isTimingUpdated = true*/
         }
     }
 
