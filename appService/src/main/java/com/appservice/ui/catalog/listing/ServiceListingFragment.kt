@@ -10,7 +10,7 @@ import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
-import androidx.appcompat.widget.SearchView
+import android.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.appservice.R
@@ -33,6 +33,7 @@ import com.framework.extensions.observeOnce
 import java.util.*
 import kotlin.collections.ArrayList
 import com.framework.base.FRAGMENT_TYPE
+import kotlinx.android.synthetic.main.fragment_service_listing.*
 import kotlinx.android.synthetic.main.fragment_service_listing_empty.*
 
 class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(), RecyclerItemClickListener, SearchView.OnQueryTextListener {
@@ -131,6 +132,11 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         binding?.serviceListingEmpty?.ctvAddServiceSubheading?.highlightColor = resources.getColor(android.R.color.transparent)
 
         cb_add_service?.setOnClickListener {
+            var bundle = Bundle()
+            startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle, clearTop = false, isResult = false)
+        }
+
+        binding?.buttonAddService?.setOnClickListener {
             var bundle = Bundle()
             startFragmentActivity(FragmentType.SERVICE_DETAIL_VIEW, bundle, clearTop = false, isResult = false)
         }

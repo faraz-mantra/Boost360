@@ -42,6 +42,7 @@
             app:layout_constraintVertical_bias="0.971">
 
             <com.framework.views.customViews.CustomButton
+                android:id="@+id/button_add_service"
                 style="@style/ButtonStyle.Rounded.Solid"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/size_40"
