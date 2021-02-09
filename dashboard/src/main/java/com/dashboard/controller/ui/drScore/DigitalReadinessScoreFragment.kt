@@ -174,7 +174,9 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       DrScoreItem.DrScoreItemType.boolean_respond_to_customer_enquiries -> {
         baseActivity.startBusinessEnquiry(session)
       }
-      DrScoreItem.DrScoreItemType.boolean_add_featured_image_video,
+      DrScoreItem.DrScoreItemType.boolean_add_featured_image_video->{
+        baseActivity.startFeatureLogo(session)
+      }
       DrScoreItem.DrScoreItemType.boolean_select_what_you_sell,
       DrScoreItem.DrScoreItemType.boolean_create_doctor_e_profile,
       DrScoreItem.DrScoreItemType.boolean_manage_appointment_settings,

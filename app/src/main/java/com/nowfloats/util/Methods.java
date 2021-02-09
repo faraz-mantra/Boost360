@@ -23,13 +23,6 @@ import android.os.Binder;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Layout;
 import android.text.Spanned;
@@ -49,11 +42,18 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.material.snackbar.Snackbar;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-//import com.squareup.okhttp.OkHttpClient;
 import com.thinksity.R;
 
 import java.io.ByteArrayOutputStream;
@@ -79,6 +79,8 @@ import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.QueryMap;
+
+//import com.squareup.okhttp.OkHttpClient;
 
 /**
  * Created by Guru on 21-04-2015.
@@ -439,9 +441,7 @@ public class Methods {
 
     public static void hideKeyboard(Context context) {
         try {
-
             if (context != null) {
-
                 View view = ((Activity) context).getCurrentFocus();
                 if (view != null) {
                     InputMethodManager imm = (InputMethodManager) context.getSystemService(Service.INPUT_METHOD_SERVICE);

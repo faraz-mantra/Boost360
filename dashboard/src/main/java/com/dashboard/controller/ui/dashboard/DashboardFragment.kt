@@ -51,6 +51,9 @@ import com.inventoryorder.model.ordersummary.OrderSummaryModel
 import com.inventoryorder.model.ordersummary.SELLER_BUSINESS_REPORT
 import com.inventoryorder.model.ordersummary.TOTAL_SELLER_SUMMARY
 import com.inventoryorder.model.summary.*
+import com.inventoryorder.model.summary.request.FilterBy
+import com.inventoryorder.model.summary.request.QueryObject
+import com.inventoryorder.model.summary.request.SellerSummaryRequest
 import com.inventoryorder.model.summaryCall.CALL_BUSINESS_REPORT
 import com.inventoryorder.model.summaryCall.CallSummaryResponse
 import com.inventoryorder.rest.response.OrderSummaryResponse
@@ -220,11 +223,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun refreshAllDashboardSummary() {
-    setBusinessSummary(getDrScoreData()?.getDrsTotal() ?: 0, OrderSummaryModel().getTotalOrder(TOTAL_SELLER_SUMMARY)?:"0",
+    setBusinessSummary(getDrScoreData()?.getDrsTotal() ?: 0, OrderSummaryModel().getTotalOrder(TOTAL_SELLER_SUMMARY) ?: "0",
         SummaryEntity().getUserSummary(USER_BUSINESS_SUMMARY))
     setRoiBusinessReport(OrderSummaryModel().getSellerSummary(SELLER_BUSINESS_REPORT), SummaryEntity().getTotalUserMessage(TOTAL_USER_MESSAGE).toString(),
-        CallSummaryResponse().getCallSummary(CALL_BUSINESS_REPORT)?:"0")
-    setWebsiteReport(SummaryEntity().getUserSummary(USER_WEBSITE_REPORT), VisitsModelResponse().getTotalOMapVisit(TOTAL_MAP_VISIT) ?: "0")
+        CallSummaryResponse().getCallSummary(CALL_BUSINESS_REPORT) ?: "0")
+    setWebsiteReport(SummaryEntity().getUserSummary(USER_WEBSITE_REPORT), VisitsModelResponse().getTotalOMapVisit(TOTAL_MAP_VISIT) ?: "0",null)
   }
 
   private fun getAllDashboardSummary() {
@@ -246,7 +249,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun apiBusinessSummary() {
-    viewModel?.getSellerSummary(clientId_ORDER, session?.fpTag)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerSummaryV2_5(clientId_ORDER, session?.fpTag, getRequestSellerSummary(null))?.observeOnce(viewLifecycleOwner, {
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveTotalOrder(TOTAL_SELLER_SUMMARY)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
@@ -275,7 +278,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   private fun apiRoiBusinessReport(filterDate: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
-    viewModel?.getSellerSummary(clientId_ORDER, session?.fpTag)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerSummaryV2_5(clientId_ORDER, session?.fpTag, getRequestSellerSummary(filterDate))?.observeOnce(viewLifecycleOwner, {
       val response1 = it as? OrderSummaryResponse
       if (response1?.isSuccess() == true && response1.Data != null) response1.Data?.saveData(SELLER_BUSINESS_REPORT)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
@@ -317,19 +320,23 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         viewModel?.getMapVisits(session?.fpTag, session?.getRequestMap(filterDate.startDate ?: "", filterDate.endDate ?: ""))?.observeOnce(viewLifecycleOwner, { it3 ->
           val response3 = it3 as? VisitsModelResponse
           response3?.saveMapVisit(TOTAL_MAP_VISIT)
-          setWebsiteReport(summary, response3?.getTotalCount() ?: "0")
-          if (isLoader) hideProgress()
-          (baseActivity as? DashboardActivity)?.isLoadShimmer = false
-          showSimmer(false)
-          saveFirstLoad()
+          viewModel?.getSearchAnalytics(session?.fPID, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, {
+            val countSearch = (it?.anyResponse as? String)?.toIntOrNull()
+            setWebsiteReport(summary, response3?.getTotalCount() ?: "0",countSearch)
+            if (isLoader) hideProgress()
+            (baseActivity as? DashboardActivity)?.isLoadShimmer = false
+            showSimmer(false)
+            saveFirstLoad()
+          })
         })
       })
     })
   }
 
 
-  private fun setWebsiteReport(summary: SummaryEntity?, mapVisitCount: String) {
-    val growthStatsList = GrowthStatsData().getData(summary, mapVisitCount, getNumberFormat((session?.searchCount?.toIntOrNull() ?: 0).toString()))
+  private fun setWebsiteReport(summary: SummaryEntity?, mapVisitCount: String,countSearch:Int?) {
+   val countS= countSearch?.toString() ?: getNumberFormat((session?.searchCount?.toIntOrNull() ?: 0).toString())
+    val growthStatsList = GrowthStatsData().getData(summary, mapVisitCount,countS)
     growthStatsList.map { it.recyclerViewItemType = RecyclerViewItemType.GROWTH_STATE_ITEM_VIEW.getLayout() }
     if (adapterGrowth == null) {
       binding?.rvGrowthState?.apply {
@@ -765,4 +772,15 @@ fun saveFirstLoad() {
 
 fun isFirstLoad(): Boolean {
   return PreferencesUtils.instance.getData(IS_FIRST_LOAD, false)
+}
+
+fun getRequestSellerSummary(filterDate: FilterDateModel?): SellerSummaryRequest {
+  if (filterDate?.startDate.isNullOrEmpty()) return SellerSummaryRequest(filterBy = ArrayList())
+  val request = SellerSummaryRequest()
+  val queryObject = arrayListOf(
+      QueryObject(key = QueryObject.keys.CreatedOn.name, value = filterDate?.startDate, queryOperator = QueryObject.Operator.GTE.name),
+      QueryObject(key = QueryObject.keys.CreatedOn.name, value = filterDate?.endDate, queryOperator = QueryObject.Operator.LTE.name)
+  )
+  request.filterBy = arrayListOf(FilterBy(queryConditionType = FilterBy.ConditionType.AND.name, queryObject))
+  return request
 }

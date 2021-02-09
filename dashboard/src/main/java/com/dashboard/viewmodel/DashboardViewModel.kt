@@ -11,6 +11,7 @@ import com.dashboard.rest.repository.WithFloatRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.inventoryorder.model.summary.request.SellerSummaryRequest
 import com.inventoryorder.rest.repositories.ApiTwoWithFloatRepository
 import com.inventoryorder.rest.repositories.ApiWithFloatRepository
 import com.inventoryorder.rest.repositories.InventoryOrderRepository
@@ -56,6 +57,10 @@ class DashboardViewModel : BaseViewModel() {
     return WithFloatRepository.getNavDashboardData(context).toLiveData()
   }
 
+  fun  getSearchAnalytics(fpTag: String?,  startDate: String?, endDate: String?): LiveData<BaseResponse> {
+    return DevBoostKitRepository.getSearchAnalytics(fpTag, startDate, endDate).toLiveData()
+  }
+
   fun getDrScoreUi(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getDrScoreUi(context).toLiveData()
   }
@@ -86,6 +91,9 @@ class DashboardViewModel : BaseViewModel() {
 
   fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
     return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
+  }
+  fun getSellerSummaryV2_5(clientId: String?, sellerId: String?,request: SellerSummaryRequest?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getSellerSummaryV2_5(clientId, sellerId,request).toLiveData()
   }
 
   fun getUserSummary(clientId: String?, fpIdParent: String?, scope: String?, startDate: String? = null, endDate: String? = null): LiveData<BaseResponse> {

@@ -62,7 +62,7 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
 
   private fun apiSellerSummary(enquiriesFilter: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
-    viewModel?.getSellerSummary(clientId_ORDER, session?.fpTag)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerSummaryV2_5(clientId_ORDER, session?.fpTag, getRequestSellerSummary(enquiriesFilter))?.observeOnce(viewLifecycleOwner, {
       val response1 = it as? OrderSummaryResponse
       response1?.Data?.saveTotalOrder(TOTAL_SELLER_ENQUIRIES)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
