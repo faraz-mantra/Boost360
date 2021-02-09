@@ -53,7 +53,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
 
     private fun updateStaffProfile() {
         viewModel?.updateStaffProfile(
-                StaffProfileUpdateRequest(isAvailable = staffDetails?.isAvailable, serviceIds = staffDetails?.serviceIds, gender = staffDetails?.gender, floatingPointTag = UserSession.fpId, name = staffDetails?.name, description = staffDetails
+                StaffProfileUpdateRequest(isAvailable = staffDetails?.isAvailable, serviceIds = staffDetails?.serviceIds, gender = staffDetails?.gender, floatingPointTag = UserSession.fpTag, name = staffDetails?.name, description = staffDetails
                         ?.description, experience = staffDetails?.experience, staffId = staffDetails?.id, age = staffDetails?.age, specialisations = staffDetails?.specialisations))?.observeOnce(viewLifecycleOwner, { t ->
             when (t.status) {
                 200 -> {
@@ -115,7 +115,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
 
     private fun fetchServices() {
         viewModel?.getServiceListing(ServiceListRequest(
-                filterBy = FilterBy("ALL", 0, 0), category = "", floatingPointTag = UserSession.fpId))?.observeOnce(viewLifecycleOwner, { response ->
+                filterBy = FilterBy("ALL", 0, 0), category = "", floatingPointTag = UserSession.fpTag))?.observeOnce(viewLifecycleOwner, { response ->
             when (response.status) {
                 200 -> {
                     val data = (response as ServiceListResponse).result?.data
@@ -223,7 +223,7 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
     }
 
     private fun removeStaffProfile() {
-        viewModel?.deleteStaffProfile(StaffDeleteImageProfileRequest(staffDetails?.id, UserSession.fpId))?.observe(viewLifecycleOwner, { response ->
+        viewModel?.deleteStaffProfile(StaffDeleteImageProfileRequest(staffDetails?.id, UserSession.fpTag))?.observe(viewLifecycleOwner, { response ->
             when (response.status) {
                 200 -> {
                     baseActivity.setResult(AppCompatActivity.RESULT_OK)

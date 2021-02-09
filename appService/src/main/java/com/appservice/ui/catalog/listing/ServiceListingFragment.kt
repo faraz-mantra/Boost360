@@ -58,8 +58,8 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_stafflisting, menu)
-        val searchItem = menu.findItem(R.id.app_bar_search)
+        inflater.inflate(R.menu.menu_service_listing, menu)
+        val searchItem = menu.findItem(R.id.action_search)
         searchItem.isVisible = list.isNullOrEmpty().not()
         this.searchView = searchItem.actionView as SearchView
         searchView.queryHint = "Search Product"
