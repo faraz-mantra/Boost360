@@ -3,12 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/app_bar_search"
+        android:id="@+id/action_search"
         app:showAsAction="always"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_group_search_service"
         android:title="Search"
         app:actionViewClass="android.widget.SearchView" />
-    <item android:title="Filter"
-        app:showAsAction="always"/>
-    <menu />
+    <item
+        android:icon="@drawable/ic_service_configuration"
+        android:title="Item"
+        android:id="@+id/action_service_configuration"
+        app:showAsAction="always" />
+    <item
+        android:icon="@drawable/ic_menu_dotted"
+        android:title="More"
+        android:id="@+id/action_more"
+        app:showAsAction="always" />
 </menu>

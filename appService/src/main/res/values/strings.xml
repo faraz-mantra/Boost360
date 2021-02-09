@@ -1,465 +1,465 @@
 <resources>
-  <string name="hello_blank_fragment">Hello blank fragment</string>
-  <string name="jpeg_png">JPEG/PNG</string>
-  <string name="_800x800px">(800x800px)</string>
-  <string name="add_service_image">Add Service Image</string>
-  <string name="error_add_product_image">Please add image of the product</string>
-  <string name="save_amp_publish">Save &amp; Publish</string>
-  <string name="change">Change</string>
-  <string name="a_premium_service_by_boost_for_secure_payment_collection_learn_more_here">A premium service by Boost for secure payment collection (Learn more here)</string>
-  <string name="gallery">Gallery</string>
-  <string name="camera">Camera</string>
-  <string name="close">Close</string>
-  <string name="choose_an_action">Choose an action</string>
-  <string name="please_set_up_your_bank_account_to_proceed">Please set up your bank account to proceed</string>
-  <string name="benificiary_name">Beneficiary Name</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="jpeg_png">JPEG/PNG</string>
+    <string name="_800x800px">(800x800px)</string>
+    <string name="add_service_image">Add Service Image</string>
+    <string name="error_add_product_image">Please add image of the product</string>
+    <string name="save_amp_publish">Save &amp; Publish</string>
+    <string name="change">Change</string>
+    <string name="a_premium_service_by_boost_for_secure_payment_collection_learn_more_here">A premium service by Boost for secure payment collection (Learn more here)</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="close">Close</string>
+    <string name="choose_an_action">Choose an action</string>
+    <string name="please_set_up_your_bank_account_to_proceed">Please set up your bank account to proceed</string>
+    <string name="benificiary_name">Beneficiary Name</string>
 
-  <string name="sanjay_sharma">e.g. Sanjay Sharma</string>
-  <string name="bank_ifsc_number">Bank IFSC Number</string>
-  <string name="xxxxx_xxxxx">XXXXX XXXXX</string>
+    <string name="sanjay_sharma">e.g. Sanjay Sharma</string>
+    <string name="bank_ifsc_number">Bank IFSC Number</string>
+    <string name="xxxxx_xxxxx">XXXXX XXXXX</string>
 
-  <string name="bank_account_number">Bank Account Number</string>
-  <string name="_111111111111111">111111111111111</string>
-  <string name="save_n">save</string>
-  <string name="please_wait_while_we_verify_your_account">Please Wait While We Verify Your Account</string>
-  <string name="verification_desc_account">We\'re currently verifying your bank account. This process usually takes 1 working day. Once verified we will notify you.</string>
-  <string name="verify_desc_account">This bank account is being used to send you money collected online from your customers.</string>
-  <string name="internet_connection_not_available">Internet connection not available.</string>
-  <string name="verification_underway">Verification pending</string>
-  <string name="how_it_works">How it works!</string>
-  <string name="understood">Understood</string>
-  <string name="refresh_status">Refresh Status</string>
-  <string name="link_your_account">Linked Bank Account</string>
-  <string name="change_bank_detail">Change Bank details</string>
-  <string name="submit_for_verification">Submit for Verification</string>
-  <string name="write_the_name_as_mentioned_in_bank_account">Write the Name as mentioned in Bank account</string>
-  <string name="xxxxxxxxxxxxxxxxxx">XXXXXXXXXXXXXXXXXX</string>
-  <string name="write_the_name_of_your_bank">Write the Name of your bank</string>
-  <string name="write_account_alias">Write Account Alias</string>
-  <string name="type_ifsc_code">Type IFSC Code</string>
-  <string name="my_bank_account">My Bank Account</string>
-  <string name="link_bank_account">Link Bank Account</string>
-  <string name="adding_bank_account">Adding Bank Account</string>
-  <string name="add_bank_account">Add Bank Account</string>
-  <string name="enabled_payments_reveived_bank">Once enabled, all payments from your customers will be received in this bank account</string>
-  <string name="directly_designated_bank_account">Get payments in 48 hours, directly in your designated bank account</string>
-  <string name="account_verification_pending">Your account verification is pending</string>
+    <string name="bank_account_number">Bank Account Number</string>
+    <string name="_111111111111111">111111111111111</string>
+    <string name="save_n">save</string>
+    <string name="please_wait_while_we_verify_your_account">Please Wait While We Verify Your Account</string>
+    <string name="verification_desc_account">We\'re currently verifying your bank account. This process usually takes 1 working day. Once verified we will notify you.</string>
+    <string name="verify_desc_account">This bank account is being used to send you money collected online from your customers.</string>
+    <string name="internet_connection_not_available">Internet connection not available.</string>
+    <string name="verification_underway">Verification pending</string>
+    <string name="how_it_works">How it works!</string>
+    <string name="understood">Understood</string>
+    <string name="refresh_status">Refresh Status</string>
+    <string name="link_your_account">Linked Bank Account</string>
+    <string name="change_bank_detail">Change Bank details</string>
+    <string name="submit_for_verification">Submit for Verification</string>
+    <string name="write_the_name_as_mentioned_in_bank_account">Write the Name as mentioned in Bank account</string>
+    <string name="xxxxxxxxxxxxxxxxxx">XXXXXXXXXXXXXXXXXX</string>
+    <string name="write_the_name_of_your_bank">Write the Name of your bank</string>
+    <string name="write_account_alias">Write Account Alias</string>
+    <string name="type_ifsc_code">Type IFSC Code</string>
+    <string name="my_bank_account">My Bank Account</string>
+    <string name="link_bank_account">Link Bank Account</string>
+    <string name="adding_bank_account">Adding Bank Account</string>
+    <string name="add_bank_account">Add Bank Account</string>
+    <string name="enabled_payments_reveived_bank">Once enabled, all payments from your customers will be received in this bank account</string>
+    <string name="directly_designated_bank_account">Get payments in 48 hours, directly in your designated bank account</string>
+    <string name="account_verification_pending">Your account verification is pending</string>
 
-  <string name="self_branded_payment_gateway">Self Branded Payment Gateway</string>
-  <string name="about_this_add_on"> About this add-on</string>
-  <string name="gateway_description">This payment gateway is powered by <b>Instamojo</b>, which allows you to collect your customers’ payment directly into your bank account without any delay, (unlike the default payment gateway provided by Boost). With this add-on acticvated on your Boost website your customers see that they are paying to your business and not to Boost.</string>
-  <string name="important_colon">Important:</string>
-  <string name="add_on_terms_and_conditions">Addon Terms and Conditions</string>
-  <string name="add_on_not_active">Add-on not active</string>
-  <string name="boost_not_added_message">You, have either not renewed this add-on or have not added this add-on ever before. To enjoy it’s benefits, go to add-on store to activate it for your Boost business website.</string>
-  <string name="view_in_add_on_store">View in Add-on Store</string>
-  <string name="self_branded_payment_gateway_camel_case">Self Branded Payment Gateway</string>
-  <string name="add_on_terms_and_condition">Add-on Terms and Condition</string>
-  <string name="payment_gateway_terms_content">
+    <string name="self_branded_payment_gateway">Self Branded Payment Gateway</string>
+    <string name="about_this_add_on"> About this add-on</string>
+    <string name="gateway_description">This payment gateway is powered by <b>Instamojo</b>, which allows you to collect your customers’ payment directly into your bank account without any delay, (unlike the default payment gateway provided by Boost). With this add-on acticvated on your Boost website your customers see that they are paying to your business and not to Boost.</string>
+    <string name="important_colon">Important:</string>
+    <string name="add_on_terms_and_conditions">Addon Terms and Conditions</string>
+    <string name="add_on_not_active">Add-on not active</string>
+    <string name="boost_not_added_message">You, have either not renewed this add-on or have not added this add-on ever before. To enjoy it’s benefits, go to add-on store to activate it for your Boost business website.</string>
+    <string name="view_in_add_on_store">View in Add-on Store</string>
+    <string name="self_branded_payment_gateway_camel_case">Self Branded Payment Gateway</string>
+    <string name="add_on_terms_and_condition">Add-on Terms and Condition</string>
+    <string name="payment_gateway_terms_content">
     <li>First item</li>\n
     <li>Second item</li>\n
     <li>Third item</li>
   </string>
-  <string name="payment_gateway_terms_point_one">Boost currently supports Instamojo as ONLY OPTION as a custom payment gateway. If you want to activate it, get this add-on from our marketplace, and then for it’s activation, we’ll ask you to either create Instamojo account yourself or else we will help you do KYC and help you setup this account.\n\n</string>
-  <string name="payment_gateway_terms_point_two">Please note that Boost just acts as a fecilitator helping businesses like you to get most out of your Business website.\n\n</string>
-  <string name="payment_gateway_terms_point_three">Boost in no way is associated with Instamojo or claim any kind of responsibility related to the custom payment gateway.\n\n</string>
-  <string name="payment_gateway_terms_point_four">Instamojo logo or brand name belongs to it’s respective owners.\n\n</string>
-  <string name="payment_gateway_terms_point_five">If you do not do the kyc, Instamojo has a monthly INR 10,000 limit. Once you complete the KYC this limit get’s removed.\n</string>
-  <string name="i_understand">I Understand</string>
-  <string name="step_1">step 1</string>
-  <string name="add_on_activation_camel_case">Add-on Activation</string>
-  <string name="i_don_t_have_an_instamojo_account">I don\'t have an Instamojo account</string>
-  <string name="i_have_an_instamojo_account">I have an Instamojo account</string>
-  <string name="start_with_pan_card">Start with PAN Card</string>
-  <string name="get_started">get started</string>
-  <string name="take_photo_of_your_pan_card">Take photo of your PAN Card</string>
-  <string name="submit_documents_for_kyc">Submit Documents for KYC</string>
-  <string name="submit">Submit</string>
-  <string name="pan_details">Pan Details</string>
-  <string name="pan_number_individual_or_company">PAN Number (Individual or Company)</string>
-  <string name="enter_pan_number">Enter PAN Number</string>
-  <string name="name_as_mentioned_on_pan_card">Name as mentioned on PAN Card</string>
-  <string name="enter_name">Enter Name</string>
-  <string name="pan_card_image">PAN Card Image</string>
-  <string name="bank_details">Bank Details</string>
-  <string name="account_number">Account Number</string>
-  <string name="enter_account_no">Enter Account No.</string>
-  <string name="account_holder_s_name">Account Holder\'s Name</string>
-  <string name="name_of_the_bank">Name of the Bank</string>
-  <string name="enter_bank_name">Enter Bank Name</string>
-  <string name="ifsc_code">IFSC Code</string>
-  <string name="enter_ifsc_code">Enter IFSC Code</string>
-  <string name="latest_bank_statement_last_1_month">Latest Bank Statement (Last 1 month)</string>
-  <string name="upload">upload</string>
-  <string name="jpg_png_pdf">jpg/png/pdf</string>
-  <string name="maximum_5">Maximum 5</string>
-  <string name="currently_you_re_having_a_limit_of">Currently, you\'re having a limit of</string>
-  <string name="you_have_already_submitted_your_documents_for_verification">You have already submitted your documents for verification</string>
-  <string name="rs_10_000_per_month">Rs. 10,000 per month</string>
-  <string name="check_status">Check Status</string>
-  <string name="verification_still_pending_camel_case">Verification Still Pending!</string>
-  <string name="documents_have_been_submitted_and_your_profile_is_being_verified">Documents have been submitted and your profile is being verified.\nThis may take a while. We’ll notify you soon.</string>
-  <string name="successful">Successful!</string>
-  <string name="something_went_wrong_camel_case">Something went wrong!</string>
-  <string name="your_profile_has_been_verified_successfully_for_any_changes_in_the_account_request_below_to_edit">Your profile has been verified successfully. For any changes in the account, request below to edit.</string>
-  <string name="we_ve_encountered_the_following_issues_while_verifying_your_profile">We\'ve encountered the following issues while verifying your profile.</string>
-  <string name="request_for_edit">request for edit</string>
-  <string name="resubmit_the_documents">Resubmit the documents</string>
-  <string name="u2022_your_bank_statement_is_not_clearly_visible_n_n_u2022_lorem_ipsum_mogeraaa">• Your bank statement is not clearly visible.\n\n• Lorem ipsum mogeraaa</string>
-  <string name="custom_payment_gateway">Custom Payment Gateway</string>
-  <string name="kyc_status_all_caps">KYC STATUS</string>
-  <string name="upload_from_gallery">Upload from Gallery</string>
-  <string name="associated_bank_account">Associated Bank Account</string>
-  <string name="add_a_different_bank_account">Add a different bank account</string>
-  <string name="a_c_no_34565xxxxx45465">A/C No. 34565XXXXX45465</string>
-  <string name="add_file_jpg_png">Add File (Jpg/png)</string>
-  <string name="change_file_jpg_png">Change File (Jpg/png)</string>
-  <string name="additional_documents_optional">Additional Documents (Optional)</string>
-  <string name="add_multiple_files_jpg_png">Add Multiple Files (Jpg/png)</string>
-  <string name="payment_gateway_docs_ready_note"><b>NOTE:</b> Keep your PAN card handy or a picture of it from your gallery would also do. Apart from this you should keep 1 month bank statement and establishment certificate to upload here (if applicable) for extended limit.</string>
-  <string name="refresh_status_camel_case">Refresh Status</string>
-  <string name="pan_number">PAN Number</string>
-  <string name="propizio_real_estate_private_limited_all_caps">PROPIZIO REAL ESTATE PRIVATE LIMITED</string>
-  <string name="kotak_mahindra_bank_connaught_place_branch">Kotak Mahindra Bank - Connaught Place Branch</string>
-  <string name="verification_underway_details">This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to <u>ria@nowfloats.com</u> with this screenshot attached..</string>
-  <string name="kyc_information">KYC Information</string>
-  <string name="business_kyc">Business KYC</string>
-  <string name="crop_and_proceed">Crop and Proceed</string>
-  <string name="bank_branch">Bank Branch</string>
-  <string name="invalid_ifsc">Please enter valid IFSC code</string>
-  <string name="failed_to_upload_pan_card">Failed to upload pan card image, please try again</string>
-  <string name="failed_to_upload_statement">Failed to upload bank statement, please try again</string>
-  <string name="failed_to_upload_additional_doc">Failed to upload additional document, please try again</string>
-  <string name="add_kyc_error">Add kyc error, please try again.</string>
-  <string name="update_kyc_error">Update kyc error, please try again.</string>
-  <string name="uploading_file_wait">Uploading file, please wait....</string>
-  <string name="please_wait_">Please wait....</string>
-  <string name="pdf">PDF</string>
-  <string name="kyc_not_done">KYC Not done!</string>
-  <string name="start_your_kyc">Start your KYC</string>
-  <string name="update_your_kyc">Update your KYC</string>
-  <string name="start_branded_payment_desc">To start using your \'Branded custom payment gateway\' on your Boost website, we\'ll need to verify your business details along with a bank account (if not provided already) using your business PAN card and 1-month bank statement respectively.</string>
-  <string name="view_details">View Details</string>
-  <string name="business_kyc_verification_underway">Business KYC\nVerification Underway...</string>
-  <string name="business_kyc_verify">Business KYC verify</string>
-  <string name="submit_verification">Submit for verification</string>
-  <string name="business_kyc_verification_underway_n">Business KYC Verification Underway</string>
-  <string name="bank_account_not_added">Bank account not added</string>
-  <string name="bank_account_added">Bank account added</string>
-  <string name="are_you_sure">Are you sure?</string>
-  <string name="cancel">Cancel</string>
-  <string name="delete">Delete</string>
-  <string name="enter_service_name">Enter service name</string>
-  <string name="enter_product_name">Enter product name</string>
-  <string name="enter_category_catalog_product">Please add product category</string>
-  <string name="enter_service_desc">Enter service description</string>
-  <string name="enter_product_desc">Enter product description</string>
-  <string name="enter_valid_price">Enter valid price</string>
-  <string name="discount_amount_not_greater_than_price">Discount amount can\'t be greater than price</string>
-  <string name="please_fill_other_info">Please fill other information service.</string>
-  <string name="contact_support">Contact Support</string>
-  <string name="update_bank_detail">Update Bank Detail</string>
-  <string name="add_bank_detail">Add Bank Detail</string>
-  <string name="boost_payment_gateway">Boost payment gateway</string>
-  <string name="external_url">External URL</string>
-  <string name="the_service_can_be_offered_either_at_the_business_location_or_at_client_s_location">The service can be offered either at the business location or at client’s location.</string>
-  <string name="please_add_bank_detail">Please add bank account detail.</string>
-  <string name="please_enter_valid_url_name">Please enter valid external url and name.</string>
-  <string name="need_change_information">Need to change any information in your Business KYC?</string>
-  <string name="business_verification_allows_your_customers_desc">Business verification allows your customers to have trust on you. We use this verification to also, provide you extension of limits for certain features going forward.</string>
-  <string name="business_verification_allows_customers_trust">Business verification allows your customers to have trust on you. We use this verification to also, provide you extension of limits for certain features going forward.</string>
-  <string name="with_business_kyc">With Business KYC,</string>
-  <string name="verify_business">verify your business</string>
-  <string name="on_boost360">on Boost360</string>
-  <string name="delete_record_not_undone">Do you really want to delete these records? This process can not be undone.</string>
-  <string name="crop_picture">Crop picture</string>
-  <string name="proceed">Proceed</string>
-  <string name="service_details">Service Details</string>
-  <string name="other_information">Other Information</string>
-  <string name="product_details">Product details</string>
-  <string name="additional_information">Additional Info</string>
-<!--staff module strings-->
-  <string name="what_services_you_give">What services do you give?</string>
-  <string name="you_don_t_h">In order to add staff members, please first add all the services your business offers.</string>
-  <string name="take_me_to_service_listing">Take me to service listing</string>
-  <string name="staff_listing">Staff Listing</string>
-  <string name="staff_listing_paragraph">You don\'t have anything listed on your site as of yet. Tap the plus icon to start adding a staff.</string>
-  <string name="add_a_staff">Add a Staff</string>
-  <string name="staff_member_name">Staff member Name*</string>
-  <string name="select_gender">Select gender*</string>
-  <string name="add_staff_image">Add Staff Image</string>
-  <string name="write_the_this_staff_specialises_in">Write the this staff specialises in</string>
-  <string name="specialization">Specialization*</string>
-  <string name="staff_description_optional">Staff Description (optional)</string>
-  <string name="describe_this_staff_in_around_2000_characters_at_max">Describe this staff in around 2000 characters at max…</string>
-  <string name="years_of_experience">Years of Experience*</string>
-  <string name="is_available">Is Available*</string>
-  <string name="is_the_staff_available_for_home_service">Is the staff available for home service?</string>
-  <string name="services_provided">Services provided</string>
-  <string name="map_the_employee_to_one_or_multiple_services">Map the employee to one or multiple services.</string>
-  <string name="scheduled_break">Scheduled Break</string>
-  <string name="leaves_to_be_taken_by_the_staff">Leaves to be taken by the staff.</string>
-  <string name="clinic_businesses_hour"><![CDATA[<b>Note:</b> Since the clinic business hours are from 9:30am to 7:30 pm, all your sessions will be between same.]]></string>
-  <string name="monday">Monday</string>
-  <string name="select_what_services_that_the_staff"><![CDATA[<b>Select what services that the staff will provide.</b> While booking a staff for a service/speciality, customer will know which all staff provide service they are looking for.]]></string>
-  <string name="save">Save</string>
-  <string name="you_can_add_scheduled_breaks_for_your_staff_when_they_need_it">You can add scheduled breaks for your staff when they need it.</string>
-  <string name="what_happens_to_already_booked_appoin"><u>What happens to already booked appointments during the leave period of this staff?</u></string>
-  <string name="add_a_break">Add a Break</string>
-  <string name="add_a_leave_break_for_br_gaurav_sharma">"Add a leave break for <br/>Gaurav Sharma"</string>
-  <string name="planning_a_break">Planning a break</string>
-  <string name="starting_from">Starting from</string>
-  <string name="additional_break_info_optional">Additional break info (optional)</string>
-  <string name="e_g_a_name_for_this_break_for_easy_identification_by_your_admin">e.g. a name for this break for easy identification by your admin</string>
-  <string name="start_time">Start time</string>
-  <string name="till">Till</string>
-  <string name="time">Time</string>
-  <string name="confirm_block_calender">Confirm &amp; Block Calender</string>
-  <string name="break_duration">Break Duration</string>
-  <string name="read_how_breaks_work">Read how breaks work</string>
-  <string name="break_111">Break 111</string>
-  <string name="duration">Duration</string>
-  <string name="friend_s_wedding">Friend\'s wedding</string>
-  <string name="additional_break_info">Additional break info</string>
-  <string name="add_another_break">Add Another Break</string>
-  <string name="view_info">VIEW INFO</string>
-  <string name="u_edit_info_u"><u>EDIT INFO</u></string>
-  <string name="view_profile">VIEW INFO</string>
+    <string name="payment_gateway_terms_point_one">Boost currently supports Instamojo as ONLY OPTION as a custom payment gateway. If you want to activate it, get this add-on from our marketplace, and then for it’s activation, we’ll ask you to either create Instamojo account yourself or else we will help you do KYC and help you setup this account.\n\n</string>
+    <string name="payment_gateway_terms_point_two">Please note that Boost just acts as a fecilitator helping businesses like you to get most out of your Business website.\n\n</string>
+    <string name="payment_gateway_terms_point_three">Boost in no way is associated with Instamojo or claim any kind of responsibility related to the custom payment gateway.\n\n</string>
+    <string name="payment_gateway_terms_point_four">Instamojo logo or brand name belongs to it’s respective owners.\n\n</string>
+    <string name="payment_gateway_terms_point_five">If you do not do the kyc, Instamojo has a monthly INR 10,000 limit. Once you complete the KYC this limit get’s removed.\n</string>
+    <string name="i_understand">I Understand</string>
+    <string name="step_1">step 1</string>
+    <string name="add_on_activation_camel_case">Add-on Activation</string>
+    <string name="i_don_t_have_an_instamojo_account">I don\'t have an Instamojo account</string>
+    <string name="i_have_an_instamojo_account">I have an Instamojo account</string>
+    <string name="start_with_pan_card">Start with PAN Card</string>
+    <string name="get_started">get started</string>
+    <string name="take_photo_of_your_pan_card">Take photo of your PAN Card</string>
+    <string name="submit_documents_for_kyc">Submit Documents for KYC</string>
+    <string name="submit">Submit</string>
+    <string name="pan_details">Pan Details</string>
+    <string name="pan_number_individual_or_company">PAN Number (Individual or Company)</string>
+    <string name="enter_pan_number">Enter PAN Number</string>
+    <string name="name_as_mentioned_on_pan_card">Name as mentioned on PAN Card</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="pan_card_image">PAN Card Image</string>
+    <string name="bank_details">Bank Details</string>
+    <string name="account_number">Account Number</string>
+    <string name="enter_account_no">Enter Account No.</string>
+    <string name="account_holder_s_name">Account Holder\'s Name</string>
+    <string name="name_of_the_bank">Name of the Bank</string>
+    <string name="enter_bank_name">Enter Bank Name</string>
+    <string name="ifsc_code">IFSC Code</string>
+    <string name="enter_ifsc_code">Enter IFSC Code</string>
+    <string name="latest_bank_statement_last_1_month">Latest Bank Statement (Last 1 month)</string>
+    <string name="upload">upload</string>
+    <string name="jpg_png_pdf">jpg/png/pdf</string>
+    <string name="maximum_5">Maximum 5</string>
+    <string name="currently_you_re_having_a_limit_of">Currently, you\'re having a limit of</string>
+    <string name="you_have_already_submitted_your_documents_for_verification">You have already submitted your documents for verification</string>
+    <string name="rs_10_000_per_month">Rs. 10,000 per month</string>
+    <string name="check_status">Check Status</string>
+    <string name="verification_still_pending_camel_case">Verification Still Pending!</string>
+    <string name="documents_have_been_submitted_and_your_profile_is_being_verified">Documents have been submitted and your profile is being verified.\nThis may take a while. We’ll notify you soon.</string>
+    <string name="successful">Successful!</string>
+    <string name="something_went_wrong_camel_case">Something went wrong!</string>
+    <string name="your_profile_has_been_verified_successfully_for_any_changes_in_the_account_request_below_to_edit">Your profile has been verified successfully. For any changes in the account, request below to edit.</string>
+    <string name="we_ve_encountered_the_following_issues_while_verifying_your_profile">We\'ve encountered the following issues while verifying your profile.</string>
+    <string name="request_for_edit">request for edit</string>
+    <string name="resubmit_the_documents">Resubmit the documents</string>
+    <string name="u2022_your_bank_statement_is_not_clearly_visible_n_n_u2022_lorem_ipsum_mogeraaa">• Your bank statement is not clearly visible.\n\n• Lorem ipsum mogeraaa</string>
+    <string name="custom_payment_gateway">Custom Payment Gateway</string>
+    <string name="kyc_status_all_caps">KYC STATUS</string>
+    <string name="upload_from_gallery">Upload from Gallery</string>
+    <string name="associated_bank_account">Associated Bank Account</string>
+    <string name="add_a_different_bank_account">Add a different bank account</string>
+    <string name="a_c_no_34565xxxxx45465">A/C No. 34565XXXXX45465</string>
+    <string name="add_file_jpg_png">Add File (Jpg/png)</string>
+    <string name="change_file_jpg_png">Change File (Jpg/png)</string>
+    <string name="additional_documents_optional">Additional Documents (Optional)</string>
+    <string name="add_multiple_files_jpg_png">Add Multiple Files (Jpg/png)</string>
+    <string name="payment_gateway_docs_ready_note"><b>NOTE:</b> Keep your PAN card handy or a picture of it from your gallery would also do. Apart from this you should keep 1 month bank statement and establishment certificate to upload here (if applicable) for extended limit.</string>
+    <string name="refresh_status_camel_case">Refresh Status</string>
+    <string name="pan_number">PAN Number</string>
+    <string name="propizio_real_estate_private_limited_all_caps">PROPIZIO REAL ESTATE PRIVATE LIMITED</string>
+    <string name="kotak_mahindra_bank_connaught_place_branch">Kotak Mahindra Bank - Connaught Place Branch</string>
+    <string name="verification_underway_details">This process usually takes 1 working day. Once verified we will notify you. If you want to make any change to above account details, please write to <u>ria@nowfloats.com</u> with this screenshot attached..</string>
+    <string name="kyc_information">KYC Information</string>
+    <string name="business_kyc">Business KYC</string>
+    <string name="crop_and_proceed">Crop and Proceed</string>
+    <string name="bank_branch">Bank Branch</string>
+    <string name="invalid_ifsc">Please enter valid IFSC code</string>
+    <string name="failed_to_upload_pan_card">Failed to upload pan card image, please try again</string>
+    <string name="failed_to_upload_statement">Failed to upload bank statement, please try again</string>
+    <string name="failed_to_upload_additional_doc">Failed to upload additional document, please try again</string>
+    <string name="add_kyc_error">Add kyc error, please try again.</string>
+    <string name="update_kyc_error">Update kyc error, please try again.</string>
+    <string name="uploading_file_wait">Uploading file, please wait....</string>
+    <string name="please_wait_">Please wait....</string>
+    <string name="pdf">PDF</string>
+    <string name="kyc_not_done">KYC Not done!</string>
+    <string name="start_your_kyc">Start your KYC</string>
+    <string name="update_your_kyc">Update your KYC</string>
+    <string name="start_branded_payment_desc">To start using your \'Branded custom payment gateway\' on your Boost website, we\'ll need to verify your business details along with a bank account (if not provided already) using your business PAN card and 1-month bank statement respectively.</string>
+    <string name="view_details">View Details</string>
+    <string name="business_kyc_verification_underway">Business KYC\nVerification Underway...</string>
+    <string name="business_kyc_verify">Business KYC verify</string>
+    <string name="submit_verification">Submit for verification</string>
+    <string name="business_kyc_verification_underway_n">Business KYC Verification Underway</string>
+    <string name="bank_account_not_added">Bank account not added</string>
+    <string name="bank_account_added">Bank account added</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="enter_service_name">Enter service name</string>
+    <string name="enter_product_name">Enter product name</string>
+    <string name="enter_category_catalog_product">Please add product category</string>
+    <string name="enter_service_desc">Enter service description</string>
+    <string name="enter_product_desc">Enter product description</string>
+    <string name="enter_valid_price">Enter valid price</string>
+    <string name="discount_amount_not_greater_than_price">Discount amount can\'t be greater than price</string>
+    <string name="please_fill_other_info">Please fill other information service.</string>
+    <string name="contact_support">Contact Support</string>
+    <string name="update_bank_detail">Update Bank Detail</string>
+    <string name="add_bank_detail">Add Bank Detail</string>
+    <string name="boost_payment_gateway">Boost payment gateway</string>
+    <string name="external_url">External URL</string>
+    <string name="the_service_can_be_offered_either_at_the_business_location_or_at_client_s_location">The service can be offered either at the business location or at client’s location.</string>
+    <string name="please_add_bank_detail">Please add bank account detail.</string>
+    <string name="please_enter_valid_url_name">Please enter valid external url and name.</string>
+    <string name="need_change_information">Need to change any information in your Business KYC?</string>
+    <string name="business_verification_allows_your_customers_desc">Business verification allows your customers to have trust on you. We use this verification to also, provide you extension of limits for certain features going forward.</string>
+    <string name="business_verification_allows_customers_trust">Business verification allows your customers to have trust on you. We use this verification to also, provide you extension of limits for certain features going forward.</string>
+    <string name="with_business_kyc">With Business KYC,</string>
+    <string name="verify_business">verify your business</string>
+    <string name="on_boost360">on Boost360</string>
+    <string name="delete_record_not_undone">Do you really want to delete these records? This process can not be undone.</string>
+    <string name="crop_picture">Crop picture</string>
+    <string name="proceed">Proceed</string>
+    <string name="service_details">Service Details</string>
+    <string name="other_information">Other Information</string>
+    <string name="product_details">Product details</string>
+    <string name="additional_information">Additional Info</string>
+    <!--staff module strings-->
+    <string name="what_services_you_give">What services do you give?</string>
+    <string name="you_don_t_h">In order to add staff members, please first add all the services your business offers.</string>
+    <string name="take_me_to_service_listing">Take me to service listing</string>
+    <string name="staff_listing">Staff Listing</string>
+    <string name="staff_listing_paragraph">You don\'t have anything listed on your site as of yet. Tap the plus icon to start adding a staff.</string>
+    <string name="add_a_staff">Add a Staff</string>
+    <string name="staff_member_name">Staff member Name*</string>
+    <string name="select_gender">Select gender*</string>
+    <string name="add_staff_image">Add Staff Image</string>
+    <string name="write_the_this_staff_specialises_in">Write the this staff specialises in</string>
+    <string name="specialization">Specialization*</string>
+    <string name="staff_description_optional">Staff Description (optional)</string>
+    <string name="describe_this_staff_in_around_2000_characters_at_max">Describe this staff in around 2000 characters at max…</string>
+    <string name="years_of_experience">Years of Experience*</string>
+    <string name="is_available">Is Available*</string>
+    <string name="is_the_staff_available_for_home_service">Is the staff available for home service?</string>
+    <string name="services_provided">Services provided</string>
+    <string name="map_the_employee_to_one_or_multiple_services">Map the employee to one or multiple services.</string>
+    <string name="scheduled_break">Scheduled Break</string>
+    <string name="leaves_to_be_taken_by_the_staff">Leaves to be taken by the staff.</string>
+    <string name="clinic_businesses_hour"><![CDATA[<b>Note:</b> Since the clinic business hours are from 9:30am to 7:30 pm, all your sessions will be between same.]]></string>
+    <string name="monday">Monday</string>
+    <string name="select_what_services_that_the_staff"><![CDATA[<b>Select what services that the staff will provide.</b> While booking a staff for a service/speciality, customer will know which all staff provide service they are looking for.]]></string>
+    <string name="save">Save</string>
+    <string name="you_can_add_scheduled_breaks_for_your_staff_when_they_need_it">You can add scheduled breaks for your staff when they need it.</string>
+    <string name="what_happens_to_already_booked_appoin"><u>What happens to already booked appointments during the leave period of this staff?</u></string>
+    <string name="add_a_break">Add a Break</string>
+    <string name="add_a_leave_break_for_br_gaurav_sharma">"Add a leave break for <br />Gaurav Sharma"</string>
+    <string name="planning_a_break">Planning a break</string>
+    <string name="starting_from">Starting from</string>
+    <string name="additional_break_info_optional">Additional break info (optional)</string>
+    <string name="e_g_a_name_for_this_break_for_easy_identification_by_your_admin">e.g. a name for this break for easy identification by your admin</string>
+    <string name="start_time">Start time</string>
+    <string name="till">Till</string>
+    <string name="time">Time</string>
+    <string name="confirm_block_calender">Confirm &amp; Block Calender</string>
+    <string name="break_duration">Break Duration</string>
+    <string name="read_how_breaks_work">Read how breaks work</string>
+    <string name="break_111">Break 111</string>
+    <string name="duration">Duration</string>
+    <string name="friend_s_wedding">Friend\'s wedding</string>
+    <string name="additional_break_info">Additional break info</string>
+    <string name="add_another_break">Add Another Break</string>
+    <string name="view_info">VIEW INFO</string>
+    <string name="u_edit_info_u"><u>EDIT INFO</u></string>
+    <string name="view_profile">VIEW INFO</string>
     <string name="change_picture">CHANGE PICTURE</string>
-  <string name="save_and_publish"><![CDATA[Save & Publish]]></string>
-  <string name="year_of_experience">Year of Experience</string>
-  <string name="edit"><u>EDIT</u></string>
-  <string name="special">Specialization</string>
-  <string name="staff_timing">Staff Timing</string>
-  <string name="upcoming_leaves">Upcoming Leaves</string>
-  <string name="upcoming_leave_s">Upcoming Leave(s)</string>
+    <string name="save_and_publish"><![CDATA[Save & Publish]]></string>
+    <string name="year_of_experience">Year of Experience</string>
+    <string name="edit"><u>EDIT</u></string>
+    <string name="special">Specialization</string>
+    <string name="staff_timing">Staff Timing</string>
+    <string name="upcoming_leaves">Upcoming Leaves</string>
+    <string name="upcoming_leave_s">Upcoming Leave(s)</string>
     <string name="confirm_services">CONFIRM 0 SERVICES</string>
     <array name="gender">
-    <item>Please select</item>
-    <item>Male</item>
-    <item>Female</item>
-  </array>
-  <array name="Years">
-    <item>0 Years</item>
-    <item>1 Years</item>
-    <item>2 Years</item>
-    <item>3 Years</item>
-    <item>4 Years</item>
-    <item>5 Years</item>
-    <item>6 Years</item>
-    <item>7 Years</item>
-    <item>8 Years</item>
-    <item>9 Years</item>
-    <item>10 Years</item>
-  </array>
-  <array name="Time">
-    <item>7:30 PM</item>
-    <item>8:30 PM</item>
-    <item>9:30 PM</item>
-  </array>
-<!--  end of staff modules strings-->
-  <string name="why_do_we_need_your_bank_account">Why do we need your bank account?</string>
-  <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
+        <item>Please select</item>
+        <item>Male</item>
+        <item>Female</item>
+    </array>
+    <array name="Years">
+        <item>0 Years</item>
+        <item>1 Years</item>
+        <item>2 Years</item>
+        <item>3 Years</item>
+        <item>4 Years</item>
+        <item>5 Years</item>
+        <item>6 Years</item>
+        <item>7 Years</item>
+        <item>8 Years</item>
+        <item>9 Years</item>
+        <item>10 Years</item>
+    </array>
+    <array name="Time">
+        <item>7:30 PM</item>
+        <item>8:30 PM</item>
+        <item>9:30 PM</item>
+    </array>
+    <!--  end of staff modules strings-->
+    <string name="why_do_we_need_your_bank_account">Why do we need your bank account?</string>
+    <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
     <string name="product_category">Product Category*</string>
-  <string name="select_or_create_a_service_category">Select or create a service category</string>
+    <string name="select_or_create_a_service_category">Select or create a service category</string>
     <string name="write_the_name_of_your_product">Write the name of your product</string>
-  <string name="product_name">Product Name*</string>
+    <string name="product_name">Product Name*</string>
     <string name="this_information_is_required_if_you_select">This information is required if you select delivery service.</string>
-  <string name="product_specifications">Product specifications</string>
-  <string name="in_case_this_product_is_associated_with_certified_by_any_brand">In case this product is associated with/certified by any brand.</string>
-  <string name="add_specification">Add specification</string>
-  <string name="invoice_gst_details">Invoice GST details</string>
-  <string name="select_the_appropriate_gst_slab_at_which_this_product_is_taxable">Select the appropriate GST slab at which this product is taxable.</string>
-  <string name="_0">0 %</string>
-  <string name="confirm">Confirm</string>
-  <string name="add_secondary_images">Add secondary images</string>
-  <string name="_8_max_jpeg_png_800x800px">(8 max, Jpeg/png, 800x800px)</string>
-  <string name="secondary_images">Secondary images</string>
-  <string name="twitter_page">Twitter Page</string>
-  <string name="type_product_category">Type product category</string>
-  <string name="brand_name">Brand Name</string>
-  <string name="type_a_brand_name">Type a brand name</string>
-  <string name="stock_availability">Stock Availability</string>
+    <string name="product_specifications">Product specifications</string>
+    <string name="in_case_this_product_is_associated_with_certified_by_any_brand">In case this product is associated with/certified by any brand.</string>
+    <string name="add_specification">Add specification</string>
+    <string name="invoice_gst_details">Invoice GST details</string>
+    <string name="select_the_appropriate_gst_slab_at_which_this_product_is_taxable">Select the appropriate GST slab at which this product is taxable.</string>
+    <string name="_0">0 %</string>
+    <string name="confirm">Confirm</string>
+    <string name="add_secondary_images">Add secondary images</string>
+    <string name="_8_max_jpeg_png_800x800px">(8 max, Jpeg/png, 800x800px)</string>
+    <string name="secondary_images">Secondary images</string>
+    <string name="twitter_page">Twitter Page</string>
+    <string name="type_product_category">Type product category</string>
+    <string name="brand_name">Brand Name</string>
+    <string name="type_a_brand_name">Type a brand name</string>
+    <string name="stock_availability">Stock Availability</string>
     <string name="add_change_warehouse"><u>ADD/CHANGE WAREHOUSE</u></string>
     <string name="service_delivery_configuration">Service Delivery Configuration*</string>
     <string name="u_add_session_u"><u>Add Session</u></string>
     <string name="business_hours_timing"><b>Note:</b> Since the business hours are from 9:30am to 7:30 pm, the appointments can be booked within this duration</string>
-  <string name="from">From</string>
-  <string name="to">to</string>
-  <string name="apply_same_on_all_days">Apply same on all days</string>
+    <string name="from">From</string>
+    <string name="to">to</string>
+    <string name="apply_same_on_all_days">Apply same on all days</string>
     <string name="dropdown_options_1_1_2_3_4_5_5"><![CDATA[Dropdown options: <1, 1, 2, 3, 4, 5, 5+]]></string>
     <string name="enter_age">Enter Age</string>
-  <string name="age">Age*</string>
-  <string name="full_name">Full name</string>
+    <string name="age">Age*</string>
+    <string name="full_name">Full name</string>
     <string name="customers_can_only_view_and_enquire_about_this_product">Customers can only view and enquire about this product.</string>
     <string name="remove_product_failed">Removing product failed, please try again.</string>
-  <string name="product_removed_success">Product removed successfully.</string>
-  <string name="information_not_saved">\"Information not saved!\"</string>
-  <string name="you_have_unsaved_info">\"You have unsaved information. Do you still want to close?\"</string>
+    <string name="product_removed_success">Product removed successfully.</string>
+    <string name="information_not_saved">\"Information not saved!\"</string>
+    <string name="you_have_unsaved_info">\"You have unsaved information. Do you still want to close?\"</string>
     <string name="error_upload_secondary_images">Error while uploading secondary product images, please try again.</string>
-  <string name="error_upload_product_image">Product image uploading error, please try again.</string>
-  <string name="error_unknown">Oops some unknown error occurred, please try again.</string>
+    <string name="error_upload_product_image">Product image uploading error, please try again.</string>
+    <string name="error_unknown">Oops some unknown error occurred, please try again.</string>
     <string name="clients_can_book_this_service_for_free">Clients can book this service for FREE.</string>
-  <string name="select_service_delivery_config">Select service delivery config</string>
-  <string name="channels_service_specifications_service_category_etc">Channels, Service Specifications, Service category, etc.</string>
-  <string name="paste_your_url_here">Paste your URL here</string>
-  <string name="website_name">Website name</string>
-  <string name="add_external_url">Add External URL</string>
-  <string name="kotak_mahindra_bnak_345547684878">Kotak Mahindra Bnak - 345547684878</string>
-  <string name="select_how_you_want_to_receive_money_for_your_bookings">Select, how you want to receive money for your bookings.</string>
-  <string name="inr_xx_xxx">INR XX,XXX</string>
-  <string name="final_price">Final Price</string>
-  <string name="xxx">XXX</string>
-  <string name="discount_amt_inr">Discount amt. (INR)</string>
-  <string name="xx_xxx">XX,XXX</string>
-  <string name="price_with_tax_inr">Price with tax (INR)</string>
-  <string name="price_includes_taxes">Price includes taxes</string>
-  <string name="appointment_for_this_service_is_paid">Appointment for this service is paid?</string>
-  <string name="select_how_do_you_want_to_give_this_service_to_your_clients">Select, how do you want to give this service to your clients.</string>
-  <string name="pricing_info">Pricing info</string>
-  <string name="add_buffer_time_before_and_after">Add buffer time before and after</string>
-  <string name="enter_duration_in_minutes">Enter duration in minutes</string>
-  <string name="service_duration_minutes">Service duration (minutes)*</string>
-  <string name="describe_this_service_in_around_2000_characters_at_max">Describe this service in around 2000 characters at max...</string>
-  <string name="service_description">Service description*</string>
-  <string name="create_a_service_category">Create a service category</string>
-  <string name="this_will_help_you_group_multiple_services_under_this_category">This will help you group multiple services under this category</string>
-  <string name="service_category">Service category*</string>
-  <string name="write_the_name_of_your_service">Write the name of your service</string>
-  <string name="service_name">Service Name*</string>
-  <string name="service_adding_error">Service adding error, please try again.</string>
-  <string name="service_updating_error">Service updating error, please try again.</string>
-  <string name="uploading_service_image">Uploading service image, please wait...</string>
-  <string name="secondary_service_image_upload_error">Secondary Service image uploading error, please try again.</string>
-  <string name="add_secondary_image_service_error">Add secondary image data error, please try again.</string>
-  <string name="services_updated_success">Service updated successfully.</string>
-  <string name="services_saved">Service saved successfully.</string>
-  <string name="enter_service_category">Enter service category</string>
-  <string name="enter_service_duration">Enter service duration.</string>
-  <string name="service_removed_successfully">Service removed successfully.</string>
-  <string name="removing_service_failed">Removing service failed, please try again.</string>
-  <string name="only_eight_files_are_allowed_discarding">Only 8 files are allowed. Discarding the rest.</string>
-  <string name="only_eight_files_allowed">Only 8 files are allowed.</string>
-  <string name="removing_image">Removing image...</string>
-  <string name="removing_image_failed">Removing image failed, please try again.</string>
+    <string name="select_service_delivery_config">Select service delivery config</string>
+    <string name="channels_service_specifications_service_category_etc">Channels, Service Specifications, Service category, etc.</string>
+    <string name="paste_your_url_here">Paste your URL here</string>
+    <string name="website_name">Website name</string>
+    <string name="add_external_url">Add External URL</string>
+    <string name="kotak_mahindra_bnak_345547684878">Kotak Mahindra Bnak - 345547684878</string>
+    <string name="select_how_you_want_to_receive_money_for_your_bookings">Select, how you want to receive money for your bookings.</string>
+    <string name="inr_xx_xxx">INR XX,XXX</string>
+    <string name="final_price">Final Price</string>
+    <string name="xxx">XXX</string>
+    <string name="discount_amt_inr">Discount amt. (INR)</string>
+    <string name="xx_xxx">XX,XXX</string>
+    <string name="price_with_tax_inr">Price with tax (INR)</string>
+    <string name="price_includes_taxes">Price includes taxes</string>
+    <string name="appointment_for_this_service_is_paid">Appointment for this service is paid?</string>
+    <string name="select_how_do_you_want_to_give_this_service_to_your_clients">Select, how do you want to give this service to your clients.</string>
+    <string name="pricing_info">Pricing info</string>
+    <string name="add_buffer_time_before_and_after">Add buffer time before and after</string>
+    <string name="enter_duration_in_minutes">Enter duration in minutes</string>
+    <string name="service_duration_minutes">Service duration (minutes)*</string>
+    <string name="describe_this_service_in_around_2000_characters_at_max">Describe this service in around 2000 characters at max...</string>
+    <string name="service_description">Service description*</string>
+    <string name="create_a_service_category">Create a service category</string>
+    <string name="this_will_help_you_group_multiple_services_under_this_category">This will help you group multiple services under this category</string>
+    <string name="service_category">Service category*</string>
+    <string name="write_the_name_of_your_service">Write the name of your service</string>
+    <string name="service_name">Service Name*</string>
+    <string name="service_adding_error">Service adding error, please try again.</string>
+    <string name="service_updating_error">Service updating error, please try again.</string>
+    <string name="uploading_service_image">Uploading service image, please wait...</string>
+    <string name="secondary_service_image_upload_error">Secondary Service image uploading error, please try again.</string>
+    <string name="add_secondary_image_service_error">Add secondary image data error, please try again.</string>
+    <string name="services_updated_success">Service updated successfully.</string>
+    <string name="services_saved">Service saved successfully.</string>
+    <string name="enter_service_category">Enter service category</string>
+    <string name="enter_service_duration">Enter service duration.</string>
+    <string name="service_removed_successfully">Service removed successfully.</string>
+    <string name="removing_service_failed">Removing service failed, please try again.</string>
+    <string name="only_eight_files_are_allowed_discarding">Only 8 files are allowed. Discarding the rest.</string>
+    <string name="only_eight_files_allowed">Only 8 files are allowed.</string>
+    <string name="removing_image">Removing image...</string>
+    <string name="removing_image_failed">Removing image failed, please try again.</string>
     <string name="discount_amount_cant_be_grater">Discount amount can\'t be greater than price</string>
     <string name="manage_your_product_s_availability_on_your_website">Manage your product’s availability on your website.</string>
-  <string name="brand_name_if_available">Brand Name (if available)</string>
-  <string name="add_the_brand_name_associated_with_this_product">Add the brand name associated with this product.</string>
-  <string name="add_more_images_for_the_product">Add more images for the product.</string>
-  <string name="applicable_gst_slab">Applicable GST Slab</string>
-  <string name="for_invoice">(for invoice)</string>
-  <string name="product_tags">Product Tags</string>
-  <string name="tags_help_site_visitors_filter_products_in_your_catalogue">Tags help site visitors filter products in your catalogue.</string>
-  <string name="type_a_tag_and_press_add">Type a tag and press \'ADD\'</string>
-  <string name="add">Add</string>
-  <string name="it_appears_at_the_end_of_the_product_name_as_it_s_variant">It appears at the end of the product name as it’s variant</string>
-  <string name="e_g_color">e.g. Color</string>
-  <string name="yellow_and_orange">Yellow and Orange</string>
-  <string name="other_specifications">Other specifications</string>
-  <string name="this_list_appears_inside_the_product_details_page_on_your_website">This list appears inside the product details page on your website.</string>
+    <string name="brand_name_if_available">Brand Name (if available)</string>
+    <string name="add_the_brand_name_associated_with_this_product">Add the brand name associated with this product.</string>
+    <string name="add_more_images_for_the_product">Add more images for the product.</string>
+    <string name="applicable_gst_slab">Applicable GST Slab</string>
+    <string name="for_invoice">(for invoice)</string>
+    <string name="product_tags">Product Tags</string>
+    <string name="tags_help_site_visitors_filter_products_in_your_catalogue">Tags help site visitors filter products in your catalogue.</string>
+    <string name="type_a_tag_and_press_add">Type a tag and press \'ADD\'</string>
+    <string name="add">Add</string>
+    <string name="it_appears_at_the_end_of_the_product_name_as_it_s_variant">It appears at the end of the product name as it’s variant</string>
+    <string name="e_g_color">e.g. Color</string>
+    <string name="yellow_and_orange">Yellow and Orange</string>
+    <string name="other_specifications">Other specifications</string>
+    <string name="this_list_appears_inside_the_product_details_page_on_your_website">This list appears inside the product details page on your website.</string>
     <string name="error_service_image">Service image uploading error, please try again.</string>
     <string name="error_getting_service_details">Error while getting the service details.</string>
     <string name="update">UPDATE</string>
-  <string name="profile_updated">profile updated</string>
-  <string name="something_went_wrong">something went wrong</string>
-  <string name="enter_staff_name">Enter Staff Name</string>
-  <string name="select_staff_gender">Select Staff Gender</string>
-  <string name="please_add_specialization">Please add specialization</string>
-  <string name="select_year_of_experience">select year of experience</string>
-  <string name="please_enter_your_age">please enter your age</string>
-  <string name="please_choose_image">please choose image</string>
-  <string name="profile_created">profile created</string>
-  <string name="removing_staff">Removing Staff</string>
-  <string name="unable_to_delete">Unable to delete</string>
-  <string name="loading">Loading</string>
-  <string name="toolbar_staff_listing">STAFF LISTING</string>
-  <string name="toolbar_select_services">Select Services</string>
-  <string name="toolbar_staff_timing">Staff Timing</string>
-  <string name="toolbar_schedule_break">Scheduled Breaks</string>
-  <string name="toolbar_schedule_breaks">Scheduled Breaks</string>
-  <string name="toolbar_staff_details">Staff Details</string>
+    <string name="profile_updated">profile updated</string>
+    <string name="something_went_wrong">something went wrong</string>
+    <string name="enter_staff_name">Enter Staff Name</string>
+    <string name="select_staff_gender">Select Staff Gender</string>
+    <string name="please_add_specialization">Please add specialization</string>
+    <string name="select_year_of_experience">select year of experience</string>
+    <string name="please_enter_your_age">please enter your age</string>
+    <string name="please_choose_image">please choose image</string>
+    <string name="profile_created">profile created</string>
+    <string name="removing_staff">Removing Staff</string>
+    <string name="unable_to_delete">Unable to delete</string>
+    <string name="loading">Loading</string>
+    <string name="toolbar_staff_listing">STAFF LISTING</string>
+    <string name="toolbar_select_services">Select Services</string>
+    <string name="toolbar_staff_timing">Staff Timing</string>
+    <string name="toolbar_schedule_break">Scheduled Breaks</string>
+    <string name="toolbar_schedule_breaks">Scheduled Breaks</string>
+    <string name="toolbar_staff_details">Staff Details</string>
     <string name="search_staff">Search Staff</string>
     <string name="staff_timing_add">Adding staff timing...</string>
-  <string name="staff_timings_added">staff timings added</string>
-  <string name="staff_timings">STAFF_TIMINGS</string>
-  <string name="uploading_image">Uploading Image</string>
+    <string name="staff_timings_added">staff timings added</string>
+    <string name="staff_timings">STAFF_TIMINGS</string>
+    <string name="uploading_image">Uploading Image</string>
     <string name="weekly_schedule">Weekly Schedule</string>
-  <string name="staff_will_available_for_clients">Time the staff will be available for the clients.</string>
+    <string name="staff_will_available_for_clients">Time the staff will be available for the clients.</string>
     <string name="updated">Updated Successfully</string>
     <string name="staff_timings_updated">Staff Timings Updated</string>
-  <string name="staff_timings_unable_to_update">Staff Timings Unable to Update</string>
+    <string name="staff_timings_unable_to_update">Staff Timings Unable to Update</string>
     <string name="staff_timings_updating">Updating Staff Timings...</string>
     <string name="weekly_appointment">Weekly appointment schedule</string>
-  <string name="categories">Categories</string>
-  <string name="services">SERVICES</string>
+    <string name="categories">Categories</string>
+    <string name="services">SERVICES</string>
     <string name="you_don_t_have_any_service_added_to_your_digital_catalog_as_of_yet_watch_video">You don’t have any service added to your digital catalog as of yet. Watch video</string>
-  <string name="add_services_to_your_catalog">Add services to your catalog</string>
+    <string name="add_services_to_your_catalog">Add services to your catalog</string>
     <string name="add_a_service">Add a service</string>
     <string name="setup_appointment">SETUP APPOINTMENT</string>
     <string name="share">Share</string>
     <string name="add_service">ADD SERVICE</string>
-  <string name="sort_and_filter">Sort and filter</string>
+    <string name="sort_and_filter">Sort and filter</string>
     <string name="allow_cash_on_delivery">Allow cash-on-delivery</string>
-  <string name="weekly_appointment_schedule">Weekly appointment schedule</string>
-  <string name="customise_the_weekly_timings_when_all_appointment_for_this_servive_can_be_booked">Customise the weekly timings when all, appointment for this servive can be booked.</string>
-  <string name="mon_tue_wed_thu_fri">Mon , Tue , Wed , Thu , Fri</string>
-  <string name="if_this_item_is_also_listed_on_some_other_website_enter_the_url_below">If this item is also listed on some other website, enter the URL below</string>
-  <string name="payment_collection_and_max_quantity">Payment collection and max quantity</string>
-  <array name="stock_availbility">
-    <item>"Unlimited stock"</item>
-    <item>"Limited stock"</item>
+    <string name="weekly_appointment_schedule">Weekly appointment schedule</string>
+    <string name="customise_the_weekly_timings_when_all_appointment_for_this_servive_can_be_booked">Customise the weekly timings when all, appointment for this servive can be booked.</string>
+    <string name="mon_tue_wed_thu_fri">Mon , Tue , Wed , Thu , Fri</string>
+    <string name="if_this_item_is_also_listed_on_some_other_website_enter_the_url_below">If this item is also listed on some other website, enter the URL below</string>
+    <string name="payment_collection_and_max_quantity">Payment collection and max quantity</string>
+    <array name="stock_availbility">
+        <item>"Unlimited stock"</item>
+        <item>"Limited stock"</item>
 
-  </array>
-  <string-array name="business_hours_arrays">
-    <item>12:00AM</item>
-    <item>12:30AM</item>
-    <item>01:00AM</item>
-    <item>01:30AM</item>
-    <item>02:00AM</item>
-    <item>02:30AM</item>
-    <item>03:00AM</item>
-    <item>03:30AM</item>
-    <item>04:00AM</item>
-    <item>04:30AM</item>
-    <item>05:00AM</item>
-    <item>05:30AM</item>
-    <item>06:00AM</item>
-    <item>06:30AM</item>
-    <item>07:00AM</item>
-    <item>07:30AM</item>
-    <item>08:00AM</item>
-    <item>08:30AM</item>
-    <item>09:00AM</item>
-    <item>09:30AM</item>
-    <item>10:00AM</item>
-    <item>10:30AM</item>
-    <item>11:00AM</item>
-    <item>11:30AM</item>
-    <item>12:00PM</item>
-    <item>12:30PM</item>
-    <item>01:00PM</item>
-    <item>01:30PM</item>
-    <item>02:00PM</item>
-    <item>02:30PM</item>
-    <item>03:00PM</item>
-    <item>03:30PM</item>
-    <item>04:00PM</item>
-    <item>04:30PM</item>
-    <item>05:00PM</item>
-    <item>05:30PM</item>
-    <item>06:00PM</item>
-    <item>06:30PM</item>
-    <item>07:00PM</item>
-    <item>07:30PM</item>
-    <item>08:00PM</item>
-    <item>08:30PM</item>
-    <item>09:00PM</item>
-    <item>09:30PM</item>
-    <item>10:00PM</item>
-    <item>10:30PM</item>
-    <item>11:00PM</item>
-    <item>11:30PM</item>
-  </string-array>
+    </array>
+    <string-array name="business_hours_arrays">
+        <item>12:00AM</item>
+        <item>12:30AM</item>
+        <item>01:00AM</item>
+        <item>01:30AM</item>
+        <item>02:00AM</item>
+        <item>02:30AM</item>
+        <item>03:00AM</item>
+        <item>03:30AM</item>
+        <item>04:00AM</item>
+        <item>04:30AM</item>
+        <item>05:00AM</item>
+        <item>05:30AM</item>
+        <item>06:00AM</item>
+        <item>06:30AM</item>
+        <item>07:00AM</item>
+        <item>07:30AM</item>
+        <item>08:00AM</item>
+        <item>08:30AM</item>
+        <item>09:00AM</item>
+        <item>09:30AM</item>
+        <item>10:00AM</item>
+        <item>10:30AM</item>
+        <item>11:00AM</item>
+        <item>11:30AM</item>
+        <item>12:00PM</item>
+        <item>12:30PM</item>
+        <item>01:00PM</item>
+        <item>01:30PM</item>
+        <item>02:00PM</item>
+        <item>02:30PM</item>
+        <item>03:00PM</item>
+        <item>03:30PM</item>
+        <item>04:00PM</item>
+        <item>04:30PM</item>
+        <item>05:00PM</item>
+        <item>05:30PM</item>
+        <item>06:00PM</item>
+        <item>06:30PM</item>
+        <item>07:00PM</item>
+        <item>07:30PM</item>
+        <item>08:00PM</item>
+        <item>08:30PM</item>
+        <item>09:00PM</item>
+        <item>09:30PM</item>
+        <item>10:00PM</item>
+        <item>10:30PM</item>
+        <item>11:00PM</item>
+        <item>11:30PM</item>
+    </string-array>
 
 </resources>
