@@ -55,7 +55,7 @@ class StaffServicesFragment() : AppBaseFragment<FragmentSelectServicesBinding, S
     private fun fetchServices() {
         showProgress("Loading...")
         viewModel!!.getServiceListing(ServiceListRequest(
-                FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpId)
+                FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpTag)
         ).observe(viewLifecycleOwner, {
             hideProgress()
             data = (it as ServiceListResponse).result!!.data!!

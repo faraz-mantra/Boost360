@@ -190,7 +190,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     private fun updateStaffProfile() {
         val staffGender = binding?.spinnerGender?.selectedItem.toString()
         viewModel?.updateStaffProfile(
-                StaffProfileUpdateRequest(isAvailable, staffDetails?.serviceIds, staffGender, UserSession.fpId, name = staffName, staffDescription,
+                StaffProfileUpdateRequest(isAvailable, staffDetails?.serviceIds, staffGender, UserSession.fpTag, name = staffName, staffDescription,
                         experience = yearOfExperience.toInt(), staffDetails?.id, staffAge, specializationList
                 ))?.observeOnce(viewLifecycleOwner, Observer { t ->
             when (t.status) {
@@ -253,7 +253,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
             staffProfile?.description = staffDescription
             staffProfile?.gender = binding?.spinnerGender?.selectedItem.toString()
             staffProfile?.experience = yearOfExperience.toIntOrNull() ?: 0
-            staffProfile?.floatingPointTag = UserSession.fpId
+            staffProfile?.floatingPointTag = UserSession.fpTag
             staffProfile?.name = staffName
             staffProfile?.serviceIds = serviceListId
             staffProfile?.image = staffImage
@@ -391,7 +391,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
     private fun setServicesList() {
         if (isEdit == true) {
-            viewModel!!.getServiceListing(ServiceListRequest(floatingPointTag = UserSession.fpId)
+            viewModel!!.getServiceListing(ServiceListRequest(floatingPointTag = UserSession.fpTag)
             ).observeOnce(viewLifecycleOwner, Observer {
                 when (it.status) {
                     200 -> {

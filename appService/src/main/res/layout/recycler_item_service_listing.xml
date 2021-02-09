@@ -6,12 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginStart="15dp"
     android:layout_marginTop="10dp"
     android:elevation="@dimen/size_5"
-    app:cardUseCompatPadding="true"
-    android:layout_marginEnd="15dp"
-    android:layout_marginBottom="5dp"
     app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp">
@@ -22,49 +18,61 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:paddingLeft="@dimen/size_15"
-        android:paddingTop="@dimen/size_15"
+        android:paddingTop="@dimen/size_10"
         android:paddingRight="@dimen/size_15"
         android:paddingBottom="@dimen/size_10">
 
         <com.framework.views.roundedimageview.RoundedImageView
             android:id="@+id/card_thumbnail"
-            android:layout_width="@dimen/size_70"
-            android:layout_height="@dimen/size_70"
-            android:layout_marginRight="@dimen/size_10"
+            android:layout_width="@dimen/size_50"
+            android:layout_height="@dimen/size_50"
+            android:layout_marginEnd="@dimen/size_10"
+            android:scaleType="fitXY"
+            android:layout_marginTop="-5dp"
+            android:layout_below="@id/ctv_duration"
+            app:riv_corner_radius="@dimen/size_3"
             app:riv_border_color="@color/gray_ligh_3"
             app:riv_border_width="1dp"
             app:riv_mutate_background="true"
             app:riv_oval="false" />
 
-
+        <com.framework.views.customViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:id="@+id/ctv_duration"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="@font/open_sans"
+            android:textFontWeight="600"
+            android:textSize="12sp"
+            android:layout_toStartOf="@id/card_thumbnail"
+            android:layout_marginEnd="@dimen/size_8"
+            android:drawableEnd="@drawable/ic_clock_color_primary_text"
+            android:drawablePadding="@dimen/size_5"
+            tools:text="30min"
+            android:textColor="@color/secondary_text" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_70"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll_service_details"
+            android:layout_below="@id/ctv_duration"
             android:layout_toEndOf="@+id/card_thumbnail"
-            android:gravity="bottom"
             android:orientation="vertical"
             android:paddingBottom="4dp">
 
-            <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:drawableEnd="@drawable/ic_clock_gray"
-                android:drawablePadding="@dimen/size_5"
-                android:drawableTint="@color/secondary_text"
-                tools:text="30min"
-                android:textColor="@color/secondary_text" />
+
 
             <com.framework.views.customViews.CustomTextView
-                android:id="@+id/label_brand"
+                android:id="@+id/label_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/regular"
+                android:fontFamily="@font/open_sans"
                 android:maxLines="2"
+                android:textColor="#828282"
                 android:paddingBottom="3dp"
-                android:text="Watch by Fastrack"
-                android:textColor="@color/primary_text"
-                android:textSize="14sp"
+                android:textFontWeight="400"
+                android:textSize="10sp"
+                tools:text="Watch by Fastrack"
                 android:textStyle="normal" />
 
             <com.framework.views.customViews.CustomTextView
@@ -72,12 +80,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/label_brand"
-                android:fontFamily="@font/regular"
+                android:fontFamily="@font/open_sans"
                 android:maxLines="2"
-                android:text="Fastrack Bare Basic Watch"
+                android:textFontWeight="400"
+                tools:text="Fastrack Bare Basic Watch"
                 android:textColor="@color/primary_text"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="14sp"
+                android:textStyle="normal" />
 
         </LinearLayout>
 
@@ -88,9 +97,10 @@
             android:layout_below="@+id/card_thumbnail"
             android:ellipsize="end"
             android:maxLines="3"
+            android:visibility="gone"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="This is a wedding makeup description"
+            tools:text="This is a wedding makeup description"
             android:textColor="@color/secondary_text"
             android:textSize="14sp" />
 
@@ -107,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Price: "
+                tools:text="Price: "
                 android:textColor="@color/secondary_text"
                 android:textSize="13sp"
                 android:visibility="gone" />
@@ -119,7 +129,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@id/ll_share_buttons"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/label_price"
@@ -127,20 +137,23 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:paddingEnd="4dp"
-                    android:text="INR 0"
+                    tools:text="INR 0"
+                    android:textFontWeight="800"
+                    android:textStyle="normal"
                     android:textColor="@color/primary_text"
                     android:textSize="12sp" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/label_base_price"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:paddingStart="2dp"
                     android:paddingEnd="8dp"
-                    android:text="INR 0"
-                    android:textColor="@color/secondary_text"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="#828282"
+                    tools:text="INR 0"
+                    android:textFontWeight="400"
                     android:textSize="12sp" />
 
 

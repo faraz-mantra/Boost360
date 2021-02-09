@@ -1,11 +1,9 @@
 package com.dashboard.controller.ui.website
 
-import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat.getColor
-import androidx.core.os.bundleOf
 import com.appservice.constant.FragmentType
-import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.staffs.ui.UserSession
 import com.dashboard.R
 import com.dashboard.base.AppBaseFragment
 import com.dashboard.constant.RecyclerViewActionType
@@ -72,6 +70,8 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
       } else setImageResource(R.drawable.ic_add_logo_d)
     }
     updateTimings()
+    UserSession.apply { fpTag = session?.fpTag;customerID = session?.userProfileId }
+
   }
 
   private fun getWebsiteData() {
@@ -109,7 +109,7 @@ class WebsiteFragment : AppBaseFragment<FragmentWebsiteBinding, DashboardViewMod
 
   private fun clickActionButton(type: WebsiteActionItem.IconType) {
     when (type) {
-      WebsiteActionItem.IconType.service_product_catalogue -> baseActivity.startFragmentActivity(FragmentType.SERVICE_LISTING )
+      WebsiteActionItem.IconType.service_product_catalogue -> startFragmentActivity(FragmentType.SERVICE_LISTING)
       WebsiteActionItem.IconType.latest_update_tips -> session?.let { baseActivity.startUpdateLatestStory(it) }
       WebsiteActionItem.IconType.all_images -> baseActivity.startAllImage(session)
       WebsiteActionItem.IconType.business_profile -> baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")

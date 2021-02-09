@@ -1,9 +1,7 @@
 package com.appservice.staffs.ui.home
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
@@ -21,6 +19,7 @@ import com.appservice.staffs.ui.IOnBackPressed
 import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
+import kotlinx.android.synthetic.main.fragment_service_listing.view.*
 import kotlinx.android.synthetic.main.fragment_staff_profile.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -62,7 +61,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
     private fun fetchStaffListing() {
         showProgress("Loading")
-        viewModel?.getStaffList(GetStaffListingRequest(FilterBy("", 0, 0), UserSession.fpId, ""))?.observe(viewLifecycleOwner, {
+        viewModel?.getStaffList(GetStaffListingRequest(FilterBy("", 0, 0), UserSession.fpTag, ""))?.observe(viewLifecycleOwner, {
             when (it.status) {
                 200 -> {
                     val getStaffListingResponse = it as GetStaffListingResponse

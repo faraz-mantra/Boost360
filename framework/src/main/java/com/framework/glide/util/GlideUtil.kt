@@ -37,6 +37,10 @@ fun Context.glideLoad(mImageView: CustomImageView?, url: String?) {
   if (mImageView == null) return
   Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
 }
+fun Context.glideLoad(mImageView: RoundedImageView?, url: String?) {
+  if (mImageView == null) return
+  Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.DATA).into(mImageView)
+}
 
 fun Context.glideLoad(mImageView: CircularImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
   if (url.isNullOrEmpty()) return
