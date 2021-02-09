@@ -246,7 +246,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
                 }
             }
         }
-        adapter.updateList(list)
+        adapter.notifyDataSetChanged()
     }
 
     override fun onBackPressed(): Boolean {
