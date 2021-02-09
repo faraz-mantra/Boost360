@@ -78,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:text="@string/u_edit_info_u"
+                android:textStyle="bold"
                 android:textColor="@color/blue_4889f8" />
 
             <com.framework.views.customViews.CustomTextView
@@ -146,7 +147,9 @@
                 android:id="@+id/ctv_edit_timing"
                 style="@style/StaffProfileEditText"
                 android:visibility="visible"
+                android:textStyle="bold"
                 android:layout_alignBaseline="@id/ctv_heading_timing" />
+
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/ctv_heading_timing"
                 android:layout_below="@id/ll_services"
@@ -166,6 +169,7 @@
                 android:id="@+id/ctv_edit_services"
                 android:visibility="visible"
                 style="@style/StaffProfileEditText"
+                android:textStyle="bold"
                 android:layout_alignBaseline="@id/ctv_heading_services"
             />
 
