@@ -30,6 +30,7 @@ import com.appservice.staffs.ui.UserSession
 import com.appservice.staffs.ui.startStaffFragmentActivity
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.staffs.widgets.ExperienceBottomSheet
+import com.appservice.ui.catalog.common.AppointmentModel
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.framework.extensions.observeOnce
@@ -124,7 +125,12 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
                     selectedDays.append(item?.day)
                 }
             }
-            binding?.ctvTiming?.text = selectedDays
+
+            if (selectedDays.isNullOrEmpty()) {
+                binding?.ctvTiming?.visibility = View.GONE
+            } else {
+                binding?.ctvTiming?.text = selectedDays
+            }
         }
 
         if (specialisations?.isNullOrEmpty() == false)
@@ -364,9 +370,11 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
 
     private fun addStaffTimings(staffId: String?) {
         if (staffDetails?.timings == null) {
-            finishAndGoBack();
-            return;
+            staffDetails?.timings = AppointmentModel.getDefaultTimings()
+           /* finishAndGoBack();
+            return;*/
         }
+
         showProgress(getString(R.string.staff_timing_add))
         viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id
                 ?: staffId, staffDetails?.timings))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
