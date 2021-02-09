@@ -13,12 +13,7 @@ data class ServiceListingResponse(
 
 		@field:SerializedName("Result")
 		val result: List<ResultItem?>? = null,
-		var recyclerViewItem: Int = RecyclerViewItemType.SERVICE_LISTING_VIEW.getLayout(),
-) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
-	override fun getViewType(): Int {
-		return recyclerViewItem
-	}
-}
+) : BaseResponse(), Serializable
 
 data class ItemsItem(
 
@@ -59,7 +54,7 @@ data class ItemsItem(
 		val tileImage: String? = null,
 
 		@field:SerializedName("BrandName")
-		val brandName: Any? = null,
+		val brandName: String? = null,
 
 		@field:SerializedName("Type")
 		val type: Any? = null,
@@ -75,7 +70,12 @@ data class ItemsItem(
 
 		@field:SerializedName("SecondaryImages")
 		val secondaryImages: List<Any?>? = null,
-)
+		var recyclerViewItem: Int = RecyclerViewItemType.SERVICE_LISTING_VIEW.getLayout(),
+) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
+	override fun getViewType(): Int {
+		return recyclerViewItem
+	}
+}
 
 data class ResultItem(
 

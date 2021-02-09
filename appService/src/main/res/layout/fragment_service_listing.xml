@@ -12,32 +12,34 @@
         <include
             android:id="@+id/service_listing_empty"
             layout="@layout/fragment_service_listing_empty"
-            android:visibility="visible" />
+            android:visibility="gone" />
+
         <com.framework.views.viewgroups.BaseRecyclerView
             android:id="@+id/baseRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/size_16"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.78"
             tools:itemCount="2"
             tools:listitem="@layout/recycler_item_service_listing" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/ll_action_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="16dp"
             android:orientation="horizontal"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.971">
 
             <com.framework.views.customViews.CustomButton
                 style="@style/ButtonStyle.Rounded.Solid"
