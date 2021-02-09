@@ -1,6 +1,5 @@
 package com.inventoryorder.model.ordersdetails
 
-import com.framework.utils.DateUtils
 import com.inventoryorder.utils.convertMinutesToDays
 import java.io.Serializable
 

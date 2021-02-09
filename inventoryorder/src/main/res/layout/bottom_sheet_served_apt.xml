@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tvTitle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_8"
+      android:text="@string/marking_as_served"
+      android:textColor="@color/white"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:textType="HEADING_4"
+      tools:ignore="RtlSymmetry"
+      tools:textColor="@color/dimgray" />
+
+    <com.framework.views.customViews.CustomTextView
+      android:id="@+id/tvSubTitle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="@dimen/size_20"
+      android:layout_marginBottom="@dimen/size_8"
+      android:textColor="@color/white"
+      app:fontFamily="@font/italic"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+      app:textType="BODY_1"
+      tools:text="Appointment ID #VDJNVBJD"
+      tools:textColor="@color/dimgray" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/coordinatorLayoutBottomSheet"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/size_10"
+      android:background="@drawable/bg_rounded_top_white_2"
+      android:orientation="vertical"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/btn_bottom"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tvSubTitle">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:orientation="vertical">
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_20"
+          android:text="@string/want_to_request_customer_to_give_feedback"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="HEADING_6" />
+
+        <RadioGroup
+          android:id="@+id/radioGroup1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/size_10"
+          android:orientation="vertical">
+
+          <RadioButton
+            android:id="@+id/radio_store"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_16"
+            android:buttonTint="@color/colorAccent"
+            android:clickable="false"
+            android:focusable="false"
+            android:text="@string/yes_send_feedback_link"
+            android:textColor="@color/black_4a4a4a" />
+
+
+          <RadioButton
+            android:id="@+id/radio_customer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_16"
+            android:layout_marginTop="@dimen/size_4"
+            android:checked="true"
+            android:clickable="false"
+            android:focusable="false"
+            android:buttonTint="@color/colorAccent"
+            android:text="@string/no_don_t_need_any_feedback"
+            android:textColor="@color/black_4a4a4a" />
+
+        </RadioGroup>
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_16"
+          android:text="@string/include_a_message_optional"
+          android:textColor="@color/black_4a4a4a"
+          app:textType="HEADING_6" />
+
+        <com.framework.views.customViews.CustomTextField
+          android:id="@+id/tv_desc"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_10"
+          android:layout_marginEnd="@dimen/size_20"
+          android:background="@drawable/bg_rect_edit_txt"
+          android:gravity="start"
+          android:hint="@string/type_the_message_that_you_want_to_include"
+          android:inputType="textMultiLine"
+          android:maxLines="5"
+          android:minHeight="@dimen/size_100"
+          android:padding="@dimen/size_10"
+          android:textAlignment="gravity"
+          android:textColor="@color/warm_grey_10"
+          android:textColorHint="@color/primary_grey"
+          tools:ignore="UnusedAttribute" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/size_20"
+          android:layout_marginTop="@dimen/size_16"
+          android:layout_marginEnd="@dimen/size_20"
+          android:text="@string/boost_will_send_an_email_and_an_sms_feedback_apt_experience"
+          android:textColor="@color/grey_dark_2"
+          app:fontFamily="@font/italic"
+          app:textType="CAPTION" />
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="0.8dp"
+          android:layout_marginStart="@dimen/size_10"
+          android:layout_marginTop="@dimen/size_20"
+          android:layout_marginEnd="@dimen/size_10"
+          android:background="@color/light_grey_2" />
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+      android:id="@+id/btn_bottom"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/white"
+      android:gravity="end"
+      android:orientation="horizontal"
+      android:padding="@dimen/size_14"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/tvCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/size_10"
+        android:padding="@dimen/size_4"
+        android:text="@string/go_back"
+        android:textAllCaps="true"
+        android:textColor="@color/pinkish_grey"
+        app:fontFamily="@font/semi_bold"
+        app:textType="BODY_3" />
+
+      <com.framework.views.customViews.CustomButton
+        android:id="@+id/buttonDone"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_36"
+        android:layout_gravity="center"
+        android:background="@drawable/button_rounded_8"
+        android:gravity="center"
+        android:paddingStart="@dimen/size_28"
+        android:paddingEnd="@dimen/size_28"
+        android:shadowRadius="0"
+        android:stateListAnimator="@null"
+        android:text="@string/complete_apt"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        app:fontFamily="@font/bold"
+        app:textType="CAPTION"
+        tools:ignore="UnusedAttribute" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

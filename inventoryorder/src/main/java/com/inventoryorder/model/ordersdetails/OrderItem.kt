@@ -14,24 +14,24 @@ import java.io.Serializable
 import java.util.*
 
 data class OrderItem(
-    val BillingDetails: BillingDetailsN? = null,
-    val BuyerDetails: BuyerDetailsN? = null,
-    val CancellationDetails: CancellationDetailsN? = null,
+    var BillingDetails: BillingDetailsN? = null,
+    var BuyerDetails: BuyerDetailsN? = null,
+    var CancellationDetails: CancellationDetailsN? = null,
     var CreatedOn: String? = null,
-    val InventoryDetails: ArrayList<InventoryDetailN>? = null,
-    val IsArchived: Boolean? = null,
-    val Items: ArrayList<ItemN>? = null,
-    val LogisticsDetails: LogisticsDetailsN? = null,
-    val Mode: String? = null,
-    val OrderAmountMatch: Boolean? = null,
-    val PaymentDetails: PaymentDetailsN? = null,
-    val ReferenceNumber: String? = null,
-    val RefundDetails: RefundDetailsN? = null,
-    val SellerDetails: SellerDetailsN? = null,
-    val SettlementDetails: SettlementDetailsN? = null,
+    var InventoryDetails: ArrayList<InventoryDetailN>? = null,
+    var IsArchived: Boolean? = null,
+    var Items: ArrayList<ItemN>? = null,
+    var LogisticsDetails: LogisticsDetailsN? = null,
+    var Mode: String? = null,
+    var OrderAmountMatch: Boolean? = null,
+    var PaymentDetails: PaymentDetailsN? = null,
+    var ReferenceNumber: String? = null,
+    var RefundDetails: RefundDetailsN? = null,
+    var SellerDetails: SellerDetailsN? = null,
+    var SettlementDetails: SettlementDetailsN? = null,
     var Status: String? = null,
-    val UpdatedOn: String? = null,
-    val _id: String? = null,
+    var UpdatedOn: String? = null,
+    var _id: String? = null,
 ) : AppBaseRecyclerViewItem, Serializable {
 
   var dateKey: Date? = null
@@ -67,20 +67,20 @@ data class OrderItem(
 
   fun cancelledText(): String {
     return if (CancellationDetails != null) {
-      when (CancellationDetails.cancelledBy().trim().toUpperCase(Locale.ROOT)) {
+      when (CancellationDetails?.cancelledBy()?.trim()?.toUpperCase(Locale.ROOT)) {
         CancellingEntity.SELLER.name -> return " You"
         CancellingEntity.BUYER.name, CancellingEntity.NF.name -> return " Customer"
-        else -> " ${CancellationDetails.cancelledBy()}"
+        else -> " ${CancellationDetails?.cancelledBy()}"
       }
     } else ""
   }
 
   fun cancelledTextVideo(): String {
     return if (CancellationDetails != null) {
-      when (CancellationDetails.cancelledBy().trim().toUpperCase(Locale.ROOT)) {
+      when (CancellationDetails?.cancelledBy()?.trim()?.toUpperCase(Locale.ROOT)) {
         CancellingEntity.SELLER.name -> return " You"
         CancellingEntity.BUYER.name, CancellingEntity.NF.name -> return " Patient"
-        else -> " ${CancellationDetails.cancelledBy()}"
+        else -> " ${CancellationDetails?.cancelledBy()}"
       }
     } else ""
   }
@@ -166,17 +166,17 @@ data class OrderItem(
   fun isConfirmActionBtn(): Boolean {
     return ((OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED
         || OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED) &&
-        PaymentDetails != null && ((PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
-        PaymentDetailsN.STATUS.from(PaymentDetails.status()) == PaymentDetailsN.STATUS.SUCCESS)
-        || (PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.COD)
-        || (PaymentDetailsN.METHOD.fromType(PaymentDetails.method()) == PaymentDetailsN.METHOD.FREE)))
+        PaymentDetails != null && ((PaymentDetailsN.METHOD.fromType(PaymentDetails?.method()) == PaymentDetailsN.METHOD.ONLINEPAYMENT &&
+        PaymentDetailsN.STATUS.from(PaymentDetails?.status()) == PaymentDetailsN.STATUS.SUCCESS)
+        || (PaymentDetailsN.METHOD.fromType(PaymentDetails?.method()) == PaymentDetailsN.METHOD.COD)
+        || (PaymentDetailsN.METHOD.fromType(PaymentDetails?.method()) == PaymentDetailsN.METHOD.FREE)))
   }
 
   fun isCancelActionBtn(): Boolean {
     return ((OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED ||
         OrderSummaryModel.OrderStatus.from(status()) == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED) &&
-        LogisticsDetails != null && LogisticsDetailsN.STSTUS.from(LogisticsDetails.status()) == LogisticsDetailsN.STSTUS.NOT_INITIATED)
+        LogisticsDetails != null && LogisticsDetailsN.STSTUS.from(LogisticsDetails?.status()!!) == LogisticsDetailsN.STSTUS.NOT_INITIATED)
   }
 
   fun orderBtnStatus(): ArrayList<OrderMenuModel.MenuStatus> {
@@ -216,8 +216,7 @@ data class OrderItem(
       else arrayListOf(OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
 
     } else if ((statusOrder == OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS || statusOrder == OrderSummaryModel.OrderStatus.DELIVERY_DELAYED) &&
-        method != PaymentDetailsN.METHOD.FREE && (statusPayment == PaymentDetailsN.STATUS.PENDING ||
-            statusPayment == PaymentDetailsN.STATUS.FAILED || statusPayment == PaymentDetailsN.STATUS.CANCELLED)) {
+        method != PaymentDetailsN.METHOD.FREE && (statusPayment == PaymentDetailsN.STATUS.PENDING || statusPayment == PaymentDetailsN.STATUS.FAILED || statusPayment == PaymentDetailsN.STATUS.CANCELLED)) {
 
       return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.MARK_AS_DELIVERED)
       else arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.MARK_AS_DELIVERED, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
@@ -296,7 +295,7 @@ data class OrderItem(
             (method != PaymentDetailsN.METHOD.FREE || (statusPayment == PaymentDetailsN.STATUS.PENDING || statusPayment == PaymentDetailsN.STATUS.FAILED || statusPayment == PaymentDetailsN.STATUS.CANCELLED))) {
 
       return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
-      else arrayListOf(OrderMenuModel.MenuStatus.CONFIRM_APPOINTMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
+      else arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT,OrderMenuModel.MenuStatus.CONFIRM_APPOINTMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT,OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
 
     } else if ((statusOrder == OrderSummaryModel.OrderStatus.PAYMENT_MODE_VERIFIED || statusOrder == OrderSummaryModel.OrderStatus.PAYMENT_CONFIRMED) && (method != PaymentDetailsN.METHOD.FREE ||
                     (statusPayment == PaymentDetailsN.STATUS.INITIATED || statusPayment == PaymentDetailsN.STATUS.INPROCESS))) {
@@ -319,8 +318,8 @@ data class OrderItem(
       else arrayListOf(OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
 
     } else if ((statusOrder == OrderSummaryModel.OrderStatus.DELIVERY_IN_PROGRESS || statusOrder == OrderSummaryModel.OrderStatus.DELIVERY_DELAYED) &&
-            method != PaymentDetailsN.METHOD.FREE && (statusPayment == PaymentDetailsN.STATUS.PENDING ||
-                    statusPayment == PaymentDetailsN.STATUS.FAILED || statusPayment == PaymentDetailsN.STATUS.CANCELLED)) {
+            method != PaymentDetailsN.METHOD.FREE && (statusPayment == PaymentDetailsN.STATUS.PENDING || statusPayment == PaymentDetailsN.STATUS.FAILED ||
+            statusPayment == PaymentDetailsN.STATUS.CANCELLED)) {
 
       return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.MARK_AS_SERVED)
       else arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.MARK_AS_SERVED, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
@@ -367,20 +366,19 @@ data class OrderItem(
     } else if (statusOrder == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED && method != PaymentDetailsN.METHOD.FREE &&
             (statusPayment == PaymentDetailsN.STATUS.PENDING || statusPayment == PaymentDetailsN.STATUS.FAILED || statusPayment == PaymentDetailsN.STATUS.CANCELLED)) {
 
-      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.MARK_AS_SERVED, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
-     // else arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.CUSTOMER_SERVED, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
-      else arrayListOf(OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
+      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.START_APPOINTMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
+      else arrayListOf(OrderMenuModel.MenuStatus.REQUEST_PAYMENT, OrderMenuModel.MenuStatus.START_APPOINTMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
 
     } else if (statusOrder == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED && (method == PaymentDetailsN.METHOD.FREE ||
                     (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))) {
 
-      return arrayListOf(OrderMenuModel.MenuStatus.MARK_AS_SERVED, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
+      return arrayListOf(OrderMenuModel.MenuStatus.START_APPOINTMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
 
     } else if (statusOrder == OrderSummaryModel.OrderStatus.ORDER_CONFIRMED && method != PaymentDetailsN.METHOD.FREE &&
             (statusPayment == PaymentDetailsN.STATUS.INITIATED || statusPayment == PaymentDetailsN.STATUS.INPROCESS)) {
 
-      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.MARK_AS_SERVED, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
-      else arrayListOf(OrderMenuModel.MenuStatus.MARK_AS_SHIPPED, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
+      return if (method != PaymentDetailsN.METHOD.COD) arrayListOf(OrderMenuModel.MenuStatus.START_APPOINTMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT)
+      else arrayListOf(OrderMenuModel.MenuStatus.START_APPOINTMENT, OrderMenuModel.MenuStatus.CANCEL_APPOINTMENT, OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE)
 
     }
 

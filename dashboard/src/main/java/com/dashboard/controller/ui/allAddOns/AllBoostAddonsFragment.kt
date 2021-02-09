@@ -119,7 +119,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
       searchAutoComplete?.setTextColor(getColor(R.color.white))
       searchView?.setIconifiedByDefault(true)
-      searchView?.queryHint = "Search boost add-ons"
+      searchView?.queryHint = resources.getString(R.string.search_boost_add_ons)
       searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
           return false

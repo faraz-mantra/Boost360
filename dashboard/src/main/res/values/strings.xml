@@ -87,4 +87,5 @@
   <string name="retry">Retry</string>
   <string name="reset">Reset</string>
   <string name="select_duration">Select duration</string>
+  <string name="search_boost_add_ons">Search boost add-ons</string>
 </resources>

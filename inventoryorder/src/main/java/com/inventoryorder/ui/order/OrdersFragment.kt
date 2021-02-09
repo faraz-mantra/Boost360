@@ -483,6 +483,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
     if (searchItem != null) {
       val searchView = searchItem.actionView as SearchView
       searchView.queryHint = resources.getString(R.string.queryHintOrder)
+      searchView.setIconifiedByDefault(true)
       searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(newText: String?): Boolean {
           newText?.let { startFilter(it.trim().toUpperCase(Locale.ROOT)) }

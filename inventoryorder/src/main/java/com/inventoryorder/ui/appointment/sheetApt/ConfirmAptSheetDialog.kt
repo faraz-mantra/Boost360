@@ -1,4 +1,4 @@
-package com.inventoryorder.ui.order.sheetOrder
+package com.inventoryorder.ui.appointment.sheetApt
 
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -8,18 +8,20 @@ import com.framework.extensions.visible
 import com.framework.models.BaseViewModel
 import com.framework.utils.fromHtml
 import com.inventoryorder.R
-import com.inventoryorder.databinding.BottomSheetConfirmOrderBinding
+import com.inventoryorder.databinding.BottomSheetConfirmAptBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import java.math.BigDecimal
+import java.text.DecimalFormat
 
-class ConfirmBottomSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmOrderBinding, BaseViewModel>() {
+class ConfirmAptSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmAptBinding, BaseViewModel>() {
 
   var isCheckLink: Boolean = true
   var onClicked: (isCheckLink: Boolean) -> Unit = {}
   private var orderItem: OrderItem? = null
 
   override fun getLayout(): Int {
-    return R.layout.bottom_sheet_confirm_order
+    return R.layout.bottom_sheet_confirm_apt
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
@@ -32,7 +34,9 @@ class ConfirmBottomSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmOrderBi
 
   override fun onCreateView() {
     setOnClickListener(binding?.buttonDone, binding?.buttonDoneN, binding?.tvCancel, binding?.tvCancelN)
-    binding?.tvSubTitle?.text = "Order ID #${orderItem?.ReferenceNumber ?: ""}"
+    binding?.tvSubTitle?.text = "Appointment ID #${orderItem?.ReferenceNumber ?: ""}"
+    binding?.txtSymbol?.text = takeIf { orderItem?.BillingDetails?.CurrencyCode.isNullOrEmpty().not() }?.let { orderItem?.BillingDetails?.CurrencyCode?.trim() } ?: "INR"
+    binding?.txtPrice?.text = "${DecimalFormat("##,##,##0.00").format(BigDecimal(orderItem?.BillingDetails?.AmountPayableByBuyer ?: 0.0))}"
     val method = PaymentDetailsN.METHOD.fromType(orderItem?.PaymentDetails?.method())
     val statusPayment = PaymentDetailsN.STATUS.from(orderItem?.PaymentDetails?.status())
     val number = orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber
@@ -49,9 +53,11 @@ class ConfirmBottomSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmOrderBi
 
 
     val isPaymentDone = (method == PaymentDetailsN.METHOD.FREE || (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))
-    binding?.txtDeliveryMode?.text = fromHtml("Delivery mode: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.deliveryType()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
-    binding?.txtPaymentMode?.text = fromHtml("Payment mode: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.PaymentDetails?.methodValue()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
-    binding?.txtPaymentStatus?.text = fromHtml("Payment status: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.PaymentDetails?.status()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
+    activity?.let { binding?.txtPrice?.setTextColor(ContextCompat.getColor(it, if (isPaymentDone) R.color.green_light_1 else R.color.watermelon_light)) }
+    activity?.let { binding?.txtSymbol?.setTextColor(ContextCompat.getColor(it, if (isPaymentDone) R.color.green_light_1 else R.color.watermelon_light)) }
+    binding?.txtDeliveryMode?.text = fromHtml("Service location: <b>${orderItem?.SellerDetails?.Address?.City ?: "NA"}</b>")
+    binding?.txtPaymentMode?.text = fromHtml("Payment mode: <b>${orderItem?.PaymentDetails?.methodValue()}</b>")
+    binding?.txtPaymentStatus?.text = fromHtml("Payment status: <b>${orderItem?.PaymentDetails?.status()}</b>")
     val iconPayment = ContextCompat.getDrawable(baseActivity, if (isPaymentDone) R.drawable.ic_order_status_success else R.drawable.ic_order_status_pending)
     binding?.txtPaymentStatus?.setCompoundDrawablesWithIntrinsicBounds(iconPayment, null, null, null)
     if (isPaymentDone.not()) {
