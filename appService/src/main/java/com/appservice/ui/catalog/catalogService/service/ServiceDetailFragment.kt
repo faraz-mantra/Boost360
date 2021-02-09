@@ -32,6 +32,7 @@ import com.appservice.rest.TaskCode
 import com.appservice.ui.bankaccount.startFragmentAccountActivity
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
+import com.appservice.ui.model.ItemsItem
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
 import com.appservice.viewmodel.ServiceViewModelV1
@@ -211,10 +212,10 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     }
 
     private fun initProductFromBundle(data: Bundle?) {
-        val p = data?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? ServiceModelV1
-        if(p != null && p?.productId.isNullOrEmpty().not()){
+        val p = data?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? ItemsItem
+        if(p != null && p?.id.isNullOrEmpty().not()){
             isEdit = true;
-            getServiceDetailObject(p?.productId);
+            getServiceDetailObject(p?.id);
         }else{
             isEdit = false;
             this.product = ServiceModelV1();

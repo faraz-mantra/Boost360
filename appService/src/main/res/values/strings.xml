@@ -406,6 +406,7 @@
     <string name="mon_tue_wed_thu_fri">Mon , Tue , Wed , Thu , Fri</string>
     <string name="if_this_item_is_also_listed_on_some_other_website_enter_the_url_below">If this item is also listed on some other website, enter the URL below</string>
     <string name="payment_collection_and_max_quantity">Payment collection and max quantity</string>
+    <string name="search_services">Search services...</string>
     <array name="stock_availbility">
         <item>"Unlimited stock"</item>
         <item>"Limited stock"</item>

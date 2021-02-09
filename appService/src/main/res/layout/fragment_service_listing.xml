@@ -45,6 +45,7 @@
                 style="@style/ButtonStyle.Rounded.Solid"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/size_40"
+                android:id="@+id/cb_add_service"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/add_service" />
@@ -57,6 +58,7 @@
             <com.framework.views.customViews.CustomButton
                 android:layout_width="0dp"
                 android:layout_height="@dimen/size_40"
+                android:id="@+id/cb_sort_and_filter"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_stroke_orange_4_transparent"
                 android:gravity="center"

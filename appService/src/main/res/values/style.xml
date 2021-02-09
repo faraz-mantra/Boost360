@@ -15,7 +15,14 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
+    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
+    <item name="searchViewStyle">@style/ThemeOverlay.SearchView</item>
     <item name="colorAccent">@color/colorAccent</item>
+  </style>
+  <style name="ThemeOverlay.SearchView" parent="Widget.AppCompat.SearchView.ActionBar">
+    <item name="submitBackground">@android:color/transparent</item>
+    <item name="searchHintIcon">@null</item>
+    <item name="closeIconTint">@color/white</item>
   </style>
   <style name="CatalogTheme.Information" parent="CatalogTheme">
     <item name="colorPrimary">@color/color_primary</item>
