@@ -25,6 +25,7 @@ import com.appservice.ui.catalog.common.AppointmentModel
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.views.customViews.CustomTextView
+import java.lang.StringBuilder
 
 
 class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBinding, StaffViewModel>() {
@@ -161,7 +162,9 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
     private fun setTimings() {
         binding?.llTimingContainer?.removeAllViews()
         staffDetails?.timings?.forEach {
-            binding?.llTimingContainer?.addView(getTimeView(it))
+            if (it?.timeSlots != null && it?.timeSlots?.isNotEmpty()) {
+                binding?.llTimingContainer?.addView(getTimeView(it))
+            }
         }
     }
 
@@ -169,7 +172,44 @@ class StaffProfileDetailsFragment() : AppBaseFragment<FragmentStaffProfileBindin
         val itemView = LayoutInflater.from(binding?.llTimingContainer?.context).inflate(R.layout.recycler_item_service_timing, null, false);
         val timeTextView = itemView.findViewById(R.id.ctv_timing_services) as CustomTextView
         if (staffDetails?.isAvailable == true) timeTextView.setTextColor(resources.getColor(R.color.gray_4e4e4e)) else timeTextView.setTextColor(resources.getColor(R.color.pinkish_grey))
-        timeTextView?.text = "${appointmentModel?.day}  ${appointmentModel?.timeSlots?.joinToString(" ,")?.removeSurrounding("(", ")")}"
+       // timeTextView?.text = "${appointmentModel?.day}  ${appointmentModel?.timeSlots?.joinToString(" ,")?.removeSurrounding("(", ")")}"
+
+        var str = StringBuilder()
+        str.clear()
+        when {
+            appointmentModel?.day?.equals("monday", true) == true -> {
+                str.append("Mon: ")
+            }
+            appointmentModel?.day?.equals("tuesday", true) == true -> {
+                str.append("Tue: ")
+            }
+            appointmentModel?.day?.equals("wednesday", true) == true -> {
+                str.append("Wed: ")
+            }
+            appointmentModel?.day?.equals("thursday", true) == true -> {
+                str.append("Thu: ")
+            }
+            appointmentModel?.day?.equals("friday", true) == true -> {
+                str.append("Fri: ")
+            }
+            appointmentModel?.day?.equals("saturday", true) == true -> {
+                str.append("Sat: ")
+            }
+            appointmentModel?.day?.equals("sunday", true) == true -> {
+                str.append("Sun: ")
+            }
+        }
+
+        for ((index, item) in appointmentModel?.timeSlots?.withIndex()!!) {
+            if (item.from?.isNotEmpty() == true) {
+                str.append("${item?.from} to ${item?.to}")
+
+                if (index < appointmentModel?.timeSlots?.size - 1) str.append(", ")
+            }
+        }
+
+        timeTextView?.text = str
+
         return itemView;
     }
 
