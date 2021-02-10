@@ -7,6 +7,7 @@ import com.appservice.rest.EndPoints
 import com.appservice.ui.catalog.RequestWeeklyAppointment
 import com.appservice.ui.model.ServiceListingRequest
 import com.appservice.ui.model.ServiceListingResponse
+import com.appservice.ui.model.ServiceSearchListingResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -28,7 +29,14 @@ interface NowfloatsRemoteData {
     fun getServiceDetails(
             @Query("serviceId") serviceId: String?,
     ): Observable<Response<ServiceDetailResponse>>
-
+    @GET(EndPoints.GET_SEARCH_LISTING)
+    fun getServiceSearchListing(
+            @Query("fpTag") fpTag: String?,
+            @Query("fpId") fpId: String?,
+            @Query("searchString") searchString: String?,
+            @Query("offset") offset: Int?,
+            @Query("limit") limit: Int?,
+    ): Observable<Response<ServiceSearchListingResponse>>
     @POST(EndPoints.GET_SERVICE_LISTING)
     fun getServiceListing(
             @Body request: ServiceListingRequest,

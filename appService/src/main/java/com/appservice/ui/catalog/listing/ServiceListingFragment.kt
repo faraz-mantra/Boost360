@@ -25,10 +25,7 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.ui.UserSession
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.startFragmentActivity
-import com.appservice.ui.model.ItemsItem
-import com.appservice.ui.model.ResultItem
-import com.appservice.ui.model.ServiceListingRequest
-import com.appservice.ui.model.ServiceListingResponse
+import com.appservice.ui.model.*
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.observeOnce
 import com.squareup.picasso.Target
@@ -45,8 +42,8 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     var shareProduct: ItemsItem? = null
 
     private lateinit var searchView: SearchView
-    private var list: ArrayList<ItemsItem> = arrayListOf()
-    private var copylist: ArrayList<ItemsItem> = arrayListOf()
+    private val list: ArrayList<ItemsItem> = arrayListOf()
+    private val copylist: ArrayList<ItemsItem> = arrayListOf()
     private lateinit var adapter: AppBaseRecyclerViewAdapter<ItemsItem>
 
     override fun getLayout(): Int {
@@ -81,6 +78,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
             searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
             searchAutoComplete?.setTextColor(getColor(R.color.white))
             searchView.setIconifiedByDefault(true)
+            searchView.clearFocus()
             searchView.queryHint = getString(R.string.search_services)
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
@@ -88,24 +86,58 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    newText?.let { startFilter(it.trim().toLowerCase(Locale.ROOT)) }
+                    startFilter(newText)
                     return false
                 }
 
             })
         }
+//        copylist.removeAll(list)
+//        copylist.addAll(list)
+//      searchView.setOnCloseListener {
+//          adapter.notify(copylist)
+//          return@setOnCloseListener false
+//      }
     }
+//    private fun startFilter(query: String) {
+//        copylist.removeAll(list)
+//        copylist.addAll(list)
+//        val searchList = ArrayList<ItemsItem>()
+//        if (query.isNotEmpty() || query.isNotBlank()) {
+//            list.forEach { if (it.name?.toLowerCase(Locale.ROOT)?.contains(query) == true) searchList.add(it) }
+//            adapter.notify(searchList)
+//        } else {
+//            adapter.notify(copylist)
+//        }
+//    }
 
-    private fun startFilter(query: String) {
-        copylist.removeAll(list)
-        copylist.addAll(list)
-        val searchList = ArrayList<ItemsItem>()
-        if (query.isNotEmpty() || query.isNotBlank()) {
-            list.forEach { if (it.name?.toLowerCase(Locale.ROOT)?.contains(query) == true) searchList.add(it) }
-            adapter.notify(searchList)
-        } else {
+    private fun startFilter(query: String?) {
+        val secondCopyList = ArrayList<ItemsItem>()
+        if (query.isNullOrEmpty().not()) {
+            viewModel?.getSearchListings(fpTag = UserSession.fpTag, fpId = UserSession.fpId, searchString = query)?.observeOnce(viewLifecycleOwner, {
+//            hideProgress()
+                when (it.status) {
+                    200 -> {
+                        val data = (it as ServiceSearchListingResponse).result?.data as ArrayList<ItemsItem>
+                        secondCopyList.removeAll(data)
+                        secondCopyList.addAll(data)
+                        adapter.notify(secondCopyList)
+                    }
+                    204 -> {
+                        showShortToast("Result not found")
+                        adapter.notify(secondCopyList)
+                    }
+                    else -> {
+                        adapter.notify(copylist)
+
+                    }
+                }
+            })
+
+        } else if (copylist.isNullOrEmpty().not()) {
             adapter.notify(copylist)
         }
+
     }
 
     private fun setServiceListing() {
@@ -117,6 +149,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
                     val map = (it as ServiceListingResponse).result?.map { resultItem -> (resultItem as ResultItem).services?.items }
                     if (map.isNullOrEmpty().not()) {
                         map?.forEach { list1 -> list1?.forEach { itemsItem -> list.add(itemsItem!!) } }
+                        copylist.addAll(list)
                         (requireActivity() as CatalogServiceContainerActivity).getToolbar()?.title = "${resources.getString(R.string.services)} (${list.size})"
                         setEmptyView(View.GONE)
                         this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = list, itemClickListener = this@ServiceListingFragment)
@@ -131,6 +164,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
                 }
             }
         })
+
     }
 
     private fun setListingView(visibility: Int) {
