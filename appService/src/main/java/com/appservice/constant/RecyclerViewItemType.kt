@@ -9,6 +9,7 @@ enum class RecyclerViewItemType {
   IMAGE_PREVIEW,
   GST_DETAILS_VIEW,
   SESSION_ITEM_VIEW,
+  SERVICE_TIMING_ITEM_VIEW,
   CREATE_CATEGORY_ITEM_VIEW,
   ADDITIONAL_FILE_VIEW,
   SERVICE_ITEM_VIEW,
@@ -25,14 +26,15 @@ enum class RecyclerViewItemType {
       SPECIFICATION_ITEM -> R.layout.row_layout_added_specs
       IMAGE_PREVIEW -> R.layout.item_preview_image
       GST_DETAILS_VIEW -> R.layout.item_gst_detail
-      ADDITIONAL_FILE_VIEW -> R.layout.item_pdf_file
       SESSION_ITEM_VIEW -> R.layout.recycler_item_session
+      SERVICE_TIMING_ITEM_VIEW -> R.layout.item_service_timing
       CREATE_CATEGORY_ITEM_VIEW -> R.layout.item_create_category
+      ADDITIONAL_FILE_VIEW -> R.layout.item_pdf_file
       SERVICE_ITEM_VIEW -> R.layout.recycler_item_service
       STAFF_LISTING_VIEW -> R.layout.recycler_item_staff_listing
-      STAFF_FILTER_VIEW -> R.layout.recycler_item_staff_filter
       EXPERIENCE_RECYCLER_ITEM -> R.layout.item_experience_details
       SERVICE_LISTING_VIEW -> R.layout.recycler_item_service_listing
+      STAFF_FILTER_VIEW -> R.layout.recycler_item_staff_filter
     }
   }
 }

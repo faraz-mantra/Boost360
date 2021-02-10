@@ -13,12 +13,12 @@ import com.appservice.ui.catalog.common.AppointmentModel
 import com.appservice.ui.catalog.common.TimeSlot
 import com.framework.BaseApplication
 
-class WeeklyAppointmentViewHolder(binding: RecyclerItemSessionBinding) : AppBaseRecyclerViewHolder<RecyclerItemSessionBinding>(binding) {
+class WeeklyAppointmentViewHolder (binding: RecyclerItemSessionBinding) : AppBaseRecyclerViewHolder<RecyclerItemSessionBinding>(binding) {
     val businessHours: Array<String> = BaseApplication.instance.applicationContext.resources.getStringArray(R.array.business_hours_arrays)
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         setIsRecyclable(false)
 
-        val data = item as AppointmentModel
+        val data = item as? AppointmentModel?:return
 
         // turned on or off visibility of checkbox for all days
 //        binding.ccbAllDay.visibility = data.isAppliedOnAllDaysViewVisible

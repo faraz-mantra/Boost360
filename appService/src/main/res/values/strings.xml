@@ -328,6 +328,7 @@
     <string name="write_the_name_of_your_service">Write the name of your service</string>
     <string name="service_name">Service Name*</string>
     <string name="service_adding_error">Service adding error, please try again.</string>
+    <string name="service_timing_adding_error">Service timing adding error, please try again.</string>
     <string name="service_updating_error">Service updating error, please try again.</string>
     <string name="uploading_service_image">Uploading service image, please wait...</string>
     <string name="secondary_service_image_upload_error">Secondary Service image uploading error, please try again.</string>
@@ -360,6 +361,7 @@
     <string name="this_list_appears_inside_the_product_details_page_on_your_website">This list appears inside the product details page on your website.</string>
     <string name="error_service_image">Service image uploading error, please try again.</string>
     <string name="error_getting_service_details">Error while getting the service details.</string>
+    <string name="error_getting_service_timing">Error while getting the service timing.</string>
     <string name="update">UPDATE</string>
     <string name="profile_updated">profile updated</string>
     <string name="something_went_wrong">something went wrong</string>
@@ -407,7 +409,9 @@
     <string name="if_this_item_is_also_listed_on_some_other_website_enter_the_url_below">If this item is also listed on some other website, enter the URL below</string>
     <string name="payment_collection_and_max_quantity">Payment collection and max quantity</string>
     <string name="search_services">Search services...</string>
-    <array name="stock_availbility">
+  <string name="apply_same_on_all_working_days">Apply same on all working days</string>
+  <string name="note_service_business_is_open">Note: Service can only be given on the days and duration the business is open.</string>
+  <array name="stock_availbility">
         <item>"Unlimited stock"</item>
         <item>"Limited stock"</item>
 

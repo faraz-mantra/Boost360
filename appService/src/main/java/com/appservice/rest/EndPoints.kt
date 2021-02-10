@@ -20,6 +20,10 @@ object EndPoints {
   const val STAFF_UPDATE_IMAGE ="staff/v1/UpdateStaffImage"
   const val STAFF_DELETE_IMAGE ="staff/v1/DeleteStaffImage"
   const val GET_STAFF_DETAILS ="Staff/v1/GetStaffDetails"
+  //TODO WEEKLY APPOINTMENT APIS
+  const val POST_UPDATE_SERVICE_TIMING = "service/v1/UpdateServiceTiming"
+  const val POST_ADD_SERVICE_TIMING = "service/v1/AddServiceTiming"
+  const val GET_SERVICE_TIMING = "service/v1/GetServiceTiming"
 
   //TODO API.NOWFLOATS.COM FLOAT
   const val API_NOWFLOATS_COM_BASE = "https://api.nowfloats.com/"
@@ -48,11 +52,6 @@ object EndPoints {
 
   //TODO SERVICE API WITH NOWFLOATS API
   const val GET_SERVICE_LISTING = "product/v13/GetAllServiceListings"
-
-  //TODO WEEKLY APPOINTMENT APIS
-  const val POST_UPDATE_SERVICE_TIMING = "Service/v1/UpdateServiceTiming"
-  const val POST_ADD_SERVICE_TIMING = "Service/v1/AddServiceTiming"
-  const val GET_SERVICE_TIMING = "Service/v1/GetServiceTiming"
 
 
   //TODO NFX API 2 WITH FLOAT

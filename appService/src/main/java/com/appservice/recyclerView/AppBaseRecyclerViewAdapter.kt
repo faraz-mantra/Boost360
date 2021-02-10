@@ -8,8 +8,10 @@ import com.appservice.R
 import com.appservice.constant.RecyclerViewItemType.*
 import com.appservice.databinding.*
 import com.appservice.holder.*
-import com.appservice.holder.WeeklyAppointmentViewHolder
-import com.appservice.staffs.recycler.*
+import com.appservice.staffs.recycler.StaffExperienceViewHolder
+import com.appservice.staffs.recycler.StaffFilterViewHolder
+import com.appservice.staffs.recycler.StaffListingViewHolder
+import com.appservice.staffs.recycler.StaffServiceViewHolder
 import com.framework.base.BaseActivity
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
@@ -26,13 +28,13 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       GST_DETAILS_VIEW -> GstDetailViewHolder(binding as ItemGstDetailBinding)
       ADDITIONAL_FILE_VIEW -> AdditionalFileViewHolder(binding as ItemPdfFileBinding)
       SESSION_ITEM_VIEW -> WeeklyAppointmentViewHolder(binding as RecyclerItemSessionBinding)
-      CREATE_CATEGORY_ITEM_VIEW->CreateCategoryViewHolder(binding as ItemCreateCategoryBinding)
-
+      SERVICE_TIMING_ITEM_VIEW -> ServiceTimingViewHolder(binding as ItemServiceTimingBinding)
+      CREATE_CATEGORY_ITEM_VIEW -> CreateCategoryViewHolder(binding as ItemCreateCategoryBinding)
       SERVICE_ITEM_VIEW -> StaffServiceViewHolder(binding as RecyclerItemServiceBinding)
       EXPERIENCE_RECYCLER_ITEM -> StaffExperienceViewHolder(binding as ItemExperienceDetailsBinding)
       STAFF_LISTING_VIEW -> StaffListingViewHolder(binding as RecyclerItemStaffListingBinding)
       STAFF_FILTER_VIEW -> StaffFilterViewHolder(binding as RecyclerItemStaffFilterBinding)
-      SERVICE_LISTING_VIEW->ServiceListingViewHolder(binding = binding as RecyclerItemServiceListingBinding)
+      SERVICE_LISTING_VIEW -> ServiceListingViewHolder(binding as RecyclerItemServiceListingBinding)
     }
   }
 
