@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -62,7 +64,7 @@ class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding,
 
     private fun fetchStaffListing() {
         showProgress("Loading")
-        viewModel?.getStaffList(GetStaffListingRequest(FilterBy("", 0, 0), UserSession.fpId, ""))?.observe(viewLifecycleOwner, {
+        viewModel?.getStaffList(GetStaffListingRequest(FilterBy("", 0, 0), UserSession.fpId, ""))?.observe(viewLifecycleOwner, Observer{
             when (it.status) {
                 200 -> {
                     val getStaffListingResponse = it as GetStaffListingResponse
