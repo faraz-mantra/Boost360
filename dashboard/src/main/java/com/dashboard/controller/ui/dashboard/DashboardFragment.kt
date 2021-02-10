@@ -24,7 +24,6 @@ import com.dashboard.model.live.dashboardBanner.*
 import com.dashboard.model.live.drScore.DrScoreSetupData
 import com.dashboard.model.live.drScore.DrScoreUiDataResponse
 import com.dashboard.model.live.drScore.getDrScoreData
-import com.dashboard.model.live.premiumBanner.*
 import com.dashboard.model.live.quickAction.QuickActionItem
 import com.dashboard.model.live.quickAction.QuickActionResponse
 import com.dashboard.model.live.shareUser.ShareUserDetailResponse

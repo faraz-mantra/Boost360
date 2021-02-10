@@ -62,11 +62,11 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
 
   private fun apiSellerSummary(enquiriesFilter: FilterDateModel, isLoader: Boolean = false) {
     if (isLoader) showProgress()
-    viewModel?.getSellerSummaryV2_5(clientId_ORDER, session?.fpTag, getRequestSellerSummary(enquiriesFilter))?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getSellerSummaryV2_5(clientId_ORDER, session?.fpTag, getRequestSellerSummary(enquiriesFilter))?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer{
       val response1 = it as? OrderSummaryResponse
       response1?.Data?.saveTotalOrder(TOTAL_SELLER_ENQUIRIES)
       val scope = if (session?.iSEnterprise == "true") "1" else "0"
-      viewModel?.getUserSummary(clientId, session?.fPParentId, scope, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, { it1 ->
+      viewModel?.getUserSummary(clientId, session?.fPParentId, scope, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer{ it1 ->
         val response2 = it1 as? UserSummaryResponse
         viewModel?.getSubscriberCount(session?.fpTag, clientId, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, { it2 ->
           val subscriberCount = (it2.anyResponse as? Double)?.toInt() ?: 0
@@ -74,7 +74,7 @@ class EnquiriesFragment : AppBaseFragment<FragmentPatientsCustomerBinding, Dashb
           summary?.noOfSubscribers = subscriberCount
           summary?.saveData(USER_MY_ENQUIRIES)
           val identifierType = if (session?.iSEnterprise == "true") "MULTI" else "SINGLE"
-          viewModel?.getUserCallSummary(clientId, session?.fPParentId, identifierType, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, { it2 ->
+          viewModel?.getUserCallSummary(clientId, session?.fPParentId, identifierType, enquiriesFilter.startDate, enquiriesFilter.endDate)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer{ it2 ->
             val response3 = it2 as? CallSummaryResponse
             response3?.saveData(CALL_MY_ENQUIRIES)
             setDataSellerSummary(response1?.Data?.getTotalOrders(), response2?.getSummary(), response3?.getTotalCalls())
