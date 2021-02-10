@@ -48,6 +48,7 @@ object EndPoints {
 
   //TODO SERVICE API WITH NOWFLOATS API
   const val GET_SERVICE_LISTING = "product/v13/GetAllServiceListings"
+  const val GET_SEARCH_LISTING = "/Service/v1/GetSearchListings"
 
   //TODO WEEKLY APPOINTMENT APIS
   const val POST_UPDATE_SERVICE_TIMING = "Service/v1/UpdateServiceTiming"
