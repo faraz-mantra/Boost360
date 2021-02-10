@@ -1,6 +1,19 @@
 package com.appservice.ui.catalog.listing
 
+import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.SpannableString
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
@@ -10,7 +23,9 @@ import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.appservice.R
@@ -25,36 +40,31 @@ import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.ui.UserSession
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.startFragmentActivity
+import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.ui.model.*
 import com.appservice.viewmodel.ServiceViewModel
 import com.framework.extensions.observeOnce
+import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
+import kotlinx.android.synthetic.main.fragment_service_detail.*
 import kotlinx.android.synthetic.main.recycler_item_service_timing.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(), RecyclerItemClickListener {
-    // For sharing
-    private val STORAGE_CODE = 120
-    var targetMap: Target? = null
-    var defaultShareGlobal = true
-    var shareType = 2
-    var shareProduct: ItemsItem? = null
+
 
     private lateinit var searchView: SearchView
     private val list: ArrayList<ItemsItem> = arrayListOf()
     private val copylist: ArrayList<ItemsItem> = arrayListOf()
     private lateinit var adapter: AppBaseRecyclerViewAdapter<ItemsItem>
+    var targetMap: Target? = null
 
     override fun getLayout(): Int {
         return R.layout.fragment_service_listing
     }
 
-    companion object {
-        fun newInstance(): ServiceListingFragment {
-            return ServiceListingFragment()
-        }
-    }
 
     override fun getViewModelClass(): Class<ServiceViewModel> {
         return ServiceViewModel::class.java
@@ -207,8 +217,97 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
         }
 
         if (actionType == RecyclerViewActionType.SERVICE_WHATS_APP_SHARE.ordinal) {
+            shareProduct = item as ItemsItem
+            if (checkStoragePermission())
+                share(defaultShareGlobal, 1, shareProduct)
         }
         if (actionType == RecyclerViewActionType.SERVICE_DATA_SHARE_CLICK.ordinal) {
+            shareProduct = item as ItemsItem
+            if (checkStoragePermission())
+                share(defaultShareGlobal, 0, shareProduct)
+        }
+    }
+
+    private fun checkStoragePermission(): Boolean {
+        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            showDialog(requireActivity(), "Storage Permission", "To share the image we need storage permission."
+            ) { _: DialogInterface?, _: Int -> ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_CODE) }
+            return false
+        }
+        return true
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == STORAGE_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (!defaultShareGlobal && shareType != 2 && shareProduct != null) {
+                share(defaultShareGlobal, shareType, shareProduct)
+            }
+        }
+    }
+
+    fun showDialog(mContext: Context?, title: String?, msg: String?, listener: DialogInterface.OnClickListener) {
+        val builder = AlertDialog.Builder(mContext!!)
+        builder.setTitle(title).setMessage(msg).setPositiveButton("Ok") { dialog, which ->
+            dialog.dismiss()
+            listener.onClick(dialog, which)
+        }
+        builder.create().show()
+    }
+
+    fun share(defaultShare: Boolean, type: Int, product: ItemsItem?) {
+        showProgress("Sharing . . .")
+        val share = Intent(Intent.ACTION_SEND)
+        share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        if (isOnline(baseActivity)) {
+            val shareText = String.format("*%s* %s\n*%s* %s\n\n-------------\n%s\n\nfor more details visit: %s",
+                    product?.name?.trim { it <= ' ' }, product?.description, "${product?.currency}${product?.discountedPrice}",
+                    "${product?.currency}${product?.price}", product?.description?.trim { it <= ' ' }, product?.category?.trim { it <= ' ' })
+            var target: Target = object : Target {
+                override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
+                    targetMap = null
+                    hideProgress()
+                    try {
+                        val mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+                        val view = View(activity)
+                        view.draw(Canvas(mutableBitmap))
+                        val path = MediaStore.Images.Media.insertImage(requireActivity().contentResolver, mutableBitmap, "boost_360", "")
+                        val uri = Uri.parse(path)
+                        share.putExtra(Intent.EXTRA_TEXT, shareText)
+                        share.putExtra(Intent.EXTRA_STREAM, uri)
+                        share.type = "image/*"
+                        if (share.resolveActivity(requireActivity().packageManager) != null) {
+                            if (!defaultShare) {
+                                if (type == 0) {
+                                    share.setPackage(getString(R.string.facebook_package))
+                                } else if (type == 1) {
+                                    share.setPackage(getString(R.string.whats_app_package))
+                                }
+                            }
+                            startActivityForResult(Intent.createChooser(share, resources.getString(R.string.share_updates)), 1)
+                        }
+                    } catch (e: OutOfMemoryError) {
+                        showShortToast(getString(R.string.image_size_is_large))
+                    } catch (e: Exception) {
+                        showShortToast(getString(R.string.image_not_able_to_share))
+                    }
+                }
+
+                override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
+                    hideProgress()
+                    targetMap = null
+                    showShortToast(getString(R.string.failed_to_download_image))
+                }
+
+                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                }
+            }
+            targetMap = target
+                Picasso.get().load(product?.image).into(target)
+        } else {
+            hideProgress()
+            showShortToast(getString(R.string.can_not_share_image_offline))
+            //            Methods.showSnackBarNegative((Activity) getApplicationContext(), getApplicationContext().getString(R.string.can_not_share_image_offline_mode));
         }
     }
 
@@ -225,7 +324,52 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     }
 
     private fun openSortingBottomSheet() {
+        val sortSheet = SortAndFilterBottomSheet()
+        sortSheet.onClicked = { }
+        sortSheet.show(this@ServiceListingFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
+    }
 
+    companion object {
+        fun newInstance(): ServiceListingFragment {
+            return ServiceListingFragment()
+        }
+
+        private const val STORAGE_CODE = 120
+        var defaultShareGlobal = true
+        var shareType = 2
+        var shareProduct: ItemsItem? = null
+    }
+
+    fun isOnline(context: Activity): Boolean {
+        var status = false
+        try {
+            val connectivityManager = context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            var netInfo = connectivityManager.getNetworkInfo(0)
+            if (netInfo != null
+                    && netInfo.state == NetworkInfo.State.CONNECTED) {
+                status = true
+            } else {
+                netInfo = connectivityManager.getNetworkInfo(1)
+                if (netInfo != null
+                        && netInfo.state == NetworkInfo.State.CONNECTED) status = true
+            }
+            if (!status) {
+                snackbarNoInternet(context)
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            snackbarNoInternet(context)
+            return false
+        }
+        return status
+    }
+
+    private fun snackbarNoInternet(context: Activity) {
+        val snackBar = Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), Snackbar.LENGTH_LONG)
+        snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))
+        snackBar.show()
     }
 }
+
 
