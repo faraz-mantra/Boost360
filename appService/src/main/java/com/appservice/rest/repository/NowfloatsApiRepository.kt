@@ -94,5 +94,8 @@ object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, AppBaseLo
     fun getServiceListing(request: ServiceListingRequest): Observable<BaseResponse> {
         return makeRemoteRequest(remoteDataSource.getServiceListing(request), TaskCode.GET_SERVICE_LISTING)
     }
+    fun getServiceSearchListing(fpTag: String?, fpId: String?, searchString: String?, offset: Int?=0, limit: Int?=0):Observable<BaseResponse>{
+        return makeRemoteRequest(remoteDataSource.getServiceSearchListing(fpTag, fpId, searchString, offset, limit),TaskCode.GET_SERVICE_LISTING)
+    }
 
 }
