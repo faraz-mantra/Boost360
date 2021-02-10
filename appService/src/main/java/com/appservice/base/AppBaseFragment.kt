@@ -47,7 +47,7 @@ abstract class AppBaseFragment<Binding : ViewDataBinding, ViewModel : BaseViewMo
 
     protected fun isResponseSuccessful(it: BaseResponse, errorMessage: String?): Boolean {
         if ((it.error is NoNetworkException).not()) {
-            if ((it.status == 200 || it.status == 201 || it.status == 202)) {
+            if ((it.isSuccess())) {
                 return true;
             } else {
                 Log.d("API_ERROR", it.message())

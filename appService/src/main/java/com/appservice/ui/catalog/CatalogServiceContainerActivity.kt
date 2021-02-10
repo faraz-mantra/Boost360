@@ -15,6 +15,7 @@ import com.appservice.ui.catalog.catalogProduct.information.ProductInformationFr
 import com.appservice.ui.catalog.catalogProduct.product.ProductDetailFragment
 import com.appservice.ui.catalog.catalogService.information.ServiceInformationFragment
 import com.appservice.ui.catalog.catalogService.service.ServiceDetailFragment
+import com.appservice.ui.catalog.catalogService.weeklyTime.ServiceTimingFragment
 import com.appservice.ui.catalog.common.CreateCategoryFragment
 import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
 import com.appservice.ui.catalog.listing.ServiceListingFragment
@@ -34,6 +35,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   private var productDetailFragment: ProductDetailFragment? = null
   private var productInformationFragment: ProductInformationFragment? = null
   private var weeklyAppointmentFragment: WeeklyAppointmentFragment? = null
+  private var serviceTimingFragment: ServiceTimingFragment? = null
   private var createCategoryFragment: CreateCategoryFragment? = null
   private var serviceListingFragment: ServiceListingFragment? = null
 
@@ -59,7 +61,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_LISTING -> R.style.CatalogTheme
-      FragmentType.SERVICE_INFORMATION, FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> R.style.CatalogTheme_Information
+      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> R.style.CatalogTheme_Information
       else -> super.customTheme()
     }
   }
@@ -88,7 +90,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_LISTING, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.WEEKLY_APPOINTMENT_FRAGMENT, FragmentType.CREATE_CATEGORY -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_LISTING, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT, FragmentType.CREATE_CATEGORY -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
 
       else -> super.getNavigationIcon()
     }
@@ -100,7 +102,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
       FragmentType.SERVICE_DETAIL_VIEW -> resources.getString(R.string.service_details)
       FragmentType.PRODUCT_DETAIL_VIEW -> resources.getString(R.string.product_details)
       FragmentType.PRODUCT_INFORMATION -> resources.getString(R.string.additional_information)
-      FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> getString(R.string.weekly_appointment)
+      FragmentType.SERVICE_TIMING_FRAGMENT -> getString(R.string.weekly_appointment)
       FragmentType.CREATE_CATEGORY -> getString(R.string.categories)
       FragmentType.SERVICE_LISTING -> getString(R.string.services)
       else -> super.getToolbarTitle()
@@ -109,7 +111,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarTitleGravity(): Int {
     return when (type) {
-      FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> Gravity.CENTER
+      FragmentType.SERVICE_TIMING_FRAGMENT -> Gravity.CENTER
       else -> {
         Gravity.START
       }
@@ -136,10 +138,11 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
         createCategoryFragment = CreateCategoryFragment.newInstance()
         createCategoryFragment
       }
-      FragmentType.WEEKLY_APPOINTMENT_FRAGMENT -> {
-        weeklyAppointmentFragment = WeeklyAppointmentFragment.newInstance()
-        weeklyAppointmentFragment
+      FragmentType.SERVICE_TIMING_FRAGMENT -> {
+        serviceTimingFragment = ServiceTimingFragment.newInstance()
+        serviceTimingFragment
       }
+
       FragmentType.SERVICE_DETAIL_VIEW -> {
         serviceDetailFragment = ServiceDetailFragment.newInstance()
         serviceDetailFragment

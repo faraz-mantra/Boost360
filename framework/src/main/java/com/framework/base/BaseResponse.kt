@@ -26,6 +26,6 @@ open class BaseResponse(
   }
 
   fun isSuccess(): Boolean {
-    return status == 200 || status == 201 || status == 202
+    return status == 200 || status == 201 || status == 202 || status == 204
   }
 }

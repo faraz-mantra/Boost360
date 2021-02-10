@@ -1,14 +1,11 @@
 package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
-import com.appservice.model.ProductDimensionRequest
-import com.appservice.model.serviceProduct.Product
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
-import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.gstProduct.ProductGstDetailRequest
 import com.appservice.model.serviceProduct.gstProduct.update.ProductUpdateRequest
-import com.appservice.model.serviceProduct.update.ProductUpdate
+import com.appservice.model.serviceTiming.AddServiceTimingRequest
 import com.appservice.model.servicev1.DeleteSecondaryImageRequest
 import com.appservice.model.servicev1.DeleteServiceRequest
 import com.appservice.model.servicev1.ServiceModelV1
@@ -91,6 +88,19 @@ class ServiceViewModelV1 : BaseViewModel() {
     fun userAccountDetails(fpId: String?, clientId: String?): LiveData<BaseResponse> {
         return WithFloatRepository.userAccountDetail(fpId, clientId).toLiveData()
     }
+
+    fun addServiceTiming(request: AddServiceTimingRequest?): LiveData<BaseResponse> {
+        return StaffNowFloatsRepository.addServiceTiming(request).toLiveData()
+    }
+
+    fun updateServiceTiming(request: AddServiceTimingRequest?): LiveData<BaseResponse> {
+        return StaffNowFloatsRepository.updateServiceTiming(request).toLiveData()
+    }
+
+    fun getServiceTiming(request: String?): LiveData<BaseResponse> {
+        return StaffNowFloatsRepository.getServiceTiming(request).toLiveData()
+    }
+
 //  fun addProductDetails(request:ProductDimensionRequest): LiveData<BaseResponse> {
 //    return KitWebActionRepository.productAddData(request).toLiveData()
 //  }

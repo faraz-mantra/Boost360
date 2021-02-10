@@ -4,7 +4,6 @@ import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.servicev1.*
 import com.appservice.rest.EndPoints
-import com.appservice.ui.catalog.RequestWeeklyAppointment
 import com.appservice.ui.model.ServiceListingRequest
 import com.appservice.ui.model.ServiceListingResponse
 import io.reactivex.Observable
@@ -83,16 +82,6 @@ interface NowfloatsRemoteData {
             @Body requestBody: RequestBody?,
     ): Observable<Response<String>>
 
-    @POST(EndPoints.POST_ADD_SERVICE_TIMING)
-    fun addServiceTiming(@Body requestWeeklyAppointment: RequestWeeklyAppointment?): Observable<Response<ResponseBody>>
-
-    @POST(EndPoints.POST_UPDATE_SERVICE_TIMING)
-    fun updateServiceTiming(@Body requestWeeklyAppointment: RequestWeeklyAppointment?): Observable<Response<ResponseBody>>
-
-    @GET(EndPoints.GET_SERVICE_TIMING)
-    fun getServiceTimings(
-            @Query("serviceId") serviceId: String?,
-    ): Observable<Response<List<String>>>
 
     @POST(EndPoints.DELETE_SECONDARY_IMAGE)
     fun deleteSecondaryImage(@Body request: DeleteSecondaryImageRequest?): Observable<Response<ServiceV1BaseResponse>>

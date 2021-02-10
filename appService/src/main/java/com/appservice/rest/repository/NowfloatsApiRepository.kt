@@ -12,7 +12,6 @@ import com.appservice.model.servicev1.UploadImageRequest
 import com.appservice.rest.TaskCode
 import com.appservice.rest.apiClients.NowfloatsApiClient
 import com.appservice.rest.services.NowfloatsRemoteData
-import com.appservice.ui.catalog.RequestWeeklyAppointment
 import com.appservice.ui.model.ServiceListingRequest
 import com.framework.base.BaseResponse
 import io.reactivex.Observable
@@ -86,21 +85,6 @@ object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, AppBaseLo
     ): Observable<BaseResponse> {
         return makeRemoteRequest(remoteDataSource.addUpdateImageProduct(clientId, requestType, requestId, totalChunks,
                 currentChunkNumber, productId, requestBody), TaskCode.ADD_UPDATE_IMAGE_PRODUCT_SERVICE)
-    }
-
-    fun addServiceTiming(request: RequestWeeklyAppointment?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.addServiceTiming(request),TaskCode.GET_SERVICE_TIMING)
-
-    }
-
-    fun updateServiceTiming(request: RequestWeeklyAppointment?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.updateServiceTiming(request), TaskCode.GET_SERVICE_TIMING)
-
-    }
-
-    fun getServiceTiming(serviceId: String?): Observable<BaseResponse> {
-        return makeRemoteRequest(remoteDataSource.getServiceTimings(serviceId), TaskCode.GET_SERVICE_TIMING)
-
     }
 
     fun deleteSecondaryImage(request: DeleteSecondaryImageRequest?): Observable<BaseResponse> {

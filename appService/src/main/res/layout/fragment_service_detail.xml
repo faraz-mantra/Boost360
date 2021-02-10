@@ -10,14 +10,13 @@
   <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/white_snow"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/main_view"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/white">
+      android:layout_height="match_parent">
 
       <View
         android:id="@+id/shadow1"
@@ -46,18 +45,18 @@
             android:orientation="vertical">
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
 
               <com.framework.views.customViews.CustomImageView
-                  android:id="@+id/service_image_view"
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/size_180"
-                  android:layout_marginTop="@dimen/size_1"
-                  android:layout_marginBottom="@dimen/size_1"
-                  android:scaleType="centerCrop"
-                  android:visibility="gone"
-                  app:srcCompat="@color/placeholder_bg" />
+                android:id="@+id/service_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_180"
+                android:layout_marginTop="@dimen/size_1"
+                android:layout_marginBottom="@dimen/size_1"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                app:srcCompat="@color/placeholder_bg" />
 
               <com.framework.views.customViews.CustomImageView
                 android:id="@+id/clear_image"
@@ -76,7 +75,8 @@
                 android:id="@+id/image_add_btn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_180"
-                android:background="?attr/selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
+                android:background="@color/white_smoke_1"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
@@ -112,9 +112,9 @@
                   android:layout_marginTop="@dimen/size_20"
                   android:text="@string/add_service_image"
                   android:textColor="@color/yellow_ffb900"
-                    app:fontFamily="@font/semi_bold"
-                    app:textAllCaps="true"
-                    app:textType="BODY_1" />
+                  app:fontFamily="@font/semi_bold"
+                  app:textAllCaps="true"
+                  app:textType="BODY_1" />
 
               </LinearLayout>
 
@@ -123,21 +123,21 @@
           </androidx.appcompat.widget.LinearLayoutCompat>
 
           <View
-              android:id="@+id/divider2"
-              android:layout_width="match_parent"
-              android:layout_height="1dp"
-              android:background="?android:attr/listDivider" />
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
 
           <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginStart="@dimen/size_20"
-              android:orientation="vertical"
-              android:paddingEnd="@dimen/size_20">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_20"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/size_20">
 
             <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
               android:layout_marginStart="@dimen/size_3"
               android:layout_marginTop="@dimen/size_36"
               android:text="@string/service_name"
@@ -646,14 +646,15 @@
                           android:textSize="14sp" />
 
                       </androidx.appcompat.widget.LinearLayoutCompat>
+
                       <com.framework.views.customViews.CustomCheckBox
-                          android:id="@+id/ccb_payextra"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:text="@string/allow_cash_on_delivery"
-                          android:textColor="@color/primary_grey"
-                          android:theme="@style/ActiveTheme"
-                          android:visibility="visible" />
+                        android:id="@+id/ccb_payextra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/allow_cash_on_delivery"
+                        android:textColor="@color/primary_grey"
+                        android:theme="@style/ActiveTheme"
+                        android:visibility="visible" />
 
                     </LinearLayout>
 
@@ -707,121 +708,21 @@
               android:textColorHint="@color/primary_grey"
               android:visibility="gone"
               tools:ignore="UnusedAttribute" />
-            <!--            <com.framework.views.customViews.CustomTextView-->
-            <!--                android:id="@+id/tvCustomerAddress"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:includeFontPadding="false"-->
-            <!--                android:visibility="visible"-->
-            <!--                android:text="Select, how do you want to give this service to your clients."-->
-            <!--                android:textColor="@color/warm_grey"-->
-            <!--                android:textSize="12sp"-->
-            <!--                app:fontFamily="@font/regular" />-->
 
-            <!--            <androidx.appcompat.widget.LinearLayoutCompat-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginTop="@dimen/size_10"-->
-            <!--                android:background="@drawable/shape_grey_stroke_rect_bkg"-->
-            <!--                android:orientation="vertical">-->
-
-            <!--              &lt;!&ndash;android:background="@color/dodger_blue_ED73FE"&ndash;&gt;-->
-            <!--              <androidx.constraintlayout.widget.ConstraintLayout-->
-            <!--                  android:layout_width="match_parent"-->
-            <!--                  android:layout_height="wrap_content"-->
-            <!--                  android:background="@drawable/shape_blue_stroke_rect_title_bkg"-->
-            <!--                  android:padding="@dimen/size_10">-->
-
-            <!--                <com.framework.views.customViews.CustomTextView-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:text="Both online and in-person"-->
-            <!--                    android:textColor="@color/black_4f4f4f"-->
-            <!--                    android:textSize="12sp"-->
-            <!--                    app:fontFamily="@font/semi_bold"-->
-            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-            <!--                    app:layout_constraintTop_toTopOf="parent" />-->
-
-            <!--                <com.framework.views.customViews.CustomTextView-->
-            <!--                    android:id="@+id/vw_changeDeliverConfig"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:text="@string/change"-->
-            <!--                    android:textColor="@color/cerulean_blue"-->
-            <!--                    android:textSize="10sp"-->
-            <!--                    app:fontFamily="@font/semi_bold"-->
-            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                    app:layout_constraintRight_toRightOf="parent"-->
-            <!--                    app:layout_constraintTop_toTopOf="parent"-->
-            <!--                    app:textAllCaps="true" />-->
-
-            <!--              </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-            <!--              <androidx.constraintlayout.widget.ConstraintLayout-->
-            <!--                  android:id="@+id/vw_changeDeliverLocation"-->
-            <!--                  android:layout_width="match_parent"-->
-            <!--                  android:layout_height="wrap_content"-->
-            <!--                  android:padding="@dimen/size_10">-->
-
-            <!--                <androidx.appcompat.widget.LinearLayoutCompat-->
-            <!--                    android:layout_width="0dp"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                    app:layout_constraintLeft_toLeftOf="parent"-->
-            <!--                    app:layout_constraintRight_toLeftOf="@+id/iv_dropDown"-->
-            <!--                    app:layout_constraintTop_toTopOf="parent">-->
-
-            <!--                  <com.framework.views.customViews.CustomTextView-->
-            <!--                      android:layout_width="wrap_content"-->
-            <!--                      android:layout_height="wrap_content"-->
-            <!--                      android:drawablePadding="@dimen/size_6"-->
-            <!--                      android:includeFontPadding="false"-->
-            <!--                      android:text="Service delivery at:"-->
-            <!--                      android:textColor="@color/black"-->
-            <!--                      android:textSize="12sp"-->
-            <!--                      app:drawableStartCompat="@drawable/ic_delivery_business_location"-->
-            <!--                      app:fontFamily="@font/regular" />-->
-
-            <!--                  <com.framework.views.customViews.CustomTextView-->
-            <!--                      android:layout_width="wrap_content"-->
-            <!--                      android:layout_height="wrap_content"-->
-            <!--                      android:layout_marginLeft="@dimen/size_5"-->
-            <!--                      android:includeFontPadding="false"-->
-            <!--                      android:text="My business Location"-->
-            <!--                      android:textColor="@color/warm_grey"-->
-            <!--                      android:textSize="12sp"-->
-            <!--                      app:fontFamily="@font/regular" />-->
-
-            <!--                </androidx.appcompat.widget.LinearLayoutCompat>-->
-
-            <!--                <com.framework.views.customViews.CustomImageView-->
-            <!--                    android:id="@+id/iv_dropDown"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                    app:layout_constraintRight_toRightOf="parent"-->
-            <!--                    app:layout_constraintTop_toTopOf="parent"-->
-            <!--                    app:srcCompat="@drawable/ic_grey_drop_down" />-->
-
-            <!--              </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-            <!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
             <androidx.constraintlayout.widget.ConstraintLayout
+              android:id="@+id/btn_other_info"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_20"
               android:background="@drawable/shape_grey_stroke_rect_bkg"
+              android:clickable="true"
+              android:focusable="true"
+              android:foreground="?attr/selectableItemBackground"
               android:padding="@dimen/size_10">
 
-
               <LinearLayout
-                android:id="@+id/btn_other_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
