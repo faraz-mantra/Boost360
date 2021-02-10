@@ -78,4 +78,8 @@ class ServiceViewModel : BaseViewModel() {
   fun getServiceListing(request: ServiceListingRequest): LiveData<BaseResponse> {
     return NowfloatsApiRepository.getServiceListing(request).toLiveData()
   }
+
+  fun getSearchListings(fpTag: String?, fpId: String?, searchString: String?="", offset: Int?=0, limit: Int?=0):LiveData<BaseResponse>{
+    return NowfloatsApiRepository.getServiceSearchListing(fpTag, fpId, searchString, offset, limit).toLiveData()
+  }
 }

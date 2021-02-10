@@ -52,6 +52,7 @@ object EndPoints {
 
   //TODO SERVICE API WITH NOWFLOATS API
   const val GET_SERVICE_LISTING = "product/v13/GetAllServiceListings"
+  const val GET_SEARCH_LISTING = "/Service/v1/GetSearchListings"
 
 
   //TODO NFX API 2 WITH FLOAT

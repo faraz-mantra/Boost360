@@ -411,7 +411,24 @@
     <string name="search_services">Search services...</string>
   <string name="apply_same_on_all_working_days">Apply same on all working days</string>
   <string name="note_service_business_is_open">Note: Service can only be given on the days and duration the business is open.</string>
-  <array name="stock_availbility">
+    <string name="sort_the_service_list">Sort the service list</string>
+    <string name="most_popular_on_top">Most popular on top</string>
+    <string name="latest_on_top">Latest on top</string>
+    <string name="oldest_on_top">Oldest on top</string>
+    <string name="biggest_value_service_on_top">Biggest value service on top</string>
+    <string name="lowest_value_service_on_top">Lowest value service on top</string>
+    <string name="apply">Apply</string>
+    <string name="select_how_you_would_want_to_list_the_services">Select how you would want to list the services</string>
+    <string name="reset">RESET</string>
+    <string name="share_updates">Share your update</string>
+    <string name="noInternet">No Internet Connection</string>
+    <string name="failed_to_download_image">failed to download image</string>
+    <string name="image_not_able_to_share">Image not able to share</string>
+    <string name="image_size_is_large">Image size is large, not able to share</string>
+    <string name="whats_app_package">com.whatsapp</string>
+    <string name="facebook_package">com.facebook.katana</string>
+    <string name="can_not_share_image_offline">can not share image offline mode</string>
+    <array name="stock_availbility">
         <item>"Unlimited stock"</item>
         <item>"Limited stock"</item>
 
