@@ -1,199 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <data/>
-<com.framework.views.customViews.CustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+  <data />
+
+  <com.framework.views.customViews.CustomCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="@dimen/size_12"
     app:cardBackgroundColor="@android:color/white"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="4dp">
+    app:cardCornerRadius="@dimen/size_4">
 
     <RelativeLayout
-        android:id="@+id/item_category_root"
+      android:id="@+id/item_category_root"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="?attr/selectableItemBackground"
+      android:paddingLeft="@dimen/size_15"
+      android:paddingTop="@dimen/size_10"
+      android:paddingRight="@dimen/size_15"
+      android:paddingBottom="@dimen/size_10">
+
+      <com.framework.views.roundedimageview.RoundedImageView
+        android:id="@+id/card_thumbnail"
+        android:layout_width="@dimen/size_48"
+        android:layout_height="@dimen/size_48"
+        android:layout_below="@id/ctv_duration"
+        android:layout_marginTop="-5dp"
+        android:layout_marginEnd="@dimen/size_10"
+        android:scaleType="centerCrop"
+        app:riv_border_color="@color/gray_ligh_3"
+        app:riv_border_width="1dp"
+        app:riv_corner_radius="@dimen/size_3"
+        app:riv_mutate_background="true"
+        app:riv_oval="false"
+        app:srcCompat="@drawable/placeholder_image_n" />
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/ctv_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/size_8"
+        android:layout_toStartOf="@id/card_thumbnail"
+        android:drawableEnd="@drawable/ic_clock_color_primary_text"
+        android:drawablePadding="@dimen/size_5"
+        android:fontFamily="@font/open_sans"
+        android:textColor="@color/secondary_text"
+        android:textFontWeight="600"
+        android:textSize="12sp"
+        tools:text="30min" />
+
+      <LinearLayout
+        android:id="@+id/ll_service_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:paddingLeft="@dimen/size_15"
-        android:paddingTop="@dimen/size_10"
-        android:paddingRight="@dimen/size_15"
-        android:paddingBottom="@dimen/size_10">
+        android:layout_below="@id/ctv_duration"
+        android:layout_toEndOf="@+id/card_thumbnail"
+        android:orientation="vertical"
+        android:paddingBottom="4dp">
 
-        <com.framework.views.roundedimageview.RoundedImageView
-            android:id="@+id/card_thumbnail"
-            android:layout_width="@dimen/size_50"
-            android:layout_height="@dimen/size_50"
-            android:layout_marginEnd="@dimen/size_10"
-            android:scaleType="fitXY"
-            android:layout_marginTop="-5dp"
-            android:layout_below="@id/ctv_duration"
-            app:riv_corner_radius="@dimen/size_3"
-            app:riv_border_color="@color/gray_ligh_3"
-            app:riv_border_width="1dp"
-            app:riv_mutate_background="true"
-            app:riv_oval="false" />
 
         <com.framework.views.customViews.CustomTextView
+          android:id="@+id/label_category"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/open_sans"
+          android:maxLines="2"
+          android:paddingBottom="3dp"
+          android:textColor="#828282"
+          android:textFontWeight="400"
+          android:textSize="10sp"
+          android:textStyle="normal"
+          tools:text="Watch by Fastrack" />
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/label_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/label_brand"
+          android:fontFamily="@font/open_sans"
+          android:maxLines="2"
+          android:textColor="@color/primary_text"
+          android:textFontWeight="400"
+          android:textSize="14sp"
+          android:textStyle="normal"
+          tools:text="Fastrack Bare Basic Watch" />
+
+      </LinearLayout>
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/label_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/card_thumbnail"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/secondary_text"
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:text="This is a wedding makeup description" />
+
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label_description"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <com.framework.views.customViews.CustomTextView
+          android:id="@+id/label_currency"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:textColor="@color/secondary_text"
+          android:textSize="13sp"
+          android:visibility="gone"
+          tools:text="Price: " />
+
+        <LinearLayout
+          android:id="@+id/linear_layout"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentStart="true"
+          android:layout_centerVertical="true"
+          android:layout_toStartOf="@id/ll_share_buttons"
+          android:orientation="vertical">
+
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/label_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:id="@+id/ctv_duration"
-            android:layout_alignParentEnd="true"
-            android:fontFamily="@font/open_sans"
-            android:textFontWeight="600"
+            android:layout_gravity="center_vertical"
+            android:paddingEnd="4dp"
+            android:textColor="@color/primary_text"
+            android:textFontWeight="800"
             android:textSize="12sp"
-            android:layout_toStartOf="@id/card_thumbnail"
-            android:layout_marginEnd="@dimen/size_8"
-            android:drawableEnd="@drawable/ic_clock_color_primary_text"
-            android:drawablePadding="@dimen/size_5"
-            tools:text="30min"
-            android:textColor="@color/secondary_text" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ll_service_details"
-            android:layout_below="@id/ctv_duration"
-            android:layout_toEndOf="@+id/card_thumbnail"
-            android:orientation="vertical"
-            android:paddingBottom="4dp">
+            android:textStyle="normal"
+            tools:text="INR 0" />
 
+          <com.framework.views.customViews.CustomTextView
+            android:id="@+id/label_base_price"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/open_sans"
+            android:gravity="center_vertical"
+            android:paddingEnd="8dp"
+            android:textColor="#828282"
+            android:textFontWeight="400"
+            android:textSize="12sp"
+            tools:text="INR 0" />
 
-
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/label_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
-                android:maxLines="2"
-                android:textColor="#828282"
-                android:paddingBottom="3dp"
-                android:textFontWeight="400"
-                android:textSize="10sp"
-                tools:text="Watch by Fastrack"
-                android:textStyle="normal" />
-
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/label_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/label_brand"
-                android:fontFamily="@font/open_sans"
-                android:maxLines="2"
-                android:textFontWeight="400"
-                tools:text="Fastrack Bare Basic Watch"
-                android:textColor="@color/primary_text"
-                android:textSize="14sp"
-                android:textStyle="normal" />
 
         </LinearLayout>
 
-        <com.framework.views.customViews.CustomTextView
-            android:id="@+id/label_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/card_thumbnail"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:visibility="gone"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            tools:text="This is a wedding makeup description"
-            android:textColor="@color/secondary_text"
-            android:textSize="14sp" />
+        <LinearLayout
+          android:id="@+id/ll_share_buttons"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:layout_centerVertical="true"
+          android:orientation="horizontal">
+
+          <ImageView
+            android:id="@+id/shareData"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/rounded_stroke_grey_4_solid_gray"
+            android:padding="@dimen/size_4"
+            android:src="@drawable/ic_share_normal"
+            app:iconPadding="@dimen/size_3" />
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/label_description"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/label_currency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                tools:text="Price: "
-                android:textColor="@color/secondary_text"
-                android:textSize="13sp"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/linear_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@id/ll_share_buttons"
-                android:orientation="vertical">
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/label_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingEnd="4dp"
-                    tools:text="INR 0"
-                    android:textFontWeight="800"
-                    android:textStyle="normal"
-                    android:textColor="@color/primary_text"
-                    android:textSize="12sp" />
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/label_base_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:paddingEnd="8dp"
-                    android:fontFamily="@font/open_sans"
-                    android:textColor="#828282"
-                    tools:text="INR 0"
-                    android:textFontWeight="400"
-                    android:textSize="12sp" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_share_buttons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/shareData"
-                    android:layout_width="30dp"
-                    android:src="@drawable/ic_share_normal"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="8dp"
-                    android:padding="@dimen/size_4"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/rounded_stroke_grey_4_solid_gray"
-                    app:iconPadding="@dimen/size_3" />
-
-
-                <com.framework.views.customViews.CustomButton
-                    android:id="@+id/share_whatsapp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_button_proceed_4"
-                    android:backgroundTint="#6BC95C"
-                    android:drawableStart="@drawable/ic_whatsapp_for_business_active"
-                    android:drawablePadding="@dimen/size_2"
-                    android:gravity="center"
-                    android:paddingHorizontal="@dimen/size_16"
-                    android:text="@string/share"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-        </RelativeLayout>
+          <com.framework.views.customViews.CustomButton
+            android:id="@+id/share_whatsapp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_button_proceed_4"
+            android:backgroundTint="#6BC95C"
+            android:drawableStart="@drawable/ic_whatsapp_for_business_active"
+            android:drawablePadding="@dimen/size_2"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/size_16"
+            android:text="@string/share"
+            android:textColor="@color/white" />
+        </LinearLayout>
+      </RelativeLayout>
     </RelativeLayout>
-</com.framework.views.customViews.CustomCardView>
+  </com.framework.views.customViews.CustomCardView>
 </layout>

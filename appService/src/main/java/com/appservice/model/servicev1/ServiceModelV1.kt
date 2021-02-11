@@ -53,6 +53,7 @@ class ServiceModelV1(
         var UpdatedOn: String? = null,
         var isProductSelected: Boolean = false,
         var productType: String? = null,
+        var serviceType: List<Int> = arrayListOf(0),
         var paymentType: String? = null,
         var variants: Boolean = false,
         @SerializedName("BrandName", alternate = ["brandName"])
@@ -72,7 +73,7 @@ class ServiceModelV1(
         @SerializedName("maxPrepaidOnlineOrders")
         var maxPrepaidOnlineAvailable: Int = 10,
 
-        @SerializedName("uniquePaymentUrl")
+        @SerializedName("url",alternate = ["uniquePaymentUrl"])
         var BuyOnlineLink: BuyOnlineLink? = null,
         @SerializedName("KeySpecifications")
         var keySpecification: KeySpecification? = null,

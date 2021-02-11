@@ -37,7 +37,6 @@ class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, Staf
     super.onCreateView()
     getBundleData()
     setOnClickListener(binding?.btnSave)
-    this.serviceTimingList = getServiceTimingList(this.serviceTimingList)
     setServiceTimingAdapter(this.serviceTimingList!!)
   }
 
@@ -51,10 +50,6 @@ class ServiceTimingFragment : AppBaseFragment<FragmentServiceTimingBinding, Staf
       adapterTiming = AppBaseRecyclerViewAdapter(activity = baseActivity, serviceTimingList, this@ServiceTimingFragment)
       adapter = adapterTiming
     }
-  }
-
-  private fun getServiceTimingList(serviceTimingList: ArrayList<ServiceTiming>?): ArrayList<ServiceTiming> {
-    return if (serviceTimingList.isNullOrEmpty().not()) serviceTimingList!! else ServiceTiming().getEmptyDataServiceTiming()
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {

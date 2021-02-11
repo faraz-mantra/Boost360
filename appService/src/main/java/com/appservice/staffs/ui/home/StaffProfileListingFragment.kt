@@ -32,232 +32,224 @@ import kotlin.collections.ArrayList
 
 class StaffProfileListingFragment : AppBaseFragment<FragmentStaffListingBinding, StaffViewModel>(), RecyclerItemClickListener, SearchView.OnQueryTextListener, IOnBackPressed {
 
-    private var searchView: SearchView? = null
-    private var layoutManager: LinearLayoutManager? = null
-    private val list: ArrayList<DataItem> = ArrayList()
-    private val copyList: ArrayList<DataItem> = ArrayList()
-    private lateinit var adapter: AppBaseRecyclerViewAdapter<DataItem>
-    private var filter = FilterBy("", 10, 0)
+  private var searchView: SearchView? = null
+  private var layoutManager: LinearLayoutManager? = null
+  private val list: ArrayList<DataItem> = ArrayList()
+  private val copyList: ArrayList<DataItem> = ArrayList()
+  private lateinit var adapter: AppBaseRecyclerViewAdapter<DataItem>
+  private var filter = FilterBy("", 10, 0)
 
-    /* Paging */
-    private var isLastPageD = false
+  /* Paging */
+  private var isLastPageD = false
 
-    override fun getLayout(): Int {
-        return R.layout.fragment_staff_listing
+  override fun getLayout(): Int {
+    return R.layout.fragment_staff_listing
+  }
+
+  override fun getViewModelClass(): Class<StaffViewModel> {
+    return StaffViewModel::class.java
+  }
+
+  private fun showMenuItem() {
+    appBaseActivity?.getToolbar()?.menu?.findItem(R.id.app_bar_search)?.isVisible = true
+  }
+
+  private fun hideMenuItem() {
+    appBaseActivity?.getToolbar()?.menu?.findItem(R.id.app_bar_search)?.isVisible = false
+  }
+
+  companion object {
+    fun newInstance(): StaffProfileListingFragment {
+      return StaffProfileListingFragment()
+    }
+  }
+
+  override fun onCreateView() {
+    super.onCreateView()
+    setHasOptionsMenu(true)
+    hideMenuItem()
+    setOnClickListener(binding?.fragmentStaffAdd?.flAddStaff)
+    layoutManager = LinearLayoutManager(baseActivity)
+  }
+
+  override fun onResume() {
+    super.onResume()
+
+    if (this::adapter.isInitialized) {
+      list.clear()
+      copyList.clear()
     }
 
-    override fun getViewModelClass(): Class<StaffViewModel> {
-        return StaffViewModel::class.java
+    filter = FilterBy("", 10, 0)
+    fetchStaffListing()
+    setupOnScrollListener()
+    setUpSwipeRefresh()
+  }
+
+  private fun setUpSwipeRefresh() {
+    binding?.staffListSwipeRefresh?.setOnRefreshListener {
+      filter = FilterBy("", 10, 0)
+      list.clear()
+      copyList.clear()
+      fetchStaffListing()
     }
+  }
 
-    private fun showMenuItem() {
-        appBaseActivity?.getToolbar()?.menu?.findItem(R.id.app_bar_search)?.isVisible = true
-    }
+  private fun fetchStaffListing() {
+    if (copyList.size == 0) showProgress("Loading")
+    viewModel?.getStaffList(GetStaffListingRequest(filter, UserSession.fpTag, ""))?.observeOnce(viewLifecycleOwner, {
+      hideProgress()
+      binding?.staffListSwipeRefresh?.isRefreshing = false
+      if (this::adapter.isInitialized) adapter.removeLoadingFooter()
+      when (it.status) {
+        200 -> {
+          staff_list_swipe_refresh?.visibility = View.VISIBLE
+          fragment_staff_add?.visibility = View.GONE
+          val getStaffListingResponse = it as GetStaffListingResponse
+          val data = getStaffListingResponse.result?.data
 
-    private fun hideMenuItem() {
-        appBaseActivity?.getToolbar()?.menu?.findItem(R.id.app_bar_search)?.isVisible = false
-    }
+          if (data?.isNotEmpty() == true) {
+            binding?.layoutStaffListing!!.root.visibility = View.VISIBLE
+            binding?.fragmentStaffAdd!!.root.visibility = View.GONE
 
-    companion object {
-        fun newInstance(): StaffProfileListingFragment {
-            return StaffProfileListingFragment()
-        }
-    }
-
-    override fun onCreateView() {
-        super.onCreateView()
-        setHasOptionsMenu(true)
-        hideMenuItem()
-        setOnClickListener(binding?.fragmentStaffAdd?.flAddStaff)
-
-        layoutManager = LinearLayoutManager(baseActivity)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        if (this::adapter.isInitialized) {
-            list.clear()
+            data as ArrayList<DataItem>
+            list.addAll(data)
+            showMenuItem()
             copyList.clear()
+            copyList.addAll(data)
+
+            if (this::adapter.isInitialized) {
+              adapter.notifyDataSetChanged()
+            } else {
+              adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = list, itemClickListener = this@StaffProfileListingFragment)
+              binding?.layoutStaffListing?.rvStaffList?.adapter = adapter
+            }
+
+            isLastPageD = data.size < 10
+          } else {
+            if (this.list.size == 0) {
+              staff_list_swipe_refresh?.visibility = View.GONE
+              fragment_staff_add?.visibility = View.VISIBLE
+            }
+
+            isLastPageD = data?.size!! < 10
+          }
         }
 
-        filter = FilterBy("", 10, 0)
-        fetchStaffListing()
-        setupOnScrollListener()
-        setUpSwipeRefresh()
-    }
+        204 -> {
+          staff_list_swipe_refresh?.visibility = View.GONE
+          fragment_staff_add?.visibility = View.VISIBLE
+        }
 
-    private fun setUpSwipeRefresh() {
-        binding?.staffListSwipeRefresh?.setOnRefreshListener {
-            filter = FilterBy("", 10, 0)
-            list.clear()
-            copyList.clear()
+        else -> {
+          showLongToast(it.message())
+        }
+      }
+
+    })
+  }
+
+  private fun setupOnScrollListener() {
+    binding?.layoutStaffListing?.rvStaffList?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+      override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        super.onScrolled(recyclerView, dx, dy)
+      }
+
+      override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+        super.onScrollStateChanged(recyclerView, newState)
+
+        var LayoutM = binding?.layoutStaffListing?.rvStaffList?.layoutManager as LinearLayoutManager
+
+        if (LayoutM.findLastCompletelyVisibleItemPosition() == copyList.size - 1) {
+
+          if (!isLastPageD) {
+            filter.offset = filter.offset?.plus(10)
             fetchStaffListing()
+            adapter?.addLoadingFooter(DataItem())
+          }
         }
+      }
+    })
+  }
+
+  override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    val staff = item as DataItem
+    val bundle = Bundle()
+    bundle.putSerializable(IntentConstant.STAFF_DATA.name, staff)
+    startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, bundle, clearTop = false, isResult = false)
+
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+    inflater.inflate(R.menu.menu_stafflisting, menu)
+    val searchItem = menu.findItem(R.id.app_bar_search)
+    searchItem.isVisible = list.isNullOrEmpty().not()
+    this.searchView = searchItem.actionView as SearchView
+    val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
+    searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
+    searchAutoComplete?.setTextColor(getColor(R.color.white))
+    searchView?.queryHint = "Search Staff"
+    searchView?.setOnQueryTextListener(this)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    // Handle item selection
+    return when (item.itemId) {
+      R.id.menu_add_staff -> {
+        startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = false)
+        true
+      }
+      R.id.app_bar_search -> {
+        true
+      }
+      else -> super.onOptionsItemSelected(item)
     }
+  }
 
-    private fun fetchStaffListing() {
-
-        if (copyList.size == 0)
-            showProgress("Loading")
-
-        viewModel?.getStaffList(GetStaffListingRequest(filter, UserSession.fpId, ""))?.observeOnce(viewLifecycleOwner, {
-
-            hideProgress()
-            binding?.staffListSwipeRefresh?.isRefreshing = false
-            if (this::adapter.isInitialized) adapter.removeLoadingFooter()
-
-            when (it.status) {
-                200 -> {
-
-                    staff_list_swipe_refresh?.visibility = View.VISIBLE
-                    fragment_staff_add?.visibility = View.GONE
-
-                    val getStaffListingResponse = it as GetStaffListingResponse
-                    val data = getStaffListingResponse.result?.data
-
-                    if (data?.isNotEmpty() == true) {
-                        binding?.layoutStaffListing!!.root.visibility = View.VISIBLE
-                        binding?.fragmentStaffAdd!!.root.visibility = View.GONE
-
-                        data as ArrayList<DataItem>
-                        list.addAll(data)
-                        showMenuItem()
-                        copyList.clear()
-                        copyList.addAll(data)
-
-                        if (this::adapter.isInitialized) {
-                            adapter.notifyDataSetChanged()
-                        } else {
-                            adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = list, itemClickListener = this@StaffProfileListingFragment)
-                            binding?.layoutStaffListing?.rvStaffList?.adapter = adapter
-                        }
-
-                        isLastPageD = data.size < 10
-                    } else {
-                        if (this.list.size == 0) {
-                            staff_list_swipe_refresh?.visibility = View.GONE
-                            fragment_staff_add?.visibility = View.VISIBLE
-                        }
-
-                        isLastPageD = data?.size!! < 10
-                    }
-                }
-
-                204 -> {
-                    staff_list_swipe_refresh?.visibility = View.GONE
-                    fragment_staff_add?.visibility = View.VISIBLE
-                }
-
-                else -> {
-                    showLongToast(it.message())
-                }
-            }
-
-        })
+  override fun onClick(v: View) {
+    when (v) {
+      binding!!.fragmentStaffAdd.flAddStaff -> {
+        startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = false)
+      }
     }
+  }
 
-    private fun setupOnScrollListener() {
-        binding?.layoutStaffListing?.rvStaffList?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-            }
+  override fun onQueryTextSubmit(query: String?): Boolean {
+    return false
+  }
 
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
 
-                var LayoutM = binding?.layoutStaffListing?.rvStaffList?.layoutManager as LinearLayoutManager
-
-                if (LayoutM.findLastCompletelyVisibleItemPosition() == copyList.size - 1) {
-
-                    if (!isLastPageD) {
-                        filter.offset = filter.offset?.plus(10)
-                        fetchStaffListing()
-                        adapter?.addLoadingFooter(DataItem())
-                    }
-                }
-            }
-        })
+  override fun onQueryTextChange(newText: String?): Boolean {
+    if (newText != null) {
+      filter(newText)
     }
+    return false
+  }
 
-    override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        val staff = item as DataItem
-        val bundle = Bundle()
-        bundle.putSerializable(IntentConstant.STAFF_DATA.name, staff)
-        startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT, bundle, clearTop = false, isResult = false)
-
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_stafflisting, menu)
-        val searchItem = menu.findItem(R.id.app_bar_search)
-        searchItem.isVisible = list.isNullOrEmpty().not()
-        this.searchView = searchItem.actionView as SearchView
-        val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
-        searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
-        searchAutoComplete?.setTextColor(getColor(R.color.white))
-        searchView?.queryHint = "Search Staff"
-        searchView?.setOnQueryTextListener(this)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle item selection
-        return when (item.itemId) {
-            R.id.menu_add_staff -> {
-                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = false)
-                true
-            }
-            R.id.app_bar_search -> {
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+  fun filter(queryText: String) {
+    list.clear()
+    if (queryText.isEmpty() && queryText.isBlank()) {
+      list.addAll(copyList)
+    } else {
+      for (dataItem in copyList) {
+        if (dataItem.name?.toLowerCase(Locale.ROOT)?.contains(queryText.toLowerCase(Locale.ROOT))!!) {
+          list.add(dataItem)
         }
+      }
     }
+    adapter.notifyDataSetChanged()
+  }
 
-    override fun onClick(v: View) {
-        when (v) {
-            binding!!.fragmentStaffAdd.flAddStaff -> {
-                startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_DETAILS_FRAGMENT, clearTop = false, isResult = false)
-            }
-        }
+  override fun onBackPressed(): Boolean {
+    return when {
+      !searchView?.isIconified!! -> {
+        searchView?.isIconified = true;
+        false
+      }
+      else -> {
+        true
+      }
     }
-
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return false
-    }
-
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        if (newText != null) {
-            filter(newText)
-        }
-        return false
-    }
-
-    fun filter(queryText: String) {
-        list.clear()
-        if (queryText.isEmpty() && queryText.isBlank()) {
-            list.addAll(copyList)
-        } else {
-            for (dataItem in copyList) {
-                if (dataItem.name?.toLowerCase(Locale.ROOT)?.contains(queryText.toLowerCase(Locale.ROOT))!!) {
-                    list.add(dataItem)
-                }
-            }
-        }
-        adapter.notifyDataSetChanged()
-    }
-
-    override fun onBackPressed(): Boolean {
-        return when {
-            !searchView?.isIconified!! -> {
-                searchView?.isIconified = true;
-                false
-            }
-            else -> {
-                true
-            }
-        }
-    }
+  }
 }
