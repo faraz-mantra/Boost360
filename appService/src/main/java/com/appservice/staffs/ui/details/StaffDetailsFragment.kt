@@ -36,10 +36,6 @@ import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.framework.extensions.observeOnce
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.fragment_staff_details.*
-import kotlinx.android.synthetic.main.item_preview_image.*
-import kotlinx.android.synthetic.main.item_preview_image.view.*
 import java.io.ByteArrayOutputStream
 import java.lang.StringBuilder
 

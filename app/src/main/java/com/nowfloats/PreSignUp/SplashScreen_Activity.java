@@ -3,7 +3,9 @@ package com.nowfloats.PreSignUp;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import com.appservice.model.accountDetails.AccountDetailsResponse;
 import com.appservice.model.kycData.PaymentKycDataResponse;
 import com.boost.presignup.utils.PresignupManager;
 import com.boost.upgrades.UpgradeActivity;
+import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Login_MainActivity;
 import com.nowfloats.Login.Model.FloatsMessageModel;
@@ -108,9 +111,23 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
       Util.addBackgroundImages();
       checkSelfBrandedKyc();
       checkUserAccount();
+      getNfxTokenData();
       getFPDetails_retrofit(SplashScreen_Activity.this, session.getFPID(), Constants.clientId, bus);
     } catch (Exception e) {
       e.printStackTrace();
+    }
+  }
+
+  private void getNfxTokenData() {
+    Get_FP_Details_Service.newNfxTokenDetails(this, session.getFPID(), bus);
+    Get_FP_Details_Service.autoPull(this, session.getFPID());
+  }
+
+  @Subscribe
+  public void nfxCallback(NfxGetTokensResponse response) {
+    if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+      SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF, Context.MODE_PRIVATE);
+      smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, session.getFPID()).apply();
     }
   }
 

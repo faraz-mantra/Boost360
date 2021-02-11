@@ -17,6 +17,7 @@ object PreferenceConstant {
   const val GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG"
   const val IS_START_ACTIVITY = "IsStartActivity"
   const val KEY_FACEBOOK_PAGE = "facebookpage"
+  const val KEY_FACEBOOK_NAME = "facebookname"
   const val FP_PAGE_SHARE_ENABLED = "fbPageShareEnabled"
   const val FP_PAGE_STATUS = "fbPageStatus"
   const val CONTACT_NAME = "contact_name"
@@ -31,5 +32,7 @@ object PreferenceConstant {
   const val PREF_NAME_TWITTER = "NFBoostTwitterPref"
   const val PREF_KEY_TWITTER_LOGIN = "is_twitter_loggedin"
   const val TWITTER_USER_NAME = "twitter_user_name"
+
+
 
 }

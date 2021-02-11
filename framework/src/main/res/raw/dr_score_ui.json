@@ -15,11 +15,11 @@
       "title": "Clinic Logo",
       "desc": ""
     },
-//    {
-//      "id": "boolean_add_featured_image_video",
-//      "title": "Featured Image Video",
-//      "desc": ""
-//    },
+    {
+      "id": "boolean_add_featured_image_video",
+      "title": "Featured Image Video",
+      "desc": ""
+    },
 //    {
 //      "id": "boolean_select_what_you_sell",
 //      "title": "Select What You Sell",

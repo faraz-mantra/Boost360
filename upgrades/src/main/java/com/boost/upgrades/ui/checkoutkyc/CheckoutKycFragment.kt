@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -28,12 +29,15 @@ import kotlinx.android.synthetic.main.checkoutkyc_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import java.io.*
 import java.util.*
+import kotlin.collections.ArrayList
+
 
 class CheckoutKycFragment : DialogFragment() {
 
     var createCustomerInfoRequest: Result? = null
 
     var customerInfoState = false
+
 
     companion object {
         fun newInstance() = CheckoutKycFragment()
@@ -60,8 +64,10 @@ class CheckoutKycFragment : DialogFragment() {
 //        viewModel = ViewModelProviders.of(requireActivity()).get(CheckoutKycViewModel::class.java)
         viewModel = ViewModelProviders.of(requireActivity()).get(CartViewModel::class.java)
 
+
         loadCustomerInfo()
         initMvvm()
+        viewModel.getCitiesFromAssetJson(activity!!)
         business_gst_number.setFilters(business_gst_number.filters + InputFilter.AllCaps())
 
         confirm_btn.setOnClickListener {
@@ -204,6 +210,15 @@ class CheckoutKycFragment : DialogFragment() {
             }
             dismiss()
         })
+        viewModel.cityResult().observe(this, androidx.lifecycle.Observer {
+            if(it != null){
+                val adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_dropdown_item, it)
+                val adapter1 = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_dropdown_item, it)
+                business_city_name.setAdapter(adapter);
+            }
+
+        })
+
     }
 
     private fun loadCustomerInfo() {

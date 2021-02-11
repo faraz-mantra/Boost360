@@ -5,6 +5,7 @@ import com.inventoryorder.model.SendMailRequest
 import com.inventoryorder.model.doctorsData.DoctorDataResponse
 import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
+import com.inventoryorder.model.summary.request.SellerSummaryRequest
 import com.inventoryorder.rest.EndPoints
 import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.inventoryorder.rest.response.order.InventoryOrderListResponse
@@ -22,6 +23,14 @@ interface InventoryOrderRemoteDataSource {
       @Query("clientId") clientId: String?,
       @Query("sellerId") sellerId: String?,
   ): Observable<Response<OrderSummaryResponse>>
+
+  @POST(EndPoints.GET_SELLER_SUMMARY_V2_5_URL)
+  fun getSellerSummaryV2_5(
+      @Query("clientId") clientId: String?,
+      @Query("sellerId") sellerId: String?,
+      @Body request: SellerSummaryRequest?
+  ): Observable<Response<OrderSummaryResponse>>
+
 
   @GET(EndPoints.GET_LIST_ORDER_URL)
   fun getSellerOrders(

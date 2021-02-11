@@ -91,7 +91,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
       binding.layoutToolbar.toolbarTitle.setText(Utils.getProductCatalogTaxonomyFromServiceCode(session.getFP_AppExperienceCode()));
       binding.layoutToolbar.toolbar.setNavigationIcon(R.drawable.ic_back_arrow_white);
       binding.tvMessage.setText(String.format(getString(R.string.product_empty_view_message),
-          Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase()));
+              Utils.getSingleProductTaxonomyFromServiceCode(session.getFP_AppExperienceCode()).toLowerCase()));
     }
 
     this.initProductRecyclerView();
@@ -434,7 +434,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
   public boolean checkStoragePermission() {
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
       Methods.showDialog(this, "Storage Permission", "To share the image we need storage permission.",
-          (dialog, which) -> ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
+              (dialog, which) -> ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
       return false;
     }
 
@@ -449,8 +449,8 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
     if (Methods.isOnline(this)) {
       String shareText = String.format("*%s* %s\n*%s* %s\n\n-------------\n%s\n\nfor more details visit: %s",
-          product.Name.trim(), product.getVariantDetail(), product.getFinalPriceWithCurrency(),
-          product.getActualPriceWithCurrency(), product.Description.trim(), product.ProductUrl.trim());
+              product.Name.trim(), product.getVariantDetail(), product.getFinalPriceWithCurrency(),
+              product.getActualPriceWithCurrency(), product.Description.trim(), product.ProductUrl.trim());
 
       Target target = new Target() {
         @Override

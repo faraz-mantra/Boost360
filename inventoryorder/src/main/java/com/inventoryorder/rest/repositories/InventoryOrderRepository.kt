@@ -6,6 +6,7 @@ import com.inventoryorder.base.rest.AppBaseRepository
 import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
+import com.inventoryorder.model.summary.request.SellerSummaryRequest
 import com.inventoryorder.rest.TaskCode
 import com.inventoryorder.rest.apiClients.AssuredPurchaseClient
 import com.inventoryorder.rest.services.InventoryOrderRemoteDataSource
@@ -26,6 +27,9 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
     return makeRemoteRequest(remoteDataSource.getSellerSummary(clientId, sellerId), TaskCode.GET_SELLER_SUMMARY)
   }
 
+  fun getSellerSummaryV2_5(clientId: String?, sellerId: String?,request: SellerSummaryRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getSellerSummaryV2_5(clientId, sellerId,request), TaskCode.GET_SELLER_SUMMARY)
+  }
   fun getSellerOrders(auth: String, request: OrderSummaryRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getSellerOrders(auth, request.clientId, request.sellerId, request.orderMode, request.deliveryMode, request.orderStatus, request.paymentStatus, request.skip, request.limit), TaskCode.GET_LIST_ORDER)
   }

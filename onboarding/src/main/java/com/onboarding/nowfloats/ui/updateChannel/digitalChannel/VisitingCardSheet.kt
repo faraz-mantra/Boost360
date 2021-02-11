@@ -195,6 +195,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
       dismiss()
       savePositionCard(cardPosition)
+      WebEngageController.trackEvent("Visiting Card Share", "visiting_card", localSessionModel?.fpTag?:"")
       onBusinessCardAddedOrUpdated(true)
     } catch (e: Exception) {
       showLongToast("Error sharing visiting card, please try again.")
