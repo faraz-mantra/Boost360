@@ -6,5 +6,7 @@ import java.io.Serializable
 
 data class ChannelsAccessTokenResponse(
     val NFXAccessTokens: List<NFXAccessToken>? = null,
-    val nowfloats_id: String? = null
+    val nowfloats_id: String? = null,
+    val callLogTimeInterval: String? = null,
+    val smsRegex: List<String>? = null
 ) : BaseResponse(), Serializable

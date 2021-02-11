@@ -44,6 +44,7 @@ object FirestoreManager {
 //    }
 
     fun readDrScoreDocument() {
+        Log.e("readDrScoreDocument ","readDrScoreDocument")
         val docRef = getDocumentReference();
         docRef?.addSnapshotListener(MetadataChanges.INCLUDE) { snapshot, e ->
             if (e == null) {

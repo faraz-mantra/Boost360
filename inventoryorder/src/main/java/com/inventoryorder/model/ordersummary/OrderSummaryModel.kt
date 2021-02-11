@@ -25,6 +25,7 @@ class OrderSummaryModel(
     val TotalOrdersEscalated: Int? = null,
     val TotalOrdersInProgress: Int? = null,
     val TotalRevenue: Double? = null,
+    val FeedbackSummary: FeedbackSummary? = null,
 
     val type: String? = null,
     val count: Int? = null,
@@ -115,4 +116,9 @@ class OrderSummaryModel(
     PreferencesUtils.instance.saveData(key, getTotalOrders())
   }
 }
+
+class FeedbackSummary(
+    val AverageFeedback: Double? = null,
+    val TotalFeedbacksReceived: Int? = null,
+)
 
