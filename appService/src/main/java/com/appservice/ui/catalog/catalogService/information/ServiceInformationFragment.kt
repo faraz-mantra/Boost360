@@ -1,7 +1,10 @@
 package com.appservice.ui.catalog.catalogService.information
 
 import android.content.Intent
-import android.view.*
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.appservice.R
@@ -12,11 +15,10 @@ import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentServiceInformationBinding
 import com.appservice.model.FileModel
 import com.appservice.model.KeySpecification
-import com.appservice.model.auth_3
-import com.appservice.model.serviceProduct.Product
-import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
-import com.appservice.model.serviceProduct.addProductImage.response.DataImage
-import com.appservice.model.serviceProduct.gstProduct.response.DataG
+import com.appservice.model.serviceTiming.ServiceTiming
+import com.appservice.model.servicev1.DeleteSecondaryImageRequest
+import com.appservice.model.servicev1.ImageModel
+import com.appservice.model.servicev1.ServiceModelV1
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
@@ -25,26 +27,27 @@ import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.GstDetailsBottomSheet
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
-import com.appservice.viewmodel.ServiceViewModel
+import com.appservice.viewmodel.ServiceViewModelV1
+import com.framework.extensions.gone
+import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
+class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModelV1>(), RecyclerItemClickListener {
 
-class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
-
-  private var product: Product? = null
-  private var isEdit: Boolean? = null
+  private var product: ServiceModelV1? = null
+  private var isEdit: Boolean = false
   private var tagList = ArrayList<String>()
   private var specList: ArrayList<KeySpecification> = arrayListOf(KeySpecification())
   private var secondaryImage: ArrayList<FileModel> = ArrayList()
   private var adapterSpec: AppBaseRecyclerViewAdapter<KeySpecification>? = null
   private var adapterImage: AppBaseRecyclerViewAdapter<FileModel>? = null
   private var ordersQuantity: Int = 0
-
-  private var secondaryDataImage: ArrayList<DataImage>? = null
-  private var gstProductData: DataG? = null
+  private var secondaryDataImage: ArrayList<ImageModel>? = null
+  private var serviceTimingList: ArrayList<ServiceTiming>? = null
 
   companion object {
     fun newInstance(): ServiceInformationFragment {
@@ -56,8 +59,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     return R.layout.fragment_service_information
   }
 
-  override fun getViewModelClass(): Class<ServiceViewModel> {
-    return ServiceViewModel::class.java
+  override fun getViewModelClass(): Class<ServiceViewModelV1> {
+    return ServiceViewModelV1::class.java
   }
 
   override fun onCreateView() {
@@ -65,18 +68,17 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     WebEngageController.trackEvent("Service other information catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
 
     setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage,
-            binding?.civIncreaseQuantityOrder, binding?.civDecreseQuantityOrder, binding?.btnAddTag, binding?.btnAddSpecification,
-            binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst,binding?.weeklyAppointmentSchedule)
-    product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? Product
+        binding?.civIncreaseQuantityOrder, binding?.civDecreseQuantityOrder, binding?.btnAddTag, binding?.btnAddSpecification,
+        binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.weeklyAppointmentSchedule)
+    this.product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? ServiceModelV1
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
-    gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? DataG
-    secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
-            ?: ArrayList()
+    this.serviceTimingList = arguments?.getSerializable(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
+    secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
     tagList = product?.tags ?: ArrayList()
     specList = if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
-    if (isEdit == true) {
-      secondaryDataImage = arguments?.getSerializable(IntentConstant.PRODUCT_IMAGE.name) as? ArrayList<DataImage>
-      if (secondaryImage.isNullOrEmpty()) secondaryDataImage?.forEach { secondaryImage.add(FileModel(pathUrl = it.image?.url)) }
+    if (isEdit) {
+      secondaryDataImage = product?.secondaryImages
+      if (secondaryImage.isNullOrEmpty()) secondaryDataImage?.forEach { secondaryImage.add(FileModel(pathUrl = it.ActualImage)) }
     }
     setUiText()
     serviceTagsSet()
@@ -89,11 +91,18 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private fun setUiText() {
     ordersQuantity = product?.maxCodOrders!!
 //    binding?.edtServiceCategory?.setText(product?.category ?: "")
-    binding?.cetSpecKey?.setText(product?.keySpecification?.key)
-    binding?.cetSpecValue?.setText(product?.keySpecification?.value)
+    binding?.cetSpecKey?.setText(product?.keySpecification?.key ?: "")
+    binding?.cetSpecValue?.setText(product?.keySpecification?.value ?: "")
     binding?.edtBrand?.setText(product?.brandName ?: "")
     binding?.ctvQuantityOrderStatus?.text = ordersQuantity.toString()
-    if (gstProductData != null) binding?.edtGst?.setText("${(gstProductData?.gstSlab ?: 0.0).toInt()} %")
+    if (product?.isPriceToggleOn() == true) {
+      binding?.edtGst?.visible()
+      binding?.llGst?.visible()
+    } else {
+      binding?.edtGst?.gone()
+      binding?.llGst?.gone()
+    }
+    if (product?.GstSlab != null) binding?.edtGst?.setText("${(product?.GstSlab ?: 0.0)} %")
     setAdapter()
     val listYesNo = mutableListOf(SpinnerImageModel("YES" to true, R.drawable.ic_dot_green), SpinnerImageModel("NO" to false, R.drawable.ic_dot_red))
     binding?.spinnerOnlinePayment?.adapter = CustomDropDownAdapter(baseActivity, listYesNo)
@@ -117,7 +126,6 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
-//    inflater.inflate(R.menu.menu_product_info, menu)
   }
 
   override fun onClick(v: View) {
@@ -147,16 +155,16 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
       }
       binding?.civDecreseQuantityOrder -> {
         when {
-          ordersQuantity > 0 -> {
-            --ordersQuantity
-          }
+          ordersQuantity > 0 -> --ordersQuantity
         }
         binding?.ctvQuantityOrderStatus?.text = ordersQuantity.toString()
 
       }
       binding?.weeklyAppointmentSchedule -> {
-        startFragmentActivity(FragmentType.WEEKLY_APPOINTMENT_FRAGMENT, isResult = true)
-
+        val bundle = Bundle()
+        bundle.putSerializable(IntentConstant.SERVICE_TIMING_DATA.name, this.serviceTimingList)
+        bundle.putBoolean(IntentConstant.IS_EDIT.name, this.isEdit)
+        startFragmentActivity(FragmentType.SERVICE_TIMING_FRAGMENT,bundle = bundle, isResult = true)
       }
     }
   }
@@ -187,7 +195,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     val valSpecification = binding?.cetSpecValue?.text?.toString() ?: ""
     val gst = (binding?.edtGst?.text?.toString() ?: "").replace("%", "").trim()
     val otherSpec = (specList.filter { it.key.isNullOrEmpty().not() && it.value.isNullOrEmpty().not() } as? ArrayList<KeySpecification>)
-            ?: ArrayList()
+        ?: ArrayList()
     when {
 //      secondaryImage.isNullOrEmpty() -> {
 //        showLongToast("Please select at least one secondary image.")
@@ -227,12 +235,11 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         product?.keySpecification?.value = valSpecification
         product?.maxCodOrders = ordersQuantity
         product?.otherSpecification = otherSpec
-        if (gstProductData == null) gstProductData = DataG()
-        gstProductData?.gstSlab = gst.toDoubleOrNull() ?: 0.0
+        product?.GstSlab = gst.toIntOrNull() ?: 0;
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)
         output.putExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
-        output.putExtra(IntentConstant.PRODUCT_GST_DETAIL.name, gstProductData)
+        output.putExtra(IntentConstant.SERVICE_TIMING_DATA.name, serviceTimingList)
         baseActivity.setResult(AppCompatActivity.RESULT_OK, output)
         baseActivity.finish()
       }
@@ -258,6 +265,8 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as ArrayList<String>
       secondaryImage(mPaths)
+    }else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101){
+      this.serviceTimingList = data?.getSerializableExtra(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
     }
   }
 
@@ -287,13 +296,12 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     when (actionType) {
       RecyclerViewActionType.IMAGE_CLEAR_CLICK.ordinal -> {
         val data = item as? FileModel
-        if (isEdit == true && data?.pathUrl.isNullOrEmpty().not()) {
-          val dataImage = secondaryDataImage?.firstOrNull { it.image?.url == data?.pathUrl }
-                  ?: return
+        if (isEdit && data?.pathUrl.isNullOrEmpty().not()) {
+          val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl }
+              ?: return
           showProgress(resources.getString(R.string.removing_image))
-          val request = ProductImageDeleteRequest()
-          request.setQueryData(dataImage.id)
-          viewModel?.deleteProductImage(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
+          val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId);
+          viewModel?.deleteSecondaryImage(request)?.observeOnce(viewLifecycleOwner, Observer {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               secondaryDataImage?.remove(dataImage)
               secondaryImage.remove(data)
@@ -337,11 +345,11 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
 
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-            .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
-            .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
-              baseActivity.finish()
-              d.dismiss()
-            }.show()
+        .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
+        .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
+          baseActivity.finish()
+          d.dismiss()
+        }.show()
   }
 
 }

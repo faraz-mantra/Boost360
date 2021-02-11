@@ -1,10 +1,13 @@
 package com.inventoryorder.model.mapDetail
 
 import com.framework.base.BaseResponse
+import com.framework.utils.PreferencesUtils
+import com.framework.utils.getData
+import com.framework.utils.saveData
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-const val VISIT_SUMMARY_DATA = "VISIT_SUMMARY_DATA"
+const val TOTAL_MAP_VISIT = "TOTAL_MAP_VISIT"
 
 data class VisitsModelResponse(
     @SerializedName("batchType")
@@ -21,6 +24,14 @@ data class VisitsModelResponse(
     var count = 0
     uniqueVisitsList?.forEach { count += it.dataCount ?: 0 }
     return count.toString()
+  }
+
+  fun getTotalOMapVisit(key:String): String? {
+    return PreferencesUtils.instance.getData(key, "0")
+  }
+
+  fun saveMapVisit(key:String) {
+    PreferencesUtils.instance.saveData(key, getTotalCount())
   }
 }
 

@@ -6,6 +6,7 @@ import com.dashboard.base.rest.AppBaseLocalService
 import com.dashboard.model.live.addOns.ManageAddOnsBusinessResponse
 import com.dashboard.model.live.addOns.ManageBusinessDataResponse
 import com.dashboard.model.live.customerItem.BoostCustomerItemResponse
+import com.dashboard.model.live.drScore.DrScoreUiDataResponse
 import com.dashboard.model.live.drawerData.DrawerHomeDataResponse
 import com.dashboard.model.live.quickAction.QuickActionResponse
 import com.dashboard.model.live.shareUser.ShareUserDetailResponse
@@ -24,8 +25,8 @@ object DashboardLocalDataSource : AppBaseLocalService() {
     return fromJsonRes(context, R.raw.boost_add_ons_top, ManageBusinessDataResponse::class.java)
   }
 
-  fun getBoostUserDetailMessage(context: Context): Observable<BaseResponse> {
-    return fromJsonRes(context, R.raw.user_details_share, ShareUserDetailResponse::class.java)
+  fun getBoostVisitingMessage(context: Context): Observable<BaseResponse> {
+    return fromJsonRes(context, R.raw.visiting_card_data_share, ShareUserDetailResponse::class.java)
   }
 
   fun getBoostCustomerItem(context: Context): Observable<BaseResponse> {
@@ -36,6 +37,10 @@ object DashboardLocalDataSource : AppBaseLocalService() {
   }
   fun getNavDashboardData(context: Context): Observable<BaseResponse> {
     return fromJsonRes(context, R.raw.nav_dashboard_data, DrawerHomeDataResponse::class.java)
+  }
+
+  fun getDrScoreUi(context: Context): Observable<BaseResponse> {
+    return fromJsonRes(context, R.raw.dr_score_ui, DrScoreUiDataResponse::class.java)
   }
 
   fun getQuickActionData(context: Context): Observable<BaseResponse> {

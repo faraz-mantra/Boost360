@@ -31,6 +31,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.framework.models.firestore.FirestoreManager;
 import com.nowfloats.BusinessProfile.UI.API.Upload_Logo;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.EditImageActivity;
@@ -76,7 +77,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_business__logo);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_business_logo);
         //setContentView(R.layout.activity_business__logo);
 
         setSupportActionBar(binding.appBar.toolbar);
@@ -113,14 +114,17 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 //String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
                 BoostLog.d("Logo Url:", iconUrl);
                 Glide.with(this).asGif().load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
+                onBusinessLogoAddedOrUpdated(true);
             }else{
                 if(iconUrl!=null && iconUrl.length()>0) {
                     uploadButton.setText("CHANGE");
                     BoostLog.d("Logo Url:", iconUrl);
                     Glide.with(this).load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.logo_default_image)).into(logoimageView);
+                    onBusinessLogoAddedOrUpdated(true);
                 }else{
                     uploadButton.setText("ADD");
                     Glide.with(this).asGif().load(R.drawable.logo_default_image).into(logoimageView);
+                    onBusinessLogoAddedOrUpdated(false);
                 }
             }
         }catch(Exception e){e.printStackTrace();System.gc();}
@@ -383,6 +387,11 @@ public class Business_Logo_Activity extends AppCompatActivity {
         }
     }
 
+    private void onBusinessLogoAddedOrUpdated(Boolean isAdded){
+        FirestoreManager instance = FirestoreManager.INSTANCE;
+        instance.getDrScoreData().getMetricdetail().setBoolean_add_clinic_logo(isAdded);
+        instance.updateDocument();
+    }
 
 
 
@@ -446,14 +455,17 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
     public void uploadPrimaryPicture(String path) {
         new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());
-        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this, path, session.getFPID(), session, this::changeText);
+        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this, path, session.getFPID(), session, this::imageUpload);
         upload_logo.execute();
 //        Constants.isImgUploaded = false;
 //        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Business_Logo_Activity.this, path, false,true,session.getFPID());
 //        upa.execute();
     }
 
-    private void changeText(Boolean siSuccess) {
-        uploadButton.setText("CHANGE");
+    private void imageUpload(Boolean isSuccess) {
+       if (isSuccess){
+           uploadButton.setText("CHANGE");
+           onBusinessLogoAddedOrUpdated(true);
+       }
     }
 }

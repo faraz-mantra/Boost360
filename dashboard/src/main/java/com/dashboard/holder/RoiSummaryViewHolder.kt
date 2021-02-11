@@ -15,10 +15,10 @@ class RoiSummaryViewHolder(binding: ItemRoiSummaryBinding) : AppBaseRecyclerView
     binding.txtSymbol.visibility = if (data.isRupeeSymbols) View.VISIBLE else View.GONE
     binding.txtTitle.text = data.title
     data.icon1?.let { binding.imgIcon.setImageResource(it) }
-    binding.txtDayTitle.visibility= if (data.dayTitle.isNullOrEmpty().not()) View.VISIBLE else View.GONE
+    binding.txtDayTitle.visibility = if (data.dayTitle.isNullOrEmpty().not()) View.VISIBLE else View.GONE
     binding.txtDayTitle.text = data.dayTitle
-    binding.txtAmount.text = data.value
-    binding.mainContent.setOnClickListener { listener?.onItemClick(position,item, RecyclerViewActionType.ROI_SUMMARY_CLICK.ordinal) }
+    binding.txtAmount.text = if (data.value.equals("0")) "_" else data.value
+    binding.mainContent.setOnClickListener { listener?.onItemClick(position, item, RecyclerViewActionType.ROI_SUMMARY_CLICK.ordinal) }
   }
 
 }

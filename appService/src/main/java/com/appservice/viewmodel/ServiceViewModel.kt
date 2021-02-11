@@ -1,7 +1,6 @@
 package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
-import com.appservice.model.ProductDimensionRequest
 import com.appservice.model.serviceProduct.Product
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
@@ -9,10 +8,8 @@ import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.gstProduct.ProductGstDetailRequest
 import com.appservice.model.serviceProduct.gstProduct.update.ProductUpdateRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
-import com.appservice.rest.repository.AssuredWithFloatRepository
-import com.appservice.rest.repository.KitWebActionRepository
-import com.appservice.rest.repository.WithFloatRepository
-import com.appservice.rest.repository.WithFloatTwoRepository
+import com.appservice.rest.repository.*
+import com.appservice.ui.model.ServiceListingRequest
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -74,7 +71,15 @@ class ServiceViewModel : BaseViewModel() {
   fun userAccountDetails(fpId: String?, clientId: String?): LiveData<BaseResponse> {
     return WithFloatRepository.userAccountDetail(fpId, clientId).toLiveData()
   }
-//  fun addProductDetails(request:ProductDimensionRequest): LiveData<BaseResponse> {
+
+  //  fun addProductDetails(request:ProductDimensionRequest): LiveData<BaseResponse> {
 //    return KitWebActionRepository.productAddData(request).toLiveData()
 //  }
+  fun getServiceListing(request: ServiceListingRequest): LiveData<BaseResponse> {
+    return NowfloatsApiRepository.getServiceListing(request).toLiveData()
+  }
+
+  fun getSearchListings(fpTag: String?, fpId: String?, searchString: String?="", offset: Int?=0, limit: Int?=0):LiveData<BaseResponse>{
+    return NowfloatsApiRepository.getServiceSearchListing(fpTag, fpId, searchString, offset, limit).toLiveData()
+  }
 }

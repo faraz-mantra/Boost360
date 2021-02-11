@@ -1,31 +1,25 @@
 package com.nowfloats.AccrossVerticals.domain;
 
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import com.framework.models.firestore.FirestoreManager;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
 import com.nowfloats.AccrossVerticals.API.model.GetDomain.GetDomainData;
 import com.nowfloats.AccrossVerticals.domain.ui.ActiveDomain.ActiveDomainFragment;
-import com.nowfloats.AccrossVerticals.domain.ui.DomainPurchased.DomainPurchasedFragment;
-import com.nowfloats.AccrossVerticals.domain.ui.ExistingDomain.ExistingDomainFragment;
-import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.AccrossVerticals.domain.ui.DomainNotPurchase.DomainNotPurchaseFragment;
+import com.nowfloats.AccrossVerticals.domain.ui.DomainPurchased.DomainPurchasedFragment;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
-
-import org.json.JSONObject;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -83,6 +77,7 @@ public class DomainEmailActivity extends AppCompatActivity {
             loadData();
         }else{
             addFragment(new DomainNotPurchaseFragment(), "DOMAIN_NOT_PURCHASE_FRAGMENT");
+            onDomainAddedOrUpdated(false);
         }
     }
 
@@ -158,6 +153,7 @@ public class DomainEmailActivity extends AppCompatActivity {
                     }
                     if(domainData.getDomainName()!=null && !domainData.getDomainName().isEmpty()){
                         addFragment(new ActiveDomainFragment(), "ACTIVE_DOMAIN_FRAGMENT");
+                        onDomainAddedOrUpdated(true);
                     }else{
                         addFragment(new DomainPurchasedFragment(), "DOMAIN_PURCHASE_FRAGMENT");
                     }
@@ -172,6 +168,12 @@ public class DomainEmailActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void onDomainAddedOrUpdated(Boolean isAdded) {
+        FirestoreManager instance = FirestoreManager.INSTANCE;
+        instance.getDrScoreData().getMetricdetail().setBoolean_add_custom_domain_name_and_ssl(isAdded);
+        instance.updateDocument();
     }
 
 }

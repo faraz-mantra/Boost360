@@ -67,7 +67,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     private fun getBundle() {
         when {
             intent.extras?.get(IntentConstant.FP_TAG.name) != null -> {
-                UserSession.fpId = intent.extras!!.getString(IntentConstant.FP_TAG.name)!!
+                UserSession.fpTag = intent.extras!!.getString(IntentConstant.FP_TAG.name)!!
                 UserSession.customerID = intent.extras!!.getString(IntentConstant.CLIENT_ID.name)!!
             }
 

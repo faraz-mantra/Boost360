@@ -185,6 +185,29 @@
       ]
     },
     {
+      "type": "SAL",
+      "action_item": [
+        {
+          "title": "Manage your website content",
+          "btnTitle": "get started",
+          "desc": "Add and update content on your website like service listings, social media updates or business details.\n\nTip: Keeping your website updated helps get better results.",
+          "welcomeType": "WEBSITE_CONTENT"
+        },
+        {
+          "title": "Track and manage your customer enquiries",
+          "btnTitle": "get started",
+          "desc": "You can respond to your website enquiries, track customer calls and process online appointments.",
+          "welcomeType": "MANAGE_INTERACTION"
+        },
+        {
+          "title": "Add-ons to make your website more powerful",
+          "btnTitle": "get started",
+          "desc": "You can explore and purchase add-ons for your website starting at ₹50/month.",
+          "welcomeType": "ADD_ON_MARKETPLACE"
+        }
+      ]
+    },
+    {
       "type": "SPA",
       "action_item": [
         {

@@ -201,6 +201,7 @@ open class BaseRegistrationFragment<binding : ViewDataBinding> : AppBaseFragment
 
   protected fun setDataLogin() {
     val editor = pref?.edit()
+    editor?.putString(PreferenceConstant.GET_FP_DETAILS_TAG, requestFloatsModel?.getWebSiteId())
     editor?.putString(PreferenceConstant.KEY_FP_ID, requestFloatsModel?.floatingPointId)
     editor?.putString(PreferenceConstant.KEY_sourceClientId, clientId)
     editor?.putString(PreferenceConstant.GET_FP_EXPERIENCE_CODE, requestFloatsModel?.categoryDataModel?.experience_code)

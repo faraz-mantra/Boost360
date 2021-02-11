@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.appservice.R
@@ -67,7 +66,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent("Service other information catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
+    WebEngageController.trackEvent("Product other information catalogue load", "PRODUCT CATALOGUE ADD/UPDATE", "")
 
     setOnClickListener(
             binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.civDecreseStock,
@@ -96,29 +95,37 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 //    maxOrder = product?.maxCodOrders!!
     binding?.specKey?.setText(product?.keySpecification?.key)
     binding?.specValue?.setText(product?.keySpecification?.value)
-    availableStock = product?.availableUnits!!
+    availableStock = product?.availableUnits ?: 0
     binding?.edtBrand?.setText(product?.brandName ?: "")
     binding?.ctvCurrentStock?.text = product?.availableUnits.toString()
 //    binding?.ctvQuantityOrderStatus?.text = product?.maxCodOrders.toString()
     if (gstProductData != null) {
       binding?.edtGst?.setText("${(gstProductData?.gstSlab ?: 0.0).toInt()} %")
-      binding?.cetLength?.setText("${gstProductData?.length?:0.0}")
-       binding?.cetHeight?.setText("${gstProductData?.height?:0.0}")
-     binding?.cetThickness?.setText("${gstProductData?.width?:0.0}")
-      binding?.cetWeight?.setText("${gstProductData?.weight?:0.0}")
+      binding?.cetLength?.setText("${gstProductData?.length ?: 0.0}")
+      binding?.cetHeight?.setText("${gstProductData?.height ?: 0.0}")
+      binding?.cetThickness?.setText("${gstProductData?.width ?: 0.0}")
+      binding?.cetWeight?.setText("${gstProductData?.weight ?: 0.0}")
     }
     setAdapter()
     val stockAdapter = mutableListOf(SpinnerImageModel("Limited Stock" to true, R.drawable.ic_dot_green), SpinnerImageModel("Unlimited Stock" to false, R.drawable.ic_infinite))
     binding?.spinnerStock?.adapter = CustomDropDownAdapter(baseActivity, stockAdapter)
-    binding?.spinnerStock?.setSelection(1)
+    when {
+      availableStock < 0 -> binding?.spinnerStock?.setSelection(1)
+      else -> binding?.spinnerStock?.setSelection(0)
+    }
     binding?.spinnerStock?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
       override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         return when (stockAdapter[p2] == stockAdapter[1]) {
           true -> {
             binding?.llStockChange?.visibility = View.INVISIBLE
+            availableStock = -1
           }
           else -> {
             binding?.llStockChange?.visibility = View.VISIBLE
+            availableStock = product?.availableUnits ?: 0
+            if (availableStock < 0) availableStock++
+            binding?.ctvCurrentStock?.text = availableStock.toString()
+
 
           }
         }

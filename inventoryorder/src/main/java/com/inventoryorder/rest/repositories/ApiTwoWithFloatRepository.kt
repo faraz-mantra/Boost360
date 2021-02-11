@@ -27,17 +27,6 @@ object ApiTwoWithFloatRepository : AppBaseRepository<WithFloatTwoDataSource, App
     return makeRemoteRequest(remoteDataSource.getBizFloatMessage(map), TaskCode.GET_BIZ_FLOAT_MESSAGE)
   }
 
-  fun getUserSummary(clientId: String?, fpIdParent: String?, scope: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getUserSummary(clientId, fpIdParent, scope), TaskCode.GET_USER_SUMMARY)
-  }
-
-  fun getMapVisits(fpTag: String?, mapData: Map<String, String>?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getMapVisits(fpTag, mapData), TaskCode.GET_MAP_SUMMARY)
-  }
-
-  fun getUserCallSummary(clientId: String?, fpIdParent: String?, identifierType: String?): Observable<BaseResponse> {
-    return makeRemoteRequest(remoteDataSource.getUserCallSummary(clientId, fpIdParent, identifierType), TaskCode.GET_USER_CALL_SUMMARY)
-  }
 
   override fun getLocalDataSourceInstance(): AppBaseLocalService {
     return AppBaseLocalService()

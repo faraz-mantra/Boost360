@@ -10,7 +10,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:4.1.2'
         // in the individual module build.gradle files
         classpath 'com.google.gms:google-services:4.3.3'
         // kotlin support
@@ -20,7 +20,6 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url "https://sdk.smartlook.com/android/release" }
         maven { url "https://jitpack.io" }
         google()
         jcenter()
@@ -30,9 +29,6 @@ allprojects {
         }
         maven {
             url  "http://dl.bintray.com/lukaville/maven"
-        }
-        maven {
-            url "https://sdk.smartlook.com/android/release"
         }
         flatDir {
             dirs 'libs'
