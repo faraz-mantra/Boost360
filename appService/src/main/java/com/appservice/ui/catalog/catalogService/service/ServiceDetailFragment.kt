@@ -2,7 +2,6 @@ package com.appservice.ui.catalog.catalogService.service
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Paint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -17,18 +16,14 @@ import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentServiceDetailBinding
 import com.appservice.extension.afterTextChanged
 import com.appservice.model.FileModel
-import com.appservice.model.accountDetails.AccountDetailsResponse
-import com.appservice.model.accountDetails.BankAccountDetails
-import com.appservice.model.serviceProduct.BuyOnlineLink
-import com.appservice.model.serviceProduct.Product
 import com.appservice.model.serviceTiming.AddServiceTimingRequest
 import com.appservice.model.serviceTiming.ServiceTime
 import com.appservice.model.serviceTiming.ServiceTiming
 import com.appservice.model.serviceTiming.ServiceTimingResponse
 import com.appservice.model.servicev1.*
 import com.appservice.rest.TaskCode
-import com.appservice.ui.bankaccount.startFragmentAccountActivity
-import com.appservice.ui.catalog.listing.CreateServiceSuccessBottomSheet
+import com.appservice.ui.catalog.catalogService.listing.CreateServiceSuccessBottomSheet
+import com.appservice.ui.catalog.catalogService.listing.TypeSuccess
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
 import com.appservice.ui.model.ItemsItem
@@ -59,9 +54,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private var applicationId: String? = null
   private var userProfileId: String? = null
   private var isEdit: Boolean = false
-  private var bankAccountDetail: BankAccountDetails? = null
   private var secondaryImage: ArrayList<FileModel> = ArrayList()
   private var productIdAdd: String? = null
+  private var isRefresh: Boolean = false
   private var serviceTimingList: ArrayList<ServiceTiming>? = null
 
   companion object {
@@ -82,9 +77,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     super.onCreateView()
     WebEngageController.trackEvent("Service product catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
     getBundleData()
-    binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-    setOnClickListener(binding?.selectDeliveryConfig, binding?.vwPaymentConfig, binding?.vwSavePublish, binding?.imageAddBtn,
-        binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
+    setOnClickListener(binding?.selectDeliveryConfig, binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo)
     binding?.payServiceView?.visibility = View.GONE
     binding?.toggleService?.setOnToggledListener { _, _ -> initServiceToggle() }
     initServiceToggle()
@@ -114,62 +107,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     binding?.finalPriceTxt?.setText("$currencyType $finalAmount")
   }
 
-  private fun getPaymentGatewayKyc() {
-    showProgress()
-    viewModel?.userAccountDetails(fpId, clientId)?.observeOnce(viewLifecycleOwner, Observer {
-      if ((it.error is NoNetworkException).not()) {
-        val response = it as? AccountDetailsResponse
-        if ((it.status == 200 || it.status == 201 || it.status == 202) && response?.result?.bankAccountDetails != null) {
-          bankAccountDetail = response.result?.bankAccountDetails
-        }
-      }
-      if (isEdit) updateUiPreviousData()
-      else {
-        setBankAccountData()
-        hideProgress()
-      }
-    })
-  }
-
-  private fun setBankAccountData() {
-    if (bankAccountDetail != null) {
-      product?.paymentType = Product.PaymentType.ASSURED_PURCHASE.value
-      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-      binding?.bankAccountView?.visible()
-      binding?.externalUrlView?.gone()
-      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-      binding?.bankAccountName?.visible()
-      binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
-      binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-      binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
-    }
-  }
-
   private fun updateUiPreviousData() {
     binding?.tvServiceName?.setText(product?.Name)
+    binding?.cashOnDelivery?.isChecked = product?.codAvailable ?: false
     binding?.tvDesc?.setText(product?.Description)
     binding?.edtServiceCategory?.setText(product?.category)
     binding?.edtServiceTime?.setText("${product?.Duration ?: 0}")
-    if (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty()
-        || !bankAccountDetail?.accountNumber.isNullOrEmpty()) {
-      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-      binding?.bankAccountName?.visible()
-      binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
-      binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-      binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
-    }
-    if (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value) {
-      binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
-      binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
-      binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
-      binding?.bankAccountView?.gone()
-      binding?.externalUrlView?.visible()
-    } else {
-      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-      binding?.bankAccountName?.gone()
-      binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
-      binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
-    }
+
     if (product?.isPriceToggleOn() == false) {
       binding?.toggleService?.isOn = false
       binding?.payServiceView?.gone()
@@ -226,11 +170,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.bankAccountView -> if (binding?.bankAccountView?.visibility == View.VISIBLE) goAddBankView()
       binding?.imageAddBtn -> openImagePicker()
       binding?.clearImage -> clearImage()
       binding?.selectDeliveryConfig -> showServiceDeliveryConfigBottomSheet()
-      binding?.vwPaymentConfig -> showPaymentConfigBottomSheet()
       binding?.btnOtherInfo -> {
         WebEngageController.trackEvent("Service click other information", "SERVICE CATALOGUE ADD/UPDATE", "")
         val bundle = Bundle()
@@ -262,7 +204,10 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun onServiceDelete(it: BaseResponse) {
     showLongToast(getString(R.string.service_removed_successfully))
-    goBack()
+    val data = Intent()
+    data.putExtra(IntentConstant.IS_UPDATED.name, true)
+    appBaseActivity?.setResult(Activity.RESULT_OK, data)
+    appBaseActivity?.finish()
   }
 
   private fun onServiceDetailResponseReceived(it: BaseResponse) {
@@ -347,8 +292,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val requestApi = if (this.serviceTimingList.isNullOrEmpty()) viewModel?.addServiceTiming(request) else viewModel?.updateServiceTiming(request)
     requestApi?.observeOnce(viewLifecycleOwner, {
       if (it.isSuccess()) {
-        showLongToast(if (isEdit) resources.getString(R.string.services_updated_success) else resources.getString(R.string.services_saved))
-        goBack()
+        isRefresh = true
+        hideProgress()
+        openSuccessBottomSheet()
       } else showError(resources.getString(R.string.service_timing_adding_error))
     })
   }
@@ -362,16 +308,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
 
-  private fun goBack() {
-    hideProgress()
-//    val data = Intent()
-//    data.putExtra("LOAD", true)
-//    appBaseActivity?.setResult(Activity.RESULT_OK, data)
-//    appBaseActivity?.finish()
-    openSuccessBottomSheet()
-  }
-
-
   private fun isValid(): Boolean {
     val serviceName = binding?.tvServiceName?.text.toString()
     val shipmentDuration = binding?.edtServiceTime?.text
@@ -380,8 +316,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val amount = binding?.amountEdt?.text.toString().toDoubleOrNull() ?: 0.0
     val discount = binding?.discountEdt?.text.toString().toDoubleOrNull() ?: 0.0
     val toggle = binding?.toggleService?.isOn ?: false
-    val externalUrlName = binding?.edtNameDesc?.text?.toString() ?: ""
-    val externalUrl = binding?.edtUrl?.text?.toString() ?: ""
 
     if (serviceImage == null && product?.image?.ImageId.isNullOrEmpty()) {
       showLongToast(resources.getString(R.string.add_service_image))
@@ -404,12 +338,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     } else if (toggle && (discount > amount)) {
       showLongToast(resources.getString(R.string.discount_amount_not_greater_than_price))
       return false
-    } else if (toggle && (product?.paymentType.isNullOrEmpty() || (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null))) {
-      showLongToast(resources.getString(R.string.please_add_bank_detail))
-      return false
-    } else if (toggle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty()))) {
-      showLongToast(resources.getString(R.string.please_enter_valid_url_name))
-      return false
     }
     product?.ClientId = clientId
     product?.FPTag = fpTag
@@ -420,9 +348,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     product?.Description = serviceDesc
     product?.Price = if (toggle) amount else 0.0
     product?.DiscountAmount = if (toggle) discount else 0.0
-
-    if (toggle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)) product?.BuyOnlineLink = BuyOnlineLink(externalUrl, externalUrlName)
-    else product?.BuyOnlineLink = BuyOnlineLink()
+    product?.codAvailable = binding?.cashOnDelivery?.isChecked ?: false
 
     if (!isEdit) {
       product?.category = product?.category ?: ""
@@ -455,18 +381,32 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun openSuccessBottomSheet() {
     val createdSuccess = CreateServiceSuccessBottomSheet()
-    createdSuccess.onClicked = { it }
+    createdSuccess.setData(isEdit)
+    createdSuccess.onClicked = { clickSuccessCreate(it) }
     createdSuccess.show(this@ServiceDetailFragment.parentFragmentManager, CreateServiceSuccessBottomSheet::class.java.name)
+  }
+
+  private fun clickSuccessCreate(it: String) {
+    when (it) {
+      TypeSuccess.CLOSE.name -> {
+        val data = Intent()
+        data.putExtra(IntentConstant.IS_UPDATED.name, isRefresh)
+        appBaseActivity?.setResult(Activity.RESULT_OK, data)
+        appBaseActivity?.finish()
+      }
+      TypeSuccess.VISIT_WEBSITE.name -> {
+      }
+    }
   }
 
   private fun openImagePicker(it: ClickType) {
     val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
     ImagePicker.Builder(baseActivity)
-            .mode(type)
-            .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
-            .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
-            .scale(800, 800)
-            .enableDebuggingMode(true).build()
+        .mode(type)
+        .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
+        .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
+        .scale(800, 800)
+        .enableDebuggingMode(true).build()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -484,17 +424,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       this.product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? ServiceModelV1
       this.serviceTimingList = data?.getSerializableExtra(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
       this.secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
-    } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 202) {
-      bankAccountDetail = data?.getSerializableExtra(IntentConstant.USER_BANK_DETAIL.name) as? BankAccountDetails
-      if (bankAccountDetail != null) {
-        product?.paymentType = Product.PaymentType.ASSURED_PURCHASE.value
-        binding?.bankAccountView?.visible()
-        binding?.externalUrlView?.gone()
-        binding?.bankAccountName?.visible()
-        binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
-        binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-        binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
-      }
     }
   }
 
@@ -505,69 +434,12 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     dialog.show(parentFragmentManager, ServiceDeliveryConfigBottomSheet::class.java.name)
   }
 
-  private fun showPaymentConfigBottomSheet() {
-    val dialog = PaymentConfigBottomSheet()
-    dialog.onClicked = {
-      product?.paymentType = it
-      binding?.bankAccountView?.visible()
-      binding?.externalUrlView?.gone()
-      when (it) {
-        Product.PaymentType.ASSURED_PURCHASE.value -> {
-          binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-          binding?.bankAccountName?.visible()
-          binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
-          when {
-            bankAccountDetail?.accountNumber.isNullOrBlank() || bankAccountDetail?.accountName.isNullOrBlank() -> {
-              binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
-              binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
-            }
-            else -> {
-              binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-              binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
-            }
-          }
-        }
-        Product.PaymentType.UNIQUE_PAYMENT_URL.value -> {
-          binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
-          binding?.bankAccountView?.gone()
-          binding?.externalUrlView?.visible()
-        }
-        else -> {
-          binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-          binding?.bankAccountName?.gone()
-          binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
-          binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
-        }
-      }
-    }
-    dialog.onListenerChange = { goAddBankView() }
-    if (((product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) ||
-            (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)).not()) {
-      product?.paymentType = ""
-    }
-    dialog.setDataPaymentGateway(bankAccountDetail, product?.paymentType)
-    dialog.show(parentFragmentManager, PaymentConfigBottomSheet::class.java.name)
-  }
-
-  private fun goAddBankView() {
-    WebEngageController.trackEvent("Add/Update bank account", "SERVICE CATALOGUE ADD/UPDATE", "")
-    val bundle = Bundle()
-    bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
-    bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
-    bundle.putString(IntentConstant.FP_ID.name, fpId)
-    bundle.putBoolean(IntentConstant.IS_SERVICE_CREATION.name, true)
-    val fragment = when {
-      bankAccountDetail != null && bankAccountDetail?.accountNumber.isNullOrEmpty().not() && bankAccountDetail?.iFSC.isNullOrEmpty().not() -> FragmentType.BANK_ACCOUNT_DETAILS
-      else -> FragmentType.ADD_BANK_ACCOUNT_START
-    }
-    startFragmentAccountActivity(fragment, bundle, isResult = true, requestCode = 202)
-  }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.ic_menu_delete_new, menu)
     menuDelete = menu.findItem(R.id.id_delete)
-    menuDelete?.isVisible = isEdit ?: false
+    menuDelete?.isVisible = isEdit
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {

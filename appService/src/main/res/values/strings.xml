@@ -13,11 +13,9 @@
   <string name="choose_an_action">Choose an action</string>
   <string name="please_set_up_your_bank_account_to_proceed">Please set up your bank account to proceed</string>
   <string name="benificiary_name">Beneficiary Name</string>
-
   <string name="sanjay_sharma">e.g. Sanjay Sharma</string>
   <string name="bank_ifsc_number">Bank IFSC Number</string>
   <string name="xxxxx_xxxxx">XXXXX XXXXX</string>
-
   <string name="bank_account_number">Bank Account Number</string>
   <string name="_111111111111111">111111111111111</string>
   <string name="save_n">save</string>
@@ -44,7 +42,6 @@
   <string name="enabled_payments_reveived_bank">Once enabled, all payments from your customers will be received in this bank account</string>
   <string name="directly_designated_bank_account">Get payments in 48 hours, directly in your designated bank account</string>
   <string name="account_verification_pending">Your account verification is pending</string>
-
   <string name="self_branded_payment_gateway">Self Branded Payment Gateway</string>
   <string name="about_this_add_on"> About this add-on</string>
   <string name="gateway_description">This payment gateway is powered by <b>Instamojo</b>, which allows you to collect your customers’ payment directly into your bank account without any delay, (unlike the default payment gateway provided by Boost). With this add-on acticvated on your Boost website your customers see that they are paying to your business and not to Boost.</string>
@@ -55,11 +52,13 @@
   <string name="view_in_add_on_store">View in Add-on Store</string>
   <string name="self_branded_payment_gateway_camel_case">Self Branded Payment Gateway</string>
   <string name="add_on_terms_and_condition">Add-on Terms and Condition</string>
+
   <string name="payment_gateway_terms_content">
     <li>First item</li>\n
     <li>Second item</li>\n
     <li>Third item</li>
   </string>
+
   <string name="payment_gateway_terms_point_one">Boost currently supports Instamojo as ONLY OPTION as a custom payment gateway. If you want to activate it, get this add-on from our marketplace, and then for it’s activation, we’ll ask you to either create Instamojo account yourself or else we will help you do KYC and help you setup this account.\n\n</string>
   <string name="payment_gateway_terms_point_two">Please note that Boost just acts as a fecilitator helping businesses like you to get most out of your Business website.\n\n</string>
   <string name="payment_gateway_terms_point_three">Boost in no way is associated with Instamojo or claim any kind of responsibility related to the custom payment gateway.\n\n</string>
@@ -233,11 +232,13 @@
   <string name="upcoming_leaves">Upcoming Leaves</string>
   <string name="upcoming_leave_s">Upcoming Leave(s)</string>
   <string name="confirm_services">CONFIRM 0 SERVICES</string>
+
   <array name="gender">
     <item>Please select</item>
     <item>Male</item>
     <item>Female</item>
   </array>
+
   <array name="Years">
     <item>0 Years</item>
     <item>1 Years</item>
@@ -251,11 +252,13 @@
     <item>9 Years</item>
     <item>10 Years</item>
   </array>
+
   <array name="Time">
     <item>7:30 PM</item>
     <item>8:30 PM</item>
     <item>9:30 PM</item>
   </array>
+
   <!--  end of staff modules strings-->
   <string name="why_do_we_need_your_bank_account">Why do we need your bank account?</string>
   <string name="collect_boost_business_website_desc">This account is being used to send you money collected from your customers who are making payments on your Boost Business website.</string>
@@ -374,7 +377,7 @@
   <string name="removing_staff">Removing Staff</string>
   <string name="unable_to_delete">Unable to delete</string>
   <string name="loading">Loading</string>
-  <string name="toolbar_staff_listing">STAFF LISTING</string>
+  <string name="toolbar_staff_listing">Staff Listing</string>
   <string name="toolbar_select_services">Select Services</string>
   <string name="toolbar_staff_timing">Staff Timing</string>
   <string name="toolbar_schedule_break">Scheduled Breaks</string>
@@ -394,7 +397,7 @@
   <string name="staff_timings_updating">Updating Staff Timings...</string>
   <string name="weekly_appointment">Weekly appointment schedule</string>
   <string name="categories">Categories</string>
-  <string name="services">SERVICES</string>
+  <string name="services">Services</string>
   <string name="you_don_t_have_any_service_added_to_your_digital_catalog_as_of_yet_watch_video">You don’t have any service added to your digital catalog as of yet. Watch video</string>
   <string name="add_services_to_your_catalog">Add services to your catalog</string>
   <string name="add_a_service">Add a service</string>
@@ -458,11 +461,15 @@
   <string name="starttime_on_one_slot_cannot_be_before_endtime_of_other_slot">Start time on one slot cannot be less than end time of previous slot</string>
   <string name="no_staff_member_listed_yet">No staff member listed yet</string>
   <string name="share_">Share:</string>
+  <string name="view_on_website">VIEW ON WEBSITE</string>
+  <string name="successfully_saved">Successfully Saved</string>
+  <string name="successfully_update">Successfully Updated</string>
+
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
-
   </array>
+
   <string-array name="business_hours_arrays">
     <item>12:00AM</item>
     <item>12:30AM</item>
