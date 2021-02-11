@@ -438,6 +438,7 @@
     <string name="accept_online_payment">Accept online payment</string>
     <string name="max_quantity_per_order">Max quantity per order</string>
     <string name="accept_cod_payment">Accept COD payment</string>
+    <string name="share_">Share:</string>
     <array name="stock_availbility">
         <item>"Unlimited stock"</item>
         <item>"Limited stock"</item>
