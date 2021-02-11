@@ -29,16 +29,14 @@ data class DrScoreSetupData(
   }
 
   enum class DrScoreType(var id: String, var title: String, var icon: Int) {
-//    BASIC_PROFILE("basic_profile", "Basic Profile", R.drawable.ic_add_home_d),
-    BUSINESS_PROFILE("business_profile", "Business Profile", R.drawable.ic_edit_content_d),
+    BUSINESS_PROFILE("business_profile", "Business Profile", R.drawable.ic_business_profile_dr),
     WEBSITE_CONTENT("website_content", "Website Content", R.drawable.ic_edit_content_d),
-    ECOMMERCE_SETTINGS("enable_ecommerce", "E-commerce Settings", R.drawable.ic_edit_content_d),
-    CUSTOMER_INTERACTIONS("customer_interactions", "Customer Interactions", R.drawable.ic_edit_content_d),
-    MARKETING_ENGAGEMENT("marketing_enagement", "Marketing & Engagement", R.drawable.ic_edit_content_d);
+    ECOMMERCE_SETTINGS("enable_ecommerce", "E-commerce Settings", R.drawable.ic_e_commerce_setting_dr),
+    CUSTOMER_INTERACTIONS("customer_interactions", "Customer Interactions", R.drawable.ic_customer_interaction_dr),
+    MARKETING_ENGAGEMENT("marketing_enagement", "Marketing & Engagement", R.drawable.ic_marketing_engage_dr);
+    //Testing Data
+//    BASIC_PROFILE("basic_profile", "Basic Profile", R.drawable.ic_add_home_d),
 //    ADVANCE_PROFILE("advanced_profile", "Advanced Profile", R.drawable.ic_edit_content_d);
-
-
-
 
     companion object {
       fun fromId(value: String): DrScoreType? = values().firstOrNull { it.id.toLowerCase(Locale.ROOT) == value }
