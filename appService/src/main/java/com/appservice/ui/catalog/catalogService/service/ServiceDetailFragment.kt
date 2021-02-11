@@ -364,10 +364,11 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun goBack() {
     hideProgress()
-    val data = Intent()
-    data.putExtra("LOAD", true)
-    appBaseActivity?.setResult(Activity.RESULT_OK, data)
-    appBaseActivity?.finish()
+//    val data = Intent()
+//    data.putExtra("LOAD", true)
+//    appBaseActivity?.setResult(Activity.RESULT_OK, data)
+//    appBaseActivity?.finish()
+    openSuccessBottomSheet()
   }
 
 
