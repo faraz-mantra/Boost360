@@ -103,7 +103,6 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
 
                 //linking facebook profile Skip Event Tracker.
                 WebEngageController.trackEvent("linking facebook profile", "Button", "Skip")
-
                 gotoNextScreen()
             }
             binding?.linkFacebook -> {
