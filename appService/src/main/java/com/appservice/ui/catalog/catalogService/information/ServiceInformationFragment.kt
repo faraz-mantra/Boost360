@@ -28,7 +28,10 @@ import com.appservice.ui.catalog.widgets.GstDetailsBottomSheet
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.utils.WebEngageController
 import com.appservice.viewmodel.ServiceViewModelV1
+import com.framework.extensions.gone
+import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
 import com.framework.imagepicker.ImagePicker
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -92,6 +95,13 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     binding?.cetSpecValue?.setText(product?.keySpecification?.value ?: "")
     binding?.edtBrand?.setText(product?.brandName ?: "")
     binding?.ctvQuantityOrderStatus?.text = ordersQuantity.toString()
+    if (product?.isPriceToggleOn() == true) {
+      binding?.edtGst?.visible()
+      binding?.llGst?.visible()
+    } else {
+      binding?.edtGst?.gone()
+      binding?.llGst?.gone()
+    }
     if (product?.GstSlab != null) binding?.edtGst?.setText("${(product?.GstSlab ?: 0.0)} %")
     setAdapter()
     val listYesNo = mutableListOf(SpinnerImageModel("YES" to true, R.drawable.ic_dot_green), SpinnerImageModel("NO" to false, R.drawable.ic_dot_red))

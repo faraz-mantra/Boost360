@@ -223,7 +223,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:includeFontPadding="false"
-              android:text="Secondary images"
+              android:text="@string/secondary_images"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_3" />
@@ -235,24 +235,13 @@
               android:drawablePadding="@dimen/size_4"
               android:drawableTint="@color/orange"
               android:includeFontPadding="false"
-              android:text="(8 max, Jpeg/png, 800x800px)"
+              android:text="@string/_8_max_jpeg_png_800x800px"
               android:textColor="@color/warm_grey"
               android:textSize="12sp"
               app:drawableEndCompat="@drawable/ic_question_circular_blue"
               app:fontFamily="@font/regular" />
 
           </androidx.appcompat.widget.LinearLayoutCompat>
-
-          <com.framework.views.viewgroups.BaseRecyclerView
-            android:id="@+id/rvAdditionalDocs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_8"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="3"
-            tools:listitem="@layout/item_preview_image" />
-
           <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/btn_click_photo"
             android:layout_width="match_parent"
@@ -260,13 +249,12 @@
             android:layout_marginTop="@dimen/size_8"
             android:background="@drawable/shape_blue_stroke_rect_title_bkg"
             android:padding="@dimen/size_14">
-
             <com.framework.views.customViews.CustomTextView
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
               android:gravity="center"
-              android:text="Add secondary images"
+              android:text="@string/add_secondary_images"
               android:textColor="@color/yellow_ffb900"
               app:drawableLeftCompat="@drawable/ic_small_add_images"
               app:fontFamily="@font/semi_bold"
@@ -280,7 +268,15 @@
 
           </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+          <com.framework.views.viewgroups.BaseRecyclerView
+              android:id="@+id/rvAdditionalDocs"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/size_8"
+              android:orientation="vertical"
+              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+              tools:itemCount="3"
+              tools:listitem="@layout/item_preview_image" />
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -292,7 +288,7 @@
               android:layout_height="wrap_content"
               android:drawablePadding="@dimen/size_4"
               android:includeFontPadding="false"
-              android:text="Associated brand name (if any)"
+              android:text="@string/associated_brand_name_if_any"
               android:textColor="@color/black_4a4a4a"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_3" />
@@ -301,7 +297,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:includeFontPadding="false"
-              android:text="In case this service is associated with/certified by any brand."
+              android:text="@string/in_case_this_service_is_associated_with_certified_by_any_brand"
               android:textColor="@color/warm_grey"
               android:textSize="12sp"
               android:visibility="gone"
@@ -315,7 +311,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_5"
             android:background="@drawable/bg_rect_edit_txt"
-            android:hint="Dry Balanese Massage"
+            android:hint="@string/dry_balanese_massage"
             android:inputType="textCapWords"
             android:padding="@dimen/size_12"
             android:singleLine="true"
@@ -335,7 +331,7 @@
               android:drawablePadding="@dimen/size_4"
               android:drawableTint="@color/orange"
               android:includeFontPadding="false"
-              android:text="Service Tags"
+              android:text="@string/service_tags"
               android:textColor="@color/black_4a4a4a"
               app:drawableEndCompat="@drawable/ic_question_circular_blue"
               app:fontFamily="@font/semi_bold"
@@ -384,7 +380,7 @@
               android:background="@drawable/shape_blue_stroke_rect_title_bkg"
               android:clickable="true"
               android:gravity="center"
-              android:text="Add"
+              android:text="@string/add"
               android:textColor="@color/yellow_ffb900"
               app:fontFamily="@font/semi_bold"
               app:layout_constraintBottom_toBottomOf="@id/edt_service_tag"
@@ -402,7 +398,7 @@
             android:drawablePadding="@dimen/size_4"
             android:drawableTint="@color/orange"
             android:includeFontPadding="false"
-            android:text="Key specifications"
+            android:text="@string/key_specifications"
             android:textColor="@color/black_4a4a4a"
             app:drawableEndCompat="@drawable/ic_question_circular_blue"
             app:fontFamily="@font/semi_bold"
@@ -412,7 +408,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-            android:text="It appears at the end of the service name as it’s variant"
+            android:text="@string/it_appears_at_the_end_of_the_service_name_as_it_s_variant"
             android:textColor="@color/warm_grey"
             android:textSize="12sp"
             android:visibility="gone"
@@ -433,7 +429,7 @@
               android:layout_height="wrap_content"
               android:layout_weight="0.3"
               android:background="@android:color/transparent"
-              android:hint="e.g. Color"
+              android:hint="@string/e_g_color"
               android:maxLines="1"
               android:paddingStart="@dimen/size_8"
               android:singleLine="true"
@@ -452,7 +448,7 @@
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:background="@android:color/transparent"
-              android:hint="Yellow and Orange"
+              android:hint="@string/yellow_and_orange"
               android:maxLines="1"
               android:paddingStart="@dimen/size_8"
               android:singleLine="true"
@@ -469,7 +465,7 @@
             android:drawablePadding="@dimen/size_4"
             android:drawableTint="@color/orange"
             android:includeFontPadding="false"
-            android:text="Service specifications"
+            android:text="@string/service_specifications"
             android:textColor="@color/black_4a4a4a"
             app:drawableEndCompat="@drawable/ic_question_circular_blue"
             app:fontFamily="@font/semi_bold"
@@ -498,7 +494,7 @@
             android:gravity="center"
             android:minWidth="@dimen/size_100"
             android:padding="@dimen/size_10"
-            android:text="Add specification"
+            android:text="@string/add_specification"
             android:textColor="@color/yellow_ffb900"
             app:fontFamily="@font/semi_bold"
             app:layout_constraintBottom_toBottomOf="@id/edt_service_tag"
@@ -624,7 +620,7 @@
                 android:layout_weight="1"
                 android:drawablePadding="4dp"
                 android:includeFontPadding="false"
-                android:text="Accept online payment"
+                android:text="@string/accept_online_payment"
                 android:textColor="@color/warm_grey"
                 android:textSize="12sp"
                 android:visibility="visible"
@@ -645,7 +641,7 @@
                 android:drawablePadding="4dp"
                 android:gravity="center_horizontal"
                 android:includeFontPadding="false"
-                android:text="Max quantity per order"
+                android:text="@string/max_quantity_per_order"
                 android:textColor="@color/warm_grey"
                 android:textSize="12sp"
                 app:fontFamily="@font/regular" />
@@ -661,7 +657,7 @@
               android:layout_marginTop="@dimen/_6dp"
               android:drawablePadding="4dp"
               android:includeFontPadding="false"
-              android:text="Accept COD payment"
+              android:text="@string/accept_cod_payment"
               android:textColor="@color/warm_grey"
               android:textSize="12sp"
               android:visibility="visible"
@@ -755,6 +751,7 @@
           <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+              android:id="@+id/ll_gst"
             android:layout_marginTop="@dimen/size_26"
             android:orientation="horizontal">
 
