@@ -96,6 +96,10 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     }
   }
 
+  override fun getNavIconScale(): Float {
+    return 1.0f
+  }
+
   override fun getToolbarTitle(): String? {
     return when (type) {
       FragmentType.SERVICE_INFORMATION -> resources.getString(R.string.other_information)

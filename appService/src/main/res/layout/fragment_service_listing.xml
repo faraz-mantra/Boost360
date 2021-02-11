@@ -27,6 +27,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.78"
             tools:itemCount="2"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/size_80"
             tools:listitem="@layout/recycler_item_service_listing" />
 
         <LinearLayout
