@@ -42,6 +42,32 @@ import org.json.JSONObject;
 import java.util.Locale;
 
 import static android.view.View.NO_ID;
+import static com.framework.webengageconstant.EventLabelKt.BUSINESS_PROFILE;
+import static com.framework.webengageconstant.EventLabelKt.CLICKING_USE_SAME_TIME_FOR_WHOLE_WEEK;
+import static com.framework.webengageconstant.EventLabelKt.TOGGLE_FRIDAY;
+import static com.framework.webengageconstant.EventLabelKt.TOGGLE_MONDAY;
+import static com.framework.webengageconstant.EventLabelKt.TOGGLE_SATURDAY;
+import static com.framework.webengageconstant.EventLabelKt.TOGGLE_SUNDAY;
+import static com.framework.webengageconstant.EventLabelKt.TOGGLE_THURSDAY;
+import static com.framework.webengageconstant.EventLabelKt.TOGGLE_TUESDAY;
+import static com.framework.webengageconstant.EventLabelKt.TOGGLE_WEDNESDAY;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_HOURS_SAVED;
+import static com.framework.webengageconstant.EventNameKt.FRIDAY_MARKED_OFF;
+import static com.framework.webengageconstant.EventNameKt.FRIDAY_MARKED_ON;
+import static com.framework.webengageconstant.EventNameKt.MONDAY_MARKED_OFF;
+import static com.framework.webengageconstant.EventNameKt.MONDAY_MARKED_ON;
+import static com.framework.webengageconstant.EventNameKt.SATURDAY_MARKED_OFF;
+import static com.framework.webengageconstant.EventNameKt.SATURDAY_MARKED_ON;
+import static com.framework.webengageconstant.EventNameKt.STORE_TIMINGS;
+import static com.framework.webengageconstant.EventNameKt.SUNDAY_MARKED_OFF;
+import static com.framework.webengageconstant.EventNameKt.SUNDAY_MARKED_ON;
+import static com.framework.webengageconstant.EventNameKt.THURSDAY_MARKED_OFF;
+import static com.framework.webengageconstant.EventNameKt.THURSDAY_MARKED_ON;
+import static com.framework.webengageconstant.EventNameKt.TUESDAY_MARKED_OFF;
+import static com.framework.webengageconstant.EventNameKt.TUESDAY_MARKED_ON;
+import static com.framework.webengageconstant.EventNameKt.WEDNESDAY_MARKED_OFF;
+import static com.framework.webengageconstant.EventNameKt.WEDNESDAY_MARKED_ON;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 
 /**
  * Created by Admin on 27-09-2017.
@@ -79,7 +105,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
                 MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
                 if (Methods.isOnline(BusinessHoursActivity.this)) {
-                    WebEngageController.trackEvent("Business hours saved", "BUSINESS PROFILE", session.getFpTag());
+                    WebEngageController.trackEvent(BUSINESS_HOURS_SAVED, BUSINESS_PROFILE, session.getFpTag());
                     uploadbusinessTimingsInfo();
                 }else{
                     Methods.snackbarNoInternet(BusinessHoursActivity.this);
@@ -526,77 +552,77 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
         switch (v.getId()){
             case R.id.switch_sun:
                 if(!switchSun.isChecked()) {
-                    WebEngageController.trackEvent("SUNDAY MARKED OFF", "Toggle: Sunday", null);
+                    WebEngageController.trackEvent(SUNDAY_MARKED_OFF, TOGGLE_SUNDAY, NULL);
                     setTextTimeOnSwitch(R.id.et_sun_open, R.id.et_sun_close, 0, 0, 0, 0);
                 }
                 else
                 {
-                    WebEngageController.trackEvent("SUNDAY MARKED ON", "Toggle: Sunday", null);
+                    WebEngageController.trackEvent(SUNDAY_MARKED_ON, TOGGLE_SUNDAY, NULL);
                 }
                 break;
             case R.id.switch_mon:
                 if(!switchMon.isChecked()) {
-                    WebEngageController.trackEvent("MONDAY MARKED OFF", "Toggle: MONDAY", null);
+                    WebEngageController.trackEvent(MONDAY_MARKED_OFF, TOGGLE_MONDAY, NULL);
                     setTextTimeOnSwitch(R.id.et_mon_open, R.id.et_mon_close, 0, 0, 0, 0);
                 }
                 else
                 {
-                    WebEngageController.trackEvent("MONDAY MARKED ON", "Toggle: MONDAY", null);
+                    WebEngageController.trackEvent(MONDAY_MARKED_ON, TOGGLE_MONDAY, NULL);
                 }
                 break;
             case R.id.switch_tue:
                 if(!switchTue.isChecked()) {
                     setTextTimeOnSwitch(R.id.et_tue_open, R.id.et_tue_close, 0, 0, 0, 0);
-                    WebEngageController.trackEvent("TUESDAY MARKED OFF", "Toggle: TUESDAY", null);
+                    WebEngageController.trackEvent(TUESDAY_MARKED_OFF, TOGGLE_TUESDAY, NULL);
                 }
                 else
                 {
-                    WebEngageController.trackEvent("TUESDAY MARKED ON", "Toggle: TUESDAY", null);
+                    WebEngageController.trackEvent(TUESDAY_MARKED_ON, TOGGLE_TUESDAY, NULL);
                 }
                 break;
             case R.id.switch_wed:
                 if(!switchWed.isChecked()) {
                     setTextTimeOnSwitch(R.id.et_wed_open, R.id.et_wed_close, 0, 0, 0, 0);
-                    WebEngageController.trackEvent("WEDNESDAY MARKED OFF", "Toggle: WEDNESDAY", null);
+                    WebEngageController.trackEvent(WEDNESDAY_MARKED_OFF, TOGGLE_WEDNESDAY, NULL);
                 }
                 else
                 {
-                    WebEngageController.trackEvent("WEDNESDAY MARKED ON", "Toggle: WEDNESDAY", null);
+                    WebEngageController.trackEvent(WEDNESDAY_MARKED_ON, TOGGLE_WEDNESDAY, NULL);
                 }
                 break;
             case R.id.switch_thu:
                 if(!switchThu.isChecked()) {
                     setTextTimeOnSwitch(R.id.et_thu_open, R.id.et_thu_close, 0, 0, 0, 0);
-                    WebEngageController.trackEvent("THURSDAY MARKED OFF", "Toggle: THURSDAY", null);
+                    WebEngageController.trackEvent(THURSDAY_MARKED_OFF, TOGGLE_THURSDAY, NULL);
                 }
                 else
                 {
-                    WebEngageController.trackEvent("THURSDAY MARKED ON", "Toggle: THURSDAY", null);
+                    WebEngageController.trackEvent(THURSDAY_MARKED_ON, TOGGLE_THURSDAY, NULL);
                 }
                 break;
             case R.id.switch_fri:
                 if(!switchFri.isChecked()) {
                     setTextTimeOnSwitch(R.id.et_fri_open, R.id.et_fri_close, 0, 0, 0, 0);
-                    WebEngageController.trackEvent("FRIDAY MARKED OFF", "Toggle: FRIDAY", null);
+                    WebEngageController.trackEvent(FRIDAY_MARKED_OFF, TOGGLE_FRIDAY, NULL);
                 }
                 else
                 {
-                    WebEngageController.trackEvent("FRIDAY MARKED ON", "Toggle: FRIDAY", null);
+                    WebEngageController.trackEvent(FRIDAY_MARKED_ON, TOGGLE_FRIDAY, NULL);
                 }
                 break;
             case R.id.switch_sat:
                 if(!switchSat.isChecked()) {
                     setTextTimeOnSwitch(R.id.et_sat_open, R.id.et_sat_close, 0, 0, 0, 0);
-                    WebEngageController.trackEvent("SATURDAY MARKED OFF", "Toggle: SATURDAY", null);
+                    WebEngageController.trackEvent(SATURDAY_MARKED_OFF, TOGGLE_SATURDAY, NULL);
                 }
                 else
                 {
-                    WebEngageController.trackEvent("SATURDAY MARKED ON", "Toggle: SATURDAY", null);
+                    WebEngageController.trackEvent(SATURDAY_MARKED_ON, TOGGLE_SATURDAY, NULL);
                 }
                 break;
             case R.id.chbx_same_time:
                 if(checkBoxAllTime.isChecked()) {
-                    WebEngageController.trackEvent("STORE TIMINGS","Clicking: Use same time for whole week",null);
+                    WebEngageController.trackEvent(STORE_TIMINGS,CLICKING_USE_SAME_TIME_FOR_WHOLE_WEEK,NULL);
                     linearLayoutAllTime.setVisibility(View.VISIBLE);
                     findViewById(R.id.et_all_close).setOnTouchListener(BusinessHoursActivity.this);
                     findViewById(R.id.et_all_open).setOnTouchListener(BusinessHoursActivity.this);
