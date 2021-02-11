@@ -315,6 +315,28 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         }
 
       }
+      RecyclerViewActionType.IMAGE_CHANGE.ordinal -> {
+        val data = item as? FileModel
+        if (isEdit && data?.pathUrl.isNullOrEmpty().not()) {
+          val dataImage = secondaryDataImage?.firstOrNull { it.ActualImage == data?.pathUrl }
+                  ?: return
+          showProgress(resources.getString(R.string.removing_image))
+          val request = DeleteSecondaryImageRequest(product?.productId, dataImage.ImageId);
+          viewModel?.deleteSecondaryImage(request)?.observeOnce(viewLifecycleOwner, {
+            if (it.status == 200 || it.status == 201 || it.status == 202) {
+              secondaryDataImage?.remove(dataImage)
+              secondaryImage.remove(data)
+              setAdapter()
+            } else showLongToast(resources.getString(R.string.removing_image_failed))
+            hideProgress()
+          })
+        } else {
+          secondaryImage.remove(data)
+          setAdapter()
+        }
+        openImagePicker()
+
+      }
       RecyclerViewActionType.CLEAR_SPECIFICATION_CLICK.ordinal -> {
         if (specList.size > 1) {
           val element = item as? KeySpecification ?: return
