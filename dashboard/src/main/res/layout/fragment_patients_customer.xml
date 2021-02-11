@@ -48,6 +48,8 @@
       android:layout_height="wrap_content"
       android:orientation="vertical"
       android:layout_marginTop="@dimen/size_2"
+      android:clipToPadding="false"
+      android:paddingBottom="@dimen/size_20"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
       tools:listitem="@layout/item_customer_patient_item" />
   </androidx.appcompat.widget.LinearLayoutCompat>
