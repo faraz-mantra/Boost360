@@ -384,7 +384,24 @@
     <string name="staff_timings_updated">Staff Timings Updated</string>
   <string name="staff_timings_unable_to_update">Staff Timings Unable to Update</string>
     <string name="staff_timings_updating">Updating Staff Timings...</string>
-    <array name="stock_availbility">
+    <string name="bank_account_cannot_empty">Bank account name can\'t empty.</string>
+  <string name="bank_number_can_not_empty">Bank account number can\'t empty.</string>
+  <string name="confirm_bank_account_cannot_empty">Confirm bank account number can\'t empty.</string>
+  <string name="enter_a_valid_account_number">Enter valid confirm account number.</string>
+  <string name="bank_ifcs_cannot_empty">Bank IFSC can\'t empty.</string>
+  <string name="please_enter_valid_ifcs">Please enter valid IFSC code</string>
+  <string name="bank_name_cant_empty">Bank name can\'t empty.</string>
+  <string name="product_adding_error_try_again">Product adding error, please try again.</string>
+  <string name="product_updating_error_try_again">Product updating error, please try again.</string>
+  <string name="uploading_product_image">Uploading product image, please wait...</string>
+  <string name="product_image_uploading_error">Product image uploading error, please try again.</string>
+  <string name="secondary_product_image_uploading_error_please">Secondary Product image uploading error, please try again.</string>
+  <string name="add_secondary_image_data_error_please_try_again">Add secondary image data error, please try again.</string>
+  <string name="product_updated_successfully">Product updated successfully.</string>
+  <string name="product_saved_successfully">Product saved successfully.</string>
+  <string name="you_have_unsaved_information_do_you_still_want_to_close">You have unsaved information. Do you still want to close?</string>
+  <string name="service_image_uploading_error">Service image uploading error, please try again.</string>
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
 

@@ -25,6 +25,8 @@ import com.dashboard.recyclerView.RecyclerItemClickListener
 import com.dashboard.utils.*
 import com.dashboard.viewmodel.AddOnsViewModel
 import com.framework.extensions.observeOnce
+import com.framework.webengageconstant.BOOST_ADD_ONS_PAGE
+import com.framework.webengageconstant.PAGE_VIEW
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -57,7 +59,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
     super.onCreateView()
     session = UserSessionManager(baseActivity)
     getDomainDetail()
-    WebEngageController.trackEvent("Boost Add-ons Page", "pageview", session?.fpTag)
+    WebEngageController.trackEvent(BOOST_ADD_ONS_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
   override fun onResume() {

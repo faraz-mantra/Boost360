@@ -1,20 +1,10 @@
 package com.nowfloats.AccrossVerticals.Testimonials;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,7 +22,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,13 +44,10 @@ import com.nowfloats.AccrossVerticals.API.model.GetToken.GetTokenData;
 import com.nowfloats.AccrossVerticals.API.model.UpdateTestimonialsData.UpdateTestimonialsData;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog;
-import com.nowfloats.manufacturing.projectandteams.ui.home.ProjectAndTermsActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
 
@@ -69,6 +62,11 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
+
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_TESTIMONIAL_ADDED;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventNameKt.TESTIMONIAL_ADDED;
 
 public class TestimonialsFeedbackActivity extends AppCompatActivity implements TestimonialsFeedbackListener {
 
@@ -392,7 +390,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        WebEngageController.trackEvent("Testimonial added", "MANAGE CONTENT", session.getFpTag());
+                        WebEngageController.trackEvent(TESTIMONIAL_ADDED, EVENT_LABEL_MANAGE_CONTENT, session.getFpTag());
                         Toast.makeText(getApplicationContext(), "Successfully Added Testimonials", Toast.LENGTH_LONG).show();
                         isNewDataAdded  = true;
                         onBackPressed();
@@ -471,7 +469,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                             Toast.makeText(getApplicationContext(), getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        WebEngageController.trackEvent("MANAGE CONTENT", "Testimonial added", session.getFpTag());
+                        WebEngageController.trackEvent(EVENT_NAME_MANAGE_CONTENT, EVENT_LABEL_TESTIMONIAL_ADDED, session.getFpTag());
                         Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
                         onBackPressed();
                     }
