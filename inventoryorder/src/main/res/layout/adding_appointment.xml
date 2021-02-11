@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/orange"
+            android:elevation="4dp"
+            android:minHeight="@dimen/toolbar_size"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="?android:attr/actionBarSize"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <com.framework.views.customViews.CustomImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/back_screen" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:gravity="start|center">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Adding appointment"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/sans_regular" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.framework.views.customViews.CustomImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/question_circle" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/question_upper"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical">
+
+                                <com.framework.views.customViews.CustomImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/question" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/question_lower"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/question_upper">
+
+                                <com.framework.views.customViews.CustomImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/questio_dot" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </FrameLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="@dimen/size_10"
+                    android:background="@color/white">
+
+                    <LinearLayout
+                        android:layout_marginBottom="@dimen/size_20"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/size_10"
+                        android:paddingRight="@dimen/size_10">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <com.framework.views.customViews.CustomImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/calender" />
+                            </LinearLayout>
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:gravity="center|left"
+                                android:text="Service info"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                app:fontFamily="@font/sans_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp">
+
+                                <com.framework.views.customViews.CustomTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="10"
+                                    android:text="Service name"
+                                    android:textSize="12sp"
+                                    app:fontFamily="@font/sans_regular" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <FrameLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp">
+
+                                        <com.framework.views.customViews.CustomImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@drawable/circle_yellow" />
+
+                                        <RelativeLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:orientation="vertical">
+
+                                            <LinearLayout
+                                                android:id="@+id/service_question_upper"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical">
+
+                                                <com.framework.views.customViews.CustomImageView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:src="@drawable/question_upeer_yellow" />
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:id="@+id/service_question_lower"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_below="@+id/service_question_upper">
+
+                                                <com.framework.views.customViews.CustomImageView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:src="@drawable/dot_yellow" />
+                                            </LinearLayout>
+                                        </RelativeLayout>
+                                    </FrameLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="8dp"
+                                android:layout_marginBottom="@dimen/size_15"
+                                android:background="#FFFFFF"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="5"
+                                    android:background="@drawable/boarder">
+
+                                    <AutoCompleteTextView
+                                        android:id="@+id/service_namep_spinner"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:backgroundTint="@android:color/transparent"
+                                        android:dropDownWidth="fill_parent"
+                                        android:dropDownHeight="100dp"
+                                        android:paddingStart="@dimen/size_10"
+                                        android:text="Select Service"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@color/pinkish_grey"
+                                        app:fontFamily="@font/sans_regular" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/boarder"
+                                    android:gravity="center">
+
+                                    <com.framework.views.customViews.CustomImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:src="@drawable/arrow_down" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:visibility="visible"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <com.framework.views.customViews.CustomTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="10"
+                                    android:text="Appointment date and time"
+                                    android:textSize="12sp"
+                                    app:fontFamily="@font/sans_regular" />
+                            </LinearLayout>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                app:cardCornerRadius="@dimen/size_5"
+                                android:layout_marginTop="@dimen/size_10"
+                                android:layout_marginBottom="@dimen/size_10"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:layout_marginStart="@dimen/size_5"
+                                    android:layout_marginEnd="@dimen/size_5"
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <LinearLayout
+                                        android:layout_marginTop="@dimen/size_10"
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <com.framework.views.customViews.CustomTextView
+                                            android:layout_weight="6"
+                                            android:textColor="@color/bg_dark_grey"
+                                            android:text="Monday, 7 Jan 2021"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"/>
+                                        <LinearLayout
+                                            android:gravity="center"
+                                            android:layout_weight="1"
+                                            android:orientation="horizontal"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content">
+                                            <com.framework.views.customViews.CustomImageView
+                                                android:src="@drawable/pen"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"/>
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+                                    <RelativeLayout
+                                        android:layout_marginBottom="@dimen/size_10"
+                                        android:layout_marginTop="@dimen/size_20"
+                                        android:orientation="horizontal"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content">
+
+                                        <com.framework.views.customViews.CustomTextView
+                                            android:layout_alignParentStart="true"
+                                            android:textColor="@color/black_4a4a4a"
+                                            android:text="11:00 AM"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"/>
+
+                                        <com.framework.views.customViews.CustomTextView
+                                            android:layout_marginLeft="@dimen/size_10"
+                                            android:text="by anybody"
+                                            android:textColor="@color/pinkish_grey"
+                                            android:layout_alignParentEnd="true"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"/>
+
+                                    </RelativeLayout>
+
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="@dimen/size_10"
+                    android:layout_marginBottom="@dimen/size_10"
+                    android:background="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/size_40"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/size_10">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <com.framework.views.customViews.CustomImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/calender" />
+                            </LinearLayout>
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:gravity="center|left"
+                                android:text="Customer Details"
+                                android:textColor="@color/black"
+                                android:textSize="15sp"
+                                app:fontFamily="@font/sans_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="@dimen/size_20">
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Customer name*"
+                                android:textSize="12sp"
+                                app:fontFamily="@font/sans_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:layout_marginEnd="@dimen/size_10"
+                            android:background="@drawable/boarder"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/size_10"
+                            android:paddingBottom="@dimen/size_10">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="5">
+
+                                <com.framework.views.customViews.CustomEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingStart="@dimen/size_10"
+                                    android:text="Type Customer Name"
+                                    android:textColor="@color/text_grey"
+                                    android:textSize="19sp"
+                                    app:fontFamily="@font/sans_regular" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <com.framework.views.customViews.CustomImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/phone_book" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="@dimen/size_20">
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Customer Phone Number"
+                                android:textSize="12sp"
+                                app:fontFamily="@font/sans_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:layout_marginEnd="@dimen/size_10"
+                            android:background="@drawable/boarder"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/size_10"
+                            android:paddingBottom="@dimen/size_10">
+
+                            <com.framework.views.customViews.CustomEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="@dimen/size_10"
+                                android:text="+91 XXXXX XXXXX"
+                                android:textColor="@color/text_grey"
+                                android:textSize="19sp"
+                                app:fontFamily="@font/sans_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="@dimen/size_20">
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Customer street address*"
+                                android:textSize="12sp"
+                                app:fontFamily="@font/sans_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:layout_marginEnd="@dimen/size_10"
+                            android:background="@drawable/boarder"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/size_10"
+                            android:paddingBottom="@dimen/size_10">
+
+                            <com.framework.views.customViews.CustomEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="@dimen/size_10"
+                                android:text="Type the plot number and street address"
+                                android:textColor="@color/text_grey"
+                                android:textSize="19sp"
+                                app:fontFamily="@font/sans_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="@dimen/size_20">
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pincode*"
+                                android:textSize="12sp"
+                                app:fontFamily="@font/sans_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:layout_marginEnd="@dimen/size_10"
+                            android:background="@drawable/boarder"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/size_10"
+                            android:paddingBottom="@dimen/size_10">
+
+                            <com.framework.views.customViews.CustomEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="@dimen/size_10"
+                                android:text="Enter customer’s Pincode"
+                                android:textColor="@color/text_grey"
+                                android:textSize="19sp"
+                                app:fontFamily="@font/sans_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="@dimen/size_20">
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="City name*"
+                                android:textSize="12sp"
+                                app:fontFamily="@font/sans_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:layout_marginEnd="@dimen/size_10"
+                            android:background="@drawable/boarder"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/size_10"
+                            android:paddingBottom="@dimen/size_10">
+
+                            <com.framework.views.customViews.CustomEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="@dimen/size_10"
+                                android:text="Enter customer’s city"
+                                android:textColor="@color/text_grey"
+                                android:textSize="19sp"
+                                app:fontFamily="@font/sans_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="@dimen/size_20">
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="State*"
+                                android:textSize="12sp"
+                                app:fontFamily="@font/sans_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_10"
+                            android:layout_marginEnd="@dimen/size_10"
+                            android:background="@drawable/boarder"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/size_10"
+                            android:paddingBottom="@dimen/size_10">
+
+                            <com.framework.views.customViews.CustomEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="@dimen/size_10"
+                                android:text="Select customer’s state"
+                                android:textColor="@color/text_grey"
+                                android:textSize="19sp"
+                                app:fontFamily="@font/sans_regular" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_20">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/size_30"
+                        android:paddingBottom="@dimen/size_20">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:elevation="10dp"
+                            app:cardBackgroundColor="@color/orange"
+                            app:cardCornerRadius="@dimen/size_10">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:minHeight="@dimen/size_45">
+
+                                <com.framework.views.customViews.CustomTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Review details"
+                                    android:textColor="@color/white"
+                                    android:textSize="20sp" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </ScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
