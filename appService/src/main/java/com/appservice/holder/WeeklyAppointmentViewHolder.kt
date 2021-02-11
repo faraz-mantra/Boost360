@@ -30,11 +30,11 @@ class WeeklyAppointmentViewHolder (binding: RecyclerItemSessionBinding) : AppBas
         when (data.isTurnedOn) {
             false -> {
                 binding.layoutSessionCreate.visibility = View.GONE
-                binding.rlRoot.background = null
+//                binding.rlRoot.background = null
             }
             true -> {
                 binding.layoutSessionCreate.visibility = View.VISIBLE
-                binding.rlRoot.setBackgroundResource(R.drawable.rounded_stroke_grey)
+//                binding.rlRoot.setBackgroundResource(R.drawable.rounded_stroke_grey)
             }
 
         }
