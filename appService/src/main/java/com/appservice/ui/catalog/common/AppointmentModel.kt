@@ -5,7 +5,6 @@ import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-
 data class AppointmentModel(
         @field:SerializedName("day", alternate = ["Day"])
         var day: String? = null,
@@ -13,10 +12,15 @@ data class AppointmentModel(
         @field:SerializedName("timing", alternate = ["Timing"])
         var timeSlots: ArrayList<TimeSlot> = arrayListOf(),
         var isDataAppliedOnMyDay: Boolean? = false,
-        var isTurnedOn: Boolean? = false, var isAppliedOnAllDays: Boolean? = false, var isAppliedOnAllDaysViewVisible: Boolean? = false, var toTiming: String? = null, var fromTiming: String? = null, var recyclerViewItem: Int = RecyclerViewItemType.SESSION_ITEM_VIEW.getLayout(),
+        var isTurnedOn: Boolean? = false,
+        var isAppliedOnAllDays: Boolean? = false,
+        var isAppliedOnAllDaysViewVisible: Boolean? = false,
+        var toTiming: String? = null,
+        var fromTiming: String? = null,
 ) : AppBaseRecyclerViewItem, Serializable {
+
     override fun getViewType(): Int {
-        return recyclerViewItem
+        return RecyclerViewItemType.SESSION_ITEM_VIEW.getLayout()
     }
 
     fun getDefaultModel(day: String?, isAppliedOnAllDays: Boolean, isAppliedOnAllDaysVisible: Boolean): AppointmentModel {

@@ -73,19 +73,16 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
                 BoostLog.d("Logo Image", Constants.serviceResponse);
                 mSession.storeFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl, Constants.serviceResponse.replace("\\", "").replace("\"", ""));
             }
-            appContext.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        listener.onSuccess(true);
-                        Methods.showSnackBarPositive(appContext, "Image updated successfully");
-                        Constants.LOGOUPLOADED = true ;
-                        Bitmap bmp = Methods.decodeSampledBitmap(path, 720,720);
-                        bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);
-                        Business_Logo_Activity.logoimageView.setImageBitmap(bmp);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            appContext.runOnUiThread(() -> {
+                try {
+                    listener.onSuccess(true);
+                    Methods.showSnackBarPositive(appContext, "Image updated successfully");
+                    Constants.LOGOUPLOADED = true ;
+                    Bitmap bmp = Methods.decodeSampledBitmap(path, 720,720);
+                    bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);
+                    Business_Logo_Activity.logoimageView.setImageBitmap(bmp);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
 
@@ -231,6 +228,6 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
     }
 
     public interface Listener {
-        void onSuccess(Boolean siSuccess);
+        void onSuccess(Boolean isSuccess);
     }
 }

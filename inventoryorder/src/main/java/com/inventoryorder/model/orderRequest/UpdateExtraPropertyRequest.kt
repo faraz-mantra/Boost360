@@ -1,13 +1,12 @@
 package com.inventoryorder.model.orderRequest
 
-
 import com.framework.base.BaseRequest
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class UpdateExtraPropertyRequest(
     @SerializedName("existingKeyName")
-    var existingKeyName: Any? = null,
+    var existingKeyName: String? = null,
     @SerializedName("extraProperties")
     var extraProperties: ExtraProperties? = null,
     @SerializedName("orderId")
@@ -17,6 +16,6 @@ data class UpdateExtraPropertyRequest(
 ) : BaseRequest(), Serializable {
 
   enum class PropertyType {
-    ITEM
+    ITEM, SELLER, BUYER, PAYMENT, DELIVERY, BILLING, SETTLEMENT, REFUND, CANCELLATION;
   }
 }

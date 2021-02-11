@@ -21,7 +21,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 
 import com.framework.R;
 
-@SuppressWarnings("UnusedDeclaration")
+
 public class RoundedImageView extends AppCompatImageView {
 
     public static final String TAG = "RoundedImageView";

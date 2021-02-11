@@ -30,10 +30,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.adapter.*
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.*
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.data.model.FeaturesModel
-import com.boost.upgrades.data.model.WidgetModel
-import com.boost.upgrades.data.model.YoutubeVideoModel
+import com.boost.upgrades.data.model.*
 import com.boost.upgrades.data.remote.ApiInterface
 import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CompareBackListener
@@ -56,16 +53,13 @@ import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.Utils.getRetrofit
 import com.boost.upgrades.utils.Utils.longToast
 import com.boost.upgrades.utils.WebEngageController
-import com.framework.extensions.observeOnce
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.onboarding.nowfloats.rest.response.category.ResponseDataCategory
 import es.dmoral.toasty.Toasty
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.home_fragment.*
-import kotlinx.android.synthetic.main.view_all_features_fragment.*
 import retrofit2.Retrofit
 import java.util.*
 import kotlin.collections.ArrayList
@@ -179,7 +173,9 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 shimmer_view_recommended.visibility = View.GONE
             }
         }
-        geCategoriesFromExpCode()
+
+        viewModel.getCategoriesFromAssetJson(activity!!, (activity as UpgradeActivity).experienceCode)
+
         share_refferal_code_btn.setOnClickListener {
             WebEngageController.trackEvent("ADDONS_MARKETPLACE REFFER_BOOST CLICKED", "Generic", "")
             val sendIntent = Intent()
@@ -529,6 +525,13 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
         viewModel.getTotalActiveWidgetCount().observe(this, androidx.lifecycle.Observer {
             total_active_widget_count.text = it.toString()
+        })
+
+        viewModel.categoryResult().observe(this, androidx.lifecycle.Observer {
+            if(it != null){
+                recommended_features_account_type.setText(Html.fromHtml(it!!.toLowerCase()))
+            }
+
         })
 
         viewModel.updatesLoader().observe(this, androidx.lifecycle.Observer {
@@ -1515,22 +1518,5 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
             viewModel.loadPackageUpdates((activity as UpgradeActivity).fpid!!, (activity as UpgradeActivity).clientid)
         }
-    }
-
-    private fun geCategoriesFromExpCode(){
-        viewModel?.getCategories(activity!!)?.observeOnce(this, {
-            if (it?.error != null) errorMessage(it.error?.localizedMessage
-                    ?: resources.getString(com.onboarding.nowfloats.R.string.error_getting_category_data))
-            else {
-                val categoryList = (it as? ResponseDataCategory)?.data
-                val categoryData = categoryList?.singleOrNull { c -> c.experienceCode() == (activity as UpgradeActivity).experienceCode }
-                if (categoryData != null) {
-                    recommended_features_account_type.setText(Html.fromHtml(categoryData.category_Name!!.toLowerCase()))
-                } else errorMessage(resources.getString(com.onboarding.nowfloats.R.string.error_getting_category_data))
-            }
-        })
-    }
-    private fun errorMessage(message: String) {
-        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
     }
 }

@@ -32,11 +32,6 @@ class BoostAddOnsViewHolder(binding: ItemBoostAddOnsBinding) : AppBaseRecyclerVi
       binding.mainContent.background = activity?.let { ContextCompat.getDrawable(it, R.color.white_smoke) }
       setExpendStatusView(data)
       binding.imgArrow.rotation = if (data.isExpend) ROTATED_POSITION else INITIAL_POSITION
-      binding.contentParent.setOnClickListener {
-        data.isExpend = data.isExpend.not()
-        binding.imgArrow.rotateImage(data.isExpend)
-        setExpendStatusView(data)
-      }
     } else {
       activity?.resources?.getDimensionPixelSize(R.dimen.size_40)?.let { binding.contentParent.layoutParams.height = it }
       activity?.resources?.getDimensionPixelSize(R.dimen.size_16)?.let { binding.view.layoutParams.height = it }
@@ -59,6 +54,14 @@ class BoostAddOnsViewHolder(binding: ItemBoostAddOnsBinding) : AppBaseRecyclerVi
         }
       }
     } else binding.rvManageBusiness.gone()
+
+    binding.contentParent.setOnClickListener {
+      if (data.isLastSeen.not()) {
+        data.isExpend = data.isExpend.not()
+        binding.imgArrow.rotateImage(data.isExpend)
+        setExpendStatusView(data)
+      }
+    }
 
     binding.executePendingBindings()
   }

@@ -13,6 +13,7 @@ open class BaseResponse(
     var arrayResponse: Array<*>? = null,
     var anyResponse: Any? = null,
     var responseBody: ResponseBody? = null
+
 ) {
   fun message(): String {
     val message = message ?: ""
@@ -25,6 +26,6 @@ open class BaseResponse(
   }
 
   fun isSuccess(): Boolean {
-    return status == 200 || status == 201 || status == 202
+    return status == 200 || status == 201 || status == 202 || status == 204
   }
 }

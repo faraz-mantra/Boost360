@@ -198,13 +198,13 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun getAddPreviousData() {
-    viewModel?.getProductImage(auth_3, String.format("{'_pid':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, {
+    viewModel?.getProductImage(auth_3, String.format("{'_pid':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer{
       if ((it.error is NoNetworkException).not()) {
         val response = it as? ProductImageResponse
         if (response?.status == 200 && response.data.isNullOrEmpty().not()) {
           secondaryDataImage = response.data
         }
-        viewModel?.getProductGstDetail(auth_3, String.format("{'product_id':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, { it1 ->
+        viewModel?.getProductGstDetail(auth_3, String.format("{'product_id':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer{ it1 ->
           if ((it1.error is NoNetworkException).not()) {
             val response2 = it1 as? ProductGstResponse
             if (response2?.status == 200 && response2.data.isNullOrEmpty().not()) {
@@ -299,7 +299,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 //      binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
       binding?.vwPaymentConfig -> showPaymentConfigBottomSheet()
       binding?.btnOtherInfo -> {
-        WebEngageController.trackEvent("Service click other information", "SERVICE CATALOGUE ADD/UPDATE", "")
+        WebEngageController.trackEvent("Product click other information", "PRODUCT CATALOGUE ADD/UPDATE", "")
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, product)
         bundle.putSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
@@ -314,7 +314,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private fun createUpdateApi() {
     showProgress()
     if (isEdit == false) {
-      WebEngageController.trackEvent("Add service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
+      WebEngageController.trackEvent("Add product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "")
       if (productIdAdd.isNullOrEmpty().not() && errorType == "addGstService") {
         addGstService(productIdAdd)
       } else if (productIdAdd.isNullOrEmpty().not() && errorType == "uploadImageSingle") {
@@ -326,12 +326,12 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             if ((it.status == 200 || it.status == 201 || it.status == 202) && productId.isNullOrEmpty().not()) {
               productIdAdd = productId
               addGstService(productId)
-            } else showError("Product adding error, please try again.")
+            } else showError(getString(R.string.error_unknown))
           } else showError(resources.getString(R.string.internet_connection_not_available))
         })
       }
     } else {
-      WebEngageController.trackEvent("Update service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
+      WebEngageController.trackEvent("Update product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "")
       val updates = ArrayList<UpdateValue>()
       val json = JSONObject(Gson().toJson(product))
       val keys = json.keys()
@@ -344,7 +344,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         if ((it.error is NoNetworkException).not()) {
           if ((it.status == 200 || it.status == 201 || it.status == 202)) {
             updateGstService(product?.productId)
-          } else showError("Product updating error, please try again.")
+          } else showError("Oops some unknown error occurred while updating the product, please try again.")
         } else showError(resources.getString(R.string.internet_connection_not_available))
       })
     }
@@ -361,7 +361,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {
           hideProgress()
           uploadImageSingle(productId)
-        } else showError("Product updating error, please try again.")
+        } else showError("Oops some unknown error occurred while updating the product, please try again.")
       } else showError(resources.getString(R.string.internet_connection_not_available))
     })
   }
@@ -377,7 +377,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           uploadImageSingle(productId)
         } else {
           if (isEdit == false) errorType = "addGstService"
-          showError("Product adding error, please try again.")
+          showError(getString(R.string.error_unknown))
         }
       } else {
         if (isEdit == false) errorType = "addGstService"
@@ -400,7 +400,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           uploadSecondaryImage(productId)
         } else {
           if (isEdit == false) errorType = "uploadImageSingle"
-          showError("Product image uploading error, please try again.")
+          showError(getString(R.string.error_upload_product_image))
         }
       } else {
         if (isEdit == false) errorType = "uploadImageSingle"
@@ -432,7 +432,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               val response = getResponse(it.responseBody) ?: ""
               if (response.isNotEmpty()) secondaryImageList.add(response)
-            } else showError("Secondary Product image uploading error, please try again.")
+            } else showError(getString(R.string.error_upload_secondary_images))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == images.size) {
             addImageToProduct(productId, secondaryImageList)
@@ -452,7 +452,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           if ((it.error is NoNetworkException).not()) {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               Log.d(ProductDetailFragment::class.java.name, "$it")
-            } else showLongToast("Add secondary image data error, please try again.")
+            } else showLongToast("Oops some unknown error occurred while adding the secondary images data, please try again.")
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == secondaryImageList.size) {
             showLongToast(if (isEdit == true) "Product updated successfully." else "Product saved successfully.")
@@ -493,7 +493,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     val externalUrl = binding?.edtUrl?.text?.toString() ?: ""
 
     if (productImage == null && product?.ImageUri.isNullOrEmpty()) {
-      showLongToast(resources.getString(R.string.add_service_image))
+      showLongToast(resources.getString(R.string.error_add_product_image))
       return false
     } else if (productName.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_product_name))
@@ -697,7 +697,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete)) { d, _ ->
               d.dismiss()
               showProgress()
-              WebEngageController.trackEvent("Delete Service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
+              WebEngageController.trackEvent("Delete product catalogue", "Product Item DELETE", "")
               val request = DeleteProductRequest(clientId, "SINGLE", product?.productId, product?.productType)
               viewModel?.deleteService(request)?.observeOnce(viewLifecycleOwner, Observer {
                 hideProgress()

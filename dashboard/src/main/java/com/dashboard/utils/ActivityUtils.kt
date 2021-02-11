@@ -8,14 +8,17 @@ import android.os.Bundle
 import android.os.Environment
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.appservice.model.SessionData
 import com.appservice.model.StatusKyc
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
+import com.appservice.ui.catalog.CatalogServiceContainerActivity
+import com.appservice.ui.catalog.setFragmentType
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
+import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.pref.*
-import com.framework.utils.convertStringToList
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.floatMessage.MessageModel
@@ -23,7 +26,7 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.ui.updateChannel.startFragmentChannelActivity
 import com.onboarding.nowfloats.ui.webview.WebViewActivity
-import java.util.ArrayList
+import java.util.*
 
 
 const val VISITS_TYPE_STRING = "visits_type_string"
@@ -396,6 +399,14 @@ fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
   }
 }
 
+fun Fragment.startFragmentActivity(type: com.appservice.constant.FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
+  val intent = Intent(activity, CatalogServiceContainerActivity::class.java)
+  intent.putExtras(bundle)
+  intent.setFragmentType(type)
+  if (clearTop) intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+  if (isResult.not()) startActivity(intent) else startActivityForResult(intent, 101)
+}
+
 fun AppCompatActivity.startBookTable(session: UserSessionManager?) {
   try {
     WebEngageController.trackEvent("Book Table Page", "startview", session?.fpTag)
@@ -522,9 +533,9 @@ fun AppCompatActivity.startAllImage(session: UserSessionManager?) {
   }
 }
 
-fun AppCompatActivity.startBusinessDescriptionEdit(session: UserSessionManager?) {
+fun AppCompatActivity.startBusinessProfileDetailEdit(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Business Description Page", "startview", session?.fpTag)
+    WebEngageController.trackEvent("Business Profile Page", "startview", session?.fpTag)
     val webIntent = Intent(this, Class.forName("com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"))
     startActivity(webIntent)
     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -590,6 +601,15 @@ fun AppCompatActivity.startWebViewPageLoad(session: UserSessionManager?, url: St
   }
 }
 
+
+fun AppCompatActivity.startReadinessScoreView(session: UserSessionManager?,position:Int=0) {
+  try {
+    WebEngageController.trackEvent("Digital readiness score Page", "startview", session?.fpTag)
+    startFragmentDashboardActivity(com.dashboard.constant.FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(com.dashboard.constant.IntentConstant.POSITION.name, position) })
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
 
 fun AppCompatActivity.startSelfBrandedGateway(session: UserSessionManager?) {
   try {

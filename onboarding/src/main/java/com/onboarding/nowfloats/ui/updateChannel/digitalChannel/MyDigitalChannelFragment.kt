@@ -18,6 +18,7 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.*
@@ -276,6 +277,13 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     binding?.viewConnect?.visibility = if (isConnect) View.GONE else View.VISIBLE
     binding?.connectedRiya?.visibility = if (isConnect) View.VISIBLE else View.GONE
     if (isConnect.not()) binding?.connectedBg?.visibility = View.VISIBLE
+    onDigitalChannelAddedOrUpdated(isConnect)
+  }
+
+  private fun onDigitalChannelAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    instance.getDrScoreData()?.metricdetail?.boolean_social_channel_connected = isAdded
+    instance.updateDocument()
   }
 
   private fun setAdapterDisconnected(list: ArrayList<ChannelModel>?) {
@@ -395,6 +403,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_alert_icon, menu)
   }
+
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.menu_info -> {
