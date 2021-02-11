@@ -50,7 +50,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private var serviceImage: File? = null
   private var product: ServiceModelV1? = null
   private var isNonPhysicalExperience: Boolean? = null
-  private var currencyType: String? = null
+  private var currencyType: String? = "INR"
   private var fpId: String? = null
   private var fpTag: String? = null
   private var clientId: String? = null
@@ -148,7 +148,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     binding?.tvServiceName?.setText(product?.Name)
     binding?.tvDesc?.setText(product?.Description)
     binding?.edtServiceCategory?.setText(product?.category)
-    binding?.edtServiceTime?.setText(product?.ShipmentDuration)
+    binding?.edtServiceTime?.setText("${product?.Duration ?: 0}")
     if (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty()
         || !bankAccountDetail?.accountNumber.isNullOrEmpty()) {
       binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
@@ -169,10 +169,14 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
       binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
     }
-    if (product?.Price ?: 0.0 <= 0.0) {
+    if (product?.isPriceToggleOn() == false) {
       binding?.toggleService?.isOn = false
       binding?.payServiceView?.gone()
       binding?.freeServiceView?.visible()
+    } else if (product?.isPriceToggleOn() == true) {
+      binding?.toggleService?.isOn = true
+      binding?.payServiceView?.visible()
+      binding?.freeServiceView?.gone()
     }
     binding?.amountEdt?.setText("${product?.Price ?: 0}")
     binding?.discountEdt?.setText("${product?.DiscountAmount ?: 0.0}")
@@ -192,7 +196,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private fun getBundleData() {
     initProductFromBundle(arguments)
     isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
-    currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name)
+    currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
     fpId = arguments?.getString(IntentConstant.FP_ID.name)
     fpTag = arguments?.getString(IntentConstant.FP_TAG.name)
     clientId = arguments?.getString(IntentConstant.CLIENT_ID.name)

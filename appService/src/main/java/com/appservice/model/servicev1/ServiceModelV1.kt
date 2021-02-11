@@ -1,10 +1,7 @@
 package com.appservice.model.servicev1
 
-import com.appservice.model.serviceProduct.BuyOnlineLink
-import com.appservice.model.serviceProduct.ImageListModel
-
-import android.net.Uri
 import com.appservice.model.KeySpecification
+import com.appservice.model.serviceProduct.BuyOnlineLink
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
@@ -13,7 +10,7 @@ class ServiceModelV1(
         @SerializedName(value = "Name", alternate = ["name"])
         var Name: String? = null,
         @SerializedName(value = "Currency", alternate = ["CurrencyCode"])
-        var CurrencyCode: String? = null,
+        var CurrencyCode: String? = "INR",
 
         @SerializedName(value = "Description", alternate = ["description"])
         var Description: String? = null,
@@ -25,7 +22,6 @@ class ServiceModelV1(
 
         @SerializedName(value = "isAvailable", alternate = ["IsAvailable"])
         var IsAvailable: Boolean = false,
-
 
 
         @SerializedName(value = "Price", alternate = ["price"])

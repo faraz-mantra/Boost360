@@ -428,6 +428,16 @@
     <string name="whats_app_package">com.whatsapp</string>
     <string name="facebook_package">com.facebook.katana</string>
     <string name="can_not_share_image_offline">can not share image offline mode</string>
+    <string name="associated_brand_name_if_any">Associated brand name (if any)</string>
+    <string name="in_case_this_service_is_associated_with_certified_by_any_brand">In case this service is associated with/certified by any brand.</string>
+    <string name="dry_balanese_massage">Dry Balanese Massage</string>
+    <string name="service_tags">Service Tags</string>
+    <string name="key_specifications">Key specifications</string>
+    <string name="it_appears_at_the_end_of_the_service_name_as_it_s_variant">It appears at the end of the service name as it’s variant</string>
+    <string name="service_specifications">Service specifications</string>
+    <string name="accept_online_payment">Accept online payment</string>
+    <string name="max_quantity_per_order">Max quantity per order</string>
+    <string name="accept_cod_payment">Accept COD payment</string>
     <array name="stock_availbility">
         <item>"Unlimited stock"</item>
         <item>"Limited stock"</item>
