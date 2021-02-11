@@ -14,11 +14,16 @@ import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.rest.repositories.*
+import com.inventoryorder.rest.services.WithFloatTwoDataSource
 
 class OrderCreateViewModel : BaseViewModel() {
 
   fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
     return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
+  }
+
+  fun getProductItems(fpTag: String?, clientId: String?, skipBy: Int?): LiveData<BaseResponse> {
+    return ApiTwoWithFloatRepository.getProductList(fpTag, clientId, skipBy).toLiveData()
   }
 
   fun getSellerOrders(auth: String, request: OrderSummaryRequest): LiveData<BaseResponse> {

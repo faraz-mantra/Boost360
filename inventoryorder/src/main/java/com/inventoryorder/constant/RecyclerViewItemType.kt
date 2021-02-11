@@ -24,7 +24,8 @@ enum class RecyclerViewItemType {
   TIME_SLOT_ITEM,
   WEEK_TIMING_SELECTED,
   SERVICES_DEPARTMENT,
-  ORDER_MENU_ITEM;
+  ORDER_MENU_ITEM,
+  PRODUCT_ITEM;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -50,6 +51,7 @@ enum class RecyclerViewItemType {
       WEEK_TIMING_SELECTED -> R.layout.item_week_time_select
       SERVICES_DEPARTMENT -> R.layout.item_consultation_services
       ORDER_MENU_ITEM-> R.layout.item_order_menu
+      PRODUCT_ITEM -> R.layout.item_product
     }
   }
 }
