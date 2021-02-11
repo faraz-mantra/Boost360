@@ -113,7 +113,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
   }
 
   override fun getNavIconScale(): Float {
-    return 0.7f
+    return 0.8f
   }
 
   override fun customTheme(): Int? {
