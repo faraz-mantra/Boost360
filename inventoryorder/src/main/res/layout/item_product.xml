@@ -9,9 +9,9 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="@dimen/size_20"
-        android:paddingBottom="@dimen/size_12"
         android:paddingTop="@dimen/size_12"
-        android:paddingEnd="@dimen/size_30">
+        android:paddingEnd="@dimen/size_30"
+        android:paddingBottom="@dimen/size_12">
 
         <LinearLayout
             android:id="@+id/vw_details"
@@ -22,19 +22,19 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.framework.views.customViews.CustomCardView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/size_4"
+                android:background="@drawable/bg_outline_grey"
+                android:padding="@dimen/size_2"
                 app:cardUseCompatPadding="true">
 
                 <com.framework.views.customViews.CustomImageView
-                    android:id="@+id/ivDishItem"
+                    android:id="@+id/itemImage"
                     android:layout_width="@dimen/size_72"
                     android:layout_height="@dimen/size_72"
-                    tools:src="@drawable/ic_mutton_rogan_josh" />
-
-            </com.framework.views.customViews.CustomCardView>
+                    tools:src="@drawable/placeholder_image" />
+            </LinearLayout>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -51,18 +51,18 @@
                     android:gravity="start"
                     android:maxLines="1"
                     android:textColor="@color/greyish_brown"
+                    android:textSize="14sp"
                     app:fontFamily="@font/regular"
-                    app:textType="BODY_2"
                     tools:text="Mutton Rogan Josh" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_product_Price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/greyish_brown"
-                    app:fontFamily="@font/regular"
-                    app:textType="BODY_2"
                     android:layout_marginTop="@dimen/size_10"
+                    android:textColor="@color/greyish_brown"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/regular"
                     tools:text="₹ 3,000.00" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -73,27 +73,36 @@
             android:id="@+id/iv_remove_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_remove" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_item_counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginStart="@dimen/size_10"
+            android:layout_marginBottom="@dimen/size_2"
+            android:background="@drawable/bg_outline_yellow"
             android:gravity="bottom"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent">
 
-            <com.framework.views.customViews.CustomImageView
+            <com.framework.views.customViews.CustomTextView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/ic_plus_circular_bkg" />
+                android:background="@drawable/bg_rounded_light_yellow"
+                android:gravity="center"
+                android:text="+"
+                android:textColor="#FFB900" />
 
             <com.framework.views.customViews.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:paddingStart="@dimen/size_8"
                 android:paddingEnd="@dimen/size_8"
                 android:textColor="@color/orange"
@@ -101,13 +110,43 @@
                 app:textType="BODY_1"
                 tools:text="1" />
 
-            <com.framework.views.customViews.CustomImageView
+            <com.framework.views.customViews.CustomTextView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/ic_plus_circular_bkg" />
-
+                android:background="@drawable/bg_rounded_light_yellow"
+                android:gravity="center"
+                android:text="-"
+                android:includeFontPadding="false"
+                android:textColor="#FFB900" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/size_10"
+            android:layout_marginBottom="@dimen/size_2"
+            android:background="@drawable/bg_rounded_yellow_light"
+            android:gravity="bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="@dimen/size_20"
+                android:paddingTop="@dimen/size_5"
+                android:paddingEnd="@dimen/size_20"
+                android:paddingBottom="@dimen/size_5"
+                android:textAllCaps="true"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/size_12"
+                app:fontFamily="@font/semi_bold"
+                android:text="@string/add" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

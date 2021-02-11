@@ -217,5 +217,6 @@
   <string name="order_delivery">Order delivery successfully!</string>
   <string name="cancellation_reason_not_update">Cancellation reason not update</string>
   <string name="include_a_message_optional">Include a Message (optional)</string>
+    <string name="add">Add</string>
 
 </resources>
