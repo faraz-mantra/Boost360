@@ -262,7 +262,7 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/size_5"
               android:background="@drawable/bg_rect_edit_txt"
-              android:drawableStart="@drawable/ic_clock_gray"
+              android:drawableStart="@drawable/bg_focusable_time_service"
               android:drawablePadding="@dimen/size_8"
               android:hint="@string/enter_duration_in_minutes"
               android:inputType="number"

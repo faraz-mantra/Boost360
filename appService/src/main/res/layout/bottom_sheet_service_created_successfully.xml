@@ -17,123 +17,78 @@
             android:orientation="horizontal"
             android:padding="@dimen/size_10">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ll_header"
-                android:layout_width="match_parent"
+
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/size_20"
-                android:orientation="vertical"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/civ_cancel"
+                android:includeFontPadding="false"
+                android:src="@drawable/ic_cross_grey"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/customTextView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:includeFontPadding="false"
-                    android:text="@string/sort_the_service_list"
-                    android:textSize="20sp"
-                    android:textColor="@color/black_4a4a4a"
-                    app:fontFamily="@font/semi_bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
-
-                <com.framework.views.customViews.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="8dp"
-                    android:includeFontPadding="false"
-                    android:text="@string/reset"
-                    android:textColor="@color/yellow_ffb900"
-                    android:textSize="14sp"
-                    app:fontFamily="@font/semi_bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tvCustomerAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:includeFontPadding="false"
-                    android:text="@string/select_how_you_would_want_to_list_the_services"
-                    android:textColor="@color/gray_828282"
-                    android:textFontWeight="400"
-                    android:textSize="12sp"
-                    app:layout_constraintTop_toBottomOf="@+id/customTextView2" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RadioGroup
+            <com.framework.views.customViews.CustomImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_success" />
+
+            <com.framework.views.customViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/open_sans"
+                android:text="Successfully Saved"
+                android:textAllCaps="true"
+                android:textColor="@color/yellow_ffb900"
+                android:textFontWeight="700"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.framework.views.customViews.CustomTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_10"
-                android:orientation="vertical">
+                android:layout_marginHorizontal="@dimen/size_20"
+                android:layout_marginTop="@dimen/size_8"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="Your product is successfully saved and published live on your website. Click on below button to see it live or share with in your connections."
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="12sp"
+                tools:textColor="@color/warm_grey" />
 
-
-                <com.framework.views.customViews.CustomRadioButton
-                    style="@style/RadioService"
-                    android:layout_marginHorizontal="@dimen/size_20"
-                    android:paddingHorizontal="@dimen/size_10"
-                    android:text="@string/most_popular_on_top" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_5"
-                    android:background="@drawable/shape_grey_dotted_line" />
-
-                <com.framework.views.customViews.CustomRadioButton
-                    style="@style/RadioService"
-                    android:layout_marginHorizontal="@dimen/size_20"
-                    android:paddingHorizontal="@dimen/size_10"
-                    android:text="@string/latest_on_top" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_5"
-                    android:background="@drawable/shape_grey_dotted_line" />
-
-                <com.framework.views.customViews.CustomRadioButton
-                   style="@style/RadioService"
-                    android:layout_marginHorizontal="@dimen/size_20"
-                    android:paddingHorizontal="@dimen/size_10"
-                    android:text="@string/oldest_on_top" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_5"
-                    android:background="@drawable/shape_grey_dotted_line" />
-
-                <com.framework.views.customViews.CustomRadioButton
-                   style="@style/RadioService"
-                    android:layout_marginHorizontal="@dimen/size_20"
-                    android:paddingHorizontal="@dimen/size_10"
-                    android:text="@string/biggest_value_service_on_top" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_5"
-                    android:background="@drawable/shape_grey_dotted_line" />
-
-                <com.framework.views.customViews.CustomRadioButton
-                  style="@style/RadioService"
-                    android:layout_marginHorizontal="@dimen/size_20"
-                    android:paddingHorizontal="@dimen/size_10"
-                    android:text="@string/lowest_value_service_on_top" />
-
-            </RadioGroup>
+            <com.framework.views.customViews.CustomButton
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_36"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_button_proceed_4"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:textFontWeight="700"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/size_8"
+                android:stateListAnimator="@null"
+                android:drawablePadding="@dimen/size_8"
+                android:drawableEnd="@drawable/ic_arrow_top_right"
+                android:paddingHorizontal="@dimen/size_20"
+                android:text="VIEW ON WEBSITE"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -142,38 +97,88 @@
                 android:layout_marginBottom="@dimen/size_20"
                 android:padding="@dimen/size_10">
 
-                <com.framework.views.customViews.CustomButton
-                    android:id="@+id/btn_done"
-                    android:layout_width="@dimen/size_110"
-                    android:layout_height="@dimen/size_36"
+                <com.framework.views.roundedimageview.RoundedImageView
+                    android:id="@+id/btn_fb"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:layout_marginStart="@dimen/size_30"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/bg_button_proceed_4"
-                    android:fontFamily="@font/semi_bold"
                     android:gravity="center"
-                    android:stateListAnimator="@null"
-                    android:text="@string/apply"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:src="@drawable/ic_facebook"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@+id/btn_cancel"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:riv_oval="true" />
 
-                <com.framework.views.customViews.CustomButton
+                <com.framework.views.roundedimageview.RoundedImageView
+                    android:id="@+id/btn_twitter"
+                    android:layout_width="27dp"
+                    android:layout_marginStart="@dimen/size_10"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:src="@drawable/ic_twitter_service"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btn_fb"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:riv_oval="true" />
+                <com.framework.views.roundedimageview.RoundedImageView
+                    android:id="@+id/btn_whatsapp"
+                    android:layout_width="27dp"
+                    android:layout_marginStart="@dimen/size_10"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:src="@drawable/ic_whats_app_service"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btn_twitter"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:riv_oval="true" />
+                <com.framework.views.roundedimageview.RoundedImageView
+                    android:id="@+id/btn_linkedin"
+                    android:layout_width="27dp"
+                    android:layout_marginStart="@dimen/size_10"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:src="@drawable/ic_linkedin_service"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btn_whatsapp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:riv_oval="true" />
+                <com.framework.views.roundedimageview.RoundedImageView
+                    android:id="@+id/btn_mail"
+                    android:layout_width="27dp"
+                    android:layout_marginStart="@dimen/size_10"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:src="@drawable/ic_email_service"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btn_linkedin"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:riv_oval="true" />
+
+                <com.framework.views.customViews.CustomTextView
                     android:id="@id/btn_cancel"
-                    android:layout_width="@dimen/size_110"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/size_36"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginEnd="@dimen/size_20"
-                    android:background="@null"
                     android:fontFamily="@font/semi_bold"
                     android:gravity="center"
-                    android:stateListAnimator="@null"
-                    android:text="@string/cancel"
-                    android:textAllCaps="true"
-                    android:textColor="@color/yellow_ffb900"
+                    android:text="@string/share_"
                     android:textSize="12sp"
-                    app:layout_constraintRight_toLeftOf="@id/btn_done"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.248"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.2" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

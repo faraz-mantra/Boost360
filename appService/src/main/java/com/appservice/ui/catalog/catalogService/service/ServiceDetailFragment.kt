@@ -28,6 +28,7 @@ import com.appservice.model.serviceTiming.ServiceTimingResponse
 import com.appservice.model.servicev1.*
 import com.appservice.rest.TaskCode
 import com.appservice.ui.bankaccount.startFragmentAccountActivity
+import com.appservice.ui.catalog.listing.CreateServiceSuccessBottomSheet
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
 import com.appservice.ui.model.ItemsItem
@@ -363,10 +364,11 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun goBack() {
     hideProgress()
-    val data = Intent()
-    data.putExtra("LOAD", true)
-    appBaseActivity?.setResult(Activity.RESULT_OK, data)
-    appBaseActivity?.finish()
+//    val data = Intent()
+//    data.putExtra("LOAD", true)
+//    appBaseActivity?.setResult(Activity.RESULT_OK, data)
+//    appBaseActivity?.finish()
+    openSuccessBottomSheet()
   }
 
 
@@ -451,15 +453,20 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     filterSheet.show(this@ServiceDetailFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
+  private fun openSuccessBottomSheet() {
+    val createdSuccess = CreateServiceSuccessBottomSheet()
+    createdSuccess.onClicked = { it }
+    createdSuccess.show(this@ServiceDetailFragment.parentFragmentManager, CreateServiceSuccessBottomSheet::class.java.name)
+  }
 
   private fun openImagePicker(it: ClickType) {
     val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
     ImagePicker.Builder(baseActivity)
-        .mode(type)
-        .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
-        .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
-        .scale(800, 800)
-        .enableDebuggingMode(true).build()
+            .mode(type)
+            .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
+            .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
+            .scale(800, 800)
+            .enableDebuggingMode(true).build()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
