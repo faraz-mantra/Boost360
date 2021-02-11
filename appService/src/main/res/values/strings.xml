@@ -457,6 +457,7 @@
   <string name="endtime_cannot_be_before_starttime">Shift end time cannot be before shift start time</string>
   <string name="starttime_on_one_slot_cannot_be_before_endtime_of_other_slot">Start time on one slot cannot be less than end time of previous slot</string>
   <string name="no_staff_member_listed_yet">No staff member listed yet</string>
+  <string name="share_">Share:</string>
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
