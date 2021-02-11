@@ -81,31 +81,32 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
     viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? DrScoreUiDataResponse
       if (response?.isSuccess() == true && response.data.isNullOrEmpty().not()) {
-        FirestoreManager.getDrScoreData()?.let { drScoreData ->
-          if (drScoreData.drs_segment.isNullOrEmpty().not()) {
-            isHigh = (drScoreData.getDrsTotal() >= 80)
-            val drScoreSetupList = drScoreData.getDrScoreData(response.data)
-            drScoreSetupList.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }
-            if (adapterPager == null) {
-              binding?.pagerBusinessContentSetup?.apply {
-                adapterPager = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList, this@DigitalReadinessScoreFragment)
-                offscreenPageLimit = 3
-                clipToPadding = false
-                setPadding(34, 0, 34, 0)
-                adapter = adapterPager
-                currentItem = position
-                binding?.dotBusinessContentSetup?.setViewPager2(this)
-                setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-              }
-            } else adapterPager?.notify(drScoreSetupList)
-          } else Snackbar.make(binding?.root!!, getString(R.string.error_dr_score), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
-          binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "90%")
-          binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
-          binding?.txtPercentage?.text = "${drScoreData.getDrsTotal()}%"
-          binding?.progressBar?.progress = drScoreData.getDrsTotal()
-          binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
-        }
-      } else showShortToast("Getting error digital readiness!")
+        val drScoreData = FirestoreManager.getDrScoreData()
+        isHigh = (drScoreData!=null && drScoreData.getDrsTotal() >= 80)
+        val drScoreSetupList = drScoreData?.getDrScoreData(response.data)
+        if (drScoreSetupList.isNullOrEmpty().not()) {
+          drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_CONTENT_SETUP_ITEM_VIEW.getLayout() }
+          if (adapterPager == null) {
+            binding?.pagerBusinessContentSetup?.apply {
+              adapterPager = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList!!, this@DigitalReadinessScoreFragment)
+              offscreenPageLimit = 3
+              clipToPadding = false
+              setPadding(34, 0, 34, 0)
+              adapter = adapterPager
+              currentItem = position
+              binding?.dotBusinessContentSetup?.setViewPager2(this)
+              setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+            }
+          } else adapterPager?.notify(drScoreSetupList)
+        } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
+        binding?.txtDes?.text = resources.getString(R.string.add_missing_info_better_online_traction, if (isHigh) "100%" else "90%")
+        binding?.txtPercentage?.setTextColor(getColor(if (isHigh) R.color.light_green_3 else R.color.accent_dark))
+        binding?.txtPercentage?.text = "${drScoreData?.getDrsTotal()}%"
+        binding?.progressBar?.progress = drScoreData?.getDrsTotal()?:0
+        binding?.progressBar?.progressDrawable = ContextCompat.getDrawable(baseActivity, if (isHigh) R.drawable.ic_progress_bar_horizontal_high else R.drawable.progress_bar_horizontal)
+
+      } else Snackbar.make(binding?.root!!, getString(R.string.digital_readiness_score_failed_to_load), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry)) { getSiteMeter() }.show()
+
     })
 
   }
@@ -174,7 +175,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       DrScoreItem.DrScoreItemType.boolean_respond_to_customer_enquiries -> {
         baseActivity.startBusinessEnquiry(session)
       }
-      DrScoreItem.DrScoreItemType.boolean_add_featured_image_video->{
+      DrScoreItem.DrScoreItemType.boolean_add_featured_image_video -> {
         baseActivity.startFeatureLogo(session)
       }
       DrScoreItem.DrScoreItemType.boolean_select_what_you_sell,

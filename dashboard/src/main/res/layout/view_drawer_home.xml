@@ -156,7 +156,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:includeFontPadding="false"
-                android:text="@string/site_meter"
+                android:text="@string/dr_score"
                 android:textAlignment="gravity"
                 android:textColor="@color/accent_dark"
                 app:textType="CAPTION" />

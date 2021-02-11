@@ -39,7 +39,8 @@ class ToppersViewModel(private val service: IEducationService) : BaseViewModel()
     private var _deleteTopperResponse = MutableLiveData<String>()
 
     fun getOurToppers() {
-        compositeDisposable.add(service.getOurToppers(AUTH_CODE, WEBSITE_ID_EDUCATION, LIMIT, SKIP).processRequest(
+        val value = "{WebsiteId:'"+WEBSITE_ID_EDUCATION+"'}"
+        compositeDisposable.add(service.getOurToppers(AUTH_CODE, value, LIMIT, SKIP).processRequest(
                 {
                     _ourTopperResponse.value = it
                 },
