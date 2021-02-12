@@ -65,6 +65,14 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN;
+import static com.framework.webengageconstant.EventLabelKt.FAILED_TO_UPDATE_CUSTOMPAGE;
+import static com.framework.webengageconstant.EventLabelKt.SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN;
+import static com.framework.webengageconstant.EventLabelKt.SUCCESSFULLY_ADDED_CUSTOMPAGE;
+import static com.framework.webengageconstant.EventLabelKt.UPDATE_A_CUSTOMPAGE;
+import static com.framework.webengageconstant.EventNameKt.POST_ACUSTOMPAGE;
+import static com.framework.webengageconstant.EventNameKt.UPDATE_CUSTOMPAGE;
+
 
 /**
  * Created by guru on 09-06-2015.
@@ -255,14 +263,14 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                                             MixPanelController.track("CreateCustomPage", null);
                                             long time = System.currentTimeMillis();
                                             CustomPageFragment.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
-                                            WebEngageController.trackEvent("POST A CUSTOMPAGE", "Successfully added custompage", session.getFpTag());
+                                            WebEngageController.trackEvent(POST_ACUSTOMPAGE, SUCCESSFULLY_ADDED_CUSTOMPAGE, session.getFpTag());
                                             Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
                                             isNewDataAdded = true;
                                             onCustomPageAddedOrUpdated();
                                             onBackPressed();
                                         } else {
                                             Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
-                                            WebEngageController.trackEvent("POST A CUSTOMPAGE", getString(R.string.enter_different_title_try_again), session.getFpTag());
+                                            WebEngageController.trackEvent(POST_ACUSTOMPAGE, ENTER_DIFFERENT_TITLE_AND_TRY_AGAIN, session.getFpTag());
                                             //Log.d("Create page Fail", "");
                                         }
                                     }
@@ -271,7 +279,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                                     public void failure(RetrofitError error) {
                                         materialProgress.dismiss();
                                         Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
-                                        WebEngageController.trackEvent("POST A CUSTOMPAGE", getString(R.string.something_went_wrong_try_again), session.getFpTag());
+                                        WebEngageController.trackEvent(POST_ACUSTOMPAGE, SOMETHING_WENT_WRONG_PLEASE_TRY_AGAIN, session.getFpTag());
                                         //Log.d("Create page Fail", "" + error.getMessage());
                                     }
                                 });
@@ -287,7 +295,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                                     public void success(String s, Response response) {
                                         materialProgress.dismiss();
                                         MixPanelController.track("UpdateCustomPage", null);
-                                        WebEngageController.trackEvent("UPDATE CUSTOMPAGE", "Update a Custompage", session.getFpTag());
+                                        WebEngageController.trackEvent(UPDATE_CUSTOMPAGE, UPDATE_A_CUSTOMPAGE, session.getFpTag());
                                         //Log.d("Update page success", "");
                                         CustomPageFragment.dataModel.get(curPos).DisplayName = name;
                                         Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
@@ -298,7 +306,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                                     public void failure(RetrofitError error) {
                                         materialProgress.dismiss();
                                         Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
-                                        WebEngageController.trackEvent("UPDATE CUSTOMPAGE", "Failed to update custompage", session.getFpTag());
+                                        WebEngageController.trackEvent(UPDATE_CUSTOMPAGE, FAILED_TO_UPDATE_CUSTOMPAGE, session.getFpTag());
                                         //Log.d("Update page Fail", "" + error.getMessage());
                                     }
                                 });

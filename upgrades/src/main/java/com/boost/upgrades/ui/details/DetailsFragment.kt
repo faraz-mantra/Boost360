@@ -170,7 +170,7 @@ class DetailsFragment : BaseFragment(), DetailsFragmentListener {
                     event_attributes.put("Addon Discount %", addonDetails!!.discount_percent)
                     event_attributes.put("Addon Validity", 1)
                     addonDetails!!.target_business_usecase?.let { it1 -> event_attributes.put("Addon Tag", it1) }
-                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Addon added to cart", "ADDONS_MARKETPLACE", event_attributes)
+                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Addon added to cart", ADDONS_MARKETPLACE, event_attributes)
                     if(addonDetails!!.feature_code == "CUSTOM_PAYMENTGATEWAY")
                         WebEngageController.trackEvent("Self branded payment gateway requested", "Self Branded Payment Gateway", "")
                     badgeNumber = badgeNumber + 1

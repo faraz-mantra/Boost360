@@ -89,6 +89,21 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.ADDED_PHOTO;
+import static com.framework.webengageconstant.EventLabelKt.CLICKED_CANCEL;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventLabelKt.HAS_CLICKED_FB_PAGE_SHARING_ON;
+import static com.framework.webengageconstant.EventLabelKt.HAS_CLICKED_SUBSCRIBER_SHARING_ON;
+import static com.framework.webengageconstant.EventLabelKt.HAS_CLICKED_TWITTER_SHARING_ON;
+import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
+import static com.framework.webengageconstant.EventNameKt.ADDED_PHOTO_IN_UPDATE;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_UPDATE;
+import static com.framework.webengageconstant.EventNameKt.FB_PAGE_SHARING_ACTIVATED;
+import static com.framework.webengageconstant.EventNameKt.POST_AN_UPDATE;
+import static com.framework.webengageconstant.EventNameKt.POST_AN_UPDATE_CANCLED;
+import static com.framework.webengageconstant.EventNameKt.SUBSCRIBER_SHARING_ACTIVATED;
+import static com.framework.webengageconstant.EventNameKt.TWITTER_SHARING_ACTIVATED;
+
 
 public class Create_Message_Activity extends AppCompatActivity implements Fetch_Home_Data.Fetch_Home_Data_Interface {
   private Toolbar toolbar;
@@ -159,7 +174,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     title_card = findViewById(R.id.title_card);
     message_card = findViewById(R.id.message_card_view);
     ivSpeakUpdate = findViewById(R.id.iv_speak_update);
-    WebEngageController.trackEvent("UPDATE", "pageview", session.getFpTag());
+    WebEngageController.trackEvent(EVENT_NAME_UPDATE, PAGE_VIEW, session.getFpTag());
     TextView shareText = findViewById(R.id.shareTextView);
     tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
     if (session.getISEnterprise().equals("true")) {
@@ -184,7 +199,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     post.setText(getString(R.string.post_in_capital));
 
     post.setOnClickListener(v -> {
-      WebEngageController.trackEvent("POST AN UPDATE", "null", session.getFpTag());
+      WebEngageController.trackEvent(POST_AN_UPDATE, EVENT_LABEL_NULL, session.getFpTag());
       String businessMessage = msg.getText().toString();
 
       if (TextUtils.isEmpty((businessMessage))) {
@@ -370,7 +385,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
                 public void onPositive(MaterialDialog dialog) {
                   super.onPositive(dialog);
                   if (tosubscribers) {
-                    WebEngageController.trackEvent("SUBSCRIBER SHARING ACTIVATED", "Has/Clicked Subscriber sharing on", session.getFpTag());
+                    WebEngageController.trackEvent(SUBSCRIBER_SHARING_ACTIVATED, HAS_CLICKED_SUBSCRIBER_SHARING_ON, session.getFpTag());
                     MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_SEND_TO_SUBSCRIBERS, null);
                     create_message_subscribe_button.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.subscribe_icon));
                     create_message_subscribe_button.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
@@ -417,7 +432,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
             Toast.makeText(Create_Message_Activity.this, "Facebook Page Enabled", Toast.LENGTH_SHORT).show();
             facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebook_page));
             facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
-            WebEngageController.trackEvent("FB PAGE SHARING ACTIVATED", "Has/Clicked Fb Page sharing on", session.getFpTag());
+            WebEngageController.trackEvent(FB_PAGE_SHARING_ACTIVATED, HAS_CLICKED_FB_PAGE_SHARING_ON, session.getFpTag());
                         /* PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(Create_Message_Activity.this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
                         facebookPageShare.setColorFilter(porterDuffColorFilter);*/
           }
@@ -994,13 +1009,13 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
             path = Util.saveBitmap(CameraBitmap, activity, tagName + System.currentTimeMillis());
             picUri = Uri.parse(path);
             setPicture(CameraBitmap);
-            WebEngageController.trackEvent("ADDED PHOTO IN UPDATE", "Added Photo", session.getFpTag());
+            WebEngageController.trackEvent(ADDED_PHOTO_IN_UPDATE, ADDED_PHOTO, session.getFpTag());
 
           } else {
             path = getRealPathFromURI(picUri);
             CameraBitmap = Util.getBitmap(path, activity);
             setPicture(CameraBitmap);
-            WebEngageController.trackEvent("ADDED PHOTO IN UPDATE", "Added Photo", session.getFpTag());
+            WebEngageController.trackEvent(ADDED_PHOTO_IN_UPDATE, ADDED_PHOTO, session.getFpTag());
 
           }
         } catch (Exception e) {
@@ -1020,13 +1035,13 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
               path = Util.saveCameraBitmap(CameraBitmap, activity, tagName + System.currentTimeMillis());
               picUri = Uri.parse(path);
               setPicture(CameraBitmap);
-              WebEngageController.trackEvent("ADDED PHOTO IN UPDATE", "Added Photo", session.getFpTag());
+              WebEngageController.trackEvent(ADDED_PHOTO_IN_UPDATE, ADDED_PHOTO, session.getFpTag());
 
             } else {
               path = getRealPathFromURI(picUri);
               CameraBitmap = Util.getBitmap(path, activity);
               setPicture(CameraBitmap);
-              WebEngageController.trackEvent("ADDED PHOTO IN UPDATE", "Added Photo", session.getFpTag());
+              WebEngageController.trackEvent(ADDED_PHOTO_IN_UPDATE, ADDED_PHOTO, session.getFpTag());
 
             }
           } else {
@@ -1128,7 +1143,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     if (Constants.twitterShareEnabled) {
       twitterloginButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.twitter_icon_active));
       twitterloginButton.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
-      WebEngageController.trackEvent("TWITTER SHARING ACTIVATED", "Has/Clicked TWITTER sharing on", session.getFpTag());
+      WebEngageController.trackEvent(TWITTER_SHARING_ACTIVATED, HAS_CLICKED_TWITTER_SHARING_ON, session.getFpTag());
     } else {
       twitterloginButton.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
     }
@@ -1179,7 +1194,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     } else {
       super.onBackPressed();
       overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-      WebEngageController.trackEvent("POST AN UPDATE-CANCLED", "Clicked Cancel", session.getFpTag());
+      WebEngageController.trackEvent(POST_AN_UPDATE_CANCLED, CLICKED_CANCEL, session.getFpTag());
     }
   }
 

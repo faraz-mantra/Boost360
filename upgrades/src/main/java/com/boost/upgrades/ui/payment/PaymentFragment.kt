@@ -134,7 +134,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         initializeWalletRecycler()
         updateSubscriptionDetails()
 
-        WebEngageController.trackEvent("ADDONS MARKETPLACE", "pageview", "ADDONS MARKETPLACE PAYMENT SCREEN")
+        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, "ADDONS MARKETPLACE PAYMENT SCREEN")
 
         var firebaseAnalytics = Firebase.analytics
         val revenue = cartCheckoutData.getDouble("amount")
@@ -144,7 +144,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundle)
 
         back_button.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back_button paymentscreen", "ADDONS_MARKETPLACE", "")
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back_button paymentscreen", ADDONS_MARKETPLACE, "")
             (activity as UpgradeActivity).popFragmentFromBackStack()
         }
 

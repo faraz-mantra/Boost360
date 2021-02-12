@@ -2,20 +2,28 @@ package com.nowfloats.Store;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.nowfloats.Store.Adapters.PurchasedPlanAdapter;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.WebEngageController;
 import com.thinksity.R;
+
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventLabelKt.LOGIN_ERROR;
+import static com.framework.webengageconstant.EventNameKt.YOUR_PLANS_CURRENT;
+import static com.framework.webengageconstant.EventNameKt.YOUR_PLANS_EXPIRED;
+import static com.framework.webengageconstant.EventNameKt.YOUR_PLANS_TO_BE_ACTIVATED;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 
 /**
  * Created by Admin on 31-01-2018.
@@ -64,7 +72,7 @@ public class PurchasePlanFragment extends Fragment {
 
         switch (planType) {
             case ACTIVE_PLANS:
-                WebEngageController.trackEvent("YOUR PLANS - CURRENT","Login error",null);
+                WebEngageController.trackEvent(YOUR_PLANS_CURRENT, LOGIN_ERROR, NULL);
                 aboutPlan.setText("The following plan(s) is/are currently in use");
                 break;
             case YOUR_ORDERS:
@@ -74,11 +82,11 @@ public class PurchasePlanFragment extends Fragment {
                 mRecyclerView.setPadding(pixels, 0, pixels, pixels);
                 break;
             case TO_BE_ACTIVATED_PLANS:
-                WebEngageController.trackEvent("YOUR PLANS - TO BE ACTIVATED","null",null);
+                WebEngageController.trackEvent(YOUR_PLANS_TO_BE_ACTIVATED, EVENT_LABEL_NULL, NULL);
                 aboutPlan.setText("The following plan(s) is/are not in use");
                 break;
             case EXPIRED_PLANS:
-                WebEngageController.trackEvent("YOUR PLANS - EXPIRED","null",null);
+                WebEngageController.trackEvent(YOUR_PLANS_EXPIRED, EVENT_LABEL_NULL, NULL);
                 aboutPlan.setText("The following plan(s) is/are expired");
                 break;
         }

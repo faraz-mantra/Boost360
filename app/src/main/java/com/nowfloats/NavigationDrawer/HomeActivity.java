@@ -178,6 +178,39 @@ import zendesk.core.Zendesk;
 import zendesk.support.Support;
 
 import static com.appservice.ui.bankaccount.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
+import static com.framework.webengageconstant.EventLabelKt.ABOUT_BOOST;
+import static com.framework.webengageconstant.EventLabelKt.ACCOUNT_SETTINGS;
+import static com.framework.webengageconstant.EventLabelKt.ADDONS_MARKETPLACE;
+import static com.framework.webengageconstant.EventLabelKt.BIZ_KEYBOARD;
+import static com.framework.webengageconstant.EventLabelKt.CALLS;
+import static com.framework.webengageconstant.EventLabelKt.CONTENT_SHARING_SETTINGS;
+import static com.framework.webengageconstant.EventLabelKt.ENQUIRIES;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventLabelKt.ONLINE_ADVERTISING;
+import static com.framework.webengageconstant.EventLabelKt.ORDERS;
+import static com.framework.webengageconstant.EventLabelKt.PAGE_VIEW;
+import static com.framework.webengageconstant.EventLabelKt.SITE_HEALTH;
+import static com.framework.webengageconstant.EventLabelKt.SUBSCRIPTIONS;
+import static com.framework.webengageconstant.EventLabelKt.SUPPORT;
+import static com.framework.webengageconstant.EventNameKt.CONTACT_NF;
+import static com.framework.webengageconstant.EventNameKt.HOME;
+import static com.framework.webengageconstant.EventNameKt.NAV_ABOUT_BOOST;
+import static com.framework.webengageconstant.EventNameKt.NAV_ACCOUNT_SETTINGS;
+import static com.framework.webengageconstant.EventNameKt.NAV_ADDONS_MARKETPLACE;
+import static com.framework.webengageconstant.EventNameKt.NAV_BIZ_KEYBOARD;
+import static com.framework.webengageconstant.EventNameKt.NAV_CALLS;
+import static com.framework.webengageconstant.EventNameKt.NAV_ENQUIRIES;
+import static com.framework.webengageconstant.EventNameKt.NAV_MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventNameKt.NAV_ONLINE_ADVERTISING;
+import static com.framework.webengageconstant.EventNameKt.NAV_ORDERS;
+import static com.framework.webengageconstant.EventNameKt.NAV_SITE_HEALTH;
+import static com.framework.webengageconstant.EventNameKt.NAV_SOCIAL_SHARING_MY_DIGITAL_CHANNELS_CLICK;
+import static com.framework.webengageconstant.EventNameKt.NAV_SUBSCRIPTIONS;
+import static com.framework.webengageconstant.EventNameKt.NAV_SUPPORT;
+import static com.framework.webengageconstant.EventNameKt.WEBSITE_VISITS_CHART_DURATION_CHANGED;
+import static com.framework.webengageconstant.EventValueKt.EVENT_VALUE_HOME_PAGE;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.inventoryorder.ui.FragmentContainerOrderActivityKt.startFragmentActivityNew;
 import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYPE;
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
@@ -374,7 +407,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             }
         });
 
-        WebEngageController.trackEvent("HOME", "pageview", "Home Page");
+        WebEngageController.trackEvent(HOME, PAGE_VIEW, EVENT_VALUE_HOME_PAGE);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -616,7 +649,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 ft.replace(R.id.mainFrame, customPageFragment)
                         .commit();
             } else if (url.contains(getResources().getString(R.string.deeplink_analytics_website_visits))) {
-                WebEngageController.trackEvent("WEBSITE visits - CHART DURATION CHANGED", "null", session.getFpTag());
+                WebEngageController.trackEvent(WEBSITE_VISITS_CHART_DURATION_CHANGED, EVENT_LABEL_NULL, session.getFpTag());
                 MixPanelController.track("OverallVisitsDetailedView", null);
                 Intent q = new Intent(HomeActivity.this, SiteViewsAnalytics.class);
                 q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.TOTAL);
@@ -1258,11 +1291,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             @Override
             public void run() {
                 if (nextScreen.equals(getString(R.string.keyboard))) {
-                    WebEngageController.trackEvent("NAV - BIZ_KEYBOARD", "BIZ_KEYBOARD", session.getFpTag());
+                    WebEngageController.trackEvent(NAV_BIZ_KEYBOARD, BIZ_KEYBOARD, session.getFpTag());
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.facebook_leads))) {
-                    WebEngageController.trackEvent("NAV - ONLINE_ADVERTISING", "ONLINE_ADVERTISING", session.getFpTag());
+                    WebEngageController.trackEvent(NAV_ONLINE_ADVERTISING, ONLINE_ADVERTISING, session.getFpTag());
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, facebookLeadsFragment, "FacebookLeadAds")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.business_profile))) {
@@ -1305,7 +1338,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     startActivity(i);
 
                 } else if (nextScreen.equals(getString(R.string.site__meter))) {
-                    WebEngageController.trackEvent("NAV - SITE_HEALTH", "SITE_HEALTH", null);
+                    WebEngageController.trackEvent(NAV_SITE_HEALTH, SITE_HEALTH, NULL);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).commit();
                 } else if (nextScreen.equals(getString(R.string.deeplink_analytics))) {
                     DeepLinkPage(getString(R.string.deeplink_analytics), "", false);
@@ -1339,7 +1372,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 } else if (nextScreen.equals(getString(R.string.chat))) {
                     if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || BuildConfig.APPLICATION_ID.equals("com.redtim")) {
                         MixPanelController.track(MixPanelController.HELP_AND_SUPPORT_CHAT, null);
-                        WebEngageController.trackEvent("CONTACT NF", "null", session.getFpTag());
+                        WebEngageController.trackEvent(CONTACT_NF, EVENT_LABEL_NULL, session.getFpTag());
 
                         PreferencesManager.getsInstance(HomeActivity.this).setUserName(session.getFpTag());
 
@@ -1356,7 +1389,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
                 } else if (nextScreen.equals(getString(R.string.call)) || nextScreen.equals(getString(R.string.help_and_support))) {
 
-                    WebEngageController.trackEvent("NAV - SUPPORT", "SUPPORT", null);
+                    WebEngageController.trackEvent(NAV_SUPPORT, SUPPORT, NULL);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
 
                 } else if (nextScreen.equals(getString(R.string.share))) {
@@ -1382,25 +1415,25 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     Intent businessAddressIntent = new Intent(HomeActivity.this, Business_Address_Activity.class);
                     startActivity(businessAddressIntent);
                 } else if (nextScreen.equals(getString(R.string.title_activity_social__sharing_)) || nextScreen.equals(getString(R.string.content_sharing_settings))) {
-                    WebEngageController.trackEvent("Nav Social sharing / My digital channels click", "CONTENT_SHARING_SETTINGS", null);
+                    WebEngageController.trackEvent(NAV_SOCIAL_SHARING_MY_DIGITAL_CHANNELS_CLICK, CONTENT_SHARING_SETTINGS, NULL);
                     /*Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                     startActivity(socialSharingIntent);*/
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
                     DigitalChannelUtil.startDigitalChannel(HomeActivity.this,session);
                 } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
-                    WebEngageController.trackEvent("NAV - ORDERS", "ORDERS", null);
+                    WebEngageController.trackEvent(NAV_ORDERS, ORDERS, NULL);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
                             .commit();
 //                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
 //                    startActivity(socialSharingIntent);
                 } else if (nextScreen.equals(getString(R.string.manage_inbox))) {
-                    WebEngageController.trackEvent("NAV - ENQUIRIES", "ENQUIRIES", null);
+                    WebEngageController.trackEvent(NAV_ENQUIRIES, ENQUIRIES, NULL);
 //                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInboxFragment, "ManageInbox")
 //                            .commit();
                     Intent queries = new Intent(HomeActivity.this, BusinessEnquiryActivity.class);
                     startActivity(queries);
                 } else if (nextScreen.equals(getString(R.string.manage_customer_calls))) {
-                    WebEngageController.trackEvent("NAV - CALLS", "CALLS", null);
+                    WebEngageController.trackEvent(NAV_CALLS, CALLS, NULL);
                     Intent i = new Intent(HomeActivity.this, VmnCallCardsActivity.class);
                     startActivity(i);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -1413,22 +1446,22 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, addOnFragment, "addOnFragment")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.about))) {
-                    WebEngageController.trackEvent("NAV - ABOUT_BOOST", "ABOUT_BOOST", null);
+                    WebEngageController.trackEvent(NAV_ABOUT_BOOST, ABOUT_BOOST, NULL);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, aboutFragment, "aboutFragment")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.manage_content))) {
-                    WebEngageController.trackEvent("NAV - MANAGE_CONTENT", "MANAGE_CONTENT", null);
+                    WebEngageController.trackEvent(NAV_MANAGE_CONTENT, MANAGE_CONTENT, NULL);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageContentFragment, "manageContentFragment")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.account_settings))) {
-                    WebEngageController.trackEvent("NAV - ACCOUNT_SETTINGS", "ACCOUNT_SETTINGS", null);
+                    WebEngageController.trackEvent(NAV_ACCOUNT_SETTINGS, ACCOUNT_SETTINGS, NULL);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, accountSettingsFragment, "accountSettingsFragment")
                             .commit();
                 } else if (nextScreen.equals(getString(R.string.addon_marketplace))) {
-                    WebEngageController.trackEvent("NAV - ADDONS_MARKETPLACE", "ADDONS_MARKETPLACE", null);
+                    WebEngageController.trackEvent(NAV_ADDONS_MARKETPLACE, ADDONS_MARKETPLACE, NULL);
                     initiateAddonMarketplace(false, "", "");
                 } else if (nextScreen.equals(getString(R.string.subscriptions))) {
-                    WebEngageController.trackEvent("NAV - SUBSCRIPTIONS", "SUBSCRIPTIONS", null);
+                    WebEngageController.trackEvent(NAV_SUBSCRIPTIONS, SUBSCRIPTIONS, NULL);
                     Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
                     startActivity(subscribers);
                 } else if (nextScreen.equals(getString(R.string.referrals_button))) {

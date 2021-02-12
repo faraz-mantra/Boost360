@@ -57,6 +57,12 @@ import com.thinksity.R;
 
 import java.util.HashMap;
 
+import static com.framework.webengageconstant.EventLabelKt.BUTTON;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_ABOUT_BOOST;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_REFER_A_FRIEND;
+import static com.framework.webengageconstant.EventNameKt.SELF_WEBSITE_CLICK;
+import static com.framework.webengageconstant.EventValueKt.CLICKED;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -219,7 +225,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Self Website Event Trigger
-                WebEngageController.trackEvent("Self website click", "Button", "Clicked");
+                WebEngageController.trackEvent(SELF_WEBSITE_CLICK, BUTTON, CLICKED);
 
                 String url = fpNameTextView.getText().toString().trim();
 
@@ -572,7 +578,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //About Boost Event Trigger
-                WebEngageController.trackEvent("Clicked on about Boost", "Button", "Clicked");
+                WebEngageController.trackEvent(CLICKED_ON_ABOUT_BOOST, BUTTON, CLICKED);
 
                 onclickColorChange(aboutImageView, aboutText, aboutLayout);
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.about));
@@ -625,7 +631,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //About Boost Event Trigger
-                WebEngageController.trackEvent("Clicked on Refer a friend", "Button", "Clicked");
+                WebEngageController.trackEvent(CLICKED_ON_REFER_A_FRIEND , BUTTON, CLICKED);
 
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.referrals_button));
 //                String name = session.getUserProfileName();
