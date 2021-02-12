@@ -219,15 +219,14 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   // function will be called once service is created
   private fun onServiceCreated(it: BaseResponse) {
-    val res = it as? ServiceV1BaseResponse;
+    hideProgress()
+    val res = it as? ServiceV1BaseResponse
     val productId = res?.Result
     if (productId.isNullOrEmpty().not()) {
       product?.productId = res?.Result
       productIdAdd = productId
       uploadPrimaryImage()
-    } else {
-      showError(resources.getString(R.string.service_adding_error))
-    }
+    } else showError(resources.getString(R.string.service_adding_error))
   }
 
   private fun onServiceUpdated(it: BaseResponse) {
@@ -247,14 +246,16 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun uploadPrimaryImage() {
     if (serviceImage != null) {
+      showProgress(getString(R.string.image_uploading))
       val request = UploadImageRequest.getInstance(0, product?.productId!!, serviceImage!!)
       hitApi(viewModel?.addPrimaryImage(request), R.string.error_service_image);
-    } else uploadSecondaryImages();
+    } else uploadSecondaryImages()
   }
 
   private fun uploadSecondaryImages() {
     val images = secondaryImage.filter { it.path.isNullOrEmpty().not() }
     if (images.isNullOrEmpty().not()) {
+      showProgress(getString(R.string.image_uploading))
       var checkPosition = 0
       images.forEach { fileData ->
         val request = UploadImageRequest.getInstance(1, product?.productId!!, fileData.getFile()!!)
