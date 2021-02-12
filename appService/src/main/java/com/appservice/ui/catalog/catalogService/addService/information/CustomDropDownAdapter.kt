@@ -1,4 +1,4 @@
-package com.appservice.ui.catalog.catalogService.information
+package com.appservice.ui.catalog.catalogService.addService.information
 
 import android.content.Context
 import android.view.LayoutInflater

@@ -85,8 +85,8 @@
           android:maxLines="2"
           android:textColor="@color/primary_text"
           android:textFontWeight="400"
-          android:textSize="14sp"
           android:textStyle="normal"
+          app:textType="HEADING_6"
           tools:text="Fastrack Bare Basic Watch" />
 
       </LinearLayout>
@@ -140,8 +140,8 @@
             android:paddingEnd="4dp"
             android:textColor="@color/primary_text"
             android:textFontWeight="800"
-            android:textSize="12sp"
             android:textStyle="normal"
+            app:textType="BODY_1"
             tools:text="INR 0" />
 
           <com.framework.views.customViews.CustomTextView
@@ -154,7 +154,7 @@
             android:paddingEnd="8dp"
             android:textColor="#828282"
             android:textFontWeight="400"
-            android:textSize="12sp"
+            app:textType="CAPTION"
             tools:text="INR 0" />
 
 

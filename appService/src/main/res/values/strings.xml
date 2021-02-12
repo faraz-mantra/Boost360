@@ -303,8 +303,8 @@
   <string name="error_unknown">Oops some unknown error occurred, please try again.</string>
   <string name="clients_can_book_this_service_for_free">Clients can book this service for FREE.</string>
   <string name="select_service_delivery_config">Select service delivery config</string>
-  <string name="channels_service_specifications_service_category_etc">Channels, Service Specifications, Service category, etc.</string>
-  <string name="paste_your_url_here">Paste your URL here</string>
+  <string name="channels_service_specifications_service_category_etc">Channels, Service specifications, Weekly schedule, etc.</string>
+  <string name="paste_your_url_here">Paste your URL here...</string>
   <string name="website_name">Website name</string>
   <string name="add_external_url">Add External URL</string>
   <string name="kotak_mahindra_bnak_345547684878">Kotak Mahindra Bnak - 345547684878</string>
@@ -316,7 +316,7 @@
   <string name="xx_xxx">XX,XXX</string>
   <string name="price_with_tax_inr">Price with tax (INR)</string>
   <string name="price_includes_taxes">Price includes taxes</string>
-  <string name="appointment_for_this_service_is_paid">Appointment for this service is paid?</string>
+  <string name="appointment_for_this_service_is_paid">Is this a paid service?</string>
   <string name="select_how_do_you_want_to_give_this_service_to_your_clients">Select, how do you want to give this service to your clients.</string>
   <string name="pricing_info">Pricing info</string>
   <string name="add_buffer_time_before_and_after">Add buffer time before and after</string>
@@ -464,6 +464,8 @@
   <string name="view_on_website">VIEW ON WEBSITE</string>
   <string name="successfully_saved">Successfully Saved</string>
   <string name="successfully_update">Successfully Updated</string>
+  <string name="product_saved_and_published_live_on_your_website_or_share">Your product is successfully saved and published live on your website. Click on below button to see it live or share with in your connections.</string>
+  <string name="product_update_and_published_live_on_your_website_or_share">Your product is successfully updated and published live on your website. Click on below button to see it live or share with in your connections.</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>

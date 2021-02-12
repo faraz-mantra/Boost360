@@ -11,12 +11,12 @@ import androidx.fragment.app.Fragment
 import com.appservice.R
 import com.appservice.base.AppBaseActivity
 import com.appservice.constant.FragmentType
-import com.appservice.ui.catalog.catalogProduct.information.ProductInformationFragment
-import com.appservice.ui.catalog.catalogProduct.product.ProductDetailFragment
-import com.appservice.ui.catalog.catalogService.information.ServiceInformationFragment
+import com.appservice.ui.catalog.catalogProduct.addProduct.ProductDetailFragment
+import com.appservice.ui.catalog.catalogProduct.addProduct.information.ProductInformationFragment
+import com.appservice.ui.catalog.catalogService.addService.ServiceDetailFragment
+import com.appservice.ui.catalog.catalogService.addService.information.ServiceInformationFragment
+import com.appservice.ui.catalog.catalogService.addService.weeklyTime.ServiceTimingFragment
 import com.appservice.ui.catalog.catalogService.listing.ServiceListingFragment
-import com.appservice.ui.catalog.catalogService.service.ServiceDetailFragment
-import com.appservice.ui.catalog.catalogService.weeklyTime.ServiceTimingFragment
 import com.appservice.ui.catalog.common.CreateCategoryFragment
 import com.appservice.ui.catalog.common.WeeklyAppointmentFragment
 import com.framework.base.BaseFragment
@@ -61,7 +61,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun customTheme(): Int? {
     return when (type) {
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
-      FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_LISTING -> R.style.CatalogTheme
+      FragmentType.CREATE_CATEGORY, FragmentType.SERVICE_LISTING,
+      -> R.style.CatalogTheme
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> R.style.CatalogTheme_Information
       else -> super.customTheme()
     }
@@ -72,13 +73,14 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   }
 
   override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.body_2)
+    return resources.getDimension(R.dimen.heading_7)
   }
 
   override fun getToolbarBackgroundColor(): Int? {
     return when (type) {
       FragmentType.PRODUCT_INFORMATION, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.SERVICE_DETAIL_VIEW,
-      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY -> ContextCompat.getColor(this, R.color.orange)
+      FragmentType.SERVICE_LISTING, FragmentType.CREATE_CATEGORY,
+      -> ContextCompat.getColor(this, R.color.orange)
       else -> super.getToolbarBackgroundColor()
     }
   }
@@ -86,7 +88,8 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
   override fun getToolbarTitleColor(): Int? {
     return when (type) {
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_LISTING,
-      FragmentType.SERVICE_DETAIL_VIEW -> ContextCompat.getColor(this, R.color.white)
+      FragmentType.SERVICE_DETAIL_VIEW,
+      -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
   }
@@ -95,13 +98,14 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     return when (type) {
       FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_LISTING, FragmentType.SERVICE_DETAIL_VIEW,
       FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT,
-      FragmentType.CREATE_CATEGORY -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
+      FragmentType.CREATE_CATEGORY,
+      -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
       else -> super.getNavigationIcon()
     }
   }
 
   override fun getNavIconScale(): Float {
-    return 0.7f
+    return 1.0f
   }
 
   override fun getToolbarTitle(): String? {
@@ -119,12 +123,9 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getToolbarTitleGravity(): Int {
     return when (type) {
-      FragmentType.SERVICE_TIMING_FRAGMENT -> Gravity.CENTER
-      else -> {
-        Gravity.START
-      }
+      FragmentType.SERVICE_TIMING_FRAGMENT, FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_TIMING_FRAGMENT -> Gravity.CENTER
+      else -> Gravity.START
     }
-
   }
 
 
@@ -185,12 +186,6 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
     productDetailFragment?.onActivityResult(requestCode, resultCode, data)
     weeklyAppointmentFragment?.onActivityResult(requestCode, resultCode, data)
     createCategoryFragment?.onActivityResult(requestCode, resultCode, data)
-  }
-
-  override fun onBackPressed() {
-    when (type) {
-      else -> super.onBackPressed()
-    }
   }
 }
 

@@ -1,4 +1,4 @@
-package com.appservice.ui.catalog.catalogProduct.information
+package com.appservice.ui.catalog.catalogProduct.addProduct.information
 
 import android.content.Intent
 import android.view.Menu
@@ -22,8 +22,8 @@ import com.appservice.model.serviceProduct.gstProduct.response.DataG
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.ui.catalog.catalogService.information.CustomDropDownAdapter
-import com.appservice.ui.catalog.catalogService.information.SpinnerImageModel
+import com.appservice.ui.catalog.catalogService.addService.information.CustomDropDownAdapter
+import com.appservice.ui.catalog.catalogService.addService.information.SpinnerImageModel
 import com.appservice.ui.catalog.widgets.ClickType
 import com.appservice.ui.catalog.widgets.GstDetailsBottomSheet
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet

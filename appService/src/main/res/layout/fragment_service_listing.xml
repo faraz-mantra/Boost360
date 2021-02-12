@@ -5,30 +5,27 @@
 
   <data></data>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.framework.views.viewgroups.BaseRecyclerView
+      android:id="@+id/baseRecyclerView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:clipToPadding="false"
+      android:orientation="vertical"
+      android:paddingBottom="@dimen/size_80"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      tools:itemCount="10"
+      tools:listitem="@layout/recycler_item_service_listing" />
 
     <include
       android:id="@+id/service_listing_empty"
       layout="@layout/fragment_service_listing_empty"
       android:visibility="gone" />
-
-    <com.framework.views.viewgroups.BaseRecyclerView
-      android:id="@+id/baseRecyclerView"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:clipToPadding="false"
-      android:orientation="vertical"
-      android:paddingBottom="@dimen/size_80"
-      android:visibility="visible"
-      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      tools:itemCount="10"
-      tools:listitem="@layout/recycler_item_service_listing" />
 
     <LinearLayout
       android:id="@+id/ll_action_buttons"
@@ -37,7 +34,7 @@
       android:layout_marginHorizontal="16dp"
       android:orientation="horizontal"
       android:visibility="visible"
-      app:layout_constraintBottom_toBottomOf="parent"
+      android:layout_gravity="bottom"
       android:paddingBottom="@dimen/size_14">
 
       <com.framework.views.customViews.CustomButton
@@ -46,9 +43,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_44"
         android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
         android:stateListAnimator="@null"
         android:text="@string/add_service" />
-
       <!--            <com.framework.views.customViews.CustomButton-->
       <!--                android:layout_width="0dp"-->
       <!--                android:layout_height="@dimen/size_40"-->
@@ -62,5 +60,12 @@
 
     </LinearLayout>
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+    <ProgressBar
+      android:id="@+id/progress"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:indeterminate="true"
+      android:theme="@style/progressBar" />
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -1,4 +1,4 @@
-package com.appservice.ui.catalog.catalogService.weeklyTime
+package com.appservice.ui.catalog.catalogService.addService.weeklyTime
 
 import android.content.Intent
 import android.view.View

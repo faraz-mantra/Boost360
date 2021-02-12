@@ -72,9 +72,6 @@ class ServiceViewModel : BaseViewModel() {
     return WithFloatRepository.userAccountDetail(fpId, clientId).toLiveData()
   }
 
-  //  fun addProductDetails(request:ProductDimensionRequest): LiveData<BaseResponse> {
-//    return KitWebActionRepository.productAddData(request).toLiveData()
-//  }
   fun getServiceListing(request: ServiceListingRequest): LiveData<BaseResponse> {
     return NowfloatsApiRepository.getServiceListing(request).toLiveData()
   }
