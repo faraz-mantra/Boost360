@@ -96,6 +96,14 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventLabelKt.SEARCH_RANKING;
+import static com.framework.webengageconstant.EventNameKt.ROI_SUMMARY_ADDRESS_VIEWS;
+import static com.framework.webengageconstant.EventNameKt.SALES_ANALYTICS;
+import static com.framework.webengageconstant.EventNameKt.SEARCH_ANALYTICS;
+import static com.framework.webengageconstant.EventNameKt.SOCIAL_ANALYTICS_DETAILS_FROM_HOME;
+import static com.framework.webengageconstant.EventNameKt.SUBSCRIBERS;
+import static com.framework.webengageconstant.EventNameKt.WILDFIRE_ANALYTICS;
 import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYPE;
 
 /**
@@ -323,7 +331,7 @@ public class Analytics_Fragment extends Fragment {
         visitsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("WEBSITE visits - CHART DURATION CHANGED", "null", session.getFpTag());
+                WebEngageController.trackEvent(WEBSITE_VISITS_CHART_DURATION_CHANGED, EVENT_LABEL_NULL, session.getFpTag());
                 MixPanelController.track("OverallVisitsDetailedView", null);
                 Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
                 q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.TOTAL);
@@ -347,7 +355,7 @@ public class Analytics_Fragment extends Fragment {
         mapVisitsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("ROI SUMMARY - ADDRESS VIEWS", "null", session.getFpTag());
+                WebEngageController.trackEvent(ROI_SUMMARY_ADDRESS_VIEWS, EVENT_LABEL_NULL, session.getFpTag());
                 MixPanelController.track("MapVisitsDetailedView", null);
                 Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
                 q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.MAP_VISITS);
@@ -364,7 +372,7 @@ public class Analytics_Fragment extends Fragment {
             public void onClick(View v) {
 
                 addSubscription();
-                WebEngageController.trackEvent("ROI SUMMARY - ADDRESS VIEWS", "null", session.getFpTag());
+                WebEngageController.trackEvent(ROI_SUMMARY_ADDRESS_VIEWS, EVENT_LABEL_NULL, session.getFpTag());
 
 //                Intent i = new Intent(getActivity(), SubscribersActivity.class);
 //                startActivity(i);
@@ -378,7 +386,7 @@ public class Analytics_Fragment extends Fragment {
                /* if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                     Toast.makeText(context, "This feature is coming soon", Toast.LENGTH_LONG).show();
                 } else {*/
-                WebEngageController.trackEvent("SOCIAL ANALYTICS - DETAILS FROM HOME", "null", session.getFpTag());
+                WebEngageController.trackEvent(SOCIAL_ANALYTICS_DETAILS_FROM_HOME, EVENT_LABEL_NULL, session.getFpTag());
                 int status = pref.getInt("fbPageStatus", 0);
 
                 Intent i = new Intent(getActivity(), SocialAnalytics.class);
@@ -394,7 +402,7 @@ public class Analytics_Fragment extends Fragment {
         orderLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("SALES ANALYTICS", "null", session.getFpTag());
+                WebEngageController.trackEvent(SALES_ANALYTICS, EVENT_LABEL_NULL, session.getFpTag());
 //                Intent i = new Intent(getActivity(), OrderAnalyticsActivity.class);
                 Intent i = new Intent(getActivity(), RevenueSummaryActivity.class);
                 startActivity(i);
@@ -407,7 +415,7 @@ public class Analytics_Fragment extends Fragment {
         llSearchRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("SEARCH ANALYTICS", "SEARCH RANKING", session.getFpTag());
+                WebEngageController.trackEvent(SEARCH_ANALYTICS, SEARCH_RANKING, session.getFpTag());
                 Intent i = new Intent(getActivity(), SearchRankingActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -418,7 +426,7 @@ public class Analytics_Fragment extends Fragment {
         wildfireAnalytics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent("WILDFIRE ANALYTICS", "null", session.getFpTag());
+                WebEngageController.trackEvent(WILDFIRE_ANALYTICS, EVENT_LABEL_NULL, session.getFpTag());
                 Intent i = new Intent(getActivity(), WildFireAdsActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -1127,7 +1135,7 @@ public class Analytics_Fragment extends Fragment {
          * If not new pricing plan
          */
         if (!WidgetKey.isNewPricingPlan) {
-            WebEngageController.trackEvent("SUBSCRIBERS", "null", session.getFpTag());
+            WebEngageController.trackEvent(SUBSCRIBERS, EVENT_LABEL_NULL, session.getFpTag());
             openSubscriberActivity();
         } else {
             String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SUBSCRIPTION, WidgetKey.WIDGET_PROPERTY_SUBSCRIPTION);
@@ -1135,7 +1143,7 @@ public class Analytics_Fragment extends Fragment {
             if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
                 Toast.makeText(getContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
             } else {
-                WebEngageController.trackEvent("SUBSCRIBERS", "null", session.getFpTag());
+                WebEngageController.trackEvent(SUBSCRIBERS, EVENT_LABEL_NULL, session.getFpTag());
                 openSubscriberActivity();
             }
         }

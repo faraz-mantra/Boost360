@@ -82,6 +82,13 @@ import java.util.List;
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
 import static com.appservice.ui.catalog.CatalogServiceContainerActivityKt.startFragmentActivityNew;
+import static com.framework.webengageconstant.EventLabelKt.FAB;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_CUSTOM_PAGE;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_IMAGE;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_INVENTORY;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_TESTIMONIAL;
+import static com.framework.webengageconstant.EventNameKt.DASHBOARD_FAB_UPDATE;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 import static com.nowfloats.NavigationDrawer.floating_view.FloatingViewBottomSheetDialog.FLOATING_CLICK_TYPE.WRITE_UPDATE;
 
 
@@ -633,7 +640,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   }
 
   private void addImage() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - Image", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_IMAGE, FAB, NULL);
     Intent webIntent = new Intent(getActivity(), ImageGalleryActivity.class);
     webIntent.putExtra("create_image", true);
     startActivity(webIntent);
@@ -692,14 +699,14 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   }
 
   private void openAddUpdateActivity() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - Update", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_UPDATE, FAB, NULL);
     Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
     startActivity(webIntent);
     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
   }
 
   private void addCustomPage() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - CustomPage", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_CUSTOM_PAGE, FAB, NULL);
     Intent webIntent = new Intent(getActivity(), CustomPageActivity.class);
     webIntent.putExtra("IS_ADD", true);
     startActivity(webIntent);
@@ -707,7 +714,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   }
 
   private void addTestimonial() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - Testimonial", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_TESTIMONIAL, FAB, NULL);
     Intent webIntent = new Intent(getActivity(), TestimonialsActivity.class);
     webIntent.putExtra("IS_ADD", true);
     startActivity(webIntent);
@@ -845,7 +852,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   }
 
   private void addInventory() {
-    WebEngageController.trackEvent("DASHBOARD - Fab - Inventory", "Fab", null);
+    WebEngageController.trackEvent(DASHBOARD_FAB_INVENTORY, FAB, NULL);
     String type = Utils.getProductType(session.getFP_AppExperienceCode());
     Product newProduct = new Product();
     newProduct.setProductType(type);

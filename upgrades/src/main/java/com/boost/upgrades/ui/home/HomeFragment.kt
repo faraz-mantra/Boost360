@@ -140,7 +140,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         shimmer_view_recommended.startShimmer()
         shimmer_view_recomm_addons.startShimmer()
         shimmer_view_addon_category.startShimmer()
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE Loaded", "ADDONS_MARKETPLACE", "")
+        WebEngageController.trackEvent("ADDONS_MARKETPLACE Loaded", ADDONS_MARKETPLACE, "")
 //        Glide.with(this).load(R.drawable.back_beau).apply(RequestOptions.bitmapTransform(BlurTransformation(25, 3))).into(back_image)
 
         imageView21.setOnClickListener {
@@ -267,7 +267,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
 
         all_recommended_addons.setOnClickListener {
-            WebEngageController.trackEvent("Clicked view all recommended add-ons", "ADDONS_MARKETPLACE", "null")
+            WebEngageController.trackEvent("Clicked view all recommended add-ons", ADDONS_MARKETPLACE, NULL)
             val args = Bundle()
             args.putStringArrayList("userPurchsedWidgets", arguments?.getStringArrayList("userPurchsedWidgets"))
             (activity as UpgradeActivity).addFragmentHome(
@@ -400,7 +400,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         referralText.setSpan(UnderlineSpan(), 0, referralText.length, 0)
         boost360_tnc.text = referralText
         boost360_tnc.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE TnC Clicked", "ADDONS_MARKETPLACE", "")
+            WebEngageController.trackEvent("ADDONS_MARKETPLACE TnC Clicked", ADDONS_MARKETPLACE, "")
             val webViewFragment: WebViewFragment = WebViewFragment.newInstance()
             val args = Bundle()
             args.putString("link", "https://www.getboost360.com/tnc")
@@ -933,7 +933,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPackageClicked(item: Bundles?) {
-        WebEngageController.trackEvent("Feature packs Clicked", "ADDONS_MARKETPLACE", item?.name
+        WebEngageController.trackEvent("Feature packs Clicked", ADDONS_MARKETPLACE, item?.name
                 ?: "")
         val packageFragment = PackageFragment.newInstance()
         val args = Bundle()
@@ -1089,7 +1089,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPartnerZoneClicked(item: PartnerZone?) {
-        WebEngageController.trackEvent("Partner's Promo banners Clicked", "ADDONS_MARKETPLACE", item?.title
+        WebEngageController.trackEvent("Partner's Promo banners Clicked", ADDONS_MARKETPLACE, item?.title
                 ?: "")
         Log.i("onPartnerZoneClicked >>", item.toString())
         if (item!!.cta_feature_key.isNullOrEmpty().not()) {
@@ -1158,7 +1158,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
 
     override fun onAddFeatureDealItemToCart(item: FeaturesModel?, minMonth: Int) {
         if (item != null) {
-            WebEngageController.trackEvent("Feature deals add cart Clicked", "ADDONS_MARKETPLACE", item.name
+            WebEngageController.trackEvent("Feature deals add cart Clicked", ADDONS_MARKETPLACE, item.name
                     ?: "")
             viewModel.addItemToCart(item, minMonth)
         }
@@ -1177,7 +1177,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     override fun onPlayYouTubeVideo(videoItem: YoutubeVideoModel) {
-        WebEngageController.trackEvent("Video gallery Clicked", "ADDONS_MARKETPLACE", videoItem.title
+        WebEngageController.trackEvent("Video gallery Clicked", ADDONS_MARKETPLACE, videoItem.title
                 ?: "")
         Log.i("onPlayYouTubeVideo", videoItem.youtube_link)
         val link: List<String> = videoItem.youtube_link!!.split('/')
@@ -1254,7 +1254,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                                             event_attributes.put("Discounted Price", offeredBundlePrice)
                                             event_attributes.put("Discount %", item!!.overall_discount_percent)
                                             item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                                            WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", "ADDONS_MARKETPLACE", event_attributes)
+                                            WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", ADDONS_MARKETPLACE, event_attributes)
 //                packageInCartStatus = true
 //                package_submit.background = ContextCompat.getDrawable(
 //                        requireContext(),
@@ -1300,7 +1300,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                  event_attributes.put("Discounted Price", offeredBundlePrice)
                  event_attributes.put("Discount %", item!!.overall_discount_percent)
                  item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                 WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", "ADDONS_MARKETPLACE", event_attributes)
+                 WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", ADDONS_MARKETPLACE, event_attributes)
  //                packageInCartStatus = true
  //                package_submit.background = ContextCompat.getDrawable(
  //                        requireContext(),
