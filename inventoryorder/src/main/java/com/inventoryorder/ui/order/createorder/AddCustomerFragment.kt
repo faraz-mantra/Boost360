@@ -2,6 +2,9 @@ package com.inventoryorder.ui.order.createorder
 
 import android.os.Bundle
 import android.view.View
+import android.widget.CheckBox
+import android.widget.CompoundButton
+import android.widget.RadioGroup
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.databinding.FragmentAddCustomerBinding
 import com.inventoryorder.ui.BaseInventoryFragment
@@ -24,7 +27,11 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     super.onCreateView()
     fpTag?.let { WebEngageController.trackEvent("Clicked on Add Customer", "ORDERS", it) }
 
-    setOnClickListener(binding?.vwNext)
+    setOnClickListener(binding?.vwNext, binding?.textAddCustomerGstin, binding?.tvRemove)
+
+    binding?.checkboxAddressSame?.setOnCheckedChangeListener { p0, isChecked ->
+      binding?.lytShippingAddress?.visibility = if (isChecked) View.GONE else View.VISIBLE
+    }
   }
 
 
@@ -32,9 +39,21 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     super.onClick(v)
     when (v) {
       binding?.vwNext -> {
-        startFragmentOrderActivity(FragmentType.ADD_PRODUCT, Bundle())
+        startFragmentOrderActivity(FragmentType.BILLING_DETAIL, Bundle())
+      }
+
+      binding?.textAddCustomerGstin -> {
+
+        if (binding?.lytCustomerGstn?.visibility == View.GONE) {
+          binding?.textAddCustomerGstin?.visibility = View.GONE
+          binding?.lytCustomerGstn?.visibility = View.VISIBLE
+        }
+      }
+
+      binding?.tvRemove -> {
+        binding?.textAddCustomerGstin?.visibility = View.VISIBLE
+        binding?.lytCustomerGstn?.visibility = View.GONE
       }
     }
   }
-
 }
