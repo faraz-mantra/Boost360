@@ -6,6 +6,7 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentOrderOnBoardingBinding
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
 
@@ -24,7 +25,7 @@ class CreateOrderOnBoardingFragment : BaseInventoryFragment<FragmentOrderOnBoard
     super.onCreateView()
     fpTag?.let { WebEngageController.trackEvent("Clicked on Orders Creation", "ORDERS", it) }
 
-    setOnClickListener(binding?.tvGetStarted)
+    setOnClickListener(binding?.tvGetStarted, binding?.ivClose)
   }
 
   override fun onClick(v: View) {
@@ -34,6 +35,10 @@ class CreateOrderOnBoardingFragment : BaseInventoryFragment<FragmentOrderOnBoard
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle)
+      }
+
+      binding?.ivClose -> {
+        (context as FragmentContainerOrderActivity).finish()
       }
     }
   }

@@ -8,6 +8,7 @@ import com.framework.exceptions.NoNetworkException
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
+import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentAddProductBinding
 import com.inventoryorder.model.PRODUCT_LIST_CLIENT_ID
 import com.inventoryorder.model.PreferenceData
@@ -26,6 +27,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
   private var productList : ArrayList<ProductItem> ?= null
   private var itemsAdapter: AppBaseRecyclerViewAdapter<ProductItem>? = null
   private var layoutManagerN: LinearLayoutManager? = null
+  private var totalPrice = 0.0
 
   companion object {
     @JvmStatic
@@ -56,8 +58,10 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
   }
 
   private fun getItemList(fpTag : String?, clientId : String?) {
+    showProgress(context?.getString(R.string.loading))
     viewModel?.getProductItems(fpTag, clientId, 0)?.observe(viewLifecycleOwner, Observer {
 
+      hideProgress()
       if (it.error is NoNetworkException) {
         showShortToast(resources.getString(R.string.internet_connection_not_available))
         return@Observer
@@ -66,7 +70,15 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
       if (it.isSuccess()) {
         val resp = (it.arrayResponse as? Array<ProductItem>)
         productList = if (resp.isNullOrEmpty().not()) resp?.toCollection(ArrayList()) else ArrayList()
-        setAdapterOrderList(productList!!)
+
+        if (productList?.size!! > 0) {
+          binding?.tvNoProducts?.visibility = View.GONE
+          binding?.productRecycler?.visibility = View.VISIBLE
+          setAdapterOrderList(productList!!)
+        } else {
+          binding?.tvNoProducts?.visibility = View.VISIBLE
+          binding?.productRecycler?.visibility = View.GONE
+        }
       } else {
         showShortToast(it.message)
       }
@@ -83,6 +95,41 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
+    when (actionType) {
+      RecyclerViewActionType.PRODUCT_ITEM_ADD.ordinal -> {
+        val product = item as? ProductItem
+        productList?.get(position)?.productQuantityAdded = (productList?.get(position)?.productQuantityAdded ?: 0) + 1
+        itemsAdapter?.notifyDataSetChanged()
 
+        totalPrice = totalPrice.plus(product?.Price ?: 0.0)
+        binding?.tvItemTotalPrice?.text = totalPrice.toString()
+
+        if (binding?.layoutTotalPricePanel?.visibility == View.GONE) {
+          binding?.layoutTotalPricePanel?.visibility = View.VISIBLE
+        }
+      }
+
+      RecyclerViewActionType.PRODUCT_ITEM_INCREASE_COUNT.ordinal -> {
+        val product = item as? ProductItem
+        productList?.get(position)?.productQuantityAdded = (productList?.get(position)?.productQuantityAdded ?: 0) + 1
+        itemsAdapter?.notifyDataSetChanged()
+
+        totalPrice = totalPrice.plus(product?.Price ?: 0.0)
+        binding?.tvItemTotalPrice?.text = totalPrice.toString()
+      }
+
+      RecyclerViewActionType.PRODUCT_ITEM_DECREASE_COUNT.ordinal -> {
+        val product = item as? ProductItem
+        productList?.get(position)?.productQuantityAdded = (productList?.get(position)?.productQuantityAdded ?: 0) - 1
+        itemsAdapter?.notifyDataSetChanged()
+
+        totalPrice = totalPrice.minus(product?.Price ?: 0.0)
+        binding?.tvItemTotalPrice?.text = totalPrice.toString()
+
+        if (totalPrice == 0.0) {
+          binding?.layoutTotalPricePanel?.visibility = View.GONE
+        }
+      }
+    }
   }
 }
