@@ -9,8 +9,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -23,11 +21,12 @@ import android.text.style.UnderlineSpan
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
@@ -36,30 +35,32 @@ import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentServiceListingBinding
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
+import com.appservice.recyclerView.PaginationScrollListener
+import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_SIZE
+import com.appservice.recyclerView.PaginationScrollListener.Companion.PAGE_START
 import com.appservice.recyclerView.RecyclerItemClickListener
-import com.appservice.staffs.ui.UserSession
-import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
 import com.appservice.ui.model.*
 import com.appservice.viewmodel.ServiceViewModel
+import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
+import com.framework.utils.NetworkUtils.isNetworkConnected
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
+import kotlinx.android.synthetic.main.fragment_add_account_start.view.*
 import kotlinx.android.synthetic.main.fragment_service_detail.*
 import kotlinx.android.synthetic.main.recycler_item_service_timing.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
-  private lateinit var searchView: SearchView
   private val list: ArrayList<ItemsItem> = arrayListOf()
-  private val copylist: ArrayList<ItemsItem> = arrayListOf()
+  private val finalList: ArrayList<ItemsItem> = arrayListOf()
   private var adapterService: AppBaseRecyclerViewAdapter<ItemsItem>? = null
   private var targetMap: Target? = null
-
   private var isNonPhysicalExperience: Boolean? = null
   private var currencyType: String? = "INR"
   private var fpId: String? = null
@@ -68,6 +69,25 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   private var externalSourceId: String? = null
   private var applicationId: String? = null
   private var userProfileId: String? = null
+  private var layoutManagerN: LinearLayoutManager? = null
+
+  /* Paging */
+  private var isLoadingD = false
+  private var TOTAL_ELEMENTS = 0
+  private var offSet: Int = PAGE_START
+  private var limit: Int = PAGE_SIZE
+  private var isLastPageD = false
+
+  companion object {
+    fun newInstance(): ServiceListingFragment {
+      return ServiceListingFragment()
+    }
+
+    private const val STORAGE_CODE = 120
+    var defaultShareGlobal = true
+    var shareType = 2
+    var shareProduct: ItemsItem? = null
+  }
 
   override fun getLayout(): Int {
     return R.layout.fragment_service_listing
@@ -81,7 +101,9 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun onCreateView() {
     super.onCreateView()
     getBundleData()
-    setServiceListing()
+    layoutManagerN = LinearLayoutManager(baseActivity)
+    getListServiceFilterApi(isFirst = true, offSet = offSet, limit = limit)
+    layoutManagerN?.let { scrollPagingListener(it) }
     setOnClickListener(binding?.cbAddService, binding?.serviceListingEmpty?.cbAddService)
   }
 
@@ -96,80 +118,122 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     userProfileId = arguments?.getString(IntentConstant.USER_PROFILE_ID.name)
   }
 
-  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-    super.onCreateOptionsMenu(menu, inflater)
-//        inflater.inflate(R.menu.menu_service_listing, menu)
-//        val searchItem = menu.findItem(R.id.action_search)
-//        if (searchItem != null) {
-//            searchView = searchItem.actionView as SearchView
-//            val searchAutoComplete = searchView.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
-//            searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
-//            searchAutoComplete?.setTextColor(getColor(R.color.white))
-//            searchView.setIconifiedByDefault(true)
-//            searchView.clearFocus()
-//            searchView.queryHint = getString(R.string.search_services)
-//            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//                override fun onQueryTextSubmit(query: String?): Boolean {
-//                    return false
-//                }
-//                override fun onQueryTextChange(newText: String?): Boolean {
-//                    startFilter(newText)
-//                    return false
-//                }
-//
-//            })
-//        }
+
+  private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
+    binding?.baseRecyclerView?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
+      override fun loadMoreItems() {
+        if (!isLastPageD) {
+          isLoadingD = true
+          adapterService?.addLoadingFooter(ItemsItem().getLoaderItem())
+          offSet += limit
+          getListServiceFilterApi(offSet = offSet, limit = limit)
+        }
+      }
+
+      override val totalPageCount: Int
+        get() = TOTAL_ELEMENTS
+      override val isLastPage: Boolean
+        get() = isLastPageD
+      override val isLoading: Boolean
+        get() = isLoadingD
+    })
   }
 
-  private fun startFilter(query: String?) {
-    val secondCopyList = ArrayList<ItemsItem>()
-    if (query.isNullOrEmpty().not()) {
-      viewModel?.getSearchListings(fpTag = UserSession.fpTag, fpId = UserSession.fpId, searchString = query)?.observeOnce(viewLifecycleOwner, {
-        if (it.isSuccess()) {
-          val data = (it as ServiceSearchListingResponse).result?.data as ArrayList<ItemsItem>
-          secondCopyList.removeAll(data)
-          secondCopyList.addAll(data)
-          adapterService?.notify(secondCopyList)
-        } else adapterService?.notify(copylist)
-      })
+  private fun getListServiceFilterApi(searchString: String = "", isFirst: Boolean = false, offSet: Int? = null, limit: Int? = null) {
+    if (isFirst || searchString.isNotEmpty()) showProgress()
+    viewModel?.getSearchListings(fpTag, fpId, searchString, offSet, limit)?.observeOnce(viewLifecycleOwner, {
+      if (it.isSuccess()) {
+        setServiceDataItems((it as? ServiceSearchListingResponse)?.result, searchString.isNotEmpty(), isFirst)
+      } else if (isFirst) showShortToast(it.message())
+      if (isFirst || searchString.isNotEmpty()) hideProgress()
+    })
+  }
 
-    } else if (copylist.isNullOrEmpty().not()) {
-      adapterService?.notify(copylist)
+  private fun setServiceDataItems(resultService: Result?, isSearchString: Boolean, isFirstLoad: Boolean) {
+    val listService = resultService?.data as? ArrayList<ItemsItem>
+    if (isSearchString.not()) {
+      if (isFirstLoad) finalList.clear()
+      if (listService.isNullOrEmpty().not()) {
+        removeLoader()
+        setEmptyView(View.GONE)
+        TOTAL_ELEMENTS = resultService?.paging?.count ?: 0
+        finalList.addAll(listService!!)
+        list.clear()
+        list.addAll(finalList)
+        isLastPageD = (finalList.size == TOTAL_ELEMENTS)
+        setAdapterNotify()
+        setToolbarTitle("${resources.getString(R.string.services)} (${TOTAL_ELEMENTS})")
+      } else if (isFirstLoad) setEmptyView(View.VISIBLE)
+    } else {
+      if (listService.isNullOrEmpty().not()) {
+        list.clear()
+        list.addAll(listService!!)
+        setAdapterNotify()
+      }
     }
   }
 
-  private fun setServiceListing() {
-    showProgress()
-    viewModel?.getServiceListing(ServiceListingRequest(arrayListOf(), "ALL", UserSession.fpTag))?.observeOnce(lifecycleOwner = viewLifecycleOwner, Observer {
-      hideProgress()
-      when (it.isSuccess()) {
-        true -> {
-          val map = (it as ServiceListingResponse).result?.map { resultItem -> (resultItem as ResultItem).services?.items }
-          if (map.isNullOrEmpty().not()) {
-            list.clear()
-            copylist.clear()
-            map?.forEach { list1 -> list1?.forEach { itemsItem -> list.add(itemsItem!!) } }
-            copylist.addAll(list)
-            (requireActivity() as CatalogServiceContainerActivity).getToolbar()?.title = "${resources.getString(R.string.services)} (${list.size})"
-            adapterService = AppBaseRecyclerViewAdapter(activity = baseActivity, list = list, itemClickListener = this@ServiceListingFragment)
-            binding?.baseRecyclerView?.adapter = adapterService
-            setEmptyView(View.GONE)
-          } else setEmptyView(View.VISIBLE)
-        }
-        else -> setEmptyView(View.VISIBLE)
+  private fun setAdapterNotify() {
+    if (adapterService == null) {
+      adapterService = AppBaseRecyclerViewAdapter(baseActivity, list, this@ServiceListingFragment)
+      binding?.baseRecyclerView?.layoutManager = layoutManagerN
+      binding?.baseRecyclerView?.adapter = adapterService
+      adapterService?.runLayoutAnimation(binding?.baseRecyclerView)
+    } else adapterService?.notifyDataSetChanged()
+  }
+
+  private fun removeLoader() {
+    if (isLoadingD) {
+      isLoadingD = false
+      adapterService?.removeLoadingFooter()
+    }
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+    inflater.inflate(R.menu.menu_service_listing, menu)
+    val searchItem = menu.findItem(R.id.action_search)
+    val searchView = searchItem.actionView as SearchView
+    val searchAutoComplete = searchView.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
+    val searchCloseIcon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+    searchCloseIcon?.setColorFilter(resources.getColor(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
+    searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
+    searchAutoComplete?.setTextColor(getColor(R.color.white))
+    searchView.setIconifiedByDefault(true)
+    searchView.queryHint = getString(R.string.search_services)
+    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+      override fun onQueryTextSubmit(query: String?): Boolean {
+        return false
+      }
+
+      override fun onQueryTextChange(newText: String?): Boolean {
+        startFilter(newText)
+        return false
       }
     })
+  }
+
+  private fun startFilter(query: String?) {
+    when {
+      query.isNullOrEmpty().not() && query!!.length > 2 -> getListServiceFilterApi(searchString = query)
+      finalList.isNullOrEmpty().not() -> {
+        list.clear()
+        list.addAll(finalList)
+        setAdapterNotify()
+      }
+      else -> setEmptyView(View.VISIBLE)
+    }
+  }
+
+  private fun setEmptyView(visibility: Int) {
+    binding?.serviceListingEmpty?.root?.visibility = visibility
+    if (visibility == View.VISIBLE) setListingView(View.GONE) else setListingView(View.VISIBLE)
+    setEmptyView()
   }
 
   private fun setListingView(visibility: Int) {
     binding?.baseRecyclerView?.visibility = visibility
     binding?.llActionButtons?.visibility = visibility
-  }
-
-  private fun setEmptyView(visibility: Int) {
-    binding?.serviceListingEmpty?.root?.visibility = visibility
-    setEmptyView()
-    if (visibility == View.VISIBLE) setListingView(View.GONE) else setListingView(View.VISIBLE)
   }
 
   private fun setEmptyView() {
@@ -190,7 +254,6 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     binding?.serviceListingEmpty?.ctvAddServiceSubheading?.text = spannableString
     binding?.serviceListingEmpty?.ctvAddServiceSubheading?.movementMethod = LinkMovementMethod.getInstance()
     binding?.serviceListingEmpty?.ctvAddServiceSubheading?.highlightColor = resources.getColor(android.R.color.transparent)
-
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -252,7 +315,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
 
   fun share(defaultShare: Boolean, type: Int, product: ItemsItem?) {
     showProgress("Sharing...")
-    if (isOnline(baseActivity)) {
+    if (isNetworkConnected()) {
       val shareText = String.format("*%s* %s\n*%s* %s\n\n-------------\n%s\n\nfor more details visit: %s",
           product?.name?.trim { it <= ' ' }, product?.description, "${product?.currency}${product?.discountedPrice}",
           "${product?.currency}${product?.price}", product?.description?.trim { it <= ' ' }, product?.category?.trim { it <= ' ' })
@@ -329,42 +392,6 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     sortSheet.show(this@ServiceListingFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
-  companion object {
-    fun newInstance(): ServiceListingFragment {
-      return ServiceListingFragment()
-    }
-
-    private const val STORAGE_CODE = 120
-    var defaultShareGlobal = true
-    var shareType = 2
-    var shareProduct: ItemsItem? = null
-  }
-
-  fun isOnline(context: Activity): Boolean {
-    var status = false
-    try {
-      val connectivityManager = context
-          .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-      var netInfo = connectivityManager.getNetworkInfo(0)
-      if (netInfo != null
-          && netInfo.state == NetworkInfo.State.CONNECTED) {
-        status = true
-      } else {
-        netInfo = connectivityManager.getNetworkInfo(1)
-        if (netInfo != null
-            && netInfo.state == NetworkInfo.State.CONNECTED) status = true
-      }
-      if (!status) {
-        sandbarNoInternet(context)
-      }
-    } catch (e: java.lang.Exception) {
-      e.printStackTrace()
-      sandbarNoInternet(context)
-      return false
-    }
-    return status
-  }
-
   private fun sandbarNoInternet(context: Activity) {
     val snackBar = Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), Snackbar.LENGTH_LONG)
     snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.snackbar_negative_color))
@@ -375,8 +402,20 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
       val isRefresh = data?.getBooleanExtra(IntentConstant.IS_UPDATED.name, false) ?: false
-      if (isRefresh) setServiceListing()
+      if (isRefresh) {
+        this.offSet = PAGE_START
+        this.limit = PAGE_SIZE
+        getListServiceFilterApi(isFirst = true, offSet = offSet, limit = limit)
+      }
     }
+  }
+
+  override fun showProgress(title: String?, cancelable: Boolean?) {
+    binding?.progress?.visible()
+  }
+
+  override fun hideProgress() {
+    binding?.progress?.gone()
   }
 }
 

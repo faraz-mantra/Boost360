@@ -1,4 +1,4 @@
-package com.appservice.ui.catalog.catalogProduct.product
+package com.appservice.ui.catalog.catalogProduct.addProduct
 
 import android.app.Activity
 import android.content.Intent

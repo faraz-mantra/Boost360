@@ -82,7 +82,7 @@ object WebEngageController {
 
 
     fun logout() {
-        weUser!!.logout()
+        weUser.logout()
 
         //Reset Firebase Analytics User Session Event.
         FirebaseAnalyticsUtilsHelper.resetIdentifyUser()

@@ -26,7 +26,7 @@ data class ServiceTiming(
   fun getEmptyDataServiceTiming(isEdit: Boolean): ArrayList<ServiceTiming> {
     val list = ArrayList<ServiceTiming>()
     val days = arrayListOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-    days.forEachIndexed { index, s -> list.add(ServiceTiming(s, isToggle = (isEdit.not() && index == 0))) }
+    days.forEach { list.add(ServiceTiming(it)) }
     return list
   }
 

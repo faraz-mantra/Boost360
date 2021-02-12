@@ -1,4 +1,4 @@
-package com.appservice.ui.catalog.catalogService.service
+package com.appservice.ui.catalog.catalogService.addService
 
 import android.app.Activity
 import android.content.Intent
@@ -102,7 +102,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       binding?.discountEdt?.setText("")
       return
     }
-//    val finalAmount = String.format("%.1f", (amountD - ((amountD * distD) / 100))).toFloatOrNull() ?: 0F
     val finalAmount = String.format("%.1f", (amountD - distD)).toFloatOrNull() ?: 0F
     binding?.finalPriceTxt?.setText("$currencyType $finalAmount")
   }
@@ -153,18 +152,24 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun initProductFromBundle(data: Bundle?) {
     val p = data?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? ItemsItem
-    if (p != null && p.id.isNullOrEmpty().not()) {
-      isEdit = true
-      getServiceDetailObject(p.id)
-    } else {
-      isEdit = false
-      this.product = ServiceModelV1()
-    }
+    isEdit = (p != null && p.id.isNullOrEmpty().not())
+    if (isEdit) getServiceDetailObject(p?.id) else this.product = ServiceModelV1()
   }
 
   private fun getServiceDetailObject(serviceId: String?) {
     hitApi(viewModel?.getServiceDetails(serviceId), R.string.error_getting_service_details)
     hitApi(viewModel?.getServiceTiming(serviceId), R.string.error_getting_service_timing)
+  }
+
+  override fun onSuccess(it: BaseResponse) {
+    when (it.taskcode) {
+      TaskCode.POST_CREATE_SERVICE.ordinal -> onServiceCreated(it)
+      TaskCode.POST_UPDATE_SERVICE.ordinal -> onServiceUpdated(it)
+      TaskCode.ADD_SERVICE_PRIMARY_IMAGE_V1.ordinal -> onPrimaryImageUploaded(it)
+      TaskCode.GET_SERVICE_DETAILS.ordinal -> onServiceDetailResponseReceived(it)
+      TaskCode.DELETE_SERVICE.ordinal -> onServiceDelete(it)
+      TaskCode.GET_SERVICE_TIMING.ordinal -> onServiceTiming(it)
+    }
   }
 
   override fun onClick(v: View) {
@@ -188,18 +193,6 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private fun createServiceApi() {
     WebEngageController.trackEvent("Add service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
     hitApi(viewModel?.createService(product), R.string.service_adding_error);
-  }
-
-
-  override fun onSuccess(it: BaseResponse) {
-    when (it.taskcode) {
-      TaskCode.POST_CREATE_SERVICE.ordinal -> onServiceCreated(it)
-      TaskCode.POST_UPDATE_SERVICE.ordinal -> onServiceUpdated(it)
-      TaskCode.ADD_SERVICE_PRIMARY_IMAGE_V1.ordinal -> onPrimaryImageUploaded(it)
-      TaskCode.GET_SERVICE_DETAILS.ordinal -> onServiceDetailResponseReceived(it)
-      TaskCode.DELETE_SERVICE.ordinal -> onServiceDelete(it)
-      TaskCode.GET_SERVICE_TIMING.ordinal -> onServiceTiming(it)
-    }
   }
 
   private fun onServiceDelete(it: BaseResponse) {
@@ -238,7 +231,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun onServiceUpdated(it: BaseResponse) {
-    updateGstService(product?.productId)
+    hideProgress()
+    uploadPrimaryImage()
   }
 
   private fun createUpdateApi() {
@@ -251,23 +245,11 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     }
   }
 
-  private fun updateGstService(productId: String?) {
-    hideProgress()
-    uploadPrimaryImage()
-  }
-
-  private fun addGstService() {
-    hideProgress()
-    uploadPrimaryImage()
-  }
-
   private fun uploadPrimaryImage() {
     if (serviceImage != null) {
       val request = UploadImageRequest.getInstance(0, product?.productId!!, serviceImage!!)
       hitApi(viewModel?.addPrimaryImage(request), R.string.error_service_image);
-    } else {
-      uploadSecondaryImages();
-    }
+    } else uploadSecondaryImages();
   }
 
   private fun uploadSecondaryImages() {
@@ -351,15 +333,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     product?.codAvailable = binding?.cashOnDelivery?.isChecked ?: false
 
     if (!isEdit) {
-      product?.category = product?.category ?: ""
       product?.brandName = product?.brandName ?: ""
       product?.tags = product?.tags ?: ArrayList()
       product?.otherSpecification = product?.otherSpecification ?: ArrayList()
       product?.IsAvailable = true
       product?.prepaidOnlineAvailable = true
-      product?.variants = false
-      product?.isProductSelected = false
-      product?.codAvailable = true
+      product?.isPriceInclusiveOfTax = true
+      product?.codAvailable = binding?.cashOnDelivery?.isChecked ?: false
     }
     return true
   }

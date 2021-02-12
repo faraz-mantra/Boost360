@@ -1,4 +1,4 @@
-package com.appservice.ui.catalog.catalogService.information
+package com.appservice.ui.catalog.catalogService.addService.information
 
 import android.content.Intent
 import android.os.Bundle
@@ -86,11 +86,18 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   }
 
   private fun setUiText() {
-    binding?.txtDaysActive?.text = ServiceTiming().getStringActive(this.serviceTimingList)
+    val serviceTimingTxt = ServiceTiming().getStringActive(this.serviceTimingList)
+    if (serviceTimingTxt.isNotEmpty()) {
+      binding?.txtDaysActive?.text = serviceTimingTxt
+      binding?.txtDaysActive?.visible()
+    } else binding?.txtDaysActive?.gone()
+
     ordersQuantity = product?.maxCodOrders!!
     binding?.cetSpecKey?.setText(product?.keySpecification?.key ?: "")
     binding?.cetSpecValue?.setText(product?.keySpecification?.value ?: "")
     binding?.edtBrand?.setText(product?.brandName ?: "")
+    binding?.cetWebsite?.setText(product?.BuyOnlineLink?.description?:"")
+    binding?.cetWebsiteValue?.setText(product?.BuyOnlineLink?.url ?: "")
     binding?.ctvQuantityOrderStatus?.text = ordersQuantity.toString()
     if (product?.isPriceToggleOn() == true) {
       binding?.edtGst?.visible()
@@ -244,7 +251,11 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
       secondaryImage(mPaths)
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
       this.serviceTimingList = data?.getSerializableExtra(IntentConstant.SERVICE_TIMING_DATA.name) as? ArrayList<ServiceTiming>
-      binding?.txtDaysActive?.text = ServiceTiming().getStringActive(this.serviceTimingList)
+      val serviceTimingTxt = ServiceTiming().getStringActive(this.serviceTimingList)
+      if (serviceTimingTxt.isNotEmpty()) {
+        binding?.txtDaysActive?.text = serviceTimingTxt
+        binding?.txtDaysActive?.visible()
+      } else binding?.txtDaysActive?.gone()
     }
   }
 

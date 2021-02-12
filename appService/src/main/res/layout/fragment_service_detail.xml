@@ -48,7 +48,6 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="@dimen/size_14"
-            android:tint="@color/dodger_blue_two"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_close_round" />
 
@@ -154,7 +153,6 @@
             android:text="@string/service_category"
             android:textColor="@color/black_4a4a4a"
             app:drawableEndCompat="@drawable/ic_question_circular_blue"
-            app:drawableTint="@color/orange"
             app:fontFamily="@font/semi_bold"
             app:textType="BODY_3" />
 
@@ -268,22 +266,12 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_20"
           android:drawablePadding="@dimen/size_4"
-          android:drawableTint="@color/orange"
           android:includeFontPadding="false"
           android:text="@string/pricing_info"
           android:textColor="@color/black_4a4a4a"
           app:drawableEndCompat="@drawable/ic_question_circular_blue"
           app:fontFamily="@font/semi_bold"
           app:textType="BODY_3" />
-
-        <com.framework.views.customViews.CustomTextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:includeFontPadding="false"
-          android:text="@string/select_how_do_you_want_to_give_this_service_to_your_clients"
-          android:textColor="@color/warm_grey"
-          android:textSize="12sp"
-          app:fontFamily="@font/regular" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
           android:layout_width="match_parent"
@@ -460,11 +448,13 @@
               android:layout_marginEnd="@dimen/size_10"
               android:layout_marginBottom="@dimen/size_10"
               android:orientation="vertical">
+
               <com.framework.views.customViews.CustomCheckBox
+                android:id="@+id/cash_on_delivery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/cash_on_delivery"
                 android:layout_marginTop="@dimen/size_5"
+                android:buttonTint="@color/colorAccent"
                 android:text="@string/allow_cash_on_delivery"
                 android:textColor="@color/grey_dark_1"
                 android:theme="@style/ActiveTheme" />
@@ -540,12 +530,9 @@
             <com.framework.views.customViews.CustomTextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:drawablePadding="@dimen/size_4"
-              android:drawableTint="@color/orange"
               android:includeFontPadding="false"
               android:text="@string/other_information"
               android:textColor="@color/black_4a4a4a"
-              app:drawableEndCompat="@drawable/ic_question_circular_blue"
               app:fontFamily="@font/semi_bold"
               app:textType="BODY_3" />
 
@@ -587,6 +574,7 @@
         android:layout_marginEnd="@dimen/size_20"
         android:layout_marginBottom="@dimen/size_14"
         android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
