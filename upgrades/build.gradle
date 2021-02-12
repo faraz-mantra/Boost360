@@ -118,7 +118,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-analytics-ktx:18.0.1'
 
-    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:2.1.0'
+//    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:2.1.0'
 
     implementation 'com.appsflyer:af-android-sdk:6.0.0'
 }
