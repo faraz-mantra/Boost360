@@ -37,6 +37,7 @@ class ImagePreviewViewHolder(binding: ItemPreviewImageBinding) : AppBaseRecycler
       }
       else -> {
         activity?.let {
+          binding.ctvSize.text="Loading..."
           Glide.with(it)
               .asBitmap().load(data?.pathUrl ?: "")
               .placeholder(R.drawable.placeholder_image_n)
