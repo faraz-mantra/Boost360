@@ -92,7 +92,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
       binding?.txtDaysActive?.visible()
     } else binding?.txtDaysActive?.gone()
 
-    ordersQuantity = product?.maxCodOrders!!
+    ordersQuantity = product?.maxCodOrders?:0
     binding?.cetSpecKey?.setText(product?.keySpecification?.key ?: "")
     binding?.cetSpecValue?.setText(product?.keySpecification?.value ?: "")
     binding?.edtBrand?.setText(product?.brandName ?: "")
