@@ -28,6 +28,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
   private var itemsAdapter: AppBaseRecyclerViewAdapter<ProductItem>? = null
   private var layoutManagerN: LinearLayoutManager? = null
   private var totalPrice = 0.0
+  private var totalCartItems = 0
 
   companion object {
     @JvmStatic
@@ -102,11 +103,12 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         itemsAdapter?.notifyDataSetChanged()
 
         totalPrice = totalPrice.plus(product?.Price ?: 0.0)
-        binding?.tvItemTotalPrice?.text = totalPrice.toString()
+        binding?.tvItemTotalPrice?.text = "${product?.CurrencyCode ?: "INR" } $totalPrice"
 
         if (binding?.layoutTotalPricePanel?.visibility == View.GONE) {
           binding?.layoutTotalPricePanel?.visibility = View.VISIBLE
         }
+        totalCartItems += 1
       }
 
       RecyclerViewActionType.PRODUCT_ITEM_INCREASE_COUNT.ordinal -> {
@@ -115,7 +117,8 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         itemsAdapter?.notifyDataSetChanged()
 
         totalPrice = totalPrice.plus(product?.Price ?: 0.0)
-        binding?.tvItemTotalPrice?.text = totalPrice.toString()
+        binding?.tvItemTotalPrice?.text = "${product?.CurrencyCode ?: "INR" } $totalPrice"
+        totalCartItems += 1
       }
 
       RecyclerViewActionType.PRODUCT_ITEM_DECREASE_COUNT.ordinal -> {
@@ -124,9 +127,10 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         itemsAdapter?.notifyDataSetChanged()
 
         totalPrice = totalPrice.minus(product?.Price ?: 0.0)
-        binding?.tvItemTotalPrice?.text = totalPrice.toString()
+        binding?.tvItemTotalPrice?.text = "${product?.CurrencyCode ?: "INR" } $totalPrice"
 
-        if (totalPrice == 0.0) {
+        totalCartItems -= 1
+        if (totalCartItems == 0) {
           binding?.layoutTotalPricePanel?.visibility = View.GONE
         }
       }
