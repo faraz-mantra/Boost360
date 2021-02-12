@@ -50,7 +50,10 @@ data class ProductItem(
     val productType: String?= null,
     val tags: List<String>?= null,
     val uniquePaymentUrl: UniquePaymentUrl?= null,
-    val variants: Boolean?= null
+    val variants: Boolean?= null,
+
+    var isProductAddedInCart : Boolean = false,
+    var productQuantityAdded : Int = 0
 ) :BaseResponse(), AppBaseRecyclerViewItem, Serializable {
     var recyclerViewType = RecyclerViewItemType.PRODUCT_ITEM.getLayout()
 
