@@ -53,7 +53,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
     super.onClick(v)
     when (v) {
         binding?.tvProceed -> {
-            startFragmentOrderActivity(FragmentType.BILLING_DETAIL, Bundle())
+            startFragmentOrderActivity(FragmentType.ADD_CUSTOMER, Bundle())
         }
     }
   }
