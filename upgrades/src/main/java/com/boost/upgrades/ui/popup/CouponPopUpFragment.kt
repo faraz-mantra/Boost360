@@ -13,13 +13,17 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.boost.upgrades.R
+import com.boost.upgrades.UpgradeActivity
+import com.boost.upgrades.data.api_model.couponSystem.redeem.RedeemCouponRequest
 import com.boost.upgrades.data.model.CouponsModel
 import com.boost.upgrades.ui.cart.CartViewModel
+import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.add_card_popup.*
 import kotlinx.android.synthetic.main.coupon_popup.*
+import kotlinx.android.synthetic.main.order_confirmation_fragment.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -30,6 +34,9 @@ class CouponPopUpFragment : DialogFragment() {
     private lateinit var viewModel: CartViewModel
 
     var couponsList: List<CouponsModel> = arrayListOf()
+    companion object {
+        fun newInstance() = CouponPopUpFragment()
+    }
 
     override fun onStart() {
         super.onStart()
@@ -55,7 +62,6 @@ class CouponPopUpFragment : DialogFragment() {
 
         loadAllCoupons()
         initMvvm()
-
         entered_coupon_value.setFilters(entered_coupon_value.filters + InputFilter.AllCaps())
 
         entered_coupon_value.addTextChangedListener(object: TextWatcher{
@@ -83,7 +89,9 @@ class CouponPopUpFragment : DialogFragment() {
         coupon_submit.setOnClickListener {
             if(validateCouponCode()){
                 if(couponsList.size>0){
-                    coupon_invalid.visibility = View.GONE
+                    viewModel.getCouponRedeem(RedeemCouponRequest(arguments!!.getDouble("cartValue") ,entered_coupon_value.text.toString(),(activity as UpgradeActivity).fpid!!),entered_coupon_value.text.toString())
+                    dismiss()
+                   /* coupon_invalid.visibility = View.GONE
                     var validCouponCode:CouponsModel? = null
                     for(singleCoupon in couponsList){
                         if(entered_coupon_value.text.toString().toUpperCase(Locale.getDefault()) == singleCoupon.coupon_key.toUpperCase(Locale.getDefault())){
@@ -96,7 +104,7 @@ class CouponPopUpFragment : DialogFragment() {
                     }else{
                         dismiss()
                         viewModel.addCouponCodeToCart(validCouponCode)
-                    }
+                    }*/
                 }else{
                     coupon_invalid.visibility = View.VISIBLE
                 }

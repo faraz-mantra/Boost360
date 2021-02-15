@@ -354,16 +354,22 @@
 
 ##onboarding progard rule
 -keeppackagenames com.onboarding
+-keeppackagenames com.dashboard
+-keeppackagenames com.appservice
 -keeppackagenames com.framework
 -keeppackagenames com.resources
 -keeppackagenames com.inventoryorder
 
 -keep class com.onboarding.** { *; }
+-keep class com.dashboard.** { *; }
+-keep class com.appservice.** { *; }
 -keep class com.framework.** { *; }
 -keep class com.resources.** { *; }
 -keep class com.inventoryorder.** { *; }
 -keep class com.onboarding.nowfloats.model.** { <fields>; }
 -keep class com.inventoryorder.model.** { <fields>; }
+-keep class com.dashboard.model.** { <fields>; }
+-keep class com.appservice.model.** { <fields>; }
 
 ##onboarding progard rule
 

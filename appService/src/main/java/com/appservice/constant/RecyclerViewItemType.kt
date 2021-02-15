@@ -9,10 +9,15 @@ enum class RecyclerViewItemType {
   IMAGE_PREVIEW,
   GST_DETAILS_VIEW,
   SESSION_ITEM_VIEW,
-  ADDITIONAL_FILE_VIEW;
+  CREATE_CATEGORY_ITEM_VIEW,
+  ADDITIONAL_FILE_VIEW,
+  SERVICE_ITEM_VIEW,
+  STAFF_LISTING_VIEW,
+  EXPERIENCE_RECYCLER_ITEM,
+  STAFF_FILTER_VIEW;
 
 
-    @LayoutRes
+  @LayoutRes
   fun getLayout(): Int {
     return when (this) {
       PAGINATION_LOADER -> R.layout.pagination_loader
@@ -20,7 +25,12 @@ enum class RecyclerViewItemType {
       IMAGE_PREVIEW -> R.layout.item_preview_image
       GST_DETAILS_VIEW -> R.layout.item_gst_detail
       ADDITIONAL_FILE_VIEW -> R.layout.item_pdf_file
-      SESSION_ITEM_VIEW->R.layout.recycler_item_session
+      SESSION_ITEM_VIEW -> R.layout.recycler_item_session
+      CREATE_CATEGORY_ITEM_VIEW -> R.layout.item_create_category
+      SERVICE_ITEM_VIEW -> R.layout.recycler_item_service
+      STAFF_LISTING_VIEW -> R.layout.recycler_item_staff_listing
+      STAFF_FILTER_VIEW -> R.layout.recycler_item_staff_filter
+      EXPERIENCE_RECYCLER_ITEM -> R.layout.item_experience_details
     }
   }
 }

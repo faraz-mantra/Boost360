@@ -16,6 +16,10 @@ class VisitingCardThreeViewHolder(binding: ItemVisitingCardThreeBinding) : AppBa
     val data = (item as? DigitalCardData)?.cardData ?: return
     binding.businessName.text = data.businessName
     binding.number.text = data.number
+    data.cardIcon?.let {
+      binding.imgLogo1.setImageResource(it)
+      binding.imgLogo2.setImageResource(it)
+    }
     if (data.businessLogo.isNullOrEmpty().not()) {
       binding.profileView.visible()
       binding.viewTop.gone()

@@ -294,28 +294,25 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
             }
         });
 
-        password.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View arg0, MotionEvent arg1) {
-                if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
-                    int tot_width = password.getWidth();
-                    float cur_x = arg1.getX();
-                    float res = (cur_x / Float.parseFloat(tot_width + "") * (Float.parseFloat("100")));
-                    if (res >= 85) {
-                        String d = password.getTag().toString();
-                        if (d.equals("pwd")) {
-                            password.setTag("show");
-                            password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                            password.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.pwd_hide, 0);
-                        } else {
-                            password.setTag("pwd");
-                            password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                            password.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.pwd_show, 0);
-                        }
+        password.setOnTouchListener((arg0, arg1) -> {
+            if (arg1.getAction() == MotionEvent.ACTION_DOWN) {
+                int tot_width = password.getWidth();
+                float cur_x = arg1.getX();
+                float res = (cur_x / Float.parseFloat(tot_width + "") * (Float.parseFloat("100")));
+                if (res >= 85) {
+                    String d = password.getTag().toString();
+                    if (d.equals("pwd")) {
+                        password.setTag("show");
+                        password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                        password.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.pwd_hide, 0);
+                    } else {
+                        password.setTag("pwd");
+                        password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        password.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.pwd_show, 0);
                     }
                 }
-                return false;
             }
+            return false;
         });
 
         findViewById(R.id.im_back_button).setOnClickListener(v -> {
@@ -377,25 +374,21 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         };
 
         loginButton = findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userNameText = userName.getText().toString().trim();
-                passwordText = password.getText().toString().trim();
-
-                if (userNameText.length() > 0 && passwordText.length() > 0) {
-                    userName.clearFocus();
-                    progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.processing_request));
-                    progressDialog.setCancelable(true);
-                    Methods.hideKeyboard(Login_MainActivity.this);
-                    currentProvider = "";
-                    customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(Login_MainActivity.this, customFirebaseAuthListeners, "");
-                    customFirebaseAuthHelpers.verifyUserProfileAPI(userNameText, passwordText, "");
-                } else {
-                    YoYo.with(Techniques.Shake).playOn(userName);
-                    YoYo.with(Techniques.Shake).playOn(password);
-                    Toast.makeText(Login_MainActivity.this, getString(R.string.enter_valid_login_details), Toast.LENGTH_SHORT).show();
-                }
+        loginButton.setOnClickListener(v -> {
+            userNameText = userName.getText().toString().trim();
+            passwordText = password.getText().toString().trim();
+            if (userNameText.length() > 0 && passwordText.length() > 0) {
+                Methods.hideKeyboard(Login_MainActivity.this);
+                userName.clearFocus();
+                progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.processing_request));
+                progressDialog.setCancelable(true);
+                currentProvider = "";
+                customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(Login_MainActivity.this, customFirebaseAuthListeners, "");
+                customFirebaseAuthHelpers.verifyUserProfileAPI(userNameText, passwordText, "");
+            } else {
+                YoYo.with(Techniques.Shake).playOn(userName);
+                YoYo.with(Techniques.Shake).playOn(password);
+                Toast.makeText(Login_MainActivity.this, getString(R.string.enter_valid_login_details), Toast.LENGTH_SHORT).show();
             }
         });
 

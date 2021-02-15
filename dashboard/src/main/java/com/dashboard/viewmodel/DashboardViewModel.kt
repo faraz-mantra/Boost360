@@ -11,7 +11,9 @@ import com.dashboard.rest.repository.WithFloatRepository
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
+import com.inventoryorder.model.summary.request.SellerSummaryRequest
 import com.inventoryorder.rest.repositories.ApiTwoWithFloatRepository
+import com.inventoryorder.rest.repositories.ApiWithFloatRepository
 import com.inventoryorder.rest.repositories.InventoryOrderRepository
 import com.onboarding.nowfloats.model.nfxProcess.NFXProcessRequest
 import com.onboarding.nowfloats.model.uploadfile.UploadFileBusinessRequest
@@ -55,6 +57,14 @@ class DashboardViewModel : BaseViewModel() {
     return WithFloatRepository.getNavDashboardData(context).toLiveData()
   }
 
+  fun  getSearchAnalytics(fpTag: String?,  startDate: String?, endDate: String?): LiveData<BaseResponse> {
+    return DevBoostKitRepository.getSearchAnalytics(fpTag, startDate, endDate).toLiveData()
+  }
+
+  fun getDrScoreUi(context: Context): LiveData<BaseResponse> {
+    return WithFloatRepository.getDrScoreUi(context).toLiveData()
+  }
+
   fun getQuickActionData(context: Context): LiveData<BaseResponse> {
     return WithFloatRepository.getQuickActionData(context).toLiveData()
   }
@@ -67,8 +77,8 @@ class DashboardViewModel : BaseViewModel() {
     return WithFloatRepository.getWelcomeDashboardData(context).toLiveData()
   }
 
-  fun getBoostUserDetailMessage(context: Context): LiveData<BaseResponse> {
-    return WithFloatRepository.getBoostUserDetailMessage(context).toLiveData()
+  fun getBoostVisitingMessage(context: Context): LiveData<BaseResponse> {
+    return WithFloatRepository.getBoostVisitingMessage(context).toLiveData()
   }
 
   fun getBoostCustomerItem(context: Context): LiveData<BaseResponse> {
@@ -82,17 +92,24 @@ class DashboardViewModel : BaseViewModel() {
   fun getSellerSummary(clientId: String?, sellerId: String?): LiveData<BaseResponse> {
     return InventoryOrderRepository.getSellerSummary(clientId, sellerId).toLiveData()
   }
+  fun getSellerSummaryV2_5(clientId: String?, sellerId: String?,request: SellerSummaryRequest?): LiveData<BaseResponse> {
+    return InventoryOrderRepository.getSellerSummaryV2_5(clientId, sellerId,request).toLiveData()
+  }
 
-  fun getUserSummary(clientId: String?, fpIdParent: String?, scope: String?): LiveData<BaseResponse> {
-    return ApiTwoWithFloatRepository.getUserSummary(clientId, fpIdParent, scope).toLiveData()
+  fun getUserSummary(clientId: String?, fpIdParent: String?, scope: String?, startDate: String? = null, endDate: String? = null): LiveData<BaseResponse> {
+    return ApiWithFloatRepository.getUserSummary(clientId, fpIdParent, scope, startDate, endDate).toLiveData()
+  }
+
+  fun  getSubscriberCount(fpTag: String?, clientId: String?, startDate: String?, endDate: String?): LiveData<BaseResponse> {
+    return ApiWithFloatRepository.getSubscriberCount(fpTag, clientId, startDate, endDate).toLiveData()
   }
 
   fun getMapVisits(fpTag: String?, mapData: Map<String, String>?): LiveData<BaseResponse> {
-    return ApiTwoWithFloatRepository.getMapVisits(fpTag, mapData).toLiveData()
+    return ApiWithFloatRepository.getMapVisits(fpTag, mapData).toLiveData()
   }
 
-  fun getUserCallSummary(clientId: String?, fpIdParent: String?, identifierType: String?): LiveData<BaseResponse> {
-    return ApiTwoWithFloatRepository.getUserCallSummary(clientId, fpIdParent, identifierType).toLiveData()
+  fun getUserCallSummary(clientId: String?, fpIdParent: String?, identifierType: String?, startDate: String? = null, endDate: String? = null): LiveData<BaseResponse> {
+    return ApiWithFloatRepository.getUserCallSummary(clientId, fpIdParent, identifierType, startDate, endDate).toLiveData()
   }
 
   fun putUploadSecondaryImage(request: UploadFileBusinessRequest): LiveData<BaseResponse> {

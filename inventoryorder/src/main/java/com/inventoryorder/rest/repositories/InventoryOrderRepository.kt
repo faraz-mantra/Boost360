@@ -3,10 +3,12 @@ package com.inventoryorder.rest.repositories
 import com.framework.base.BaseResponse
 import com.inventoryorder.base.rest.AppBaseLocalService
 import com.inventoryorder.base.rest.AppBaseRepository
+import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
+import com.inventoryorder.model.summary.request.SellerSummaryRequest
 import com.inventoryorder.rest.TaskCode
-import com.inventoryorder.rest.apiClients.WithFloatsApiClient
+import com.inventoryorder.rest.apiClients.AssuredPurchaseClient
 import com.inventoryorder.rest.services.InventoryOrderRemoteDataSource
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -25,6 +27,9 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
     return makeRemoteRequest(remoteDataSource.getSellerSummary(clientId, sellerId), TaskCode.GET_SELLER_SUMMARY)
   }
 
+  fun getSellerSummaryV2_5(clientId: String?, sellerId: String?,request: SellerSummaryRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.getSellerSummaryV2_5(clientId, sellerId,request), TaskCode.GET_SELLER_SUMMARY)
+  }
   fun getSellerOrders(auth: String, request: OrderSummaryRequest): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getSellerOrders(auth, request.clientId, request.sellerId, request.orderMode, request.deliveryMode, request.orderStatus, request.paymentStatus, request.skip, request.limit), TaskCode.GET_LIST_ORDER)
   }
@@ -53,11 +58,27 @@ object InventoryOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSour
     return makeRemoteRequest(remoteDataSource.confirmOrder(clientId, orderId), TaskCode.CONFIRM_ORDER_TASK)
   }
 
+
+  fun sendPaymentReminder(clientId: String?, orderId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.sendPaymentReminder(clientId, orderId), TaskCode.SEND_LINK_ORDER_TASK)
+  }
+
   fun cancelOrder(clientId: String?, orderId: String?, cancellingEntity: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.cancelOrder(clientId, orderId, cancellingEntity), TaskCode.CANCEL_ORDER_TASK)
   }
 
+  fun markAsDelivered(clientId: String?, orderId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.markAsDelivered(clientId, orderId), TaskCode.DELIVERED_ORDER_TASK)
+  }
+  fun markCodPaymentDone(clientId: String?, orderId: String?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.markCodPaymentDone(clientId, orderId), TaskCode.DELIVERED_ORDER_TASK)
+  }
+
+  fun markAsShipped(clientId: String?, request: MarkAsShippedRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.markAsShipped(clientId, request), TaskCode.SHIPPED_ORDER_TASK)
+  }
+
   override fun getApiClient(): Retrofit {
-    return WithFloatsApiClient.shared.retrofit
+    return AssuredPurchaseClient.shared.retrofit
   }
 }

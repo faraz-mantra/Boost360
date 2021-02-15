@@ -17,6 +17,7 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.models.firestore.FirestoreManager
 import com.framework.views.dotsindicator.OffsetPageTransformer
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.FragmentType
@@ -42,9 +43,9 @@ import kotlin.collections.ArrayList
 
 const val WA_KEY = "58ede4d4ee786c1604f6c535"
 
-open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
+open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBinding, ChannelPlanViewModel>(), RecyclerItemClickListener {
 
-  private var messageCard: String? = null
+  private var shareChannelText: String? = null
   private var isWhatsApp: Boolean? = null
   private var cardPosition = 0
   private var localSessionModel: LocalSessionModel? = null
@@ -54,8 +55,9 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
       return baseActivity.getSharedPreferences(PreferenceConstant.NOW_FLOATS_PREFS, Context.MODE_PRIVATE)
     }
 
-  fun setData(localSessionModel: LocalSessionModel) {
+  fun setData(localSessionModel: LocalSessionModel, shareChannelText: String) {
     this.localSessionModel = localSessionModel
+    this.shareChannelText = shareChannelText
   }
 
   override fun getLayout(): Int {
@@ -83,16 +85,16 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
         val userProfile = ProfileProperties(userName = localSessionModel?.contactName, userMobile = localSessionModel?.primaryNumber, userEmail = localSessionModel?.primaryEmail)
         val cardList = ArrayList<DigitalCardData>()
         val cardData = CardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
-            addPlus91(userProfile.userMobile), userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl)
+            addPlus91(userProfile.userMobile), userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl,getIconCard())
 
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SIX_ITEM.getLayout()))
+        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_EIGHT_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_TWO_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_THREE_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FIVE_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SIX_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_SEVEN_ITEM.getLayout()))
-        cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_EIGHT_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_NINE_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_TEN_ITEM.getLayout()))
 
@@ -125,15 +127,15 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
       }
       popup.show()
     }
-    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp("Business Card", true) }
-    binding?.shareOther?.setOnClickListener { shareCardWhatsApp("Business Card", false) }
+    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp(shareChannelText, true) }
+    binding?.shareOther?.setOnClickListener { shareCardWhatsApp(shareChannelText, false) }
   }
 
   private fun showSimmer(isSimmer: Boolean) {
-    if (isSimmer){
+    if (isSimmer) {
       binding?.viewMain?.gone()
       binding?.progressSimmer?.parentShimmerLayout?.visible()
-    }else{
+    } else {
       binding?.viewMain?.visible()
       binding?.progressSimmer?.parentShimmerLayout?.gone()
       binding?.progressSimmer?.parentShimmerLayout?.hideShimmer()
@@ -143,12 +145,11 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
   private fun setAdapterCard(cardList: ArrayList<DigitalCardData>) {
     cardList.add(0, cardList.removeAt(getLastShareCard()))
     binding?.pagerDigitalCard?.apply {
-      val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, cardList, this@MyDigitalCardShareDialog)
+      val adapterPager3 = AppBaseRecyclerViewAdapter(baseActivity, cardList, this@VisitingCardSheet)
       offscreenPageLimit = 3
       isUserInputEnabled = true
       adapter = adapterPager3
       binding?.dotIndicatorCard?.setViewPager2(this)
-//      post { setCurrentItem(getLastShareCard(), false) }
       setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
       registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -159,8 +160,23 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
     }
   }
 
+  private fun getIconCard(): Int {
+    return when (this.localSessionModel?.experienceCode?.toUpperCase(Locale.ROOT)) {
+      "DOC" -> R.drawable.ic_business_card_doctor_hospital_d
+      "HOS" -> R.drawable.ic_business_card_doctor_hospital_d
+      "RTL" -> R.drawable.ic_business_card_retail_d
+      "EDU" -> R.drawable.ic_business_card_education_d
+      "HOT" -> R.drawable.ic_business_card_hotel_d
+      "MFG" -> R.drawable.ic_business_card_manufacture_d
+      "CAF" -> R.drawable.ic_business_card_restaurant_d
+      "SVC" -> R.drawable.ic_business_card_services_d
+      "SPA" -> R.drawable.ic_business_card_spa_n
+      "SAL" -> R.drawable.ic_business_card_spa_n
+      else -> R.drawable.ic_business_card_spa_n
+    }
+  }
+
   private fun shareCardWhatsApp(messageCard: String?, isWhatsApp: Boolean) {
-    this.messageCard = messageCard
     this.isWhatsApp = isWhatsApp
     if (ActivityCompat.checkSelfPermission(baseActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
       requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
@@ -176,13 +192,21 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
       if (isWhatsApp) waIntent.setPackage("com.whatsapp")
       waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
       waIntent.putExtra(Intent.EXTRA_TEXT, messageCard ?: "")
-      baseActivity.startActivity(Intent.createChooser(waIntent, getString(R.string.share_your_business_card)))
+      baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
       dismiss()
       savePositionCard(cardPosition)
+      WebEngageController.trackEvent("Visiting Card Share", "visiting_card", localSessionModel?.fpTag?:"")
+      onBusinessCardAddedOrUpdated(true)
     } catch (e: Exception) {
-      showLongToast(getString(R.string.error_sharing_visiting_card_please_try_again))
+      showLongToast("Error sharing visiting card, please try again.")
       dismiss()
     }
+  }
+
+  private fun onBusinessCardAddedOrUpdated(isAdded: Boolean) {
+    val instance = FirestoreManager
+    instance.getDrScoreData()?.metricdetail?.boolean_share_business_card = isAdded
+    instance.updateDocument()
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
@@ -211,8 +235,8 @@ open class MyDigitalCardShareDialog : BaseBottomSheetDialog<DialogDigitalCardSha
     when (requestCode) {
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-          shareCardWhatsApp(this.messageCard, this.isWhatsApp ?: false)
-        } else showShortToast(getString(R.string.permission_denied_to_read_your_external_storage))
+          shareCardWhatsApp(shareChannelText, this.isWhatsApp ?: false)
+        } else showShortToast("Permission denied to read your External storage")
         return
       }
     }
