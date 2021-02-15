@@ -11,6 +11,9 @@ import com.framework.extensions.gone
 import com.framework.extensions.isVisible
 import com.framework.extensions.visible
 import com.framework.utils.showKeyBoard
+import com.framework.webengageconstant.BUILDING_YOUR_BUSINESS_CONTACT_INFO
+import com.framework.webengageconstant.CLICKED
+import com.framework.webengageconstant.CONFIRM
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.widget.Autocomplete
 import com.onboarding.nowfloats.R
@@ -95,7 +98,7 @@ class RegistrationBusinessContactInfoFragment : BaseRegistrationFragment<Fragmen
               gotoBusinessWebsite()
 
               //Business Contact Info Event Tracker.
-              WebEngageController.trackEvent("Building Your Business Contact Info", "Confirm", "Clicked")
+              WebEngageController.trackEvent(BUILDING_YOUR_BUSINESS_CONTACT_INFO, CONFIRM, CLICKED)
 
             }, 300)
           }

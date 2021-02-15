@@ -12,6 +12,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.order_confirmation_fragment.*
 import java.text.SimpleDateFormat
@@ -69,7 +70,7 @@ class OrderConfirmationFragment : BaseFragment() {
         }
 
         check_activation_status.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE Check_Activation_Status Clicked", "Check_Activation_Status", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_CHECK_ACTIVATION_STATUS_CLICKED, Check_Activation_Status, NO_EVENT_VALUE)
             (activity as UpgradeActivity).goBackToMyAddonsScreen()
         }
 
@@ -77,7 +78,7 @@ class OrderConfirmationFragment : BaseFragment() {
             Toasty.info(requireContext(),"In case of any concerns, you can write to ria@nowfloats.com. Boost Care Team is available during business hours.").show()
         }
 
-        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, "ADDONS MARKETPLACE ORDER CONFIRMATION")
+        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, ADDONS_MARKETPLACE_ORDER_CONFIRMATION)
 
     }
 

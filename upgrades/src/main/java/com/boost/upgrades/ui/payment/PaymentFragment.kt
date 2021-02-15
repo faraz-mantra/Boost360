@@ -35,6 +35,7 @@ import com.boost.upgrades.utils.Constants.Companion.UPI_POPUP_FRAGMENT
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
+import com.framework.webengageconstant.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
@@ -134,7 +135,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         initializeWalletRecycler()
         updateSubscriptionDetails()
 
-        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, "ADDONS MARKETPLACE PAYMENT SCREEN")
+        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, ADDONS_MARKETPLACE_PAYMENT_SCREEN)
 
         var firebaseAnalytics = Firebase.analytics
         val revenue = cartCheckoutData.getDouble("amount")
@@ -144,7 +145,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.BEGIN_CHECKOUT, bundle)
 
         back_button.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE Clicked back_button paymentscreen", ADDONS_MARKETPLACE, "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_CLICKED_BACK_BUTTON_PAYMENTSCREEN, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
             (activity as UpgradeActivity).popFragmentFromBackStack()
         }
 
@@ -155,7 +156,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         }
 
         add_new_card.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE ADD_NEW_CARD Click", "ADDONS_MARKETPLACE ADD_NEW_CARD", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_ADD_NEW_CARD_CLICK , ADDONS_MARKETPLACE_ADD_NEW_CARD, NO_EVENT_VALUE)
             val args = Bundle()
             args.putString("customerId", cartCheckoutData.getString("customerId"))
             addCardPopUpFragement.arguments = args
@@ -163,7 +164,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         }
 
         show_more_bank.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE SHOW_MORE_BANK Click", "ADDONS_MARKETPLACE SHOW_MORE_BANK", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_SHOW_MORE_BANK_CLICK , ADDONS_MARKETPLACE_SHOW_MORE_BANK, NO_EVENT_VALUE)
             netBankingPopUpFragement.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     NETBANKING_POPUP_FRAGMENT
@@ -171,7 +172,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         }
 
         add_upi_layout.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE UPI Click", "ADDONS_MARKETPLACE UPI", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_UPI_CLICK, ADDONS_MARKETPLACE_UPI, NO_EVENT_VALUE)
             upiPopUpFragement.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     UPI_POPUP_FRAGMENT
@@ -179,7 +180,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         }
 
         add_external_email.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE PAYMENT_LINK Click", "ADDONS_MARKETPLACE PAYMENT_LINK", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_PAYMENT_LINK_CLICK, ADDONS_MARKETPLACE_PAYMENT_LINK , NO_EVENT_VALUE)
             externalEmailPopUpFragement.show(
                     (activity as UpgradeActivity).supportFragmentManager,
                     EXTERNAL_EMAIL_POPUP_FRAGMENT
@@ -204,7 +205,7 @@ class PaymentFragment : BaseFragment(), PaymentListener {
 //
 //        }
 
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment_Screen Loaded", "Payment_Screen", "")
+        WebEngageController.trackEvent( ADDONS_MARKETPLACE_PAYMENT_SCREEN_LOADED, PAYMENT_SCREEN, NO_EVENT_VALUE)
     }
 
     fun loadData() {
@@ -371,13 +372,13 @@ class PaymentFragment : BaseFragment(), PaymentListener {
         item.put("bank", bankCode)
         paymentData = item
 
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE NET_BANKING Selected", bankCode, "")
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_NET_BANKING_SELECTED, bankCode, NO_EVENT_VALUE)
         payThroughRazorPay()
     }
 
     override fun walletSelected(data: String) {
         Log.i("walletSelected", data)
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE WALLET Selected", data, "")
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_WALLET_SELECTED, data, NO_EVENT_VALUE)
         val item = JSONObject()
         item.put("method", "wallet");
         item.put("wallet", data);
