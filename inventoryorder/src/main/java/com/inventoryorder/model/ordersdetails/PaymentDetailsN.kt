@@ -36,7 +36,7 @@ data class PaymentDetailsN(
     COD("Offline", "COD"), ONLINEPAYMENT("Online", "ONLINEPAYMENT"), FREE("Free", "FREE"), ONLINE("Online", "ONLINE");
 
     companion object {
-      fun fromType(type: String): METHOD? = values().firstOrNull { it.type.equals(type, ignoreCase = true) }
+      fun fromType(type: String?): METHOD? = values().firstOrNull { it.type.equals(type, ignoreCase = true) }
     }
   }
 
@@ -44,7 +44,7 @@ data class PaymentDetailsN(
     PENDING, INITIATED, SUCCESS, INPROCESS, SUBMITTEDFORREFUND, REFUNDED, REFUNDDENIED, FAILED, CANCELLED;
 
     companion object {
-      fun from(value: String): STATUS? = values().firstOrNull { it.name.equals(value, ignoreCase = true) }
+      fun from(value: String?): STATUS? = values().firstOrNull { it.name.equals(value, ignoreCase = true) }
     }
   }
 }

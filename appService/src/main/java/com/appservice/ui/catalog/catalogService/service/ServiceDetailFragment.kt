@@ -114,19 +114,21 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     WebEngageController.trackEvent("Service product catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
     getBundleData()
     getPickUpAddress()
-//    binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     setOnClickListener(binding?.selectDeliveryConfig, binding?.vwPaymentConfig,
             binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
-    binding?.toggleService?.isOn = false
+    binding?.toggleService?.isOn = product?.isPriceToggleOn()!!
     binding?.payServiceView?.visibility = View.GONE
-//    binding?.ccbPayextra?.visibility = View.GONE
-    binding?.toggleService?.setOnToggledListener { _, isOn ->
-      binding?.payServiceView?.visibility = if (isOn) View.VISIBLE else View.GONE
-      binding?.freeServiceView?.visibility = if (isOn) View.GONE else View.VISIBLE
-//      binding?.ccbPayextra?.visibility = if (isOn) View.VISIBLE else View.GONE
+    binding?.toggleService?.setOnToggledListener { _, _ ->
+      initServiceToggle()
     }
+    initServiceToggle()
     listenerEditText()
+  }
+
+  private fun initServiceToggle() {
+    binding?.payServiceView?.visibility = if (binding?.toggleService?.isOn!!) View.VISIBLE else View.GONE
+    binding?.freeServiceView?.visibility = if (binding?.toggleService?.isOn!!) View.GONE else View.VISIBLE
   }
 
   private fun listenerEditText() {
@@ -138,7 +140,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     val amountD = amount.toFloatOrNull() ?: 0F
     val distD = dist.toFloatOrNull() ?: 0F
     if (distD > amountD) {
-      showLongToast(getString(R.string.discount_amount_can_t_be_greater_than_price))
+      showLongToast(resources.getString(R.string.discount_amount_cant_be_grater))
       binding?.discountEdt?.setText("")
       return
     }
@@ -230,7 +232,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
       binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
       binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
-    } else if (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value) {
+    }
+    if (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value) {
       binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
       binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
       binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
@@ -315,7 +318,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
             if ((it.status == 200 || it.status == 201 || it.status == 202) && productId.isNullOrEmpty().not()) {
               productIdAdd = productId
               addGstService(productId)
-            } else showError(getString(R.string.service_adding_error_please_try_again))
+            } else showError(resources.getString(R.string.service_adding_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
         })
       }
@@ -333,7 +336,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         if ((it.error is NoNetworkException).not()) {
           if ((it.status == 200 || it.status == 201 || it.status == 202)) {
             updateGstService(product?.productId)
-          } else showError(getString(R.string.service_updating_error_please_try_again))
+          } else showError(resources.getString(R.string.service_updating_error))
         } else showError(resources.getString(R.string.internet_connection_not_available))
       })
     }
@@ -350,7 +353,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {
           hideProgress()
           uploadImageSingle(productId)
-        } else showError(getString(R.string.service_updating_error_please_try_again))
+        } else showError(resources.getString(R.string.service_updating_error))
       } else showError(resources.getString(R.string.internet_connection_not_available))
     })
   }
@@ -366,7 +369,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
           uploadImageSingle(productId)
         } else {
           if (isEdit == false) errorType = "addGstService"
-          showError(getString(R.string.service_adding_error_please_try_again))
+          showError(resources.getString(R.string.service_adding_error))
         }
       } else {
         if (isEdit == false) errorType = "addGstService"
@@ -376,7 +379,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun uploadImageSingle(productId: String?) {
-    showProgress(getString(R.string.uploading_service_image_please_wait))
+    showProgress(resources.getString(R.string.uploading_service_image))
     if (isEdit == true && serviceImage == null) {
       uploadSecondaryImage(productId)
       return
@@ -389,7 +392,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
           uploadSecondaryImage(productId)
         } else {
           if (isEdit == false) errorType = "uploadImageSingle"
-          showError(getString(R.string.service_image_uploading_error_please_try_again))
+          showError("Service image uploading error, please try again.")
         }
       } else {
         if (isEdit == false) errorType = "uploadImageSingle"
@@ -421,7 +424,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               val response = getResponse(it.responseBody) ?: ""
               if (response.isNotEmpty()) secondaryImageList.add(response)
-            } else showError(getString(R.string.secondary_service_image_uploading_error_please_try_again))
+            } else showError(resources.getString(R.string.secondary_service_image_upload_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == images.size) {
             addImageToProduct(productId, secondaryImageList)
@@ -441,16 +444,16 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
           if ((it.error is NoNetworkException).not()) {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               Log.d(ServiceDetailFragment::class.java.name, "$it")
-            } else showLongToast(getString(R.string.add_secondary_image_data_error_please_try_again))
+            } else showLongToast(resources.getString(R.string.add_secondary_image_service_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == secondaryImageList.size) {
-            showLongToast(if (isEdit == true) getString(R.string.service_updated_successfully) else getString(R.string.service_saved_successfully))
+            showLongToast(if (isEdit == true) resources.getString(R.string.services_updated_success) else resources.getString(R.string.services_saved))
             goBack()
           }
         })
       }
     } else {
-      showLongToast(if (isEdit == true) getString(R.string.service_updated_successfully) else getString(R.string.service_saved_successfully))
+      showLongToast(if (isEdit == true) resources.getString(R.string.services_updated_success) else resources.getString(R.string.services_saved))
       goBack()
     }
   }
@@ -488,13 +491,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     }
 
     if (shipmentDuration.isNullOrEmpty()) {
-      showLongToast(getString(R.string.enter_service_duration))
+      showLongToast(resources.getString(R.string.enter_service_duration))
       return false
     } else if (serviceName.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_service_name))
       return false
     } else if (serviceCategory.isBlank()) {
-      showLongToast(getString(R.string.enter_service_category))
+      showLongToast(resources.getString(R.string.enter_service_category))
       return false
     } else if (serviceDesc.isEmpty()) {
       showLongToast(resources.getString(R.string.enter_service_desc))
@@ -693,9 +696,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
                 hideProgress()
                 if ((it.error is NoNetworkException).not()) {
                   if ((it.status == 200 || it.status == 201 || it.status == 202)) {
-                    showLongToast(getString(R.string.service_removed_successfully))
+                    showLongToast(resources.getString(R.string.service_removed_successfully))
                     goBack()
-                  } else showError(getString(R.string.removing_service_failed_please_try_again))
+                  } else showError(resources.getString(R.string.removing_service_failed))
                 } else showError(resources.getString(R.string.internet_connection_not_available))
               })
             }.show()
@@ -711,8 +714,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-        .setTitle(getString(R.string.information_not_saved)).setMessage(getString(R.string.you_have_unsaved_information_do_you_still_want_to_close))
-        .setNegativeButton(getString(R.string.no)) { d, _ -> d.dismiss() }.setPositiveButton(getString(R.string.yes)) { d, _ ->
+        .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
+        .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
           baseActivity.finish()
           d.dismiss()
         }.show()

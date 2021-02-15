@@ -4,12 +4,8 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.dashboard.constant.FragmentType
-import com.dashboard.constant.IntentConstant
-import com.dashboard.controller.startFragmentDashboardActivity
 import com.dashboard.pref.FACEBOOK_PAGE_WITH_ID
 import com.dashboard.pref.FACEBOOK_URL
 import com.dashboard.pref.Key_Preferences
@@ -122,7 +118,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_update)) {
           baseActivity.startPostUpdate(session)
         } else if (url.contains(deeplink_featuredimage)) {
-          baseActivity.startBusinessDescriptionEdit(session)
+          baseActivity.startBusinessProfileDetailEdit(session)
         } else if (url.contains(addProduct)) {
           baseActivity.startAddServiceProduct(session)
         } else if (url.contains(addCustomPage)) {
@@ -191,7 +187,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
         } else if (url.contains(deeplink_nfstoreDomainTTBCombo)) {
           baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
         } else if (url.contains(deeplink_sitemeter) || url.contains(deeplink_site_health)) {
-          baseActivity.startFragmentDashboardActivity(FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(IntentConstant.POSITION.name, 0) })
+          baseActivity.startReadinessScoreView(session,0)
         } else if (url.contains(deeplink_imageGallery)) {
           baseActivity.startAddImageGallery(session, isCreate = false)
         } else if (url.contains(deeplink_ProductGallery)) {

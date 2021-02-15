@@ -8,10 +8,12 @@ import com.appservice.R
 import com.appservice.constant.RecyclerViewItemType.*
 import com.appservice.databinding.*
 import com.appservice.holder.*
-import com.appservice.ui.catalog.StaffSessionViewHolder
+import com.appservice.holder.WeeklyAppointmentViewHolder
+import com.appservice.staffs.recycler.*
 import com.framework.base.BaseActivity
 
 open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: BaseActivity<*, *>, list: ArrayList<T>, itemClickListener: RecyclerItemClickListener? = null) : BaseRecyclerViewAdapter<T>(activity, list, itemClickListener) {
+
 
   override fun getViewHolder(parent: ViewGroup, viewType: Int): BaseRecyclerViewHolder<*> {
     val inflater = LayoutInflater.from(parent.context)
@@ -23,7 +25,13 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       IMAGE_PREVIEW -> ImagePreviewViewHolder(binding as ItemPreviewImageBinding)
       GST_DETAILS_VIEW -> GstDetailViewHolder(binding as ItemGstDetailBinding)
       ADDITIONAL_FILE_VIEW -> AdditionalFileViewHolder(binding as ItemPdfFileBinding)
-      SESSION_ITEM_VIEW -> StaffSessionViewHolder(binding as RecyclerItemSessionBinding)
+      SESSION_ITEM_VIEW -> WeeklyAppointmentViewHolder(binding as RecyclerItemSessionBinding)
+      CREATE_CATEGORY_ITEM_VIEW->CreateCategoryViewHolder(binding as ItemCreateCategoryBinding)
+
+      SERVICE_ITEM_VIEW -> StaffServiceViewHolder(binding as RecyclerItemServiceBinding)
+      EXPERIENCE_RECYCLER_ITEM -> StaffExperienceViewHolder(binding as ItemExperienceDetailsBinding)
+      STAFF_LISTING_VIEW -> StaffListingViewHolder(binding as RecyclerItemStaffListingBinding)
+      STAFF_FILTER_VIEW -> StaffFilterViewHolder(binding as RecyclerItemStaffFilterBinding)
     }
   }
 
@@ -97,5 +105,4 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
   open fun list(): ArrayList<T> {
     return list
   }
-
 }

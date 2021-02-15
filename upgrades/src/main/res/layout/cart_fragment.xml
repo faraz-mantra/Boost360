@@ -495,6 +495,7 @@
                     app:layout_constraintTop_toBottomOf="@id/cart_coupon_title" />
 
                 <LinearLayout
+                    android:id="@+id/couponInnerLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -538,6 +539,20 @@
                         app:srcCompat="@drawable/ic_close" />
 
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/discount_coupon_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:text="@string/discount_coupon"
+                    android:textColor="@color/light_blue"
+                    android:fontFamily="@font/open_sans"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/couponInnerLayout"
+                    tools:visibility="visible"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -26,8 +26,8 @@
 
       <com.framework.views.customViews.CustomImageView
         android:id="@+id/img_icon"
-        android:layout_width="@dimen/size_36"
-        android:layout_height="@dimen/size_36"
+        android:layout_width="@dimen/size_34"
+        android:layout_height="@dimen/size_34"
         android:layout_marginTop="@dimen/size_6"
         tools:srcCompat="@drawable/ic_add_photo_d" />
       <com.framework.views.customViews.CustomImageView
@@ -46,6 +46,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/size_4"
       android:layout_marginEnd="@dimen/size_4"
+      android:paddingEnd="@dimen/size_4"
       android:gravity="center"
       android:textAlignment="gravity"
       android:textColor="@color/black_4a4a4a"
