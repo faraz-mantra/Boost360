@@ -114,12 +114,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
       mainLayout.setVisibility(View.GONE);
       secondaryLayout.setVisibility(View.VISIBLE);
     }
-    buyItemButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        initiateBuyFromMarketplace();
-      }
-    });
+    buyItemButton.setOnClickListener(v -> initiateBuyFromMarketplace());
 
     MixPanelController.track(EventKeysWL.SIDE_PANEL_KEYBOARD, null);
     if (!isAdded() && isDetached()) return;
