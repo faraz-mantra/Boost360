@@ -153,7 +153,7 @@
                         </LinearLayout>
 
                         <RadioButton
-                            android:id="@+id/radio_customer"
+                            android:id="@+id/radio_home"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/size_16"

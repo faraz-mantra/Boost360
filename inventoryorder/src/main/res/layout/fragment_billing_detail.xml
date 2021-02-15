@@ -83,6 +83,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_5"
@@ -92,6 +93,7 @@
                     app:textType="BODY_1" />
 
                 <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_6"
@@ -101,11 +103,13 @@
                     app:textType="BODY_1" />
 
                 <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_gst"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_6"
                     android:text="GSTIN : DBS987654321010"
                     android:textColor="@color/black_4a4a4a"
+                    android:visibility="gone"
                     app:fontFamily="@font/regular"
                     app:textType="BODY_1" />
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -231,7 +235,7 @@
                             app:textType="BODY_1" />
 
                         <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/tvOrderStatus"
+                            android:id="@+id/tvPaymentStatus"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -270,6 +274,7 @@
                 layout="@layout/layout_order_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginStart="@dimen/size_30"
                 android:layout_marginEnd="@dimen/size_20" />
 
@@ -375,7 +380,7 @@
                         android:includeFontPadding="false"
                         android:maxLines="1"
                         android:paddingEnd="@dimen/size_20"
-                        android:text="₹ 15,000.00"
+                        tools:text="₹ 15,000.00"
                         android:textColor="@color/black_4a4a4a"
                         app:fontFamily="@font/semi_bold"
                         app:textType="BODY_1" />
@@ -385,6 +390,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/size_30"
+                    android:visibility="gone"
                     android:layout_marginTop="@dimen/size_10"
                     android:layout_marginEnd="@dimen/size_10"
                     android:gravity="center_vertical"
@@ -491,7 +497,7 @@
                         android:includeFontPadding="false"
                         android:maxLines="1"
                         android:paddingEnd="@dimen/size_10"
-                        android:text="₹ 15,000.00"
+                        tools:text="₹ 15,000.00"
                         android:textAllCaps="true"
                         android:textColor="@color/black_2A2A2A"
                         app:fontFamily="@font/semi_bold"

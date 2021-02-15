@@ -238,4 +238,23 @@
     <string name="delivery_fee">Delivery fee</string>
     <string name="total_payable_amount">Total payable amount</string>
     <string name="confirm_order">Confirm Order</string>
+    <string name="edit_customer_info">Edit Customer Info</string>
+    <string name="edit_customer_address">Edit customer Address</string>
+    <string name="pick_another_customer">Pick another customer</string>
+    <string name="order_placed_and_confirmed_successfully">Order placed and confirmed successfully.</string>
+    <string name="view_order_details">View Order Details</string>
+    <string name="initiate_new_order">Initiate new Order</string>
+    <string name="order_id">Order ID:</string>
+    <string name="str_customer">Customer:</string>
+    <string name="item_qty">Item Qty:</string>
+    <string name="str_delivery_status">Delivery Status:</string>
+    <string name="pending_not_received">Pending/Not Received</string>
+    <string name="str_delivery_type">Delivery type:</string>
+    <string name="make_changes_to_the_customer_info">Make changes to the customer info.</string>
+    <string name="save">Save</string>
+    <string name="remove_item">Remove Item?</string>
+    <string name="yes_remove">Yes, remove</string>
+    <string name="add_delivery_fee">Add delivery fee</string>
+    <string name="enter_the_delivery_charges_to_add_it_to_billing">Enter the delivery charges to add it to billing</string>
+    <string name="enter_delivery_fee">Enter delivery fee</string>
 </resources>
