@@ -6,6 +6,7 @@ import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -39,50 +40,70 @@ fun Context.glideLoad(mImageView: CustomImageView?, url: String?) {
 }
 
 fun Context.glideLoad(mImageView: CircularImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
-  if (url.isNullOrEmpty()) return
-  val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-  placeholder?.let { glide.placeholder(it) }
-  if (isCrop) glide.centerCrop()
-  glide.into(mImageView)
+  try {
+    if (url.isNullOrEmpty()) return
+    val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+    placeholder?.let { glide.placeholder(it) }
+    if (isCrop) glide.centerCrop()
+    glide.into(mImageView)
+  }catch (e:Exception){
+    Log.e("GlideUtil","Error: ${e.localizedMessage}")
+  }
 }
 
 
 fun Context.glideLoad(mImageView: RoundedImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
-  if (url.isNullOrEmpty()) return
-  val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-  placeholder?.let { glide.placeholder(it) }
-  if (isCrop) glide.centerCrop()
-  glide.into(mImageView)
+  try {
+    if (url.isNullOrEmpty()) return
+    val glide = Glide.with(this).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+    placeholder?.let { glide.placeholder(it) }
+    if (isCrop) glide.centerCrop()
+    glide.into(mImageView)
+  }catch (e:Exception){
+    Log.e("GlideUtil","Error: ${e.localizedMessage}")
+  }
 }
 
 fun Context.glideLoad(mImageView: CustomImageView, url: String?, placeholder: Int?, isCrop: Boolean = false) {
-  if (url.isNullOrEmpty()) return
-  val glide = Glide.with(this).load(url).skipMemoryCache(true).thumbnail(0.1f).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-  placeholder?.let { glide.placeholder(it) }
-  if (isCrop) glide.centerCrop()
-  glide.into(mImageView)
+  try {
+    if (url.isNullOrEmpty()) return
+    val glide = Glide.with(this).load(url).skipMemoryCache(true).thumbnail(0.1f).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+    placeholder?.let { glide.placeholder(it) }
+    if (isCrop) glide.centerCrop()
+    glide.into(mImageView)
+  }catch (e:Exception){
+    Log.e("GlideUtil","Error: ${e.localizedMessage}")
+  }
 }
 
 fun Context.loadGifGlide(mImageView: CustomImageView, gif_file: Int?, placeholder: Int?) {
-  val glide = Glide.with(this).load(gif_file).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-  placeholder?.let { glide.placeholder(it) }
-  glide.into(DrawableImageViewTarget(mImageView))
+  try {
+    val glide = Glide.with(this).load(gif_file).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+    placeholder?.let { glide.placeholder(it) }
+    glide.into(DrawableImageViewTarget(mImageView))
+  }catch (e:Exception){
+    Log.e("GlideUtil","Error: ${e.localizedMessage}")
+  }
 }
 
 fun Activity.glideLoad(mImageView: CustomImageView, url: String, placeholder: Int, isCenterCrop: Boolean = false, isLoadBitmap: Boolean = false) {
-  val options: RequestOptions = mImageView.getRequestOptionImage(placeholder)
-  val glideImage = Glide.with(this).load(url).apply(options)
-  if (isCenterCrop) glideImage.centerCrop()
-  if (isLoadBitmap) {
-    glideImage.into(object : CustomTarget<Drawable>() {
-      override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-        mImageView.setImageDrawable(resource)
-      }
+  try {
+    val options: RequestOptions = mImageView.getRequestOptionImage(placeholder)
+    val glideImage = Glide.with(this).load(url).apply(options)
+    if (isCenterCrop) glideImage.centerCrop()
+    if (isLoadBitmap) {
+      glideImage.into(object : CustomTarget<Drawable>() {
+        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+          mImageView.setImageDrawable(resource)
+        }
 
-      override fun onLoadCleared(placeholder: Drawable?) {
-      }
-    })
-  } else glideImage.into(mImageView)
+        override fun onLoadCleared(placeholder: Drawable?) {
+        }
+      })
+    } else glideImage.into(mImageView)
+  }catch (e:Exception){
+    Log.e("GlideUtil","Error: ${e.localizedMessage}")
+  }
 }
 
 fun Context.glideLoadCircle(mImageView: CustomImageView, url: String) {

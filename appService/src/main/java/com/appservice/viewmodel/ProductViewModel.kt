@@ -1,7 +1,7 @@
 package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
-import com.appservice.model.serviceProduct.Product
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
@@ -19,7 +19,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class ProductViewModel :BaseViewModel() {
-    fun createProduct(request: Product?): LiveData<BaseResponse> {
+    fun createProduct(request: CatalogProduct?): LiveData<BaseResponse> {
         return WithFloatTwoRepository.createProduct(request).toLiveData()
     }
 

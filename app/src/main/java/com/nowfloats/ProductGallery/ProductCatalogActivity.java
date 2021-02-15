@@ -368,7 +368,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
   }
 
 
-  private com.appservice.model.serviceProduct.Product getProductData(Product p) {
+  private com.appservice.model.serviceProduct.CatalogProduct getProductData(Product p) {
     ArrayList<com.appservice.model.serviceProduct.ImageListModel> listImages = new ArrayList<>();
     if (p.Images != null) {
       for (ImageListModel data : p.Images) {
@@ -381,7 +381,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         otherSpec.add(new com.appservice.model.KeySpecification(spec.key, spec.value));
       }
     }
-    com.appservice.model.serviceProduct.Product newProduct = new com.appservice.model.serviceProduct.Product();
+    com.appservice.model.serviceProduct.CatalogProduct newProduct = new com.appservice.model.serviceProduct.CatalogProduct();
     newProduct.setCurrencyCode(p.CurrencyCode);
     newProduct.setDescription(p.Description);
     newProduct.setDiscountAmount(p.DiscountAmount);

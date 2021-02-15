@@ -7,9 +7,9 @@ import java.io.Serializable
 
 data class AccountDetailsResponse(
     @SerializedName("Error")
-    var errorN: Error? = null,
+    var errorN: ErrorDeatil? = null,
     @SerializedName("Result")
-    var result: Result? = null,
+    var result: AccountResult? = null,
     @SerializedName("StatusCode")
     var statusCode: Int? = null
 ) : BaseResponse(), Serializable

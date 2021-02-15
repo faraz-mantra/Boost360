@@ -159,7 +159,10 @@
                 android:text="@string/dr_score"
                 android:textAlignment="gravity"
                 android:textColor="@color/accent_dark"
-                app:textType="CAPTION" />
+                app:autoSizeMaxTextSize="12sp"
+                app:autoSizeMinTextSize="6sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform" />
             </LinearLayout>
 
             <ProgressBar
