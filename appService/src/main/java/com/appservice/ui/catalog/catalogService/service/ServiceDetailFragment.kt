@@ -53,6 +53,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
+import com.framework.webengageconstant.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -111,7 +112,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent("Service product catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
+    WebEngageController.trackEvent(SERVICE_PRODUCT_CATALOGUE_LOAD, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
     getBundleData()
     getPickUpAddress()
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
@@ -291,7 +292,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 //      binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
       binding?.vwPaymentConfig -> showPaymentConfigBottomSheet()
       binding?.btnOtherInfo -> {
-        WebEngageController.trackEvent("Service click other information", "SERVICE CATALOGUE ADD/UPDATE", "")
+        WebEngageController.trackEvent(SERVICE_CLICK_OTHER_INFORMATION, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, product)
         bundle.putSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
@@ -306,7 +307,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private fun createUpdateApi() {
     showProgress()
     if (isEdit == false) {
-      WebEngageController.trackEvent("Add service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
+      WebEngageController.trackEvent(ADD_SERVICE_PRODUCT_CATALOGUE, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
       if (productIdAdd.isNullOrEmpty().not() && errorType == "addGstService") {
         addGstService(productIdAdd)
       } else if (productIdAdd.isNullOrEmpty().not() && errorType == "uploadImageSingle") {
@@ -323,7 +324,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         })
       }
     } else {
-      WebEngageController.trackEvent("Update service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
+      WebEngageController.trackEvent(UPDATE_SERVICE_PRODUCT_CATALOGUE, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
       val updates = ArrayList<UpdateValue>()
       val json = JSONObject(Gson().toJson(product))
       val keys = json.keys()
@@ -388,11 +389,11 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         1, 1, productId, getRequestServiceImage(serviceImage))?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
-          WebEngageController.trackEvent("Product added to catalogue", "MANAGE CONTENT", "null")
+          WebEngageController.trackEvent(PRODUCT_ADDED_TO_CATALOGUE, MANAGE_CONTENT, NULL)
           uploadSecondaryImage(productId)
         } else {
           if (isEdit == false) errorType = "uploadImageSingle"
-          showError("Service image uploading error, please try again.")
+          showError(getString(R.string.service_image_uploading_error))
         }
       } else {
         if (isEdit == false) errorType = "uploadImageSingle"
@@ -661,7 +662,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun goAddBankView() {
-    WebEngageController.trackEvent("Add/Update bank account", "SERVICE CATALOGUE ADD/UPDATE", "")
+    WebEngageController.trackEvent(ADD_UPDATE_BANK_ACCOUNT, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
     val bundle = Bundle()
     bundle.putString(IntentConstant.CLIENT_ID.name, clientId)
     bundle.putString(IntentConstant.USER_PROFILE_ID.name, userProfileId)
@@ -690,7 +691,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
             .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete)) { d, _ ->
               d.dismiss()
               showProgress()
-              WebEngageController.trackEvent("Delete Service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
+              WebEngageController.trackEvent(DELETE_SERVICE_PRODUCT_CATALOGUE, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)
               val request = DeleteProductRequest(clientId, "SINGLE", product?.productId, product?.productType)
               viewModel?.deleteService(request)?.observeOnce(viewLifecycleOwner, Observer {
                 hideProgress()
@@ -714,7 +715,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-        .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
+        .setTitle(resources.getString(R.string.information_not_saved)).setMessage(resources.getString(R.string.you_have_unsaved_information_do_you_still_want_to_close))
         .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
           baseActivity.finish()
           d.dismiss()

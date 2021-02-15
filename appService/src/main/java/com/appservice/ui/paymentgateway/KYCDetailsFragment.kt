@@ -45,6 +45,8 @@ import com.framework.glide.util.glideLoad
 import com.framework.imagepicker.ImagePicker
 import com.framework.utils.convertListObjToString
 import com.framework.utils.convertStringToList
+import com.framework.webengageconstant.KYC_VERIFICATION
+import com.framework.webengageconstant.KYC_VERIFICATION_REQUESTED
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -262,7 +264,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
         if ((it.error is NoNetworkException).not()) {
           if (it.status == 200 || it.status == 201 || it.status == 202) {
             setPreference()
-            session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC verification requested", "KYC VERIFICATION", it1) }
+            session?.fpTag?.let { it1 -> WebEngageController.trackEvent(KYC_VERIFICATION_REQUESTED, KYC_VERIFICATION, it1) }
             val bundle = Bundle()
             bundle.putSerializable(IntentConstant.SESSION_DATA.name, session)
             bundle.putSerializable(IntentConstant.KYC_DETAIL.name, request)
@@ -286,7 +288,7 @@ class KYCDetailsFragment : AppBaseFragment<FragmentKycDetailsBinding, WebBoostKi
       hideProgress()
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
-          session?.fpTag?.let { it1 -> WebEngageController.trackEvent("KYC verification requested", "KYC VERIFICATION", it1) }
+          session?.fpTag?.let { it1 -> WebEngageController.trackEvent(KYC_VERIFICATION_REQUESTED, KYC_VERIFICATION, it1) }
           val output = Intent()
           output.putExtra(IntentConstant.IS_EDIT.name, true)
           baseActivity.setResult(AppCompatActivity.RESULT_OK, output)

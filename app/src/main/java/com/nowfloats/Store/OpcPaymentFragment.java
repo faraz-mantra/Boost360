@@ -56,6 +56,10 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.BUTTON;
+import static com.framework.webengageconstant.EventNameKt.APPLY_COUPON;
+import static com.framework.webengageconstant.EventValueKt.CLICKED;
+
 /**
  * Created by Admin on 13-04-2018.
  */
@@ -537,7 +541,7 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
         switch (v.getId()) {
             case R.id.textView_apply:
                 //Apply Coupon Event Trigger
-                WebEngageController.trackEvent("Apply_Coupon", "Button", "Clicked");
+                WebEngageController.trackEvent(APPLY_COUPON, BUTTON, CLICKED);
 
                 updateDraftInvoice(opcEditText.getText().toString());
                 // check for opc

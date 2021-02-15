@@ -32,6 +32,8 @@ import com.framework.utils.PreferencesUtils
 import com.framework.utils.getData
 import com.framework.utils.saveData
 import com.framework.views.dotsindicator.OffsetPageTransformer
+import com.framework.webengageconstant.DIGITAL_READINESS_PAGE
+import com.framework.webengageconstant.PAGE_VIEW
 import com.google.android.material.snackbar.Snackbar
 import com.inventoryorder.model.floatMessage.MessageModel
 import com.onboarding.nowfloats.model.channel.request.ChannelAccessToken
@@ -68,7 +70,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
     session = UserSessionManager(baseActivity)
     position = arguments?.getInt(IntentConstant.POSITION.name) ?: 0
     binding?.btnBack?.setOnClickListener { baseActivity.onNavPressed() }
-    WebEngageController.trackEvent("Digital Readiness Page", "pageview", session?.fpTag)
+    WebEngageController.trackEvent(DIGITAL_READINESS_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
   override fun onResume() {

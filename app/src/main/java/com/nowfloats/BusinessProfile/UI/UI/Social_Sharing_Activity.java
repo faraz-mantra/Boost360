@@ -75,6 +75,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_FB_PAGE_SHARING_FAILED;
+import static com.framework.webengageconstant.EventNameKt.FB_PAGE_SHARING_FAILED;
+
 public class Social_Sharing_Activity extends AppCompatActivity implements NfxRequestClient.NfxCallBackListener, TwitterConnection.TwitterResult {
     private static final int PAGE_NO_FOUND = 404;
     private static final int FB_PAGE_CREATION = 101;
@@ -865,7 +868,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             @Override
             public void onError(FacebookException error) {
                 onFBPageError(from);
-                WebEngageController.trackEvent("FB PAGE SHARING FAILED","FB Page Sharing Failed",session.getFpTag());
+                WebEngageController.trackEvent(FB_PAGE_SHARING_FAILED,EVENT_LABEL_FB_PAGE_SHARING_FAILED,session.getFpTag());
                 //Log.v("ggg",error.toString()+"fberror");
             }
         });

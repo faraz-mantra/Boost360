@@ -38,7 +38,7 @@
       android:id="@+id/desc"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="As a business owner or manager, the decision to opt for offshore software development can be difficult. As anyone who has experience knows, there are advantages and disadvantages to outsourcing software development."
+      android:text="@string/a_business_owner_or_manager_the_decision_to_opt_for_offshore_software"
       app:fontFamily="@font/regular"
       android:layout_marginStart="@dimen/size_16"
       android:layout_marginTop="@dimen/size_8"

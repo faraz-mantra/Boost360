@@ -62,6 +62,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import static com.framework.webengageconstant.EventLabelKt.BUSINESS_DESCRIPTION;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_CATEGORY;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_NAME;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_BUSINESS_DESCRIPTION;
+import static com.framework.webengageconstant.EventNameKt.PRODUCT_CATEGORY;
 import static com.nowfloats.NavigationDrawer.floating_view.ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE;
 
 public class Edit_Profile_Activity extends BaseActivity {
@@ -403,23 +409,23 @@ public class Edit_Profile_Activity extends BaseActivity {
 
         buzzname.setOnClickListener(v -> {
 
-            WebEngageController.trackEvent("BUSINESS NAME", "null", session.getFpTag());
+            WebEngageController.trackEvent(BUSINESS_NAME, EVENT_LABEL_NULL, session.getFpTag());
 
         });
 
         buzzdescription.setOnClickListener(v -> {
 
-            WebEngageController.trackEvent("BUSINESS DESCRIPTION", "null", session.getFpTag());
+            WebEngageController.trackEvent(EVENT_NAME_BUSINESS_DESCRIPTION, EVENT_LABEL_NULL, session.getFpTag());
 
         });
 
         category.setOnClickListener(v -> {
 
-            WebEngageController.trackEvent("BUSINESS CATEGORY", "null", session.getFpTag());
+            WebEngageController.trackEvent(BUSINESS_CATEGORY, EVENT_LABEL_NULL, session.getFpTag());
 
         });
         productCategory.setOnCheckedChangeListener((group, checkedId) -> {
-            WebEngageController.trackEvent("PRODUCT CATEGORY", "null", session.getFpTag());
+            WebEngageController.trackEvent(PRODUCT_CATEGORY, EVENT_LABEL_NULL, session.getFpTag());
 
         });
 
