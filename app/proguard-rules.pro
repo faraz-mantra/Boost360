@@ -448,8 +448,11 @@
 #-dontwarn com.google.android.libraries.places.internal.jb
 
 ##------Upgrades---------##
--keep class com.boost.upgrades.** {*;}
 -dontwarn com.boost.upgrades.**
+-keeppackagenames com.boost.upgrades
+-keep class com.boost.upgrades.** {*;}
+-keep class com.boost.upgrades.data.** { <fields>; }
+
 
 ##-----Appsflyer-----###
 -keep class com.appsflyer.** { *; }
