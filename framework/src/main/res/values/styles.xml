@@ -31,9 +31,6 @@
 
   <style name="BottomSheetTheme" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
     <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
-    <item name="android:windowIsFloating">false</item>
-    <item name="android:statusBarColor">@android:color/transparent</item>
-    <item name="android:navigationBarColor">?android:colorBackground</item>
   </style>
 
   <style name="MaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">

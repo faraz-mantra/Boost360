@@ -160,7 +160,8 @@
                 android:textAlignment="gravity"
                 android:textColor="@color/accent_dark"
                 app:autoSizeMaxTextSize="12sp"
-                app:autoSizeMinTextSize="6sp"
+                android:maxLines="1"
+                app:autoSizeMinTextSize="8sp"
                 app:autoSizeStepGranularity="1sp"
                 app:autoSizeTextType="uniform" />
             </LinearLayout>
