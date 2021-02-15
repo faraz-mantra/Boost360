@@ -3,12 +3,10 @@ package com.framework.base
 import android.app.Dialog
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -17,6 +15,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProviders
 import com.framework.helper.Navigator
 import com.framework.models.BaseViewModel
+import com.framework.utils.ScreenUtils
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -73,12 +72,7 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
           getDraggable()?.let { it1 -> isDraggable = it1 }
         }
         bottomSheet.parent.requestLayout()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-          val window: Window? = dialog.window
-          window?.findViewById<View>(com.google.android.material.R.id.container)?.fitsSystemWindows = false
-          val decorView: View? = window?.decorView
-          decorView?.systemUiVisibility?.or(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR)?.let { it1 -> decorView.systemUiVisibility = it1 }
-        }
+        ScreenUtils.instance.setWhiteNavigationBar(dialog)
       } catch (e: Exception) {
         e.printStackTrace()
       }
