@@ -12,6 +12,8 @@ import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.utils.NetworkUtils
 import com.framework.utils.PreferencesUtils
+import com.framework.webengageconstant.DIGITAL_CHANNELS
+import com.framework.webengageconstant.FACEBOOK_SHOP_DISCONNECTED
 import com.nowfloats.facebook.FacebookLoginHelper
 import com.nowfloats.facebook.constants.FacebookGraphRequestType
 import com.nowfloats.facebook.constants.FacebookPermissions
@@ -170,7 +172,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
   }
 
   override fun setProfileDetails(name: String?, profilePicture: String?) {
-    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook shop connected", "DIGITAL CHANNELS", it) }
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(FACEBOOK_SHOP_DISCONNECTED, DIGITAL_CHANNELS, it) }
     val binding = binding?.facebookPageSuccess ?: return
     this.binding?.skip?.gone()
     binding.maimView.visible()
@@ -189,7 +191,7 @@ class RegistrationBusinessFacebookShopFragment : BaseRegistrationFragment<Fragme
 
   private fun disconnectFacebookPage() {
     logoutFacebook()
-    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook shop disconnected", "DIGITAL CHANNELS", it) }
+    requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(FACEBOOK_SHOP_DISCONNECTED, DIGITAL_CHANNELS, it) }
     binding?.skip?.visible()
     binding?.facebookPageSuccess?.maimView?.gone()
     this.binding?.title?.text = resources.getString(R.string.shop_section_on_your_fb_page)

@@ -17,6 +17,7 @@ import com.boost.upgrades.ui.popup.FailedTransactionPopUpFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
@@ -82,11 +83,11 @@ class RazorPayWebView : DialogFragment() {
                         // Razorpay payment ID is passed here after a successful payment
                         Log.i("onPaymentSuccess", razorpayPaymentId)
                         val revenue = data["amount"] as Int
-                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment Success", "rev", revenue/100)
+                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment Success", "rev", revenue / 100)
 
                         var firebaseAnalytics = Firebase.analytics
                         val bundle = Bundle()
-                        bundle.putDouble(FirebaseAnalytics.Param.VALUE, (revenue/100).toDouble())
+                        bundle.putDouble(FirebaseAnalytics.Param.VALUE, (revenue / 100).toDouble())
                         bundle.putString(FirebaseAnalytics.Param.TRANSACTION_ID, razorpayPaymentId)
                         bundle.putString(FirebaseAnalytics.Param.CURRENCY, "INR")
                         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.PURCHASE, bundle)
@@ -98,11 +99,11 @@ class RazorPayWebView : DialogFragment() {
                     override fun onPaymentError(p0: Int, p1: String?) {
                         // Error code and description is passed here
                         Log.e("onPaymentError", "p1 >>>" + p1)
-                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Failed_Payment_Transaction Load", ADDONS_MARKETPLACE, "")
-                    val listPersonType = object : TypeToken<PaymentErrorModule>() {}.type
-                    val errorBody: PaymentErrorModule = Gson().fromJson(p1, listPersonType)
+                        WebEngageController.trackEvent(ADDONS_MARKETPLACE_FAILED_PAYMENT_TRANSACTION_LOAD, ADDONS_MARKETPLACE, NO_EVENT_VALUE)
+                        val listPersonType = object : TypeToken<PaymentErrorModule>() {}.type
+                        val errorBody: PaymentErrorModule = Gson().fromJson(p1, listPersonType)
                         Toasty.error(requireContext(), errorBody.error.description, Toast.LENGTH_LONG).show()
-                        WebEngageController.trackEvent("ADDONS_MARKETPLACE Payment Failed", "", "")
+                        WebEngageController.trackEvent(ADDONS_MARKETPLACE_PAYMENT_FAILED, NO_EVENT_LABLE, NO_EVENT_VALUE)
                         redirectTransactionFailure(data.toString())
                         dialog!!.dismiss()
                     }
@@ -111,7 +112,7 @@ class RazorPayWebView : DialogFragment() {
                 e.printStackTrace()
             }
 
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE Razor_Pay_View Loaded", "Razor_Pay_View", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_RAZOR_PAY_VIEW_LOADED, RAZOR_PAY_VIEW, NO_EVENT_VALUE)
         }
     }
 

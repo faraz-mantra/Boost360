@@ -17,6 +17,8 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.utils.NetworkUtils
 import com.framework.views.DotProgressBar
+import com.framework.webengageconstant.DIGITAL_CHANNELS
+import com.framework.webengageconstant.WHATS_APP_CONNECTED
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.PreferenceConstant
@@ -164,7 +166,7 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
       viewModel?.postUpdateWhatsappRequest(dataRequest, authorization)
           ?.observeOnce(viewLifecycleOwner, Observer {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
-              requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("WhatsApp connected", "DIGITAL CHANNELS", it) }
+              requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(WHATS_APP_CONNECTED, DIGITAL_CHANNELS, it) }
               connectedChannels.forEach { it1 ->
                 it1.status = takeIf { ChannelType.WAB == it1.getType() }?.let { ProcessApiSyncModel.SyncStatus.SUCCESS.name }
               }
