@@ -3,10 +3,12 @@ package com.framework.base
 import android.app.Dialog
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -57,19 +59,29 @@ abstract class BaseBottomSheetDialog<Binding : ViewDataBinding, ViewModel : Base
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
     dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
     dialog.setOnShowListener {
-      val dialog = it as? BottomSheetDialog ?: return@setOnShowListener
-      val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) ?: return@setOnShowListener
-      BottomSheetBehavior.from(bottomSheet).apply {
-        isPeekHeightSetMatch()?.let {
-          isFitToContents = true
-          expandedOffset = 0
-          peekHeight = getScreenHeight()
+      try {
+        val dialog = it as? BottomSheetDialog ?: return@setOnShowListener
+        val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) ?: return@setOnShowListener
+        BottomSheetBehavior.from(bottomSheet).apply {
+          isPeekHeightSetMatch()?.let {
+            isFitToContents = true
+            expandedOffset = 0
+            peekHeight = getScreenHeight()
+          }
+          state = getBottomSheetInitialState()
+          getSkipCollapse()?.let { it1 -> skipCollapsed = it1 }
+          getDraggable()?.let { it1 -> isDraggable = it1 }
         }
-        state = getBottomSheetInitialState()
-        getSkipCollapse()?.let { it1 -> skipCollapsed = it1 }
-        getDraggable()?.let { it1 -> isDraggable = it1 }
+        bottomSheet.parent.requestLayout()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+          val window: Window? = dialog.window
+          window?.findViewById<View>(com.google.android.material.R.id.container)?.fitsSystemWindows = false
+          val decorView: View? = window?.decorView
+          decorView?.systemUiVisibility?.or(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR)?.let { it1 -> decorView.systemUiVisibility = it1 }
+        }
+      } catch (e: Exception) {
+        e.printStackTrace()
       }
-      bottomSheet.parent.requestLayout()
     }
     return dialog
   }
