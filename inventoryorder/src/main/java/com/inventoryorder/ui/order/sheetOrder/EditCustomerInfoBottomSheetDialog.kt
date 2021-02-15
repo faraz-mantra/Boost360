@@ -1,24 +1,22 @@
 package com.inventoryorder.ui.order.sheetOrder
 
 import android.view.View
-import android.widget.CompoundButton
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
 import com.inventoryorder.databinding.BottomSheetCancelOrderBinding
 import com.inventoryorder.databinding.BottomSheetDeliveryTypeBinding
+import com.inventoryorder.databinding.BottomSheetEditCustomerInfoBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class DeliveryTypeBottomSheetDialog : BaseBottomSheetDialog<BottomSheetDeliveryTypeBinding, BaseViewModel>() {
+class EditCustomerInfoBottomSheetDialog : BaseBottomSheetDialog<BottomSheetEditCustomerInfoBinding, BaseViewModel>() {
 
   private var cancellingEntity: String? = OrderItem.CancellingEntity.BUYER.name
   private var orderItem: OrderItem? = null
   var onClicked: (cancellingEntity: String,reasonText:String) -> Unit = { _: String, _: String -> }
 
   override fun getLayout(): Int {
-    return R.layout.bottom_sheet_delivery_type
+    return R.layout.bottom_sheet_edit_customer_info
   }
 
   override fun getViewModelClass(): Class<BaseViewModel> {
@@ -30,24 +28,15 @@ class DeliveryTypeBottomSheetDialog : BaseBottomSheetDialog<BottomSheetDeliveryT
   }
 
   override fun onCreateView() {
-
-    binding?.radioHome?.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-      override fun onCheckedChanged(p0: CompoundButton?, isChecked: Boolean) {
-        if (isChecked) {
-          binding?.radioStore?.isChecked = false
-          binding?.radioHome?.isChecked = true
-        }
+   /* setOnClickListener(binding?.buttonDone, binding?.tvCancel)
+    binding?.tvSubTitle?.text = "Order ID #${orderItem?.ReferenceNumber ?: ""}"
+    binding?.radioGroup?.setOnCheckedChangeListener { group, checkedId ->
+      val radioButton: View = group.findViewById(checkedId)
+      cancellingEntity= when (radioButton){
+        binding?.radioCustomer -> OrderItem.CancellingEntity.BUYER.name
+        else -> OrderItem.CancellingEntity.SELLER.name
       }
-    })
-
-    binding?.radioStore?.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-      override fun onCheckedChanged(p0: CompoundButton?, isChecked: Boolean) {
-        if (isChecked) {
-          binding?.radioStore?.isChecked = true
-          binding?.radioHome?.isChecked = false
-        }
-      }
-    })
+    }*/
   }
 
   override fun onClick(v: View) {

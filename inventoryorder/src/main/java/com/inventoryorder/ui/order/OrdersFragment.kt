@@ -93,6 +93,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, bundle)
+       // startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle)
       }
     }
   }

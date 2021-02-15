@@ -19,6 +19,7 @@
             app:textType="BODY_1" />
 
         <com.framework.views.customViews.CustomEditText
+            android:id="@+id/edit_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_6"
@@ -41,6 +42,7 @@
             app:textType="BODY_1" />
 
         <com.framework.views.customViews.CustomEditText
+            android:id="@+id/edit_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_6"
@@ -63,6 +65,7 @@
             app:textType="BODY_1" />
 
         <com.framework.views.customViews.CustomEditText
+            android:id="@+id/edit_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_6"
@@ -87,6 +90,7 @@
             app:textType="BODY_1" />
 
         <com.framework.views.customViews.CustomEditText
+            android:id="@+id/edit_pin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_6"

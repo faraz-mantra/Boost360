@@ -7,17 +7,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.exceptions.NoNetworkException
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
-import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentAddProductBinding
 import com.inventoryorder.model.PRODUCT_LIST_CLIENT_ID
-import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.order.ProductItem
-import com.inventoryorder.model.ordersdetails.OrderItem
+import com.inventoryorder.model.orderRequest.ItemsItem
+import com.inventoryorder.model.orderRequest.OrderInitiateRequest
+import com.inventoryorder.model.orderRequest.ProductDetails
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
-import com.inventoryorder.rest.response.OrderSummaryResponse
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
@@ -25,10 +24,12 @@ import com.inventoryorder.utils.WebEngageController
 class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), RecyclerItemClickListener {
 
   private var productList : ArrayList<ProductItem> ?= null
+  private var selectedProductList : ArrayList<ProductItem> ?= null
   private var itemsAdapter: AppBaseRecyclerViewAdapter<ProductItem>? = null
   private var layoutManagerN: LinearLayoutManager? = null
   private var totalPrice = 0.0
   private var totalCartItems = 0
+  private var createOrderRequest = OrderInitiateRequest()
 
   companion object {
     @JvmStatic
@@ -46,16 +47,53 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
     layoutManagerN = LinearLayoutManager(baseActivity)
 
     setOnClickListener(binding?.tvProceed)
-    getItemList(fpTag, PRODUCT_LIST_CLIENT_ID)
+
+    productList = ArrayList()
+    selectedProductList = ArrayList()
+
+    if (productList?.isEmpty() == true) {
+      getItemList(fpTag, PRODUCT_LIST_CLIENT_ID)
+    }
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
         binding?.tvProceed -> {
-            startFragmentOrderActivity(FragmentType.ADD_CUSTOMER, Bundle())
+           onProceedClicked()
         }
     }
+  }
+
+  private fun onProceedClicked() {
+
+    var itemList = ArrayList<ItemsItem>()
+
+    for (prod in selectedProductList!!) {
+
+      var productDetails = ProductDetails()
+      productDetails.currencyCode = prod.CurrencyCode
+      productDetails.description = prod.Description
+      productDetails.discountAmount = prod.DiscountAmount
+      productDetails.imageUri = prod.ImageUri
+      productDetails.isAvailable = prod.IsAvailable
+      productDetails.name = prod.Name
+      productDetails.price = prod.Price
+
+      var item = ItemsItem(productDetails = productDetails, productOrOfferId = "")
+      //item.productDetails = productDetails
+      item.quantity = prod.productQuantityAdded
+      item.type = "PRODUCT"
+      item.productOrOfferId = "NO_ITEM"
+      itemList.add(item)
+    }
+
+    createOrderRequest.items = itemList
+
+    var bundle = Bundle()
+    bundle.putSerializable("order_req", createOrderRequest)
+    bundle.putDouble("total", totalPrice)
+    startFragmentOrderActivity(FragmentType.ADD_CUSTOMER, bundle)
   }
 
   private fun getItemList(fpTag : String?, clientId : String?) {
@@ -109,6 +147,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
           binding?.layoutTotalPricePanel?.visibility = View.VISIBLE
         }
         totalCartItems += 1
+        selectedProductList?.add(product!!)
       }
 
       RecyclerViewActionType.PRODUCT_ITEM_INCREASE_COUNT.ordinal -> {
@@ -119,6 +158,12 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         totalPrice = totalPrice.plus(product?.Price ?: 0.0)
         binding?.tvItemTotalPrice?.text = "${product?.CurrencyCode ?: "INR" } $totalPrice"
         totalCartItems += 1
+
+     /*   for (i in selectedProductList!!) {
+          if (i._id == product?._id) {
+            i.productQuantityAdded = i.productQuantityAdded + 1
+          }
+        }*/
       }
 
       RecyclerViewActionType.PRODUCT_ITEM_DECREASE_COUNT.ordinal -> {
@@ -130,8 +175,16 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         binding?.tvItemTotalPrice?.text = "${product?.CurrencyCode ?: "INR" } $totalPrice"
 
         totalCartItems -= 1
+
+      /*  for (i in selectedProductList!!) {
+          if (i._id == product?._id) {
+            i.productQuantityAdded = i.productQuantityAdded - 1
+          }
+        }*/
+
         if (totalCartItems == 0) {
           binding?.layoutTotalPricePanel?.visibility = View.GONE
+          selectedProductList?.clear()
         }
       }
     }

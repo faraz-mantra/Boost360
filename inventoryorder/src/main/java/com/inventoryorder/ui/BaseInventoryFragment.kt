@@ -19,10 +19,7 @@ import com.inventoryorder.ui.createAptOld.NewBookingFragmentTwo
 import com.inventoryorder.ui.order.OrderDetailFragment
 import com.inventoryorder.ui.order.OrderInvoiceFragment
 import com.inventoryorder.ui.order.OrdersFragment
-import com.inventoryorder.ui.order.createorder.AddCustomerFragment
-import com.inventoryorder.ui.order.createorder.AddProductFragment
-import com.inventoryorder.ui.order.createorder.BillingDetailFragment
-import com.inventoryorder.ui.order.createorder.CreateOrderOnBoardingFragment
+import com.inventoryorder.ui.order.createorder.*
 import com.inventoryorder.viewmodel.OrderCreateViewModel
 
 open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<binding, OrderCreateViewModel>() {
@@ -59,6 +56,7 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
       is AddProductFragment -> R.layout.fragment_add_product
       is BillingDetailFragment -> R.layout.fragment_billing_detail
       is OrderInvoiceFragment -> R.layout.fragment_order_inoice
+      is OrderPlacedFragment -> R.layout.fragment_order_placed
       else -> throw IllegalFragmentTypeException()
     }
   }

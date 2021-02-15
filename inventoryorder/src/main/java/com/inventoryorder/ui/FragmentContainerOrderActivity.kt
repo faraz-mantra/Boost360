@@ -30,10 +30,7 @@ import com.inventoryorder.ui.createAptOld.NewBookingFragmentTwo
 import com.inventoryorder.ui.order.OrderDetailFragment
 import com.inventoryorder.ui.order.OrderInvoiceFragment
 import com.inventoryorder.ui.order.OrdersFragment
-import com.inventoryorder.ui.order.createorder.AddCustomerFragment
-import com.inventoryorder.ui.order.createorder.AddProductFragment
-import com.inventoryorder.ui.order.createorder.BillingDetailFragment
-import com.inventoryorder.ui.order.createorder.CreateOrderOnBoardingFragment
+import com.inventoryorder.ui.order.createorder.*
 
 open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentContainerBinding, BaseViewModel>() {
 
@@ -53,6 +50,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   private var videoConsultFragment: VideoConsultFragment? = null
   private var videoConsultDetailsFragment: VideoConsultDetailsFragment? = null
   private var orderInvoiceFragment: OrderInvoiceFragment? = null
+  private var orderPlacedFragment : OrderPlacedFragment? = null
 
   override fun getLayout(): Int {
     return com.framework.R.layout.activity_fragment_container
@@ -107,7 +105,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ADD_PRODUCT,
       FragmentType.BILLING_DETAIL,
       FragmentType.CREATE_APPOINTMENT_VIEW,
-      FragmentType.ORDER_INVOICE_VIEW
+      FragmentType.ORDER_INVOICE_VIEW,
+      FragmentType.ORDER_PLACED
       -> ContextCompat.getColor(this, R.color.colorPrimary)
       else -> super.getToolbarBackgroundColor()
     }
@@ -127,7 +126,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ADD_PRODUCT,
       FragmentType.BILLING_DETAIL,
       FragmentType.CREATE_APPOINTMENT_VIEW,
-      FragmentType.ORDER_INVOICE_VIEW
+      FragmentType.ORDER_INVOICE_VIEW,
+      FragmentType.ORDER_PLACED
       -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
@@ -269,6 +269,10 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ORDER_INVOICE_VIEW -> {
         orderInvoiceFragment = OrderInvoiceFragment.newInstance()
         orderInvoiceFragment
+      }
+      FragmentType.ORDER_PLACED -> {
+        orderPlacedFragment = OrderPlacedFragment.newInstance()
+        orderPlacedFragment
       }
       else -> throw IllegalFragmentTypeException()
     }

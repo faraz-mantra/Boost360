@@ -5,5 +5,5 @@ import java.io.Serializable
 
 data class Address(
     @SerializedName("AddressLine1")
-    val addressLine: Any? = null
+    val addressLine: String? = null
 ):Serializable
