@@ -22,6 +22,9 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import androidx.lifecycle.Observer
+import com.framework.webengageconstant.ADDONS_MARKETPLACE_GSTIN_LOADED
+import com.framework.webengageconstant.AUTO_RENEW
+import com.framework.webengageconstant.NO_EVENT_VALUE
 
 class RenewalPopUpFragment : DialogFragment(){
 
@@ -95,7 +98,7 @@ class RenewalPopUpFragment : DialogFragment(){
                 }
             }
         })
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE GSTIN Loaded", "AUTO_RENEW", "")
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_GSTIN_LOADED, AUTO_RENEW, NO_EVENT_VALUE)
         var calue = getNextRenewalDate()
         val strRenewFormat = resources.getString(R.string.auto_renewal_date, calue)
 //        val strRenewFormat = resources.getString(R.string.radio_auto_renew, calue)

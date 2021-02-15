@@ -19,6 +19,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.views.dotsindicator.OffsetPageTransformer
+import com.framework.webengageconstant.*
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.PreferenceConstant
@@ -189,16 +190,16 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       val imageUri: Uri = Uri.parse(path)
       val waIntent = Intent(Intent.ACTION_SEND)
       waIntent.type = "image/*"
-      if (isWhatsApp) waIntent.setPackage("com.whatsapp")
+      if (isWhatsApp) waIntent.setPackage(getString(R.string.whatsapp_package))
       waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
       waIntent.putExtra(Intent.EXTRA_TEXT, messageCard ?: "")
-      baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
+      baseActivity.startActivity(Intent.createChooser(waIntent,resources.getString(R.string.share_your_business_card)))
       dismiss()
       savePositionCard(cardPosition)
-      WebEngageController.trackEvent("Visiting Card Share", "visiting_card", localSessionModel?.fpTag?:"")
+      WebEngageController.trackEvent(VISITING_CARD_SHARE, VISITING_CARD, localSessionModel?.fpTag?:"")
       onBusinessCardAddedOrUpdated(true)
     } catch (e: Exception) {
-      showLongToast("Error sharing visiting card, please try again.")
+      showLongToast(getString(R.string.error_sharing_visiting_card_please_try_again))
       dismiss()
     }
   }
@@ -236,7 +237,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       100 -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
           shareCardWhatsApp(shareChannelText, this.isWhatsApp ?: false)
-        } else showShortToast("Permission denied to read your External storage")
+        } else showShortToast(getString(R.string.permission_denied_to_your_external_storage))
         return
       }
     }
@@ -245,7 +246,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
 
 fun AppCompatActivity.startDigitalChannel(bundle: Bundle) {
   try {
-    WebEngageController.trackEvent("Digital Channel Page", "startview", "");
+    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, START_VIEW, NO_EVENT_VALUE);
     startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()

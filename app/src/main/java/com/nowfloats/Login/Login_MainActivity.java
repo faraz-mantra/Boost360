@@ -81,6 +81,9 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABLE_LOGIN;
+import static com.framework.webengageconstant.EventNameKt.LOGIN;
+
 public class Login_MainActivity extends AppCompatActivity implements API_Login.API_Login_Interface, View.OnClickListener {
     Bus bus;
     EditText userName, password;
@@ -257,7 +260,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         // setSupportActionBar(toolbar);
 //        getSupportActionBar().setHomeButtonEnabled(true);
         //      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        WebEngageController.trackEvent("LOGIN", "Login", session.getFpTag());
+        WebEngageController.trackEvent(LOGIN, EVENT_LABLE_LOGIN, session.getFpTag());
         userName = findViewById(R.id.userNameEditText);
         password = findViewById(R.id.passwordEditText);
 

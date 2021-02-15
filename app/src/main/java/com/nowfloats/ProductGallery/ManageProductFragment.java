@@ -104,6 +104,15 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static android.app.Activity.RESULT_OK;
+import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventLabelKt.PRODUCT_CATALOGUE_ADD_UPDATE;
+import static com.framework.webengageconstant.EventNameKt.ADD_PRODUCT_CATALOGUE;
+import static com.framework.webengageconstant.EventNameKt.ADD_UPDATE_PRODUCT_CATALOGUE_LOADED;
+import static com.framework.webengageconstant.EventNameKt.DELETE_PRODUCT_CATALOGUE;
+import static com.framework.webengageconstant.EventNameKt.ERROR_UPDATE_PRODUCT_CATALOGUE;
+import static com.framework.webengageconstant.EventNameKt.PRODUCT_ADDED_TO_CATALOGUE;
+import static com.framework.webengageconstant.EventNameKt.UPDATE_PRODUCT_CATALOGUE;
+import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 import static com.nowfloats.util.Constants.DEV_ASSURED_PURCHASE_URL;
 
 
@@ -200,7 +209,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_manage_product, container, false);
         sheetBehavior = BottomSheetBehavior.from(binding.layoutBottomSheet.getRoot());
         sheetBehaviorAddress = BottomSheetBehavior.from(binding.layoutBottomSheetAddress.getRoot());
-        WebEngageController.trackEvent("Add/Update product catalogue Loaded", "PRODUCT CATALOGUE ADD/UPDATE", "");
+        WebEngageController.trackEvent(ADD_UPDATE_PRODUCT_CATALOGUE_LOADED, PRODUCT_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE);
         return binding.getRoot();
     }
 
@@ -2218,7 +2227,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 Log.d("PRODUCT_JSON", "" + new Gson().toJson(model));
 
                 showDialog("Please Wait...");
-                WebEngageController.trackEvent("Update product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "");
+                WebEngageController.trackEvent(UPDATE_PRODUCT_CATALOGUE, PRODUCT_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE);
                 productInterface.put_UpdateGalleryUpdate(model, new Callback<ArrayList<String>>() {
 
                     @Override
@@ -2270,7 +2279,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             }
         } catch (Exception e) {
             Log.d("JSON_PRODUCT_UPDATE", "ERROR " + e.getMessage());
-            WebEngageController.trackEvent("Error update product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "");
+            WebEngageController.trackEvent(ERROR_UPDATE_PRODUCT_CATALOGUE, PRODUCT_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE);
         }
     }
 
@@ -2297,7 +2306,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 Log.d("PRODUCT_JSON", "JSON: " + new Gson().toJson(product));
 
                 showDialog("Please Wait...");
-                WebEngageController.trackEvent("Add product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "");
+                WebEngageController.trackEvent(ADD_PRODUCT_CATALOGUE, PRODUCT_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE);
                 productInterface.addProduct(product, new Callback<String>() {
 
                     @Override
@@ -2319,7 +2328,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                             uploadProductImage(productId);
                         } else {
                             Toast.makeText(getContext(), "Product saved successfully.", Toast.LENGTH_SHORT).show();
-                            WebEngageController.trackEvent("Product added to catalogue", "MANAGE CONTENT", "");
+                            WebEngageController.trackEvent(PRODUCT_ADDED_TO_CATALOGUE, MANAGE_CONTENT, NO_EVENT_VALUE);
                             hideDialog();
 
                             if (getActivity() != null) {
@@ -2366,7 +2375,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             map.put("identifierType", "SINGLE");
 
             showDialog("Please Wait...");
-            WebEngageController.trackEvent("Delete product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "");
+            WebEngageController.trackEvent(DELETE_PRODUCT_CATALOGUE, PRODUCT_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE);
             productInterface.removeProduct(map, new Callback<String>() {
 
                 @Override

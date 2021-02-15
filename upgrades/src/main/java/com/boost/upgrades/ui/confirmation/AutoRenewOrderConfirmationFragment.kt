@@ -12,6 +12,7 @@ import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.auto_renew_order_confirmation_fragment.*
 import java.text.ParseException
@@ -74,7 +75,7 @@ class AutoRenewOrderConfirmationFragment : BaseFragment() {
         }
 
         check_activation_status.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE Check_Activation_Status Clicked", "Check_Activation_Status", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_CHECK_ACTIVATION_STATUS_CLICKED , Check_Activation_Status, NO_EVENT_VALUE)
             (activity as UpgradeActivity).goBackToMyAddonsScreen()
         }
 
@@ -82,7 +83,7 @@ class AutoRenewOrderConfirmationFragment : BaseFragment() {
             Toasty.info(requireContext(),"In case of any concerns, you can write to ria@nowfloats.com. Boost Care Team is available during business hours.").show()
         }
 
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE Order_Confirmation Loaded", "Auto_Renew_Order_Confirmation", "")
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_ORDER_CONFIRMATION_LOADED , Auto_Renew_Order_Confirmation, NO_EVENT_VALUE)
 
     }
     fun getNextRenewalDate(): String{

@@ -215,7 +215,7 @@
   <string name="order_cancel">Order cancel successfully!</string>
   <string name="order_shipped">Order shipped successfully!</string>
   <string name="order_delivery">Order delivery successfully!</string>
+  <string name="pick_a_type_of_appointment_from_the_options_below">Pick a type of appointment from the options below</string>
   <string name="cancellation_reason_not_update">Cancellation reason not update</string>
   <string name="include_a_message_optional">Include a Message (optional)</string>
-
 </resources>

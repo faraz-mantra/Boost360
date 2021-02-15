@@ -44,6 +44,7 @@ import com.framework.models.firestore.FirestoreManager.getDrScoreData
 import com.framework.models.firestore.FirestoreManager.readDrScoreDocument
 import com.framework.utils.*
 import com.framework.views.dotsindicator.OffsetPageTransformer
+import com.framework.webengageconstant.*
 import com.inventoryorder.model.mapDetail.TOTAL_MAP_VISIT
 import com.inventoryorder.model.mapDetail.VisitsModelResponse
 import com.inventoryorder.model.ordersummary.OrderSummaryModel
@@ -104,7 +105,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     getAllDashboardSummary()
     getPremiumBanner()
     getChannelAccessToken()
-    WebEngageController.trackEvent("Dashboard Home Page", "pageview", session?.fpTag)
+    WebEngageController.trackEvent(DASHBOARD_HOME_PAGE, PAGE_VIEW, session?.fpTag)
   }
 
   override fun onResume() {
@@ -234,7 +235,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         } else showShortToast(baseActivity.getString(R.string.manage_business_not_found))
       })
       btnShowAll.setOnClickListener {
-        WebEngageController.trackEvent("Business Add-ons Page", "Add-ons", session?.fpTag)
+        WebEngageController.trackEvent(BUSINESS_ADD_ONS_PAGE, ADD_ONS, session?.fpTag)
         startFragmentDashboardActivity(FragmentType.ALL_BOOST_ADD_ONS)
       }
     }
@@ -424,7 +425,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     when (actionType) {
       RecyclerViewActionType.READING_SCORE_CLICK.ordinal -> {
-        WebEngageController.trackEvent("SITE HEALTH Page", "SITE_HEALTH", session?.fpTag);
+        WebEngageController.trackEvent(SITE_HEALTH_PAGE, SITE_HEALTH, session?.fpTag);
 //        session?.let { baseActivity.startOldSiteMeter(it) }
         baseActivity.startReadinessScoreView(session, 0)
       }

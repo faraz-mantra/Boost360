@@ -8,7 +8,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -42,6 +43,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_NULL;
+import static com.framework.webengageconstant.EventNameKt.ROI_SUMMARY_ENQUIRY;
 import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
 
 /**
@@ -169,7 +172,7 @@ public class ManageInboxFragment extends Fragment {
                 Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                WebEngageController.trackEvent("ROI SUMMARY - ENQUIRY","null",session.getFpTag());
+                WebEngageController.trackEvent(ROI_SUMMARY_ENQUIRY, EVENT_LABEL_NULL, session.getFpTag());
             });
 
             tvBusinessCalls.setOnClickListener(v -> {

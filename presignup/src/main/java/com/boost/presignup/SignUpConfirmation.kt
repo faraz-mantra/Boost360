@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.boost.presignup.utils.WebEngageController
+import com.framework.webengageconstant.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.onboarding.nowfloats.constant.PreferenceConstant
@@ -21,7 +22,7 @@ class SignUpConfirmation : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_sign_up_confirmation)
 
-    WebEngageController.trackEvent("PS_Account Creation Confirmation", "Account Creation Confirmation", "")
+    WebEngageController.trackEvent(PS_ACCOUNT_CREATION_CONFIRMATION, ACCOUNT_CREATION_CONFIRMATION, NO_EVENT_VALUE)
     val currentFirebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     val bundle = intent.extras
     profile_id = bundle?.getString("profile_id") ?: ""
@@ -47,7 +48,7 @@ class SignUpConfirmation : AppCompatActivity() {
       }
 
     set_up_business_profile.setOnClickListener {
-      WebEngageController.trackEvent("PS_Business Creation Initiated", "Business Creation Initiated", "")
+      WebEngageController.trackEvent(PS_BUSINESS_CREATION_INITIATED, BUSINESS_CREATION_INITIATED, NO_EVENT_VALUE)
 //      val intent = Intent(applicationContext, Class.forName("com.nowfloats.signup.UI.UI.PreSignUpActivityRia"))
 //      intent.putExtra("profile_id", profile_id)
 //      startActivity(intent)

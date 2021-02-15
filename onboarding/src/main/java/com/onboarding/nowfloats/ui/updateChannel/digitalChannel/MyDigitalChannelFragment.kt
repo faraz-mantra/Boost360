@@ -19,6 +19,10 @@ import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
+import com.framework.webengageconstant.MY_DIGITAL_CHANNEL
+import com.framework.webengageconstant.MY_DIGITAL_CHANNEL_LOAD
+import com.framework.webengageconstant.MY_DIGITAL_CHANNEL_SYNC_BUTTON_CLICK
+import com.framework.webengageconstant.NO_EVENT_VALUE
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.base.AppBaseFragment
 import com.onboarding.nowfloats.constant.*
@@ -102,7 +106,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   override fun onCreateView() {
     super.onCreateView()
-    WebEngageController.trackEvent("My digital channel load", "MY DIGITAL CHANNEL", "")
+    WebEngageController.trackEvent(MY_DIGITAL_CHANNEL_LOAD, MY_DIGITAL_CHANNEL, NO_EVENT_VALUE)
     progress = ProgressChannelDialog.newInstance()
     updateRequestGetChannelData()
     binding?.syncBtn?.setOnClickListener { syncChannels() }
@@ -380,7 +384,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
 
   private fun syncChannels() {
     if (selectedChannels.isNullOrEmpty().not()) {
-      WebEngageController.trackEvent("My digital channel sync button click", "MY DIGITAL CHANNEL", "")
+      WebEngageController.trackEvent(MY_DIGITAL_CHANNEL_SYNC_BUTTON_CLICK , MY_DIGITAL_CHANNEL, NO_EVENT_VALUE)
       val bundle = Bundle()
       var totalPages = if (requestFloatsModel?.isUpdate == true) 0 else 2
       selectedChannels.let { channels ->

@@ -47,6 +47,11 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 
+import static com.framework.webengageconstant.EventLabelKt.MANAGE_CONTENT;
+import static com.framework.webengageconstant.EventLabelKt.UPDATE_GALLERY_IMAGES;
+import static com.framework.webengageconstant.EventNameKt.GALLERY_IMAGE_ADDED;
+import static com.framework.webengageconstant.EventNameKt.UPLOAD_GALLERY_IMAGE;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -205,7 +210,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
     imagePickerBottomSheetDialog.show(getParentFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
-    WebEngageController.trackEvent("UPLOAD GALLERY IMAGE", "Update Gallery Images", session.getFpTag());
+    WebEngageController.trackEvent(UPLOAD_GALLERY_IMAGE, UPDATE_GALLERY_IMAGES, session.getFpTag());
 
 //        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
 //                .customView(R.layout.featuredimage_popup, true)
@@ -296,7 +301,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         CameraBitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), imageUri);
         imageUrl = getRealPathFromURI(imageUri);
         path = imageUrl;
-        WebEngageController.trackEvent("Gallery Image added", "MANAGE CONTENT", session.getFpTag());
+        WebEngageController.trackEvent(GALLERY_IMAGE_ADDED, MANAGE_CONTENT, session.getFpTag());
         UploadPictureAsyncTask upload = new UploadPictureAsyncTask(activity, imageUrl);
         upload.setOnUploadListener(Image_Gallery_Fragment.this);
         upload.execute();
@@ -337,7 +342,7 @@ public class Image_Gallery_Fragment extends Fragment implements
       try {
         Uri extras2 = data.getData();
         // if (extras2 != null) {
-        WebEngageController.trackEvent("Gallery Image added", "MANAGE CONTENT", session.getFpTag());
+        WebEngageController.trackEvent(GALLERY_IMAGE_ADDED, MANAGE_CONTENT, session.getFpTag());
         String filepath = "";
         UploadPictureAsyncTask upload = null;
         if (data.getData() != null) {

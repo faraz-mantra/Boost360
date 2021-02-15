@@ -34,6 +34,12 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.framework.webengageconstant.EventLabelKt.CLICKED_REPLY_AS_CALL;
+import static com.framework.webengageconstant.EventLabelKt.CLICKED_REPLY_AS_EMAIL;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_ENQUIRIES_CALL;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_ENQUIRIES_EMAIL;
+import static com.framework.webengageconstant.EventValueKt.NULL;
+
 
 /*created using Android Studio (Beta) 0.8.14
 www.101apps.co.za*/
@@ -193,12 +199,12 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
                         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                 "mailto", headerValue, null));
                         appContext.startActivity(Intent.createChooser(emailIntent, appContext.getResources().getString(R.string.send_email)));
-                        WebEngageController.trackEvent("BUSINESS ENQUIRIES - EMAIL","Clicked: reply as email",null);
+                        WebEngageController.trackEvent(BUSINESS_ENQUIRIES_EMAIL,CLICKED_REPLY_AS_EMAIL,NULL);
                     }else{
                         Intent call = new Intent(Intent.ACTION_DIAL);
                     call.setData(Uri.parse("tel:"+headerValue));
                       appContext.startActivity(call);
-                        WebEngageController.trackEvent("BUSINESS ENQUIRIES - CALL","Clicked: reply as Call",null);
+                        WebEngageController.trackEvent(BUSINESS_ENQUIRIES_CALL,CLICKED_REPLY_AS_CALL,NULL);
                     }
                 }
             });

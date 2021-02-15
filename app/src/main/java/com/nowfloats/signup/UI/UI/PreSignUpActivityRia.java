@@ -1,7 +1,6 @@
 package com.nowfloats.signup.UI.UI;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,13 +9,6 @@ import android.content.IntentFilter;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.Editable;
 import android.text.InputType;
 import android.text.Spannable;
@@ -31,8 +23,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,18 +31,21 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.nowfloats.CustomWidget.MaterialProgressBar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
-import com.nowfloats.signup.UI.API.API_Layer;
 import com.nowfloats.signup.UI.API.API_Layer_Signup;
 import com.nowfloats.signup.UI.API.Download_Facebook_Image;
 import com.nowfloats.signup.UI.API.LoadCountryData;
@@ -80,7 +73,6 @@ import com.nowfloats.util.Utils;
 import com.nowfloats.util.WebEngageController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.apache.http.HttpResponse;
@@ -95,7 +87,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -103,6 +94,14 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_BUSINESS_PROFILE_CREATION_FAILED;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_BUSINESS_PROFILE_CREATION_INITIATED;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_BUSINESS_PROFILE_CREATION_SUCCESSFUL;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_PROFILE_CREATION_FAILED;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_PROFILE_CREATION_INITIATED;
+import static com.framework.webengageconstant.EventNameKt.BUSINESS_PROFILE_CREATION_SUCCESSFUL;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 
 public class PreSignUpActivityRia extends AppCompatActivity implements
         PreSignUpDialog.Dialog_Activity_Interface,
@@ -766,13 +765,13 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                     }
                     hideKeyBoard();
                     MixPanelController.track("CreateMyWebsite", null);
-                    WebEngageController.trackEvent("Business Profile Creation Initiated", "Business Profile Creation Initiated", null);
+                    WebEngageController.trackEvent(BUSINESS_PROFILE_CREATION_INITIATED, EVENT_LABEL_BUSINESS_PROFILE_CREATION_INITIATED, NULL);
                     createStore_retrofit(PreSignUpActivityRia.this, getJSONData(), bus);
                 } else {
                     Toast.makeText(activity, "All your inputs are not valid. Please cross check once.", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
-                WebEngageController.trackEvent("Business Profile Creation Failed", "Business Profile Creation Failed", null);
+                WebEngageController.trackEvent(BUSINESS_PROFILE_CREATION_FAILED, EVENT_LABEL_BUSINESS_PROFILE_CREATION_FAILED, NULL);
                 e.printStackTrace();
             }
         }
@@ -1247,8 +1246,8 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             descriptinon.execute();
         }
         if (response != null && response.model != null) {
-            WebEngageController.trackEvent("Business Profile Creation Successful",
-                    "Business Profile Creation Successful", response.model.Tag);
+            WebEngageController.trackEvent(BUSINESS_PROFILE_CREATION_SUCCESSFUL,
+                    EVENT_LABEL_BUSINESS_PROFILE_CREATION_SUCCESSFUL, response.model.Tag);
         }
         Intent webIntent = new Intent(PreSignUpActivityRia.this, HomeActivity.class);
         webIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
