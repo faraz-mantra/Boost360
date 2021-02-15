@@ -352,13 +352,14 @@
 -dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
 
 
-##onboarding progard rule
+## New progard rule
 -keeppackagenames com.onboarding
 -keeppackagenames com.dashboard
 -keeppackagenames com.appservice
 -keeppackagenames com.framework
 -keeppackagenames com.resources
 -keeppackagenames com.inventoryorder
+-keeppackagenames com.boost.presignup
 
 -keep class com.onboarding.** { *; }
 -keep class com.dashboard.** { *; }
@@ -370,8 +371,10 @@
 -keep class com.inventoryorder.model.** { <fields>; }
 -keep class com.dashboard.model.** { <fields>; }
 -keep class com.appservice.model.** { <fields>; }
+-keep class com.appservice.staffs.model.** { <fields>; }
+-keep class com.boost.presignup.datamodel.** { <fields>; }
 
-##onboarding progard rule
+## New progard rule
 
 ##---------------Begin: proguard configuration for Gson  ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard

@@ -1,12 +1,12 @@
-package com.onboarding.nowfloats.model.profile
+package com.appservice.model.accountDetails
 
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class Error(
+data class ErrorDeatil(
     @SerializedName("ErrorCode")
     var errorCode: Any? = null,
     @SerializedName("ErrorList")
-    var errorList: Any? = null,
-) : Serializable
+    var errorList: ErrorDetailList? = null
+): Serializable
