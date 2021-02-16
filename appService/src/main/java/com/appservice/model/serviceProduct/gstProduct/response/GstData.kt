@@ -4,7 +4,7 @@ package com.appservice.model.serviceProduct.gstProduct.response
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class DataG(
+data class GstData(
     @SerializedName("ActionId")
     var actionId: String? = null,
     @SerializedName("CreatedOn")

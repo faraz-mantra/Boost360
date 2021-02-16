@@ -7,7 +7,7 @@ import java.io.Serializable
 
 data class AccountCreateResponse(
     @SerializedName("Error")
-    var errorN: Error? = null,
+    var errorN: AccountError? = null,
     @SerializedName("Result")
     var result: Any? = null,
     @SerializedName("StatusCode")

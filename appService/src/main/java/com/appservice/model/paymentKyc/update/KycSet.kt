@@ -2,6 +2,7 @@ package com.appservice.model.paymentKyc.update
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class KycSet(
     @SerializedName("additionalDocument")
@@ -32,4 +33,4 @@ data class KycSet(
     var panCardDocument: String? = null,
     @SerializedName("panNumber")
     var panNumber: String? = null
-)
+): Serializable

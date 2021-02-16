@@ -18,7 +18,7 @@ import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.interfaces.CompareListener
 import com.bumptech.glide.Glide
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
+//import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -108,7 +108,7 @@ class ParentCompareItemAdapter (var list: java.util.ArrayList<Bundles>, val acti
 
         val layoutManager1 = LinearLayoutManager(parentViewHolder.ChildRecyclerView.context,
                 LinearLayoutManager.VERTICAL, false)
-        val sectionAdapter1 = SectionedRecyclerViewAdapter()
+//        val sectionAdapter1 = SectionedRecyclerViewAdapter()
         CompositeDisposable().add(
                 AppDatabase.getInstance(activity!!.application)!!
                         .featuresDao()

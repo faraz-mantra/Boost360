@@ -9,5 +9,5 @@ data class DashboardPremiumBannerResponse(
     @SerializedName("Data")
   var `data`: ArrayList<DashboardBannerData>? = null,
     @SerializedName("Extra")
-  var extra: Extra? = null
+  var extra: BannerExtra? = null
 ):BaseResponse(),Serializable
