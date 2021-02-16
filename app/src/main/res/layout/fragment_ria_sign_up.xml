@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="false"
                     android:scaleType="fitEnd"
-                    android:src="@drawable/ria_bg"></ImageView>
+                    android:src="@drawable/ria_bg" />
             </LinearLayout>
 
             <LinearLayout
@@ -137,7 +137,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/margin_10"
             android:paddingTop="@dimen/margin_10"
-            android:text="GET STARTED" />
+            android:text="@string/get_started" />
     </LinearLayout>
 </RelativeLayout>
 

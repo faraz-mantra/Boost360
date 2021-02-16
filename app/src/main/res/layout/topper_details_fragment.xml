@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Rank"
+                    android:text="@string/rank"
                     android:textColor="#747474"
                     android:textSize="@dimen/txt_12sp" />
 
@@ -91,7 +91,7 @@
                     android:layout_marginRight="@dimen/_5sdp"
                     android:background="@drawable/edit_text_bg_elevated_education"
                     android:elevation="@dimen/_2sdp"
-                    android:hint="Enter Rank"
+                    android:hint="@string/enter_rank"
                     android:text="@={toppersData.rank}"
                     android:textSize="@dimen/txt_16sp" />
 
@@ -113,7 +113,7 @@
                     android:layout_marginRight="@dimen/_5sdp"
                     android:background="@drawable/edit_text_bg_elevated_education"
                     android:elevation="@dimen/_2sdp"
-                    android:hint="Enter Name"
+                    android:hint="@string/enter_name"
                     android:text="@={toppersData.name}"
                     android:textSize="@dimen/txt_16sp" />
 
@@ -135,7 +135,7 @@
                     android:layout_marginRight="@dimen/_5sdp"
                     android:background="@drawable/edit_text_bg_elevated_education"
                     android:elevation="@dimen/_2sdp"
-                    android:hint="Enter Course Name"
+                    android:hint="@string/enter_course_name"
                     android:text="@={toppersData.programavailed}"
                     android:textSize="@dimen/txt_16sp" />
 
@@ -157,7 +157,7 @@
                     android:layout_marginRight="@dimen/_5sdp"
                     android:background="@drawable/edit_text_bg_elevated_education"
                     android:elevation="@dimen/_2sdp"
-                    android:hint="Enter Course Type"
+                    android:hint="@string/enter_course_type"
                     android:text="@={toppersData.coursecategory}"
                     android:textSize="@dimen/txt_16sp" />
 
@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Add Testimonial Image"
+                    android:text="@string/add_testimonial_image"
                     android:textColor="#747474"
                     android:textSize="@dimen/txt_12sp" />
 
@@ -210,7 +210,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Testimonial Description"
+                    android:text="@string/testimonial_description"
                     android:textColor="#747474"
                     android:textSize="@dimen/txt_12sp" />
 
@@ -225,7 +225,7 @@
                     android:background="@drawable/edit_text_bg_elevated_education"
                     android:elevation="@dimen/_2sdp"
                     android:gravity="top"
-                    android:hint="Enter Testimonial Text \n(200 Characters Max)"
+                    android:hint="@string/enter_testimonial_text_n_200_characters_max"
                     android:text="@={toppersData.testimonialtext}"
                     android:textSize="@dimen/txt_16sp" />
 
@@ -243,7 +243,7 @@
                     android:gravity="center"
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_10sdp"
-                    android:text="save"
+                    android:text="@string/save"
                     android:textAllCaps="true"
                     android:textColor="@color/white" />
 

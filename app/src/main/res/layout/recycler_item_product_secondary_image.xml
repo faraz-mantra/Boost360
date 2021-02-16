@@ -52,7 +52,7 @@
         android:id="@+id/btn_change"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:text="Change"
+        android:text="@string/change_"
         android:textSize="12sp"
         android:textAllCaps="false"
         android:padding="5dp"

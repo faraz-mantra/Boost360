@@ -83,7 +83,7 @@
             android:gravity="center_horizontal"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="fpwebsitename.com"
+            android:text="@string/fpwebsitename_com"
             android:textColor="#FFFFFF"
             android:textSize="12sp" />
 
@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text=""></com.nowfloats.CustomWidget.roboto_md_46_616161>
+                    android:text="" />
 
                 <com.nowfloats.CustomWidget.roboto_md_36_bcbcbc
                     android:layout_width="wrap_content"

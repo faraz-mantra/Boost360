@@ -46,7 +46,7 @@
                 android:background="@drawable/button_bg"
                 android:elevation="5dp"
                 android:padding="5dp"
-                android:text="Add Multiple Images"
+                android:text="@string/add_multiple_images"
                 android:textColor="@color/white" />
 
 
@@ -200,7 +200,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:hint="Available Units"
+                    android:hint="@string/available_units"
                     android:inputType="number|numberDecimal"
                     android:textColor="@color/main_text_color"
                     android:textColorHint="@color/primaryColor"

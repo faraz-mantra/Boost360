@@ -61,7 +61,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:singleLine="true"
-                                android:text="I'm Late Wallclock"
+                                android:text="@string/i_m_late_wallclock"
                                 android:textColor="@color/primaryColor"
                                 android:textSize="14sp"
                                 tools:ignore="MissingPrefix" />

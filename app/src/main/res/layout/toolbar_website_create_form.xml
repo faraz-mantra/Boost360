@@ -33,7 +33,7 @@
             android:layout_gravity="bottom"
             android:layout_marginLeft="15dp"
             android:gravity="center"
-            android:text="Ria"
+            android:text="@string/ria"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginLeft="3dp"
-            android:text="is typing..."
+            android:text="@string/is_typing"
             android:textColor="@color/white"
             android:textStyle="italic"
             android:visibility="invisible" />

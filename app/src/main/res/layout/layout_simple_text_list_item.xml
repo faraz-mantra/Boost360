@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceListItemSmall"
     android:gravity="center_vertical"
-    android:text="fafsfs"
     android:textColor="@color/cell_text_color"
     android:background="@color/white"
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"

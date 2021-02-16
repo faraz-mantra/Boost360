@@ -23,7 +23,7 @@
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_gravity="start"
-            android:text="Social Analytics"/>
+            android:text="@string/social_analytics"/>
         <ImageView
             android:id="@+id/social_img"
             android:layout_width="30dp"
