@@ -84,7 +84,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
             startCountDown(orderItem!!)
           }
           setDetails(orderItem!!)
-        } else errorUi("Consultation data not available.")
+        } else errorUi(getString(R.string.consultation_data_not_available))
       } else errorUi(it.message())
     })
   }
@@ -338,7 +338,7 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
           OrderStatusValue.ESCALATED_3.value
         } else statusValue.plus(order.cancelledTextVideo())
       }
-      order.isConfirmConsultBtn() -> "Upcoming Consult"
+      order.isConfirmConsultBtn() -> getString(R.string.upcoming_consult)
       else -> statusValue
     }
   }
@@ -362,12 +362,12 @@ class VideoConsultDetailsFragment : BaseInventoryFragment<FragmentVideoConsultDe
     super.onCreateOptionsMenu(menu, inflater)
     val item: MenuItem = menu.findItem(R.id.menu_item_share)
     item.actionView.findViewById<CustomButton>(R.id.button_share).setOnClickListener {
-      showLongToast("Coming soon..")
+      showLongToast(getString(R.string.coming_soon))
     }
   }
 
   private fun paymentReminder() {
-    showLongToast("Coming soon..")
+    showLongToast(getString(R.string.coming_soon))
   }
 
   private fun clickDeliveryItem(list: LocationsModel?) {

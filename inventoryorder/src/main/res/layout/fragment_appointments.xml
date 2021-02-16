@@ -66,7 +66,7 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/size_10"
           android:gravity="center"
-          android:text="Error"
+          android:text="@string/error"
           android:textAlignment="gravity"
           android:textColor="@color/greyish_brown"
           app:fontFamily="@font/semi_bold"

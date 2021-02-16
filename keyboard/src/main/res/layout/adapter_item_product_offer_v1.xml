@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/tv_product_name"
-        android:text="Creating new offer for"/>
+        android:text="@string/creating_new_offer_for"/>
 
     <TextView
         android:id="@+id/tv_product_name"
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/secondaryTextColor"
             android:textSize="13sp"
-            android:text="Price: "
+            android:text="@string/price_colon"
             android:layout_gravity="center_vertical"/>
 
         <TextView
@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/secondaryTextColor"
-                android:text="OFFER PRICE" />
+                android:text="@string/offer_price_heading" />
 
             <LinearLayout
                 android:id="@+id/ll_price"
@@ -186,7 +186,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/secondaryTextColor"
-                android:text="VALIDITY" />
+                android:text="@string/validity_heading" />
 
             <LinearLayout
                 android:id="@+id/ll_validity"
@@ -207,7 +207,7 @@
                     android:gravity="bottom"
                     android:textSize="13sp"
                     android:textColor="@color/primaryTextColor"
-                    android:text="24 Hrs"/>
+                    android:text="@string/_24_hrs"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="18dp"
@@ -232,7 +232,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/secondaryTextColor"
-                android:text="QTY." />
+                android:text="@string/qty" />
 
             <LinearLayout
                 android:id="@+id/ll_quantity"
@@ -251,7 +251,7 @@
                     android:textSize="13sp"
                     android:gravity="bottom"
                     android:textColor="@color/primaryTextColor"
-                    android:text="1"/>
+                    android:text="@string/_1"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="18dp"

@@ -82,7 +82,7 @@
                     android:layout_marginTop="@dimen/size_6"
                     android:background="@drawable/ic_rectangle_light_black_outline"
                     android:gravity="center_vertical"
-                    android:hint="+91 XXXXX XXXXX"
+                    android:hint="@string/_91_xxxxx_xxxxx"
                     android:paddingStart="@dimen/size_12"
                     android:paddingEnd="@dimen/size_12"
                     android:textColorHint="@color/black_202A2A2A" />

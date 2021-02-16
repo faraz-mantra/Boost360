@@ -202,6 +202,9 @@
   <string name="onboarding_please_wait">Please wait…</string>
   <string name="https_shantisalonspa_com">https://shantisalonspa.com/</string>
   <string name="permission_denied_to_your_external_storage">Permission denied to read your External storage</string>
+    <string name="upto_50_latest_news_updates">Upto 50 Latest News/Updates</string>
+  <string name="business_card">Business Card</string>
+  <string name="google_business_url">https://business.google.com/create</string>
 
 </resources>
 
