@@ -2,7 +2,7 @@ package com.framework.webengageconstant
 
 const val FLOATING_POINT_ID = "fpId"
 const val NO_EVENT_VALUE = ""
-const val NULL = "null"
+const val NULL = ""
 const val EVENT_VALUE_HOME_PAGE = "Home Page"
 const val PLEASE_CHECK_YOUR_CREDENTIALS = "Please check your credentials"
 const val FORGOT_PASSWORD_FAILED="Forgot Password failed"

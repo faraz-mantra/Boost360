@@ -17,6 +17,7 @@ object WebEngageController {
             }
             if (event_attributes.size > 0) {
                 weAnalytics.track(event_name, event_attributes)
+                weAnalytics.screenNavigated(event_name)
 
                 //Firebase Analytics Event...
                 val event = FirebaseEvent(event_name)
@@ -37,7 +38,7 @@ object WebEngageController {
         if (weAnalytics != null) {
             if (event_attributes.size > 0) {
                 weAnalytics.track(event_name, event_attributes)
-
+                weAnalytics.screenNavigated(event_name)
                 //Firebase Analytics Event...
                 val event = FirebaseEvent(event_name)
                 event.putDoubleMap(event_attributes)
@@ -74,7 +75,7 @@ object WebEngageController {
 
             if (event_attributes.size > 0) {
                 weAnalytics.track(event_name, event_attributes)
-
+                weAnalytics.screenNavigated(event_name)
                 //Firebase Analytics Event...
                 val event = FirebaseEvent(event_name)
                 event.putIntMap(event_attributes)
@@ -109,7 +110,7 @@ object WebEngageController {
 
             if (event_attributes.size > 0) {
                 weAnalytics.track(event_name, event_attributes)
-
+                weAnalytics.screenNavigated(event_name)
 
                 //Firebase Analytics Event...
                 FirebaseAnalyticsUtils.logEvent(event_name, "", "")
@@ -122,6 +123,7 @@ object WebEngageController {
 
             } else {
                 weAnalytics.track(event_name)
+                weAnalytics.screenNavigated(event_name)
             }
 
         }
