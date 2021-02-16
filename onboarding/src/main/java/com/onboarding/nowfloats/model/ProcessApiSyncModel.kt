@@ -8,7 +8,7 @@ class ProcessApiSyncModel(
     val title: String? = null,
     val channels: List<ChannelModel>? = null,
     val profileFreePlanItems: String? = null,
-    var status: String? = SyncStatus.PROCESSING.name
+    var status: String? = SyncStatus.PROCESSING.name,
 ) : AppBaseRecyclerViewItem {
 
 

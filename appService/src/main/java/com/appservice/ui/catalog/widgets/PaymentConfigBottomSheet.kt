@@ -6,7 +6,7 @@ import android.view.View
 import com.appservice.R
 import com.appservice.databinding.BottomShettPaymentConfigurationBinding
 import com.appservice.model.accountDetails.BankAccountDetails
-import com.appservice.model.serviceProduct.Product
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
@@ -37,8 +37,8 @@ class PaymentConfigBottomSheet : BaseBottomSheetDialog<BottomShettPaymentConfigu
     setOnClickListener(binding?.vwBoostPaymentGateway, binding?.vwExternalUrl, binding?.changeBankDetail)
     setOnClickListener(binding?.btnDone, binding?.btnCancel)
     binding?.changeBankDetail?.text = resources.getString(if (bankAccountDetail != null) R.string.update_bank_detail else R.string.add_bank_account)
-    binding?.rbBoostPaymentGateway?.isChecked = (paymentType == Product.PaymentType.ASSURED_PURCHASE.value)
-    binding?.rbExternalUrl?.isChecked = (paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)
+    binding?.rbBoostPaymentGateway?.isChecked = (paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value)
+    binding?.rbExternalUrl?.isChecked = (paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)
   }
 
   override fun onClick(v: View) {
@@ -46,13 +46,13 @@ class PaymentConfigBottomSheet : BaseBottomSheetDialog<BottomShettPaymentConfigu
     when (v) {
       binding?.vwBoostPaymentGateway -> {
         if (bankAccountDetail != null) {
-          paymentType = Product.PaymentType.ASSURED_PURCHASE.value
+          paymentType = CatalogProduct.PaymentType.ASSURED_PURCHASE.value
           binding?.rbExternalUrl?.isChecked = false
           binding?.rbBoostPaymentGateway?.isChecked = binding?.rbBoostPaymentGateway?.isChecked?.not() ?: false
         } else showLongToast("Boost Payment gateway not added, please add first.")
       }
       binding?.vwExternalUrl -> {
-        paymentType = Product.PaymentType.UNIQUE_PAYMENT_URL.value
+        paymentType = CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value
         binding?.rbBoostPaymentGateway?.isChecked = false
         binding?.rbExternalUrl?.isChecked = binding?.rbExternalUrl?.isChecked?.not() ?: false
       }

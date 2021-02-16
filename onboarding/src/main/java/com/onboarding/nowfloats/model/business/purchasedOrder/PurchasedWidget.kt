@@ -4,7 +4,7 @@ package com.onboarding.nowfloats.model.business.purchasedOrder
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class Widget(
+data class PurchasedWidget(
     @SerializedName("ConsumptionConstraint")
     var consumptionConstraint: ConsumptionConstraint? = null,
     @SerializedName("Desc")
@@ -12,7 +12,7 @@ data class Widget(
     @SerializedName("Discount")
     var discount: Double? = null,
     @SerializedName("Expiry")
-    var expiry: Expiry? = null,
+    var expiry: PurchasedExpiry? = null,
     @SerializedName("Images")
     var images: List<String>? = null,
     @SerializedName("IsCancellable")
