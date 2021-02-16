@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-                    android:text="Assured Purchase"
+                    android:text="@string/assured_purchase"
                     android:textColor="@color/primaryColor"
                     android:textSize="23sp" />
 

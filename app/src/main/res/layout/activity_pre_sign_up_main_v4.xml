@@ -89,7 +89,7 @@
                 android:layout_marginLeft="8dp"
                 android:gravity="center"
                 android:fontFamily="sans-serif-medium"
-                android:text="LOGIN    "
+                android:text="@string/login__"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/medium_text_size"

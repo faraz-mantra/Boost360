@@ -111,7 +111,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
             setAdapterNotify(orderList)
           } else {
             setHasOptionsMenu(false)
-            errorView("No video consultation available.")
+            errorView(getString(R.string.no_video_consultation_available))
           }
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
@@ -122,12 +122,12 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
           } else if (orderList.isNullOrEmpty().not()) setAdapterNotify(orderList)
           else {
             setHasOptionsMenu(false)
-            errorView("No video consultation available.")
+            errorView(getString(R.string.no_video_consultation_available))
           }
         }
       } else {
         setHasOptionsMenu(false)
-        errorView(it.message ?: "No video consultation available.")
+        errorView(it.message ?:getString(R.string.no_video_consultation_available))
       }
     })
   }

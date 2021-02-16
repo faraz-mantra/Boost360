@@ -24,7 +24,7 @@
             android:layout_gravity="center"
             android:textAllCaps="false"
             android:background="@drawable/rounded_corner_button"
-            android:text="Load more calls"/>
+            android:text="@string/load_more_calls"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_list"

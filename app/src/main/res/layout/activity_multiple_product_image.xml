@@ -100,7 +100,7 @@
         android:textSize="20sp"
         android:gravity="center"
         android:textColor="@color/white"
-        android:text="Click on + below to add\nImages for your product"
+        android:text="@string/click_on_below_to_add_nimages_for_your_product"
         app:layout_constraintTop_toTopOf="@id/vp_product_images"
         app:layout_constraintBottom_toBottomOf="@id/vp_product_images"
         app:layout_constraintStart_toStartOf="@id/vp_product_images"

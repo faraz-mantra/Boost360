@@ -18,13 +18,13 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Title for Latin keyboard input options dialog [CHAR LIMIT=25] -->
-    <string name="english_ime_input_options">Input options</string>
+    <string name="english_ime_input_options" translatable="false">Input options</string>
 
     <!-- Title for the spell checker option to turn on/off contact names lookup [CHAR LIMIT=25] -->
-    <string name="use_contacts_for_spellchecking_option_title">Look up contact names</string>
+    <string name="use_contacts_for_spellchecking_option_title" translatable="false">Look up contact names</string>
 
     <!-- Description for the spell checker option to turn on/off contact names lookup. [CHAR LIMIT=65] -->
-    <string name="use_contacts_for_spellchecking_option_summary">Spell checker uses entries from your contact list</string>
+    <string name="use_contacts_for_spellchecking_option_summary" translatable="false">Spell checker uses entries from your contact list</string>
 
     <!-- Option to provide vibrate/haptic feedback on keypress -->
     <string name="vibrate_on_keypress">Vibrate on keypress</string>
@@ -668,9 +668,6 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <string name="validity_heading">VALIDITY</string>
     <string name="_24_hrs">24 Hrs</string>
     <string name="qty">QTY.</string>
-    <string name="_1">1</string>
-    <string name="product_name">Product Name</string>
-    <string name="_0_0">0.0</string>
     <string name="_0_0">0.0</string>
     <string name="this_is_product_description">This is product description</string>
     <string name="share_now">SHARE NOW</string>
@@ -684,7 +681,6 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <string name="lol">LoL</string>
     <string name="h">h</string>
     <string name="listening">Listening...</string>
-    <string name="_1">1</string>
     <string name="in_the_language_and_input_settings_tap_the_toggle_next_to_agah_keyboard_this_will_authorize_the_keyboard_to_run_on_your_device">In the Language and Input settings, tap the toggle next to Agah Keyboard. This will authorize the keyboard to run on your device.</string>
 
 

@@ -144,7 +144,7 @@
                     android:inputType="none"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:text="India"
+                    android:text="@string/india"
                     android:editable="false"
                     android:textSize="15sp"/>
 
@@ -206,7 +206,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="28dp"
-                        android:text="+91"
+                        android:text="@string/_91"
                         android:textColor="#B6B6B6"
                         android:textSize="15sp"
                         android:visibility="gone"
@@ -245,7 +245,7 @@
                 android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginBottom="@dimen/margin_20"
                 android:autoLink="all"
-                android:text="NOTE: Boost will automatically create a commerce-enabled website (e.g. cairo.nowfloats.com) for your business. As you start adding content on Boost, the website gets updated instantly helping your business get visibility across all search engines."
+                android:text="@string/note_boost_will_automatically_create_a_commerce_enabled_website_e_g_cairo_nowfloats_com_for_your_business_as_you_start_adding_content_on_boost_the_website_gets_updated_instantly_helping_your_business_get_visibility_across_all_search_engines"
                 android:textColor="@color/gray"
                 android:textColorHint="@color/primary"
                 android:textSize="@dimen/small_text_size"
@@ -272,7 +272,7 @@
             android:layout_height="fill_parent"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="CONFIRM"
+            android:text="@string/confirm"
             android:textColor="@color/white"
             android:textSize="@dimen/medium_text_size"
             tools:ignore="MissingPrefix" />

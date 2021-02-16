@@ -196,7 +196,7 @@
                             android:layout_gravity="center"
                             android:textSize="17sp"
                             android:textColor="#383838"
-                            android:text="Product Category"/>
+                            android:text="@string/product_category"/>
                         <LinearLayout
                             android:gravity="center"
                             android:orientation="horizontal"
@@ -227,7 +227,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:buttonTint="@color/light_gray"
-                                android:text="Services" />
+                                android:text="@string/services" />
 
                             <RadioButton
                                 android:layout_marginLeft="10dp"

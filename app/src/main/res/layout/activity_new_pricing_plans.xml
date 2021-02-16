@@ -52,7 +52,8 @@
         <TextView
             android:id="@+id/tv_category"
             android:layout_marginLeft="5dp"
-            android:text="SELECT CATEGORY"
+            android:textAllCaps="true"
+            android:text="@string/select_category"
             android:gravity="center_horizontal"
             android:textColor="#525252"
             android:textStyle="bold"
