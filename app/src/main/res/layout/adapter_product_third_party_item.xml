@@ -27,7 +27,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:text="my product"/>
+            android:text="@string/my_product"/>
         <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
             android:maxLines="1"
             android:visibility="gone"
             android:layout_marginBottom="5dp"
-            android:text="INR 50"/>
+            android:text="@string/inr_50"/>
 
     </LinearLayout>
     <FrameLayout

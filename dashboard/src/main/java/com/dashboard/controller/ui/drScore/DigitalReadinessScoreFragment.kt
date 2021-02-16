@@ -203,7 +203,7 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
           val txt = String.format(messageDetail!!, session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), shareChannelText, location)
           visitingCard(txt)
         }
-      } else visitingCard("Business Card")
+      } else visitingCard(getString(R.string.business_card))
     })
   }
 

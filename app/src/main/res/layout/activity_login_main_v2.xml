@@ -31,7 +31,7 @@
       android:layout_marginLeft="14dp"
       android:layout_marginTop="10dp"
       android:fontFamily="@font/open_sans_bold"
-      android:text="Ready to Log in?"
+      android:text="@string/ready_to_log_in"
       android:textColor="@color/yellow"
       android:textSize="30sp" />
 
@@ -148,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
                 android:fontFamily="@font/open_sans"
-                android:text="Forgot?"
+                android:text="@string/forgot"
                 android:textColor="#4a4a4a" />
             </LinearLayout>
           </LinearLayout>
@@ -170,7 +170,7 @@
           android:layout_marginTop="40dp"
           android:background="@color/primaryColor"
           android:elevation="5dp"
-          android:text="LOG IN"
+          android:text="@string/log_in_heading"
           android:textSize="6sp"
           android:visibility="gone" />
 
@@ -236,7 +236,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="Via Facebook"
+                android:text="@string/via_facebook"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
@@ -274,7 +274,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="Via Google"
+                android:text="@string/via_google"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
             </LinearLayout>
@@ -314,7 +314,7 @@
               android:layout_gravity="center"
               android:layout_marginStart="@dimen/_10sdp"
               android:fontFamily="@font/open_sans_bold"
-              android:text="Via Mobile OTP"
+              android:text="@string/via_mobile_otp"
               android:textColor="#4a4a4a"
               android:textStyle="bold" />
           </LinearLayout>

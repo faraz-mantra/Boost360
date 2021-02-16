@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company Title"
+                android:text="@string/company_title"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
@@ -40,13 +40,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/EditTextCustomeStyle"
-                android:hint="Enter Company Title"
+                android:hint="@string/enter_company_title"
                 android:elevation="@dimen/_2sdp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="About Company"
+                android:text="@string/about_company"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
@@ -56,8 +56,9 @@
                 android:id="@+id/company_description"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
+                android:inputType="textMultiLine"
                 style="@style/EditTextCustomeStyle"
-                android:hint="Enter Company Description \n (100 Characters Max)"
+                android:hint="@string/enter_company_description_100_characters_max"
                 android:textSize="@dimen/_12sdp"
                 android:elevation="@dimen/_2sdp"
                 android:gravity="top"/>
@@ -72,7 +73,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Client Name"
+                android:text="@string/client_name"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
@@ -82,13 +83,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/EditTextCustomeStyle"
-                android:hint="Enter Client Name"
+                android:hint="@string/enter_client_name"
                 android:elevation="@dimen/_2sdp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Client Category"
+                android:text="@string/client_category"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
@@ -98,13 +99,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/EditTextCustomeStyle"
-                android:hint="Enter Client Category"
+                android:hint="@string/enter_client_category"
                 android:elevation="@dimen/_2sdp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Project Client Requirement"
+                android:text="@string/project_client_requirement"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
@@ -115,14 +116,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
                 style="@style/EditTextCustomeStyle"
-                android:hint="Enter Description \n(200 Characters Max)"
+                android:hint="@string/enter_description_200_characters_max"
                 android:elevation="@dimen/_2sdp"
                 android:gravity="top"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Our Approach"
+                android:text="@string/our_approach"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
@@ -133,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp"
                 style="@style/EditTextCustomeStyle"
-                android:hint="Enter Description \n(200 Characters Max)"
+                android:hint="@string/enter_description_200_characters_max"
                 android:elevation="@dimen/_2sdp"
                 android:gravity="top"/>
 
@@ -149,7 +150,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Budget"
+                        android:text="@string/budget"
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_15sdp"/>
@@ -159,7 +160,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/EditTextCustomeStyle"
-                        android:hint="0"
+                        android:hint="@string/_0"
                         android:inputType="number"
                         android:elevation="@dimen/_2sdp"/>
                 </LinearLayout>
@@ -171,7 +172,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Date of Completion"
+                        android:text="@string/date_of_completion"
                         android:layout_marginEnd="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_15sdp"/>
 
@@ -181,7 +182,7 @@
                         android:layout_height="wrap_content"
                         style="@style/EditTextCustomeStyle"
                         android:layout_marginStart="0dp"
-                        android:hint="00-00-0000"
+                        android:hint="@string/_00_00_0000"
                         android:inputType="none"
                         android:focusable="false"
                         android:textSize="@dimen/_12sdp"
@@ -244,7 +245,7 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Maximum 3"
+                    android:text="@string/maximum_3"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:textColor="@color/grey_400"
                     android:fontFamily="@font/open_sans"/>
@@ -253,7 +254,7 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Jpg/png (800x800px)"
+                    android:text="@string/jpg_png_800x800px"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:gravity="end"
                     android:textColor="@color/grey_400"
@@ -272,7 +273,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="STATUS"
+                android:textAllCaps="true"
+                android:text="@string/status"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/open_sans"
@@ -298,7 +300,7 @@
                         android:id="@+id/completed_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="COMPLETED"
+                        android:text="@string/completed"
                         android:textStyle="bold"
                         android:textColor="#9ABFFF"
                         android:textSize="@dimen/_8sdp"
@@ -321,7 +323,7 @@
                         android:id="@+id/inprogress_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="IN PROGRESS"
+                        android:text="@string/in_progress"
                         android:textStyle="bold"
                         android:textColor="#9ABFFF"
                         android:textSize="@dimen/_8sdp"
@@ -344,7 +346,7 @@
                         android:id="@+id/withdraw_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="WITHDRAW"
+                        android:text="@string/withdraw"
                         android:textStyle="bold"
                         android:textSize="@dimen/_8sdp"
                         android:textColor="#9ABFFF"
@@ -363,7 +365,7 @@
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:gravity="center"
-                android:text="save"
+                android:text="@string/save"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:elevation="@dimen/_2sdp"

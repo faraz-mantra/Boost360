@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import com.dashboard.AppDashboardApplication
 import com.dashboard.R
 
 import com.dashboard.base.AppBaseFragment
@@ -121,7 +122,7 @@ class AllBoostAddonsFragment : AppBaseFragment<FragmentAllBoostAddOnsBinding, Ad
       searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
       searchAutoComplete?.setTextColor(getColor(R.color.white))
       searchView?.setIconifiedByDefault(true)
-      searchView?.queryHint = "Search boost add-ons"
+      searchView?.queryHint = getString(R.string.search_boost_add_ons)
       searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
           return false
@@ -238,7 +239,7 @@ fun businessAddOnsClick(type: ManageBusinessData.BusinessType, baseActivity: App
     ManageBusinessData.BusinessType.membership_plans,
     ManageBusinessData.BusinessType.restaurant_story_d,
     -> {
-      Toast.makeText(baseActivity, "Coming soon...", Toast.LENGTH_SHORT).show()
+      Toast.makeText(baseActivity, AppDashboardApplication.instance.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show()
     }
   }
 }

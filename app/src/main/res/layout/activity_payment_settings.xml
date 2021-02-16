@@ -208,7 +208,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="Name:"/>
+                            android:text="@string/name_heading"/>
                         <TextView
                             android:id="@+id/tv_person_name"
                             android:layout_marginLeft="5dp"
@@ -227,7 +227,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="Bank Name:"/>
+                            android:text="@string/bank_name"/>
                         <TextView
                             android:id="@+id/tv_bank_name"
                             android:layout_marginLeft="5dp"
@@ -246,7 +246,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="Account Number:"/>
+                            android:text="@string/account_number"/>
                         <TextView
                             android:id="@+id/tv_acc_num"
                             android:layout_marginLeft="5dp"
@@ -265,7 +265,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="IFSC:"/>
+                            android:text="@string/ifsc"/>
                         <TextView
                             android:id="@+id/tv_ifsc"
                             android:layout_marginLeft="5dp"
@@ -284,7 +284,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="Account Type:"/>
+                            android:text="@string/account_type"/>
                         <TextView
                             android:id="@+id/tv_acc_type"
                             android:layout_marginLeft="5dp"
@@ -303,7 +303,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="PAN Card:"/>
+                            android:text="@string/pan_card"/>
                         <TextView
                             android:id="@+id/tv_pan_card"
                             android:layout_marginLeft="5dp"
@@ -323,7 +323,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="GSTIN:"/>
+                            android:text="@string/gstin"/>
                         <TextView
                             android:id="@+id/tv_gstin"
                             android:layout_marginLeft="5dp"

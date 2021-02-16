@@ -503,7 +503,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           val txt = String.format(messageDetail!!, session?.getFPDetails(GET_FP_DETAILS_BUSINESS_NAME) ?: "", session!!.getDomainName(false), shareChannelText, location)
           visitingCard(txt)
         }
-      } else visitingCard("My Business Card")
+      } else visitingCard(getString(R.string.my_business_card))
     })
   }
 
@@ -587,14 +587,14 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
       RoiSummaryData.RoiType.TRACK_CALL -> baseActivity.startVmnCallCard(session)
       RoiSummaryData.RoiType.APT_ORDER -> baseActivity.startAptOrderSummary(session)
       RoiSummaryData.RoiType.CONSULTATION -> {
-        showShortToast("Video Consultation analytics coming soon...")
+        showShortToast(getString(R.string.video_consultation_analytics_coming_soon))
       }
       RoiSummaryData.RoiType.APT_ORDER_WORTH -> {
 //        baseActivity.startRevenueSummary(session)
-        showShortToast("Collection analytics coming soon...")
+        showShortToast(getString(R.string.collection_analytics_coming_soon))
       }
       RoiSummaryData.RoiType.COLLECTION_WORTH -> {
-        showShortToast("Collection analytics coming soon...")
+        showShortToast(getString(R.string.collection_analytics_coming_soon))
       }
     }
   }

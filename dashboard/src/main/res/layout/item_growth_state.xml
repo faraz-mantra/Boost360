@@ -53,16 +53,17 @@
         android:orientation="horizontal">
 
         <com.framework.views.customViews.CustomTextView
-          android:id="@+id/txt_symbol"
-          android:layout_width="wrap_content"
-          android:layout_height="match_parent"
-          android:layout_marginEnd="@dimen/size_6"
-          android:includeFontPadding="false"
-          android:paddingTop="@dimen/size_6"
-          android:text="INR"
-          android:textColor="@color/black_4a4a4a"
-          app:fontFamily="@font/regular"
-          app:textType="CAPTION" />
+            android:id="@+id/txt_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/size_6"
+            android:includeFontPadding="false"
+            android:paddingTop="@dimen/size_6"
+            android:text="@string/inr"
+            android:textAllCaps="true"
+            android:textColor="@color/black_4a4a4a"
+            app:fontFamily="@font/regular"
+            app:textType="CAPTION" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/txt_amount"
