@@ -111,28 +111,30 @@
             android:max="100"
             android:progress="50" />
 
+          <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager_business_content_setup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/size_14"
+            android:layout_weight="1"
+            android:clipChildren="false"
+            android:clipToPadding="false" />
+
           <com.framework.views.dotsindicator.DotsIndicator
             android:id="@+id/dot_business_content_setup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/size_14"
+            android:layout_marginBottom="@dimen/size_14"
             app:dotsColor="@color/light_grey_1"
             app:dotsCornerRadius="@dimen/_6dp"
             app:dotsSize="@dimen/size_5"
             app:dotsSpacing="@dimen/size_2"
             app:dotsWidthFactor="2.5"
             app:progressMode="false"
-            app:selectedDotColor="@color/white" />
+            app:selectedDotColor="@color/black_4a4a4a"/>
 
-          <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pager_business_content_setup"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/size_7"
-            android:layout_marginBottom="@dimen/size_16"
-            android:clipChildren="false"
-            android:clipToPadding="false" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </FrameLayout>
 

@@ -24,7 +24,7 @@ class BusinessSetupViewHolder(binding: ItemBusinessManagementBinding) : AppBaseR
       startCheckAnimation(true)
     } else {
       val subTitle = data.getPendingText()
-      binding.btnTitle.text = if (subTitle.isNullOrEmpty()) data.type?.title else "Add $subTitle"
+      binding.btnTitle.text = if (subTitle.isNullOrEmpty()) data.type?.title else subTitle
       getColor(R.color.light_grey_3)?.let { binding.txtDes.setTextColor(it) }
       binding.viewBtn.visible()
       binding.viewImage.visible()

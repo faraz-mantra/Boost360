@@ -19,6 +19,7 @@ import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.models.firestore.FirestoreManager
 import com.framework.views.dotsindicator.OffsetPageTransformer
+import com.framework.webengageconstant.*
 import com.onboarding.nowfloats.R
 import com.onboarding.nowfloats.constant.FragmentType
 import com.onboarding.nowfloats.constant.PreferenceConstant
@@ -195,7 +196,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
       dismiss()
       savePositionCard(cardPosition)
-      WebEngageController.trackEvent("Visiting Card Share", "visiting_card", localSessionModel?.fpTag?:"")
+      WebEngageController.trackEvent(VISITING_CARD_SHARE, VISITING_CARD, localSessionModel?.fpTag?:"")
       onBusinessCardAddedOrUpdated(true)
     } catch (e: Exception) {
       showLongToast("Error sharing visiting card, please try again.")
@@ -245,7 +246,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
 
 fun AppCompatActivity.startDigitalChannel(bundle: Bundle) {
   try {
-    WebEngageController.trackEvent("Digital Channel Page", "startview", "");
+    WebEngageController.trackEvent(DIGITAL_CHANNEL_PAGE, START_VIEW, NO_EVENT_VALUE);
     startFragmentChannelActivity(FragmentType.MY_DIGITAL_CHANNEL, bundle)
   } catch (e: Exception) {
     e.printStackTrace()

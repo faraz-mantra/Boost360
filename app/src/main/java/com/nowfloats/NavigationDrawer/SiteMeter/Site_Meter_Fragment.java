@@ -66,6 +66,9 @@ import java.util.HashMap;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
+import static com.framework.webengageconstant.EventLabelKt.SITE_HEALTH;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_SITE_HEALTH;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -390,7 +393,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
             }
         }
 
-        WebEngageController.trackEvent("Clicked on site health", "SITE HEALTH", String.valueOf(siteMeterTotalWeight));
+        WebEngageController.trackEvent(CLICKED_ON_SITE_HEALTH, SITE_HEALTH, String.valueOf(siteMeterTotalWeight));
 
         activity.runOnUiThread(new Runnable() {
             @Override

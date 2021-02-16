@@ -53,6 +53,10 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static com.appservice.ui.catalog.CatalogServiceContainerActivityKt.startFragmentActivityNew;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_PRODUCT_CATALOGUE;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW;
+import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_PRODUCTS_CATALOGUE_ITEM;
+import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 
 public class ProductCatalogActivity extends AppCompatActivity implements WidgetKey.OnWidgetListener {
 
@@ -203,7 +207,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
       }
     });
     adapter.SetOnItemClickListener(product -> {
-      WebEngageController.trackEvent("Clicked on products catalogue item", "PRODUCT CATALOGUE", "");
+      WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ITEM, EVENT_LABEL_PRODUCT_CATALOGUE, NO_EVENT_VALUE);
       openAddProductActivity(product);
 //            Intent intent = new Intent(ProductCatalogActivity.this, ManageProductActivity.class);
 //            intent.putExtra("PRODUCT", selected_product);
@@ -320,7 +324,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
       if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
         Methods.showFeatureNotAvailDialog(this);
       } else {
-        WebEngageController.trackEvent("Clicked on products catalogue add new", "PRODUCT CATALOGUE", "");
+        WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW, EVENT_LABEL_PRODUCT_CATALOGUE, NO_EVENT_VALUE);
         openAddProductActivity(new Product());
       }
 
@@ -335,7 +339,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
       } else if (!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && adapter.getItemCount() >= Integer.parseInt(value)) {
         Toast.makeText(getApplicationContext(), getString(R.string.message_add_product_limit), Toast.LENGTH_LONG).show();
       } else {
-        WebEngageController.trackEvent("Clicked on products catalogue add new", "PRODUCT CATALOGUE", "");
+        WebEngageController.trackEvent(CLICKED_ON_PRODUCTS_CATALOGUE_ADD_NEW, EVENT_LABEL_PRODUCT_CATALOGUE, NO_EVENT_VALUE);
         openAddProductActivity(new Product());
       }
 

@@ -11,7 +11,7 @@
   <string name="more">More</string>
   <string name="www_sravansclinic_com"><u>www.plastoindiaandpolymers.com</u></string>
   <string name="my_visiting_card">My visiting card</string>
-  <string name="improve_your_score_to_90">Improve your score above <b>90%</b> for\nbetter online traction.</string>
+  <string name="improve_your_score_to_90">Improve your score above <b>90%</b> for better online traction.</string>
   <string name="share_on_whatsapp">Share on WhatsApp</string>
   <string name="share_on_more">Share on more...</string>
   <string name="digital_readiness_score">Digital readiness score</string>
@@ -58,10 +58,11 @@
   <string name="business_hours">5</string>
   <!-- SITE-Meter Percentage  -->
 
-  <string name="add_missing_info_better_online_traction">Add missing info and improve your digital readiness\nscore above %s for better online traction.</string>
+  <string name="add_missing_info_better_online_traction">Add missing information and improve your digital readiness\nscore above %s for better online traction.</string>
   <string name="site_completed">site completed</string>
-  <string name="your_site_health">Your site helth</string>
+  <string name="your_site_health">Your site health</string>
   <string name="site_meter">Site Meter</string>
+  <string name="dr_score">Digital Readiness Score</string>
   <string name="navigation_data_error">Navigation data getting error!</string>
   <string name="quick_action_data_error">Quick action data getting error!</string>
   <string name="manage_business_not_found">Manage business data not found!</string>
@@ -83,8 +84,8 @@
   <string name="business_timings">Business timings</string>
   <string name="contact_details">Contact details</string>
   <string name="business_address">Business address</string>
-  <string name="error_dr_score">Digital readiness score getting error</string>
   <string name="retry">Retry</string>
   <string name="reset">Reset</string>
   <string name="select_duration">Select duration</string>
+  <string name="digital_readiness_score_failed_to_load">Failed to load your Digital Readiness Score.</string>
 </resources>

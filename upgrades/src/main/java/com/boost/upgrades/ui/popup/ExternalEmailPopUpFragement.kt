@@ -13,6 +13,7 @@ import com.boost.upgrades.UpgradeActivity
 import com.boost.upgrades.ui.payment.PaymentViewModel
 import com.boost.upgrades.utils.Utils
 import com.boost.upgrades.utils.WebEngageController
+import com.framework.webengageconstant.*
 import com.razorpay.Razorpay
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.add_external_email_popup.*
@@ -68,18 +69,18 @@ class ExternalEmailPopUpFragement : DialogFragment() {
                 if(validateEmail()){
                     validatingStatus = false
                     external_email_popup_submit.setText("CONFIRM")
-                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Ext_Email Validation Success", external_email_popup_value.text.toString(), "")
+                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_EXT_EMAIL_VALIDATION_SUCCESS, external_email_popup_value.text.toString(), NO_EVENT_VALUE)
                     sendPaymentLinkEmail()
                     invalid_email.visibility = View.GONE
                 } else {
                     validatingStatus = false
-                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Ext_Email Validation Failed", external_email_popup_value.text.toString(), "")
+                    WebEngageController.trackEvent(ADDONS_MARKETPLACE_EXT_EMAIL_VALIDATION_FAILED, external_email_popup_value.text.toString(), NO_EVENT_VALUE)
                     Toasty.warning(requireContext(),"Invalid Email Id. Please try again.",Toast.LENGTH_LONG).show()
                     invalid_email.visibility = View.VISIBLE
                 }
             }
         }
-        WebEngageController.trackEvent("ADDONS_MARKETPLACE ADD_UPI Loaded", "ADD_UPI", "")
+        WebEngageController.trackEvent(ADDONS_MARKETPLACE_ADD_UPI_LOADED , ADD_UPI, NO_EVENT_VALUE)
     }
 
     fun validateEmail(): Boolean{

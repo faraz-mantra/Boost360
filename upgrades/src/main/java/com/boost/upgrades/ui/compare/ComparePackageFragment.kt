@@ -532,7 +532,7 @@ class ComparePackageFragment : BaseFragment(), CompareListener,CompareBackListen
                                             event_attributes.put("Discounted Price", offeredBundlePrice)
                                             event_attributes.put("Discount %", item!!.overall_discount_percent)
                                             item!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                                            WebEngageController.trackEvent("ADDONS_MARKETPLACE Compare Package added to cart", "ADDONS_MARKETPLACE", event_attributes)
+                                            WebEngageController.trackEvent("ADDONS_MARKETPLACE Compare Package added to cart", ADDONS_MARKETPLACE, event_attributes)
                                             badgeNumber = badgeNumber + 1
                                             Log.v("badgeNumber321", " "+ badgeNumber)
                                             Constants.CART_VALUE = badgeNumber

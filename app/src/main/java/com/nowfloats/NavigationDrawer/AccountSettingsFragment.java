@@ -60,6 +60,11 @@ import java.util.HashMap;
 
 import static com.appservice.ui.bankaccount.AccountFragmentContainerActivityKt.startFragmentAccountActivityNew;
 import static com.appservice.ui.paymentgateway.PaymentGatewayContainerActivityKt.startFragmentPaymentActivityNew;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_CHANGEPASSWORD;
+import static com.framework.webengageconstant.EventLabelKt.NO_EVENT_LABLE;
+import static com.framework.webengageconstant.EventNameKt.DOMAIN_EMAIL;
+import static com.framework.webengageconstant.EventNameKt.EVENT_NAME_CHANGEPASSWORD;
+import static com.framework.webengageconstant.EventValueKt.NULL;
 
 /**
  * Created by Admin on 29-01-2018.
@@ -153,7 +158,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                     case "Domain and Email":
                         isAlreadyCalled = false;
                         MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
-                        WebEngageController.trackEvent("DOMAIN-EMAIL", "", sessionManager.getFpTag());
+                        WebEngageController.trackEvent(DOMAIN_EMAIL, NO_EVENT_LABLE, sessionManager.getFpTag());
                         if (Methods.isOnline(getActivity())) {
                             showLoader(getString(R.string.please_wait));
                             domainApiService.getDomainDetails(mContext, sessionManager.getFpTag(), getDomainDetailsParam());
@@ -168,7 +173,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         break;
                     case "Change Password":
                         changePassword();
-                        WebEngageController.trackEvent("CHANGEPASSWORD", "CHANGEPASSWORD", null);
+                        WebEngageController.trackEvent(EVENT_NAME_CHANGEPASSWORD, EVENT_LABEL_CHANGEPASSWORD, NULL);
                         return;
                     case "Log out":
                         logoutAlertDialog_Material();

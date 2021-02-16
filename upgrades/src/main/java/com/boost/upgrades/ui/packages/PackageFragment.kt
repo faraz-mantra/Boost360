@@ -131,7 +131,7 @@ class PackageFragment : BaseFragment() {
                     event_attributes.put("Discounted Price", offeredBundlePrice)
                     event_attributes.put("Discount %", bundleData!!.overall_discount_percent)
                     bundleData!!.min_purchase_months?.let { it1 -> event_attributes.put("Validity", it1) }
-                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", "ADDONS_MARKETPLACE", event_attributes)
+                    WebEngageController.trackEvent("ADDONS_MARKETPLACE Package added to cart", ADDONS_MARKETPLACE, event_attributes)
                     packageInCartStatus = true
                     package_submit.background = ContextCompat.getDrawable(
                             requireContext(),
