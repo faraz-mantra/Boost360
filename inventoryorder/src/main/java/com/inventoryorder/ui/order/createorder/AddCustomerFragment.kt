@@ -2,7 +2,9 @@ package com.inventoryorder.ui.order.createorder
 
 import android.os.Bundle
 import android.view.View
+import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
+import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentAddCustomerBinding
 import com.inventoryorder.model.orderRequest.Address
 import com.inventoryorder.model.orderRequest.BuyerDetails
@@ -18,6 +20,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
 
   private var createOrderRequest = OrderInitiateRequest()
   private var totalPrice = 0.0
+  private var isRefresh: Boolean = false
 
   companion object {
     @JvmStatic
@@ -34,13 +37,8 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
 
     setOnClickListener(binding?.vwNext, binding?.textAddCustomerGstin, binding?.tvRemove, binding?.textGoBack)
 
-    createOrderRequest = arguments?.getSerializable("order_req") as OrderInitiateRequest
-    totalPrice = arguments?.getSerializable("total") as Double
-
-
-    /*binding?.checkboxAddressSame?.setOnCheckedChangeListener { p0, isChecked ->
-      binding?.lytShippingAddress?.visibility = if (isChecked) View.GONE else View.VISIBLE
-    }*/
+    createOrderRequest = arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
+    totalPrice = arguments?.getSerializable(IntentConstant.TOTAL_PRICE.name) as Double
   }
 
   override fun onClick(v: View) {
@@ -69,6 +67,15 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     }
   }
 
+ /* fun getBundleData(): Bundle? {
+    isRefresh?.let {
+      val bundle = Bundle()
+      bundle.putBoolean(IntentConstant.IS_REFRESH.name, it)
+      return bundle
+    }
+    return null
+  }*/
+
   private fun onNextTapped() {
 
     val name = binding?.editCustomerName?.text ?: ""
@@ -82,37 +89,48 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     val gstNo = binding?.editGstin?.text ?: ""
 
     if (name.isEmpty()) {
-      showShortToast("Customer Name cannot be empty")
-      return
-    }
-
-    if (email.isEmpty()) {
-      showShortToast("Customer Email cannot be empty")
+      showShortToast(getString(R.string.customer_name_cannot_be_empty))
       return
     }
 
     if (phone.isEmpty()) {
-      showShortToast("Customer phone cannot be empty")
+      showShortToast(getString(R.string.customer_phone_cannot_be_empty))
       return
     }
 
+    if (phone.length < 10) {
+      showShortToast(getString(R.string.please_enter_valid_phone))
+      return
+    }
+
+    if (email.isNullOrEmpty().not() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches().not()) {
+      showShortToast(getString(R.string.please_enter_valid_email))
+      return
+    }
+
+
     if (address.isEmpty()) {
-      showShortToast("Customer address cannot be empty")
+      showShortToast(getString(R.string.customer_address_cannot_be_empty))
       return
     }
 
     if (city.isEmpty()) {
-      showShortToast("Customer city cannot be empty")
+      showShortToast(getString(R.string.customer_city_cannot_be_empty))
       return
     }
 
     if (state.isEmpty()) {
-      showShortToast("Customer state cannot be empty")
+      showShortToast(getString(R.string.customer_state_cannot_be_empty))
       return
     }
 
     if (pinCode.isEmpty()) {
-      showShortToast("Customer pincode cannot be empty")
+      showShortToast(getString(R.string.customer_pincode_cannot_be_empty))
+      return
+    }
+
+    if (pinCode.length < 6) {
+      showShortToast(getString(R.string.enter_valid_pincode))
       return
     }
 
@@ -131,8 +149,9 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     createOrderRequest.buyerDetails = buyerDetails
 
     var bundle = Bundle()
-    bundle.putSerializable("order_req", createOrderRequest)
-    bundle.putDouble("total", totalPrice)
+    bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
+    bundle.putDouble(IntentConstant.TOTAL_PRICE.name, totalPrice)
+    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name))
     startFragmentOrderActivity(FragmentType.BILLING_DETAIL, bundle)
   }
 }

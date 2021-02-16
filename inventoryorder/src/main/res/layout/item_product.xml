@@ -64,7 +64,6 @@
                     android:textSize="14sp"
                     app:fontFamily="@font/regular"
                     tools:text="₹ 3,000.00" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </LinearLayout>
