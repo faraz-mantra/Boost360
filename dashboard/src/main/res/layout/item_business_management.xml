@@ -131,8 +131,12 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:textAllCaps="true"
+            android:maxLines="1"
             android:textColor="@color/colorAccent"
-            app:textType="BODY_1"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
             tools:text="Add working hours" />
 
           <com.framework.views.GifView

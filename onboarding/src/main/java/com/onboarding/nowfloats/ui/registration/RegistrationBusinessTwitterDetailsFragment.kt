@@ -7,6 +7,9 @@ import com.framework.extensions.gone
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.utils.NetworkUtils
+import com.framework.webengageconstant.DIGITAL_CHANNELS
+import com.framework.webengageconstant.FAILED
+import com.framework.webengageconstant.TWITTER_CONNECTED
 import com.nowfloats.twitter.TwitterLoginHelper
 import com.nowfloats.twitter.TwitterUserHelper
 import com.onboarding.nowfloats.R
@@ -137,7 +140,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     }
 
     override fun setProfileDetails(name: String?, profilePicture: String?) {
-        requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Twitter connected", "DIGITAL CHANNELS", it) }
+        requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(TWITTER_CONNECTED, DIGITAL_CHANNELS, it) }
         val binding = binding?.twitterSuccess ?: return
         this.binding?.skip?.gone()
         binding.maimView.visible()
@@ -167,7 +170,7 @@ class RegistrationBusinessTwitterDetailsFragment : BaseRegistrationFragment<Frag
     }
 
     override fun onTwitterLoginFailure(exception: TwitterException?) {
-        WebEngageController.trackEvent("Twitter connected", "DIGITAL CHANNELS", "Failed")
+        WebEngageController.trackEvent(TWITTER_CONNECTED, DIGITAL_CHANNELS, FAILED)
         showShortToast(exception?.localizedMessage)
     }
 

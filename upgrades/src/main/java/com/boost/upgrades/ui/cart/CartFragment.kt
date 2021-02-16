@@ -36,7 +36,6 @@ import com.boost.upgrades.database.LocalStorage
 import com.boost.upgrades.interfaces.CartFragmentListener
 import com.boost.upgrades.ui.autorenew.AutoRenewSubsFragment
 import com.boost.upgrades.ui.checkoutkyc.CheckoutKycFragment
-import com.boost.upgrades.ui.compare.ComparePackageFragment
 import com.boost.upgrades.ui.packages.PackageFragment
 import com.boost.upgrades.ui.payment.PaymentFragment
 import com.boost.upgrades.ui.popup.CouponPopUpFragment
@@ -52,6 +51,7 @@ import com.boost.upgrades.utils.Constants.Companion.RENEW_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.Constants.Companion.TAN_POPUP_FRAGEMENT
 import com.boost.upgrades.utils.DateUtils.parseDate
 import com.dashboard.model.live.coupon.CouponServiceModel
+import com.framework.webengageconstant.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import es.dmoral.toasty.Toasty
@@ -137,7 +137,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         cartAddonsAdaptor = CartAddonsAdaptor(ArrayList(), this)
         cartRenewalAdaptor = CartRenewalAdaptor(ArrayList(), this)
         prefs = SharedPrefs(activity as UpgradeActivity)
-        WebEngageController.trackEvent("ADDONS MARKETPLACE", "pageview", "ADDONS MARKETPLACE CART")
+        WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE, PAGE_VIEW, ADDONS_MARKETPLACE_CART)
 
         return root
     }
@@ -265,7 +265,7 @@ class CartFragment : BaseFragment(), CartFragmentListener {
         }
 
         back_button12.setOnClickListener {
-            WebEngageController.trackEvent("ADDONS_MARKETPLACE Cart Back", "", "")
+            WebEngageController.trackEvent(ADDONS_MARKETPLACE_CART_BACK, NO_EVENT_LABLE, NO_EVENT_VALUE)
             (activity as UpgradeActivity).onBackPressed()
         }
 
@@ -1007,10 +1007,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 for (items in it) {
                     if (items.item_type.equals("features")) {
                         couponDiwaliRedundant.clear()
-                        if(items.feature_code.equals("WILDFIRE_FB_LEAD_ADS") || items.feature_code.equals("WILDFIRE") || items.feature_code.equals("DICTATE")){
-                            Log.v("couponDiwaliRedundant" , " "+ items.item_id)
+                        if (items.feature_code.equals("WILDFIRE_FB_LEAD_ADS") || items.feature_code.equals("WILDFIRE") || items.feature_code.equals("DICTATE")) {
+                            Log.v("couponDiwaliRedundant", " " + items.item_id)
 //                            couponDiwaliRedundant.add(items.feature_code)
-                            couponDiwaliRedundant.put(items.feature_code,items.item_name)
+                            couponDiwaliRedundant.put(items.feature_code, items.item_name)
                         }
                         features.add(items)
                     } else if (items.item_type.equals("bundles")) {
@@ -1053,10 +1053,10 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                 event_attributes.put("total amount", grandTotal)
                 event_attributes.put("cart size", it.size.toDouble())
 //                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Full_Cart Loaded", "ADDONS_MARKETPLACE Full_Cart Loaded", event_attributes)
+                WebEngageController.trackEvent(event_name = EVENT_NAME_ADDONS_MARKETPLACE_FULL_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_FULL_CART_LOADED, event_attributes)
 
             } else {
-                WebEngageController.trackEvent("ADDONS_MARKETPLACE Empty_Cart Loaded", "ADDONS_MARKETPLACE Empty_Cart Loaded", "")
+                WebEngageController.trackEvent(EVENT_NAME_ADDONS_MARKETPLACE_EMPTY_CART_LOADED, EVENT_LABEL_ADDONS_MARKETPLACE_EMPTY_CART_LOADED, NO_EVENT_VALUE)
                 empty_cart.visibility = View.VISIBLE
                 cart_main_layout.visibility = View.GONE
                 Constants.COMPARE_CART_COUNT = 0

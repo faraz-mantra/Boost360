@@ -58,6 +58,11 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DELETE_BACKGROUND_IMAGE;
+import static com.framework.webengageconstant.EventLabelKt.UPDATE_BACKGROUND_IMAGE;
+import static com.framework.webengageconstant.EventNameKt.DELETE_BACKGROUND_IMAGE;
+import static com.framework.webengageconstant.EventNameKt.UPLOAD_BACKGROUND_IMAGE;
+
 
 public class BackgroundImageGalleryActivity extends AppCompatActivity implements UploadFaviconImage.OnImageUpload
 {
@@ -395,7 +400,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == CAMERA_IMAGE_REQUEST_CODE) {
             uploadPrimaryPicture(primaryUri.getPath());
-            WebEngageController.trackEvent("UPLOAD BACKGROUND IMAGE", "Update Background Image", session.getFpTag());
+            WebEngageController.trackEvent(UPLOAD_BACKGROUND_IMAGE, UPDATE_BACKGROUND_IMAGE, session.getFpTag());
         }
 
         if (resultCode == RESULT_OK && requestCode == GALLERY_IMAGE_REQUEST_CODE && data != null) {
@@ -405,13 +410,13 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                 File file = new File(images.get(0).getPath());
                 uploadPrimaryPicture(file.getPath());
             }
-            WebEngageController.trackEvent("UPLOAD BACKGROUND IMAGE", "Update Background Image", session.getFpTag());
+            WebEngageController.trackEvent(UPLOAD_BACKGROUND_IMAGE, UPDATE_BACKGROUND_IMAGE, session.getFpTag());
         }
 
         if (resultCode == RESULT_OK && requestCode == IMAGE_DELETE_REQUEST_CODE && data != null) {
             int position = data.getIntExtra("POSITION", 0);
             adapter.removeImage(position);
-            WebEngageController.trackEvent("DELETE BACKGROUND IMAGE", "DELETE BACKGROUND IMAGE", session.getFpTag());
+            WebEngageController.trackEvent(DELETE_BACKGROUND_IMAGE, EVENT_LABEL_DELETE_BACKGROUND_IMAGE, session.getFpTag());
         }
     }
 

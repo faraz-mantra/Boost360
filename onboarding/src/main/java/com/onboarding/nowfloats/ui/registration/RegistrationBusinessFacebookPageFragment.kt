@@ -12,6 +12,7 @@ import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.utils.NetworkUtils
 import com.framework.utils.PreferencesUtils
+import com.framework.webengageconstant.*
 import com.nowfloats.facebook.FacebookLoginHelper
 import com.nowfloats.facebook.constants.FacebookGraphRequestType
 import com.nowfloats.facebook.constants.FacebookGraphRequestType.USER_DETAILS
@@ -102,14 +103,14 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
             binding?.skip -> {
 
                 //linking facebook profile Skip Event Tracker.
-                WebEngageController.trackEvent("linking facebook profile", "Button", "Skip")
+                WebEngageController.trackEvent(LINKING_FACEBOOK_PROFILE, BUTTON, SKIP)
 
                 gotoNextScreen()
             }
             binding?.linkFacebook -> {
 
                 //linking facebook profile Yes Event Tracker.
-                WebEngageController.trackEvent("linking facebook profile", "Button", "Yes")
+                WebEngageController.trackEvent(LINKING_FACEBOOK_PROFILE, BUTTON, YES)
 
                 if (channelAccessToken.isLinked()) {
                     gotoNextScreen()
@@ -169,7 +170,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     }
 
     override fun onFacebookLoginError(error: FacebookException?) {
-        WebEngageController.trackEvent("Facebook connected", "DIGITAL CHANNELS", "Failed")
+        WebEngageController.trackEvent(FACEBOOK_CONNECTED, DIGITAL_CHANNELS, FAILED)
         showShortToast(error?.localizedMessage)
     }
 
@@ -196,7 +197,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
     }
 
     override fun setProfileDetails(name: String?, profilePicture: String?) {
-        requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook Page Connected", "DIGITAL CHANNELS", it) }
+        requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(FACEBOOK_PAGE_CONNECTED, DIGITAL_CHANNELS, it) }
 
         val binding = binding?.facebookPageSuccess ?: return
         this.binding?.skip?.gone()
@@ -221,7 +222,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
         binding?.subTitle?.text = resources.getString(R.string.facebook_page_connect_later_Skip)
         binding?.linkFacebook?.text = resources.getString(R.string.sync_facebook_page)
         channelAccessToken.clear()
-        requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent("Facebook Page Disconnected", "DIGITAL CHANNELS", it) }
+        requestFloatsModel?.fpTag?.let { WebEngageController.trackEvent(FACEBOOK_PAGE_DISCONNECTED, DIGITAL_CHANNELS, it) }
     }
 
     override fun updateInfo() {

@@ -18,21 +18,21 @@ interface IEducationService {
 
     @GET("upcoming_batches/get-data")
     fun getUpcomingBatches(@Header("Authorization") auth: String?,
-                           @Query("WebsiteId") websiteId: String,
+                           @Query("query") websiteId: String,
                            @Query("limit") limit: Int,
                            @Query("skip") skip: Int): Observable<UpcomingBatchesResponse>
 
 
     @GET("our_faculty/get-data")
     fun getOurFaculty(@Header("Authorization") auth: String?,
-                      @Query("WebsiteId") websiteId: String,
+                      @Query("query") websiteId: String,
                       @Query("limit") limit: Int,
                       @Query("skip") skip: Int): Observable<OurFacultyResponse>
 
 
     @GET("our_toppers/get-data")
     fun getOurToppers(@Header("Authorization") auth: String?,
-                      @Query("WebsiteId") websiteId: String,
+                      @Query("query") websiteId: String,
                       @Query("limit") limit: Int,
                       @Query("skip") skip: Int): Observable<OurTopperResponse>
 
