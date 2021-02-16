@@ -25,7 +25,7 @@ import com.appservice.model.deviceId
 import com.appservice.model.pickUpAddress.PickUpAddressResponse
 import com.appservice.model.pickUpAddress.PickUpData
 import com.appservice.model.serviceProduct.BuyOnlineLink
-import com.appservice.model.serviceProduct.Product
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.addProductImage.ActionDataI
 import com.appservice.model.serviceProduct.addProductImage.ImageI
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
@@ -34,7 +34,7 @@ import com.appservice.model.serviceProduct.addProductImage.response.ProductImage
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.gstProduct.ActionDataG
 import com.appservice.model.serviceProduct.gstProduct.ProductGstDetailRequest
-import com.appservice.model.serviceProduct.gstProduct.response.DataG
+import com.appservice.model.serviceProduct.gstProduct.response.GstData
 import com.appservice.model.serviceProduct.gstProduct.response.ProductGstResponse
 import com.appservice.model.serviceProduct.gstProduct.update.ProductUpdateRequest
 import com.appservice.model.serviceProduct.gstProduct.update.SetGST
@@ -74,7 +74,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private var menuDelete: MenuItem? = null
   private var serviceImage: File? = null
-  private var product: Product? = null
+  private var product: CatalogProduct? = null
   private var isNonPhysicalExperience: Boolean? = null
   private var currencyType: String? = null
   private var fpId: String? = null
@@ -91,7 +91,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   private var secondaryImage: ArrayList<FileModel> = ArrayList()
 
   private var secondaryDataImage: ArrayList<DataImage>? = null
-  private var gstProductData: DataG? = null
+  private var gstProductData: GstData? = null
 
   private var productIdAdd: String? = null
   private var errorType: String? = null
@@ -185,7 +185,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun setBankAccountData() {
     if (bankAccountDetail != null) {
-      product?.paymentType = Product.PaymentType.ASSURED_PURCHASE.value
+      product?.paymentType = CatalogProduct.PaymentType.ASSURED_PURCHASE.value
       binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
       binding?.bankAccountView?.visible()
       binding?.externalUrlView?.gone()
@@ -226,7 +226,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     binding?.tvDesc?.setText(product?.Description)
     binding?.edtServiceCategory?.setText(product?.category)
     binding?.edtServiceTime?.setText(product?.ShipmentDuration)
-    if (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty()
+    if (product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty()
             || !bankAccountDetail?.accountNumber.isNullOrEmpty()) {
       binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
       binding?.bankAccountName?.visible()
@@ -234,7 +234,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
       binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
     }
-    if (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value) {
+    if (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value) {
       binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
       binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
       binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
@@ -267,7 +267,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun getBundleData() {
-    product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? Product
+    product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
     isNonPhysicalExperience = arguments?.getBoolean(IntentConstant.NON_PHYSICAL_EXP_CODE.name)
     currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name)
@@ -344,7 +344,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun updateGstService(productId: String?) {
-    val gstData = gstProductData ?: DataG()
+    val gstData = gstProductData ?: GstData()
     val request = ProductUpdateRequest(false, query = String.format("{'product_id':'%s'}", productId))
     val setGST = SetGST(gstData.gstSlab?.toString() ?: "0.0", gstData.height?.toString() ?: "0.0",
         gstData.length?.toString() ?: "0.0", gstData.weight?.toString() ?: "0.0", gstData.width?.toString() ?: "0.0")
@@ -360,7 +360,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun addGstService(productId: String?) {
-    val gstData = gstProductData ?: DataG()
+    val gstData = gstProductData ?: GstData()
     val request = ProductGstDetailRequest(ActionDataG(gstData.gstSlab ?: 0.0, 0.0, 0.0,
         merchantId = fpId, productId = productId, weight = 0.0, width = 0.0), fpId)
     viewModel?.addProductGstDetail(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
@@ -509,10 +509,10 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     } else if (toggle && (discount > amount)) {
       showLongToast(resources.getString(R.string.discount_amount_not_greater_than_price))
       return false
-    } else if (toggle && (product?.paymentType.isNullOrEmpty() || (product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null))) {
+    } else if (toggle && (product?.paymentType.isNullOrEmpty() || (product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail == null))) {
       showLongToast(resources.getString(R.string.please_add_bank_detail))
       return false
-    } else if (toggle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty()))) {
+    } else if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value && (externalUrlName.isNullOrEmpty() || externalUrl.isNullOrEmpty()))) {
       showLongToast(resources.getString(R.string.please_enter_valid_url_name))
       return false
     }
@@ -525,7 +525,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
     product?.Description = serviceDesc
     product?.Price = if (toggle) amount else 0.0
     product?.DiscountAmount = if (toggle) discount else 0.0
-    if (toggle && (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)) {
+    if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)) {
       product?.BuyOnlineLink = BuyOnlineLink(externalUrl, externalUrlName)
     } else product?.BuyOnlineLink = BuyOnlineLink()
 
@@ -581,13 +581,13 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
         serviceImage?.getBitmap()?.let { binding?.serviceImageView?.setImageBitmap(it) }
       }
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
-      product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? Product
+      product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
       secondaryImage = (data?.getSerializableExtra(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
-      gstProductData = data?.getSerializableExtra(IntentConstant.PRODUCT_GST_DETAIL.name) as? DataG
+      gstProductData = data?.getSerializableExtra(IntentConstant.PRODUCT_GST_DETAIL.name) as? GstData
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 202) {
       bankAccountDetail = data?.getSerializableExtra(IntentConstant.USER_BANK_DETAIL.name) as? BankAccountDetails
       if (bankAccountDetail != null) {
-        product?.paymentType = Product.PaymentType.ASSURED_PURCHASE.value
+        product?.paymentType = CatalogProduct.PaymentType.ASSURED_PURCHASE.value
         binding?.bankAccountView?.visible()
         binding?.externalUrlView?.gone()
         binding?.bankAccountName?.visible()
@@ -623,7 +623,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       binding?.bankAccountView?.visible()
       binding?.externalUrlView?.gone()
       when (it) {
-        Product.PaymentType.ASSURED_PURCHASE.value -> {
+        CatalogProduct.PaymentType.ASSURED_PURCHASE.value -> {
           binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
           binding?.bankAccountName?.visible()
           binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
@@ -639,7 +639,7 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
 
         }
-        Product.PaymentType.UNIQUE_PAYMENT_URL.value -> {
+        CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value -> {
           binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
           binding?.bankAccountView?.gone()
           binding?.externalUrlView?.visible()
@@ -653,8 +653,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
       }
     }
     dialog.onListenerChange = { goAddBankView() }
-    if (((product?.paymentType == Product.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) ||
-            (product?.paymentType == Product.PaymentType.UNIQUE_PAYMENT_URL.value)).not()) {
+    if (((product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) ||
+            (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)).not()) {
       product?.paymentType = ""
     }
     dialog.setDataPaymentGateway(bankAccountDetail, product?.paymentType)
