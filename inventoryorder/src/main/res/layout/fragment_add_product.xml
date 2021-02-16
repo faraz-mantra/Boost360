@@ -108,7 +108,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_label_item_total"
                 app:textType="HEADING_4"
-                android:text="₹ X,XXX,XX"
+                android:text="@string/x_xxx_xx"
                 tools:text="₹ 3,000.00" />
 
             <com.framework.views.customViews.CustomTextView

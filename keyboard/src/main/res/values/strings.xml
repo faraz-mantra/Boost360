@@ -657,6 +657,35 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <string name="tv_done">Done</string>
     <string name="separator">". "</string>
     <string name="text_space">"SPACE"</string>
+    <string name="go">go</string>
+    <string name="name">Name</string>
+    <string name="business_name">Business Name</string>
+    <string name="website_url">Website URL</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="creating_new_offer_for">Creating new offer for</string>
+    <string name="price_colon">Price:</string>
+    <string name="offer_price_heading">OFFER PRICE</string>
+    <string name="validity_heading">VALIDITY</string>
+    <string name="_24_hrs">24 Hrs</string>
+    <string name="qty">QTY.</string>
+    <string name="_1">1</string>
+    <string name="product_name">Product Name</string>
+    <string name="_0_0">0.0</string>
+    <string name="_0_0">0.0</string>
+    <string name="this_is_product_description">This is product description</string>
+    <string name="share_now">SHARE NOW</string>
+    <string name="updates">UPDATES</string>
+    <string name="inventory">INVENTORY</string>
+    <string name="photos">PHOTOS</string>
+    <string name="details">DETAILS</string>
+    <string name="neural_network_technology">Neural network technology</string>
+    <string name="get_ready_for_your_first_truly_machine_learning_powered_keyboard">Get ready for your first truly machine learning powered keyboard.</string>
+    <string name="help_us_improving_your_typing_experience_collecting_anonymous_data">Help us improving your typing experience collecting anonymous data.</string>
+    <string name="lol">LoL</string>
+    <string name="h">h</string>
+    <string name="listening">Listening...</string>
+    <string name="_1">1</string>
+    <string name="in_the_language_and_input_settings_tap_the_toggle_next_to_agah_keyboard_this_will_authorize_the_keyboard_to_run_on_your_device">In the Language and Input settings, tap the toggle next to Agah Keyboard. This will authorize the keyboard to run on your device.</string>
 
 
     <string-array name="validity_items">

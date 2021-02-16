@@ -63,5 +63,15 @@
     <string name="browser">Browser</string>
     <string name="login_cancel">Login cancel.</string>
     <string name="signup_using_mobile">Signup using Mobile</string>
+    <string name="please_enter_all_values" translatable="false">Please enter all values.</string>
+    <string name="enter_valid_email_id" translatable="false">Enter Valid EmailId.</string>
+    <string name="enter_valid_mobile_no" translatable="false">Enter Valid Mobile No.</string>
+    <string name="link_is_empty" translatable="false">Link is Empty!!</string>
+    <string name="ready_to_log_in" translatable="false">Ready to Log in?</string>
+    <string name="login_faster_via_below_options" translatable="false">Login faster via below options</string>
+    <string name="via_facebook" translatable="false">Via Facebook</string>
+    <string name="via_google" translatable="false">Via Google</string>
+    <string name="via_mobile_otp" translatable="false">Via Mobile OTP</string>
+    <string name="scan_qr_code" translatable="false">Scan QR code</string>
 
 </resources>

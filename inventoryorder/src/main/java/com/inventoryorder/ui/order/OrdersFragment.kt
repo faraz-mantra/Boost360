@@ -441,7 +441,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
             orderList.addAll(orderListFinalList)
             isLastPageD = (orderListFinalList.size == TOTAL_ELEMENTS)
             setAdapterNotify(orderList)
-          } else errorView("No order available.")
+          } else errorView(getString(R.string.no_order_available))
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
             orderList.clear()
@@ -451,9 +451,9 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
             orderList.clear()
             orderList.addAll(orderListFinalList)
             setAdapterNotify(orderList)
-          } else errorView("No order available.")
+          } else errorView(getString(R.string.no_order_available))
         }
-      } else errorView(it.message ?: "No order available.")
+      } else errorView(it.message ?: getString(R.string.no_order_available))
     })
   }
 

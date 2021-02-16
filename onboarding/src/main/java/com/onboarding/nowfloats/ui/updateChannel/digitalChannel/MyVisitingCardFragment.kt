@@ -99,8 +99,8 @@ class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Chann
       } else showShortToast(it.message())
       hideProgress()
     })
-    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp("Business Card", true) }
-    binding?.shareOther?.setOnClickListener { shareCardWhatsApp("Business Card", false) }
+    binding?.shareWhatsapp?.setOnClickListener { shareCardWhatsApp(getString(R.string.business_card), true) }
+    binding?.shareOther?.setOnClickListener { shareCardWhatsApp(getString(R.string.business_card), false) }
   }
 
   private fun shareCardWhatsApp(messageCard: String?, isWhatsApp: Boolean) {

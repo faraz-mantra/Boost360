@@ -36,7 +36,7 @@ class GmbLocationAddDialog : BaseDialogFragment<DialogGmbLocationAddBinding, Bas
   override fun onClick(v: View?) {
     super.onClick(v)
     when (v) {
-      binding?.confirm -> baseActivity.openWebPage("https://business.google.com/create")
+      binding?.confirm -> baseActivity.openWebPage(getString(R.string.google_business_url))
     }
     this.dismiss()
   }

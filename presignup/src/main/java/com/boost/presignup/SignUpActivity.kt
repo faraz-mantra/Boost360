@@ -262,15 +262,15 @@ class SignUpActivity : AppCompatActivity() {
     this.email = user_email.text.toString()
 
     if (user_name.text!!.isEmpty() || user_password.text!!.isEmpty() || user_mobile.text!!.isEmpty()) {
-      Toast.makeText(applicationContext, "Please enter all values.", Toast.LENGTH_SHORT).show()
+      Toast.makeText(applicationContext, getString(R.string.please_enter_all_values), Toast.LENGTH_SHORT).show()
       return false
     }
     if (!isValidMail(email, allowEmpty = true)) {
-      Toast.makeText(applicationContext, "Enter Valid EmailId.", Toast.LENGTH_SHORT).show()
+      Toast.makeText(applicationContext, getString(R.string.enter_valid_email_id), Toast.LENGTH_SHORT).show()
       return false
     }
     if (!isValidMobile(userMobile)) {
-      Toast.makeText(applicationContext, "Enter Valid Mobile No.", Toast.LENGTH_SHORT).show()
+      Toast.makeText(applicationContext, getString(R.string.enter_valid_mobile_no), Toast.LENGTH_SHORT).show()
       return false
     }
     return true
