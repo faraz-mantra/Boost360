@@ -38,8 +38,8 @@ import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.boost.presignup.PreSignUpActivity;
 import com.boost.presignup.datamodel.userprofile.ConnectUserProfileResponse;
-import com.boost.presignup.datamodel.userprofile.Result;
 import com.boost.presignup.datamodel.userprofile.UserProfileResponse;
+import com.boost.presignup.datamodel.userprofile.UserResult;
 import com.boost.presignup.datamodel.userprofile.VerificationRequestResult;
 import com.boost.presignup.utils.CustomFirebaseAuthHelpers;
 import com.boost.presignup.utils.CustomFirebaseAuthListeners;
@@ -753,7 +753,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
         } else {
             progressDialog = ProgressDialog.show(this, "", "Loading");
 
-            Result result = userProfileResponse.getResult();
+            UserResult result = userProfileResponse.getResult();
             session.storeISEnterprise(result.getIsEnterprise() + "");
             session.storeIsThinksity((result.getSourceClientId() != null &&
                     result.getSourceClientId().equals(Constants.clientIdThinksity)) + "");
@@ -780,7 +780,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
                 return;
 
             Login_Data_Model response_Data = new Login_Data_Model();
-            Result result = userProfileResponse.getResult();
+            UserResult result = userProfileResponse.getResult();
 
             response_Data.accessType = result.getProfileAccessType() + "";
             response_Data.sourceClientId = result.getSourceClientId();

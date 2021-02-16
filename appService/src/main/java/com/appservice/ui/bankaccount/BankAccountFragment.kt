@@ -133,7 +133,7 @@ class BankAccountFragment : AppBaseFragment<FragmentBankAccountDetailsBinding, A
     baseActivity.finish()
   }
 
-  private fun checkBankAccountDetail(result: Result?, isPendingToastShow: Boolean) {
+  private fun checkBankAccountDetail(result: AccountResult?, isPendingToastShow: Boolean) {
     if (result?.bankAccountDetails != null) {
       isUpdated = true
       uiUpdate(false)
