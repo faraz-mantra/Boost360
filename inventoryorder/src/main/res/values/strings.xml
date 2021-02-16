@@ -257,4 +257,27 @@
     <string name="add_delivery_fee">Add delivery fee</string>
     <string name="enter_the_delivery_charges_to_add_it_to_billing">Enter the delivery charges to add it to billing</string>
     <string name="enter_delivery_fee">Enter delivery fee</string>
+    <string name="edit">Edit</string>
+    <string name="customer_name_cannot_be_empty">Customer Name cannot be empty</string>
+    <string name="customer_email_cannot_be_empty">Customer Email cannot be empty</string>
+    <string name="please_enter_valid_email">Please enter a valid email</string>
+    <string name="customer_phone_cannot_be_empty">Customer phone cannot be empty</string>
+    <string name="customer_address_cannot_be_empty">Customer address cannot be empty</string>
+    <string name="customer_city_cannot_be_empty">Customer city cannot be empty</string>
+    <string name="customer_state_cannot_be_empty">Customer state cannot be empty</string>
+    <string name="customer_pincode_cannot_be_empty">Customer pincode cannot be empty</string>
+    <string name="unable_to_create_order">Cannot create a order at this time. Please try later.</string>
+    <string name="customer_phone">Customer Phone</string>
+    <string name="customer_email">Customer Email</string>
+    <string name="str_cash_on_delivery">Cash on Delivery</string>
+    <string name="str_remove_item">Remove Item</string>
+    <string name="str_payment_status">Payment Status</string>
+    <string name="collect_later">Collect later</string>
+    <string name="send_payment_to_customer">Send payment options to customer</string>
+    <string name="pending">Pending</string>
+    <string name="playment_already_received">Payment already received</string>
+    <string name="customer_paid_via_cash_card_upi">Customer paid the amount via cash/card/UPI</string>
+    <string name="payment_received">Payment received</string>
+    <string name="enter_valid_pincode">Please enter a valid pincode</string>
+    <string name="please_enter_valid_phone">Please enter a valid phone number</string>
 </resources>
