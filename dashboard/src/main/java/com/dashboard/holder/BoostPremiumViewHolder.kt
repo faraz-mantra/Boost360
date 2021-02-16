@@ -13,7 +13,7 @@ class BoostPremiumViewHolder(binding: ItemBoostPremiumBinding) : AppBaseRecycler
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
     val data = item as? DashboardMarketplaceBanner ?: return
-    activity?.glideLoad(binding.image, data.image?.url ?: "", R.drawable.placeholder_image_n)
+    activity?.glideLoad(binding.image, data.bannerImage?.url ?: "", R.drawable.placeholder_image_n)
     binding.maimView.setOnClickListener { listener?.onItemClick(position,data, RecyclerViewActionType.PROMO_BANNER_CLICK.ordinal) }
   }
 

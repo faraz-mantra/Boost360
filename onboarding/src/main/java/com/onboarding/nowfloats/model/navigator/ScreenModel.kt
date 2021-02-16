@@ -11,16 +11,13 @@ import com.onboarding.nowfloats.ui.channel.ChannelPickerActivity
 import com.onboarding.nowfloats.ui.setFragmentType
 
 data class ScreenModel(
-        var title: String? = null,
-        var type: String? = Screen.CATEGORY_SELECT.name
+    var title: String? = null,
+    var type: String? = Screen.CATEGORY_SELECT.name,
 ) : Parcelable {
 
-  constructor(parcel: Parcel) : this(
-          parcel.readString(),
-          parcel.readString() ?: Screen.CATEGORY_SELECT.name)
+  constructor(parcel: Parcel) : this(parcel.readString(), parcel.readString() ?: Screen.CATEGORY_SELECT.name)
 
-  constructor(screen: Screen? = null,
-              title: String? = null) : this(title, screen?.name)
+  constructor(screen: Screen? = null, title: String? = null, ) : this(title, screen?.name)
 
   enum class Screen {
     CATEGORY_SELECT,

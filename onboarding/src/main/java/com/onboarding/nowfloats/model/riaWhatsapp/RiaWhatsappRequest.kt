@@ -10,7 +10,7 @@ data class RiaWhatsappRequest(
     val notificationType: String? = null,
     val customerId: String? = null,
     //TODO Optional default value "919381915059"
-    val optinId: String? = null
+    val optinId: String? = null,
 ) : BaseRequest() {
 
   enum class OptType {

@@ -2,6 +2,7 @@ package com.appservice.model.serviceProduct.informationFetch
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class BankAccountInfo(
     @SerializedName("BankAddress")
@@ -20,4 +21,4 @@ data class BankAccountInfo(
     var isVerfied: Boolean? = null,
     @SerializedName("Number")
     var number: String? = null
-)
+): Serializable
