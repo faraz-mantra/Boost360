@@ -7,7 +7,7 @@ import java.io.Serializable
 
 data class ProductGstResponse(
     @SerializedName("Data")
-    var `data`: ArrayList<DataG>? = null,
+    var `data`: ArrayList<GstData>? = null,
     @SerializedName("Extra")
-    var extra: ExtraG? = null
+    var extra: GstExtra? = null
 ) : BaseResponse(), Serializable

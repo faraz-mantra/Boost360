@@ -2,6 +2,7 @@ package com.appservice.model.account
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class RegisteredBusinessAddressN(
     @SerializedName("City")
@@ -14,4 +15,4 @@ data class RegisteredBusinessAddressN(
     var line2: String? = null,
     @SerializedName("State")
     var state: String? = null
-)
+): Serializable

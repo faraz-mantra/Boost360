@@ -13,10 +13,10 @@ import com.appservice.databinding.FragmentServiceInformationBinding
 import com.appservice.model.FileModel
 import com.appservice.model.KeySpecification
 import com.appservice.model.auth_3
-import com.appservice.model.serviceProduct.Product
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
 import com.appservice.model.serviceProduct.addProductImage.response.DataImage
-import com.appservice.model.serviceProduct.gstProduct.response.DataG
+import com.appservice.model.serviceProduct.gstProduct.response.GstData
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
@@ -38,7 +38,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
-  private var product: Product? = null
+  private var product: CatalogProduct? = null
   private var isEdit: Boolean? = null
   private var tagList = ArrayList<String>()
   private var specList: ArrayList<KeySpecification> = arrayListOf(KeySpecification())
@@ -48,7 +48,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
   private var ordersQuantity: Int = 0
 
   private var secondaryDataImage: ArrayList<DataImage>? = null
-  private var gstProductData: DataG? = null
+  private var gstProductData: GstData? = null
 
   companion object {
     fun newInstance(): ServiceInformationFragment {
@@ -71,9 +71,9 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
     setOnClickListener(binding?.cbFacebookPage, binding?.cbGoogleMerchantCenter, binding?.cbTwitterPage,
             binding?.civIncreaseQuantityOrder, binding?.civDecreseQuantityOrder, binding?.btnAddTag, binding?.btnAddSpecification,
             binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst,binding?.weeklyAppointmentSchedule)
-    product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? Product
+    product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
-    gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? DataG
+    gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? GstData
     secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
             ?: ArrayList()
     tagList = product?.tags ?: ArrayList()
@@ -231,7 +231,7 @@ class ServiceInformationFragment : AppBaseFragment<FragmentServiceInformationBin
         product?.keySpecification?.value = valSpecification
         product?.maxCodOrders = ordersQuantity
         product?.otherSpecification = otherSpec
-        if (gstProductData == null) gstProductData = DataG()
+        if (gstProductData == null) gstProductData = GstData()
         gstProductData?.gstSlab = gst.toDoubleOrNull() ?: 0.0
         val output = Intent()
         output.putExtra(IntentConstant.PRODUCT_DATA.name, product)
