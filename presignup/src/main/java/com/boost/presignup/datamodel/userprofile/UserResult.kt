@@ -2,7 +2,7 @@ package com.boost.presignup.datamodel.userprofile
 
 import com.google.gson.annotations.SerializedName
 
-data class Result(
+data class UserResult(
     @SerializedName("AuthToken")
     val AuthToken: String,
     @SerializedName("ClientId")

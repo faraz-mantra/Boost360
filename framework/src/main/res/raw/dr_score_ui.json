@@ -3,7 +3,7 @@
     {
       "id": "boolean_add_business_name",
       "title": "Add Business Name",
-      "desc": ""
+      "desc": "  "
     },
     {
       "id": "boolean_add_business_description",
@@ -13,7 +13,7 @@
     {
       "id": "boolean_add_clinic_logo",
       "title": "Add Business Logo",
-      "desc": ""
+      "desc": "  "
     },
     {
       "id": "boolean_add_featured_image_video",
@@ -48,7 +48,7 @@
     {
       "id": "boolean_social_channel_connected",
       "title": "Connect Social Media Channels",
-      "desc": ""
+      "desc": "  "
     },
     {
       "id": "number_services_added",
@@ -72,8 +72,8 @@
     },
     {
       "id": "boolean_create_custom_page",
-      "title": "Add unique content to your website with the Boost WYSWIG editor.",
-      "desc": ""
+      "title": "Create a Custom Page",
+      "desc": "Add unique content to your website with the Boost WYSWIG editor."
     },
     {
       "id": "boolean_share_business_card",

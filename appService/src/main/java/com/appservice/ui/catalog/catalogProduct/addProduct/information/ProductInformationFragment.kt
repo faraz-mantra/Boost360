@@ -15,10 +15,10 @@ import com.appservice.databinding.FragmentProductInformationBinding
 import com.appservice.model.FileModel
 import com.appservice.model.KeySpecification
 import com.appservice.model.auth_3
-import com.appservice.model.serviceProduct.Product
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
 import com.appservice.model.serviceProduct.addProductImage.response.DataImage
-import com.appservice.model.serviceProduct.gstProduct.response.DataG
+import com.appservice.model.serviceProduct.gstProduct.response.GstData
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
@@ -37,7 +37,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBinding, ServiceViewModel>(), RecyclerItemClickListener {
 
-  private var product: Product? = null
+  private var product: CatalogProduct? = null
   private var isEdit: Boolean? = null
   private var tagList = ArrayList<String>()
   private var specList: ArrayList<KeySpecification> = arrayListOf(KeySpecification())
@@ -48,7 +48,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 //  private var maxOrder = 0;
 
   private var secondaryDataImage: ArrayList<DataImage>? = null
-  private var gstProductData: DataG? = null
+  private var gstProductData: GstData? = null
 
   companion object {
     fun newInstance(): ProductInformationFragment {
@@ -71,9 +71,9 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
     setOnClickListener(
             binding?.btnAddTag, binding?.btnAddSpecification, binding?.btnConfirm, binding?.btnClickPhoto, binding?.edtGst, binding?.civDecreseStock,
             binding?.civIncreaseStock)
-    product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? Product
+    product = arguments?.getSerializable(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
     isEdit = (product != null && product?.productId.isNullOrEmpty().not())
-    gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? DataG
+    gstProductData = arguments?.getSerializable(IntentConstant.PRODUCT_GST_DETAIL.name) as? GstData
     secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>) ?: ArrayList()
     tagList = product?.tags ?: ArrayList()
     specList = if (product?.otherSpecification.isNullOrEmpty()) arrayListOf(KeySpecification()) else product?.otherSpecification!!
@@ -345,7 +345,7 @@ class ProductInformationFragment : AppBaseFragment<FragmentProductInformationBin
 //        product?.maxCodOrders = maxOrder
         product?.availableUnits = availableStock
         product?.otherSpecification = otherSpec
-        if (gstProductData == null) gstProductData = DataG()
+        if (gstProductData == null) gstProductData = GstData()
         gstProductData?.gstSlab = gst.toDoubleOrNull() ?: 0.0
         gstProductData?.height = specHeight
         gstProductData?.length = specLength

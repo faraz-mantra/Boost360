@@ -2,7 +2,7 @@ package com.appservice.rest.repository
 
 import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
-import com.appservice.model.serviceProduct.Product
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.rest.TaskCode
@@ -15,7 +15,7 @@ import retrofit2.Retrofit
 
 object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBaseLocalService>() {
 
-  fun createService(request: Product?): Observable<BaseResponse> {
+  fun createService(request: CatalogProduct?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.createService(request), TaskCode.POST_CREATE_SERVICE)
   }
 
@@ -51,7 +51,7 @@ object WithFloatTwoRepository : AppBaseRepository<WithFloatTwoRemoteData, AppBas
     return WithFloatsApiTwoClient.shared.retrofit
   }
 
-  fun createProduct(request: Product?): Observable<BaseResponse> {
+  fun createProduct(request: CatalogProduct?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.createProduct(request = request), TaskCode.POST_CREATE_PRODUCT)
   }
 

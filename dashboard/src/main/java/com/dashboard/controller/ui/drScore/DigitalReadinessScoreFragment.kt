@@ -124,13 +124,16 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
   private fun clickEventUpdateScoreN(type: DrScoreItem.DrScoreItemType?) {
     when (type) {
       DrScoreItem.DrScoreItemType.boolean_add_business_name -> {
-        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty()) baseActivity.startBusinessProfileDetailEdit(session)
+//        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty())
+        baseActivity.startBusinessProfileDetailEdit(session)
       }
       DrScoreItem.DrScoreItemType.boolean_add_business_description -> {
-        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty()) baseActivity.startBusinessProfileDetailEdit(session)
+//        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty())
+        baseActivity.startBusinessProfileDetailEdit(session)
       }
       DrScoreItem.DrScoreItemType.boolean_add_clinic_logo -> {
-        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl).isNullOrEmpty()) baseActivity.startBusinessLogo(session)
+//        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl).isNullOrEmpty())
+        baseActivity.startBusinessLogo(session)
       }
 
       DrScoreItem.DrScoreItemType.boolean_add_business_hours -> {
@@ -243,45 +246,6 @@ class DigitalReadinessScoreFragment : AppBaseFragment<FragmentDigitalReadinessSc
       PreferencesUtils.instance.saveData(PreferenceConstant.CHANNEL_SHARE_URL, urlStringN)
       if (isShowLoader) visitingCardDetailText(urlStringN)
     })
-  }
-
-  private fun clickEventUpdateScore(value: SiteMeterModel.TypePosition?) {
-    when (value) {
-      SiteMeterModel.TypePosition.BUSINESS_NAME -> {
-        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME).isNullOrEmpty()) baseActivity.startBusinessProfileDetailEdit(session)
-      }
-      SiteMeterModel.TypePosition.DESCRIPTION -> {
-        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION).isNullOrEmpty()) baseActivity.startBusinessProfileDetailEdit(session)
-      }
-      SiteMeterModel.TypePosition.CATEGORY -> {
-        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).isNullOrEmpty()) baseActivity.startBusinessProfileDetailEdit(session)
-      }
-      SiteMeterModel.TypePosition.EMAIL -> {
-        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL).isNullOrEmpty()) baseActivity.startBusinessInfoEmail(session)
-      }
-      SiteMeterModel.TypePosition.PHONE -> {
-        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER).isNullOrEmpty()) baseActivity.startBusinessContactInfo(session)
-      }
-      SiteMeterModel.TypePosition.ADDRESS -> {
-        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS).isNullOrEmpty() || session?.getFPDetails(Key_Preferences.LATITUDE).isNullOrEmpty() || session?.getFPDetails(Key_Preferences.LONGITUDE).isNullOrEmpty()) {
-          baseActivity.startBusinessAddress(session)
-        }
-      }
-      SiteMeterModel.TypePosition.BUSINESS_HOURS -> {
-        if (session!!.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS) == "TIMINGS") baseActivity.startBusinessHours(session)
-        else alertDialogBusinessHours()
-      }
-      SiteMeterModel.TypePosition.IMAGE -> {
-        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI).isNullOrEmpty()) baseActivity.startBusinessProfileDetailEdit(session)
-      }
-      SiteMeterModel.TypePosition.LOGO -> {
-        if (session?.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl).isNullOrEmpty()) baseActivity.startBusinessLogo(session)
-      }
-      SiteMeterModel.TypePosition.POST -> if (MessageModel().getStoreBizFloatSize() < 5) baseActivity.startPostUpdate(session)
-      SiteMeterModel.TypePosition.SOCIAL -> session?.let { baseActivity.startDigitalChannel(it) }
-      SiteMeterModel.TypePosition.DOMAIN -> {
-      }
-    }
   }
 
   private fun alertDialogBusinessHours() {
