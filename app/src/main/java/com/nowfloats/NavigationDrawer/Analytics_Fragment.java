@@ -103,6 +103,7 @@ import static com.framework.webengageconstant.EventNameKt.SALES_ANALYTICS;
 import static com.framework.webengageconstant.EventNameKt.SEARCH_ANALYTICS;
 import static com.framework.webengageconstant.EventNameKt.SOCIAL_ANALYTICS_DETAILS_FROM_HOME;
 import static com.framework.webengageconstant.EventNameKt.SUBSCRIBERS;
+import static com.framework.webengageconstant.EventNameKt.WEBSITE_VISITS_CHART_DURATION_CHANGED;
 import static com.framework.webengageconstant.EventNameKt.WILDFIRE_ANALYTICS;
 import static com.nowfloats.Analytics_Screen.Graph.SiteViewsAnalytics.VISITS_TYPE;
 

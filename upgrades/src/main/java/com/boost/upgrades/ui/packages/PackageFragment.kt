@@ -27,6 +27,7 @@ import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
 import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
+import com.framework.webengageconstant.ADDONS_MARKETPLACE
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.package_fragment.*

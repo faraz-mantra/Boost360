@@ -38,7 +38,7 @@ import retrofit.RetrofitError;
 import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
-import static com.framework.webengageconstant.EventLabelKt.DOMAIN_AND_EMAIL2;
+import static com.framework.webengageconstant.EventLabelKt.EVENT_LABEL_DOMAIN_AND_EMAIL;
 import static com.framework.webengageconstant.EventNameKt.CLICKED_ON_CONFIRM_BOOK_A_NEW_DOMAIN;
 import static com.framework.webengageconstant.EventValueKt.NO_EVENT_VALUE;
 
@@ -81,7 +81,7 @@ public class NewDomainFragment extends Fragment {
         confirm_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebEngageController.trackEvent(CLICKED_ON_CONFIRM_BOOK_A_NEW_DOMAIN, DOMAIN_AND_EMAIL2, NO_EVENT_VALUE);
+                WebEngageController.trackEvent(CLICKED_ON_CONFIRM_BOOK_A_NEW_DOMAIN, EVENT_LABEL_DOMAIN_AND_EMAIL, NO_EVENT_VALUE);
             }
         });
 //        domainSupportTypeSpinneer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
