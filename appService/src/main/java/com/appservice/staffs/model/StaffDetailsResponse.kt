@@ -6,8 +6,6 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class StaffDetailsResponse(
-
-
 		@field:SerializedName("StatusCode")
 		val statusCode: Int? = null,
 

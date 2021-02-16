@@ -201,7 +201,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
   private fun setPage(position: Int) {
-    binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
+    binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: R.xml.fragment_dashboard_scene_hide)
   }
 
   private fun setBusinessManageTask() {

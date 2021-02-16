@@ -1,4 +1,4 @@
-package com.appservice.ui.catalog.catalogProduct.addProduct
+package com.appservice.ui.catalog.catalogService.service
 
 import android.app.Activity
 import android.content.Intent
@@ -15,7 +15,7 @@ import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
-import com.appservice.databinding.FragmentProductDetailsBinding
+import com.appservice.databinding.FragmentServiceDetailBinding
 import com.appservice.extension.afterTextChanged
 import com.appservice.model.FileModel
 import com.appservice.model.accountDetails.AccountDetailsResponse
@@ -46,7 +46,7 @@ import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.catalog.widgets.*
 import com.appservice.utils.WebEngageController
 import com.appservice.utils.getBitmap
-import com.appservice.viewmodel.ProductViewModel
+import com.appservice.viewmodel.ServiceViewModel
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
@@ -69,10 +69,10 @@ import java.nio.charset.Charset
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, ProductViewModel>() {
+class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, ServiceViewModel>() {
 
   private var menuDelete: MenuItem? = null
-  private var productImage: File? = null
+  private var serviceImage: File? = null
   private var product: CatalogProduct? = null
   private var isNonPhysicalExperience: Boolean? = null
   private var currencyType: String? = null
@@ -96,17 +96,17 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private var errorType: String? = null
 
   companion object {
-    fun newInstance(): ProductDetailFragment {
-      return ProductDetailFragment()
+    fun newInstance(): ServiceDetailFragment {
+      return ServiceDetailFragment()
     }
   }
 
   override fun getLayout(): Int {
-    return R.layout.fragment_product_details
+    return R.layout.fragment_service_detail
   }
 
-  override fun getViewModelClass(): Class<ProductViewModel> {
-    return ProductViewModel::class.java
+  override fun getViewModelClass(): Class<ServiceViewModel> {
+    return ServiceViewModel::class.java
   }
 
   override fun onCreateView() {
@@ -114,22 +114,21 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     WebEngageController.trackEvent("Service product catalogue load", "SERVICE CATALOGUE ADD/UPDATE", "")
     getBundleData()
     getPickUpAddress()
-    binding?.vwChangeDeliverConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     binding?.vwPaymentConfig?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-    setOnClickListener(binding?.vwChangeDeliverConfig, binding?.vwChangeDeliverLocation, binding?.vwPaymentConfig,
-            binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
-    binding?.toggleProduct?.isOn = product?.isPriceToggleOn()!!
-    binding?.payProductView?.visibility = View.GONE
-    binding?.toggleProduct?.setOnToggledListener { _, _ ->
-    initProductToggleView()
+    setOnClickListener(binding?.selectDeliveryConfig, binding?.vwPaymentConfig,
+        binding?.vwSavePublish, binding?.imageAddBtn, binding?.clearImage, binding?.btnOtherInfo, binding?.bankAccountView)
+    binding?.toggleService?.isOn = product?.isPriceToggleOn()!!
+    binding?.payServiceView?.visibility = View.GONE
+    binding?.toggleService?.setOnToggledListener { _, _ ->
+      initServiceToggle()
     }
-    initProductToggleView()
+    initServiceToggle()
     listenerEditText()
   }
 
-  private fun initProductToggleView() {
-    binding?.payProductView?.visibility = if (binding?.toggleProduct?.isOn!!) View.VISIBLE else View.GONE
-    binding?.freeProductView?.visibility = if (binding?.toggleProduct?.isOn!!) View.GONE else View.VISIBLE
+  private fun initServiceToggle() {
+    binding?.payServiceView?.visibility = if (binding?.toggleService?.isOn!!) View.VISIBLE else View.GONE
+    binding?.freeServiceView?.visibility = if (binding?.toggleService?.isOn!!) View.GONE else View.VISIBLE
   }
 
   private fun listenerEditText() {
@@ -141,7 +140,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     val amountD = amount.toFloatOrNull() ?: 0F
     val distD = dist.toFloatOrNull() ?: 0F
     if (distD > amountD) {
-      showLongToast(resources.getString(R.string.discount_amount_not_greater_than_price))
+      showLongToast(resources.getString(R.string.discount_amount_cant_be_grater))
       binding?.discountEdt?.setText("")
       return
     }
@@ -198,13 +197,13 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun getAddPreviousData() {
-    viewModel?.getProductImage(auth_3, String.format("{'_pid':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer{
+    viewModel?.getProductImage(auth_3, String.format("{'_pid':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         val response = it as? ProductImageResponse
         if (response?.status == 200 && response.data.isNullOrEmpty().not()) {
           secondaryDataImage = response.data
         }
-        viewModel?.getProductGstDetail(auth_3, String.format("{'product_id':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer{ it1 ->
+        viewModel?.getProductGstDetail(auth_3, String.format("{'product_id':'%s'}", product?.productId))?.observeOnce(viewLifecycleOwner, Observer { it1 ->
           if ((it1.error is NoNetworkException).not()) {
             val response2 = it1 as? ProductGstResponse
             if (response2?.status == 200 && response2.data.isNullOrEmpty().not()) {
@@ -222,49 +221,42 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun updateUiPreviousDat() {
-    binding?.tvProductName?.setText(product?.Name)
+    binding?.tvServiceName?.setText(product?.Name)
     binding?.tvDesc?.setText(product?.Description)
-    binding?.edtProductCategory?.setText(product?.category)
-    when {
-        product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty() || !bankAccountDetail?.accountNumber.isNullOrEmpty() -> {
-          binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-          binding?.bankAccountName?.visible()
-          binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
-          binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-          binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
-        }
+    binding?.edtServiceCategory?.setText(product?.category)
+    binding?.edtServiceTime?.setText(product?.ShipmentDuration)
+    if (product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null || !bankAccountDetail?.iFSC.isNullOrEmpty()
+        || !bankAccountDetail?.accountNumber.isNullOrEmpty()) {
+      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
+      binding?.bankAccountName?.visible()
+      binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
+      binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
+      binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
     }
-    when (product?.paymentType) {
-        CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value -> {
-          binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
-          binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
-          binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
-          binding?.bankAccountView?.gone()
-          binding?.externalUrlView?.visible()
-        }
-        else -> {
-          binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
-          binding?.bankAccountName?.gone()
-          binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
-          binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
-        }
+    if (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value) {
+      binding?.txtPaymentType?.text = resources.getString(R.string.external_url)
+      binding?.edtUrl?.setText(product?.BuyOnlineLink?.url ?: "")
+      binding?.edtNameDesc?.setText(product?.BuyOnlineLink?.description ?: "")
+      binding?.bankAccountView?.gone()
+      binding?.externalUrlView?.visible()
+    } else {
+      binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
+      binding?.bankAccountName?.gone()
+      binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
+      binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
     }
-    when {
-        product?.Price ?: 0.0 <= 0.0 -> {
-          binding?.toggleProduct?.isOn = false
-          binding?.payProductView?.gone()
-          binding?.freeProductView?.visible()
-        }
+    if (product?.Price ?: 0.0 <= 0.0) {
+      binding?.toggleService?.isOn = false
+      binding?.payServiceView?.gone()
+      binding?.freeServiceView?.visible()
     }
     binding?.amountEdt?.setText("${product?.Price ?: 0}")
     binding?.discountEdt?.setText("${product?.DiscountAmount ?: 0.0}")
-    when {
-        product?.ImageUri.isNullOrEmpty().not() -> {
-          binding?.imageAddBtn?.gone()
-          binding?.clearImage?.visible()
-          binding?.productImageView?.visible()
-          binding?.productImageView?.let { activity?.glideLoad(it, product?.ImageUri!!, R.drawable.placeholder_image) }
-        }
+    if (product?.ImageUri.isNullOrEmpty().not()) {
+      binding?.imageAddBtn?.gone()
+      binding?.clearImage?.visible()
+      binding?.serviceImageView?.visible()
+      binding?.serviceImageView?.let { activity?.glideLoad(it, product?.ImageUri!!, R.drawable.placeholder_image) }
     }
   }
 
@@ -295,17 +287,17 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       }
       binding?.imageAddBtn -> openImagePicker()
       binding?.clearImage -> clearImage()
-      binding?.vwChangeDeliverConfig -> showServiceDeliveryConfigBottomSheet()
+      binding?.selectDeliveryConfig -> showServiceDeliveryConfigBottomSheet()
 //      binding?.vwChangeDeliverLocation -> showServiceDeliveryLocationBottomSheet()
       binding?.vwPaymentConfig -> showPaymentConfigBottomSheet()
       binding?.btnOtherInfo -> {
-        WebEngageController.trackEvent("Product click other information", "PRODUCT CATALOGUE ADD/UPDATE", "")
+        WebEngageController.trackEvent("Service click other information", "SERVICE CATALOGUE ADD/UPDATE", "")
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PRODUCT_DATA.name, product)
         bundle.putSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name, secondaryImage)
         bundle.putSerializable(IntentConstant.PRODUCT_IMAGE.name, secondaryDataImage)
         bundle.putSerializable(IntentConstant.PRODUCT_GST_DETAIL.name, gstProductData)
-        startFragmentActivity(FragmentType.PRODUCT_INFORMATION, bundle, isResult = true)
+        startFragmentActivity(FragmentType.SERVICE_INFORMATION, bundle, isResult = true)
       }
       binding?.vwSavePublish -> if (isValid()) createUpdateApi()
     }
@@ -314,24 +306,24 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private fun createUpdateApi() {
     showProgress()
     if (isEdit == false) {
-      WebEngageController.trackEvent("Add product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "")
+      WebEngageController.trackEvent("Add service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
       if (productIdAdd.isNullOrEmpty().not() && errorType == "addGstService") {
         addGstService(productIdAdd)
       } else if (productIdAdd.isNullOrEmpty().not() && errorType == "uploadImageSingle") {
         uploadImageSingle(productIdAdd)
       } else {
-        viewModel?.createProduct(product)?.observeOnce(viewLifecycleOwner, Observer {
+        viewModel?.createService(product)?.observeOnce(viewLifecycleOwner, Observer {
           if ((it.error is NoNetworkException).not()) {
             val productId = it.stringResponse
             if ((it.status == 200 || it.status == 201 || it.status == 202) && productId.isNullOrEmpty().not()) {
               productIdAdd = productId
               addGstService(productId)
-            } else showError(getString(R.string.error_unknown))
+            } else showError(resources.getString(R.string.service_adding_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
         })
       }
     } else {
-      WebEngageController.trackEvent("Update product catalogue", "PRODUCT CATALOGUE ADD/UPDATE", "")
+      WebEngageController.trackEvent("Update service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
       val updates = ArrayList<UpdateValue>()
       val json = JSONObject(Gson().toJson(product))
       val keys = json.keys()
@@ -340,11 +332,11 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         updates.add(UpdateValue(key, json[key].toString()))
       }
       val request = ProductUpdate(clientId, productId = product?.productId, productType = product?.productType, updates = updates)
-      viewModel?.updateProduct(request)?.observeOnce(viewLifecycleOwner, Observer {
+      viewModel?.updateService(request)?.observeOnce(viewLifecycleOwner, Observer {
         if ((it.error is NoNetworkException).not()) {
           if ((it.status == 200 || it.status == 201 || it.status == 202)) {
             updateGstService(product?.productId)
-          } else showError("Oops some unknown error occurred while updating the product, please try again.")
+          } else showError(resources.getString(R.string.service_updating_error))
         } else showError(resources.getString(R.string.internet_connection_not_available))
       })
     }
@@ -361,15 +353,15 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {
           hideProgress()
           uploadImageSingle(productId)
-        } else showError("Oops some unknown error occurred while updating the product, please try again.")
+        } else showError(resources.getString(R.string.service_updating_error))
       } else showError(resources.getString(R.string.internet_connection_not_available))
     })
   }
 
   private fun addGstService(productId: String?) {
     val gstData = gstProductData ?: GstData()
-    val request = ProductGstDetailRequest(ActionDataG(gstData.gstSlab ?: 0.0, gstData.height?:0.0, gstData.length?:0.0,
-        merchantId = fpId, productId = productId, gstData.weight?:0.0, gstData.height?:0.0), fpId)
+    val request = ProductGstDetailRequest(ActionDataG(gstData.gstSlab ?: 0.0, 0.0, 0.0,
+        merchantId = fpId, productId = productId, weight = 0.0, width = 0.0), fpId)
     viewModel?.addProductGstDetail(auth_3, request)?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if ((it.status == 200 || it.status == 201 || it.status == 202)) {
@@ -377,7 +369,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           uploadImageSingle(productId)
         } else {
           if (isEdit == false) errorType = "addGstService"
-          showError(getString(R.string.error_unknown))
+          showError(resources.getString(R.string.service_adding_error))
         }
       } else {
         if (isEdit == false) errorType = "addGstService"
@@ -387,20 +379,20 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   }
 
   private fun uploadImageSingle(productId: String?) {
-    showProgress("Uploading product image, please wait...")
-    if (isEdit == true && productImage == null) {
+    showProgress(resources.getString(R.string.uploading_service_image))
+    if (isEdit == true && serviceImage == null) {
       uploadSecondaryImage(productId)
       return
     }
-    viewModel?.addUpdateProductImage(clientId, "sequential", deviceId,
-            1, 1, productId, getRequestServiceImage(productImage))?.observeOnce(viewLifecycleOwner, Observer {
+    viewModel?.addUpdateImageProductService(clientId, "sequential", deviceId,
+        1, 1, productId, getRequestServiceImage(serviceImage))?.observeOnce(viewLifecycleOwner, Observer {
       if ((it.error is NoNetworkException).not()) {
         if (it.status == 200 || it.status == 201 || it.status == 202) {
           WebEngageController.trackEvent("Product added to catalogue", "MANAGE CONTENT", "null")
           uploadSecondaryImage(productId)
         } else {
           if (isEdit == false) errorType = "uploadImageSingle"
-          showError(getString(R.string.error_upload_product_image))
+          showError("Service image uploading error, please try again.")
         }
       } else {
         if (isEdit == false) errorType = "uploadImageSingle"
@@ -409,11 +401,11 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     })
   }
 
-  private fun getRequestServiceImage(serviceImage: File?): RequestBody {
+  private fun getRequestServiceImage(serviceImage: File?): RequestBody? {
     val responseBody = serviceImage?.readBytes()?.let { it.toRequestBody("image/png".toMediaTypeOrNull(), 0, it.size) }
     val fileName = takeIf { serviceImage?.name.isNullOrEmpty().not() }?.let { serviceImage?.name }
         ?: "service_${Date().time}.png"
-    return responseBody!!
+    return responseBody
   }
 
   private fun uploadSecondaryImage(productId: String?) {
@@ -432,7 +424,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             if (it.status == 200 || it.status == 201 || it.status == 202) {
               val response = getResponse(it.responseBody) ?: ""
               if (response.isNotEmpty()) secondaryImageList.add(response)
-            } else showError(getString(R.string.error_upload_secondary_images))
+            } else showError(resources.getString(R.string.secondary_service_image_upload_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == images.size) {
             addImageToProduct(productId, secondaryImageList)
@@ -451,17 +443,17 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           checkPosition += 1
           if ((it.error is NoNetworkException).not()) {
             if (it.status == 200 || it.status == 201 || it.status == 202) {
-              Log.d(ProductDetailFragment::class.java.name, "$it")
-            } else showLongToast("Oops some unknown error occurred while adding the secondary images data, please try again.")
+              Log.d(ServiceDetailFragment::class.java.name, "$it")
+            } else showLongToast(resources.getString(R.string.add_secondary_image_service_error))
           } else showError(resources.getString(R.string.internet_connection_not_available))
           if (checkPosition == secondaryImageList.size) {
-            showLongToast(if (isEdit == true) "Product updated successfully." else "Product saved successfully.")
+            showLongToast(if (isEdit == true) resources.getString(R.string.services_updated_success) else resources.getString(R.string.services_saved))
             goBack()
           }
         })
       }
     } else {
-      showLongToast(if (isEdit == true) "Product updated successfully." else "Product saved successfully.")
+      showLongToast(if (isEdit == true) resources.getString(R.string.services_updated_success) else resources.getString(R.string.services_saved))
       goBack()
     }
   }
@@ -483,26 +475,32 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
 
   private fun isValid(): Boolean {
-    val productName = binding?.tvProductName?.text.toString()
-    val productCategory = binding?.edtProductCategory?.text.toString()
-    val productDesc = binding?.tvDesc?.text.toString()
+    val serviceName = binding?.tvServiceName?.text.toString()
+    val shipmentDuration = binding?.edtServiceTime?.text
+    val serviceCategory = binding?.edtServiceCategory?.text.toString()
+    val serviceDesc = binding?.tvDesc?.text.toString()
     val amount = binding?.amountEdt?.text.toString().toDoubleOrNull() ?: 0.0
     val discount = binding?.discountEdt?.text.toString().toDoubleOrNull() ?: 0.0
-    val toggle = binding?.toggleProduct?.isOn ?: false
+    val toggle = binding?.toggleService?.isOn ?: false
     val externalUrlName = binding?.edtNameDesc?.text?.toString() ?: ""
     val externalUrl = binding?.edtUrl?.text?.toString() ?: ""
 
-    if (productImage == null && product?.ImageUri.isNullOrEmpty()) {
-      showLongToast(resources.getString(R.string.error_add_product_image))
+    if (serviceImage == null && product?.ImageUri.isNullOrEmpty()) {
+      showLongToast(resources.getString(R.string.add_service_image))
       return false
-    } else if (productName.isEmpty()) {
-      showLongToast(resources.getString(R.string.enter_product_name))
+    }
+
+    if (shipmentDuration.isNullOrEmpty()) {
+      showLongToast(resources.getString(R.string.enter_service_duration))
       return false
-    } else if (productCategory.isEmpty()) {
-      showLongToast(resources.getString(R.string.enter_category_catalog_product))
+    } else if (serviceName.isEmpty()) {
+      showLongToast(resources.getString(R.string.enter_service_name))
       return false
-    } else if (productDesc.isEmpty()) {
-      showLongToast(resources.getString(R.string.enter_product_desc))
+    } else if (serviceCategory.isBlank()) {
+      showLongToast(resources.getString(R.string.enter_service_category))
+      return false
+    } else if (serviceDesc.isEmpty()) {
+      showLongToast(resources.getString(R.string.enter_service_desc))
       return false
     } else if (toggle && amount <= 0.0) {
       showLongToast(resources.getString(R.string.enter_valid_price))
@@ -520,9 +518,10 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     product?.ClientId = clientId
     product?.FPTag = fpTag
     product?.CurrencyCode = currencyType
-    product?.Name = productName
-    product?.category = productCategory
-    product?.Description = productDesc
+    product?.Name = serviceName
+    product?.ShipmentDuration = shipmentDuration.toString()
+    product?.category = serviceCategory
+    product?.Description = serviceDesc
     product?.Price = if (toggle) amount else 0.0
     product?.DiscountAmount = if (toggle) discount else 0.0
     if (toggle && (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)) {
@@ -546,24 +545,21 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   private fun clearImage() {
     binding?.imageAddBtn?.visible()
     binding?.clearImage?.gone()
-    binding?.productImageView?.gone()
+    binding?.serviceImageView?.gone()
     product?.ImageUri = null
-    productImage = null
+    serviceImage = null
   }
 
   private fun openImagePicker() {
     val filterSheet = ImagePickerBottomSheet()
     filterSheet.isHidePdf(true)
     filterSheet.onClicked = { openImagePicker(it) }
-    filterSheet.show(this@ProductDetailFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
+    filterSheet.show(this@ServiceDetailFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
   }
 
 
   private fun openImagePicker(it: ClickType) {
-    val type = when (it) {
-        ClickType.CAMERA -> ImagePicker.Mode.CAMERA
-        else -> ImagePicker.Mode.GALLERY
-    }
+    val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
     ImagePicker.Builder(baseActivity)
         .mode(type)
         .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
@@ -577,11 +573,11 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
       val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
       if (mPaths.isNotEmpty()) {
-        productImage = File(mPaths[0])
+        serviceImage = File(mPaths[0])
         binding?.imageAddBtn?.gone()
         binding?.clearImage?.visible()
-        binding?.productImageView?.visible()
-        productImage?.getBitmap()?.let { binding?.productImageView?.setImageBitmap(it) }
+        binding?.serviceImageView?.visible()
+        serviceImage?.getBitmap()?.let { binding?.serviceImageView?.setImageBitmap(it) }
       }
     } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
       product = data?.getSerializableExtra(IntentConstant.PRODUCT_DATA.name) as? CatalogProduct
@@ -596,7 +592,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
         binding?.bankAccountName?.visible()
         binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
         binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-        binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_added)
+        binding?.titleBankAdded?.text =  "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
       }
     }
   }
@@ -630,15 +626,14 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
           binding?.txtPaymentType?.text = resources.getString(R.string.boost_payment_gateway)
           binding?.bankAccountName?.visible()
           binding?.bankAccountName?.text = "${bankAccountDetail?.accountName} - ${bankAccountDetail?.accountNumber}"
-          when {
-            bankAccountDetail?.accountNumber.isNullOrBlank() || bankAccountDetail?.accountName.isNullOrBlank() -> {
+          when{
+            bankAccountDetail?.accountNumber.isNullOrBlank()||bankAccountDetail?.accountName.isNullOrBlank()->{
               binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_info_circular_orange, 0, 0, 0)
               binding?.titleBankAdded?.text = resources.getString(R.string.bank_account_not_added)
-            }
-            else -> {
-              binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
-              binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
-            }
+            }else->{
+            binding?.titleBankAdded?.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_ok_green, 0, 0, 0)
+            binding?.titleBankAdded?.text = "${resources.getString(R.string.bank_account_added)} (${bankAccountDetail?.getVerifyText()})"
+          }
           }
 
 
@@ -658,7 +653,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
     }
     dialog.onListenerChange = { goAddBankView() }
     if (((product?.paymentType == CatalogProduct.PaymentType.ASSURED_PURCHASE.value && bankAccountDetail != null) ||
-                    (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)).not()) {
+            (product?.paymentType == CatalogProduct.PaymentType.UNIQUE_PAYMENT_URL.value)).not()) {
       product?.paymentType = ""
     }
     dialog.setDataPaymentGateway(bankAccountDetail, product?.paymentType)
@@ -682,8 +677,6 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     super.onCreateOptionsMenu(menu, inflater)
 //    inflater.inflate(R.menu.menu_help, menu)
-////    menuDelete = menu.findItem(R.id.id_delete)
-////    menuDelete?.isVisible = isEdit ?: false
     inflater.inflate(R.menu.ic_menu_delete_new, menu)
     menuDelete = menu.findItem(R.id.id_delete)
     menuDelete?.isVisible = isEdit ?: false
@@ -697,15 +690,15 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
             .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete)) { d, _ ->
               d.dismiss()
               showProgress()
-              WebEngageController.trackEvent("Delete product catalogue", "Product Item DELETE", "")
+              WebEngageController.trackEvent("Delete Service product catalogue", "SERVICE CATALOGUE ADD/UPDATE", "")
               val request = DeleteProductRequest(clientId, "SINGLE", product?.productId, product?.productType)
               viewModel?.deleteService(request)?.observeOnce(viewLifecycleOwner, Observer {
                 hideProgress()
                 if ((it.error is NoNetworkException).not()) {
                   if ((it.status == 200 || it.status == 201 || it.status == 202)) {
-                    showLongToast(resources.getString(R.string.product_removed_success))
+                    showLongToast(resources.getString(R.string.service_removed_successfully))
                     goBack()
-                  } else showError(resources.getString(R.string.remove_product_failed))
+                  } else showError(resources.getString(R.string.removing_service_failed))
                 } else showError(resources.getString(R.string.internet_connection_not_available))
               })
             }.show()
@@ -721,7 +714,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
 
   private fun dialogLogout() {
     MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme)
-        .setTitle(resources.getString(R.string.information_not_saved)).setMessage(resources.getString(R.string.you_have_unsaved_info))
+        .setTitle("Information not saved!").setMessage("You have unsaved information. Do you still want to close?")
         .setNegativeButton("No") { d, _ -> d.dismiss() }.setPositiveButton("Yes") { d, _ ->
           baseActivity.finish()
           d.dismiss()
