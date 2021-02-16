@@ -1,10 +1,10 @@
-package com.dashboard.model.live.premiumBanner
+package com.dashboard.model.live.dashboardBanner
 
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class Extra(
+data class BannerExtra(
   @SerializedName("CurrentIndex")
   var currentIndex: Int? = null,
   @SerializedName("PageSize")

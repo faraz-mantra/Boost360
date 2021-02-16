@@ -3,7 +3,7 @@ package com.appservice.model.account.response
 
 import com.google.gson.annotations.SerializedName
 
-data class ErrorList(
+data class AccountErrorList(
     @SerializedName("Message")
     var message: String? = null,
     @SerializedName("StackTrace")

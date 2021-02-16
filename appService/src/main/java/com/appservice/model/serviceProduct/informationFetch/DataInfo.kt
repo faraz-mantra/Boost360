@@ -2,6 +2,7 @@ package com.appservice.model.serviceProduct.informationFetch
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class DataInfo(
     @SerializedName("Addresses")
@@ -42,4 +43,4 @@ data class DataInfo(
     var tnC: Boolean? = null,
     @SerializedName("UpdatedOn")
     var updatedOn: String? = null
-)
+): Serializable

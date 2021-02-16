@@ -2,6 +2,7 @@ package com.appservice.model.account
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class PanDetailsN(
     @SerializedName("DocumentContent")
@@ -14,4 +15,4 @@ data class PanDetailsN(
     var name: String? = null,
     @SerializedName("Number")
     var number: String? = null
-)
+): Serializable

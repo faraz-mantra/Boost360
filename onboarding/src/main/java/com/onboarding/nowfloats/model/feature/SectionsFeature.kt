@@ -13,11 +13,11 @@ data class SectionsFeature(
     val desc: String? = "",
     val icon: String? = null,
     val boost_widget_key: String? = null,
-    val details: ArrayList<DetailsFeature>? = null
+    val details: ArrayList<DetailsFeature>? = null,
 ) : AppBaseRecyclerViewItem, Parcelable {
 
   fun getWidList(): List<String> {
-     return if (boost_widget_key.isNullOrEmpty()) arrayListOf() else  boost_widget_key.split(",")
+    return if (boost_widget_key.isNullOrEmpty()) arrayListOf() else boost_widget_key.split(",")
   }
 
   constructor(parcel: Parcel) : this(

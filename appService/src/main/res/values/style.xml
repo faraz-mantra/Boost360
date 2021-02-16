@@ -7,21 +7,25 @@
     <item name="colorAccent">@color/colorAccent</item>
     <item name="colorControlNormal">@color/colorAccent</item>
     <item name="android:windowDisablePreview">true</item>
+    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     <item name="android:homeAsUpIndicator">@drawable/ic_arrow_left_30</item>
     <item name="searchViewStyle">@style/SearchView</item>
   </style>
+
   <style name="CatalogTheme" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="colorAccent">@color/colorAccent</item>
   </style>
+
   <style name="CatalogTheme.Information" parent="CatalogTheme">
     <item name="colorPrimary">@color/color_primary</item>
     <item name="colorPrimaryDark">@color/color_primary_dark</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
   </style>
+
   <style name="AppTheme.account" parent="AppTheme.cataloge">
     <item name="android:editTextColor">@color/black</item>
     <item name="android:textColorHint">@color/light_grey_two</item>
@@ -65,13 +69,6 @@
     <item name="colorPrimaryDark">@color/color_primary_dark</item>
   </style>
 
-  <style name="CustomBottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">
-    <item name="android:background">@android:color/transparent</item>
-  </style>
-
-  <style name="BottomSheetTheme" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
-    <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
-  </style>
 
   <style name="SearchView" parent="Widget.AppCompat.Light.SearchView">
     <item name="submitBackground">@android:color/transparent</item>
@@ -126,6 +123,7 @@
   <style name="MaterialAlertNegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
     <item name="android:textColor">@color/colorAccent</item>
   </style>
+
   <!--staff module styles-->
   <!-- customize the color palette -->
   <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
@@ -228,7 +226,6 @@
     <item name="android:layout_width">wrap_content</item>
     <item name="android:paddingStart">30dp</item>
     <item name="android:paddingEnd">30dp</item>
-    <item name="android:textFontWeight">400</item>
     <item name="android:paddingTop">8dp</item>
     <item name="android:textColor">@color/warm_light</item>
     <item name="android:textSize">@dimen/size_12</item>
@@ -238,7 +235,6 @@
   </style>
   <style name="TextStaffHeading">
     <item name="android:layout_width">wrap_content</item>
-    <item name="android:textFontWeight">400</item>
     <item name="android:textColor">@color/black</item>
     <item name="android:textStyle">normal</item>
     <item name="textType">SUBHEADING_1</item>

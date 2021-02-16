@@ -28,8 +28,8 @@ import com.onboarding.nowfloats.model.ProcessApiSyncModel
 import com.onboarding.nowfloats.model.business.BusinessCreateRequest
 import com.onboarding.nowfloats.model.business.purchasedOrder.ActivatePurchasedOrderRequest
 import com.onboarding.nowfloats.model.business.purchasedOrder.ConsumptionConstraint
-import com.onboarding.nowfloats.model.business.purchasedOrder.Expiry
-import com.onboarding.nowfloats.model.business.purchasedOrder.Widget
+import com.onboarding.nowfloats.model.business.purchasedOrder.PurchasedExpiry
+import com.onboarding.nowfloats.model.business.purchasedOrder.PurchasedWidget
 import com.onboarding.nowfloats.model.channel.ChannelModel
 import com.onboarding.nowfloats.model.channel.ChannelType
 import com.onboarding.nowfloats.model.channel.getType
@@ -269,13 +269,13 @@ class RegistrationBusinessApiFragment : BaseRegistrationFragment<FragmentRegistr
   }
 
   private fun getRequestPurchasedOrder(floatingPointId: String): ActivatePurchasedOrderRequest {
-    val widList = ArrayList<Widget>()
+    val widList = ArrayList<PurchasedWidget>()
     requestFloatsModel?.categoryDataModel?.sections?.forEach {
       it.getWidList().forEach { key ->
-        val widget = Widget(widgetKey = key, name = it.title, quantity = 1, desc = it.desc, recurringPaymentFrequency = "MONTHLY",
+        val widget = PurchasedWidget(widgetKey = key, name = it.title, quantity = 1, desc = it.desc, recurringPaymentFrequency = "MONTHLY",
             isCancellable = true, isRecurringPayment = true, discount = 0.0, price = 0.0, netPrice = 0.0,
             consumptionConstraint = ConsumptionConstraint("DAYS", 30), images = ArrayList(),
-            expiry = Expiry("YEARS", 10))
+            expiry = PurchasedExpiry("YEARS", 10))
         widList.add(widget)
       }
     }

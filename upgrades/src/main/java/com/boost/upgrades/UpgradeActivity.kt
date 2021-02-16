@@ -156,7 +156,9 @@ class UpgradeActivity : AppCompatActivity() {
   }
 
   private fun initRazorPay() {
-    razorpay = Razorpay(this, RAZORPAY_KEY)
+    try {
+      razorpay = Razorpay(this, RAZORPAY_KEY)
+    }catch (e:Exception){e.printStackTrace()}
   }
 
 //  public fun initYoutube(){
