@@ -2,7 +2,7 @@ package com.appservice.rest.repository
 
 import com.appservice.base.rest.AppBaseLocalService
 import com.appservice.base.rest.AppBaseRepository
-import com.appservice.model.serviceProduct.Product
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.servicev1.DeleteSecondaryImageRequest
@@ -68,7 +68,7 @@ object NowfloatsApiRepository : AppBaseRepository<NowfloatsRemoteData, AppBaseLo
         return NowfloatsApiClient.shared.retrofit
     }
 
-    fun createProduct(request: Product?): Observable<BaseResponse> {
+    fun createProduct(request: CatalogProduct?): Observable<BaseResponse> {
         return makeRemoteRequest(remoteDataSource.createProduct(request = request), TaskCode.POST_CREATE_PRODUCT)
     }
     fun updateProduct(request: ProductUpdate?): Observable<BaseResponse> {
