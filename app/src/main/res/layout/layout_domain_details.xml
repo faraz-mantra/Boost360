@@ -7,7 +7,7 @@
         android:id="@+id/tv_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Domain Expired"
+        android:text="@string/domain_expired"
         android:background="@color/light_gray"
         android:textColor="@color/white"
         android:paddingLeft="10dp"
@@ -40,7 +40,7 @@
                 android:id="@+id/tv_domain_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="testmanage.nowfloats.com"
+                android:text="@string/testmanage_nowfloats_com"
                 android:textSize="15sp"
                 android:textAllCaps="false"
                 android:layout_marginTop="5dp"
@@ -50,14 +50,14 @@
                 android:id="@+id/tv_domain_created_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Purchase Date: 31 october 2016"
+                android:text="@string/purchase_date_31_october_2016"
                 android:textSize="12sp"/>
             <TextView
                 android:id="@+id/tv_domain_expire_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:text="Valid Till: 31 october 2018"/>
+                android:text="@string/valid_till_31_october_2018"/>
         </LinearLayout>
     </LinearLayout>
     <TextView
@@ -69,5 +69,5 @@
         android:layout_marginBottom="20dp"
         android:textSize="13sp"
         android:visibility="gone"
-        android:text="Your domain will be automatically renewed year on year before expiry based on active NowFloats package."/>
+        android:text="@string/your_domain_will_be_automatically_renewed_year_on_year_before_expiry_based_on_active_nowfloats_package"/>
 </LinearLayout>

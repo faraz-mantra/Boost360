@@ -25,7 +25,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Product Name:"
+                android:text="@string/product_name"
                 />
             <TextView
                 android:id="@+id/tv_product_name"
@@ -37,7 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="One piece Anime full"
+                android:text="@string/one_piece_anime_full"
                 />
         </TableRow>
 
@@ -48,7 +48,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quantity:"
+                android:text="@string/quantity"
                 />
             <TextView
                 android:id="@+id/tv_product_quantity"
@@ -60,7 +60,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="3"
+                android:text="@string/_3"
                 />
         </TableRow>
 
@@ -71,7 +71,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Unit Price:"
+                android:text="@string/unit_price"
                 />
             <TextView
                 android:id="@+id/tv_product_price"
@@ -83,7 +83,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="INR 200"
+                android:text="@string/inr_200"
                 />
         </TableRow>
 
@@ -94,7 +94,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Discount:"
+                android:text="@string/discount_"
                 />
             <TextView
                 android:id="@+id/tv_product_discount"
@@ -106,7 +106,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="INR 0"
+                android:text="@string/inr_0"
                 />
         </TableRow>
 
@@ -117,7 +117,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Final Price:"
+                android:text="@string/final_price"
                 />
             <TextView
                 android:id="@+id/tv_final_price"
@@ -129,7 +129,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="INR 200"
+                android:text="@string/inr_200"
                 />
         </TableRow>
     </TableLayout>

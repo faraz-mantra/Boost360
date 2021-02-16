@@ -147,7 +147,7 @@
   <string name="bank_account_added">Bank account added</string>
   <string name="are_you_sure">Are you sure?</string>
   <string name="cancel">Cancel</string>
-  <string name="delete">Delete</string>
+  <string name="@string/delete_">Delete</string>
   <string name="enter_service_name">Enter service name</string>
   <string name="enter_product_name">Enter product name</string>
   <string name="enter_category_catalog_product">Please add product category</string>

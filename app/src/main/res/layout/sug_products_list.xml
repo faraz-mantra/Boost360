@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:numColumns="2"
-            android:stretchMode="columnWidth"></GridView>
+            android:stretchMode="columnWidth" />
 
         <TextView
             android:id="@+id/tvNoItems"

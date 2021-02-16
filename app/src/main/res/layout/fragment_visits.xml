@@ -26,7 +26,7 @@
         android:id="@+id/tv_dash_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
+        android:text="@string/underscores"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_visit_count"
         app:layout_constraintTop_toBottomOf="@+id/tv_visit_count" />
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="unique visits this week"
+        android:text="@string/unique_visits_this_week"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_dash_line"
         app:layout_constraintTop_toBottomOf="@+id/tv_dash_line" />

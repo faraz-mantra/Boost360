@@ -21,7 +21,7 @@
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:visibility="gone"
-        android:text="Renew NowFloats Plan"
+        android:text="@string/renew_nowfloats_plan"
         android:background="@drawable/rounded_corner_button"
         android:layout_marginTop="20dp"
         android:textColor="@drawable/yellow_btn_hover_text_color"
@@ -48,7 +48,7 @@
             android:paddingBottom="5dp"
             android:paddingRight="20dp"
             android:textAllCaps="false"
-            android:text="Book New Domain"/>
+            android:text="@string/book_new_domain"/>
         <Button
             android:id="@+id/btn_renew_domain"
             android:layout_width="0dp"
@@ -61,7 +61,7 @@
             android:paddingBottom="5dp"
             android:paddingRight="25dp"
             android:textAllCaps="false"
-            android:text="Renew Domain"/>
+            android:text="@string/renew_domain_"/>
         <Button
             android:id="@+id/btn_link_domain"
             android:layout_width="0dp"
@@ -76,6 +76,6 @@
             android:paddingRight="20dp"
             android:layout_marginLeft="15dp"
             android:textAllCaps="false"
-            android:text="Link another domain"/>
+            android:text="@string/link_another_domain"/>
     </LinearLayout>
 </LinearLayout>

@@ -28,7 +28,7 @@
                     android:id="@+id/label_inventory_hint"
                     style="@style/ProductLabelTextStyle"
                     android:layout_gravity="center_vertical"
-                    android:text="Inventory Availability"/>
+                    android:text="@string/inventory_availability"/>
 
                 <ImageButton
                     android:id="@+id/ib_info_product_inventory"

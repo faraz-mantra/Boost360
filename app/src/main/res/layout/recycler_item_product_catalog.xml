@@ -72,7 +72,7 @@
           android:drawablePadding="5dp"
           android:maxLines="2"
           android:paddingBottom="5dp"
-          android:text="Missing Information"
+          android:text="@string/missing_information"
           android:textColor="#d0021b"
           android:textSize="14sp" />
 
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:paddingBottom="3dp"
-            android:text="Watch by Fastrack"
+            android:text="@string/watch_by_fastrack"
             android:textColor="@color/primaryTextColor"
             android:textSize="14sp"
             android:textStyle="normal"
@@ -94,7 +94,7 @@
           android:layout_height="wrap_content"
           android:layout_below="@+id/label_brand"
           android:maxLines="2"
-          android:text="Fastrack Bare Basic Watch"
+          android:text="@string/fastrack_bare_basic_watch"
           android:textColor="@color/primaryTextColor"
           android:textSize="18sp"
           android:textStyle="bold"
@@ -111,7 +111,7 @@
         android:maxLines="3"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="This is a wedding makeup description"
+        android:text="@string/this_is_a_wedding_makeup_description"
         android:textColor="@color/secondaryTextColor"
         android:textSize="14sp" />
 
@@ -135,7 +135,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center_vertical"
-          android:text="Price: "
+          android:text="@string/price"
           android:textColor="@color/secondaryLightTextColor"
           android:textSize="13sp"
           android:visibility="gone" />
@@ -196,7 +196,7 @@
             android:layout_height="30dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:contentDescription="facebook share button"
+            android:contentDescription="@string/facebook_share_button"
             android:src="@drawable/facebook_icon_share" />
 
           <ImageView
