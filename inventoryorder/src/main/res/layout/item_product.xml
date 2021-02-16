@@ -53,7 +53,7 @@
                     android:textColor="@color/greyish_brown"
                     android:textSize="14sp"
                     app:fontFamily="@font/regular"
-                    tools:text="Mutton Rogan Josh" />
+                    tools:text="@string/dummy_title" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:id="@+id/tv_product_Price"
