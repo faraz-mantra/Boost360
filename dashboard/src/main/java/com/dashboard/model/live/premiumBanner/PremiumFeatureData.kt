@@ -8,7 +8,7 @@ import kotlin.collections.ArrayList
 
 data class PremiumFeatureData(
     @SerializedName("bundles")
-    var bundles: ArrayList<Bundle>? = null,
+    var bundles: ArrayList<PremiumBundle>? = null,
     @SerializedName("createdon")
     var createdon: String? = null,
     @SerializedName("discount_coupons")

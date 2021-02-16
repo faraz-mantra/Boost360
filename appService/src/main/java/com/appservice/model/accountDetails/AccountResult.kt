@@ -4,7 +4,7 @@ package com.appservice.model.accountDetails
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class Result(
+data class AccountResult(
     @SerializedName("AdditionalKYCDocuments")
     var additionalKYCDocuments: List<AdditionalKYCDocument>? = null,
     @SerializedName("BankAccountDetails")

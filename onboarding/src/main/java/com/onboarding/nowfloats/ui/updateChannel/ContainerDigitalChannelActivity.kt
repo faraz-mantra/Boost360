@@ -89,7 +89,7 @@ class ContainerDigitalChannelActivity : AppBaseActivity<ActivityFragmentContaine
 
   override fun getToolbarTitle(): String? {
     return when (type) {
-      FragmentType.MY_DIGITAL_CHANNEL.name -> getString(R.string.business_contact_channels)
+      FragmentType.MY_DIGITAL_CHANNEL.name -> getString(R.string.my_digital_channels)
       else -> super.getToolbarTitle()
     }
   }

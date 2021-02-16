@@ -2,6 +2,7 @@ package com.appservice.model.serviceProduct.informationFetch
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ProductInfoFetchResponse(
     @SerializedName("Data")
@@ -10,4 +11,4 @@ data class ProductInfoFetchResponse(
     var message: String? = null,
     @SerializedName("Status")
     var status: String? = null
-)
+): Serializable
