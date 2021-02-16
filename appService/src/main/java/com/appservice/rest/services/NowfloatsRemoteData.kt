@@ -1,5 +1,5 @@
 package com.appservice.rest.services
-import com.appservice.model.serviceProduct.Product
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.model.servicev1.*
@@ -63,7 +63,7 @@ interface NowfloatsRemoteData {
     fun getNotificationCount(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?, @Query("isRead") isRead: Boolean = false): Observable<Response<Any>>
 
     @POST(EndPoints.CREATE_PRODUCT)
-    fun createProduct(@Body request: Product?): Observable<Response<String>>
+    fun createProduct(@Body request: CatalogProduct?): Observable<Response<String>>
 //
 //    @GET(EndPoints.GET_PRODUCT_LISTING)
 //    fun getAllProducts(
