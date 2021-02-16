@@ -88,11 +88,11 @@ class CouponPopUpFragment : DialogFragment() {
         enter_coupon_layout.setOnClickListener { }
 
         coupon_submit.setOnClickListener {
-            if (validateCouponCode() && validateCouponCodeWithAPI()) {
-                if (couponsList.size > 0) {
-//                    viewModel.getCouponRedeem(RedeemCouponRequest(arguments!!.getDouble("cartValue"), entered_coupon_value.text.toString(), (activity as UpgradeActivity).fpid!!), entered_coupon_value.text.toString())
-//                    dismiss()
-                     coupon_invalid.visibility = View.GONE
+            if (validateCouponCode()) {
+//                if (couponsList.size > 0) {
+                    viewModel.getCouponRedeem(RedeemCouponRequest(arguments!!.getDouble("cartValue"), entered_coupon_value.text.toString(), (activity as UpgradeActivity).fpid!!), entered_coupon_value.text.toString())
+                    dismiss()
+                     /*coupon_invalid.visibility = View.GONE
                      var validCouponCode:CouponsModel? = null
                      for(singleCoupon in couponsList){
                          if(entered_coupon_value.text.toString().toUpperCase(Locale.getDefault()) == singleCoupon.coupon_key.toUpperCase(Locale.getDefault())){
@@ -105,13 +105,10 @@ class CouponPopUpFragment : DialogFragment() {
                      }else{
                          dismiss()
                          viewModel.addCouponCodeToCart(validCouponCode)
-                     }
-                } else {
-                    coupon_invalid.visibility = View.VISIBLE
-                }
-            }else if(validateCouponCode() && validateCouponCodeWithAPI().not()){
-                viewModel.getCouponRedeem(RedeemCouponRequest(arguments!!.getDouble("cartValue"), entered_coupon_value.text.toString(), (activity as UpgradeActivity).fpid!!), entered_coupon_value.text.toString())
-                dismiss()
+                     }*/
+//                } else {
+//                    coupon_invalid.visibility = View.VISIBLE
+//                }
             }
         }
 
