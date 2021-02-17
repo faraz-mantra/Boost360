@@ -82,7 +82,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
       productDetails.price = prod.Price
       productDetails.isAvailable = prod.IsAvailable
 
-      var item = ItemsItem(productDetails = productDetails, productOrOfferId = "", )
+      var item = ItemsItem(productDetails = productDetails, productOrOfferId = prod._id, )
       item.quantity = prod.productQuantityAdded
 
       //hardcoded as "prod.productType!!" is throwing error when calling api
