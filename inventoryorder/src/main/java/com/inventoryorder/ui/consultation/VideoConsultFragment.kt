@@ -132,6 +132,7 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
 
   private fun onVideoConsultAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_create_sample_video_consultation = isAdded
     instance.updateDocument()
   }
@@ -296,9 +297,9 @@ class VideoConsultFragment : BaseInventoryFragment<FragmentVideoConsultBinding>(
   private fun startFilter(query: String) {
     if (query.isEmpty().not() && query.length > 2) {
       val isNumberWith91=(query.contains("+91"))
-      val isNumber= ValidationUtils.isNumeric(if (isNumberWith91) query.replace("+91","") else query)
+      val isNumber= ValidationUtils.isNumeric(if (isNumberWith91) query.replace("+91", "") else query)
       val type = if (isNumber) QueryObject.QueryKey.BuyerPrimaryContactNumber.name else QueryObject.QueryKey.BuyerFullName.name
-      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query,type=type), isSearch = true)
+      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query, type = type), isSearch = true)
     } else setAdapterNotify(orderList)
   }
 
