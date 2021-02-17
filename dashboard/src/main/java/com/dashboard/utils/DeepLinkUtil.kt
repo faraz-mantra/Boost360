@@ -63,6 +63,7 @@ const val deeplink_gplaces = "gplaces"
 const val deeplink_nfstorebiztiming = "nfstorebiztiming"
 const val deeplink_ProductGallery = "productGallery"
 const val deeplink_sitemeter = "sitemeter"
+const val deeplink_DR_SCORE = "dr_score"
 const val deeplink_assuredPurchase = "assuredPurchase"
 const val deeplink_accSettings = "accSettings"
 const val deeplink_uniqueVisitor = "uniqueVisitor"
@@ -187,7 +188,7 @@ class DeepLinkUtil(var baseActivity: AppCompatActivity, var session: UserSession
           baseActivity.startBusinessLogo(session)
         } else if (url.contains(deeplink_nfstoreDomainTTBCombo)) {
           baseActivity.startFragmentsFactory(session, fragmentType = "Business_Profile_Fragment_V2")
-        } else if (url.contains(deeplink_sitemeter) || url.contains(deeplink_site_health)) {
+        } else if (url.contains(deeplink_sitemeter) || url.contains(deeplink_site_health) || url.contains(deeplink_DR_SCORE)) {
           baseActivity.startReadinessScoreView(session, 0)
         } else if (url.contains(deeplink_imageGallery)) {
           baseActivity.startAddImageGallery(session, isCreate = false)

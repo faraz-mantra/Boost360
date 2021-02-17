@@ -262,7 +262,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
       editorFp?.putBoolean(PreferenceConstant.FP_PAGE_SHARE_ENABLED, false)
       editorFp?.putInt(PreferenceConstant.FP_PAGE_STATUS, 0)
     }
-    val timeLine=channelsAccessToken?.NFXAccessTokens?.first { it.type() == "facebookusertimeline" }
+    val timeLine=channelsAccessToken?.NFXAccessTokens?.firstOrNull { it.type() == "facebookusertimeline" }
     if (timeLine!=null){
       editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, timeLine.UserAccountName)
       editorFp?.putInt("fbStatus", timeLine.Status?.toIntOrNull() ?: 0)
