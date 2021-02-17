@@ -42,9 +42,9 @@ interface FacebookLoginHelper {
    * @see <a href="https://developers.facebook.com/docs/facebook-login/permissions/overview">Permissions with Facebook Login</a>
    */
   fun loginWithFacebook(fragment: Fragment, permissions: List<FacebookPermissions>, arePublishPermissions: Boolean = false) {
-//      LoginManager.getInstance().logIn(fragment, permissions.map { it.name })
-    if (arePublishPermissions) LoginManager.getInstance().logInWithPublishPermissions(fragment, permissions.map { it.name })
-    else LoginManager.getInstance().logInWithReadPermissions(fragment, permissions.map { it.name })
+      LoginManager.getInstance().logIn(fragment, permissions.map { it.name })
+//    if (arePublishPermissions) LoginManager.getInstance().logInWithPublishPermissions(fragment, permissions.map { it.name })
+//    else LoginManager.getInstance().logInWithReadPermissions(fragment, permissions.map { it.name })
   }
 
   /***

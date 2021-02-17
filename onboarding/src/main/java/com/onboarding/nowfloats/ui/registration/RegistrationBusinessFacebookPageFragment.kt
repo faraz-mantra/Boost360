@@ -119,10 +119,9 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
                         FacebookPermissions.email,
                         FacebookPermissions.public_profile,
                         FacebookPermissions.read_insights,
-                        FacebookPermissions.business_management,
                         FacebookPermissions.pages_show_list,
-                        FacebookPermissions.pages_manage_cta,
-                        FacebookPermissions.pages_manage_metadata
+                        FacebookPermissions.pages_manage_metadata,
+                        FacebookPermissions.ads_management, FacebookPermissions.pages_manage_posts,
 //            FacebookPermissions.manage_pages,
 //            FacebookPermissions.publish_pages,
 //            FacebookPermissions.ads_management
@@ -188,7 +187,7 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
         val pages = response?.data ?: return
 //        if (pages.size > 1) return showShortToast(resources.getString(R.string.select_one_page))
         val page = pages.firstOrNull() ?: return
-        channelAccessToken.userAccessTokenKey = AccessToken.getCurrentAccessToken().token
+        channelAccessToken.userAccessTokenKey = page.access_token;
         channelAccessToken.userAccountId = page.id
         channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(page.id ?: "")
         channelAccessToken.userAccountName = page.name
