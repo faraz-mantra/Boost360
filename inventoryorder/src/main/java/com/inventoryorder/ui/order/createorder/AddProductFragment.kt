@@ -22,6 +22,7 @@ import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
 
@@ -98,7 +99,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
     bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
     bundle.putDouble(IntentConstant.TOTAL_PRICE.name, totalPrice)
     bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name))
-    startFragmentOrderActivity(FragmentType.ADD_CUSTOMER, bundle)
+    startFragmentOrderActivity(FragmentType.ADD_CUSTOMER, bundle, isResult = true)
   }
 
   private fun getItemList(fpTag : String?, clientId : String?) {
@@ -179,6 +180,27 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
           binding?.layoutTotalPricePanel?.visibility = View.GONE
           selectedProductList?.clear()
         }
+      }
+    }
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+
+    if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+      val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
+      val req = bundle?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
+      if (req != null) {
+        createOrderRequest = req
+        itemsAdapter?.notifyDataSetChanged()
+      }
+
+      val shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name)
+      if (shouldReInitiate != null && shouldReInitiate) {
+         totalPrice = 0.0
+         totalCartItems = 0
+         binding?.layoutTotalPricePanel?.visibility = View.GONE
+         getItemList(fpTag, PRODUCT_LIST_CLIENT_ID)
       }
     }
   }

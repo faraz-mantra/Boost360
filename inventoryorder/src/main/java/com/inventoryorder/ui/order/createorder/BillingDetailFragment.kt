@@ -1,5 +1,7 @@
 package com.inventoryorder.ui.order.createorder
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +47,7 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
   var orderBottomSheet = OrderBottomSheet()
   var deliveryTypeBottomSheet = OrderBottomSheet()
   private var shouldFinish = false
+  var shouldReInitiate = false
   private var paymentStatus : String = PaymentDetailsN.STATUS.PENDING.name
 
   companion object {
@@ -75,11 +78,15 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
   }
 
   fun getBundleData(): Bundle? {
+    val bundle = Bundle()
     shouldFinish?.let {
-      val bundle = Bundle()
       bundle.putBoolean(IntentConstant.SHOULD_FINISH.name, shouldFinish)
-      return bundle
     }
+    shouldReInitiate?.let {
+      bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+    }
+    bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
+    return bundle
   }
 
   private fun setUpData() {
@@ -124,10 +131,6 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       }
 
       binding?.tvDeliveryType -> {
-        /*val deliveryTypeBottomSheetDialog = DeliveryTypeBottomSheetDialog(selectedDeliveryType)
-        deliveryTypeBottomSheetDialog.onClicked = {onDeliveryTypeSelected(it)}
-        deliveryTypeBottomSheetDialog.show(this.parentFragmentManager, DeliveryTypeBottomSheetDialog::class.java.name)*/
-
         val createOrderBottomSheetDialog = CreateOrderBottomSheetDialog(deliveryTypeBottomSheet)
         createOrderBottomSheetDialog.onClicked = this::onDeliveryTypeSelected
         createOrderBottomSheetDialog.show(this.parentFragmentManager, CreateOrderBottomSheetDialog::class.java.name)
@@ -239,15 +242,6 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
     this.orderBottomSheet = orderBottomSheet
   }
 
-  private fun onDeliveryTypeSelected(selectedType : String) {
-    selectedDeliveryType = selectedType
-    binding?.tvDeliveryType?.text = if (selectedType == OrderItem.OrderMode.PICKUP.name) {
-      getString(R.string.store_pickup)
-    } else {
-      getString(R.string.home_delivery)
-    }
-  }
-
   private fun showAddDeliveryFeeDialog() {
     val addDeliveryFeeBottomSheetDialog = AddDeliveryFeeBottomSheetDialog(deliveryFee)
     addDeliveryFeeBottomSheetDialog.onClicked = { onDeliveryFeeAdded(it) }
@@ -355,11 +349,23 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
         var orderInitiateResponse = (it as? OrderInitiateResponse)
         var bundle = Bundle()
         bundle.putSerializable(IntentConstant.CREATE_ORDER_RESPONSE.name, orderInitiateResponse)
-        startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle)
+        startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
       } else {
         hideProgress()
         showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
       }
     })
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+
+    if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+      val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
+      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name)!!
+      if (shouldReInitiate != null && shouldReInitiate) {
+        (context as FragmentContainerOrderActivity).onBackPressed()
+      }
+    }
   }
 }

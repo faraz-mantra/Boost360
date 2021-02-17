@@ -12,11 +12,13 @@ import com.inventoryorder.databinding.FragmentOrderDetailBinding
 import com.inventoryorder.databinding.FragmentOrderPlacedBinding
 import com.inventoryorder.model.OrderInitiateResponse
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.order.OrderInvoiceFragment
 import com.inventoryorder.ui.startFragmentOrderActivity
 
 class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() {
 
+    var shouldReInitiate = false
     var orderInitiateResponse: OrderInitiateResponse? = null
 
     companion object {
@@ -47,12 +49,21 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
         binding?.textTotalAmount?.text = "${orderInitiateResponse?.data?.BillingDetails?.CurrencyCode} ${orderInitiateResponse?.data?.BillingDetails?.GrossAmount}"
     }
 
+    fun getBundleData(): Bundle? {
+        val bundle = Bundle()
+        shouldReInitiate?.let {
+            bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+        }
+        return bundle
+    }
+
     override fun onClick(v: View) {
         super.onClick(v)
 
         when(v) {
             binding?.buttonInitiateNewOrder -> {
-                startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, Bundle(),)
+                shouldReInitiate = true
+                (activity as FragmentContainerOrderActivity).onBackPressed()
             }
         }
     }
