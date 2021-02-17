@@ -11,11 +11,10 @@ import com.inventoryorder.databinding.BottomSheetCancelOrderBinding
 import com.inventoryorder.databinding.BottomSheetDeliveryTypeBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class DeliveryTypeBottomSheetDialog : BaseBottomSheetDialog<BottomSheetDeliveryTypeBinding, BaseViewModel>() {
+class DeliveryTypeBottomSheetDialog(val selectedType : String) : BaseBottomSheetDialog<BottomSheetDeliveryTypeBinding, BaseViewModel>() {
 
-  private var cancellingEntity: String? = OrderItem.CancellingEntity.BUYER.name
-  private var orderItem: OrderItem? = null
-  var onClicked: (cancellingEntity: String,reasonText:String) -> Unit = { _: String, _: String -> }
+  var selectedDeliveryType = ""
+  var onClicked: (selectedDeliveryType: String) -> Unit = { selectedDeliveryType: String -> }
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_delivery_type
@@ -25,36 +24,38 @@ class DeliveryTypeBottomSheetDialog : BaseBottomSheetDialog<BottomSheetDeliveryT
     return BaseViewModel::class.java
   }
 
-  fun setData(orderItem: OrderItem) {
-    this.orderItem = orderItem
-  }
-
   override fun onCreateView() {
 
-    binding?.radioHome?.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-      override fun onCheckedChanged(p0: CompoundButton?, isChecked: Boolean) {
-        if (isChecked) {
-          binding?.radioStore?.isChecked = false
-          binding?.radioHome?.isChecked = true
-        }
-      }
-    })
+    if (selectedType == OrderItem.OrderMode.DELIVERY.name) {
+      binding?.radioHome?.isChecked = true
+    } else {
+      binding?.radioStore?.isChecked = true
+    }
 
-    binding?.radioStore?.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-      override fun onCheckedChanged(p0: CompoundButton?, isChecked: Boolean) {
-        if (isChecked) {
-          binding?.radioStore?.isChecked = true
-          binding?.radioHome?.isChecked = false
-        }
+    setOnClickListener(binding?.buttonDone, binding?.tvCancel)
+
+    binding?.radioHome?.setOnCheckedChangeListener { p0, isChecked ->
+      if (isChecked) {
+        selectedDeliveryType = OrderItem.OrderMode.DELIVERY.name
+        binding?.radioStore?.isChecked = false
+        binding?.radioHome?.isChecked = true
       }
-    })
+    }
+
+    binding?.radioStore?.setOnCheckedChangeListener { p0, isChecked ->
+      if (isChecked) {
+        selectedDeliveryType = OrderItem.OrderMode.PICKUP.name
+        binding?.radioStore?.isChecked = true
+        binding?.radioHome?.isChecked = false
+      }
+    }
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     dismiss()
     when (v) {
-     // binding?.buttonDone -> onClicked(cancellingEntity?:"", (binding?.txtReason?.text?.toString()?:""))
+      binding?.buttonDone -> onClicked(selectedDeliveryType)
     }
   }
 
