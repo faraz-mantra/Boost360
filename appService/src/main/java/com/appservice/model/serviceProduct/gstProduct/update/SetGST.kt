@@ -2,6 +2,7 @@ package com.appservice.model.serviceProduct.gstProduct.update
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class SetGST(
     @SerializedName("gst_slab")
@@ -14,4 +15,4 @@ data class SetGST(
     var weight: String? = null,
     @SerializedName("width")
     var width: String? = null
-)
+): Serializable

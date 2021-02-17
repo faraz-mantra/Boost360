@@ -21,7 +21,7 @@ class ServiceModelV1(
         var IsArchived: String? = null,
 
         @SerializedName(value = "isAvailable", alternate = ["IsAvailable"])
-        var IsAvailable: Boolean = false,
+        var IsAvailable: Boolean = true,
 
 
         @SerializedName(value = "Price", alternate = ["price"])
@@ -37,7 +37,7 @@ class ServiceModelV1(
         var GstSlab: Int? = null,
 
         var availableUnits: Int = 1,
-
+        @SerializedName(value = "tags", alternate = ["Tags"])
         var tags: ArrayList<String>? = null,
         var ApplicationId: String? = null,
 
@@ -51,39 +51,37 @@ class ServiceModelV1(
         var productId: String? = null,
         var CreatedOn: String? = null,
         var UpdatedOn: String? = null,
-        var isProductSelected: Boolean = false,
-        var productType: String? = null,
-        var paymentType: String? = null,
-        var variants: Boolean = false,
+        @SerializedName("serviceType", alternate = ["ServiceType"])
+        var serviceType: List<Int> = arrayListOf(0),
         @SerializedName("BrandName", alternate = ["brandName"])
         var brandName: String? = null,
         @SerializedName("Category", alternate = ["category"])
         var category: String? = null,
 
-        @SerializedName("isCodAvailable")
+        @SerializedName("isCodAvailable",alternate = ["IsCodAvailable"])
         var codAvailable: Boolean = false,
 
         @SerializedName("maxCodOrders")
         var maxCodOrders: Int = 10,
 
-        @SerializedName("isPrepaidOnlineAvailable")
+        @SerializedName("isPrepaidOnlineAvailable",alternate = ["IsPrepaidOnlineAvailable"])
         var prepaidOnlineAvailable: Boolean = true,
 
-        @SerializedName("maxPrepaidOnlineOrders")
-        var maxPrepaidOnlineAvailable: Int = 10,
+        @SerializedName("isPriceInclusiveOfTax",alternate = ["IsPriceInclusiveOfTax"])
+        var isPriceInclusiveOfTax: Boolean = true,
 
-        @SerializedName("uniquePaymentUrl")
+        @SerializedName("url",alternate = ["Url","uniquePaymentUrl"])
         var BuyOnlineLink: BuyOnlineLink? = null,
-        @SerializedName("KeySpecifications")
+        @SerializedName("keySpecifications",alternate = ["KeySpecifications"])
         var keySpecification: KeySpecification? = null,
 
-        @SerializedName("com.appservice.ui.model.OtherSpecifications")
+        @SerializedName("otherSpecifications",alternate = ["OtherSpecifications"])
         var otherSpecification: ArrayList<KeySpecification>? = null,
 
-        @SerializedName("Image")
+        @SerializedName("image",alternate = ["Image"])
         var image: ImageModel? = null,
 
-        @SerializedName("SecondaryImages")
+        @SerializedName("secondaryImages",alternate = ["SecondaryImages"])
         var secondaryImages: ArrayList<ImageModel>? = null,
 
         var pickupAddressReferenceId: String? = null,
@@ -97,7 +95,7 @@ class ServiceModelV1(
         ASSURED_PURCHASE("AssuredPurchase"), MY_PAYMENT_GATEWAY("MyPaymentGateWay"), UNIQUE_PAYMENT_URL("UniquePaymentUrl"), DONT_WANT_TO_SELL("None");
 
         companion object {
-            fun fromValue(value: String): PaymentType? = values().firstOrNull { it.value.toLowerCase(Locale.ROOT) == value.toLowerCase(Locale.ROOT) }
+            fun fromValue(value: String): PaymentType? = values().firstOrNull { it.value.equals(value, ignoreCase = true) }
         }
     }
 }

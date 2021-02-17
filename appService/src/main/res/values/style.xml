@@ -8,14 +8,16 @@
     <item name="colorControlNormal">@color/colorAccent</item>
     <item name="android:windowDisablePreview">true</item>
     <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
-    <item name="android:homeAsUpIndicator">@drawable/ic_arrow_left_30</item>
+    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
+    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <item name="searchViewStyle">@style/SearchView</item>
   </style>
+
   <style name="CatalogTheme" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
-    <item name="android:homeAsUpIndicator">@drawable/ic_arrow_left</item>
+    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
     <item name="searchViewStyle">@style/ThemeOverlay.SearchView</item>
     <item name="colorAccent">@color/colorAccent</item>
   </style>
@@ -85,13 +87,14 @@
   <style name="AppTheme_staff_home" parent="AppTheme.Base">
     <item name="colorPrimary">@color/orange</item>
     <item name="colorPrimaryDark">#F5B200</item>
-    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_toolbar_d</item>
+    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
     <item name="searchViewStyle">@style/SearchView</item>
   </style>
 
   <style name="AppTheme_staff_details" parent="AppTheme.Base">
     <item name="colorPrimary">@color/color_primary</item>
     <item name="colorPrimaryDark">@color/color_primary_dark</item>
+    <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
   </style>
 
   <style name="CustomBottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">
@@ -250,7 +253,7 @@
   <style name="ButtonStyle.Rounded.Solid" parent="ButtonStyle.Rounded">
     <item name="android:background">@drawable/bg_button_proceed_4</item>
     <item name="android:paddingStart">@dimen/size_30</item>
-    <item name="android:textSize">12.89sp</item>
+    <item name="android:textSize">16sp</item>
     <item name="android:paddingTop">@dimen/size_8</item>
     <item name="android:paddingBottom">@dimen/size_8</item>
     <item name="android:layout_width">wrap_content</item>

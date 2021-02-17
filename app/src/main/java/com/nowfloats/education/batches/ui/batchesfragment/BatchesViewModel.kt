@@ -3,6 +3,7 @@ package com.nowfloats.education.batches.ui.batchesfragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.framework.models.BaseViewModel
+import com.google.gson.JsonObject
 import com.nowfloats.education.batches.model.Data
 import com.nowfloats.education.batches.model.Query
 import com.nowfloats.education.helper.Constants.AUTH_CODE
@@ -39,7 +40,8 @@ class BatchesViewModel(private val service: IEducationService) : BaseViewModel()
     private var _deleteBatchResponse = MutableLiveData<String>()
 
     fun getUpcomingBatches() {
-        compositeDisposable.add(service.getUpcomingBatches(AUTH_CODE, WEBSITE_ID_EDUCATION, LIMIT, SKIP)
+        val value = "{WebsiteId:'"+WEBSITE_ID_EDUCATION+"'}";
+        compositeDisposable.add(service.getUpcomingBatches(AUTH_CODE, value, LIMIT, SKIP)
                 .processRequest(
                         {
                             _upcomingBatchResponse.value = it

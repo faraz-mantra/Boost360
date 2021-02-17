@@ -62,7 +62,7 @@
               android:layout_height="@dimen/size_40"
               android:layout_marginEnd="@dimen/size_10"
               android:layout_marginBottom="@dimen/size_10"
-              app:cardBackgroundColor="@color/gray_ligh_3"
+              app:cardBackgroundColor="@color/gray_light_3"
               app:cardCornerRadius="@dimen/size_20"
               app:cardElevation="@dimen/size_4"
               app:layout_constraintBottom_toBottomOf="parent"
@@ -72,7 +72,7 @@
                 android:layout_width="@dimen/size_20"
                 android:layout_height="@dimen/size_20"
                 android:layout_gravity="center"
-                android:background="@color/gray_ligh_3"
+                android:background="@color/gray_light_3"
                 app:srcCompat="@drawable/ic_camera_grey" />
 
               <com.framework.views.customViews.CustomCardView

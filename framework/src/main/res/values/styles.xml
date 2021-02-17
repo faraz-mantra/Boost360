@@ -14,6 +14,7 @@
     <item name="materialAlertDialogTheme">@style/MaterialDialogTheme</item>
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
+    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
     <!--  <item name="toolbarStyle">@style/ToolbarStyle</item>-->
     <!--  <item name="android:toolbarStyle" tools:ignore="NewApi">@style/ToolbarStyle</item>-->
     <!--  <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>-->
@@ -24,14 +25,22 @@
   </style>
 
 
+  <style name="CustomBottomSheet" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+    <item name="android:background">@android:color/transparent</item>
+  </style>
+
+  <style name="BottomSheetTheme" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+    <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
+  </style>
+
   <style name="MaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
     <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:backgroundDimEnabled">false</item>
   </style>
 
   <style name="MaterialDialogThemeFull" parent="MaterialDialogTheme">
     <item name="android:windowNoTitle">true</item>
     <item name="android:windowIsFloating">false</item>
-    <!--    <item name="android:windowAnimationStyle">@style/Animation.WindowSlideUpDown</item>-->
   </style>
 
 

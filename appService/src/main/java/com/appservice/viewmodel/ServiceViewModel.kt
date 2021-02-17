@@ -1,7 +1,7 @@
 package com.appservice.viewmodel
 
 import androidx.lifecycle.LiveData
-import com.appservice.model.serviceProduct.Product
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.addProductImage.ProductImageRequest
 import com.appservice.model.serviceProduct.addProductImage.deleteRequest.ProductImageDeleteRequest
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
@@ -18,7 +18,7 @@ import okhttp3.RequestBody
 
 class ServiceViewModel : BaseViewModel() {
 
-  fun createService(request: Product?): LiveData<BaseResponse> {
+  fun createService(request: CatalogProduct?): LiveData<BaseResponse> {
     return WithFloatTwoRepository.createService(request).toLiveData()
   }
 
@@ -72,9 +72,6 @@ class ServiceViewModel : BaseViewModel() {
     return WithFloatRepository.userAccountDetail(fpId, clientId).toLiveData()
   }
 
-  //  fun addProductDetails(request:ProductDimensionRequest): LiveData<BaseResponse> {
-//    return KitWebActionRepository.productAddData(request).toLiveData()
-//  }
   fun getServiceListing(request: ServiceListingRequest): LiveData<BaseResponse> {
     return NowfloatsApiRepository.getServiceListing(request).toLiveData()
   }
