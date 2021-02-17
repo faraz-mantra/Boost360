@@ -7,6 +7,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.exceptions.NoNetworkException
+import com.framework.extensions.observeOnce
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
@@ -102,7 +103,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
 
   private fun getItemList(fpTag : String?, clientId : String?) {
     showProgress(context?.getString(R.string.loading))
-    viewModel?.getProductItems(fpTag, clientId, 0)?.observe(viewLifecycleOwner, Observer {
+    viewModel?.getProductItems(fpTag, clientId, 0)?.observeOnce(viewLifecycleOwner, Observer {
 
       hideProgress()
       if (it.error is NoNetworkException) {
