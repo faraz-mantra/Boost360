@@ -273,7 +273,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     }
     showProgress(getString(R.string.staff_timings_updating))
     val request = StaffTimingAddUpdateRequest(staffId = staffDetails?.id, workTimings = this.staffDetails?.timings)
-    viewModel?.updateStaffTiming(request)?.observeOnce(viewLifecycleOwner, {
+    viewModel?.updateStaffTiming(request)?.observeOnce(viewLifecycleOwner, Observer{
       hideProgress()
       if (it?.isSuccess() == true) {
         Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
@@ -300,7 +300,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
   private fun addStaffTimings(staffId: String?) {
     if (staffDetails?.timings == null) staffDetails?.timings = AppointmentModel.getDefaultTimings()
     showProgress(getString(R.string.staff_timing_add))
-    viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id ?: staffId, staffDetails?.timings))?.observeOnce(viewLifecycleOwner, {
+    viewModel?.addStaffTiming(StaffTimingAddUpdateRequest(staffId = staffDetails?.id ?: staffId, staffDetails?.timings))?.observeOnce(viewLifecycleOwner, Observer{
       hideProgress()
       if (it.isSuccess()) {
         Log.v(getString(R.string.staff_timings), getString(R.string.staff_timings_added))
@@ -339,12 +339,14 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
         this.resultCode = resultCode
         this.servicesList?.clear()
         this.servicesList = data?.extras?.get(IntentConstant.STAFF_SERVICES.name) as? ArrayList<DataItemService>
+        serviceListId = ArrayList();
         servicesList?.forEach { dataItem ->
           if (dataItem.id.isNullOrEmpty().not()) serviceListId?.add(dataItem.id!!)
         }
         if (staffDetails?.serviceIds == null) staffDetails?.serviceIds = arrayListOf()
         staffDetails?.serviceIds = servicesList?.map { if (it.id.isNullOrEmpty().not()) it.id!! } as? ArrayList<String>
         if (staffDetails?.serviceIds.isNullOrEmpty()) staffDetails?.serviceIds = null
+        staffDetails?.serviceIds = serviceListId;
         binding?.ctvServices?.text = (servicesList?.map { it.name })?.joinToString(", ", limit = 5, truncated = "+${servicesList?.size?.minus(5)} more")
         showHideServicesText()
       }

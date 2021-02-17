@@ -116,7 +116,7 @@ data class AppointmentModel(
     return selectedDays.toString()
   }
 
-  enum class WeekdayStaffValue(var fullName: String, var sortName: String) {
+  enum class WeekdayStaffValue(var fullName: String, var sortName: String): Serializable {
     MONDAY("Monday", "Mon"), TUESDAY("Tuesday", "Tue"), WEDNESDAY("Wednesday", "Wed"),
     THURSDAY("Thursday", "Thu"), FRIDAY("Friday", "Fri"), SATURDAY("Saturday", "Sat"),
     SUNDAY("Sunday", "Sun");
