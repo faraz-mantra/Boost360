@@ -120,7 +120,7 @@ public class ThemeSelectorFragment extends Fragment {
     }
 
     private void setTheme() {
-        UserSessionManager sessionManager = new UserSessionManager(getActivity(), getActivity());
+        UserSessionManager sessionManager = new UserSessionManager(requireActivity(), getActivity());
         ThemeApis api = Constants.restAdapter.create(ThemeApis.class);
         api.setTheme(new JSONObject(), Constants.clientId, sessionManager.getFpTag(), themeIds[pos], new Callback<String>() {
             @Override

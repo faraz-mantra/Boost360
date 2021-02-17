@@ -76,7 +76,7 @@ public class DomainNotPurchaseFragment extends Fragment {
 
     private void initiateBuyFromMarketplace() {
         ProgressDialog progressDialog = new ProgressDialog(requireContext());
-        String status = "Loading. Please wait...";
+        String status = getString(R.string.loading_please_wait);
         progressDialog.setMessage(status);
         progressDialog.setCancelable(false);
         progressDialog.show();

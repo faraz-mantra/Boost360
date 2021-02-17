@@ -31,7 +31,7 @@ public abstract class InputMethodSettingsFragment extends PreferenceFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final Context context = getActivity();
+        final Context context = requireActivity();
         setPreferenceScreen(getPreferenceManager().createPreferenceScreen(context));
         mSettings.init(context, getPreferenceScreen());
     }

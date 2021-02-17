@@ -133,14 +133,14 @@ public class FullScreen_Gallery_Image extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(FullScreen_Gallery_Image.this)
-                        .setMessage("Are you sure, you want to delete?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setMessage(R.string.are_you_sure_you_want_to_delete)
+                        .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 deleteImage(currentPos);
                             }
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -191,7 +191,7 @@ public class FullScreen_Gallery_Image extends AppCompatActivity {
        // task.setOnDeleteListener(this);
         task.execute();
 
-//        UploadPictureAsyncTask upload = new UploadPictureAsyncTask(getActivity(),imageUrl);
+//        UploadPictureAsyncTask upload = new UploadPictureAsyncTask(requireActivity(),imageUrl);
 //        upload.execute();
     }
 

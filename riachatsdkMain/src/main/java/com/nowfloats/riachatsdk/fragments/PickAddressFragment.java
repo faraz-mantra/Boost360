@@ -162,7 +162,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private void showKeyBoard()
     {
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
@@ -202,7 +202,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         btnCancel = v.findViewById(R.id.btn_cancel);
 
         llManual.setVisibility(View.VISIBLE);
-        btnSave.setText(getActivity().getResources().getString(R.string.locate_on_map));
+        btnSave.setText(requireActivity().getResources().getString(R.string.locate_on_map));
 
         etCity = v.findViewById(R.id.et_city);
         etState = v.findViewById(R.id.et_state);
@@ -240,11 +240,11 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
                                 getResources().getDisplayMetrics().heightPixels - 100);
 
-                        Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.map_form_scale_down);
+                        Animation animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.map_form_scale_down);
                         llManual.setAnimation(animation);
                         animation.start();
                         rlMapContainer.setVisibility(View.VISIBLE);
-                        Animation animation1 = AnimationUtils.loadAnimation(getActivity(), R.anim.map_scale_up);
+                        Animation animation1 = AnimationUtils.loadAnimation(requireActivity(), R.anim.map_scale_up);
                         rlMapContainer.setAnimation(animation1);
                         animation1.start();
 
@@ -373,7 +373,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                         .Builder(getActivity())
                         .addApi(Places.GEO_DATA_API)
                         .addApi(Places.PLACE_DETECTION_API)
-                        .enableAutoManage(getActivity(), this)
+                        .enableAutoManage(requireActivity(), this)
                         .build();
             }
 
@@ -394,7 +394,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                     loadCountryCodeandCountryNameMap();
 
-                    if (getActivity() == null || (etCity.getTag() != null && !(boolean) etCity.getTag()))
+                    if (requireActivity() == null || (etCity.getTag() != null && !(boolean) etCity.getTag()))
                     {
 
                     }
@@ -428,9 +428,9 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                         public void run()
                                         {
 
-                                            if (getActivity() != null && !getActivity().isFinishing())
+                                            if (requireActivity() != null && !requireActivity().isFinishing())
                                             {
-                                                adapter = new ArrayAdapter<>(getActivity(),
+                                                adapter = new ArrayAdapter<>(requireActivity(),
                                                         android.R.layout.simple_dropdown_item_1line, citys);
                                                 etCity.setAdapter(adapter);
                                                 adapter.notifyDataSetChanged();
@@ -520,7 +520,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             @Override
             public void onClick(View v) {
 
-                getActivity().getSupportFragmentManager().beginTransaction().remove(PickAddressFragment.this).commit();
+                requireActivity().getSupportFragmentManager().beginTransaction().remove(PickAddressFragment.this).commit();
             }
         });
     }
@@ -542,7 +542,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private void showCountryDialog(ArrayList<String> countries) {
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.search_list_item_layout, countries);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), R.layout.search_list_item_layout, countries);
 
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
         builderSingle.setTitle("Select a Country");
@@ -671,21 +671,21 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
         else
         {
-            if (ActivityCompat.checkSelfPermission(getActivity(),
+            if (ActivityCompat.checkSelfPermission(requireActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION) ==
                     PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(getActivity(),
+                    ActivityCompat.checkSelfPermission(requireActivity(),
                             Manifest.permission.ACCESS_COARSE_LOCATION) ==
                             PackageManager.PERMISSION_GRANTED) {
 
-                mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                mLocationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
                 mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, PickAddressFragment.this);
             }
 
-            if (ActivityCompat.checkSelfPermission(getActivity(),
+            if (ActivityCompat.checkSelfPermission(requireActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION) ==
                     PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(getActivity(),
+                    ActivityCompat.checkSelfPermission(requireActivity(),
                             Manifest.permission.ACCESS_COARSE_LOCATION) ==
                             PackageManager.PERMISSION_GRANTED) {
 
@@ -737,7 +737,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         {
             isAllFieldsValid = false;
 
-            Toast.makeText(getActivity(), getString(R.string.pin_code_length_error), Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireActivity(), getString(R.string.pin_code_length_error), Toast.LENGTH_SHORT).show();
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             {
@@ -757,13 +757,13 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
         if (!isAllFieldsValid)
         {
-            Toast.makeText(getActivity(), "Please enter mandatory fields.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireActivity(), "Please enter mandatory fields.", Toast.LENGTH_SHORT).show();
         }
 
         if(!hasCitySelected)
         {
             isAllFieldsValid = false;
-            Toast.makeText(getActivity(), "Please enter valid city.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireActivity(), "Please enter valid city.", Toast.LENGTH_SHORT).show();
         }
 
         return isAllFieldsValid;
@@ -802,10 +802,10 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                     mGoogleMap = googleMap;
 
-                    if (ActivityCompat.checkSelfPermission(getActivity(),
+                    if (ActivityCompat.checkSelfPermission(requireActivity(),
                             Manifest.permission.ACCESS_FINE_LOCATION) ==
                             PackageManager.PERMISSION_GRANTED &&
-                            ActivityCompat.checkSelfPermission(getActivity(),
+                            ActivityCompat.checkSelfPermission(requireActivity(),
                                     Manifest.permission.ACCESS_COARSE_LOCATION) ==
                                     PackageManager.PERMISSION_GRANTED) {
 
@@ -820,7 +820,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                     else
                     {
-                        Toast.makeText(getActivity(), "Sorry! unable to create maps", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireActivity(), "Sorry! unable to create maps", Toast.LENGTH_SHORT).show();
                     }
 
                     setCameraChangeListener();

@@ -102,8 +102,8 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
-        if (getActivity() != null)
-            getActivity().setTitle("OPC Online Payment");
+        if (requireActivity() != null)
+            requireActivity().setTitle("OPC Online Payment");
     }
 
     @Override
@@ -401,10 +401,10 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
 //                                i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId=" + Constants.clientId);//change this later
 
                                 startActivityForResult(i, OPC_REQUEST_CODE);
-//                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 break;
                             case "PADDLE":
-                                Intent paddleIntent = new Intent(getActivity(), PaddleCheckoutActivity.class);
+                                Intent paddleIntent = new Intent(requireActivity(), PaddleCheckoutActivity.class);
                                 paddleIntent.putExtra("paymentUrl", paymentTokenResult.getResult().getTargetPaymentCollectionUri());
                                 startActivityForResult(paddleIntent, PADDLE_REQUEST_CODE);
                                 break;
@@ -529,8 +529,8 @@ public class OpcPaymentFragment extends Fragment implements View.OnClickListener
     }
 
     public void showMessage(String msg) {
-        if (getActivity() != null) {
-            Methods.showSnackBarNegative(getActivity(), msg);
+        if (requireActivity() != null) {
+            Methods.showSnackBarNegative(requireActivity(), msg);
         } else {
             Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
         }

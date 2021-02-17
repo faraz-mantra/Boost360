@@ -27,7 +27,7 @@ import java.util.List;
 public class DataAccessibilityServiceV8 extends AccessibilityService {
 
 
-    public static final String PK_NAME_WHATSAPP = "com.whatsapp";
+    public static final String PK_NAME_WHATSAPP = getString(R.string.whatsapp_package);
     public static final String PK_NAME_NOWFLOATS = "com.biz2.nowfloats";
     public static final String PK_NAME_NOWFLOATS_HOME_ACTIVTY = "com.nowfloats";
 

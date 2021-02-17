@@ -85,7 +85,7 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = getActivity();
+        activity = requireActivity();
 
 
     }
@@ -99,7 +99,7 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
         prefsEditor = pref.edit();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         domainApiService = new DomainApiService(this);
-        GmbHandler = new GMBHandler(getContext(), session);
+        GmbHandler = new GMBHandler(requireContext(), session);
 
         try {
             GmbHandler.sendDetailsToGMB(false);
@@ -352,7 +352,7 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
                                         showLoader(getString(R.string.please_wait));
                                         domainApiService.getDomainDetails(activity, session.getFpTag(), getDomainDetailsParam());
                                     } else {
-                                        Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
+                                        Methods.showSnackBarNegative(requireActivity(), getString(R.string.noInternet));
                                     }
                                 }
                             });
@@ -454,9 +454,9 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
 
     private void showLoader(final String message) {
 
-        if (getActivity() == null) return;
+        if (requireActivity() == null) return;
 
-        getActivity().runOnUiThread(new Runnable() {
+        requireActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (progressDialog == null) {
@@ -470,8 +470,8 @@ public class    Business_Profile_Fragment_V2 extends Fragment implements DomainA
     }
 
     private void hideLoader() {
-        if (getActivity() == null) return;
-        getActivity().runOnUiThread(new Runnable() {
+        if (requireActivity() == null) return;
+        requireActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (progressDialog != null && progressDialog.isShowing()) {

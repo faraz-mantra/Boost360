@@ -34,7 +34,7 @@ public class HttpClientStackTest extends AndroidTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mContext = getContext();
+        mContext = requireContext();
     }
 
     public void testCreateDeprecatedGetRequest() throws Exception {

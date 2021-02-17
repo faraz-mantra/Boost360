@@ -153,7 +153,7 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!isAdded() || getActivity() == null) return;
+        if (!isAdded() || requireActivity() == null) return;
 
         bankNameEt = view.findViewById(R.id.editText_bank_name);
         ifscCodeEt = view.findViewById(R.id.editText_ifsc_code);
@@ -505,8 +505,8 @@ public class ImagesPaymentFragment extends Fragment implements View.OnClickListe
     }
 
     public void showMessage(String msg) {
-        if (getActivity() != null) {
-            Methods.showSnackBarNegative(getActivity(), msg);
+        if (requireActivity() != null) {
+            Methods.showSnackBarNegative(requireActivity(), msg);
         } else {
             Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
         }

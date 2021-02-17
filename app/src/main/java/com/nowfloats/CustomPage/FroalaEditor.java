@@ -226,7 +226,7 @@ public class FroalaEditor extends WebView {
 
     @Override
     public void setBackgroundResource(int resid) {
-        Bitmap bitmap = Utils.decodeResource(getContext(), resid);
+        Bitmap bitmap = Utils.decodeResource(requireContext(), resid);
         String base64 = Utils.toBase64(bitmap);
         bitmap.recycle();
 

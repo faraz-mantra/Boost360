@@ -57,7 +57,7 @@ public class BusinessAppsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        pref = requireActivity()().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         setHasOptionsMenu(true);
     }
 
@@ -127,12 +127,12 @@ public class BusinessAppsFragment extends Fragment {
 
                 if(mPager.getCurrentItem()<3){
                     mPager.setCurrentItem(mPager.getCurrentItem()+1,true);
-                }else if(Methods.isOnline(getActivity()))
+                }else if(Methods.isOnline(requireActivity()()))
                 {
                     if(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO)<=BIZ_APP_PAID) {
                         Intent i = new Intent(context, BusinessAppsDetailsActivity.class);
                         startActivity(i);
-                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        requireActivity()().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }else{
                         BusinessAppsDetailsActivity activity = ((BusinessAppsDetailsActivity)context);
                         if(activity != null){
@@ -174,10 +174,10 @@ public class BusinessAppsFragment extends Fragment {
         switch (item.getItemId())
         {
             case R.id.skip:
-                if(Methods.isOnline(getActivity())) {
+                if(Methods.isOnline(requireActivity()())) {
                     Intent i = new Intent(context, BusinessAppsDetailsActivity.class);
                     startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    requireActivity()().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 return true;
             default:

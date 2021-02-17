@@ -390,7 +390,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
                     public void failure(RetrofitError error)
                     {
                         //progressDialog.dismiss();
-                        //Toast.makeText(getActivity(), "Something went wrong! Please try again", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(requireActivity(), "Something went wrong! Please try again", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -463,7 +463,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
         catch (Exception e)
         {
-            Toast.makeText(getActivity(), "Please enter valid input", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireActivity(), "Please enter valid input", Toast.LENGTH_LONG).show();
             return null;
         }
 

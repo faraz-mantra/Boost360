@@ -70,16 +70,16 @@ public class ExistingDomainFragment extends Fragment {
         subdomainDescription = view.findViewById(R.id.subdomain_description);
 
         radioButton1.setChecked(true);
-        subdomainDescription.setText("I would like to map my existing domain to my\n NowFloats site http://" + session.getFpTag() + ".nowfloats.com\nPlease reach out to me to discuss this in detail.");
+        subdomainDescription.setText(getString(R.string.i_would_like_to_map_my_existing_domain) + session.getFpTag() + getString(R.string.please_reach_out_to_me));
 
         radioButton1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     radioButton2.setChecked(false);
-                    subject = "Make given domain as my Boost website’s web address/URL.[" + session.getFpTag() + "]";
+                    subject = getString(R.string.make_my_domain_as_my_boost) + session.getFpTag() + "]";
                     if (!domainName.getText().toString().isEmpty()) {
-                        message = "I would like to map my existing domain to my\n NowFloats site http://"+ domainName.getText().toString() + " \nPlease reach out to me to discuss this in detail.";
+                        message = getString(R.string.i_would_like_to_map_my_existing_domain_to_)+ domainName.getText().toString() + getString(R.string.please_reach_out_to_me_discuss_in_details);
                     }else{
                         message = "";
                     }
@@ -94,8 +94,8 @@ public class ExistingDomainFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     radioButton1.setChecked(false);
-                    subject = "Point your existing domain to NowFloats website. [" + session.getFpTag() + "]";
-                    message = "I would like to map my existing domain to my\n NowFloats site http://" + session.getFpTag() + ".nowfloats.com\nPlease reach out to me to discuss this in detail.";
+                    subject = getString(R.string.point_your_existing_domain_to_nowfloats) + session.getFpTag() + "]";
+                    message = getString(R.string.i_would_like_to_map_my_existing_domain_to_my) + session.getFpTag() + getString(R.string.please_reach_out_and_discuss_more_about_it);
                     subdomainDescription.setText(message);
                 } else {
                     radioButton1.setChecked(true);
@@ -176,7 +176,7 @@ public class ExistingDomainFragment extends Fragment {
                     public void success(Boolean status, Response response) {
                         hideProgress();
                         if (response.getStatus() == 200) {
-                            Methods.showSnackBarPositive(requireActivity(), "Request Successfully.");
+                            Methods.showSnackBarPositive(requireActivity(), getString(R.string.request_successfully));
                             requireActivity().onBackPressed();
                             onDomainAddedOrUpdated(true);
                         } else {
@@ -205,13 +205,13 @@ public class ExistingDomainFragment extends Fragment {
     private boolean validate() {
         if(radioButton1.isChecked()){
             if(domainName.getText().toString().isEmpty()){
-                Toast.makeText(requireContext(), "Domain Details Field is Empty...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.domain_details_field_is_empty), Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
         if(radioButton2.isChecked()){
             if(subdomainDescription.getText().toString().isEmpty()){
-                Toast.makeText(requireContext(), "Message Field is Empty...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(),getString(R.string.message_field_is_empty), Toast.LENGTH_SHORT).show();
                 return false;
             }
         }

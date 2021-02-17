@@ -41,8 +41,8 @@
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:textColor="@color/white"
-                    android:gravity="left"
-                    android:paddingLeft="6dp"
+                    android:gravity="start"
+                    android:paddingStart="6dp"
                     android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content" />
 
@@ -51,7 +51,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:textStyle="bold"
                     android:text="@string/avg_position"/>
 
@@ -70,7 +70,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:orientation="vertical" >
 
                     <TextView

@@ -496,7 +496,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
         if (materialProgress == null) {
             materialProgress = new MaterialDialog.Builder(this)
                     .widgetColorRes(R.color.accentColor)
-                    .content("Please Wait...")
+                    .content(R.string.please_wait_)
                     .progress(true, 0)
                     .cancelable(false)
                     .build();

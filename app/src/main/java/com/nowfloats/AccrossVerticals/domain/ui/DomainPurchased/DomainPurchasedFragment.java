@@ -74,7 +74,7 @@ public class DomainPurchasedFragment extends Fragment {
 
         title = view.findViewById(R.id.title);
         backButton = view.findViewById(R.id.back_button);
-        title.setText("Website Domain");
+        title.setText(R.string.website_domain);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

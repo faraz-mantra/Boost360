@@ -80,7 +80,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         if(!isAdded() || isDetached()) return;
 
-        session = new UserSessionManager(context, getActivity());
+        session = new UserSessionManager(context, requireActivity()());
         if(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO) == BIZ_APP_DEMO){
             pref.edit().putInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_PAID).apply();
         }
@@ -143,7 +143,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
         switch (view.getId()){
             case R.id.preview_button:
                 startActivity(new Intent(context,BusinessAppTipsActivity.class));
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                requireActivity()().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.site_health:
                 ((BusinessAppsDetailsActivity)context).addFragments(BusinessAppsDetailsActivity.SHOW_SITE_HEALTH);
@@ -159,7 +159,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
         if(!isAdded()) return false;
         switch(item.getItemId()){
             case R.id.action_notif:
-                Methods.materialDialog(getActivity(),"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
+                Methods.materialDialog(requireActivity(),"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
                 return true;
             case R.id.app_preview:
                 frag.showScreenShots();

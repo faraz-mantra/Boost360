@@ -54,7 +54,7 @@
                     android:id="@+id/tv_know_more"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_info_outline_white_24dp"
                     android:tint="@color/primary_color" />
 
@@ -75,7 +75,7 @@
                 android:id="@+id/llayout_wildfire"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/ria_positive_btn"
                 android:gravity="center"
@@ -88,7 +88,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     app:srcCompat="@drawable/ic_plus_btn" />
 
                 <TextView
@@ -109,7 +109,7 @@
                 android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
+                android:layout_marginStart="1dp"
                 android:layout_marginTop="5dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardElevation="3dp"
@@ -127,7 +127,7 @@
                 android:id="@+id/title_tv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginStart="16dp"
                 android:gravity="center_vertical"
                 android:text="@string/why_upgrade_nto_wildfire_plan"

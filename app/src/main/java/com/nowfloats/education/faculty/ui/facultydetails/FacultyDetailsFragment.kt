@@ -100,17 +100,17 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(), R
                 when {
                     validate() -> {
                         if (viewModel.getFilePath() != "") {
-                            showLoader("Loading image")
+                            showLoader(getString(R.string.loading_image))
                             viewModel.getFilePath()?.let { path -> viewModel.getFacultyProfileImageUrl(path) }
                         } else {
-                            showLoader("Updating Faculty details")
+                            showLoader(getString(R.string.updating_faculty_details))
                             viewModel.updateOurFaculty(binding.facultyData as Data, null)
                         }
                     }
                 }
             }
             else -> {
-                showToast("Please select Profile Image")
+                showToast(getString(R.string.please_select_profile_image))
             }
         }
     }
@@ -120,7 +120,7 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(), R
             addFacultyResponse.observe(viewLifecycleOwner, Observer {
                 hideLoader()
                 if (!it.isNullOrBlank()) {
-                    Toast.makeText(requireContext(), "Faculty added successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.faculty_added_successfully), Toast.LENGTH_SHORT).show()
                     (activity as FacultyActivity).popFragmentFromBackStack()
                 }
             })
@@ -134,7 +134,7 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(), R
                 if (!it.isNullOrBlank()) {
                     if (it == SUCCESS) {
                         hideLoader()
-                        Toast.makeText(requireContext(), "Faculty deleted successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.faculty_deleted_successfully), Toast.LENGTH_SHORT).show()
                         (activity as FacultyActivity).popFragmentFromBackStack()
                     }
                 }
@@ -143,7 +143,7 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(), R
             updateFacultyResponse.observe(viewLifecycleOwner, Observer {
                 hideLoader()
                 if (!it.isNullOrBlank()) {
-                    Toast.makeText(requireContext(), "Faculty updated successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.faculty_updated_successfully), Toast.LENGTH_SHORT).show()
                     (activity as FacultyActivity).popFragmentFromBackStack()
                 }
             })
@@ -152,11 +152,11 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(), R
                 hideLoader()
                 when {
                     addUpdateFaculty -> {
-                        showLoader("Updating Faculty details")
+                        showLoader(getString(R.string.updating_faculty_details))
                         viewModel.updateOurFaculty(binding.facultyData as Data, it[0].url)
                     }
                     else -> {
-                        showLoader("Adding Faculty")
+                        showLoader(getString(R.string.adding_faculty))
                         viewModel.addOurFaculty(binding.facultyData as Data, it[0].url)
                     }
                 }
@@ -174,11 +174,11 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(), R
         rightButton.setOnClickListener {
             when {
                 addUpdateFaculty -> {
-                    showLoader("Deleting Faculty")
+                    showLoader(getString(R.string.deleting_faculty))
                     viewModel.deleteOurFaculty(facultyData as Data)
                 }
                 else -> {
-                    Toast.makeText(requireContext(), "No faculty data found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.no_faculty_data_found), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -188,7 +188,7 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(), R
     private fun validate(): Boolean {
         when {
             binding.facultyName.text.isNullOrBlank() -> {
-                binding.facultyName.error = "Enter valid Name"
+                binding.facultyName.error = getString(R.string.enter_valid_name)
                 binding.facultyName.requestFocus()
                 return false
             }
@@ -199,7 +199,7 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(), R
 
         when {
             binding.facultyDesignation.text.isNullOrBlank() -> {
-                binding.facultyDesignation.error = "Enter valid Designation"
+                binding.facultyDesignation.error = getString(R.string.enter_valid_description)
                 binding.facultyDesignation.requestFocus()
                 return false
             }
@@ -209,7 +209,7 @@ class FacultyDetailsFragment(private val facultyData: Data?) : BaseFragment(), R
         }
 
         if (!Utils.isConnectedToInternet(requireContext())) {
-            Toast.makeText(requireContext(), "No Internet!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
             return false
         }
 

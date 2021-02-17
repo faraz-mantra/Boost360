@@ -93,7 +93,7 @@ public class SearchRankingActivity extends AppCompatActivity {
         ivSort = findViewById(R.id.iv_sort);
 
         //rvSearchQuery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        //rvSearchQuery.addItemDecoration(new DividerItemDecoration(rvSearchQuery.getContext(), DividerItemDecoration.VERTICAL));
+        //rvSearchQuery.addItemDecoration(new DividerItemDecoration(rvSearchQuery.requireContext(), DividerItemDecoration.VERTICAL));
 
         //pd = new ProgressDialog(this);
         //pd.setMessage(getString(R.string.please_wait));

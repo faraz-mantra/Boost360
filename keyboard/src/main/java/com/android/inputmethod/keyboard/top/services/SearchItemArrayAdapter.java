@@ -142,7 +142,7 @@ public class SearchItemArrayAdapter extends ArrayAdapter<RSearchItem, SearchItem
 
     public SearchItemArrayAdapter(Context context) {
         super(context);
-        this.mImageHeight = getContext().getResources().getDimension(R.dimen.icon_height);
+        this.mImageHeight = requireContext().getResources().getDimension(R.dimen.icon_height);
     }
 
     public void setOnSearchItemClickListener(IOnClickListener clickListener) {
@@ -150,11 +150,11 @@ public class SearchItemArrayAdapter extends ArrayAdapter<RSearchItem, SearchItem
     }
 
     public void setImageHeightBig() {
-        this.mImageHeight = getContext().getResources().getDimension(R.dimen.icon_height_big);
+        this.mImageHeight = requireContext().getResources().getDimension(R.dimen.icon_height_big);
     }
 
     public void setImageHeightSmall() {
-        this.mImageHeight = getContext().getResources().getDimension(R.dimen.icon_height);
+        this.mImageHeight = requireContext().getResources().getDimension(R.dimen.icon_height);
     }
 
     public void setServiceItem(RServiceItem serviceItem) {
@@ -244,7 +244,7 @@ public class SearchItemArrayAdapter extends ArrayAdapter<RSearchItem, SearchItem
                 vh.titleContainer.setVisibility(View.VISIBLE);
                 break;
             case RESULT_TYPE_PERMISSION_REQUIRED /*7*/:
-                updateActionRequiredItem(vh, RServiceItem.serviceItemHashMap.get(item.getService()), item.getOutput(), item.getTitle(), getContext().getString(R.string.allow_permission));
+                updateActionRequiredItem(vh, RServiceItem.serviceItemHashMap.get(item.getService()), item.getOutput(), item.getTitle(), requireContext().getString(R.string.allow_permission));
                 break;
         }
         if(vh.header != null)

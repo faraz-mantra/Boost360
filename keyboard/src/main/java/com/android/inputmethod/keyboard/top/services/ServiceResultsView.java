@@ -99,7 +99,7 @@ public class ServiceResultsView extends LinearLayout implements ColorManager.OnC
 
     private void onPermissionClick(RSearchItem searchItem) {
         EventBusExt.getDefault().post(new LaunchSettingsEvent());
-        //PermissionActivity.startActivity(getContext(), "android.permission.READ_CONTACTS");
+        //PermissionActivity.startActivity(requireContext(), "android.permission.READ_CONTACTS");
     }
 
     class C04643 implements CategoriesArrayAdapter.IOnClickListener {
@@ -378,7 +378,7 @@ public class ServiceResultsView extends LinearLayout implements ColorManager.OnC
     }
 
     private void onPreviewClicked(int position) {
-        ResultsRecyclerView.openPreview(getContext(), (String)this.mRecycler.getAdapter().getItem(position).getPreviewUrl());
+        ResultsRecyclerView.openPreview(requireContext(), (String)this.mRecycler.getAdapter().getItem(position).getPreviewUrl());
     }
 
     private boolean isViewShown() {

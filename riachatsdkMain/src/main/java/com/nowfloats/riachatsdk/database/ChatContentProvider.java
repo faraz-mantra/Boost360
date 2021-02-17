@@ -41,7 +41,7 @@ public class ChatContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        context = getContext();
+        context = requireContext();
         /*
          *This dbName needs to be edited according to the Constants value(e.g  Constants.PREF_NAME).
          * Remove the default db name on porting to BOOST app
@@ -71,7 +71,7 @@ public class ChatContentProvider extends ContentProvider {
 
         }
         Cursor cursor = builder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
-        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        cursor.setNotificationUri(requireContext().getContentResolver(), uri);
         //db.close();
         return cursor;
     }
@@ -138,7 +138,7 @@ public class ChatContentProvider extends ContentProvider {
 
         }
         if (updateCount > 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            requireContext().getContentResolver().notifyChange(uri, null);
         }
         //db.close();
         return updateCount;
@@ -147,7 +147,7 @@ public class ChatContentProvider extends ContentProvider {
     private Uri getUriForId(long id, Uri uri) {
         if (id > 0) {
             Uri itemUri = ContentUris.withAppendedId(uri, id);
-            getContext().getContentResolver().notifyChange(itemUri, null);
+            requireContext().getContentResolver().notifyChange(itemUri, null);
             return itemUri;
         }
         throw new SQLException("Problem while inserting into uri: " + uri);

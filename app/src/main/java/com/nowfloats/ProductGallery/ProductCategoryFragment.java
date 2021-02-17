@@ -70,7 +70,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        session = new UserSessionManager(getContext(), getActivity());
+        session = new UserSessionManager(requireContext(), getActivity());
         if (product != null && product.productId != null) {
             binding.editCategory.setText(product.category != null ? product.category : "");
             if (!TextUtils.isEmpty(product.productType) && (product.productType.equalsIgnoreCase("services") || product.productType.equalsIgnoreCase("products"))) {
@@ -187,7 +187,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
      */
     private void toolTip(ViewTooltip.Position position, String message, View view) {
         ViewTooltip
-                .on(getActivity(), view)
+                .on(requireActivity(), view)
                 .autoHide(true, 3500)
                 .clickToHide(true)
                 .corner(30)
@@ -210,7 +210,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
      */
     private void addAutoCompleteListener(List<String> categories) {
         try {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.customized_spinner_item, categories);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), R.layout.customized_spinner_item, categories);
 
             binding.editCategory.setAdapter(adapter);
             binding.editCategory.setOnItemClickListener(this);
@@ -223,7 +223,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_start:
-                startFragmentActivityNew(getActivity(), FragmentType.SERVICE_DETAIL_VIEW, new Bundle(), false, true);
+                startFragmentActivityNew(requireActivity(), FragmentType.SERVICE_DETAIL_VIEW, new Bundle(), false, true);
                 break;
         }
     }

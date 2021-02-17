@@ -101,7 +101,7 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
             if (Utils.isNetworkConnected(DigitalBrochuresActivity.this)) {
                 loadData();
             } else {
-                Methods.showSnackBarNegative(DigitalBrochuresActivity.this, "No Internet Connection.");
+                Methods.showSnackBarNegative(DigitalBrochuresActivity.this, getString(R.string.no_internet_connection));
             }
         }
     }
@@ -241,7 +241,7 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
                 public void success(String data, Response response) {
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(DigitalBrochuresActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(DigitalBrochuresActivity.this, getString(R.string.successfully_deleted_));
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(DigitalBrochuresActivity.this, getString(R.string.something_went_wrong));
@@ -251,7 +251,7 @@ public class DigitalBrochuresActivity extends AppCompatActivity implements Digit
                 @Override
                 public void failure(RetrofitError error) {
                     if (error.getResponse().getStatus() == 200) {
-                        Methods.showSnackBarPositive(DigitalBrochuresActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(DigitalBrochuresActivity.this, getString(R.string.successfully_deleted_));
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(DigitalBrochuresActivity.this, getString(R.string.something_went_wrong));

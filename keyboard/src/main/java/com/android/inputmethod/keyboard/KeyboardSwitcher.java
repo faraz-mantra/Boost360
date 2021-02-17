@@ -814,7 +814,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     @Override
     public boolean onClick(AllSuggestionModel model, boolean selected) {
-        if (presenterListener.packageName().equalsIgnoreCase("com.whatsapp")) {
+        if (presenterListener.packageName().equalsIgnoreCase(getString(R.string.whatsapp_package))) {
             if (selectedImages.size() < 5) {
                 if (selected) {
                     selectedImages.add(model);
@@ -916,7 +916,7 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
 
     @Override
     public void onError() {
-        Toast.makeText(mThemeContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mThemeContext, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
     }
 
     public void setPresenterListener(CandidateToPresenterInterface mImePresenter) {
@@ -965,16 +965,16 @@ public final class KeyboardSwitcher implements KeyboardState.SwitchActions, Item
                 if (updatesList.size() > 0 && updatesList.get(updatesList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
                     updatesList.remove(updatesList.size() - 1);
                 }
-                Toast.makeText(mThemeContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mThemeContext, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
                 break;
             case PRODUCTS:
                 if (productList.size() > 0 && productList.get(productList.size() - 1).getTypeEnum() == BaseAdapterManager.SectionTypeEnum.loader) {
                     productList.remove(productList.size() - 1);
                 }
-                Toast.makeText(mThemeContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mThemeContext, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
                 break;
             default:
-                Toast.makeText(mThemeContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mThemeContext, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
         }
         if (type == mTabType) {
             shareAdapter.setSuggestionModels(type == ImePresenterImpl.TabType.UPDATES ? updatesList : productList);

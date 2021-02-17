@@ -75,7 +75,7 @@ public class CustomerAssistantListFragment extends android.app.Fragment
         ivSort = (ImageView) view.findViewById(R.id.ivSort);
         rvSAMCustomerList = (RecyclerView) view.findViewById(R.id.rvSAMCustomerList);
 
-        rvSAMCustomerList.setLayoutManager(new LinearLayoutManager(getActivity(),
+        rvSAMCustomerList.setLayoutManager(new LinearLayoutManager(requireActivity(),
                 LinearLayoutManager.VERTICAL,
                 false));
 
@@ -92,7 +92,7 @@ public class CustomerAssistantListFragment extends android.app.Fragment
 
         rvSAMCustomerList.setAdapter(null);
 
-        rvSAMCustomerList.setAdapter(new CustomerAssistantAdapter(getActivity(),
+        rvSAMCustomerList.setAdapter(new CustomerAssistantAdapter(requireActivity(),
                 (ArrayList<SuggestionsDO>) lsSuggestionsDOs));
     }
 
@@ -165,7 +165,7 @@ public class CustomerAssistantListFragment extends android.app.Fragment
 
 
     public void showSortPopup() {
-        Context wrapper = new ContextThemeWrapper(getActivity(), R.style.MyPopupMenuStyle);
+        Context wrapper = new ContextThemeWrapper(requireActivity(), R.style.MyPopupMenuStyle);
         PopupMenu popup = new PopupMenu(wrapper, ivSort);
         popup.inflate(R.menu.menu_sam_sort);
 

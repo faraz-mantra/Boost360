@@ -24,6 +24,7 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.thinksity.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -96,7 +97,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
     protected void onPreExecute() {
         if(!isSilent && (delImg==false))
         {
-            pd= ProgressDialog.show(appContext, "", "Uploading image...");
+            pd= ProgressDialog.show(appContext, "", appContext.getString(R.string.uploading_image));
             pd.setCancelable(false);
 
         }

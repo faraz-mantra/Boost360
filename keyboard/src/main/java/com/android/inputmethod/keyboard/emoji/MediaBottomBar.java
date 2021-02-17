@@ -67,7 +67,7 @@ public class MediaBottomBar extends LinearLayout implements View.OnTouchListener
     @Override
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        final Resources res = getContext().getResources();
+        final Resources res = requireContext().getResources();
         final int width = ResourceUtils.getDefaultKeyboardWidth(res)
                 + getPaddingLeft() + getPaddingRight();
         final int height = (res.getDimensionPixelSize(R.dimen.config_suggestions_strip_height)) + getPaddingTop() + getPaddingBottom();

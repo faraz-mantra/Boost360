@@ -221,7 +221,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, WHATSAPP, NO_EVENT_VALUE)
             val whatsappIntent = Intent(Intent.ACTION_SEND)
             whatsappIntent.type = "text/plain"
-            whatsappIntent.setPackage("com.whatsapp")
+            whatsappIntent.setPackage(getString(R.string.whatsapp_package))
             whatsappIntent.putExtra(
                     Intent.EXTRA_TEXT,
                     getString(R.string.referral_text_1) + fpRefferalCode

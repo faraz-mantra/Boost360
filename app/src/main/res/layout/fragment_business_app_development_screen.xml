@@ -10,7 +10,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:paddingStart="20dp"
-        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:orientation="vertical"
         android:layout_height="0dp"
@@ -61,7 +61,7 @@
                 android:id="@+id/anim_parent"
                 android:layout_marginStart="10dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp">
+                android:layout_marginStart="10dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
             android:visibility="gone"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="2.5dp"
             android:id="@+id/site_health"
@@ -138,7 +138,7 @@
             android:layout_height="match_parent"
             android:text="@string/increase_our_site_health"
             android:drawableLeft="@drawable/site_health"
-            android:paddingLeft="15dp"
-            android:layout_marginLeft="2.5dp" />
+            android:paddingStart="15dp"
+            android:layout_marginStart="2.5dp" />
     </LinearLayout>
 </LinearLayout>

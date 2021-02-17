@@ -54,7 +54,7 @@ public class EmojiEditText extends EditText {
     private void init(Context context, AttributeSet attrs) {
         this.mContext = context;
         this.initFocusListener();
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Emoji);
+        TypedArray a = requireContext().obtainStyledAttributes(attrs, R.styleable.Emoji);
         this.mEmojiconSize = (int) a.getDimension(R.styleable.Emoji_emojiSize, getTextSize());
         this.mEmojiconAlignment = a.getInt(R.styleable.Emoji_emojiAlignment, DynamicDrawableSpan.ALIGN_BASELINE);
         this.mUseSystemDefault = a.getBoolean(R.styleable.Emoji_emojiUseSystemDefault, false);
@@ -100,7 +100,7 @@ public class EmojiEditText extends EditText {
     // EMOJI HANDLER
     private void updateText() {
         EmojiUtil.addEmojis(
-                this.getContext(),
+                this.requireContext(),
                 this.getText(),
                 this.mEmojiconSize,
                 this.mEmojiconAlignment,

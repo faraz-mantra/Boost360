@@ -62,7 +62,7 @@
 		        android:layout_gravity="center_horizontal"
 		        android:gravity="center_horizontal"
 		        android:layout_marginTop="@dimen/pre_s2_description_marginTop"
-		        android:paddingLeft="@dimen/pre_s2_description_paddingLeft"
+		        android:paddingStart="@dimen/pre_s2_description_paddingLeft"
 		        android:paddingRight="@dimen/pre_s2_description_paddingRight"
                          />
     

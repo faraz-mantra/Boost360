@@ -57,7 +57,7 @@ class SpringDotsIndicator @JvmOverloads constructor(
     dotsClickable = true
 
     if (attrs != null) {
-      val a = getContext().obtainStyledAttributes(attrs, R.styleable.SpringDotsIndicator)
+      val a = requireContext().obtainStyledAttributes(attrs, R.styleable.SpringDotsIndicator)
 
       // Dots attributes
       dotIndicatorColor = a.getColor(R.styleable.SpringDotsIndicator_dotsColor, dotIndicatorColor)

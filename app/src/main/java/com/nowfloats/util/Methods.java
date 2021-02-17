@@ -384,7 +384,7 @@ public class Methods {
 
     public static void showSnackBarNegative(View mView, String msg) {
         Snackbar snackBar = Snackbar.make(mView, msg, Snackbar.LENGTH_LONG);
-        snackBar.getView().setBackgroundColor(ContextCompat.getColor(mView.getContext(), R.color.snackbar_negative_color));
+        snackBar.getView().setBackgroundColor(ContextCompat.getColor(mView.requireContext(), R.color.snackbar_negative_color));
         snackBar.show();
     }
 

@@ -120,7 +120,7 @@ public class DayNightSwitch extends ToggleableView {
     }
 
     private void initProperties(AttributeSet attrs) {
-        TypedArray tarr = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.Toggle,0,0);
+        TypedArray tarr = requireContext().getTheme().obtainStyledAttributes(attrs, R.styleable.Toggle,0,0);
         final int N = tarr.getIndexCount();
         for (int i = 0; i < N; ++i) {
             int attr = tarr.getIndex(i);

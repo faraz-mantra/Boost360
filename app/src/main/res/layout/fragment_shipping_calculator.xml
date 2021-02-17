@@ -18,7 +18,7 @@
             android:textColor="@color/white"
             android:layout_gravity="center_vertical"
             android:textSize="16sp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginStart="10dp"/>
         <View
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -29,7 +29,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:tint="@color/white"
-            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/ic_close_black_24dp"/>
 
@@ -125,7 +125,7 @@
             android:id="@+id/btn_calculate_shipping_charges"
             android:layout_width="wrap_content"
             android:textColor="@color/white"
-            android:paddingLeft="15dp"
+            android:paddingStart="15dp"
             android:paddingRight="15dp"
             android:layout_marginBottom="10dp"
             android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/white"
-            android:paddingLeft="15dp"
+            android:paddingStart="15dp"
             android:paddingRight="15dp"
             android:id="@+id/btn_save_metrics"
             android:background="@drawable/btn_bg"

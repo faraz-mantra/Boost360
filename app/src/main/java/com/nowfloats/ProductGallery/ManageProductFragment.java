@@ -222,7 +222,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        session = new UserSessionManager(getContext(), getActivity());
+        session = new UserSessionManager(requireContext(), getActivity());
         this.paymentOptionTitles = getResources().getStringArray(R.array.payment_method_titles);
 
         initProductSpecificationRecyclerView(binding.layoutProductSpecification.productSpecificationList);
@@ -338,7 +338,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
             @Override
             public void onClick(View widget) {
-                Intent i = new Intent(getActivity(), Mobile_Site_Activity.class);
+                Intent i = new Intent(requireActivity(), Mobile_Site_Activity.class);
                 i.putExtra("WEBSITE_NAME", getString(R.string.assured_purchase_link));
                 startActivity(i);
             }
@@ -751,7 +751,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                     if (binding.layoutBottomSheet.layoutPaymentMethodAcceptance.getVisibility() == View.VISIBLE
                             && !binding.layoutBottomSheet.checkPaymentConfiguration.isChecked()) {
-                        Toast.makeText(getContext(), "Please accept terms and condition", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Please accept terms and condition", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -822,7 +822,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
         binding.layoutBottomSheet.btnChange.setOnClickListener(view -> {
 
-            Intent intent = new Intent(getActivity(), PickupAddressActivity.class);
+            Intent intent = new Intent(requireActivity(), PickupAddressActivity.class);
             intent.putExtra("ADDRESS_ID", product.pickupAddressReferenceId);
             startActivityForResult(intent, 10);
         });
@@ -1212,8 +1212,8 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         String[] stockOptions = getResources().getStringArray(R.array.stock_options);
         String[] stockAvailability = getResources().getStringArray(R.array.stock_availability);
 
-        ArrayAdapter<String> spinner1 = new ArrayAdapter<>(getActivity(), R.layout.customized_spinner_item, stockAvailability);
-        ArrayAdapter<String> spinner2 = new ArrayAdapter<>(getActivity(), R.layout.customized_spinner_item, stockOptions);
+        ArrayAdapter<String> spinner1 = new ArrayAdapter<>(requireActivity(), R.layout.customized_spinner_item, stockAvailability);
+        ArrayAdapter<String> spinner2 = new ArrayAdapter<>(requireActivity(), R.layout.customized_spinner_item, stockOptions);
 
         binding.layoutInventory.spinnerStockAvailability.setAdapter(spinner1);
         binding.layoutInventoryOnline.spinnerStockAvailability.setAdapter(spinner2);
@@ -1395,23 +1395,23 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
      */
     private void cameraIntent(int requestCode) {
         try {
-            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
+            if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
 
-                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
-                        ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                        ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.CAMERA)) {
 
                     Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", getActivity());
                 } else {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
                 }
             } else {
                 startCamera(requestCode);
             }
         } catch (ActivityNotFoundException e) {
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
-            Methods.showSnackBarNegative(getActivity(), errorMessage);
+            Methods.showSnackBarNegative(requireActivity(), errorMessage);
         }
     }
 
@@ -1432,7 +1432,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
          * Check if we're running on Android 5.0 or higher
          */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            tempUri = FileProvider.getUriForFile(getActivity(),
+            tempUri = FileProvider.getUriForFile(requireActivity(),
                     Constants.PACKAGE_NAME + ".provider",
                     new File(mediaStorageDir + "/" + System.currentTimeMillis() + ".jpg"));
         } else {
@@ -1461,7 +1461,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             intent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
             startActivityForResult(intent, requestCode);
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Failed to Open Camera", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Failed to Open Camera", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -1565,7 +1565,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 // binding.ivPrimaryImage.setImageBitmap(bitmap);
 
                 if (requestCode == CAMERA_PRIMARY_IMAGE_REQUEST_CODE || requestCode == GALLERY_PRIMARY_IMAGE_REQUEST_CODE) {
-                    ImageLoader.load(getContext(), file, binding.ivPrimaryImage);
+                    ImageLoader.load(requireContext(), file, binding.ivPrimaryImage);
                     binding.ibRemoveProductImage.setVisibility(View.VISIBLE);
                 }
 
@@ -1579,13 +1579,13 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                     adapterImage.setData(imageList);
                 }
             } catch (Exception e) {
-                Toast.makeText(getContext(), "Failed to Set Image", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Failed to Set Image", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             } finally {
                 displayImageAddButton();
             }
         } else {
-            Toast.makeText(getContext(), "File Not Found", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "File Not Found", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -1600,23 +1600,23 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         }
 
         if (product.productId == null && primaryUri == null) {
-            Toast.makeText(getContext(), "Add product image", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Add product image", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (product.TileImageUri == null && primaryUri == null) {
-            Toast.makeText(getContext(), "Add product image", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Add product image", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (binding.editProductName.getText().toString().trim().length() == 0) {
-            Toast.makeText(getContext(), "Enter product name", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter product name", Toast.LENGTH_LONG).show();
             binding.editProductName.requestFocus();
             return false;
         }
 
         if (binding.editProductDescription.getText().toString().trim().length() == 0) {
-            Toast.makeText(getContext(), "Enter product description", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter product description", Toast.LENGTH_LONG).show();
             binding.editProductDescription.requestFocus();
             return false;
         }
@@ -1626,7 +1626,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             try {
                 Double.valueOf(binding.editBasePrice.getText().toString().trim());
             } catch (Exception e) {
-                Toast.makeText(getContext(), "Enter valid price", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Enter valid price", Toast.LENGTH_LONG).show();
                 binding.editBasePrice.requestFocus();
                 return false;
             }
@@ -1636,7 +1636,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             try {
                 Double.valueOf(binding.editDiscount.getText().toString().trim());
             } catch (Exception e) {
-                Toast.makeText(getContext(), "Enter valid discount", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Enter valid discount", Toast.LENGTH_LONG).show();
                 binding.editDiscount.requestFocus();
                 return false;
             }
@@ -1647,12 +1647,12 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             double discount = binding.editDiscount.getText().toString().trim().length() > 0 ? Double.valueOf(binding.editDiscount.getText().toString().trim()) : 0;
 
             if (discount > price) {
-                Toast.makeText(getContext(), "Discount amount can't be greater than price", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Discount amount can't be greater than price", Toast.LENGTH_LONG).show();
                 binding.editDiscount.requestFocus();
                 return false;
             }
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Invalid Input", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Invalid Input", Toast.LENGTH_LONG).show();
             binding.editDiscount.requestFocus();
             return false;
         }
@@ -1660,19 +1660,19 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         /*if(binding.layoutProductSpecification.layoutKeySpecification.editKey.getText().toString().trim().length() == 0 ||
                 binding.layoutProductSpecification.layoutKeySpecification.editValue.getText().toString().trim().length() == 0)
         {
-            Toast.makeText(getContext(), "Enter product specification", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter product specification", Toast.LENGTH_LONG).show();
             return false;
         }*/
 
 //        if (!adapter.isValid()) {
-//            Toast.makeText(getContext(), "Enter all specification values", Toast.LENGTH_LONG).show();
+//            Toast.makeText(requireContext(), "Enter all specification values", Toast.LENGTH_LONG).show();
 //            return false;
 //        }
 
         if (paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue())
                 && !isService) {
             if (product.pickupAddressReferenceId == null || product.pickupAddressReferenceId.isEmpty()) {
-                Toast.makeText(getContext(), "Pickup Address Required", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Pickup Address Required", Toast.LENGTH_LONG).show();
                 return false;
             }
 
@@ -1680,13 +1680,13 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         }
 
         if (paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.ASSURED_PURCHASE.getValue()) && bankInformation == null) {
-            Toast.makeText(getContext(), "Please update payment information", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Please update payment information", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (paymentAndDeliveryMode.getValue().equalsIgnoreCase(Constants.PaymentAndDeliveryMode.UNIQUE_PAYMENT_URL.getValue())
                 && binding.layoutPaymentMethod.editPurchaseUrlLink.getText().toString().trim().length() == 0) {
-            Toast.makeText(getContext(), "Purchase URL Required", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Purchase URL Required", Toast.LENGTH_LONG).show();
             binding.layoutPaymentMethod.editPurchaseUrlLink.requestFocus();
             return false;
         }
@@ -1702,25 +1702,25 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     private boolean isValidAssuredPurchase() {
         if (binding.layoutShippingMatrixDetails.editWeight.getText().toString().trim().length() == 0) {
             binding.layoutShippingMatrixDetails.editWeight.requestFocus();
-            Toast.makeText(getContext(), "Enter product weight", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter product weight", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (binding.layoutShippingMatrixDetails.editLength.getText().toString().trim().length() == 0) {
             binding.layoutShippingMatrixDetails.editLength.requestFocus();
-            Toast.makeText(getContext(), "Enter product length", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter product length", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (binding.layoutShippingMatrixDetails.editHeight.getText().toString().trim().length() == 0) {
             binding.layoutShippingMatrixDetails.editHeight.requestFocus();
-            Toast.makeText(getContext(), "Enter product height", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter product height", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (binding.layoutShippingMatrixDetails.editThickness.getText().toString().trim().length() == 0) {
             binding.layoutShippingMatrixDetails.editThickness.requestFocus();
-            Toast.makeText(getContext(), "Enter product thickness", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter product thickness", Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -1730,7 +1730,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             Double.valueOf(binding.layoutShippingMatrixDetails.editHeight.getText().toString().trim());
             Double.valueOf(binding.layoutShippingMatrixDetails.editThickness.getText().toString().trim());
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Enter valid package dimensions", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter valid package dimensions", Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -1745,19 +1745,19 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     private boolean isValidBankInformation() {
         if (binding.layoutBottomSheet.editBankAccount.getText().toString().trim().length() == 0) {
             binding.layoutBottomSheet.editBankAccount.requestFocus();
-            Toast.makeText(getContext(), "Enter bank account number", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter bank account number", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (binding.layoutBottomSheet.editIfscCode.getText().toString().trim().length() == 0) {
             binding.layoutBottomSheet.editIfscCode.requestFocus();
-            Toast.makeText(getContext(), "Enter IFSC", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter IFSC", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (binding.layoutBottomSheet.editGst.toString().trim().length() == 0) {
             binding.layoutBottomSheet.editGst.requestFocus();
-            Toast.makeText(getContext(), "Enter GST/Tax ID", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter GST/Tax ID", Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -1771,7 +1771,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
      */
     private boolean isValidAddress() {
         if (file == null) {
-            Toast.makeText(getContext(), "Address proof required", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Address proof required", Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -1800,7 +1800,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                             if (TextUtils.isEmpty(addressInformation.id)) {
                                 //If new address added then add it locally to address list
                                 adapterAddress.addData(addressResponse);
-                                Toast.makeText(getContext(), "Address Added Successfully", Toast.LENGTH_LONG).show();
+                                Toast.makeText(requireContext(), "Address Added Successfully", Toast.LENGTH_LONG).show();
                             } else {
                                 //If address updated the update it locally to address list
                                 for (int i = 0; i < addressInformationList.size(); i++) {
@@ -1811,7 +1811,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                                     }
                                 }
 
-                                Toast.makeText(getContext(), "Address Updated Successfully", Toast.LENGTH_LONG).show();
+                                Toast.makeText(requireContext(), "Address Updated Successfully", Toast.LENGTH_LONG).show();
                             }
 
                             product.pickupAddressReferenceId = webResponseModel.getData().id;
@@ -1825,7 +1825,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                     @Override
                     public void failure(RetrofitError error) {
                         hideDialog();
-                        Toast.makeText(getContext(), "Failed to save address", Toast.LENGTH_LONG).show();
+                        Toast.makeText(requireContext(), "Failed to save address", Toast.LENGTH_LONG).show();
                         Log.d("PRODUCT_JSON", "FAIL " + error.getMessage() + " CODE " + error.getSuccessType());
                     }
                 });
@@ -2051,7 +2051,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             upload.execute();
         } catch (Exception e) {
             e.printStackTrace();
-            Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
+            Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong_try_again));
         }
     }
 
@@ -2120,7 +2120,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                         Log.d("PRODUCT_JSON", "Bank Information Saved");
 
-                        Toast.makeText(getContext(), "Seller Profile Updated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Seller Profile Updated", Toast.LENGTH_SHORT).show();
                         hideDialog();
 
                         binding.layoutPaymentMethod.tvPaymentConfigurationMessage.setVisibility(View.VISIBLE);
@@ -2135,7 +2135,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Toast.makeText(getContext(), "Failed to Update Seller Profile", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Failed to Update Seller Profile", Toast.LENGTH_SHORT).show();
                         hideDialog();
                         Log.d("PRODUCT_JSON", "Failed to Save Bank Information");
                     }
@@ -2252,14 +2252,14 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         if (primaryUri != null) {
                             uploadProductImage(product.productId);
                         } else {
-                            Toast.makeText(getContext(), "Product updated successfully.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), "Product updated successfully.", Toast.LENGTH_SHORT).show();
                             hideDialog();
 
-                            if (getActivity() != null) {
+                            if (requireActivity() != null) {
                                 Intent data = new Intent();
                                 data.putExtra("LOAD", true);
-                                getActivity().setResult(RESULT_OK, data);
-                                getActivity().finish();
+                                requireActivity().setResult(RESULT_OK, data);
+                                requireActivity().finish();
                             }
                         }
                     }
@@ -2270,7 +2270,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         Log.d("PRODUCT_JSON", "Failed to Save Product");
 
                         hideDialog();
-                        Toast.makeText(getContext(), "Failed to update product.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(requireContext(), "Failed to update product.", Toast.LENGTH_LONG).show();
                         Log.d("PRODUCT_JSON", "FAIL " + error.getMessage());
                     }
                 });
@@ -2327,15 +2327,15 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         if (primaryUri != null) {
                             uploadProductImage(productId);
                         } else {
-                            Toast.makeText(getContext(), "Product saved successfully.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), "Product saved successfully.", Toast.LENGTH_SHORT).show();
                             WebEngageController.trackEvent(PRODUCT_ADDED_TO_CATALOGUE, MANAGE_CONTENT, NO_EVENT_VALUE);
                             hideDialog();
 
-                            if (getActivity() != null) {
+                            if (requireActivity() != null) {
                                 Intent data = new Intent();
                                 data.putExtra("LOAD", true);
-                                getActivity().setResult(RESULT_OK, data);
-                                getActivity().finish();
+                                requireActivity().setResult(RESULT_OK, data);
+                                requireActivity().finish();
                             }
                         }
                     }
@@ -2346,7 +2346,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                         Log.d("PRODUCT_JSON", "Failed to Save Product");
 
                         hideDialog();
-                        Toast.makeText(getContext(), "Failed to save product.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(requireContext(), "Failed to save product.", Toast.LENGTH_LONG).show();
                         Log.d("PRODUCT_JSON", "FAIL " + error.getMessage());
                     }
                 });
@@ -2383,14 +2383,14 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                     Log.d("PRODUCT_JSON", "SUCCESS : Product Deleted Successfully");
 
-                    Toast.makeText(getContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
                     hideDialog();
 
-                    if (getActivity() != null) {
+                    if (requireActivity() != null) {
                         Intent data = new Intent();
                         data.putExtra("LOAD", true);
-                        getActivity().setResult(RESULT_OK, data);
-                        getActivity().finish();
+                        requireActivity().setResult(RESULT_OK, data);
+                        requireActivity().finish();
                     }
                 }
 
@@ -2398,7 +2398,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 public void failure(RetrofitError error) {
 
                     hideDialog();
-                    Toast.makeText(getContext(), "Failed to delete", Toast.LENGTH_LONG).show();
+                    Toast.makeText(requireContext(), "Failed to delete", Toast.LENGTH_LONG).show();
                 }
             });
         } catch (Exception e) {
@@ -2520,19 +2520,19 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         hideDialog();
 
         if (responseCode == 200 || responseCode == 202) {
-            Toast.makeText(getContext(), "Product saved successfully.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Product saved successfully.", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getContext(), "Failed to save product.", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Failed to save product.", Toast.LENGTH_LONG).show();
         }
 
         /**
          * If information saved reload product/service list
          */
-        if (getActivity() != null) {
+        if (requireActivity() != null) {
             Intent data = new Intent();
             data.putExtra("LOAD", true);
-            getActivity().setResult(RESULT_OK, data);
-            getActivity().finish();
+            requireActivity().setResult(RESULT_OK, data);
+            requireActivity().finish();
         }
     }
 
@@ -2630,13 +2630,13 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
             @Override
             public void onSuccess(Boolean result) {
 
-                Toast.makeText(getContext(), "Image Removed Successfully", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Image Removed Successfully", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "" + true);
             }
 
             @Override
             public void onFailure(WebActionError error) {
-                Toast.makeText(getContext(), "Failed to Remove Image", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Failed to Remove Image", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "Fail");
             }
         });
@@ -2688,7 +2688,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
      */
     private void toolTip(ViewTooltip.Position position, String message, View view) {
         ViewTooltip
-                .on(getActivity(), view)
+                .on(requireActivity(), view)
                 .autoHide(true, 3500)
                 .clickToHide(true)
                 .corner(30)
@@ -2741,7 +2741,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
      */
     private void addAutoCompleteListener(List<String> categories) {
         try {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.customized_spinner_item, categories);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), R.layout.customized_spinner_item, categories);
 
             binding.editProductTags.setAdapter(adapter);
             binding.editProductTags.setOnItemClickListener(this);
@@ -2763,7 +2763,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
     public void onFailure() {
 
         Log.d("PRODUCT_JSON", "FAILURE");
-        Toast.makeText(getContext(), "Failed to upload address proof", Toast.LENGTH_LONG).show();
+        Toast.makeText(requireContext(), "Failed to upload address proof", Toast.LENGTH_LONG).show();
         hideDialog();
     }
 
@@ -2783,8 +2783,8 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_product_specification_input, viewGroup, false);
 
-            if (getActivity() != null) {
-                View currentFocus = getActivity().getCurrentFocus();
+            if (requireActivity() != null) {
+                View currentFocus = requireActivity().getCurrentFocus();
 
                 if (currentFocus != null) {
                     currentFocus.clearFocus();
@@ -2803,8 +2803,8 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
 
                 viewHolder.ibRemove.setOnClickListener(view -> {
 
-                    if (getActivity() != null) {
-                        View currentFocus = getActivity().getCurrentFocus();
+                    if (requireActivity() != null) {
+                        View currentFocus = requireActivity().getCurrentFocus();
 
                         if (currentFocus != null) {
                             currentFocus.clearFocus();
@@ -2930,7 +2930,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
                 });
 
                 ProductImageResponseModel image = imageList.get(i);
-                ImageLoader.load(getContext(), image.getImage().url, viewHolder.iv_image);
+                ImageLoader.load(requireContext(), image.getImage().url, viewHolder.iv_image);
                 viewHolder.tv_image_name.setText(image.getImage().description != null ? image.getImage().description : "");
             }
         }

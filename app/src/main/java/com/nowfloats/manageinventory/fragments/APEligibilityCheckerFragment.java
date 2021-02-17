@@ -92,7 +92,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
         llBankDetails = view.findViewById(R.id.ll_bank_details);
 
         mHandler = new Handler();
-        mSession = new UserSessionManager(getActivity(), getActivity());
+        mSession = new UserSessionManager(requireActivity(), getActivity());
 
         initChecking();
 
@@ -117,7 +117,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
         if(activity instanceof EligibilityCheckCallBack){
             mEligibilityCheckCallBack = (EligibilityCheckCallBack) activity;
         }else {
-            throw new RuntimeException("Implement EligibilityCheckCallBack");
+            throw new RuntimeException(getString(R.string.implement_eligibility_check));
         }
     }
 
@@ -260,7 +260,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                                 checkBankDetails();
                             }else {
 
-                                //Toast.makeText(getActivity(), resp.Error.ErrorCode, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(requireActivity(), resp.Error.ErrorCode, Toast.LENGTH_SHORT).show();
                                 throw new NullPointerException("Response is Null");
                             }
                         }catch (Exception e)
@@ -328,7 +328,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                                     APEligibilityCheckerFragment.this.dismiss();
                                 }
                             }else {
-                                throw new NullPointerException("Orders Count is Null");
+                                throw new NullPointerException(getString(R.string.order_count_is_null));
                             }
                         }catch (Exception e)
                         {
@@ -360,20 +360,20 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_addr_pincode:
-                Intent baActivity = new Intent(getActivity(), Business_Address_Activity.class);
+                Intent baActivity = new Intent(requireActivity(), Business_Address_Activity.class);
                 startActivity(baActivity);
                 break;
             case R.id.ll_subscription_status:
 
-                Intent ppActivity = new Intent(getActivity(), NewPricingPlansActivity.class);
+                Intent ppActivity = new Intent(requireActivity(), NewPricingPlansActivity.class);
                 startActivity(ppActivity);
                 break;
             case R.id.ll_custom_domain:
-//                Intent siteMeterFragment = new Intent(getActivity(), HomeActivity.class);
+//                Intent siteMeterFragment = new Intent(requireActivity(), HomeActivity.class);
 //                siteMeterFragment.putExtra("url", getString(R.string.site__meter));
 //                startActivity(siteMeterFragment);
                 try {
-                    Intent siteMeterFragment = new Intent(getActivity(), Class.forName("com.dashboard.controller.DashboardActivity"));
+                    Intent siteMeterFragment = new Intent(requireActivity(), Class.forName("com.dashboard.controller.DashboardActivity"));
                     siteMeterFragment.putExtra("url", getString(R.string.site__meter));
                     startActivity(siteMeterFragment);
                 } catch (Exception e) {
@@ -381,16 +381,16 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                 }
                 break;
             case R.id.ll_site_appearance:
-                showDialog("SiteAppearance", "Your website look must be changed to 'Fresh Milk Lite'", "Take Me There");
+                showDialog(getString(R.string.site_apperance), getString(R.string.your_website_must_be_changed_to_fresh_milk), getString(R.string.take_me_there_));
                 break;
             case R.id.ll_shipping_metrics:
-                Intent productGallery = new Intent(getActivity(), ProductGalleryActivity.class);
+                Intent productGallery = new Intent(requireActivity(), ProductGalleryActivity.class);
                 startActivity(productGallery);
                 break;
             case R.id.ll_bank_details:
                 dismiss();
                 DialogFragment fragment = new PaymentInfoEntryFragment();
-                fragment.show(getActivity().getFragmentManager(), "PaymentInfoEntryFragment");
+                fragment.show(requireActivity().getFragmentManager(), "PaymentInfoEntryFragment");
         }
     }
     private void showDialog(String headText, String message, final String actionButton) {
@@ -402,7 +402,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Intent saActivity = new Intent(getActivity(), SiteAppearanceActivity.class);
+                Intent saActivity = new Intent(requireActivity(), SiteAppearanceActivity.class);
                 startActivity(saActivity);
                 dialog.dismiss();
             }

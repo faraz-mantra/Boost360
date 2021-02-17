@@ -1604,7 +1604,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
         } else if (requestCode == gallery_req_id) {
             if (ActivityCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
                     PackageManager.PERMISSION_GRANTED) {
-                Methods.showApplicationPermissions("Storage Permission", "We need this permission to enable image upload", Product_Detail_Activity_V45.this);
+                Methods.showApplicationPermissions(getString(R.string.storage_permission), "We need this permission to enable image upload", Product_Detail_Activity_V45.this);
             }
         }
     }
@@ -1615,7 +1615,7 @@ public class Product_Detail_Activity_V45 extends BaseActivity implements Shippin
                     PackageManager.PERMISSION_GRANTED) {
 
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    Methods.showApplicationPermissions("Storage Permission", "We need this permission to enable image upload", Product_Detail_Activity_V45.this);
+                    Methods.showApplicationPermissions(getString(R.string.storage_permission), "We need this permission to enable image upload", Product_Detail_Activity_V45.this);
                 } else {
                     ActivityCompat.requestPermissions(Product_Detail_Activity_V45.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, gallery_req_id);
                 }

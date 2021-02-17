@@ -296,8 +296,8 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                         Log.d("deleteTestimonials ->", response.getBody().toString());
 //                        loadData();
                         getHeaderAuthToken();
-                        Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
-//                        Methods.showSnackBarPositive(TestimonialsActivity.this, "Successfully Deleted.");
+                        Toast.makeText(getApplicationContext(), getString(R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
+//                        Methods.showSnackBarPositive(TestimonialsActivity.this,  getString(R.string.successfully_deleted_));
                     } else {
                         Methods.showSnackBarNegative(TestimonialsActivity.this, getString(R.string.something_went_wrong));
                     }
@@ -308,8 +308,8 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
                     if (error.getResponse().getStatus() == 200) {
 //                        loadData();
                         getHeaderAuthToken();
-                        Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
-//                        Methods.showSnackBarPositive(TestimonialsActivity.this, "Successfully Deleted.");
+                        Toast.makeText(getApplicationContext(), getString(R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
+//                        Methods.showSnackBarPositive(TestimonialsActivity.this,  getString(R.string.successfully_deleted_));
                     } else {
                         Methods.showSnackBarNegative(TestimonialsActivity.this, getString(R.string.something_went_wrong));
                     }

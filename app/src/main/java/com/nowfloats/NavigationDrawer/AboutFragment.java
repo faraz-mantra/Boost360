@@ -71,7 +71,7 @@ public class AboutFragment extends Fragment {
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
-        UserSessionManager session = new UserSessionManager(getContext(), getActivity());
+        UserSessionManager session = new UserSessionManager(requireContext(), getActivity());
         SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, new OnItemClickCallback() {
             @Override
             public void onItemClick(int pos) {
@@ -85,7 +85,7 @@ public class AboutFragment extends Fragment {
                         } else {
                             MaterialDialog dialog = new MaterialDialog.Builder(mContext)
                                     .title("Restricted Access")
-                                    .content("You need to buy the one-time pack for Boost Training and Certification.")
+                                    .content(R.string.you_need_to_buy_one_time_pack_for_boost_training)
                                     .build();
                             dialog.show();
                         }
@@ -103,7 +103,7 @@ public class AboutFragment extends Fragment {
                         WebEngageController.trackEvent(ABOUT_BOOST_TWITTER_LIKE, NO_EVENT_LABLE, NULL);
                         intent = new Intent(Intent.ACTION_VIEW);
                         try {
-                            getActivity().getPackageManager().getPackageInfo("com.twitter.android", 0);
+                            requireActivity().getPackageManager().getPackageInfo(getString(R.string.twitter_package), 0);
                             intent.setData(Uri.parse(Constants.TWITTER_ID_URL));
                         } catch (PackageManager.NameNotFoundException e1) {
                             intent.setData(Uri.parse(Constants.TWITTER_URL));
@@ -140,7 +140,7 @@ public class AboutFragment extends Fragment {
                 }
                 if(intent != null) {
                     startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
         });

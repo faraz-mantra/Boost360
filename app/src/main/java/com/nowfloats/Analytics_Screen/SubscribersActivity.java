@@ -239,7 +239,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                     mSubscriberList.clear();
                     mSubscriberAdapter.notifyDataSetChanged();
                     getSubscribersList();
-                    Toast.makeText(SubscribersActivity.this, email + " Successfully Added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SubscribersActivity.this, email + getString(R.string.successfully_added), Toast.LENGTH_SHORT).show();
                     if (!isFinishing()) {
                         dialog.dismiss();
                     }

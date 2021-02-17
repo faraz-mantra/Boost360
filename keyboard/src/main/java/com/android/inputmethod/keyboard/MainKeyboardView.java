@@ -289,7 +289,7 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
             return null;
         }
         final ObjectAnimator animator = (ObjectAnimator) AnimatorInflater.loadAnimator(
-                getContext(), resId);
+                requireContext(), resId);
         if (animator != null) {
             animator.setTarget(target);
         }
@@ -841,7 +841,7 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
     @Override
     protected void onDraw(final Canvas canvas) {
         super.onDraw(canvas);
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
 
@@ -852,7 +852,7 @@ public final class MainKeyboardView extends KeyboardView implements PointerTrack
         }
        /* final java.util.List<Key> sortedKeys = getKeyboard().getSortedKeys();
         for (Key key : sortedKeys) {
-            Drawable dr = (Drawable) getContext().getResources().getDrawable(R.drawable.round_light_grey);
+            Drawable dr = (Drawable) requireContext().getResources().getDrawable(R.drawable.round_light_grey);
             dr.setBounds(key.getX(), key.getY(), key.getX() + key.getWidth(), key.getY() + key.getHeight());
             dr.draw(canvas);
             if (!TextUtils.isEmpty(key.getLabel())) {

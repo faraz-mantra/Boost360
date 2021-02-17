@@ -54,8 +54,8 @@
                 android:id="@+id/productLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:orientation="vertical">
 
 
@@ -221,8 +221,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="15dp"
                         android:singleLine="true"
                         android:text="@string/product_detail_availability"
                         android:textColor="@color/product_price"
@@ -232,14 +232,14 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:gravity="right">
+                        android:layout_marginEnd="5dp"
+                        android:gravity="end">
 
                         <Switch
                             android:id="@+id/switchView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right"
+                            android:layout_gravity="end"
                             android:checked="true"
                             android:textColorHighlight="@color/product_price" />
                     </LinearLayout>
@@ -264,8 +264,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="15dp"
                         android:singleLine="true"
                         android:text="@string/product_detail_free_shipping"
                         android:textColor="@color/product_price"
@@ -275,14 +275,14 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:gravity="right">
+                        android:layout_marginEnd="5dp"
+                        android:gravity="end">
 
                         <Switch
                             android:id="@+id/sv_free_shipping"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right"
+                            android:layout_gravity="end"
                             android:checked="false"
                             android:textColorHighlight="@color/product_price" />
                     </LinearLayout>

@@ -124,11 +124,11 @@ public class AddOnFragment extends Fragment {
             Intent intent = null;
             switch (pos) {
                 case 0:
-                    intent = new Intent(getContext(), FragmentsFactoryActivity.class);
+                    intent = new Intent(requireContext(), FragmentsFactoryActivity.class);
                     intent.putExtra("fragmentName", "WildFireFragment");
                     break;
                 case 1:
-                    intent = new Intent(getContext(), FragmentsFactoryActivity.class);
+                    intent = new Intent(requireContext(), FragmentsFactoryActivity.class);
                     intent.putExtra("fragmentName", "DictateFragment");
                     break;
                 case 2:
@@ -136,24 +136,24 @@ public class AddOnFragment extends Fragment {
                     return;
             }
             startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            requireActivity()().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
 
         private void startBusinessApp() {
             Intent i;
-            SharedPreferences pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
+            SharedPreferences pref = requireActivity()().getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
             int businessAppStatus = pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP, BIZ_APP_DEMO);
             if (businessAppStatus == BIZ_APP_DEMO) {
-                i = new Intent(getContext(), FragmentsFactoryActivity.class);
+                i = new Intent(requireContext(), FragmentsFactoryActivity.class);
                 i.putExtra("fragmentName", "BusinessAppsFragment");
             } else {
                 if (businessAppStatus == BIZ_APP_PAID) {
                     pref.edit().putInt(Key_Preferences.ABOUT_BUSINESS_APP, BIZ_APP_DEMO_REMOVE).apply();
                 }
-                i = new Intent(getContext(), BusinessAppsDetailsActivity.class);
+                i = new Intent(requireContext(), BusinessAppsDetailsActivity.class);
             }
             startActivity(i);
-            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            requireActivity()().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
 
         class TopUpCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -177,10 +177,10 @@ public class AddOnFragment extends Fragment {
             }
 
             private void sendEmailRequestForBizApp() {
-                final SharedPreferences pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-                UserSessionManager session = new UserSessionManager(getContext(), getActivity());
+                final SharedPreferences pref = requireActivity()().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+                UserSessionManager session = new UserSessionManager(requireContext(), requireActivity()());
                 if (!pref.getBoolean(Key_Preferences.BUSINESS_APP_REQUESTED, false)) {
-                    MaterialProgressBar.startProgressBar(getActivity(), getString(R.string.submiting_request), false);
+                    MaterialProgressBar.startProgressBar(requireActivity()(), getString(R.string.submiting_request), false);
 
                     Map<String, String> params = new HashMap<>();
                     params.put("clientId", session.getSourceClientId());
@@ -192,7 +192,7 @@ public class AddOnFragment extends Fragment {
                         public void success(String s, Response response) {
                             MaterialProgressBar.dismissProgressBar();
                             if (response.getStatus() != 200) {
-                                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
+                                Methods.showSnackBarNegative(requireActivity()(), getString(R.string.something_went_wrong_try_again));
                                 return;
                             }
                             pref.edit().putBoolean(Key_Preferences.BUSINESS_APP_REQUESTED, true).apply();
@@ -204,7 +204,7 @@ public class AddOnFragment extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
                             MaterialProgressBar.dismissProgressBar();
-                            Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
+                            Methods.showSnackBarNegative(requireActivity()(), getString(R.string.something_went_wrong_try_again));
                         }
                     });
 
@@ -235,7 +235,7 @@ public class AddOnFragment extends Fragment {
                         break;
                     case R.id.tv_top_up_pricing:
                         if (topUpDialog == null)
-                            topUpDialog = new TopUpDialog(getActivity());
+                            topUpDialog = new TopUpDialog(requireActivity()());
 
                         switch (getAdapterPosition()) {
                             case 0:

@@ -109,7 +109,7 @@ public class Home_Fragment_Tab extends Fragment {
         /*new Thread(new Runnable() {
             @Override
             public void run() {
-                if(activity==null){activity = getActivity();}
+                if(activity==null){activity = requireActivity();}
 
             }
         }).start();*/
@@ -119,7 +119,7 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = getActivity();
+        activity = requireActivity();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
     }
 
@@ -153,7 +153,7 @@ public class Home_Fragment_Tab extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
-        pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        pref = requireActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         NotificationFragment.getAlertCount(session, Constants.alertInterface, bus);
         progressLayout = (LinearLayout) view.findViewById(R.id.progress_layout);
         progressLayout.setVisibility(View.VISIBLE);
@@ -241,11 +241,11 @@ public class Home_Fragment_Tab extends Fragment {
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return ContextCompat.getColor(getContext(), R.color.white);
+                return ContextCompat.getColor(requireContext(), R.color.white);
             }
         });
         // Setting the ViewPager For the SlidingTabsLayout
-        tabs.setViewPager(viewPager, ContextCompat.getColorStateList(getActivity(), R.color.selector));
+        tabs.setViewPager(viewPager, ContextCompat.getColorStateList(requireActivity(), R.color.selector));
 
         if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0")) {
             if (Integer.parseInt(alertCountVal) > 99) {
@@ -293,7 +293,7 @@ public class Home_Fragment_Tab extends Fragment {
         /*new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                        getActivity().runOnUiThread(new Runnable() {
+                        requireActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
 
@@ -324,10 +324,10 @@ public class Home_Fragment_Tab extends Fragment {
     public void onStop() {
         super.onStop();
 
-//        if (getActivity() == null) return;
+//        if (requireActivity() == null) return;
 //        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-//            getActivity().stopService(new Intent(getActivity(), BubblesService.class));
-//            getActivity().unregisterReceiver(clickReceiver);
+//            requireActivity().stopService(new Intent(requireActivity(), BubblesService.class));
+//            requireActivity().unregisterReceiver(clickReceiver);
 //        }
 
     }
@@ -340,7 +340,7 @@ public class Home_Fragment_Tab extends Fragment {
 ////        }
 //
 //        int px = Methods.dpToPx(80, getActivity());
-//        Intent intent = new Intent(getActivity(), BubblesService.class);
+//        Intent intent = new Intent(requireActivity(), BubblesService.class);
 //        intent.putExtra(Key_Preferences.BUBBLE_POS_Y, px);
 //        intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
 //        activity.startService(intent);
@@ -348,7 +348,7 @@ public class Home_Fragment_Tab extends Fragment {
 //    }
 
     public void checkOverlay(DrawOverLay from) {
-//        if (!isAdded() || getActivity() == null) {
+//        if (!isAdded() || requireActivity() == null) {
 //            return;
 //        }
 //
@@ -361,7 +361,7 @@ public class Home_Fragment_Tab extends Fragment {
 //            return;
 //        } else {
 
-        if (getActivity() != null) {
+        if (requireActivity() != null) {
             if (!Methods.hasOverlayPerm(getActivity())) {
                 dialogForOverlayPath(from);
             }
@@ -371,7 +371,7 @@ public class Home_Fragment_Tab extends Fragment {
     }
 
     private void dialogForOverlayPath(DrawOverLay from) {
-        if (getActivity() == null || !isAdded()) return;
+        if (requireActivity() == null || !isAdded()) return;
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_bubble_overlay_permission, null);
         ImageView image = (ImageView) view.findViewById(R.id.gif_image);
         try {
@@ -405,14 +405,14 @@ public class Home_Fragment_Tab extends Fragment {
 
     private void requestOverlayPermission() {
 
-        if (getActivity() == null) {
+        if (requireActivity() == null) {
             return;
         }
 
         MixPanelController.track(MixPanelController.BUBBLE_OVERLAY_PERM, null);
         if (android.os.Build.VERSION.SDK_INT >= 23) {
 
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + requireActivity().getPackageName()));
             startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
         } else {
             startActivity(new Intent(Settings.ACTION_SETTINGS));
@@ -429,7 +429,7 @@ public class Home_Fragment_Tab extends Fragment {
                 public void run() {
                     if (android.os.Build.VERSION.SDK_INT >= 23) {
 
-                        if (getActivity() != null && Settings.canDrawOverlays(getActivity())) {
+                        if (requireActivity() != null && Settings.canDrawOverlays(getActivity())) {
 
                             if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
                                 checkCustomerAssistantService();
@@ -448,17 +448,17 @@ public class Home_Fragment_Tab extends Fragment {
 
             if (Methods.hasOverlayPerm(getActivity())) {
 
-                if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
+                if (!Methods.isMyServiceRunning(requireActivity(), CustomerAssistantService.class)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        getActivity().startForegroundService(new Intent(getActivity(), CustomerAssistantService.class));
+                        requireActivity().startForegroundService(new Intent(requireActivity(), CustomerAssistantService.class));
                     } else {
-                        Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
-                        getActivity().startService(bubbleIntent);
+                        Intent bubbleIntent = new Intent(requireActivity(), CustomerAssistantService.class);
+                        requireActivity().startService(bubbleIntent);
                     }
                 }
             }
         }
-        getActivity().sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
+        requireActivity().sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }
 
 
@@ -499,7 +499,7 @@ public class Home_Fragment_Tab extends Fragment {
             alertCountVal = "0";
         }
 //        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-//            getActivity().registerReceiver(clickReceiver, clickIntentFilters);
+//            requireActivity().registerReceiver(clickReceiver, clickIntentFilters);
 //        }
     }
 

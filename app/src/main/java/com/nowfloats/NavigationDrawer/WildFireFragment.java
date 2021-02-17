@@ -107,7 +107,7 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.llayout_wildfire:
-                if (getActivity() != null && mTopUpDialog == null) {
+                if (requireActivity() != null && mTopUpDialog == null) {
                     mTopUpDialog = new TopUpDialog(getActivity());
                 }
                 mTopUpDialog.getTopUpPricing(TopUpDialog.TopUpType.WildFire.name());
@@ -134,16 +134,16 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
             public void success(String s, Response response) {
                 hideProgress();
                 if (response.getStatus() == 200 && !TextUtils.isEmpty(s)){
-                    Methods.materialDialog(getActivity(),"Request For WildFire Plan","Your meeting request has been sent successfully.");
+                    Methods.materialDialog(requireActivity(),"Request For WildFire Plan","Your meeting request has been sent successfully.");
                 }else{
-                    Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong_try_again));
+                    Methods.showSnackBarNegative(requireActivity(),getString(R.string.something_went_wrong_try_again));
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
                 hideProgress();
-                Methods.showSnackBarNegative(getActivity(),"Server error");
+                Methods.showSnackBarNegative(requireActivity(),"Server error");
             }
         });
 

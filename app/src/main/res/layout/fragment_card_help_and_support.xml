@@ -57,7 +57,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/img_person"
                     app:layout_constraintTop_toBottomOf="@+id/tv_person_description"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginEnd="15dp" />
 
                 <TextView
                     android:id="@+id/textView11"
@@ -67,7 +67,7 @@
                     android:textColor="@color/light_gray"
                     android:textSize="11sp"
 
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:textStyle="italic"
                     app:layout_constraintStart_toStartOf="@+id/tv_person_name"
                     app:layout_constraintTop_toBottomOf="@+id/tv_person_name" />
@@ -79,7 +79,7 @@
                     android:text="number"
                     android:textColor="@color/light_gray"
                     android:textSize="11sp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:textStyle="italic"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/tv_person_number"
@@ -100,7 +100,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/img_person"
                     app:layout_constraintTop_toBottomOf="@+id/img_person"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginEnd="10dp" />
 
                 <EditText
                     android:id="@+id/tv_person_email"
@@ -118,14 +118,14 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/img_person"
                     app:layout_constraintTop_toBottomOf="@+id/textView11"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginEnd="15dp" />
 
                 <TextView
                     android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="email"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:textColor="@color/light_gray"
                     android:textSize="11sp"
                     android:textStyle="italic"
@@ -146,7 +146,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/img_person"
                     app:layout_constraintTop_toBottomOf="@+id/tv_email"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginEnd="15dp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
@@ -197,7 +197,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         app:srcCompat="@drawable/ic_expiry_lock"
                         android:visibility="visible"
                         android:paddingRight="@dimen/_15sdp"/>
@@ -225,7 +225,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         app:srcCompat="@drawable/ic_expiry_lock"
                         android:visibility="visible"
                         android:paddingRight="@dimen/_15sdp"/>
@@ -256,7 +256,7 @@
                     android:id="@+id/btn_my_tickets"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
+                    android:layout_marginStart="1dp"
                     android:layout_weight="0.5"
                     android:background="@color/white_alpha"
                     android:gravity="center"

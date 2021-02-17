@@ -68,7 +68,7 @@ public class AllPlansFragment extends Fragment {
         vpPricingPlans.setPageMargin(24);
         vpPricingPlans.setPadding(68, 8, 68, 8);
         vpPricingPlans.setOffscreenPageLimit(3);
-        pricingPagerAdapter = new PricingPlansPagerAdapter(getActivity().getSupportFragmentManager(), mBasePlans, mTopUps);
+        pricingPagerAdapter = new PricingPlansPagerAdapter(requireActivity().getSupportFragmentManager(), mBasePlans, mTopUps);
         vpPricingPlans.setAdapter(pricingPagerAdapter);
         TabLayout tabLayout = view.findViewById(R.id.tabDots);
         if (mBasePlans != null && mBasePlans.size() > 1) {
@@ -111,10 +111,10 @@ public class AllPlansFragment extends Fragment {
             public void onClick(View v) {
 
                 MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
-                Intent i = new Intent(getActivity(), BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") ? ProductCheckout_v2Activity.class : ProductCheckoutActivity.class);
+                Intent i = new Intent(requireActivity(), BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") ? ProductCheckout_v2Activity.class : ProductCheckoutActivity.class);
                 i.putExtra("package_ids", new String[]{mBasePlans.get(vpPricingPlans.getCurrentItem()).getId()});
                 startActivityForResult(i, DIRECT_REQUEST_CODE);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -152,7 +152,7 @@ public class AllPlansFragment extends Fragment {
 //                if (TextUtils.isEmpty(status)) {
 //                    String msg = "Sorry! \n" +
 //                            "SomeThing went wrong. To retry, please go to the Store and pay again.";
-//                    Methods.showDialog(getActivity(), status, msg);
+//                    Methods.showDialog(requireActivity(), status, msg);
 //                } else if (status.equals("Success")) {
 //
 //                    MixPanelController.track(EventKeysWL.PAYMENT_SUCCESSFULL, null);
@@ -167,15 +167,15 @@ public class AllPlansFragment extends Fragment {
 //                if (TextUtils.isEmpty(status)) {
 //                    String msg = "Sorry! \n" +
 //                            "SomeThing went wrong. To retry, please go to the Store and pay again.";
-//                    Methods.showDialog(getActivity(), status, msg);
+//                    Methods.showDialog(requireActivity(), status, msg);
 //                } else if (status.equals("Pending")) {
 //                    String msg = "Alert! \n" +
 //                            "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours";
-//                    Methods.showDialog(getActivity(), status, msg);
+//                    Methods.showDialog(requireActivity(), status, msg);
 //                } else if (status.equals("Failure")) {
 //                    String msg = "Sorry! \n" +
 //                            "This transaction failed. To retry, please go to the Store and pay again.";
-//                    Methods.showDialog(getActivity(), status, msg);
+//                    Methods.showDialog(requireActivity(), status, msg);
 //                }
 //            }
         }
@@ -198,7 +198,7 @@ public class AllPlansFragment extends Fragment {
                         if (!showTobeActivatedOn) {
                             String msg = "Thank you! \n" +
                                     "The Transaction ID for your transaction is " + transactionId + ". Your package will be activated within 24 hours.";
-                            Methods.showDialog(getActivity(), status, msg);
+                            Methods.showDialog(requireActivity(), status, msg);
                         }
 
                     } else {
@@ -207,7 +207,7 @@ public class AllPlansFragment extends Fragment {
                         } else {
                             String msg = "Alert! \n" +
                                     "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours.";
-                            Methods.showDialog(getActivity(), status, msg);
+                            Methods.showDialog(requireActivity(), status, msg);
                         }
 
                     }
@@ -223,7 +223,7 @@ public class AllPlansFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 String msg = "Your PaymentId is: " + paymentid + ". Please Contact Customer Support.";
                 materialProgress.dismiss();
-                Methods.showDialog(getActivity(), status, msg);
+                Methods.showDialog(requireActivity(), status, msg);
             }
         });
         AppController.getInstance().addToRequstQueue(request);
@@ -242,6 +242,6 @@ public class AllPlansFragment extends Fragment {
     public void onStop() {
         super.onStop();
         pricingPagerAdapter = null;
-        Log.d("AllFrags", getActivity().getSupportFragmentManager().getFragments().size() + "");
+        Log.d("AllFrags", requireActivity().getSupportFragmentManager().getFragments().size() + "");
     }
 }

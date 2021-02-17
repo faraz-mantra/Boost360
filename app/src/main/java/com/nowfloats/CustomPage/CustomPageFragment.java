@@ -151,7 +151,7 @@ public class CustomPageFragment extends Fragment {
     super.onCreate(savedInstanceState);
 //        setContentView(R.layout.fragment_custom_page);
 
-    activity = getActivity();
+    activity = requireActivity();
     pageInterface = Constants.restAdapter.create(CustomPageInterface.class);
     session = new UserSessionManager(activity.getApplicationContext(), activity);
     bus = BusProvider.getInstance().getBus();
@@ -195,7 +195,7 @@ public class CustomPageFragment extends Fragment {
     if (titleTextView != null)
       titleTextView.setText(getString(R.string.custom_pages));
     final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(
-        ContextCompat.getColor(getContext(), R.color.white), PorterDuff.Mode.SRC_IN);
+        ContextCompat.getColor(requireContext(), R.color.white), PorterDuff.Mode.SRC_IN);
     if (HomeActivity.shareButton != null) {
       HomeActivity.shareButton.setImageResource(R.drawable.delete_dustbin_small);
       HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
@@ -450,7 +450,7 @@ public class CustomPageFragment extends Fragment {
       if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
         Methods.showFeatureNotAvailDialog(getContext());
       } else if (!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && dataModel.size() >= Integer.parseInt(value)) {
-        Toast.makeText(getContext(), String.valueOf(getString(R.string.message_custom_page_limit)), Toast.LENGTH_LONG).show();
+        Toast.makeText(requireContext(), String.valueOf(getString(R.string.message_custom_page_limit)), Toast.LENGTH_LONG).show();
       } else {
         openAddCustomPageActivity();
       }

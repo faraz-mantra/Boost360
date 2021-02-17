@@ -74,7 +74,7 @@ public class DictionaryDownloadProgressBar extends ProgressBar {
         if (null != mReporterThread) mReporterThread.interrupt();
         if (mIsCurrentlyAttachedToWindow && View.VISIBLE == getVisibility()) {
             final int downloadManagerPendingId =
-                    getDownloadManagerPendingIdFromWordlistId(getContext(), mClientId, mWordlistId);
+                    getDownloadManagerPendingIdFromWordlistId(requireContext(), mClientId, mWordlistId);
             if (NOT_A_DOWNLOADMANAGER_PENDING_ID == downloadManagerPendingId) {
                 // Can't get the ID. This is never supposed to happen, but still clear the updater
                 // thread and return to avoid a crash.
@@ -82,7 +82,7 @@ public class DictionaryDownloadProgressBar extends ProgressBar {
                 return;
             }
             final UpdaterThread updaterThread =
-                    new UpdaterThread(getContext(), downloadManagerPendingId);
+                    new UpdaterThread(requireContext(), downloadManagerPendingId);
             updaterThread.start();
             mReporterThread = updaterThread;
         } else {

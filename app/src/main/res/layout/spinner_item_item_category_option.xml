@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/margin_10"
+    android:paddingStart="@dimen/margin_10"
     android:paddingRight="@dimen/margin_10"
     android:paddingTop="@dimen/margin_10"
     android:paddingBottom="@dimen/margin_10"
@@ -22,7 +22,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/margin_15"
+            android:layout_marginEnd="@dimen/margin_15"
             app:srcCompat="@drawable/ic_product_filled"/>
 
         <TextView

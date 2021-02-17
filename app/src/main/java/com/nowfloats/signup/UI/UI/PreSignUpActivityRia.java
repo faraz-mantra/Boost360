@@ -795,7 +795,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 //                @Override
 //                public void onClick(View v) {
 //                    selectC();
-//                    //Util.hideInput(getActivity());
+//                    //Util.hideInput(requireActivity()());
 //
 //                }
 //            });

@@ -351,7 +351,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
     @Override
     public void onPreUpload()
     {
-        dialog = ProgressDialog.show(this, "", "Uploading image...");
+        dialog = ProgressDialog.show(this, "", getString(R.string.uploading_image));
         dialog.setCancelable(false);
     }
 
@@ -360,7 +360,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
     {
         if(isSuccess)
         {
-            Methods.showSnackBarPositive(this, "Image updated successfully");
+            Methods.showSnackBarPositive(this, getString(R.string.image_updated_successfully));
 
             if(!TextUtils.isEmpty(response))
             {
@@ -386,7 +386,7 @@ public class FaviconImageActivity extends AppCompatActivity implements UploadFav
 
         else
         {
-            Methods.showSnackBarNegative(this, "Failed to Upload Image");
+            Methods.showSnackBarNegative(this, getString(R.string.failed_to_upload));
         }
 
         if(dialog != null && dialog.isShowing())

@@ -31,7 +31,7 @@
         android:imeOptions="flagNoFullscreen"
         android:inputType="textNoSuggestions"
         android:maxLength="@integer/config_user_dictionary_max_word_length"
-        android:layout_marginLeft="8dip">
+        android:layout_marginStart="8dip">
 
         <requestFocus />
     </EditText>
@@ -63,7 +63,7 @@
             android:imeOptions="flagNoFullscreen"
             android:inputType="textNoSuggestions"
             android:maxLength="@integer/config_user_dictionary_max_word_length"
-            android:layout_marginLeft="8dip" />
+            android:layout_marginStart="8dip" />
 
         <TextView
             android:id="@+id/user_dictionary_add_locale_label"
@@ -82,7 +82,7 @@
             android:layout_marginStart="8dip"
             android:layout_marginTop="8dip"
             android:visibility="gone"
-            android:layout_marginLeft="8dip" />
+            android:layout_marginStart="8dip" />
     </GridLayout>
 
 </LinearLayout>

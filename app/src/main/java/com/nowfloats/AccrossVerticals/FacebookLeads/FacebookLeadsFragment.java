@@ -40,7 +40,7 @@ public class FacebookLeadsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        sharedPreferences = getContext().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        sharedPreferences = requireContext().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         return inflater.inflate(R.layout.fragment_facebook_leads, container, false);
     }
 

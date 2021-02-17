@@ -55,7 +55,7 @@ public class ImagePickerAdapter extends BaseRecyclerViewAdapter<ImagePickerAdapt
         viewHolder.gifIndicator.setVisibility(ImageHelper.isGifFormat(image) ? View.VISIBLE : View.GONE);
         viewHolder.alphaView.setAlpha(isSelected ? 0.5f : 0.0f);
         viewHolder.container.setForeground(isSelected
-                ? ContextCompat.getDrawable(getContext(), R.drawable.imagepicker_ic_selected)
+                ? ContextCompat.getDrawable(requireContext(), R.drawable.imagepicker_ic_selected)
                 : null);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

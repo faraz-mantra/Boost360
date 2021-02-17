@@ -71,7 +71,7 @@ public class UpgradesFragment extends Fragment {
                 }
 
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -104,6 +104,6 @@ public class UpgradesFragment extends Fragment {
 //                return;
 //        }
 //        startActivity(intent);
-//        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //    }
 }

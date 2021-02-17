@@ -163,7 +163,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                         progressDialog.setMessage(status);
                         progressDialog.setCancelable(false);
                         progressDialog.show();
-                        UserSessionManager session = new UserSessionManager(getContext(), getActivity());
+                        UserSessionManager session = new UserSessionManager(requireContext(), getActivity());
                         Intent intent = new Intent(requireActivity(), UpgradeActivity.class);
                         intent.putExtra("expCode", session.getFP_AppExperienceCode());
                         intent.putExtra("fpName", session.getFPName());

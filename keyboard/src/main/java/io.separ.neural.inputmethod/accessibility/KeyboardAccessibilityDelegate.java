@@ -102,7 +102,7 @@ public class KeyboardAccessibilityDelegate<KV extends KeyboardView>
         if (resId == 0) {
             return;
         }
-        final Context context = mKeyboardView.getContext();
+        final Context context = mKeyboardView.requireContext();
         sendWindowStateChanged(context.getString(resId));
     }
 

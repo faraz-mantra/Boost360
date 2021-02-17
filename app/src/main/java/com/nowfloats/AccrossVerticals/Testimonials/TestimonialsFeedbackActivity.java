@@ -146,7 +146,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
             @Override
             public void onClick(View v) {
                 if (path != null) {
-                    showLoader("Uploading Image.Please Wait...");
+                    showLoader(getString(R.string.uploading_image_please_wait));
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -251,7 +251,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                 @Override
                 public void onClick(View v) {
                     if (ScreenType != null && ScreenType.equals("edit")) {
-                        showLoader("Deleting Record.Please Wait...");
+                        showLoader(getString(R.string.deleting_record_please_wait));
                         deleteRecord(itemId);
                         return;
                     }
@@ -478,7 +478,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                     public void failure(RetrofitError error) {
                         hideLoader();
                         if (error.getResponse().getStatus() == 200) {
-                            Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.successfully_updated_testimonials), Toast.LENGTH_LONG).show();
                             onBackPressed();
                         } else {
                             Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
@@ -590,7 +590,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                         path = Methods.getPath(this, picUri);
                         updatePlaceProfileImage();
                     } else {
-                        Toast.makeText(this, "Something went wrong. Try Later!!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getString(R.string.something_went_wrong_try_later), Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -649,7 +649,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                     hideLoader();
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
-                        Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString( R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
                         onBackPressed();
                     } else {
                         Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
@@ -660,7 +660,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
                 public void failure(RetrofitError error) {
                     hideLoader();
                     if (error.getResponse().getStatus() == 200) {
-                        Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),getString( R.string.successfully_deleted_), Toast.LENGTH_LONG).show();
                         onBackPressed();
                     } else {
                         Methods.showSnackBarNegative(TestimonialsFeedbackActivity.this, getString(R.string.something_went_wrong));
@@ -683,10 +683,10 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
 
     private void uploadDataToServer() {
         if (ScreenType.equals("edit")) {
-            showLoader("Updating Record.Please Wait...");
+            showLoader(getString(R.string.updating_record_please_wait));
             updateExistingTestimonialsAPI();
         } else {
-            showLoader("Creating Record.Please Wait...");
+            showLoader(getString(R.string.creating_record_please_wait));
             createNewTestimonialsAPI();
             Methods.hideKeyboard(TestimonialsFeedbackActivity.this);
         }

@@ -92,10 +92,10 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
 
         pbActivePlans.setVisibility(View.VISIBLE);
 
-        mPlansRvAdapter = new ActivePlansRvAdapter(getActivity());
+        mPlansRvAdapter = new ActivePlansRvAdapter(requireActivity()());
         rvActivePlans.setAdapter(mPlansRvAdapter);
-        rvActivePlans.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        DividerItemDecoration decoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        rvActivePlans.setLayoutManager(new LinearLayoutManager(requireActivity()(), LinearLayoutManager.VERTICAL, false));
+        DividerItemDecoration decoration = new DividerItemDecoration(requireActivity()(), DividerItemDecoration.VERTICAL);
         rvActivePlans.addItemDecoration(decoration);
         mPlansRvAdapter.setActivePackages(mActivePlans);
         mPlansRvAdapter.setOnItemClickInterface(this);
@@ -191,11 +191,11 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
 
     private void showTopUpPlans() {
         if(mTopUps == null || mTopUps.size() == 0) {
-            Methods.showSnackBarNegative(getActivity(), "Top Up Plan is not available");
+            Methods.showSnackBarNegative(requireActivity()(), "Top Up Plan is not available");
             return;
         }
-        final View topUpDialogView  = LayoutInflater.from(getActivity()).inflate(R.layout.top_up_dialog_layout, null);
-        final AlertDialog dialog = new AlertDialog.Builder(getActivity())
+        final View topUpDialogView  = LayoutInflater.from(requireActivity()()).inflate(R.layout.top_up_dialog_layout, null);
+        final AlertDialog dialog = new AlertDialog.Builder(requireActivity()())
                 .setView(topUpDialogView)
                 .show();
         RecyclerView rvTopUpPlans = (RecyclerView) topUpDialogView.findViewById(R.id.rv_top_plans);
@@ -210,7 +210,7 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
                 tvAmount.setText(amount+"");
             }
         }));
-        rvTopUpPlans.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvTopUpPlans.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
         topUpDialogView.findViewById(R.id.ll_purchase_plan).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,10 +219,10 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
                 }
                 dialog.dismiss();
                 MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
-                Intent i = new Intent(getActivity(), BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")?ProductCheckout_v2Activity.class:ProductCheckoutActivity.class);
+                Intent i = new Intent(requireActivity()(), BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")?ProductCheckout_v2Activity.class:ProductCheckoutActivity.class);
                 i.putExtra("package_ids", mPackageIds.toArray(new String[mPackageIds.size()]));
                 startActivityForResult(i, DIRECT_REQUEST_CODE);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                requireActivity()().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 mPackageIds.clear();
             }
         });
@@ -247,7 +247,7 @@ public class ActivePlansFragment extends Fragment implements ActivePlansRvAdapte
     @Override
     public void onResume() {
         super.onResume();
-        //Log.d("CurrentFragmentsNum", getActivity().getSupportFragmentManager().getFragments().size()+"");
+        //Log.d("CurrentFragmentsNum", requireActivity()().getSupportFragmentManager().getFragments().size()+"");
     }
 
     public void setTopUps(List<PackageDetails> topUps) {

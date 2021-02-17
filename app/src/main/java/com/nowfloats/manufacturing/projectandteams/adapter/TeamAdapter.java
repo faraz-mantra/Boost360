@@ -42,7 +42,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_single_team, null);
-        context = v.getContext();
+        context = v.requireContext();
         return new ViewHolder(v);
     }
 

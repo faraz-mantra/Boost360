@@ -117,7 +117,7 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
         if(Utils.isNetworkConnected(this)) {
             loadData();
         }else{
-            Methods.showSnackBarNegative(ProjectActivity.this, "No Internet Connection.");
+            Methods.showSnackBarNegative(ProjectActivity.this, getString(R.string.no_internet_connection));
         }
     }
 
@@ -166,7 +166,7 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
                 public void success(String data, Response response) {
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(ProjectActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(ProjectActivity.this,  getString(R.string.successfully_deleted_));
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(ProjectActivity.this, getString(R.string.something_went_wrong));
@@ -176,7 +176,7 @@ public class ProjectActivity extends AppCompatActivity implements ProjectActivit
                 @Override
                 public void failure(RetrofitError error) {
                     if(error.getResponse().getStatus() == 200){
-                        Methods.showSnackBarPositive(ProjectActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(ProjectActivity.this,  getString(R.string.successfully_deleted_));
                         loadData();
                     }else {
                         Methods.showSnackBarNegative(ProjectActivity.this, getString(R.string.something_went_wrong));

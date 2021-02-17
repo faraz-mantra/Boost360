@@ -332,7 +332,7 @@
                             android:background="@android:color/white"
                             android:layout_marginTop="1dp"
                             android:layout_marginBottom="1dp"
-                            android:layout_marginRight="1dp"
+                            android:layout_marginEnd="1dp"
                             android:layout_height="match_parent">
 
                             <ImageView
