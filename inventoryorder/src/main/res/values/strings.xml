@@ -257,11 +257,12 @@
     <string name="add_delivery_fee">Add delivery fee</string>
     <string name="enter_the_delivery_charges_to_add_it_to_billing">Enter the delivery charges to add it to billing</string>
     <string name="enter_delivery_fee">Enter delivery fee</string>
+    <string name="dummy_title">Mutton Rogan Josh</string>
     <string name="edit">Edit</string>
     <string name="customer_name_cannot_be_empty">Customer Name cannot be empty</string>
     <string name="customer_email_cannot_be_empty">Customer Email cannot be empty</string>
     <string name="please_enter_valid_email">Please enter a valid email</string>
-    <string name="customer_phone_cannot_be_empty">Customer phone cannot be empty</string>
+    <string name="customer_phone_cannot_be_empty">Customer phone number cannot be empty</string>
     <string name="customer_address_cannot_be_empty">Customer address cannot be empty</string>
     <string name="customer_city_cannot_be_empty">Customer city cannot be empty</string>
     <string name="customer_state_cannot_be_empty">Customer state cannot be empty</string>

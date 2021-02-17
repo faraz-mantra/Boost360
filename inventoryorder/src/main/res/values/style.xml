@@ -66,5 +66,6 @@
     <item name="queryBackground">@android:color/transparent</item>
     <item name="searchHintIcon">@null</item>
   </style>
+  
 
 </resources>
