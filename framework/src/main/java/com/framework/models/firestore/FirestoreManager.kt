@@ -82,7 +82,7 @@ object FirestoreManager {
     }
 
     fun getDrScoreData(): DrScoreModel? {
-        return this.model;
+        return this.model
     }
 
     fun updateDrScoreData(model: DrScoreModel) {

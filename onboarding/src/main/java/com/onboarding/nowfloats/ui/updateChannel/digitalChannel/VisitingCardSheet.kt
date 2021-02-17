@@ -85,7 +85,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
         val userProfile = ProfileProperties(userName = localSessionModel?.contactName, userMobile = localSessionModel?.primaryNumber, userEmail = localSessionModel?.primaryEmail)
         val cardList = ArrayList<DigitalCardData>()
         val cardData = CardData(localSessionModel?.businessName, localSessionModel?.businessImage, localSessionModel?.location, userProfile.userName?.capitalizeWords(),
-            addPlus91(userProfile.userMobile), userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl,getIconCard())
+            addPlus91(userProfile.userMobile), userProfile.userEmail, localSessionModel?.businessType, localSessionModel?.websiteUrl, getIconCard())
 
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_ONE_ITEM.getLayout()))
         cardList.add(DigitalCardData(cardData = cardData, recyclerViewType = RecyclerViewItemType.VISITING_CARD_FOUR_ITEM.getLayout()))
@@ -195,7 +195,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
       baseActivity.startActivity(Intent.createChooser(waIntent, "Share your business card..."))
       dismiss()
       savePositionCard(cardPosition)
-      WebEngageController.trackEvent("Visiting Card Share", "visiting_card", localSessionModel?.fpTag?:"")
+      WebEngageController.trackEvent("Visiting Card Share", "visiting_card", localSessionModel?.fpTag ?: "")
       onBusinessCardAddedOrUpdated(true)
     } catch (e: Exception) {
       showLongToast("Error sharing visiting card, please try again.")
@@ -205,6 +205,7 @@ open class VisitingCardSheet : BaseBottomSheetDialog<DialogDigitalCardShareBindi
 
   private fun onBusinessCardAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
     instance.getDrScoreData()?.metricdetail?.boolean_share_business_card = isAdded
     instance.updateDocument()
   }

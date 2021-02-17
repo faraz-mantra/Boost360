@@ -337,16 +337,13 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
       }
       requestCode == Constants.REQUEST_CODE_SERVICES_PROVIDED && resultCode == AppCompatActivity.RESULT_OK -> {
         this.resultCode = resultCode
-        this.servicesList?.clear()
+        this.serviceListId = arrayListOf()
         this.servicesList = data?.extras?.get(IntentConstant.STAFF_SERVICES.name) as? ArrayList<DataItemService>
         serviceListId = ArrayList();
         servicesList?.forEach { dataItem ->
           if (dataItem.id.isNullOrEmpty().not()) serviceListId?.add(dataItem.id!!)
         }
-        if (staffDetails?.serviceIds == null) staffDetails?.serviceIds = arrayListOf()
-        staffDetails?.serviceIds = servicesList?.map { if (it.id.isNullOrEmpty().not()) it.id!! } as? ArrayList<String>
-        if (staffDetails?.serviceIds.isNullOrEmpty()) staffDetails?.serviceIds = null
-        staffDetails?.serviceIds = serviceListId;
+        staffDetails?.serviceIds = serviceListId
         binding?.ctvServices?.text = (servicesList?.map { it.name })?.joinToString(", ", limit = 5, truncated = "+${servicesList?.size?.minus(5)} more")
         showHideServicesText()
       }

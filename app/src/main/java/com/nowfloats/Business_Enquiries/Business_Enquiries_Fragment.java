@@ -2,7 +2,6 @@ package com.nowfloats.Business_Enquiries;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,13 +129,9 @@ public class Business_Enquiries_Fragment extends Fragment {
 
   private void onBusinessEnquiriesAddedOrUpdated(Boolean isAdded) {
     FirestoreManager instance = FirestoreManager.INSTANCE;
-    if (instance.getDrScoreData().getMetricdetail() != null)
-    {
-      instance.getDrScoreData().getMetricdetail().setBoolean_respond_to_customer_enquiries(isAdded);
-      instance.updateDocument();
-    }else {
-      Log.e(" Metricdetail ","null");
-    }
+    if (instance.getDrScoreData().getMetricdetail() == null) return;
+    instance.getDrScoreData().getMetricdetail().setBoolean_respond_to_customer_enquiries(isAdded);
+    instance.updateDocument();
   }
 
   @Subscribe
