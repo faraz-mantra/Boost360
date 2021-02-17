@@ -3,8 +3,11 @@ package com.inventoryorder.ui.order.createorder
 import android.app.Fragment
 import android.os.Bundle
 import android.view.View
+import com.framework.utils.PreferencesUtils
+import com.framework.utils.saveData
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
+import com.inventoryorder.constant.PreferenceConstant
 import com.inventoryorder.databinding.FragmentOrderOnBoardingBinding
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
@@ -33,6 +36,7 @@ class CreateOrderOnBoardingFragment : BaseInventoryFragment<FragmentOrderOnBoard
     super.onClick(v)
     when (v) {
       binding?.tvGetStarted -> {
+        PreferencesUtils.instance.saveData(PreferenceConstant.SHOW_CREATE_ORDER_WELCOME, true)
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name))
         startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle)
