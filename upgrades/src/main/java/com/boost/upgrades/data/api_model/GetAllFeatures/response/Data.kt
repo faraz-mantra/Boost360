@@ -56,7 +56,7 @@ fun ArrayList<PromoBanners>.promoBannerFilter(expCode: String?,fpTag: String?): 
                 }else{
                         if(it.cta_feature_key.isNullOrEmpty().not() || it.cta_feature_key.isNullOrBlank().not()
                                 || it.cta_bundle_identifier.isNullOrEmpty().not() || it.cta_bundle_identifier.isNullOrBlank().not() ){
-                                list.add(it)
+//                                list.add(it)
                         }
                 }
         }
