@@ -7,7 +7,7 @@ data class StaffProfileUpdateRequest(
     var isAvailable: Boolean? = null,
 
     @field:SerializedName("serviceIds")
-    var serviceIds: List<String?>? = null,
+    var serviceIds: ArrayList<String>? = null,
 
     @field:SerializedName("gender")
     var gender: String? = null,
@@ -29,9 +29,8 @@ data class StaffProfileUpdateRequest(
 
     @field:SerializedName("age")
     var age: Int? = null,
-
     @field:SerializedName("specialisations")
-    var specialisations: List<SpecialisationsItem?>? = null,
+    var specialisations: ArrayList<SpecialisationsItem>? = null,
 )
 
 

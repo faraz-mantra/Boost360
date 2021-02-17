@@ -4,7 +4,6 @@ import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import com.appservice.R
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.RecyclerItemStaffListingBinding
@@ -17,7 +16,7 @@ class StaffListingViewHolder(binding: RecyclerItemStaffListingBinding) : AppBase
     override fun bind(position: Int, item: BaseRecyclerViewItem) {
         val data = item as DataItem
         binding.ctvName.text = "${data.name}"
-        binding.civImage.let { activity?.glideLoad(it, data.image.toString(), R.drawable.placeholder_image) }
+        binding.civImage.let { activity?.glideLoad(it, data.image.toString(), R.drawable.placeholder_image_n) }
         val specialisationsItem: ArrayList<String> = ArrayList()
         data.specialisations?.forEach { specialisationsItem.add(it.value!!) }
         binding.ctvSpecialization.text = specialisationsItem.joinToString(separator = ",")

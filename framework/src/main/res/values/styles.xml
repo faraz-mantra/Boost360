@@ -25,16 +25,17 @@
   </style>
 
 
-  <style name="CustomBottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">
+  <style name="CustomBottomSheet" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
     <item name="android:background">@android:color/transparent</item>
   </style>
 
-  <style name="BottomSheetTheme" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+  <style name="BottomSheetTheme" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
     <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
   </style>
 
   <style name="MaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
     <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:backgroundDimEnabled">false</item>
   </style>
 
   <style name="MaterialDialogThemeFull" parent="MaterialDialogTheme">
