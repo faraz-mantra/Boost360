@@ -23,7 +23,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
 
   private var createOrderRequest = OrderInitiateRequest()
   private var totalPrice = 0.0
-  private var isRefresh: Boolean = false
+  private var shouldReInitiate: Boolean = false
 
   companion object {
     @JvmStatic
@@ -41,6 +41,7 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     setOnClickListener(binding?.vwNext, binding?.textAddCustomerGstin, binding?.tvRemove, binding?.textGoBack)
 
     createOrderRequest = arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
+    setUpData()
     totalPrice = arguments?.getSerializable(IntentConstant.TOTAL_PRICE.name) as Double
   }
 
@@ -65,19 +66,19 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
       }
 
       binding?.textGoBack -> {
-        (context as FragmentContainerOrderActivity).finish()
+        (context as FragmentContainerOrderActivity).onBackPressed()
       }
     }
   }
 
- /* fun getBundleData(): Bundle? {
-    isRefresh?.let {
-      val bundle = Bundle()
-      bundle.putBoolean(IntentConstant.IS_REFRESH.name, it)
-      return bundle
+  fun getBundleData(): Bundle? {
+    val bundle = Bundle()
+    shouldReInitiate?.let {
+      bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
     }
-    return null
-  }*/
+    bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
+    return bundle
+  }
 
   private fun onNextTapped() {
 
@@ -163,10 +164,30 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
 
     if (requestCode == 101 && resultCode == RESULT_OK) {
       val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
+      val req = bundle?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
+      if (req != null) {
+        createOrderRequest = req
+        setUpData()
+      }
       val shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name)
       if (shouldFinish != null && shouldFinish) {
         (context as FragmentContainerOrderActivity).onBackPressed()
       }
+
+      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name)
+      if (shouldReInitiate != null && shouldReInitiate) {
+        (context as FragmentContainerOrderActivity).onBackPressed()
+      }
     }
+  }
+
+  private fun setUpData() {
+    binding?.editCustomerName?.setText(createOrderRequest?.buyerDetails?.contactDetails?.fullName ?: "")
+    binding?.editCustomerEmail?.setText(createOrderRequest?.buyerDetails?.contactDetails?.emailId ?: "")
+    binding?.editCustomerPhone?.setText(createOrderRequest?.buyerDetails?.contactDetails?.primaryContactNumber ?: "")
+    binding?.layoutBillingAddr?.editAddress?.setText(createOrderRequest?.buyerDetails?.address?.addressLine ?: "")
+    binding?.layoutBillingAddr?.editCity?.setText(createOrderRequest?.buyerDetails?.address?.city ?: "")
+    binding?.layoutBillingAddr?.editState?.setText(createOrderRequest?.buyerDetails?.address?.region ?: "")
+    binding?.layoutBillingAddr?.editPin?.setText(createOrderRequest?.buyerDetails?.address?.zipcode ?: "")
   }
 }
