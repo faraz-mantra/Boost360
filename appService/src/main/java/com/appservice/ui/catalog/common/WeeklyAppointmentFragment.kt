@@ -18,6 +18,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, StaffViewModel>(), RecyclerItemClickListener {
+
   private var isEdit: Boolean? = null
   private var staffData: StaffDetailsResult? = null
 
@@ -42,29 +43,19 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
       (staffData?.timings != null && staffData?.timings?.isNotEmpty() == true) -> {
         this.defaultTimings = arrayListOf()
         this.defaultTimings.addAll(staffData?.timings!!)
-
         for (item in defaultTimings) {
-          if (item?.timeSlots != null && item?.timeSlots?.isNotEmpty()) {
-            item.isTurnedOn = true
-          }
+          if (item.timeSlots.isNullOrEmpty().not()) item.isTurnedOn = true
         }
-
         setTimings()
       }
-      else -> {
-        this.defaultTimings = AppointmentModel.getDefaultTimings()
-      }
+      else -> this.defaultTimings = AppointmentModel.getDefaultTimings()
     }
   }
 
   private fun setTimings() {
-    if (defaultTimings != null && defaultTimings.size > 0) {
-      this.adapter = AppBaseRecyclerViewAdapter(
-          activity = baseActivity,
-          list = this.defaultTimings,
-          itemClickListener = this@WeeklyAppointmentFragment
-      )
-      binding!!.rvStaffTiming.adapter = adapter
+    if (defaultTimings.isNullOrEmpty().not()) {
+      this.adapter = AppBaseRecyclerViewAdapter(baseActivity, this.defaultTimings, this@WeeklyAppointmentFragment)
+      binding?.rvStaffTiming?.adapter = adapter
     }
   }
 
@@ -72,11 +63,7 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     super.onCreateView()
     getBundleData()
     setOnClickListener(binding?.btnSave)
-    this.adapter = AppBaseRecyclerViewAdapter(
-        activity = baseActivity,
-        list = this.defaultTimings,
-        itemClickListener = this@WeeklyAppointmentFragment
-    )
+    this.adapter = AppBaseRecyclerViewAdapter(baseActivity, this.defaultTimings, this@WeeklyAppointmentFragment)
     binding!!.rvStaffTiming.adapter = adapter
 
   }
@@ -143,7 +130,6 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     }
   }
 
-  //todo validation left
   fun isValid(): Boolean {
     var i = 0
     this.defaultTimings.forEachIndexed { index, appointmentModel ->
@@ -183,14 +169,10 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     return d2.before(d1)
   }
 
-
   private fun finishAndGoBack() {
-    // send staff data to the intent
     val intent = Intent()
     intent.putExtra(IntentConstant.STAFF_TIMINGS.name, staffData)
     requireActivity().setResult(AppCompatActivity.RESULT_OK, intent)
     baseActivity.finish()
   }
-
-
 }
