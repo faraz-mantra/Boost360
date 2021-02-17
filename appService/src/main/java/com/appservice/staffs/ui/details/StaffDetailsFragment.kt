@@ -148,9 +148,7 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.flAddStaffImg -> {
-        openImagePicker()
-      }
+      binding?.flAddStaffImg -> openImagePicker()
       binding?.rlStaffTiming -> {
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
