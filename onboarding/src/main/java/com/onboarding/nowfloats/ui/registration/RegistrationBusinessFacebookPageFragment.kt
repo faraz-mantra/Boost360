@@ -2,6 +2,7 @@ package com.onboarding.nowfloats.ui.registration
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
@@ -76,7 +77,8 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
             requestFloatsModel?.channelAccessTokens?.forEach {
                 if (it.type == ChannelAccessToken.AccessTokenType.facebookpage.name) {
                     channelAccessToken = it
-                    channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(it.userAccountId ?: "")
+                    channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(it.userAccountId
+                            ?: "")
                     isShowProfile = true
                 }
             }
@@ -120,13 +122,9 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
                         FacebookPermissions.email,
                         FacebookPermissions.public_profile,
                         FacebookPermissions.read_insights,
-                        FacebookPermissions.business_management,
                         FacebookPermissions.pages_show_list,
-                        FacebookPermissions.pages_manage_cta,
                         FacebookPermissions.pages_manage_metadata,
-            FacebookPermissions.manage_pages,
-            FacebookPermissions.publish_pages,
-            FacebookPermissions.ads_management, FacebookPermissions.pages_manage_posts,
+                        FacebookPermissions.ads_management, FacebookPermissions.pages_manage_posts,
                 ))
             }
         }
@@ -189,7 +187,9 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
         val pages = response?.data ?: return
 //        if (pages.size > 1) return showShortToast(resources.getString(R.string.select_one_page))
         val page = pages.firstOrNull() ?: return
-        channelAccessToken.userAccessTokenKey = AccessToken.getCurrentAccessToken().token
+        Log.d("UserToken", ""+AccessToken.getCurrentAccessToken().token);
+        Log.d("PageToken", ""+page.access_token);
+        channelAccessToken.userAccessTokenKey = page.access_token
         channelAccessToken.userAccountId = page.id
         channelAccessToken.profilePicture = FacebookGraphManager.getProfilePictureUrl(page.id ?: "")
         channelAccessToken.userAccountName = page.name
