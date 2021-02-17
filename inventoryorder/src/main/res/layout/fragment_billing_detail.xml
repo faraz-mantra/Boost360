@@ -197,13 +197,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:drawableEnd="@drawable/ic_arrow_down_orange"
                             android:drawablePadding="@dimen/size_8"
                             android:ellipsize="end"
                             android:gravity="right"
                             android:includeFontPadding="false"
                             android:maxLines="1"
                             android:text="@string/str_cash_on_delivery"
-                            android:textColor="@color/orange"
+                            android:drawableTint="@color/grey_dark_2"
+                            android:textColor="@color/grey_dark_2"
                             app:fontFamily="@font/semi_bold"
                             app:textType="BODY_1" />
                     </androidx.appcompat.widget.LinearLayoutCompat>

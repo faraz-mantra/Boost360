@@ -15,12 +15,14 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentBillingDetailBinding
+import com.inventoryorder.model.OrderInitiateResponse
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.order.orderbottomsheet.BottomSheetOptionsItem
 import com.inventoryorder.model.order.orderbottomsheet.OrderBottomSheet
 import com.inventoryorder.model.orderRequest.*
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
+import com.inventoryorder.model.ordersummary.OrderSummaryRequest
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
@@ -144,9 +146,13 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       binding?.buttonConfirmOrder -> {
 
         var paymentDetails = PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
+        var shippingDetails = ShippingDetails(shippedBy = ShippingDetails.ShippedBy.SELLER.name,
+                deliveryMode = OrderSummaryRequest.DeliveryMode.OFFLINE.name, shippingCost = deliveryFee,
+                currencyCode = createOrderRequest?.items?.get(0)?.productDetails?.currencyCode)
 
         createOrderRequest.mode = selectedDeliveryType!!
         createOrderRequest.paymentDetails = paymentDetails
+        createOrderRequest.shippingDetails = shippingDetails
         createOrderRequest.sellerID = preferenceData?.fpTag.toString()
         createOrderRequest.shippingDetails?.shippingCost = deliveryFee
         createOrder()
@@ -346,7 +352,10 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       }
       if (it.isSuccess()) {
         hideProgress()
-        startFragmentOrderActivity(FragmentType.ORDER_PLACED, Bundle())
+        var orderInitiateResponse = (it as? OrderInitiateResponse)
+        var bundle = Bundle()
+        bundle.putSerializable(IntentConstant.CREATE_ORDER_RESPONSE.name, orderInitiateResponse)
+        startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle)
       } else {
         hideProgress()
         showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))

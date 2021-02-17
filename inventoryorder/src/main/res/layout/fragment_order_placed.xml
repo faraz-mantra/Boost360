@@ -6,8 +6,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/white_smoke_1"
+        android:orientation="vertical"
         tools:context=".ui.order.createorder.OrderPlacedFragment">
 
         <LinearLayout
@@ -50,17 +50,17 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:background="@drawable/ic_invoice_bg"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_invoice_bg">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:padding="@dimen/size_30"
-                android:layout_weight="1">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -78,12 +78,13 @@
                         app:textType="BODY_1" />
 
                     <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_order_id_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_5"
                         android:layout_weight="1"
-                        android:text="@string/dummy_order_id"
                         android:gravity="end"
+                        android:text="@string/dummy_order_id"
                         android:textColor="@color/black_4a4a4a"
                         app:fontFamily="@font/semi_bold"
                         app:textType="BODY_1" />
@@ -105,12 +106,13 @@
                         app:textType="BODY_1" />
 
                     <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_5"
                         android:layout_weight="1"
-                        android:text="@string/dummy_name"
                         android:gravity="end"
+                        android:text="@string/dummy_name"
                         android:textColor="@color/black_4a4a4a"
                         app:fontFamily="@font/semi_bold"
                         app:textType="BODY_1" />
@@ -132,12 +134,13 @@
                         app:textType="BODY_1" />
 
                     <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_count"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_5"
                         android:layout_weight="1"
-                        android:text="@string/dummy_qty"
                         android:gravity="end"
+                        android:text="@string/dummy_qty"
                         android:textColor="@color/black_4a4a4a"
                         app:fontFamily="@font/semi_bold"
                         app:textType="BODY_1" />
@@ -159,12 +162,13 @@
                         app:textType="BODY_1" />
 
                     <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_payment_link"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_5"
                         android:layout_weight="1"
-                        android:text="@string/payment_link"
                         android:gravity="end"
+                        android:text="@string/payment_link"
                         android:textColor="@color/black_4a4a4a"
                         app:fontFamily="@font/semi_bold"
                         app:textType="BODY_1" />
@@ -186,12 +190,13 @@
                         app:textType="BODY_1" />
 
                     <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_delivery_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_5"
                         android:layout_weight="1"
-                        android:text="@string/pending_not_received"
                         android:gravity="end"
+                        android:text="@string/pending_not_received"
                         android:textColor="@color/black_4a4a4a"
                         app:fontFamily="@font/semi_bold"
                         app:textType="BODY_1" />
@@ -213,12 +218,13 @@
                         app:textType="BODY_1" />
 
                     <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_delivery_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_5"
                         android:layout_weight="1"
-                        android:text="@string/store_pickup"
                         android:gravity="end"
+                        android:text="@string/store_pickup"
                         android:textColor="@color/black_4a4a4a"
                         app:fontFamily="@font/semi_bold"
                         app:textType="BODY_1" />
@@ -226,10 +232,10 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@drawable/horizontal_dashed_line"
+                    android:layout_height="0.5dp"
                     android:layout_marginTop="@dimen/size_20"
                     android:layout_marginBottom="@dimen/size_10"
-                    android:layout_height="0.5dp" />
+                    android:background="@drawable/horizontal_dashed_line" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -237,30 +243,31 @@
                     android:orientation="horizontal">
 
                     <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_total_amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/summy_amount"
+                        tools:text="@string/summy_amount"
                         android:textColor="@color/black_4a4a4a"
-                        app:fontFamily="@font/regular"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        app:fontFamily="@font/regular" />
 
                     <ImageView
                         android:layout_width="@dimen/size_20"
-                        android:src="@drawable/ic_billing_address"
-                        android:layout_gravity="center"
                         android:layout_height="@dimen/size_20"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_billing_address"
                         app:tint="@color/orange" />
 
                     <com.framework.views.customViews.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        android:text="@string/invoice"
-                        android:textAllCaps="true"
                         android:layout_gravity="center"
+                        android:layout_weight="0"
                         android:drawableTint="@color/orange"
                         android:gravity="end"
+                        android:text="@string/invoice"
+                        android:textAllCaps="true"
                         android:textColor="@color/orange"
                         app:fontFamily="@font/semi_bold"
                         app:textType="BODY_1" />
@@ -268,9 +275,9 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:background="@drawable/horizontal_dashed_line"
+                    android:layout_height="0.5dp"
                     android:layout_marginTop="@dimen/size_10"
-                    android:layout_height="0.5dp" />
+                    android:background="@drawable/horizontal_dashed_line" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -279,9 +286,9 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@color/white_smoke_1"
             android:orientation="vertical"
-            android:layout_weight="1"
             android:padding="@dimen/size_30">
 
             <com.framework.views.customViews.CustomButton
@@ -304,7 +311,7 @@
                 tools:ignore="UnusedAttribute" />
 
             <com.framework.views.customViews.CustomButton
-                android:id="@+id/button_go_back"
+                android:id="@+id/button_initiate_new_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
