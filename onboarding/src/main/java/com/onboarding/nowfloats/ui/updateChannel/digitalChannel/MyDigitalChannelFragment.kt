@@ -264,8 +264,8 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
     }
     val timeLine=channelsAccessToken?.NFXAccessTokens?.first { it.type() == "facebookusertimeline" }
     if (timeLine!=null){
-      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME,timeLine.UserAccountName)
-      editorFp?.putInt("fbStatus", timeLine.Status?.toIntOrNull()?:0)
+      editorFp?.putString(PreferenceConstant.KEY_FACEBOOK_NAME, timeLine.UserAccountName)
+      editorFp?.putInt("fbStatus", timeLine.Status?.toIntOrNull() ?: 0)
       if (timeLine.UserAccountName.isNullOrEmpty().not()) editorFp?.putBoolean("fbShareEnabled", true)
       editorFp?.putString("fbAccessId", timeLine.UserAccountId)
     }
@@ -296,6 +296,7 @@ class MyDigitalChannelFragment : AppBaseFragment<FragmentDigitalChannelBinding, 
   private fun onDigitalChannelAddedOrUpdated(isAdded: Boolean) {
     binding?.root?.post {
       val instance = FirestoreManager
+      if (instance.getDrScoreData()?.metricdetail == null) return@post
       instance.getDrScoreData()?.metricdetail?.boolean_social_channel_connected = isAdded
       instance.updateDocument()
     }
