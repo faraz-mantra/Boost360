@@ -545,6 +545,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   private void onBusinessUpdateAddedOrUpdated(Integer count) {
     if (count == null) count = 0;
     FirestoreManager instance = FirestoreManager.INSTANCE;
+    if(instance.getDrScoreData().getMetricdetail()==null) return;
     instance.getDrScoreData().getMetricdetail().setNumber_updates_posted(count);
     instance.updateDocument();
   }
