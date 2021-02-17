@@ -8,7 +8,6 @@ import java.io.Serializable
 data class StaffDetailsResponse(
     @field:SerializedName("StatusCode")
     val statusCode: Int? = null,
-
     @field:SerializedName("Result")
     val result: StaffDetailsResult? = null,
 ) : Serializable, BaseResponse()

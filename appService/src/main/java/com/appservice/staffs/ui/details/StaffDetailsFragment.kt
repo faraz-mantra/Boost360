@@ -148,24 +148,22 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-      binding?.flAddStaffImg -> {
-        openImagePicker()
-      }
+      binding?.flAddStaffImg -> openImagePicker()
       binding?.rlStaffTiming -> {
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.STAFF_DATA.name, staffDetails)
-        startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_TIMING_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
+        startStaffFragmentActivity(baseActivity, FragmentType.STAFF_TIMING_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_STAFF_TIMING)
       }
       binding?.rlServiceProvided -> {
         val bundle = Bundle()
         if (staffDetails?.serviceIds.isNullOrEmpty().not()) {
-          val serviceIds = staffDetails?.serviceIds as ArrayList
-          bundle.putSerializable(IntentConstant.STAFF_SERVICES.name, serviceIds)
+          val serviceIds = staffDetails?.serviceIds
+          bundle.putStringArrayList(IntentConstant.STAFF_SERVICES.name, serviceIds)
         }
-        startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SERVICES_PROVIDED)
+        startStaffFragmentActivity(baseActivity, FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, bundle, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SERVICES_PROVIDED)
       }
       binding?.rlScheduledBreaks -> {
-        startStaffFragmentActivity(requireActivity(), FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SCHEDULED_BREAK)
+        startStaffFragmentActivity(baseActivity, FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT, clearTop = false, isResult = true, requestCode = Constants.REQUEST_CODE_SCHEDULED_BREAK)
       }
       binding?.edtExperience -> {
         openExperienceDetail()

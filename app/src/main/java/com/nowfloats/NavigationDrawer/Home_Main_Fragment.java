@@ -169,7 +169,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         }
       });
       int[] images = {R.drawable.lock, R.drawable.share, R.drawable.camera, R.drawable.scope, R.drawable.chat};
-      String[] headerText = {"Password Management", "Refer a Friend", "New Camera Experience", "Live Visitor Info", "Talk To NowFloats"};
+      String[] headerText = {"Password Management", "Refer and Earn", "New Camera Experience", "Live Visitor Info", "Talk To NowFloats"};
       String[] bodyText = {"Now Change/retrieve your old password. Phew!!!", "Like Us? Help spread the word about our app among your friends :)",
           "Now with preview, crop & rotate features!", "Get to know when & from where someone visited your website in real time",
           "Got Questions for us? We are just now a tap away!"};

@@ -11,13 +11,14 @@ data class AppointmentModel(
     var isViewEnabled: Boolean? = true,
     @field:SerializedName("timing", alternate = ["Timing"])
     var timeSlots: ArrayList<TimeSlot> = arrayListOf(),
+
     var isDataAppliedOnMyDay: Boolean? = false,
     var isTurnedOn: Boolean? = false,
     var isAppliedOnAllDays: Boolean? = false,
     var isAppliedOnAllDaysViewVisible: Boolean? = false,
     var toTiming: String? = null,
-    var fromTiming: String? = null,
-) : AppBaseRecyclerViewItem, Serializable {
+    var fromTiming: String? = null
+) : Serializable, AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
     return RecyclerViewItemType.SESSION_ITEM_VIEW.getLayout()
@@ -93,13 +94,13 @@ data class AppointmentModel(
 
   fun getStringStaffActive(list: ArrayList<AppointmentModel>?): String {
     val selectedDays = StringBuilder()
-      list?.forEach { item ->
-        if (!item.day.isNullOrEmpty() && item.timeSlots.isNotEmpty()) {
-          val value = WeekdayStaffValue.fromFullName(item.day) ?: return@forEach
-          if (selectedDays.isNotEmpty()) selectedDays.append(", ")
-          selectedDays.append(value.sortName)
-        }
+    list?.forEach { item ->
+      if (!item.day.isNullOrEmpty() && item.timeSlots.isNotEmpty()) {
+        val value = WeekdayStaffValue.fromFullName(item.day) ?: return@forEach
+        if (selectedDays.isNotEmpty()) selectedDays.append(", ")
+        selectedDays.append(value.sortName)
       }
+    }
     return selectedDays.toString()
   }
 
