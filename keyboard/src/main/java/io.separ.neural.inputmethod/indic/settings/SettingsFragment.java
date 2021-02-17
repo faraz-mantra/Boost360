@@ -46,7 +46,7 @@ public final class SettingsFragment extends InputMethodSettingsFragment {
         addPreferencesFromResource(R.xml.prefs);
         final PreferenceScreen preferenceScreen = getPreferenceScreen();
         preferenceScreen.setTitle(
-                ApplicationUtils.getActivityTitleResId(getActivity(), SettingsActivity.class));
+                ApplicationUtils.getActivityTitleResId(requireActivity(), SettingsActivity.class));
         /*if (!Settings.SHOW_MULTILINGUAL_SETTINGS) {
             final Preference multilingualOptions = findPreference(Settings.SCREEN_MULTILINGUAL);
             preferenceScreen.removePreference(multilingualOptions);

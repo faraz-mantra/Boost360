@@ -57,7 +57,7 @@ public class ProcessFacebookDataFragment extends Fragment {
             image.setImageResource(R.drawable.boost_with_quikr);
         }
         String text1_message = "Gathering "+socialType+" analytics";
-        String text2_message = "Please wait, as we are collecting statistics from your "+socialType+". It usually takes upto 24 hours to fetch data.";
+        String text2_message = getString(R.string.please_wait_as_we_are_collecting_statistics_from_your)+socialType+". It usually takes upto 24 hours to fetch data.";
         textView2.setText(text2_message);
         textView1.setText(text1_message);
     }

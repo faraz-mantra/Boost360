@@ -44,8 +44,8 @@ public class ChequePaymentFragment extends ImagesPaymentFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (getActivity() != null)
-            getActivity().setTitle("Cheque Payment");
+        if (requireActivity() != null)
+            requireActivity().setTitle("Cheque Payment");
     }
 
     public boolean validateAllFields() {

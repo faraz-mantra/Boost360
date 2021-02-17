@@ -21,9 +21,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="10dp"
             android:text="@string/you_haven_t_linked_a_domain_to_your_website_yet_please_link_a_domain_to_your_website_to_engage_more_traffic_and_get_more_customers" />
 

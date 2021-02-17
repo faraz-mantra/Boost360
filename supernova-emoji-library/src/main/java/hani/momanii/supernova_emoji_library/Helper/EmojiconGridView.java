@@ -51,7 +51,7 @@ public class EmojiconGridView{
             Object[] o = (Object[]) emojicons;
             mData = Arrays.asList(o).toArray(new Emojicon[o.length]);
         }
-        EmojiAdapter mAdapter = new EmojiAdapter(rootView.getContext(), mData ,useSystemDefault);
+        EmojiAdapter mAdapter = new EmojiAdapter(rootView.requireContext(), mData ,useSystemDefault);
         mAdapter.setEmojiClickListener(new OnEmojiconClickedListener() {
 
             @Override
@@ -60,7 +60,7 @@ public class EmojiconGridView{
                     mEmojiconClickedListener.onEmojiconClicked(emojicon);
                 }
                 if (mRecents != null) {
-                    mRecents.addRecentEmoji(rootView.getContext(), emojicon);
+                    mRecents.addRecentEmoji(rootView.requireContext(), emojicon);
                 }
             }
         });

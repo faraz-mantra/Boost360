@@ -134,7 +134,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
                                     obj.execute();
 
                                     pd = ProgressDialog.show(Card_Full_View_MainActivity.this, null,
-                                            "Deleting Message . . . ");
+                                            getString(R.string.deleting_message));
                                     pd.setCancelable(false);
                                 } catch (JSONException e) {
                                     e.printStackTrace();

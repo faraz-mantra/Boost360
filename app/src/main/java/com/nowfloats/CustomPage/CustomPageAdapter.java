@@ -312,7 +312,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
         switch (type){
             case "facebook": sendIntent.setPackage("com.facebook.katana");
             break;
-            case "whatsapp":  sendIntent.setPackage("com.whatsapp");
+            case "whatsapp":  sendIntent.setPackage(getString(R.string.whatsapp_package));
             break;
         }
         appContext.startActivity(sendIntent);

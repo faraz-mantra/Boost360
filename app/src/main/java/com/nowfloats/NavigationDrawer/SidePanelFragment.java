@@ -155,8 +155,8 @@ public class SidePanelFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        mSharedPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
+        pref = requireActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        mSharedPreferences = requireActivity().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
 
         progressbar = view.findViewById(R.id.ProgressBar);
         meterValue = view.findViewById(R.id.fragment_side_panel_progress_meter_value);
@@ -172,7 +172,7 @@ public class SidePanelFragment extends Fragment {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        Typeface robotoMedium = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf");
+        Typeface robotoMedium = Typeface.createFromAsset(requireActivity().getAssets(), "Roboto-Medium.ttf");
 
         whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_IN);
         defaultLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.dark_grey), PorterDuff.Mode.SRC_IN);
@@ -183,9 +183,9 @@ public class SidePanelFragment extends Fragment {
 
         iconImage.setOnClickListener(v -> {
 
-            Intent businessAddress = new Intent(getActivity(), Edit_Profile_Activity.class);
+            Intent businessAddress = new Intent(requireActivity(), Edit_Profile_Activity.class);
             startActivity(businessAddress);
-            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
 
 
@@ -214,7 +214,7 @@ public class SidePanelFragment extends Fragment {
         fpNameTextView.setVisibility(View.VISIBLE);
 
         String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getActivity().getResources().getString(R.string.tag_for_partners);
+        String normalURI = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + requireActivity().getResources().getString(R.string.tag_for_partners);
         if (rootAlisasURI != null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length() > 0) {
             fpNameTextView.setText(Methods.fromHtml("<u>" + rootAlisasURI + "</u>"));
         } else {
@@ -229,11 +229,11 @@ public class SidePanelFragment extends Fragment {
 
                 String url = fpNameTextView.getText().toString().trim();
 
-                Intent showWebSiteIntent = new Intent(getContext(), Mobile_Site_Activity.class);
+                Intent showWebSiteIntent = new Intent(requireContext(), Mobile_Site_Activity.class);
                 // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 showWebSiteIntent.putExtra("WEBSITE_NAME", url);
                 startActivity(showWebSiteIntent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -391,7 +391,7 @@ public class SidePanelFragment extends Fragment {
         keyboardTextView = (TextView) keyboardLayout.findViewById(R.id.keyboard_TextView);
         facebookTextView = (TextView) facebookLayout.findViewById(R.id.facebook_TextView);
         marketplaceTextView = (TextView) marketplaceLayout.findViewById(R.id.marketplace_TextView);
-        if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
+        if (requireContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
             keyboardTextView.setText("RedTim Keyboard");
         } else {
             keyboardTextView.setText("Boost Keyboard");
@@ -430,7 +430,7 @@ public class SidePanelFragment extends Fragment {
 //                    session.setBubbleStatus(isChecked);
 //                } else {
 //
-//                    if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
+//                    if ((android.os.Build.VERSION.SDK_INT >= 23 && requireActivity() != null && !Settings.canDrawOverlays(getActivity()))
 //                            || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
 //
 ////                        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1")) {
@@ -705,24 +705,24 @@ public class SidePanelFragment extends Fragment {
     }
 
     private void deleteBackgroundImage() {
-        DeleteBackgroundImageAsyncTask deleteBackgroundImageAsyncTask = new DeleteBackgroundImageAsyncTask(getActivity(), session);
+        DeleteBackgroundImageAsyncTask deleteBackgroundImageAsyncTask = new DeleteBackgroundImageAsyncTask(requireActivity(), session);
         deleteBackgroundImageAsyncTask.execute();
     }
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar) {
-        containerView = getActivity().findViewById(fragmentId);
+        containerView = requireActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
-        mDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
+        mDrawerToggle = new ActionBarDrawerToggle(requireActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
 
                 if (!mUserLearnedDrawer) {
                     mUserLearnedDrawer = true;
-                    saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, mUserLearnedDrawer + "");
+                    saveToPreferences(requireActivity(), KEY_USER_LEARNED_DRAWER, mUserLearnedDrawer + "");
                 }
                 siteMeterCalculation();
-                getActivity().invalidateOptionsMenu();
+                requireActivity().invalidateOptionsMenu();
             }
 
             @Override
@@ -734,8 +734,8 @@ public class SidePanelFragment extends Fragment {
             public void onDrawerClosed(View drawerView) {
 
                 super.onDrawerClosed(drawerView);
-                if (getActivity() != null)
-                    getActivity().invalidateOptionsMenu();
+                if (requireActivity() != null)
+                    requireActivity().invalidateOptionsMenu();
             }
 
             @Override
@@ -761,8 +761,8 @@ public class SidePanelFragment extends Fragment {
     public void cameraIntent() {
         try {
             // use standard intent to capture an image
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
+            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         media_req_id);
@@ -771,7 +771,7 @@ public class SidePanelFragment extends Fragment {
                 values.put(MediaStore.Images.Media.TITLE, "New Picture");
                 values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
 
-                imageUri = getActivity().getContentResolver().insert(
+                imageUri = requireActivity().getContentResolver().insert(
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
                 Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -786,8 +786,8 @@ public class SidePanelFragment extends Fragment {
 
     public void galleryIntent() {
         try {
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
+            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         gallery_req_id);
@@ -799,7 +799,7 @@ public class SidePanelFragment extends Fragment {
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
-            Toast toast = Toast.makeText(getActivity().getApplicationContext(), errorMessage, Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(requireActivity().getApplicationContext(), errorMessage, Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -807,28 +807,28 @@ public class SidePanelFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
-            if (resultCode == getActivity().RESULT_OK && (CAMERA_PHOTO == requestCode)) {
+            if (resultCode == requireActivity().RESULT_OK && (CAMERA_PHOTO == requestCode)) {
                 try {
                     path = null;
                     if (imageUri != null) {
                         path = getRealPathFromURI(imageUri);
                         CameraBitmap = Util.getBitmap(path, getActivity());
                         imageUrl = getRealPathFromURI(imageUri);
-                        path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
+                        path = Util.saveBitmap(path, requireActivity(), "ImageFloat" + System.currentTimeMillis());
                     } else {
                         if (data != null) {
                             imageUri = data.getData();
                             if (imageUri == null) {
                                 CameraBitmap = (Bitmap) data.getExtras().get("data");
                                 if (CameraBitmap != null) {
-                                    path = Util.saveCameraBitmap(CameraBitmap, getActivity(), "ImageFloat" + System.currentTimeMillis());
+                                    path = Util.saveCameraBitmap(CameraBitmap, requireActivity(), "ImageFloat" + System.currentTimeMillis());
                                     imageUri = Uri.parse(path);
                                 }
                             } else {
                                 path = getRealPathFromURI(imageUri);
                                 CameraBitmap = Util.getBitmap(path, getActivity());
                                 imageUrl = getRealPathFromURI(imageUri);
-                                path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
+                                path = Util.saveBitmap(path, requireActivity(), "ImageFloat" + System.currentTimeMillis());
                             }
                         }
                     }
@@ -838,23 +838,23 @@ public class SidePanelFragment extends Fragment {
                     E.printStackTrace();
                     CameraBitmap.recycle();
                     System.gc();
-                    Methods.showSnackBar(getActivity(), getString(R.string.try_again));
+                    Methods.showSnackBar(requireActivity(), getString(R.string.try_again));
                 }
 
                 if (!Util.isNullOrEmpty(path)) {
                     uploadPrimaryPicture(path);
-                } else Methods.showSnackBar(getActivity(), getString(R.string.select_image_upload));
-            } else if (resultCode == getActivity().RESULT_OK && (GALLERY_PHOTO == requestCode)) {
+                } else Methods.showSnackBar(requireActivity(), getString(R.string.select_image_upload));
+            } else if (resultCode == requireActivity().RESULT_OK && (GALLERY_PHOTO == requestCode)) {
                 {
                     Uri picUri = data.getData();
                     if (picUri != null) {
                         path = getPath(picUri);
-                        path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
+                        path = Util.saveBitmap(path, requireActivity(), "ImageFloat" + System.currentTimeMillis());
 
                         if (!Util.isNullOrEmpty(path)) {
                             uploadPrimaryPicture(path);
                         } else
-                            Toast.makeText(getActivity().getApplicationContext(), getString(R.string.select_image_upload), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireActivity().getApplicationContext(), getString(R.string.select_image_upload), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -865,7 +865,7 @@ public class SidePanelFragment extends Fragment {
 
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getActivity().managedQuery(contentUri, proj, null, null, null);
+        Cursor cursor = requireActivity().managedQuery(contentUri, proj, null, null, null);
 
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
@@ -876,7 +876,7 @@ public class SidePanelFragment extends Fragment {
     public String getPath(Uri uri) {
         try {
             String[] projection = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
+            Cursor cursor = requireActivity().managedQuery(uri, projection, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
@@ -890,7 +890,7 @@ public class SidePanelFragment extends Fragment {
     public void uploadPrimaryPicture(String path) {
         mDrawerLayout.openDrawer(Gravity.LEFT);
         Constants.isImgUploaded = false;
-        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(getActivity(), path, true, session.getFPID());
+        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(requireActivity(), path, true, session.getFPID());
         upa.execute();
     }
 

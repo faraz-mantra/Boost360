@@ -251,7 +251,7 @@ public final class CustomInputStyleSettingsFragment extends PreferenceFragment {
 
         @Override
         protected void onPrepareDialogBuilder(final AlertDialog.Builder builder) {
-            final Context context = builder.getContext();
+            final Context context = builder.requireContext();
             builder.setCancelable(true).setOnCancelListener(this);
             if (isIncomplete()) {
                 builder.setPositiveButton(R.string.add, this)
@@ -405,7 +405,7 @@ public final class CustomInputStyleSettingsFragment extends PreferenceFragment {
         // initialization method of these classes here. See {@link LatinIME#onCreate()}.
         SubtypeLocaleUtils.init(pref.getContext());
 
-        final Resources res = pref.getContext().getResources();
+        final Resources res = pref.requireContext().getResources();
         final SharedPreferences prefs = pref.getSharedPreferences();
         final String prefSubtype = Settings.readPrefAdditionalSubtypes(prefs, res);
         final InputMethodSubtype[] subtypes =
@@ -441,7 +441,7 @@ public final class CustomInputStyleSettingsFragment extends PreferenceFragment {
 
     @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
-        final Context context = getActivity();
+        final Context context = requireActivity();
         mSubtypeLocaleAdapter = new SubtypeLocaleAdapter(context);
         mKeyboardLayoutSetAdapter = new KeyboardLayoutSetAdapter(context);
 
@@ -541,7 +541,7 @@ public final class CustomInputStyleSettingsFragment extends PreferenceFragment {
     };
 
     private void showSubtypeAlreadyExistsToast(final InputMethodSubtype subtype) {
-        final Context context = getActivity();
+        final Context context = requireActivity();
         final Resources res = context.getResources();
         final String message = res.getString(R.string.custom_input_style_already_exists,
                 SubtypeLocaleUtils.getSubtypeDisplayNameInSystemLocale(subtype));
@@ -630,7 +630,7 @@ public final class CustomInputStyleSettingsFragment extends PreferenceFragment {
         final int itemId = item.getItemId();
         if (itemId == R.id.action_add_style) {
             final SubtypePreference newSubtype =
-                    SubtypePreference.newIncompleteSubtypePreference(getActivity(), mSubtypeProxy);
+                    SubtypePreference.newIncompleteSubtypePreference(requireActivity(), mSubtypeProxy);
             getPreferenceScreen().addPreference(newSubtype);
             newSubtype.show();
             mIsAddingNewSubtype = true;

@@ -8,7 +8,7 @@
     android:background="@android:color/transparent"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
     android:paddingRight="10dp">
 
     <RelativeLayout
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginStart="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_3"
             android:layout_toRightOf="@+id/img_question_plan_group"
             android:gravity="center_vertical"

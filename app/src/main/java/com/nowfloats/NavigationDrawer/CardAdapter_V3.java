@@ -194,7 +194,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
                 sendIntent.setType("text/plain");
-                sendIntent.setPackage("com.whatsapp");
+                sendIntent.setPackage(getString(R.string.whatsapp_package));
                 appContext.startActivity(sendIntent);
             }
             catch (Exception e)
@@ -369,7 +369,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
     void shareContent(String type, String imageShare, int position) {
         MixPanelController.track("SharePost", null);
         if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            Methods.showDialog(appContext, "Storage Permission", "To share service image, we need storage permission.",
+            Methods.showDialog(appContext, appContext.getString(R.string.storage_permission), appContext.getString(R.string.to_share_service_image_we_need_storage_permission),
                     (dialog, which) -> ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
             return;
         }
@@ -377,7 +377,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
         final Intent shareIntent = new Intent(Intent.ACTION_SEND);
         switch (type) {
             case "whatsapp":
-                shareIntent.setPackage("com.whatsapp");
+                shareIntent.setPackage(appContext.getString(R.string.whatsapp_package));
                 break;
             case "facebook":
                 shareIntent.setPackage("com.facebook.katana");
@@ -414,7 +414,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                 Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
                             }
                         } catch (OutOfMemoryError e) {
-                            Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(appContext, appContext.getString(R.string.image_size_is_large), Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             Toast.makeText(appContext, "Image not able to share", Toast.LENGTH_SHORT).show();
                         }

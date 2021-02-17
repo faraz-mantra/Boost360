@@ -437,7 +437,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
 
   public boolean checkStoragePermission() {
     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-      Methods.showDialog(this, "Storage Permission", "To share the image we need storage permission.",
+      Methods.showDialog(this, getString(R.string.storage_permission), "To share the image we need storage permission.",
               (dialog, which) -> ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
       return false;
     }
@@ -476,13 +476,13 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
                 if (type == 0) {
                   share.setPackage("com.facebook.katana");
                 } else if (type == 1) {
-                  share.setPackage("com.whatsapp");
+                  share.setPackage(getString(R.string.whatsapp_package));
                 }
               }
               startActivityForResult(Intent.createChooser(share, getApplicationContext().getString(R.string.share_updates)), 1);
             }
           } catch (OutOfMemoryError e) {
-            Toast.makeText(getApplicationContext(), "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.image_size_is_large), Toast.LENGTH_SHORT).show();
           } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Image not able to share", Toast.LENGTH_SHORT).show();
           }

@@ -400,7 +400,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                     chatModelList.get(currPos).setSender(FacebookChatDetailAdapter.ERROR);
                     adapter.notifyItemChanged(currPos);
                     Snackbar bar = Snackbar.make(FacebookChatDetailActivity.this.findViewById(android.R.id.content),
-                            "It's been more than 24 hours since you last received a message you can no longer reply.",
+                            R.string.its_been_more_than_twenty_hours_since_you_last,
                             Snackbar.LENGTH_INDEFINITE);
                     bar.getView().setBackgroundColor(Color.parseColor("#E02200"));
                     bar.show();

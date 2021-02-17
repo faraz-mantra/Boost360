@@ -25,7 +25,7 @@ public abstract class BaseRecyclerViewAdapter<T extends RecyclerView.ViewHolder>
         return imageLoader;
     }
 
-    public Context getContext() {
+    public Context requireContext() {
         return context;
     }
 

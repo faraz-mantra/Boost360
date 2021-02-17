@@ -119,7 +119,7 @@ public class DictateFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.llayout_wildfire:
-                if (getActivity() != null && mTopUpDialog == null) {
+                if (requireActivity() != null && mTopUpDialog == null) {
                     mTopUpDialog = new TopUpDialog(getActivity());
                 }
                 mTopUpDialog.getTopUpPricing(TopUpDialog.TopUpType.Dictate.name());

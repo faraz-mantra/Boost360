@@ -1025,7 +1025,7 @@ public class Edit_Profile_Activity extends BaseActivity {
     public void displayEditConfirmation(final Activity mContext, String type) {
         new MaterialDialog.Builder(mContext)
                 .title("Are you sure ?")
-                .content(Html.fromHtml(String.format("It is <b>not advised to change</b> your %s category, as this can cause search related problems and a drop in search rank leading to less traffic.", type)))
+                .content(Html.fromHtml(String.format(getString(R.string.it_is_not_advised_to_change_your_category), type)))
                 .positiveText("Change Category")
                 .negativeText("Cancel")
                 .positiveColorRes(R.color.primaryColor)
@@ -1055,7 +1055,7 @@ public class Edit_Profile_Activity extends BaseActivity {
 
     public void displayAlert(final Activity mContext) {
         new MaterialDialog.Builder(mContext)
-                .title("Wrong business category?")
+                .title(R.string.wrong_business_category)
                 .content(R.string.business_category_change_level)
                 .positiveText("Ok")
                 .positiveColorRes(R.color.primaryColor)

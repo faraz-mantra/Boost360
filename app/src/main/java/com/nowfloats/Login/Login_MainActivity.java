@@ -152,7 +152,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
                 if (resultCode != RESULT_OK) {
                     if (progressDialog != null && progressDialog.isShowing())
                         progressDialog.dismiss();
-                    Methods.showSnackBar(this, "Login failed. Please try again");
+                    Methods.showSnackBar(this, getString(R.string.login_failed_please_try_again));
                     return;
                 }
                 customFirebaseAuthHelpers.disableAutoUserProfileCreationMode();
@@ -346,7 +346,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
                     progressDialog.dismiss();
                 }
                 if (response != null && response.getLoginId() != null) processLoginSuccessRequest(response);
-                else Methods.showSnackBarNegative(Login_MainActivity.this, "Ensure that the entered username and password is correct.");
+                else Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.ensure_that_the_entered_username_password));
             }
 
             @Override
@@ -362,7 +362,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
                 if (response != null) {
                     loginSuccess(response);
                 } else {
-                    Methods.showSnackBarNegative(Login_MainActivity.this, "Error occurred while processing your login request. Please get in touch with Boost Support team");
+                    Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.error_occured_while_processing_your_login));
                 }
             }
 
@@ -371,7 +371,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
                 if (progressDialog != null && progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
-                Toast.makeText(Login_MainActivity.this, "Error occurred while processing your login request. Please get in touch with Boost Support team", Toast.LENGTH_LONG).show();
+                Toast.makeText(Login_MainActivity.this, getString(R.string.error_occured_while_processing_your_login), Toast.LENGTH_LONG).show();
 
             }
         };
@@ -456,7 +456,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
             progressDialog.dismiss();
             progressDialog = null;
         }
-        Toast.makeText(Login_MainActivity.this, "Sorry, no Boost account was found for the given login details. Please try again.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(Login_MainActivity.this,getString( R.string.sorry_no_boost_account_was_found_for_the_given), Toast.LENGTH_SHORT).show();
     }
 
     protected void sendPasswordToEmail(String enteredText) {
@@ -665,7 +665,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
                 if (response != null) processLoginSuccessRequest(response);
-                else Methods.showSnackBarNegative(Login_MainActivity.this, "Unable to validate your phone number with Boost.");
+                else Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.unable_to_validate_your_phone));
             }
 
             @Override
@@ -680,7 +680,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
                 if (response != null) {
                     loginSuccess(response);
                 } else {
-                    Methods.showSnackBarNegative(Login_MainActivity.this, "Error occurred processing your mobile number. Please get in touch with Boost support to resolve your login issue.");
+                    Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.error_occured_while_processing_your_mobile));
                 }
             }
 
@@ -688,7 +688,7 @@ public class Login_MainActivity extends AppCompatActivity implements API_Login.A
             public void onFailure() {
                 if (progressDialog != null && progressDialog.isShowing())
                     progressDialog.dismiss();
-                Methods.showSnackBarNegative(Login_MainActivity.this, "Unable to validate your phone number with Boost.");
+                Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.unable_to_validate_your_phone));
             }
         }, "");
 

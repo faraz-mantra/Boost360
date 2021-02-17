@@ -161,8 +161,8 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
     }
 
     private void getPermissions() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
-                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED) {
+        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+                || ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                 requestPermissions(permission, STORAGE_CODE);
@@ -172,7 +172,7 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
     }
 
     private void getPermission(int code) {
-        Activity activity = getActivity();
+        Activity activity = requireActivity();
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED && code == STORAGE_CODE) {
             storageSwitchTv.setChecked(false);
             if (activity == null) {
@@ -207,12 +207,12 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
         String content = "", title = "";
         switch (code) {
             case MICROPHONE_CODE:
-                title = "Microphone Permission";
-                content = "We need permission to enable voice input feature in " + getString(R.string.boost_keyboard);
+                title = getString(R.string.microphone_permission);
+                content = getString(R.string.we_need_permission_to_enable_voice_input_feature_in) + getString(R.string.boost_keyboard);
                 break;
             case STORAGE_CODE:
-                title = "Storage Permission";
-                content = "We need permission to enable sharing feature in " + getString(R.string.boost_keyboard);
+                title = getString(R.string.storage_permission);
+                content = getString(R.string.we_need_permission_to_enable_sharing_feature) + getString(R.string.boost_keyboard);
                 break;
         }
         Methods.showApplicationPermissions(title, content, mContext);

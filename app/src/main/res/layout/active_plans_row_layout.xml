@@ -15,7 +15,7 @@
             android:layout_width="55dp"
             android:layout_height="55dp" />
         <LinearLayout
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -36,7 +36,7 @@
                 <TextView
                     android:id="@+id/tv_activation_date"
                     android:textStyle="bold"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/_30_09_2016" />
@@ -45,7 +45,7 @@
                     android:textStyle="italic"
                     android:layout_gravity="center_vertical"
                     android:textSize="10sp"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/validity_1year" />
@@ -61,7 +61,7 @@
                 <TextView
                     android:id="@+id/tv_expiry_date"
                     android:textStyle="bold"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/_29_09_2017" />
@@ -70,7 +70,7 @@
                     android:textStyle="italic"
                     android:textSize="10sp"
                     android:textColor="@color/green"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
                     android:layout_gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -86,7 +86,7 @@ public class BubbleTrashLayout extends BubbleBaseLayout {
     }
 
     void vibrate() {
-        final Vibrator vibrator = (Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        final Vibrator vibrator = (Vibrator)requireContext().getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(VIBRATION_DURATION_IN_MS);
     }
 
@@ -100,7 +100,7 @@ public class BubbleTrashLayout extends BubbleBaseLayout {
     private void playAnimation(int animationResourceId) {
         if (!isInEditMode()) {
             AnimatorSet animator = (AnimatorSet) AnimatorInflater
-                    .loadAnimator(getContext(), animationResourceId);
+                    .loadAnimator(requireContext(), animationResourceId);
             animator.setTarget(getChildAt(0));
             animator.start();
         }

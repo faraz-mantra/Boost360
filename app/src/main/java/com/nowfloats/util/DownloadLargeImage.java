@@ -163,7 +163,7 @@ public class DownloadLargeImage {
             if(imageViewReused(photoToLoad))
                 return;
             BitmapDisplayer bd=new BitmapDisplayer(bmp, photoToLoad);
-            Activity a=(Activity)photoToLoad.imageView.getContext();
+            Activity a=(Activity)photoToLoad.imageView.requireContext();
             a.runOnUiThread(bd);
         }
     }

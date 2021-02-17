@@ -224,7 +224,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
           MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_NOT_SELECTED, null);
           Constants.imageNotSet = true;
           HashMap<String, String> eventKey = new HashMap<String, String>();
-          eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_NOT_SELECTED, "Posted Update with only text");
+          eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_NOT_SELECTED, getString(R.string.posted_update_with_only_text));
 
         } else {
 
@@ -232,7 +232,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
           Constants.imageNotSet = false;
 
           HashMap<String, String> eventKey = new HashMap<String, String>();
-          eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_SELECTED, "Posted Update with text and image");
+          eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_SELECTED, getString(R.string.posted_update_with_text_and_image));
 
         }
 
@@ -250,7 +250,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
         if (mQuikrShare == 1) {
           socialShare += "QUIKR.";
         }
-        showLoader("Uploading...");
+        showLoader(getString(R.string.uploading_));
 //                    mBusEvent.post(new UploadPostEvent(path, msg.getText().toString(), socialShare));
         uploadProcess(new UploadPostEvent(path, msg.getText().toString(), socialShare));
         if (path != null && path.trim().length() > 0) {
@@ -282,9 +282,9 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
         int status = pref.getInt("quikrStatus", -1);
         if (status == 0) {
           MixPanelController.track(Key_Preferences.POST_TO_QUIKR_SECOND_TIME, null);
-          Methods.showSnackBar(activity, "You cannot post more than one ad on Quikr in a day");
+          Methods.showSnackBar(activity, getString(R.string.you_can_not_post_more_than_one_ad_on_quicker_a_day));
         } else if (status == -1) {
-          Methods.showSnackBarNegative(activity, "Something went wrong, please restart the application");
+          Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_please_restart_the_application));
         } else {
           if (mQuikrShare == 1) {
             mQuikrShare = 0;
@@ -339,13 +339,13 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
             mTwitterShare = 0;
             twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.twitter_icon_inactive));
             twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
-            Toast.makeText(Create_Message_Activity.this, "Twitter Disabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Create_Message_Activity.this, getString(R.string.twitter_disabled), Toast.LENGTH_SHORT).show();
           } else {
             Constants.twitterShareEnabled = true;
             mTwitterShare = 1;
             twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.twitter_icon_active));
             twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
-            Toast.makeText(Create_Message_Activity.this, "Twitter Enabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Create_Message_Activity.this, getString(R.string.twitter_enabled), Toast.LENGTH_SHORT).show();
           }
 
         } else {
@@ -425,11 +425,11 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
             mFbPageShare = 0;
             facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebookpage_icon_inactive));
             facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
-            Toast.makeText(Create_Message_Activity.this, "Facebook Page Disabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Create_Message_Activity.this, getString(R.string.facebook_page_disabled), Toast.LENGTH_SHORT).show();
 
           } else {
             mFbPageShare = 1;
-            Toast.makeText(Create_Message_Activity.this, "Facebook Page Enabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Create_Message_Activity.this,getString( R.string.facebook_page_enabled), Toast.LENGTH_SHORT).show();
             facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebook_page));
             facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
             WebEngageController.trackEvent(FB_PAGE_SHARING_ACTIVATED, HAS_CLICKED_FB_PAGE_SHARING_ON, session.getFpTag());
@@ -457,12 +457,12 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
             mFbProfileShare = 0;
             facebookShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebook_icon_inactive));
             facebookShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
-            Toast.makeText(Create_Message_Activity.this, "Facebook Disabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Create_Message_Activity.this,getString( R.string.fb_disabled), Toast.LENGTH_SHORT).show();
           } else {
             mFbProfileShare = 1;
             facebookShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebook_icon));
             facebookShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
-            Toast.makeText(Create_Message_Activity.this, "Facebook Enabled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Create_Message_Activity.this, getString(R.string.fb_enabled), Toast.LENGTH_SHORT).show();
 
           }
 
@@ -564,7 +564,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
     } catch (Exception e) {
       e.printStackTrace();
       hideLoader();
-      Toast.makeText(this, "Unable to post Message", Toast.LENGTH_SHORT).show();
+      Toast.makeText(this, getString(R.string.unable_to_post_image), Toast.LENGTH_SHORT).show();
     }
   }
 

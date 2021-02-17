@@ -29,7 +29,7 @@ public class WebEngageController {
 
         //AppsFlyerEvent...
         try {
-            AppsFlyerLib.getInstance().logEvent(weAnalytics.getActivity().get().getApplicationContext(), event_name, trackEvent);
+            AppsFlyerLib.getInstance().logEvent(weAnalytics.requireActivity().get().getApplicationContext(), event_name, trackEvent);
         } catch (Exception e) {
         }
 
@@ -43,7 +43,7 @@ public class WebEngageController {
         FirebaseAnalyticsUtilsHelper.identifyUser(profileId);
 
         //AppsFlyer Analytics User Session Event.
-        AppsFlyerLib.getInstance().logSession(weAnalytics.getActivity().get().getApplicationContext());
+        AppsFlyerLib.getInstance().logSession(weAnalytics.requireActivity().get().getApplicationContext());
         AppsFlyerLib.getInstance().setCustomerUserId(profileId);
 
     }

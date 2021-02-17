@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/focused_edittext_bg"
         android:focusable="false"
         android:gravity="center"
@@ -37,7 +37,7 @@
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp" />
 
     <TextView
@@ -45,7 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/unfocused_edittext_bg"
         android:gravity="center"
@@ -56,7 +56,7 @@
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/tv_date_period"
         app:layout_constraintTop_toTopOf="@+id/tv_date_period"
-        android:layout_marginRight="16dp" />
+        android:layout_marginEnd="16dp" />
 
     <TextView
         android:id="@+id/tv_save"

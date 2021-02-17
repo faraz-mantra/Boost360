@@ -46,7 +46,7 @@ public class EmojiTextView extends TextView {
         if (attrs == null) {
             this.mEmojiSize = (int) this.getTextSize();
         } else {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Emoji);
+            TypedArray a = requireContext().obtainStyledAttributes(attrs, R.styleable.Emoji);
             this.mEmojiSize = (int) a.getDimension(R.styleable.Emoji_emojiSize, getTextSize());
             this.mEmojiAlignment = a.getInt(R.styleable.Emoji_emojiAlignment, DynamicDrawableSpan.ALIGN_BASELINE);
             this.mTextStart = a.getInteger(R.styleable.Emoji_emojiTextStart, 0);
@@ -62,7 +62,7 @@ public class EmojiTextView extends TextView {
         if (!TextUtils.isEmpty(text)) {
             SpannableStringBuilder builder = new SpannableStringBuilder(text);
             EmojiUtil.addEmojis(
-                    this.getContext(),
+                    this.requireContext(),
                     builder,
                     this.mEmojiSize,
                     this.mEmojiAlignment,

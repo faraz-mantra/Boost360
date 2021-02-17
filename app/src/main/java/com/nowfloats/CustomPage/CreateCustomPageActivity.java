@@ -165,7 +165,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                                     editCheck = true;
                                     deletePage.setVisibility(View.VISIBLE);
                                 } else {
-                                    Methods.showSnackBarNegative(CreateCustomPageActivity.this, "Page Detail not found");
+                                    Methods.showSnackBarNegative(CreateCustomPageActivity.this, getString(R.string.page_details_not_found));
                                 }
                             }
 
@@ -173,7 +173,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                             public void failure(RetrofitError error) {
                                 materialProgress.dismiss();
                                 Log.d("page detail error-", "" + error.getMessage());
-                                Methods.showSnackBarNegative(CreateCustomPageActivity.this, "Page Detail not found");
+                                Methods.showSnackBarNegative(CreateCustomPageActivity.this,  getString(R.string.page_details_not_found));
                             }
                         });
             } catch (Exception e) {
@@ -715,7 +715,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                     PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
                         ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA)) {
-                    Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", CreateCustomPageActivity.this);
+                    Methods.showApplicationPermissions(getString(R.string.camera_and_storage_permission), getString(R.string.we_need_these_permissions_to_enable), CreateCustomPageActivity.this);
                 } else {
                     ActivityCompat.requestPermissions(CreateCustomPageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, media_req_id);
                 }
@@ -744,7 +744,7 @@ public class CreateCustomPageActivity extends AppCompatActivity {
                     PackageManager.PERMISSION_GRANTED) {
 
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    Methods.showApplicationPermissions("Storage Permission", "We need this permission to enable image upload", CreateCustomPageActivity.this);
+                    Methods.showApplicationPermissions(getString(R.string.storage_permission), getString(R.string.we_need_this_permission_to_enable_image_upload), CreateCustomPageActivity.this);
                 } else {
                     ActivityCompat.requestPermissions(CreateCustomPageActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, gallery_req_id);
                 }

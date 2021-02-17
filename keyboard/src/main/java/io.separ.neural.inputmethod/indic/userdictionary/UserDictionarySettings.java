@@ -108,7 +108,7 @@ public class UserDictionarySettings extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().getActionBar().setTitle(R.string.edit_personal_dictionary);
+        requireActivity().getActionBar().setTitle(R.string.edit_personal_dictionary);
     }
 
     @Override
@@ -122,7 +122,7 @@ public class UserDictionarySettings extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        final Intent intent = getActivity().getIntent();
+        final Intent intent = requireActivity().getIntent();
         final String localeFromIntent =
                 null == intent ? null : intent.getStringExtra("locale");
 
@@ -156,8 +156,8 @@ public class UserDictionarySettings extends ListFragment {
 
         setHasOptionsMenu(true);
         // Show the language as a subtitle of the action bar
-        getActivity().getActionBar().setSubtitle(
-                UserDictionarySettingsUtils.getLocaleDisplayName(getActivity(), mLocale));
+        requireActivity().getActionBar().setSubtitle(
+                UserDictionarySettingsUtils.getLocaleDisplayName(requireActivity(), mLocale));
     }
 
     @SuppressWarnings("deprecation")
@@ -174,19 +174,19 @@ public class UserDictionarySettings extends ListFragment {
         // can be guaranteed not to match locales that may exist.
         if (locale != null && locale.isEmpty()) {
             // Case-insensitive sort
-            return getActivity().managedQuery(UserDictionary.Words.CONTENT_URI, QUERY_PROJECTION,
+            return requireActivity().managedQuery(UserDictionary.Words.CONTENT_URI, QUERY_PROJECTION,
                     QUERY_SELECTION_ALL_LOCALES, null,
                     "UPPER(" + UserDictionary.Words.WORD + ')');
         } else {
             final String queryLocale = null != locale ? locale : Locale.getDefault().toString();
-            return getActivity().managedQuery(UserDictionary.Words.CONTENT_URI, QUERY_PROJECTION,
+            return requireActivity().managedQuery(UserDictionary.Words.CONTENT_URI, QUERY_PROJECTION,
                     QUERY_SELECTION, new String[] { queryLocale },
                     "UPPER(" + UserDictionary.Words.WORD + ')');
         }
     }
 
     private ListAdapter createAdapter() {
-        return new MyAdapter(getActivity(), R.layout.user_dictionary_item, mCursor,
+        return new MyAdapter(requireActivity(), R.layout.user_dictionary_item, mCursor,
                 ADAPTER_FROM, ADAPTER_TO, this);
     }
 
@@ -240,7 +240,7 @@ public class UserDictionarySettings extends ListFragment {
         args.putString(UserDictionaryAddWordContents.EXTRA_SHORTCUT, editingShortcut);
         args.putString(UserDictionaryAddWordContents.EXTRA_LOCALE, mLocale);
         android.preference.PreferenceActivity pa =
-                (android.preference.PreferenceActivity)getActivity();
+                (android.preference.PreferenceActivity)requireActivity();
         pa.startPreferencePanel(UserDictionaryAddWordFragment.class.getName(),
                 args, R.string.user_dict_settings_add_dialog_title, null, null, 0);
     }

@@ -175,7 +175,7 @@ public class ImePresenterImpl implements ItemClickListener,
 //    }
 
     @Override
-    public Context getContext() {
+    public Context requireContext() {
         return mContext;
     }
 
@@ -305,7 +305,7 @@ public class ImePresenterImpl implements ItemClickListener,
 
         if (Url == null)
         {
-            Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
             return null;
         }
 
@@ -1071,7 +1071,7 @@ public class ImePresenterImpl implements ItemClickListener,
     {
         if (model == null)
         {
-            Toast.makeText(mContext, "Something went wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
             return null;
         }
 

@@ -27,7 +27,7 @@ public class ProjectImagePreviewAdapter extends RecyclerView.Adapter<ProjectImag
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.project_image_preview_item, null);
-        context = v.getContext();
+        context = v.requireContext();
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT

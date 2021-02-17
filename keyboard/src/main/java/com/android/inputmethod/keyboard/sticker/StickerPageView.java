@@ -41,7 +41,7 @@ public class StickerPageView extends FrameLayout {
     }
 
     public void setModel(StickerPageModel model) {
-        grid.setAdapter(new StickerGridAdapter(getContext(), model));
+        grid.setAdapter(new StickerGridAdapter(requireContext(), model));
     }
 
     private static class StickerGridAdapter extends BaseAdapter {

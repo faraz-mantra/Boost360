@@ -76,7 +76,7 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
         if(Utils.isNetworkConnected(this)) {
             loadData();
         }else{
-            Methods.showSnackBarNegative(TeamsActivity.this, "No Internet Connection.");
+            Methods.showSnackBarNegative(TeamsActivity.this, getString(R.string.no_internet_connection));
         }
     }
 
@@ -127,7 +127,7 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
         if(Utils.isNetworkConnected(this)) {
             loadData();
         }else{
-            Methods.showSnackBarNegative(TeamsActivity.this, "No Internet Connection.");
+            Methods.showSnackBarNegative(TeamsActivity.this, getString(R.string.no_internet_connection));
         }
     }
 
@@ -176,7 +176,7 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
                 public void success(String data, Response response) {
                     if (response != null && response.getStatus() == 200) {
                         Log.d("deletePlacesAround ->", response.getBody().toString());
-                        Methods.showSnackBarPositive(TeamsActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(TeamsActivity.this,  getString(R.string.successfully_deleted_));
                         loadData();
                     } else {
                         Methods.showSnackBarNegative(TeamsActivity.this, getString(R.string.something_went_wrong));
@@ -186,7 +186,7 @@ public class TeamsActivity extends AppCompatActivity implements TeamsActivityLis
                 @Override
                 public void failure(RetrofitError error) {
                     if(error.getResponse().getStatus() == 200){
-                        Methods.showSnackBarPositive(TeamsActivity.this, "Successfully Deleted.");
+                        Methods.showSnackBarPositive(TeamsActivity.this,  getString(R.string.successfully_deleted_));
                         loadData();
                     }else {
                         Methods.showSnackBarNegative(TeamsActivity.this, getString(R.string.something_went_wrong));

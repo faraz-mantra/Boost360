@@ -43,14 +43,14 @@ public class MobileOtpFragment extends Fragment {
         mobileOtpBottomView = v.findViewById(R.id.mobile_otp_bottom_view);
 
         v.findViewById(R.id.im_back_button).setOnClickListener(view -> {
-            getActivity().onBackPressed();
+            requireActivity().onBackPressed();
         });
 
         cvNextButton.setOnClickListener(view -> {
             Methods.hideKeyboard(getContext());
             String phoneNumber = etPhoneNumber.getText().toString();
             if (!Methods.validPhoneNumber(phoneNumber)) {
-                Methods.showSnackBarNegative(getActivity(), "Enter valid number");
+                Methods.showSnackBarNegative(requireActivity(), getString(R.string.enter_a_valid_number));
                 return;
             }
             onMobileProvidedListener.onMobileProvided(phoneNumber);

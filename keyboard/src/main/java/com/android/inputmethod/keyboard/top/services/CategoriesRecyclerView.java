@@ -37,7 +37,7 @@ public class CategoriesRecyclerView extends RecyclerView {
 
     private void init() {
         this.mAdapter = new CategoriesArrayAdapter(getContext());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), 0, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), 0, false);
         setHasFixedSize(true);
         setLayoutManager(layoutManager);
         setItemAnimator(null);

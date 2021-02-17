@@ -22,7 +22,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:text="@string/bubble_in_app_message"
-        android:layout_marginLeft="24dp" />
+        android:layout_marginStart="24dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

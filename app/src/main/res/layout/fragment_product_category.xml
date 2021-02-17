@@ -49,7 +49,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/margin_15"
+            android:layout_marginEnd="@dimen/margin_15"
             app:srcCompat="@drawable/ic_physical_product_check" />
 
         <TextView
@@ -98,7 +98,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/margin_15"
+            android:layout_marginEnd="@dimen/margin_15"
             app:srcCompat="@drawable/ic_service_offering_check" />
 
         <TextView

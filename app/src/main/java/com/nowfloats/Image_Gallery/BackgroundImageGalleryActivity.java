@@ -329,7 +329,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
                         ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
 
-                    Methods.showApplicationPermissions("Camera And Storage Permission", "We need these permission to enable capture and upload images", this);
+                    Methods.showApplicationPermissions(getString(R.string.camera_and_storage_permission), getString(R.string.we_need_this_permission), this);
                 }
 
                 else
@@ -389,7 +389,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         catch (Exception e)
         {
-            Toast.makeText(getApplicationContext(), "Failed to Open Camera", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.failed_to_open_camera, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -451,7 +451,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
     @Override
     public void onPreUpload() {
 
-        dialog = ProgressDialog.show(this, "", "Uploading image...");
+        dialog = ProgressDialog.show(this, "", getString(R.string.uploadin_image));
         dialog.setCancelable(false);
     }
 
@@ -460,7 +460,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         if(isSuccess)
         {
-            Methods.showSnackBarPositive(this, "Image updated successfully");
+            Methods.showSnackBarPositive(this, getString(R.string.image_added_successfully));
 
             String url = response.replace("\\", "").replace("\"", "");
             adapter.addImage(url);
@@ -470,7 +470,7 @@ public class BackgroundImageGalleryActivity extends AppCompatActivity implements
 
         else
         {
-            Methods.showSnackBarNegative(this, "Failed to Upload Image");
+            Methods.showSnackBarNegative(this, getString(R.string.failed_to_upload_image));
         }
 
         if(dialog != null && dialog.isShowing())

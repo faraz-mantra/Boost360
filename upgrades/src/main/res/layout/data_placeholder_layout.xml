@@ -12,7 +12,7 @@
         android:layout_width="170dp"
         android:layout_marginStart="16dp"
         android:layout_height="167dp"
-        android:layout_marginRight="@dimen/activityPadding"
+        android:layout_marginEnd="@dimen/activityPadding"
         android:layout_marginTop="@dimen/padding_10"
         android:background="@color/background2"
         />

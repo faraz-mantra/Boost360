@@ -67,7 +67,7 @@ public class ManageInboxFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = getActivity();
+        activity = requireActivity();
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ManageInboxFragment extends Fragment {
         ivLockWidget = (ImageView) mainView.findViewById(R.id.lock_widget);
         ivPaymentIcon = mainView.findViewById(R.id.secondrow_ImageView_ProfileV2);
 
-        session = new UserSessionManager(getContext(), activity);
+        session = new UserSessionManager(requireContext(), activity);
         pref = activity.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
         getPaymentSettings();
@@ -101,8 +101,8 @@ public class ManageInboxFragment extends Fragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if(getActivity() != null)
-                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                        if(requireActivity() != null)
+                        Toast.makeText(requireActivity(), getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -126,7 +126,7 @@ public class ManageInboxFragment extends Fragment {
                                 }
                                 mTransactionCharge = profile.getData().get(0).getApplicableTxnCharge()+"%";
                             }else {
-                                throw new NullPointerException("Orders Count is Null");
+                                throw new NullPointerException(getString(R.string.order_count_is_null));
                             }
                         }catch (Exception e)
                         {
@@ -169,17 +169,17 @@ public class ManageInboxFragment extends Fragment {
 
             tvBusinessInquiries.setOnClickListener(v -> {
 
-                Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
+                Intent i = new Intent(requireActivity(), BusinessEnquiryActivity.class);
                 startActivity(i);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 WebEngageController.trackEvent(ROI_SUMMARY_ENQUIRY, EVENT_LABEL_NULL, session.getFpTag());
             });
 
             tvBusinessCalls.setOnClickListener(v -> {
                 if(Constants.StoreWidgets.contains("CALLTRACKER")) {
-                    Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                    Intent i = new Intent(requireActivity(), VmnCallCardsActivity.class);
                     startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else{
                     // show popup to user to Purchase this item.
                     Bundle bundle = new Bundle();
@@ -194,19 +194,19 @@ public class ManageInboxFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_PAYMENT_SETTING, null);
-                    Intent i = new Intent(getActivity(), PaymentSettingsActivity.class);
+                    Intent i = new Intent(requireActivity(), PaymentSettingsActivity.class);
                     startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
             tvProductGallery.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
-                    //Intent i = new Intent(getActivity(), ProductGalleryActivity.class);
-                    Intent i = new Intent(getActivity(), ProductCatalogActivity.class);
+                    //Intent i = new Intent(requireActivity(), ProductGalleryActivity.class);
+                    Intent i = new Intent(requireActivity(), ProductCatalogActivity.class);
                     startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
             tvSellerAnalytics.setOnClickListener(new View.OnClickListener() {
@@ -217,9 +217,9 @@ public class ManageInboxFragment extends Fragment {
 
 //                    if(mIsAPEnabled) {
 //                        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
-//                        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
+//                        Intent i = new Intent(requireActivity(), SellerAnalyticsActivity.class);
 //                        startActivity(i);
-//                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                    }else {
 //                        new AlertDialog.Builder(getActivity())
 //                                .setMessage("Enable Assured Purchase to view Seller Analytics")
@@ -228,9 +228,9 @@ public class ManageInboxFragment extends Fragment {
 //                                    public void onClick(DialogInterface dialog, int which) {
 //                                        dialog.dismiss();
 //                                        MixPanelController.track(EventKeysWL.SIDE_PANEL_PAYMENT_SETTING, null);
-//                                        Intent i = new Intent(getActivity(), PaymentSettingsActivity.class);
+//                                        Intent i = new Intent(requireActivity(), PaymentSettingsActivity.class);
 //                                        startActivity(i);
-//                                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                                    }
 //                                })
 //                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -277,9 +277,9 @@ public class ManageInboxFragment extends Fragment {
     private void openSellerAnalyticsActivity()
     {
         MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
-        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
+        Intent i = new Intent(requireActivity(), SellerAnalyticsActivity.class);
         startActivity(i);
-        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void startOrdersActivity()
@@ -298,7 +298,7 @@ public class ManageInboxFragment extends Fragment {
 
             if(value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue()))
             {
-                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), String.valueOf(getString(R.string.message_feature_not_available)), Toast.LENGTH_LONG).show();
             }
             else
             {

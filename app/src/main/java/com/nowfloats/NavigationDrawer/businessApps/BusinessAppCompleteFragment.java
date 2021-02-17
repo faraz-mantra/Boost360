@@ -70,7 +70,7 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
                 setHasOptionsMenu(true);
             }
         }
-        pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        pref = requireActivity()().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         MixPanelController.track(MixPanelController.BUSINESS_APP_PUBLISHED,null);
     }
 
@@ -91,7 +91,7 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         if(!isAdded()) return;
 
-        session = new UserSessionManager(context, getActivity());
+        session = new UserSessionManager(context, requireActivity()());
         if(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO) == BIZ_APP_DEMO){
             pref.edit().putInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_PAID).apply();
         }
@@ -197,7 +197,7 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
             Intent showWebSiteIntent = new Intent(context, Mobile_Site_Activity.class);
             showWebSiteIntent.putExtra("WEBSITE_NAME", url);
             context.startActivity(showWebSiteIntent);
-            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            requireActivity()().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
 
@@ -206,7 +206,7 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
         if(!isAdded()) return false;
         switch(item.getItemId()){
             case R.id.action_notif:
-                Methods.materialDialog(getActivity(),"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
+                Methods.materialDialog(requireActivity()(),"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
                 return true;
             case R.id.about:
                 ((BusinessAppsDetailsActivity)context).addFragments(SHOW_ABOUT_APP);

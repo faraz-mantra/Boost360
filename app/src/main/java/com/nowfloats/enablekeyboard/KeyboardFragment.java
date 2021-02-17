@@ -84,7 +84,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    sharedPreferences = getContext().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+    sharedPreferences = requireContext().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
     return inflater.inflate(R.layout.fragment_keyboard, container, false);
   }
 
@@ -126,13 +126,13 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     } else {
       view.findViewById(R.id.cv_themes).setVisibility(View.VISIBLE);
       TextView tvBoostThemes = view.findViewById(R.id.tv_boost_themes);
-      if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
+      if (requireContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
         tvBoostThemes.setText("RedTim Keyboard Themes");
       } else {
         tvBoostThemes.setText("Boost Keyboard Themes");
       }
       rvKeyboardThemes = view.findViewById(R.id.rv_keyboard_themes);
-      rvKeyboardThemes.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
+      rvKeyboardThemes.setLayoutManager(new GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false));
       ArrayList<Integer> keyboardDrawables = new ArrayList<>();
       keyboardDrawables.add(R.drawable.ic_keyboard_theme_two);
       keyboardDrawables.add(R.drawable.ic_keyboard_theme_one);
@@ -143,7 +143,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
       } else if (selectedString.equals(KeyboardThemesAdapter.Themes.LXX_DARK_UNBORDERED.toString())) {
         selected = 1;
       }
-      keyboardThemesAdapter = new KeyboardThemesAdapter(getContext(), keyboardDrawables, selected, sharedPreferences);
+      keyboardThemesAdapter = new KeyboardThemesAdapter(requireContext(), keyboardDrawables, selected, sharedPreferences);
       rvKeyboardThemes.setAdapter(keyboardThemesAdapter);
     }
   }
@@ -195,7 +195,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
   }
 
   private void getPermission(int code) {
-    Activity activity = getActivity();
+    Activity activity = requireActivity();
     if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED && code == STORAGE_CODE) {
       storageSwitchTv.setChecked(false);
       if (activity == null) {
@@ -222,7 +222,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
       } else if (code == STORAGE_CODE) {
         storageSwitchTv.setChecked(true);
       }
-      Toast.makeText(activity, "To change permission go to setting", Toast.LENGTH_SHORT).show();
+      Toast.makeText(activity, getString(R.string.to_change_permission_go_to_settings), Toast.LENGTH_SHORT).show();
     }
   }
 
@@ -230,12 +230,12 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     String content = "", title = "";
     switch (code) {
       case MICROPHONE_CODE:
-        title = "Microphone Permission";
-        content = "We need permission to enable voice input feature in " + getString(R.string.boost_keyboard);
+        title = getString(R.string.microphone_permission);
+        content = getString(R.string.we_need_permission_to_enable_voice_input_feature_in) + getString(R.string.boost_keyboard);
         break;
       case STORAGE_CODE:
-        title = "Storage Permission";
-        content = "We need permission to enable sharing feature in " + getString(R.string.boost_keyboard);
+        title = getString(R.string.storage_permission);
+        content = getString(R.string.we_need_permission_to_sharing) + getString(R.string.boost_keyboard);
         break;
     }
     Methods.showApplicationPermissions(title, content, mContext);
@@ -326,7 +326,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
         showOverlay(overLayout1, getString(R.string.boost_keyboard), getString(R.string.keyboard_message));
         break;
       case R.id.ll_enable_keyboard:
-        startActivity(new Intent(getActivity(), BoostKeyboardActivity.class));
+        startActivity(new Intent(requireActivity(), BoostKeyboardActivity.class));
         break;
     }
   }

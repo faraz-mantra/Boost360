@@ -103,7 +103,7 @@ public class NewDomainFragment extends Fragment {
 
         title = view.findViewById(R.id.title);
         backButton = view.findViewById(R.id.back_button);
-        title.setText("Get a New Domain");
+        title.setText(R.string.get_a_new_domain);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

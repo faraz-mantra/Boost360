@@ -110,7 +110,7 @@ public class UserDictionaryList extends PreferenceFragment {
      * @param userDictGroup The group to put the settings in.
      */
     protected void createUserDictSettings(PreferenceGroup userDictGroup) {
-        final Activity activity = getActivity();
+        final Activity activity = requireActivity();
         userDictGroup.removeAll();
         final TreeSet<String> localeSet =
                 UserDictionaryList.getUserDictionaryLocalesSet(activity);

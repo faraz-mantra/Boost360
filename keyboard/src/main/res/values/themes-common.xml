@@ -115,7 +115,7 @@
         <item name="android:minWidth">@dimen/config_suggestion_min_width</item>
         <item name="android:textSize">@dimen/config_suggestion_text_size</item>
         <item name="android:gravity">center</item>
-        <item name="android:paddingLeft">@dimen/config_suggestion_text_horizontal_padding</item>
+        <item name="android:paddingStart">@dimen/config_suggestion_text_horizontal_padding</item>
         <item name="android:paddingTop">0dp</item>
         <item name="android:paddingRight">@dimen/config_suggestion_text_horizontal_padding</item>
         <item name="android:paddingBottom">0dp</item>

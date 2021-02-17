@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
     android:layout_marginTop="2dp"
     android:background="@color/white"
     android:orientation="horizontal"
@@ -25,9 +25,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:background="@drawable/items_num_bg"
-            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
             android:paddingRight="8dp"
             android:text="@string/_3_items"
             android:textSize="12sp" />
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:orientation="vertical">
 
         <TextView

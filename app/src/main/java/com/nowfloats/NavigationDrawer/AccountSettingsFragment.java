@@ -96,7 +96,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!isAdded() || getActivity() == null) {
+        if (!isAdded() || requireActivity() == null) {
             Methods.showSnackBar(view, getString(R.string.something_went_wrong_try_again), Color.RED);
             return;
         }
@@ -153,7 +153,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
 //                    case "Site Appearance":
 //                        intent = new Intent(mContext, SiteAppearanceActivity.class);
 //                        startActivity(intent);
-//                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                        break;
                     case "Domain and Email":
                         isAlreadyCalled = false;
@@ -163,7 +163,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                             showLoader(getString(R.string.please_wait));
                             domainApiService.getDomainDetails(mContext, sessionManager.getFpTag(), getDomainDetailsParam());
                         } else {
-                            Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
+                            Methods.showSnackBarNegative(requireActivity(), getString(R.string.noInternet));
                         }
                         return;
                     case "Subscription History":
@@ -234,7 +234,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     }
 
     public void changePassword() {
-        if (getActivity() == null) return;
+        if (requireActivity() == null) return;
         MaterialDialog dialog = new MaterialDialog.Builder(mContext)
                 .customView(R.layout.change_password, true)
                 .positiveText(getString(R.string.ok))
@@ -270,14 +270,14 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                                     dialog.dismiss();
                                     task.execute();
                                 } else {
-                                    Methods.showSnackBarNegative(getActivity(), getString(R.string.check_internet_connection));
+                                    Methods.showSnackBarNegative(requireActivity(), getString(R.string.check_internet_connection));
                                 }
 
                             } else {
-                                Methods.showSnackBarNegative(getActivity(), getString(R.string.both_password_not_matched));
+                                Methods.showSnackBarNegative(requireActivity(), getString(R.string.both_password_not_matched));
                             }
                         } else {
-                            Methods.showSnackBarNegative(getActivity(), getString(R.string.min_6char_required));
+                            Methods.showSnackBarNegative(requireActivity(), getString(R.string.min_6char_required));
                         }
                     }
                 }).show();
@@ -350,9 +350,9 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
 
     private void showLoader(final String message) {
 
-        if (getActivity() == null) return;
+        if (requireActivity() == null) return;
 
-        getActivity().runOnUiThread(() -> {
+        requireActivity().runOnUiThread(() -> {
             if (progressDialog == null) {
                 progressDialog = new ProgressDialog(getActivity());
                 progressDialog.setCanceledOnTouchOutside(false);
@@ -363,8 +363,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     }
 
     private void hideLoader() {
-        if (getActivity() == null) return;
-        getActivity().runOnUiThread(() -> {
+        if (requireActivity() == null) return;
+        requireActivity().runOnUiThread(() -> {
             if (progressDialog != null && progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
@@ -509,7 +509,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     @Override
     public void getDomainDetails(DomainDetails domainDetails) {
         hideLoader();
-        if (!isAdded() || getActivity() == null) return;
+        if (!isAdded() || requireActivity() == null) return;
         if (!isAlreadyCalled) {
             showDomainDetails();
         }
@@ -551,7 +551,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         //new design implementation work in progress
         Intent domainIntent = new Intent(mContext, DomainEmailActivity.class);
         startActivity(domainIntent);
-        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private enum DialogFrom {

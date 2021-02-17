@@ -102,7 +102,7 @@ public class RichMediaView extends LinearLayout implements ChangeRichModeListene
     /*@Override
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        final Resources res = getContext().getResources();
+        final Resources res = requireContext().getResources();
         // The main keyboard expands to the entire this {@link KeyboardView}.
         final int width = ResourceUtils.getDefaultKeyboardWidth(res)
                 + getPaddingLeft() + getPaddingRight();

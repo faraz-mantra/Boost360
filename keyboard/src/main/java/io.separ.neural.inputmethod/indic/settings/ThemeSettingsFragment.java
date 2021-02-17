@@ -44,7 +44,7 @@ public final class ThemeSettingsFragment extends SubScreenFragment
     }
 
     static void updateKeyboardThemeSummary(final Preference pref) {
-        //final Resources res = pref.getContext().getResources();
+        //final Resources res = pref.requireContext().getResources();
         //final SharedPreferences prefs = pref.getSharedPreferences();
         /*final KeyboardTheme keyboardTheme = KeyboardTheme.getKeyboardTheme(prefs);
         final String keyboardThemeId = String.valueOf(keyboardTheme.mThemeId);
@@ -68,7 +68,7 @@ public final class ThemeSettingsFragment extends SubScreenFragment
         final String[] keyboardThemeIds = res.getStringArray(R.array.keyboard_theme_ids);
         for (int index = 0; index < keyboardThemeNames.length; index++) {
             final KeyboardThemePreference pref = new KeyboardThemePreference(
-                    getActivity(), keyboardThemeNames[index], keyboardThemeIds[index]);
+                    requireActivity(), keyboardThemeNames[index], keyboardThemeIds[index]);
             screen.addPreference(pref);
             pref.setOnRadioButtonClickedListener(this);
         }

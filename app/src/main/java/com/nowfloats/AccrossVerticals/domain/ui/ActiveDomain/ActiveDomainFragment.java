@@ -106,7 +106,7 @@ public class ActiveDomainFragment extends Fragment implements ActiveDomainListen
     }
 
     private void initializeRecycler() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(emailAdapter);
     }

@@ -42,8 +42,8 @@ public abstract class AnimatedBackgroundGradientFragment extends Fragment {
         }
 
         public void run() {
-            if (AnimatedBackgroundGradientFragment.this.getActivity() != null) {
-                AnimatedBackgroundGradientFragment.this.getActivity().runOnUiThread(new C06001());
+            if (AnimatedBackgroundGradientFragment.this.requireActivity() != null) {
+                AnimatedBackgroundGradientFragment.this.requireActivity().runOnUiThread(new C06001());
             }
         }
     }

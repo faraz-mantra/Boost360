@@ -116,7 +116,7 @@ class MyVisitingCardFragment : AppBaseFragment<FragmentDigitalCardBinding, Chann
       val imageUri: Uri = Uri.parse(path)
       val waIntent = Intent(Intent.ACTION_SEND)
       waIntent.type = "image/*"
-      if (isWhatsApp) waIntent.setPackage("com.whatsapp")
+      if (isWhatsApp) waIntent.setPackage(getString(R.string.whatsapp_package))
       waIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
       waIntent.putExtra(Intent.EXTRA_TEXT, messageCard ?: "")
       baseActivity.startActivity(Intent.createChooser(waIntent, getString(R.string.share_your_business_card)))

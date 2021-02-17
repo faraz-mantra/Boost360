@@ -232,14 +232,14 @@ public final class DictionaryProvider extends ContentProvider {
         switch (match) {
             case DICTIONARY_V1_WHOLE_LIST:
             case DICTIONARY_V2_WHOLE_LIST:
-                final Cursor c = MetadataDbHelper.queryDictionaries(getContext(), clientId);
+                final Cursor c = MetadataDbHelper.queryDictionaries(requireContext(), clientId);
                 DebugLogUtils.l("List of dictionaries with count", c.getCount());
                 PrivateLog.log("Returned a list of " + c.getCount() + " items");
                 return c;
             case DICTIONARY_V2_DICT_INFO:
                 // In protocol version 2, we return null if the client is unknown. Otherwise
                 // we behave exactly like for protocol 1.
-                if (!MetadataDbHelper.isClientKnown(getContext(), clientId)) return null;
+                if (!MetadataDbHelper.isClientKnown(requireContext(), clientId)) return null;
                 // Fall through
             case DICTIONARY_V1_DICT_INFO:
                 final String locale = uri.getLastPathSegment();
@@ -275,7 +275,7 @@ public final class DictionaryProvider extends ContentProvider {
      */
     private ContentValues getWordlistMetadataForWordlistId(final String clientId,
             final String wordlistId) {
-        final Context context = getContext();
+        final Context context = requireContext();
         if (TextUtils.isEmpty(wordlistId)) return null;
         final SQLiteDatabase db = MetadataDbHelper.getDb(context, clientId);
         return MetadataDbHelper.getInstalledOrDeletingWordListContentValuesByWordListId(
@@ -317,12 +317,12 @@ public final class DictionaryProvider extends ContentProvider {
                 // This is how we "delete" the files. It allows Android Keyboard to fake deleting
                 // a default dictionary - which is actually in its assets and can't be really
                 // deleted.
-                return getContext().getResources().openRawResourceFd(
+                return requireContext().getResources().openRawResourceFd(
                         R.raw.empty);
             } else {
                 final String localFilename =
                         wordList.getAsString(MetadataDbHelper.LOCAL_FILENAME_COLUMN);
-                final File f = getContext().getFileStreamPath(localFilename);
+                final File f = requireContext().getFileStreamPath(localFilename);
                 final ParcelFileDescriptor pfd =
                         ParcelFileDescriptor.open(f, ParcelFileDescriptor.MODE_READ_ONLY);
                 return new AssetFileDescriptor(pfd, 0, pfd.getStatSize());
@@ -349,7 +349,7 @@ public final class DictionaryProvider extends ContentProvider {
      */
     private Collection<WordListInfo> getDictionaryWordListsForLocale(final String clientId,
             final String locale, final boolean mayPrompt) {
-        final Context context = getContext();
+        final Context context = requireContext();
         final Cursor results =
                 MetadataDbHelper.queryInstalledOrDeletingOrAvailableDictionaryMetadata(context,
                         clientId);
@@ -407,7 +407,7 @@ public final class DictionaryProvider extends ContentProvider {
                         // already have it. Do not return it. However, this only applies if the
                         // word list is INSTALLED, for if it is DELETING we should return it always
                         // so that Android Keyboard can perform the actual deletion.
-                        final File f = getContext().getFileStreamPath(wordListLocalFilename);
+                        final File f = requireContext().getFileStreamPath(wordListLocalFilename);
                         if (!f.isFile()) {
                             continue;
                         }
@@ -448,7 +448,7 @@ public final class DictionaryProvider extends ContentProvider {
             return deleteDataFile(uri);
         }
         if (DICTIONARY_V2_METADATA == match) {
-            if (MetadataDbHelper.deleteClient(getContext(), getClientId(uri))) {
+            if (MetadataDbHelper.deleteClient(requireContext(), getClientId(uri))) {
                 return 1;
             }
             return 0;
@@ -465,16 +465,16 @@ public final class DictionaryProvider extends ContentProvider {
         final int status = wordList.getAsInteger(MetadataDbHelper.STATUS_COLUMN);
         final int version = wordList.getAsInteger(MetadataDbHelper.VERSION_COLUMN);
         if (MetadataDbHelper.STATUS_DELETING == status) {
-            UpdateHandler.markAsDeleted(getContext(), clientId, wordlistId, version, status);
+            UpdateHandler.markAsDeleted(requireContext(), clientId, wordlistId, version, status);
             return 1;
         } else if (MetadataDbHelper.STATUS_INSTALLED == status) {
             final String result = uri.getQueryParameter(QUERY_PARAMETER_DELETE_RESULT);
             if (QUERY_PARAMETER_FAILURE.equals(result)) {
-                UpdateHandler.markAsBroken(getContext(), clientId, wordlistId, version);
+                UpdateHandler.markAsBroken(requireContext(), clientId, wordlistId, version);
             }
             final String localFilename =
                     wordList.getAsString(MetadataDbHelper.LOCAL_FILENAME_COLUMN);
-            final File f = getContext().getFileStreamPath(localFilename);
+            final File f = requireContext().getFileStreamPath(localFilename);
             // f.delete() returns true if the file was successfully deleted, false otherwise
             if (f.delete()) {
                 return 1;
@@ -507,7 +507,7 @@ public final class DictionaryProvider extends ContentProvider {
                 // is reserved for internal use.
                 // The metadata URI may not be null, but it may be empty if the client does not
                 // want the dictionary pack to update the metadata automatically.
-                MetadataDbHelper.updateClientInfo(getContext(), clientId, values);
+                MetadataDbHelper.updateClientInfo(requireContext(), clientId, values);
                 break;
             case DICTIONARY_V2_DICT_INFO:
                 try {
@@ -523,7 +523,7 @@ public final class DictionaryProvider extends ContentProvider {
                 // For all intents and purposes, this is new metadata, so we should publish it
                 // so that any listeners (like the Settings interface for example) can update
                 // themselves.
-                UpdateHandler.publishUpdateMetadataCompleted(getContext(), true);
+                UpdateHandler.publishUpdateMetadataCompleted(requireContext(), true);
                 break;
             case DICTIONARY_V1_WHOLE_LIST:
             case DICTIONARY_V1_DICT_INFO:

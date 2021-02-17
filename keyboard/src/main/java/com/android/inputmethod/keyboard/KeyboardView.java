@@ -522,7 +522,7 @@ public class KeyboardView extends View {
                 paint.clearShadowLayer();
             }
             blendAlpha(paint, params.mAnimAlpha);
-           /* Drawable dr = (Drawable) getContext().getResources().getDrawable(R.drawable.round_light_grey);
+           /* Drawable dr = (Drawable) requireContext().getResources().getDrawable(R.drawable.round_light_grey);
             dr.setBounds(key.getX(), key.getY(), key.getX() + key.getWidth(), key.getY() + key.getHeight());
             dr.draw(canvas);*/
             if ((key.isHeaderKey() || key.getHeaderKeySpec() != null && key.getHeaderKeySpec() != null) &&
@@ -664,7 +664,7 @@ public class KeyboardView extends View {
         icon.clearColorFilter();
         icon.setColorFilter(null);
         if (code == -1) {
-            icon.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(), AlphabetShiftState.IS_SHIFTED ?
+            icon.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(requireContext(), AlphabetShiftState.IS_SHIFTED ?
                     R.color.primaryColor : R.color.white), PorterDuff.Mode.SRC_IN));
         } else {
             icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);

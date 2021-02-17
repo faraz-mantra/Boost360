@@ -148,7 +148,7 @@ class ScanPanCardFragment : AppBaseFragment<FragmentScanPanCardBinding, BaseView
       }
       STORAGE_PERMISSIONS_CODE -> {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-          Log.d("STORAGE PERMISSION", "PERMISSION GRANTED")
+          Log.d(getString(R.string.storage_permission), "PERMISSION GRANTED")
           //startImagePickerIntent()
         } else {
           Toast.makeText(context, "Please provide the storage permissions to proceed", Toast.LENGTH_LONG).show()

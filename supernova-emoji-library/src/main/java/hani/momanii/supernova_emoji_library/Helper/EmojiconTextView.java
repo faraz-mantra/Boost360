@@ -58,7 +58,7 @@ public class EmojiconTextView extends TextView {
         if (attrs == null) {
             mEmojiconSize = (int) getTextSize();
         } else {
-            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Emojicon);
+            TypedArray a = requireContext().obtainStyledAttributes(attrs, R.styleable.Emojicon);
             mEmojiconSize = (int) a.getDimension(R.styleable.Emojicon_emojiconSize, getTextSize());
             mEmojiconAlignment = a.getInt(R.styleable.Emojicon_emojiconAlignment, DynamicDrawableSpan.ALIGN_BOTTOM);
             mTextStart = a.getInteger(R.styleable.Emojicon_emojiconTextStart, 0);
@@ -73,7 +73,7 @@ public class EmojiconTextView extends TextView {
     public void setText(CharSequence text, BufferType type) {
         if (!TextUtils.isEmpty(text)) {
             SpannableStringBuilder builder = new SpannableStringBuilder(text);
-            EmojiconHandler.addEmojis(getContext(), builder, mEmojiconSize, mEmojiconAlignment, mEmojiconTextSize, mTextStart, mTextLength, mUseSystemDefault);
+            EmojiconHandler.addEmojis(requireContext(), builder, mEmojiconSize, mEmojiconAlignment, mEmojiconTextSize, mTextStart, mTextLength, mUseSystemDefault);
             text = builder;
         }
         super.setText(text, type);

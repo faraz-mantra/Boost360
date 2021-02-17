@@ -56,7 +56,7 @@ public class NotificationFragment extends Fragment implements DeepLinkInterface 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = getActivity();
+        activity = requireActivity();
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         alertInterface = Constants.restAdapter.create(NotificationInterface.class);
@@ -191,7 +191,7 @@ public class NotificationFragment extends Fragment implements DeepLinkInterface 
 
     @Override
     public void deepLink(String url) {
-        if (getActivity() instanceof HomeActivity) {
+        if (requireActivity() instanceof HomeActivity) {
             ((HomeActivity) getActivity()).deepLink(url);
         } else if (deepLinkUtil != null) {
             deepLinkUtil.deepLinkPage(url, "", false);
@@ -248,8 +248,8 @@ public class NotificationFragment extends Fragment implements DeepLinkInterface 
                     if (alertModelsList.size() == 0) {
                         emptylayout.setVisibility(View.VISIBLE);
                     }
-                    if (getActivity() != null) {
-                        Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
+                    if (requireActivity() != null) {
+                        Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong_try_again));
                     }
                     progress_layout.setVisibility(View.GONE);
                 }

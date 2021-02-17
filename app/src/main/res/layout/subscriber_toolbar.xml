@@ -13,7 +13,7 @@
         android:layout_marginEnd="5dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_marginRight="15dp">
+        android:layout_marginEnd="15dp">
 
         <TextView
             android:id="@+id/titleTextView"
@@ -32,7 +32,7 @@
             android:marqueeRepeatLimit="1"
             android:scrollHorizontally="true"
             tools:ignore="MissingPrefix"
-            android:layout_marginRight="5dp" />
+            android:layout_marginEnd="5dp" />
 
         <AutoCompleteTextView
             android:id="@+id/search_edittext"
@@ -48,7 +48,7 @@
             android:textColor="@color/white"
             android:visibility="gone"
             android:background="@android:color/transparent"
-            android:layout_marginRight="15dp" />
+            android:layout_marginEnd="15dp" />
         <ImageView
             android:id="@+id/search_image"
             android:layout_width="36dp"

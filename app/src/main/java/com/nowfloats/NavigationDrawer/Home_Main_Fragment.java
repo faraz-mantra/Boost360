@@ -149,15 +149,15 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     super.onResume();
     MixPanelController.track(EventKeysWL.HOME_SCREEN, null);
     BoostLog.d("Home_Main_Fragment", "onResume : " + session.getFPName());
-    getActivity().setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+    requireActivity().setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
   }
 
 
   private void inflateWhatsNew() {
-    SharedPreferences preferences = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+    SharedPreferences preferences = requireActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
     final SharedPreferences.Editor editor = preferences.edit();
     if (!preferences.getString("currentAppVersion", "default").equals(getVersion())) {
-      View v = getActivity().getLayoutInflater().inflate(R.layout.whats_new_layout, null);
+      View v = requireActivity().getLayoutInflater().inflate(R.layout.whats_new_layout, null);
 
 
       final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -186,7 +186,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
         list.add(model);
       }
       WhatsNewAdapter adapter = new WhatsNewAdapter(list);
-      rvWhatsNew.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+      rvWhatsNew.setLayoutManager(new LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false));
       rvWhatsNew.setAdapter(adapter);
       adapter.notifyDataSetChanged();
     }
@@ -195,7 +195,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   private String getVersion() {
     String val;
     try {
-      val = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+      val = requireActivity().getPackageManager().getPackageInfo(requireActivity().getPackageName(), 0).versionName;
     } catch (PackageManager.NameNotFoundException e) {
       e.printStackTrace();
       val = "default";
@@ -213,10 +213,10 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
       retryLayout.setVisibility(View.GONE);
       fetch_home_data.setNewPostListener(true);
       fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
-      uploadPicture(event.path, event.msg, event.mSocialShare, getActivity(), new UserSessionManager(getActivity(), getActivity()));
+      uploadPicture(event.path, event.msg, event.mSocialShare, requireActivity(), new UserSessionManager(requireActivity(), getActivity()));
     } catch (Exception e) {
       e.printStackTrace();
-      Toast.makeText(getActivity(), "Unable to post Message", Toast.LENGTH_SHORT).show();
+      Toast.makeText(requireActivity(), "Unable to post Message", Toast.LENGTH_SHORT).show();
     }
   }
 
@@ -257,7 +257,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
   public void onAttach(Context context) {
     super.onAttach(context);
     try {
-      if (getActivity() instanceof HomeActivity) mCallback = (HomeActivity) context;
+      if (requireActivity() instanceof HomeActivity) mCallback = (HomeActivity) context;
     } catch (ClassCastException e) {
       e.printStackTrace();
     }
@@ -274,8 +274,8 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     super.onCreate(savedInstanceState);
     bus = BusProvider.getInstance().getBus();
     bus.register(this);
-    current_Activity = getActivity();
-    session = new UserSessionManager(getActivity(), current_Activity);
+    current_Activity = requireActivity();
+    session = new UserSessionManager(requireActivity(), current_Activity);
     mPref = current_Activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
     mDbController = DbController.getDbController(current_Activity);
     getMessageList(current_Activity).clear();
@@ -324,7 +324,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     /**
      * Call this API to get visitsCount list and display in Analytics
      */
-    //new Fetch_Home_Data(getActivity(),session).getVisitors();
+    //new Fetch_Home_Data(requireActivity(),session).getVisitors();
   }
 
   private void startSync() {
@@ -345,7 +345,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
                            Bundle savedInstanceState) {
     View mainView;
     mainView = inflater.inflate(R.layout.fragment_home__main_, container, false);
-    fetch_home_data = new Fetch_Home_Data(getActivity(), 0);
+    fetch_home_data = new Fetch_Home_Data(requireActivity(), 0);
 
     getMessageList(current_Activity).clear();
     progressCrd = mainView.findViewById(R.id.progressCard);
@@ -363,7 +363,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     recyclerView = mainView.findViewById(R.id.my_recycler_view);
     recyclerView.setHasFixedSize(true);
 
-    cAdapter = new CardAdapter_V3(getActivity(), session);
+    cAdapter = new CardAdapter_V3(requireActivity(), session);
 
 
     recyclerView.setAdapter(cAdapter);
@@ -397,7 +397,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
           facebookPostCount = 0;
           retryLayout.setVisibility(View.GONE);
           progressCrd.setVisibility(View.GONE);
-          Methods.showSnackBarNegative(getActivity(), getString(R.string.retry_create_new_post));
+          Methods.showSnackBarNegative(requireActivity(), getString(R.string.retry_create_new_post));
           Constants.createMsg = false;
         }
       }
@@ -483,7 +483,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     ViewAnimation.init(addOptions);
 
     fabButton.setOnClickListener(v -> {
-      if (getActivity() instanceof HomeActivity) {
+      if (requireActivity() instanceof HomeActivity) {
         FloatingViewBottomSheetDialog dialog = new FloatingViewBottomSheetDialog(session, this::onClickFloatingView);
         dialog.show(getParentFragmentManager(), FloatingViewBottomSheetDialog.class.getName());
       } else {
@@ -586,7 +586,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
           ex1.printStackTrace();
         }
         BoostLog.i("IMAGE---", "CALing DeLEte Method");
-        Home_View_Card_Delete deleteCard = new Home_View_Card_Delete(getActivity(), Constants.DeleteCard, obj2, 0, null, 1);
+        Home_View_Card_Delete deleteCard = new Home_View_Card_Delete(requireActivity(), Constants.DeleteCard, obj2, 0, null, 1);
         deleteCard.execute();
       }
     } catch (Exception e) {
@@ -641,10 +641,10 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
 
   private void addImage() {
     WebEngageController.trackEvent(DASHBOARD_FAB_IMAGE, FAB, NULL);
-    Intent webIntent = new Intent(getActivity(), ImageGalleryActivity.class);
+    Intent webIntent = new Intent(requireActivity(), ImageGalleryActivity.class);
     webIntent.putExtra("create_image", true);
     startActivity(webIntent);
-    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
   }
 
   private boolean loadDataFromDb(int skip, boolean isNewMessage) {
@@ -700,25 +700,25 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
 
   private void openAddUpdateActivity() {
     WebEngageController.trackEvent(DASHBOARD_FAB_UPDATE, FAB, NULL);
-    Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
+    Intent webIntent = new Intent(requireActivity(), Create_Message_Activity.class);
     startActivity(webIntent);
-    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
   }
 
   private void addCustomPage() {
     WebEngageController.trackEvent(DASHBOARD_FAB_CUSTOM_PAGE, FAB, NULL);
-    Intent webIntent = new Intent(getActivity(), CustomPageActivity.class);
+    Intent webIntent = new Intent(requireActivity(), CustomPageActivity.class);
     webIntent.putExtra("IS_ADD", true);
     startActivity(webIntent);
-    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
   }
 
   private void addTestimonial() {
     WebEngageController.trackEvent(DASHBOARD_FAB_TESTIMONIAL, FAB, NULL);
-    Intent webIntent = new Intent(getActivity(), TestimonialsActivity.class);
+    Intent webIntent = new Intent(requireActivity(), TestimonialsActivity.class);
     webIntent.putExtra("IS_ADD", true);
     startActivity(webIntent);
-    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
   }
 
   private void addUpdate() {
@@ -750,7 +750,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
 //
 //            else if(!value.equals(WidgetKey.WidgetValue.UNLIMITED.getValue()) && cAdapter.getItemCount() >= Integer.parseInt(value))
 //            {
-//                Toast.makeText(getContext(), String.valueOf(getString(R.string.message_add_update_limit)), Toast.LENGTH_LONG).show();
+//                Toast.makeText(requireContext(), String.valueOf(getString(R.string.message_add_update_limit)), Toast.LENGTH_LONG).show();
 //            }
 //
 //            else
@@ -859,18 +859,18 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
     switch (type.toUpperCase()) {
       case "SERVICES":
         Bundle bundle = getBundleData(newProduct);
-        startFragmentActivityNew(getActivity(), FragmentType.SERVICE_DETAIL_VIEW, bundle, false, true);
+        startFragmentActivityNew(requireActivity(), FragmentType.SERVICE_DETAIL_VIEW, bundle, false, true);
         break;
       default:
-        Intent intent = new Intent(getContext(), ManageProductActivity.class);
+        Intent intent = new Intent(requireContext(), ManageProductActivity.class);
         intent.putExtra("PRODUCT", newProduct);
         startActivityForResult(intent, 300);
         break;
     }
-//        Intent webIntent = new Intent(getActivity(), ProductCatalogActivity.class);
+//        Intent webIntent = new Intent(requireActivity(), ProductCatalogActivity.class);
 //        webIntent.putExtra("IS_ADD", true);
 //        startActivity(webIntent);
-//        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
   }
 
   public class MyOnClickListener implements View.OnClickListener {
@@ -888,7 +888,7 @@ public class Home_Main_Fragment extends Fragment implements Fetch_Home_Data.Fetc
       webIntent.putExtra("POSITION", selectedItemPosition);
       webIntent.putExtra("IS_DASHBOARD", true);
       startActivity(webIntent);
-      getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+      requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
     }
 

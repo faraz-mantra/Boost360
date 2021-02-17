@@ -49,7 +49,7 @@ public final class AdvancedSettingsFragment extends SubScreenFragment {
         addPreferencesFromResource(R.xml.prefs_screen_advanced);
 
         final Resources res = getResources();
-        final Context context = getActivity();
+        final Context context = requireActivity();
 
         // When we are called from the Settings application but we are not already running, some
         // singleton and utility classes may not have been initialized.  We have to call
@@ -141,7 +141,7 @@ public final class AdvancedSettingsFragment extends SubScreenFragment {
         }
         final SharedPreferences prefs = getSharedPreferences();
         final Resources res = getResources();
-        final AudioManager am = (AudioManager)getActivity().getSystemService(Context.AUDIO_SERVICE);
+        final AudioManager am = (AudioManager)requireActivity().getSystemService(Context.AUDIO_SERVICE);
         pref.setInterface(new MyValueProxy2(prefs, res, am));
     }
 

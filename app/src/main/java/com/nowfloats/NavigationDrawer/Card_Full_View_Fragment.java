@@ -67,9 +67,9 @@ public class Card_Full_View_Fragment extends Fragment {
         View mainView = inflater.inflate(R.layout.fragment_card_full_view, container, false);
         Bundle bundle = getArguments();
 
-        Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
+        Typeface robotoLight = Typeface.createFromAsset(requireActivity().getAssets(), "Roboto-Light.ttf");
 
-        Typeface robotoMedium = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf");
+        Typeface robotoMedium = Typeface.createFromAsset(requireActivity().getAssets(), "Roboto-Medium.ttf");
 
 
         ((Card_Full_View_MainActivity) getActivity()).setActionBarTitle(getString(R.string.home));
@@ -108,7 +108,7 @@ public class Card_Full_View_Fragment extends Fragment {
 //                Intent shareIntent=new Intent();
 //                shareIntent.setAction(Intent.ACTION_SEND);
 //                shareIntent.setType("text/plain");
-//                List<ResolveInfo> resInfos=getActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
+//                List<ResolveInfo> resInfos=requireActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
 //                if(!resInfos.isEmpty()) {
 //                    System.out.println("Have package");
 //                    for (ResolveInfo resInfo : resInfos) {
@@ -157,7 +157,7 @@ public class Card_Full_View_Fragment extends Fragment {
         if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Methods.showDialog(appContext, "Storage Permission", "To share your image we need storage permission.");
+                Methods.showDialog(appContext, getString(R.string.storage_permission), getString(R.string.to_share_your_image_we_need_storage_permission));
             } else {
                 ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE);
             }
@@ -167,10 +167,10 @@ public class Card_Full_View_Fragment extends Fragment {
         switch (type)
         {
             case "whatsapp":
-                shareIntent.setPackage("com.whatsapp");
+                shareIntent.setPackage(getString(R.string.whatsapp_package));
                 break;
             case "facebook":
-                shareIntent.setPackage("com.facebook.katana");
+                shareIntent.setPackage(getString(R.string.facebook_package));
                 break;
         }
 
@@ -208,7 +208,7 @@ public class Card_Full_View_Fragment extends Fragment {
                                 Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
                             }
                         } catch (OutOfMemoryError e) {
-                            Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(appContext, getString(R.string.image_size_is_large), Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
 
                         }
@@ -279,7 +279,7 @@ public class Card_Full_View_Fragment extends Fragment {
             Intent shareIntent=new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
-            List<ResolveInfo> resInfos=getActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
+            List<ResolveInfo> resInfos=requireActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
             if(!resInfos.isEmpty()) {
                 System.out.println("Have package");
                 for (ResolveInfo resInfo : resInfos) {
@@ -302,7 +302,7 @@ public class Card_Full_View_Fragment extends Fragment {
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetShareIntents.toArray(new Parcelable[]{}));
                     startActivity(chooserIntent);
                 } else {
-                    System.out.println("Do not Have Intent");
+                    System.out.println(getString(R.string.do_not_have_intent));
                     //showDialaog(this);
                 }
 
@@ -319,7 +319,7 @@ public class Card_Full_View_Fragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        getActivity().setTitle("Home");
+        requireActivity().setTitle("Home");
 
     }
 
@@ -336,7 +336,7 @@ public class Card_Full_View_Fragment extends Fragment {
                 if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
 
                     if (ActivityCompat.shouldShowRequestPermissionRationale(appContext,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                        Methods.showDialog(appContext,"Storage Permission", "To share your image we need storage permission.");
+                        Methods.showDialog(appContext,getString(R.string.storage_permission), "To share your image we need storage permission.");
                     }else{
                         ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},STORAGE_CODE);
                     }
@@ -418,11 +418,11 @@ public class Card_Full_View_Fragment extends Fragment {
             }
 
         });
-        MessageTag_Async_Task tag = new MessageTag_Async_Task(getActivity(),messageTag,msgID);
+        MessageTag_Async_Task tag = new MessageTag_Async_Task(requireActivity(),messageTag,msgID);
         tag.execute();
 
-        Typeface myCustomFont = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
-        Typeface myCustomFont_Medium = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf");
+        Typeface myCustomFont = Typeface.createFromAsset(requireActivity().getAssets(), "Roboto-Light.ttf");
+        Typeface myCustomFont_Medium = Typeface.createFromAsset(requireActivity().getAssets(), "Roboto-Medium.ttf");
         String baseName = "";
 
         mainTextView.setTypeface(myCustomFont);

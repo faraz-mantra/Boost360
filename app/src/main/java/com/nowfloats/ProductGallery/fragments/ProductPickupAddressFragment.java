@@ -71,7 +71,7 @@ public class ProductPickupAddressFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        return new Dialog(getActivity());
+        return new Dialog(requireActivity()());
     }
 
     @Override
@@ -199,54 +199,54 @@ public class ProductPickupAddressFragment extends DialogFragment {
         if(editWarehouseName.getText().toString().trim().length() == 0)
         {
             editWarehouseName.requestFocus();
-            Toast.makeText(getContext(), "Enter warehouse name", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter warehouse name", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if(editContactNumber.getText().toString().trim().length() == 0)
         {
             editContactNumber.requestFocus();
-            Toast.makeText(getContext(), "Enter warehouse contact number", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter warehouse contact number", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if(!isFileSelected)
         {
-            Toast.makeText(getContext(), "Address proof required", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Address proof required", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if(editBuildingName.getText().toString().trim().length() == 0)
         {
             editBuildingName.requestFocus();
-            Toast.makeText(getContext(), "Enter building/plot no. and street address", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter building/plot no. and street address", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if(editCity.getText().toString().trim().length() == 0)
         {
             editCity.requestFocus();
-            Toast.makeText(getContext(), "Enter city", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter city", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if(editState.getText().toString().trim().length() == 0)
         {
             editState.requestFocus();
-            Toast.makeText(getContext(), "Enter state", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Enter state", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if(editCountry.getText().toString().trim().length() == 0)
         {
             editCountry.requestFocus();
-            Toast.makeText(getContext(), "Select country", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Select country", Toast.LENGTH_LONG).show();
             return false;
         }
 
         if(!checkAcceptance.isChecked())
         {
-            Toast.makeText(getContext(), "Please confirm entered details", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), "Please confirm entered details", Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -287,7 +287,7 @@ public class ProductPickupAddressFragment extends DialogFragment {
 
     private void showCountryDialog(ArrayList<String> countries) {
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.search_list_item_layout, countries);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity()(), R.layout.search_list_item_layout, countries);
 
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
         builderSingle.setTitle("Select a Country");

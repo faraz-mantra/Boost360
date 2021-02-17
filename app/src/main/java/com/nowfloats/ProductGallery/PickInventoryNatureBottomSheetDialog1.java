@@ -79,8 +79,8 @@ public class PickInventoryNatureBottomSheetDialog1 extends BottomSheetDialogFrag
     }
 
     private void setRecyclerViewPickInventoryNature() {
-        adapter = new InventoryPickAdapter(getActivity(), list, this::onClickItemGet);
-        binding.recyclerViewPickInventoryNature.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        adapter = new InventoryPickAdapter(requireActivity()(), list, this::onClickItemGet);
+        binding.recyclerViewPickInventoryNature.setLayoutManager(new LinearLayoutManager(requireActivity()(), LinearLayoutManager.VERTICAL, false));
         binding.recyclerViewPickInventoryNature.setAdapter(adapter);
     }
 

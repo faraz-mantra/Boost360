@@ -35,7 +35,7 @@ public class ImageRequestTest extends InstrumentationTestCase {
 
     public void testParseNetworkResponse_resizing() throws Exception {
         byte[] jpegBytes = readRawResource(
-                getInstrumentation().getContext().getResources(), R.raw.large_jpeg_1024_500);
+                getInstrumentation().requireContext().getResources(), R.raw.large_jpeg_1024_500);
         NetworkResponse jpeg = new NetworkResponse(jpegBytes);
 
         // Exact sizes

@@ -45,19 +45,19 @@ public class PaymentOptionsListFragment extends ListFragment implements AdapterV
     @Override
     public void onResume() {
         super.onResume();
-        if (getActivity() != null)
-            getActivity().setTitle("Select Payment option");
+        if (requireActivity()() != null)
+            requireActivity()().setTitle("Select Payment option");
     }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!isAdded() || getActivity() == null){
+        if (!isAdded() || requireActivity()() == null){
             Methods.showSnackBar(view,getString(R.string.something_went_wrong_try_again), Color.RED);
             return;
         }
 
-        sessionManager = new UserSessionManager(mContext, getActivity());
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),
+        sessionManager = new UserSessionManager(mContext, requireActivity()());
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(requireActivity()(),
                 R.array.payment_options, R.layout.layout_simple_text_list_item);
         setListAdapter(adapter);
         getListView().setOnItemClickListener(this);

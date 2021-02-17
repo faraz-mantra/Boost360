@@ -90,7 +90,7 @@ public class ImagePicker {
             if (!config.isCameraOnly()) {
                 fragment.startActivityForResult(intent, requestCode);
             } else {
-                fragment.getActivity().overridePendingTransition(0, 0);
+                fragment.requireActivity().overridePendingTransition(0, 0);
                 fragment.startActivityForResult(intent, requestCode);
             }
         }
@@ -99,10 +99,10 @@ public class ImagePicker {
         public Intent getIntent() {
             Intent intent;
             if (!config.isCameraOnly()) {
-                intent = new Intent(fragment.getActivity(), ImagePickerActivity.class);
+                intent = new Intent(fragment.requireActivity(), ImagePickerActivity.class);
                 intent.putExtra(Config.EXTRA_CONFIG, config);
             } else {
-                intent = new Intent(fragment.getActivity(), CameraActivty.class);
+                intent = new Intent(fragment.requireActivity(), CameraActivty.class);
                 intent.putExtra(Config.EXTRA_CONFIG, config);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             }

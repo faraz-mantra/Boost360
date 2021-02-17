@@ -14,7 +14,7 @@
         android:text="@string/boost_bubble"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="24dp"
-        android:layout_marginLeft="24dp" />
+        android:layout_marginStart="24dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,5 +32,5 @@
         android:textColor="@color/primaryColor"
         android:text="Open WhatsApp"
         android:layout_marginBottom="8dp"
-        android:layout_marginRight="24dp" />
+        android:layout_marginEnd="24dp" />
 </LinearLayout>

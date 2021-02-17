@@ -117,8 +117,8 @@ public class CustomDialogFragment extends DialogFragment {
 
                 mlp.setMargins(0, 130, 0, 0);
                 setCancelable(false);
-                tvContent.setText(getActivity().getString(R.string.server_error_content));
-                tvPositive.setText(getActivity().getString(R.string.sure_lets_go));
+                tvContent.setText(requireActivity().getString(R.string.server_error_content));
+                tvPositive.setText(requireActivity().getString(R.string.sure_lets_go));
                 llNegative.setVisibility(View.GONE);
 
                 llPositive.setOnClickListener(new View.OnClickListener() {
@@ -133,25 +133,25 @@ public class CustomDialogFragment extends DialogFragment {
             case NO_INTERNET:
 
                 setCancelable(false);
-                tvTitle.setText(getActivity().getString(R.string.cannot_reach_network));
-                tvContent.setText(getActivity().getString(R.string.cannot_reach_network_msg));
-                tvPositive.setText(getActivity().getString(R.string.ok));
+                tvTitle.setText(requireActivity().getString(R.string.cannot_reach_network));
+                tvContent.setText(requireActivity().getString(R.string.cannot_reach_network_msg));
+                tvPositive.setText(requireActivity().getString(R.string.ok));
                 llNegative.setVisibility(View.GONE);
 
                 llPositive.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getActivity().finish();
+                        requireActivity().finish();
                     }
                 });
 
                 break;
             case CREATE_MY_SITE:
 
-                tvTitle.setText(getActivity().getString(R.string.edit_title));
-                tvContent.setText(getActivity().getString(R.string.edit_content));
-                tvNegative.setText(getActivity().getString(R.string.yes_i_want_to_make_changes));
-                tvPositive.setText(getActivity().getString(R.string.no_i_dont_want_to_change_details));
+                tvTitle.setText(requireActivity().getString(R.string.edit_title));
+                tvContent.setText(requireActivity().getString(R.string.edit_content));
+                tvNegative.setText(requireActivity().getString(R.string.yes_i_want_to_make_changes));
+                tvPositive.setText(requireActivity().getString(R.string.no_i_dont_want_to_change_details));
                 setCancelable(false);
 
                 llPositive.setOnClickListener(new View.OnClickListener() {
@@ -179,10 +179,10 @@ public class CustomDialogFragment extends DialogFragment {
 
                 ivHorizontalSep.setVisibility(View.VISIBLE);
 
-                tvTitle.setText(getActivity().getString(R.string.alert));
-                tvContent.setText(getActivity().getString(R.string.you_will_lose_info));
-                tvNeg.setText(getActivity().getString(R.string.exit));
-                tvPos.setText(getActivity().getString(R.string.cancel));
+                tvTitle.setText(requireActivity().getString(R.string.alert));
+                tvContent.setText(requireActivity().getString(R.string.you_will_lose_info));
+                tvNeg.setText(requireActivity().getString(R.string.exit));
+                tvPos.setText(requireActivity().getString(R.string.cancel));
                 setCancelable(false);
 
                 llPos.setOnClickListener(new View.OnClickListener() {
@@ -211,10 +211,10 @@ public class CustomDialogFragment extends DialogFragment {
 
                 ivHorizontalSep.setVisibility(View.VISIBLE);
 
-                tvTitle.setText(getActivity().getString(R.string.leave_or_login));
-                tvContent.setText(getActivity().getString(R.string.your_website_has_been_created_through));
-                tvNeg.setText(getActivity().getString(R.string.leave));
-                tvPos.setText(getActivity().getString(R.string.login));
+                tvTitle.setText(requireActivity().getString(R.string.leave_or_login));
+                tvContent.setText(requireActivity().getString(R.string.your_website_has_been_created_through));
+                tvNeg.setText(requireActivity().getString(R.string.leave));
+                tvPos.setText(requireActivity().getString(R.string.login));
                 setCancelable(true);
 
                 llPos.setOnClickListener(new View.OnClickListener() {
@@ -243,11 +243,11 @@ public class CustomDialogFragment extends DialogFragment {
 
                 ivHorizontalSep.setVisibility(View.VISIBLE);
 
-                tvTitle.setText(getActivity().getString(R.string.cant_wait_to_see_your_dashboard));
+                tvTitle.setText(requireActivity().getString(R.string.cant_wait_to_see_your_dashboard));
                 tvTitle.setVisibility(View.INVISIBLE);
-                tvContent.setText(getActivity().getString(R.string.since_you_are_eager_to_manage));
-                tvNeg.setText(getActivity().getString(R.string.skip_login));
-                tvPos.setText(getActivity().getString(R.string.continue_chat));
+                tvContent.setText(requireActivity().getString(R.string.since_you_are_eager_to_manage));
+                tvNeg.setText(requireActivity().getString(R.string.skip_login));
+                tvPos.setText(requireActivity().getString(R.string.continue_chat));
                 setCancelable(false);
 
                 llPos.setOnClickListener(new View.OnClickListener() {
@@ -276,12 +276,12 @@ public class CustomDialogFragment extends DialogFragment {
 
                 ivHorizontalSep.setVisibility(View.VISIBLE);
 
-                tvTitle.setText(getActivity().getString(R.string.change_country_code));
-                tvContent.setText(getActivity().getString(R.string.country_code_msg));
-                tvNeg.setText(getActivity().getString(R.string.skip));
+                tvTitle.setText(requireActivity().getString(R.string.change_country_code));
+                tvContent.setText(requireActivity().getString(R.string.country_code_msg));
+                tvNeg.setText(requireActivity().getString(R.string.skip));
 
                 llNeg.setVisibility(View.GONE);
-                tvPos.setText(getActivity().getString(R.string.okay));
+                tvPos.setText(requireActivity().getString(R.string.okay));
                 setCancelable(false);
 
                 llNegative.setVisibility(View.GONE);
@@ -313,11 +313,11 @@ public class CustomDialogFragment extends DialogFragment {
 
                 ivHorizontalSep.setVisibility(View.VISIBLE);
 
-                tvTitle.setText(getActivity().getString(R.string.change_country_code));
-                tvContent.setText(getActivity().getString(R.string.country_code_msg));
-                tvNeg.setText(getActivity().getString(R.string.skip));
+                tvTitle.setText(requireActivity().getString(R.string.change_country_code));
+                tvContent.setText(requireActivity().getString(R.string.country_code_msg));
+                tvNeg.setText(requireActivity().getString(R.string.skip));
                 tvNeg.setAllCaps(false);
-                tvPos.setText(getActivity().getString(R.string.continue_details));
+                tvPos.setText(requireActivity().getString(R.string.continue_details));
                 setCancelable(false);
 
                 llPos.setOnClickListener(new View.OnClickListener() {

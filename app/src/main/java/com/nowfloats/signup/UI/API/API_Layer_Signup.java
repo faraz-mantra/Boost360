@@ -105,7 +105,7 @@ public class API_Layer_Signup {
 
             @Override
             protected void onPreExecute() {
-//                pd = ProgressDialog.show(BDetailsFrag.this.getActivity(), null,
+//                pd = ProgressDialog.show(BDetailsFrag.this.requireActivity()(), null,
 //                        "Checking contact number..");
 //                pd.setCancelable(true);
                 checkUniqueNumberInterface.CheckUniqueNumber_preExecute("PreExecute");

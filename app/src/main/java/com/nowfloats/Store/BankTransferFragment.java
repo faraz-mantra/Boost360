@@ -67,8 +67,8 @@ public class BankTransferFragment extends ImagesPaymentFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (getActivity() != null)
-            getActivity().setTitle("Bank Transfer Payment");
+        if (requireActivity()() != null)
+            requireActivity()().setTitle("Bank Transfer Payment");
     }
 
     @Override

@@ -45,7 +45,7 @@ public class EmojiView extends View implements Drawable.Callback {
     public void setEmoji(String emoji) {
         this.emoji = emoji;
         SpannableStringBuilder builder = new SpannableStringBuilder(emoji);
-        int resourceId = EmojiconHandler.addEmojis(getContext(), builder, 20, DynamicDrawableSpan.ALIGN_BOTTOM, 20);
+        int resourceId = EmojiconHandler.addEmojis(requireContext(), builder, 20, DynamicDrawableSpan.ALIGN_BOTTOM, 20);
         if (resourceId > 0) {
             this.drawable = getResources().getDrawable(resourceId);
         } else {

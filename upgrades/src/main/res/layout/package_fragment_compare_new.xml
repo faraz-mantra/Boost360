@@ -181,8 +181,8 @@
                     android:clipChildren="true"
                     android:paddingTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginEnd="0dp"
                     app:cardPreventCornerOverlap="false"
                     app:cardElevation="1dp"
                     android:divider="@android:color/darker_gray"
@@ -284,8 +284,8 @@
                             android:text="Includes all free forever add-ons. Ideal for small businesses that want to get started with online sales."
                             android:textColor="#4A4A4A"
                             android:textFontWeight="400"
-                            android:layout_marginLeft="@dimen/_7sdp"
-                            android:layout_marginRight="@dimen/_9sdp"
+                            android:layout_marginStart="@dimen/_7sdp"
+                            android:layout_marginEnd="@dimen/_9sdp"
                             android:textSize="@dimen/txt_10sp"/>
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>

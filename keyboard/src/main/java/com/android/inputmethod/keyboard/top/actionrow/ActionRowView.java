@@ -218,12 +218,12 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
         super(context, attrs);
 
 
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         InputMethodSubtype ims = imm.getCurrentInputMethodSubtype();
 
         String locale = ims.getLocale();
-        setLocale(getContext(), locale);
+        setLocale(requireContext(), locale);
         init();
         this.mEventHandler = new EventBusHandler();
         this.mEventHandler.register();
@@ -340,7 +340,7 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
 
     private LinearLayout addButtons() {
         int textColor = ColorManager.getLastProfile().getTextColor();
-        LinearLayout layout = (LinearLayout) View.inflate(getContext(), R.layout.clipboard_action_layout, null);
+        LinearLayout layout = (LinearLayout) View.inflate(requireContext(), R.layout.clipboard_action_layout, null);
         ImageView selectAll = (ImageView) layout.findViewById(R.id.select);
         selectAll.setColorFilter(textColor);
         selectAll.setSoundEffectsEnabled(false);
@@ -370,8 +370,8 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
     }
 
     private LinearLayout addServices() {
-        //LinearLayout layout = (LinearLayout) View.inflate(getContext(), R.layout.services_action_layout, null);
-        LinearLayout layout = (LinearLayout) View.inflate(getContext(), R.layout.boost_share_candidate_view1, null);
+        //LinearLayout layout = (LinearLayout) View.inflate(requireContext(), R.layout.services_action_layout, null);
+        LinearLayout layout = (LinearLayout) View.inflate(requireContext(), R.layout.boost_share_candidate_view1, null);
         int i = 0;
        /* for(int currentServiceViewId : SERVICE_IMAGE_IDS) {
             ImageView imageView = (ImageView) layout.findViewById(currentServiceViewId);
@@ -470,7 +470,7 @@ public class ActionRowView extends ViewPager implements ColorManager.OnColorChan
     }
 
     private View addSingleEmoji(String emoji) {
-        EmojiView view = new EmojiView(getContext(), true);
+        EmojiView view = new EmojiView(requireContext(), true);
         view.setEmoji(emoji);
         view.setSoundEffectsEnabled(false);
         view.setAlpha(1.f);

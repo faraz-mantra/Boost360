@@ -111,9 +111,9 @@ public class OrderAnalyticsFragment extends Fragment {
         rvLegend.setHasFixedSize(true);
         rvLegend.setAdapter(new LegendAdapter(colorcodes, legend.getLabels()));
         if (colorcodes.length > 3) {
-            rvLegend.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            rvLegend.setLayoutManager(new GridLayoutManager(requireActivity(), 2));
         } else {
-            rvLegend.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+            rvLegend.setLayoutManager(new GridLayoutManager(requireActivity(), 1));
         }
         pieChart.getLegend().setEnabled(false);
     }

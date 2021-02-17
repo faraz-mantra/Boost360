@@ -64,7 +64,7 @@ public class ManageContentFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
         WebEngageController.trackEvent(EVENT_NAME_MANAGE_CONTENT, PAGE_VIEW, EVENT_VALUE_MANAGE_CONTENT);
-        UserSessionManager session = new UserSessionManager(getContext(), getActivity());
+        UserSessionManager session = new UserSessionManager(requireContext(), getActivity());
         String experience_code = session.getFP_AppExperienceCode();
 
         int content_tabs_resource, image_tabs_resource;
@@ -107,7 +107,7 @@ public class ManageContentFragment extends Fragment {
                     intent = new Intent(mContext, ProductCatalogActivity.class);
                     break;
                 case 1:
-                    AppFragmentContainerActivity.startFragmentAppActivity(getActivity(), UPDATE_LATEST_STORY_VIEW, new Bundle(), false);
+                    AppFragmentContainerActivity.startFragmentAppActivity(requireActivity(), UPDATE_LATEST_STORY_VIEW, new Bundle(), false);
 //                        ((SidePanelFragment.OnItemClickListener) mContext).onClick(getString(R.string.update));
                     return;
                 case 2:
@@ -153,7 +153,7 @@ public class ManageContentFragment extends Fragment {
             }
             if (intent != null) {
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         adapter.setItems(adapterImages, adapterTexts);

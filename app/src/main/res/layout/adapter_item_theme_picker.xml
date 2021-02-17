@@ -45,9 +45,9 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:text="@string/we_choose_the_theme_that_will_work_best_for_your_business_keeping_many_factors_in_mind_by_default_this_is_the_setting_because_you_should_only_focus_on_the_content_that_will_get_the_customers_to_your_store" />
 
         <TextView

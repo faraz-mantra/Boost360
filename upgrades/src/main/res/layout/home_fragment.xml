@@ -414,8 +414,8 @@
                         android:textColor="#FFB900"
                         android:textFontWeight="600"
                         android:textAllCaps="true"
-                        android:layout_marginLeft="@dimen/_4sdp"
-                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:textSize="@dimen/txt_12sp"/>
                 </LinearLayout>
 

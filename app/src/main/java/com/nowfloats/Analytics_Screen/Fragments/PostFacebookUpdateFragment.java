@@ -72,7 +72,7 @@ public class PostFacebookUpdateFragment extends Fragment {
             socialTypeText2 = "Quikr";
             socialTypeText1 = "Quikr account";
         }
-        String text = "Looks like you haven\'t posted any update on your "+socialTypeText1+" through "+ getString(R.string.app_name)+" yet Make sure you select the <b>"+socialTypeText2+" option</b> while creating an update";
+        String text = getString(R.string.looks_like_you_havent_posted_any_update_on_your)+socialTypeText1+" through "+ getString(R.string.app_name)+getString(R.string.yet_make_sure_you_select_the)+socialTypeText2+" option</b> while creating an update";
         message.setText(Methods.fromHtml(text));
 
         if(!isAdded()) return;
@@ -86,7 +86,7 @@ public class PostFacebookUpdateFragment extends Fragment {
                 }else{
                     Intent i = new Intent(context, Create_Message_Activity.class);
                     startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
         });

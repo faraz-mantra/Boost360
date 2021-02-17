@@ -39,7 +39,7 @@
             android:layout_alignTop="@id/ProgressBar"
             android:layout_gravity="center"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="7dp"
             android:text=""
 
@@ -58,11 +58,11 @@
         <com.nowfloats.CustomWidget.roboto_lt_28_565656
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="11dp"
+            android:layout_marginStart="11dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginRight="11dp"
-            android:gravity="left"
+            android:layout_marginEnd="11dp"
+            android:gravity="start"
             android:text="@string/site_meter_body_text"
 
             />
@@ -71,9 +71,9 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
 
-            android:layout_marginLeft="11dp"
-            android:layout_marginRight="11dp"
-            android:gravity="left"
+            android:layout_marginStart="11dp"
+            android:layout_marginEnd="11dp"
+            android:gravity="start"
             android:visibility="gone"
             android:text="@string/site_meter_more_traffic_text"
             />

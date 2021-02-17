@@ -44,7 +44,7 @@
                         android:id="@+id/tv_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="" />
                 </TableRow>
 
@@ -65,7 +65,7 @@
                         android:id="@+id/tv_user_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="" />
                 </TableRow>
 
@@ -86,7 +86,7 @@
                         android:id="@+id/tv_user_phone_no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="" />
                 </TableRow>
 
@@ -110,7 +110,7 @@
                         android:id="@+id/tv_user_tan_no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:text="" />
                 </TableRow>
             </TableLayout>
@@ -132,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:text="@string/items"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -196,7 +196,7 @@
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dip"
+                    android:layout_marginStart="0dip"
                     android:layout_marginTop="@dimen/margin_10"
                     android:backgroundTint="#383838"
                     android:drawableRight="@drawable/dropselect"
@@ -216,7 +216,7 @@
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_weight="1"
                         android:background="@drawable/et_opc_bg"
                         android:gravity="center"
@@ -230,7 +230,7 @@
                         android:background="@drawable/btn_bg"
                         android:gravity="center"
                         android:paddingBottom="10dp"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:paddingRight="20dp"
                         android:paddingTop="10dp"
                         android:text="@string/apply"
@@ -243,7 +243,7 @@
                         android:background="@drawable/ic_cancel_black_24dp"
                         android:gravity="center"
                         android:paddingBottom="10dp"
-                        android:paddingLeft="20dp"
+                        android:paddingStart="20dp"
                         android:paddingRight="20dp"
                         android:paddingTop="10dp"
                         android:textColor="@color/white"
@@ -267,7 +267,7 @@
                         android:id="@+id/cvTwo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_5"
+                        android:layout_marginStart="@dimen/margin_5"
                         android:buttonTint="@color/gray"
                         android:text="@string/_2" />
 
@@ -275,7 +275,7 @@
                         android:id="@+id/cvTen"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_5"
+                        android:layout_marginStart="@dimen/margin_5"
                         android:buttonTint="@color/gray"
                         android:text="@string/_10" />
 
@@ -288,7 +288,7 @@
                 android:id="@+id/tl_total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/llOpcInputLayout"
                 android:layout_marginTop="40dp"
                 android:layout_weight="1">
@@ -449,8 +449,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="10dp"
         android:layout_weight="0"
         android:background="@drawable/btn_bg"
