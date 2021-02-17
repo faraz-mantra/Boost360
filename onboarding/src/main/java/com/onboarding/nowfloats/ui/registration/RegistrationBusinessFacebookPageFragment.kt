@@ -123,10 +123,10 @@ class RegistrationBusinessFacebookPageFragment : BaseRegistrationFragment<Fragme
                         FacebookPermissions.business_management,
                         FacebookPermissions.pages_show_list,
                         FacebookPermissions.pages_manage_cta,
-                        FacebookPermissions.pages_manage_metadata
-//            FacebookPermissions.manage_pages,
-//            FacebookPermissions.publish_pages,
-//            FacebookPermissions.ads_management
+                        FacebookPermissions.pages_manage_metadata,
+            FacebookPermissions.manage_pages,
+            FacebookPermissions.publish_pages,
+            FacebookPermissions.ads_management, FacebookPermissions.pages_manage_posts,
                 ))
             }
         }
