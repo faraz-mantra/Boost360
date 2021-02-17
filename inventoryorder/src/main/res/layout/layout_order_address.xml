@@ -51,6 +51,6 @@
             app:layout_constraintStart_toStartOf="@id/text_addr_title"
             app:layout_constraintTop_toBottomOf="@id/text_addr_title"
             app:textType="CAPTION"
-            android:text="24/10 City Center, B-Zone, Kolkata, West Bengal - 100023" />
+            tools:text="@string/dummy_address" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

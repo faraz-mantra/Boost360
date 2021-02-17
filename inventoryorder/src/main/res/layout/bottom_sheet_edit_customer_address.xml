@@ -45,6 +45,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_rounded_top_white_2"
             android:orientation="vertical"
+            android:layout_marginTop="@dimen/size_10"
             android:paddingBottom="@dimen/size_10"
             app:layout_constraintBottom_toTopOf="@+id/btn_bottom"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +55,7 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/size_10"
-                android:layout_height="@dimen/size_300">
+                android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -72,7 +73,9 @@
                         app:fontFamily="@font/semi_bold"
                         app:textType="BODY_2" />
 
-                    <include layout="@layout/layout_address" />
+                    <include
+                        android:id="@+id/layout_address"
+                        layout="@layout/layout_address" />
 
                     <com.framework.views.customViews.CustomCheckBox
                         android:id="@+id/checkbox_address_same"

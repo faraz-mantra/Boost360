@@ -25,8 +25,10 @@ class CreateOrderBottomSheetItemViewHolder(binding: BottomSheetOrderOptionBindin
         binding?.optionTitle?.text = data?.title
         binding?.optionDesc?.text = data?.description
         binding?.radioBtn?.isChecked = data?.isChecked
-        binding?.radioBtn?.setOnCheckedChangeListener { p0, p1 ->
+        binding?.linearLayout?.setOnClickListener {
             listener?.onItemClick(adapterPosition, data, RecyclerViewActionType.ORDER_OPTION_SELECTED.ordinal)
         }
+        /*binding?.radioBtn?.setOnCheckedChangeListener { p0, p1 ->
+        }*/
     }
 }

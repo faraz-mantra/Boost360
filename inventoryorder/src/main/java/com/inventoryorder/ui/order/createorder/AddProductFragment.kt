@@ -1,5 +1,7 @@
 package com.inventoryorder.ui.order.createorder
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -51,6 +53,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
 
     productList = ArrayList()
     selectedProductList = ArrayList()
+
     getItemList(fpTag, PRODUCT_LIST_CLIENT_ID)
   }
 
@@ -77,12 +80,14 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
       productDetails.isAvailable = prod.IsAvailable
       productDetails.name = prod.Name
       productDetails.price = prod.Price
+      productDetails.isAvailable = prod.IsAvailable
 
-      var item = ItemsItem(productDetails = productDetails, productOrOfferId = "")
-      //item.productDetails = productDetails
+      var item = ItemsItem(productDetails = productDetails, productOrOfferId = "", )
       item.quantity = prod.productQuantityAdded
+
+      //hardcoded as "prod.productType!!" is throwing error when calling api
       item.type = "PRODUCT"
-      item.productOrOfferId = "NO_ITEM"
+      //item.type = prod.productType!!
       itemList.add(item)
     }
 
@@ -157,12 +162,6 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         totalPrice = totalPrice.plus(product?.Price ?: 0.0)
         binding?.tvItemTotalPrice?.text = "${product?.CurrencyCode ?: "INR" } $totalPrice"
         totalCartItems += 1
-
-     /*   for (i in selectedProductList!!) {
-          if (i._id == product?._id) {
-            i.productQuantityAdded = i.productQuantityAdded + 1
-          }
-        }*/
       }
 
       RecyclerViewActionType.PRODUCT_ITEM_DECREASE_COUNT.ordinal -> {
@@ -174,12 +173,6 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
         binding?.tvItemTotalPrice?.text = "${product?.CurrencyCode ?: "INR" } $totalPrice"
 
         totalCartItems -= 1
-
-      /*  for (i in selectedProductList!!) {
-          if (i._id == product?._id) {
-            i.productQuantityAdded = i.productQuantityAdded - 1
-          }
-        }*/
 
         if (totalCartItems == 0) {
           binding?.layoutTotalPricePanel?.visibility = View.GONE

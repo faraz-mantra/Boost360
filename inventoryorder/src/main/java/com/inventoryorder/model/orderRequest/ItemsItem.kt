@@ -13,7 +13,7 @@ data class ItemsItem(
     @SerializedName("Quantity")
     var quantity: Int = 0,
     @SerializedName("ProductOrOfferId")
-    var productOrOfferId: String = ""
+    var productOrOfferId: String ?= null
 ):Serializable , AppBaseRecyclerViewItem{
 
     var recyclerViewItem: Int = RecyclerViewItemType.PRODUCT_ITEM_SELECTED.getLayout()

@@ -10,5 +10,6 @@ enum class IntentConstant {
   IS_REFRESH,
   RESULT_DATA,
   ORDER_REQUEST,
-  TOTAL_PRICE
+  TOTAL_PRICE,
+  SHOULD_FINISH
 }
