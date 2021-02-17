@@ -4,9 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class StaffDeleteImageProfileRequest(
 
-	@field:SerializedName("StaffId")
+	@field:SerializedName("staffId",alternate = ["StaffId"])
 	val staffId: String? = null,
-
-	@field:SerializedName("FloatingPointTag")
+	@field:SerializedName("floatingPointTag",alternate = ["FloatingPointTag"])
 	val floatingPointTag: String? = null
 )

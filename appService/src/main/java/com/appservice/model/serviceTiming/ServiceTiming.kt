@@ -1,6 +1,7 @@
 package com.appservice.model.serviceTiming
 
 import com.appservice.constant.RecyclerViewItemType
+import com.appservice.model.serviceTiming.ServiceTiming.WeekdayValue.Companion.fromFullName
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -22,10 +23,10 @@ data class ServiceTiming(
     return time!!
   }
 
-  fun getEmptyDataServiceTiming(): ArrayList<ServiceTiming> {
+  fun getEmptyDataServiceTiming(isEdit: Boolean): ArrayList<ServiceTiming> {
     val list = ArrayList<ServiceTiming>()
     val days = arrayListOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-    days.forEachIndexed { index, s -> list.add(ServiceTiming(s, isToggle = (index == 0))) }
+    days.forEach { list.add(ServiceTiming(it)) }
     return list
   }
 
@@ -34,5 +35,26 @@ data class ServiceTiming(
     val days = arrayListOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
     days.forEach { list.add(ServiceTiming(it, time = ServiceTime("", ""))) }
     return list
+  }
+
+  fun getStringActive(list: ArrayList<ServiceTiming>?): String {
+    var txtDays = ""
+    list?.forEach {
+      if (it.isToggle) {
+        val value = fromFullName(it.day) ?: return@forEach
+        txtDays = if (txtDays.isNotEmpty()) "$txtDays, ${value.sortName}" else value.sortName
+      }
+    }
+    return txtDays
+  }
+
+  enum class WeekdayValue(var fullName: String, var sortName: String) {
+    MONDAY("Monday", "Mon"), TUESDAY("Tuesday", "Tue"), WEDNESDAY("Wednesday", "Wed"),
+    THURSDAY("Thursday", "Thu"), FRIDAY("Friday", "Fri"), SATURDAY("Saturday", "Sat"),
+    SUNDAY("Sunday", "Sun");
+
+    companion object {
+      fun fromFullName(fullName: String?): WeekdayValue? = values().firstOrNull { it.fullName.equals(fullName, false) }
+    }
   }
 }

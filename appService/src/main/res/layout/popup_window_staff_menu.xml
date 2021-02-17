@@ -1,60 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+  <data>
 
-    </data>
+  </data>
 
-    <com.framework.views.customViews.CustomCardView
+  <com.framework.views.customViews.CustomCardView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/size_6"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="vertical">
+
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/mark_as_active"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardElevation="@dimen/size_2"
-        app:cardCornerRadius="@dimen/size_6"
-       android:layout_margin="@dimen/size_30"
-        app:cardUseCompatPadding="true"
-       >
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/open_sans_semibold"
+        android:gravity="center"
+        android:padding="@dimen/size_16"
+        android:text="@string/mark_as_inactive"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:background="@color/gray_light_3" />
 
-            <com.framework.views.customViews.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-            android:padding="@dimen/size_16"
-            android:id="@+id/mark_as_active"
-            android:foreground="?android:selectableItemBackground"
-            android:fontFamily="@font/open_sans_semibold"
-            android:textColor="@color/black"
-            android:text="@string/mark_as_inactive"
-            android:gravity="center"
-            android:textSize="12sp" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginHorizontal="@dimen/size_20"
-            android:background="?android:attr/listDivider" />
+      <com.framework.views.customViews.CustomTextView
+        android:id="@+id/remove_staff_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/open_sans_semibold"
+        android:gravity="center"
+        android:padding="@dimen/size_16"
+        android:text="REMOVE STAFF"
+        android:textColor="@color/red_F40000"
+        android:textSize="12sp" />
 
-        <com.framework.views.customViews.CustomTextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:id="@+id/remove_staff_profile"
-            android:gravity="center"
-            android:foreground="?android:selectableItemBackground"
-            android:fontFamily="@font/open_sans_semibold"
-            android:textColor="@color/red_F40000"
-            android:padding="@dimen/size_16"
-            android:text="REMOVE STAFF"
-            android:textSize="12sp" />
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </com.framework.views.customViews.CustomCardView>
-
-
+  </com.framework.views.customViews.CustomCardView>
 </layout>

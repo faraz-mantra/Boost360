@@ -5,6 +5,7 @@ import android.content.Context
 import android.text.Html
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
 import com.boost.upgrades.UpgradeActivity
@@ -22,6 +23,8 @@ import kotlinx.android.synthetic.main.home_fragment.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeViewModel(application: Application) : BaseViewModel(application) {
     var updatesResult: MutableLiveData<List<WidgetModel>> = MutableLiveData()
@@ -33,6 +36,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var allVideoDetails: MutableLiveData<List<YoutubeVideoModel>> = MutableLiveData()
     var expertConnectDetails: MutableLiveData<ExpertConnect> = MutableLiveData()
     var promoBanners: MutableLiveData<List<PromoBanners>> = MutableLiveData()
+    var marketplaceOffers: MutableLiveData<List<PromoBanners>> = MutableLiveData()
+    var promoBannerAndMarketOfferResult: MediatorLiveData<List<PromoBanners>> = MediatorLiveData()
     var partnerZone: MutableLiveData<List<PartnerZone>> = MutableLiveData()
     var feedbackLink: MutableLiveData<String> = MutableLiveData()
 
@@ -79,6 +84,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     fun getPromoBanners(): LiveData<List<PromoBanners>> {
         return promoBanners
+    }
+
+    fun promoBannerAndMarketOfferResult(): LiveData<List<PromoBanners>> {
+        return promoBannerAndMarketOfferResult
     }
 
     fun getPartnerZone(): LiveData<List<PartnerZone>> {
@@ -137,7 +146,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    fun loadUpdates(fpid: String, clientId: String) {
+    fun loadUpdates(fpid: String, clientId: String, expCode: String?, fpTag: String?) {
+        Log.v("loadUpdates ", " "+ expCode + " "+ fpTag)
         updatesLoader.postValue(true)
 
         if (Utils.isConnectedToInternet(getApplication())) {
@@ -381,7 +391,15 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
                                         //promobanner
                                         if (it.Data[0].promo_banners != null && it.Data[0].promo_banners.size > 0) {
-                                            promoBanners.postValue(it.Data[0].promo_banners)
+//                                            promoBanners.value = it.Data[0].promo_banners.filter {  it1 -> it1.exclusive_to_categories.toString() == expCode }
+                                            val promoBannerFilter = (it.Data[0].promo_banners ?: ArrayList()).promoBannerFilter(expCode,fpTag)
+                                            promoBanners.postValue(promoBannerFilter)
+//                                            promoBanners.postValue(it.Data[0].promo_banners)
+                                            Log.v("promoBanner1213", " " + "promoBanner1213")
+                                            /*promoBannerAndMarketOfferResult.addSource(promoBanners,{
+                                                Log.v("promoBanner12", " " + promoBanners)
+                                                promoBannerAndMarketOfferResult.setValue(it.distinct())
+                                            })*/
                                         }
 
                                         //partnerZone
@@ -392,6 +410,18 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                         //feedbackURL
                                         if (it.Data[0].feedback_link != null && it.Data[0].feedback_link.isNotEmpty()) {
                                             feedbackLink.postValue(it.Data[0].feedback_link)
+                                        }
+
+                                        //marketplace offers
+                                        if (it.Data[0].marketplace_offers != null && it.Data[0].marketplace_offers.size > 0) {
+//                                            marketplaceOffers.value = it.Data[0].marketplace_offers
+                                            marketplaceOffers.postValue(it.Data[0].marketplace_offers)
+                                            Log.v("MarketOffer2", " " + "MarketOffer2")
+                                            promoBannerAndMarketOfferResult.addSource(marketplaceOffers,{
+                                                Log.v("MarketOffer", " " + marketplaceOffers!!.value?.size.toString())
+                                                promoBannerAndMarketOfferResult.postValue(it)
+//                                                promoBannerAndMarketOfferResult.value = it
+                                                })
                                         }
                                     },
                                     {

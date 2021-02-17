@@ -14,6 +14,7 @@ import com.appservice.model.StatusKyc
 import com.appservice.ui.bankaccount.startFragmentAccountActivityNew
 import com.appservice.ui.catalog.CatalogServiceContainerActivity
 import com.appservice.ui.catalog.setFragmentType
+import com.appservice.ui.catalog.startFragmentActivity
 import com.appservice.ui.paymentgateway.startFragmentPaymentActivityNew
 import com.dashboard.R
 import com.dashboard.controller.getDomainName
@@ -187,7 +188,7 @@ fun AppCompatActivity.startAnalytics(session: UserSessionManager?, table_name: I
   }
 }
 
-fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOpenCardFragment: Boolean, screenType: String, buyItemKey: String?,isLoadingShow:Boolean=true) {
+fun AppCompatActivity.initiateAddonMarketplace(session: UserSessionManager, isOpenCardFragment: Boolean, screenType: String, buyItemKey: String?, isLoadingShow: Boolean = true) {
   try {
     if (isLoadingShow) delayProgressShow()
     WebEngageController.trackEvent("Addon Marketplace Page", "startview", session.fpTag);
@@ -390,13 +391,31 @@ fun AppCompatActivity.startCustomPage(session: UserSessionManager?, isAdd: Boole
 
 fun AppCompatActivity.startListServiceProduct(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Product/Service Inventory", "startview", session?.fpTag);
-    val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
-    startActivity(webIntent)
-    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+      WebEngageController.trackEvent("Service Inventory", "startview", session?.fpTag);
+      session?.let { startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_LISTING, bundle = getBundleData(it)) }
+    } else {
+      WebEngageController.trackEvent("Product Inventory", "startview", session?.fpTag);
+      val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
+      startActivity(webIntent)
+      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
+}
+
+fun getBundleData(session: UserSessionManager): Bundle {
+  val bundle = Bundle()
+  bundle.putBoolean(com.appservice.constant.IntentConstant.NON_PHYSICAL_EXP_CODE.name, session.isNonPhysicalProductExperienceCode)
+  bundle.putString(com.appservice.constant.IntentConstant.CURRENCY_TYPE.name, "INR")
+  bundle.putString(com.appservice.constant.IntentConstant.FP_ID.name, session.fPID)
+  bundle.putString(com.appservice.constant.IntentConstant.FP_TAG.name, session.fpTag)
+  bundle.putString(com.appservice.constant.IntentConstant.USER_PROFILE_ID.name, session.userProfileId)
+  bundle.putString(com.appservice.constant.IntentConstant.CLIENT_ID.name, clientId)
+  bundle.putString(com.appservice.constant.IntentConstant.EXTERNAL_SOURCE_ID.name, session.getFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID))
+  bundle.putString(com.appservice.constant.IntentConstant.APPLICATION_ID.name, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID))
+  return bundle
 }
 
 fun Fragment.startFragmentActivity(type: com.appservice.constant.FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
@@ -430,13 +449,17 @@ fun AppCompatActivity.startPreSignUp(session: UserSessionManager?) {
 }
 
 fun AppCompatActivity.startAddServiceProduct(session: UserSessionManager?) {
-  val type: String = getProductType(session?.fP_AppExperienceCode)
   try {
-    WebEngageController.trackEvent("Add Service Product Page", "startview", session?.fpTag)
-    val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
-    webIntent.putExtra("IS_ADD", true)
-    startActivity(webIntent)
-    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    if (getProductType(session?.fP_AppExperienceCode) == "SERVICES") {
+      WebEngageController.trackEvent("Add Service Page", "startview", session?.fpTag);
+      session?.let { startFragmentActivity(com.appservice.constant.FragmentType.SERVICE_DETAIL_VIEW, bundle = getBundleData(it)) }
+    } else {
+      WebEngageController.trackEvent("Add Product Page", "startview", session?.fpTag)
+      val webIntent = Intent(this, Class.forName("com.nowfloats.ProductGallery.ProductCatalogActivity"))
+      webIntent.putExtra("IS_ADD", true)
+      startActivity(webIntent)
+      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+    }
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
@@ -602,7 +625,7 @@ fun AppCompatActivity.startWebViewPageLoad(session: UserSessionManager?, url: St
 }
 
 
-fun AppCompatActivity.startReadinessScoreView(session: UserSessionManager?,position:Int=0) {
+fun AppCompatActivity.startReadinessScoreView(session: UserSessionManager?, position: Int = 0) {
   try {
     WebEngageController.trackEvent("Digital readiness score Page", "startview", session?.fpTag)
     startFragmentDashboardActivity(com.dashboard.constant.FragmentType.DIGITAL_READINESS_SCORE, bundle = Bundle().apply { putInt(com.dashboard.constant.IntentConstant.POSITION.name, position) })

@@ -43,12 +43,13 @@
     <View
       android:id="@+id/view2"
       android:layout_width="0.7dp"
-      android:layout_height="@dimen/size_28"
+      android:layout_height="0dp"
       android:layout_marginStart="@dimen/size_8"
-      android:layout_marginTop="@dimen/size_4"
+      android:layout_marginTop="@dimen/size_14"
       android:background="@color/light_grey_1"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/view_frame" />
+      app:layout_constraintBottom_toBottomOf="@+id/view_linear"
+      app:layout_constraintTop_toTopOf="@+id/view_frame"/>
 
     <LinearLayout
       android:id="@+id/view_linear"
@@ -69,7 +70,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:includeFontPadding="false"
-        android:maxLines="1"
+        android:maxLines="2"
         android:textColor="@color/warm_light"
         app:textType="HEADING_6"
         tools:text="Business Name" />
@@ -84,7 +85,7 @@
         android:maxLines="2"
         android:textColor="@color/warm_light_1"
         app:textType="CAPTION"
-        tools:text="Add name of your\nbusiness." />
+        tools:text="Add name of your \nbusiness." />
     </LinearLayout>
 
     <FrameLayout

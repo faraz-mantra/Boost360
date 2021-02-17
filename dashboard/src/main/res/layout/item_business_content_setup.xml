@@ -37,7 +37,7 @@
             android:id="@+id/view_dash_top_1"
             android:layout_width="0.7dp"
             android:layout_height="@dimen/size_8"
-            android:layout_marginStart="@dimen/size_18_3"
+            android:layout_marginStart="@dimen/size_18"
             android:background="@color/light_grey_1" />
 
           <androidx.recyclerview.widget.RecyclerView
@@ -46,6 +46,8 @@
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="3"
+            android:clipToPadding="false"
+            android:paddingBottom="20dp"
             tools:listitem="@layout/item_content_setup_manage" />
         </androidx.appcompat.widget.LinearLayoutCompat>
       </androidx.core.widget.NestedScrollView>

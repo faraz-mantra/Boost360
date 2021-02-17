@@ -27,7 +27,7 @@ data class ItemsItem(
 		val description: String? = null,
 
 		@field:SerializedName("SecondaryTileImages")
-		val secondaryTileImages: List<Any?>? = null,
+		val secondaryTileImages: List<String>? = null,
 
 		@field:SerializedName("DiscountedPrice")
 		val discountedPrice: Double? = null,
@@ -69,11 +69,23 @@ data class ItemsItem(
 		val id: String? = null,
 
 		@field:SerializedName("SecondaryImages")
-		val secondaryImages: List<Any?>? = null,
-		var recyclerViewItem: Int = RecyclerViewItemType.SERVICE_LISTING_VIEW.getLayout(),
+		val secondaryImages: List<String>? = null,
+
 ) : BaseResponse(), AppBaseRecyclerViewItem, Serializable {
+
+	var recyclerViewItem: Int = RecyclerViewItemType.SERVICE_LISTING_VIEW.getLayout();
+
 	override fun getViewType(): Int {
 		return recyclerViewItem
+	}
+
+	fun getLoaderItem(): ItemsItem {
+		this.recyclerViewItem = RecyclerViewItemType.PAGINATION_LOADER.getLayout()
+		return this
+	}
+
+	fun getCategoryValue():String{
+		return if (category.isNullOrEmpty()) "No category" else category
 	}
 }
 

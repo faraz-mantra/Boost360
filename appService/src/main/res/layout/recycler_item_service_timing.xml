@@ -15,7 +15,7 @@
         <com.framework.views.customViews.CustomImageView
             android:layout_width="@dimen/size_5"
             android:layout_height="@dimen/size_5"
-            android:tint="@color/blue_4a90e2"
+            android:tint="@color/blue_4A90E2"
             android:layout_gravity="center"
             android:src="@drawable/ic_dot_green" />
 
