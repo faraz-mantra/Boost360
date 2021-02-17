@@ -1,5 +1,8 @@
 package com.inventoryorder.ui.order.createorder
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.inventoryorder.R
@@ -137,13 +140,13 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     var contactDetails = ContactDetails(fullName = name.toString(),
             emailId = email.toString(), primaryContactNumber = phone.toString())
 
-    var addrStr = StringBuilder()
+    /*var addrStr = StringBuilder()
     addrStr.append(address)
     if (city.isNullOrEmpty().not()) addrStr.append(", $city")
     if (state.isNullOrEmpty().not()) addrStr.append(", $state")
-    if (pinCode.isNullOrEmpty().not()) addrStr.append(", $pinCode")
+    if (pinCode.isNullOrEmpty().not()) addrStr.append(", $pinCode")*/
 
-    var billingAddress = Address("$addrStr")
+    var billingAddress = Address(address.toString(), city = city.toString(), region = state.toString(), zipcode = pinCode.toString())
     var buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress)
 
     createOrderRequest.buyerDetails = buyerDetails
@@ -152,6 +155,18 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
     bundle.putDouble(IntentConstant.TOTAL_PRICE.name, totalPrice)
     bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name))
-    startFragmentOrderActivity(FragmentType.BILLING_DETAIL, bundle)
+    startFragmentOrderActivity(FragmentType.BILLING_DETAIL, bundle, isResult = true)
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+
+    if (requestCode == 101 && resultCode == RESULT_OK) {
+      val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
+      val shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name)
+      if (shouldFinish != null && shouldFinish) {
+        (context as FragmentContainerOrderActivity).onBackPressed()
+      }
+    }
   }
 }

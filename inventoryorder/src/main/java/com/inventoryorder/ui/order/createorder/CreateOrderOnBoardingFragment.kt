@@ -1,5 +1,6 @@
 package com.inventoryorder.ui.order.createorder
 
+import android.app.Fragment
 import android.os.Bundle
 import android.view.View
 import com.inventoryorder.constant.FragmentType
@@ -35,6 +36,7 @@ class CreateOrderOnBoardingFragment : BaseInventoryFragment<FragmentOrderOnBoard
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name))
         startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle)
+        (context as FragmentContainerOrderActivity).finish()
       }
 
       binding?.ivClose -> {

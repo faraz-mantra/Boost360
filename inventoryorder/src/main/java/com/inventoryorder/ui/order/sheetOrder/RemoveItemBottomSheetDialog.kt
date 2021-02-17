@@ -11,9 +11,8 @@ import com.inventoryorder.model.ordersdetails.OrderItem
 
 class RemoveItemBottomSheetDialog : BaseBottomSheetDialog<BottomSheetRemoveItemBinding, BaseViewModel>() {
 
-  private var cancellingEntity: String? = OrderItem.CancellingEntity.BUYER.name
-  private var orderItem: OrderItem? = null
-  var onClicked: (cancellingEntity: String,reasonText:String) -> Unit = { _: String, _: String -> }
+  var onClicked: (boolean : Boolean) -> Unit = { boolean : Boolean -> }
+  var removeItem = true
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_remove_item
@@ -23,19 +22,17 @@ class RemoveItemBottomSheetDialog : BaseBottomSheetDialog<BottomSheetRemoveItemB
     return BaseViewModel::class.java
   }
 
-  fun setData(orderItem: OrderItem) {
-    this.orderItem = orderItem
-  }
-
   override fun onCreateView() {
-
+    setOnClickListener(binding?.buttonDone, binding?.tvCancel)
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     dismiss()
     when (v) {
-     // binding?.buttonDone -> onClicked(cancellingEntity?:"", (binding?.txtReason?.text?.toString()?:""))
+      binding?.buttonDone -> {
+        onClicked(removeItem)
+      }
     }
   }
 

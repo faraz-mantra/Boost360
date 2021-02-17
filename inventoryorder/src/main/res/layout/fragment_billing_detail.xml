@@ -64,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_5"
-                        android:text="Rakesh Singhania"
+                        tools:text="@string/dummy_name"
                         android:textColor="@color/black_4a4a4a"
                         app:fontFamily="@font/regular"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -87,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_5"
-                    android:text="rakeshsinghania@gmail.com"
+                    tools:text="@string/dummy_email"
                     android:textColor="@color/black_4a4a4a"
                     app:fontFamily="@font/regular"
                     app:textType="BODY_1" />
@@ -97,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_6"
-                    android:text="+91 8247893456"
+                    tools:text="@string/dummy_phone"
                     android:textColor="@color/black_4a4a4a"
                     app:fontFamily="@font/regular"
                     app:textType="BODY_1" />
@@ -107,7 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_6"
-                    android:text="GSTIN : DBS987654321010"
+                    tools:text="@string/dummy_gstin"
                     android:textColor="@color/black_4a4a4a"
                     android:visibility="gone"
                     app:fontFamily="@font/regular"
@@ -162,7 +162,7 @@
                             android:gravity="right"
                             android:includeFontPadding="false"
                             android:maxLines="1"
-                            android:text="Store Pickup"
+                            android:text="@string/store_pickup"
                             android:textColor="@color/orange"
                             app:fontFamily="@font/semi_bold"
                             app:textType="BODY_1" />
@@ -197,7 +197,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableEnd="@drawable/ic_arrow_down_orange"
                             android:drawablePadding="@dimen/size_8"
                             android:ellipsize="end"
                             android:gravity="right"
@@ -245,7 +244,7 @@
                             android:gravity="right"
                             android:includeFontPadding="false"
                             android:maxLines="1"
-                            android:text="Pending"
+                            android:text="@string/collect_later"
                             android:textColor="@color/orange"
                             app:fontFamily="@font/semi_bold"
                             app:textType="BODY_1" />
@@ -302,7 +301,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_remove"
+                    android:id="@+id/tv_add_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/add_more"

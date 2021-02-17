@@ -58,12 +58,9 @@ class CreateOrderBottomSheetDialog(val orderBottomSheet: OrderBottomSheet) :
     super.onClick(v)
     dismiss()
     when (v) {
-
       binding?.buttonDone ->  {
         onClicked(currentSelectedItem!!, orderBottomSheet)
       }
-
-     // binding?.tvCancel -> onClicked(-1.0)
     }
   }
 
@@ -72,22 +69,22 @@ class CreateOrderBottomSheetDialog(val orderBottomSheet: OrderBottomSheet) :
       optionsAdapter = AppBaseRecyclerViewAdapter(baseActivity, orderBottomSheet.items?.toCollection(ArrayList())!!, this@CreateOrderBottomSheetDialog)
       layoutManager = layoutManagerN
       adapter = optionsAdapter
-     // optionsAdapter?.runLayoutAnimation(this)
     }
   }
 
   override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
     if (actionType == RecyclerViewActionType.ORDER_OPTION_SELECTED.ordinal) {
 
-      for ((index, value) in orderBottomSheet?.items!!.withIndex()) {
-        orderBottomSheet?.items?.get(index)?.isChecked = index == position
+      currentSelectedItem = orderBottomSheet.items?.get(position)
+
+      for (i in orderBottomSheet?.items!!) {
+        i.isChecked = (i.serverValue == currentSelectedItem?.serverValue)
       }
 
       currentOptionPosition = position
+
       if (binding?.recyclerOrderOptions?.isComputingLayout?.not() == true)
         optionsAdapter?.notifyDataSetChanged()
-
-      currentSelectedItem = orderBottomSheet.items?.get(position)
     }
   }
 }

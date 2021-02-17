@@ -280,4 +280,13 @@
     <string name="payment_received">Payment received</string>
     <string name="enter_valid_pincode">Please enter a valid pincode</string>
     <string name="please_enter_valid_phone">Please enter a valid phone number</string>
+    <string name="dummy_gstin">GSTIN : DBS987654321010</string>
+    <string name="dummy_phone">+91 8247893456</string>
+    <string name="dummy_name">Rakesh Singhania</string>
+    <string name="dummy_email">rakeshsinghania@gmail.com</string>
+    <string name="dummy_address">24/10 City Center, B-Zone, Kolkata, West Bengal - 100023</string>
+    <string name="dummy_order_id">#GK7C4FM</string>
+    <string name="dummy_qty">(Five) 5</string>
+    <string name="payment_link">Payment Link</string>
+    <string name="summy_amount">INR 500</string>
 </resources>
