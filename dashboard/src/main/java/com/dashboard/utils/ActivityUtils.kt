@@ -319,7 +319,7 @@ fun AppCompatActivity.startBoostExtension(session: UserSessionManager?) {
 
 fun AppCompatActivity.startReferralView(session: UserSessionManager?) {
   try {
-    WebEngageController.trackEvent("Refer a friend ", "startview", session?.fpTag);
+    WebEngageController.trackEvent("Refer and Earn ", "startview", session?.fpTag);
     val webIntent = Intent(this, Class.forName("com.nowfloats.helper.ReferralTransActivity"))
     startActivity(webIntent)
     overridePendingTransition(0, 0)
