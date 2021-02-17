@@ -13,6 +13,7 @@ enum class FacebookPermissions {
   pages_manage_cta,
   manage_pages,
   publish_pages,
-  ads_management
+  ads_management,
+  pages_manage_posts
 }
 
