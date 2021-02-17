@@ -75,7 +75,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
   }
 
   fun changeTheme(color: Int) {
-    getToolbar().setBackgroundColor(ContextCompat.getColor(this, color))
+    getToolbar()?.setBackgroundColor(ContextCompat.getColor(this, color))
     window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -85,35 +85,22 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
 
   override fun onCreate(savedInstanceState: Bundle?) {
     when (intent.extras) {
-      null -> {
-        fragmentType = FragmentType.STAFF_HOME_FRAGMENT
-      }
-      else -> {
-        intent?.extras?.getInt(FRAGMENT_TYPE)?.let {
-          fragmentType = FragmentType.values()[it]
-        }
-      }
+      null -> fragmentType = FragmentType.STAFF_HOME_FRAGMENT
+      else -> intent?.extras?.getInt(FRAGMENT_TYPE)?.let { fragmentType = FragmentType.values()[it] }
     }
     super.onCreate(savedInstanceState)
   }
 
-  override fun getToolbar(): CustomToolbar {
-    return when (fragmentType) {
-      FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> {
-        val toolbar = binding!!.appBarLayout.toolbar
-        toolbar.contentInsetStartWithNavigation = 0
-        toolbar
-      }
-      else -> binding!!.appBarLayout.toolbar
-    }
+  override fun getToolbar(): CustomToolbar? {
+    return binding?.appBarLayout?.toolbar
   }
 
   override fun getToolbarTitleSize(): Float? {
-    return resources.getDimension(R.dimen.heading_6)
+    return resources.getDimension(R.dimen.heading_7)
   }
 
   override fun getNavIconScale(): Float {
-    return 0.8f
+    return 1.0f
   }
 
   override fun customTheme(): Int? {
@@ -121,8 +108,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
       FragmentType.STAFF_PROFILE_LISTING_FRAGMENT, FragmentType.STAFF_HOME_FRAGMENT, FragmentType.STAFF_ADD_FRAGMENT, FragmentType.STAFF_DETAILS_FRAGMENT, FragmentType.STAFF_TIMING_FRAGMENT,
       FragmentType.STAFF_SELECT_SERVICES_FRAGMENT, FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT,
       -> R.style.AppTheme_staff_home
-      FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT,
-      -> R.style.AppTheme_staff_details
+      FragmentType.STAFF_SCHEDULED_BREAK_FRAGMENT -> R.style.AppTheme_staff_details
       else -> super.customTheme()
     }
   }
@@ -147,7 +133,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
   }
 
   override fun getNavigationIcon(): Drawable? {
-    return ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_toolbar_d)
+    return ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
   }
 
   private fun shouldAddToBackStack(): Boolean {
@@ -219,6 +205,13 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     return super.isHideToolbar()
   }
 
+  override fun onBackPressed() {
+    when (fragmentType) {
+      FragmentType.STAFF_PROFILE_DETAILS_FRAGMENT -> staffProfileDetailsFragment?.onBackPresDetail()
+      else -> super.onBackPressed()
+    }
+  }
+
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     staffDetailsFragment?.onActivityResult(requestCode, resultCode, data)
@@ -227,27 +220,8 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     staffServicesFragment?.onActivityResult(requestCode, resultCode, data)
     staffTimingFragment?.onActivityResult(requestCode, resultCode, data)
   }
-
-  override fun onBackPressed() {
-    when (fragmentType) {
-      FragmentType.STAFF_PROFILE_LISTING_FRAGMENT -> {
-        val fragment =
-            this.supportFragmentManager.findFragmentById(R.id.container)
-        (fragment as? IOnBackPressed)?.onBackPressed()?.not()?.let {
-          super.onBackPressed()
-        }
-      }
-      else -> super.onBackPressed()
-
-    }
-
-
-  }
 }
 
-interface IOnBackPressed {
-  fun onBackPressed(): Boolean
-}
 
 fun Fragment.startStaffFragmentActivity(type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean = false) {
   val intent = Intent(activity, StaffFragmentContainerActivity::class.java)

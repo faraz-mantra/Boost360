@@ -8,39 +8,36 @@ import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 
 class InActiveBottomSheet : BaseBottomSheetDialog<BottomsheetInactiveStaffBinding, BaseViewModel>() {
-    private var value: Boolean = true
-    var onClicked: (value: Boolean) -> Unit = { }
-    override fun getLayout(): Int {
-        return R.layout.bottomsheet_inactive_staff
+  private var value: Boolean = true
+  var onClicked: (value: Boolean) -> Unit = { }
+  var onBackPres: () -> Unit = { }
+  override fun getLayout(): Int {
+    return R.layout.bottomsheet_inactive_staff
+  }
+
+  override fun getViewModelClass(): Class<BaseViewModel> {
+    return BaseViewModel::class.java
+  }
+
+  override fun onCreateView() {
+    setOnClickListener(binding?.btnActivateStaff)
+    dialog.setCanceledOnTouchOutside(false)
+    getDialog()?.setOnKeyListener { _, keyCode, _ ->
+      if (keyCode == KeyEvent.KEYCODE_BACK) {
+        onBackPres()
+        true
+      } else false
     }
+  }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+
+  override fun onClick(v: View) {
+    super.onClick(v)
+    when (v) {
+      binding?.btnActivateStaff -> {
+        dismiss()
+        onClicked(value)
+      }
     }
-
-    override fun onCreateView() {
-        setOnClickListener(binding?.btnActivateStaff)
-        dialog.setCanceledOnTouchOutside(false)
-        getDialog()!!.setOnKeyListener { dialog, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                // To dismiss the fragment when the back-button is pressed.
-                requireActivity().finish()
-                true
-            } else false
-        }
-    }
-
-
-    override fun onClick(v: View) {
-        super.onClick(v)
-        when (v) {
-            binding?.btnActivateStaff -> {
-                dismiss()
-                onClicked(value)
-            }
-        }
-    }
-
-
-
+  }
 }

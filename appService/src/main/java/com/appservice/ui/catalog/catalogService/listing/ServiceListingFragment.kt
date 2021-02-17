@@ -193,15 +193,15 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
     super.onCreateOptionsMenu(menu, inflater)
     inflater.inflate(R.menu.menu_service_listing, menu)
     val searchItem = menu.findItem(R.id.action_search)
-    val searchView = searchItem.actionView as SearchView
-    val searchAutoComplete = searchView.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
-    val searchCloseIcon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+    val searchView = searchItem.actionView as? SearchView
+    val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(R.id.search_src_text)
+    val searchCloseIcon = searchView?.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
     searchCloseIcon?.setColorFilter(resources.getColor(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN)
     searchAutoComplete?.setHintTextColor(getColor(R.color.white_70))
     searchAutoComplete?.setTextColor(getColor(R.color.white))
-    searchView.setIconifiedByDefault(true)
-    searchView.queryHint = getString(R.string.search_services)
-    searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+    searchView?.setIconifiedByDefault(true)
+    searchView?.queryHint = getString(R.string.search_services)
+    searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
       override fun onQueryTextSubmit(query: String?): Boolean {
         return false
       }
