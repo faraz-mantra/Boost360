@@ -46,7 +46,7 @@ class StaffServicesFragment() : AppBaseFragment<FragmentSelectServicesBinding, S
   private fun getBundleData() {
     if (listServices == null) listServices = arrayListOf()
     serviceIds = arguments?.getStringArrayList(IntentConstant.STAFF_SERVICES.name)
-    isEdit = (serviceIds != null && serviceIds?.isNullOrEmpty()?.not()!!)
+    isEdit = serviceIds.isNullOrEmpty().not()
   }
 
 
