@@ -282,5 +282,4 @@ public class AppFragmentContainerActivity extends AppCompatActivity {
         if (homeMainFragment != null) homeMainFragment.onActivityResult(requestCode, resultCode, data);
         if (manageCustomerFragment!= null) manageCustomerFragment.onActivityResult(requestCode, resultCode, data);
     }
-
 }
