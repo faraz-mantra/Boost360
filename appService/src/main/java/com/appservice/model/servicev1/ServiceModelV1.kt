@@ -2,6 +2,7 @@ package com.appservice.model.servicev1
 
 import com.appservice.model.KeySpecification
 import com.appservice.model.serviceProduct.BuyOnlineLink
+import com.appservice.model.serviceTiming.ServiceTiming
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
@@ -84,6 +85,8 @@ class ServiceModelV1(
         @SerializedName("secondaryImages",alternate = ["SecondaryImages"])
         var secondaryImages: ArrayList<ImageModel>? = null,
 
+        @SerializedName("Timings")
+        var timings: ArrayList<ServiceTiming>? = null,
         var pickupAddressReferenceId: String? = null,
 ) : Serializable {
 

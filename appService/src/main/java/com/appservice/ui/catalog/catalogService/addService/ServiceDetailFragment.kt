@@ -205,6 +205,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun onServiceDetailResponseReceived(it: BaseResponse) {
     this.product = (it as? ServiceDetailResponse)?.Result ?: return
+    this.serviceTimingList = this.product?.timings
+    this.serviceTimingList?.map { it.isToggle = (it.day.isNullOrEmpty().not() && it.time?.from.isNullOrEmpty().not()) }
     updateUiPreviousData()
   }
 
@@ -213,8 +215,9 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
   }
 
   private fun onServiceTiming(it: BaseResponse) {
-    this.serviceTimingList = (it as? ServiceTimingResponse)?.result
-    this.serviceTimingList?.map { it.isToggle = (it.day.isNullOrEmpty().not() && it.time?.from.isNullOrEmpty().not()) }
+    // commenting this as get service timing api is not working
+//    this.serviceTimingList = (it as? ServiceTimingResponse)?.result
+//    this.serviceTimingList?.map { it.isToggle = (it.day.isNullOrEmpty().not() && it.time?.from.isNullOrEmpty().not()) }
   }
 
   // function will be called once service is created
@@ -272,8 +275,8 @@ class ServiceDetailFragment : AppBaseFragment<FragmentServiceDetailBinding, Serv
 
   private fun addUpdateServiceTiming() {
     val request = AddServiceTimingRequest(product?.productId, product?.Duration, getTiming(this.serviceTimingList))
-    val requestApi = if (this.serviceTimingList.isNullOrEmpty()) viewModel?.addServiceTiming(request) else viewModel?.updateServiceTiming(request)
-    requestApi?.observeOnce(viewLifecycleOwner, {
+    val requestApi = if (this.serviceTimingList.isNullOrEmpty()) viewModel?.addServiceTiming(request) else viewModel?.addServiceTiming(request)
+    requestApi?.observeOnce(viewLifecycleOwner, Observer{
       if (it.isSuccess()) {
         isRefresh = true
         hideProgress()
