@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.exceptions.NoNetworkException
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
+import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentAddProductBinding
 import com.inventoryorder.model.PRODUCT_LIST_CLIENT_ID
@@ -50,10 +51,7 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
 
     productList = ArrayList()
     selectedProductList = ArrayList()
-
-    if (productList?.isEmpty() == true) {
-      getItemList(fpTag, PRODUCT_LIST_CLIENT_ID)
-    }
+    getItemList(fpTag, PRODUCT_LIST_CLIENT_ID)
   }
 
   override fun onClick(v: View) {
@@ -91,8 +89,9 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
     createOrderRequest.items = itemList
 
     var bundle = Bundle()
-    bundle.putSerializable("order_req", createOrderRequest)
-    bundle.putDouble("total", totalPrice)
+    bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
+    bundle.putDouble(IntentConstant.TOTAL_PRICE.name, totalPrice)
+    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name))
     startFragmentOrderActivity(FragmentType.ADD_CUSTOMER, bundle)
   }
 

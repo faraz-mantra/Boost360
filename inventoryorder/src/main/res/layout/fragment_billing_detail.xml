@@ -203,7 +203,7 @@
                             android:gravity="right"
                             android:includeFontPadding="false"
                             android:maxLines="1"
-                            android:text="COD"
+                            android:text="@string/str_cash_on_delivery"
                             android:textColor="@color/orange"
                             app:fontFamily="@font/semi_bold"
                             app:textType="BODY_1" />
@@ -265,7 +265,7 @@
                 layout="@layout/layout_order_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_30"
+                android:layout_marginStart="@dimen/size_20"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="@dimen/size_20" />
 
@@ -433,14 +433,30 @@
                     android:orientation="horizontal">
 
                     <com.framework.views.customViews.CustomTextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:drawablePadding="@dimen/size_4"
                         android:includeFontPadding="false"
                         android:text="@string/delivery_fee"
                         android:textColor="@color/greyish_brown"
                         app:fontFamily="@font/regular"
+                        app:textType="BODY_1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_add_delivery_fee_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:paddingEnd="@dimen/size_20"
+                        android:text="@string/edit"
+                        android:visibility="gone"
+                        android:paddingStart="@dimen/size_10"
+                        android:textAllCaps="true"
+                        android:textColor="@color/orange"
+                        app:fontFamily="@font/semi_bold"
                         app:textType="BODY_1" />
 
                     <com.framework.views.customViews.CustomTextView
@@ -453,6 +469,22 @@
                         android:maxLines="1"
                         android:paddingEnd="@dimen/size_20"
                         android:text="@string/add"
+                        android:textAllCaps="true"
+                        android:textColor="@color/orange"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="BODY_1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_add_delivery_fee_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:includeFontPadding="false"
+                        android:visibility="gone"
+                        android:maxLines="1"
+                        android:paddingEnd="@dimen/size_20"
+                        tools:text="@string/add"
                         android:textAllCaps="true"
                         android:textColor="@color/orange"
                         app:fontFamily="@font/semi_bold"

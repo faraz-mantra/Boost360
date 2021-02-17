@@ -9,11 +9,9 @@ import com.inventoryorder.R
 import com.inventoryorder.databinding.*
 import com.inventoryorder.model.ordersdetails.OrderItem
 
-class AddDeliveryFeeBottomSheetDialog : BaseBottomSheetDialog<BottomSheetAddDeliveryFeeBinding, BaseViewModel>() {
+class AddDeliveryFeeBottomSheetDialog(val deliveryFee : Double = 0.0) : BaseBottomSheetDialog<BottomSheetAddDeliveryFeeBinding, BaseViewModel>() {
 
-  private var cancellingEntity: String? = OrderItem.CancellingEntity.BUYER.name
-  private var orderItem: OrderItem? = null
-  var onClicked: (cancellingEntity: String,reasonText:String) -> Unit = { _: String, _: String -> }
+  var onClicked: (deliveryFeeValue: Double) -> Unit = { value : Double -> }
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_add_delivery_fee
@@ -23,20 +21,27 @@ class AddDeliveryFeeBottomSheetDialog : BaseBottomSheetDialog<BottomSheetAddDeli
     return BaseViewModel::class.java
   }
 
-  fun setData(orderItem: OrderItem) {
-    this.orderItem = orderItem
-  }
 
   override fun onCreateView() {
-
+    if (deliveryFee > 0) binding?.editDeliveryFee?.setText(deliveryFee.toString())
+    setOnClickListener(binding?.buttonDone, binding?.tvCancel)
   }
 
   override fun onClick(v: View) {
     super.onClick(v)
     dismiss()
     when (v) {
-     // binding?.buttonDone -> onClicked(cancellingEntity?:"", (binding?.txtReason?.text?.toString()?:""))
+
+      binding?.buttonDone ->  {
+
+        if (binding?.editDeliveryFee?.text?.isNullOrEmpty()?.not() == true) {
+          onClicked(binding?.editDeliveryFee?.text?.toString()?.toDouble() ?: 0.0)
+        } else {
+          onClicked(0.0)
+        }
+      }
+
+      binding?.tvCancel -> onClicked(-1.0)
     }
   }
-
 }

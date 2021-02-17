@@ -9,4 +9,6 @@ enum class IntentConstant {
   BOOKING_ITEM,
   IS_REFRESH,
   RESULT_DATA,
+  ORDER_REQUEST,
+  TOTAL_PRICE
 }
