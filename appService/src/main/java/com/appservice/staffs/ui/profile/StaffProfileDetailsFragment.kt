@@ -139,7 +139,7 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
   private fun setTimings() {
     binding?.llTimingContainer?.removeAllViews()
     staffDetails?.timings?.forEach {
-      if (it.timeSlots.isNullOrEmpty().not()) binding?.llTimingContainer?.addView(getTimeView(it))
+      if (it!=null && it.timeSlots.isNullOrEmpty().not()) binding?.llTimingContainer?.addView(getTimeView(it))
     }
   }
 

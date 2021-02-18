@@ -73,7 +73,7 @@ data class AppointmentModel(
   }
 
   fun removeApplyOnAllDays(data: AppointmentModel) {
-    getDefaultTimings().forEach { if (it != data) it.isTurnedOn = false }
+    getDefaultTimings().forEach { if (it != data) it?.isTurnedOn = false }
   }
 
   companion object {
@@ -95,7 +95,7 @@ data class AppointmentModel(
   fun getStringStaffActive(list: ArrayList<AppointmentModel>?): String {
     val selectedDays = StringBuilder()
     list?.forEach { item ->
-      if (!item.day.isNullOrEmpty() && item.timeSlots.isNotEmpty()) {
+      if (item!=null && !item.day.isNullOrEmpty() && item.timeSlots.isNotEmpty()) {
         val value = WeekdayStaffValue.fromFullName(item.day) ?: return@forEach
         if (selectedDays.isNotEmpty()) selectedDays.append(", ")
         selectedDays.append(value.sortName)
@@ -107,7 +107,7 @@ data class AppointmentModel(
   fun getStringStaffActiveN(list: ArrayList<AppointmentModel>?): String {
     val selectedDays = StringBuilder()
     list?.forEach { item ->
-      if (item.isTurnedOn == true) {
+      if (item!=null && item.isTurnedOn == true) {
         val value = WeekdayStaffValue.fromFullName(item.day) ?: return@forEach
         if (selectedDays.isNotEmpty()) selectedDays.append(", ")
         selectedDays.append(value.sortName)
