@@ -199,6 +199,8 @@ class AddProductFragment : BaseInventoryFragment<FragmentAddProductBinding>(), R
       if (shouldReInitiate != null && shouldReInitiate) {
          totalPrice = 0.0
          totalCartItems = 0
+         selectedProductList?.clear()
+         createOrderRequest = OrderInitiateRequest()
          binding?.layoutTotalPricePanel?.visibility = View.GONE
          getItemList(fpTag, PRODUCT_LIST_CLIENT_ID)
       }

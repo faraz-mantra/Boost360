@@ -328,8 +328,13 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       val removeItemBottomSheetDialog = RemoveItemBottomSheetDialog()
       removeItemBottomSheetDialog.onClicked = {
         if (it) {
-          createOrderRequest?.items?.removeAt(position)
-          itemsAdapter?.notify(createOrderRequest?.items)
+
+          if (createOrderRequest?.items?.size!! > 1) {
+            createOrderRequest?.items?.removeAt(position)
+            itemsAdapter?.notify(createOrderRequest?.items)
+          } else {
+            showShortToast(getString(R.string.you_cannot_remove_all_items))
+          }
         }
       }
       removeItemBottomSheetDialog.show(this.parentFragmentManager, RemoveItemBottomSheetDialog::class.java.name)
