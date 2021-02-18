@@ -550,7 +550,7 @@ public class ContactInformationActivity extends BaseActivity {
 
 
   private void sendSms(String number) {
-    showProgressbar("Please Wait...");
+    showProgressbar(getString(R.string.please_wait_));
 
     Methods.SmsInterface smsApi = Constants.restAdapterDev1.create(Methods.SmsInterface.class);
 

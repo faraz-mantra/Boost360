@@ -84,7 +84,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    sharedPreferences = requireContext().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+    sharedPreferences = getContext().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
     return inflater.inflate(R.layout.fragment_keyboard, container, false);
   }
 
@@ -100,7 +100,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    session = new UserSessionManager(requireActivity().getApplicationContext(), requireActivity());
+    session = new UserSessionManager(getActivity().getApplicationContext(), requireActivity());
 
     //show or hide if feature is available to user
     mainLayout = view.findViewById(R.id.main_layout);
@@ -126,13 +126,13 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     } else {
       view.findViewById(R.id.cv_themes).setVisibility(View.VISIBLE);
       TextView tvBoostThemes = view.findViewById(R.id.tv_boost_themes);
-      if (requireContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
+      if (getContext().getApplicationContext().getPackageName().equalsIgnoreCase("com.redtim")) {
         tvBoostThemes.setText("RedTim Keyboard Themes");
       } else {
         tvBoostThemes.setText("Boost Keyboard Themes");
       }
       rvKeyboardThemes = view.findViewById(R.id.rv_keyboard_themes);
-      rvKeyboardThemes.setLayoutManager(new GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false));
+      rvKeyboardThemes.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
       ArrayList<Integer> keyboardDrawables = new ArrayList<>();
       keyboardDrawables.add(R.drawable.ic_keyboard_theme_two);
       keyboardDrawables.add(R.drawable.ic_keyboard_theme_one);
@@ -143,7 +143,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
       } else if (selectedString.equals(KeyboardThemesAdapter.Themes.LXX_DARK_UNBORDERED.toString())) {
         selected = 1;
       }
-      keyboardThemesAdapter = new KeyboardThemesAdapter(requireContext(), keyboardDrawables, selected, sharedPreferences);
+      keyboardThemesAdapter = new KeyboardThemesAdapter(getContext(), keyboardDrawables, selected, sharedPreferences);
       rvKeyboardThemes.setAdapter(keyboardThemesAdapter);
     }
   }
@@ -195,7 +195,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
   }
 
   private void getPermission(int code) {
-    Activity activity = requireActivity();
+    Activity activity = getActivity();
     if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED && code == STORAGE_CODE) {
       storageSwitchTv.setChecked(false);
       if (activity == null) {
@@ -326,7 +326,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
         showOverlay(overLayout1, getString(R.string.boost_keyboard), getString(R.string.keyboard_message));
         break;
       case R.id.ll_enable_keyboard:
-        startActivity(new Intent(requireActivity(), BoostKeyboardActivity.class));
+        startActivity(new Intent(getActivity(), BoostKeyboardActivity.class));
         break;
     }
   }
@@ -404,7 +404,7 @@ public class KeyboardFragment extends Fragment implements View.OnTouchListener, 
     progressDialog.setMessage(status);
     progressDialog.setCancelable(false);
     progressDialog.show();
-    Intent intent = new Intent(requireActivity(), UpgradeActivity.class);
+    Intent intent = new Intent(getActivity(), UpgradeActivity.class);
     intent.putExtra("expCode", session.getFP_AppExperienceCode());
     intent.putExtra("fpName", session.getFPName());
     intent.putExtra("fpid", session.getFPID());

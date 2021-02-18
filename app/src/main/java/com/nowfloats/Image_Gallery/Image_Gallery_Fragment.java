@@ -116,8 +116,8 @@ public class Image_Gallery_Fragment extends Fragment implements
 
   private void initializeControls(View view) {
 
-    activity = requireActivity();
-    session = new UserSessionManager(requireContext(), activity);
+    activity = getActivity();
+    session = new UserSessionManager(getContext(), activity);
     gvImages = view.findViewById(R.id.grid);
     emptyGalleryLayout = view.findViewById(R.id.layout_empty);
     progressLayout = view.findViewById(R.id.layout_progress);
@@ -179,8 +179,8 @@ public class Image_Gallery_Fragment extends Fragment implements
   public void cameraIntent() {
     try {
       // use standard intent to capture an image
-      if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-          || ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+      if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+          || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
         requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, media_req_id);
       } else {
         ContentValues values = new ContentValues();
@@ -215,7 +215,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 //        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
 //                .customView(R.layout.featuredimage_popup, true)
 //                .show();
-//        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(requireContext(), R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+//        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 //        View view = dialog.getCustomView();
 //        if (view != null) {
 //            TextView header = (TextView) view.findViewById(R.id.textview_heading);
@@ -259,10 +259,10 @@ public class Image_Gallery_Fragment extends Fragment implements
 
   private void galleryIntent() {
     try {
-      if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-          PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) !=
+      if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+          PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
           PackageManager.PERMISSION_GRANTED) {
-        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
             gallery_req_id);
       } else {
         Intent intent = new Intent(
@@ -278,7 +278,7 @@ public class Image_Gallery_Fragment extends Fragment implements
     } catch (ActivityNotFoundException anfe) {
       // display an error message
       String errorMessage = getString(R.string.device_does_not_support_capturing_image);
-      Toast toast = Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT);
+      Toast toast = Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT);
       toast.show();
     }
   }
@@ -395,7 +395,7 @@ public class Image_Gallery_Fragment extends Fragment implements
       }
 
       if (TextUtils.isEmpty(filePath))
-        filePath = getPath(requireActivity(), imgUri);
+        filePath = getPath(getActivity(), imgUri);
     } else if (data.getType().equals("image/jpeg") || data.getType().equals("image/png")) {
       // For getting images from dropbox or any other gallery apps.
       filePath = imgUri.getPath();
@@ -427,7 +427,7 @@ public class Image_Gallery_Fragment extends Fragment implements
           }
 
           if (TextUtils.isEmpty(filePath)) {
-            filePath = getPath(requireActivity(), uri);
+            filePath = getPath(getActivity(), uri);
           }
 
           if (!TextUtils.isEmpty(filePath))

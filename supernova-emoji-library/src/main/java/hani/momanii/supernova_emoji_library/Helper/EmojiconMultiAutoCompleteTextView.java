@@ -47,7 +47,7 @@ public class EmojiconMultiAutoCompleteTextView extends MultiAutoCompleteTextView
     }
 
     private void init(AttributeSet attrs) {
-        TypedArray a = requireContext().obtainStyledAttributes(attrs, R.styleable.Emojicon);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.Emojicon);
         mEmojiconSize = (int) a.getDimension(R.styleable.Emojicon_emojiconSize, getTextSize());
         mEmojiconAlignment = a.getInt(R.styleable.Emojicon_emojiconAlignment, DynamicDrawableSpan.ALIGN_BASELINE);
         mUseSystemDefault = a.getBoolean(R.styleable.Emojicon_emojiconUseSystemDefault, false);
@@ -71,7 +71,7 @@ public class EmojiconMultiAutoCompleteTextView extends MultiAutoCompleteTextView
     }
 
     private void updateText() {
-        EmojiconHandler.addEmojis(requireContext(), getText(), mEmojiconSize, mEmojiconAlignment, mEmojiconTextSize, mUseSystemDefault);
+        EmojiconHandler.addEmojis(getContext(), getText(), mEmojiconSize, mEmojiconAlignment, mEmojiconTextSize, mUseSystemDefault);
     }
 
     /**

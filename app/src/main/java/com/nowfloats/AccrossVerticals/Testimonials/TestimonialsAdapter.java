@@ -44,7 +44,7 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_testimonials, null);
-        this.context = v.requireContext();
+        this.context = v.getContext();
         return new ViewHolder(v);
     }
 

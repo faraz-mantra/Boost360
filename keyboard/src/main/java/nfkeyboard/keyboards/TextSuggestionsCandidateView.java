@@ -64,9 +64,9 @@ public class TextSuggestionsCandidateView extends BaseCandidateView {
     void setCandidateData(Bundle bundle) {
        /* if (textSuggestionAdapter == null) {
             RecyclerView mRecyclerView = findViewById(R.id.rv_suggestions);
-            mRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 3));
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
             mRecyclerView.addItemDecoration(
-                    new DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL));
+                    new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL));
             mRecyclerView.setHasFixedSize(true);
             textSuggestionAdapter = new TextSuggestionAdapter(mContext);
             mRecyclerView.setAdapter(textSuggestionAdapter);

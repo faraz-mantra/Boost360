@@ -278,7 +278,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             for (ResolveInfo resInfo : resInfos) {
                 String packageName = resInfo.activityInfo.packageName;
                 Log.i("Package Name", packageName);
-                if (!packageName.contains("com.twitter.android") && !packageName.contains("com.facebook.katana")) {
+                if (!packageName.contains("com.twitter.android") && !packageName.contains(getString(R.string.facebook_package))) {
                     Intent intent = new Intent();
                     intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
                     intent.setAction(Intent.ACTION_SEND);
@@ -314,7 +314,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
     private List<String> getShareApplication() {
         List<String> mList = new ArrayList<String>();
-        mList.add("com.facebook.katana");
+        mList.add(getString(R.string.facebook_package));
         mList.add("com.twitter.android");
         mList.add("com.google.android.gm");
         return mList;
@@ -380,7 +380,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                 shareIntent.setPackage(appContext.getString(R.string.whatsapp_package));
                 break;
             case "facebook":
-                shareIntent.setPackage("com.facebook.katana");
+                shareIntent.setPackage(getString(R.string.facebook_package));
                 break;
         }
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

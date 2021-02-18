@@ -72,7 +72,7 @@ public class ResultsRecyclerView extends RecyclerView {
 
     private void init() {
         this.mAdapter = new SearchItemArrayAdapter(getContext());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), 0, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), 0, false);
         setHasFixedSize(true);
         setLayoutManager(layoutManager);
         setItemAnimator(null);
@@ -108,10 +108,10 @@ public class ResultsRecyclerView extends RecyclerView {
         this.mAdapter.setServiceItem(this.mCurrentService);
         if (this.mChangeListHeight) {
             if (RServiceItem.PHOTOS.equals(slash)) {
-                getLayoutParams().height = (int) requireContext().getResources().getDimension(R.dimen.search_results_container_height_big);
+                getLayoutParams().height = (int) getContext().getResources().getDimension(R.dimen.search_results_container_height_big);
                 getAdapter().setImageHeightBig();
             } else {
-                getLayoutParams().height = (int) requireContext().getResources().getDimension(R.dimen.search_results_container_height);
+                getLayoutParams().height = (int) getContext().getResources().getDimension(R.dimen.search_results_container_height);
                 getAdapter().setImageHeightSmall();
             }
         }
@@ -171,7 +171,7 @@ public class ResultsRecyclerView extends RecyclerView {
 //    }
 
     /*public boolean requiresPermissionAccess() {
-        if (RServiceItem.CONTACTS.equals(mCurrentService.getSlash()) && ContextCompat.checkSelfPermission(requireContext(), "android.permission.READ_CONTACTS") != 0)
+        if (RServiceItem.CONTACTS.equals(mCurrentService.getSlash()) && ContextCompat.checkSelfPermission(getContext(), "android.permission.READ_CONTACTS") != 0)
             return true;
         return false;
     }*/
@@ -188,7 +188,7 @@ public class ResultsRecyclerView extends RecyclerView {
         RSearchItem connectItem = new RSearchItem();
         connectItem.setDisplayType(RSearchItem.PERMISSION_REQUIRED_TYPE);
         connectItem.setService(mCurrentService.getSlash());
-        connectItem.setOutput(requireContext().getString(R.string.contacts_permission));
+        connectItem.setOutput(getContext().getString(R.string.contacts_permission));
         connectItem.setTitle("Contacts");
         this.mAdapter.add(connectItem);
         //invalidateReactViewHack();

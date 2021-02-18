@@ -61,7 +61,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
         if(getArguments()!=null) {
             mProfile = getArguments().getParcelable("profile");
         }
-        mSession = new UserSessionManager(requireActivity(), getActivity());
+        mSession = new UserSessionManager(getActivity(), getActivity());
     }
 
     @Override
@@ -208,7 +208,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
                     public void run() {
                         progressDialog.dismiss();
                         PaymentInfoEntryFragment.this.dismiss();
-                        Toast.makeText(requireActivity(), R.string.something_wen_wrong, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.something_wen_wrong, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -221,7 +221,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
                         progressDialog.dismiss();
                         PaymentInfoEntryFragment.this.dismiss();
                         mProfileCallBack.onProfileUpdated(profile);
-                        Toast.makeText(requireActivity(), getString(R.string.successfully_saved), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.successfully_saved), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -278,7 +278,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
                     @Override
                     public void run() {
                         progressDialog.dismiss();
-                        Toast.makeText(requireActivity(), getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -291,7 +291,7 @@ public class PaymentInfoEntryFragment extends DialogFragment {
                     @Override
                     public void run() {
                         progressDialog.dismiss();
-                        Toast.makeText(requireActivity(), R.string.successfully_updated, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.successfully_updated, Toast.LENGTH_SHORT).show();
                         mProfileCallBack.onProfileUpdated(merchantProfile);
                         PaymentInfoEntryFragment.this.dismiss();
                     }

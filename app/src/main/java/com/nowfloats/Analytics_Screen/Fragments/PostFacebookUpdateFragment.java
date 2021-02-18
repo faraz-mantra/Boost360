@@ -86,7 +86,7 @@ public class PostFacebookUpdateFragment extends Fragment {
                 }else{
                     Intent i = new Intent(context, Create_Message_Activity.class);
                     startActivity(i);
-                    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
         });

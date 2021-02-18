@@ -84,7 +84,7 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        session = new UserSessionManager(requireActivity().getApplicationContext(),getActivity());
+        session = new UserSessionManager(getActivity().getApplicationContext(),getActivity());
 
         apiService = new OffersApiService(mBus);
         apiService.getAllOffers(getOffersParam(0));
@@ -117,7 +117,7 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
         cancelPost.setColorFilter(whiteLabelFilter);
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         adapter  = new OffersAdapter(offersModelList, getActivity());
         adapter.setOnItemClickListener(new OffersAdapter.OnItemClickListener() {
@@ -197,9 +197,9 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
                     mCallback.onRenewPlanSelected();
                 }
                 else {
-                    Intent webIntent = new Intent(requireActivity(), Create_Message_Activity.class);
+                    Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
                     startActivity(webIntent);
-                    requireActivity().overridePendingTransition(R.anim.slide_in_right,
+                    getActivity().overridePendingTransition(R.anim.slide_in_right,
                             R.anim.slide_out_left);
                 }
                 break;
@@ -209,9 +209,9 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
                     mCallback.onRenewPlanSelected();
                 }
                 else {
-                    Intent webIntent = new Intent(requireActivity(), CreateOffersActivity.class);
+                    Intent webIntent = new Intent(getActivity(), CreateOffersActivity.class);
                     startActivity(webIntent);
-                    requireActivity().overridePendingTransition(R.anim.slide_in_right,
+                    getActivity().overridePendingTransition(R.anim.slide_in_right,
                             R.anim.slide_out_left);
                 }
                 break;
@@ -234,7 +234,7 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
             }
             moreFloatsAvailable = result.moreFloatsAvailable;
         }else {
-            Methods.showSnackBarNegative(requireActivity(), getString(R.string.offer_getting_error));
+            Methods.showSnackBarNegative(getActivity(), getString(R.string.offer_getting_error));
         }
 
     }

@@ -119,7 +119,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         //request retrofit instance
         ApiService = getRetrofit().create(ApiInterface::class.java)
         progressDialog = ProgressDialog(requireContext())
-        localStorage = LocalStorage.getInstance(context!!)!!
+        localStorage = LocalStorage.getInstance(requireContext())!!
         cart_list = localStorage.getCartItems()
         prefs = SharedPrefs(activity as UpgradeActivity)
 
@@ -178,7 +178,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
             }
         }
 
-        viewModel.getCategoriesFromAssetJson(activity!!, (activity as UpgradeActivity).experienceCode)
+        viewModel.getCategoriesFromAssetJson(requireActivity(), (activity as UpgradeActivity).experienceCode)
 
         share_refferal_code_btn.setOnClickListener {
             WebEngageController.trackEvent(ADDONS_MARKETPLACE_REFFER_BOOST_CLICKED, GENERIC, NO_EVENT_VALUE)
@@ -419,7 +419,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
         refText.setSpan(StyleSpan(Typeface.BOLD), 18, 26, 0)
         refText.setSpan(StyleSpan(Typeface.BOLD), refText.length - 4, refText.length, 0)
         refText.setSpan(
-                ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.common_text_color)),
+                ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.common_text_color)),
                 0,
                 refText.length,
                 0
@@ -428,7 +428,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
     }
 
     fun loadData() {
-        val pref = activity!!.getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
+        val pref = requireActivity().getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE)
         val fpTag = pref.getString("GET_FP_DETAILS_TAG", null)
         var code: String = (activity as UpgradeActivity).experienceCode!!
         if (!code.equals("null", true)) {

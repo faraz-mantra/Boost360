@@ -160,7 +160,7 @@ public final class KeyPreviewDrawParams {
             return showUpAnimator;
         }
         final Animator animator = AnimatorInflater.loadAnimator(
-                target.requireContext(), mShowUpAnimatorResId);
+                target.getContext(), mShowUpAnimatorResId);
         animator.setTarget(target);
         animator.setInterpolator(DECELERATE_INTERPOLATOR);
         return animator;
@@ -180,7 +180,7 @@ public final class KeyPreviewDrawParams {
             return dismissAnimator;
         }
         final Animator animator = AnimatorInflater.loadAnimator(
-                target.requireContext(), mDismissAnimatorResId);
+                target.getContext(), mDismissAnimatorResId);
         animator.setTarget(target);
         animator.setInterpolator(ACCELERATE_INTERPOLATOR);
         return animator;

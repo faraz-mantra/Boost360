@@ -114,7 +114,7 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
                     .into(profileImage);
         }
 
-        Typeface robotoLight = Typeface.createFromAsset(requireActivity().getAssets(), "Roboto-Light.ttf");
+        Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
         category.setTypeface(robotoLight);
         category.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
         businessName.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
@@ -173,7 +173,7 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
                         }
 
                     });
-            if (!requireActivity().isFinishing()) {
+            if (!getActivity().isFinishing()) {
                 builder.show();
             }
         } else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")){
@@ -183,9 +183,9 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
             showExpiryDialog(DEMO_EXPIRED);
         } else if (Utils.isNetworkConnected(getActivity())) {
             showLoader(getString(R.string.please_wait));
-            domainApiService.getDomainDetails(requireActivity(),session.getFpTag(), getDomainDetailsParam());
+            domainApiService.getDomainDetails(getActivity(),session.getFpTag(), getDomainDetailsParam());
         } else {
-            Methods.showSnackBarNegative(requireActivity(), getString(R.string.noInternet));
+            Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
         }
     }
     @Override
@@ -213,7 +213,7 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
 
         if (!isAdded()) return;
 
-        requireActivity().runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (progressDialog == null) {
@@ -228,7 +228,7 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
 
     private void hideLoader() {
 
-        requireActivity().runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (progressDialog != null && progressDialog.isShowing()) {
@@ -311,7 +311,7 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
 
         if(!isAlreadyCalled) {
             if (domainDetails == null){
-                Methods.showSnackBarNegative(requireActivity(),getString(R.string.something_went_wrong));
+                Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong));
             } else if(domainDetails.isFailed()){
                 showCustomDialog(getString(R.string.domain_booking_failed),
                         Methods.fromHtml(TextUtils.isEmpty(domainDetails.getErrorMessage())?
@@ -332,7 +332,7 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
         isAlreadyCalled = true;
         Intent domainIntent = new Intent(mContext, DomainDetailsActivity.class);
         startActivity(domainIntent);
-        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void showExpiryDialog(int showDialog) {

@@ -70,7 +70,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        session = new UserSessionManager(requireContext(), getActivity());
+        session = new UserSessionManager(getContext(), getActivity());
         if (product != null && product.productId != null) {
             binding.editCategory.setText(product.category != null ? product.category : "");
             if (!TextUtils.isEmpty(product.productType) && (product.productType.equalsIgnoreCase("services") || product.productType.equalsIgnoreCase("products"))) {
@@ -85,7 +85,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
             if (product != null && product.productType != null)
                 type = product.productType;
             else type = "products";
-            productType = setProductType(/*session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)*/ type, "Adding to Catalogue");
+            productType = setProductType(/*session.getFPDetails(Key_Preferences.PRODUCT_CATEGORY)*/ type, getString(R.string.adding_to_catalogue));
         }
         binding.btnStart.setOnClickListener(v -> ((ManageProductActivity) getActivity()).loadFragment(ManageProductFragment.newInstance(product), "MANAGE_PRODUCT"));
         addInfoButtonListener();
@@ -187,7 +187,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
      */
     private void toolTip(ViewTooltip.Position position, String message, View view) {
         ViewTooltip
-                .on(requireActivity(), view)
+                .on(getActivity(), view)
                 .autoHide(true, 3500)
                 .clickToHide(true)
                 .corner(30)
@@ -199,7 +199,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
     }
 
     private void addInfoButtonListener() {
-        binding.ibInfoProductType.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, "Defining product type makes it easier to categorize the <variable product verb> and helps your customers easily find what they are looking for.", binding.ibInfoProductType));
+        binding.ibInfoProductType.setOnClickListener(v -> toolTip(ViewTooltip.Position.TOP, getString(R.string.defining_product_type_makes_it_easier_to), binding.ibInfoProductType));
     }
 
 
@@ -210,7 +210,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
      */
     private void addAutoCompleteListener(List<String> categories) {
         try {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), R.layout.customized_spinner_item, categories);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.customized_spinner_item, categories);
 
             binding.editCategory.setAdapter(adapter);
             binding.editCategory.setOnItemClickListener(this);
@@ -223,7 +223,7 @@ public class ProductCategoryFragment extends Fragment implements AdapterView.OnI
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_start:
-                startFragmentActivityNew(requireActivity(), FragmentType.SERVICE_DETAIL_VIEW, new Bundle(), false, true);
+                startFragmentActivityNew(getActivity(), FragmentType.SERVICE_DETAIL_VIEW, new Bundle(), false, true);
                 break;
         }
     }

@@ -27,7 +27,7 @@
     <string name="use_contacts_for_spellchecking_option_summary" translatable="false">Spell checker uses entries from your contact list</string>
 
     <!-- Option to provide vibrate/haptic feedback on keypress -->
-    <string name="vibrate_on_keypress">Vibrate on keypress</string>
+    <string name="vibrate_on_keypress" translatable="false">Vibrate on keypress</string>
 
     <!-- Option to play back sound on keypress in soft keyboard -->
     <string name="sound_on_keypress">Sound on keypress</string>
@@ -616,6 +616,7 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <string name="enable_layout">Enable the keyboard</string>
     <string name="link_copied">"Link has been copied to clipboard!"</string>
     <string name="invalid">"Oops! Something went wrong, try again"</string>
+    <string name="something_went_wrong_" translatable="false">Something went wrong</string>
     <string name="share">share</string>
     <string name="share_link">share Link</string>
     <string name="enter_offer_price">Enter Offer Price</string>
@@ -682,6 +683,12 @@ Tip: You can download and remove dictionaries by going to &lt;b>Languages&#160;&
     <string name="h">h</string>
     <string name="listening">Listening...</string>
     <string name="in_the_language_and_input_settings_tap_the_toggle_next_to_agah_keyboard_this_will_authorize_the_keyboard_to_run_on_your_device">In the Language and Input settings, tap the toggle next to Agah Keyboard. This will authorize the keyboard to run on your device.</string>
+    <string name="can_not_select_more_than_5_images">Cannot select more than 5 images for WhatsApp</string>
+    <string name="please_reopen_the_keyboard">Please reopen this keyboard</string>
+    <string name="no_updates_available">No updates available.</string>
+    <string name="no_product_available">No products available.</string>
+    <string name="no_details_available">No details available.</string>
+    <string name="whatsapp_package" translatable="false">com.whatsapp</string>
 
 
     <string-array name="validity_items">

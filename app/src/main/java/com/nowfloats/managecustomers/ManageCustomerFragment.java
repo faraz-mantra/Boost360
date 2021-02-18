@@ -50,7 +50,7 @@ public class ManageCustomerFragment extends Fragment implements View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = requireActivity();
+        activity = getActivity();
     }
 
     @Override
@@ -74,8 +74,8 @@ public class ManageCustomerFragment extends Fragment implements View.OnClickList
     public void onViewCreated(final View mainView, Bundle savedInstanceState) {
         super.onViewCreated(mainView, savedInstanceState);
         if (!isAdded() || isDetached()) return;
-        if (requireActivity() != null) {
-            requireActivity().setTitle(getString(R.string.manage_customers));
+        if (getActivity() != null) {
+            getActivity().setTitle(getString(R.string.manage_customers));
         }
         mainView.findViewById(R.id.img_info1).setOnClickListener(this);
         mainView.findViewById(R.id.img_info2).setOnClickListener(this);
@@ -172,13 +172,13 @@ public class ManageCustomerFragment extends Fragment implements View.OnClickList
         final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
 
         if (isVmnEnable) {
-            Intent i = new Intent(requireActivity(), VmnCallCardsActivity.class);
+            Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
             startActivity(i);
-            requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } else if ((TextUtils.isDigitsOnly(paymentState) && "1".equalsIgnoreCase(paymentState))) {
-            Intent i = new Intent(requireActivity(), VmnNumberRequestActivity.class);
+            Intent i = new Intent(getActivity(), VmnNumberRequestActivity.class);
             startActivity(i);
-            requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } else {
             Methods.showFeatureNotAvailDialog(getActivity());
             // show first buy lighthouse
@@ -209,23 +209,23 @@ public class ManageCustomerFragment extends Fragment implements View.OnClickList
                 return;
             case R.id.ll_subscriber:
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_SUBSCRIBERS, null);
-                startActivity(new Intent(requireActivity(), SubscribersActivity.class));
+                startActivity(new Intent(getActivity(), SubscribersActivity.class));
                 break;
             case R.id.ll_enquiry:
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_ENQUIRIES, null);
-                startActivity(new Intent(requireActivity(), BusinessEnquiryActivity.class));
+                startActivity(new Intent(getActivity(), BusinessEnquiryActivity.class));
                 break;
             case R.id.ll_facebook_chat:
-                startActivity(new Intent(requireActivity(), FacebookChatActivity.class));
+                startActivity(new Intent(getActivity(), FacebookChatActivity.class));
                 break;
             case R.id.ll_third_party_query:
-                startActivity(new Intent(requireActivity(), ThirdPartyQueriesActivity.class));
+                startActivity(new Intent(getActivity(), ThirdPartyQueriesActivity.class));
                 break;
             case R.id.ll_order:
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
-                startActivity(new Intent(requireActivity(), SellerAnalyticsActivity.class));
+                startActivity(new Intent(getActivity(), SellerAnalyticsActivity.class));
                 break;
         }
-        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

@@ -369,7 +369,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             otpViewHolder.etOTPConfirmation.setEnabled(true);
 
             otpViewHolder.etOTPConfirmation.requestFocus();
-            InputMethodManager imm = (InputMethodManager) otpViewHolder.etOTPConfirmation.requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) otpViewHolder.etOTPConfirmation.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(otpViewHolder.etOTPConfirmation, InputMethodManager.SHOW_FORCED);
 
             otpViewHolder.llConfirm.setVisibility(View.VISIBLE);

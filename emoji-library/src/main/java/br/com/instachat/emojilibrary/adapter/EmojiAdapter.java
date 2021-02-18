@@ -42,7 +42,7 @@ public class EmojiAdapter extends ArrayAdapter<Emoji> {
         View view = convertView;
 
         if (view == null) {
-            view = View.inflate(requireContext(), R.layout.rsc_emoji_item, null);
+            view = View.inflate(getContext(), R.layout.rsc_emoji_item, null);
             view.setTag(new ViewHolder(view, this.mUseSystemDefault));
         }
 

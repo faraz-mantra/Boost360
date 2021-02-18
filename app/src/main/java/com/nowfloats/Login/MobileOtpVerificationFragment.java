@@ -52,7 +52,7 @@ public class MobileOtpVerificationFragment extends Fragment {
         tvHint = v.findViewById(R.id.tv_hint_text);
 
         v.findViewById(R.id.im_back_button).setOnClickListener(view -> {
-            requireActivity()().onBackPressed();
+            getActivity().onBackPressed();
         });
 
 

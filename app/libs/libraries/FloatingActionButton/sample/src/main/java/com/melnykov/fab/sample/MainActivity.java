@@ -125,7 +125,7 @@ public class MainActivity extends ActionBarActivity {
             View root = inflater.inflate(R.layout.fragment_listview, container, false);
 
             ListView list = (ListView) root.findViewById(android.R.id.list);
-            ListViewAdapter listAdapter = new ListViewAdapter(requireActivity(),
+            ListViewAdapter listAdapter = new ListViewAdapter(getActivity(),
                 getResources().getStringArray(R.array.countries));
             list.setAdapter(listAdapter);
 
@@ -155,9 +155,9 @@ public class MainActivity extends ActionBarActivity {
             recyclerView.setHasFixedSize(true);
             recyclerView.setItemAnimator(new DefaultItemAnimator());
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView.addItemDecoration(new DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL_LIST));
+            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
-            RecyclerViewAdapter adapter = new RecyclerViewAdapter(requireActivity(), getResources()
+            RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), getResources()
                 .getStringArray(R.array.countries));
             recyclerView.setAdapter(adapter);
 
@@ -181,7 +181,7 @@ public class MainActivity extends ActionBarActivity {
                 TextView textView = (TextView) inflater.inflate(R.layout.list_item, container, false);
                 String[] values = country.split(",");
                 String countryName = values[0];
-                int flagResId = getResources().getIdentifier(values[1], "drawable", requireActivity().getPackageName());
+                int flagResId = getResources().getIdentifier(values[1], "drawable", getActivity().getPackageName());
                 textView.setText(countryName);
                 textView.setCompoundDrawablesWithIntrinsicBounds(flagResId, 0, 0, 0);
 

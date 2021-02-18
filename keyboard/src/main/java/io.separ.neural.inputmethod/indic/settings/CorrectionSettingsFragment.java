@@ -57,7 +57,7 @@ public final class CorrectionSettingsFragment extends SubScreenFragment {
         super.onCreate(icicle);
         addPreferencesFromResource(R.xml.prefs_screen_correction);
 
-        final Context context = requireActivity();
+        final Context context = getActivity();
         final PackageManager pm = context.getPackageManager();
 
         ensureConsistencyOfAutoCorrectionSettings();
@@ -99,7 +99,7 @@ public final class CorrectionSettingsFragment extends SubScreenFragment {
     }
 
     private void overwriteUserDictionaryPreference(final Preference userDictionaryPreference) {
-        final Activity activity = requireActivity();
+        final Activity activity = getActivity();
         final TreeSet<String> localeList = UserDictionaryList.getUserDictionaryLocalesSet(activity);
         if (null == localeList) {
             // The locale list is null if and only if the user dictionary service is

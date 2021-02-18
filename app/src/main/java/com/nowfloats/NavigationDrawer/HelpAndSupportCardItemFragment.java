@@ -143,10 +143,10 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
 
     private void showPremiumAddOnDialog() {
         MaterialDialog dialog = new MaterialDialog.Builder(mContext)
-                .title("Upgrade to Premium Support")
-                .content("You are currently on the default support plan. This gives you access to Boost Care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to Boost Care team by phone, email and chat,\nwith a promise of 1 hour SLA.")
-                .positiveText("View Details")
-                .negativeText("Later")
+                .title(R.string.upgrade_to_premium_support)
+                .content(R.string.you_are_currently_on_the_default_support_plan)
+                .positiveText(getString(R.string.save_data))
+                .negativeText(R.string.later)
                 .positiveColorRes(R.color.primaryColor)
                 .negativeColorRes(R.color.gray_40)
                 .callback(new MaterialDialog.ButtonCallback() {
@@ -159,12 +159,12 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         ProgressDialog progressDialog = new ProgressDialog(requireContext());
-                        String status = "Loading. Please wait...";
+                        String status = getString(R.string.loading_please_wait);
                         progressDialog.setMessage(status);
                         progressDialog.setCancelable(false);
                         progressDialog.show();
-                        UserSessionManager session = new UserSessionManager(requireContext(), getActivity());
-                        Intent intent = new Intent(requireActivity(), UpgradeActivity.class);
+                        UserSessionManager session = new UserSessionManager(getContext(), getActivity());
+                        Intent intent = new Intent(getActivity(), UpgradeActivity.class);
                         intent.putExtra("expCode", session.getFP_AppExperienceCode());
                         intent.putExtra("fpName", session.getFPName());
                         intent.putExtra("fpid", session.getFPID());
@@ -217,7 +217,7 @@ public class HelpAndSupportCardItemFragment extends Fragment implements View.OnC
                 break;
             case R.id.tv_person_email:
                 WebEngageController.trackEvent(SUPPORT_EMAIL, EMAIL_OPTION_IN_ACCOUNT, NULL);
-                Methods.sendEmail(mContext, new String[]{riaSupportModel.getEmail()}, "Need help with Boost360 [" + sessionManager.getFpTag() + " , " + sessionManager.getFP_AppExperienceCode() + "]");
+                Methods.sendEmail(mContext, new String[]{riaSupportModel.getEmail()}, getString(R.string.need_help_with_boost) + sessionManager.getFpTag() + " , " + sessionManager.getFP_AppExperienceCode() + "]");
                 break;
             case R.id.tv_person_number:
                 if(is_premium_support) {

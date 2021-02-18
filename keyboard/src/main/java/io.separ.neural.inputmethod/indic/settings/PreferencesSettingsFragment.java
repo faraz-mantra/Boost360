@@ -44,7 +44,7 @@ public final class PreferencesSettingsFragment extends SubScreenFragment {
         addPreferencesFromResource(R.xml.prefs_screen_preferences);
 
         final Resources res = getResources();
-        final Context context = requireActivity();
+        final Context context = getActivity();
 
         // When we are called from the Settings application but we are not already running, some
         // singleton and utility classes may not have been initialized.  We have to call

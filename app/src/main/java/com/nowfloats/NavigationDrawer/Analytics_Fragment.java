@@ -149,7 +149,7 @@ public class Analytics_Fragment extends Fragment {
     public void onResume() {
 
         //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
-        //getFPDetails(requireActivity(), session.getFPID(), Constants.clientId, bus);
+        //getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
         //enableLockScreen();
 
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
@@ -181,7 +181,7 @@ public class Analytics_Fragment extends Fragment {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (requireActivity() != null && mButtonId != null && mNextNodeId != null) {
+                    if (getActivity() != null && mButtonId != null && mNextNodeId != null) {
                         if (RiaEventLogger.isLastEventCompleted) {
                             mListener.onResponse(mButtonId, mNextNodeId);
                         }
@@ -227,13 +227,13 @@ public class Analytics_Fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-        session = new UserSessionManager(requireActivity(), getActivity());
+        session = new UserSessionManager(getActivity(), getActivity());
         bus = BusProvider.getInstance().getBus();
         pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         onBoardingManager = new OnBoardingManager(getContext());
 //        if(Util.isNullOrEmpty(session.getVisitorsCount()) || Util.isNullOrEmpty(session.getSubcribersCount())){
         try {
-            //GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(requireActivity(), session);
+            //GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(getActivity(), session);
             //visit_subcribersCountAsyncTask.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -260,7 +260,7 @@ public class Analytics_Fragment extends Fragment {
                     }
                 }
                 session.setMapVisitsCount(String.valueOf(totalCount));
-                if (isAdded() && requireActivity() != null) {
+                if (isAdded() && getActivity() != null) {
                     map_progressbar.setVisibility(View.GONE);
                     mapVisitsCount.setVisibility(View.VISIBLE);
                     mapVisitsCount.setText(String.valueOf(totalCount));
@@ -269,7 +269,7 @@ public class Analytics_Fragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                if (isAdded() && requireActivity() != null) {
+                if (isAdded() && getActivity() != null) {
                     map_progressbar.setVisibility(View.GONE);
                 }
             }
@@ -310,9 +310,9 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("SearchQueriesDetailedView", null);
-                Intent q = new Intent(requireActivity(), SearchQueriesActivity.class);
+                Intent q = new Intent(getActivity(), SearchQueriesActivity.class);
                 startActivity(q);
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -322,7 +322,7 @@ public class Analytics_Fragment extends Fragment {
             public void onClick(View v) {
                 Intent i = new Intent(context, BusinessEnquiryActivity.class);
                 startActivity(i);
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -332,10 +332,10 @@ public class Analytics_Fragment extends Fragment {
             public void onClick(View v) {
                 WebEngageController.trackEvent(WEBSITE_VISITS_CHART_DURATION_CHANGED, EVENT_LABEL_NULL, session.getFpTag());
                 MixPanelController.track("OverallVisitsDetailedView", null);
-                Intent q = new Intent(requireActivity(), SiteViewsAnalytics.class);
+                Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
                 q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.TOTAL);
                 startActivity(q);
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         LinearLayout visitorsLinearLayout = rootView.findViewById(R.id.numberOfVisitorsLinearLayout);
@@ -343,10 +343,10 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("UniqueVisitsDetailedView", null);
-                Intent q = new Intent(requireActivity(), SiteViewsAnalytics.class);
+                Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
                 q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.UNIQUE);
                 startActivity(q);
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -356,10 +356,10 @@ public class Analytics_Fragment extends Fragment {
             public void onClick(View v) {
                 WebEngageController.trackEvent(ROI_SUMMARY_ADDRESS_VIEWS, EVENT_LABEL_NULL, session.getFpTag());
                 MixPanelController.track("MapVisitsDetailedView", null);
-                Intent q = new Intent(requireActivity(), SiteViewsAnalytics.class);
+                Intent q = new Intent(getActivity(), SiteViewsAnalytics.class);
                 q.putExtra(VISITS_TYPE, SiteViewsAnalytics.VisitsType.MAP_VISITS);
                 startActivity(q);
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         if (session.getISEnterprise().equals("true")) {
@@ -373,9 +373,9 @@ public class Analytics_Fragment extends Fragment {
                 addSubscription();
                 WebEngageController.trackEvent(ROI_SUMMARY_ADDRESS_VIEWS, EVENT_LABEL_NULL, session.getFpTag());
 
-//                Intent i = new Intent(requireActivity(), SubscribersActivity.class);
+//                Intent i = new Intent(getActivity(), SubscribersActivity.class);
 //                startActivity(i);
-//                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         LinearLayout facebookLayout = rootView.findViewById(R.id.facebook_analytics_layout);
@@ -388,11 +388,11 @@ public class Analytics_Fragment extends Fragment {
                 WebEngageController.trackEvent(SOCIAL_ANALYTICS_DETAILS_FROM_HOME, EVENT_LABEL_NULL, session.getFpTag());
                 int status = pref.getInt("fbPageStatus", 0);
 
-                Intent i = new Intent(requireActivity(), SocialAnalytics.class);
+                Intent i = new Intent(getActivity(), SocialAnalytics.class);
                 i.putExtra("GetStatus", status);
                 startActivity(i);
 
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 // }
             }
         });
@@ -402,11 +402,11 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 WebEngageController.trackEvent(SALES_ANALYTICS, EVENT_LABEL_NULL, session.getFpTag());
-//                Intent i = new Intent(requireActivity(), OrderAnalyticsActivity.class);
-                Intent i = new Intent(requireActivity(), RevenueSummaryActivity.class);
+//                Intent i = new Intent(getActivity(), OrderAnalyticsActivity.class);
+                Intent i = new Intent(getActivity(), RevenueSummaryActivity.class);
                 startActivity(i);
 
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -415,9 +415,9 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 WebEngageController.trackEvent(SEARCH_ANALYTICS, SEARCH_RANKING, session.getFpTag());
-                Intent i = new Intent(requireActivity(), SearchRankingActivity.class);
+                Intent i = new Intent(getActivity(), SearchRankingActivity.class);
                 startActivity(i);
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -426,9 +426,9 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 WebEngageController.trackEvent(WILDFIRE_ANALYTICS, EVENT_LABEL_NULL, session.getFpTag());
-                Intent i = new Intent(requireActivity(), WildFireAdsActivity.class);
+                Intent i = new Intent(getActivity(), WildFireAdsActivity.class);
                 startActivity(i);
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -604,25 +604,25 @@ public class Analytics_Fragment extends Fragment {
             public void onClick(View v) {
 
                 if (vmnTotalCallCount.getVisibility() == View.VISIBLE) {
-                    Intent i = new Intent(requireActivity(), VmnCallCardsActivity.class);
+                    Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
                     startActivity(i);
-                    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else {
                     Toast.makeText(context, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
                 }
 
 //                if (isVmnEnable) {
 //                    if (vmnTotalCallCount.getVisibility() == View.VISIBLE) {
-//                        Intent i = new Intent(requireActivity(), VmnCallCardsActivity.class);
+//                        Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
 //                        startActivity(i);
-//                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                    } else {
 //                        Toast.makeText(context, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
 //                    }
 //                } else {
-//                    Intent i = new Intent(requireActivity(), VmnNumberRequestActivity.class);
+//                    Intent i = new Intent(getActivity(), VmnNumberRequestActivity.class);
 //                    startActivity(i);
-//                    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                }
 
             }
@@ -632,10 +632,10 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (vmnTotalCustomerCount.getVisibility() == View.VISIBLE) {
-//                    Intent i = new Intent(requireActivity(), VmnCallCardsActivity.class);
-                    Intent i = new Intent(requireActivity(), OrderSummaryActivity.class);
+//                    Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                    Intent i = new Intent(getActivity(), OrderSummaryActivity.class);
                     startActivity(i);
-                    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else {
                     Toast.makeText(context, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
                 }
@@ -658,7 +658,7 @@ public class Analytics_Fragment extends Fragment {
 //        Map<String, String> query = new HashMap<>();
 //        query.put("fpTag", session.getFpTag());
 //        try {
-//            query.put("appVersion", requireActivity().getPackageManager().getPackageInfo(requireActivity().getPackageName(), 0).versionName);
+//            query.put("appVersion", getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName);
 //        } catch (PackageManager.NameNotFoundException e) {
 //            e.printStackTrace();
 //        }
@@ -678,7 +678,7 @@ public class Analytics_Fragment extends Fragment {
 //        networkInterface.getRiaCards(query, new Callback<ArrayList<RiaCardModel>>() {
 //            @Override
 //            public void success(ArrayList<RiaCardModel> riaCardModels, Response response) {
-//                if (riaCardModels != null && requireActivity() != null && riaCardModels.size() > 0) {
+//                if (riaCardModels != null && getActivity() != null && riaCardModels.size() > 0) {
 //                    cvRiaCard.setVisibility(View.VISIBLE);
 //                    drawRiaCards(riaCardModels);
 //                    bus.post(riaCardModels);
@@ -739,14 +739,14 @@ public class Analytics_Fragment extends Fragment {
                         cvRiaCard.setVisibility(View.GONE);
                         bus.post(new ArrayList<RiaCardModel>());
                     } else if (btnSingle.getButtonType().equals(BUTTON_TYPE_OPEN_URL)) {
-                        Intent intent = new Intent(requireActivity(), RiaWebViewActivity.class);
+                        Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
                         intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnSingle.getUrl());
                         intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnSingle.getId(),
                                 btnSingle.getButtonText()));
                         mButtonId = btnSingle.getId();
                         mNextNodeId = btnSingle.getNextNodeId();
                         startActivity(intent);
-                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
                     RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
                             btnSingle.getId(), btnSingle.getButtonText());
@@ -774,14 +774,14 @@ public class Analytics_Fragment extends Fragment {
                         cvRiaCard.setVisibility(View.GONE);
                         bus.post(new ArrayList<RiaCardModel>());
                     } else if (btnLeft.getButtonType().equals(BUTTON_TYPE_OPEN_URL)) {
-                        Intent intent = new Intent(requireActivity(), RiaWebViewActivity.class);
+                        Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
                         intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnLeft.getUrl());
                         intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
                                 btnLeft.getButtonText()));
                         mButtonId = btnLeft.getId();
                         mNextNodeId = btnLeft.getNextNodeId();
                         startActivity(intent);
-                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
                     RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
                             btnLeft.getId(), btnLeft.getButtonText());
@@ -806,14 +806,14 @@ public class Analytics_Fragment extends Fragment {
                         cvRiaCard.setVisibility(View.GONE);
                         bus.post(new ArrayList<RiaCardModel>());
                     } else if (btnRight.getButtonType().equals(BUTTON_TYPE_OPEN_URL)) {
-                        Intent intent = new Intent(requireActivity(), RiaWebViewActivity.class);
+                        Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
                         intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnRight.getUrl());
                         intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnRight.getId(),
                                 btnRight.getButtonText()));
                         mButtonId = btnRight.getId();
                         mNextNodeId = btnRight.getNextNodeId();
                         startActivity(intent);
-                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
                     RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
                             btnRight.getId(), btnRight.getButtonText());
@@ -849,7 +849,7 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void attachText(Section widget, LinearLayout llRiaCardSections) {
-        if (requireActivity() == null) return;
+        if (getActivity() == null) return;
         TextView tv = new TextView(getActivity());
         tv.setText(Methods.fromHtml(widget.getText()));
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -860,11 +860,11 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void attachGraph(Section widget, LinearLayout llRiaCardSections) {
-        if (requireActivity() == null) return;
+        if (getActivity() == null) return;
         LinearLayout graph = new LinearLayout(getActivity());
         graph.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         graph.setGravity(Gravity.CENTER_VERTICAL);
-        VerticalTextView yAxisName = new VerticalTextView(requireActivity(), null);
+        VerticalTextView yAxisName = new VerticalTextView(getActivity(), null);
         yAxisName.setText(widget.getY().getLabel());
         yAxisName.setTextSize(dpToPx(4));
         yAxisName.setRotation(180);
@@ -896,7 +896,7 @@ public class Analytics_Fragment extends Fragment {
                 }
                 BarDataSet dataSet = new BarDataSet(dataEntry, null);
                 //dataSet.setDrawFilled(true);
-                dataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.primary));
+                dataSet.setColor(ContextCompat.getColor(getActivity(), R.color.primary));
                 dataSet.setValueTextSize(10);
                 dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 //                dataSets.add(dataSet);
@@ -960,9 +960,9 @@ public class Analytics_Fragment extends Fragment {
                 //dataSet.setFillColor(Color.parseColor("#33ffb900"));
                 dataSet.setValueTextSize(10);
                 dataSet.setDrawFilled(true);
-                dataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.primaryColor));
-                dataSet.setCircleColor(ContextCompat.getColor(requireActivity(), R.color.primaryColor));
-                dataSet.setCircleColorHole(ContextCompat.getColor(requireActivity(), R.color.primaryColor));
+                dataSet.setColor(ContextCompat.getColor(getActivity(), R.color.primaryColor));
+                dataSet.setCircleColor(ContextCompat.getColor(getActivity(), R.color.primaryColor));
+                dataSet.setCircleColorHole(ContextCompat.getColor(getActivity(), R.color.primaryColor));
                 dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 //                dataSets.add(dataSet);
             }
@@ -1000,7 +1000,7 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private int dpToPx(int dp) {
-        DisplayMetrics displayMetrics = requireContext().getResources().getDisplayMetrics();
+        DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
@@ -1028,7 +1028,7 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void attachImage(Section widget, LinearLayout llRiaCardSections) {
-        if (requireActivity() == null) return;
+        if (getActivity() == null) return;
         ImageView iv = new ImageView(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(150));
         lp.setMargins(0, 0, 0, dpToPx(15));
@@ -1124,9 +1124,9 @@ public class Analytics_Fragment extends Fragment {
 
 
     private void openSubscriberActivity() {
-        Intent i = new Intent(requireActivity(), SubscribersActivity.class);
+        Intent i = new Intent(getActivity(), SubscribersActivity.class);
         startActivity(i);
-        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void addSubscription() {
@@ -1140,7 +1140,7 @@ public class Analytics_Fragment extends Fragment {
             String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SUBSCRIPTION, WidgetKey.WIDGET_PROPERTY_SUBSCRIPTION);
 
             if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
-                Toast.makeText(requireContext(), getString(R.string.message_feature_not_available), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.message_feature_not_available), Toast.LENGTH_LONG).show();
             } else {
                 WebEngageController.trackEvent(SUBSCRIBERS, EVENT_LABEL_NULL, session.getFpTag());
                 openSubscriberActivity();

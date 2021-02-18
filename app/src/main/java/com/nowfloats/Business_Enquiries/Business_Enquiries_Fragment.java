@@ -56,7 +56,7 @@ public class Business_Enquiries_Fragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    activity = requireActivity();
+    activity = getActivity();
     bus = BusProvider.getInstance().getBus();
     session = new UserSessionManager(activity.getApplicationContext(), activity);
   }

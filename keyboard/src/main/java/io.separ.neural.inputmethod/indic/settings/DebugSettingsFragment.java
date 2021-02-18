@@ -69,7 +69,7 @@ public final class DebugSettingsFragment extends SubScreenFragment
         final PreferenceGroup dictDumpPreferenceGroup =
                 (PreferenceGroup)findPreference(PREF_KEY_DUMP_DICTS);
         for (final String dictName : DictionaryFacilitator.DICT_TYPE_TO_CLASS.keySet()) {
-            final Preference pref = new DictDumpPreference(requireActivity(), dictName);
+            final Preference pref = new DictDumpPreference(getActivity(), dictName);
             pref.setOnPreferenceClickListener(this);
             dictDumpPreferenceGroup.addPreference(pref);
         }
@@ -110,7 +110,7 @@ public final class DebugSettingsFragment extends SubScreenFragment
 
     @Override
     public boolean onPreferenceClick(final Preference pref) {
-        final Context context = requireActivity();
+        final Context context = getActivity();
         if (pref == mReadExternalDictionaryPref) {
             ExternalDictionaryGetterForDebug.chooseAndInstallDictionary(context);
             mServiceNeedsRestart = true;

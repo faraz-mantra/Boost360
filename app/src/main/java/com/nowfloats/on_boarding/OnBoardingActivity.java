@@ -257,7 +257,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
             if (progressDialog != null && progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
-            Toast.makeText(OnBoardingActivity.this, "Failed to connect account. Please try again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(OnBoardingActivity.this, getString(R.string.failed_to_connect_account_please_try_again), Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -302,7 +302,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
     }
 
     private void startPhoneNumberAuth(String phoneNumber, boolean gotoNextPage) {
-        progressDialog = ProgressDialog.show(this, "", "Loading");
+        progressDialog = ProgressDialog.show(this, "", getString(R.string.loading_));
 
         customFirebaseAuthHelpers = new CustomFirebaseAuthHelpers(this, customFirebaseAuthListeners, session.getFPID());
 
@@ -338,7 +338,7 @@ public class OnBoardingActivity extends AppCompatActivity implements OnBoardingA
     }
 
     private void submitUserOtp(String otp) {
-        progressDialog = ProgressDialog.show(this, "", "Loading");
+        progressDialog = ProgressDialog.show(this, "", getString(R.string.loading_));
         customFirebaseAuthHelpers.phoneAuthVerification(otp);
     }
 

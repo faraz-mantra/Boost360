@@ -66,7 +66,7 @@ public class DemoActivity extends Activity {
                                "Menu with custom animation",
                                "Menu in ScrollView"
                             };
-            ArrayAdapter<String> simpleAdapter = new ArrayAdapter<String>(requireActivity(), android.R.layout.simple_list_item_1, items);
+            ArrayAdapter<String> simpleAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items);
             demosListView = (ListView) rootView.findViewById(R.id.demosListView);
             demosListView.setAdapter(simpleAdapter);
             demosListView.setOnItemClickListener(this);
@@ -77,16 +77,16 @@ public class DemoActivity extends Activity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (position) {
                 case 0:
-                    startActivity(new Intent(requireActivity(), MenuWithFABActivity.class));
+                    startActivity(new Intent(getActivity(), MenuWithFABActivity.class));
                     break;
                 case 1:
-                    startActivity(new Intent(requireActivity(), MenuWithCustomActionButtonActivity.class));
+                    startActivity(new Intent(getActivity(), MenuWithCustomActionButtonActivity.class));
                     break;
                 case 2:
-                    startActivity(new Intent(requireActivity(), MenuWithCustomAnimationActivity.class));
+                    startActivity(new Intent(getActivity(), MenuWithCustomAnimationActivity.class));
                     break;
                 case 3:
-                    startActivity(new Intent(requireActivity(), MenuInScrollViewActivity.class));
+                    startActivity(new Intent(getActivity(), MenuInScrollViewActivity.class));
                     break;
             }
         }

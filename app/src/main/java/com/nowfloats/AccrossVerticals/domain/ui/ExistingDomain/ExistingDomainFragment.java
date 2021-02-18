@@ -61,7 +61,7 @@ public class ExistingDomainFragment extends Fragment {
         vmnProgressBar.setIndeterminate(true);
         vmnProgressBar.setMessage(getString(R.string.please_wait));
         vmnProgressBar.setCancelable(false);
-        session = new UserSessionManager(requireContext(), requireActivity());
+        session = new UserSessionManager(getContext(), requireActivity());
         confirmButton = view.findViewById(R.id.confirm_btn);
         cancleButton = view.findViewById(R.id.cancel_button);
         radioButton1 = view.findViewById(R.id.radio_button1);
@@ -130,7 +130,7 @@ public class ExistingDomainFragment extends Fragment {
         cancleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().onBackPressed();
+                getActivity().onBackPressed();
             }
         });
 
@@ -149,7 +149,7 @@ public class ExistingDomainFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().onBackPressed();
+                getActivity().onBackPressed();
             }
         });
     }
@@ -176,18 +176,18 @@ public class ExistingDomainFragment extends Fragment {
                     public void success(Boolean status, Response response) {
                         hideProgress();
                         if (response.getStatus() == 200) {
-                            Methods.showSnackBarPositive(requireActivity(), getString(R.string.request_successfully));
-                            requireActivity().onBackPressed();
+                            Methods.showSnackBarPositive(getActivity(), getString(R.string.request_successfully));
+                            getActivity().onBackPressed();
                             onDomainAddedOrUpdated(true);
                         } else {
-                            Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong));
+                            Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
                         }
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         hideProgress();
-                        Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong));
+                        Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
                     }
                 });
             }
@@ -205,13 +205,13 @@ public class ExistingDomainFragment extends Fragment {
     private boolean validate() {
         if(radioButton1.isChecked()){
             if(domainName.getText().toString().isEmpty()){
-                Toast.makeText(requireContext(), getString(R.string.domain_details_field_is_empty), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.domain_details_field_is_empty), Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
         if(radioButton2.isChecked()){
             if(subdomainDescription.getText().toString().isEmpty()){
-                Toast.makeText(requireContext(),getString(R.string.message_field_is_empty), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),getString(R.string.message_field_is_empty), Toast.LENGTH_SHORT).show();
                 return false;
             }
         }

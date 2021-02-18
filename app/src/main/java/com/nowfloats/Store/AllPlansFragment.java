@@ -68,7 +68,7 @@ public class AllPlansFragment extends Fragment {
         vpPricingPlans.setPageMargin(24);
         vpPricingPlans.setPadding(68, 8, 68, 8);
         vpPricingPlans.setOffscreenPageLimit(3);
-        pricingPagerAdapter = new PricingPlansPagerAdapter(requireActivity().getSupportFragmentManager(), mBasePlans, mTopUps);
+        pricingPagerAdapter = new PricingPlansPagerAdapter(getActivity().getSupportFragmentManager(), mBasePlans, mTopUps);
         vpPricingPlans.setAdapter(pricingPagerAdapter);
         TabLayout tabLayout = view.findViewById(R.id.tabDots);
         if (mBasePlans != null && mBasePlans.size() > 1) {
@@ -111,17 +111,17 @@ public class AllPlansFragment extends Fragment {
             public void onClick(View v) {
 
                 MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
-                Intent i = new Intent(requireActivity(), BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") ? ProductCheckout_v2Activity.class : ProductCheckoutActivity.class);
+                Intent i = new Intent(getActivity(), BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats") ? ProductCheckout_v2Activity.class : ProductCheckoutActivity.class);
                 i.putExtra("package_ids", new String[]{mBasePlans.get(vpPricingPlans.getCurrentItem()).getId()});
                 startActivityForResult(i, DIRECT_REQUEST_CODE);
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
         if (materialProgress == null) {
             materialProgress = new MaterialDialog.Builder(getActivity())
                     .widgetColorRes(R.color.accentColor)
-                    .content("Please Wait...")
+                    .content(getString(R.string.please_wait_))
                     .progress(true, 0)
                     .cancelable(false)
                     .build();
@@ -152,7 +152,7 @@ public class AllPlansFragment extends Fragment {
 //                if (TextUtils.isEmpty(status)) {
 //                    String msg = "Sorry! \n" +
 //                            "SomeThing went wrong. To retry, please go to the Store and pay again.";
-//                    Methods.showDialog(requireActivity(), status, msg);
+//                    Methods.showDialog(getActivity(), status, msg);
 //                } else if (status.equals("Success")) {
 //
 //                    MixPanelController.track(EventKeysWL.PAYMENT_SUCCESSFULL, null);
@@ -167,15 +167,15 @@ public class AllPlansFragment extends Fragment {
 //                if (TextUtils.isEmpty(status)) {
 //                    String msg = "Sorry! \n" +
 //                            "SomeThing went wrong. To retry, please go to the Store and pay again.";
-//                    Methods.showDialog(requireActivity(), status, msg);
+//                    Methods.showDialog(getActivity(), status, msg);
 //                } else if (status.equals("Pending")) {
 //                    String msg = "Alert! \n" +
 //                            "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours";
-//                    Methods.showDialog(requireActivity(), status, msg);
+//                    Methods.showDialog(getActivity(), status, msg);
 //                } else if (status.equals("Failure")) {
 //                    String msg = "Sorry! \n" +
 //                            "This transaction failed. To retry, please go to the Store and pay again.";
-//                    Methods.showDialog(requireActivity(), status, msg);
+//                    Methods.showDialog(getActivity(), status, msg);
 //                }
 //            }
         }
@@ -191,23 +191,23 @@ public class AllPlansFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    if (response.getString("Result").equals("SUCCESS")) {
+                    if (response.getString(getString(R.string.result)).equals("SUCCESS")) {
                         if (materialProgress != null) {
                             materialProgress.dismiss();
                         }
                         if (!showTobeActivatedOn) {
-                            String msg = "Thank you! \n" +
-                                    "The Transaction ID for your transaction is " + transactionId + ". Your package will be activated within 24 hours.";
-                            Methods.showDialog(requireActivity(), status, msg);
+                            String msg = getString(R.string.thank_you) +
+                                    getString(R.string.the_transaction_id_for_your_transaction_is) + transactionId + getString(R.string.your_package_will_be_activated);
+                            Methods.showDialog(getActivity(), status, msg);
                         }
 
                     } else {
                         if (pollCount < 5) {
                             pollServerForStatus(transactionId, paymentid, status, showTobeActivatedOn, tobeActivatedOn, pollCount + 1);
                         } else {
-                            String msg = "Alert! \n" +
-                                    "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours.";
-                            Methods.showDialog(requireActivity(), status, msg);
+                            String msg = getString(R.string.alert_) +
+                                    getString(R.string.your_payment_is_pending);
+                            Methods.showDialog(getActivity(), status, msg);
                         }
 
                     }
@@ -221,9 +221,9 @@ public class AllPlansFragment extends Fragment {
         }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String msg = "Your PaymentId is: " + paymentid + ". Please Contact Customer Support.";
+                String msg = getString(R.string.your_payment_id_is) + paymentid + getString(R.string.please_contact_customer_support);
                 materialProgress.dismiss();
-                Methods.showDialog(requireActivity(), status, msg);
+                Methods.showDialog(getActivity(), status, msg);
             }
         });
         AppController.getInstance().addToRequstQueue(request);
@@ -242,6 +242,6 @@ public class AllPlansFragment extends Fragment {
     public void onStop() {
         super.onStop();
         pricingPagerAdapter = null;
-        Log.d("AllFrags", requireActivity().getSupportFragmentManager().getFragments().size() + "");
+        Log.d("AllFrags", getActivity().getSupportFragmentManager().getFragments().size() + "");
     }
 }

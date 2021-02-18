@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
  */
 
 public interface UrlToBitmapInterface {
-    Context requireContext();
+    Context getContext();
 
     void onResourcesReady(Bitmap bitmap, String text, String imageId);
 

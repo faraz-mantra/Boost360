@@ -147,7 +147,7 @@
   <string name="bank_account_added">Bank account added</string>
   <string name="are_you_sure">Are you sure?</string>
   <string name="cancel">Cancel</string>
-  <string name="@string/delete_">Delete</string>
+  <string name="delete_" translatable="false">Delete</string>
   <string name="enter_service_name">Enter service name</string>
   <string name="enter_product_name">Enter product name</string>
   <string name="enter_category_catalog_product">Please add product category</string>
@@ -409,6 +409,9 @@
   <string name="account_alias">Account Alias</string>
   <string name="bank_branch_required">Bank Branch*</string>
   <string name="why_do_we_need_your_bank_account_required">Why do we need your bank account?</string>
+  <string name="storage_permission" translatable="false">Storage Permission</string>
+  <string name="please_provide_the_storage_permissions_to_proceed" translatable="false">Please provide the storage permissions to proceed</string>
+  <string name="please_provide_the_camera_permission_to_proceed" translatable="false">Please provide the camera permission to proceed</string>
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>

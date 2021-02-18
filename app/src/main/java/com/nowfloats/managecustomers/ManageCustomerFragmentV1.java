@@ -81,7 +81,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = requireActivity();
+        activity = getActivity();
     }
 
     @Override
@@ -102,7 +102,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
         rvManageCustomers = (RecyclerView) mainView.findViewById(R.id.rvManageCustomers);
         bubbleOverlay = (LinearLayout) mainView.findViewById(R.id.floating_bubble_overlay);
 
-        final LinearLayoutManager manager = new LinearLayoutManager(requireActivity()
+        final LinearLayoutManager manager = new LinearLayoutManager(getActivity()
                 , LinearLayoutManager.VERTICAL, false);
         rvManageCustomers.setLayoutManager(manager);
         rvManageCustomers.setAdapter(manageCustomerAdapter = new ManageCustomerAdapter());
@@ -115,10 +115,10 @@ public class ManageCustomerFragmentV1 extends Fragment {
         super.onStop();
         bus.unregister(this);
 
-        /*if (requireActivity() == null) return;
+        /*if (getActivity() == null) return;
         if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-            requireActivity().stopService(new Intent(requireActivity(), BubblesService.class));
-            requireActivity().unregisterReceiver(clickReceiver);
+            getActivity().stopService(new Intent(getActivity(), BubblesService.class));
+            getActivity().unregisterReceiver(clickReceiver);
         }*/
     }
 
@@ -127,7 +127,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
         super.onStart();
         bus.register(this);
        /* if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-            requireActivity().registerReceiver(clickReceiver, clickIntentFilters);
+            getActivity().registerReceiver(clickReceiver, clickIntentFilters);
         }
 */
         if (manageCustomerAdapter != null)
@@ -182,8 +182,8 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
                         manageCustomerHolder.tvThree.setVisibility(View.VISIBLE);
                         manageCustomerHolder.tvTitle.setText("Website\nCustomers");
-                        manageCustomerHolder.tvTwo.setText(requireActivity().getString(R.string.enquiries_title));
-                        manageCustomerHolder.tvOne.setText(requireActivity().getString(R.string.subscriptions));
+                        manageCustomerHolder.tvTwo.setText(getActivity().getString(R.string.enquiries_title));
+                        manageCustomerHolder.tvOne.setText(getActivity().getString(R.string.subscriptions));
                         manageCustomerHolder.tvThree.setText("Calls");
 
                         manageCustomerHolder.tvThree.setOnClickListener(new View.OnClickListener() {
@@ -199,9 +199,9 @@ public class ManageCustomerFragmentV1 extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_ENQUIRIES, null);
-                                Intent i = new Intent(requireActivity(), BusinessEnquiryActivity.class);
+                                Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
                                 startActivity(i);
-                                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
                         });
 
@@ -209,9 +209,9 @@ public class ManageCustomerFragmentV1 extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 MixPanelController.track(EventKeysWL.SIDE_PANEL_SUBSCRIBERS, null);
-                                Intent i = new Intent(requireActivity(), SubscribersActivity.class);
+                                Intent i = new Intent(getActivity(), SubscribersActivity.class);
                                 startActivity(i);
-                                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
                         });
 
@@ -241,9 +241,9 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent i = new Intent(requireActivity(), FacebookChatActivity.class);
+                                Intent i = new Intent(getActivity(), FacebookChatActivity.class);
                                 startActivity(i);
-                                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
                         });
 
@@ -253,9 +253,9 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent i = new Intent(requireActivity(), FacebookChatActivity.class);
+                                Intent i = new Intent(getActivity(), FacebookChatActivity.class);
                                 startActivity(i);
-                                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
                             }
                         });
@@ -285,8 +285,8 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         manageCustomerHolder.tvTwo.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                startActivity(new Intent(requireActivity(), ThirdPartyQueriesActivity.class));
-                                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                startActivity(new Intent(getActivity(), ThirdPartyQueriesActivity.class));
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 //enableCustomerAssistant();
                             }
                         });
@@ -299,8 +299,8 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                startActivity(new Intent(requireActivity(), ThirdPartyQueriesActivity.class));
-                                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                startActivity(new Intent(getActivity(), ThirdPartyQueriesActivity.class));
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
                         });
                        /* if (session.isBoostBubbleEnabled() || Methods.hasOverlayPerm(getActivity())) {
@@ -322,7 +322,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                             manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    startActivity(new Intent(requireActivity(), ThirdPartyQueriesActivity.class));
+                                    startActivity(new Intent(getActivity(), ThirdPartyQueriesActivity.class));
                                     //enableCustomerAssistant();
                                 }
                             });
@@ -381,13 +381,13 @@ public class ManageCustomerFragmentV1 extends Fragment {
             final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
 
             if (isVmnEnable) {
-                Intent i = new Intent(requireActivity(), VmnCallCardsActivity.class);
+                Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
                 startActivity(i);
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             } else if ((TextUtils.isDigitsOnly(paymentState) && "1".equalsIgnoreCase(paymentState))) {
-                Intent i = new Intent(requireActivity(), VmnNumberRequestActivity.class);
+                Intent i = new Intent(getActivity(), VmnNumberRequestActivity.class);
                 startActivity(i);
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             } else {
                 Methods.showFeatureNotAvailDialog(getActivity());
                 // show first buy lighthouse
@@ -502,7 +502,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     manageCustomerHolder.rlRevealLayout.setVisibility(View.INVISIBLE);
-                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.transparent));
+                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.transparent));
                 }
             });
             anim.start();
@@ -515,7 +515,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     manageCustomerHolder.rlRevealLayout.setVisibility(View.INVISIBLE);
-                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.transparent));
+                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.transparent));
                 }
             });
             anim.start();
@@ -542,7 +542,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
         getProducts();
 
-        if ((android.os.Build.VERSION.SDK_INT >= 23 && requireActivity() != null && !Settings.canDrawOverlays(getActivity()))
+        if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
                 || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
             session.setBubbleTime(-1);
 
@@ -562,9 +562,9 @@ public class ManageCustomerFragmentV1 extends Fragment {
             session.setBubbleStatus(true);
             if (Methods.hasOverlayPerm(getActivity())) {
 
-                if (!Methods.isMyServiceRunning(requireActivity(), CustomerAssistantService.class)) {
-                    Intent bubbleIntent = new Intent(requireActivity(), CustomerAssistantService.class);
-                    requireActivity().startService(bubbleIntent);
+                if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
+                    Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
+                    getActivity().startService(bubbleIntent);
                 }
             }
 
@@ -601,16 +601,16 @@ public class ManageCustomerFragmentV1 extends Fragment {
                     public void onClick(View v) {
                         materialDialog.dismiss();
                         if (!pref.getBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false)) {
-                            startActivity(new Intent(requireActivity(), BubbleInAppDialog.class));
+                            startActivity(new Intent(getActivity(), BubbleInAppDialog.class));
                         } else {
                             MixPanelController.track(MixPanelController.WHATS_APP_DIALOG_CLICKED, null);
                             try {
-                                Intent launchIntent = requireActivity().getPackageManager().
+                                Intent launchIntent = getActivity().getPackageManager().
                                         getLaunchIntentForPackage(DataAccessibilityServiceV8.PK_NAME_WHATSAPP);
                                 startActivity(launchIntent);
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Toast.makeText(requireActivity(), "Problem to open whatsApp", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Problem to open whatsApp", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -620,7 +620,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                     @Override
                     public void onClick(View v) {
                         materialDialog.dismiss();
-                        Intent intent = new Intent(requireActivity(), CustomerAssistantActivity.class);
+                        Intent intent = new Intent(getActivity(), CustomerAssistantActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                     }
@@ -670,7 +670,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
     }
 
     public void checkOverlay(Home_Fragment_Tab.DrawOverLay from) {
-        if (!isAdded() || requireActivity() == null) {
+        if (!isAdded() || getActivity() == null) {
             return;
         }
 
@@ -695,7 +695,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
     }
 
     private void checkForAccessibility() {
-        if (requireActivity() == null) return;
+        if (getActivity() == null) return;
         if (!Methods.isAccessibilitySettingsOn(getActivity())) {
             showBubble();
         }
@@ -711,7 +711,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
 //        }
 
         int px = Methods.dpToPx(80, getActivity());
-        Intent intent = new Intent(requireActivity(), BubblesService.class);
+        Intent intent = new Intent(getActivity(), BubblesService.class);
         intent.putExtra(Key_Preferences.BUBBLE_POS_Y, px);
         intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
         activity.startService(intent);
@@ -732,7 +732,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
     }
 
     private void dialogForOverlayPath(Home_Fragment_Tab.DrawOverLay from) {
-        if (requireActivity() == null || !isAdded()) return;
+        if (getActivity() == null || !isAdded()) return;
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_bubble_overlay_permission, null);
         ImageView image = (ImageView) view.findViewById(R.id.gif_image);
         try {
@@ -766,14 +766,14 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
     private void requestOverlayPermission() {
 
-        if (requireActivity() == null) {
+        if (getActivity() == null) {
             return;
         }
 
         MixPanelController.track(MixPanelController.BUBBLE_OVERLAY_PERM, null);
         if (android.os.Build.VERSION.SDK_INT >= 23) {
 
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + requireActivity().getPackageName()));
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
             startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
         } else {
             startActivity(new Intent(Settings.ACTION_SETTINGS));
@@ -790,7 +790,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
 //                public void run() {
 //                    if (android.os.Build.VERSION.SDK_INT >= 23) {
 //
-//                        if (requireActivity() != null && Settings.canDrawOverlays(getActivity())) {
+//                        if (getActivity() != null && Settings.canDrawOverlays(getActivity())) {
 //
 //                            if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
 //                                checkCustomerAssistantService();
@@ -806,11 +806,11 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
     /*private void checkCustomerAssistantService() {
 
-        if (!Methods.isMyServiceRunning(requireActivity(), CustomerAssistantService.class)) {
-            Intent bubbleIntent = new Intent(requireActivity(), CustomerAssistantService.class);
-            requireActivity().startService(bubbleIntent);
+        if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
+            Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
+            getActivity().startService(bubbleIntent);
         }
-        requireActivity().sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
+        getActivity().sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }
 
     BroadcastReceiver clickReceiver = new BroadcastReceiver() {

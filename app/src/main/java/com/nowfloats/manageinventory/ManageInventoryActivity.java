@@ -52,9 +52,9 @@ public class ManageInventoryActivity extends AppCompatActivity {
         tvPaymentSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                    Intent i = new Intent(requireActivity(), BusinessEnquiryActivity.class);
+//                    Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
 //                    startActivity(i);
-//                    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         tvProductGallery.setOnClickListener(new View.OnClickListener() {

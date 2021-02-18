@@ -67,9 +67,9 @@ public class Card_Full_View_Fragment extends Fragment {
         View mainView = inflater.inflate(R.layout.fragment_card_full_view, container, false);
         Bundle bundle = getArguments();
 
-        Typeface robotoLight = Typeface.createFromAsset(requireActivity().getAssets(), "Roboto-Light.ttf");
+        Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
 
-        Typeface robotoMedium = Typeface.createFromAsset(requireActivity().getAssets(), "Roboto-Medium.ttf");
+        Typeface robotoMedium = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf");
 
 
         ((Card_Full_View_MainActivity) getActivity()).setActionBarTitle(getString(R.string.home));
@@ -108,13 +108,13 @@ public class Card_Full_View_Fragment extends Fragment {
 //                Intent shareIntent=new Intent();
 //                shareIntent.setAction(Intent.ACTION_SEND);
 //                shareIntent.setType("text/plain");
-//                List<ResolveInfo> resInfos=requireActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
+//                List<ResolveInfo> resInfos=getActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
 //                if(!resInfos.isEmpty()) {
 //                    System.out.println("Have package");
 //                    for (ResolveInfo resInfo : resInfos) {
 //                        String packageName = resInfo.activityInfo.packageName;
 //                        Log.i("Package Name", packageName);
-//                        if (packageName.contains("com.twitter.android") || packageName.contains("com.facebook.katana") || packageName.contains("com.instagram.android")) {
+//                        if (packageName.contains("com.twitter.android") || packageName.contains(getString(R.string.facebook_package)) || packageName.contains("com.instagram.android")) {
 //                            Intent intent = new Intent();
 //                            intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
 //                            intent.setAction(Intent.ACTION_SEND);
@@ -272,20 +272,20 @@ public class Card_Full_View_Fragment extends Fragment {
 
             final String[] INTENT_FILTER = new String[] {
                     "com.twitter.android",
-                    "com.facebook.katana"
+                    getString(R.string.facebook_package)
             };
 
             List<Intent> targetShareIntents=new ArrayList<Intent>();
             Intent shareIntent=new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
-            List<ResolveInfo> resInfos=requireActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
+            List<ResolveInfo> resInfos=getActivity().getPackageManager().queryIntentActivities(shareIntent, 0);
             if(!resInfos.isEmpty()) {
                 System.out.println("Have package");
                 for (ResolveInfo resInfo : resInfos) {
                     String packageName = resInfo.activityInfo.packageName;
                     Log.i("Package Name", packageName);
-                    if (packageName.contains("com.twitter.android") || packageName.contains("com.facebook.katana") || packageName.contains("com.instagram.android")) {
+                    if (packageName.contains("com.twitter.android") || packageName.contains(getString(R.string.facebook_package)) || packageName.contains("com.instagram.android")) {
                         Intent intent = new Intent();
                         intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
                         intent.setAction(Intent.ACTION_SEND);
@@ -319,7 +319,7 @@ public class Card_Full_View_Fragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        requireActivity().setTitle("Home");
+        getActivity().setTitle("Home");
 
     }
 
@@ -418,11 +418,11 @@ public class Card_Full_View_Fragment extends Fragment {
             }
 
         });
-        MessageTag_Async_Task tag = new MessageTag_Async_Task(requireActivity(),messageTag,msgID);
+        MessageTag_Async_Task tag = new MessageTag_Async_Task(getActivity(),messageTag,msgID);
         tag.execute();
 
-        Typeface myCustomFont = Typeface.createFromAsset(requireActivity().getAssets(), "Roboto-Light.ttf");
-        Typeface myCustomFont_Medium = Typeface.createFromAsset(requireActivity().getAssets(), "Roboto-Medium.ttf");
+        Typeface myCustomFont = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
+        Typeface myCustomFont_Medium = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf");
         String baseName = "";
 
         mainTextView.setTypeface(myCustomFont);

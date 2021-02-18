@@ -80,7 +80,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
     }
 
     private void initializeControls(View v) {
-        displayMetrics = requireActivity()().getResources().getDisplayMetrics();
+        displayMetrics = getActivity().getResources().getDisplayMetrics();
         ivStart = (LinearLayout) v.findViewById(R.id.ivStart);
         ivRia = (LinearLayout) v.findViewById(R.id.ivRia);
         ivBack = (ImageView) v.findViewById(R.id.ivBack);
@@ -104,7 +104,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
     }
 
     private void createAnimation() {
-        animationTool = new AnimationTool(requireActivity()());
+        animationTool = new AnimationTool(requireActivity());
         animationTool.setVisbilityStatus(isBackPress);
         animationTool.setListener(this);
     }
@@ -306,7 +306,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
                     new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Animation animation = AnimationUtils.loadAnimation(requireActivity()(),R.anim.fadein);
+                            Animation animation = AnimationUtils.loadAnimation(getActivity(),R.anim.fadein);
                             animation.setDuration(200);
                             ivStart.startAnimation(animation);
 
@@ -335,7 +335,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
     private void leftAnimation() {
 
         ivRiaZoomLeft.setVisibility(View.VISIBLE);
-        Animation leftAnimation = AnimationUtils.loadAnimation(requireActivity()(), R.anim.ria_circle_left_out);
+        Animation leftAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_left_out);
         ivRiaZoomLeft.setAnimation(leftAnimation);
         leftAnimation.setAnimationListener(new Animation.AnimationListener() {
             int i = 0;
@@ -353,10 +353,10 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
                 } else {
                     if (i == 0) {
                         i = 1;
-                        animation = AnimationUtils.loadAnimation(requireActivity()(), R.anim.ria_circle_left_in);
+                        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_left_in);
                     } else {
                         i = 0;
-                        animation = AnimationUtils.loadAnimation(requireActivity()(), R.anim.ria_circle_left_out);
+                        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_left_out);
                     }
                     ivRiaZoomLeft.setAnimation(animation);
                     animation.setAnimationListener(this);
@@ -378,7 +378,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
     private void rightAnimation() {
 
         ivRiaZoomRight.setVisibility(View.VISIBLE);
-        Animation rightAnimation = AnimationUtils.loadAnimation(requireActivity()(), R.anim.ria_circle_right_in);
+        Animation rightAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_right_in);
         ivRiaZoomRight.setAnimation(rightAnimation);
         rightAnimation.setAnimationListener(new Animation.AnimationListener() {
             int i = 0;
@@ -397,10 +397,10 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
 
                     if (i == 0) {
                         i = 1;
-                        animation = AnimationUtils.loadAnimation(requireActivity()(), R.anim.ria_circle_right_out);
+                        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_right_out);
                     } else {
                         i = 0;
-                        animation = AnimationUtils.loadAnimation(requireActivity()(), R.anim.ria_circle_right_in);
+                        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_right_in);
                     }
                     ivRiaZoomRight.setAnimation(animation);
                     animation.setAnimationListener(this);
@@ -420,7 +420,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
     private void topAnimation() {
 
         ivRiaZoomTop.setVisibility(View.VISIBLE);
-        Animation topAnimation = AnimationUtils.loadAnimation(requireActivity()(), R.anim.ria_circle_top_in);
+        Animation topAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_top_in);
         ivRiaZoomTop.setAnimation(topAnimation);
         topAnimation.setAnimationListener(new Animation.AnimationListener() {
             int i = 0;
@@ -438,10 +438,10 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
                 } else {
                     if (i == 0) {
                         i = 1;
-                        animation = AnimationUtils.loadAnimation(requireActivity()(), R.anim.ria_circle_top_out);
+                        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_top_out);
                     } else {
                         i = 0;
-                        animation = AnimationUtils.loadAnimation(requireActivity()(), R.anim.ria_circle_top_in);
+                        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_top_in);
                     }
                     ivRiaZoomTop.setAnimation(animation);
                     animation.setAnimationListener(this);

@@ -97,7 +97,7 @@ public class SiteAppearanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        session = new UserSessionManager(requireContext(), getActivity());
+        session = new UserSessionManager(getContext(), getActivity());
         View view = inflater.inflate(R.layout.fragment_site_appearance, container, false);
         //svKitsune = (Switch)view.findViewById(R.id.sv_kitsune);
         cvKitsuneSwitch = view.findViewById(R.id.cv_kitsune_switch);
@@ -132,13 +132,13 @@ public class SiteAppearanceFragment extends Fragment {
                     i.setData(Uri.parse(url));
                     startActivity(i);
                 }else {*/
-                        final ProgressDialog pg = ProgressDialog.show(requireActivity(), "", getString(R.string.wait_for_new_look));
+                        final ProgressDialog pg = ProgressDialog.show(getActivity(), "", getString(R.string.wait_for_new_look));
                         new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
                             @Override
                             public void onResult(String response, boolean isError) {
                                 pg.dismiss();
                                 if (response.equals("true") && !isError) {
-                                    Methods.showSnackBarPositive(requireActivity(), getString(R.string.your_website_appearance_changed));
+                                    Methods.showSnackBarPositive(getActivity(), getString(R.string.your_website_appearance_changed));
                                     tvHelpHeader.setText(getResources().getString(R.string.conv_sa_title));
                                     tvHelpBody.setText(getResources().getString(R.string.conv_sa_body));
                                     tvHelpFooter.setVisibility(View.GONE);
@@ -149,7 +149,7 @@ public class SiteAppearanceFragment extends Fragment {
                                     ivKitsuneSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_learn_more));
                                     session.storeFpWebTempalteType("6");
                                 } else {
-                                    Methods.showSnackBarNegative(requireActivity(), getString(R.string.can_not_change_appearance));
+                                    Methods.showSnackBarNegative(getActivity(), getString(R.string.can_not_change_appearance));
                                 }
                             }
                         }).enableKitsune();
@@ -184,7 +184,7 @@ public class SiteAppearanceFragment extends Fragment {
     private void showFeedBackDialog() {
         //lfkvljgf
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View v = requireActivity().getLayoutInflater().inflate(R.layout.feedback_kitsune_layout, null);
+        View v = getActivity().getLayoutInflater().inflate(R.layout.feedback_kitsune_layout, null);
         final EditText et = v.findViewById(R.id.et_other_reason);
         final CheckBox cbOtherReasons = v.findViewById(R.id.cb_other_reasons);
         cbOtherReasons.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -211,7 +211,7 @@ public class SiteAppearanceFragment extends Fragment {
                 //Write Code for submitting the feedback and disabling kitsune
                 //Also set the offline webtemplate to 4 in preference
                 if (cbOtherReasons.isChecked() && Util.isNullOrEmpty(et.getText().toString().trim())) {
-                    Methods.showSnackBarNegative(requireActivity(), getString(R.string.fill_reasons));
+                    Methods.showSnackBarNegative(getActivity(), getString(R.string.fill_reasons));
                     return;
                 }
                 if(dialog.isShowing()) {
@@ -246,7 +246,7 @@ public class SiteAppearanceFragment extends Fragment {
                     }
                 }
                 if(!checkBoxFlag){
-                    Methods.showSnackBarNegative(requireActivity(), getString(R.string.check_any_checkbox));
+                    Methods.showSnackBarNegative(getActivity(), getString(R.string.check_any_checkbox));
                     return;
                 }
                 submitFeedBack(array);
@@ -264,14 +264,14 @@ public class SiteAppearanceFragment extends Fragment {
     }
 
     private void submitFeedBack(JSONArray array) {
-        final ProgressDialog pd= ProgressDialog.show(requireActivity(), "", getString(R.string.wait_while_reverting));
+        final ProgressDialog pd= ProgressDialog.show(getActivity(), "", getString(R.string.wait_while_reverting));
         new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
             @Override
             public void onResult(String response, boolean isError) {
                 pd.dismiss();
                 if(!isError){
                     if(response.equals("true")){
-                        Methods.showSnackBarPositive(requireActivity(), getString(R.string.successfully_revert));
+                        Methods.showSnackBarPositive(getActivity(), getString(R.string.successfully_revert));
                         tvKitsuneSwitch.setText(getString(R.string.upgrade_now));
                         tvKitsuneSwitch.setTextColor(getResources().getColor(R.color.primaryColor));
                         ivKitsuneSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_enable_kitsune));
@@ -292,10 +292,10 @@ public class SiteAppearanceFragment extends Fragment {
                                     session.storeFpWebTempalteType("6");
                          */
                     }else {
-                        Methods.showSnackBarNegative(requireActivity(), getString(R.string.failed_to_revert));
+                        Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_revert));
                     }
                 }else {
-                    Methods.showSnackBarNegative(requireActivity(), getString(R.string.failed_to_revert));
+                    Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_revert));
                 }
             }
         }).disablekitsune(array.toString());

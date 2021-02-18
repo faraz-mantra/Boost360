@@ -17,7 +17,6 @@
         android:id="@+id/button_snackbar_action"
         style="@style/imagepicker_TextSmall"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="24dp"
         android:background="?selectableItemBackground"

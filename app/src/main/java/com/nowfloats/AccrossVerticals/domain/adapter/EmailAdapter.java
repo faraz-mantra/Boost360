@@ -29,7 +29,7 @@ public class EmailAdapter extends RecyclerView.Adapter<EmailAdapter.MyViewHolder
     public EmailAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater
                 .from(parent.getContext()).inflate(R.layout.item_single_email, parent, false);
-        mContext = parent.requireContext();
+        mContext = parent.getContext();
         return new MyViewHolder(itemView);
     }
 

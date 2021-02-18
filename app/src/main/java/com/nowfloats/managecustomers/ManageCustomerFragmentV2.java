@@ -71,7 +71,7 @@ public class ManageCustomerFragmentV2 extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = requireActivity();
+        activity = getActivity();
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ManageCustomerFragmentV2 extends Fragment {
         if (!isAdded()) return;
         rvManageCustomers = (RecyclerView) mainView.findViewById(R.id.rvManageCustomers);
 
-        final LinearLayoutManager manager = new LinearLayoutManager(requireActivity()
+        final LinearLayoutManager manager = new LinearLayoutManager(getActivity()
                 , LinearLayoutManager.VERTICAL, false);
         rvManageCustomers.setLayoutManager(manager);
         rvManageCustomers.setAdapter(manageCustomerAdapter = new ManageCustomerAdapter());
@@ -149,12 +149,12 @@ public class ManageCustomerFragmentV2 extends Fragment {
 //            if (viewType == 0) {
 //                lastTopValue = 0;
 //                manageCustomerHolder.llUpdates.setVisibility(View.VISIBLE);
-//                DisplayMetrics displayMetrics = requireActivity().getResources().getDisplayMetrics();
+//                DisplayMetrics displayMetrics = getActivity().getResources().getDisplayMetrics();
 //                int rightspace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25,
-//                        requireActivity().getResources().getDisplayMetrics());
+//                        getActivity().getResources().getDisplayMetrics());
 //                manageCustomerHolder.rv_carousel.addItemDecoration(new FirstItemSpacesDecoration(0, rightspace, false));
 //
-//                final LinearLayoutManager manager = new LinearLayoutManager(requireActivity()
+//                final LinearLayoutManager manager = new LinearLayoutManager(getActivity()
 //                        , LinearLayoutManager.HORIZONTAL, false);
 //                ManageUpdatesAdapter manageUpdatesAdapter = new ManageUpdatesAdapter();
 //                manageCustomerHolder.rv_carousel.setLayoutManager(manager);
@@ -218,8 +218,8 @@ public class ManageCustomerFragmentV2 extends Fragment {
 
 //                        manageCustomerHolder.tvThree.setVisibility(View.VISIBLE);
                         manageCustomerHolder.tvTitle.setText("Website\nInteractions");
-                        manageCustomerHolder.tvTwo.setText(requireActivity().getString(R.string.enquiries_title));
-                        manageCustomerHolder.tvOne.setText(requireActivity().getString(R.string.subscriptions));
+                        manageCustomerHolder.tvTwo.setText(getActivity().getString(R.string.enquiries_title));
+                        manageCustomerHolder.tvOne.setText(getActivity().getString(R.string.subscriptions));
                         manageCustomerHolder.tvThree.setText("Call");
 
                         manageCustomerHolder.tvInfo.setText(getString(R.string.manage_website_customers));
@@ -227,9 +227,9 @@ public class ManageCustomerFragmentV2 extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_ENQUIRIES, null);
-                                Intent i = new Intent(requireActivity(), BusinessEnquiryActivity.class);
+                                Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
                                 startActivity(i);
-                                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
                         });
 
@@ -237,9 +237,9 @@ public class ManageCustomerFragmentV2 extends Fragment {
                             @Override
                             public void onClick(View v) {
                                 MixPanelController.track(EventKeysWL.SIDE_PANEL_SUBSCRIBERS, null);
-                                Intent i = new Intent(requireActivity(), SubscribersActivity.class);
+                                Intent i = new Intent(getActivity(), SubscribersActivity.class);
                                 startActivity(i);
-                                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
                         });
                         manageCustomerHolder.llBackground.setBackgroundResource(R.drawable.mcw_bg);
@@ -262,9 +262,9 @@ public class ManageCustomerFragmentV2 extends Fragment {
                         manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent i = new Intent(requireActivity(), FacebookChatActivity.class);
+                                Intent i = new Intent(getActivity(), FacebookChatActivity.class);
                                 startActivity(i);
-                                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
                         });
 
@@ -387,7 +387,7 @@ public class ManageCustomerFragmentV2 extends Fragment {
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     manageCustomerHolder.rlRevealLayout.setVisibility(View.INVISIBLE);
-                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.transparent));
+                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.transparent));
                 }
             });
             anim.start();
@@ -400,7 +400,7 @@ public class ManageCustomerFragmentV2 extends Fragment {
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     manageCustomerHolder.rlRevealLayout.setVisibility(View.INVISIBLE);
-                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.transparent));
+                    manageCustomerHolder.rflOverLay.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.transparent));
                 }
             });
             anim.start();
@@ -440,9 +440,9 @@ public class ManageCustomerFragmentV2 extends Fragment {
 //                Matcher m = p.matcher(email);
 //                boolean matchFound = m.matches();
 //                if (matchFound) {
-//                    manageUpdatesHolder.tvSubmit.setText(requireActivity().getResources().getString(R.string.email));
+//                    manageUpdatesHolder.tvSubmit.setText(getActivity().getResources().getString(R.string.email));
 //                } else {
-//                    manageUpdatesHolder.tvSubmit.setText(requireActivity().getResources().getString(R.string.call));
+//                    manageUpdatesHolder.tvSubmit.setText(getActivity().getResources().getString(R.string.call));
 //                }
 //
 //            }
@@ -474,7 +474,7 @@ public class ManageCustomerFragmentV2 extends Fragment {
 //        activity.runOnUiThread(new Runnable() {
 //            @Override
 //            public void run() {
-//                final LinearLayoutManager manager = new LinearLayoutManager(requireActivity()
+//                final LinearLayoutManager manager = new LinearLayoutManager(getActivity()
 //                        , LinearLayoutManager.VERTICAL, false);
 //                rvManageCustomers.setLayoutManager(manager);
 //                rvManageCustomers.setAdapter(manageCustomerAdapter = new ManageCustomerAdapter());

@@ -184,12 +184,12 @@ public class AVLoadingIndicatorView extends View {
     }
 
     public void smoothToShow(){
-        startAnimation(AnimationUtils.loadAnimation(requireContext(),android.R.anim.fade_in));
+        startAnimation(AnimationUtils.loadAnimation(getContext(),android.R.anim.fade_in));
         setVisibility(VISIBLE);
     }
 
     public void smoothToHide(){
-        startAnimation(AnimationUtils.loadAnimation(requireContext(),android.R.anim.fade_out));
+        startAnimation(AnimationUtils.loadAnimation(getContext(),android.R.anim.fade_out));
         setVisibility(GONE);
     }
 

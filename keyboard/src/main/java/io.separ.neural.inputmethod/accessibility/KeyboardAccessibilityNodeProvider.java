@@ -140,7 +140,7 @@ final class KeyboardAccessibilityNodeProvider<KV extends KeyboardView>
         final int virtualViewId = getVirtualViewIdOf(key);
         final String keyDescription = getKeyDescription(key);
         final AccessibilityEvent event = AccessibilityEvent.obtain(eventType);
-        event.setPackageName(mKeyboardView.requireContext().getPackageName());
+        event.setPackageName(mKeyboardView.getContext().getPackageName());
         event.setClassName(key.getClass().getName());
         event.setContentDescription(keyDescription);
         event.setEnabled(true);
@@ -236,7 +236,7 @@ final class KeyboardAccessibilityNodeProvider<KV extends KeyboardView>
 
         // Obtain and initialize an AccessibilityNodeInfo with information about the virtual view.
         final AccessibilityNodeInfoCompat info = AccessibilityNodeInfoCompat.obtain();
-        info.setPackageName(mKeyboardView.requireContext().getPackageName());
+        info.setPackageName(mKeyboardView.getContext().getPackageName());
         info.setClassName(key.getClass().getName());
         info.setContentDescription(keyDescription);
         info.setBoundsInParent(boundsInParent);
@@ -323,7 +323,7 @@ final class KeyboardAccessibilityNodeProvider<KV extends KeyboardView>
         final boolean shouldObscure = mAccessibilityUtils.shouldObscureInput(editorInfo);
         final SettingsValues currentSettings = Settings.getInstance().getCurrent();
         final String keyCodeDescription = mKeyCodeDescriptionMapper.getDescriptionForKey(
-                mKeyboardView.requireContext(), mKeyboard, key, shouldObscure);
+                mKeyboardView.getContext(), mKeyboard, key, shouldObscure);
         if (currentSettings.isWordSeparator(key.getCode())) {
             return mAccessibilityUtils.getAutoCorrectionDescription(
                     keyCodeDescription, shouldObscure);

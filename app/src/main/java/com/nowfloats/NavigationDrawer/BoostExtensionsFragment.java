@@ -72,7 +72,7 @@ public class BoostExtensionsFragment extends Fragment {
                         showStaticWebsiteScript();
                         break;
                 }
-                requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -84,7 +84,7 @@ public class BoostExtensionsFragment extends Fragment {
      }
 
     private void showWordpressScript() {
-        if (requireActivity() == null) return;
+        if (getActivity() == null) return;
         UserSessionManager session = new UserSessionManager(mContext, getActivity());
         MaterialDialog dialog = new MaterialDialog.Builder(mContext)
                 .customView(R.layout.boostx_script_panel, true)
@@ -106,7 +106,7 @@ public class BoostExtensionsFragment extends Fragment {
                         ClipData clip = ClipData.newPlainText("boostx_key", session.getFPID());
                         clipboard.setPrimaryClip(clip);
 
-                        Methods.showSnackBarPositive(requireActivity(),
+                        Methods.showSnackBarPositive(getActivity(),
                                 getString(R.string.the_key_has_been_copied_to_clipboard));
 
                         /*Create an ACTION_SEND Intent*/
@@ -145,7 +145,7 @@ public class BoostExtensionsFragment extends Fragment {
                                 ClipData clip = ClipData.newPlainText("boostx_script", script);
                                 clipboard.setPrimaryClip(clip);
 
-                                Methods.showSnackBarPositive(requireActivity(),
+                                Methods.showSnackBarPositive(getActivity(),
                                         getString(R.string.the_script_has_been_copied_to_clipboard_also_you_can));
 
                                 /*Create an ACTION_SEND Intent*/
@@ -167,7 +167,7 @@ public class BoostExtensionsFragment extends Fragment {
     }
 
     private void showStaticWebsiteScript() {
-        if (requireActivity() == null) return;
+        if (getActivity() == null) return;
         UserSessionManager session = new UserSessionManager(mContext, getActivity());
         MaterialDialog dialog = new MaterialDialog.Builder(mContext)
                 .customView(R.layout.boostx_script_panel, true)
@@ -191,7 +191,7 @@ public class BoostExtensionsFragment extends Fragment {
                         ClipData clip = ClipData.newPlainText("boostx_script", script);
                         clipboard.setPrimaryClip(clip);
 
-                        Methods.showSnackBarPositive(requireActivity(),
+                        Methods.showSnackBarPositive(getActivity(),
                                 getString(R.string.the_script_has_been_copied_to_clipboard_also_you_can));
 
                         /*Create an ACTION_SEND Intent*/

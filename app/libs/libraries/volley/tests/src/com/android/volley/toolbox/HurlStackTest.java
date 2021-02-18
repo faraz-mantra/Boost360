@@ -31,7 +31,7 @@ public class HurlStackTest extends AndroidTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mContext = requireContext();
+        mContext = getContext();
         mMockConnection = new MockHttpURLConnection();
     }
 

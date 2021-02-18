@@ -102,7 +102,6 @@
         android:layout_width="@dimen/config_key_preview_offset_lxx"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:contentDescription="@string/spoken_description_mic" />
 </merge>

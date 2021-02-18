@@ -35,7 +35,7 @@ public abstract class BaseFragment extends Fragment implements OnBackPressed {
     }
 
     @Override
-    public Context requireContext() {
+    public Context getContext() {
         return baseContext;
     }
 
@@ -68,7 +68,7 @@ public abstract class BaseFragment extends Fragment implements OnBackPressed {
 
     protected void showLoader() {
         try {
-            if (requireContext() != null && isAdded()) {
+            if (getContext() != null && isAdded()) {
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
@@ -102,10 +102,10 @@ public abstract class BaseFragment extends Fragment implements OnBackPressed {
     }
 
     public void toastMsg(String msg, boolean isLong) {
-        if (requireContext() != null && !isDetached()) {
+        if (getContext() != null && !isDetached()) {
             if (isLong)
-                Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show();
-            else Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+            else Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
         }
     }
 

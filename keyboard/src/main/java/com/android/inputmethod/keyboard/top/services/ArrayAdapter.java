@@ -29,7 +29,7 @@ public abstract class ArrayAdapter<T, VH extends RecyclerView.ViewHolder> extend
         this.objects = new ArrayList();
     }
 
-    public Context requireContext() {
+    public Context getContext() {
         return this.context;
     }
 

@@ -137,7 +137,7 @@ public class Methods {
         Intent facebookIntent;
         //if(review.trim().length() == 0) {
         try {
-            context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+            context.getPackageManager().getPackageInfo(getString(R.string.facebook_package), 0);
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
         } catch (Exception e) {
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
@@ -384,7 +384,7 @@ public class Methods {
 
     public static void showSnackBarNegative(View mView, String msg) {
         Snackbar snackBar = Snackbar.make(mView, msg, Snackbar.LENGTH_LONG);
-        snackBar.getView().setBackgroundColor(ContextCompat.getColor(mView.requireContext(), R.color.snackbar_negative_color));
+        snackBar.getView().setBackgroundColor(ContextCompat.getColor(mView.getContext(), R.color.snackbar_negative_color));
         snackBar.show();
     }
 

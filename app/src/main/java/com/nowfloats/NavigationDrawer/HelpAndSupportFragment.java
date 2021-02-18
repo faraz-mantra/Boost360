@@ -87,7 +87,7 @@ public class HelpAndSupportFragment extends Fragment {
     }
 
     private void hideProgress() {
-        if (dialog != null && dialog.isShowing() && requireActivity() != null && isAdded()) {
+        if (dialog != null && dialog.isShowing() && getActivity() != null && isAdded()) {
             dialog.dismiss();
         }
     }
@@ -230,7 +230,7 @@ public class HelpAndSupportFragment extends Fragment {
             else
             {
                 addDefaultRiaData();
-                Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong));
+                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
             }
 
             setAdapterWithPager(view);
@@ -267,7 +267,7 @@ public class HelpAndSupportFragment extends Fragment {
             public void failure(RetrofitError error) {
                 addDefaultRiaData();
                 setAdapterWithPager(view);
-                Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong));
+                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
 
             }
         });
@@ -283,7 +283,7 @@ public class HelpAndSupportFragment extends Fragment {
 
     private void setAdapterWithPager(View view) {
         hideProgress();
-        if (requireActivity() == null || !isAdded()) {
+        if (getActivity() == null || !isAdded()) {
             return;
         }
         ViewPager mPager = view.findViewById(R.id.ps_pager);
@@ -301,7 +301,7 @@ public class HelpAndSupportFragment extends Fragment {
 
     private void addDefaultRiaData() {
         RiaSupportModel model = new RiaSupportModel();
-        Activity activity = requireActivity();
+        Activity activity = getActivity();
         if (activity != null && isAdded()) {
             model.setName(getString(R.string.support_name));
             model.setEmail(getString(R.string.settings_feedback_link));

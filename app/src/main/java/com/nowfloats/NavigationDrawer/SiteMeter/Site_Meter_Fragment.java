@@ -111,20 +111,20 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = requireActivity()();
+        activity = getActivity();
         Methods.isOnline(activity);
         session = new UserSessionManager(activity.getApplicationContext(), activity);
     }
 
     private void showLoader(final String message) {
 
-        if (requireActivity()() == null) return;
+        if (getActivity() == null) return;
 
-        requireActivity()().runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (progressDialog == null) {
-                    progressDialog = new ProgressDialog(requireActivity()());
+                    progressDialog = new ProgressDialog(requireActivity());
                     progressDialog.setCanceledOnTouchOutside(false);
                 }
                 progressDialog.setMessage(message);
@@ -134,8 +134,8 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
     }
 
     private void hideLoader() {
-        if (requireActivity()() == null) return;
-        requireActivity()().runOnUiThread(new Runnable() {
+        if (getActivity() == null) return;
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (progressDialog != null && progressDialog.isShowing()) {
@@ -160,18 +160,18 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (requireActivity()() == null || !isAdded()) return;
+        if (getActivity() == null || !isAdded()) return;
         progressBar = (ProgressBar) view.findViewById(R.id.ProgressBar);
         meterReading = (TextView) view.findViewById(R.id.site_meter_reading);
         recyclerView = (RecyclerView) view.findViewById(R.id.sitemeter_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setItemAnimator(new FadeInUpAnimator());
-        pref = requireActivity()().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
         Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
 
-        mSharedPreferences = requireActivity()().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
+        mSharedPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
         Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
         final LinearLayout progressLayout = (LinearLayout) view.findViewById(R.id.progress_layout);
         progressLayout.setVisibility(View.VISIBLE);
@@ -523,11 +523,11 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                 } else if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
                         session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")) {
                     showExpiryDialog(DEMO_EXPIRED);
-                } else if (Utils.isNetworkConnected(requireActivity()())) {
+                } else if (Utils.isNetworkConnected(getActivity()())) {
                     showLoader(getString(R.string.please_wait));
                     domainApiService.getDomainDetails(activity, session.getFpTag(), getDomainDetailsParam());
                 } else {
-                    Methods.showSnackBarNegative(requireActivity()(), getString(R.string.noInternet));
+                    Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                 }
 
                 break;
@@ -635,7 +635,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                 return;
         }
 
-        MaterialDialog mExpireDailog = new MaterialDialog.Builder(requireActivity()())
+        MaterialDialog mExpireDailog = new MaterialDialog.Builder(requireActivity())
                 .customView(R.layout.pop_up_restrict_post_message, false)
                 .backgroundColorRes(R.color.white)
                 .positiveText(callUsButtonText)
@@ -802,7 +802,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
 
          } else {
              hideLoader();
-             Methods.showSnackBarNegative(requireActivity()(), getString(R.string.something_went_wrong));
+             Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
          }
      }*/
 

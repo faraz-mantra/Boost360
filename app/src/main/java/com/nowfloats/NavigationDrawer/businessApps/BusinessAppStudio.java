@@ -83,7 +83,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
             return;
         }
         pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        session=new UserSessionManager(context,requireActivity()());
+        session=new UserSessionManager(context,requireActivity());
 
         Button previewButton = (Button) view.findViewById(R.id.preview_button);
         Button getAppButton = (Button) view.findViewById(R.id.get_app_button);
@@ -137,7 +137,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                     if (type.equals("android")) {
 
                         if (!pref.getBoolean(Key_Preferences.BUSINESS_APP_REQUESTED, false)) {
-                            MaterialProgressBar.startProgressBar(requireActivity()(), getString(R.string.submiting_request), false);
+                            MaterialProgressBar.startProgressBar(getActivity(), getString(R.string.submiting_request), false);
 
                             Map<String, String> params = new HashMap<>();
                             params.put("clientId", session.getSourceClientId());
@@ -149,7 +149,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                                 public void success(String s, Response response) {
                                     MaterialProgressBar.dismissProgressBar();
                                     if(response.getStatus() != 200){
-                                        Methods.showSnackBarNegative(requireActivity()(),getString(R.string.something_went_wrong_try_again));
+                                        Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong_try_again));
                                         return;
                                     }
                                     pref.edit().putBoolean(Key_Preferences.BUSINESS_APP_REQUESTED,true).apply();
@@ -172,7 +172,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                                 @Override
                                 public void failure(RetrofitError error) {
                                     MaterialProgressBar.dismissProgressBar();
-                                    Methods.showSnackBarNegative(requireActivity()(),getString(R.string.something_went_wrong_try_again));
+                                    Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong_try_again));
                                 }
                             });
                        /* BusinessAppApis.AppApis apis=BusinessAppApis.getRestAdapter();
@@ -234,7 +234,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
         if(!isAdded()) return false;
         switch(item.getItemId()){
             case R.id.action_notif:
-                Methods.materialDialog(requireActivity()(),"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
+                Methods.materialDialog(getActivity(),"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
                 return true;
             default:
                 break;

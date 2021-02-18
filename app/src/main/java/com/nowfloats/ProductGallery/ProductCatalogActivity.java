@@ -474,7 +474,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
             if (share.resolveActivity(getApplicationContext().getPackageManager()) != null) {
               if (!defaultShare) {
                 if (type == 0) {
-                  share.setPackage("com.facebook.katana");
+                  share.setPackage(getString(R.string.facebook_package));
                 } else if (type == 1) {
                   share.setPackage(getString(R.string.whatsapp_package));
                 }

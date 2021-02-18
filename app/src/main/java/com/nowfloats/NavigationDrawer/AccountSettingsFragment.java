@@ -96,7 +96,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!isAdded() || requireActivity() == null) {
+        if (!isAdded() || getActivity() == null) {
             Methods.showSnackBar(view, getString(R.string.something_went_wrong_try_again), Color.RED);
             return;
         }
@@ -121,7 +121,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         intent = new Intent(mContext, FragmentsFactoryActivity.class);
                         intent.putExtra("fragmentName", "Business_Profile_Fragment_V2");
                         startActivity(intent);
-                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
                     case "My Bank Account":
                         Bundle bundle = new Bundle();
@@ -129,31 +129,31 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                         bundle.putString(IntentConstant.USER_PROFILE_ID.name(), sessionManager.getUserProfileId());
                         bundle.putString(IntentConstant.FP_ID.name(), sessionManager.getFPID());
                         if (sessionManager.getAccountSave()) {
-                            startFragmentAccountActivityNew(requireActivity(), FragmentType.BANK_ACCOUNT_DETAILS, bundle, false);
+                            startFragmentAccountActivityNew(getActivity(), FragmentType.BANK_ACCOUNT_DETAILS, bundle, false);
                         } else {
-                            startFragmentAccountActivityNew(requireActivity(), FragmentType.ADD_BANK_ACCOUNT_START, bundle, false);
+                            startFragmentAccountActivityNew(getActivity(), FragmentType.ADD_BANK_ACCOUNT_START, bundle, false);
                         }
 //                        intent = new Intent(mContext, AccountInfoActivity.class);
                         break;
                     case "Self Branded Payment Gateway":
                         Bundle b = getBundleDataKyc();
-                        startFragmentPaymentActivityNew(requireActivity(), com.appservice.constant.FragmentType.PAYMENT_GATEWAY, b, false);
+                        startFragmentPaymentActivityNew(getActivity(), com.appservice.constant.FragmentType.PAYMENT_GATEWAY, b, false);
                         break;
                     case "My Business KYC":
                         Bundle b1 = getBundleDataKyc();
                         if (sessionManager.isSelfBrandedKycAdd()) {
-                            startFragmentPaymentActivityNew(requireActivity(), com.appservice.constant.FragmentType.KYC_STATUS, b1, false);
-                        } else startFragmentPaymentActivityNew(requireActivity(), FragmentType.BUSINESS_KYC_VIEW, b1, false);
+                            startFragmentPaymentActivityNew(getActivity(), com.appservice.constant.FragmentType.KYC_STATUS, b1, false);
+                        } else startFragmentPaymentActivityNew(getActivity(), FragmentType.BUSINESS_KYC_VIEW, b1, false);
                         break;
                     case "Boost Extensions":
                         intent = new Intent(mContext, Boost360ExtensionsActivity.class);
                         startActivity(intent);
-                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
 //                    case "Site Appearance":
 //                        intent = new Intent(mContext, SiteAppearanceActivity.class);
 //                        startActivity(intent);
-//                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                        break;
                     case "Domain and Email":
                         isAlreadyCalled = false;
@@ -163,13 +163,13 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                             showLoader(getString(R.string.please_wait));
                             domainApiService.getDomainDetails(mContext, sessionManager.getFpTag(), getDomainDetailsParam());
                         } else {
-                            Methods.showSnackBarNegative(requireActivity(), getString(R.string.noInternet));
+                            Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                         }
                         return;
                     case "Subscription History":
                         intent = new Intent(mContext, YourPurchasedPlansActivity.class);
                         startActivity(intent);
-                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
                     case "Change Password":
                         changePassword();
@@ -234,7 +234,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     }
 
     public void changePassword() {
-        if (requireActivity() == null) return;
+        if (getActivity() == null) return;
         MaterialDialog dialog = new MaterialDialog.Builder(mContext)
                 .customView(R.layout.change_password, true)
                 .positiveText(getString(R.string.ok))
@@ -270,14 +270,14 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
                                     dialog.dismiss();
                                     task.execute();
                                 } else {
-                                    Methods.showSnackBarNegative(requireActivity(), getString(R.string.check_internet_connection));
+                                    Methods.showSnackBarNegative(getActivity(), getString(R.string.check_internet_connection));
                                 }
 
                             } else {
-                                Methods.showSnackBarNegative(requireActivity(), getString(R.string.both_password_not_matched));
+                                Methods.showSnackBarNegative(getActivity(), getString(R.string.both_password_not_matched));
                             }
                         } else {
-                            Methods.showSnackBarNegative(requireActivity(), getString(R.string.min_6char_required));
+                            Methods.showSnackBarNegative(getActivity(), getString(R.string.min_6char_required));
                         }
                     }
                 }).show();
@@ -350,9 +350,9 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
 
     private void showLoader(final String message) {
 
-        if (requireActivity() == null) return;
+        if (getActivity() == null) return;
 
-        requireActivity().runOnUiThread(() -> {
+        getActivity().runOnUiThread(() -> {
             if (progressDialog == null) {
                 progressDialog = new ProgressDialog(getActivity());
                 progressDialog.setCanceledOnTouchOutside(false);
@@ -363,8 +363,8 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     }
 
     private void hideLoader() {
-        if (requireActivity() == null) return;
-        requireActivity().runOnUiThread(() -> {
+        if (getActivity() == null) return;
+        getActivity().runOnUiThread(() -> {
             if (progressDialog != null && progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
@@ -509,7 +509,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
     @Override
     public void getDomainDetails(DomainDetails domainDetails) {
         hideLoader();
-        if (!isAdded() || requireActivity() == null) return;
+        if (!isAdded() || getActivity() == null) return;
         if (!isAlreadyCalled) {
             showDomainDetails();
         }
@@ -551,7 +551,7 @@ public class AccountSettingsFragment extends Fragment implements DomainApiServic
         //new design implementation work in progress
         Intent domainIntent = new Intent(mContext, DomainEmailActivity.class);
         startActivity(domainIntent);
-        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private enum DialogFrom {

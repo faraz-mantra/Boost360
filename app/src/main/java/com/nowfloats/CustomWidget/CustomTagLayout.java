@@ -43,7 +43,7 @@ public class CustomTagLayout extends ViewGroup {
      */
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
-        return new MarginLayoutParams(requireContext(), attrs);
+        return new MarginLayoutParams(getContext(), attrs);
     }
 
     /**

@@ -88,7 +88,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/_0" />
+                        android:text="@string/zero" />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -127,7 +127,7 @@
                         android:id="@+id/tv_enquiries_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/_0" />
+                        android:text="@string/zero" />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -165,7 +165,7 @@
                         android:id="@+id/tv_calls_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/_0" />
+                        android:text="@string/zero" />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -204,7 +204,7 @@
                         android:id="@+id/tv_subscriber_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/_0" />
+                        android:text="@string/zero" />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"

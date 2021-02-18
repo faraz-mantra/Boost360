@@ -100,7 +100,7 @@ public class LabeledSwitch extends ToggleableView {
         this.textSize = (int) (12f * getResources().getDisplayMetrics().scaledDensity);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            colorBorder = colorOn = getResources().getColor(R.color.colorAccent, requireContext().getTheme());
+            colorBorder = colorOn = getResources().getColor(R.color.colorAccent, getContext().getTheme());
         } else {
             colorBorder = colorOn = getResources().getColor(R.color.colorAccent);
         }
@@ -120,7 +120,7 @@ public class LabeledSwitch extends ToggleableView {
     }
 
     private void initProperties(AttributeSet attrs) {
-        TypedArray tarr = requireContext().getTheme().obtainStyledAttributes(attrs, R.styleable.Toggle, 0, 0);
+        TypedArray tarr = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.Toggle, 0, 0);
         final int N = tarr.getIndexCount();
         for (int i = 0; i < N; ++i) {
             int attr = tarr.getIndex(i);
@@ -131,7 +131,7 @@ public class LabeledSwitch extends ToggleableView {
             } else if (attr == R.styleable.Toggle_colorBorder) {
                 int accentColor;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                    accentColor = getResources().getColor(R.color.colorAccent, requireContext().getTheme());
+                    accentColor = getResources().getColor(R.color.colorAccent, getContext().getTheme());
                 } else {
                     accentColor = getResources().getColor(R.color.colorAccent);
                 }
@@ -139,7 +139,7 @@ public class LabeledSwitch extends ToggleableView {
             } else if (attr == R.styleable.Toggle_colorOn) {
                 int accentColor;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                    accentColor = getResources().getColor(R.color.colorAccent, requireContext().getTheme());
+                    accentColor = getResources().getColor(R.color.colorAccent, getContext().getTheme());
                 } else {
                     accentColor = getResources().getColor(R.color.colorAccent);
                 }

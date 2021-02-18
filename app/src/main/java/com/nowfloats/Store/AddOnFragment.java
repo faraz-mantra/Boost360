@@ -99,13 +99,13 @@ public class AddOnFragment extends Fragment {
         public void onBindViewHolder(TopUpPlansAdapter.TopUpCardHolder holder, int position) {
             switch (position) {
                 case 0:
-                    holder.setCardHolderData(R.drawable.wild_fire_expire, "Wildfire", getString(R.string.wildfire_definition));
+                    holder.setCardHolderData(R.drawable.wild_fire_expire, getString(R.string.wildfire), getString(R.string.wildfire_definition));
                     break;
                 case 1:
-                    holder.setCardHolderData(R.drawable.ic_dictate_plan, "Dictate", getString(R.string.dictate_definition));
+                    holder.setCardHolderData(R.drawable.ic_dictate_plan, getString(R.string.dictate), getString(R.string.dictate_definition));
                     break;
                 case 2:
-                    holder.setCardHolderData(R.drawable.ic_business_apps, "My Business App", getString(R.string.business_app_definition));
+                    holder.setCardHolderData(R.drawable.ic_business_apps, getString(R.string.my_business_app), getString(R.string.business_app_definition));
                     break;
             }
         }
@@ -124,11 +124,11 @@ public class AddOnFragment extends Fragment {
             Intent intent = null;
             switch (pos) {
                 case 0:
-                    intent = new Intent(requireContext(), FragmentsFactoryActivity.class);
+                    intent = new Intent(getContext(), FragmentsFactoryActivity.class);
                     intent.putExtra("fragmentName", "WildFireFragment");
                     break;
                 case 1:
-                    intent = new Intent(requireContext(), FragmentsFactoryActivity.class);
+                    intent = new Intent(getContext(), FragmentsFactoryActivity.class);
                     intent.putExtra("fragmentName", "DictateFragment");
                     break;
                 case 2:
@@ -136,24 +136,24 @@ public class AddOnFragment extends Fragment {
                     return;
             }
             startActivity(intent);
-            requireActivity()().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
 
         private void startBusinessApp() {
             Intent i;
-            SharedPreferences pref = requireActivity()().getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
+            SharedPreferences pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
             int businessAppStatus = pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP, BIZ_APP_DEMO);
             if (businessAppStatus == BIZ_APP_DEMO) {
-                i = new Intent(requireContext(), FragmentsFactoryActivity.class);
+                i = new Intent(getContext(), FragmentsFactoryActivity.class);
                 i.putExtra("fragmentName", "BusinessAppsFragment");
             } else {
                 if (businessAppStatus == BIZ_APP_PAID) {
                     pref.edit().putInt(Key_Preferences.ABOUT_BUSINESS_APP, BIZ_APP_DEMO_REMOVE).apply();
                 }
-                i = new Intent(requireContext(), BusinessAppsDetailsActivity.class);
+                i = new Intent(getContext(), BusinessAppsDetailsActivity.class);
             }
             startActivity(i);
-            requireActivity()().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
 
         class TopUpCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -177,10 +177,10 @@ public class AddOnFragment extends Fragment {
             }
 
             private void sendEmailRequestForBizApp() {
-                final SharedPreferences pref = requireActivity()().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-                UserSessionManager session = new UserSessionManager(requireContext(), requireActivity()());
+                final SharedPreferences pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+                UserSessionManager session = new UserSessionManager(getContext(), requireActivity());
                 if (!pref.getBoolean(Key_Preferences.BUSINESS_APP_REQUESTED, false)) {
-                    MaterialProgressBar.startProgressBar(requireActivity()(), getString(R.string.submiting_request), false);
+                    MaterialProgressBar.startProgressBar(getActivity(), getString(R.string.submiting_request), false);
 
                     Map<String, String> params = new HashMap<>();
                     params.put("clientId", session.getSourceClientId());
@@ -192,7 +192,7 @@ public class AddOnFragment extends Fragment {
                         public void success(String s, Response response) {
                             MaterialProgressBar.dismissProgressBar();
                             if (response.getStatus() != 200) {
-                                Methods.showSnackBarNegative(requireActivity()(), getString(R.string.something_went_wrong_try_again));
+                                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
                                 return;
                             }
                             pref.edit().putBoolean(Key_Preferences.BUSINESS_APP_REQUESTED, true).apply();
@@ -204,7 +204,7 @@ public class AddOnFragment extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
                             MaterialProgressBar.dismissProgressBar();
-                            Methods.showSnackBarNegative(requireActivity()(), getString(R.string.something_went_wrong_try_again));
+                            Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
                         }
                     });
 
@@ -229,26 +229,24 @@ public class AddOnFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.tv_top_up_detail:
-                        startDetails(getAdapterPosition());
-                        break;
-                    case R.id.tv_top_up_pricing:
-                        if (topUpDialog == null)
-                            topUpDialog = new TopUpDialog(requireActivity()());
+                int id = view.getId();
+                if (id == R.id.tv_top_up_detail) {
+                    startDetails(getAdapterPosition());
+                } else if (id == R.id.tv_top_up_pricing) {
+                    if (topUpDialog == null)
+                        topUpDialog = new TopUpDialog(requireActivity());
 
-                        switch (getAdapterPosition()) {
-                            case 0:
-                                topUpDialog.getTopUpPricing(TopUpDialog.TopUpType.WildFire.name());
-                                break;
-                            case 1:
-                                topUpDialog.getTopUpPricing(TopUpDialog.TopUpType.Dictate.name());
-                                break;
-                            case 2:
-                                sendEmailRequestForBizApp();
-                                break;
-                        }
-                        break;
+                    switch (getAdapterPosition()) {
+                        case 0:
+                            topUpDialog.getTopUpPricing(TopUpDialog.TopUpType.WildFire.name());
+                            break;
+                        case 1:
+                            topUpDialog.getTopUpPricing(TopUpDialog.TopUpType.Dictate.name());
+                            break;
+                        case 2:
+                            sendEmailRequestForBizApp();
+                            break;
+                    }
                 }
             }
         }
