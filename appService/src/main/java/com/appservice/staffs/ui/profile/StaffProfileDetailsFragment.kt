@@ -21,9 +21,7 @@ import com.appservice.staffs.ui.bottomsheets.InActiveStaffConfirmationBottomShee
 import com.appservice.staffs.ui.bottomsheets.RemoveStaffConfirmationBottomSheet
 import com.appservice.staffs.ui.viewmodel.StaffViewModel
 import com.appservice.ui.catalog.common.AppointmentModel
-import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
-import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
 import com.framework.views.customViews.CustomTextView
 
@@ -70,9 +68,6 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
   private fun getStaffDetail() {
     showProgress()
-    binding?.ctvEdit?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-    binding?.ctvEditTiming?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-    binding?.ctvEditServices?.paintFlags = Paint.UNDERLINE_TEXT_FLAG
     val get = arguments?.get(IntentConstant.STAFF_DATA.name) as? DataItem
     viewModel?.getStaffDetails(get?.id)?.observeOnce(viewLifecycleOwner, { res ->
       if (res.isSuccess()) {
@@ -85,8 +80,8 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
         binding?.civStaffProfileImg?.let { activity?.glideLoad(it, staffDetails?.image ?: "", R.drawable.placeholder_image) }
         binding?.ctvSpecialization?.text = staffDetails?.specialisations?.get(0)?.value
         if (staffDetails?.isAvailable == false) showInactiveProfile()
-        setTimings()
         fetchServices()
+        setTimings()
       } else showShortToast(res.errorMessage() ?: getString(R.string.something_went_wrong))
       hideProgress()
     })
@@ -207,16 +202,9 @@ class StaffProfileDetailsFragment : AppBaseFragment<FragmentStaffProfileBinding,
 
   private fun setServices(map: List<String>?) {
     binding?.llServices?.removeAllViews()
-    if (map.isNullOrEmpty().not()) {
-      binding?.llServices?.visible()
-      binding?.ctvHeadingServices?.visible()
-      binding?.ctvEditServices?.visible()
-      map?.forEach { binding?.llServices?.addView(getServiceView(it)) }
-    } else {
-      binding?.ctvHeadingServices?.gone()
-      binding?.llServices?.gone()
-      binding?.ctvEditServices?.gone()
-    }
+    val isEmpty = (map.isNullOrEmpty().not())
+    binding?.llServices?.visibility = if (isEmpty) View.VISIBLE else View.GONE
+    if (isEmpty) map?.forEach { binding?.llServices?.addView(getServiceView(it)) }
   }
 
   private fun getServiceView(services: String?): View {

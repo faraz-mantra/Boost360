@@ -78,7 +78,7 @@
           android:layout_alignParentEnd="true"
           android:text="@string/u_edit_info_u"
           android:textColor="@color/blue_4889f8"
-          android:textStyle="bold" />
+          app:fontFamily="@font/semi_bold" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_about_heading"
@@ -140,8 +140,8 @@
           android:id="@+id/ctv_edit_timing"
           style="@style/StaffProfileEditText"
           android:layout_alignBaseline="@id/ctv_heading_timing"
-          android:textStyle="bold"
-          android:visibility="visible" />
+          android:visibility="visible"
+          app:fontFamily="@font/semi_bold" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_heading_timing"
@@ -161,15 +161,17 @@
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_edit_services"
           style="@style/StaffProfileEditText"
+          android:layout_below="@id/ctv_experience"
           android:layout_alignBaseline="@id/ctv_heading_services"
-          android:textStyle="bold"
-          android:visibility="visible" />
+          app:fontFamily="@font/semi_bold" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_edit_leaves"
           style="@style/StaffProfileEditText"
+          android:layout_below="@id/ll_timing_container"
+          android:visibility="gone"
           android:layout_alignBaseline="@id/ctv_heading_leaves"
-          android:visibility="gone" />
+          app:fontFamily="@font/semi_bold" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_heading_leaves"
@@ -190,11 +192,11 @@
           android:layout_height="wrap_content"
           android:layout_below="@id/ctv_heading_leaves"
           android:layout_marginTop="@dimen/size_5"
-          android:fontFamily="@font/open_sans"
           android:text="@string/upcoming_leave_s"
           android:textColor="#4A90E2"
           android:textSize="12sp"
-          android:visibility="gone" />
+          android:visibility="gone"
+          app:fontFamily="@font/semi_bold" />
 
         <com.framework.views.customViews.CustomTextView
           android:id="@+id/ctv_leaves"
