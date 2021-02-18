@@ -117,7 +117,7 @@
             android:id="@+id/delete_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/delete"
+            android:text="@string/delete_"
             android:padding="@dimen/_10sdp"
             android:textAllCaps="true"
             android:textColor="@color/red"

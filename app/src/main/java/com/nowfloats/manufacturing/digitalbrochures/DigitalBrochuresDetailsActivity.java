@@ -418,7 +418,7 @@ public class DigitalBrochuresDetailsActivity extends AppCompatActivity implement
             updateExistingTeamsAPI();
             Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
         } else {
-            showLoader(getString(R.string.creating_record_please_wait);
+            showLoader(getString(R.string.creating_record_please_wait));
             createNewTeamsAPI();
             Methods.hideKeyboard(DigitalBrochuresDetailsActivity.this);
         }

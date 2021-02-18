@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -31,7 +29,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -2543,7 +2540,7 @@ public class ManageProductFragment extends Fragment implements AdapterView.OnIte
         new MaterialDialog.Builder(getActivity())
                 .title(getString(R.string.are_you_sure_want_to_delete))
                 .content(R.string.delete_record_not_undone)
-                .positiveText(getString(R.string.delete))
+                .positiveText(getString(R.string.delete_))
                 .positiveColorRes(R.color.primaryColor)
                 .negativeText(getString(R.string.cancel))
                 .negativeColorRes(R.color.light_gray)

@@ -1761,10 +1761,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Terms of use</item>
         <item>Data privacy policy</item>
     </string-array>
-    <string name="keyboard">Keyboard</string>
     <string name="payment_gateway">Payment Gateway</string>
     <string name="facebook_leads">Facebook Lead Ads</string>
-    <string name="website_domain">Website Domain</string>
     <string name="testimonials">Testimonials</string>
     <!--<string name="keyboard_message">The Boost Keyboard allows you to share your products and updates without leaving a chat.We do not store, send or share any data that is typed on the Boost Keyboard.</string>
     -->
@@ -1975,7 +1973,6 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="our_approach" translatable="false">Our Approach</string>
     <string name="budget" translatable="false">Budget</string>
     <string name="date_of_completion" translatable="false">Date of Completion</string>
-    <string name="_00_00_0000" translatable="false">00-00-0000</string>
     <string name="maximum_3" translatable="false">Maximum 3</string>
     <string name="jpg_png_800x800px" translatable="false">Jpg/png (800x800px)</string>
     <string name="completed" translatable="false">COMPLETED</string>
@@ -2109,7 +2106,6 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="skype_profile">Skype Profile</string>
     <string name="enter_skype_url">Enter Skype URL</string>
     <string name="with_the_feature_you_can_showcase_your_customer_reviews_and_highlight_their_experience_on_the_homepage_of_your_website">With the feature, you can showcase your customer reviews and highlight their experience on the homepage of your website.</string>
-    <string name="name" translatable="false">Name</string>
     <string name="astreak">*</string>
     <string name="enter_company_title" translatable="false">Enter Company Title</string>
     <string name="review_title">Review Title</string>
@@ -2466,14 +2462,12 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="preview_image">Preview Image</string>
     <string name="order_analytics_">Order Analytics</string>
     <string name="book_a_table">Book A Table</string>
-    <string name="website_customers">Website Customers</string>
     <string name="track_how_many_customers_you_have_received_from_your_website_this_is_your_organic_traffic_coming_from_search_engines_and_repeat_visitors_these_are_your_most_important_customers_and_will_grow_over_time">Track how many customers you have received from your website. This is your organic traffic coming from search engines, and repeat visitors. These are your most important customers, and will grow over time.</string>
     <string name="https">https://</string>
     <string name="create_my_site">CREATE MY SITE</string>
     <string name="shipping_details">Shipping Details</string>
     <string name="warehouse">Warehouse</string>
     <string name="search_datetime">Search DateTime</string>
-    <string name="boost_keyboard">Boost Keyboard</string>
     <string name="online_advertising">Online Advertising</string>
     <string name="i">i</string>
     <string name="refer_a_friend">Refer a friend</string>
@@ -2682,7 +2676,6 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="we_are_currently_reworking_this_feature_to_enhance">We are currently reworking this feature to enhance your experience of sharing. For now, you can share your products from Product Gallery.</string>
     <string name="whats_app_bubble">WhatsApp Bubble</string>
     <string name="social_and_interaction">Social<br/>Interactions</string>
-    <string name="my_facebook_chats">My Facebook Chats</string>
     <string name="cross_and_platform">Cross\nPlatform</string>
     <string name="enable_customer_assistant">Enable Customer Assistant</string>
     <string name="something_wen_wrong">Something Went Wrong</string>
@@ -2690,16 +2683,12 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="mark_order_as_shipped">Mark Order As Shipped</string>
     <string name="you_do_not_have_any_order">You don\'t have any Order</string>
     <string name="you_dont_have_any_order">You don\'t have Any Order</string>
-    <string name="received_orders">Received Orders</string>
     <string name="you_dont_have_received_orders">You don\'t have any Received Order</string>
     <string name="delivered_orders">Delivered Orders</string>
     <string name="you_dont_have_any_successfull_order">You don\'t have any Successful Order</string>
-    <string name="cancelled_orders">Cancelled Orders</string>
     <string name="you_dont_have_cancelled_orders">You don\'t have any Cancelled Order</string>
     <string name="you_dont_have_disputed_order">You don\'t have any Disputed Order</string>
-    <string name="abandoned_orders">Abandoned Orders</string>
     <string name="you_dont_have_abandoned_order">You don\'t have any Abandoned Order</string>
-    <string name="disputed_orders">Disputed Orders</string>
     <string name="you_dont_have_any_disputed_order">You don\'t have any Disputed Order</string>
     <string name="order_count_is_null">Orders Count is Null</string>
     <string name="assured_purchase_is_service_guarantee_by_nowfloats">Assured Purchase is a service guarantee by NowFloats that is the new benchmark for online selling businesses in India. By earning this badge:</string>
@@ -3024,8 +3013,37 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="_00_00_0000">00-00-0000</string>
     <string name="table_for">Table for</string>
     <string name="contact_number">Contact Number</string>
-    <string name="contact_number">Contact Number</string>
-    <string name="enter_name">Enter Name</string>
     <string name="time_">Time</string>
+    <string name="primary_image">Primary Image</string>
+    <string name="secondary_images_8_max_jpeg_800x800px">Secondary Images (8 max, jpeg, 800x800px)</string>
+    <string name="browse_secondary_images">BROWSE SECONDARY IMAGES</string>
+    <string name="brand_if_any">Brand (If any)</string>
+    <string name="write_the_name_of_the_brand">Write the name of the brand</string>
+    <string name="product_name_">Product Name</string>
+    <string name="write_the_name_of_your_base_product">Write the name of your base product</string>
+    <string name="product_type_category_if_any">Product Type/Category (If any)</string>
+    <string name="write_the_item_type_eg_book_smartphone_etc">Write the item type eg. Book, Smartphone etc.</string>
+    <string name="variant_information">Variant Information</string>
+    <string name="having_variants_of_this_product">Having variants of this product?</string>
+    <string name="product_description">Product Description</string>
+    <string name="describe_your_product_within_2000_characters_max">Describe your product within 2000 characters max ...</string>
+    <string name="filter_tags">Filter Tags</string>
+    <string name="type_a_filter_tag">Type a filter tag</string>
+    <string name="currency">Currency</string>
+    <string name="price_incl_tax">Price (Incl. tax)</string>
+    <string name="xx_xx_xxx">XX,XX,XXX</string>
+    <string name="discount_amount">Discount Amount</string>
+    <string name="xx_xxx">XX,XXX</string>
+    <string name="final_price_">Final Price</string>
+    <string name="xx_xxx">XX,XXX</string>
+    <string name="tax_rate_for_invoice">Tax Rate % (for invoice)</string>
+    <string name="xx">XX</string>
+    <string name="save_and_publish">SAVE AND PUBLISH</string>
+    <string name="delete_item">DELETE ITEM</string>
+    <string name="payment_configuration">Payment Configuration</string>
+    <string name="for_variant_1">for variant #1</string>
+    <string name="of_fastrack_bare_basic_watch">of Fastrack Bare Basic Watch</string>
+    <string name="payment_and_delivery_mode">Payment and delivery mode</string>
+    <string name="package_pickup_address">Package pickup address</string>
 
 </resources>

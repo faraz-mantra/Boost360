@@ -523,7 +523,7 @@ public class Site_Meter_Fragment extends Fragment implements DomainApiService.Do
                 } else if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
                         session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")) {
                     showExpiryDialog(DEMO_EXPIRED);
-                } else if (Utils.isNetworkConnected(getActivity()())) {
+                } else if (Utils.isNetworkConnected(getActivity())) {
                     showLoader(getString(R.string.please_wait));
                     domainApiService.getDomainDetails(activity, session.getFpTag(), getDomainDetailsParam());
                 } else {

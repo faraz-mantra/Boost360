@@ -37,7 +37,7 @@ fun getMessage(t: Throwable) = when (t) {
         val err = t.response()?.errorBody()
         if (t.code() == 401) KoinBaseApplication.instance.getString(R.string.session_expired)
         else if (t.code() == 400) KoinBaseApplication.instance.getString(R.string.bad_request)
-        else if (err == null) context.getString(R.string.request_failed_)
+        else if (err == null) KoinBaseApplication.instance.getString(R.string.request_failed_)
         else {
             try {
                 val jObjError = JSONObject(err.string())

@@ -28,7 +28,7 @@ class UploadImageService(private val listener: UploadImageServiceListener, priva
                 listener.onSuccess(responseImageUrlList)
             }
             else -> {
-                listener.onFailed(context.getString(R.string.error_occured_while_uploadin_images))
+                listener.onFailed(KoinBaseApplication.instance.getString(R.string.error_occured_while_uploadin_images))
             }
         }
     }

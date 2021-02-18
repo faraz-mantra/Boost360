@@ -79,7 +79,7 @@ public class uploadIMAGEURI extends AsyncTask<Void, String, String> {
         if (pd != null)
           pd.dismiss();
         if (isUploadingSuccess) {
-          Methods.showSnackBarPositive(appContext, appContext.getString(R.string.image_updated_successfully);
+          Methods.showSnackBarPositive(appContext, appContext.getString(R.string.image_updated_successfully));
           Constants.IMAGEURIUPLOADED = true;
           try {
             Bitmap bmp = Util.getBitmap(path, appContext);

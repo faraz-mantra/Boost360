@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="18dp"
-            android:text="@string/delete"
+            android:text="@string/delete_"
             android:textColor="#878787"
             android:layout_weight=".6"/>
 
