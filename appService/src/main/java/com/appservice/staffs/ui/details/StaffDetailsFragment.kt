@@ -205,7 +205,10 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     this.staffDescription = binding?.etvStaffDescription?.text.toString()
     val staffGender = binding?.spinnerGender?.isHintSelected()
     this.isAvailable = binding?.toggleIsAvailable?.isOn
-
+    servicesList?.forEach { items ->
+      if (items.id.isNullOrEmpty().not()) serviceListId?.add(items.id!!)
+    }
+    if (serviceListId.isNullOrEmpty().not()) staffDetails?.serviceIds = serviceListId
     if (imageUri.toString() == "null" || imageUri == null || imageUri.toString().isEmpty() || imageUri.toString().isBlank()) {
       showLongToast(getString(R.string.please_choose_image))
       return false
@@ -227,13 +230,13 @@ class StaffDetailsFragment : AppBaseFragment<FragmentStaffDetailsBinding, StaffV
     } else if (!this::yearOfExperience.isInitialized || yearOfExperience.equals("null", ignoreCase = true)) {
       showLongToast(getString(R.string.select_year_of_experience))
       return false
+    }else if (staffDetails?.serviceIds.isNullOrEmpty()) {
+      showLongToast(getString(R.string.error_select_service))
+      return false
     }
 
     specializationList.add(SpecialisationsItem(specialization, "key"))
-    servicesList?.forEach { items ->
-      if (items.id.isNullOrEmpty().not()) serviceListId?.add(items.id!!)
-    }
-    if (serviceListId.isNullOrEmpty().not()) staffDetails?.serviceIds = serviceListId
+
     if (isImageUpdated == true) {
       val imageExtension: String? = imageUri?.toString()?.substring(imageUri.toString().lastIndexOf("."))
       val imageToByteArray: ByteArray = imageToByteArray()
