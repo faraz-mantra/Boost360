@@ -10,7 +10,7 @@ import com.boost.upgrades.data.model.*
 
 import com.boost.upgrades.utils.Constants
 
-@Database(entities = [FeaturesModel::class, WidgetModel::class, BundlesModel::class, CartModel::class, CouponsModel::class, YoutubeVideoModel::class], version = 15, exportSchema = false)
+@Database(entities = [FeaturesModel::class, WidgetModel::class, BundlesModel::class, CartModel::class, CouponsModel::class, YoutubeVideoModel::class, MarketOfferModel::class], version = 16, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
@@ -41,4 +41,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun youtubeVideoDao(): YoutubeVideoDao
 
     abstract fun cartDao(): CartDao
+
+    abstract fun marketOffersDao(): MarketOfferDao
 }
