@@ -2169,7 +2169,6 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="service_offering">Service offering</string>
     <string name="tasks_that_are_performed_by_individuals_for_the_benefit_of_others_e_g_therapy_training_financial_consultation">Tasks that are performed by individuals for the benefit of others. E.g. therapy, training, financial consultation.</string>
     <string name="product_type_category_if_any">Product Type/Category (If any)</string>
-    <string name="write_the_item_type_eg_book_smartphone_etc">Write the item type eg. Book, Smartphone etc.</string>
     <string name="continue_" translatable="false">CONTINUE</string>
     <string name="_0_00" translatable="false">0.00</string>
     <string name="shipping_metric">Shipping Metric</string>
@@ -3021,7 +3020,6 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="write_the_name_of_the_brand">Write the name of the brand</string>
     <string name="product_name_">Product Name</string>
     <string name="write_the_name_of_your_base_product">Write the name of your base product</string>
-    <string name="product_type_category_if_any">Product Type/Category (If any)</string>
     <string name="write_the_item_type_eg_book_smartphone_etc">Write the item type eg. Book, Smartphone etc.</string>
     <string name="variant_information">Variant Information</string>
     <string name="having_variants_of_this_product">Having variants of this product?</string>
@@ -3033,7 +3031,6 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="price_incl_tax">Price (Incl. tax)</string>
     <string name="xx_xx_xxx">XX,XX,XXX</string>
     <string name="discount_amount">Discount Amount</string>
-    <string name="xx_xxx">XX,XXX</string>
     <string name="final_price_">Final Price</string>
     <string name="xx_xxx">XX,XXX</string>
     <string name="tax_rate_for_invoice">Tax Rate % (for invoice)</string>
@@ -3045,5 +3042,6 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="of_fastrack_bare_basic_watch">of Fastrack Bare Basic Watch</string>
     <string name="payment_and_delivery_mode">Payment and delivery mode</string>
     <string name="package_pickup_address">Package pickup address</string>
+    <string name="unable_to_open_facebook">unable to open facebook</string>
 
 </resources>

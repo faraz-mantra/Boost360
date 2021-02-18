@@ -435,7 +435,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                         MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_DELETE, null);
                          new MaterialDialog.Builder(activity)
                         .title(getString(R.string.are_you_sure_want_to_delete))
-                        .positiveText(getString(R.string.delete))
+                        .positiveText(getString(R.string.delete_))
                         .positiveColorRes(R.color.primaryColor)
                         .negativeText(getString(R.string.are_you_sure_want_to_delete))
                         .negativeColorRes(R.color.light_gray)
