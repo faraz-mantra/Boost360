@@ -1,55 +1,51 @@
 package com.boost.upgrades.ui.marketplace_offers
 
 import android.annotation.SuppressLint
-import android.graphics.Color
-import androidx.lifecycle.ViewModelProviders
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.text.SpannableString
-import android.text.style.StrikethroughSpan
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.biz2.nowfloats.boost.updates.base_class.BaseFragment
-
 import com.boost.upgrades.R
 import com.boost.upgrades.UpgradeActivity
-import com.boost.upgrades.adapter.PackageAdaptor
-import com.boost.upgrades.data.api_model.GetAllFeatures.response.Bundles
 import com.boost.upgrades.data.api_model.GetAllFeatures.response.MarketPlaceOffers
-import com.boost.upgrades.data.model.CartModel
-import com.boost.upgrades.data.model.FeaturesModel
 import com.boost.upgrades.ui.cart.CartFragment
+import com.boost.upgrades.ui.freeaddons.FreeAddonsFragment
 import com.boost.upgrades.utils.Constants
 import com.boost.upgrades.utils.SharedPrefs
-import com.boost.upgrades.utils.WebEngageController
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.compare_all_packages_new.*
 import kotlinx.android.synthetic.main.marketplaceoffer_fragment.*
-import java.text.NumberFormat
+import kotlinx.android.synthetic.main.marketplaceoffer_fragment.package_back
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
+
 
 class MarketPlaceOfferFragment : BaseFragment() {
 
     lateinit var root: View
 
-    lateinit var packageAdaptor: PackageAdaptor
-
     var marketOffersData: MarketPlaceOffers? = null
-    var featuresList: List<FeaturesModel>? = null
-    var cartList: List<CartModel>? = null
 
-    var badgeNumber = 0
-    var offeredBundlePrice = 0
-    var originalBundlePrice = 0
-
-    var packageInCartStatus = false
     lateinit var prefs: SharedPrefs
 
     private lateinit var viewModel: MarketPlaceOfferViewModel
+
     companion object {
         fun newInstance() = MarketPlaceOfferFragment()
     }
@@ -62,8 +58,7 @@ class MarketPlaceOfferFragment : BaseFragment() {
 
         val jsonString = arguments!!.getString("marketOffersData")
         marketOffersData = Gson().fromJson<MarketPlaceOffers>(jsonString, object : TypeToken<MarketPlaceOffers>() {}.type)
-        Log.v("bundleData"," "+ marketOffersData?.coupon_code)
-        packageAdaptor = PackageAdaptor((activity as UpgradeActivity), ArrayList(), Gson().fromJson<Bundles>(jsonString, object : TypeToken<Bundles>() {}.type))
+        Log.v("bundleData", " " + marketOffersData?.expiry_date  + " "+ marketOffersData?.createdon)
         prefs = SharedPrefs(activity as UpgradeActivity)
         return root
     }
@@ -75,39 +70,71 @@ class MarketPlaceOfferFragment : BaseFragment() {
         loadData()
         initMvvm()
 
-        package_title.setText(marketOffersData!!.title)
+        offer_title.setText(marketOffersData!!.title)
+        avail_coupon_txt.setText(marketOffersData!!.coupon_code)
+        howto_pointTwo.setText(resources.getString(R.string.marketoffer_howtoTwo, marketOffersData!!.coupon_code))
+        howto_pointThree_layout.visibility = View.GONE
+        term_one.setText(resources.getString(R.string.marketoffer_termOne, marketOffersData!!.coupon_code))
 
-        if(arguments!!.containsKey("showCartIcon")){
-            package_cart_icon.visibility = View.INVISIBLE
-            package_submit.visibility = View.GONE
+        val ss = SpannableString(resources.getString(R.string.marketoffer_termSix))
+        val clickableSpan: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(textView: View) {
+                Toast.makeText(activity, "On Clicked " , Toast.LENGTH_SHORT).show()
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = resources.getColor(R.color.common_text_color)
+                ds.isUnderlineText = true
+            }
+        }
+        ss.setSpan(clickableSpan, 66, 70, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        term_six.setText(ss)
+        term_six.setMovementMethod(LinkMovementMethod.getInstance())
+        term_six.setText(resources.getString(R.string.marketoffer_termSix, getConvertedDateFormat(marketOffersData!!.createdon),getConvertedExpiryDateFormat(marketOffersData!!.expiry_date)  ) )
+
+
+
+        if (arguments!!.containsKey("showCartIcon")) {
+            offer_info_icon.visibility = View.INVISIBLE
+            avail_coupon_submit.visibility = View.GONE
         }
 
-        if(marketOffersData!!.image != null && !marketOffersData!!.image!!.url.isNullOrEmpty()){
-            Glide.with(this).load(marketOffersData!!.image!!.url).into(package_profile_image)
+        if (marketOffersData!!.image != null && !marketOffersData!!.image!!.url.isNullOrEmpty()) {
+            Glide.with(this).load(marketOffersData!!.image!!.url).into(marketoffers_image)
         } else {
-            package_profile_image.setImageResource(R.drawable.rectangle_copy_18)
+            marketoffers_image.setImageResource(R.drawable.rectangle_copy_18)
         }
 
         package_back.setOnClickListener {
             (activity as UpgradeActivity).popFragmentFromBackStack()
         }
 
-        package_cart_icon.setOnClickListener {
+        offer_info_icon.setOnClickListener {
             (activity as UpgradeActivity).addFragment(
                     CartFragment.newInstance(),
                     Constants.CART_FRAGMENT
             )
         }
+        avail_coupon_submit.setOnClickListener {
+            val clipboard: ClipboardManager = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText(avail_coupon_txt.text, avail_coupon_txt.text)
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(activity, "Coupon " + avail_coupon_txt.text + " copied!!" , Toast.LENGTH_SHORT).show()
+        }
 
     }
 
     private fun loadData() {
-
+        Log.v("marketOffersCoupon", " " + marketOffersData!!.coupon_code)
+        viewModel.getOffersByCouponId(marketOffersData!!.coupon_code)
     }
 
     @SuppressLint("FragmentLiveDataObserve")
     private fun initMvvm() {
-
+        viewModel.marketOffersCouponResult().observe(this, Observer {
+            Log.v("marketOffersCoupon", " " + it.coupon_code)
+        })
     }
 
     override fun onBackPressed() {
@@ -116,22 +143,30 @@ class MarketPlaceOfferFragment : BaseFragment() {
         }
     }
 
-    fun spannableString(value: Int, minMonth: Int) {
-        val origCost: SpannableString
-        if (minMonth > 1) {
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/" + minMonth + "mths")
-        } else {
-            origCost = SpannableString("₹" + NumberFormat.getNumberInstance(Locale.ENGLISH).format(value) + "/mth")
-        }
-        origCost.setSpan(
-                StrikethroughSpan(),
-                0,
-                origCost.length,
-                0
-        )
-        orig_cost.setText(origCost)
+    fun getConvertedDateFormat(textDate: String) : String{
+        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+       val output = SimpleDateFormat("dd'th' MMM yyyy ")
+
+       var d: Date? = null
+       try {
+           d = input.parse(textDate)
+       } catch (e: ParseException) {
+           e.printStackTrace()
+       }
+        return output.format(d)
     }
+    fun getConvertedExpiryDateFormat(textDate: String) : String{
+        Log.v("getConvertedExpir", " "+ textDate)
+//        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+        val output = SimpleDateFormat("dd'th' MMM yyyy ")
 
-
-
+        var d: Date? = null
+        try {
+            d = input.parse(textDate)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return output.format(d)
+    }
 }
