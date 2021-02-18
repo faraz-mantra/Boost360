@@ -160,7 +160,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/EditTextCustomeStyle"
-                        android:hint="@string/_0"
+                        android:hint="@string/zero"
                         android:inputType="number"
                         android:elevation="@dimen/_2sdp"/>
                 </LinearLayout>

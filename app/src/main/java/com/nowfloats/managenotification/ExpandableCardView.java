@@ -175,13 +175,13 @@ public class ExpandableCardView extends LinearLayout {
         }
 
         if (backgroundColor != -1) {
-            textViewTitle.setTextSize(convertDpToPixels(requireContext(), 6));
+            textViewTitle.setTextSize(convertDpToPixels(getContext(), 6));
             card.setBackgroundColor(backgroundColor);
             findViewById(R.id.vwDivider).setVisibility(View.GONE);
-            card.setRadius(convertDpToPixels(requireContext(), 5));
-            setElevation(convertDpToPixels(requireContext(), 5));
+            card.setRadius(convertDpToPixels(getContext(), 5));
+            setElevation(convertDpToPixels(getContext(), 5));
         } else {
-            setElevation(convertDpToPixels(requireContext(), 20));
+            setElevation(convertDpToPixels(getContext(), 20));
         }
 
         setInnerView(innerViewRes);
@@ -328,7 +328,7 @@ public class ExpandableCardView extends LinearLayout {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void setIcon(int resId) {
 //        if (headerIcon != null) {
-        iconDrawable = ContextCompat.getDrawable(requireContext(), resId);
+        iconDrawable = ContextCompat.getDrawable(getContext(), resId);
 //            headerIcon.setBackground(iconDrawable);
 //        }
     }

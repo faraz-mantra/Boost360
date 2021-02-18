@@ -453,7 +453,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains(getString(R.string.facebook_chat_main))) {
 
             } else if (url.contains(getString(R.string.deeplink_manage_customer))) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, getString(R.string.managecustomers))
                         .commit();
             } else if (url.contains(getString(R.string.feedback_chat))) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
@@ -482,7 +482,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 }
                 startActivity(productActivity);
             } else if (url.contains(getString(R.string.keyboardSettings))) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, "Keyboard")
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, keyboardFragment, getString(R.string.keyboard))
                         .commit();
                 //navigationView.getMenu().getItem(1).setChecked(true);
             } else if (url.contains(getString(R.string.addCustomPage))) {
@@ -569,7 +569,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 startBusinessApp();
             } else if (url.contains(getResources().getString(R.string.deeplink_socailsharing))) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
+                ft.replace(R.id.mainFrame, socialSharingFragment, getString(R.string.socialsharingfragment)).commit();
 //                startActivity(new Intent(activity, Social_Sharing_Activity.class));
             } else if (url.contains(getResources().getString(R.string.deeplink_notification))) {
                 homeFragment.setFragmentTab(2);
@@ -604,13 +604,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             } else if (url.contains(getResources().getString(R.string.deeplink_assuredPurchase))) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, getString(R.string.manageinventory))
                         .commit();
             } else if (url.contains(getResources().getString(R.string.deeplink_gplaces))) {
                 //TODO
             } else if (url.contains(getResources().getString(R.string.deeplink_accSettings))) {
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_ACCOUNT_SETTINGS, null);
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, accountSettingsFragment, "accountSettingsFragment")
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, accountSettingsFragment, getString(R.string.accountsettingsfragment))
                         .commit();
             } else if (url.contains(getResources().getString(R.string.deeplink_uniqueVisitor))) {
                 Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
@@ -962,12 +962,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             prefsEditor = pref.edit();
         }
 
-        Boolean isPaymentSuccess = pref.getBoolean("Last_payment_status", false);
-        Set<String> keys = pref.getStringSet("Last_Purchase_Order_Feature_Keys", null);
+        Boolean isPaymentSuccess = pref.getBoolean(getString(R.string.last_payment_status), false);
+        Set<String> keys = pref.getStringSet(getString(R.string.last_purchase_order_feature_keys), null);
         if (keys != null && isPaymentSuccess) {
             ArrayList<String> keys2 = new ArrayList<>();
             keys2.addAll(keys);
-            Toast.makeText(HomeActivity.this, "Refreshing your business dashboard with the digital add-ons you just purchased.", Toast.LENGTH_LONG).show();
+            Toast.makeText(HomeActivity.this,getString( R.string.refreshing_your_business_dashboard), Toast.LENGTH_LONG).show();
             for (int i = 0; i < keys2.size(); i++) {
                 if (!Constants.StoreWidgets.contains(keys2.get(i))) {
                     Constants.StoreWidgets.add(keys2.get(i));
@@ -1482,7 +1482,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         );
                         inviteReferralLogin();
                     } else {
-                        Toast.makeText(getApplicationContext(), "An unexpected error occured.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.an_unexpacted_error_occured), Toast.LENGTH_LONG).show();
                     }
 //                    InviteReferralsApi.getInstance(getApplicationContext()).userDetails(
 //                            session.getUserProfileName(),
@@ -1507,11 +1507,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     if (status.toLowerCase().equals("success")) {
                         InviteReferralsApi.getInstance(getApplicationContext()).inline_btn(REFERRAL_CAMPAIGN_CODE);
                     } else {
-                        Toast.makeText(getApplicationContext(), "Authentication failed. Please try later.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.auth_failed_please_try_again_later), Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
 //                                e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Authentication failed. Please try later.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),  getString(R.string.auth_failed_please_try_again_later), Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -60,7 +60,7 @@ public final class KeyPreviewChoreographer {
         if (keyPreviewView != null) {
             return keyPreviewView;
         }
-        final Context context = placerView.requireContext();
+        final Context context = placerView.getContext();
         keyPreviewView = new KeyPreviewView(context, null /* attrs */);
         keyPreviewView.setBackgroundResource(mParams.mPreviewBackgroundResId);
         placerView.addView(keyPreviewView, ViewLayoutUtils.newLayoutParam(placerView, 0, 0));

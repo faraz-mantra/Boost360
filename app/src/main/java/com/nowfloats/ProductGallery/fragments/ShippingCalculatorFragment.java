@@ -370,7 +370,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
         query.put("height", height);
         query.put("weight", weight);
 
-        progressDialog.setMessage("Please Wait...");
+        progressDialog.setMessage(getString(R.string.please_wait_));
         progressDialog.show();
 
         Constants.restAdapter.create(ProductGalleryInterface.class)
@@ -390,7 +390,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
                     public void failure(RetrofitError error)
                     {
                         //progressDialog.dismiss();
-                        //Toast.makeText(requireActivity(), "Something went wrong! Please try again", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Something went wrong! Please try again", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -463,7 +463,7 @@ public class ShippingCalculatorFragment extends DialogFragment implements TextWa
 
         catch (Exception e)
         {
-            Toast.makeText(requireActivity(), "Please enter valid input", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Please enter valid input", Toast.LENGTH_LONG).show();
             return null;
         }
 

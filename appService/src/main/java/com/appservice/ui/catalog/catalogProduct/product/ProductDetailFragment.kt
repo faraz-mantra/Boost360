@@ -695,7 +695,7 @@ class ProductDetailFragment : AppBaseFragment<FragmentProductDetailsBinding, Pro
       R.id.id_delete -> {
         MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme).setTitle(resources.getString(R.string.are_you_sure))
             .setMessage(resources.getString(R.string.delete_record_not_undone))
-            .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete)) { d, _ ->
+            .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete_)) { d, _ ->
               d.dismiss()
               showProgress()
               WebEngageController.trackEvent(DELETE_SERVICE_PRODUCT_CATALOGUE, SERVICE_CATALOGUE_ADD_UPDATE, NO_EVENT_VALUE)

@@ -66,7 +66,7 @@ public class ManageInventoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = requireActivity();
+        activity = getActivity();
         UserSessionManager session = new UserSessionManager(activity.getApplicationContext(), activity);
 
         category_code = session.getFP_AppExperienceCode();
@@ -80,7 +80,7 @@ public class ManageInventoryFragment extends Fragment {
         ivLockWidget.setVisibility(View.GONE);
         ivPaymentIcon = mainView.findViewById(R.id.secondrow_ImageView_ProfileV2);
 
-        session = new UserSessionManager(requireContext(), activity);
+        session = new UserSessionManager(getContext(), activity);
         pref = activity.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
         //getPaymentSettings();
@@ -103,8 +103,8 @@ public class ManageInventoryFragment extends Fragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (requireActivity() != null)
-                            Toast.makeText(requireActivity(), getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
+                        if (getActivity() != null)
+                            Toast.makeText(getActivity(), getString(R.string.something_went_wrong_), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -169,9 +169,9 @@ public class ManageInventoryFragment extends Fragment {
         else if (experienceType == 3) startFragmentActivityNew(activity, FragmentType.ALL_ORDER_VIEW, getBundleData(), false);
         else Toast.makeText(activity, "Coming soon..", Toast.LENGTH_SHORT).show();
 //        MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
-//        Intent i = new Intent(requireActivity(), SellerAnalyticsActivity.class);
+//        Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
 //        startActivity(i);
-//        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private Bundle getBundleData() {
@@ -248,9 +248,9 @@ public class ManageInventoryFragment extends Fragment {
             orderAnalytics.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(requireActivity(), OrderSummaryActivity.class);
+                    Intent i = new Intent(getActivity(), OrderSummaryActivity.class);
                     startActivity(i);
-                    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
 
@@ -262,9 +262,9 @@ public class ManageInventoryFragment extends Fragment {
                 bookTable.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(requireActivity(), BookATableActivity.class);
+                        Intent i = new Intent(getActivity(), BookATableActivity.class);
                         startActivity(i);
-                        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
                 });
                 if (Constants.StoreWidgets.contains("BOOKTABLE")) {
@@ -288,7 +288,7 @@ public class ManageInventoryFragment extends Fragment {
 //        else {
 //            String value = WidgetKey.getPropertyValue(WidgetKey.WIDGET_SHOPPING_CART, WidgetKey.WIDGET_PROPERTY_CART);
 //            if (value.equals(WidgetKey.WidgetValue.FEATURE_NOT_AVAILABLE.getValue())) {
-//                Toast.makeText(requireContext(), getString(R.string.message_feature_not_available), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(), getString(R.string.message_feature_not_available), Toast.LENGTH_LONG).show();
 //            } else openSellerAnalyticsActivity();
 //        }
     }

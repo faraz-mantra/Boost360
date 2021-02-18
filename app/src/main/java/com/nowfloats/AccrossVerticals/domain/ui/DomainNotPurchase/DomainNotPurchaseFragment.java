@@ -36,7 +36,7 @@ public class DomainNotPurchaseFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        session = new UserSessionManager(requireContext(), requireActivity());
+        session = new UserSessionManager(getContext(), requireActivity());
         mViewModel = ViewModelProviders.of(this).get(DomainNotPurchaseViewModel.class);
 
         return inflater.inflate(R.layout.domain_not_purchase_fragment, container, false);
@@ -69,7 +69,7 @@ public class DomainNotPurchaseFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().onBackPressed();
+                getActivity().onBackPressed();
             }
         });
     }
@@ -80,7 +80,7 @@ public class DomainNotPurchaseFragment extends Fragment {
         progressDialog.setMessage(status);
         progressDialog.setCancelable(false);
         progressDialog.show();
-        Intent intent = new Intent(requireContext(), UpgradeActivity.class);
+        Intent intent = new Intent(getContext(), UpgradeActivity.class);
         intent.putExtra("expCode", session.getFP_AppExperienceCode());
         intent.putExtra("fpName", session.getFPName());
         intent.putExtra("fpid", session.getFPID());

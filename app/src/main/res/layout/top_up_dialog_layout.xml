@@ -40,7 +40,7 @@
             android:textSize="22sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/_0"/>
+            android:text="@string/zero"/>
         <TextView
             android:id="@+id/tv_taxes"
             android:layout_marginStart="5dp"

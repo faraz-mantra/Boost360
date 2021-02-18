@@ -54,7 +54,7 @@ public class EnableButtonLayout extends LinearLayout {
 
     private void init() {
         setWeightSum(9.0f);
-        int padding = pxFromDp(requireContext(), 10.0f);
+        int padding = pxFromDp(getContext(), 10.0f);
         setGravity(17);
         this.numberView = new TextView(getContext());
         this.numberView.setText(this.number + ".");
@@ -69,7 +69,7 @@ public class EnableButtonLayout extends LinearLayout {
         this.introButton.setLayoutParams(new LayoutParams(0, -2, 5.0f));
         this.imageView = new ImageView(getContext());
         this.imageView.setImageResource(R.drawable.minimal_tick);
-        this.imageView.setLayoutParams(new LayoutParams(0, pxFromDp(requireContext(), 40.0f), 2.0f));
+        this.imageView.setLayoutParams(new LayoutParams(0, pxFromDp(getContext(), 40.0f), 2.0f));
         this.imageView.setVisibility(INVISIBLE);
         this.imageView.setPadding(padding / 2, padding, padding, padding);
         addView(this.numberView);

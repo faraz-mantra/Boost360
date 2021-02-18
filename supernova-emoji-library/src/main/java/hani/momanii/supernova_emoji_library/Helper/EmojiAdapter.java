@@ -55,7 +55,7 @@ class EmojiAdapter extends ArrayAdapter<Emojicon> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         View v = convertView;
         if (v == null) {
-            v = View.inflate(requireContext(), R.layout.emojicon_item, null);
+            v = View.inflate(getContext(), R.layout.emojicon_item, null);
             ViewHolder holder = new ViewHolder();
             holder.icon = (EmojiconTextView) v.findViewById(R.id.emojicon_icon);
             holder.icon.setUseSystemDefault(mUseSystemDefault);

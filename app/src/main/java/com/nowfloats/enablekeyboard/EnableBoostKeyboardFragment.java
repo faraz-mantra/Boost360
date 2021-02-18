@@ -161,8 +161,8 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
     }
 
     private void getPermissions() {
-        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
-                || ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED) {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+                || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                 requestPermissions(permission, STORAGE_CODE);
@@ -172,7 +172,7 @@ public class EnableBoostKeyboardFragment extends Fragment implements View.OnTouc
     }
 
     private void getPermission(int code) {
-        Activity activity = requireActivity();
+        Activity activity = getActivity();
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED && code == STORAGE_CODE) {
             storageSwitchTv.setChecked(false);
             if (activity == null) {

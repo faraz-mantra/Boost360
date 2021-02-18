@@ -191,7 +191,7 @@ public class FullScreen_Gallery_Image extends AppCompatActivity {
        // task.setOnDeleteListener(this);
         task.execute();
 
-//        UploadPictureAsyncTask upload = new UploadPictureAsyncTask(requireActivity(),imageUrl);
+//        UploadPictureAsyncTask upload = new UploadPictureAsyncTask(getActivity(),imageUrl);
 //        upload.execute();
     }
 

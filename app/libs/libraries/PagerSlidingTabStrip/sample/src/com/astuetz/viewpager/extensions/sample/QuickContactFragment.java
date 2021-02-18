@@ -61,12 +61,12 @@ public class QuickContactFragment extends DialogFragment {
 			int fullWidth = getDialog().getWindow().getAttributes().width;
 
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-				Display display = requireActivity().getWindowManager().getDefaultDisplay();
+				Display display = getActivity().getWindowManager().getDefaultDisplay();
 				Point size = new Point();
 				display.getSize(size);
 				fullWidth = size.x;
 			} else {
-				Display display = requireActivity().getWindowManager().getDefaultDisplay();
+				Display display = getActivity().getWindowManager().getDefaultDisplay();
 				fullWidth = display.getWidth();
 			}
 

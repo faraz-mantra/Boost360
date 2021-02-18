@@ -47,7 +47,7 @@ class WormDotsIndicator @JvmOverloads constructor(context: Context, attrs: Attri
     dotsStrokeColor = dotIndicatorColor
 
     if (attrs != null) {
-      val a = requireContext().obtainStyledAttributes(attrs, R.styleable.WormDotsIndicator)
+      val a = getContext().obtainStyledAttributes(attrs, R.styleable.WormDotsIndicator)
 
       // Dots attributes
       dotIndicatorColor = a.getColor(R.styleable.WormDotsIndicator_dotsColor, dotIndicatorColor)

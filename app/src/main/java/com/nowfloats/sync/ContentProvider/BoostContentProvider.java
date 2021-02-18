@@ -66,7 +66,7 @@ public class BoostContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        context = requireContext();
+        context = getContext();
         /*
          *This dbName needs to be edited according to the Constants value(e.g  Constants.PREF_NAME).
          * Remove the default db name on porting to BOOST app
@@ -136,7 +136,7 @@ public class BoostContentProvider extends ContentProvider {
 
         }
         Cursor cursor = builder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
-        cursor.setNotificationUri(requireContext().getContentResolver(), uri);
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
         //db.close();
         return cursor;
     }
@@ -259,7 +259,7 @@ public class BoostContentProvider extends ContentProvider {
                 break;
         }
         if (updateCount > 0) {
-            requireContext().getContentResolver().notifyChange(uri, null);
+            getContext().getContentResolver().notifyChange(uri, null);
         }
         //db.close();
         return updateCount;
@@ -268,7 +268,7 @@ public class BoostContentProvider extends ContentProvider {
     private Uri getUriForId(long id, Uri uri) {
         if (id > 0) {
             Uri itemUri = ContentUris.withAppendedId(uri, id);
-            requireContext().getContentResolver().notifyChange(itemUri, null);
+            getContext().getContentResolver().notifyChange(itemUri, null);
             return itemUri;
         }
         throw new SQLException("Problem while inserting into uri: " + uri);

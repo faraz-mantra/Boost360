@@ -87,7 +87,7 @@ public class NewDomainFragment extends Fragment {
 //        domainSupportTypeSpinneer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //            @Override
 //            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(requireContext(),domainSupportType[position] , Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(),domainSupportType[position] , Toast.LENGTH_LONG).show();
 //            }
 //
 //            @Override
@@ -108,7 +108,7 @@ public class NewDomainFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().onBackPressed();
+                getActivity().onBackPressed();
             }
         });
     }
@@ -146,20 +146,20 @@ public class NewDomainFragment extends Fragment {
                         }
 
                         //Creating the ArrayAdapter instance having the country list
-//                        ArrayAdapter aa = new ArrayAdapter(requireActivity(), R.layout.spinner_item_white_text, domainSupportType);
-                        ArrayAdapter aa = new ArrayAdapter(requireActivity(), R.layout.spinner_item_white_text, domainList);
+//                        ArrayAdapter aa = new ArrayAdapter(getActivity(), R.layout.spinner_item_white_text, domainSupportType);
+                        ArrayAdapter aa = new ArrayAdapter(getActivity(), R.layout.spinner_item_white_text, domainList);
                         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         //Setting the ArrayAdapter data on the Spinner
                         domainSupportTypeSpinneer.setAdapter(aa);
                     }else{
-                        Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong));
+                        Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
                     }
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     hideProgress();
-                    Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong));
+                    Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
                 }
             });
 

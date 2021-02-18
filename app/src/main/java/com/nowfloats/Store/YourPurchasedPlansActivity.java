@@ -73,7 +73,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
                 adapter.setPlansList(expiredPlans);
                 break;
             default:
-                throw new RuntimeException("You can use other type of plans");
+                throw new RuntimeException(getString(R.string.you_can_use_other_type_of_plans));
         }
         return adapter;
     }
@@ -176,7 +176,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
                         yourOrdersItems.add(activePackage);
                     }
                 } else {
-                    Toast.makeText(YourPurchasedPlansActivity.this, "Oops, Invoice details not found.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(YourPurchasedPlansActivity.this, getString(R.string.oops_invoice_details_not_found), Toast.LENGTH_SHORT).show();
                     hideDialog();
                 }
                 // zeroth screen
@@ -212,7 +212,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
                 if (storeMainModel != null) {
                     preProcessAndDispatchPlans(storeMainModel);
                 } else {
-                    Toast.makeText(YourPurchasedPlansActivity.this, "Oops, Pricing plans not found.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(YourPurchasedPlansActivity.this, getString(R.string.oops_pricing_plans_not_found), Toast.LENGTH_SHORT).show();
                     hideDialog();
                 }
                 // zeroth screen
@@ -334,7 +334,7 @@ public class YourPurchasedPlansActivity extends AppCompatActivity implements Pur
         if (materialProgress == null) {
             materialProgress = new MaterialDialog.Builder(this)
                     .widgetColorRes(R.color.accentColor)
-                    .content("Please Wait...")
+                    .content(getString(R.string.please_wait_))
                     .progress(true, 0)
                     .cancelable(false)
                     .build();

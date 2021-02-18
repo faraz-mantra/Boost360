@@ -87,7 +87,7 @@ public class SnackBarView extends RelativeLayout {
 
     public void show(int textResId, OnClickListener onClickListener) {
         setText(textResId);
-        setOnActionClickListener(requireContext().getString(R.string.imagepicker_action_ok), onClickListener);
+        setOnActionClickListener(getContext().getString(R.string.imagepicker_action_ok), onClickListener);
 
         ViewCompat.animate(this)
                 .translationY(0f)

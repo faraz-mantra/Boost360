@@ -112,11 +112,11 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
         facebookHandler = new FacebookHandler(this,mContext);
         if(status == 2)
             message.setText(R.string.your_facebook_session_has_expired);
-        if(requireActivity() instanceof FacebookChatActivity){
+        if(getActivity() instanceof FacebookChatActivity){
             message.setText(R.string.please_connect_your_facebook_page);
         }
         Methods.isOnline(getActivity());
-        session = new UserSessionManager(requireContext(), getActivity());
+        session = new UserSessionManager(getContext(), getActivity());
         pref = mContext.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
 
@@ -260,8 +260,8 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
         }
     }
     private void showLoader(final String message) {
-        if (requireActivity() == null) return;
-        requireActivity().runOnUiThread(new Runnable() {
+        if (getActivity() == null) return;
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (progressDialog == null) {
@@ -275,8 +275,8 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
     }
 
     private void hideLoader() {
-        if (requireActivity() == null) return;
-        requireActivity().runOnUiThread(new Runnable() {
+        if (getActivity() == null) return;
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (progressDialog != null && progressDialog.isShowing()) {
@@ -359,7 +359,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
         });
         dialog = builder.show();
         TextView textView = (TextView) dialog.findViewById(android.R.id.message);
-        Typeface face = Typeface.createFromAsset(requireActivity().getAssets(), "Roboto-Light.ttf");
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
         textView.setTypeface(face);
         textView.setTextColor(Color.parseColor("#808080"));
 
@@ -394,7 +394,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
             case PAGE_NO_FOUND:
                 MixPanelController.track(MixPanelController.FACEBOOK_PAGE_NOT_FOUND, null);
                 if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-                    Methods.materialDialog(requireActivity(), "Alert", getString(R.string.look_like_no_facebook_page));
+                    Methods.materialDialog(getActivity(), "Alert", getString(R.string.look_like_no_facebook_page));
                 } else {
                     final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
                     final MaterialDialog builder = new MaterialDialog.Builder(mContext)
@@ -407,11 +407,11 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                                     if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
                                         createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                                     }else{
-                                        Methods.materialDialog(requireActivity(), "Alert",getString(R.string.this_feature_is_available_for_paid_customers));
+                                        Methods.materialDialog(getActivity(), "Alert",getString(R.string.this_feature_is_available_for_paid_customers));
                                     }
                                 }
                             });
-                    if (requireActivity() != null && !requireActivity().isFinishing())
+                    if (getActivity() != null && !getActivity().isFinishing())
                         builder.show();
                 }
                 break;
@@ -432,14 +432,14 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                         break;
                     case "error_creating_page":
                         MixPanelController.track(MixPanelController.FACEBOOK_PAGE_ERROR_IN_CREATE, null);
-                        Methods.showSnackBarNegative(requireActivity(), getString(R.string.something_went_wrong));
+                        Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
                         break;
                     case "invalid_name":
                         MixPanelController.track(MixPanelController.FACEBOOK_PAGE_INVALID_NAME, null);
                         pageSuggestionDialog();
                         break;
                     default:
-                        Toast.makeText(requireActivity(), getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
                         break;
                 }
                 break;
@@ -499,11 +499,11 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
                     dialog.dismiss();
                     createFBPage(page);
                 } else {
-                    Toast.makeText(requireActivity(), getString(R.string.page_name_cant_be_empty), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.page_name_cant_be_empty), Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        if (!requireActivity().isFinishing()) {
+        if (!getActivity().isFinishing()) {
             dialog.show();
         }
 
@@ -557,7 +557,7 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
             }
         });
 
-        if (!requireActivity().isFinishing()) {
+        if (!getActivity().isFinishing()) {
             dialog.show();
         }
     }
@@ -574,14 +574,14 @@ public class FacebookLoginFragment extends Fragment implements NfxRequestClient.
 
     @Override
     public void onAllPermissionNotGiven(Collection<String> givenPermissions) {
-        if(!isAdded() || requireActivity() == null) return;
+        if(!isAdded() || getActivity() == null) return;
         boolean readContain = givenPermissions.containsAll(publishPermissions);
         boolean publishContain = givenPermissions.containsAll(publishPermissions);
         if(!readContain){
 
-            Methods.showSnackBarNegative(requireActivity(),getString(R.string.required_permission_is_not_given_please_connect_again));
+            Methods.showSnackBarNegative(getActivity(),getString(R.string.required_permission_is_not_given_please_connect_again));
         }else if(!publishContain){
-            Methods.showSnackBarNegative(requireActivity(),getString(R.string.required_permission_is_not_given_please_connect_again));
+            Methods.showSnackBarNegative(getActivity(),getString(R.string.required_permission_is_not_given_please_connect_again));
         }
     }
 

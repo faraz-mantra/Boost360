@@ -133,7 +133,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
         emojiPalettesViewAttr.recycle();
 
 
-        final TypedArray keyboardViewAttr = requireContext().obtainStyledAttributes(attrs,
+        final TypedArray keyboardViewAttr = getContext().obtainStyledAttributes(attrs,
                 R.styleable.KeyboardView, defStyle, R.style.KeyboardView);
 
         final int keyBackgroundId = keyboardViewAttr.getResourceId(
@@ -156,7 +156,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
     @Override
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        final Resources res = requireContext().getResources();
+        final Resources res = getContext().getResources();
         // The main keyboard expands to the entire this {@link KeyboardView}.
         final int width = ResourceUtils.getDefaultKeyboardWidth(res)
                 + getPaddingLeft() + getPaddingRight();
@@ -325,7 +325,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 //            tabWidget.setRightStripDrawable(mCategoryIndicatorBackgroundResId);
 //        }
 
-        mEmojiPalettesAdapter = new EmojiPagerAdapter(requireContext(),
+        mEmojiPalettesAdapter = new EmojiPagerAdapter(getContext(),
                 models,
                 new EmojiPageView.EmojiSelectionListener() {
                     @Override
@@ -348,7 +348,7 @@ public final class EmojiPalettesView extends LinearLayout implements OnTabChange
 
 
         mDeleteKey = (ImageView) findViewById(R.id.emoji_keyboard_delete);
-        mDeleteKey.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(requireContext(),
+        mDeleteKey.setColorFilter(new PorterDuffColorFilter(ContextCompat.getColor(getContext(),
                 R.color.light_gray), PorterDuff.Mode.SRC_IN));
         mDeleteKey.setTag(Constants.CODE_DELETE);
         mDeleteKey.setOnTouchListener(mDeleteKeyOnTouchListener);

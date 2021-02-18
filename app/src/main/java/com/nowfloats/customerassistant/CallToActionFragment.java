@@ -114,7 +114,7 @@ public class CallToActionFragment extends Fragment {
     private void initializeControls(View view) {
 
         try {
-            appVersion = requireActivity().getPackageManager().getPackageInfo(requireActivity().getPackageName(), 0).versionName;
+            appVersion = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -133,11 +133,11 @@ public class CallToActionFragment extends Fragment {
 
         ((SuggestionsActivity) getActivity()).setSupportActionBar(toolbar);
 
-//        requireActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
-        requireActivity().setTitle("Your Leads");
+//        getActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
+        getActivity().setTitle("Your Leads");
         ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        toolbar.setTitleTextColor(ContextCompat.getColor(requireActivity(), R.color.white));
+        toolbar.setTitleTextColor(ContextCompat.getColor(getActivity(), R.color.white));
 
         tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true);
@@ -145,7 +145,7 @@ public class CallToActionFragment extends Fragment {
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return ContextCompat.getColor(requireContext(), R.color.white);
+                return ContextCompat.getColor(getContext(), R.color.white);
             }
         });
 
@@ -178,7 +178,7 @@ public class CallToActionFragment extends Fragment {
                 })
                 .positiveColorRes(R.color.primaryColor);
 
-        if (!requireActivity().isFinishing()) {
+        if (!getActivity().isFinishing()) {
 
             final MaterialDialog materialDialog = builder.show();
             materialDialog.setCancelable(false);
@@ -279,8 +279,8 @@ public class CallToActionFragment extends Fragment {
 
         this.suggestionsDO = suggestionsDO;
 
-//        requireActivity().setTitle(Html.fromHtml("Sam <i>suggests..</i>"));
-        requireActivity().setTitle("Updates & Products");
+//        getActivity().setTitle(Html.fromHtml("Sam <i>suggests..</i>"));
+        getActivity().setTitle("Updates & Products");
         ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         llProductView.setVisibility(View.VISIBLE);
@@ -311,8 +311,8 @@ public class CallToActionFragment extends Fragment {
         llProductView.setVisibility(View.GONE);
         rvActionItems.setVisibility(View.VISIBLE);
 
-//        requireActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
-        requireActivity().setTitle("Your Leads");
+//        getActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
+        getActivity().setTitle("Your Leads");
         ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
@@ -377,7 +377,7 @@ public class CallToActionFragment extends Fragment {
 
 
             if (TextUtils.isEmpty(selectedProducts)) {
-                Methods.showSnackBarNegative(requireActivity(), getString(R.string.select_update_or_product));
+                Methods.showSnackBarNegative(getActivity(), getString(R.string.select_update_or_product));
             } else {
                 switch (share_via) {
                     case GMAIL:
@@ -390,7 +390,7 @@ public class CallToActionFragment extends Fragment {
                                         View view = new View(getActivity());
                                         view.draw(new Canvas(mutableBitmap));
                                         try {
-                                            String path = MediaStore.Images.Media.insertImage(requireActivity().getContentResolver(), mutableBitmap, "Nur", null);
+                                            String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), mutableBitmap, "Nur", null);
                                             BoostLog.d("Path is:", path);
                                             Uri uri = Uri.parse(path);
                                             shareIntent =
@@ -401,15 +401,15 @@ public class CallToActionFragment extends Fragment {
                                             shareIntent.setType("image/*");
 
 
-                                            if (shareIntent.resolveActivity(requireActivity().getPackageManager()) != null) {
+                                            if (shareIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                                                 startActivity(shareIntent);
                                             } else {
-                                                Methods.showSnackBarNegative(requireActivity(),
+                                                Methods.showSnackBarNegative(getActivity(),
                                                         getString(R.string.no_app_available_for_action));
                                             }
 
                                         } catch (Exception e) {
-                                            ActivityCompat.requestPermissions(requireActivity()
+                                            ActivityCompat.requestPermissions(getActivity()
                                                     , new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                                             android.Manifest.permission.CAMERA}, 2);
                                         }
@@ -417,7 +417,7 @@ public class CallToActionFragment extends Fragment {
 
                                     @Override
                                     public void onBitmapFailed(Exception e,Drawable errorDrawable) {
-                                        Methods.showSnackBarNegative(requireActivity(), getString(R.string.failed_to_download_image));
+                                        Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_download_image));
 
                                     }
 
@@ -480,7 +480,7 @@ public class CallToActionFragment extends Fragment {
 
                 if (suggestionsDO.getUpdates() != null && suggestionsDO.getUpdates().size() > 0) {
                     rvSuggestions.setLayoutManager(new LinearLayoutManager(getActivity()));
-//                    rvSuggestions.setAdapter(new CAUpdatesAdapter(requireActivity(),
+//                    rvSuggestions.setAdapter(new CAUpdatesAdapter(getActivity(),
 //                            (ArrayList<SugUpdates>) suggestionsDO.getUpdates()),null);
 
                     ivScrollDown.setOnClickListener(new View.OnClickListener() {
@@ -526,7 +526,7 @@ public class CallToActionFragment extends Fragment {
                 tvNoItems.setVisibility(View.GONE);
 
                 if (suggestionsDO.getProducts() != null && suggestionsDO.getProducts().size() > 0) {
-                    gvSuggestions.setAdapter(new CAProductsAdapter(requireActivity(), suggestionsDO.getProducts()));
+                    gvSuggestions.setAdapter(new CAProductsAdapter(getActivity(), suggestionsDO.getProducts()));
 
                     gvSuggestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override

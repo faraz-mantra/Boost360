@@ -81,7 +81,7 @@ public class SignUpWithRiaFragmentCopy extends Fragment implements AnimationTool
     }
 
     private void initializeControls(View v) {
-        displayMetrics = requireActivity().getResources().getDisplayMetrics();
+        displayMetrics = getActivity().getResources().getDisplayMetrics();
         ivStart = (LinearLayout) v.findViewById(R.id.ivStart);
         ivRia = (LinearLayout) v.findViewById(R.id.ivRia);
         ivBack = (ImageView) v.findViewById(R.id.ivBack);

@@ -118,7 +118,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
     private void initializeControls(View view) {
 
         try {
-            appVersion = requireActivity().getPackageManager().getPackageInfo(requireActivity().getPackageName(), 0).versionName;
+            appVersion = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -142,13 +142,13 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return ContextCompat.getColor(requireActivity(), R.color.white);
+                return ContextCompat.getColor(getActivity(), R.color.white);
             }
         });
         tabs.setSelectedIndicatorColors(getResources().getColor(R.color.lt_black));
 
         vwSAM.setAdapter(new SAMPagerAdapter(getActivity()));
-        tabs.setViewPager(vwSAM,ContextCompat.getColorStateList(requireActivity(),R.color.lt_black));
+        tabs.setViewPager(vwSAM,ContextCompat.getColorStateList(getActivity(),R.color.lt_black));
         btnShare.setText(getString(R.string.share));
     }
 
@@ -213,7 +213,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
         tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requireActivity().onBackPressed();
+                getActivity().onBackPressed();
             }
         });
     }
@@ -263,7 +263,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
 
 
             if (TextUtils.isEmpty(selectedProducts)) {
-                Toast.makeText(requireActivity(), getString(R.string.select_update_or_product), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.select_update_or_product), Toast.LENGTH_SHORT).show();
             } else {
                 switch (share_via) {
                     case GMAIL:
@@ -276,7 +276,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
                                         View view = new View(getActivity());
                                         view.draw(new Canvas(mutableBitmap));
                                         try {
-                                            String path = MediaStore.Images.Media.insertImage(requireActivity().getContentResolver(), mutableBitmap, "Nur", null);
+                                            String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), mutableBitmap, "Nur", null);
                                             BoostLog.d("Path is:", path);
                                             Uri uri = Uri.parse(path);
                                             shareIntent =
@@ -287,14 +287,14 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
                                             shareIntent.setType("image/*");
 
 
-                                            if (shareIntent.resolveActivity(requireActivity().getPackageManager()) != null) {
+                                            if (shareIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                                                 startActivity(shareIntent);
                                             } else {
-                                                Toast.makeText(requireActivity(), getString(R.string.no_app_available_for_action), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getActivity(), getString(R.string.no_app_available_for_action), Toast.LENGTH_SHORT).show();
                                             }
 
                                         } catch (Exception e) {
-                                            ActivityCompat.requestPermissions(requireActivity()
+                                            ActivityCompat.requestPermissions(getActivity()
                                                     , new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                                             android.Manifest.permission.CAMERA}, 2);
                                         }
@@ -302,7 +302,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
 
                                     @Override
                                     public void onBitmapFailed(Exception e,Drawable errorDrawable) {
-                                        Toast.makeText(requireActivity(), getString(R.string.failed_to_download_image), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), getString(R.string.failed_to_download_image), Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
@@ -345,8 +345,8 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
 //                .duration(500)
 //                .playOn(llRelevant);
 
-        llMessage.startAnimation(AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_down));
-//        llRelevant.startAnimation(AnimationUtils.loadAnimation(requireActivity(), R.anim.juspay_slide_from_below));
+        llMessage.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down));
+//        llRelevant.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.juspay_slide_from_below));
 
     }
 
@@ -413,7 +413,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
 
                 if (mSuggestionsDO.getUpdates() != null && mSuggestionsDO.getUpdates().size() > 0) {
                     rvSuggestions.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    rvSuggestions.setAdapter(new CAUpdatesAdapter(requireActivity(),
+                    rvSuggestions.setAdapter(new CAUpdatesAdapter(getActivity(),
                             (ArrayList<SugUpdates>) mSuggestionsDO.getUpdates(), CustomerAssistantDetailFragment.this));
 
                     ivScrollDown.setOnClickListener(new View.OnClickListener() {
@@ -460,7 +460,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
                 gvSuggestions.setHorizontalSpacing(Methods.dpToPx(20, getActivity()));
                 gvSuggestions.setVerticalSpacing(Methods.dpToPx(20, getActivity()));
                 if (mSuggestionsDO.getProducts() != null && mSuggestionsDO.getProducts().size() > 0) {
-                    gvSuggestions.setAdapter(new CAProductsAdapter(requireActivity(),
+                    gvSuggestions.setAdapter(new CAProductsAdapter(getActivity(),
                             mSuggestionsDO.getProducts(), CustomerAssistantDetailFragment.this));
 
                     gvSuggestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {

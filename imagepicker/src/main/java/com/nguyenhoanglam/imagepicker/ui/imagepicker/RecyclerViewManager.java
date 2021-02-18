@@ -51,7 +51,7 @@ public class RecyclerViewManager {
     public RecyclerViewManager(RecyclerView recyclerView, Config config, int orientation) {
         this.recyclerView = recyclerView;
         this.config = config;
-        context = recyclerView.requireContext();
+        context = recyclerView.getContext();
         changeOrientation(orientation);
         imageLoader = new ImageLoader();
         isShowingFolder = config.isFolderMode();

@@ -43,7 +43,7 @@ public class OnBoardingFragment extends android.app.Fragment {
 
         llGetStarted = (LinearLayout) view.findViewById(R.id.llGetStarted);
         ivCA = (ImageView) view.findViewById(R.id.ivCA);
-        DisplayMetrics mDisplayMetrics = requireActivity().getResources().getDisplayMetrics();
+        DisplayMetrics mDisplayMetrics = getActivity().getResources().getDisplayMetrics();
 
         int width = (int) (mDisplayMetrics.widthPixels * 0.5);
         int height = (int) (width * 0.925);

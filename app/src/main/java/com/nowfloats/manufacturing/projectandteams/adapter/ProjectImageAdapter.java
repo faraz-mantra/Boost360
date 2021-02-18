@@ -38,7 +38,7 @@ public class ProjectImageAdapter extends RecyclerView.Adapter<ProjectImageAdapte
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_project_image, null);
 
-        context = v.requireContext();
+        context = v.getContext();
 
         return new ViewHolder(v);
     }

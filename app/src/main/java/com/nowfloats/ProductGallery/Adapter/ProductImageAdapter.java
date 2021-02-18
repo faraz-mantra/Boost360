@@ -29,7 +29,7 @@ public class ProductImageAdapter extends RecyclerView.Adapter<ProductImageAdapte
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        mContext = parent.requireContext();
+        mContext = parent.getContext();
         View v = LayoutInflater.from(mContext).inflate(R.layout.carousel_itm, parent, false);
         return new MyViewHolder(v);
     }

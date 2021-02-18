@@ -25,13 +25,13 @@
     <string name="hotline_file_provider_authority" translatable="false">com.biz2.nowfloats.provider</string>
     <string name="title_activity_business_profile__home" translatable="false">Business Profile</string>
 
-    <string name="business__address">Business Address</string>
-    <string name="contact__info">Contact Information</string>
-    <string name="title_activity_business__hours_">Business Hours</string>
-    <string name="title_activity_business__logo_">Business Logo</string>
-    <string name="title_activity_social__sharing_">Social Sharing</string>
+    <string name="business__address" translatable="false">Business Address</string>
+    <string name="contact__info" translatable="false">Contact Information</string>
+    <string name="title_activity_business__hours_" translatable="false">Business Hours</string>
+    <string name="title_activity_business__logo_" translatable="false">Business Logo</string>
+    <string name="title_activity_social__sharing_" translatable="false">Social Sharing</string>
     <string name="third_party_integration" translatable="false">Third Party Integrations</string>
-    <string name="title_activity_login__main">Welcome Back</string>
+    <string name="title_activity_login__main" translatable="false">Welcome Back</string>
     <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
     <string name="ps_create_lbl" translatable="false">CREATE</string>
     <string name="ps_login_lbl" translatable="false">LOG IN</string>
@@ -1701,17 +1701,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="feedback_chat" translatable="false">feedbackchat</string>
     <string name="error_msg_unknown" translatable="false">Unknown Error Occurred</string>
     <string name="tap_to_reload" translatable="false">Tap to Reload</string>
-    <string name="received_orders" translatable="false">Received Orders</string>
-    <string name="disputed_orders" translatable="false">Disputed Orders</string>
     <string name="delivery_charges" translatable="false">Delivery Charges</string>
     <string name="tracking_url" translatable="false">Tracking URL</string>
     <string name="tracking_number" translatable="false">Tracking Number</string>
     <string name="delivery_provider" translatable="false">Delivery Provider</string>
     <string name="shipped_on" translatable="false">Shipped On</string>
     <string name="received_successful_orders" translatable="false">Successful Orders</string>
-    <string name="cancelled_orders" translatable="false">Cancelled Orders</string>
     <string name="returned_orders" translatable="false">Returned Orders</string>
-    <string name="abandoned_orders" translatable="false">Abandoned Orders</string>
     <string name="filter_orders" translatable="false">Filter Orders</string>
     <string name="learn_more" translatable="false">Learn More</string>
     <string-array name="assured_purchase_points">
@@ -1726,22 +1722,20 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>If you are listed on an e-commerce marketplace like Amazon, Paytm, Flipkart etc, you can use the URL of the relevant product on the NowFloats Product catalogue.</item>
     </string-array>
     <string name="analylitcs" translatable="false">Analytics</string>
-    <string name="website_customers" translatable="false">Website Customers</string>
     <string name="social_interactions" translatable="false">Social Interactions</string>
     <string name="cross_platform" translatable="false">Cross Platform</string>
 
     <string name="manage_website" translatable="false">Manage Website</string>
-    <string name="my_facebook_chats" translatable="false">My Facebook Chats</string>
 
     <string name="manage_website_customers" translatable="false">Track how many customers you have received from your website. This is your organic traffic coming from search engines, and repeat visitors. These are your most important customers, and will grow over time. </string>
     <string name="manage_social_customers" translatable="false">Your social media pages are an easy way for customers on those platforms to interact with you. Currently, you can chat with customers who are reaching out to you on your Facebook Page.
 </string>
     <string name="manage_multichannel_customers" translatable="false">Interact with your customers and reply to their enquiries from across platforms through a single interface. We read through your SMS data to fetch relevant enquiries.</string>
-    <string name="deeplink_manage_customer">managecustomer</string>
+    <string name="deeplink_manage_customer" translatable="false">managecustomer</string>
     <string name="pp_business_category" translatable="false">Business Category:</string>
     <string name="renew_domain_message" formatted="false" translatable="false">Your domain \'%s\' has expired. Your website is currently running on \'%s\'. Please renew your domain or link another domain to avail the advantages of having a personal domain.</string>
     <string name="renew_nowfloats_and_domain_plan" translatable="false">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
-    <string name="contact_us_message">  </string>
+    <string name="contact_us_message" translatable="false">  </string>
     <string name="wildfire_definition" translatable="false"><![CDATA[WildFire is a way for your business to <b>quickly</b> reach your <b>target</b> audience and get more customers to your store! It uses inorganic discovery to get you discovered in the top ranking ad spots of Google Search and Facebook Feed - getting you more and <b>more phone calls</b>.]]></string>
     <string name="wildfire_ad_cost_text" translatable="false"><![CDATA[Total cost incurred for this Ad: <b>INR %.2f</b>]]></string>
     <string name="dictate_definition" translatable="false"><![CDATA[Dictate is a service by which, a <b>NowFloats representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>
@@ -1760,7 +1754,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="add_ons" translatable="false">Add-ons</string>
     <string name="subscriptions" translatable="false">Newsletter Subscriptions</string>
     <string name="shared_user_label" translatable="false">NowFloatsBoost</string>
-    <string name="business_apps">Business Apps</string>
+    <string name="business_apps" translatable="false">Business Apps</string>
 
     <string-array name="about_tab_items">
         <item>Boost360 Training &amp; Certification Program</item>
@@ -1771,10 +1765,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Terms of use</item>
         <item>Data privacy policy</item>
     </string-array>
-    <string name="keyboard" translatable="false">Keyboard</string>
     <string name="payment_gateway" translatable="false">Payment Gateway</string>
     <string name="facebook_leads" translatable="false">Facebook Lead Ads</string>
-    <string name="website_domain" translatable="false">Website Domain</string>
     <string name="testimonials" translatable="false">Testimonials</string>
     <!--<string name="keyboard_message">The Boost Keyboard allows you to share your products and updates without leaving a chat.We do not store, send or share any data that is typed on the Boost Keyboard.</string>
     -->
@@ -1783,7 +1775,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="domain_linked" translatable="false">Your domain is successfully Linked to your NowFloats website</string>
     <string name="domain_linking_success" translatable="false">Domain Linking Successful</string>
     <string name="map_visits" translatable="false">Address Views</string>
-    <string name="boost_keyboard" translatable="false">Boost Keyboard</string>
     <string name="enable_keyboard" translatable="false">Enable Keyboard</string>
     <string name="otp_over_call" translatable="false">Tap here to get OTP Over Call</string>
     <string name="sam" translatable="false">Sam</string>
@@ -1940,13 +1931,11 @@ With this feature, you can show off your top rankers to help people gain trust i
     <string name="course_timings" translatable="false">Course Timings <p><font color="red">*</font></p></string>
     <string name="course_duration" translatable="false">Course Duration <p><font color="red">*</font></p></string>
     <string name="commencement_date" translatable="false">Commencement Date <p><font color="red">*</font></p></string>
-    <string name="name">Name <p><font color="red">*</font></p></string>
     <string name="add_profile_image" translatable="false">Add Profile Image <p><font color="red">*</font></p></string>
     <string name="course_type" translatable="false">Course Type <p><font color="red">*</font></p></string>
     <string name="upcoming_batches" translatable="false">Upcoming Batches</string>
     <string name="upcoming_batches_feature_description" translatable="false">Looks like this add-on is not added to your current plan. Add it now to start using it.
 With this feature, students and their parents can browse and learn about the upcoming batches you are offering their starting date etc and drop a question regarding that if they may have.</string>
-    <string name="designation">Designation <p><font color="red">*</font></p></string>
     <string name="third_party_queries" translatable="false">thirdPartyQueries</string>
     <string name="facebookpage" translatable="false">facebookpage</string>
     <string name="addProduct" translatable="false">addProduct</string>
@@ -1972,7 +1961,6 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="add_candidate" translatable="false">Add candidate</string>
     <string name="share_colon" translatable="false">Share:</string>
     <string name="minimum_50_char_business_description_required" translatable="false">Minimum 50 characters in business description are required.</string>
-    <string name="refer_a_friend" translatable="false">Refer a friend</string>
     <string name="referrals_button" translatable="false">Referrals Button</string>
     <string name="samrt_look_api_key" translatable="false">2976fda0fc620d3186eca19884bd55ac125b56e4</string>
     <string name="contact_number_not_valid" translatable="false">Please enter valid contact number</string>
@@ -1986,7 +1974,6 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="enter_description_200_characters_max" translatable="false">Enter Description <br/> (200 Characters Max)</string>
     <string name="our_approach" translatable="false">Our Approach</string>
     <string name="budget" translatable="false">Budget</string>
-    <string name="_0">0</string>
     <string name="date_of_completion" translatable="false">Date of Completion</string>
     <string name="_00_00_0000" translatable="false">00-00-0000</string>
     <string name="maximum_3" translatable="false">Maximum 3</string>
@@ -2016,7 +2003,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="_30_09_2016" translatable="false">30/09/2016</string>
     <string name="validity_1year" translatable="false">(Validity: 1year)</string>
     <string name="expiry_date_heading" translatable="false">Expiry Date:</string>
-    <string name="_29_09_2017">29/09/2017</string>
+    <string name="dummy_date_29_09_2017">29/09/2017</string>
     <string name="expires_in_15_days">(expires in 15 days)</string>
     <string name="plan_details_heading">Plan Details:</string>
     <string name="see_plan_details">See Plan Details</string>
@@ -2159,9 +2146,9 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="review_title">Review Title</string>
     <string name="review_title">Review Title</string>
     <string name="review_description">Review Description</string>
-    <string name="_200_characters">(200 Characters)</string>
+    <string name="_200_characters" translatable="false">(200 Characters)</string>
     <string name="enter_description">Enter Description</string>
-    <string name="save">save</string>
+    <string name="save">Save</string>
     <string name="showcase_tripadvisor_ratings_on_your_boost_business_website">Showcase Tripadvisor Ratings on your Boost business website.</string>
     <string name="feature_locked">Feature Locked!</string>
     <string name="looks_like_this_add_on_is_not_added_to_your_current_plan_add_it_now_to_start_using_it_if_you_ve_added_it_before_and_have_not_reviewed_it_please_renew_it_to_start_showing_making_changes_to_this_script">Looks like this add-on is not added to your current plan. Add it now to start using it. if you’ve added it before and have not reviewed it, please renew it to start showing/making changes to this script.</string>
@@ -2173,14 +2160,13 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="save" translatable="false">save</string>
     <string name="load_more_calls">Load more calls</string>
     <string name="your_number">Your Number</string>
-    <string name="_040969578">040969578</string>
+    <string name="_040969578" translatable="false">040969578</string>
     <string name="view_potential_calls_0">View potential calls (0)</string>
-    <string name="_0">0</string>
-    <string name="_0" translatable="false">0</string>
+    <string name="zero">0</string>
     <string name="title">title</string>
     <string name="clicks">Clicks</string>
     <string name="cost_per_click_cpc">Cost per Click (CPC)</string>
-    <string name="_16_789">16,789</string>
+    <string name="_16_789" translatable="false">16,789</string>
     <string name="inr_0_16">INR 0.16</string>
     <string name="see_ad_preview">See Ad Preview</string>
     <string name="hello">hello</string>
@@ -2207,7 +2193,6 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="awesome_nyou_are_using_nowfloats_boost">Awesome,\nyou are using NowFloats Boost!</string>
     <string name="manage_your_website_on_the_go_and_get_discovered_online_real_time_your_business_in_your_hands_now">Manage your website on-the-go and get discovered online, real-time. Your business in your hands now.</string>
     <string name="what_s_next">What\'s Next</string>
-    <string name="_1">1</string>
     <string name="name_colon">Name:</string>
     <string name="phone_number_colon">Phone Number:</string>
     <string name="location_colon">Location:</string>
@@ -2215,14 +2200,12 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="order_value_colon">Order Value:</string>
     <string name="status_colon">Status:</string>
     <string name="my_product">my product</string>
-    <string name="inr_50">INR 50</string>
-    <string name="_9695787711">9695787711</string>
-    <string name="_24_jan_01_17_am">24 jan, 01:17 am</string>
+    <string name="inr_50" translatable="false">INR 50</string>
     <string name="hello">hello</string>
     <string name="helium_ballon">Helium Ballon</string>
     <string name="helium_balloon_decoration_service_in_best_prices_kandivali_west">Helium Balloon decoration service in best prices - Kandivali west</string>
     <string name="mr_gopal_chandwani_918095923954_harlur_road_belandur">Mr. Gopal Chandwani, +918095923954, Harlur road belandur</string>
-    <string name="today_02_23_pm">today, 02:23 PM</string>
+    <string name="today_02_23_pm" translatable="false">today, 02:23 PM</string>
     <string name="respond" translatable="false">Respond</string>
     <string name="inventory_nature">Inventory Nature</string>
     <string name="physical_product">Physical product</string>
@@ -2233,7 +2216,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="write_the_item_type_eg_book_smartphone_etc">Write the item type eg. Book, Smartphone etc.</string>
     <string name="continue_" translatable="false">CONTINUE</string>
     <string name="get_started">GET STARTED</string>
-    <string name="_0_00">0.00</string>
+    <string name="_0_00" translatable="false">0.00</string>
     <string name="close">Close</string>
     <string name="shipping_metric">Shipping Metric</string>
     <string name="length_in_cm">Length (In cm)</string>
@@ -2252,7 +2235,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="select_products_to_share">Select products to share...</string>
     <string name="add_products">Add Products</string>
     <string name="mr_gopal_chandwani_918095923954_harlur_road_belandur">Mr. Gopal Chandwani, +918095923954, Harlur road belandur</string>
-    <string name="today_02_23_pm_">Today, 02:23 PM</string>
+    <string name="today_02_23_pm_" translatable="false">Today, 02:23 PM</string>
     <string name="type_your_response">TYPE YOUR RESPONSE...</string>
     <string name="hi_thanks_for_getting_in_touch_with_us_regarding_your_query_below_are_few_options_which_you_might_like">Hi, Thanks for getting in touch with us. Regarding your query, below are few options which you might like.</string>
     <string name="products">PRODUCTS</string>
@@ -2263,11 +2246,11 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="unique_visits_this_week">unique visits this week</string>
     <string name="tanmay_majumdar">Tanmay Majumdar</string>
     <string name="george_kim">George Kim</string>
-    <string name="_3">+3</string>
-    <string name="_91_9999999999">+91-9999999999</string>
-    <string name="_12_08_2020">12-08-2020</string>
+    <string name="_3" translatable="false">+3</string>
+    <string name="_91_9999999999" translatable="false">+91-9999999999</string>
+    <string name="_12_08_2020" translatable="false">12-08-2020</string>
     <string name="time">TIME</string>
-    <string name="_12_00_pm">12:00 PM</string>
+    <string name="_12_00_pm" translatable="false">12:00 PM</string>
     <string name="message">MESSAGE</string>
     <string name="looking_for_lunch_with_pine_amp_dine"><![CDATA[Looking for Lunch with Pine & Dine]]></string>
     <string name="edit">Edit</string>
@@ -2282,17 +2265,17 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="qutub_minar">Qutub Minar</string>
     <string name="mehrauli_new_delhi_delhi_110030">Mehrauli, New Delhi, Delhi 110030</string>
     <string name="at_a_height_of_234_feet_this_minaret_is_the_tallest_individual_tower_in_the_world_and_is_a_perfect_display_of_mughal_architectural_brilliance">At a height of 234 feet, this minaret is the tallest individual tower in the world and is a perfect display of Mughal architectural brilliance.</string>
-    <string name="_120_mt_from_your_place">120 Mt from your place</string>
+    <string name="_120_mt_from_your_place" translatable="false">120 Mt from your place</string>
     <string name="ki_512kb">ki.. (512kb)</string>
     <string name="rs_1199">Rs.1199</string>
     <string name="at_a_height_of_234_feet_this_minaret_is_the_tallest_individual_tower_in_the_world_and_is_a_perfect_display_of_mughal_architectural_brilliance">At a height of 234 feet, this minaret is the tallest individual tower in the world and is a perfect display of Mughal architectural brilliance.</string>
-    <string name="_25_flat_discount">25% Flat Discount</string>
+    <string name="_25_flat_discount" translatable="false">25% Flat Discount</string>
     <string name="contact_thinkwalls_net">contact@thinkwalls.net</string>
     <string name="robert">Robert</string>
     <string name="cfo">CFO</string>
     <string name="commercial_kitchen_equipment">Commercial Kitchen Equipment</string>
     <string name="we_are_designing_commercial_kitchen_equipments_for_council_stainless">We are designing commercial kitchen equipments for council stainless</string>
-    <string name="_1_00_000">1,00,000</string>
+    <string name="_1_00_000" translatable="false">1,00,000</string>
     <string name="completion_date">COMPLETION DATE</string>
     <string name="client_requirement">Client Requirement</string>
     <string name="to_produce_custom_itvgems_for_commercial_kitchen_equipment_fadvnasdkvsd_nds_dv">To produce custom itvgems for commercial kitchen equipment fadvnasdkvsd nds dv...</string>
@@ -2362,7 +2345,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="allow_prepaid_online_orders">Allow prepaid online orders</string>
     <string name="max_qty">Max Qty.</string>
     <string name="xxxx">XXXX</string>
-    <string name="_1">1</string>
+    <string name="_1" translatable="false">1</string>
     <string name="delivery_package_dimensions">Delivery package dimensions</string>
     <string name="package_weight">Package Weight</string>
     <string name="gm">gm</string>
@@ -2403,9 +2386,9 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="boost_doesn_t_buy_any_premium_domain">*Boost doesn’t buy any premium domain.</string>
     <string name="confirm_">Confirm</string>
     <string name="order_date">Order Date:</string>
-    <string name="_07_september_2017">07 September 2017</string>
+    <string name="_07_september_2017" translatable="false">07 September 2017</string>
     <string name="delivery_date">Delivery Date:</string>
-    <string name="_12_september_2017">12 September 2017</string>
+    <string name="_12_september_2017" translatable="false">12 September 2017</string>
     <string name="net_amount">Net Amount:</string>
     <string name="inr_600">INR 600</string>
     <string name="shipping_charge">Shipping Charge:</string>
@@ -2414,14 +2397,14 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="inr_80">INR 80</string>
     <string name="cart_total">Cart Total:</string>
     <string name="inr_805">INR 805</string>
-    <string name="_3_items">3 Items</string>
+    <string name="_3_items" translatable="false">3 Items</string>
     <string name="fresh">Fresh</string>
     <string name="ad310817fg6t">AD310817FG6T</string>
     <string name="inr_7_000">INR 7,000</string>
     <string name="date_">Date:</string>
-    <string name="_31_08_2017">31/08/2017</string>
+    <string name="_31_08_2017" translatable="false">31/08/2017</string>
     <string name="exp_deliv_date">Exp. Deliv. Date:</string>
-    <string name="_31_08_2017">31/08/2017</string>
+    <string name="_31_08_2017" translatable="false">31/08/2017</string>
     <string name="you_have_not_configured_any_warehouse_as_package_pickup_addresses">You have not configured any warehouse as package pickup addresses.</string>
     <string name="add_address">ADD ADDRESS</string>
     <string name="you_have_no_products_listed_on_your_site_as_of_yet">You have no products listed on your site as of yet.</string>
@@ -2454,14 +2437,14 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="price">Price:</string>
     <string name="facebook_share_button">facebook share button</string>
     <string name="change_">Change</string>
-    <string name="_21_july_2017">21 july, 2017</string>
+    <string name="_21_july_2017" translatable="false">21 july, 2017</string>
     <string name="outgoing">OUTGOING</string>
-    <string name="_9695787711">9695787711</string>
-    <string name="_01_17_am">01:17 am</string>
-    <string name="_24_jan_2020">24 jan 2020</string>
-    <string name="_0_00_">0:00</string>
-    <string name="_0_00_back_slash">/ 0:00</string>
-    <string name="_10_percent">+10%</string>
+    <string name="_9695787711" translatable="false">9695787711</string>
+    <string name="_01_17_am" translatable="false">01:17 am</string>
+    <string name="_24_jan_2020" translatable="false">24 jan 2020</string>
+    <string name="_0_00_" translatable="false">0:00</string>
+    <string name="_0_00_back_slash" translatable="false">/ 0:00</string>
+    <string name="_10_percent" translatable="false">+10%</string>
     <string name="get_your_own_identity">Get your own identity</string>
     <string name="social_analytics">Social Analytics</string>
     <string name="physical_product_">Physical Product</string>
@@ -2477,7 +2460,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="quantity">Quantity:</string>
     <string name="_1">1</string>
     <string name="discount_">Discount:</string>
-    <string name="_10_space_percent">10 %</string>
+    <string name="_10_space_percent" translatable="false">10 %</string>
     <string name="datev1">Date</string>
     <string name="expiry">Expiry</string>
     <string name="source">Source</string>
@@ -2494,7 +2477,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="testimonial_description">Testimonial Description</string>
     <string name="enter_testimonial_text_n_200_characters_max">Enter Testimonial Text <br/>(200 Characters Max)</string>
     <string name="potential_customers">Potential Customers</string>
-    <string name="_91_84932987498">+91 84932987498</string>
+    <string name="_91_84932987498" translatable="false">+91 84932987498</string>
     <string name="relevant_update_and_product_suggestions">Relevant update and product suggestions:</string>
     <string name="other_information">Other Information</string>
     <string name="if_you_wish_to_change_email_address_please_contact_ria_nowfloats_com">If you wish to change email address, please contact ria@nowfloats.com</string>
@@ -2510,30 +2493,30 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="services_">Services</string>
     <string name="custom_">Custom</string>
     <string name="log_in_">LOG IN</string>
-    <string name="_9695787711">9695787711</string>
-    <string name="_24_jan_01_17_am">24 jan, 01:17 am</string>
+    <string name="_9695787711" translatable="false">9695787711</string>
+    <string name="_24_jan_01_17_am" translatable="false">24 jan, 01:17 am</string>
     <string name="dynamic">Dynamic</string>
     <string name="recommended">(Recommended)</string>
     <string name="we_choose_the_theme_that_will_work_best_for_your_business_keeping_many_factors_in_mind_by_default_this_is_the_setting_because_you_should_only_focus_on_the_content_that_will_get_the_customers_to_your_store">We choose the theme that will work best for your business, keeping many factors in mind. By default this is the setting, because you should only focus on the content that will get the customers to your store.</string>
     <string name="set_this_look">Set this look</string>
     <string name="from_9695787711">From: 9695787711</string>
     <string name="i_need_info_on_this_kid_s_wallpaper">I need info on this kid\'s wallpaper</string>
-    <string name="_24_jan_01_17_am">24 jan, 01:17 am</string>
+    <string name="_24_jan_01_17_am" translatable="false">24 jan, 01:17 am</string>
     <string name="from_9177513207">From: 9177513207</string>
     <string name="hi_i_would_like_to_know_the_cost_per_square_feet_and_material_used">Hi , I would like to know the cost per square feet and material used</string>
-    <string name="_24_jan_01_17_am">24 jan, 01:17 am</string>
+    <string name="_24_jan_01_17_am" translatable="false">24 jan, 01:17 am</string>
     <string name="hint___">...</string>
     <string name="days">Days</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="close_">close</string>
     <string name="open_">open</string>
-    <string name="_00_00">00:00</string>
+    <string name="_00_00" translatable="false">00:00</string>
     <string name="use_same_time_for_whole_week">Use same time for whole week</string>
     <string name="to">to</string>
     <string name="expiry_in_3_days">Expiry in 3 days</string>
-    <string name="j">J</string>
-    <string name="_91_84932987498">+91 84932987498</string>
+    <string name="j" translatable="false">J</string>
+    <string name="_91_84932987498" translatable="false">+91 84932987498</string>
     <string name="view_details">VIEW DETAILS</string>
     <string name="confirming">Confirming...</string>
     <string name="call_">Call</string>
@@ -2543,7 +2526,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="get_started">GET STARTED</string>
     <string name="view_orders">View Orders</string>
     <string name="think_ink_house">Think Ink House</string>
-    <string name="_3_4k_likes">3.4K Likes</string>
+    <string name="_3_4k_likes" translatable="false">3.4K Likes</string>
     <string name="website_ninteractions">Website<br/>Interactions</string>
     <string name="orders">Orders</string>
     <string name="enquiries_">Enquiries</string>
@@ -2592,7 +2575,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="website_customers">Website Customers</string>
     <string name="track_how_many_customers_you_have_received_from_your_website_this_is_your_organic_traffic_coming_from_search_engines_and_repeat_visitors_these_are_your_most_important_customers_and_will_grow_over_time">Track how many customers you have received from your website. This is your organic traffic coming from search engines, and repeat visitors. These are your most important customers, and will grow over time.</string>
     <string name="https">https://</string>
-    <string name="_91">+91</string>
+    <string name="_91"><![CDATA[+91]]></string>
     <string name="create_my_site">CREATE MY SITE</string>
     <string name="shipping_details">Shipping Details</string>
     <string name="warehouse">Warehouse</string>
@@ -2680,7 +2663,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="cancel">Cancel</string>
     <string name="verify_and_send_otp"><![CDATA[Verify & Send OTP]]></string>
     <string name="please_enter_valid_otp">Please enter valid OTP</string>
-    <string name="primary_number_changed_successfully">Primary number changed successfully</string>
+    <string name="primary_number_changed_successfully" translatable="false">Primary number changed successfully</string>
     <string name="it_is_not_advised_to_change_your_category" translatable="false"><![CDATA[It is <b>not advised to change</b> your %s category, as this can cause search related problems and a drop in search rank leading to less traffic.]]></string>
     <string name="wrong_business_category">Wrong business category?</string>
     <string name="image_updated_successfully">Image updated successfully</string>
@@ -2707,7 +2690,7 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="this_will_lead_indefinite_loop_of">You cannot select the same Facebook Page to auto-update your website. This will lead to an indefinite loop of updates on your website and Facebook Page.</string>
     <string name="alert">Alert</string>
     <string name="your_facebook_session_has_expired_please_login">Your Facebook session has expired. Please login.</string>
-    <string name="something_went_wrong_">Something went wrong</string>
+    <string name="something_went_wrong_" translatable="false">Something went wrong</string>
     <string name="this_feature_is_available_to_paid_customers">This feature is available to paid customers only.</string>
     <string name="take_me_there_">Take Me There</string>
     <string name="google_api_conneted">Google Api Connected</string>
@@ -2955,5 +2938,228 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="fb_disabled">Facebook Disabled</string>
     <string name="fb_enabled">Facebook Enabled</string>
     <string name="unable_to_post_image">Unable to post Message</string>
+    <string name="please_give_storage_and_camera_permission">Please give storage and camera permission</string>
+    <string name="please_give_read_storage_permission">Please give read storage permission</string>
+    <string name="please_enable_camera_permission_in_settings_to_use_your_camera">Please eanble camera permission in settings to use your camera</string>
+    <string name="do_you_want_to_save_this_update_as_draft">Do you want to save this update as draft?</string>
+    <string name="new_picture">New Picture</string>
+    <string name="from_your_camera">From your Camera</string>
+    <string name="upgrade_to_premium_support">Upgrade to Premium Support</string>
+    <string name="you_are_currently_on_the_default_support_plan">You are currently on the default support plan. This gives you access to Boost Care team via email only, with a promise of 72 hours SLA.\n\nYou can upgrade to premium support to get direct access to Boost Care team by phone, email and chat,\nwith a promise of 1 hour SLA.</string>
+    <string name="later">Later</string>
+    <string name="loading_please_wait">Loading. Please wait...</string>
+    <string name="need_help_with_boost">Need help with Boost360 [</string>
+    <string name="unable_to_post_message">Unable to post Message</string>
+    <string name="image_upload_sent_check_triggered">Image UpLoAd sent_check Triggered</string>
+    <string name="text_upload_sent_check_triggered">TeXt UpLoAd sent_check Triggered</string>
+    <string name="managecustomers">ManageCustomers</string>
+    <string name="keyboard">Keyboard</string>
+    <string name="socialsharingfragment">socialSharingFragment</string>
+    <string name="manageinventory">ManageInventory</string>
+    <string name="accountsettingsfragment">accountSettingsFragment</string>
+    <string name="last_payment_status">Last_payment_status</string>
+    <string name="last_purchase_order_feature_keys">Last_Purchase_Order_Feature_Keys</string>
+    <string name="refreshing_your_business_dashboard">Refreshing your business dashboard with the digital add-ons you just purchased.</string>
+    <string name="an_unexpacted_error_occured">An unexpected error occured.</string>
+    <string name="auth_failed_please_try_again_later">Authentication failed. Please try later.</string>
+    <string name="loading_data">Loading data...</string>
+    <string name="quotation_request">Quotation Requests</string>
+    <string name="enquires">Enquiries</string>
+    <string name="redtim_keyboard">RedTim Keyboard</string>
+    <string name="boost_keyboard">Boost Keyboard</string>
+    <string name="post_image_uploading_error" translatable="false">Post image uploading error!</string>
+    <string name="title_test_bitmap_array">Title Test Bitmap array</string>
+    <string name="keyboard_analytics">Keyword Analytics</string>
+    <string name="from_a_desktop_to_explore_and_install_related_add_ons">\" from a desktop to explore and install related add-ons to see inorganic traffic/leads\"</string>
+    <string name="to_enable_google_wildfire_with_us">To enable Google WildFire with us</string>
+    <string name="to_enable_facebook_wildfire_with_us">To enable Facebook WildFire with us</string>
+    <string name="google_adwords">Google Adwords</string>
+    <string name="facebook_ads">Facebook Ads</string>
+    <string name="inactive">Inactive</string>
+    <string name="please_select_start_end_date">Please select start, end date</string>
+    <string name="end_date_should_be_grater_than_start_date">end date should be greater than start date</string>
+    <string name="pranav_email">pranav.venuturumilli@nowfloats.com</string>
+    <string name="wildfire_email">wildfire.team@nowfloats.com</string>
+    <string name="client_with_fp_tag"><![CDATA[\"Hi, <br>The client with FP Tag <b>\" \"]]></string>
+    <string name="has_requested_a_meeting"><![CDATA[\" \"</b> has requested a meeting to understand the WildFire plan. Please take it up on priority.\"]]></string>
+    <string name="wildfire_meeting_is_requested">Important: WildFire meeting is requested by</string>
+    <string name="request_for_wildfire_plan">Request For WildFire Plan</string>
+    <string name="your_meeting_request_has_been_sent">Your meeting request has been sent successfully.</string>
+    <string name="server_error">Server error</string>
+    <string name="failed_to_connect_account_please_try_again">Failed to connect account. Please try again</string>
+    <string name="loading_">Loading</string>
+    <string name="you_need_to_finish_the_previous_setup_before_">You need to finish the previous step before you proceed further</string>
+    <string name="fetching_details">Fetching Details...</string>
+    <string name="choose_a_facebook_page">Choose a Facebook Page</string>
+    <string name="choose">Choose</string>
+    <string name="you_have_unsaved_information_do_you_still_want_to_close">You have unsaved information. Do you still want to close?</string>
+    <string name="information_not_saved">Information not saved!</string>
+    <string name="service_details">Service Details</string>
+    <string name="product_details">Product Details</string>
+    <string name="add_more">ADD MORE</string>
+    <string name="browse_secondary_image">BROWSE SECONDARY IMAGES</string>
+    <string name="camera_and_storage_permission">Camera And Storage Permission</string>
+    <string name="we_need_this_permission_to_capture">We need these permission to enable capture and upload images</string>
+    <string name="failed_to_set_image">Failed to Set Image</string>
+    <string name="file_not_found">File Not Found</string>
+    <string name="add_a_product_image">Add product image</string>
+    <string name="enter_valid_discount">Enter valid discount</string>
+    <string name="discount_amount_cant_be_grater_than_price">Discount amount can\'t be greater than price</string>
+    <string name="invalid_input">Invalid Input</string>
+    <string name="pickup_address_required">Pickup Address Required</string>
+    <string name="please_update_payment_information">Please update payment information</string>
+    <string name="purchase_url_required">Purchase URL Required</string>
+    <string name="enter_product_weight">Enter product weight</string>
+    <string name="enter_product_length">Enter product length</string>
+    <string name="enter_product_height">Enter product height</string>
+    <string name="enter_product_thickness">Enter product thickness</string>
+    <string name="enter_valid_package_dimensions">Enter valid package dimensions</string>
+    <string name="enter_bank_account_number">Enter bank account number</string>
+    <string name="enter_ifsc">Enter IFSC</string>
+    <string name="enter_gst_tax_id">Enter GST/Tax ID</string>
+    <string name="address_proof_required">Address proof required</string>
+    <string name="address_added_successfully">Address Added Successfully</string>
+    <string name="address_updated_successfully">Address Updated Successfully</string>
+    <string name="address_successfully_added_updated">Address Successfully Added/Updated</string>
+    <string name="failed_to_save_address">Failed to save address</string>
+    <string name="seller_profile_updated">Seller Profile Updated</string>
+    <string name="failed_to_update_seller_profile">Failed to Update Seller Profile</string>
+    <string name="failed_to_save_bank_information">Failed to Save Bank Information</string>
+    <string name="failed_to_update_product">Failed to update product.</string>
+    <string name="product_saved_successfully">\"Product Saved Successfully : \"</string>
+    <string name="failed_to_save_product">Failed to save product.</string>
+    <string name="deleted_successfully">Deleted successfully</string>
+    <string name="failed_to_delete">Failed to delete</string>
+    <string name="image_removed_successfully" translatable="false">Image Removed Successfully</string>
+    <string name="failed_to_remove_image" translatable="false">Failed to Remove Image</string>
+    <string name="the_primary_image_appears_on_your_webpage">The primary image appears on your homepage, item list page, the cart page, and the checkout page.</string>
+    <string name="enter_the_text_rate_">Enter the tax rate (%) for the product. This can be used to provide clear pricing breakdown during checkout and for generating invoices.</string>
+    <string name="enter_the_product_if_any_">Enter the brand of your product if any. Customers find products with a familiar brand name more identifiable and favorable.</string>
+    <string name="the_name_of_your_base_product">The name for your base product. Your customers will see it along with the product category and brand (if mentioned).</string>
+    <string name="describe_your_product_in_details">Describe your product in detail. This helps in the online discovery of your product. Your customers will make their buying decision based on the information you provide about the product.</string>
+    <string name="select_the_currency_you_want_to_accept">Select the currency you want to accept and show on your site.</string>
+    <string name="the_maximum_price_for_this_item_Including">The maximum price for this item, including any applicable taxes.</string>
+    <string name="enter_the_key_specification_which_helps">Enter the key specification which helps in differentiating the product from other similar products. This will be visible along with product details and helps customers make better purchase decisions.\n</string>
+    <string name="mention_other_specifications_of_the_product_you_are_of">Mention other specifications of the product you are offering. To add more, click on add specifications.</string>
+    <string name="you_can_use_this_to_manage">You can use this to manage your product’s availability on your website.</string>
+    <string name="the_total_number_of_units">The total number of units you are willing to sell through your Boost website. Quantity decreases with orders that include this product.</string>
+    <string name="allows_customer_to_pay_by_cash_at_the_time">Allows customers to pay by cash at the time of delivery of the product, without the need of an advance payment online.</string>
+    <string name="the_maximum_number_of_units_that_a_buyer_can_purchase">The maximum number of units that a buyer can purchase in a single order.</string>
+    <string name="package_dimension_need_to_be_accurate_because_they_are">Package dimensions need to be accurate because they are used to calculate shipping rates.</string>
+    <string name="enter_the_weight_of_your_package">Enter the weight of your package.</string>
+    <string name="enter_the_length_of_your_package">Enter the length of your package.</string>
+    <string name="enter_the_height_of_your_package">Enter the height of your package.</string>
+    <string name="enter_the_thickness_of_your_package">Enter the thickness of your package.</string>
+    <string name="choose_the_best_way_for_customers_to_pay_you">Choose the best way for customers to pay you.</string>
+    <string name="tags_help_site_visitors_to_find_a_desire_item">Tags help site visitors find a desired item on your Boost website. You can add related tags here and reuse them across other related products. Selecting a tag filters all relevant inventory in your product catalog.</string>
+    <string name="failed_to_upload_address_proof" translatable="false">Failed to upload address proof</string>
+    <string name="add_more">ADD MORE</string>
+    <string name="we_need_this_permission_to_enable_image_upload">We need this permission to enable image upload</string>
+    <string name="we_need_this_permission_to_enable_capture_and_upload_images">We need these permission to enable capture and upload images</string>
+    <string name="select_pickup_address">Select Pickup Address</string>
+    <string name="address_proof_required">Address proof required</string>
+    <string name="we_need_this_permission_to_enable_capture_an">We need these permission to enable capture and upload images</string>
+    <string name="failed_to_open_camera">Failed to Open Camera</string>
+    <string name="allow_external_storage_reading">Allow external storage reading</string>
+    <string name="failed_to_upload_address_proof">Failed to upload address proof</string>
+    <string name="address_addded_successfully">Address Added Successfully</string>
+    <string name="address_successfully_added_updated">Address Successfully Added/Updated</string>
+    <string name="please_choose_pickup_address">Please choose pickup address</string>
+    <string name="shipping_details_required">Shipping Details Required</string>
+    <string name="invalid_shipping_details">Invalid Shipping Details</string>
+    <string name="we_need_this_permission_to_enable_capture_and_upload_images">We need these permission to enable capture and upload images</string>
+    <string name="we_need_this_to_enable_image_upload">We need this permission to enable image upload</string>
+    <string name="we_need_this_permission_to_enable_capture_and_upload_images">We need these permission to enable capture and upload images</string>
+    <string name="adding_to_catalogue">Adding to Catalogue</string>
+    <string name="defining_product_type_makes_it_easier_to"><![CDATA[Defining product type makes it easier to categorize the <variable product verb> and helps your customers easily find what they are looking for.]]></string>
+    <string name="successfully_updated_book_table_details">Successfully Updated Book Table Details</string>
+    <string name="you_have_new_enquires_from_third_party_check_now">You have new enquires from Third Party, check now.</string>
+    <string name="your_website_already_has_this_look">Your website already has this look</string>
+    <string name="not_able_to_change_theme">Not able to change theme</string>
+    <string name="changed_theme_to">\"Changed theme to \"</string>
+    <string name="create_my_business_profile">\"By clicking on \'CREATE MY BUSINESS PROFILE\' you agree to our \"</string>
+    <string name="invalid_email_please_enter_again">Invalid Email. Please enter Again</string>
+    <string name="one_time_password">One Time Password</string>
+    <string name="you_will_receive_a_call_shortly">You will receive a call shortly</string>
+    <string name="please_enter_valid_otp">Please enter valid OTP</string>
+    <string name="failed_to_create_business_profile">Failed to create your business profile. Please try again.</string>
+    <string name="you_must_agree_with_the_terms_and_conditions">You must agree with the terms and conditions to proceed</string>
+    <string name="month_boost_demo_package_will_expire_on">\" month BOOST demo package will expire on \"</string>
+    <string name="to_continue_with_the_service">.To continue with the service, please upgrade your plan.</string>
+    <string name="currently_you_dont_have_any_active_packages">Currently you don\'t have any active packages. To continue with the service, please upgrade your plan.</string>
+    <string name="plan_in_use">PLANS IN USE</string>
+    <string name="your">\"Your \"</string>
+    <string name="currently_you_dont_have_any_archived_packages">Currently you don\'t have any archived packages. To continue with the service, please upgrade your plan.</string>
+    <string name="top_up_plan_is_not_available">Top Up Plan is not available</string>
+    <string name="dictate">Dictate</string>
+    <string name="my_business_app">My Business App</string>
+    <string name="the_transaction_id_for_your_transaction_is">\"The Transaction ID for your transaction is \"</string>
+    <string name="your_package_will_be_activated">. Your package will be activated within 24 hours.</string>
+    <string name="your_payment_is_pending">Your payment is pending. Once your payment is successful, your package will be activated within 24 hours.</string>
+    <string name="alert_">Alert! \n</string>
+    <string name="thank_you">Thank you! \n</string>
+    <string name="result">Result</string>
+    <string name="please_contact_customer_support">. Please Contact Customer Support.</string>
+    <string name="your_payment_id_is">\"Your PaymentId is: \"</string>
+    <string name="enter_account_number">Enter account number</string>
+    <string name="enter_transaction_amount">Enter transaction amount</string>
+    <string name="enter_transaction_id">Enter transaction id</string>
+    <string name="attach_receipt_image">Attach receipt image</string>
+    <string name="bank_transfer_payment">Bank Transfer Payment</string>
+    <string name="enter_cheque_amount">Enter cheque amount</string>
+    <string name="enter_cheque_no">Enter cheque number</string>
+    <string name="please_attach_cheque_imaeg">Please attach cheque image</string>
+    <string name="please_enter_cheque_date">Please enter cheque date</string>
+    <string name="the_payment_id_for_transaction_is">\"The Payment ID for your transaction is \"</string>
+    <string name="your_package_will_be_activated_within">. Your package will be activated within 24 hours. \n</string>
+    <string name="you_can_reach_customer_support_at_ria_">You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.</string>
+    <string name="your_payment_is_pending_once_your_payment_is">\"Your payment is pending. Once your payment is successful, your package will be activated within 24 hours. The Payment Request ID for your transaction is \"</string>
+    <string name="you_can_reach_customer_support_at_ria_1860">You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.</string>
+    <string name="please_contact_customer_support">. Please Contact Customer Support.</string>
+    <string name="this_is_an_added_security_feature">This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.</string>
+    <string name="unable_to_create_draft_invoice">Unable to create Draft Invoice</string>
+    <string name="unable_to_apply_coupon">Unable to apply Coupon</string>
+    <string name="online_voucher_applied_successfully">Online voucher Applied Successfully</string>
+    <string name="the_entered_online_voucher_is_not_valid">The entered Online voucher is not valid for this product.</string>
+    <string name="error_while_generating_invoice">Error while generating Invoice</string>
+    <string name="please_note_that_your_package_will_be_activated_on">\"Please note that your package will be activated on \"</string>
+    <string name="are_you_sure_want_to_proceed">. Are you sure you want to proceed?</string>
+    <string name="error_while_processing_payment">Error while processing payment</string>
+    <string name="cant_proceed_for_payment">Can\'t Proceed for Payment</string>
+    <string name="this_is_an_added_security_feature_to_protect_your_package_details">This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.</string>
+    <string name="error_while_generating_invoice">Error while generating Invoice</string>
+    <string name="please_give_storage_and_camera_permission">Please give storage and camera permission</string>
+    <string name="please_give_read_storage_permission">Please give read storage permission</string>
+    <string name="select_payment_option">Select Payment option</string>
+    <string name="coupon_does_not_exist">Coupon does not exist</string>
+    <string name="error_processing_the_request">Error processing the request</string>
+    <string name="error_in_processing_amount">Error in processing Amount</string>
+    <string name="please_note_that_your_package_will_be_activated">\"Please note that your package will be activated on \"</string>
+    <string name="are_you_sure_want_to_proceed">. Are you sure you want to proceed?</string>
+    <string name="online_voucher_cant_be_empty">Online Voucher can\'t be empty</string>
+    <string name="this_is_an_added_security_feature_to_protect_your_package_details_kindly_log_out_and_login_again_to_pay_for_this">This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.</string>
+    <string name="unable_to_create_draft_invoice">Unable to create Draft Invoice</string>
+    <string name="unable_to_apply_coupon">Unable to apply Coupon</string>
+    <string name="online_voucher_applied_successfully">Online voucher Applied Successfully</string>
+    <string name="the_entered_online_voucher_is_not_valid_for_this_product">the_entered_online_voucher_is_not_valid_for_this_product.</string>
+    <string name="error_while_generating_invoice">Error while generating Invoice</string>
+    <string name="invalid_invoice">Invalid Invoice</string>
+    <string name="can_t_proceed_for_payment">Can\'t Proceed for Payment</string>
+    <string name="this_is_an_added_security_feature_to_protect_your_package_details_kindly_log_out_and_login_again_to_pay_for_this_package">This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.</string>
+    <string name="the_following_plan_in_use">The following plan(s) is/are currently in use</string>
+    <string name="the_following_plans_are_not_in_use">The following plan(s) is/are not in use</string>
+    <string name="the_following_plan_is_are_expired">The following plan(s) is/are expired</string>
+    <string name="your_account_can_t_activate_this_top_up_packages">Your account can\'t activate this TopUp packages</string>
+    <string name="select_the_duration_s_package_" translatable="false">Select the duration of %s package that suits your requirements.</string>
+    <string name="your_account_cant_activate_any_topup_package">Your account can\'t activate any TopUp packages.</string>
+    <string name="the_payment_id_for_your_transaction_is" translatable="false">\"The Payment ID for your transaction is \"</string>
+    <string name="your_package_will_be_activated_within_24_hours" translatable="false">. Your package will be activated within 24 hours. \n</string>
+    <string name="you_can_reach_customer_support_at_ria_nowfloats_com_or_1860_123_1233_for_any_queries" translatable="false">You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.</string>
+    <string name="please_contact_customer_support">. Please Contact Customer Support.</string>
+    <string name="your_payment_id_is_" translatable="false">\"Your PaymentId is: \"</string>
+    <string name="image_not_able_to_share" translatable="false">Image not able to share</string>
+    <string name="you_can_use_other_type_of_plans">You can use other type of plans</string>
+    <string name="oops_invoice_details_not_found">Oops, Invoice details not found.</string>
+    <string name="oops_pricing_plans_not_found">Oops, Pricing plans not found.</string>
 
 </resources>

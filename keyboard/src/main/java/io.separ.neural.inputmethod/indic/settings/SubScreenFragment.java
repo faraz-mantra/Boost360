@@ -93,7 +93,7 @@ abstract class SubScreenFragment extends PreferenceFragment
             @Override
             public void onSharedPreferenceChanged(final SharedPreferences prefs, final String key) {
                 final SubScreenFragment fragment = SubScreenFragment.this;
-                final Context context = fragment.requireActivity();
+                final Context context = fragment.getActivity();
                 if (context == null || fragment.getPreferenceScreen() == null) {
                     final String tag = fragment.getClass().getSimpleName();
                     // TODO: Introduce a static function to register this class and ensure that

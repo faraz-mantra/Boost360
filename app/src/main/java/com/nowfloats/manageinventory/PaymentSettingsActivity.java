@@ -144,7 +144,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
 
 
     private void getPaymentSettings(){
-        progressDialog.setMessage("Please Wait...");
+        progressDialog.setMessage(getString(R.string.please_wait_));
         progressDialog.show();
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()

@@ -119,7 +119,7 @@ public class HSVColorPickerDialog extends AlertDialog {
      * @param res A string resource with the text to be used on this button
      */
     public void setNoColorButton( int res ) {
-        setButton( BUTTON_NEUTRAL, requireContext().getString( res ), clickListener );
+        setButton( BUTTON_NEUTRAL, getContext().getString( res ), clickListener );
     }
 
     private static class HSVColorWheel  extends View {

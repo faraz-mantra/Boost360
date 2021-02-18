@@ -881,7 +881,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
         cameraIntent();
 
       } else {
-        Toast.makeText(activity, "Please give storage and camera permission", Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, getString(R.string.please_give_storage_and_camera_permission), Toast.LENGTH_SHORT).show();
       }
 
     } else if (requestCode == gallery_req_id) {
@@ -890,7 +890,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
         galleryIntent();
 
       } else {
-        Toast.makeText(activity, "Please give read storage permission", Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, getString(R.string.please_give_read_storage_permission), Toast.LENGTH_SHORT).show();
       }
 
     }
@@ -921,7 +921,7 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
       String errorMessage = getString(R.string.device_does_not_support_capturing_image);
       Methods.showSnackBarNegative(activity, errorMessage);
     } catch (SecurityException e) {
-      Toast.makeText(this, "Please eanble camera permission in settings to use your camera", Toast.LENGTH_SHORT);
+      Toast.makeText(this, R.string.please_enable_camera_permission_in_settings_to_use_your_camera, Toast.LENGTH_SHORT);
     }
   }
 
@@ -1203,11 +1203,11 @@ public class Create_Message_Activity extends AppCompatActivity implements Fetch_
       return;
     }
     new MaterialDialog.Builder(this)
-        .content("Do you want to save this update as draft?")
+        .content(R.string.do_you_want_to_save_this_update_as_draft)
         .positiveColorRes(R.color.primaryColor)
         .negativeColorRes(R.color.primaryColor)
-        .positiveText("Save")
-        .negativeText("Delete")
+        .positiveText(getString(R.string.save))
+        .negativeText(getString(R.string.delete_))
         .onPositive(new MaterialDialog.SingleButtonCallback() {
           @Override
           public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

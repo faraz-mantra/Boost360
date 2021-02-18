@@ -47,13 +47,13 @@ public class SocialMediaConnectPromptFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        session = new UserSessionManager(requireContext(), getActivity());
+        session = new UserSessionManager(getContext(), getActivity());
 
         Button button = view.findViewById(R.id.connect_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startDigitalChannel(requireActivity(),session);
+                startDigitalChannel(getActivity(),session);
             }
         });
     }

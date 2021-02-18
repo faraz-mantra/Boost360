@@ -64,7 +64,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/_29_09_2017" />
+                    android:text="@string/dummy_date_29_09_2017" />
                 <TextView
                     android:id="@+id/tv_expires_in"
                     android:textStyle="italic"

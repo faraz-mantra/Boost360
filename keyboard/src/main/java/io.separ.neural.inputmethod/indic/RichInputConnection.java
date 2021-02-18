@@ -1109,7 +1109,7 @@ public final class RichInputConnection {
         // of the target application because:
         //   1. the system does not verify it [1]
         //   2. InputMethodManager.startInputInner() had filled EditorInfo.packageName with
-        //      view.requireContext().getPackageName() [2]
+        //      view.getContext().getPackageName() [2]
         // [1]: https://android.googlesource.com/platform/frameworks/base/+/a0f3ad1b5aabe04d9eb1df8bad34124b826ab641
         // [2]: https://android.googlesource.com/platform/frameworks/base/+/02df328f0cd12f2af87ca96ecf5819c8a3470dc8
         if (Build.VERSION.SDK_INT >= 23) {

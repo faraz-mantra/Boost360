@@ -137,7 +137,7 @@ public final class MainKeyboardAccessibilityDelegate
      * @param keyboard The new keyboard.
      */
     private void announceKeyboardMode(final Keyboard keyboard) {
-        final Context context = mKeyboardView.requireContext();
+        final Context context = mKeyboardView.getContext();
         final int modeTextResId = KEYBOARD_MODE_RES_IDS.get(keyboard.mId.mMode);
         if (modeTextResId == 0) {
             return;
@@ -308,7 +308,7 @@ public final class MainKeyboardAccessibilityDelegate
             // We should talk back the code point if possible.
             final int codePointOfNoPanelAutoMoreKey = key.getMoreKeys()[0].mCode;
             final String text = KeyCodeDescriptionMapper.getInstance().getDescriptionForCodePoint(
-                    mKeyboardView.requireContext(), codePointOfNoPanelAutoMoreKey);
+                    mKeyboardView.getContext(), codePointOfNoPanelAutoMoreKey);
             if (text != null) {
                 sendWindowStateChanged(text);
             }

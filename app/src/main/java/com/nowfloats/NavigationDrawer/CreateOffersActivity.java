@@ -406,8 +406,8 @@ public class CreateOffersActivity extends AppCompatActivity implements
             else {
                 ContentValues cValues = new ContentValues();
                 Intent captureIntent;
-                cValues.put(MediaStore.Images.Media.TITLE, "New Picture");
-                cValues.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                cValues.put(MediaStore.Images.Media.TITLE, getString(R.string.new_picture));
+                cValues.put(MediaStore.Images.Media.DESCRIPTION, getString(R.string.from_your_camera));
                 Uri picUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                         cValues);
                 captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

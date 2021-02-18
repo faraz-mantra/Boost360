@@ -71,7 +71,7 @@ public class AboutFragment extends Fragment {
         RecyclerView mRecyclerView = view.findViewById(R.id.rv_upgrade);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL));
-        UserSessionManager session = new UserSessionManager(requireContext(), getActivity());
+        UserSessionManager session = new UserSessionManager(getContext(), getActivity());
         SimpleImageTextListAdapter adapter = new SimpleImageTextListAdapter(mContext, new OnItemClickCallback() {
             @Override
             public void onItemClick(int pos) {
@@ -103,7 +103,7 @@ public class AboutFragment extends Fragment {
                         WebEngageController.trackEvent(ABOUT_BOOST_TWITTER_LIKE, NO_EVENT_LABLE, NULL);
                         intent = new Intent(Intent.ACTION_VIEW);
                         try {
-                            requireActivity().getPackageManager().getPackageInfo(getString(R.string.twitter_package), 0);
+                            getActivity().getPackageManager().getPackageInfo(getString(R.string.twitter_package), 0);
                             intent.setData(Uri.parse(Constants.TWITTER_ID_URL));
                         } catch (PackageManager.NameNotFoundException e1) {
                             intent.setData(Uri.parse(Constants.TWITTER_URL));
@@ -140,7 +140,7 @@ public class AboutFragment extends Fragment {
                 }
                 if(intent != null) {
                     startActivity(intent);
-                    requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
         });

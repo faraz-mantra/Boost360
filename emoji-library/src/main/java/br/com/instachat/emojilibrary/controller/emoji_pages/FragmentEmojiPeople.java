@@ -49,7 +49,7 @@ public class FragmentEmojiPeople extends FragmentEmoji {
 
             this.mUseSystemDefault = bundle.getBoolean(Constants.USE_SYSTEM_DEFAULT_KEY);
         }
-        gridView.setAdapter(new EmojiAdapter(view.requireContext(), this.mData, this.mUseSystemDefault));
+        gridView.setAdapter(new EmojiAdapter(view.getContext(), this.mData, this.mUseSystemDefault));
         gridView.setOnItemClickListener(this);
     }
 }

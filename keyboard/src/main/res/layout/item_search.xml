@@ -4,7 +4,6 @@
     fresco:layout_height="wrap_content"
     fresco:layout_marginTop="6dp"
     fresco:layout_marginEnd="8dp"
-    fresco:layout_marginEnd="8dp"
     fresco:layout_marginBottom="3dp"
     xmlns:fresco="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/tools"

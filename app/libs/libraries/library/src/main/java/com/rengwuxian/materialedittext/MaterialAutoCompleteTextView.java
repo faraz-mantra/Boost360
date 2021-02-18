@@ -256,7 +256,7 @@ public class MaterialAutoCompleteTextView extends AutoCompleteTextView {
       defaultPrimaryColor = primaryColorTypedValue.data;
     } catch (Exception e) {
       try {
-        int colorAccentId = getResources().getIdentifier("colorPrimary", "attr", requireContext().getPackageName());
+        int colorAccentId = getResources().getIdentifier("colorPrimary", "attr", getContext().getPackageName());
         if (colorAccentId != 0) {
           context.getTheme().resolveAttribute(colorAccentId, primaryColorTypedValue, true);
           defaultPrimaryColor = primaryColorTypedValue.data;
@@ -341,7 +341,7 @@ public class MaterialAutoCompleteTextView extends AutoCompleteTextView {
   }
 
   private Typeface getCustomTypeface(@NonNull String fontPath) {
-    return Typeface.createFromAsset(requireContext().getAssets(), fontPath);
+    return Typeface.createFromAsset(getContext().getAssets(), fontPath);
   }
 
   public float getFloatingLabelFraction() {
@@ -419,7 +419,7 @@ public class MaterialAutoCompleteTextView extends AutoCompleteTextView {
   }
 
   private int getPixel(int dp) {
-    return Density.dp2px(requireContext(), dp);
+    return Density.dp2px(getContext(), dp);
   }
 
   private void initPadding() {

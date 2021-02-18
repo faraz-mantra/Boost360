@@ -61,7 +61,7 @@ public class SearchReportFragment extends Fragment {
     private void getSearch() {
         HashMap<String, String> map = new HashMap<>();
 
-        mSession = new UserSessionManager(mContext, requireActivity()());
+        mSession = new UserSessionManager(mContext, requireActivity());
         //map.put("fpTag", mSession.getFpTag());
         map.put("fpTag", "TESTFP");
 
@@ -74,7 +74,7 @@ public class SearchReportFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                Methods.showSnackBarNegative(requireActivity()(), getString(R.string.something_went_wrong_try_again));
+                Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
             }
         });
     }

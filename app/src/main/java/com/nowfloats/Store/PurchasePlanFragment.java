@@ -73,7 +73,7 @@ public class PurchasePlanFragment extends Fragment {
         switch (planType) {
             case ACTIVE_PLANS:
                 WebEngageController.trackEvent(YOUR_PLANS_CURRENT, LOGIN_ERROR, NULL);
-                aboutPlan.setText("The following plan(s) is/are currently in use");
+                aboutPlan.setText(R.string.the_following_plan_in_use);
                 break;
             case YOUR_ORDERS:
                 orderHeader.setVisibility(View.VISIBLE);
@@ -83,11 +83,11 @@ public class PurchasePlanFragment extends Fragment {
                 break;
             case TO_BE_ACTIVATED_PLANS:
                 WebEngageController.trackEvent(YOUR_PLANS_TO_BE_ACTIVATED, EVENT_LABEL_NULL, NULL);
-                aboutPlan.setText("The following plan(s) is/are not in use");
+                aboutPlan.setText(R.string.the_following_plans_are_not_in_use);
                 break;
             case EXPIRED_PLANS:
                 WebEngageController.trackEvent(YOUR_PLANS_EXPIRED, EVENT_LABEL_NULL, NULL);
-                aboutPlan.setText("The following plan(s) is/are expired");
+                aboutPlan.setText(R.string.the_following_plan_is_are_expired);
                 break;
         }
 

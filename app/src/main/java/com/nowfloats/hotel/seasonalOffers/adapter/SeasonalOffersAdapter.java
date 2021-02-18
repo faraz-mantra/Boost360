@@ -41,7 +41,7 @@ public class SeasonalOffersAdapter extends RecyclerView.Adapter<SeasonalOffersAd
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_seasonal_offers, null);
-        context = v.requireContext();
+        context = v.getContext();
         return new ViewHolder(v);
     }
 

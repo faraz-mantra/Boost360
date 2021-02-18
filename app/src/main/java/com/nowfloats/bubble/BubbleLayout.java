@@ -180,7 +180,7 @@ public class BubbleLayout extends BubbleBaseLayout {
 
             if (isToRemoveDialog && (System.currentTimeMillis() - lastTouchDown > TOUCH_TIME_THRESHOLD)) {
                 lastRemoved = System.currentTimeMillis();
-                requireContext().sendBroadcast(new Intent(BubblesService.ACTION_KILL_DIALOG));
+                getContext().sendBroadcast(new Intent(BubblesService.ACTION_KILL_DIALOG));
             }
         }
         return super.onTouchEvent(event);
@@ -190,7 +190,7 @@ public class BubbleLayout extends BubbleBaseLayout {
     private void playAnimation() {
         if (!isInEditMode()) {
             AnimatorSet animator = (AnimatorSet) AnimatorInflater
-                    .loadAnimator(requireContext(), R.animator.bubble_shown_animator);
+                    .loadAnimator(getContext(), R.animator.bubble_shown_animator);
             animator.setTarget(this);
             animator.start();
             applyAlpha();
@@ -200,7 +200,7 @@ public class BubbleLayout extends BubbleBaseLayout {
     private void playAnimationClickDown() {
         if (!isInEditMode()) {
             AnimatorSet animator = (AnimatorSet) AnimatorInflater
-                    .loadAnimator(requireContext(), R.animator.bubble_down_click_animator);
+                    .loadAnimator(getContext(), R.animator.bubble_down_click_animator);
             animator.setTarget(this);
             animator.start();
             resetAlpha();
@@ -210,7 +210,7 @@ public class BubbleLayout extends BubbleBaseLayout {
     private void playAnimationClickUp() {
         if (!isInEditMode()) {
             AnimatorSet animator = (AnimatorSet) AnimatorInflater
-                    .loadAnimator(requireContext(), R.animator.bubble_up_click_animator);
+                    .loadAnimator(getContext(), R.animator.bubble_up_click_animator);
             animator.setTarget(this);
             animator.start();
             applyAlpha();

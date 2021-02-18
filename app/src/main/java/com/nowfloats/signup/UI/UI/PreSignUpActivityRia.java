@@ -209,7 +209,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         verify_button = findViewById(R.id.verify_button);
         countryPhoneCode = findViewById(R.id.countrycode_signupscreen);
 
-        CharSequence charSequence = Methods.fromHtml("By clicking on 'CREATE MY BUSINESS PROFILE' you agree to our " +
+        CharSequence charSequence = Methods.fromHtml(getString(R.string.create_my_business_profile) +
                 "<a href=\"" + getString(R.string.settings_tou_url) + "\"><u>Terms</u></a> and <a href=\"" + getString(R.string.settings_privacy_url) + "\"><u>Privacy Policy</u></a>.");
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(charSequence);
         makeLinkClickable(spannableStringBuilder, charSequence);
@@ -795,7 +795,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 //                @Override
 //                public void onClick(View v) {
 //                    selectC();
-//                    //Util.hideInput(requireActivity()());
+//                    //Util.hideInput(requireActivity());
 //
 //                }
 //            });
@@ -869,7 +869,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
             API_Layer_Signup.checkUniqueNumber(activity, data_phone, data_country_code);
         } else {
-            Toast.makeText(activity, "Invalid Email. Please enter Again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, getString(R.string.invalid_email_please_enter_again), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -896,7 +896,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 .autoDismiss(false)
                 //.titleColorRes(R.color.primary_color)
                 //.positiveText("Submit")
-                .title("One Time Password")
+                .title(R.string.one_time_password)
                 .canceledOnTouchOutside(false)
                 /* .negativeColorRes(R.color.gray_transparent)
                 .positiveColorRes(R.color.primary_color)
@@ -966,7 +966,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
     private void reSendOTPOverCall(String number) {
         // showProgressbar();
-        Toast.makeText(PreSignUpActivityRia.this, "You will receive a call shortly", Toast.LENGTH_SHORT).show();
+        Toast.makeText(PreSignUpActivityRia.this, getString(R.string.you_will_receive_a_call_shortly), Toast.LENGTH_SHORT).show();
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("PHONE", number);
@@ -1051,7 +1051,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
                 } else {
                     hideProgressbar();
-                    Toast.makeText(PreSignUpActivityRia.this, "Please enter valid OTP", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PreSignUpActivityRia.this,getString( R.string.please_enter_valid_otp), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -1185,7 +1185,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         final String fpId = response.fpId;
         if (TextUtils.isEmpty(fpId)) {
             hideLoader();
-            Toast.makeText(PreSignUpActivityRia.this, "Failed to create your business profile. Please try again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PreSignUpActivityRia.this, getString(R.string.failed_to_create_business_profile), Toast.LENGTH_SHORT).show();
             setEnableCreateWebsiteButton(true);
             return;
         }

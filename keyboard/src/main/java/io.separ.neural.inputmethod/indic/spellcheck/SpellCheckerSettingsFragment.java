@@ -35,7 +35,7 @@ public final class SpellCheckerSettingsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.spell_checker_settings);
         final PreferenceScreen preferenceScreen = getPreferenceScreen();
         preferenceScreen.setTitle(ApplicationUtils.getActivityTitleResId(
-                requireActivity(), SpellCheckerSettingsActivity.class));
+                getActivity(), SpellCheckerSettingsActivity.class));
         TwoStatePreferenceHelper.replaceCheckBoxPreferencesBySwitchPreferences(preferenceScreen);
     }
 }

@@ -85,7 +85,7 @@ public class ShipOrderFragment extends DialogFragment {
 
 
         if (!isAllFieldsValid) {
-            Toast.makeText(requireActivity(), getResources().getString(R.string.please_enter_mandatory_fields), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getResources().getString(R.string.please_enter_mandatory_fields), Toast.LENGTH_SHORT).show();
         }
 
         return isAllFieldsValid;
@@ -144,7 +144,7 @@ public class ShipOrderFragment extends DialogFragment {
 
     public void pickDate(final EditText et) {
         Calendar calendar = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(requireActivity(), new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 SimpleDateFormat formatter = new SimpleDateFormat(Methods.ISO_8601_24H_FULL_FORMAT, Locale.ENGLISH);

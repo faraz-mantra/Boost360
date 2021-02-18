@@ -86,7 +86,7 @@ public class SwipeStack extends ViewGroup {
     }
 
     private void readAttributes(AttributeSet attributeSet) {
-        TypedArray attrs = requireContext().obtainStyledAttributes(attributeSet, R.styleable.SwipeStack);
+        TypedArray attrs = getContext().obtainStyledAttributes(attributeSet, R.styleable.SwipeStack);
 
         try {
             mAllowedSwipeDirections =

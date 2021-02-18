@@ -101,10 +101,10 @@ public class ProgressWheel extends View {
 
         float animationValue;
         if (currentApiVersion >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            animationValue = Settings.Global.getFloat(requireContext().getContentResolver(),
+            animationValue = Settings.Global.getFloat(getContext().getContentResolver(),
                     Settings.Global.ANIMATOR_DURATION_SCALE, 1);
         } else {
-            animationValue = Settings.System.getFloat(requireContext().getContentResolver(),
+            animationValue = Settings.System.getFloat(getContext().getContentResolver(),
                     Settings.System.ANIMATOR_DURATION_SCALE, 1);
         }
 
@@ -223,7 +223,7 @@ public class ProgressWheel extends View {
      */
     private void parseAttributes(TypedArray a) {
         // We transform the default values from DIP to pixels
-        DisplayMetrics metrics = requireContext().getResources().getDisplayMetrics();
+        DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
         barWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, barWidth, metrics);
         rimWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rimWidth, metrics);
         circleRadius =

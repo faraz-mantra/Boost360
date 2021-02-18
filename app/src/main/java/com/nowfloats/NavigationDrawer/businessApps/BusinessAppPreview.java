@@ -57,7 +57,7 @@ public class BusinessAppPreview extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        session=new UserSessionManager(context,requireActivity()());
+        session=new UserSessionManager(context,requireActivity());
         //setHasOptionsMenu(true);
     }
 
@@ -68,7 +68,7 @@ public class BusinessAppPreview extends Fragment {
     }
 
     public void addAndroidFragment(int id,String bundle,boolean transition){
-        if(requireActivity()() != null && requireActivity()().isFinishing()) return;
+        if(getActivity() != null && getActivity().isFinishing()) return;
         Fragment frag;
         FragmentTransaction transaction=getChildFragmentManager().beginTransaction();
         switch (id){
@@ -124,7 +124,7 @@ public class BusinessAppPreview extends Fragment {
         isOnStopCalled = false;
         if(!isAdded()) return;
         parentView = view;
-        MaterialProgressBar.startProgressBar(requireActivity()(),"Processing...",false);
+        MaterialProgressBar.startProgressBar(getActivity(),"Processing...",false);
         final BusinessAppApis.AppApis apis=BusinessAppApis.getRestAdapter();
         apis.getStatus(Constants.clientId, session.getFPID(), new Callback<JsonObject>() {
             @Override
@@ -132,15 +132,15 @@ public class BusinessAppPreview extends Fragment {
 
                 if(s == null || !isAdded() || isOnStopCalled() || response.getStatus() != 200){
                     MaterialProgressBar.dismissProgressBar();
-                    requireActivity()().finish();
+                    getActivity().finish();
                     return;
                 }
                 status = s.get("Status").getAsString();
 
                 if(status == null){
                     MaterialProgressBar.dismissProgressBar();
-                    Methods.showSnackBarNegative(requireActivity()(),getResources().getString(R.string.something_went_wrong_try_again));
-                    requireActivity()().finish();
+                    Methods.showSnackBarNegative(getActivity(),getResources().getString(R.string.something_went_wrong_try_again));
+                    getActivity().finish();
                 }else if(status.equals("0")){
                     MaterialProgressBar.dismissProgressBar();
                     addAndroidFragment(SHOW_DEVELOPMENT,"",false);
@@ -154,8 +154,8 @@ public class BusinessAppPreview extends Fragment {
                             public void success(JsonObject jsonObject, Response response) {
                                 MaterialProgressBar.dismissProgressBar();
                                 if(jsonObject == null || response.getStatus() != 200){
-                                    Methods.showSnackBarNegative(requireActivity()(),"Problem to start build");
-                                    requireActivity()().finish();
+                                    Methods.showSnackBarNegative(getActivity(),"Problem to start build");
+                                    getActivity().finish();
                                     return;
                                 }
                                 addAndroidFragment(SHOW_DEVELOPMENT,"",false);
@@ -164,8 +164,8 @@ public class BusinessAppPreview extends Fragment {
                             @Override
                             public void failure(RetrofitError error) {
                                 MaterialProgressBar.dismissProgressBar();
-                                Methods.showSnackBarNegative(requireActivity()(),"Problem to start build");
-                                requireActivity()().finish();
+                                Methods.showSnackBarNegative(getActivity(),"Problem to start build");
+                                getActivity().finish();
                             }
                         });
                     }
@@ -180,7 +180,7 @@ public class BusinessAppPreview extends Fragment {
                         public void success(List<StoreAndGoModel.PublishStatusModel> modelList, Response response) {
                             MaterialProgressBar.dismissProgressBar();
                             if(modelList == null || !isAdded()|| modelList.size() == 0 ||response.getStatus() != 200){
-                                requireActivity()().finish();
+                                getActivity().finish();
                                 return;
                             }
                             for (StoreAndGoModel.PublishStatusModel model: modelList) {
@@ -211,8 +211,8 @@ public class BusinessAppPreview extends Fragment {
             public void failure(RetrofitError error) {
                 MaterialProgressBar.dismissProgressBar();
                 Log.v("ggg",error+"");
-                Methods.showSnackBarNegative(requireActivity()(),getResources().getString(R.string.something_went_wrong_try_again));
-                requireActivity()().finish();
+                Methods.showSnackBarNegative(getActivity(),getResources().getString(R.string.something_went_wrong_try_again));
+                getActivity().finish();
             }
         });
 
@@ -240,14 +240,14 @@ public class BusinessAppPreview extends Fragment {
         }
     }
     private void getScreenShots(){
-        MaterialProgressBar.startProgressBar(requireActivity()(),"Processing...",false);
+        MaterialProgressBar.startProgressBar(getActivity(),"Processing...",false);
         final BusinessAppApis.AppApis apis=BusinessAppApis.getRestAdapter();
         apis.getScreenshots(Constants.clientId, session.getFPID(), new Callback<List<StoreAndGoModel.ScreenShotsModel>>() {
             @Override
             public void success(List<StoreAndGoModel.ScreenShotsModel> modelList, Response response) {
                 MaterialProgressBar.dismissProgressBar();
                 if(modelList == null || modelList.size()== 0 ||response.getStatus() != 200){
-                    Methods.showSnackBarNegative(requireActivity()(),getResources().getString(R.string.something_went_wrong_try_again));
+                    Methods.showSnackBarNegative(getActivity(),getResources().getString(R.string.something_went_wrong_try_again));
                     return;
                 }
                 for (StoreAndGoModel.ScreenShotsModel model : modelList){
@@ -261,7 +261,7 @@ public class BusinessAppPreview extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 MaterialProgressBar.dismissProgressBar();
-                Methods.showSnackBarNegative(requireActivity()(),getResources().getString(R.string.something_went_wrong_try_again));
+                Methods.showSnackBarNegative(getActivity(),getResources().getString(R.string.something_went_wrong_try_again));
             }
         });
     }

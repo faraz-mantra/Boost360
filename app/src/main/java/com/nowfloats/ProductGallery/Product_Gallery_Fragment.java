@@ -100,7 +100,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = requireActivity();
+        activity = getActivity();
         arrSelectedProducts = new ArrayList<>();
         if (getArguments() != null)
             from = (FROM) getArguments().get(KEY_FROM);
@@ -450,8 +450,8 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
 
                 if (from == FROM.BUBBLE)
                 {
-                    requireActivity().finish();
-                    startActivity(new Intent(requireActivity(), BubbleInAppDialog.class));
+                    getActivity().finish();
+                    startActivity(new Intent(getActivity(), BubbleInAppDialog.class));
                 }
             }
 
@@ -562,7 +562,7 @@ public class Product_Gallery_Fragment extends Fragment implements ProductDelete.
 
     public void deleteSelectedProducts() {
         String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/Delete";
-        new ProductDelete(url, requireActivity(), arrSelectedProducts,Product_Gallery_Fragment.this).execute();
+        new ProductDelete(url, getActivity(), arrSelectedProducts,Product_Gallery_Fragment.this).execute();
     }
 
     @Override

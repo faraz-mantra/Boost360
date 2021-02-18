@@ -94,7 +94,7 @@ public final class DictionarySettingsFragment extends PreferenceFragment
     @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final Activity activity = requireActivity();
+        final Activity activity = getActivity();
         mClientId = activity.getIntent().getStringExtra(DICT_SETTINGS_FRAGMENT_CLIENT_ID_ARGUMENT);
         mConnectivityManager =
                 (ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -106,7 +106,7 @@ public final class DictionarySettingsFragment extends PreferenceFragment
     @Override
     public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         final String metadataUri =
-                MetadataDbHelper.getMetadataUriAsString(requireActivity(), mClientId);
+                MetadataDbHelper.getMetadataUriAsString(getActivity(), mClientId);
         // We only add the "Refresh" button if we have a non-empty URL to refresh from. If the
         // URL is empty, of course we can't refresh so it makes no sense to display this.
         if (!TextUtils.isEmpty(metadataUri)) {
@@ -122,7 +122,7 @@ public final class DictionarySettingsFragment extends PreferenceFragment
         super.onResume();
         mChangedSettings = false;
         UpdateHandler.registerUpdateEventListener(this);
-        final Activity activity = requireActivity();
+        final Activity activity = getActivity();
         if (!MetadataDbHelper.isClientKnown(activity, mClientId)) {
             Log.i(TAG, "Unknown dictionary pack client: " + mClientId + ". Requesting info.");
             final Intent unknownClientBroadcast =
@@ -133,14 +133,14 @@ public final class DictionarySettingsFragment extends PreferenceFragment
         }
         final IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        requireActivity().registerReceiver(mConnectivityChangedReceiver, filter);
+        getActivity().registerReceiver(mConnectivityChangedReceiver, filter);
         refreshNetworkState();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        final Activity activity = requireActivity();
+        final Activity activity = getActivity();
         UpdateHandler.unregisterUpdateEventListener(this);
         activity.unregisterReceiver(mConnectivityChangedReceiver);
         if (mChangedSettings) {
@@ -168,7 +168,7 @@ public final class DictionarySettingsFragment extends PreferenceFragment
         final WordListPreference pref = findWordListPreference(wordListId);
         if (null == pref) return;
         // TODO: Report to the user if !succeeded
-        final Activity activity = requireActivity();
+        final Activity activity = getActivity();
         if (null == activity) return;
         activity.runOnUiThread(new Runnable() {
                 @Override
@@ -210,10 +210,10 @@ public final class DictionarySettingsFragment extends PreferenceFragment
     }
 
     private void refreshInterface() {
-        final Activity activity = requireActivity();
+        final Activity activity = getActivity();
         if (null == activity) return;
         final long lastUpdateDate =
-                MetadataDbHelper.getLastUpdateDateForClient(requireActivity(), mClientId);
+                MetadataDbHelper.getLastUpdateDateForClient(getActivity(), mClientId);
         final PreferenceGroup prefScreen = getPreferenceScreen();
         final Collection<? extends Preference> prefList =
                 createInstalledDictSettingsCollection(mClientId);
@@ -275,7 +275,7 @@ public final class DictionarySettingsFragment extends PreferenceFragment
                 // Need to use version 2 to get this client's list
                 .appendQueryParameter(DictionaryProvider.QUERY_PARAMETER_PROTOCOL_VERSION, "2")
                 .build();
-        final Activity activity = requireActivity();
+        final Activity activity = getActivity();
         final Cursor cursor = null == activity ? null
                 : activity.getContentResolver().query(contentUri, null, null, null, null);
 
@@ -367,7 +367,7 @@ public final class DictionarySettingsFragment extends PreferenceFragment
         startLoadingAnimation();
         mChangedSettings = true;
         UpdateHandler.registerUpdateEventListener(this);
-        final Activity activity = requireActivity();
+        final Activity activity = getActivity();
         new Thread("updateByHand") {
             @Override
             public void run() {
@@ -383,7 +383,7 @@ public final class DictionarySettingsFragment extends PreferenceFragment
 
     private void cancelRefresh() {
         UpdateHandler.unregisterUpdateEventListener(this);
-        final Context context = requireActivity();
+        final Context context = getActivity();
         UpdateHandler.cancelUpdate(context, mClientId);
         stopLoadingAnimation();
     }
@@ -398,7 +398,7 @@ public final class DictionarySettingsFragment extends PreferenceFragment
 
     private void stopLoadingAnimation() {
         final View preferenceView = getView();
-        final Activity activity = requireActivity();
+        final Activity activity = getActivity();
         if (null == activity) return;
         activity.runOnUiThread(new Runnable() {
                 @Override
@@ -406,9 +406,9 @@ public final class DictionarySettingsFragment extends PreferenceFragment
                     mLoadingView.setVisibility(View.GONE);
                     preferenceView.setVisibility(View.VISIBLE);
                     mLoadingView.startAnimation(AnimationUtils.loadAnimation(
-                            requireActivity(), android.R.anim.fade_out));
+                            getActivity(), android.R.anim.fade_out));
                     preferenceView.startAnimation(AnimationUtils.loadAnimation(
-                            requireActivity(), android.R.anim.fade_in));
+                            getActivity(), android.R.anim.fade_in));
                     // The menu is created by the framework asynchronously after the activity,
                     // which means it's possible to have the activity running but the menu not
                     // created yet - hence the necessity for a null check here.

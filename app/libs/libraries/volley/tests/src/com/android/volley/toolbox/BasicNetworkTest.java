@@ -37,7 +37,7 @@ public class BasicNetworkTest extends AndroidTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mContext = requireContext();
+        mContext = getContext();
     }
 
     public void testHeadersAndPostParams() throws Exception {

@@ -43,7 +43,7 @@ public class EmojiPageView extends FrameLayout {
     }
 
     public void setModel(EmojiPageModel model) {
-        grid.setAdapter(new EmojiGridAdapter(requireContext(), model));
+        grid.setAdapter(new EmojiGridAdapter(getContext(), model));
     }
 
     public void setEmojiSelectedListener(EmojiSelectionListener listener) {
