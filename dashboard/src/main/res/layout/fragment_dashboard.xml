@@ -471,11 +471,13 @@
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:textColor="@color/greyish_brown"
+                    android:gravity="center_vertical"
+                    android:textAlignment="gravity"
                     app:autoSizeMaxTextSize="16sp"
                     app:autoSizeMinTextSize="8sp"
                     app:autoSizeStepGranularity="1sp"
                     app:autoSizeTextType="uniform"
+                    android:textColor="@color/greyish_brown"
                     tools:text="@string/www_sravansclinic_com" />
                 </FrameLayout>
 
