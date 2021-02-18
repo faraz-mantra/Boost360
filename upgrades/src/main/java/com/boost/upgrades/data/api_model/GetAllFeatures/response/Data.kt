@@ -62,3 +62,16 @@ fun ArrayList<PromoBanners>.promoBannerFilter(expCode: String?,fpTag: String?): 
         }
         return list
 }
+
+fun ArrayList<PromoBanners>.promoMarketOfferFilter(expCode: String?,fpTag: String?): ArrayList<PromoBanners> {
+        if (isNullOrEmpty()) return ArrayList()
+        val list = ArrayList<PromoBanners>()
+        forEach {
+                if (it.exclusive_to_categories.isNullOrEmpty().not()) {
+                        if (it.exclusive_to_categories!!.firstOrNull { it1 -> it1.toLowerCase(Locale.ROOT).trim() == expCode?.toLowerCase() } != null) list.add(it)
+                }else if(it.exclusive_to_customers.isNullOrEmpty().not()){
+                        if (it.exclusive_to_customers!!.firstOrNull { it1 -> it1.toLowerCase(Locale.ROOT).trim() == fpTag?.toLowerCase() } != null) list.add(it)
+                }
+        }
+        return list
+}
