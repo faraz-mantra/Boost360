@@ -16,8 +16,6 @@ data class AppointmentModel(
     var isTurnedOn: Boolean? = false,
     var isAppliedOnAllDays: Boolean? = false,
     var isAppliedOnAllDaysViewVisible: Boolean? = false,
-    var toTiming: String? = null,
-    var fromTiming: String? = null
 ) : Serializable, AppBaseRecyclerViewItem {
 
   override fun getViewType(): Int {
@@ -39,12 +37,6 @@ data class AppointmentModel(
     timeSlots.add(TimeSlot.getDefaultTimeSlotObject());
   }
 
-  fun applyOnAllDays(startTime: String, endTime: String) {
-    getDefaultTimings().forEach {
-      it.fromTiming = startTime
-      it.toTiming = endTime
-    }
-  }
 
   fun deleteSession(sessionIndex: Int) {
     timeSlots.removeAt(sessionIndex)
@@ -73,7 +65,7 @@ data class AppointmentModel(
   }
 
   fun removeApplyOnAllDays(data: AppointmentModel) {
-    getDefaultTimings().forEach { if (it != data) it.isTurnedOn = false }
+    getDefaultTimings().forEach { if (it != data) it?.isTurnedOn = false }
   }
 
   companion object {
@@ -95,7 +87,7 @@ data class AppointmentModel(
   fun getStringStaffActive(list: ArrayList<AppointmentModel>?): String {
     val selectedDays = StringBuilder()
     list?.forEach { item ->
-      if (!item.day.isNullOrEmpty() && item.timeSlots.isNotEmpty()) {
+      if (item!=null && !item.day.isNullOrEmpty() && item.timeSlots.isNotEmpty()) {
         val value = WeekdayStaffValue.fromFullName(item.day) ?: return@forEach
         if (selectedDays.isNotEmpty()) selectedDays.append(", ")
         selectedDays.append(value.sortName)
@@ -107,7 +99,7 @@ data class AppointmentModel(
   fun getStringStaffActiveN(list: ArrayList<AppointmentModel>?): String {
     val selectedDays = StringBuilder()
     list?.forEach { item ->
-      if (item.isTurnedOn == true) {
+      if (item!=null && item.isTurnedOn == true) {
         val value = WeekdayStaffValue.fromFullName(item.day) ?: return@forEach
         if (selectedDays.isNotEmpty()) selectedDays.append(", ")
         selectedDays.append(value.sortName)

@@ -39,16 +39,24 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
 
   private fun getBundleData() {
     staffData = arguments?.getSerializable(IntentConstant.STAFF_DATA.name) as? StaffDetailsResult
-    when {
-      (staffData?.timings != null && staffData?.timings?.isNotEmpty() == true) -> {
-        this.defaultTimings = arrayListOf()
-        this.defaultTimings.addAll(staffData?.timings!!)
-        for (item in defaultTimings) {
-          if (item.timeSlots.isNullOrEmpty().not()) item.isTurnedOn = true
+    initDefaultTiming()
+    setTimings()
+  }
+
+  private fun initDefaultTiming(){
+    if(staffData?.timings.isNullOrEmpty().not()){
+      this.defaultTimings = ArrayList();
+      for(item in this.staffData?.timings!!){
+        if(item?.timeSlots.isNullOrEmpty().not()){
+          item?.isTurnedOn = true
         }
-        setTimings()
+        if(item?.day?.toLowerCase().equals("monday")){
+          item?.isAppliedOnAllDaysViewVisible = true;
+        }
+        this.defaultTimings?.add(item);
       }
-      else -> this.defaultTimings = AppointmentModel.getDefaultTimings()
+    }else{
+      this.defaultTimings = AppointmentModel.getDefaultTimings()
     }
   }
 
@@ -79,6 +87,10 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
         adapter.notifyDataSetChanged()
       }
       RecyclerViewActionType.ADD_SESSION.ordinal -> {
+        item as AppointmentModel
+        when (item.isAppliedOnAllDays == true) {
+          true -> applyOnAllDays(item);
+        }
         adapter.notifyDataSetChanged()
       }
     }
@@ -97,13 +109,12 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
     for (i in 1 until defaultTimings.size) {
       val item = defaultTimings[i]
       item.isTurnedOn = true
-      item.isViewEnabled = false
-      item.isDataAppliedOnMyDay = true
       item.timeSlots = ArrayList()
       for (t in data.timeSlots) {
-        t.to = data.toTiming
-        t.from = data.fromTiming
-        item.timeSlots.add(t)
+        val t1 = TimeSlot();
+        t1.to = t.to
+        t1.from = t.from
+        item.timeSlots.add(t1)
       }
     }
   }
@@ -112,10 +123,8 @@ class WeeklyAppointmentFragment : AppBaseFragment<FragmentStaffTimingBinding, St
   private fun applyOnAllDaysTurnedOff(data: AppointmentModel) {
     for (i in 1 until defaultTimings.size) {
       val item = defaultTimings[i]
-      item.isTurnedOn = false
       item.isViewEnabled = true
       item.isDataAppliedOnMyDay = false
-      item.timeSlots = ArrayList()
     }
   }
 
