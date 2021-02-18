@@ -3018,5 +3018,14 @@ With this feature, students and their parents can browse and learn about the upc
     <string name="share_app">Share App</string>
     <string name="select_end">Select End</string>
     <string name="select_start">Select Start</string>
+    <string name="enter_your_message">Enter your message</string>
+    <string name="message_option">Message (Option)</string>
+    <string name="_00_00_am_pm">00:00 AM/PM</string>
+    <string name="_00_00_0000">00-00-0000</string>
+    <string name="table_for">Table for</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="time_">Time</string>
 
 </resources>
