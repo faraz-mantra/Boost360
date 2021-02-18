@@ -290,4 +290,5 @@
     <string name="dummy_qty">(Five) 5</string>
     <string name="payment_link">Payment Link</string>
     <string name="summy_amount">INR 500</string>
+    <string name="you_cannot_remove_all_items">You cannot remove all items.</string>
 </resources>
