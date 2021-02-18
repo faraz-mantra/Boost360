@@ -21,6 +21,8 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.ui.appointment.AppointmentDetailsFragment
 import com.inventoryorder.ui.appointment.AppointmentsFragment
+import com.inventoryorder.ui.appointmentspa.ReviewAndConfirmFragment
+import com.inventoryorder.ui.appointmentspa.SpaAppointmentFragment
 import com.inventoryorder.ui.consultation.VideoConsultDetailsFragment
 import com.inventoryorder.ui.consultation.VideoConsultFragment
 import com.inventoryorder.ui.createAptConsult.CreateAppointmentFragment
@@ -51,6 +53,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
   private var videoConsultDetailsFragment: VideoConsultDetailsFragment? = null
   private var orderInvoiceFragment: OrderInvoiceFragment? = null
   private var orderPlacedFragment : OrderPlacedFragment? = null
+  private var spaAppointmentFragment : SpaAppointmentFragment?= null
+  private var reviewAndConfirmFragment : ReviewAndConfirmFragment?= null
 
   override fun getLayout(): Int {
     return com.framework.R.layout.activity_fragment_container
@@ -106,7 +110,9 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.BILLING_DETAIL,
       FragmentType.CREATE_APPOINTMENT_VIEW,
       FragmentType.ORDER_INVOICE_VIEW,
-      FragmentType.ORDER_PLACED
+      FragmentType.ORDER_PLACED,
+      FragmentType.CREATE_SPA_APPOINTMENT,
+      FragmentType.REVIEW_SPA_DETAILS
       -> ContextCompat.getColor(this, R.color.colorPrimary)
       else -> super.getToolbarBackgroundColor()
     }
@@ -127,7 +133,9 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.BILLING_DETAIL,
       FragmentType.CREATE_APPOINTMENT_VIEW,
       FragmentType.ORDER_INVOICE_VIEW,
-      FragmentType.ORDER_PLACED
+      FragmentType.ORDER_PLACED,
+      FragmentType.CREATE_SPA_APPOINTMENT,
+      FragmentType.REVIEW_SPA_DETAILS
       -> ContextCompat.getColor(this, R.color.white)
       else -> super.getToolbarTitleColor()
     }
@@ -159,6 +167,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ADD_PRODUCT -> getString(R.string.add_product)
       FragmentType.BILLING_DETAIL -> getString(R.string.review_billing_details)
       FragmentType.ORDER_INVOICE_VIEW -> getString(R.string.invoice_preview)
+      FragmentType.CREATE_SPA_APPOINTMENT -> getString(R.string.adding_appointment)
+      FragmentType.REVIEW_SPA_DETAILS -> getString(R.string.string_review_and_confirm)
       else -> super.getToolbarTitle()
     }
   }
@@ -179,6 +189,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.BILLING_DETAIL,
       FragmentType.CREATE_APPOINTMENT_VIEW,
       FragmentType.ORDER_INVOICE_VIEW,
+      FragmentType.CREATE_SPA_APPOINTMENT,
+      FragmentType.REVIEW_SPA_DETAILS
       -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
       else -> super.getNavigationIcon()
     }
@@ -274,6 +286,14 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ORDER_PLACED -> {
         orderPlacedFragment = OrderPlacedFragment.newInstance()
         orderPlacedFragment
+      }
+      FragmentType.CREATE_SPA_APPOINTMENT -> {
+        spaAppointmentFragment = SpaAppointmentFragment()
+        spaAppointmentFragment
+      }
+      FragmentType.REVIEW_SPA_DETAILS -> {
+        reviewAndConfirmFragment = ReviewAndConfirmFragment()
+        reviewAndConfirmFragment
       }
       else -> throw IllegalFragmentTypeException()
     }
