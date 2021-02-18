@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.appointmentspa.ReviewAndConfirmFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white_smoke_1"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white_smoke_1"
+                android:paddingStart="@dimen/size_30"
+                android:paddingTop="@dimen/size_10"
+                android:paddingEnd="@dimen/size_10"
+                android:paddingBottom="@dimen/size_10">
+
+                <com.framework.views.customViews.CustomImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_info_black" />
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/size_10"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/please_review_appointment_details_and_confirm"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="12sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/size_0"
+                app:cardElevation="@dimen/size_2">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/size_30"
+                    android:paddingTop="@dimen/size_20"
+                    android:paddingEnd="@dimen/size_20">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/appintment_for"
+                        android:textColor="@color/black_2A2A2A"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="BODY_2" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/image_service"
+                            android:layout_width="@dimen/size_60"
+                            android:layout_height="@dimen/size_60"
+                            android:src="@drawable/placeholder_image" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:paddingStart="@dimen/size_10">
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/simple_dry_massage"
+                                android:textColor="@color/black_2A2A2A"
+                                app:fontFamily="@font/bold"
+                                app:textType="BODY_2" />
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/text_service_name"
+                                style="@style/EditTextLabelStyle"
+                                android:text="@string/_30_minutes"
+                                app:layout_constraintStart_toStartOf="@id/linear_service"
+                                app:layout_constraintTop_toBottomOf="@id/linear_service" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_8">
+
+                        <ImageView
+                            android:layout_width="@dimen/size_15"
+                            android:layout_height="@dimen/size_15"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/ic_clock" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_date_time_slot"
+                            style="@style/EditTextLabelStyle"
+                            android:layout_weight="1"
+                            android:paddingStart="@dimen/size_5"
+                            android:text="@string/_30_minutes"
+                            app:layout_constraintStart_toStartOf="@id/linear_service"
+                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_amount"
+                            style="@style/EditTextLabelStyle"
+                            android:text="@string/inr_1200"
+                            android:textColor="@color/gray_light_1"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="@id/linear_service"
+                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_8">
+
+                        <ImageView
+                            android:layout_width="@dimen/size_15"
+                            android:layout_height="@dimen/size_15"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/ic_clock" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_staff_name"
+                            style="@style/EditTextLabelStyle"
+                            android:layout_weight="1"
+                            android:paddingStart="@dimen/size_5"
+                            android:text="@string/_30_minutes"
+                            app:layout_constraintStart_toStartOf="@id/linear_service"
+                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_actual_amount"
+                            style="@style/EditTextLabelStyle"
+                            android:fontFamily="@font/semi_bold"
+                            android:text="@string/inr_1200"
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="@id/linear_service"
+                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_20">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_service_charges"
+                            style="@style/EditTextLabelStyle"
+                            android:layout_weight="0"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/service_charges"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="@id/linear_service"
+                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_edit"
+                            style="@style/EditTextLabelStyle"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/semi_bold"
+                            android:paddingStart="@dimen/size_10"
+                            android:text="@string/edit"
+                            android:textColor="@color/orange"
+                            android:textSize="16sp"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toStartOf="@id/linear_service"
+                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_add"
+                            style="@style/EditTextLabelStyle"
+                            android:fontFamily="@font/semi_bold"
+                            android:text="@string/add"
+                            android:textColor="@color/orange"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="@id/linear_service"
+                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_12">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_gst"
+                            style="@style/EditTextLabelStyle"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/gst"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="@id/linear_service"
+                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_gst_amount"
+                            style="@style/EditTextLabelStyle"
+                            android:fontFamily="@font/semi_bold"
+                            android:text="@string/inr_1200"
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="@id/linear_service"
+                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="@dimen/size_10"
+                        android:background="@color/colorLightGrey" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_15">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_total_payable"
+                            style="@style/EditTextLabelStyle"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/total_payable_amount"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="@id/linear_service"
+                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/text_total_payable_value"
+                            style="@style/EditTextLabelStyle"
+                            android:fontFamily="@font/semi_bold"
+                            android:text="@string/inr_1200"
+                            android:textColor="@color/black_4a4a4a"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="@id/linear_service"
+                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="@dimen/size_15"
+                        android:background="@color/colorLightGrey" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/size_10"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/size_16"
+                        android:paddingBottom="@dimen/size_16">
+
+                        <!--  <com.framework.views.customViews.CustomTextView
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:drawablePadding="@dimen/size_4"
+                              android:includeFontPadding="false"
+                              android:text="@string/status_payment"
+                              android:textColor="@color/greyish_brown"
+                              app:fontFamily="@font/regular"
+                              android:textSize="16sp"
+                              app:textType="BODY_1" />-->
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/EditTextLabelStyle"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/status_payment"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="@id/linear_service"
+                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/tvPaymentStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0"
+                            android:drawableEnd="@drawable/ic_arrow_down_orange"
+                            android:drawablePadding="@dimen/size_8"
+                            android:ellipsize="end"
+                            android:gravity="right"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:text="@string/collect_later"
+                            android:textColor="@color/orange"
+                            app:fontFamily="@font/semi_bold"
+                            app:textType="BODY_1" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_15"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/size_0"
+                app:cardElevation="@dimen/size_2">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/size_30"
+                    android:paddingTop="@dimen/size_20"
+                    android:paddingEnd="@dimen/size_20">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/customer_details"
+                        android:textColor="@color/black_2A2A2A"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="BODY_2" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:id="@+id/tv_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_5"
+                            android:text="@string/dummy_name"
+                            android:textColor="@color/black_4a4a4a"
+                            app:fontFamily="@font/regular"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:textType="HEADING_4" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/tv_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_5"
+                        android:text="@string/dummy_email"
+                        android:textColor="@color/black_4a4a4a"
+                        app:fontFamily="@font/regular"
+                        app:textType="BODY_1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/tv_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_6"
+                        android:text="@string/dummy_phone"
+                        android:textColor="@color/black_4a4a4a"
+                        app:fontFamily="@font/regular"
+                        app:textType="BODY_1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/tv_gst"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_6"
+                        android:layout_marginBottom="@dimen/size_20"
+                        android:text="@string/dummy_address_long"
+                        android:textColor="@color/black_4a4a4a"
+                        app:fontFamily="@font/regular"
+                        app:textType="BODY_1" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_15"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/size_0"
+                app:cardElevation="@dimen/size_10">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/size_20">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/size_10"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/appointment_confirmation_description"
+                        android:textColor="@color/grey_dim_2"
+                        android:textSize="12sp" />
+
+                    <com.framework.views.customViews.CustomButton
+                        android:id="@+id/button_review_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/size_8"
+                        android:layout_marginTop="@dimen/size_15"
+                        android:layout_marginEnd="@dimen/size_5"
+                        android:layout_marginBottom="@dimen/size_20"
+                        android:background="@drawable/bg_rounded_yellow"
+                        android:gravity="center"
+                        android:padding="@dimen/size_15"
+                        android:paddingStart="@dimen/size_28"
+                        android:paddingEnd="@dimen/size_28"
+                        android:shadowRadius="0"
+                        android:stateListAnimator="@null"
+                        android:text="@string/confirm_appointment"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        app:fontFamily="@font/bold"
+                        app:textType="CAPTION"
+                        tools:ignore="UnusedAttribute" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+</layout>

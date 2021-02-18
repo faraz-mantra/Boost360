@@ -291,4 +291,23 @@
     <string name="payment_link">Payment Link</string>
     <string name="summy_amount">INR 500</string>
     <string name="you_cannot_remove_all_items">You cannot remove all items.</string>
+    <string name="adding_appointment">Adding appointment</string>
+    <string name="service_info">Service info</string>
+    <string name="service_name">Service name*</string>
+    <string name="select_service">Select service</string>
+    <string name="review_details">Review Details</string>
+    <string name="appointment_date_and_time">Appointment date and time</string>
+    <string name="dummy_date_time">Monday, 7 Jan 2021</string>
+    <string name="dummy_time">11:00 AM</string>
+    <string name="phone_hint">+91 XXXXX XXXXX</string>
+    <string name="please_review_appointment_details_and_confirm">Please review appointment details and confirm.</string>
+    <string name="appintment_for">Appintment for</string>
+    <string name="simple_dry_massage">Simple Dry Massage</string>
+    <string name="_30_minutes">30 minutes</string>
+    <string name="inr_1200">INR 1200</string>
+    <string name="service_charges">Service Charges</string>
+    <string name="gst">GST</string>
+    <string name="dummy_address_long">24 Subhas chandra avenue, Kolkata, West Bengal-712484GSTIN : DBS987654321010</string>
+    <string name="appointment_confirmation_description">An Email and SMS with the appointment details will be sent to customer notifying them about the confirmation along with a secure payment link.</string>
+    <string name="string_review_and_confirm">Review and confirm</string>
 </resources>

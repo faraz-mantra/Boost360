@@ -10,6 +10,8 @@ import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.ui.appointment.AppointmentDetailsFragment
 import com.inventoryorder.ui.appointment.AppointmentsFragment
+import com.inventoryorder.ui.appointmentspa.ReviewAndConfirmFragment
+import com.inventoryorder.ui.appointmentspa.SpaAppointmentFragment
 import com.inventoryorder.ui.consultation.VideoConsultDetailsFragment
 import com.inventoryorder.ui.consultation.VideoConsultFragment
 import com.inventoryorder.ui.createAptConsult.CreateAppointmentFragment
@@ -57,6 +59,8 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
       is BillingDetailFragment -> R.layout.fragment_billing_detail
       is OrderInvoiceFragment -> R.layout.fragment_order_inoice
       is OrderPlacedFragment -> R.layout.fragment_order_placed
+      is SpaAppointmentFragment -> R.layout.fragment_spa_appointment
+      is ReviewAndConfirmFragment -> R.layout.fragment_review_and_confirm
       else -> throw IllegalFragmentTypeException()
     }
   }
