@@ -465,32 +465,32 @@
     <string name="deeplink_gplaces">gplaces</string>
     <string name="deeplink_nfstorebiztiming">nfstorebiztiming</string>
     <string name="deeplink_ProductGallery">productGallery</string>
-    <string name="setting_faq_url" translatable="false">https://www.getboost360.com/faqs/</string>
-    <string name="deeplink_sitemeter" translatable="false">sitemeter</string>
-    <string name="deeplink_assuredPurchase" translatable="false">assuredPurchase</string>
-    <string name="deeplink_accSettings" translatable="false">accSettings</string>
-    <string name="deeplink_uniqueVisitor" translatable="false">uniqueVisitor</string>
-    <string name="deeplink_add_ons_marketplace" translatable="false">ADD_ONS_MARKETPLACE</string>
-    <string name="deeplink_cart_fragment" translatable="false">CART_FRAGMENT</string>
-    <string name="deeplink_notification" translatable="false">notification</string>
-    <string name="deeplink_site_health" translatable="false">site_health</string>
-    <string name="deeplink_manage_content" translatable="false">manage_content</string>
-    <string name="deeplink_my_bank_account" translatable="false">my_bank_account</string>
-    <string name="deeplink_boost_360_extensions" translatable="false">boost_360_extensions</string>
-    <string name="deeplink_purchased_plans" translatable="false">your_purchased_plans</string>
-    <string name="deeplink_digital_channels" translatable="false">digital_channels</string>
-    <string name="deeplink_call_tracker_add_on" translatable="false">call_tracker_add_on</string>
-    <string name="deeplink_service_catalogue" translatable="false">service_catalogue</string>
-    <string name="deeplink_all_custom_pages" translatable="false">all_custom_pages</string>
-    <string name="deeplink_analytics_website_visits" translatable="false">total_website_visits</string>
-    <string name="deeplink_analytics_website_visitors" translatable="false">total_website_visitors</string>
-    <string name="deeplink_background_images" translatable="false">background_images</string>
-    <string name="deeplink_favicon" translatable="false">favicon</string>
-    <string name="deeplink_appointment_summary" translatable="false">appointment_summary</string>
-    <string name="deeplink_book_table" translatable="false">book_table</string>
-    <string name="deeplink_my_add_ons" translatable="false">my_add_ons</string>
-    <string name="deeplink_recommended_add_ons" translatable="false">recommended_add_ons</string>
-    <string name="deeplink_item_on_market_place" translatable="false">ITEM_ONS_MARKETPLACE</string>
+    <string name="setting_faq_url">https://www.getboost360.com/faqs/</string>
+    <string name="deeplink_sitemeter">sitemeter</string>
+    <string name="deeplink_assuredPurchase">assuredPurchase</string>
+    <string name="deeplink_accSettings">accSettings</string>
+    <string name="deeplink_uniqueVisitor">uniqueVisitor</string>
+    <string name="deeplink_add_ons_marketplace">ADD_ONS_MARKETPLACE</string>
+    <string name="deeplink_cart_fragment">CART_FRAGMENT</string>
+    <string name="deeplink_notification">notification</string>
+    <string name="deeplink_site_health">site_health</string>
+    <string name="deeplink_manage_content">manage_content</string>
+    <string name="deeplink_my_bank_account">my_bank_account</string>
+    <string name="deeplink_boost_360_extensions">boost_360_extensions</string>
+    <string name="deeplink_purchased_plans">your_purchased_plans</string>
+    <string name="deeplink_digital_channels">digital_channels</string>
+    <string name="deeplink_call_tracker_add_on">call_tracker_add_on</string>
+    <string name="deeplink_service_catalogue">service_catalogue</string>
+    <string name="deeplink_all_custom_pages">all_custom_pages</string>
+    <string name="deeplink_analytics_website_visits">total_website_visits</string>
+    <string name="deeplink_analytics_website_visitors">total_website_visitors</string>
+    <string name="deeplink_background_images">background_images</string>
+    <string name="deeplink_favicon">favicon</string>
+    <string name="deeplink_appointment_summary">appointment_summary</string>
+    <string name="deeplink_book_table">book_table</string>
+    <string name="deeplink_my_add_ons">my_add_ons</string>
+    <string name="deeplink_recommended_add_ons">recommended_add_ons</string>
+    <string name="deeplink_item_on_market_place">ITEM_ONS_MARKETPLACE</string>
 
     <!-- Deep Linking URLs  -->
 
@@ -1334,26 +1334,26 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="pay_now">Pay Now</string>
 
 
-    <string name="domain" translatable="false">Domain:</string>
-    <string name="domain_type" translatable="false">Domain Type:</string>
-    <string name="company_name" translatable="false">Company Name:</string>
-    <string name="tag" translatable="false">Tag:</string>
-    <string name="domain_address_line" translatable="false">Address Line:</string>
-    <string name="city" translatable="false">City:</string>
-    <string name="zip" translatable="false">Zip:</string>
-    <string name="country_code" translatable="false">Country Code:</string>
-    <string name="isd_code" translatable="false">ISD Code:</string>
-    <string name="domain_country" translatable="false">Country:</string>
-    <string name="domain_email" translatable="false">Email:</string>
-    <string name="domain_primary_number" translatable="false">Primary Number:</string>
-    <string name="price_of_domain" translatable="false">Price of %s:</string>
-    <string name="activate_your_domain" translatable="false">Activate your domain</string>
-    <string name="submit_request" translatable="false">Submit Request</string>
-    <string name="submiting_request" translatable="false">Submitting your request</string>
-    <string name="book_your_domain" translatable="false">Book your Domain</string>
-    <string name="already_included_in_your_package" translatable="false">*Already included in your package</string>
-    <string name="link_comments" translatable="false">I would like to map my existing domain to my NowFloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
-    <string name="content_link_domain" translatable="false">
+    <string name="domain">Domain:</string>
+    <string name="domain_type">Domain Type:</string>
+    <string name="company_name">Company Name:</string>
+    <string name="tag">Tag:</string>
+    <string name="domain_address_line">Address Line:</string>
+    <string name="city">City:</string>
+    <string name="zip">Zip:</string>
+    <string name="country_code">Country Code:</string>
+    <string name="isd_code">ISD Code:</string>
+    <string name="domain_country">Country:</string>
+    <string name="domain_email">Email:</string>
+    <string name="domain_primary_number">Primary Number:</string>
+    <string name="price_of_domain">Price of %s:</string>
+    <string name="activate_your_domain">Activate your domain</string>
+    <string name="submit_request">Submit Request</string>
+    <string name="submiting_request">Submitting your request</string>
+    <string name="book_your_domain">Book your Domain</string>
+    <string name="already_included_in_your_package">*Already included in your package</string>
+    <string name="link_comments">I would like to map my existing domain to my NowFloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
+    <string name="content_link_domain">
         If you have an existing domain, we strongly recommend that you use it for your NowFloats Website.
         Online discovery will be faster as search engines already recognize your domain.
         Choose from the options below and send us a request for mapping your existing domain:
@@ -1367,9 +1367,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <!-- Caller Info -->
 
-    <string name="missed_calls" translatable="false">Missed Calls </string>
-    <string name="dismiss" translatable="false">DISMISS</string>
-    <string name="received_calls" translatable="false">Received Calls </string>
+    <string name="missed_calls">Missed Calls </string>
+    <string name="dismiss">DISMISS</string>
+    <string name="received_calls">Received Calls </string>
 
     <string-array name="priority_list">
         <item>DEFAULT</item>
@@ -1481,13 +1481,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Contact details</item>
         <item>Business hours</item>
     </string-array>
-    <string name="quikr_tip_points_heading" translatable="false">Good news! You can now publish your updates as product ads to Quikr.</string>
+    <string name="quikr_tip_points_heading">Good news! You can now publish your updates as product ads to Quikr.</string>
     <string-array name="quikr_tip_on_dialog">
         <item> Be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the brand, model and year. If you are posting an update about an apartment, mention whether it\'s for rent or sale, the area and the number of rooms (1 BHK, 2BHK etc)</item>
         <item>We recommend that you post the update along with a clear image</item>
         <item>To ensure an optimal experience for all users, you can post only 1 update to Quikr per day</item>
     </string-array>
-    <string name="message_quikr" translatable="false">These guidelines will help you post the right content to Quikr so that the ad doesn\'t get rejected. You can refer to them at any time in <b>Business Profile -> Social Sharing</b>.</string>
+    <string name="message_quikr">These guidelines will help you post the right content to Quikr so that the ad doesn\'t get rejected. You can refer to them at any time in <b>Business Profile -> Social Sharing</b>.</string>
     <string-array name="spinner_list_item_array">
         <item>IMPROVED</item>
         <item>MAINTAINED</item>
@@ -1512,20 +1512,20 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="business_hours">5</string>
 
 
-    <string name="fb_login_protocol_scheme" translatable="false">fb1641508162754092</string>
+    <string name="fb_login_protocol_scheme">fb1641508162754092</string>
     <string name="facebook_response_error">Error while receiving data from Facebook</string>
     <string name="kitsune_pre_signup_text1">manage and update your</string>
     <string name="kitsune_pre_signup_text2">kitsune powered website</string>
     <string name="error_invoice">Error while creating invoice</string>
     <string name="allow_boost_to_read_your">Please allow Boost to read your Facebook Page insights.</string>
-    <string name="social_media_connect_prompt" translatable="false">Please allow Boost to connect with your social media accounts. You will be able to sync your content automatically across channels, and also track all the analytics / customer interactions here.</string>
+    <string name="social_media_connect_prompt">Please allow Boost to connect with your social media accounts. You will be able to sync your content automatically across channels, and also track all the analytics / customer interactions here.</string>
     <string name="gathering_fcebook_analytics">Gathering Facebook Page analytics</string>
     <string name="please_wait_while_collecting_facebook_data">Please wait, as we are collecting statistics from your Facebook Page. It usually takes up to 24 hours to fetch data.</string>
     <string name="updates_not_found">Updates not found!</string>
     <string name="facebook_analytics">Social Analytics</string>
     <string name="getlink">Next</string>
 
-    <string name="my_business_apps" translatable="false">My Business App</string>
+    <string name="my_business_apps">My Business App</string>
 
     <string name="Madman_design_studio">Madman\'s Design Studio</string>
 
@@ -1534,7 +1534,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="congratulation_ios_business_app_development">Congrats! Your iOS app is under development. You will be able to download and share this app once it is published to the App Store.</string>
 
     <string name="android_app_preview">PREVIEW YOUR\nANDROID APP</string>
-    <string name="tips_for_business_app_completeness" translatable="false">Tips For App Completeness</string>
+    <string name="tips_for_business_app_completeness">Tips For App Completeness</string>
 
     <string name="ios_app_preview">PREVIEW YOUR\niOS APP</string>
 
@@ -1582,21 +1582,21 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="bubble_in_app_second_message">You just have to grant us \"Accessibility\" permission and you are good to go.</string>
     <string name="open_setting">Open Settings</string>
     <string name="take_me_there">Take me there</string>
-    <string name="accessibility_permission" translatable="false">Accessibility permission</string>
-    <string name="select_boost_from" translatable="false">Select Boost \n from the list</string>
+    <string name="accessibility_permission">Accessibility permission</string>
+    <string name="select_boost_from">Select Boost \n from the list</string>
     <string name="screen_overlay_permission">Screen overlay permission</string>
     <string name="required_overlay_permission">Give us this permission to see our new features</string>
     <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
     <string name="call_tracker">Customer Calls</string>
-    <string name="deep_link_call_tracker" translatable="false">callTracker</string>
+    <string name="deep_link_call_tracker">callTracker</string>
     <string name="successfully_downloaded">Successfully Downloaded</string>
     <string name="downloading">File downloading&#8230;</string>
-    <string name="play_with_underline"><u>PLAY</u></string>
-    <string name="view_more" translatable="false"><u>View More</u></string>
-    <string name="view_less" translatable="false"><u>View Less</u></string>
-    <string name="vmn_message_text" translatable="false">This contact number is being displayed across all your digital channels, and you can track all customer calls &amp; logs here.</string>
+    <string name="play_with_underline" translatable="false"><u>PLAY</u></string>
+    <string name="view_more"><u>View More</u></string>
+    <string name="view_less"><u>View Less</u></string>
+    <string name="vmn_message_text">This contact number is being displayed across all your digital channels, and you can track all customer calls &amp; logs here.</string>
     <string name="website_domain_name">.nowfloats.com</string>
-    <string name="email_id_to_request_plans" translatable="false">lead@nowfloats.com</string>
+    <string name="email_id_to_request_plans">lead@nowfloats.com</string>
     <string name="resend"><u>Resend</u></string>
     <string name="add_logo_message">Please add a logo for your business before proceeding.</string>
     <string name="push_notif">Send notification</string>
@@ -1613,93 +1613,97 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="connect_page_to_nowfloats">Connect your account to\nautomatically share all updates\nto your Facebook Page.</string>
     <string name="control">Connect</string>
     <string name="domain_characters">-0123456789abcdefghijklmnopqrstuvwxyz</string>
-    <string name="email_character" translatable="false">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz</string>
+    <string name="email_character">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz</string>
     <string name="fb_page_default_logo_message">We uploaded a default profile image for you as your business logo is too small.</string>
     <string name="business_profile_incomplete">Please complete all the steps in site health and reconnect your Facebook account to create your Facebook page</string>
-    <string name="sign_up_with_ria" translatable="false">Sign up with ria</string>
-    <string name="ria_chat_message" translatable="false">And I\'ll help you get\nyour website up\nand running\nin no time\nat all.</string>
-    <string name="ria_chat_header" translatable="false">Hi, I\'m Ria.</string>
+    <string name="sign_up_with_ria">Sign up with ria</string>
+    <string name="ria_chat_message">And I\'ll help you get\nyour website up\nand running\nin no time\nat all.</string>
+    <string name="ria_chat_header">Hi, I\'m Ria.</string>
 
-    <string name="enter_street_address" translatable="false">Enter Street Address</string>
-    <string name="enter_pin_code" translatable="false">Enter Pin Code</string>
-    <string name="plot_number_and_street_address" translatable="false">COMPLETE BUSINESS ADDRESS</string>
-    <string name="locality" translatable="false">LOCALITY</string>
-    <string name="mobile_number" translatable="false">BUSINESS MOBILE NUMBER</string>
-    <string name="your_website_addres" translatable="false">YOUR WEBSITE ADDRESS</string>
-    <string name="otp_sent_on_mobile" translatable="false">OTP SENT ON MOBILE NUMBER</string>
-    <string name="business_name_ria" translatable="false">BUSINESS NAME</string>
-    <string name="business_category_ria" translatable="false">BUSINESS CATEGORY</string>
-    <string name="email_address_ria" translatable="false">BUSINESS EMAIL ADDRESS</string>
-    <string name="city_ria" translatable="false">CITY</string>
-    <string name="country_ria" translatable="false">COUNTRY</string>
-    <string name="state_ria" translatable="false">STATE</string>
-    <string name="pin_code_ria" translatable="false">PIN/ZIP CODE</string>
-    <string name="number_already_exists" translatable="false">This number already exists.Please enter another number</string>
+    <string name="enter_street_address">Enter Street Address</string>
+    <string name="enter_pin_code">Enter Pin Code</string>
+    <string name="plot_number_and_street_address">COMPLETE BUSINESS ADDRESS</string>
+    <string name="locality">LOCALITY</string>
+    <string name="mobile_number">BUSINESS MOBILE NUMBER</string>
+    <string name="your_website_addres">YOUR WEBSITE ADDRESS</string>
+    <string name="otp_sent_on_mobile">OTP SENT ON MOBILE NUMBER</string>
+    <string name="business_name_ria">BUSINESS NAME</string>
+    <string name="business_category_ria">BUSINESS CATEGORY</string>
+    <string name="email_address_ria">BUSINESS EMAIL ADDRESS</string>
+    <string name="city_ria">CITY</string>
+    <string name="country_ria">COUNTRY</string>
+    <string name="state_ria">STATE</string>
+    <string name="pin_code_ria">PIN/ZIP CODE</string>
+    <string name="number_already_exists">This number already exists.Please enter another number</string>
 
-    <string name="later" translatable="false">Later</string>
+    <string name="later">Later</string>
 
-    <string name="speech_prompt" translatable="false">Say something&#8230;</string>
-    <string name="speech_not_supported" translatable="false">Sorry! Your device doesn\'t support speech input</string>
+    <string name="speech_prompt">Say something&#8230;</string>
+    <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
 
-    <string name="filter_by" translatable="false">Filter by</string>
-    <string name="action_sort_date" translatable="false">Recent</string>
-    <string name="action_sort_expiry" translatable="false">Expiring</string>
-    <string name="action_sort_source" translatable="false">Channel</string>
-    <string name="seller_analytics" translatable="false">Orders</string>
-    <string name="total_orders" translatable="false">Total Orders</string>
-    <string name="orders" translatable="false">Orders</string>
-    <string name="order_analytics" translatable="false">Sales</string>
-    <string name="seller_profile" translatable="false">Seller Profile</string>
-    <string name="order_summary" translatable="false">Order Summary</string>
-    <string name="revenue_summary" translatable="false">Revenue Summary</string>
+    <string name="filter_by">Filter by</string>
+    <string name="action_sort_date">Recent</string>
+    <string name="action_sort_expiry">Expiring</string>
+    <string name="action_sort_source">Channel</string>
+    <string name="seller_analytics">Orders</string>
+    <string name="total_orders">Total Orders</string>
+    <string name="orders">Orders</string>
+    <string name="order_analytics">Sales</string>
+    <string name="seller_profile">Seller Profile</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="revenue_summary">Revenue Summary</string>
     <string name="assured_purchase">Assured Purchase</string>
-    <string name="select_payment_method" translatable="false">Select yout payment method</string>
-    <string name="use_own_payment_link" translatable="false">Use own payment link</string>
-    <string name="delivery_mode" translatable="false">Mode  of Delivery</string>
-    <string name="nowfloats_deliv" translatable="false">NowFloats Delivery</string>
-    <string name="self_deliv" translatable="false">Self Delivery</string>
-    <string name="address_pincode" translatable="false">ADDRESS PINCODE</string>
-    <string name="subscription_status" translatable="false">SUBSCRIPTION STATUS</string>
-    <string name="custom_domain" translatable="false">CUSTOM DOMAIN</string>
-    <string name="site_appearance" translatable="false">SITE APPEARANCE</string>
-    <string name="shipping_metrics" translatable="false">SHIPPING METRICS</string>
-    <string name="bank_details" translatable="false">BANK DETAILS</string>
-    <string name="payment_methods" translatable="false">PAYMENT METHODS</string>
-    <string name="delivery_methods" translatable="false">DELIVERY METHODS</string>
-    <string name="gst_identification_number" translatable="false">GST Identification Number</string>
-    <string name="payment_details" translatable="false">Bank Account Details</string>
-    <string name="product_shipping_charges" translatable="false">Shipping Charges(In INR)</string>
-    <string name="product_shipping_charge" translatable="false">Shipping Charge</string>
-    <string name="product_gst_charges" translatable="false">GST(%)</string>
-    <string name="product_transaction_charges" translatable="false">Transaction Charges (In INR)</string>
-    <string name="product_net_amount" translatable="false">Net Amount (In INR)</string>
-    <string name="assured_purchase_note" translatable="false">Note: Following fields are applicable only in case if assured purchase is enabled otherwise please ignore.</string>
-    <string name="product_name_hint" translatable="false">Enter the most suitable name of your product, so that customers can identify the product easily.</string>
-    <string name="product_desc_hint" translatable="false">Please enter details of the product you want to sell. Please make sure the information is accurate. Your customers will make their buying decision based on the information you provide about the product. This contributes to your website SEO.</string>
-    <string name="product_price_hint" translatable="false">Enter the price at which this product will be sold on your website. This is what the buyer will pay (provided discount Amount is INR 0)</string>
-    <string name="product_discount_hint" translatable="false">Amount of discount that you wish to give. Your buyers will pay Product Price less Discount Amount while purchasing the product</string>
-    <string name="product_currency_hint" translatable="false">For Assured Purchase Online Payments only INR is supported. For any other case you can choose any currency</string>
-    <string name="product_priority_hint" translatable="false">You should use this to showcase products on your website based on popularity and selling point</string>
-    <string name="product_net_amount_hint" translatable="false">This is amount you will earn once you deliver an order successfully through Assured Purchase online payment. It is calculated as = Product Price - Discount Amount - Shipping Charges - Transaction Charges</string>
-    <string name="product_shipping_charge_hint" translatable="false">Calculate shipping charges which Assured Purchase will charge you when a buyer pays online to purchase your product.</string>
-    <string name="product_shipping_days_hint" translatable="false">Days you require to deliver the product to your customer</string>
-    <string name="product_available_unit_hint" translatable="false">Number of current product available in your inventory</string>
-    <string name="product_transaction_charge_hint" translatable="false">This is charge for using Assured Purchase only. This will be calculated on Product Price less Discount Amount</string>
-    <string name="product_buy_online_hint" translatable="false">If you don\'t want to collect payments online through Assured Purchase, you can select this option to re-direct buyer to your own URL, once they click \'Buy Now\' on your website. This disabled when Assured Purchase is enabled.</string>
-    <string name="facebook_chat" translatable="false">facebookchat</string>
-    <string name="facebook_chat_main" translatable="false">facebookchatMain</string>
-    <string name="feedback_chat" translatable="false">feedbackchat</string>
-    <string name="error_msg_unknown" translatable="false">Unknown Error Occurred</string>
-    <string name="tap_to_reload" translatable="false">Tap to Reload</string>
-    <string name="delivery_charges" translatable="false">Delivery Charges</string>
-    <string name="tracking_url" translatable="false">Tracking URL</string>
-    <string name="tracking_number" translatable="false">Tracking Number</string>
-    <string name="delivery_provider" translatable="false">Delivery Provider</string>
-    <string name="shipped_on" translatable="false">Shipped On</string>
-    <string name="received_successful_orders" translatable="false">Successful Orders</string>
-    <string name="returned_orders" translatable="false">Returned Orders</string>
-    <string name="filter_orders" translatable="false">Filter Orders</string>
-    <string name="learn_more" translatable="false">Learn More</string>
+    <string name="select_payment_method">Select yout payment method</string>
+    <string name="use_own_payment_link">Use own payment link</string>
+    <string name="delivery_mode">Mode  of Delivery</string>
+    <string name="nowfloats_deliv">NowFloats Delivery</string>
+    <string name="self_deliv">Self Delivery</string>
+    <string name="address_pincode">ADDRESS PINCODE</string>
+    <string name="subscription_status">SUBSCRIPTION STATUS</string>
+    <string name="custom_domain">CUSTOM DOMAIN</string>
+    <string name="site_appearance">SITE APPEARANCE</string>
+    <string name="shipping_metrics">SHIPPING METRICS</string>
+    <string name="bank_details">BANK DETAILS</string>
+    <string name="payment_methods">PAYMENT METHODS</string>
+    <string name="delivery_methods">DELIVERY METHODS</string>
+    <string name="gst_identification_number">GST Identification Number</string>
+    <string name="payment_details">Bank Account Details</string>
+    <string name="product_shipping_charges">Shipping Charges(In INR)</string>
+    <string name="product_shipping_charge">Shipping Charge</string>
+    <string name="product_gst_charges">GST(%)</string>
+    <string name="product_transaction_charges">Transaction Charges (In INR)</string>
+    <string name="product_net_amount">Net Amount (In INR)</string>
+    <string name="assured_purchase_note">Note: Following fields are applicable only in case if assured purchase is enabled otherwise please ignore.</string>
+    <string name="product_name_hint">Enter the most suitable name of your product, so that customers can identify the product easily.</string>
+    <string name="product_desc_hint">Please enter details of the product you want to sell. Please make sure the information is accurate. Your customers will make their buying decision based on the information you provide about the product. This contributes to your website SEO.</string>
+    <string name="product_price_hint">Enter the price at which this product will be sold on your website. This is what the buyer will pay (provided discount Amount is INR 0)</string>
+    <string name="product_discount_hint">Amount of discount that you wish to give. Your buyers will pay Product Price less Discount Amount while purchasing the product</string>
+    <string name="product_currency_hint">For Assured Purchase Online Payments only INR is supported. For any other case you can choose any currency</string>
+    <string name="product_priority_hint">You should use this to showcase products on your website based on popularity and selling point</string>
+    <string name="product_net_amount_hint">This is amount you will earn once you deliver an order successfully through Assured Purchase online payment. It is calculated as = Product Price - Discount Amount - Shipping Charges - Transaction Charges</string>
+    <string name="product_shipping_charge_hint">Calculate shipping charges which Assured Purchase will charge you when a buyer pays online to purchase your product.</string>
+    <string name="product_shipping_days_hint">Days you require to deliver the product to your customer</string>
+    <string name="product_available_unit_hint">Number of current product available in your inventory</string>
+    <string name="product_transaction_charge_hint">This is charge for using Assured Purchase only. This will be calculated on Product Price less Discount Amount</string>
+    <string name="product_buy_online_hint">If you don\'t want to collect payments online through Assured Purchase, you can select this option to re-direct buyer to your own URL, once they click \'Buy Now\' on your website. This disabled when Assured Purchase is enabled.</string>
+    <string name="facebook_chat">facebookchat</string>
+    <string name="facebook_chat_main">facebookchatMain</string>
+    <string name="feedback_chat">feedbackchat</string>
+    <string name="error_msg_unknown">Unknown Error Occurred</string>
+    <string name="tap_to_reload">Tap to Reload</string>
+    <string name="received_orders">Received Orders</string>
+    <string name="disputed_orders">Disputed Orders</string>
+    <string name="delivery_charges">Delivery Charges</string>
+    <string name="tracking_url">Tracking URL</string>
+    <string name="tracking_number">Tracking Number</string>
+    <string name="delivery_provider">Delivery Provider</string>
+    <string name="shipped_on">Shipped On</string>
+    <string name="received_successful_orders">Successful Orders</string>
+    <string name="cancelled_orders">Cancelled Orders</string>
+    <string name="returned_orders">Returned Orders</string>
+    <string name="abandoned_orders">Abandoned Orders</string>
+    <string name="filter_orders">Filter Orders</string>
+    <string name="learn_more">Learn More</string>
     <string-array name="assured_purchase_points">
         <item>You become a verified seller on NowFloats platform. Your potential buyers will see Assured Purchase badge on your website as a mark of trust and a guarantee from NowFloats.</item>
         <item>You can assure reliable and speedy delivery of your products to your buyers.</item>
@@ -1711,40 +1715,42 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>If you have an existing website with an integrated payment gateway you can choose to integrate that with your product catalog. To accept payments via your NowFloats Boost website, please add the relevant links to each one of your products via the Buy Online option in your NowFloats Boost product catalog.</item>
         <item>If you are listed on an e-commerce marketplace like Amazon, Paytm, Flipkart etc, you can use the URL of the relevant product on the NowFloats Product catalogue.</item>
     </string-array>
-    <string name="analylitcs" translatable="false">Analytics</string>
-    <string name="social_interactions" translatable="false">Social Interactions</string>
-    <string name="cross_platform" translatable="false">Cross Platform</string>
+    <string name="analylitcs">Analytics</string>
+    <string name="website_customers">Website Customers</string>
+    <string name="social_interactions">Social Interactions</string>
+    <string name="cross_platform">Cross Platform</string>
 
-    <string name="manage_website" translatable="false">Manage Website</string>
+    <string name="manage_website">Manage Website</string>
+    <string name="my_facebook_chats">My Facebook Chats</string>
 
-    <string name="manage_website_customers" translatable="false">Track how many customers you have received from your website. This is your organic traffic coming from search engines, and repeat visitors. These are your most important customers, and will grow over time. </string>
-    <string name="manage_social_customers" translatable="false">Your social media pages are an easy way for customers on those platforms to interact with you. Currently, you can chat with customers who are reaching out to you on your Facebook Page.
+    <string name="manage_website_customers">Track how many customers you have received from your website. This is your organic traffic coming from search engines, and repeat visitors. These are your most important customers, and will grow over time. </string>
+    <string name="manage_social_customers">Your social media pages are an easy way for customers on those platforms to interact with you. Currently, you can chat with customers who are reaching out to you on your Facebook Page.
 </string>
-    <string name="manage_multichannel_customers" translatable="false">Interact with your customers and reply to their enquiries from across platforms through a single interface. We read through your SMS data to fetch relevant enquiries.</string>
-    <string name="deeplink_manage_customer" translatable="false">managecustomer</string>
-    <string name="pp_business_category" translatable="false">Business Category:</string>
-    <string name="renew_domain_message" formatted="false" translatable="false">Your domain \'%s\' has expired. Your website is currently running on \'%s\'. Please renew your domain or link another domain to avail the advantages of having a personal domain.</string>
-    <string name="renew_nowfloats_and_domain_plan" translatable="false">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
-    <string name="contact_us_message" translatable="false">  </string>
-    <string name="wildfire_definition" translatable="false"><![CDATA[WildFire is a way for your business to <b>quickly</b> reach your <b>target</b> audience and get more customers to your store! It uses inorganic discovery to get you discovered in the top ranking ad spots of Google Search and Facebook Feed - getting you more and <b>more phone calls</b>.]]></string>
-    <string name="wildfire_ad_cost_text" translatable="false"><![CDATA[Total cost incurred for this Ad: <b>INR %.2f</b>]]></string>
-    <string name="dictate_definition" translatable="false"><![CDATA[Dictate is a service by which, a <b>NowFloats representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>
-    <string name="business_app_definition" translatable="false"><![CDATA[You can build you <b>personalized Android app</b> from your NowFloats Boost website itself, for your customers.You can <b>send notifications</b> to your customers about your latest products and updates via the app]]></string>
-    <string name="email_180_message" translatable="false"><![CDATA[<b>Note:</b> Business emails can be booked only if your domain is not more than <b>6 months</b> old.]]></string>
-    <string name="upgrade_base_plan_content" translatable="false"><Data><![CDATA[Your NowFloats website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won\'t be able to update any content.]]></Data></string>
-    <string name="upgrade_base_plan_description" translatable="false"><Data><![CDATA[BOOST Lite, BOOST Pro, BOOST Custom]]></Data></string>
-    <string name="Year" translatable="false">Year</string>
-    <string name="support_name" translatable="false">Support</string>
-    <string name="wildfire_analytics" translatable="false">Wildfire</string>
-    <string name="manage_content" translatable="false">Manage Content</string>
-    <string name="content_sharing_settings" translatable="false">My digital channels</string>
-    <string name="account_settings" translatable="false">Settings</string>
-    <string name="about" translatable="false">About Boost</string>
-    <string name="upgrades" translatable="false">Upgrades</string>
-    <string name="add_ons" translatable="false">Add-ons</string>
-    <string name="subscriptions" translatable="false">Newsletter Subscriptions</string>
-    <string name="shared_user_label" translatable="false">NowFloatsBoost</string>
-    <string name="business_apps" translatable="false">Business Apps</string>
+    <string name="manage_multichannel_customers">Interact with your customers and reply to their enquiries from across platforms through a single interface. We read through your SMS data to fetch relevant enquiries.</string>
+    <string name="deeplink_manage_customer">managecustomer</string>
+    <string name="pp_business_category">Business Category:</string>
+    <string name="renew_domain_message" formatted="false">Your domain \'%s\' has expired. Your website is currently running on \'%s\'. Please renew your domain or link another domain to avail the advantages of having a personal domain.</string>
+    <string name="renew_nowfloats_and_domain_plan">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
+    <string name="contact_us_message">  </string>
+    <string name="wildfire_definition"><![CDATA[WildFire is a way for your business to <b>quickly</b> reach your <b>target</b> audience and get more customers to your store! It uses inorganic discovery to get you discovered in the top ranking ad spots of Google Search and Facebook Feed - getting you more and <b>more phone calls</b>.]]></string>
+    <string name="wildfire_ad_cost_text"><![CDATA[Total cost incurred for this Ad: <b>INR %.2f</b>]]></string>
+    <string name="dictate_definition"><![CDATA[Dictate is a service by which, a <b>NowFloats representative</b> gets in touch with you to understand your business well enough, and then regularly <b>updates</b> the content <b>on your behalf</b>.]]></string>
+    <string name="business_app_definition"><![CDATA[You can build you <b>personalized Android app</b> from your NowFloats Boost website itself, for your customers.You can <b>send notifications</b> to your customers about your latest products and updates via the app]]></string>
+    <string name="email_180_message"><![CDATA[<b>Note:</b> Business emails can be booked only if your domain is not more than <b>6 months</b> old.]]></string>
+    <string name="upgrade_base_plan_content"><Data><![CDATA[Your NowFloats website runs on your base pack Once your base pack expires, all your features and functions will be disabled and you won\'t be able to update any content.]]></Data></string>
+    <string name="upgrade_base_plan_description"><Data><![CDATA[BOOST Lite, BOOST Pro, BOOST Custom]]></Data></string>
+    <string name="Year">Year</string>
+    <string name="support_name">Support</string>
+    <string name="wildfire_analytics">Wildfire</string>
+    <string name="manage_content">Manage Content</string>
+    <string name="content_sharing_settings">My digital channels</string>
+    <string name="account_settings">Settings</string>
+    <string name="about">About Boost</string>
+    <string name="upgrades">Upgrades</string>
+    <string name="add_ons">Add-ons</string>
+    <string name="subscriptions">Newsletter Subscriptions</string>
+    <string name="shared_user_label">NowFloatsBoost</string>
+    <string name="business_apps">Business Apps</string>
 
     <string-array name="about_tab_items">
         <item>Boost360 Training &amp; Certification Program</item>
@@ -1755,24 +1761,27 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Terms of use</item>
         <item>Data privacy policy</item>
     </string-array>
-    <string name="payment_gateway" translatable="false">Payment Gateway</string>
-    <string name="facebook_leads" translatable="false">Facebook Lead Ads</string>
-    <string name="testimonials" translatable="false">Testimonials</string>
+    <string name="keyboard">Keyboard</string>
+    <string name="payment_gateway">Payment Gateway</string>
+    <string name="facebook_leads">Facebook Lead Ads</string>
+    <string name="website_domain">Website Domain</string>
+    <string name="testimonials">Testimonials</string>
     <!--<string name="keyboard_message">The Boost Keyboard allows you to share your products and updates without leaving a chat.We do not store, send or share any data that is typed on the Boost Keyboard.</string>
     -->
-    <string name="keyboard_message" translatable="false">The Boost Keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
+    <string name="keyboard_message">The Boost Keyboard is a customised business keyboard that allows you to share your updates and product offerings with the click of a button, without having to leave a chat.
 (We do not store or share any data that you type on the Boost Keyboard.)</string>
-    <string name="domain_linked" translatable="false">Your domain is successfully Linked to your NowFloats website</string>
-    <string name="domain_linking_success" translatable="false">Domain Linking Successful</string>
-    <string name="map_visits" translatable="false">Address Views</string>
-    <string name="enable_keyboard" translatable="false">Enable Keyboard</string>
-    <string name="otp_over_call" translatable="false">Tap here to get OTP Over Call</string>
-    <string name="sam" translatable="false">Sam</string>
-    <string name="enquired_by" translatable="false">enquired by</string>
-    <string name="sam_chatbot_description" translatable="false">Sam is the chatbot you enabled on your website</string>
-    <string name="upload_features_image" translatable="false">Upload Featured Image</string>
-    <string name="upload_favicon_image" translatable="false">Upload Favicon Image</string>
-    <string name="upload_image_err" translatable="false">Failed to upload image</string>
+    <string name="domain_linked">Your domain is successfully Linked to your NowFloats website</string>
+    <string name="domain_linking_success">Domain Linking Successful</string>
+    <string name="map_visits">Address Views</string>
+    <string name="boost_keyboard">Boost Keyboard</string>
+    <string name="enable_keyboard">Enable Keyboard</string>
+    <string name="otp_over_call">Tap here to get OTP Over Call</string>
+    <string name="sam">Sam</string>
+    <string name="enquired_by">enquired by</string>
+    <string name="sam_chatbot_description">Sam is the chatbot you enabled on your website</string>
+    <string name="upload_features_image">Upload Featured Image</string>
+    <string name="upload_favicon_image">Upload Favicon Image</string>
+    <string name="upload_image_err">Failed to upload image</string>
 
     <string-array name="manage_content_tab_items">
         <item>[Catalogue]</item>
@@ -1849,12 +1858,12 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>http://</item>
         <item>https://</item>
     </array>
-    <string name="hint_product_name" translatable="false">Write the name of your base %s</string>
-    <string name="label_product_name" translatable="false">%s Name<sup>*</sup></string>
+    <string name="hint_product_name">Write the name of your base %s</string>
+    <string name="label_product_name">%s Name<sup>*</sup></string>
 
-    <string name="hint_product_description" translatable="false">Describe your %s within 2000 characters max ...</string>
-    <string name="label_product_description" translatable="false">%s Description<sup>*</sup></string>
-    <string name="label_product_type" translatable="false">%s Type/Category (If any)</string>
+    <string name="hint_product_description">Describe your %s within 2000 characters max ...</string>
+    <string name="label_product_description">%s Description<sup>*</sup></string>
+    <string name="label_product_type">%s Type/Category (If any)</string>
 
     <string-array name="images_content_list_items">
         <item>Business Logo</item>
@@ -1863,13 +1872,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Background Images</item>
         <item>Favicon</item>
     </string-array>
-    <string name="title_activity_background_image_gallery" translatable="false">BackgroundImageGalleryActivity</string>
+    <string name="title_activity_background_image_gallery">BackgroundImageGalleryActivity</string>
 
-    <string name="message_custom_page_limit" translatable="false">You have exceeded limit</string>
-    <string name="message_add_update_limit" translatable="false">You have exceeded limit</string>
-    <string name="message_add_image_limit" translatable="false">You have exceeded limit</string>
-    <string name="message_add_product_limit" translatable="false">You have exceeded limit</string>
-    <string name="message_feature_not_available" translatable="false">This feature is not available</string>
+    <string name="message_custom_page_limit">You have exceeded limit</string>
+    <string name="message_add_update_limit">You have exceeded limit</string>
+    <string name="message_add_image_limit">You have exceeded limit</string>
+    <string name="message_add_product_limit">You have exceeded limit</string>
+    <string name="message_feature_not_available">This feature is not available</string>
 
     <string-array name="payment_method_titles">
         <item name="title_assured_purchase">Assured Purchase</item>
@@ -1883,48 +1892,49 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item name="message_dont_want_to_sell">Select this if you just wish to list the product on the site and wants to only receive enquiries from your customers.</item>
     </string-array>
 
-    <string name="payment_method_dont_want_to_sell" translatable="false">Customers will not be able to buy this product. However, they can post an enquiry against this item</string>
-    <string name="payment_methud_message" translatable="false">Payment info updated</string>
+    <string name="payment_method_dont_want_to_sell">Customers will not be able to buy this product. However, they can post an enquiry against this item</string>
+    <string name="payment_methud_message">Payment info updated</string>
 
-    <string name="product_empty_view_message" translatable="false">You have no %s listed on your site as of yet.</string>
-    <string name="button_change" translatable="false"><u>Change</u></string>
-    <string name="button_edit" translatable="false"><u>Edit</u></string>
-    <string name="button_add" translatable="false"><u>Add</u></string>
-    <string name="null_string_exception" translatable="false">Don\'t enter empy updates</string>
-    <string name="html_tags_exception" translatable="false">Sorry, you can\'t enter HTML tags</string>
-    <string name="uh_oh" translatable="false">Uh-Oh!</string>
-    <string name="not_auth" translatable="false">not authorized.</string>
-    <string name="message_1" translatable="false"><![CDATA[For now, please login via username & password. Once you do that, post login, we’ll show you an alert to authorize different channels such as gmail, facebook etc. for faster login.]]></string>
-    <string name="message_2" translatable="false">is not authorized to support faster login to your Boost account.</string>
-    <string name="how_to_use_boost" translatable="false">Learn How-To-Use Boost</string>
-    <string name="view_support_tickets" translatable="false">View My Support Tickets</string>
-    <string name="loading_boost_dashboard_for_logged_in_user" translatable="false">Loading your business dashboard...</string>
-    <string name="custome_domain_instruction" translatable="false">We strongly recommend that you use an existing domain (if you have one) for your Boost website. Online discovery will be better as search engines already recognize your domain.</string>
+    <string name="product_empty_view_message">You have no %s listed on your site as of yet.</string>
+    <string name="button_change"><u>Change</u></string>
+    <string name="button_edit"><u>Edit</u></string>
+    <string name="button_add"><u>Add</u></string>
+    <string name="null_string_exception">Don\'t enter empy updates</string>
+    <string name="html_tags_exception">Sorry, you can\'t enter HTML tags</string>
+    <string name="uh_oh">Uh-Oh!</string>
+    <string name="not_auth">not authorized.</string>
+    <string name="message_1"><![CDATA[For now, please login via username & password. Once you do that, post login, we’ll show you an alert to authorize different channels such as gmail, facebook etc. for faster login.]]></string>
+    <string name="message_2">is not authorized to support faster login to your Boost account.</string>
+    <string name="how_to_use_boost">Learn How-To-Use Boost</string>
+    <string name="view_support_tickets">View My Support Tickets</string>
+    <string name="loading_boost_dashboard_for_logged_in_user">Loading your business dashboard...</string>
+    <string name="custome_domain_instruction">We strongly recommend that you use an existing domain (if you have one) for your Boost website. Online discovery will be better as search engines already recognize your domain.</string>
     <string-array name="boost_extensions">
         <item>Wordpress</item>
         <item>Static Website</item>
     </string-array>
-    <string name="your_digital_assitant" translatable="false">Your digital assistant</string>
-    <string name="error_right_fptag" translatable="false">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right Boost account.</string>
-    <string name="bank_account_details" translatable="false">Bank Account Details</string>
-    <string name="signup_your_account" translatable="false">Signup your account here.</string>
+    <string name="your_digital_assitant">Your digital assistant</string>
+    <string name="error_right_fptag">This link is intended for the business %1$s! and you are not authorized to access this page. Please make sure you are signed in to the right Boost account.</string>
+    <string name="bank_account_details">Bank Account Details</string>
+    <string name="signup_your_account">Signup your account here.</string>
 
-    <string name="candidate_details" translatable="false">Candidate Details</string>
-    <string name="batch_details" translatable="false">Batch Details</string>
-    <string name="faculty_management" translatable="false">Faculty Management</string>
-    <string name="faculty_management_feature_description" translatable="false">Looks like this add-on is not added to your current plan. Add it now to share your lecturer’s expertise by including awards, papers they’ve written.</string>
-    <string name="faculty_details" translatable="false">Faculty Details</string>
-    <string name="our_toppers" translatable="false">Toppers</string>
-    <string name="our_toppers_feature_description" translatable="false">Looks like this add-on is not added to your current plan. Add it now to start using it.
+    <string name="candidate_details">Candidate Details</string>
+    <string name="batch_details">Batch Details</string>
+    <string name="faculty_management">Faculty Management</string>
+    <string name="faculty_management_feature_description">Looks like this add-on is not added to your current plan. Add it now to share your lecturer’s expertise by including awards, papers they’ve written.</string>
+    <string name="faculty_details">Faculty Details</string>
+    <string name="our_toppers">Toppers</string>
+    <string name="our_toppers_feature_description">Looks like this add-on is not added to your current plan. Add it now to start using it.
 With this feature, you can show off your top rankers to help people gain trust in your coaching centre.</string>
-    <string name="course_name" translatable="false">Course Name <p><font color="red">*</font></p></string>
-    <string name="course_timings" translatable="false">Course Timings <p><font color="red">*</font></p></string>
-    <string name="course_duration" translatable="false">Course Duration <p><font color="red">*</font></p></string>
-    <string name="commencement_date" translatable="false">Commencement Date <p><font color="red">*</font></p></string>
-    <string name="add_profile_image" translatable="false">Add Profile Image <p><font color="red">*</font></p></string>
-    <string name="course_type" translatable="false">Course Type <p><font color="red">*</font></p></string>
-    <string name="upcoming_batches" translatable="false">Upcoming Batches</string>
-    <string name="upcoming_batches_feature_description" translatable="false">Looks like this add-on is not added to your current plan. Add it now to start using it.
+    <string name="course_name">Course Name <p><font color="red">*</font></p></string>
+    <string name="course_timings">Course Timings <p><font color="red">*</font></p></string>
+    <string name="course_duration">Course Duration <p><font color="red">*</font></p></string>
+    <string name="commencement_date">Commencement Date <p><font color="red">*</font></p></string>
+    <string name="name">Name <p><font color="red">*</font></p></string>
+    <string name="add_profile_image">Add Profile Image <p><font color="red">*</font></p></string>
+    <string name="course_type">Course Type <p><font color="red">*</font></p></string>
+    <string name="upcoming_batches">Upcoming Batches</string>
+    <string name="upcoming_batches_feature_description">Looks like this add-on is not added to your current plan. Add it now to start using it.
 With this feature, students and their parents can browse and learn about the upcoming batches you are offering their starting date etc and drop a question regarding that if they may have.</string>
     <string name="third_party_queries" translatable="false">thirdPartyQueries</string>
     <string name="facebookpage" translatable="false">facebookpage</string>

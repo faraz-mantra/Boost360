@@ -166,7 +166,8 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
   private fun getErrorMessage(): String {
     return when (session?.experienceCode) {
       "DOC",
-      "HOS" -> resources.getString(R.string.please_add_doctor_first)
+      "HOS",
+      -> resources.getString(R.string.please_add_doctor_first)
       "EDU" -> getString(R.string.please_add_teacher_first)
       "SPA" -> getString(R.string.masseur_masseuse_not_added)
       "HOT" -> getString(R.string.please_add_hotel_room_first)
@@ -808,6 +809,7 @@ class CreateAppointmentFragment : BaseInventoryFragment<FragmentNewAppointmentBi
 
   private fun onInClinicAptConsultAddedOrUpdated(isAdded: Boolean) {
     val instance = FirestoreManager
+    if (instance.getDrScoreData()?.metricdetail == null) return
     if (isVideoConsult) instance.getDrScoreData()?.metricdetail?.boolean_create_sample_video_consultation = isAdded
     else instance.getDrScoreData()?.metricdetail?.boolean_create_sample_in_clinic_appointment = isAdded
     instance.updateDocument()

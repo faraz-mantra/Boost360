@@ -303,7 +303,8 @@ class CartFragment : BaseFragment(), CartFragmentListener {
                         COUPON_POPUP_FRAGEMENT
                 )*/
                 val args = Bundle()
-                args.putDouble("cartValue", grandTotal)
+//                args.putDouble("cartValue", grandTotal)
+                args.putDouble("cartValue", total)
                 couponPopUpFragment.arguments = args
                 couponPopUpFragment.show(
                         (activity as UpgradeActivity).supportFragmentManager,
