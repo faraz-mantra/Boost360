@@ -44,4 +44,14 @@
         <item>Payment</item>
         <item>Done</item>
     </string-array>
+
+    <string name="marketoffer_howtoOne">Open the boost app/website/mobile-web, search for packs and choose your preferred <b>packs/addon</b>.<br/></string>
+    <string name="marketoffer_howtoTwo">Apply coupon code: <b> %1$s </b> at the time of checkout your plans/packages.<br/></string>
+    <string name="marketoffer_howtoThree">You will get %1$s instant off on your purchase<br/></string>
+    <string name="marketoffer_termOne">You must apply coupon code: <b> %1$s </b> at the time of checkout to get 20 off instantly.<br/></string>
+    <string name="marketoffer_termTwo">This offer is valid only for your first ever transaction of the month on boost.<br/></string>
+    <string name="marketoffer_termThree">The instant discount will be applied before you proceed to pay.<br/></string>
+    <string name="marketoffer_termFour">This coupon code is valid for one-time use only.<br/></string>
+    <string name="marketoffer_termFive">There is no minimum cart amount to avail this offer.<br/></string>
+    <string name="marketoffer_termSix">Offer valid from %1$s - %2$s.For more information regarding money click.<br/></string>
 </resources>
