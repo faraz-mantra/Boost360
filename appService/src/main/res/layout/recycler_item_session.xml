@@ -72,6 +72,7 @@
                 android:layout_below="@id/ll_time_slot"
                 android:layout_marginStart="@dimen/size_18"
                 android:layout_marginTop="@dimen/size_8"
+                android:layout_marginBottom="@dimen/size_8"
                 android:text="@string/u_add_session_u"
                 android:textColor="#4889F8"
                 android:focusable="true" />
@@ -82,7 +83,6 @@
                 android:id="@+id/ccb_all_day"
                 android:layout_below="@id/ctv_add_session"
                 android:layout_alignStart="@id/ctv_add_session"
-                android:layout_marginTop="@dimen/size_8"
                 android:layout_marginBottom="@dimen/size_8"
                 android:theme="@style/ActiveTheme"
                 android:fontFamily="@font/open_sans"
