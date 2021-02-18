@@ -1,22 +1,17 @@
 package com.nowfloats.NavigationDrawer;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,17 +19,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.viewHolder.MyViewHolder;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -52,32 +44,26 @@ import java.util.List;
  */
 public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
-    private static final int STORAGE_CODE = 120;
     private final int VIEW_TYPE_WELCOME = 0;
     private final int VIEW_TYPE_IMAGE_TEXT = 1;
     String imageUri = "";
-
     private LayoutInflater mInflater;
     public Activity appContext;
-//    public HomeActivity appContext;
     FloatsMessageModel data;
     String msg = "", date = "";
     private boolean imagePresent;
     UserSessionManager session;
     Target targetMap = null;
-
     static ProgressDialog pd;
+    private ListenerMain listenerMain;
 
-    public interface Permission {
-        void getPermission();
-    }
 
-    public CardAdapter_V3(Activity appContext, UserSessionManager session) {
+    public CardAdapter_V3(Activity appContext, UserSessionManager session,ListenerMain listenerMain) {
         Log.d("CardAdapter_V3", "Constructor");
         this.appContext =  appContext;
-//        this.appContext = (HomeActivity) appContext;
         this.session = session;
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.listenerMain=listenerMain;
     }
 
     @Override
@@ -180,40 +166,15 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             shareFacebook.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    shareContent("facebook", imageShare, position);
-
-
+                    if (listenerMain!=null)listenerMain.sharePost("facebook", imageShare, position);
                 }
             });
-
-            /*try {
-
-
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-                sendIntent.setType("text/plain");
-                sendIntent.setPackage("com.whatsapp");
-                appContext.startActivity(sendIntent);
-            }
-            catch (Exception e)
-            {
-
-            }*/
             shareWhatsapp.setOnClickListener(v -> {
-
-                shareContent("whatsapp", imageShare, position);
-
-
+                if (listenerMain!=null)listenerMain.sharePost("whatsapp", imageShare, position);
             });
 
             shareImageView.setOnClickListener(v -> {
-
-
-                shareContent("default", imageShare, position);
-
-
+                if (listenerMain!=null)listenerMain.sharePost("default", imageShare, position);
             });
 
             if (Constants.isWelcomScreenToBeShown) {
@@ -365,87 +326,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
         }
     }
 
-
-    void shareContent(String type, String imageShare, int position) {
-        MixPanelController.track("SharePost", null);
-        if (ActivityCompat.checkSelfPermission(appContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            Methods.showDialog(appContext, "Storage Permission", "To share service image, we need storage permission.",
-                    (dialog, which) -> ActivityCompat.requestPermissions(appContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_CODE));
-            return;
-        }
-        pd = ProgressDialog.show(appContext, "", "Sharing . . .");
-        final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        switch (type) {
-            case "whatsapp":
-                shareIntent.setPackage("com.whatsapp");
-                break;
-            case "facebook":
-                shareIntent.setPackage("com.facebook.katana");
-                break;
-        }
-        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
-            if (Methods.isOnline(appContext)) {
-                String url;
-                if (imageShare.contains("BizImages")) {
-                    url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
-                } else {
-                    url = imageShare;
-                }
-                Target target = new Target() {
-                    @Override
-                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                        pd.dismiss();
-                        targetMap = null;
-                        try {
-                            Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-                            View view = new View(appContext);
-                            view.draw(new Canvas(mutableBitmap));
-                            String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
-                            BoostLog.d("Path is:", path);
-                            Uri uri = Uri.parse(path);
-                            shareIntent.putExtra(Intent.EXTRA_TEXT, Home_Main_Fragment.getMessageList(appContext).get(position).message + " View more at: " +
-                                    Home_Main_Fragment.getMessageList(appContext).get(position).url);
-                            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                            shareIntent.setType("image/*");
-                            if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                                appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
-                            } else {
-                                Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
-                            }
-                        } catch (OutOfMemoryError e) {
-                            Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
-                        } catch (Exception e) {
-                            Toast.makeText(appContext, "Image not able to share", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                        pd.dismiss();
-                        targetMap = null;
-                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-                    }
-                };
-                targetMap = target;
-                Picasso.get().load(url).into(target);
-            } else {
-                pd.dismiss();
-                Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
-            }
-        } else {
-            pd.dismiss();
-            shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, Home_Main_Fragment.getMessageList(appContext).get(position).message + " View more at: " + Home_Main_Fragment.getMessageList(appContext).get(position).url);
-            if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_updates)), 1);
-            } else {
-                Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
-            }
-        }
+    interface ListenerMain{
+        void sharePost(String type, String imageShare, int position);
     }
 }

@@ -6,7 +6,7 @@ import java.io.Serializable
 
 data class MerchantProfileResponse(
     @SerializedName("Error")
-    var errorN: Error? = null,
+    var errorN: ProfileError? = null,
     @SerializedName("Result")
     var result: MerchantResult? = null,
     @SerializedName("StatusCode")

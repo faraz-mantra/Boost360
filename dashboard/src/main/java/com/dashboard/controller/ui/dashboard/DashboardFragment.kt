@@ -79,8 +79,11 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   private var adapterAcademy: AppBaseRecyclerViewAdapter<DashboardAcademyBanner>? = null
   private var adapterQuickAction: AppBaseRecyclerViewAdapter<QuickActionItem>? = null
   private var adapterBusinessData: AppBaseRecyclerViewAdapter<ManageBusinessData>? = null
-
   private var ctaFileLink: String? = null
+  private var mCurrentPage: Int = 0
+
+  private var handler = Handler()
+  private var runnable = Runnable { showSimmerDrScore(isSimmer = false, isRetry = true) }
 
   override fun getLayout(): Int {
     return R.layout.fragment_dashboard
@@ -95,7 +98,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     if (isFirstLoad().not() || (baseActivity as? DashboardActivity)?.isLoadShimmer == true) showSimmer(true)
     session = UserSessionManager(baseActivity)
     setOnClickListener(binding?.btnBusinessLogo, binding?.btnNotofication, binding?.filterBusinessReport, binding?.filterWebsiteReport,
-        binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore)
+        binding?.btnVisitingCard, binding?.txtDomainName, binding?.btnShowDigitalScore, binding?.retryDrScore)
     val versionName: String = baseActivity.packageManager.getPackageInfo(baseActivity.packageName, 0).versionName
     binding?.txtVersion?.text = "Version $versionName"
     getAllDashboardSummary()
@@ -134,52 +137,68 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     setUserData()
     setBusinessManageTask()
     getNotificationCount()
-    setSummaryAndDrScore()
+    setSummaryAndDrScore((baseActivity as? DashboardActivity)?.isLoadShimmer ?: true)
   }
 
-  private fun setSummaryAndDrScore() {
+  private fun setSummaryAndDrScore(isLoadingShimmerDr: Boolean) {
     (baseActivity as? DashboardActivity)?.setPercentageData(getDrScoreData()?.getDrsTotal() ?: 0)
     refreshAllDashboardSummary()
-    setDrScoreData()
+    setDrScoreData(isLoadingShimmerDr)
   }
 
-
-  private fun setDrScoreData() {
+  private fun setDrScoreData(isLoadingShimmerDr: Boolean) {
+    handler.removeCallbacks(runnable)
     viewModel?.getDrScoreUi(baseActivity)?.observeOnce(viewLifecycleOwner, {
       val response = it as? DrScoreUiDataResponse
       val drScoreData = getDrScoreData()
-      val isHighDrScore = drScoreData != null && drScoreData.drs_segment.isNullOrEmpty().not() && (drScoreData.getDrsTotal() >= 80).not()
-      if (response?.isSuccess() == true && response.data.isNullOrEmpty().not() && isHighDrScore) {
-        binding?.highReadinessScoreView?.gone()
-        binding?.lowReadinessScoreView?.visible()
-        binding?.txtReadinessScore?.text = "${drScoreData!!.getDrsTotal()}"
-        binding?.progressScore?.progress = drScoreData.getDrsTotal()
-        val drScoreSetupList = drScoreData.getDrScoreData(response.data)
-        drScoreSetupList.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
-        binding?.pagerBusinessSetupLow?.apply {
-          binding?.motionOne?.transitionToStart()
-          adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList, this@DashboardFragment)
-          offscreenPageLimit = 3
-          adapter = adapterBusinessContent
-          postInvalidateOnAnimation()
-          binding?.dotIndicator?.setViewPager2(this)
-          setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
-          registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-              super.onPageSelected(position)
-              binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: 0)
-            }
-          })
+      val isHighDrScore = drScoreData != null && (drScoreData.getDrsTotal() >= 80)
+      val drScoreSetupList = response?.data?.let { it1 -> drScoreData?.getDrScoreData(it1) }
+      if (response?.isSuccess() == true && drScoreSetupList.isNullOrEmpty().not()) {
+        if (isHighDrScore.not()) {
+          binding?.highReadinessScoreView?.gone()
+          binding?.lowReadinessScoreView?.visible()
+          binding?.txtReadinessScore?.text = "${drScoreData!!.getDrsTotal()}"
+          binding?.progressScore?.progress = drScoreData.getDrsTotal()
+          drScoreSetupList?.map { it1 -> it1.recyclerViewItemType = RecyclerViewItemType.BUSINESS_SETUP_ITEM_VIEW.getLayout() }
+          binding?.pagerBusinessSetupLow?.apply {
+            binding?.motionOne?.transitionToStart()
+            adapterBusinessContent = AppBaseRecyclerViewAdapter(baseActivity, drScoreSetupList!!, this@DashboardFragment)
+            offscreenPageLimit = 3
+            adapter = adapterBusinessContent
+            binding?.dotIndicator?.setViewPager2(this)
+            setPageTransformer { page, position -> OffsetPageTransformer().transformPage(page, position) }
+            postInvalidateOnAnimation()
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+              override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                mCurrentPage= position
+              }
+
+              override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                if (position == mCurrentPage) {
+                  if (positionOffset > 0.5) setPage(position + 1) else setPage(position)
+                } else {
+                  if (positionOffset < 0.5) setPage(position) else setPage(position + 1)
+                }
+              }
+            })
+          }
           binding?.motionOne?.loadLayoutDescription(R.xml.fragment_dashboard_scene)
           binding?.motionOne?.transitionToStart()
+          baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
+          baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
+        } else {
+          binding?.highReadinessScoreView?.visible()
+          binding?.lowReadinessScoreView?.gone()
         }
-        baseActivity.setGifAnim(binding?.missingDetailsGif!!, R.raw.ic_missing_setup_gif_d, R.drawable.ic_custom_page_d)
-        baseActivity.setGifAnim(binding?.arrowLeftGif!!, R.raw.ic_arrow_left_gif_d, R.drawable.ic_arrow_right_14_d)
-      } else {
-        binding?.highReadinessScoreView?.visible()
-        binding?.lowReadinessScoreView?.gone()
-      }
+        showSimmerDrScore(false)
+      } else showSimmerDrScore(isLoadingShimmerDr, isLoadingShimmerDr.not())
     })
+  }
+
+  private fun setPage(position: Int) {
+    binding?.motionOne?.loadLayoutDescription(takeIf { position == 0 }?.let { R.xml.fragment_dashboard_scene } ?: R.xml.fragment_dashboard_scene_hide)
   }
 
   private fun setBusinessManageTask() {
@@ -226,7 +245,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         SummaryEntity().getUserSummary(USER_BUSINESS_SUMMARY))
     setRoiBusinessReport(OrderSummaryModel().getSellerSummary(SELLER_BUSINESS_REPORT), SummaryEntity().getTotalUserMessage(TOTAL_USER_MESSAGE).toString(),
         CallSummaryResponse().getCallSummary(CALL_BUSINESS_REPORT) ?: "0")
-    setWebsiteReport(SummaryEntity().getUserSummary(USER_WEBSITE_REPORT), VisitsModelResponse().getTotalOMapVisit(TOTAL_MAP_VISIT) ?: "0",null)
+    setWebsiteReport(SummaryEntity().getUserSummary(USER_WEBSITE_REPORT), VisitsModelResponse().getTotalOMapVisit(TOTAL_MAP_VISIT) ?: "0", null)
   }
 
   private fun getAllDashboardSummary() {
@@ -321,7 +340,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
           response3?.saveMapVisit(TOTAL_MAP_VISIT)
           viewModel?.getSearchAnalytics(session?.fPID, filterDate.startDate, filterDate.endDate)?.observeOnce(viewLifecycleOwner, {
             val countSearch = (it?.anyResponse as? String)?.toIntOrNull()
-            setWebsiteReport(summary, response3?.getTotalCount() ?: "0",countSearch)
+            setWebsiteReport(summary, response3?.getTotalCount() ?: "0", countSearch)
             if (isLoader) hideProgress()
             (baseActivity as? DashboardActivity)?.isLoadShimmer = false
             showSimmer(false)
@@ -333,9 +352,9 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
   }
 
 
-  private fun setWebsiteReport(summary: SummaryEntity?, mapVisitCount: String,countSearch:Int?) {
-   val countS= countSearch?.toString() ?: getNumberFormat((session?.searchCount?.toIntOrNull() ?: 0).toString())
-    val growthStatsList = GrowthStatsData().getData(summary, mapVisitCount,countS)
+  private fun setWebsiteReport(summary: SummaryEntity?, mapVisitCount: String, countSearch: Int?) {
+    val countS = countSearch?.toString() ?: getNumberFormat((session?.searchCount?.toIntOrNull() ?: 0).toString())
+    val growthStatsList = GrowthStatsData().getData(summary, mapVisitCount, countS)
     growthStatsList.map { it.recyclerViewItemType = RecyclerViewItemType.GROWTH_STATE_ITEM_VIEW.getLayout() }
     if (adapterGrowth == null) {
       binding?.rvGrowthState?.apply {
@@ -465,7 +484,7 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
         if (messageChannelUrl.isNullOrEmpty().not()) visitingCardDetailText(messageChannelUrl)
         else getChannelAccessToken(true)
       }
-
+      binding?.retryDrScore -> setSummaryAndDrScore(true)
       binding?.txtDomainName -> baseActivity.startWebViewPageLoad(session, session!!.getDomainName(false))
     }
   }
@@ -657,6 +676,17 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
     }
   }
 
+  private fun showSimmerDrScore(isSimmer: Boolean, isRetry: Boolean = false) {
+    binding?.mainContent?.post {
+      if (isSimmer && isRetry.not()) handler.postDelayed(runnable, 4000)
+      binding?.shimmerLoadDrScoreCard?.visibility = if (isSimmer || isRetry) View.VISIBLE else View.GONE
+      binding?.shimmerLoadDrView?.setBackgroundColor(getColor(if (isSimmer) R.color.placeholder_bg else android.R.color.transparent))
+      binding?.shimmerLoadDrView?.apply { if (isSimmer) startShimmer() else stopShimmer() }
+      binding?.retryDrScore?.visibility = if (isSimmer.not() && isRetry) View.VISIBLE else View.GONE
+      binding?.lowHighViewDrScore?.visibility = if (isSimmer && isRetry) View.GONE else View.VISIBLE
+    }
+  }
+
   private fun showSimmer(isSimmer: Boolean) {
     binding?.mainContent?.apply {
       if (isSimmer) {
@@ -729,15 +759,15 @@ class DashboardFragment : AppBaseFragment<FragmentDashboardBinding, DashboardVie
 
   override fun onStop() {
     super.onStop()
+    handler.removeCallbacks(runnable)
     FirestoreManager.listener = null
   }
 
   override fun onStart() {
     super.onStart()
-    FirestoreManager.listener = { setSummaryAndDrScore() }
+    FirestoreManager.listener = { setSummaryAndDrScore(true) }
   }
 }
-
 
 fun UserSessionManager.getRequestMap(startDate: String, endDate: String): Map<String, String> {
   val map = HashMap<String, String>()

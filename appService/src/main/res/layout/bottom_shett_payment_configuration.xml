@@ -226,47 +226,42 @@
 
       </RadioGroup>
 
-      <androidx.constraintlayout.widget.ConstraintLayout
+      <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_20"
+        android:layout_marginEnd="@dimen/size_20"
         android:layout_marginBottom="@dimen/size_20"
-        android:paddingRight="@dimen/size_10">
-
-        <com.framework.views.customViews.CustomButton
-          android:id="@+id/btn_done"
-          android:layout_width="@dimen/size_110"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:background="@drawable/button_proceed"
-          android:fontFamily="@font/semi_bold"
-          android:gravity="center"
-          android:padding="12dp"
-          android:text="Done"
-          android:textAllCaps="true"
-          android:textColor="@color/white"
-          app:layout_constraintRight_toRightOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          app:textType="HEADING_6" />
+        android:gravity="end">
 
         <com.framework.views.customViews.CustomButton
           android:id="@+id/btn_cancel"
           android:layout_width="@dimen/size_110"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:layout_marginRight="@dimen/size_20"
-          android:background="@null"
+          android:layout_height="@dimen/size_46"
+          android:layout_marginEnd="@dimen/size_20"
           android:fontFamily="@font/semi_bold"
           android:gravity="center"
-          android:padding="15dp"
+          android:background="@null"
+          android:stateListAnimator="@null"
           android:text="Cancel"
           android:textAllCaps="true"
           android:textColor="@color/pinkish_grey"
-          app:layout_constraintRight_toLeftOf="@id/btn_done"
-          app:layout_constraintTop_toTopOf="parent"
           app:textType="HEADING_6" />
 
-      </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.framework.views.customViews.CustomButton
+          android:id="@+id/btn_done"
+          android:layout_width="@dimen/size_110"
+          android:layout_height="@dimen/size_46"
+          android:background="@drawable/button_proceed"
+          android:fontFamily="@font/semi_bold"
+          android:gravity="center"
+          android:stateListAnimator="@null"
+          android:text="Done"
+          android:textAllCaps="true"
+          android:textColor="@color/white"
+          app:textType="HEADING_6" />
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -19,6 +19,7 @@ class DrScoreModel(
     var metricdetail: Metricdetail? = null,
 ) : Serializable {
 
+
   fun getDrsTotal(): Int {
     return (drs_total ?: 0.0).toInt()
   }

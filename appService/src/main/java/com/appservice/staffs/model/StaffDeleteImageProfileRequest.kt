@@ -6,7 +6,6 @@ data class StaffDeleteImageProfileRequest(
 
 	@field:SerializedName("StaffId")
 	val staffId: String? = null,
-
 	@field:SerializedName("FloatingPointTag")
 	val floatingPointTag: String? = null
 )

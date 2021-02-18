@@ -2,6 +2,7 @@ package com.appservice.model.accountDetails
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class GSTDetails(
     @SerializedName("DocumentFile")
@@ -12,4 +13,4 @@ data class GSTDetails(
     var gSTIN: String? = null,
     @SerializedName("VerificationStatus")
     var verificationStatus: String? = null
-)
+): Serializable

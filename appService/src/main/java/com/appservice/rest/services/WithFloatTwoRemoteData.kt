@@ -1,6 +1,6 @@
 package com.appservice.rest.services
 
-import com.appservice.model.serviceProduct.Product
+import com.appservice.model.serviceProduct.CatalogProduct
 import com.appservice.model.serviceProduct.delete.DeleteProductRequest
 import com.appservice.model.serviceProduct.update.ProductUpdate
 import com.appservice.rest.EndPoints
@@ -14,7 +14,7 @@ import retrofit2.http.*
 interface WithFloatTwoRemoteData {
 
   @POST(EndPoints.CREATE_SERVICE)
-  fun createService(@Body request: Product?): Observable<Response<String>>
+  fun createService(@Body request: CatalogProduct?): Observable<Response<String>>
 
   @PUT(EndPoints.UPDATE_SERVICE)
   fun updateService(@Body request: ProductUpdate?): Observable<Response<ResponseBody>>
@@ -41,7 +41,7 @@ interface WithFloatTwoRemoteData {
   fun getNotificationCount(@Query("clientId") clientId: String?, @Query("fpId") fpId: String?, @Query("isRead") isRead: Boolean = false): Observable<Response<Any>>
 
   @POST(EndPoints.CREATE_PRODUCT)
-  fun createProduct(@Body request: Product?): Observable<Response<String>>
+  fun createProduct(@Body request: CatalogProduct?): Observable<Response<String>>
 
   @GET(EndPoints.GET_PRODUCT_LISTING)
   fun getAllProducts(

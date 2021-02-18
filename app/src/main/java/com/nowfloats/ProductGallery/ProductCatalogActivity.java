@@ -178,8 +178,9 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
   private void onProductServiceAddedOrUpdated(int count) {
     FirestoreManager instance = FirestoreManager.INSTANCE;
     String type = Utils.getProductType(session.getFP_AppExperienceCode());
+    if(instance.getDrScoreData().getMetricdetail()==null) return;
     if (type.toUpperCase().equals("SERVICES")) {
-      instance.getDrScoreData().getMetricdetail().setNumber_services_added(count);
+       instance.getDrScoreData().getMetricdetail().setNumber_services_added(count);
     } else instance.getDrScoreData().getMetricdetail().setNumber_products_added(count);
     instance.updateDocument();
   }
@@ -368,7 +369,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
   }
 
 
-  private com.appservice.model.serviceProduct.Product getProductData(Product p) {
+  private com.appservice.model.serviceProduct.CatalogProduct getProductData(Product p) {
     ArrayList<com.appservice.model.serviceProduct.ImageListModel> listImages = new ArrayList<>();
     if (p.Images != null) {
       for (ImageListModel data : p.Images) {
@@ -381,7 +382,7 @@ public class ProductCatalogActivity extends AppCompatActivity implements WidgetK
         otherSpec.add(new com.appservice.model.KeySpecification(spec.key, spec.value));
       }
     }
-    com.appservice.model.serviceProduct.Product newProduct = new com.appservice.model.serviceProduct.Product();
+    com.appservice.model.serviceProduct.CatalogProduct newProduct = new com.appservice.model.serviceProduct.CatalogProduct();
     newProduct.setCurrencyCode(p.CurrencyCode);
     newProduct.setDescription(p.Description);
     newProduct.setDiscountAmount(p.DiscountAmount);
