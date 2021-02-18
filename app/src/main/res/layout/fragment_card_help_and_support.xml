@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/business_screen_cardview"
@@ -21,7 +20,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-            <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -46,8 +46,7 @@
                     android:layout_marginTop="15dp"
                     android:cursorVisible="false"
                     android:focusable="false"
-                    android:layout_marginEnd="15dp"
-                    android:text="TextView"
+                    android:text="@string/textview"
                     android:inputType="textPersonName"
                     android:textColor="@color/gray"
                     android:textSize="14sp"
@@ -63,7 +62,7 @@
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="name"
+                    android:text="@string/name_"
                     android:textColor="@color/light_gray"
                     android:textSize="11sp"
 
@@ -76,7 +75,7 @@
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="number"
+                    android:text="@string/number"
                     android:textColor="@color/light_gray"
                     android:textSize="11sp"
                     android:layout_marginStart="5dp"
@@ -90,7 +89,6 @@
                     android:id="@+id/tv_person_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/your_digital_assitant"
                     android:textColor="@color/primary_color"
@@ -106,7 +104,6 @@
                     android:id="@+id/tv_person_email"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="10dp"
                     android:cursorVisible="false"
                     android:defaultFocusHighlightEnabled="false"
@@ -124,7 +121,7 @@
                     android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="email"
+                    android:text="@string/email_caps_off"
                     android:layout_marginStart="5dp"
                     android:textColor="@color/light_gray"
                     android:textSize="11sp"
@@ -136,7 +133,6 @@
                     android:id="@+id/tv_person_number"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
                     android:layout_marginTop="10dp"
                     android:cursorVisible="false"
                     android:focusable="false"
@@ -167,7 +163,7 @@
                 android:fontFamily="monospace"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="* Response time SLA - 72 hours *"
+                android:text="@string/response_time_sla_72_hours"
                 android:textColor="@color/gray_40"
                 android:textSize="12sp" />
 
@@ -189,7 +185,7 @@
                         android:background="@color/primary_color"
                         android:gravity="center"
                         android:padding="15dp"
-                        android:text="CHAT NOW"
+                        android:text="@string/chat_now"
                         android:textColor="@drawable/yellow_btn_hover_text_color"
                         android:textSize="13sp"/>
                     <ImageView
@@ -217,7 +213,7 @@
                         android:background="@color/gray"
                         android:gravity="center"
                         android:padding="15dp"
-                        android:text="CALL NOW"
+                        android:text="@string/call_now"
                         android:textColor="@color/white"
                         android:textSize="13sp"/>
                     <ImageView

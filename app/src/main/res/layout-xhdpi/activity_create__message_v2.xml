@@ -97,7 +97,6 @@
                     android:visibility="gone"
                     card:cardBackgroundColor="@color/gray"
                     android:layout_marginStart="1dp"
-                    android:layout_marginStart="1dp"
                     android:layout_marginTop="5dp">
                     <ImageView
                         android:id="@+id/imageIcon"
