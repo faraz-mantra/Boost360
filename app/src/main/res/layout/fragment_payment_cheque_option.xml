@@ -326,7 +326,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
                 android:visibility="gone"
                 card:cardBackgroundColor="@color/gray">
@@ -355,11 +354,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="35dp"
-                    android:layout_marginEnd="35dp"
                     android:background="@color/transluscent_background"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="Cheque Image"
+                    android:text="@string/cheque_image"
                     android:textColor="@color/white" />
             </androidx.cardview.widget.CardView>
 
@@ -371,7 +369,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/btn_bg"
                 android:padding="10dp"
-                android:text="Add Other Image"
+                android:text="@string/add_other_image"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:visibility="gone" />
@@ -380,7 +378,6 @@
                 android:id="@+id/cardView_alternative"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
                 android:visibility="gone"
@@ -410,11 +407,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="35dp"
-                    android:layout_marginEnd="35dp"
                     android:background="@color/transluscent_background"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="Other Cheque Image"
+                    android:text="@string/other_cheque_image"
                     android:textColor="@color/white" />
 
             </androidx.cardview.widget.CardView>
@@ -429,7 +425,7 @@
         android:background="@drawable/btn_bg"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Pay Now"
+        android:text="@string/pay_now"
         android:textColor="@color/white"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"

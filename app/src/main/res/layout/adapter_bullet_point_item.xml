@@ -11,12 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
-        android:drawableStart="@drawable/circle_bullets"
-        android:drawableLeft="@drawable/circle_bullets" />
+        app:drawableStartCompat="@drawable/circle_bullets"
+        app:drawableLeftCompat="@drawable/circle_bullets" />
     <TextView
         android:id="@+id/text1"
         android:layout_width="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginBottom="5dp"
         android:layout_height="wrap_content"
         android:textSize="15sp"
