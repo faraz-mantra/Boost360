@@ -33,7 +33,7 @@
             android:layout_width="0dp"
             android:layout_weight=".3"
             android:layout_height="wrap_content"
-            android:text="@string/close_"
+            android:text="@string/close"
             android:textSize="13sp"
             android:textStyle="italic|bold"
             android:layout_marginEnd="15dp"
@@ -41,7 +41,7 @@
         <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="@string/close_"
+            android:textOff="@string/close"
             android:visibility="invisible"
             android:textOn="@string/open_"/>
 
@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_mon"
-            android:textOff="@string/close_"
+            android:textOff="@string/close"
             android:checked="true"
             android:textOn="@string/open_"/>
 
@@ -139,7 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_tue"
-            android:textOff="@string/close_"
+            android:textOff="@string/close"
             android:checked="true"
             android:textOn="@string/open_"/>
 
@@ -187,7 +187,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_wed"
-            android:textOff="@string/close_"
+            android:textOff="@string/close"
             android:checked="true"
             android:textOn="@string/open_"/>
 
@@ -236,7 +236,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/switch_thu"
             android:checked="true"
-            android:textOff="@string/close_"
+            android:textOff="@string/close"
             android:textOn="@string/open_"/>
 
     </LinearLayout>
@@ -284,7 +284,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/switch_fri"
             android:checked="true"
-            android:textOff="@string/close_"
+            android:textOff="@string/close"
             android:textOn="@string/open_"/>
 
     </LinearLayout>
@@ -331,7 +331,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_sat"
-            android:textOff="@string/close_"
+            android:textOff="@string/close"
             android:checked="true"
             android:textOn="@string/open_"/>
     </LinearLayout>
@@ -377,7 +377,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/switch_sun"
-            android:textOff="@string/close_"
+            android:textOff="@string/close"
             android:checked="true"
             android:textOn="@string/open_"/>
 

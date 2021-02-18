@@ -32,7 +32,7 @@
 
                     <TextView
                         style="@style/ProductLabelTextStyle"
-                        android:text="Primary Image"/>
+                        android:text="@string/primary_image"/>
 
                     <ImageButton
                         android:id="@+id/ib_info_product_image_icon"
@@ -83,7 +83,7 @@
                     <TextView
                         style="@style/ProductLabelTextStyle"
                         android:layout_gravity="start"
-                        android:text="Secondary Images (8 max, jpeg, 800x800px)"/>
+                        android:text="@string/secondary_images_8_max_jpeg_800x800px"/>
 
                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/product_image_list"
@@ -107,7 +107,7 @@
                             android:id="@+id/btn_secondary_image"
                             android:layout_width="wrap_content"
                             android:layout_height="35dp"
-                            android:text="BROWSE SECONDARY IMAGES"
+                            android:text="@string/browse_secondary_images"
                             android:textSize="12sp"
                             android:textAllCaps="false"
                             android:paddingStart="10dp"
@@ -115,7 +115,7 @@
                             android:paddingTop="5dp"
                             android:paddingBottom="5dp"
                             android:drawablePadding="5dp"
-                            android:drawableLeft="@drawable/ic_camera_outline_small"
+                            android:drawableStart="@drawable/ic_camera_outline_small"
                             android:textColor="@color/secondaryTextColor"
                             style="?android:attr/borderlessButtonStyle"
                             android:background="@drawable/image_upload_title_background"/>
@@ -138,7 +138,7 @@
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="Brand (If any)"/>
+                            android:text="@string/brand_if_any"/>
 
                         <ImageButton
                             android:id="@+id/ib_info_brand"
@@ -149,7 +149,7 @@
                     <EditText
                         android:id="@+id/edit_brand"
                         style="@style/ProductEditTextStyle"
-                        android:hint="Write the name of the brand"
+                        android:hint="@string/write_the_name_of_the_brand"
                         android:layout_marginTop="@dimen/margin_5"/>
 
                 </LinearLayout>
@@ -164,7 +164,7 @@
                     <TextView
                         android:id="@+id/label_product_name"
                         style="@style/ProductLabelTextStyle"
-                        android:text="Product Name" />
+                        android:text="@string/product_name_" />
 
                     <ImageButton
                         android:id="@+id/ib_info_product_name"
@@ -175,7 +175,7 @@
                 <EditText
                     android:id="@+id/edit_product_name"
                     android:layout_marginTop="@dimen/margin_5"
-                    android:hint="Write the name of your base product"
+                    android:hint="@string/write_the_name_of_your_base_product"
                     style="@style/ProductEditTextStyle" />
 
                 <LinearLayout
@@ -188,7 +188,7 @@
                     <TextView
                         android:id="@+id/label_product_type"
                         style="@style/ProductLabelTextStyle"
-                        android:text="Product Type/Category (If any)" />
+                        android:text="@string/product_type_category_if_any" />
 
                     <ImageButton
                         android:id="@+id/ib_info_product_type"
@@ -201,7 +201,7 @@
                     style="@style/ProductEditTextStyle"
                     android:layout_marginTop="@dimen/margin_5"
                     android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- "
-                    android:hint="Write the item type eg. Book, Smartphone etc." />
+                    android:hint="@string/write_the_item_type_eg_book_smartphone_etc" />
 
                 <LinearLayout
                     android:id="@+id/layout_product_variants_hint"
@@ -213,7 +213,7 @@
 
                     <TextView
                         style="@style/ProductLabelTextStyle"
-                        android:text="Variant Information" />
+                        android:text="@string/variant_information" />
 
                     <ImageButton
                         android:id="@+id/ib_info_product_variant"
@@ -239,7 +239,7 @@
                         android:textStyle="bold"
                         android:layout_weight="1"
                         android:layout_gravity="center"
-                        android:text="Having variants of this product?"/>
+                        android:text="@string/having_variants_of_this_product"/>
 
                     <com.github.angads25.toggle.widget.LabeledSwitch
                         android:id="@+id/switch_variants"
@@ -264,7 +264,7 @@
                     <TextView
                         android:id="@+id/label_product_description"
                         style="@style/ProductLabelTextStyle"
-                        android:text="Product Description" />
+                        android:text="@string/product_description" />
 
                     <ImageButton
                         android:id="@+id/ib_info_product_description"
@@ -287,7 +287,7 @@
                     android:maxLength="2000"
                     android:singleLine="false"
                     android:textColorHint="@color/hintTextColor"
-                    android:hint="Describe your product within 2000 characters max ..." />
+                    android:hint="@string/describe_your_product_within_2000_characters_max" />
 
                 <LinearLayout
                     android:id="@+id/layout_product_tags"
@@ -299,7 +299,7 @@
                     <TextView
                         android:id="@+id/label_product_tags"
                         style="@style/ProductLabelTextStyle"
-                        android:text="Filter Tags" />
+                        android:text="@string/filter_tags" />
 
                     <ImageButton
                         android:id="@+id/ib_info_product_tags"
@@ -325,7 +325,7 @@
                         style="@style/ProductEditTextStyle"
                         android:layout_weight="1"
                         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789- "
-                        android:hint="Type a filter tag" />
+                        android:hint="@string/type_a_filter_tag" />
 
                     <FrameLayout
                         android:layout_width="wrap_content"
@@ -337,9 +337,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="1dp"
+                            android:textAllCaps="true"
                             android:background="#e9e9e9"
                             android:textColor="@color/secondaryTextColor"
-                            android:text="ADD"/>
+                            android:text="@string/add"/>
 
                     </FrameLayout>
 
@@ -365,7 +366,7 @@
 
                             <TextView
                                 style="@style/ProductLabelTextStyle"
-                                android:text="Currency" />
+                                android:text="@string/currency" />
 
                             <ImageButton
                                 android:id="@+id/ib_info_product_currency"
@@ -393,7 +394,7 @@
 
                             <TextView
                                 style="@style/ProductLabelTextStyle"
-                                android:text="Price (Incl. tax)" />
+                                android:text="@string/price_incl_tax" />
 
                             <ImageButton
                                 android:id="@+id/ib_info_product_base_price_help"
@@ -404,7 +405,7 @@
                         <EditText
                             android:id="@+id/edit_base_price"
                             style="@style/ProductEditTextStyle"
-                            android:hint="XX,XX,XXX"
+                            android:hint="@string/xx_xx_xxx"
                             android:maxLength="9"
                             android:inputType="numberDecimal"
                             android:digits="0123456789."
@@ -430,12 +431,12 @@
                             style="@style/ProductLabelTextStyle"
                             android:layout_gravity="start"
                             android:paddingBottom="3dp"
-                            android:text="Discount Amount" />
+                            android:text="@string/discount_amount" />
 
                         <EditText
                             android:id="@+id/edit_discount"
                             style="@style/ProductEditTextStyle"
-                            android:hint="XX,XXX"
+                            android:hint="@string/xx_xxx"
                             android:enabled="false"
                             android:maxLength="6"
                             android:inputType="numberDecimal"
@@ -455,13 +456,13 @@
                             style="@style/ProductLabelTextStyle"
                             android:layout_height="24dp"
                             android:layout_gravity="start"
-                            android:text="Final Price" />
+                            android:text="@string/final_price_" />
 
                         <TextView
                             android:id="@+id/label_final_price"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
-                            android:hint="XX,XXX"
+                            android:hint="@string/xx_xxx"
                             android:textColor="@color/primaryTextColor"
                             android:textSize="14sp"
                             android:gravity="center_vertical"/>
@@ -503,7 +504,7 @@
 
                         <TextView
                             style="@style/ProductLabelTextStyle"
-                            android:text="Tax Rate % (for invoice)"/>
+                            android:text="@string/tax_rate_for_invoice"/>
 
                         <ImageButton
                             android:id="@+id/ib_info_gst"
@@ -514,7 +515,7 @@
                     <EditText
                         android:id="@+id/edit_gst"
                         style="@style/ProductEditTextStyle"
-                        android:hint="XX"
+                        android:hint="@string/xx"
                         android:maxLength="5"
                         android:digits="0123456789."
                         android:inputType="numberDecimal"
@@ -561,7 +562,7 @@
                     android:layout_gravity="bottom"
                     android:layout_marginTop="@dimen/margin_30"
                     android:layout_marginBottom="@dimen/margin_10"
-                    android:text="SAVE AND PUBLISH" />
+                    android:text="@string/save_and_publish" />
 
                 <Button
                     android:id="@+id/btn_delete"
@@ -571,7 +572,7 @@
                     android:textColor="@color/product_delete_btn"
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="@dimen/margin_10"
-                    android:text="DELETE ITEM" />
+                    android:text="@string/delete_item" />
 
             </LinearLayout>
 
