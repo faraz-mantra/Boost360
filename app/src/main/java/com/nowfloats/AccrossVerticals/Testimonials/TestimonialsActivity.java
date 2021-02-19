@@ -23,6 +23,7 @@ import com.nowfloats.AccrossVerticals.API.model.DeleteTestimonials.DeleteTestimo
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.GetTestimonialData;
 import com.nowfloats.AccrossVerticals.API.model.GetToken.GetTokenData;
+import com.nowfloats.AccrossVerticals.API.model.GetToken.WebActionsItem;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -31,6 +32,7 @@ import com.thinksity.R;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit.Callback;
@@ -48,7 +50,9 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
   LinearLayout rightButton, backButton;
   ImageView rightIcon;
   TextView title;
-  String headerToken = "59c89bbb5d64370a04c9aea1";
+  private String headerToken = "59c89bbb5d64370a04c9aea1";
+  private String testimonialType = "testimonials";
+  public static List<String> allTestimonialType = Arrays.asList("testimonials", "testimonial", "guestreviews");
   private LinearLayout mainLayout, secondaryLayout;
   private UserSessionManager session;
   private TestimonialsAdapter testimonialsAdapter;
@@ -89,13 +93,10 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     vmnProgressBar.setCancelable(false);
 
     addTestimonialsButton = findViewById(R.id.add_testimonials);
-
     session = new UserSessionManager(getApplicationContext(), this);
-
-    recyclerView = (RecyclerView) findViewById(R.id.testimonials_recycler);
-    testimonialsAdapter = new TestimonialsAdapter(new ArrayList(), this, session);
+    recyclerView = findViewById(R.id.testimonials_recycler);
+    testimonialsAdapter = new TestimonialsAdapter(new ArrayList(), this, session,this);
     initialiseRecycler();
-
 
     //show or hide if feature is available to user
     mainLayout = (LinearLayout) findViewById(R.id.main_layout);
@@ -145,7 +146,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
           .build()
           .create(APIInterfaces.class);
       Log.v("headerToken", " " + headerToken);
-      APICalls.getTestimonialsList(headerToken, query, 0, 1000, new Callback<GetTestimonialData>() {
+      APICalls.getTestimonialsList(headerToken, testimonialType, query, 0, 1000, new Callback<GetTestimonialData>() {
         @Override
         public void success(GetTestimonialData testimonialModel, Response response) {
           hideProgress();
@@ -225,7 +226,6 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
 
   private void updateRecyclerView() {
     testimonialsAdapter.updateList(dataList);
-    testimonialsAdapter.notifyDataSetChanged();
   }
 
 
@@ -322,8 +322,21 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
         public void success(GetTokenData s, Response response) {
           Log.v("experincecode1", " " + s.getToken());
           int status = response.getStatus();
-          if (status == 200 || status == 201 || status == 202) {
+          if ((status == 200 || status == 201 || status == 202) && s != null) {
             Log.v("experincecode", " " + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY) + " headerToken: " + headerToken);
+
+            if (s.getWebActions() != null && !s.getWebActions().isEmpty()) {
+              loopBreak:
+              for (WebActionsItem action : s.getWebActions()) {
+                for (String type : allTestimonialType) {
+                  if (action.getName().equalsIgnoreCase(type)) {
+                    testimonialType = action.getName();
+                    break loopBreak;
+                  }
+                }
+              }
+            }
+
             headerToken = s.getToken();
             loadData();
           } else {
