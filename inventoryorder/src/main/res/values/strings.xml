@@ -291,4 +291,6 @@
     <string name="payment_link">Payment Link</string>
     <string name="summy_amount">INR 500</string>
     <string name="you_cannot_remove_all_items">You cannot remove all items.</string>
+    <string name="hint_dummy_phone_number">98765 43210</string>
+    <string name="error_valid_gst">Please enter a valid GST Number</string>
 </resources>

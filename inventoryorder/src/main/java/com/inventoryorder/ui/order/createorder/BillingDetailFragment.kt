@@ -352,12 +352,32 @@ class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding
       if (it.isSuccess()) {
         hideProgress()
         var orderInitiateResponse = (it as? OrderInitiateResponse)
-        var bundle = Bundle()
-        bundle.putSerializable(IntentConstant.CREATE_ORDER_RESPONSE.name, orderInitiateResponse)
-        startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
+        confirmOrder(orderInitiateResponse);
       } else {
         hideProgress()
         showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.unable_to_create_order))
+      }
+    })
+  }
+
+  private fun confirmOrder(order: OrderInitiateResponse?){
+    showProgress()
+    viewModel?.confirmOrder(AppConstant.CLIENT_ID_2, order?.data?._id)?.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+      if (it.error is NoNetworkException) {
+        hideProgress()
+        showLongToast(resources.getString(R.string.internet_connection_not_available))
+        return@Observer
+      }
+      if (it.isSuccess()) {
+        hideProgress()
+        var bundle = Bundle()
+        bundle.putSerializable(IntentConstant.CREATE_ORDER_RESPONSE.name, order)
+        startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
+      } else {
+        hideProgress()
+        var bundle = Bundle()
+        bundle.putSerializable(IntentConstant.CREATE_ORDER_RESPONSE.name, order)
+        startFragmentOrderActivity(FragmentType.ORDER_PLACED, bundle, isResult = true)
       }
     })
   }

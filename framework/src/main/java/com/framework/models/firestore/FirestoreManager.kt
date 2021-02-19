@@ -49,6 +49,7 @@ object FirestoreManager {
         docRef?.addSnapshotListener(MetadataChanges.INCLUDE) { snapshot, e ->
             if (e == null) {
                 Log.d(TAG, "No Exception")
+//                null {bfwufiwnfwon}
                 model = snapshot?.data?.toDataClass<DrScoreModel>();
                 updateDrScoreIfNull()
                 listener?.invoke()

@@ -18,6 +18,7 @@ import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
 import java.lang.StringBuilder
+import java.util.regex.Pattern
 
 class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() {
 
@@ -110,6 +111,13 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     if (email.isNullOrEmpty().not() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches().not()) {
       showShortToast(getString(R.string.please_enter_valid_email))
       return
+    }
+
+    if(gstNo.isNullOrEmpty().not()){
+      if(!Pattern.compile("^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+\$\n").matcher(gstNo).matches()){
+        showShortToast(getString(R.string.error_valid_gst))
+        return;
+      }
     }
 
 
