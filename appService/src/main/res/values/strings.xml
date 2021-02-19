@@ -468,8 +468,33 @@
   <string name="product_update_and_published_live_on_your_website_or_share">Your product is successfully updated and published live on your website. Click on below button to see it live or share with in your connections.</string>
   <string name="image_uploading">Uploading Image, please wait...</string>
     <string name="error_select_service">Please select at least one service provided by this staff</string>
+    <string name="_18">18 %</string>
+    <string name="no_offers_created_so_far">No offers created so far!</string>
+    <string name="you_dont_have_any_offers_added_for_your_customers">You don’t have any offers added for your <br/>customers.</string>
+  <string name="watch_video">WATCH VIDEO</string>
+  <string name="create_offer">Create Offer</string>
+    <string name="this_is_the_cristmas_offer_of_this_year">This is the christmas offer of this year.<br/> Customers will get discount on Simp..</string>
+  <string name="active">Active</string>
+    <string name="offer_title">Offer title*</string>
+  <string name="_992x640px_or_higher">(992x640px or higher)</string>
+  <string name="add_featured_image">Add featured image</string>
+    <string name="write_the_offer_title">Write the offer title</string>
+  <string name="offer_applicable_to">Offer applicable to*</string>
+    <string name="applicable_to_all_services">Applicable to all services?</string>
+    <string name="select_the_service_where_you_want_to_add_offer">Select the service where you want to add offer.</string>
+  <string name="discount_amount_inr">Discount amount (INR)*</string>
+  <string name="enter_discount_on_the_service_s">Enter discount on the service(s)</string>
+    <string name="availability_mandatory">Availablity*</string>
+  <string name="additional_information_">Additional Information</string>
+    <string name="secondary_images_and_offer_tags">Secondary images and offer tags</string>
+    <string name="add_offer">ADD OFFER</string>
+    <string name="select_service">SELECT SERVICE</string>
+    <string name="offer_tags">Offer Tags</string>
+    <string name="tags_help_site_visitors_filter_offers_in_your_website">Tags help site visitors filter offers in your website.</string>
+    <string name="offer_saved_successfully">Offer saved Successfully</string>
+  <string name="your_offer_is_saved_successfully_and_published_live_on_your_website_click_on_below_button_to_see_it_live_or_share_with_in_your_connections">Your offer is saved successfully and published live on your website. Click on below button to see it live or share with in your connections.</string>
 
-    <array name="stock_availbility">
+  <array name="stock_availbility">
     <item>"Unlimited stock"</item>
     <item>"Limited stock"</item>
   </array>
