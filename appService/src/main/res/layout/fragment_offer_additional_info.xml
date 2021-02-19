@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/match_match"
+        android:background="@color/white">
+
+        <androidx.core.widget.NestedScrollView
+            style="@style/match_match"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/content"
+                style="@style/match_match"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    style="@style/match_wrap"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/size_20"
+                    android:paddingEnd="@dimen/size_20">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        style="@style/match_wrap"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:orientation="horizontal">
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/Offers_Text_Title"
+                            android:includeFontPadding="false"
+                            android:text="@string/secondary_images" />
+
+                        <com.framework.views.customViews.CustomTextView
+                            style="@style/Offers_Text_Title.SubHeading"
+                            android:layout_marginStart="@dimen/size_5"
+                            android:text="@string/_8_max_jpeg_png_800x800px" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <com.framework.views.customViews.CustomTextView
+                        style="@style/Offers_Text_Title.SubHeading"
+                        android:text="@string/add_more_images_for_the_product" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btn_click_photo"
+                        style="@style/match_wrap"
+                        android:layout_marginTop="@dimen/size_8"
+                        android:background="@drawable/shape_blue_stroke_rect_title_bkg"
+                        android:padding="@dimen/size_12">
+
+                        <com.framework.views.customViews.CustomTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/add_secondary_images"
+                            android:textColor="@color/yellow_ffb900"
+                            app:drawableLeftCompat="@drawable/ic_small_add_images"
+                            app:fontFamily="@font/semi_bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:textAllCaps="true"
+                            app:textType="BODY_1" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.framework.views.viewgroups.BaseRecyclerView
+                        android:id="@+id/rvAdditionalDocs"
+                        style="@style/match_wrap"
+                        android:layout_marginTop="@dimen/size_8"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_preview_image" />
+
+
+                    <com.framework.views.customViews.CustomTextView
+                        style="@style/Offers_Text_Title"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/offer_tags" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        style="@style/Offers_Text_Title.SubHeading"
+                        android:layout_marginStart="@dimen/size_2"
+                        android:text="@string/tags_help_site_visitors_filter_offers_in_your_website" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipsService"
+                        style="@style/Widget.MaterialComponents.ChipGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:chipSpacing="8dp"
+                        app:singleSelection="false">
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_5"
+                        android:background="@drawable/bg_rect_edit_txt">
+
+                        <com.framework.views.customViews.CustomTextField
+                            android:id="@+id/edt_service_tag"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="@string/type_a_tag_and_press_add"
+                            android:inputType="textCapWords"
+                            android:maxEms="3"
+                            android:padding="@dimen/size_12"
+                            android:singleLine="true"
+                            android:textColor="@color/warm_grey_10"
+                            android:textColorHint="@color/primary_grey"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toLeftOf="@id/btn_add_tag"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.framework.views.customViews.CustomButton
+                            android:id="@+id/btn_add_tag"
+                            style="@style/Offers.ButtonStyle.Rounded.Solid.Stroke"
+                            android:layout_width="@dimen/size_80"
+                            android:layout_height="0dp"
+                            android:layout_margin="@dimen/size_4"
+                            android:text="@string/add"
+                            app:layout_constraintBottom_toBottomOf="@id/edt_service_tag"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/edt_service_tag" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_30" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        style="@style/match_wrap"
+                        android:layout_marginBottom="@dimen/size_14"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent">
+
+                        <com.framework.views.customViews.CustomButton
+                            android:id="@+id/btn_confirm"
+                            style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
+                            android:layout_height="@dimen/size_44"
+                            android:text="@string/confirm" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
