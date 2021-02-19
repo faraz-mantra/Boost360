@@ -5,30 +5,20 @@ import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
 
-data class PromoBanners(
+data class MarketPlaceOffers(
     val _kid: String,
-    val _parentClassId: String,
-    val _parentClassName: String,
-    val _propertyName: String,
     @SerializedName("createdon")
     val createdon: String,
-    @SerializedName("cta_feature_key")
-    val cta_feature_key: String,
-    @SerializedName("cta_web_link")
-    val cta_web_link: String,
-    @SerializedName("cta_bundle_identifier")
-    val cta_bundle_identifier: String,
     @SerializedName("exclusive_to_categories")
     val exclusive_to_categories: List<String>,
-    @SerializedName("exclusive_to_customers")
-    val exclusive_to_customers: List<String>,
-    val image: Image?=null,
-    val importance: Int?=null,
+    @SerializedName("Image")
+    val image: PrimaryImage?=null,
     val isarchived: Boolean,
     @SerializedName("title")
     val title: String,
     @SerializedName("updatedon")
     val updatedon: String,
+    @SerializedName("websiteid")
     val websiteid: String,
     @SerializedName("coupon_code")
     val coupon_code: String,
