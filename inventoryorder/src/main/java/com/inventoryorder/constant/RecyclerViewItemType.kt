@@ -27,7 +27,9 @@ enum class RecyclerViewItemType {
   ORDER_MENU_ITEM,
   PRODUCT_ITEM,
   PRODUCT_ITEM_SELECTED,
-  PRODUCT_BOTTOM_SHEET_OPTIONS;
+  PRODUCT_BOTTOM_SHEET_OPTIONS,
+  STAFF,
+  SLOTS;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -56,6 +58,8 @@ enum class RecyclerViewItemType {
       PRODUCT_ITEM -> R.layout.item_product
       PRODUCT_ITEM_SELECTED -> R.layout.item_products_added
       PRODUCT_BOTTOM_SHEET_OPTIONS -> R.layout.bottom_sheet_order_option
+      STAFF -> R.layout.staff_item
+      SLOTS -> R.layout.item_time_slot
     }
   }
 }
