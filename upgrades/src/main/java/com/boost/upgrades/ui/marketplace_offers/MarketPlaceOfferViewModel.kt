@@ -5,8 +5,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.biz2.nowfloats.boost.updates.persistance.local.AppDatabase
+import com.boost.upgrades.data.api_model.GetAllFeatures.response.MarketPlaceOffers
 import com.boost.upgrades.data.model.CartModel
 import com.boost.upgrades.data.model.FeaturesModel
+import com.boost.upgrades.data.model.MarketOfferModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.luminaire.apolloar.base_class.BaseViewModel
@@ -18,7 +20,7 @@ import io.reactivex.schedulers.Schedulers
 class MarketPlaceOfferViewModel(application: Application) : BaseViewModel(application) {
     var updatesResult: MutableLiveData<List<FeaturesModel>> = MutableLiveData()
     var cartResult: MutableLiveData<List<CartModel>> = MutableLiveData()
-    var bundleKeysResult: MutableLiveData<List<String>> = MutableLiveData()
+    var marketOffersCouponResult: MutableLiveData<MarketOfferModel> = MutableLiveData()
 
     var updatesError: MutableLiveData<String> = MutableLiveData()
     var updatesLoader: MutableLiveData<Boolean> = MutableLiveData()
@@ -31,8 +33,8 @@ class MarketPlaceOfferViewModel(application: Application) : BaseViewModel(applic
         return cartResult
     }
 
-    fun getBundleWidgetKeys(): LiveData<List<String>> {
-        return bundleKeysResult
+    fun marketOffersCouponResult(): LiveData<MarketOfferModel> {
+        return marketOffersCouponResult
     }
 
     fun loadUpdates(list: List<String>){
@@ -95,17 +97,16 @@ class MarketPlaceOfferViewModel(application: Application) : BaseViewModel(applic
         )
     }
 
-    fun getAssociatedWidgetKeys(bundleId: String) {
+    fun getOffersByCouponId(couponId: String) {
         updatesLoader.postValue(true)
         CompositeDisposable().add(
                 AppDatabase.getInstance(getApplication())!!
-                        .bundlesDao()
-                        .getIncludedKeysInBundle(bundleId)
+                        .marketOffersDao()
+                        .getMarketOffersByCouponCode(couponId)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSuccess {
-                            var keys = Gson().fromJson<List<String>>(it, object : TypeToken<List<String>>() {}.type)
-                            bundleKeysResult.postValue(keys)
+                            marketOffersCouponResult.postValue(it)
                         }
                         .doOnError {
                             updatesError.postValue(it.message)
