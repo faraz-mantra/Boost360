@@ -28,7 +28,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
     private var serviceList : ArrayList<ServiceItem> ?= null
     private var serviceAdapter : ArrayAdapter<ServiceItem> ?= null
-    private var startDate = "2021-02-19"
+    private var startDate = "2021-02-20"
     private var bookingSlotResponse : BookingSlotResponse ?= null
     private var selectedService : ServiceItem ?= null
 
@@ -56,7 +56,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
             }
 
             binding?.textAddApptDateTime -> {
-                val selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!)
+                val selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!)
                 selectedDateTimeBottomSheetDialog.show(this.parentFragmentManager, SelectDateTimeBottomSheetDialog::class.java.name)
             }
         }
@@ -106,6 +106,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
     private fun setArrayAdapter() {
         serviceAdapter = CustomArrayAdapter(this.requireActivity(), R.layout.layout_service_item, serviceList!!)
+        serviceAdapter?.setNotifyOnChange(true)
         binding?.editServiceName?.threshold = 1
         binding?.editServiceName?.setAdapter(serviceAdapter)
         binding?.editServiceName?.onItemClickListener = AdapterView.OnItemClickListener { p0, view, pos, id ->

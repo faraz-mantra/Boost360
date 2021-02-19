@@ -37,9 +37,9 @@
 
             <com.framework.views.customViews.CustomImageView
                 android:id="@+id/image_staff"
+                android:src="@drawable/ic_anybody"
                 android:layout_width="@dimen/size_60"
-                android:layout_height="@dimen/size_60"
-                android:src="@drawable/placeholder_image" />
+                android:layout_height="@dimen/size_60" />
         </androidx.cardview.widget.CardView>
 
         <com.framework.views.customViews.CustomImageView
