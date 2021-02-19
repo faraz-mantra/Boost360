@@ -20,7 +20,6 @@ object ProductOrderRepository : AppBaseRepository<InventoryOrderRemoteDataSource
     return AppBaseLocalService()
   }
 
-
   fun getProductDetails(productId: String?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.getProductDetails(productId), TaskCode.PRODUCT_ORDER_DETAILS_TASK)
   }

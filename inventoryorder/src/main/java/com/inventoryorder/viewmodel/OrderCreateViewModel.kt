@@ -13,6 +13,7 @@ import com.inventoryorder.model.orderRequest.UpdateExtraPropertyRequest
 import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
 import com.inventoryorder.model.ordersummary.OrderSummaryRequest
+import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.rest.repositories.*
 import com.inventoryorder.rest.services.WithFloatTwoDataSource
 
@@ -118,8 +119,15 @@ class OrderCreateViewModel : BaseViewModel() {
     return ApiTwoWithFloatRepository.sendSMS(mobile, message, clientId).toLiveData()
   }
 
-
   fun sendMail(request: SendMailRequest?): LiveData<BaseResponse> {
     return ProductOrderRepository.sendMail(request).toLiveData()
+  }
+
+  fun getSearchListing(fpTag : String, fpId : String, searchString : String, offset : Int, limit : Int) : LiveData<BaseResponse> {
+    return NowFloatsRepository.getSearchListing(fpTag, fpId, searchString, offset, limit).toLiveData()
+  }
+
+  fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest) : LiveData<BaseResponse> {
+    return NowFloatsRepository.getBookingSlots(bookingSlotsRequest).toLiveData()
   }
 }

@@ -25,7 +25,6 @@ object EndPoints {
   const val GET_PRODUCT_DETAILS = "Home/GetProductDetails"
   const val SEND_MAIL = "Home/SendEmail"
 
-
   // NFX APIs
   const val ASSURED_PURCHASE_BASE_URL = "https://assuredpurchase.withfloats.com/"
 
@@ -59,5 +58,9 @@ object EndPoints {
   const val ADD_APT_CONSULT_DATA = "api/v1/appointment/add-data"
   const val UPDATE_APT_CONSULT_DATA = "api/v1/appointment/update-data"
 
+  //Now FLoats Api
+  const val API_NOW_FLOATS = "https://api.nowfloats.com/"
+  const val GET_SEARCH_LISTING = "Service/v1/GetSearchListings"
+  const val GET_BOOKING_SLOTS = "staff/v1/GetBookingSlots"
 }
 

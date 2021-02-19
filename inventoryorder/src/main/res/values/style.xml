@@ -83,7 +83,7 @@
     <item name="android:layout_height">wrap_content</item>
   </style>
 
-  <style name="EditTextStyle" parent="@android:style/Widget.EditText">
+  <style name="EditTextStyle" parent="Theme.AppCompat.Light">
     <item name="android:textSize">14sp</item>
     <item name="android:fontFamily">@font/regular</item>
     <item name="android:textColor">@color/black_4a4a4a</item>

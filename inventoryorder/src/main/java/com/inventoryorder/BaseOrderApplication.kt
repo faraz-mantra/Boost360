@@ -22,6 +22,7 @@ open class BaseOrderApplication : BaseApplication() {
       ApiWithFloatClient.shared.init(EndPoints.BOOST_API_WITH_FLOAT)
       AssuredPurchaseClient.shared.init(EndPoints.ASSURED_PURCHASE_BASE_URL)
       WebActionBoostKitApiClient.shared.init(EndPoints.WEB_ACTION_BOOST_KIT_BASE_URL)
+      NowFloatClient.shared.init(EndPoints.API_NOW_FLOATS)
       BaseApplication.instance = application
     }
   }

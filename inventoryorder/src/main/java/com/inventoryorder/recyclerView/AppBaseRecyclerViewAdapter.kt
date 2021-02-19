@@ -46,6 +46,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       WEEK_TIMING_SELECTED -> WeekTimeViewHolder(binding as ItemWeekTimeSelectBinding)
       SERVICES_DEPARTMENT -> ServicesViewHolder(binding as ItemConsultationServicesBinding)
       ORDER_MENU_ITEM -> OrderMenuHolder(binding as ItemOrderMenuBinding)
+      STAFF -> StaffItemViewHolder(binding as StaffItemBinding)
+      SLOTS -> SlotsItemViewHolder(binding as ItemTimeSlotBinding)
     }
   }
 
