@@ -279,7 +279,7 @@
                 android:id="@+id/high_readiness_score_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_180"
+                android:layout_marginTop="@dimen/size_190"
                 android:background="@drawable/ic_business_snapshot_bac_d"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/size_12"

@@ -11,15 +11,17 @@ public class Data {
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("description")
+
+    @SerializedName(value = "description",alternate = {"testimonial"})
     @Expose
     private String description;
-    @SerializedName("username")
+    @SerializedName(value = "username",alternate = {"customerName"})
     @Expose
     private String username;
-    @SerializedName("profileimage")
+    @SerializedName(value = "profileimage",alternate = {"profileImage"})
     @Expose
     private Profileimage profileimage;
+
     @SerializedName("UserId")
     @Expose
     private String userId;
@@ -43,81 +45,13 @@ public class Data {
     @Expose
     private String city;
 
-    @SerializedName("testimonial")
-    @Expose
-    private String testimonial;
-
-    @SerializedName("customerName")
-    @Expose
-    private String customerName;
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public Profileimage getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(Profileimage profileImage) {
-        this.profileImage = profileImage;
-    }
-
-    @SerializedName("profileImage")
-    @Expose
-    private Profileimage profileImage;
-
-    public String getOurStory() {
-        return ourStory;
-    }
-
-    public void setOurStory(String ourStory) {
-        this.ourStory = ourStory;
-    }
-
     @SerializedName("ourStory")
     @Expose
     private String ourStory;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @SerializedName("name")
     @Expose
     private String name;
-
-    public Boolean getArchived() {
-        return isArchived;
-    }
-
-    public void setArchived(Boolean archived) {
-        isArchived = archived;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getTestimonial() {
-        return testimonial;
-    }
-
-    public void setTestimonial(String testimonial) {
-        this.testimonial = testimonial;
-    }
 
     public String getId() {
         return id;
@@ -199,12 +133,36 @@ public class Data {
         this.updatedOn = updatedOn;
     }
 
-    public Boolean getIsArchived() {
+    public Boolean getArchived() {
         return isArchived;
     }
 
-    public void setIsArchived(Boolean isArchived) {
-        this.isArchived = isArchived;
+    public void setArchived(Boolean archived) {
+        isArchived = archived;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+
+    public String getOurStory() {
+        return ourStory;
+    }
+
+    public void setOurStory(String ourStory) {
+        this.ourStory = ourStory;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
