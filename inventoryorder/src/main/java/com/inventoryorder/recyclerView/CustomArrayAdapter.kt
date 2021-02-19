@@ -14,8 +14,10 @@ import java.lang.Exception
 import java.lang.reflect.Executable
 
 
-class CustomArrayAdapter(context: Context, resource: Int, val list: MutableList<ServiceItem>) :
+class CustomArrayAdapter(context: Context, resource: Int, val list: ArrayList<ServiceItem>) :
         ArrayAdapter<ServiceItem>(context, resource, list) {
+
+    private var copyList : ArrayList<ServiceItem> = list
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var v = convertView
@@ -56,22 +58,22 @@ class CustomArrayAdapter(context: Context, resource: Int, val list: MutableList<
                 filterResult.values = suggestions
                 filterResult.count = suggestions?.size!!
             } else {
-                filterResult.values = list
-                filterResult.count = list?.size!!
+                filterResult.values = copyList
+                filterResult.count = copyList?.size!!
             }
 
             return filterResult
         }
 
-        override fun publishResults(constraint: CharSequence, results: FilterResults) {
+        override fun publishResults(constraint: CharSequence?, results: FilterResults) {
             try {
                 clear()
                 if (constraint != null && constraint.isNotEmpty() && results != null && results.count > 0) {
                     addAll((results.values as ArrayList<ServiceItem?>))
                     notifyDataSetChanged()
                 } else {
-                    addAll(list)
-                    notifyDataSetInvalidated()
+                    addAll(copyList)
+                    notifyDataSetChanged()
                 }
             } catch (e : Exception) {}
         }

@@ -318,4 +318,6 @@
     <string name="not_able_to_get_booking_slots">Not able to get booking slots</string>
     <string name="am">AM</string>
     <string name="_08_00">08:00</string>
+    <string name="no_slots_available">No slots available</string>
+    <string name="no_staff_available">No staff available</string>
 </resources>
