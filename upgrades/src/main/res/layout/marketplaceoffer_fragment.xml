@@ -117,8 +117,7 @@
         android:layout_height="0dp"
         android:overScrollMode="never"
         android:scrollbars="none"
-
-        app:layout_constraintBottom_toTopOf="@id/avail_coupon_submit"
+        app:layout_constraintBottom_toBottomOf="@id/avail_coupon_submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
@@ -151,6 +150,8 @@
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
                     android:text="Market Offers"
                     android:textColor="@color/white"
                     android:textFontWeight="700"
@@ -162,6 +163,8 @@
                     android:id="@+id/coupontxt_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
                     android:background="@drawable/marketoffers_cupon_bottom_bg"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/offer_title">
@@ -304,6 +307,8 @@
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
                     android:text="How to Avail"
                     android:textColor="@color/white"
                     android:textFontWeight="700"
@@ -315,6 +320,8 @@
                     android:id="@+id/howtoavail_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
                     android:background="@drawable/marketoffers_cupon_bottom_bg"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/how_to_avail_coupon">
@@ -428,6 +435,8 @@
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
                     android:text="Terms  &amp; Conditions "
                     android:textColor="@color/white"
                     android:textFontWeight="700"
@@ -438,6 +447,8 @@
                     android:id="@+id/terms_andcond_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
                     android:background="@drawable/marketoffers_cupon_bottom_bg"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/term_and_conditions">
@@ -619,6 +630,24 @@
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/avail_coupon_submit1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:background="@drawable/orange_button_click_effect"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:text="Avail Now"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/txt_12sp"
+                    app:layout_constraintTop_toBottomOf="@+id/terms_andcond_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
@@ -635,11 +664,13 @@
         android:gravity="center"
         android:padding="@dimen/_10sdp"
         android:text="Avail Now"
+        android:visibility="gone"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="@dimen/txt_12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

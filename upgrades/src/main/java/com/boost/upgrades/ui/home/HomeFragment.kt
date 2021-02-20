@@ -682,7 +682,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
-                updateBannerViewPager(it)
+//                updateBannerViewPager(it)
                 banner_layout.visibility = View.VISIBLE
             } else {
                 if (shimmer_view_banner.isShimmerStarted) {
@@ -703,7 +703,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 }
 //                checkBannerDetails(it as ArrayList<PromoBanners>)F
 //                checkBannerDetailsNew(it as ArrayList<PromoBanners>)
-//                updateBannerViewPager(it)
+                updateBannerViewPager(it)
                 banner_layout.visibility = View.VISIBLE
             } else {
                 if (shimmer_view_banner.isShimmerStarted) {
