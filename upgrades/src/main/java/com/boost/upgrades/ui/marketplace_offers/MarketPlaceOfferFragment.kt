@@ -76,7 +76,7 @@ class MarketPlaceOfferFragment : BaseFragment() {
         howto_pointThree_layout.visibility = View.GONE
         term_one.setText(resources.getString(R.string.marketoffer_termOne, marketOffersData!!.coupon_code))
 
-        val ss = SpannableString(resources.getString(R.string.marketoffer_termSix))
+        val ss = SpannableString(resources.getString(R.string.marketoffer_termSix, getConvertedDateFormat(marketOffersData!!.createdon),getConvertedExpiryDateFormat(marketOffersData!!.expiry_date)  ))
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
                 Toast.makeText(activity, "On Clicked " , Toast.LENGTH_SHORT).show()
@@ -88,10 +88,9 @@ class MarketPlaceOfferFragment : BaseFragment() {
                 ds.isUnderlineText = true
             }
         }
-        ss.setSpan(clickableSpan, 66, 70, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(clickableSpan, 86, 96, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         term_six.setText(ss)
         term_six.setMovementMethod(LinkMovementMethod.getInstance())
-        term_six.setText(resources.getString(R.string.marketoffer_termSix, getConvertedDateFormat(marketOffersData!!.createdon),getConvertedExpiryDateFormat(marketOffersData!!.expiry_date)  ) )
 
 
 
@@ -111,10 +110,10 @@ class MarketPlaceOfferFragment : BaseFragment() {
         }
 
         offer_info_icon.setOnClickListener {
-            (activity as UpgradeActivity).addFragment(
-                    CartFragment.newInstance(),
-                    Constants.CART_FRAGMENT
-            )
+//            (activity as UpgradeActivity).addFragment(
+//                    CartFragment.newInstance(),
+//                    Constants.CART_FRAGMENT
+//            )
         }
         avail_coupon_submit.setOnClickListener {
             val clipboard: ClipboardManager = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
