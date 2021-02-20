@@ -35,8 +35,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var marketplaceOffers: MutableLiveData<List<PromoBanners>> = MutableLiveData()
     var promoBannersList: MutableLiveData<List<PromoBanners>> = MutableLiveData()
     val promoList = ArrayList<PromoBanners>()
-    var marketplaceOffers1: MutableLiveData<List<PromoBanners>> = MutableLiveData()
-    var promoBannerAndMarketOfferResult: MediatorLiveData<List<PromoBanners>> = MediatorLiveData()
     var partnerZone: MutableLiveData<List<PartnerZone>> = MutableLiveData()
     var feedbackLink: MutableLiveData<String> = MutableLiveData()
 
@@ -399,7 +397,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                                             if (it.Data[0].marketplace_offers != null && it.Data[0].marketplace_offers.size > 0) {
 //                                            marketplaceOffers.value = it.Data[0].marketplace_offers
                                                 marketplaceOffers.postValue(it.Data[0].marketplace_offers)
-                                                marketplaceOffers1.value = it.Data[0].marketplace_offers
                                                 val marketplaceOffersFilter = (it.Data[0].marketplace_offers
                                                         ?: ArrayList()).promoMarketOfferFilter(expCode, fpTag)
                                                 promoList.addAll(marketplaceOffersFilter)
