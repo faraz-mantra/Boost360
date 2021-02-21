@@ -470,7 +470,7 @@
     <string name="error_select_service">Please select at least one service provided by this staff</string>
     <string name="_18">18 %</string>
     <string name="no_offers_created_so_far">No offers created so far!</string>
-    <string name="you_dont_have_any_offers_added_for_your_customers">You don’t have any offers added for your <br/>customers.</string>
+    <string name="you_dont_have_any_offers_added_for_your_customers">You don’t have any offers added for your \ncustomers.</string>
   <string name="watch_video">WATCH VIDEO</string>
   <string name="create_offer">Create Offer</string>
     <string name="this_is_the_cristmas_offer_of_this_year">This is the christmas offer of this year.<br/> Customers will get discount on Simp..</string>
@@ -493,6 +493,13 @@
     <string name="tags_help_site_visitors_filter_offers_in_your_website">Tags help site visitors filter offers in your website.</string>
     <string name="offer_saved_successfully">Offer saved Successfully</string>
   <string name="your_offer_is_saved_successfully_and_published_live_on_your_website_click_on_below_button_to_see_it_live_or_share_with_in_your_connections">Your offer is saved successfully and published live on your website. Click on below button to see it live or share with in your connections.</string>
+  <string name="storage_permission">Storage Permission</string>
+  <string name="to_share_the_image_we_need_storage_permission">To share the image we need storage permission.</string>
+  <string name="ok">Ok</string>
+  <string name="sharing">Sharing...</string>
+  <string name="additional_info">Additional info</string>
+  <string name="add_a_new_offer">Add a new offer</string>
+  <string name="offers">Offers</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>

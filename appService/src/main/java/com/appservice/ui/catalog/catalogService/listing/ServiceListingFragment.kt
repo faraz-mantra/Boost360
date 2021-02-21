@@ -417,6 +417,7 @@ class ServiceListingFragment : AppBaseFragment<FragmentServiceListingBinding, Se
   override fun hideProgress() {
     binding?.progress?.gone()
   }
+
 }
 
 

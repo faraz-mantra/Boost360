@@ -35,6 +35,7 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(activity: Bas
       STAFF_LISTING_VIEW -> StaffListingViewHolder(binding as RecyclerItemStaffListingBinding)
       STAFF_FILTER_VIEW -> StaffFilterViewHolder(binding as RecyclerItemStaffFilterBinding)
       SERVICE_LISTING_VIEW -> ServiceListingViewHolder(binding as RecyclerItemServiceListingBinding)
+      OFFER_LISTING_VIEW -> OfferListingViewHolder(binding as RecyclerItemOfferBinding)
     }
   }
 
