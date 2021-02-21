@@ -37,8 +37,9 @@
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme_staff_home"
         android:windowSoftInputMode="adjustPan" />
+      <activity android:name=".offers.FragmentOffersContainerActivity" />
 
-    <meta-data
+      <meta-data
         android:name="preloaded_fonts"
         android:resource="@array/preloaded_fonts" />
 

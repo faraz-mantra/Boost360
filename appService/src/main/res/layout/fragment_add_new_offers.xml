@@ -144,7 +144,7 @@
 
 
                     <LinearLayout
-                        android:id="@+id/pay_service_view"
+                        android:id="@id/ll_service_apply_to"
                         style="@style/match_wrap"
                         android:orientation="vertical">
 
@@ -240,8 +240,8 @@
                 <com.framework.views.customViews.CustomTextField
                     android:id="@+id/tv_heading_discount_amount"
                     style="@style/Offers_Text_Field"
-                    android:drawableStart="@drawable/bg_focusable_indian_rupee"
                     android:drawablePadding="@dimen/size_5"
+                    android:drawableStart="@drawable/ic_indian_rupee"
                     android:hint="@string/enter_discount_on_the_service_s" />
 
                 <com.framework.views.customViews.CustomTextView

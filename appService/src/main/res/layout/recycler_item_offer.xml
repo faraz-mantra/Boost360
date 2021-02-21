@@ -67,17 +67,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/ctv_offers_pricing"
                 tools:text="@string/this_is_the_cristmas_offer_of_this_year" />
 
-            <com.framework.views.customViews.CustomRadioButton
-                android:id="@+id/customRadioButton"
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/crb_status"
                 style="@style/Offers_Custom_Radio_Button"
                 android:text="@string/active"
+                android:padding="@dimen/size_1"
+                android:drawablePadding="@dimen/size_5"
+                android:gravity="center_vertical"
+                android:drawableStart="@drawable/ic_dot_green"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/ctv_offers_pricing"
                 app:layout_constraintTop_toTopOf="@+id/ctv_offers_heading"
                 app:layout_constraintVertical_bias="0.349" />
-
             <LinearLayout
                 android:id="@+id/ll_share_buttons"
                 android:layout_width="wrap_content"
