@@ -19,6 +19,7 @@ import com.inventoryorder.ui.startFragmentOrderActivity
 class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() {
 
     var shouldReInitiate = false
+    var type : String ?= null
     var orderInitiateResponse: OrderInitiateResponse? = null
 
     companion object {
@@ -34,19 +35,42 @@ class OrderPlacedFragment : BaseInventoryFragment<FragmentOrderPlacedBinding>() 
         super.onCreateView()
 
         orderInitiateResponse = arguments?.getSerializable(IntentConstant.CREATE_ORDER_RESPONSE.name) as OrderInitiateResponse?
+        type = arguments?.getString(IntentConstant.TYPE_APPOINTMENT.name)
+
         if (orderInitiateResponse != null) setData()
 
         setOnClickListener(binding?.buttonInitiateNewOrder)
     }
 
     private fun setData() {
-        binding?.textOrderIdValue?.text = orderInitiateResponse?.data?.ReferenceNumber ?: ""
-        binding?.textName?.text = orderInitiateResponse?.data?.BuyerDetails?.ContactDetails?.FullName ?: ""
-        binding?.textCount?.text = orderInitiateResponse?.data?.Items?.size.toString() ?: ""
-        binding?.textPaymentLink?.text = orderInitiateResponse?.data?.PaymentDetails?.OnlinePaymentProvider ?: ""
-        binding?.textDeliveryStatus?.text = orderInitiateResponse?.data?.LogisticsDetails?.Status ?: ""
-        binding?.textDeliveryType?.text = orderInitiateResponse?.data?.LogisticsDetails?.DeliveryMode ?: ""
-        binding?.textTotalAmount?.text = "${orderInitiateResponse?.data?.BillingDetails?.CurrencyCode} ${orderInitiateResponse?.data?.BillingDetails?.GrossAmount}"
+
+        if (type.equals("appt", true)) {
+            binding?.tvName?.text = getString(R.string.appointment_booked_and_confirmed_successfully)
+
+            binding?.linearPaymentStatus?.visibility = View.VISIBLE
+            binding?.textPaymentStatus?.text = orderInitiateResponse?.data?.PaymentDetails?.Status ?: ""
+            binding?.textOrderIdValue?.text = orderInitiateResponse?.data?.ReferenceNumber ?: ""
+            binding?.textName?.text = orderInitiateResponse?.data?.BuyerDetails?.ContactDetails?.FullName ?: ""
+            binding?.textTotalAmount?.text = "${orderInitiateResponse?.data?.BillingDetails?.CurrencyCode} ${orderInitiateResponse?.data?.BillingDetails?.GrossAmount}"
+
+            binding?.linearItemQty?.visibility = View.GONE
+            binding?.linearPaymentMode?.visibility = View.GONE
+            binding?.linearDeliveryStatus?.visibility = View.GONE
+            binding?.linearDeliveryType?.visibility = View.GONE
+            binding?.appointmentText?.visibility = View.VISIBLE
+
+            binding?.buttonConfirmOrder?.text = getString(R.string.view_appointment_details)
+            binding?.buttonInitiateNewOrder?.text = getString(R.string.view_appointment_dashboard)
+        } else {
+            binding?.textOrderIdValue?.text = orderInitiateResponse?.data?.ReferenceNumber ?: ""
+            binding?.textName?.text = orderInitiateResponse?.data?.BuyerDetails?.ContactDetails?.FullName ?: ""
+            binding?.textCount?.text = orderInitiateResponse?.data?.Items?.size.toString() ?: ""
+            binding?.textPaymentLink?.text = orderInitiateResponse?.data?.PaymentDetails?.OnlinePaymentProvider ?: ""
+            binding?.textDeliveryStatus?.text = orderInitiateResponse?.data?.LogisticsDetails?.Status ?: ""
+            binding?.textDeliveryType?.text = orderInitiateResponse?.data?.LogisticsDetails?.DeliveryMode ?: ""
+            binding?.textTotalAmount?.text = "${orderInitiateResponse?.data?.BillingDetails?.CurrencyCode} ${orderInitiateResponse?.data?.BillingDetails?.GrossAmount}"
+        }
+
     }
 
     fun getBundleData(): Bundle? {

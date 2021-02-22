@@ -29,6 +29,7 @@ object EndPoints {
   const val ASSURED_PURCHASE_BASE_URL = "https://assuredpurchase.withfloats.com/"
 
   const val POST_INITIATE_ORDER = "api/assuredPurchase/v2/InitiateOrder"
+  const val POST_INITIATE_APPOINTMENT = "api/assuredPurchase/v2.5/InitiateOrder"
   const val POST_UPDATE_ORDER = "api/assuredPurchase/v2/UpdateOrder"
 
   const val GET_SELLER_SUMMARY_URL = "api/assuredPurchase/v2/SellerSummary"

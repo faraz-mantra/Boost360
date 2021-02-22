@@ -309,6 +309,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     orderInvoiceFragment?.onActivityResult(requestCode, resultCode, data)
     addCustomerFragment?.onActivityResult(requestCode, resultCode, data)
     billingDetailFragment?.onActivityResult(requestCode, resultCode, data)
+    reviewAndConfirmFragment?.onActivityResult(requestCode, resultCode, data)
+    spaAppointmentFragment?.onActivityResult(requestCode, resultCode, data)
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -325,7 +327,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     val bundle = appointmentDetails?.getBundleData() ?: orderDetailFragment?.getBundleData() ?:
     videoConsultDetailsFragment?.getBundleData() ?: bookingSuccessfulFragment?.getBundleData() ?:
     billingDetailFragment?.getBundleData() ?: addCustomerFragment?.getBundleData() ?:
-    orderPlacedFragment?.getBundleData()
+    orderPlacedFragment?.getBundleData() ?: reviewAndConfirmFragment?.getBundleData() ?:
+    spaAppointmentFragment?.getBundleData()
     bundle?.let {
       val intent = Intent()
       intent.putExtra(IntentConstant.RESULT_DATA.name, it)
