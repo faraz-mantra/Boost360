@@ -86,7 +86,7 @@ open class CatalogServiceContainerActivity : AppBaseActivity<ActivityFragmentCon
 
   override fun getNavigationIcon(): Drawable? {
     return when (type) {
-      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.WEEKLY_APPOINTMENT_FRAGMENT,FragmentType.CREATE_CATEGORY -> ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+      FragmentType.SERVICE_INFORMATION, FragmentType.SERVICE_DETAIL_VIEW, FragmentType.PRODUCT_DETAIL_VIEW, FragmentType.PRODUCT_INFORMATION, FragmentType.WEEKLY_APPOINTMENT_FRAGMENT,FragmentType.CREATE_CATEGORY -> ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
 
       else -> super.getNavigationIcon()
     }

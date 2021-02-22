@@ -8,6 +8,7 @@ public class Profileimage {
     @SerializedName("url")
     @Expose
     private String url = "";
+    // for review title -> doctors
     @SerializedName("description")
     @Expose
     private String description;

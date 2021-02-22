@@ -8,16 +8,16 @@ public class GetTestimonialData {
 
     @SerializedName("Data")
     @Expose
-    private List<Data> data = null;
+    private List<TestimonialData> data = null;
     @SerializedName("Extra")
     @Expose
     private Extra extra;
 
-    public List<Data> getData() {
+    public List<TestimonialData> getData() {
         return data;
     }
 
-    public void setData(List<Data> data) {
+    public void setData(List<TestimonialData> data) {
         this.data = data;
     }
 
