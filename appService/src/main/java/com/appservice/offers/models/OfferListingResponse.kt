@@ -1,6 +1,7 @@
 package com.appservice.offers.models
 
 import com.appservice.constant.RecyclerViewItemType
+import com.appservice.model.KeySpecification
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
@@ -13,64 +14,69 @@ data class OfferListingResponse(
 
 		@field:SerializedName("Result")
 		val result: Result? = null,
-): Serializable, BaseResponse()
+) : Serializable, BaseResponse()
 
-data class DataItem(
-
+data class OfferModel(
+		@SerializedName(value = "clientId", alternate = ["ClientId"])
+		var ClientId: String? = null,
 		@field:SerializedName("Description")
-		val description: String? = null,
-
+		var description: String? = null,
+		@SerializedName(value = "FloatingPointTag", alternate = ["FPTag"])
+		var FPTag: String? = null,
 		@field:SerializedName("Category")
-		val category: String? = null,
+		var category: String? = null,
 
 		@field:SerializedName("KeySpecifications")
-		val keySpecifications: Any? = null,
+		var keySpecifications: KeySpecification? = null,
 
 		@field:SerializedName("BuyOnlineLink")
-		val buyOnlineLink: Any? = null,
+		var buyOnlineLink: String? = null,
 
 		@field:SerializedName("DiscountAmount")
-		val discountAmount: Double? = null,
+		var discountAmount: Double? = null,
 
 		@field:SerializedName("OfferTimings")
-		val offerTimings: OfferTimings? = null,
+		var offerTimings: OfferTimings? = null,
 
 		@field:SerializedName("Name")
-		val name: String? = null,
+		var name: String? = null,
 
 		@field:SerializedName("OfferType")
-		val offerType: Int? = null,
+		var offerType: Int? = null,
 
 		@field:SerializedName("OfferId")
-		val offerId: String? = null,
+		var offerId: String? = null,
 
 		@field:SerializedName("CurrencyCode")
-		val currencyCode: String? = null,
+		var currencyCode: String? = null,
 
 		@field:SerializedName("ReferenceId")
-		val referenceId: String? = null,
+		var referenceId: String? = null,
 
 		@field:SerializedName("Price")
-		val price: Double? = null,
+		var price: Double? = null,
 
 		@field:SerializedName("OtherSpecifications")
-		val otherSpecifications: List<Any?>? = null,
+		var otherSpecifications: List<KeySpecification?>? = null,
 
 		@field:SerializedName("IsAvailable")
-		val isAvailable: Boolean? = null,
+		var isAvailable: Boolean? = null,
 
 		@field:SerializedName("UniquePaymentUrl")
-		val uniquePaymentUrl: Any? = null,
+		var uniquePaymentUrl: Any? = null,
 
 		@field:SerializedName("FeaturedImage")
-		val featuredImage: FeaturedImage? = null,
+		var featuredImage: FeaturedImage? = null,
 
 		@field:SerializedName("SecondaryImages")
-		val secondaryImages: List<Any?>? = null,
+		var secondaryImages: List<Any?>? = null,
 
 		@field:SerializedName("Tags")
-		val tags: Any? = null,
+		var tags: java.util.ArrayList<String>? = null,
 ) : Serializable, BaseResponse(), AppBaseRecyclerViewItem {
+	fun isPriceToggleOn(): Boolean {
+		return this.price!! > 0
+	}
 
 	var recyclerViewItem = RecyclerViewItemType.OFFER_LISTING_VIEW.getLayout()
 
@@ -78,7 +84,7 @@ data class DataItem(
 		return recyclerViewItem
 	}
 
-	fun getLoaderItem(): DataItem {
+	fun getLoaderItem(): OfferModel {
 		this.recyclerViewItem = RecyclerViewItemType.PAGINATION_LOADER.getLayout()
 		return this
 	}
@@ -90,8 +96,8 @@ data class Result(
 		val paging: Paging? = null,
 
 		@field:SerializedName("Data")
-		val data: ArrayList<DataItem>? = null,
-): Serializable, BaseResponse()
+		val data: ArrayList<OfferModel>? = null,
+) : Serializable, BaseResponse()
 
 data class SecondaryImagesItem(
 
@@ -103,7 +109,7 @@ data class SecondaryImagesItem(
 
 		@field:SerializedName("TileImage")
 		val tileImage: String? = null,
-): Serializable, BaseResponse()
+) : Serializable, BaseResponse()
 
 data class FeaturedImage(
 
@@ -115,7 +121,7 @@ data class FeaturedImage(
 
 		@field:SerializedName("TileImage")
 		val tileImage: String? = null,
-): Serializable, BaseResponse()
+) : Serializable, BaseResponse()
 
 data class TimingsItem(
 
@@ -127,7 +133,7 @@ data class TimingsItem(
 
 		@field:SerializedName("Day")
 		val day: String? = null,
-): Serializable, BaseResponse()
+) : Serializable, BaseResponse()
 
 data class Paging(
 
@@ -139,7 +145,7 @@ data class Paging(
 
 		@field:SerializedName("Count")
 		val count: Int? = null,
-): Serializable, BaseResponse()
+) : Serializable, BaseResponse()
 
 data class OfferTimings(
 
@@ -148,4 +154,4 @@ data class OfferTimings(
 
 		@field:SerializedName("Duration")
 		val duration: Int? = null,
-): Serializable, BaseResponse()
+) : Serializable, BaseResponse()

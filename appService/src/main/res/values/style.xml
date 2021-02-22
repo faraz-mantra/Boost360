@@ -40,7 +40,18 @@
         <item name="android:layout_marginBottom">@dimen/size_15</item>
         <item name="android:textSize">16sp</item>
     </style>
-
+    <style name="RadioButtonOffers" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/black_4a4a4a</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:textFontWeight" tools:ignore="NewApi">400</item>
+        <item name="android:buttonTint">@color/yellow_ffb900</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginTop">@dimen/size_12</item>
+        <item name="android:layout_marginBottom">@dimen/size_12</item>
+        <item name="android:textSize">16sp</item>
+    </style>
     <style name="CatalogTheme.Information" parent="CatalogTheme">
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
@@ -292,6 +303,11 @@
         <item name="textColor">@color/black_4a4a4a</item>
         <item name="textType">HEADING_3</item>
         <item name="fontFamily">@font/regular</item>
+    </style>
+    <style name="Offers_Text_Heading.Bottom_Sheet" parent="Offers_Text_Heading">
+        <item name="textType">HEADING_5</item>
+        <item name="fontFamily">@font/semi_bold</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="Offers_Text_Subheading" parent="Offers_Text_Heading">

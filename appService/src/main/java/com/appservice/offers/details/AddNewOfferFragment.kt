@@ -1,26 +1,300 @@
 package com.appservice.offers.details
 
+import android.app.Activity
+import android.content.Intent
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.appservice.R
 import com.appservice.base.AppBaseFragment
 import com.appservice.constant.FragmentType
+import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentAddNewOffersBinding
+import com.appservice.model.FileModel
+import com.appservice.offers.OfferCreatedSuccessFullyBottomSheet
+import com.appservice.offers.models.*
 import com.appservice.offers.startOfferFragmentActivity
-import com.framework.models.BaseViewModel
+import com.appservice.offers.viewmodel.OfferViewModel
+import com.appservice.rest.TaskCode
+import com.appservice.staffs.ui.UserSession
+import com.appservice.ui.catalog.catalogService.listing.CreateServiceSuccessBottomSheet
+import com.appservice.ui.catalog.catalogService.listing.TypeSuccess
+import com.appservice.ui.catalog.widgets.ClickType
+import com.appservice.ui.catalog.widgets.ImagePickerBottomSheet
+import com.appservice.ui.model.ItemsItem
+import com.appservice.utils.getBitmap
+import com.framework.base.BaseResponse
+import com.framework.exceptions.NoNetworkException
+import com.framework.extensions.gone
+import com.framework.extensions.observeOnce
+import com.framework.extensions.visible
+import com.framework.glide.util.glideLoad
+import com.framework.imagepicker.ImagePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.io.File
 
-class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, BaseViewModel>() {
+class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferViewModel>() {
+    private var isRefresh: Boolean = false
+    private var menuDelete: MenuItem? = null
+    private var offerImage: File? = null
+    private var offerModel: OfferModel? = null
+    private var currencyType: String? = "INR"
+    private var fpId: String? = null
+    private var fpTag: String? = null
+    private var clientId: String? = null
+    private var applicationId: String? = null
+    private var isEdit: Boolean = false
+    private var offerIdCreate: String? = null
+    private var secondaryImage: ArrayList<FileModel> = ArrayList()
+
     override fun getLayout(): Int {
         return R.layout.fragment_add_new_offers
     }
 
-    override fun getViewModelClass(): Class<BaseViewModel> {
-        return BaseViewModel::class.java
+    override fun getViewModelClass(): Class<OfferViewModel> {
+        return OfferViewModel::class.java
     }
 
     override fun onCreateView() {
         super.onCreateView()
-        setOnClickListener(binding?.btnOtherInfo,binding?.payServiceView)
+        setOnClickListener(binding?.btnOtherInfo,binding?.clearImage,
+                binding?.toggleServiceApplicableTo,binding?.imageAddBtn,
+                binding?.toggleServiceAvailability, binding?.cbAddOffer)
+        getBundleData()
 
+
+    }
+
+    private fun getBundleData() {
+        initOfferFromBundle(arguments)
+        currencyType = arguments?.getString(IntentConstant.CURRENCY_TYPE.name) ?: "INR"
+        fpId = arguments?.getString(IntentConstant.FP_ID.name) ?: UserSession.fpId
+        fpTag = arguments?.getString(IntentConstant.FP_TAG.name)?: UserSession.fpTag
+        clientId = arguments?.getString(IntentConstant.CLIENT_ID.name)?: UserSession.clientId
+        applicationId = arguments?.getString(IntentConstant.APPLICATION_ID.name)
+        if (isEdit) menuDelete?.isVisible = true
+    }
+
+    private fun initOfferFromBundle(data: Bundle?) {
+        val offer = data?.getSerializable(IntentConstant.OFFER_DATA.name) as? OfferModel
+        isEdit = (offer != null && offer.offerId.isNullOrEmpty().not())
+        if (isEdit) getOfferDetailObject(offer?.offerId) else this.offerModel = OfferModel()
+    }
+
+    private fun getOfferDetailObject(offerId: String?) {
+        hitApi(viewModel?.getOfferDetails(OfferDetailsRequest(offerId)), R.string.error_getting_offer_details)
+    }
+
+    private fun createOfferAPI() {
+        hitApi(viewModel?.createOffer(offerModel), R.string.offer_adding_error);
+    }
+
+    // function will be called once service is created
+    private fun onOfferCreated(it: BaseResponse) {
+        hideProgress()
+        val res = it as? OfferBaseResponse
+        val offerId = res?.Result
+        if (offerId.isNullOrEmpty().not()) {
+            offerModel?.offerId = res?.Result
+            offerIdCreate = offerId
+            uploadPrimaryImage()
+        } else showError(resources.getString(R.string.offer_adding_error))
+    }
+
+    private fun onPrimaryImageUploaded(it: BaseResponse) {
+        hideProgress()
+        uploadSecondaryImages()
+    }
+
+    override fun onSuccess(it: BaseResponse) {
+        when (it.taskcode) {
+            TaskCode.CREATE_OFFER.ordinal -> onOfferCreated(it)
+            TaskCode.UPDATE_OFFER.ordinal -> onOfferUpdated(it)
+            TaskCode.ADD_OFFER_IMAGE.ordinal -> onPrimaryImageUploaded(it)
+            TaskCode.OFFER_DETAILS.ordinal -> onOfferDetailsResponseReceived(it)
+            TaskCode.DELETE_OFFER.ordinal -> onDeleteOffer(it)
+        }
+    }
+
+    private fun onDeleteOffer(it: BaseResponse) {
+        showLongToast(getString(R.string.offer_removed_successfully))
+        val data = Intent()
+        data.putExtra(IntentConstant.IS_UPDATED.name, true)
+        appBaseActivity?.setResult(Activity.RESULT_OK, data)
+        appBaseActivity?.finish()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.ic_menu_delete_new, menu)
+        menuDelete = menu.findItem(R.id.id_delete)
+        menuDelete?.isVisible = isEdit
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.id_delete -> {
+                MaterialAlertDialogBuilder(baseActivity, R.style.MaterialAlertDialogTheme).setTitle(resources.getString(R.string.are_you_sure))
+                        .setMessage(resources.getString(R.string.delete_record_not_undone))
+                        .setNegativeButton(resources.getString(R.string.cancel)) { d, _ -> d.dismiss() }.setPositiveButton(resources.getString(R.string.delete)) { d, _ ->
+                            d.dismiss()
+                            showProgress()
+                            val request = DeleteOfferRequest(clientId, offerModel?.offerId)
+                            hitApi(viewModel?.deleteOffer(request), R.string.removing_offer_failed);
+                        }.show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun isValid(): Boolean {
+        val offerTitle = binding?.ctvOfferTitle?.text.toString()
+        val offerDescription = binding?.ctvOffersDescription?.text.toString()
+        val discount = binding?.ctvDiscountAmount?.text.toString().toDoubleOrNull() ?: 0.0
+        val toggle = binding?.toggleServiceAvailability?.isOn ?: false
+
+        if (offerImage == null && offerModel?.featuredImage?.imageId.isNullOrEmpty()) {
+            showLongToast(getString(R.string.add_offer_image))
+            return false
+        } else if (offerDescription.isEmpty()) {
+            showLongToast(getString(R.string.add_offer_description))
+            return false
+        } else if (offerTitle.isEmpty()) {
+            showLongToast(getString(R.string.add_offer_title))
+            return false
+        }
+        offerModel?.ClientId = clientId
+        offerModel?.FPTag = fpTag
+        offerModel?.currencyCode = currencyType
+        offerModel?.name = offerTitle
+        offerModel?.isAvailable = toggle
+        offerModel?.discountAmount = discount
+        if (!isEdit) {
+            offerModel?.category = offerModel?.category ?: ""
+            offerModel?.tags = offerModel?.tags ?: ArrayList()
+            offerModel?.otherSpecifications = offerModel?.otherSpecifications ?: ArrayList()
+            offerModel?.isAvailable = true
+        }
+        return true
+    }
+
+    private fun onOfferDetailsResponseReceived(it: BaseResponse) {
+        this.offerModel = (it as? OfferDetailsResponse)?.result ?: return
+        updateUiPreviousData()
+    }
+
+    private fun onOfferUpdated(it: BaseResponse) {
+        hideProgress()
+        uploadPrimaryImage()
+    }
+
+    private fun uploadPrimaryImage() {
+        if (offerImage != null) {
+            showProgress(getString(R.string.image_uploading))
+            val request = AddImageOffer.getInstance(clientId, 0, offerModel?.offerId!!, offerImage!!)
+            hitApi(viewModel?.addOfferImages(request), R.string.error_offer_image)
+        } else uploadSecondaryImages()
+    }
+
+    private fun uploadSecondaryImages() {
+        val images = secondaryImage.filter { it.path.isNullOrEmpty().not() }
+        if (images.isNullOrEmpty().not()) {
+            showProgress(getString(R.string.image_uploading))
+            var checkPosition = 0
+            images.forEach { fileData ->
+                val request = AddImageOffer.getInstance(clientId, 1, offerModel?.offerId!!, fileData.getFile()!!)
+                viewModel?.addSecondaryImage(request)?.observeOnce(viewLifecycleOwner, {
+                    checkPosition += 1
+                    if ((it.error is NoNetworkException).not()) {
+                        if (it.isSuccess().not()) showError(getString(R.string.secondary_offer_Image_uploading_error))
+                    } else showError(resources.getString(R.string.internet_connection_not_available))
+                    if (checkPosition == images.size) openSuccessBottomSheet()
+                })
+            }
+        }else{
+            openSuccessBottomSheet()
+        }
+    }
+
+    private fun createUpdateApi() {
+        showProgress()
+        if (offerModel?.offerId == null) {
+            createOfferAPI()
+        } else {
+            hitApi(viewModel?.updateOffer(offerModel), R.string.offer_updating_error);
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == AppCompatActivity.RESULT_OK) {
+            val mPaths = data?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) as List<String>
+            if (mPaths.isNotEmpty()) {
+                offerImage = File(mPaths[0])
+                binding?.imageAddBtn?.gone()
+                binding?.clearImage?.visible()
+                binding?.offerImageView?.visible()
+                offerImage?.getBitmap()?.let { binding?.offerImageView?.setImageBitmap(it) }
+            }
+        } else if (resultCode == AppCompatActivity.RESULT_OK && requestCode == 101) {
+            this.offerModel = data?.getSerializableExtra(IntentConstant.OFFER_DATA.name) as? OfferModel
+            this.secondaryImage = (data?.getSerializableExtra(IntentConstant.OFFER_SECONDARY_IMAGE.name) as? ArrayList<FileModel>)
+                    ?: ArrayList()
+        }
+    }
+
+    private fun openSelectServiceBottomSheet() {
+
+    }
+
+    private fun openSuccessBottomSheet() {
+        hideProgress()
+        val createdSuccess = OfferCreatedSuccessFullyBottomSheet()
+        createdSuccess.setData(isEdit)
+        createdSuccess.onClicked = { clickSuccessCreate(it) }
+        createdSuccess.show(this@AddNewOfferFragment.parentFragmentManager, OfferCreatedSuccessFullyBottomSheet::class.java.name)
+    }
+
+    private fun clickSuccessCreate(it: String) {
+        when (it) {
+            TypeSuccess.CLOSE.name -> {
+                val data = Intent()
+                data.putExtra(IntentConstant.IS_UPDATED.name, isRefresh)
+                appBaseActivity?.setResult(Activity.RESULT_OK, data)
+                appBaseActivity?.finish()
+            }
+            TypeSuccess.VISIT_WEBSITE.name -> {
+            }
+        }
+    }
+
+    private fun updateUiPreviousData() {
+        binding?.ctvOfferTitle?.setText(offerModel?.name)
+        binding?.ctvOffersDescription?.setText(offerModel?.description)
+        if (offerModel?.isPriceToggleOn() == false) {
+            binding?.toggleServiceApplicableTo?.isOn = false
+            binding?.llServiceApplyTo?.gone()
+        } else if (offerModel?.isPriceToggleOn() == true) {
+            binding?.toggleServiceApplicableTo?.isOn = true
+            binding?.llServiceApplyTo?.visible()
+        }
+//        binding?.price?.setText("${offerModel?.price ?: 0}")
+        binding?.ctvDiscountAmount?.setText("${offerModel?.discountAmount ?: 0.0}")
+        if (offerModel?.featuredImage?.imageId.isNullOrEmpty().not()) {
+            binding?.imageAddBtn?.gone()
+            binding?.clearImage?.visible()
+            binding?.offerImageView?.visible()
+            binding?.offerImageView?.let { activity?.glideLoad(it, offerModel?.featuredImage?.actualImage, R.drawable.placeholder_image) }
+        }
+    }
+
+    private fun showError(string: String) {
+        hideProgress()
+        showLongToast(string)
     }
 
     override fun onClick(v: View) {
@@ -29,7 +303,36 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, BaseVie
             binding?.btnOtherInfo -> {
                 startOfferFragmentActivity(requireActivity(), FragmentType.OFFER_ADDITIONAL_INFO, isResult = true)
             }
+            binding?.imageAddBtn -> openImagePicker()
+            binding?.clearImage -> clearImage()
+            binding?.cbAddOffer -> if (isValid()) createUpdateApi()
+
         }
+    }
+
+    private fun clearImage() {
+        binding?.imageAddBtn?.visible()
+        binding?.clearImage?.gone()
+        binding?.offerImageView?.gone()
+        offerModel?.featuredImage = null
+        offerImage = null
+    }
+
+    private fun openImagePicker() {
+        val filterSheet = ImagePickerBottomSheet()
+        filterSheet.isHidePdf(true)
+        filterSheet.onClicked = { openImagePicker(it) }
+        filterSheet.show(this@AddNewOfferFragment.parentFragmentManager, ImagePickerBottomSheet::class.java.name)
+    }
+
+    private fun openImagePicker(it: ClickType) {
+        val type = if (it == ClickType.CAMERA) ImagePicker.Mode.CAMERA else ImagePicker.Mode.GALLERY
+        ImagePicker.Builder(baseActivity)
+                .mode(type)
+                .compressLevel(ImagePicker.ComperesLevel.SOFT).directory(ImagePicker.Directory.DEFAULT)
+                .extension(ImagePicker.Extension.PNG).allowMultipleImages(false)
+                .scale(800, 800)
+                .enableDebuggingMode(true).build()
     }
 
     companion object {

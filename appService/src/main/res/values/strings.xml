@@ -330,8 +330,10 @@
   <string name="write_the_name_of_your_service">Write the name of your service</string>
   <string name="service_name">Service Name*</string>
   <string name="service_adding_error">Service adding error, please try again.</string>
+  <string name="offer_adding_error">Offer adding error, please try again.</string>
   <string name="service_timing_adding_error">Service timing adding error, please try again.</string>
   <string name="service_updating_error">Service updating error, please try again.</string>
+  <string name="offer_updating_error">Offer updating error, please try again.</string>
   <string name="uploading_service_image">Uploading service image, please wait...</string>
   <string name="secondary_service_image_upload_error">Secondary Service image uploading error, please try again.</string>
   <string name="add_secondary_image_service_error">Add secondary image data error, please try again.</string>
@@ -341,6 +343,7 @@
   <string name="enter_service_duration">Enter service duration.</string>
   <string name="service_removed_successfully">Service removed successfully.</string>
   <string name="removing_service_failed">Removing service failed, please try again.</string>
+  <string name="removing_offer_failed">Removing offer failed, please try again.</string>
   <string name="only_eight_files_are_allowed_discarding">Only 8 files are allowed. Discarding the rest.</string>
   <string name="only_eight_files_allowed">Only 8 files are allowed.</string>
   <string name="removing_image">Removing image...</string>
@@ -362,7 +365,9 @@
   <string name="other_specifications">Other specifications</string>
   <string name="this_list_appears_inside_the_product_details_page_on_your_website">This list appears inside the product details page on your website.</string>
   <string name="error_service_image">Service image uploading error, please try again.</string>
+  <string name="error_offer_image">Offer image uploading error, please try again.</string>
   <string name="error_getting_service_details">Error while getting the service details.</string>
+  <string name="error_getting_offer_details">Error while getting the offer details.</string>
   <string name="error_getting_service_timing">Error while getting the service timing.</string>
   <string name="update">UPDATE</string>
   <string name="profile_updated">profile updated</string>
@@ -416,7 +421,6 @@
   <string name="note_service_business_is_open">Note: Service can only be given on the days and duration the business is open.</string>
   <string name="sort_the_service_list">Sort the service list</string>
   <string name="most_popular_on_top">Most popular on top</string>
-  <string name="latest_on_top">Latest on top</string>
   <string name="oldest_on_top">Oldest on top</string>
   <string name="biggest_value_service_on_top">Biggest value service on top</string>
   <string name="lowest_value_service_on_top">Lowest value service on top</string>
@@ -465,7 +469,9 @@
   <string name="successfully_saved">Successfully Saved</string>
   <string name="successfully_update">Successfully Updated</string>
   <string name="product_saved_and_published_live_on_your_website_or_share">Your product is successfully saved and published live on your website. Click on below button to see it live or share with in your connections.</string>
+  <string name="offer_saved_and_published_live_on_your_website_or_share">Your offer is successfully saved and published live on your website. Click on below button to see it live or share with in your connections.</string>
   <string name="product_update_and_published_live_on_your_website_or_share">Your product is successfully updated and published live on your website. Click on below button to see it live or share with in your connections.</string>
+  <string name="offer_update_and_published_live_on_your_website_or_share">Your offer is successfully updated and published live on your website. Click on below button to see it live or share with in your connections.</string>
   <string name="image_uploading">Uploading Image, please wait...</string>
     <string name="error_select_service">Please select at least one service provided by this staff</string>
     <string name="_18">18 %</string>
@@ -500,6 +506,18 @@
   <string name="additional_info">Additional info</string>
   <string name="add_a_new_offer">Add a new offer</string>
   <string name="offers">Offers</string>
+    <string name="offer_description_optional">Offer description (optional)</string>
+  <string name="describe_this_offer_in_around_2000_characters_at_max">Describe this offer in around 2000 characters at max…</string>
+    <string name="add_offer_image">Add offer image.</string>
+  <string name="add_offer_description">Add offer Description.</string>
+  <string name="add_offer_title">Add offer Title</string>
+    <string name="offer_removed_successfully">Offer removed successfully.</string>
+  <string name="secondary_offer_Image_uploading_error">Secondary Offer image uploading error, please try again.</string>
+    <string name="sort">Sort</string>
+    <string name="more">More</string>
+    <string name="latest_on_top">Latest on top</string>
+  <string name="active_first">Active first</string>
+  <string name="deactive_first">Deactive first</string>
 
   <array name="stock_availbility">
     <item>"Unlimited stock"</item>

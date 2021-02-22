@@ -73,6 +73,7 @@ class FragmentOffersContainerActivity : AppBaseActivity<ActivityFragmentContaine
                 fpTag = intent.getStringExtra(IntentConstant.FP_TAG.name)
                 fpId = intent.getStringExtra(IntentConstant.FP_ID.name)
                 customerID = intent.getStringExtra(IntentConstant.CLIENT_ID.name)
+                clientId = intent.getStringExtra(IntentConstant.CLIENT_ID.name)
             }
         }
     }
@@ -125,6 +126,12 @@ class FragmentOffersContainerActivity : AppBaseActivity<ActivityFragmentContaine
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        additionalInfoFragment?.onActivityResult(requestCode,resultCode,data)
+        addNewOfferFragment?.onActivityResult(requestCode,resultCode,data)
+        offerListingFragment?.onActivityResult(requestCode,resultCode,data)
+    }
 }
 
 fun Fragment.startOfferFragmentActivity(activity: Activity, type: FragmentType, bundle: Bundle = Bundle(), clearTop: Boolean = false, isResult: Boolean? = false, requestCode: Int = 222) {

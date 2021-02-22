@@ -28,6 +28,15 @@ object EndPoints {
 
   //TODO OFFERS NOW FLOATS APIS
   const val POST_GET_OFFER_LISTING = "offers/v1/GetListing"
+  const val POST_CREATE_OFFER = "offers/v1/Create"
+  const val POST_UPDATE_OFFER = "offers/v1/Update"
+  const val POST_OFFER_DETAILS = "offers/v1/GetDetails"
+  const val POST_OFFER_DELETE = "offers/v1/Delete"
+  const val POST_OFFER_ADD_IMAGE = "offers/v1/AddImage"
+  const val POST_OFFER_DELETE_IMAGE = "offers/v1/DeleteImage"
+  const val POST_GET_TOP_OFFERS_FOR_FP = "offers/v1/GetTopOffersForFloatingPoint"
+  const val POST_GET_TOP_OFFERS_BY_CATEGORIES = "offers/v1/GetTopOffersByCategories"
+  const val POST_GET_TOP_OFFERS = "offers/v1/GetTopOffers"
 
   //TODO API.NOWFLOATS.COM FLOAT
   const val API_NOWFLOATS_COM_BASE = "https://api.nowfloats.com/"
