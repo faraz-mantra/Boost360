@@ -682,7 +682,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     shimmer_view_banner.stopShimmer()
                     shimmer_view_banner.visibility = View.GONE
                 }
-                updateBannerViewPager(it)
+//                updateBannerViewPager(it)
                 banner_layout.visibility = View.VISIBLE
             } else {
                 if (shimmer_view_banner.isShimmerStarted) {
@@ -703,7 +703,7 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                 }
 //                checkBannerDetails(it as ArrayList<PromoBanners>)F
 //                checkBannerDetailsNew(it as ArrayList<PromoBanners>)
-//                updateBannerViewPager(it)
+                updateBannerViewPager(it)
                 banner_layout.visibility = View.VISIBLE
             } else {
                 if (shimmer_view_banner.isShimmerStarted) {
@@ -1040,13 +1040,14 @@ class HomeFragment : BaseFragment(), HomeListener, CompareBackListener {
                     }
                 } else if (!item!!.coupon_code.isNullOrBlank()) {
                     if (item!!.coupon_code != null) {
-Log.v("coupon_code", " "+ item.coupon_code)
+//Log.v("coupon_code", " "+ item.coupon_code + " "+ item.title)
                         CompositeDisposable().add(
                                 AppDatabase.getInstance(requireActivity().application)!!
                                         .marketOffersDao()
                                         .getMarketOffersByCouponCode(item!!.coupon_code)
                                         .subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
+                                        .doOnError {  }
                                         .subscribe({
                                             var selectedMarketOfferModel: MarketPlaceOffers? = null
                                             var item = it
