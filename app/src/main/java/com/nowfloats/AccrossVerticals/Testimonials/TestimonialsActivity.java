@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.AccrossVerticals.API.APIInterfaces;
 import com.nowfloats.AccrossVerticals.API.model.DeleteTestimonials.DeleteTestimonialsData;
-import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
+import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.TestimonialData;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.GetTestimonialData;
 import com.nowfloats.AccrossVerticals.API.model.GetToken.GetTokenData;
 import com.nowfloats.AccrossVerticals.API.model.GetToken.WebActionsItem;
@@ -46,7 +46,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
 
   TextView addTestimonialsButton;
   ProgressDialog vmnProgressBar;
-  List<Data> dataList = new ArrayList<>();
+  List<TestimonialData> dataList = new ArrayList<>();
   LinearLayout rightButton, backButton;
   ImageView rightIcon;
   TextView title;
@@ -57,6 +57,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
   private UserSessionManager session;
   private TestimonialsAdapter testimonialsAdapter;
   private RecyclerView recyclerView;
+  private boolean isLoad = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     addTestimonialsButton = findViewById(R.id.add_testimonials);
     session = new UserSessionManager(getApplicationContext(), this);
     recyclerView = findViewById(R.id.testimonials_recycler);
-    testimonialsAdapter = new TestimonialsAdapter(new ArrayList(), this, session,this);
+    testimonialsAdapter = new TestimonialsAdapter(new ArrayList(), this, session, this);
     initialiseRecycler();
 
     //show or hide if feature is available to user
@@ -136,7 +137,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
 
   void loadData() {
     try {
-      showProgress();
+      if (!isLoad) showProgress();
       JSONObject query = new JSONObject();
       query.put("WebsiteId", session.getFpTag());
       APIInterfaces APICalls = new RestAdapter.Builder()
@@ -155,6 +156,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
             return;
           }
           if (testimonialModel.getData().size() > 0) {
+            isLoad = true;
             dataList = testimonialModel.getData();
             updateRecyclerView();
             mainLayout.setVisibility(View.VISIBLE);
@@ -235,7 +237,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
   }
 
   @Override
-  public void editOptionClicked(Data data) {
+  public void editOptionClicked(TestimonialData data) {
     Intent intent = new Intent(getApplicationContext(), TestimonialsFeedbackActivity.class);
     intent.putExtra("ScreenState", "edit");
     intent.putExtra("data", new Gson().toJson(data));
@@ -243,7 +245,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
   }
 
   @Override
-  public void deleteOptionClicked(Data data) {
+  public void deleteOptionClicked(TestimonialData data) {
     try {
       DeleteTestimonialsData requestBody = new DeleteTestimonialsData();
       requestBody.setQuery("{_id:'" + data.getId() + "'}");
@@ -258,7 +260,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
           .build()
           .create(APIInterfaces.class);
 
-      APICalls.deleteTestimonials(headerToken, requestBody, new Callback<String>() {
+      APICalls.deleteTestimonials(headerToken, testimonialType, requestBody, new Callback<String>() {
         @Override
         public void success(String data, Response response) {
           if (response != null && response.getStatus() == 200) {
@@ -272,7 +274,7 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
 
         @Override
         public void failure(RetrofitError error) {
-          if (error.getResponse().getStatus() == 200) {
+          if (error != null && error.getResponse() != null && error.getResponse().getStatus() == 200) {
             getHeaderAuthToken();
             Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
           } else {
@@ -358,3 +360,4 @@ public class TestimonialsActivity extends AppCompatActivity implements Testimoni
     }
   }
 }
+

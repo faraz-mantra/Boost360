@@ -3,7 +3,7 @@ package com.nowfloats.AccrossVerticals.API.model.GetTestimonials;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data {
+public class TestimonialData {
 
     @SerializedName("_id")
     @Expose
@@ -12,13 +12,13 @@ public class Data {
     @Expose
     private String title;
 
-    @SerializedName(value = "description",alternate = {"testimonial"})
+    @SerializedName(value = "description",alternate = {"testimonial","ourStory","text"})
     @Expose
     private String description;
-    @SerializedName(value = "username",alternate = {"customerName"})
+    @SerializedName(value = "username",alternate = {"customerName","name"})
     @Expose
     private String username;
-    @SerializedName(value = "profileimage",alternate = {"profileImage"})
+    @SerializedName(value = "profileimage",alternate = {"profileImage","img"})
     @Expose
     private Profileimage profileimage;
 
@@ -41,17 +41,10 @@ public class Data {
     @Expose
     private Boolean isArchived;
 
+    // for review title ->hotels
     @SerializedName("city")
     @Expose
     private String city;
-
-    @SerializedName("ourStory")
-    @Expose
-    private String ourStory;
-
-    @SerializedName("name")
-    @Expose
-    private String name;
 
     public String getId() {
         return id;
@@ -149,20 +142,4 @@ public class Data {
         this.city = city;
     }
 
-
-    public String getOurStory() {
-        return ourStory;
-    }
-
-    public void setOurStory(String ourStory) {
-        this.ourStory = ourStory;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

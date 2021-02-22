@@ -1,7 +1,6 @@
 package com.nowfloats.AccrossVerticals.Testimonials;
 
 import android.app.Activity;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
+import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.TestimonialData;
 import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Profileimage;
 import com.nowfloats.Login.UserSessionManager;
 import com.thinksity.R;
@@ -22,16 +21,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.*;
+
 public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapter.ViewHolder> {
 
-  private List<Data> itemList;
+  private List<TestimonialData> itemList;
   private TestimonialsListener listener;
   private int menuPosition = -1;
   private boolean menuStatus = false;
   private UserSessionManager userSession;
   private Activity context;
 
-  public TestimonialsAdapter(List<Data> itemList, TestimonialsListener listener, UserSessionManager session, Activity context) {
+  public TestimonialsAdapter(List<TestimonialData> itemList, TestimonialsListener listener, UserSessionManager session, Activity context) {
     this.itemList = itemList;
     this.listener = listener;
     this.userSession = session;
@@ -50,7 +51,7 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
     menuStatus = status;
   }
 
-  public void updateList(List<Data> itemList) {
+  public void updateList(List<TestimonialData> itemList) {
     this.itemList = itemList;
     menuPosition = -1; //reset menu
     notifyDataSetChanged();
@@ -58,18 +59,19 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
 
   @Override
   public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
-    Data data = itemList.get(position);
+    TestimonialData data = itemList.get(position);
     Profileimage profileImage = data.getProfileimage();
     String imageUrl = "";
-    String titleDesc = data.getCity();
-    if (profileImage != null) {
-      imageUrl = profileImage.getUrl();
-      if (!TextUtils.isEmpty(profileImage.getDescription())) titleDesc= profileImage.getDescription();
-    }
+    if (profileImage != null) imageUrl = profileImage.getUrl();
     Glide.with(context).load(imageUrl).into(holder.userProfileImage);
     holder.userName.setText(data.getUsername());
-    holder.reviewTitle.setText(titleDesc);
+
+    holder.reviewTitle.setVisibility(isReviewSecondValue(userSession.getFP_AppExperienceCode()));
+    holder.reviewTitle.setText(getReviewSecondValue(data, userSession.getFP_AppExperienceCode()));
     holder.reviewDescription.setText(data.getDescription());
+    holder.imgDesc.setVisibility(isProfileDescShow(userSession.getFP_AppExperienceCode()));
+    holder.imgDesc.setText(getProfileDescValue(data, userSession.getFP_AppExperienceCode()));
+
 
     holder.menuOptionLayout.setVisibility(View.GONE);
     if (menuPosition == position) {
@@ -104,7 +106,7 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
     ImageView menuButton, userProfileImage;
     LinearLayout menuOptionLayout;
     ConstraintLayout mainLayout;
-    TextView userName, reviewTitle, reviewDescription, editOption, deleteOption;
+    TextView userName, reviewTitle, reviewDescription, editOption, deleteOption, imgDesc;
 
     public ViewHolder(View itemView) {
       super(itemView);
@@ -118,6 +120,7 @@ public class TestimonialsAdapter extends RecyclerView.Adapter<TestimonialsAdapte
       reviewDescription = itemView.findViewById(R.id.review_description);
       editOption = itemView.findViewById(R.id.edit_option);
       deleteOption = itemView.findViewById(R.id.delete_option);
+      imgDesc = itemView.findViewById(R.id.img_desc);
     }
   }
 }
