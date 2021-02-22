@@ -16,8 +16,8 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/black_4a4a4a"
-                android:paddingStart="@dimen/size_20"
+                android:background="@color/white_smoke_1"
+                android:paddingStart="@dimen/size_30"
                 android:paddingTop="@dimen/size_10"
                 android:paddingEnd="@dimen/size_10"
                 android:paddingBottom="@dimen/size_10">
@@ -25,14 +25,17 @@
                 <com.framework.views.customViews.CustomImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_info_white" />
+                    app:srcCompat="@drawable/ic_info_black" />
 
                 <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/size_10"
+                    android:fontFamily="@font/regular"
                     android:text="@string/please_edit_review_the_order_details_and_confirm"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="12sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -40,16 +43,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingStart="@dimen/size_20"
+                android:paddingStart="@dimen/size_30"
                 android:paddingTop="@dimen/size_20"
                 android:paddingEnd="@dimen/size_20">
 
                 <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_16"
                     android:text="@string/billing_to"
-                    android:textColor="@color/black_3C3C3C"
+                    android:textColor="@color/black_2A2A2A"
                     app:fontFamily="@font/semi_bold"
                     app:textType="BODY_2" />
 
@@ -61,13 +63,13 @@
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/billing_to"
+                        android:layout_marginTop="@dimen/size_5"
+                        tools:text="@string/dummy_name"
                         android:textColor="@color/black_4a4a4a"
                         app:fontFamily="@font/regular"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:textType="HEADING_4"
-                        tools:text="Rakesh Singhania" />
+                        app:textType="HEADING_4" />
 
                     <com.framework.views.customViews.CustomImageView
                         android:id="@+id/iv_options"
@@ -81,30 +83,41 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_5"
+                    tools:text="@string/dummy_email"
                     android:textColor="@color/black_4a4a4a"
                     app:fontFamily="@font/regular"
-                    app:textType="BODY_1"
-                    tools:text="rakeshsinghania@gmail.com" />
+                    app:textType="BODY_1" />
 
                 <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_5"
+                    android:layout_marginTop="@dimen/size_6"
+                    tools:text="@string/dummy_phone"
                     android:textColor="@color/black_4a4a4a"
                     app:fontFamily="@font/regular"
-                    app:textType="BODY_1"
-                    tools:text="+91 8247893456" />
+                    app:textType="BODY_1" />
 
-
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/tv_gst"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_6"
+                    tools:text="@string/dummy_gstin"
+                    android:textColor="@color/black_4a4a4a"
+                    android:visibility="gone"
+                    app:fontFamily="@font/regular"
+                    app:textType="BODY_1" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_12"
+                android:layout_marginTop="@dimen/size_20"
                 android:paddingStart="@dimen/size_10"
                 android:paddingEnd="@dimen/size_10">
 
@@ -123,11 +136,10 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingLeft="@dimen/size_10"
-                        android:paddingTop="@dimen/size_12"
+                        android:paddingLeft="@dimen/size_20"
+                        android:paddingTop="@dimen/size_16"
                         android:paddingRight="@dimen/size_10"
-                        android:paddingBottom="@dimen/size_12">
-
+                        android:paddingBottom="@dimen/size_16">
 
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="0dp"
@@ -137,7 +149,7 @@
                             android:includeFontPadding="false"
                             android:text="@string/delivery_type"
                             android:textColor="@color/greyish_brown"
-                            app:fontFamily="@font/semi_bold"
+                            app:fontFamily="@font/regular"
                             app:textType="BODY_1" />
 
                         <com.framework.views.customViews.CustomTextView
@@ -150,13 +162,11 @@
                             android:gravity="right"
                             android:includeFontPadding="false"
                             android:maxLines="1"
+                            android:text="@string/store_pickup"
                             android:textColor="@color/orange"
-                            app:fontFamily="@font/bold"
-                            app:textType="BODY_1"
-                            tools:text="Store Pickup" />
-
+                            app:fontFamily="@font/semi_bold"
+                            app:textType="BODY_1" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
-
 
                     <View
                         android:layout_width="match_parent"
@@ -167,19 +177,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="@dimen/size_10"
-                        android:paddingTop="@dimen/size_12"
+                        android:paddingLeft="@dimen/size_20"
+                        android:paddingTop="@dimen/size_16"
                         android:paddingRight="@dimen/size_10"
-                        android:paddingBottom="@dimen/size_12">
+                        android:paddingBottom="@dimen/size_16">
 
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:includeFontPadding="false"
-                            android:text="@string/payment_type"
+                            android:text="@string/str_payment_mode"
                             android:textColor="@color/greyish_brown"
-                            app:fontFamily="@font/semi_bold"
+                            app:fontFamily="@font/regular"
                             app:textType="BODY_1" />
 
                         <com.framework.views.customViews.CustomTextView
@@ -193,11 +203,11 @@
                             android:gravity="right"
                             android:includeFontPadding="false"
                             android:maxLines="1"
-                            android:textColor="@color/orange"
-                            app:fontFamily="@font/bold"
-                            app:textType="BODY_1"
-                            tools:text="COD" />
-
+                            android:text="@string/str_cash_on_delivery"
+                            android:drawableTint="@color/grey_dark_2"
+                            android:textColor="@color/grey_dark_2"
+                            app:fontFamily="@font/semi_bold"
+                            app:textType="BODY_1" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <View
@@ -209,10 +219,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="@dimen/size_10"
-                        android:paddingTop="@dimen/size_12"
+                        android:paddingLeft="@dimen/size_20"
+                        android:paddingTop="@dimen/size_16"
                         android:paddingRight="@dimen/size_10"
-                        android:paddingBottom="@dimen/size_12">
+                        android:paddingBottom="@dimen/size_16">
 
                         <com.framework.views.customViews.CustomTextView
                             android:layout_width="match_parent"
@@ -222,11 +232,11 @@
                             android:includeFontPadding="false"
                             android:text="@string/status_payment"
                             android:textColor="@color/greyish_brown"
-                            app:fontFamily="@font/semi_bold"
+                            app:fontFamily="@font/regular"
                             app:textType="BODY_1" />
 
                         <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/tvOrderStatus"
+                            android:id="@+id/tvPaymentStatus"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -236,15 +246,12 @@
                             android:gravity="right"
                             android:includeFontPadding="false"
                             android:maxLines="1"
+                            android:text="@string/collect_later"
                             android:textColor="@color/orange"
-                            app:fontFamily="@font/bold"
-                            app:textType="BODY_1"
-                            tools:text="Pending" />
-
+                            app:fontFamily="@font/semi_bold"
+                            app:textType="BODY_1" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
-
                 </LinearLayout>
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <View
@@ -255,11 +262,21 @@
                 android:background="@color/lightest_grey" />
 
             <include
-                layout="@layout/layout_shipping_billing_address"
+                android:id="@+id/layout_order_shipping_address"
+                layout="@layout/layout_order_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_20"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/size_20" />
+
+            <include
+                android:id="@+id/layout_order_billing_address"
+                layout="@layout/layout_order_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginStart="@dimen/size_30"
                 android:layout_marginEnd="@dimen/size_20" />
 
             <View
@@ -272,8 +289,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_14"
-                android:paddingStart="@dimen/size_20"
-                android:paddingEnd="@dimen/size_20">
+                android:paddingStart="@dimen/size_30"
+                android:paddingEnd="@dimen/size_30">
 
                 <com.framework.views.customViews.CustomTextView
                     android:layout_width="wrap_content"
@@ -286,13 +303,13 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/tv_remove"
+                    android:id="@+id/tv_add_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/add_more"
                     android:textAllCaps="true"
                     android:textColor="@color/orange"
-                    app:fontFamily="@font/bold"
+                    app:fontFamily="@font/semi_bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -305,17 +322,273 @@
                 android:id="@+id/product_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="@dimen/size_10"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/size_10"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:itemCount="5"
+                tools:itemCount="1"
                 tools:listitem="@layout/item_product" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_6"
+                android:layout_marginTop="@dimen/size_10"
+                android:background="@color/lightest_grey" />
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/size_30"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/all_items_in_cart_have_prices_including_18_gst"
+                    android:textColor="@color/black_4a4a4a"
+                    android:textSize="12sp" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_30"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:layout_marginEnd="@dimen/size_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/size_4"
+                        android:includeFontPadding="false"
+                        android:text="@string/item_total"
+                        android:textColor="@color/greyish_brown"
+                        app:fontFamily="@font/regular"
+                        app:textType="BODY_1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:paddingEnd="@dimen/size_20"
+                        tools:text="₹ 15,000.00"
+                        android:textColor="@color/black_4a4a4a"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="BODY_1" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_30"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:layout_marginEnd="@dimen/size_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/size_4"
+                        android:includeFontPadding="false"
+                        android:text="@string/discount_on_subtotal"
+                        android:textColor="@color/greyish_brown"
+                        app:fontFamily="@font/regular"
+                        app:textType="BODY_1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_add_discount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:paddingEnd="@dimen/size_20"
+                        android:text="@string/add"
+                        android:textAllCaps="true"
+                        android:textColor="@color/orange"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="BODY_1" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_30"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:layout_marginEnd="@dimen/size_10"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/size_4"
+                        android:includeFontPadding="false"
+                        android:text="@string/delivery_fee"
+                        android:textColor="@color/greyish_brown"
+                        app:fontFamily="@font/regular"
+                        app:textType="BODY_1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_add_delivery_fee_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:paddingEnd="@dimen/size_20"
+                        android:text="@string/edit"
+                        android:visibility="gone"
+                        android:paddingStart="@dimen/size_10"
+                        android:textAllCaps="true"
+                        android:textColor="@color/orange"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="BODY_1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_add_delivery_fee"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:paddingEnd="@dimen/size_20"
+                        android:text="@string/add"
+                        android:textAllCaps="true"
+                        android:textColor="@color/orange"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="BODY_1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_add_delivery_fee_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:includeFontPadding="false"
+                        android:visibility="gone"
+                        android:maxLines="1"
+                        android:paddingEnd="@dimen/size_20"
+                        tools:text="@string/add"
+                        android:textAllCaps="true"
+                        android:textColor="@color/orange"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="BODY_1" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_1"
+                    android:layout_marginStart="@dimen/size_30"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:layout_marginEnd="@dimen/size_20"
+                    android:background="@color/gray_light_1" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_30"
+                    android:layout_marginTop="@dimen/size_30"
+                    android:layout_marginEnd="@dimen/size_20"
+                    android:layout_marginBottom="@dimen/size_20"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/size_4"
+                        android:includeFontPadding="false"
+                        android:text="@string/total_payable_amount"
+                        android:textColor="@color/greyish_brown"
+                        app:fontFamily="@font/regular"
+                        app:textType="BODY_1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_total_payable_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:paddingEnd="@dimen/size_10"
+                        tools:text="₹ 15,000.00"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black_2A2A2A"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="BODY_1" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:layout_marginTop="@dimen/size_10"
+                android:background="@color/lightest_grey" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/size_30"
+                android:layout_height="wrap_content">
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/button_confirm_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_rounded_yellow"
+                    android:gravity="center"
+                    android:padding="@dimen/size_15"
+                    android:paddingStart="@dimen/size_28"
+                    android:paddingEnd="@dimen/size_28"
+                    android:shadowRadius="0"
+                    android:stateListAnimator="@null"
+                    android:text="@string/confirm_order"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    app:fontFamily="@font/bold"
+                    app:textType="CAPTION"
+                    tools:ignore="UnusedAttribute" />
+
+                <com.framework.views.customViews.CustomButton
+                    android:id="@+id/button_go_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:background="@drawable/bg_rounded_yellow_light"
+                    android:gravity="center"
+                    android:padding="@dimen/size_15"
+                    android:paddingStart="@dimen/size_28"
+                    android:paddingEnd="@dimen/size_28"
+                    android:shadowRadius="0"
+                    android:stateListAnimator="@null"
+                    android:text="@string/go_back"
+                    android:textAllCaps="true"
+                    android:textColor="@color/orange"
+                    app:fontFamily="@font/bold"
+                    app:textType="CAPTION"
+                    tools:ignore="UnusedAttribute" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
     </androidx.core.widget.NestedScrollView>
-
 </layout>

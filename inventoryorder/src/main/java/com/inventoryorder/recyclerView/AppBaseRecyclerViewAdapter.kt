@@ -26,6 +26,9 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       ORDERS_ITEM_TYPE -> OrderSummaryViewHolder(binding as ItemOrderTypeBinding)
       INVENTORY_ORDER_ITEM -> OrdersViewHolder(binding as ItemOrderBinding)
       ITEM_ORDER_DETAILS -> OrderItemDetailsViewHolder(binding as ItemOrderDetailsBinding)
+      PRODUCT_ITEM -> ProductItemViewHolder(binding as ItemProductBinding)
+      PRODUCT_ITEM_SELECTED -> ProductSelectedItemViewHolder(binding as ItemProductsAddedBinding)
+      PRODUCT_BOTTOM_SHEET_OPTIONS -> CreateOrderBottomSheetItemViewHolder(binding as BottomSheetOrderOptionBinding)
       ITEM_DELIVERY_OPTIONS -> DeliveryViewHolder(binding as ItemBottomSheetPickUpDeliveryOptionBinding)
       BOOKING_DETAILS -> AppointmentDetailsViewHolder(binding as ItemBookingDetailsBinding)
       BOOKINGS_ITEM_TYPE -> AppointmentsViewHolder(binding as ItemAppointmentsOrderBinding)
@@ -43,6 +46,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       WEEK_TIMING_SELECTED -> WeekTimeViewHolder(binding as ItemWeekTimeSelectBinding)
       SERVICES_DEPARTMENT -> ServicesViewHolder(binding as ItemConsultationServicesBinding)
       ORDER_MENU_ITEM -> OrderMenuHolder(binding as ItemOrderMenuBinding)
+      STAFF -> StaffItemViewHolder(binding as StaffItemBinding)
+      SLOTS -> SlotsItemViewHolder(binding as ItemTimeSlotAppointmentBinding)
     }
   }
 

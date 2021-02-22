@@ -1,15 +1,29 @@
 package com.inventoryorder.ui.order.createorder
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
+import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentAddCustomerBinding
+import com.inventoryorder.model.orderRequest.Address
+import com.inventoryorder.model.orderRequest.BuyerDetails
+import com.inventoryorder.model.orderRequest.ContactDetails
+import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
-
+import java.lang.StringBuilder
 
 class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() {
+
+  private var createOrderRequest = OrderInitiateRequest()
+  private var totalPrice = 0.0
+  private var shouldReInitiate: Boolean = false
 
   companion object {
     @JvmStatic
@@ -24,17 +38,156 @@ class AddCustomerFragment : BaseInventoryFragment<FragmentAddCustomerBinding>() 
     super.onCreateView()
     fpTag?.let { WebEngageController.trackEvent("Clicked on Add Customer", "ORDERS", it) }
 
-    setOnClickListener(binding?.vwNext)
-  }
+    setOnClickListener(binding?.vwNext, binding?.textAddCustomerGstin, binding?.tvRemove, binding?.textGoBack)
 
+    createOrderRequest = arguments?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
+    setUpData()
+    totalPrice = arguments?.getSerializable(IntentConstant.TOTAL_PRICE.name) as Double
+  }
 
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
       binding?.vwNext -> {
-        startFragmentOrderActivity(FragmentType.ADD_PRODUCT, Bundle())
+       onNextTapped()
+      }
+
+      binding?.textAddCustomerGstin -> {
+
+        if (binding?.lytCustomerGstn?.visibility == View.GONE) {
+          binding?.textAddCustomerGstin?.visibility = View.GONE
+          binding?.lytCustomerGstn?.visibility = View.VISIBLE
+        }
+      }
+
+      binding?.tvRemove -> {
+        binding?.textAddCustomerGstin?.visibility = View.VISIBLE
+        binding?.lytCustomerGstn?.visibility = View.GONE
+      }
+
+      binding?.textGoBack -> {
+        (context as FragmentContainerOrderActivity).onBackPressed()
       }
     }
   }
 
+  fun getBundleData(): Bundle? {
+    val bundle = Bundle()
+    shouldReInitiate?.let {
+      bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+    }
+    bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
+    return bundle
+  }
+
+  private fun onNextTapped() {
+
+    val name = binding?.editCustomerName?.text ?: ""
+    val email = binding?.editCustomerEmail?.text ?: ""
+    val phone = binding?.editCustomerPhone?.text ?: ""
+    val address = binding?.layoutBillingAddr?.editAddress?.text ?: ""
+    val city = binding?.layoutBillingAddr?.editCity?.text ?: ""
+    val state = binding?.layoutBillingAddr?.editState?.text ?: ""
+    val pinCode = binding?.layoutBillingAddr?.editPin?.text ?: ""
+
+    val gstNo = binding?.editGstin?.text ?: ""
+
+    if (name.isEmpty()) {
+      showShortToast(getString(R.string.customer_name_cannot_be_empty))
+      return
+    }
+
+    if (phone.isEmpty()) {
+      showShortToast(getString(R.string.customer_phone_cannot_be_empty))
+      return
+    }
+
+    if (phone.length < 10) {
+      showShortToast(getString(R.string.please_enter_valid_phone))
+      return
+    }
+
+    if (email.isNullOrEmpty().not() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches().not()) {
+      showShortToast(getString(R.string.please_enter_valid_email))
+      return
+    }
+
+
+    if (address.isEmpty()) {
+      showShortToast(getString(R.string.customer_address_cannot_be_empty))
+      return
+    }
+
+    if (city.isEmpty()) {
+      showShortToast(getString(R.string.customer_city_cannot_be_empty))
+      return
+    }
+
+    if (state.isEmpty()) {
+      showShortToast(getString(R.string.customer_state_cannot_be_empty))
+      return
+    }
+
+    if (pinCode.isEmpty()) {
+      showShortToast(getString(R.string.customer_pincode_cannot_be_empty))
+      return
+    }
+
+    if (pinCode.length < 6) {
+      showShortToast(getString(R.string.enter_valid_pincode))
+      return
+    }
+
+    var contactDetails = ContactDetails(fullName = name.toString(),
+            emailId = email.toString(), primaryContactNumber = phone.toString())
+
+    /*var addrStr = StringBuilder()
+    addrStr.append(address)
+    if (city.isNullOrEmpty().not()) addrStr.append(", $city")
+    if (state.isNullOrEmpty().not()) addrStr.append(", $state")
+    if (pinCode.isNullOrEmpty().not()) addrStr.append(", $pinCode")*/
+
+    var billingAddress = Address(address.toString(), city = city.toString(), region = state.toString(), zipcode = pinCode.toString())
+    var buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress)
+
+    createOrderRequest.buyerDetails = buyerDetails
+
+    var bundle = Bundle()
+    bundle.putSerializable(IntentConstant.ORDER_REQUEST.name, createOrderRequest)
+    bundle.putDouble(IntentConstant.TOTAL_PRICE.name, totalPrice)
+    bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, arguments?.getSerializable(IntentConstant.PREFERENCE_DATA.name))
+    startFragmentOrderActivity(FragmentType.BILLING_DETAIL, bundle, isResult = true)
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+
+    if (requestCode == 101 && resultCode == RESULT_OK) {
+      val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
+      val req = bundle?.getSerializable(IntentConstant.ORDER_REQUEST.name) as OrderInitiateRequest
+      if (req != null) {
+        createOrderRequest = req
+        setUpData()
+      }
+      val shouldFinish = bundle?.getBoolean(IntentConstant.SHOULD_FINISH.name)
+      if (shouldFinish != null && shouldFinish) {
+        (context as FragmentContainerOrderActivity).onBackPressed()
+      }
+
+      shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name)
+      if (shouldReInitiate != null && shouldReInitiate) {
+        (context as FragmentContainerOrderActivity).onBackPressed()
+      }
+    }
+  }
+
+  private fun setUpData() {
+    binding?.editCustomerName?.setText(createOrderRequest?.buyerDetails?.contactDetails?.fullName ?: "")
+    binding?.editCustomerEmail?.setText(createOrderRequest?.buyerDetails?.contactDetails?.emailId ?: "")
+    binding?.editCustomerPhone?.setText(createOrderRequest?.buyerDetails?.contactDetails?.primaryContactNumber ?: "")
+    binding?.layoutBillingAddr?.editAddress?.setText(createOrderRequest?.buyerDetails?.address?.addressLine ?: "")
+    binding?.layoutBillingAddr?.editCity?.setText(createOrderRequest?.buyerDetails?.address?.city ?: "")
+    binding?.layoutBillingAddr?.editState?.setText(createOrderRequest?.buyerDetails?.address?.region ?: "")
+    binding?.layoutBillingAddr?.editPin?.setText(createOrderRequest?.buyerDetails?.address?.zipcode ?: "")
+  }
 }

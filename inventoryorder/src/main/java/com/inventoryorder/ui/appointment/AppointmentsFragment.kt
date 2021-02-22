@@ -94,7 +94,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
         bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)
-        startFragmentOrderActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
+
+        if (preferenceData?.experienceCode?.equals("SPA") == true) {
+          startFragmentOrderActivity(FragmentType.CREATE_SPA_APPOINTMENT, bundle, isResult = true)
+        } else {
+          startFragmentOrderActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
+        }
       }
     }
   }
