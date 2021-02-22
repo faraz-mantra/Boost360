@@ -59,8 +59,7 @@
                         android:padding="@dimen/size_12">
 
                         <com.framework.views.customViews.CustomTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                          style="@style/match_wrap"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text="@string/add_secondary_images"
@@ -98,7 +97,7 @@
                         android:text="@string/tags_help_site_visitors_filter_offers_in_your_website" />
 
                     <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chipsService"
+                        android:id="@+id/chipsOffers"
                         style="@style/Widget.MaterialComponents.ChipGroup"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -108,13 +107,12 @@
                     </com.google.android.material.chip.ChipGroup>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/match_wrap"
                         android:layout_marginTop="@dimen/size_5"
                         android:background="@drawable/bg_rect_edit_txt">
 
                         <com.framework.views.customViews.CustomTextField
-                            android:id="@+id/edt_service_tag"
+                            android:id="@+id/edt_offer_tag"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:background="@null"
@@ -137,9 +135,9 @@
                             android:layout_height="0dp"
                             android:layout_margin="@dimen/size_4"
                             android:text="@string/add"
-                            app:layout_constraintBottom_toBottomOf="@id/edt_service_tag"
+                            app:layout_constraintBottom_toBottomOf="@id/edt_offer_tag"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/edt_service_tag" />
+                            app:layout_constraintTop_toTopOf="@id/edt_offer_tag" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -158,6 +156,7 @@
 
                         <com.framework.views.customViews.CustomButton
                             android:id="@+id/btn_confirm"
+                            android:layout_gravity="bottom"
                             style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
                             android:layout_height="@dimen/size_44"
                             android:text="@string/confirm" />

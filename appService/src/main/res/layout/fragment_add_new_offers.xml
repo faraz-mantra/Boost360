@@ -24,7 +24,7 @@
                 <FrameLayout style="@style/match_wrap">
 
                     <com.framework.views.customViews.CustomImageView
-                        android:id="@+id/service_image_view"
+                        android:id="@+id/offer_image_view"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/size_180"
                         android:layout_marginTop="@dimen/size_1"
@@ -71,6 +71,7 @@
                         <com.framework.views.customViews.CustomTextView
                             style="@style/Offers_Text_Header"
                             android:layout_marginTop="@dimen/size_20"
+                            android:id="@+id/ctv_add_featured_image"
                             android:text="@string/add_featured_image"
                             android:textAllCaps="true"
                             android:textColor="@color/yellow_ffb900" />
@@ -99,7 +100,7 @@
                     android:text="@string/offer_title" />
 
                 <com.framework.views.customViews.CustomTextField
-                    android:id="@+id/tv_offer_title"
+                    android:id="@+id/ctv_offer_title"
                     style="@style/Offers_Text_Field"
                     android:hint="@string/write_the_offer_title" />
 
@@ -144,7 +145,7 @@
 
 
                     <LinearLayout
-                        android:id="@id/ll_service_apply_to"
+                        android:id="@+id/ll_service_apply_to"
                         style="@style/match_wrap"
                         android:orientation="vertical">
 
@@ -238,9 +239,10 @@
                     android:text="@string/discount_amount_inr" />
 
                 <com.framework.views.customViews.CustomTextField
-                    android:id="@+id/tv_heading_discount_amount"
+                    android:id="@+id/ctv_discount_amount"
                     style="@style/Offers_Text_Field"
                     android:drawablePadding="@dimen/size_5"
+                    android:inputType="numberDecimal"
                     android:drawableStart="@drawable/ic_indian_rupee"
                     android:hint="@string/enter_discount_on_the_service_s" />
 
@@ -267,11 +269,11 @@
                             android:text="@string/applicable_to_all_services"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toLeftOf="@id/toggle_service_availibility"
+                            app:layout_constraintRight_toLeftOf="@id/toggle_service_availability"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.appservice.views.toggle.widget.LabeledSwitch
-                            android:id="@+id/toggle_service_availibility"
+                            android:id="@+id/toggle_service_availability"
                             style="@style/Offer_Label_Switch"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
@@ -281,7 +283,17 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+                <com.framework.views.customViews.CustomTextView
+                    style="@style/Offers_Text_Title"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:text="@string/offer_description_optional" />
 
+                <com.framework.views.customViews.CustomTextField
+                    android:id="@+id/ctv_offers_description"
+                    style="@style/Offers_Text_Field"
+                    android:drawablePadding="@dimen/size_5"
+                    android:inputType="textMultiLine"
+                    android:hint="@string/describe_this_offer_in_around_2000_characters_at_max" />
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/btn_other_info"
                     style="@style/match_wrap"

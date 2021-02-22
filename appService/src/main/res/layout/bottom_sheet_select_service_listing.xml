@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/match_match"
+        android:background="@drawable/bottoms_sheet_top20dp_white"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            style="@style/match_wrap"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_header"
+                style="@style/match_wrap"
+                android:layout_marginHorizontal="@dimen/size_20"
+                android:layout_marginTop="@dimen/size_20"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/customTextView2"
+                    style="@style/Offers_Text_Heading.Bottom_Sheet"
+                    android:text="@string/sort_the_service_list"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.framework.views.viewgroups.BaseRecyclerView
+            style="@style/match_wrap"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scrollbars="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+            app:layout_constraintVertical_bias="0.0"
+            tools:itemCount="2"
+            tools:listitem="@layout/recycler_item_offer" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            style="@style/match_wrap"
+            android:layout_marginBottom="@dimen/size_20"
+            android:padding="@dimen/size_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+>
+
+            <com.framework.views.customViews.CustomButton
+                android:id="@+id/btn_apply"
+                style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
+                android:layout_width="@dimen/size_110"
+                android:layout_height="@dimen/size_36"
+                android:text="@string/apply"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.framework.views.customViews.CustomButton
+                android:id="@+id/btn_cancel"
+                style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
+                android:layout_width="@dimen/size_110"
+                android:layout_height="@dimen/size_36"
+                android:background="@null"
+                android:text="@string/cancel"
+                android:layout_marginEnd="@dimen/size_30"
+                android:textColor="@color/yellow_ffb900"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/btn_apply"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

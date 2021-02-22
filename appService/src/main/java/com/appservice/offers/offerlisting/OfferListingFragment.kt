@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -23,9 +24,9 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentOfferListingBinding
-import com.appservice.offers.models.DataItem
 import com.appservice.offers.models.OfferListingRequest
 import com.appservice.offers.models.OfferListingResponse
+import com.appservice.offers.models.OfferModel
 import com.appservice.offers.models.Result
 import com.appservice.offers.startOfferFragmentActivity
 import com.appservice.offers.viewmodel.OfferViewModel
@@ -35,8 +36,6 @@ import com.appservice.recyclerView.PaginationScrollListener
 import com.appservice.recyclerView.RecyclerItemClickListener
 import com.appservice.staffs.ui.UserSession
 import com.appservice.ui.catalog.catalogService.listing.ServiceListingFragment
-import com.appservice.ui.catalog.startFragmentActivity
-import com.appservice.ui.model.ItemsItem
 import com.framework.extensions.gone
 import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
@@ -47,9 +46,9 @@ import com.squareup.picasso.Target
 import java.util.*
 
 class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferViewModel>(), RecyclerItemClickListener {
-    private val list: ArrayList<DataItem> = arrayListOf()
-    private val finalList: ArrayList<DataItem> = arrayListOf()
-    private var adapterOffers: AppBaseRecyclerViewAdapter<DataItem>? = null
+    private val list: ArrayList<OfferModel> = arrayListOf()
+    private val finalList: ArrayList<OfferModel> = arrayListOf()
+    private var adapterOffers: AppBaseRecyclerViewAdapter<OfferModel>? = null
     private var layoutManagerN: LinearLayoutManager? = null
     private var targetMap: Target? = null
     private var isLoadingD = false
@@ -73,7 +72,8 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
         private const val STORAGE_CODE = 120
         var defaultShareGlobal = true
         var shareType = 2
-        var offerItem: DataItem? = null
+        var offerItem: OfferModel? = null
+        var shareOfferItem: OfferModel? = null
 
     }
 
@@ -86,12 +86,19 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
         setOnClickListener(binding?.fbAddOffer, binding?.offerListingEmptyView?.cbCreateOffers, binding?.offerListingEmptyView?.cbWatchVideo)
     }
 
+    //    private fun openSuccessBottomSheet() {
+//        hideProgress()
+//        val createdSuccess = FilterOffersByBottomSheet()
+//        createdSuccess.setData(isEdit)
+//        createdSuccess.onClicked = { clickSuccessCreate(it) }
+//        createdSuccess.show(this@AddNewOfferFragment.parentFragmentManager, CreateServiceSuccessBottomSheet::class.java.name)
+//    }
     private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
         binding?.rvListing?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
             override fun loadMoreItems() {
                 if (!isLastPageD) {
                     isLoadingD = true
-                    adapterOffers?.addLoadingFooter(DataItem().getLoaderItem())
+                    adapterOffers?.addLoadingFooter(OfferModel().getLoaderItem())
                     offSet += limit
                     fetchOfferListing(offSet = offSet, limit = limit)
                 }
@@ -208,7 +215,7 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
         builder.create().show()
     }
 
-    fun share(defaultShare: Boolean, type: Int, offer: DataItem?) {
+    fun share(defaultShare: Boolean, type: Int, offer: OfferModel?) {
         showProgress(getString(R.string.sharing))
         if (NetworkUtils.isNetworkConnected()) {
             val shareText = String.format("*%s* %s\n*%s* %s\n\n-------------\n%s\n\nfor more details visit: %s",
@@ -293,27 +300,40 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
     }
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        offerItem = item as DataItem
-        if (actionType == RecyclerViewActionType.SERVICE_ITEM_CLICK.ordinal) {
+        offerItem = item as OfferModel
+        if (actionType == RecyclerViewActionType.OFFER_ITEM_CLICK.ordinal) {
             val bundle = Bundle()
             bundle.putSerializable(IntentConstant.OFFER_DATA.name, offerItem)
-            startFragmentActivity(FragmentType.OFFER_DETAILS_FRAGMENT, bundle, false, isResult = true)
+            startOfferFragmentActivity(requireActivity(), FragmentType.OFFER_DETAILS_FRAGMENT, bundle, false, isResult = true)
         }
         if (actionType == RecyclerViewActionType.OFFER_WHATS_APP_SHARE.ordinal) {
-            ServiceListingFragment.shareProduct = item as ItemsItem
+            shareOfferItem = item
             if (checkStoragePermission())
-                share(ServiceListingFragment.defaultShareGlobal, 1, offerItem)
+                share(defaultShareGlobal, 1, shareOfferItem)
         }
         if (actionType == RecyclerViewActionType.OFFER_DATA_SHARE_CLICK.ordinal) {
-            ServiceListingFragment.shareProduct = item as ItemsItem
+            shareOfferItem = item
             if (checkStoragePermission())
-                share(defaultShareGlobal, 0, offerItem)
+                share(defaultShareGlobal, 0, shareOfferItem)
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_stafflisting, menu)
+        inflater.inflate(R.menu.menu_filter, menu)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            //todo not mentioned in ui
+            R.id.action_more -> true
+            R.id.action_sort_by -> {
+                true
+            }
+            else -> false
+        }
+
     }
 
 }

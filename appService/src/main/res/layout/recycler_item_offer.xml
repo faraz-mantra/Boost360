@@ -51,21 +51,11 @@
                 style="@style/Offers_Text_Subheading"
                 android:textColor="@color/black_4a4a4a"
                 android:layout_marginTop="@dimen/size_5"
-                app:layout_constraintBottom_toTopOf="@id/ctv_offers_description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ctv_offers_heading"
                 tools:text="₹ 5,000 OFF on Simple Massage" />
 
-            <com.framework.views.customViews.CustomTextView
-                android:id="@+id/ctv_offers_description"
-                style="@style/Offers_TextDescription"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="@dimen/size_10"
-                android:gravity="start"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ctv_offers_pricing"
-                tools:text="@string/this_is_the_cristmas_offer_of_this_year" />
+
 
             <com.framework.views.customViews.CustomTextView
                 android:id="@+id/crb_status"
@@ -81,36 +71,50 @@
                 app:layout_constraintStart_toEndOf="@+id/ctv_offers_pricing"
                 app:layout_constraintTop_toTopOf="@+id/ctv_offers_heading"
                 app:layout_constraintVertical_bias="0.349" />
-            <LinearLayout
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ll_share_buttons"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/size_10"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                android:layout_marginTop="@dimen/size_10"
-                app:layout_constraintStart_toEndOf="@+id/ctv_offers_description"
                 app:layout_constraintTop_toBottomOf="@+id/ctv_offers_pricing"
                 app:layout_constraintVertical_bias="0.0">
+
+                <com.framework.views.customViews.CustomTextView
+                    android:id="@+id/ctv_offers_description"
+                    style="@style/Offers_TextDescription"
+                    android:gravity="start"
+                    android:maxLines="2"
+                    android:layout_width="@dimen/size_0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/shareData"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/this_is_the_cristmas_offer_of_this_year" />
 
                 <com.framework.views.customViews.CustomImageView
                     android:id="@+id/shareData"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_marginEnd="@dimen/size_10"
                     android:background="@drawable/rounded_stroke_grey_4_solid_gray"
                     android:padding="@dimen/size_4"
                     android:src="@drawable/ic_share_normal"
-                    app:iconPadding="@dimen/size_3" />
+                    app:iconPadding="@dimen/size_3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/share_whatsapp"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/share_whatsapp"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:layout_marginStart="@dimen/size_16"
                     android:background="@drawable/bg_button_proceed_4"
                     android:backgroundTint="#6BC95C"
                     android:drawableStart="@drawable/ic_whatsapp_for_business_active"
@@ -118,8 +122,11 @@
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/size_16"
                     android:text="@string/share"
-                    android:textColor="@color/white" />
-            </LinearLayout>
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.framework.views.customViews.CustomCardView>
