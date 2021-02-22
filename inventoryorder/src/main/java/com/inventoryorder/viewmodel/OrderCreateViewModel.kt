@@ -91,6 +91,10 @@ class OrderCreateViewModel : BaseViewModel() {
     return AssuredPurchaseRepository.postOrderInitiate(clientId, request).toLiveData()
   }
 
+  fun postAppointment(clientId: String?, request: OrderInitiateRequest?): LiveData<BaseResponse> {
+    return AssuredPurchaseRepository.postAppointmentInitiate(clientId, request).toLiveData()
+  }
+
   fun updateExtraPropertyOrder(clientId: String?, request: UpdateExtraPropertyRequest? = null, requestCancel: UpdateOrderNPropertyRequest? = null): LiveData<BaseResponse> {
     return AssuredPurchaseRepository.updateExtraPropertyOrder(clientId, request, requestCancel).toLiveData()
   }

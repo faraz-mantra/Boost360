@@ -104,12 +104,14 @@ class SelectDateTimeBottomSheetDialog(private var bookingSlotResponse: BookingSl
 
   private fun prepareModelAndClose() {
     var appointmentRequestModel = AppointmentRequestModel()
-    appointmentRequestModel._id = bookingSlotResponse?.Result?.get(0)?.Staff?.get(selectedStaffPosition)?._id
+    appointmentRequestModel._id = selectedTimeSlot?._id
     appointmentRequestModel?.startTime = selectedTimeSlot?.StartTime
     appointmentRequestModel?.endTime = selectedTimeSlot?.EndTime
     appointmentRequestModel?.duration = selectedService?.Duration?.toString()
     appointmentRequestModel?.scheduledDateTime = getDateTime()
-    appointmentRequestModel?.staffId = bookingSlotResponse?.Result?.get(0)?.Staff?.get(selectedStaffPosition)?._id
+    appointmentRequestModel?.staffId = if (bookingSlotResponse?.Result?.get(0)?.Staff?.get(selectedStaffPosition)?.Name.equals("anybody", true)) null
+                                        else bookingSlotResponse?.Result?.get(0)?.Staff?.get(selectedStaffPosition)?._id
+
     appointmentRequestModel?.staffName = bookingSlotResponse?.Result?.get(0)?.Staff?.get(selectedStaffPosition)?.Name
 
     onClicked(appointmentRequestModel)

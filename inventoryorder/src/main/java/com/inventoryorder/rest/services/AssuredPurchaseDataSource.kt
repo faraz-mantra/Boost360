@@ -37,4 +37,10 @@ interface AssuredPurchaseDataSource {
       @Query("clientId") clientId: String?,
       @Body request: UpdateOrderNPropertyRequest?
   ): Observable<Response<Any>>
+
+  @POST(EndPoints.POST_INITIATE_APPOINTMENT)
+  fun initiateAppointment(
+          @Query("clientId") clientId: String?,
+          @Body request: OrderInitiateRequest?
+  ): Observable<Response<OrderInitiateResponse>>
 }

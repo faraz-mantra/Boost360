@@ -6,10 +6,12 @@ import android.widget.RadioGroup
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
+import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.databinding.*
 import com.inventoryorder.model.ordersdetails.OrderItem
+import kotlinx.android.synthetic.main.bottom_sheet_add_delivery_fee.*
 
-class AddDeliveryFeeBottomSheetDialog(val deliveryFee : Double = 0.0) : BaseBottomSheetDialog<BottomSheetAddDeliveryFeeBinding, BaseViewModel>() {
+class AddDeliveryFeeBottomSheetDialog(val deliveryFee : Double = 0.0, val type : String = "") : BaseBottomSheetDialog<BottomSheetAddDeliveryFeeBinding, BaseViewModel>() {
 
   var onClicked: (deliveryFeeValue: Double) -> Unit = { value : Double -> }
 
@@ -24,6 +26,12 @@ class AddDeliveryFeeBottomSheetDialog(val deliveryFee : Double = 0.0) : BaseBott
 
   override fun onCreateView() {
     if (deliveryFee > 0) binding?.editDeliveryFee?.setText(deliveryFee.toString())
+
+    if (type.isNotEmpty() && type.equals( AppConstant.TYPE_APPOINTMENT, true)) {
+      binding?.tvSubTitle?.text = getString(R.string.enter_service_charges_to_add_to_billing)
+      binding?.tvTitle?.text = getString(R.string.str_service_charges)
+      binding?.editDeliveryFee?.hint = getString(R.string.enter_service_charges)
+    }
     setOnClickListener(binding?.buttonDone, binding?.tvCancel)
   }
 
@@ -40,8 +48,6 @@ class AddDeliveryFeeBottomSheetDialog(val deliveryFee : Double = 0.0) : BaseBott
           onClicked(0.0)
         }
       }
-
-      binding?.tvCancel -> onClicked(-1.0)
     }
   }
 }

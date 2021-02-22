@@ -43,7 +43,7 @@ data class ExtraProperties(
     @SerializedName("age")
     val age: String = "",
     @SerializedName("Appointment")
-    var appointment : AppointmentRequestModel ?= null
+    var appointment : ArrayList<AppointmentRequestModel> ?= null
 ) : Serializable {
 
   fun startTime(): String {

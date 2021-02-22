@@ -139,7 +139,7 @@
                             android:layout_width="@dimen/size_15"
                             android:layout_height="@dimen/size_15"
                             android:layout_gravity="center_vertical"
-                            app:srcCompat="@drawable/ic_clock" />
+                            app:srcCompat="@drawable/ic_calender" />
 
                         <com.framework.views.customViews.CustomTextView
                             android:id="@+id/text_staff_name"

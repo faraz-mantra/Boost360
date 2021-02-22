@@ -1,5 +1,7 @@
 package com.inventoryorder.ui.appointmentspa
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -23,6 +25,7 @@ import com.inventoryorder.model.spaAppointment.bookingslot.request.DateRange
 import com.inventoryorder.model.spaAppointment.bookingslot.response.BookingSlotResponse
 import com.inventoryorder.recyclerView.CustomArrayAdapter
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.appointmentspa.bottomsheet.SelectDateTimeBottomSheetDialog
 import com.inventoryorder.ui.startFragmentOrderActivity
 import java.lang.Exception
@@ -43,6 +46,8 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     private var totalPrice = 0.0
     private var discountedPrice = 0.0
     private var currency = ""
+    var shouldReInitiate = false
+    var shouldRefresh = false
 
     companion object {
         @JvmStatic
@@ -84,6 +89,15 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         }
     }
 
+    fun getBundleData(): Bundle? {
+        val bundle = Bundle()
+        shouldReInitiate?.let {
+            bundle.putBoolean(IntentConstant.SHOULD_REINITIATE.name, shouldReInitiate)
+            bundle.putBoolean(IntentConstant.IS_REFRESH.name, shouldRefresh)
+        }
+        return bundle
+    }
+
     private fun validateForm() {
 
         val name = binding?.layoutCustomer?.editCustomerName?.text ?: ""
@@ -94,6 +108,11 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         val state = binding?.layoutBillingAddr?.editState?.text ?: ""
         val pinCode = binding?.layoutBillingAddr?.editPin?.text ?: ""
         val gstNo = binding?.layoutCustomer?.editGstin?.text ?: ""
+
+        if (appointmentRequestModel._id == null ||  appointmentRequestModel?._id?.isEmpty()==true) {
+            showShortToast(getString(R.string.please_select_staff_and_time_slot))
+            return
+        }
 
         if (name.isEmpty()) {
             showShortToast(getString(R.string.customer_name_cannot_be_empty))
@@ -147,7 +166,10 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         var billingAddress = Address(address.toString(), city = city.toString(), region = state.toString(), zipcode = pinCode.toString())
         var buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress)
 
-        var productDetails = ProductDetails(extraProperties = ExtraProperties(appointment = appointmentRequestModel))
+        var appointmentsList = ArrayList<AppointmentRequestModel>()
+        appointmentsList.add(appointmentRequestModel)
+
+        var productDetails = ProductDetails(extraProperties = ExtraProperties(appointment = appointmentsList))
 
         var items = ArrayList<ItemsItem>()
         var item = ItemsItem(productOrOfferId = selectedService?._id, quantity = 1, type = "SERVICE", productDetails = productDetails)
@@ -162,12 +184,12 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
         var bundle = Bundle()
         bundle?.putSerializable(IntentConstant.ORDER_REQUEST.name, orderInitiateRequest)
-        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
+        bundle?.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
         bundle?.putDouble(IntentConstant.TOTAL_PRICE.name, totalPrice)
         bundle?.putDouble(IntentConstant.DISCOUNTED_PRICE.name, discountedPrice)
-        bundle?.putDouble(IntentConstant.DISCOUNTED_PRICE.name, discountedPrice)
         bundle?.putString(IntentConstant.CURRENCY.name, currency)
-        startFragmentOrderActivity(FragmentType.REVIEW_SPA_DETAILS, bundle)
+        bundle?.putSerializable(IntentConstant.SELECTED_SERVICE.name, selectedService)
+        startFragmentOrderActivity(FragmentType.REVIEW_SPA_DETAILS, bundle, isResult = true)
     }
 
     private fun onDialogDoneClicked(appointmentRequestModel: AppointmentRequestModel) {
@@ -261,5 +283,18 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
     override fun onDateChanged(bookingSlotsRequest: BookingSlotsRequest) {
         getBookingSlots(bookingSlotsRequest = bookingSlotsRequest)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 101 && resultCode == Activity.RESULT_OK) {
+            val bundle = data?.extras?.getBundle(IntentConstant.RESULT_DATA.name)
+            shouldReInitiate = bundle?.getBoolean(IntentConstant.SHOULD_REINITIATE.name)!!
+            shouldRefresh = bundle?.getBoolean(IntentConstant.IS_REFRESH.name)
+            if (shouldReInitiate != null && shouldReInitiate) {
+                (context as FragmentContainerOrderActivity).onBackPressed()
+            }
+        }
     }
 }

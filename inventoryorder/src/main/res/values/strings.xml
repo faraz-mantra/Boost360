@@ -322,4 +322,13 @@
     <string name="no_staff_available">No staff available</string>
     <string name="cannot_go_beyond_todays_date">You cannot go beyond today\'s date</string>
     <string name="by_anybody">by anybody</string>
+    <string name="str_service_charges">Service charges</string>
+    <string name="enter_service_charges_to_add_to_billing">Enter the service charges to add it to billing</string>
+    <string name="enter_service_charges">Enter service charges</string>
+    <string name="please_select_staff_and_time_slot">Please select a staff and a time slot</string>
+    <string name="appointment_booked_and_confirmed_successfully">Appointment booked and confirmed successfully</string>
+    <string name="an_email_and_sms_with_the_appointment_details_and_gst_incoice_have_been_sent_to_the_customer_notifying_about_the_confirmation_along_with_a_secure_payment_link">An Email and SMS with the appointment details and GST incoice have been sent to the customer notifying about the confirmation along with a secure payment link.</string>
+    <string name="view_appointment_details">View appointments details</string>
+    <string name="view_appointment_dashboard">View appointment dashboard</string>
+    <string name="appointment_created_successfully">Appointment created successfully</string>
 </resources>

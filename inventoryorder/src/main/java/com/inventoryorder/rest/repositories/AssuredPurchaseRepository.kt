@@ -18,6 +18,10 @@ object AssuredPurchaseRepository : AppBaseRepository<AssuredPurchaseDataSource, 
     return makeRemoteRequest(remoteDataSource.initiateOrder(clientId, request), TaskCode.POST_ORDER_INITIATE)
   }
 
+  fun postAppointmentInitiate(clientId: String?, request: OrderInitiateRequest?): Observable<BaseResponse> {
+    return makeRemoteRequest(remoteDataSource.initiateAppointment(clientId, request), TaskCode.POST_ORDER_INITIATE)
+  }
+
   fun postOrderUpdate(clientId: String?, request: OrderInitiateRequest?): Observable<BaseResponse> {
     return makeRemoteRequest(remoteDataSource.updateOrder(clientId, request), TaskCode.POST_ORDER_UPDATE)
   }

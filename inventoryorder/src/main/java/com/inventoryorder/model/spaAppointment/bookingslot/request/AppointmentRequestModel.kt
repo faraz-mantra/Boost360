@@ -7,7 +7,7 @@ data class AppointmentRequestModel(
     var duration: String ?= null,
     var endTime: String ?= null,
     var scheduledDateTime: String ?= null,
-    var staffId: Any ?= null,
+    var staffId: String ?= null,
     var staffName: String ?= null,
     var startTime: String ?= null
 ) : Serializable

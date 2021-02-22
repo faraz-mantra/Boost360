@@ -63,11 +63,13 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
+                    android:id="@+id/linear_order_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_order_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_5"
@@ -91,6 +93,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_customer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -119,6 +122,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_item_qty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -147,6 +151,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_payment_mode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -175,6 +180,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_delivery_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -203,6 +209,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_delivery_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -230,6 +237,36 @@
                         app:textType="BODY_1" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/linear_payment_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_5"
+                        android:layout_weight="1"
+                        android:text="@string/str_payment_status"
+                        android:textColor="@color/black_4a4a4a"
+                        app:fontFamily="@font/regular"
+                        app:textType="BODY_1" />
+
+                    <com.framework.views.customViews.CustomTextView
+                        android:id="@+id/text_payment_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_5"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:textColor="@color/black_4a4a4a"
+                        app:fontFamily="@font/semi_bold"
+                        app:textType="BODY_1"
+                        tools:text="@string/store_pickup" />
+                </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -247,10 +284,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        tools:text="@string/summy_amount"
                         android:textColor="@color/black_4a4a4a"
                         android:textSize="18sp"
-                        app:fontFamily="@font/regular" />
+                        app:fontFamily="@font/regular"
+                        tools:text="@string/summy_amount" />
 
                     <ImageView
                         android:layout_width="@dimen/size_20"
@@ -289,13 +326,27 @@
             android:layout_weight="1"
             android:background="@color/white_smoke_1"
             android:orientation="vertical"
-            android:padding="@dimen/size_30">
+            android:padding="@dimen/size_20">
+
+            <com.framework.views.customViews.CustomTextView
+                android:id="@+id/appointment_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_5"
+                android:layout_weight="1"
+                android:text="@string/an_email_and_sms_with_the_appointment_details_and_gst_incoice_have_been_sent_to_the_customer_notifying_about_the_confirmation_along_with_a_secure_payment_link"
+                android:textColor="@color/grey_dark_2"
+                android:textSize="10sp"
+                android:gravity="center"
+                android:visibility="gone"
+                app:fontFamily="@font/regular" />
 
             <com.framework.views.customViews.CustomButton
                 android:id="@+id/button_confirm_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="@dimen/size_5"
                 android:background="@drawable/bg_rounded_yellow"
                 android:gravity="center"
                 android:padding="@dimen/size_15"
@@ -330,7 +381,5 @@
                 app:textType="CAPTION"
                 tools:ignore="UnusedAttribute" />
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
     </LinearLayout>
 </layout>
