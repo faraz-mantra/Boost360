@@ -34,8 +34,8 @@ public interface APIInterfaces {
   void updateTestimonials(@Header("Authorization") String token, @Path("testimonials") String testimonialType, @Body UpdateTestimonialsData body, Callback<String> response);
 
   //    @Headers({"Authorization: 59c89bbb5d64370a04c9aea1","Content-Type: application/json"})
-  @POST("/api/v1/testimonials/update-data")
-  void deleteTestimonials(@Header("Authorization") String token, @Body DeleteTestimonialsData body, Callback<String> response);
+  @POST("/api/v1/{testimonials}/update-data")
+  void deleteTestimonials(@Header("Authorization") String token,@Path("testimonials") String testimonialType, @Body DeleteTestimonialsData body, Callback<String> response);
 
   @GET("/DomainService/v1/domains/supportedTypes")
   void getDomainSupportType(@Query("clientId") String clientId, Callback<String[]> response);

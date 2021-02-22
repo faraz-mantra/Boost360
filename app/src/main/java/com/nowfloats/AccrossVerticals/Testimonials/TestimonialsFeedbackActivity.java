@@ -39,7 +39,7 @@ import com.nowfloats.AccrossVerticals.API.model.AddTestimonials.AddTestimonialsD
 import com.nowfloats.AccrossVerticals.API.model.AddTestimonials.ProfileImagee;
 import com.nowfloats.AccrossVerticals.API.model.AddTestimonials.Profileimage;
 import com.nowfloats.AccrossVerticals.API.model.DeleteTestimonials.DeleteTestimonialsData;
-import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.Data;
+import com.nowfloats.AccrossVerticals.API.model.GetTestimonials.TestimonialData;
 import com.nowfloats.AccrossVerticals.API.model.GetToken.GetTokenData;
 import com.nowfloats.AccrossVerticals.API.model.GetToken.WebActionsItem;
 import com.nowfloats.AccrossVerticals.API.model.UpdateTestimonialsData.UpdateTestimonialsData;
@@ -65,6 +65,7 @@ import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
 import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialsActivity.allTestimonialType;
+import static com.nowfloats.AccrossVerticals.Testimonials.TestimonialUtils.*;
 
 public class TestimonialsFeedbackActivity extends AppCompatActivity implements TestimonialsFeedbackListener {
 
@@ -75,15 +76,17 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
   Uri imageUri;
   String path = null;
   String uploadedImageURL = "";
-  String titleDesc = "";
   UserSessionManager session;
-  Data existingItemData = null;
-  EditText userNameText, reviewTitleText, reviewDescriptionText;
+  TestimonialData existingItemData = null;
+  EditText userNameText, reviewTitleText, reviewDescriptionText, profileDescEdt;
+  LinearLayout profileDescView, reviewTitleView;
+  TextView titleProfileDesc, isFillProfileDesc;
   CardView imageLayout;
   ImageView profileImage;
   ImageButton removeProfileImage;
   TextView reviewDescriptionLabel;
   TextView reviewTitleLabel;
+
   private String headerToken = "59c89bbb5d64370a04c9aea1";
   private String testimonialType = "testimonials";
   private TextView saveButton, descriptionCharCount;
@@ -109,6 +112,11 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
     reviewTitleText = findViewById(R.id.review_title);
     reviewDescriptionText = findViewById(R.id.review_description);
     imageLayout = findViewById(R.id.card_primary_image);
+    titleProfileDesc = findViewById(R.id.title_img_desc);
+    isFillProfileDesc = findViewById(R.id.is_fill_img_desc);
+    profileDescView = findViewById(R.id.img_desc_view);
+    reviewTitleView = findViewById(R.id.review_title_view);
+    profileDescEdt = findViewById(R.id.img_desc);
     profileImage = findViewById(R.id.iv_primary_image);
     removeProfileImage = findViewById(R.id.ib_remove_product_image);
     descriptionCharCount = findViewById(R.id.description_char_count);
@@ -154,39 +162,26 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
 
     if (ScreenType != null && ScreenType.equals("edit")) {
       displayData();
-    } else if (ScreenType != null) {
-      if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("HOTEL & MOTELS")) {
-        reviewTitleLabel.setText("Review City");
-        reviewDescriptionLabel.setText("Review Testimonial");
-      } else if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("SALON")) {
-        reviewDescriptionLabel.setText("Review Story");
-      }
     }
+
+    reviewTitleLabel.setText(getReviewSecondTitle(session.getFP_AppExperienceCode()));
+    reviewDescriptionLabel.setText(getDescTitle(session.getFP_AppExperienceCode()));
 
   }
 
   public void displayData() {
-    existingItemData = new Gson().fromJson(getIntent().getStringExtra("data"), Data.class);
+    existingItemData = new Gson().fromJson(getIntent().getStringExtra("data"), TestimonialData.class);
     itemId = existingItemData.getId();
-    titleDesc=existingItemData.getCity();
-    if ( existingItemData.getProfileimage()!=null){
-      uploadedImageURL = existingItemData.getProfileimage().getUrl();
-      titleDesc = existingItemData.getProfileimage().getDescription();
-    }
-    reviewTitleText.setText(titleDesc);
+    if (existingItemData.getProfileimage() != null) uploadedImageURL = existingItemData.getProfileimage().getUrl();
+    reviewTitleView.setVisibility(isReviewSecondValue(session.getFP_AppExperienceCode()));
+    reviewTitleText.setText(getReviewSecondValue(existingItemData, session.getFP_AppExperienceCode()));
     userNameText.setText(existingItemData.getUsername());
     reviewDescriptionText.setText(existingItemData.getDescription());
 
-    if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("HOTEL & MOTELS")) {
-      reviewTitleLabel.setText("Review City");
-      reviewDescriptionLabel.setText("Review Testimonial");
-    } else if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("MANUFACTURERS")) {
-      reviewDescriptionLabel.setText("Review Testimonial");
-    } else if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("SALON")) {
-      reviewDescriptionLabel.setText("Review Story");
-    } else {
-      reviewTitleText.setText(existingItemData.getTitle());
-    }
+    profileDescView.setVisibility(isProfileDescShow(session.getFP_AppExperienceCode()));
+    profileDescEdt.setText(getProfileDescValue(existingItemData, session.getFP_AppExperienceCode()));
+    titleProfileDesc.setText(getTitleProfileDesc(session.getFP_AppExperienceCode()));
+    isFillProfileDesc.setVisibility(isProfileDescFill(session.getFP_AppExperienceCode()));
 
     if (!uploadedImageURL.isEmpty()) {
       Glide.with(TestimonialsFeedbackActivity.this).load(uploadedImageURL).into(profileImage);
@@ -227,36 +222,6 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
   public void showDialogToGetImage() {
     final ImagePickerBottomSheetDialog imagePickerBottomSheetDialog = new ImagePickerBottomSheetDialog(this::onClickImagePicker);
     imagePickerBottomSheetDialog.show(getSupportFragmentManager(), ImagePickerBottomSheetDialog.class.getName());
-//        final MaterialDialog dialog = new MaterialDialog.Builder(TestimonialsFeedbackActivity.this)
-//                .customView(R.layout.featuredimage_popup, true)
-//                .show();
-//        PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
-//        View view = dialog.getCustomView();
-//        TextView title = (TextView) view.findViewById(R.id.textview_heading);
-//        title.setText("Upload Image");
-//        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
-//        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-//        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-//        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
-//        cameraImg.setColorFilter(whiteLabelFilter);
-//        galleryImg.setColorFilter(whiteLabelFilter);
-//
-//        takeCamera.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                cameraIntent();
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        takeGallery.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                galleryIntent();
-//                dialog.dismiss();
-//
-//            }
-//        });
   }
 
   private void onClickImagePicker(ImagePickerBottomSheetDialog.IMAGE_CLICK_TYPE image_click_type) {
@@ -270,33 +235,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
   void createNewTestimonialsAPI() {
     try {
       if (validateInput()) {
-        ActionData actionData = new ActionData();
-        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("HOTEL & MOTELS")) {
-          actionData.setCustomerName(userNameText.getText().toString());
-          actionData.setTestimonial(reviewDescriptionText.getText().toString());
-          actionData.setCity(reviewTitleText.getText().toString());
-          ProfileImagee placeImage = new ProfileImagee();
-          placeImage.setUrl(uploadedImageURL);
-          placeImage.setDescription("");
-          actionData.setProfileImagee(placeImage);
-        }
-        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("SALON")) {
-          actionData.setName(userNameText.getText().toString());
-          actionData.setTitle(reviewTitleText.getText().toString());
-          actionData.setOurStory(reviewDescriptionText.getText().toString());
-          Profileimage placeImage = new Profileimage();
-          placeImage.setUrl(uploadedImageURL);
-          placeImage.setDescription("");
-          actionData.setProfileimage(placeImage);
-        } else {
-          actionData.setUsername(userNameText.getText().toString());
-          actionData.setTitle(reviewTitleText.getText().toString());
-          actionData.setDescription(reviewDescriptionText.getText().toString());
-          Profileimage placeImage = new Profileimage();
-          placeImage.setUrl(uploadedImageURL);
-          placeImage.setDescription("");
-          actionData.setProfileimage(placeImage);
-        }
+        ActionData actionData = getActionData(session.getFP_AppExperienceCode());
         AddTestimonialsData request = new AddTestimonialsData();
         request.setWebsiteId(session.getFpTag());
         request.setActionData(actionData);
@@ -337,27 +276,70 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
 
   }
 
+  private ActionData getActionData(String fp_appExperienceCode) {
+    ActionData actionData = new ActionData();
+    String name = userNameText.getText().toString();
+    String desc = reviewDescriptionText.getText().toString();
+    String review = reviewTitleText.getText().toString();
+    String profileDesc = profileDescEdt.getText().toString();
+    switch (fp_appExperienceCode) {
+      case "HOT":
+        actionData.setCustomerName(name);
+        actionData.setTestimonial(desc);
+        actionData.setCity(review);
+        ProfileImagee placeImage = new ProfileImagee();
+        placeImage.setUrl(uploadedImageURL);
+        placeImage.setDescription(profileDesc);
+        actionData.setProfileImage(placeImage);
+        break;
+      case "DOC":
+      case "HOS":
+      case "EDU":
+      case "SVC":
+      case "RTL":
+        actionData.setUsername(name);
+        actionData.setDescription(desc);
+        Profileimage placeImageDH = new Profileimage();
+        placeImageDH.setUrl(uploadedImageURL);
+        placeImageDH.setDescription(profileDesc);
+        actionData.setProfileimage(placeImageDH);
+        break;
+      case "CAF":
+        actionData.setName(name);
+        actionData.setText(desc);
+        ProfileImagee placeImageC = new ProfileImagee();
+        placeImageC.setUrl(uploadedImageURL);
+        placeImageC.setDescription(profileDesc);
+        actionData.setImg(placeImageC);
+        break;
+      case "SPA":
+      case "SAL":
+        actionData.setName(name);
+        actionData.setTitle(review);
+        actionData.setOurStory(desc);
+        Profileimage placeImageSP = new Profileimage();
+        placeImageSP.setUrl(uploadedImageURL);
+        placeImageSP.setDescription(profileDesc);
+        actionData.setProfileimage(placeImageSP);
+        break;
+      case "MFG":
+      default:
+        actionData.setUsername(name);
+        actionData.setTitle(review);
+        actionData.setDescription(desc);
+        Profileimage placeImageD = new Profileimage();
+        placeImageD.setUrl(uploadedImageURL);
+        placeImageD.setDescription(profileDesc);
+        actionData.setProfileimage(placeImageD);
+        break;
+    }
+    return actionData;
+  }
+
   void updateExistingTestimonialsAPI() {
     try {
       if (validateInput()) {
-        ActionData actionData = new ActionData();
-        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).equals("HOTEL & MOTELS")) {
-          actionData.setCustomerName(userNameText.getText().toString());
-          actionData.setTestimonial(reviewTitleText.getText().toString());
-          actionData.setCity(reviewDescriptionText.getText().toString());
-          ProfileImagee placeImage = new ProfileImagee();
-          placeImage.setUrl(uploadedImageURL);
-          placeImage.setDescription("");
-          actionData.setProfileImagee(placeImage);
-        } else {
-          actionData.setUsername(userNameText.getText().toString());
-          actionData.setTitle(reviewTitleText.getText().toString());
-          actionData.setDescription(reviewDescriptionText.getText().toString());
-          Profileimage placeImage = new Profileimage();
-          placeImage.setUrl(uploadedImageURL);
-          placeImage.setDescription("");
-          actionData.setProfileimage(placeImage);
-        }
+        ActionData actionData = getActionData(session.getFP_AppExperienceCode());
         UpdateTestimonialsData requestBody = new UpdateTestimonialsData();
         requestBody.setQuery("{_id:'" + existingItemData.getId() + "'}");
         requestBody.setUpdateValue("{$set :" + new Gson().toJson(actionData) + "}");
@@ -383,7 +365,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
           @Override
           public void failure(RetrofitError error) {
             hideLoader();
-            if (error.getResponse().getStatus() == 200) {
+            if (error != null && error.getResponse() != null && error.getResponse().getStatus() == 200) {
               Toast.makeText(getApplicationContext(), "Successfully Updated Testimonials", Toast.LENGTH_LONG).show();
               onBackPressed();
             } else {
@@ -399,13 +381,14 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
   }
 
   private boolean validateInput() {
-    if (userNameText.getText().toString().isEmpty() || reviewTitleText.getText().toString().isEmpty()
-        || reviewDescriptionText.getText().toString().isEmpty()) {
+    if (!(userNameText.getText().toString().isEmpty() || reviewTitleText.getText().toString().isEmpty() || reviewDescriptionText.getText().toString().isEmpty()) ||
+        !(isProfileDescFill(session.getFP_AppExperienceCode()) == View.VISIBLE && profileDescEdt.getText().toString().isEmpty())) {
+      return true;
+    } else {
       Toast.makeText(getApplicationContext(), "Fields are Empty...", Toast.LENGTH_SHORT).show();
       hideLoader();
       return false;
     }
-    return true;
   }
 
   public void cameraIntent() {
@@ -539,7 +522,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
           .build()
           .create(APIInterfaces.class);
 
-      APICalls.deleteTestimonials(headerToken, requestBody, new Callback<String>() {
+      APICalls.deleteTestimonials(headerToken, testimonialType, requestBody, new Callback<String>() {
         @Override
         public void success(String data, Response response) {
           hideLoader();
@@ -555,7 +538,7 @@ public class TestimonialsFeedbackActivity extends AppCompatActivity implements T
         @Override
         public void failure(RetrofitError error) {
           hideLoader();
-          if (error.getResponse().getStatus() == 200) {
+          if (error != null && error.getResponse() != null && error.getResponse().getStatus() == 200) {
             Toast.makeText(getApplicationContext(), "Successfully Deleted.", Toast.LENGTH_LONG).show();
             onBackPressed();
           } else {
