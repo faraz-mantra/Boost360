@@ -124,7 +124,7 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     }
 
     override fun getNavigationIcon(): Drawable? {
-        return ContextCompat.getDrawable(this, R.drawable.ic_arrow_left)
+        return ContextCompat.getDrawable(this, R.drawable.ic_back_arrow_new)
     }
 
     private fun shouldAddToBackStack(): Boolean {

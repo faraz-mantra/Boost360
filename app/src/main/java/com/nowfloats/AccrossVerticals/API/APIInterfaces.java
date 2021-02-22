@@ -50,5 +50,4 @@ public interface APIInterfaces {
 //    void getHeaderAuthorizationtoken(@Path("themeID") String fpTag, @Query("WebsiteId") String websiteId, Callback<GetDomainData> response);
   void getHeaderAuthorizationtoken(@Path("themeID") String themeID, @Query("WebsiteId") String websiteId, Callback<GetTokenData> response);
 
-
 }

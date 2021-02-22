@@ -16,14 +16,18 @@
   <style name="CatalogTheme" parent="BaseTheme">
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
+    <item name="colorAccent">@color/colorAccent</item>
+  </style>
+
+  <style name="TestimonialTheme" parent="BaseTheme">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
   <style name="CatalogTheme.Information" parent="CatalogTheme">
     <item name="colorPrimary">@color/color_primary</item>
     <item name="colorPrimaryDark">@color/color_primary_dark</item>
-    <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
   </style>
 
   <style name="AppTheme.account" parent="AppTheme.cataloge">
