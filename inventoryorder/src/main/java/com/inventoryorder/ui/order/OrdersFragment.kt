@@ -13,9 +13,13 @@ import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
+import com.framework.utils.PreferencesUtils
+import com.framework.utils.getData
+import com.framework.utils.saveData
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
+import com.inventoryorder.constant.PreferenceConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentOrdersBinding
 import com.inventoryorder.model.OrderConfirmStatus
@@ -80,7 +84,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   override fun onCreateView() {
     super.onCreateView()
     fpTag?.let { WebEngageController.trackEvent("Clicked on Orders", "ORDERS", it) }
-    //setOnClickListener(binding?.btnAdd)
+    setOnClickListener(binding?.btnAdd)
     apiSellerSummary()
     layoutManagerN = LinearLayoutManager(baseActivity)
     layoutManagerN?.let { scrollPagingListener(it) }
@@ -89,9 +93,15 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   override fun onClick(v: View) {
     super.onClick(v)
     when (v) {
-//      binding?.btnAdd -> {
-//        startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, Bundle())
-//      }
+      binding?.btnAdd -> {
+        val bundle = Bundle()
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
+        if (!PreferencesUtils.instance.getData(PreferenceConstant.SHOW_CREATE_ORDER_WELCOME, false)) {
+          startFragmentOrderActivity(FragmentType.CREATE_NEW_ORDER, bundle)
+        } else {
+          startFragmentOrderActivity(FragmentType.ADD_PRODUCT, bundle)
+        }
+      }
     }
   }
 

@@ -5,6 +5,7 @@ import com.inventoryorder.model.SendMailRequest
 import com.inventoryorder.model.doctorsData.DoctorDataResponse
 import com.inventoryorder.model.orderRequest.shippedRequest.MarkAsShippedRequest
 import com.inventoryorder.model.orderfilter.OrderFilterRequest
+import com.inventoryorder.model.spaAppointment.GetServiceListingResponse
 import com.inventoryorder.model.summary.request.SellerSummaryRequest
 import com.inventoryorder.rest.EndPoints
 import com.inventoryorder.rest.response.OrderSummaryResponse

@@ -16,7 +16,6 @@ object ApiWithFloatRepository : AppBaseRepository<WithFloatDataSource, AppBaseLo
     return WithFloatDataSource::class.java
   }
 
-
   fun getUserSummary(clientId: String?, fpIdParent: String?, scope: String?, startDate: String?, endDate: String?): Observable<BaseResponse> {
     return ApiWithFloatRepository.makeRemoteRequest(remoteDataSource.getUserSummary(clientId, fpIdParent, scope, startDate, endDate), TaskCode.GET_USER_SUMMARY)
   }

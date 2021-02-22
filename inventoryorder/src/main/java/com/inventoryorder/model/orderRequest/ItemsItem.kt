@@ -1,15 +1,24 @@
 package com.inventoryorder.model.orderRequest
 
 import com.google.gson.annotations.SerializedName
+import com.inventoryorder.constant.RecyclerViewItemType
+import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import java.io.Serializable
 
 data class ItemsItem(
     @SerializedName("Type")
-    val type: String = "",
+    var type: String = "",
     @SerializedName("ProductDetails")
-    val productDetails: ProductDetails,
+    var productDetails: ProductDetails,
     @SerializedName("Quantity")
-    val quantity: Int = 0,
+    var quantity: Int = 0,
     @SerializedName("ProductOrOfferId")
-    val productOrOfferId: String = ""
-):Serializable
+    var productOrOfferId: String ?= null
+):Serializable , AppBaseRecyclerViewItem{
+
+    var recyclerViewItem: Int = RecyclerViewItemType.PRODUCT_ITEM_SELECTED.getLayout()
+
+    override fun getViewType(): Int {
+        return recyclerViewItem
+    }
+}
