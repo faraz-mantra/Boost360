@@ -26,6 +26,8 @@ object DateUtils {
   const val FORMAT_HH_MM = "HH:mm"
   const val FORMAT_HH_MM_A = "hh:mm a"
   const val FORMAT_H_MM_A = "h:mm a"
+  const val SPA_DISPLAY_DATE = "EEE',' dd MMMM yyyy"
+  const val SPA_REVIEW_DATE_FORMAT = "EEE',' MMM dd, yyyy"
   private val dateFormater = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
   private val dateFormaterToday = SimpleDateFormat("HH:mm", Locale.getDefault())
   private val dateFormaterDate = SimpleDateFormat("HH:mm", Locale.getDefault())

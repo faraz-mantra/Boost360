@@ -1,41 +1,54 @@
 package com.inventoryorder.ui.appointmentspa
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
+import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentSpaAppointmentBinding
-import com.inventoryorder.model.OrderInitiateResponse
+import com.inventoryorder.model.orderRequest.*
+import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.spaAppointment.GetServiceListingResponse
 import com.inventoryorder.model.spaAppointment.ServiceItem
+import com.inventoryorder.model.spaAppointment.bookingslot.request.AppointmentRequestModel
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.model.spaAppointment.bookingslot.request.DateRange
 import com.inventoryorder.model.spaAppointment.bookingslot.response.BookingSlotResponse
-import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.CustomArrayAdapter
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.appointmentspa.bottomsheet.SelectDateTimeBottomSheetDialog
 import com.inventoryorder.ui.startFragmentOrderActivity
+import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBinding>() {
+class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBinding>(), SelectDateTimeBottomSheetDialog.DateChangedListener {
 
     private var serviceList : ArrayList<ServiceItem> ?= null
     private var serviceAdapter : ArrayAdapter<ServiceItem> ?= null
-    private var startDate = "2021-02-20"
+    private var startDate = ""
     private var bookingSlotResponse : BookingSlotResponse ?= null
     private var selectedService : ServiceItem ?= null
+    private var selectedDateTimeBottomSheetDialog : SelectDateTimeBottomSheetDialog ?= null
+    private var orderInitiateRequest = OrderInitiateRequest()
+    private var appointmentRequestModel = AppointmentRequestModel()
+    private var totalPrice = 0.0
+    private var discountedPrice = 0.0
+    private var currency = ""
 
     companion object {
         @JvmStatic
         fun newInstance(bundle: Bundle? = null): SpaAppointmentFragment {
             val fragment = SpaAppointmentFragment()
+            fragment.setTargetFragment(this.newInstance(), 0)
             fragment.arguments = bundle
             return fragment
         }
@@ -45,24 +58,130 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         super.onCreateView()
         getSearchListing()
         serviceList = ArrayList()
-        setOnClickListener(binding?.buttonReviewDetails, binding?.textAddApptDateTime)
+        startDate = getDateTime()
+        setOnClickListener(binding?.buttonReviewDetails, binding?.textAddApptDateTime,
+                binding?.buttonReviewDetails, binding?.imageEdit)
     }
 
     override fun onClick(v: View) {
         super.onClick(v)
         when(v) {
             binding?.buttonReviewDetails -> {
-                startFragmentOrderActivity(FragmentType.REVIEW_SPA_DETAILS, Bundle())
+                validateForm()
             }
 
             binding?.textAddApptDateTime -> {
-                val selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!)
-                selectedDateTimeBottomSheetDialog.show(this.parentFragmentManager, SelectDateTimeBottomSheetDialog::class.java.name)
+                selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!, this)
+                selectedDateTimeBottomSheetDialog?.onClicked = {onDialogDoneClicked(it)}
+                selectedDateTimeBottomSheetDialog?.show(this.parentFragmentManager, SelectDateTimeBottomSheetDialog::class.java.name)
+            }
+
+            binding?.imageEdit -> {
+                selectedDateTimeBottomSheetDialog = SelectDateTimeBottomSheetDialog(bookingSlotResponse!!, selectedService!!, this)
+                selectedDateTimeBottomSheetDialog?.onClicked = {onDialogDoneClicked(it)}
+                selectedDateTimeBottomSheetDialog?.show(this.parentFragmentManager, SelectDateTimeBottomSheetDialog::class.java.name)
             }
         }
     }
 
-    private fun getSearchListing() {
+    private fun validateForm() {
+
+        val name = binding?.layoutCustomer?.editCustomerName?.text ?: ""
+        val email = binding?.layoutCustomer?.editCustomerEmail?.text ?: ""
+        val phone = binding?.layoutCustomer?.editCustomerPhone?.text ?: ""
+        val address = binding?.layoutBillingAddr?.editAddress?.text ?: ""
+        val city = binding?.layoutBillingAddr?.editCity?.text ?: ""
+        val state = binding?.layoutBillingAddr?.editState?.text ?: ""
+        val pinCode = binding?.layoutBillingAddr?.editPin?.text ?: ""
+        val gstNo = binding?.layoutCustomer?.editGstin?.text ?: ""
+
+        if (name.isEmpty()) {
+            showShortToast(getString(R.string.customer_name_cannot_be_empty))
+            return
+        }
+
+        if (phone.isEmpty()) {
+            showShortToast(getString(R.string.customer_phone_cannot_be_empty))
+            return
+        }
+
+        if (phone.length < 10) {
+            showShortToast(getString(R.string.please_enter_valid_phone))
+            return
+        }
+
+        if (email.isNullOrEmpty().not() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches().not()) {
+            showShortToast(getString(R.string.please_enter_valid_email))
+            return
+        }
+
+        if (address.isEmpty()) {
+            showShortToast(getString(R.string.customer_address_cannot_be_empty))
+            return
+        }
+
+        if (city.isEmpty()) {
+            showShortToast(getString(R.string.customer_city_cannot_be_empty))
+            return
+        }
+
+        if (state.isEmpty()) {
+            showShortToast(getString(R.string.customer_state_cannot_be_empty))
+            return
+        }
+
+        if (pinCode.isEmpty()) {
+            showShortToast(getString(R.string.customer_pincode_cannot_be_empty))
+            return
+        }
+
+        if (pinCode.length < 6) {
+            showShortToast(getString(R.string.enter_valid_pincode))
+            return
+        }
+
+        var contactDetails = ContactDetails(fullName = name.toString(),
+                emailId = email.toString(),
+                primaryContactNumber = phone.toString())
+
+        var billingAddress = Address(address.toString(), city = city.toString(), region = state.toString(), zipcode = pinCode.toString())
+        var buyerDetails = BuyerDetails(contactDetails = contactDetails, address = billingAddress)
+
+        var productDetails = ProductDetails(extraProperties = ExtraProperties(appointment = appointmentRequestModel))
+
+        var items = ArrayList<ItemsItem>()
+        var item = ItemsItem(productOrOfferId = selectedService?._id, quantity = 1, type = "SERVICE", productDetails = productDetails)
+
+        items.add(item)
+
+        orderInitiateRequest?.buyerDetails = buyerDetails
+        orderInitiateRequest?.mode = OrderItem.OrderMode.APPOINTMENT.name
+        orderInitiateRequest?.items = items
+        orderInitiateRequest?.items?.get(0)?.productDetails?.name = selectedService?.Name
+        orderInitiateRequest?.sellerID = preferenceData?.fpTag ?: ""
+
+        var bundle = Bundle()
+        bundle?.putSerializable(IntentConstant.ORDER_REQUEST.name, orderInitiateRequest)
+        bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
+        bundle?.putDouble(IntentConstant.TOTAL_PRICE.name, totalPrice)
+        bundle?.putDouble(IntentConstant.DISCOUNTED_PRICE.name, discountedPrice)
+        bundle?.putDouble(IntentConstant.DISCOUNTED_PRICE.name, discountedPrice)
+        bundle?.putString(IntentConstant.CURRENCY.name, currency)
+        startFragmentOrderActivity(FragmentType.REVIEW_SPA_DETAILS, bundle)
+    }
+
+    private fun onDialogDoneClicked(appointmentRequestModel: AppointmentRequestModel) {
+        binding?.layoutShowSelectedSlot?.visibility = View.VISIBLE
+        binding?.groupTiming?.visibility = View.GONE
+
+        binding?.textDate?.text = getDisplayDate(appointmentRequestModel?.scheduledDateTime ?: "")
+        binding?.textTime?.text = appointmentRequestModel?.startTime
+        binding?.textBy?.text = appointmentRequestModel?.staffName
+
+        this.appointmentRequestModel = appointmentRequestModel
+    }
+
+    fun getSearchListing() {
         showProgress(getString(R.string.loading))
         viewModel?.getSearchListing(preferenceData?.fpTag!!, "", "", 0, 10)?.observeOnce(viewLifecycleOwner, Observer {
             hideProgress()
@@ -74,7 +193,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
             if (it.isSuccess()) {
                 var serviceListingResponse = (it as? GetServiceListingResponse)
-                if (serviceListingResponse!= null) {
+                if (serviceListingResponse != null) {
                     serviceList?.addAll(serviceListingResponse.Result?.Data!!)
                     setArrayAdapter()
                 }
@@ -84,8 +203,25 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         })
     }
 
-    private fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest) {
-        showProgress(getString(R.string.loading))
+
+    private fun setArrayAdapter() {
+        serviceAdapter = CustomArrayAdapter(this.requireActivity(), R.layout.layout_service_item, serviceList!!)
+        serviceAdapter?.setNotifyOnChange(true)
+        binding?.editServiceName?.threshold = 1
+        binding?.editServiceName?.setAdapter(serviceAdapter)
+        binding?.editServiceName?.onItemClickListener = AdapterView.OnItemClickListener { p0, view, pos, id ->
+            selectedService = serviceList?.get(pos)
+            totalPrice = selectedService?.Price ?: 0.0
+            discountedPrice = selectedService?.DiscountedPrice ?: 0.0
+            currency = selectedService?.Currency ?: ""
+            var bookingSlotsRequest = BookingSlotsRequest(BatchType = "DAILY",
+                    ServiceId = serviceList?.get(pos)?._id!!,
+                    DateRange = DateRange(StartDate = startDate, EndDate = startDate))
+            getBookingSlots(bookingSlotsRequest)
+        }
+    }
+
+    fun getBookingSlots(bookingSlotsRequest: BookingSlotsRequest) {
         viewModel?.getBookingSlots(bookingSlotsRequest)?.observeOnce(viewLifecycleOwner, Observer {
             hideProgress()
 
@@ -96,6 +232,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
 
             if (it.isSuccess()) {
                 bookingSlotResponse = (it as? BookingSlotResponse)
+                selectedDateTimeBottomSheetDialog?.setData(bookingSlotResponse!!, selectedService!!)
                 binding?.groupTiming?.visibility = View.VISIBLE
             } else {
                 showLongToast(if (it.message().isNotEmpty()) it.message() else getString(R.string.not_able_to_get_booking_slots))
@@ -104,17 +241,25 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         })
     }
 
-    private fun setArrayAdapter() {
-        serviceAdapter = CustomArrayAdapter(this.requireActivity(), R.layout.layout_service_item, serviceList!!)
-        serviceAdapter?.setNotifyOnChange(true)
-        binding?.editServiceName?.threshold = 1
-        binding?.editServiceName?.setAdapter(serviceAdapter)
-        binding?.editServiceName?.onItemClickListener = AdapterView.OnItemClickListener { p0, view, pos, id ->
-            selectedService = serviceList?.get(pos)
-            var bookingSlotsRequest = BookingSlotsRequest(BatchType = "DAILY",
-                    ServiceId = serviceList?.get(pos)?._id!!,
-                    DateRange = DateRange(StartDate = startDate, EndDate = startDate))
-            getBookingSlots(bookingSlotsRequest)
-        }
+    private fun getDateTime() : String {
+        val c = Calendar.getInstance().time
+        val df = SimpleDateFormat(DateUtils.FORMAT_YYYY_MM_DD, Locale.getDefault())
+        return df.format(c)
+    }
+
+    private fun getDisplayDate(date : String) : String {
+        try {
+            val currentDateFormat = SimpleDateFormat(DateUtils.FORMAT_YYYY_MM_DD, Locale.getDefault())
+            val displayDateFormat = SimpleDateFormat(DateUtils.SPA_DISPLAY_DATE, Locale.getDefault())
+
+            var currentDate = currentDateFormat.parse(date)
+            return displayDateFormat.format(currentDate!!)
+        } catch (ex : Exception) {}
+
+        return ""
+    }
+
+    override fun onDateChanged(bookingSlotsRequest: BookingSlotsRequest) {
+        getBookingSlots(bookingSlotsRequest = bookingSlotsRequest)
     }
 }

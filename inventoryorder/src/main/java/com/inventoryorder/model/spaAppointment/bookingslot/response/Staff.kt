@@ -12,7 +12,7 @@ data class Staff(
     var IsAvailable: Boolean?= null,
     var Name: String?= null,
     var TileImageUrl: String?= null,
-    var _id: Any?= null,
+    var _id: String?= null,
     var isSelected : Boolean = false
 ): Serializable, AppBaseRecyclerViewItem {
     var recyclerViewType = RecyclerViewItemType.STAFF.getLayout()

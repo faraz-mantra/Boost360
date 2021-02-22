@@ -109,6 +109,7 @@
                         app:textType="BODY_1" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/layout_show_selected_slot"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_6"
@@ -136,6 +137,7 @@
                                 android:text="@string/dummy_date_time" />
 
                             <ImageView
+                                android:id="@+id/image_edit"
                                 android:layout_width="@dimen/size_18"
                                 android:layout_height="@dimen/size_18"
                                 android:padding="@dimen/size_1"
@@ -169,7 +171,7 @@
                                 style="@style/FormHeading"
                                 android:layout_weight="0"
                                 android:fontFamily="@font/regular"
-                                android:text="by anybody"
+                                tools:text="@string/by_anybody"
                                 android:textColor="@color/pinkish_grey" />
                         </androidx.appcompat.widget.LinearLayoutCompat>
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -213,6 +215,7 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <include
+                        android:id="@+id/layout_customer"
                         layout="@layout/layout_customer_details"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

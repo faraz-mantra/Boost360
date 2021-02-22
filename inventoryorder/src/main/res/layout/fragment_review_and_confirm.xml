@@ -83,6 +83,7 @@
                             android:paddingStart="@dimen/size_10">
 
                             <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/service_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/simple_dry_massage"
@@ -91,7 +92,7 @@
                                 app:textType="BODY_2" />
 
                             <com.framework.views.customViews.CustomTextView
-                                android:id="@+id/text_service_name"
+                                android:id="@+id/text_service_duration"
                                 style="@style/EditTextLabelStyle"
                                 android:text="@string/_30_minutes"
                                 app:layout_constraintStart_toStartOf="@id/linear_service"
@@ -145,7 +146,7 @@
                             style="@style/EditTextLabelStyle"
                             android:layout_weight="1"
                             android:paddingStart="@dimen/size_5"
-                            android:text="@string/_30_minutes"
+                            tools:text="@string/_30_minutes"
                             app:layout_constraintStart_toStartOf="@id/linear_service"
                             app:layout_constraintTop_toBottomOf="@id/linear_service" />
 
@@ -153,7 +154,7 @@
                             android:id="@+id/text_actual_amount"
                             style="@style/EditTextLabelStyle"
                             android:fontFamily="@font/semi_bold"
-                            android:text="@string/inr_1200"
+                            tools:text="@string/inr_1200"
                             android:textColor="@color/black_4a4a4a"
                             android:textSize="16sp"
                             app:layout_constraintStart_toStartOf="@id/linear_service"
@@ -184,10 +185,9 @@
                             android:text="@string/edit"
                             android:textColor="@color/orange"
                             android:textSize="16sp"
-                            android:visibility="gone"
+                            android:visibility="invisible"
                             app:layout_constraintStart_toStartOf="@id/linear_service"
                             app:layout_constraintTop_toBottomOf="@id/linear_service" />
-
 
                         <com.framework.views.customViews.CustomTextView
                             android:id="@+id/text_add"
@@ -375,7 +375,7 @@
                         app:textType="BODY_1" />
 
                     <com.framework.views.customViews.CustomTextView
-                        android:id="@+id/tv_gst"
+                        android:id="@+id/tv_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_6"
