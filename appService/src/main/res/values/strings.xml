@@ -519,6 +519,7 @@
   <string name="active_first">Active first</string>
   <string name="deactive_first">Deactive first</string>
     <string name="search_for_services">Search for services</string>
+    <string name="sort_offers_by">Sort offers by</string>
 
     <array name="stock_availbility">
     <item>"Unlimited stock"</item>

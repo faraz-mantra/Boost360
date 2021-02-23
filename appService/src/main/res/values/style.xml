@@ -27,7 +27,15 @@
         <item name="searchHintIcon">@null</item>
         <item name="closeIconTint">@color/white</item>
     </style>
-
+    <style name="OffersThemeBase" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetTheme</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back_arrow_new</item>
+        <item name="searchViewStyle">@style/ThemeOverlay.SearchView</item>
+        <item name="colorBackgroundFloating">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
     <style name="RadioService" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:textColor">@color/black_4a4a4a</item>
         <item name="android:layout_height">match_parent</item>
@@ -294,20 +302,22 @@
 
     <style name="Offers.ButtonStyle.Rounded.Solid.Stroke" parent="Offers.ButtonStyle">
         <item name="android:background">@drawable/offer_button_stroke_orange</item>
+        <item name="android:paddingStart">@dimen/size_10</item>
+        <item name="android:paddingEnd">@dimen/size_10</item>
         <item name="android:textColor">@color/yellow_ffb900</item>
     </style>
 
     <style name="Offers_Text_Heading">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="textColor">@color/black_4a4a4a</item>
+        <item name="android:textColor">@color/black_4a4a4a</item>
         <item name="textType">HEADING_3</item>
-        <item name="fontFamily">@font/regular</item>
+        <item name="android:fontFamily">@font/regular</item>
     </style>
     <style name="Offers_Text_Heading.Bottom_Sheet" parent="Offers_Text_Heading">
         <item name="textType">HEADING_5</item>
-        <item name="fontFamily">@font/semi_bold</item>
-        <item name="android:includeFontPadding">false</item>
+        <item name="android:fontFamily">@font/semi_bold</item>
+        <item name="android:includeFontPadding">true</item>
     </style>
 
     <style name="Offers_Text_Subheading" parent="Offers_Text_Heading">
@@ -389,7 +399,7 @@
 
     </style>
 
-    <style name="Offers_Image_Rounded"></style>
+    <style name="Offers_Image_Rounded" />
 
     <style name="TextDescription">
         <item name="android:layout_width">wrap_content</item>

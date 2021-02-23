@@ -21,4 +21,5 @@ interface OffersNowFloatsRemoteData {
     public fun addOfferImage(@Body request: AddImageOffer?): Observable<Response<BaseResponse>>
     @POST(EndPoints.POST_OFFER_DETAILS)
     public fun getOfferDetails(@Body request: OfferDetailsRequest?): Observable<Response<OfferDetailsResponse>>
+
 }

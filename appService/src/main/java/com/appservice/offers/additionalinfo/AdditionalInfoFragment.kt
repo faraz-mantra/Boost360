@@ -8,7 +8,7 @@ import com.appservice.base.AppBaseFragment
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.FragmentOfferAdditionalInfoBinding
 import com.appservice.model.FileModel
-import com.appservice.offers.models.AddImageOffer
+import com.appservice.model.servicev1.ImageModel
 import com.appservice.offers.models.OfferModel
 import com.appservice.offers.viewmodel.OfferViewModel
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
@@ -25,7 +25,7 @@ class AdditionalInfoFragment : AppBaseFragment<FragmentOfferAdditionalInfoBindin
     private var isEdit: Boolean = false
     private var adapterImage: AppBaseRecyclerViewAdapter<FileModel>? = null
 
-    private var secondaryDataImage: ArrayList<AddImageOffer>? = null
+    private var secondaryDataImage: ArrayList<ImageModel>? = null
     private var secondaryImage: ArrayList<FileModel> = ArrayList()
     override fun getLayout(): Int {
         return R.layout.fragment_offer_additional_info
@@ -43,16 +43,19 @@ class AdditionalInfoFragment : AppBaseFragment<FragmentOfferAdditionalInfoBindin
 
     override fun onCreateView() {
         super.onCreateView()
+        setOnClickListener(binding?.btnConfirm, binding?.btnClickPhoto, binding?.btnAddTag)
         this.offerModel = arguments?.getSerializable(IntentConstant.OFFER_DATA.name) as? OfferModel
         isEdit = (offerModel != null && offerModel?.offerId.isNullOrEmpty().not())
-        secondaryImage = (arguments?.getSerializable(IntentConstant.NEW_FILE_PRODUCT_IMAGE.name) as? ArrayList<FileModel>)
+        secondaryImage = (arguments?.getSerializable(IntentConstant.OFFER_SECONDARY_IMAGE.name) as? ArrayList<FileModel>)
                 ?: ArrayList()
         tagList = offerModel?.tags ?: ArrayList()
         if (isEdit) {
-//            secondaryDataImage = offerModel?.secondaryImages
-//            if (secondaryImage.isNullOrEmpty()) secondaryDataImage?.forEach { secondaryImage.add(FileModel(pathUrl = it.ActualImage)) }
+            secondaryDataImage = offerModel?.secondaryImages as ArrayList<ImageModel>
+            if (secondaryImage.isNullOrEmpty()) secondaryDataImage?.forEach { secondaryImage.add(FileModel(pathUrl = it.ActualImage)) }
         }
         offersTags()
+        setAdapter()
+
     }
 
     private fun offersTags() {
@@ -102,6 +105,7 @@ class AdditionalInfoFragment : AppBaseFragment<FragmentOfferAdditionalInfoBindin
     }
 
     private fun validateAnnGoBack() {
+        offerModel?.tags = tagList
         val output = Intent()
         output.putExtra(IntentConstant.OFFER_DATA.name, offerModel)
         output.putExtra(IntentConstant.OFFER_SECONDARY_IMAGE.name, secondaryImage)
