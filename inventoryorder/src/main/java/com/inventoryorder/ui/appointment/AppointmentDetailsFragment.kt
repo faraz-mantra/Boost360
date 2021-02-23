@@ -100,7 +100,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     }
   }
 
-  private fun apiGetOrderDetails(orderId: String, message: String="") {
+  private fun apiGetOrderDetails(orderId: String, message: String = "") {
     showProgress()
     viewModel?.getOrderDetails(clientId, orderId)?.observeOnce(viewLifecycleOwner, Observer {
       if (it.isSuccess()) {
@@ -143,26 +143,26 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
 
   private fun setDetails(order: OrderItem?) {
+    val product = order?.firstItemForAptConsult()?.product()
+    val extraAptDetail = product?.extraItemProductConsultation()
     binding?.textFromBookingValue?.text = "#${order?.ReferenceNumber}"
-    // binding?.textDateTime?.text = order.CreatedOn
     binding?.textDateTime?.text = DateUtils.parseDate(order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
 
     binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
 
-    binding?.textServiceName?.text = order?.firstItemForAptConsult()?.product()?.Name
-    // binding?.textDate?.text = order?.firstItemForConsultation()?.product()?.extraItemProductConsultation()?.scheduledDateTime
+    binding?.textServiceName?.text = product?.Name
 
-    val appointmentDate = java.lang.StringBuilder(DateUtils.parseDate(order?.firstItemForAptConsult()?.Product?.extraItemProductConsultation()?.startTime(), DateUtils.FORMAT_HH_MM, DateUtils.FORMAT_HH_MM_A) ?: "") /*"${} on ${}"*/
-    if (!DateUtils.parseDate(order?.firstItemForAptConsult()?.product()?.extraItemProductConsultation()?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5, timeZone = TimeZone.getTimeZone("IST")).isNullOrEmpty()) {
-      appointmentDate.append(" on ${DateUtils.parseDate(order?.firstItemForAptConsult()?.product()?.extraItemProductConsultation()?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5)}")
+    val appointmentDate = java.lang.StringBuilder(DateUtils.parseDate(extraAptDetail?.startTime(), DateUtils.FORMAT_HH_MM, DateUtils.FORMAT_HH_MM_A) ?: "")
+    if (!DateUtils.parseDate(extraAptDetail?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5, timeZone = TimeZone.getTimeZone("IST")).isNullOrEmpty()) {
+      appointmentDate.append(" on ${DateUtils.parseDate(extraAptDetail?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5)}")
     }
     binding?.textDate?.text = appointmentDate
 
-    binding?.textStaff?.text = if (!order?.firstItemForAptConsult()?.product()?.extraItemProductConsultation()?.doctorName.isNullOrBlank()) "Staff : ${order?.firstItemForAptConsult()?.product()?.extraItemProductConsultation()?.doctorName}" else ""
-    binding?.textAppointmentAmount?.text = "${order?.firstItemForAptConsult()?.product()?.getCurrencyCodeValue()} ${order?.firstItemForAptConsult()?.product()?.price()}"
+    binding?.textStaff?.text = if (!extraAptDetail?.doctorName.isNullOrBlank()) "${extraAptDetail?.doctorName}" else ""
+    binding?.textAppointmentAmount?.text = "${product?.getCurrencyCodeValue()} ${product?.price()}"
 
-    if (order?.firstItemForAptConsult()?.product()?.ImageUri.isNullOrEmpty().not()) {
-      Picasso.get().load(order?.firstItemForAptConsult()?.product()?.ImageUri).into(binding?.imageServiceProvider)
+    if (product?.ImageUri.isNullOrEmpty().not()) {
+      Picasso.get().load(product?.ImageUri).into(binding?.imageServiceProvider)
     }
 
     binding?.textCustomerName?.text = order?.BuyerDetails?.ContactDetails?.FullName

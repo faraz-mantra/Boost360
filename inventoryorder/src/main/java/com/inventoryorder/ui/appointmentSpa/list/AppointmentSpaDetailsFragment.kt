@@ -143,26 +143,24 @@ class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentS
 
 
   private fun setDetails(order: OrderItem?) {
+    val product=order?.firstItemForAptConsult()?.product()
+    val extraDataSpa = order?.firstItemForAptConsult()?.getAptSpaExtraDetail()
     binding?.textFromBookingValue?.text = "#${order?.ReferenceNumber}"
-    // binding?.textDateTime?.text = order.CreatedOn
     binding?.textDateTime?.text = DateUtils.parseDate(order?.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_3, timeZone = TimeZone.getTimeZone("IST"))
 
     binding?.textAmount?.text = "${order?.BillingDetails?.CurrencyCode} ${order?.BillingDetails?.GrossAmount}"
 
-    binding?.textServiceName?.text = order?.firstItemForAptConsult()?.product()?.Name
-    // binding?.textDate?.text = order?.firstItemForConsultation()?.product()?.extraItemProductConsultation()?.scheduledDateTime
-
-    val extraDataSpa = order?.firstItemForAptConsult()?.getAptSpaExtraDetail()
+    binding?.textServiceName?.text = product?.Name
 
     val appointmentDate = "${extraDataSpa?.startTime()} on ${DateUtils.parseDate(extraDataSpa?.scheduledDateTime ?: "", DateUtils.FORMAT_YYYY_MM_DD, DateUtils.FORMAT_SERVER_TO_LOCAL_5)}"
 
     binding?.textDate?.text = appointmentDate
 
     binding?.textStaff?.text = if (!extraDataSpa?.staffName.isNullOrBlank()) "Staff : ${extraDataSpa?.staffName}" else ""
-    binding?.textAppointmentAmount?.text = "${order?.firstItemForAptConsult()?.product()?.getCurrencyCodeValue()} ${order?.firstItemForAptConsult()?.product()?.price()}"
+    binding?.textAppointmentAmount?.text = "${product?.getCurrencyCodeValue()} ${product?.price()}"
 
-    if (order?.firstItemForAptConsult()?.product()?.ImageUri.isNullOrEmpty().not()) {
-      Picasso.get().load(order?.firstItemForAptConsult()?.product()?.ImageUri).into(binding?.imageServiceProvider)
+    if (product?.ImageUri.isNullOrEmpty().not()) {
+      Picasso.get().load(product?.ImageUri).into(binding?.imageServiceProvider)
     }
 
     binding?.textCustomerName?.text = order?.BuyerDetails?.ContactDetails?.FullName
