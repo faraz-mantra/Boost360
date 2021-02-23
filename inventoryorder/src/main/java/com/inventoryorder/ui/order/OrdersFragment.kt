@@ -66,7 +66,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   /* Paging */
   private var isLoadingD = false
-  private var isSerchItem = false
+  private var isSearchItem = false
   private var TOTAL_ELEMENTS = 0
   private var currentPage = PAGE_START
   private var isLastPageD = false
@@ -108,7 +108,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
     binding?.orderRecycler?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
       override fun loadMoreItems() {
-        if (!isLastPageD && !isSerchItem) {
+        if (!isLastPageD && !isSearchItem) {
           isLoadingD = true
           currentPage += requestFilter.limit ?: 0
           orderAdapter?.addLoadingFooter(OrderItem().getLoaderItem())
@@ -202,6 +202,7 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
   }
 
   private fun popUpMenuButton(position: Int, view: View, orderItem: OrderItem?) {
+    if (orderItem == null) return
     this.orderItem = orderItem
     this.position = position
     val list = OrderMenuModel().getOrderMenu(orderItem)
@@ -508,10 +509,10 @@ open class OrdersFragment : BaseInventoryFragment<FragmentOrdersBinding>(), Recy
 
   private fun startFilter(query: String) {
     if (query.isNotEmpty() && query.length > 2) {
-      isSerchItem = true
-      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = isSerchItem)
+      isSearchItem = true
+      getSellerOrdersFilterApi(getRequestFilterData(arrayListOf(), searchTxt = query), isSearch = isSearchItem)
     } else {
-      isSerchItem = false
+      isSearchItem = false
       orderList.clear()
       orderList.addAll(orderListFinalList)
       setAdapterNotify(orderList)
