@@ -17,7 +17,7 @@ import com.framework.utils.DateUtils.parseDate
 import com.framework.utils.fromHtml
 import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewActionType
-import com.inventoryorder.databinding.ItemAppointmentsOrderBinding
+import com.inventoryorder.databinding.ItemAppointmentsSpaBinding
 import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersummary.OrderMenuModel
 import com.inventoryorder.model.ordersummary.OrderStatusValue
@@ -30,7 +30,7 @@ import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.util.*
 
-class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRecyclerViewHolder<ItemAppointmentsOrderBinding>(binding) {
+class AppointmentSpaViewHolder(binding: ItemAppointmentsSpaBinding) : AppBaseRecyclerViewHolder<ItemAppointmentsSpaBinding>(binding) {
 
   override fun bind(position: Int, item: BaseRecyclerViewItem) {
     super.bind(position, item)
@@ -71,17 +71,18 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     binding.customer.title.text = "${getApplicationContext()?.getString(R.string.customer)} :"
     binding.customer.value.text = order.BuyerDetails?.ContactDetails?.FullName?.capitalizeUtil()
 
-    if (!order.firstItemForAptConsult()?.Product?.ImageUri.isNullOrEmpty()) {
-      Picasso.get().load(order.firstItemForAptConsult()?.Product?.ImageUri).into(binding.imageServiceProvider)
+    val itemAptSpa=order.firstItemForAptConsult()
+    if (!itemAptSpa?.Product?.ImageUri.isNullOrEmpty()) {
+      Picasso.get().load(itemAptSpa?.Product?.ImageUri).into(binding.imageServiceProvider)
     } else {
       binding.imageServiceProvider.visibility = View.GONE
     }
 
-    binding.textWorkType.text = order.firstItemForAptConsult()?.Product?.Name
+    binding.textWorkType.text = itemAptSpa?.Product?.Name
 
     //settings up button
     var colorCode = "#9B9B9B"
-    val btnStatusMenu = order.appointmentButtonStatus()
+    val btnStatusMenu = order.appointmentSpaButtonStatus()
     binding.lytStatusBtn.visible()
     if (btnStatusMenu.isNullOrEmpty().not()) {
       when (val btnOrderMenu = btnStatusMenu.removeAt(0)) {
@@ -128,20 +129,9 @@ class AppointmentsViewHolder(binding: ItemAppointmentsOrderBinding) : AppBaseRec
     binding.payment.title.text = getApplicationContext()?.getString(R.string.payment_mode)
     binding.payment.value.text = fromHtml(order.PaymentDetails?.paymentWithColor(colorCode)?.trim() ?: "")
 
-    val doctorName = order.firstItemForAptConsult()?.product()?.extraItemProductConsultation()?.doctorName
-    binding.txtScheduledDate.text = fromHtml("${order.firstItemForAptConsult()?.getScheduleDateAndTime()}${if (doctorName.isNullOrEmpty()) "" else " by <b><u>$doctorName</u></b>"}")
+    val staffName = itemAptSpa?.getAptSpaExtraDetail()?.staffName
+    binding.txtScheduledDate.text = fromHtml("${itemAptSpa?.getScheduleDateAndTimeSpa()}${if (staffName.isNullOrEmpty()) "" else " by <b><u>$staffName</u></b>"}")
 
-
-    //----------------------------
-    val location = order.SellerDetails?.Address?.City?.capitalizeUtil()
-
-    val details = order.firstItemForAptConsult()?.Product?.extraItemProductConsultation()?.detailsConsultation()
-    val scheduleDate = order.firstItemForAptConsult()?.scheduledStartDate()
-
-    val dateApt = parseDate(scheduleDate, FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)
-
-    val todayDate = getCurrentDate().parseDate(FORMAT_DD_MM_YYYY) ?: ""
-    val itemDate = parseDate(order.CreatedOn, FORMAT_SERVER_DATE, FORMAT_DD_MM_YYYY) ?: ""
   }
 
   private fun changeButtonStatus(btnTitle: String, @DrawableRes buttonBkg: Int, @ColorRes dropDownDividerColor: Int, @DrawableRes resId: Int) {

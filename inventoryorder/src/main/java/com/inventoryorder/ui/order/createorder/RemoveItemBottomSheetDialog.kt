@@ -1,13 +1,10 @@
-package com.inventoryorder.ui.order.sheetOrder
+package com.inventoryorder.ui.order.createorder
 
 import android.view.View
-import android.widget.CheckBox
-import android.widget.RadioGroup
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
 import com.inventoryorder.databinding.*
-import com.inventoryorder.model.ordersdetails.OrderItem
 
 class RemoveItemBottomSheetDialog : BaseBottomSheetDialog<BottomSheetRemoveItemBinding, BaseViewModel>() {
 

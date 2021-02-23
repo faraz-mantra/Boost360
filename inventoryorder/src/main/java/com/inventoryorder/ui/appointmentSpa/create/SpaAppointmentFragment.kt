@@ -1,9 +1,8 @@
-package com.inventoryorder.ui.appointmentspa
+package com.inventoryorder.ui.appointmentSpa.create
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -26,7 +25,6 @@ import com.inventoryorder.model.spaAppointment.bookingslot.response.BookingSlotR
 import com.inventoryorder.recyclerView.CustomArrayAdapter
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
-import com.inventoryorder.ui.appointmentspa.bottomsheet.SelectDateTimeBottomSheetDialog
 import com.inventoryorder.ui.startFragmentOrderActivity
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -40,7 +38,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
     private var startDate = ""
     private var bookingSlotResponse : BookingSlotResponse ?= null
     private var selectedService : ServiceItem ?= null
-    private var selectedDateTimeBottomSheetDialog : SelectDateTimeBottomSheetDialog ?= null
+    private var selectedDateTimeBottomSheetDialog : SelectDateTimeBottomSheetDialog?= null
     private var orderInitiateRequest = OrderInitiateRequest()
     private var appointmentRequestModel = AppointmentRequestModel()
     private var totalPrice = 0.0
@@ -53,7 +51,7 @@ class SpaAppointmentFragment : BaseInventoryFragment<FragmentSpaAppointmentBindi
         @JvmStatic
         fun newInstance(bundle: Bundle? = null): SpaAppointmentFragment {
             val fragment = SpaAppointmentFragment()
-            fragment.setTargetFragment(this.newInstance(), 0)
+            fragment.setTargetFragment(newInstance(), 0)
             fragment.arguments = bundle
             return fragment
         }

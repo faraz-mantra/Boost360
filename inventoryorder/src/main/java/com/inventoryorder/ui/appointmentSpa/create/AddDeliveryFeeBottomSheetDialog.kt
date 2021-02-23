@@ -1,15 +1,11 @@
-package com.inventoryorder.ui.order.sheetOrder
+package com.inventoryorder.ui.appointmentSpa.create
 
 import android.view.View
-import android.widget.CheckBox
-import android.widget.RadioGroup
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
 import com.inventoryorder.databinding.*
-import com.inventoryorder.model.ordersdetails.OrderItem
-import kotlinx.android.synthetic.main.bottom_sheet_add_delivery_fee.*
 
 class AddDeliveryFeeBottomSheetDialog(val deliveryFee : Double = 0.0, val type : String = "") : BaseBottomSheetDialog<BottomSheetAddDeliveryFeeBinding, BaseViewModel>() {
 

@@ -1,15 +1,11 @@
-package com.inventoryorder.ui.order.sheetOrder
+package com.inventoryorder.ui.order.createorder
 
 import android.view.View
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
-import com.inventoryorder.databinding.BottomSheetCancelOrderBinding
-import com.inventoryorder.databinding.BottomSheetDeliveryTypeBinding
 import com.inventoryorder.databinding.BottomSheetEditCustomerInfoBinding
-import com.inventoryorder.model.orderRequest.BuyerDetails
 import com.inventoryorder.model.orderRequest.ContactDetails
-import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.ordersdetails.OrderItem
 
 class EditCustomerInfoBottomSheetDialog(private val contactDetails: ContactDetails) : BaseBottomSheetDialog<BottomSheetEditCustomerInfoBinding, BaseViewModel>() {

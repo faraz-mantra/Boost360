@@ -72,11 +72,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
 
   private fun apiGetOrderDetails(orderId: String, message: String) {
     viewModel?.getOrderDetails(clientId, orderId)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        errorUi(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
+      if (it.isSuccess()) {
         orderItem = (it as? OrderDetailResponse)?.Data
         if (orderItem != null) {
           getProductAllDetails()
@@ -84,7 +80,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
             isRefresh = true
             showShortToast(message)
           }
-        } else errorUi("Order item null.")
+        } else errorUi("Order detail empty.")
       } else errorUi(it.message())
     })
   }
@@ -185,7 +181,7 @@ class OrderDetailFragment : BaseInventoryFragment<FragmentOrderDetailBinding>() 
   private fun setOrderDetails(order: OrderItem) {
     binding?.orderType?.text = getStatusText(order)
     OrderStatusValue.fromStatusOrder(order.status())?.icon?.let { binding?.statusIcon?.setImageResource(it) }
-    binding?.tvOrderStatus?.text = order.PaymentDetails?.status()
+    binding?.tvOrderStatus?.text = order.PaymentDetails?.statusValue()
     binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
     binding?.tvDeliveryType?.text = order.deliveryType()
     binding?.tvItemCount?.visibility = if (order.Items.isNullOrEmpty().not()) View.VISIBLE else View.GONE

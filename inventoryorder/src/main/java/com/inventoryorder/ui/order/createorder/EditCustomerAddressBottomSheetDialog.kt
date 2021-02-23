@@ -1,18 +1,12 @@
-package com.inventoryorder.ui.order.sheetOrder
+package com.inventoryorder.ui.order.createorder
 
 import android.view.View
-import android.widget.CheckBox
-import android.widget.RadioGroup
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
-import com.inventoryorder.databinding.BottomSheetCancelOrderBinding
-import com.inventoryorder.databinding.BottomSheetDeliveryTypeBinding
 import com.inventoryorder.databinding.BottomSheetEditCustomerAddressBinding
-import com.inventoryorder.databinding.BottomSheetEditCustomerInfoBinding
 import com.inventoryorder.model.orderRequest.Address
 import com.inventoryorder.model.ordersdetails.OrderItem
-import kotlinx.android.synthetic.main.layout_address.*
 
 class EditCustomerAddressBottomSheetDialog(val address: Address) : BaseBottomSheetDialog<BottomSheetEditCustomerAddressBinding, BaseViewModel>() {
 

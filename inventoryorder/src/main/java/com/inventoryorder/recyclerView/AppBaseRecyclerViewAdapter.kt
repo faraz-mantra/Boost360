@@ -30,8 +30,10 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       PRODUCT_ITEM_SELECTED -> ProductSelectedItemViewHolder(binding as ItemProductsAddedBinding)
       PRODUCT_BOTTOM_SHEET_OPTIONS -> CreateOrderBottomSheetItemViewHolder(binding as BottomSheetOrderOptionBinding)
       ITEM_DELIVERY_OPTIONS -> DeliveryViewHolder(binding as ItemBottomSheetPickUpDeliveryOptionBinding)
-      BOOKING_DETAILS -> AppointmentDetailsViewHolder(binding as ItemBookingDetailsBinding)
-      BOOKINGS_ITEM_TYPE -> AppointmentsViewHolder(binding as ItemAppointmentsOrderBinding)
+      APPOINTMENT_ITEM_TYPE -> AppointmentsViewHolder(binding as ItemAppointmentsOrderBinding)
+      APPOINTMENT_SPA_ITEM_TYPE -> AppointmentSpaViewHolder(binding as ItemAppointmentsSpaBinding)
+      APPOINTMENT_DETAILS -> AppointmentDetailsViewHolder(binding as ItemBookingDetailsBinding)
+      APPOINTMENT_SPA_DETAILS -> AppointmentSpaDetailsViewHolder(binding as ItemAppointmentSpaDetailsBinding)
       ITEM_SERVICE_LOCATIONS -> LocationsViewHolder(binding as ItemBottomSheetServiceLocationsBinding)
       ITEM_CHOOSE_PURPOSE -> ChoosePurposeViewHolder(binding as ItemBottomSheetChoosePurposeBinding)
       VIDEO_CONSULT_ITEM_TYPE -> VideoConsultsViewHolder(binding as ItemVideoConsultOrderBinding)
@@ -46,8 +48,8 @@ open class AppBaseRecyclerViewAdapter<T : AppBaseRecyclerViewItem>(
       WEEK_TIMING_SELECTED -> WeekTimeViewHolder(binding as ItemWeekTimeSelectBinding)
       SERVICES_DEPARTMENT -> ServicesViewHolder(binding as ItemConsultationServicesBinding)
       ORDER_MENU_ITEM -> OrderMenuHolder(binding as ItemOrderMenuBinding)
-      STAFF -> StaffItemViewHolder(binding as StaffItemBinding)
-      SLOTS -> SlotsItemViewHolder(binding as ItemTimeSlotAppointmentBinding)
+      STAFF_ITEM -> StaffItemViewHolder(binding as StaffItemBinding)
+      SLOTS_ITEM -> SlotsItemViewHolder(binding as ItemTimeSlotAppointmentBinding)
     }
   }
 

@@ -20,7 +20,7 @@ object DateUtils {
   //  const val FORMAT_SERVER_TO_LOCAL_2 = "EEE dd-MMM-yyyy hh:mm a"
   const val FORMAT_SERVER_TO_LOCAL_2 = "EEE',' dd MMMM',' hh:mm a"
   const val FORMAT_DD_MM_YYYY = "dd-MM-yyyy"
-  const val FORMAT_DD_MM_YYYY_N = "yyyy/MM/dd"
+  const val FORMAT_DD_MM_YYYY_N = "dd/MM/yyyy"
   const val FORMAT_DD_MM_YYYY_hh_mm_ss = "dd-MM-yyyy HH:mm:ss"
   const val FORMAT__DD__MM__YYYY = "dd MM yyyy"
   const val FORMAT_YYYY_MM_DD = "yyyy-MM-dd"

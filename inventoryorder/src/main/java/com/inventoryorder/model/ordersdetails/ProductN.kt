@@ -14,7 +14,9 @@ data class ProductN(
     val Price: Double? = null,
     val SKU: String? = null,
     val ShippingCost: Double? = null,
-    val _id: String? = null
+    val _id: String? = null,
+    val BrandName: String? = null,
+    val BrandNamSecondaryImagesUri: Any? = null,
 ) : Serializable {
 
   fun extraItemProductConsultation(): ExtraPropertiesN? {
@@ -34,4 +36,7 @@ data class ProductN(
   }
 
 
+  fun getCurrencyCodeValue(): String? {
+    return CurrencyCode
+  }
 }

@@ -11,7 +11,6 @@ import com.inventoryorder.databinding.ItemProductsAddedBinding
 import com.inventoryorder.model.orderRequest.ItemsItem
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
-import com.inventoryorder.ui.order.sheetOrder.EditCustomerInfoBottomSheetDialog
 import com.squareup.picasso.Picasso
 
 class ProductSelectedItemViewHolder(binding: ItemProductsAddedBinding) : AppBaseRecyclerViewHolder<ItemProductsAddedBinding>(binding) {

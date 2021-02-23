@@ -9,8 +9,10 @@ enum class RecyclerViewItemType {
   INVENTORY_ORDER_ITEM,
   ITEM_ORDER_DETAILS,
   ITEM_DELIVERY_OPTIONS,
-  BOOKINGS_ITEM_TYPE,
-  BOOKING_DETAILS,
+  APPOINTMENT_ITEM_TYPE,
+  APPOINTMENT_SPA_ITEM_TYPE,
+  APPOINTMENT_DETAILS,
+  APPOINTMENT_SPA_DETAILS,
   ITEM_SERVICE_LOCATIONS,
   ITEM_CHOOSE_PURPOSE,
   VIDEO_CONSULT_ITEM_TYPE,
@@ -28,8 +30,8 @@ enum class RecyclerViewItemType {
   PRODUCT_ITEM,
   PRODUCT_ITEM_SELECTED,
   PRODUCT_BOTTOM_SHEET_OPTIONS,
-  STAFF,
-  SLOTS;
+  STAFF_ITEM,
+  SLOTS_ITEM;
 
   @LayoutRes
   fun getLayout(): Int {
@@ -39,8 +41,10 @@ enum class RecyclerViewItemType {
       INVENTORY_ORDER_ITEM -> R.layout.item_order
       ITEM_ORDER_DETAILS -> R.layout.item_order_details
       ITEM_DELIVERY_OPTIONS -> R.layout.item_bottom_sheet_pick_up_delivery_option
-      BOOKINGS_ITEM_TYPE -> R.layout.item_appointments_order
-      BOOKING_DETAILS -> R.layout.item_booking_details
+      APPOINTMENT_ITEM_TYPE -> R.layout.item_appointments_order
+      APPOINTMENT_SPA_ITEM_TYPE -> R.layout.item_appointments_spa
+      APPOINTMENT_DETAILS -> R.layout.item_booking_details
+      APPOINTMENT_SPA_DETAILS -> R.layout.item_appointment_spa_details
       ITEM_SERVICE_LOCATIONS -> R.layout.item_bottom_sheet_service_locations
       ITEM_CHOOSE_PURPOSE -> R.layout.item_bottom_sheet_choose_purpose
       DATE_VIEW_TYPE -> R.layout.item_date_view
@@ -58,8 +62,8 @@ enum class RecyclerViewItemType {
       PRODUCT_ITEM -> R.layout.item_product
       PRODUCT_ITEM_SELECTED -> R.layout.item_products_added
       PRODUCT_BOTTOM_SHEET_OPTIONS -> R.layout.bottom_sheet_order_option
-      STAFF -> R.layout.staff_item
-      SLOTS -> R.layout.item_time_slot_appointment
+      STAFF_ITEM -> R.layout.staff_item
+      SLOTS_ITEM -> R.layout.item_time_slot_appointment
     }
   }
 }

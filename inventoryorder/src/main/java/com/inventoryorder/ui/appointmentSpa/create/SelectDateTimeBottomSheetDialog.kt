@@ -1,38 +1,31 @@
-package com.inventoryorder.ui.appointmentspa.bottomsheet
+package com.inventoryorder.ui.appointmentSpa.create
 
 import android.view.View
-import android.widget.CheckBox
-import android.widget.RadioGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.framework.base.BaseBottomSheetDialog
-import com.framework.exceptions.NoNetworkException
-import com.framework.extensions.observeOnce
 import com.framework.models.BaseViewModel
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewActionType
-import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.*
-import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.spaAppointment.ServiceItem
 import com.inventoryorder.model.spaAppointment.bookingslot.request.AppointmentRequestModel
 import com.inventoryorder.model.spaAppointment.bookingslot.request.BookingSlotsRequest
 import com.inventoryorder.model.spaAppointment.bookingslot.request.DateRange
 import com.inventoryorder.model.spaAppointment.bookingslot.response.BookingSlotResponse
-import com.inventoryorder.model.spaAppointment.bookingslot.response.Date
 import com.inventoryorder.model.spaAppointment.bookingslot.response.Slots
 import com.inventoryorder.model.spaAppointment.bookingslot.response.Staff
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
-import com.inventoryorder.ui.appointmentspa.SpaAppointmentFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
 class SelectDateTimeBottomSheetDialog(private var bookingSlotResponse: BookingSlotResponse,
                                       private var selectedService : ServiceItem,
-                                      private var dateChange : DateChangedListener) :
+                                      private var dateChange : DateChangedListener
+) :
         BaseBottomSheetDialog<BottomSheetSelectDateTimeBinding, BaseViewModel>(),
         RecyclerItemClickListener{
 
@@ -41,7 +34,7 @@ class SelectDateTimeBottomSheetDialog(private var bookingSlotResponse: BookingSl
   private var selectedStaffPosition = 0
   private var calender : Calendar ?= null
   private var dateCounter = 1
-  private var dateChangedListener : DateChangedListener ?= null
+  private var dateChangedListener : DateChangedListener?= null
   private var selectedTimeSlot : Slots ?= null
 
   var onClicked: (appiointmentRequestModel: AppointmentRequestModel) -> Unit = { appiointmentRequestModel: AppointmentRequestModel -> }
