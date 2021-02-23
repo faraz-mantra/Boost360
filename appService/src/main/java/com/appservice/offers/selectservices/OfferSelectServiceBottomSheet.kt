@@ -1,7 +1,9 @@
 package com.appservice.offers.selectservices
 
+import androidx.fragment.app.DialogFragment
 import com.appservice.R
 import com.appservice.constant.IntentConstant
+import com.appservice.constant.RecyclerViewItemType
 import com.appservice.databinding.BottomSheetSelectServiceListingBinding
 import com.appservice.offers.models.SelectServiceModel.DataItemOfferService
 import com.appservice.offers.viewmodel.OfferViewModel
@@ -15,6 +17,7 @@ import com.appservice.staffs.model.ServiceListResponse
 import com.appservice.staffs.ui.UserSession
 import com.framework.base.BaseBottomSheetDialog
 import java.util.*
+import kotlin.collections.ArrayList
 
 class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectServiceListingBinding, OfferViewModel>(), RecyclerItemClickListener {
     private var isEdit: Boolean? = null
@@ -23,8 +26,8 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
     private var listServices: ArrayList<DataItemOfferService>? = null
     private var serviceIds: ArrayList<String>? = null
     override fun onCreateView() {
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogStyle)
         init()
-        getBundleData()
 
     }
 
@@ -39,8 +42,10 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
         viewModel!!.getServiceListing(ServiceListRequest(
                 FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpTag)
         ).observe(viewLifecycleOwner, {
+            val services = ArrayList<DataItemOfferService>()
             data = (it as ServiceListResponse).result!!.data!!
-            this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data as ArrayList<DataItemOfferService>, itemClickListener = this@OfferSelectServiceBottomSheet)
+            data.forEach { service -> services.add(DataItemOfferService(service?.isChecked, service?.type, service?.category, service?.secondaryTileImages, service?.price, service?.discountedPrice, service?.duration, service?.id, service?.image, service?.secondaryImages, service?.discountAmount, service?.name, service?.tileImage)) }
+            this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = services, itemClickListener = this@OfferSelectServiceBottomSheet)
             binding?.rvServices?.adapter = adapter
 //            when {
 //                isEdit!! -> {
@@ -53,12 +58,13 @@ class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectSer
 //                    }
 //                }
 //            }
-            adapter?.notifyDataSetChanged()
+//            adapter?.notifyDataSetChanged()
 
         })
     }
 
     private fun init() {
+        getBundleData()
         fetchServices()
         setOnClickListener(binding?.btnApply, binding?.btnCancel)
     }

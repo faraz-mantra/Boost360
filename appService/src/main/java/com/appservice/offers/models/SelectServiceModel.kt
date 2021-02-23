@@ -82,7 +82,7 @@ class SelectServiceModel {
 
             @field:SerializedName("TileImage")
             val tileImage: String? = null,
-            var recyclerViewItem: Int = RecyclerViewItemType.OFFER_SELECT_SERVICES.getLayout(),
+            val recyclerViewItem: Int = RecyclerViewItemType.OFFER_SELECT_SERVICES.getLayout(),
     ) : AppBaseRecyclerViewItem, Serializable {
         override fun getViewType(): Int {
             return recyclerViewItem
