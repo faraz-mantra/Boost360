@@ -99,9 +99,6 @@ class StaffFragmentContainerActivity : AppBaseActivity<ActivityFragmentContainer
     return resources.getDimension(R.dimen.heading_7)
   }
 
-  override fun getNavIconScale(): Float {
-    return 1.0f
-  }
 
   override fun customTheme(): Int? {
     return when (fragmentType) {

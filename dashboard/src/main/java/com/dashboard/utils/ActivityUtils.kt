@@ -474,8 +474,14 @@ fun AppCompatActivity.startBookAppointmentConsult(session: UserSessionManager?, 
         session?.getFPDetails(Key_Preferences.LONGITUDE), session?.fP_AppExperienceCode)
     val bundle = Bundle()
     bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
-    bundle.putBoolean(IntentConstant.IS_VIDEO.name, isConsult)
-    this.startFragmentOrderActivity(com.inventoryorder.constant.FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
+    val fragmentType = when {
+      session?.fP_AppExperienceCode.equals("SPA", true) -> com.inventoryorder.constant.FragmentType.CREATE_SPA_APPOINTMENT
+      else -> {
+        bundle.putBoolean(IntentConstant.IS_VIDEO.name, isConsult)
+        com.inventoryorder.constant.FragmentType.CREATE_APPOINTMENT_VIEW
+      }
+    }
+    this.startFragmentOrderActivity(fragmentType, bundle, isResult = true)
   } catch (e: ClassNotFoundException) {
     e.printStackTrace()
   }
@@ -493,6 +499,7 @@ fun AppCompatActivity.startOrderAptConsultList(session: UserSessionManager?, isO
     val fragmentType = when {
       isOrder -> com.inventoryorder.constant.FragmentType.ALL_ORDER_VIEW
       isConsult -> com.inventoryorder.constant.FragmentType.ALL_VIDEO_CONSULT_VIEW
+      session?.fP_AppExperienceCode.equals("SPA", true) -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_SPA_VIEW
       else -> com.inventoryorder.constant.FragmentType.ALL_APPOINTMENT_VIEW
     }
     this.startFragmentOrderActivity(fragmentType, bundle, isResult = true)

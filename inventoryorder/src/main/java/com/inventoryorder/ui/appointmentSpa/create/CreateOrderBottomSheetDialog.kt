@@ -1,22 +1,15 @@
-package com.inventoryorder.ui.order.sheetOrder
+package com.inventoryorder.ui.appointmentSpa.create
 
 import android.view.View
-import android.widget.CheckBox
-import android.widget.RadioGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.framework.adapters.RecyclerViewItemClickListener
 import com.framework.base.BaseBottomSheetDialog
 import com.framework.models.BaseViewModel
 import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewActionType
-import com.inventoryorder.constant.RecyclerViewItemType
 import com.inventoryorder.databinding.*
 import com.inventoryorder.model.order.orderbottomsheet.BottomSheetOptionsItem
 import com.inventoryorder.model.order.orderbottomsheet.OrderBottomSheet
-import com.inventoryorder.model.orderRequest.ItemsItem
-import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewAdapter
-import com.inventoryorder.recyclerView.AppBaseRecyclerViewItem
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 

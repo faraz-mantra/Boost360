@@ -1,19 +1,12 @@
 package com.inventoryorder.holders
 
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import com.google.android.material.textview.MaterialTextView
 import com.inventoryorder.R
 import com.inventoryorder.constant.RecyclerViewActionType
-import com.inventoryorder.databinding.ItemProductsAddedBinding
 import com.inventoryorder.databinding.StaffItemBinding
-import com.inventoryorder.model.orderRequest.ItemsItem
 import com.inventoryorder.model.spaAppointment.bookingslot.response.Staff
 import com.inventoryorder.recyclerView.AppBaseRecyclerViewHolder
 import com.inventoryorder.recyclerView.BaseRecyclerViewItem
-import com.inventoryorder.ui.order.sheetOrder.EditCustomerInfoBottomSheetDialog
 import com.squareup.picasso.Picasso
 
 class StaffItemViewHolder(binding: StaffItemBinding) : AppBaseRecyclerViewHolder<StaffItemBinding>(binding) {

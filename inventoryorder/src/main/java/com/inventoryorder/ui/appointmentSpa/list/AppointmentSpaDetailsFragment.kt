@@ -1,4 +1,4 @@
-package com.inventoryorder.ui.appointment
+package com.inventoryorder.ui.appointmentSpa.list
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -21,7 +21,7 @@ import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
-import com.inventoryorder.databinding.FragmentAppointmentDetailsBinding
+import com.inventoryorder.databinding.FragmentAppointmentSpaDetailsBinding
 import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.UpdateOrderNPropertyRequest
 import com.inventoryorder.model.bottomsheet.LocationsModel
@@ -37,6 +37,7 @@ import com.inventoryorder.recyclerView.RecyclerItemClickListener
 import com.inventoryorder.rest.response.order.OrderDetailResponse
 import com.inventoryorder.rest.response.order.ProductResponse
 import com.inventoryorder.ui.BaseInventoryFragment
+import com.inventoryorder.ui.appointment.LocationBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.CancelBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.ConfirmBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.DeliveredBottomSheetDialog
@@ -45,7 +46,7 @@ import com.inventoryorder.utils.capitalizeUtil
 import com.squareup.picasso.Picasso
 import java.util.*
 
-class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDetailsBinding>(), RecyclerItemClickListener {
+class AppointmentSpaDetailsFragment : BaseInventoryFragment<FragmentAppointmentSpaDetailsBinding>(), RecyclerItemClickListener {
 
   private var orderItem: OrderItem? = null
   private var isRefresh: Boolean? = null
@@ -56,8 +57,8 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
 
   companion object {
     @JvmStatic
-    fun newInstance(bundle: Bundle? = null): AppointmentDetailsFragment {
-      val fragment = AppointmentDetailsFragment()
+    fun newInstance(bundle: Bundle? = null): AppointmentSpaDetailsFragment {
+      val fragment = AppointmentSpaDetailsFragment()
       fragment.arguments = bundle
       return fragment
     }
@@ -66,7 +67,6 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
   override fun onCreateView() {
     super.onCreateView()
     arguments?.getString(IntentConstant.ORDER_ID.name)?.let { apiGetOrderDetails(it) }
-
     binding?.textPhone?.setOnClickListener {
       if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber.isNullOrEmpty()) {
         showShortToast(getString(R.string.contact_number_not_available))
@@ -137,7 +137,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     productList?.forEach { orderItem?.Items?.firstOrNull { it1 -> it1.Product?._id?.trim() == it.Product?._id?.trim() }?.product_detail = it.Product }
     binding?.mainView?.visible()
     binding?.error?.gone()
-    setDetails(orderItem!!)
+    setDetails(orderItem)
     hideProgress()
   }
 
@@ -152,13 +152,13 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     binding?.textServiceName?.text = order?.firstItemForAptConsult()?.product()?.Name
     // binding?.textDate?.text = order?.firstItemForConsultation()?.product()?.extraItemProductConsultation()?.scheduledDateTime
 
-    val appointmentDate = java.lang.StringBuilder(DateUtils.parseDate(order?.firstItemForAptConsult()?.Product?.extraItemProductConsultation()?.startTime(), DateUtils.FORMAT_HH_MM, DateUtils.FORMAT_HH_MM_A) ?: "") /*"${} on ${}"*/
-    if (!DateUtils.parseDate(order?.firstItemForAptConsult()?.product()?.extraItemProductConsultation()?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5, timeZone = TimeZone.getTimeZone("IST")).isNullOrEmpty()) {
-      appointmentDate.append(" on ${DateUtils.parseDate(order?.firstItemForAptConsult()?.product()?.extraItemProductConsultation()?.scheduledDateTime, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_5)}")
-    }
+    val extraDataSpa = order?.firstItemForAptConsult()?.getAptSpaExtraDetail()
+
+    val appointmentDate = "${extraDataSpa?.startTime()} on ${DateUtils.parseDate(extraDataSpa?.scheduledDateTime ?: "", DateUtils.FORMAT_YYYY_MM_DD, DateUtils.FORMAT_SERVER_TO_LOCAL_5)}"
+
     binding?.textDate?.text = appointmentDate
 
-    binding?.textStaff?.text = if (!order?.firstItemForAptConsult()?.product()?.extraItemProductConsultation()?.doctorName.isNullOrBlank()) "Staff : ${order?.firstItemForAptConsult()?.product()?.extraItemProductConsultation()?.doctorName}" else ""
+    binding?.textStaff?.text = if (!extraDataSpa?.staffName.isNullOrBlank()) "Staff : ${extraDataSpa?.staffName}" else ""
     binding?.textAppointmentAmount?.text = "${order?.firstItemForAptConsult()?.product()?.getCurrencyCodeValue()} ${order?.firstItemForAptConsult()?.product()?.price()}"
 
     if (order?.firstItemForAptConsult()?.product()?.ImageUri.isNullOrEmpty().not()) {
@@ -178,14 +178,13 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
       if (address.isEmpty()) binding?.groupCustomerAddress?.visibility = View.GONE
       else binding?.textAddrValue?.text = address
     }
-
     setButtonStatus(order)
   }
 
   private fun setButtonStatus(order: OrderItem?) {
     //settings up button
     var colorCode = "#4a4a4a"
-    val btnStatusMenu = order?.appointmentButtonStatus()
+    val btnStatusMenu = order?.appointmentSpaButtonStatus()
     binding?.lytStatusBtn?.visible()
     if (btnStatusMenu.isNullOrEmpty().not()) {
       when (val btnOrderMenu = btnStatusMenu?.removeAt(0)) {
@@ -228,19 +227,21 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
       binding?.divider?.visible()
       binding?.ivDropdown?.visible()
     }
-  }
 
-  private fun onButtonClicked(item: OrderItem) {
-    if (((item as? OrderItem)?.Status?.equals("ORDER_CONFIRMED")) == true) {
-      this.orderItem = item
-      val sheetCancel = CancelBottomSheetDialog()
-      sheetCancel.setData(item)
-      sheetCancel.onClicked = this@AppointmentDetailsFragment::apiCancelOrder
-      sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
-    } else {
-      apiConfirmOrder(item)
+    OrderSummaryModel.OrderStatus.from(order?.status())?.let {
+      when (it) {
+        OrderSummaryModel.OrderStatus.ORDER_CANCELLED -> {
+          // changeBackground(View.GONE, View.VISIBLE, R.drawable.cancel_order_bg, R.color.primary_grey, R.color.primary_grey)
+          // binding.btnConfirm.gone()
+        }
+        else -> {
+          //changeBackground(View.VISIBLE, View.GONE, R.drawable.ic_apt_order_bg, R.color.watermelon_light, R.color.light_green)
+          // checkConfirmBtn(order)
+        }
+      }
     }
   }
+
 
   private fun popUpMenuButton(view: View) {
     val list = OrderMenuModel().getAppointmentMenu(orderItem)
@@ -248,55 +249,12 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
     val orderMenuView: View = LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
     val rvOrderMenu: RecyclerView? = orderMenuView.findViewById(R.id.rv_menu_order)
     rvOrderMenu?.apply {
-      val adapterMenu = AppBaseRecyclerViewAdapter(baseActivity, list, this@AppointmentDetailsFragment)
+      val adapterMenu = AppBaseRecyclerViewAdapter(baseActivity, list, this@AppointmentSpaDetailsFragment)
       adapter = adapterMenu
     }
     mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
     mPopupWindow.showAsDropDown(view, 0, 0)
   }
-
-  private fun apiCancelOrder(cancellingEntity: String, reasonText: String) {
-    showProgress()
-    viewModel?.cancelOrder(clientId, this.orderItem?._id, cancellingEntity)?.observeOnce(viewLifecycleOwner, Observer {
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        hideProgress()
-        return@Observer
-      }
-      if (it.isSuccess()) {
-        isRefresh = true
-        val data = it as? OrderConfirmStatus
-        if (reasonText.isNotEmpty()) {
-          updateReason(resources.getString(R.string.order_cancel), UpdateExtraPropertyRequest.PropertyType.CANCELLATION.name, ExtraPropertiesOrder(cancellationRemark = reasonText))
-        } else {
-          apiGetOrderDetails(this.orderItem?._id ?: "")
-          showLongToast(resources.getString(R.string.order_cancel))
-        }
-      } else {
-        showLongToast(it.message())
-        hideProgress()
-      }
-    })
-  }
-
-  private fun apiConfirmOrder(order: OrderItem) {
-    showProgress()
-    viewModel?.confirmOrder(clientId, order?._id)?.observeOnce(viewLifecycleOwner, Observer {
-      hideProgress()
-      if (it.error is NoNetworkException) {
-        showShortToast(resources.getString(R.string.internet_connection_not_available))
-        return@Observer
-      }
-      if (it.status == 200 || it.status == 201 || it.status == 202) {
-        isRefresh = true
-        val data = it as? OrderConfirmStatus
-        showLongToast(getString(R.string.appointment_confirmed))
-        orderItem?.Status = OrderSummaryModel.OrderStatus.ORDER_CONFIRMED.name
-        setButtonStatus(orderItem!!)
-      }
-    })
-  }
-
 
   fun getBundleData(): Bundle? {
     isRefresh?.let {
@@ -357,7 +315,7 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
         this.orderItem = orderItem
         val sheetCancel = CancelBottomSheetDialog()
         sheetCancel.setData(orderItem)
-        sheetCancel.onClicked = this@AppointmentDetailsFragment::apiCancelApt
+        sheetCancel.onClicked = this@AppointmentSpaDetailsFragment::apiCancelApt
         sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> markCodPaymentRequest()
@@ -486,216 +444,4 @@ class AppointmentDetailsFragment : BaseInventoryFragment<FragmentAppointmentDeta
       orderItem?._id?.let { it1 -> apiGetOrderDetails(it1, message) }
     })
   }
-
-  /*  private fun checkStatusOrder(order: OrderItem) {
-      if (order.isConfirmActionBtn()) {
-        binding?.bottomBtn?.visible()
-        binding?.buttonConfirmOrder?.setOnClickListener(this)
-      } else binding?.bottomBtn?.gone()
-      if (order.isCancelActionBtn()) {
-        binding?.tvCancelOrder?.visible()
-        binding?.tvCancelOrder?.setOnClickListener(this)
-      } else binding?.tvCancelOrder?.gone()
-    }
-
-    private fun setAdapter(orderItems: ArrayList<ItemN>) {
-      binding?.recyclerViewBookingDetails?.post {
-        val adapter = AppBaseRecyclerViewAdapter(baseActivity, orderItems)
-        binding?.recyclerViewBookingDetails?.adapter = adapter
-      }
-    }
-
-
-    private fun buttonDisable(color: Int) {
-      activity?.let {
-        val newDrawable: Drawable? = binding?.buttonConfirmOrder?.background
-        newDrawable?.let { it1 -> DrawableCompat.setTint(it1, ContextCompat.getColor(it, color)) }
-        binding?.buttonConfirmOrder?.background = newDrawable
-      }
-    }
-
-    fun getBundleData(): Bundle? {
-      isRefresh?.let {
-        val bundle = Bundle()
-        bundle.putBoolean(IntentConstant.IS_REFRESH.name, it)
-        return bundle
-      }
-      return null
-    }
-
-
-    private fun setOrderDetails(order: OrderItem) {
-      binding?.orderType?.text = getStatusText(order)
-      binding?.tvOrderStatus?.text = order.PaymentDetails?.status()
-      val b = (PaymentDetailsN.STATUS.from(order.PaymentDetails?.Status ?: "") == PaymentDetailsN.STATUS.PENDING)
-      if (b) binding?.tvOrderStatus?.setTextColor(getColor(R.color.watermelon_light_10))
-      binding?.tvPaymentMode?.text = order.PaymentDetails?.methodValue()
-      order.BillingDetails?.let { bill ->
-        val currency = takeIf { bill.CurrencyCode.isNullOrEmpty().not() }?.let { bill.CurrencyCode?.trim() } ?: "INR"
-        binding?.tvOrderAmount?.text = "$currency ${bill.AmountPayableByBuyer}"
-      }
-      val scheduleDate = order.firstItemForConsultation()?.scheduledStartDate()
-      val dateApt = DateUtils.parseDate(scheduleDate, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2)
-      binding?.bookingDate?.text = if (dateApt.isNullOrEmpty().not()) {
-        dateApt
-      } else {
-        DateUtils.parseDate(order.CreatedOn, DateUtils.FORMAT_SERVER_DATE, DateUtils.FORMAT_SERVER_TO_LOCAL_2, timeZone = TimeZone.getTimeZone("IST"))
-      }
-      // customer details
-      binding?.tvCustomerName?.text = order.BuyerDetails?.ContactDetails?.FullName?.trim()
-      binding?.tvCustomerAddress?.text = order.BuyerDetails?.getAddressFull()
-
-      binding?.tvCustomerContactNumber?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerContactNumber?.setPaintFlags(it) }
-      binding?.tvCustomerEmail?.paintFlags?.or(Paint.UNDERLINE_TEXT_FLAG)?.let { binding?.tvCustomerEmail?.setPaintFlags(it) }
-      binding?.tvCustomerContactNumber?.text = order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()
-
-      if (order.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { !checkValidMobile(it) }!!)
-        binding?.tvCustomerContactNumber?.setTextColor(getColor(R.color.watermelon_light_10))
-      if (order.BuyerDetails.ContactDetails.EmailId.isNullOrEmpty().not()) {
-        binding?.tvCustomerEmail?.text = order.BuyerDetails.ContactDetails.EmailId?.trim()
-        if (!checkValidEmail(order.BuyerDetails.ContactDetails.EmailId!!.trim())) binding?.tvCustomerEmail?.setTextColor(getColor(R.color.watermelon_light_10))
-      } else binding?.tvCustomerEmail?.isGone = true
-
-
-      // shipping details
-      var shippingCost = 0.0
-      var salePrice = 0.0
-      var currency = "INR"
-      order.Items?.forEachIndexed { index, item ->
-        shippingCost += item.Product?.ShippingCost ?: 0.0
-        salePrice += item.product().price() - item.product().discountAmount()
-        if (index == 0) currency = takeIf { item.Product?.CurrencyCode.isNullOrEmpty().not() }
-            ?.let { item.Product?.CurrencyCode?.trim() } ?: "INR"
-      }
-      binding?.tvTotalOrderAmount?.text = "Total Amount: $currency $salePrice"
-
-    }
-
-    private fun getStatusText(order: OrderItem): String? {
-      val statusValue = OrderStatusValue.fromStatusAppointment(order.status())?.value
-      return when (OrderSummaryModel.OrderStatus.ORDER_CANCELLED.name) {
-        order.status().toUpperCase(Locale.ROOT) -> {
-          return if (order.PaymentDetails?.status()?.toUpperCase(Locale.ROOT) == PaymentDetailsN.STATUS.CANCELLED.name) {
-            OrderStatusValue.ESCALATED_2.value
-          } else statusValue.plus(order.cancelledText())
-        }
-        else -> statusValue
-      }
-    }
-
-    override fun onClick(v: View) {
-      super.onClick(v)
-      when (v) {
-        binding?.btnBusiness -> showBottomSheetDialog()
-        binding?.buttonConfirmOrder -> apiConfirmOrder()
-        binding?.tvCancelOrder -> cancelOrderDialog()
-        binding?.tvCustomerContactNumber -> {
-          if (orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()?.let { checkValidMobile(it) }!!)
-            openDialer()
-          else
-            showShortToast(getString(R.string.phone_invalid_format_error))
-
-        }
-        binding?.tvCustomerEmail -> {
-          if (orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim()?.let { checkValidEmail(it) }!!) {
-            openEmailApp()
-          } else {
-            showShortToast(getString(R.string.email_invalid_format_error))
-          }
-        }
-      }
-    }
-
-    private fun openEmailApp() {
-      val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-          "mailto", orderItem?.BuyerDetails?.ContactDetails?.EmailId?.trim(), null))
-      startActivity(emailIntent)
-    }
-
-    private fun openDialer() {
-      val intent = Intent(Intent.ACTION_DIAL)
-      intent.data = (Uri.parse("tel:${orderItem?.BuyerDetails?.ContactDetails?.PrimaryContactNumber?.trim()}"))
-      startActivity(intent)
-    }
-
-    private fun checkValidEmail(email: String): Boolean {
-      return Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$").matcher(email).find()
-    }
-
-    private fun checkValidMobile(mobile: String): Boolean {
-      return Pattern.compile("^[+]?[0-9]{10,12}\$").matcher(mobile).find()
-    }
-
-    private fun cancelOrderDialog() {
-      MaterialAlertDialogBuilder(baseActivity)
-          .setTitle(getString(R.string.cancel_appointment_confirmation_message))
-          .setNeutralButton(getString(R.string.no)) { dialog, _ ->
-            dialog.dismiss()
-          }
-          .setPositiveButton(getString(R.string.yes)) { dialog, which ->
-            apiCancelOrder()
-            dialog.dismiss()
-          }
-          .show()
-    }
-
-    private fun apiCancelOrder() {
-      showProgress()
-      viewModel?.cancelOrder(clientId, orderItem?._id, OrderItem.CancellingEntity.SELLER.name)?.observeOnce(viewLifecycleOwner, Observer {
-        hideProgress()
-        if (it.error is NoNetworkException) {
-          showShortToast(resources.getString(R.string.internet_connection_not_available))
-          return@Observer
-        }
-        if (it.status == 200 || it.status == 201 || it.status == 202) {
-          val data = it as? OrderConfirmStatus
-          data?.let { d -> showLongToast(getString(R.string.the_appointment_has_been_cancelled)) }
-          refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CANCELLED)
-        } else showLongToast(it.message())
-      })
-    }
-
-    private fun apiConfirmOrder() {
-      showProgress()
-      viewModel?.confirmOrder(clientId, orderItem?._id)?.observeOnce(viewLifecycleOwner, Observer {
-        hideProgress()
-        if (it.error is NoNetworkException) {
-          showShortToast(resources.getString(R.string.internet_connection_not_available))
-          return@Observer
-        }
-        if (it.status == 200 || it.status == 201 || it.status == 202) {
-          val data = it as? OrderConfirmStatus
-          showLongToast(getString(R.string.appointment_confirmed))
-          refreshStatus(OrderSummaryModel.OrderStatus.ORDER_CONFIRMED)
-        } else showLongToast(it.message())
-      })
-    }
-
-    private fun refreshStatus(statusOrder: OrderSummaryModel.OrderStatus) {
-      isRefresh = true
-      orderItem?.Status = statusOrder.name
-      orderItem?.let { binding?.orderType?.text = getStatusText(it) }
-      orderItem?.let { checkStatusOrder(it) }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-      super.onCreateOptionsMenu(menu, inflater)
-      val item: MenuItem = menu.findItem(R.id.menu_item_share)
-      item.actionView.findViewById<CustomButton>(R.id.button_share).setOnClickListener {
-        showLongToast("Coming soon..")
-      }
-    }
-
-
-    private fun showBottomSheetDialog() {
-      showLongToast("Coming soon..")
-  //    locationsBottomSheetDialog = LocationBottomSheetDialog()
-  //    locationsBottomSheetDialog?.onDoneClicked = { clickDeliveryItem(it) }
-  //    locationsBottomSheetDialog?.setList(serviceLocationsList)
-  //    locationsBottomSheetDialog?.show(this.parentFragmentManager, DeliveryBottomSheetDialog::class.java.name)
-    }
-
-    private fun clickDeliveryItem(list: LocationsModel?) {
-      serviceLocationsList.forEach { it.isSelected = (it.serviceOptionSelectedName == list?.serviceOptionSelectedName) }
-    }*/
 }

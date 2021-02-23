@@ -42,7 +42,8 @@ class OrderMenuModel(
 
     CONFIRM_APPOINTMENT("Confirm Appointment", R.color.black_4a4a4a),
     CANCEL_APPOINTMENT("Cancel Appointment", R.color.watermelon_light_10),
-    MARK_AS_SERVED("Mark as Served", R.color.black_4a4a4a);
+    MARK_AS_SERVED("Mark as Served", R.color.black_4a4a4a),
+    START_APPOINTMENT("Start Appointment", R.color.black_4a4a4a);
 
     companion object {
       fun from(type: String?): MenuStatus? = values().firstOrNull { it.name.equals(type, ignoreCase = true) }

@@ -85,21 +85,20 @@
 
 
             <com.framework.views.fabButton.FloatingActionButton
-                android:id="@+id/btn_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_margin="16dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/semi_bold"
-                android:gravity="center"
-                android:text="@string/create"
-                android:textColor="@color/white"
-                app:fabBackground="@drawable/bg_button_rounded_orange"
-                app:fabIcon="@drawable/ic_add_white"
-                app:fabIconPosition="start"
-                app:fabSize="normal" />
+              android:id="@+id/btn_add"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="bottom|end"
+              android:layout_margin="16dp"
+              android:clickable="true"
+              android:focusable="true"
+              android:fontFamily="@font/semi_bold"
+              android:gravity="center"
+              android:textColor="@color/white"
+              app:fabType="circle"
+              app:fabIcon="@drawable/ic_add_white"
+              app:fabIconPosition="start"
+              app:fabSize="normal" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

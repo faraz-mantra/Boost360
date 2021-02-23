@@ -1,4 +1,4 @@
-package com.inventoryorder.ui.appointment
+package com.inventoryorder.ui.appointmentSpa.list
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -19,7 +19,7 @@ import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.constant.RecyclerViewItemType
-import com.inventoryorder.databinding.FragmentAppointmentsBinding
+import com.inventoryorder.databinding.FragmentAppointmentsSpaBinding
 import com.inventoryorder.model.OrderConfirmStatus
 import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.UpdateOrderNPropertyRequest
@@ -50,7 +50,7 @@ import com.inventoryorder.utils.WebEngageController
 import java.util.*
 import kotlin.collections.ArrayList
 
-class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(), RecyclerItemClickListener {
+class AppointmentSpaFragment : BaseInventoryFragment<FragmentAppointmentsSpaBinding>(), RecyclerItemClickListener {
 
   private lateinit var requestFilter: OrderFilterRequest
   private var orderAdapter: AppBaseRecyclerViewAdapter<OrderItem>? = null
@@ -75,8 +75,8 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
   var data: PreferenceData? = null
 
   companion object {
-    fun newInstance(bundle: Bundle? = null): AppointmentsFragment {
-      val fragment = AppointmentsFragment()
+    fun newInstance(bundle: Bundle? = null): AppointmentSpaFragment {
+      val fragment = AppointmentSpaFragment()
       fragment.arguments = bundle
       return fragment
     }
@@ -100,7 +100,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         val bundle = Bundle()
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, data)
         bundle.putBoolean(IntentConstant.IS_VIDEO.name, false)
-        startFragmentOrderActivity(FragmentType.CREATE_APPOINTMENT_VIEW, bundle, isResult = true)
+        startFragmentOrderActivity(FragmentType.CREATE_SPA_APPOINTMENT, bundle, isResult = true)
       }
     }
   }
@@ -149,7 +149,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
           if (isDataNotEmpty) {
             orderList.clear()
             removeLoader()
-            val list = response!!.Items?.map { item -> item.recyclerViewType = RecyclerViewItemType.APPOINTMENT_ITEM_TYPE.getLayout();item } as ArrayList<OrderItem>
+            val list = response!!.Items?.map { item -> item.recyclerViewType = RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout();item } as ArrayList<OrderItem>
             TOTAL_ELEMENTS = response.total()
             orderListFinalList.addAll(list)
             orderList.addAll(orderListFinalList)
@@ -159,7 +159,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
           } else errorView(resources.getString(R.string.no_appointments))
         } else {
           if (response != null && response.Items.isNullOrEmpty().not()) {
-            val list = response.Items?.map { item -> item.recyclerViewType = RecyclerViewItemType.APPOINTMENT_ITEM_TYPE.getLayout();item } as ArrayList<OrderItem>
+            val list = response.Items?.map { item -> item.recyclerViewType = RecyclerViewItemType.APPOINTMENT_SPA_ITEM_TYPE.getLayout();item } as ArrayList<OrderItem>
             orderList.clear()
             orderList.addAll(list)
             setAdapterNotify(orderList)
@@ -312,12 +312,12 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         val bundle = Bundle()
         bundle.putString(IntentConstant.ORDER_ID.name, orderItem?._id)
         bundle.putSerializable(IntentConstant.PREFERENCE_DATA.name, preferenceData)
-        startFragmentOrderActivity(FragmentType.APPOINTMENT_DETAIL_VIEW, bundle, isResult = true)
+        startFragmentOrderActivity(FragmentType.APPOINTMENT_SPA_DETAIL_VIEW, bundle, isResult = true)
       }
       RecyclerViewActionType.ORDER_BUTTON_CLICKED.ordinal -> {
         this.position = position
         this.orderItem = (item as? OrderItem)
-        this.orderItem?.appointmentButtonStatus()?.firstOrNull()?.let { clickActionAptButton(it, this.orderItem!!) }
+        this.orderItem?.appointmentSpaButtonStatus()?.firstOrNull()?.let { clickActionAptButton(it, this.orderItem!!) }
       }
       RecyclerViewActionType.ORDER_DROPDOWN_CLICKED.ordinal -> {
         if (::mPopupWindow.isInitialized && mPopupWindow.isShowing) mPopupWindow.dismiss()
@@ -342,7 +342,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
     val orderMenuView: View = LayoutInflater.from(baseActivity).inflate(R.layout.menu_order_button, null)
     val rvOrderMenu: RecyclerView? = orderMenuView.findViewById(R.id.rv_menu_order)
     rvOrderMenu?.apply {
-      val adapterMenu = AppBaseRecyclerViewAdapter(baseActivity, list, this@AppointmentsFragment)
+      val adapterMenu = AppBaseRecyclerViewAdapter(baseActivity, list, this@AppointmentSpaFragment)
       adapter = adapterMenu
     }
     mPopupWindow = PopupWindow(orderMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true)
@@ -370,7 +370,7 @@ class AppointmentsFragment : BaseInventoryFragment<FragmentAppointmentsBinding>(
         this.orderItem = orderItem
         val sheetCancel = CancelBottomSheetDialog()
         sheetCancel.setData(orderItem)
-        sheetCancel.onClicked = this@AppointmentsFragment::apiCancelApt
+        sheetCancel.onClicked = this@AppointmentSpaFragment::apiCancelApt
         sheetCancel.show(this.parentFragmentManager, CancelBottomSheetDialog::class.java.name)
       }
       OrderMenuModel.MenuStatus.MARK_PAYMENT_DONE -> markCodPaymentRequest()

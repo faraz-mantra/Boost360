@@ -18,7 +18,6 @@ import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.constant.RecyclerViewActionType
 import com.inventoryorder.databinding.FragmentBillingDetailBinding
 import com.inventoryorder.model.OrderInitiateResponse
-import com.inventoryorder.model.PreferenceData
 import com.inventoryorder.model.order.orderbottomsheet.BottomSheetOptionsItem
 import com.inventoryorder.model.order.orderbottomsheet.OrderBottomSheet
 import com.inventoryorder.model.orderRequest.*
@@ -30,10 +29,11 @@ import com.inventoryorder.recyclerView.BaseRecyclerViewItem
 import com.inventoryorder.recyclerView.RecyclerItemClickListener
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
+import com.inventoryorder.ui.appointmentSpa.create.AddDeliveryFeeBottomSheetDialog
+import com.inventoryorder.ui.appointmentSpa.create.CreateOrderBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.*
 import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.WebEngageController
-import java.lang.reflect.Method
 
 
 class BillingDetailFragment : BaseInventoryFragment<FragmentBillingDetailBinding>(), RecyclerItemClickListener {

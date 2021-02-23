@@ -51,7 +51,7 @@ class ConfirmBottomSheetDialog : BaseBottomSheetDialog<BottomSheetConfirmOrderBi
     val isPaymentDone = (method == PaymentDetailsN.METHOD.FREE || (method != PaymentDetailsN.METHOD.FREE && statusPayment == PaymentDetailsN.STATUS.SUCCESS))
     binding?.txtDeliveryMode?.text = fromHtml("Delivery mode: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.deliveryType()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
     binding?.txtPaymentMode?.text = fromHtml("Payment mode: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.PaymentDetails?.methodValue()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
-    binding?.txtPaymentStatus?.text = fromHtml("Payment status: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.PaymentDetails?.status()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
+    binding?.txtPaymentStatus?.text = fromHtml("Payment status: ${takeIf { isPaymentDone.not() }?.let { "<b>" } ?: ""}${orderItem?.PaymentDetails?.statusValue()}${takeIf { isPaymentDone.not() }?.let { "</b>" } ?: ""}")
     val iconPayment = ContextCompat.getDrawable(baseActivity, if (isPaymentDone) R.drawable.ic_order_status_success else R.drawable.ic_order_status_pending)
     binding?.txtPaymentStatus?.setCompoundDrawablesWithIntrinsicBounds(iconPayment, null, null, null)
     if (isPaymentDone.not()) {
