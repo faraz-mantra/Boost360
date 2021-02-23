@@ -16,6 +16,7 @@ import com.appservice.databinding.FragmentAddNewOffersBinding
 import com.appservice.model.FileModel
 import com.appservice.offers.OfferCreatedSuccessFullyBottomSheet
 import com.appservice.offers.models.*
+import com.appservice.offers.selectservices.OfferSelectServiceBottomSheet
 import com.appservice.offers.startOfferFragmentActivity
 import com.appservice.offers.viewmodel.OfferViewModel
 import com.appservice.rest.TaskCode
@@ -29,6 +30,7 @@ import com.appservice.utils.getBitmap
 import com.framework.base.BaseResponse
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.gone
+import com.framework.extensions.invisible
 import com.framework.extensions.observeOnce
 import com.framework.extensions.visible
 import com.framework.glide.util.glideLoad
@@ -62,10 +64,15 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
         super.onCreateView()
         setOnClickListener(binding?.btnOtherInfo,binding?.clearImage,
                 binding?.toggleServiceApplicableTo,binding?.imageAddBtn,
+                binding?.ctvAdditionalInfo,
                 binding?.toggleServiceAvailability, binding?.cbAddOffer)
         getBundleData()
-
-
+        binding?.toggleServiceApplicableTo?.setOnToggledListener { _, isOn ->
+            when(isOn) {
+                true -> binding?.llSelectTheService?.gone()
+                false -> binding?.llSelectTheService?.visible()
+            }
+        }
     }
 
     private fun getBundleData() {
@@ -106,7 +113,8 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
 
     private fun onPrimaryImageUploaded(it: BaseResponse) {
         hideProgress()
-        uploadSecondaryImages()
+//        uploadSecondaryImages()
+        openSuccessBottomSheet()
     }
 
     override fun onSuccess(it: BaseResponse) {
@@ -198,7 +206,8 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
             val request = AddImageOffer.getInstance(clientId, 0, offerModel?.offerId!!, offerImage!!)
             hitApi(viewModel?.addOfferImages(request), R.string.error_offer_image)
         } else uploadSecondaryImages()
-    }
+        }
+
 
     private fun uploadSecondaryImages() {
         val images = secondaryImage.filter { it.path.isNullOrEmpty().not() }
@@ -207,7 +216,7 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
             var checkPosition = 0
             images.forEach { fileData ->
                 val request = AddImageOffer.getInstance(clientId, 1, offerModel?.offerId!!, fileData.getFile()!!)
-                viewModel?.addSecondaryImage(request)?.observeOnce(viewLifecycleOwner, {
+                viewModel?.addOfferImages(request)?.observeOnce(viewLifecycleOwner, {
                     checkPosition += 1
                     if ((it.error is NoNetworkException).not()) {
                         if (it.isSuccess().not()) showError(getString(R.string.secondary_offer_Image_uploading_error))
@@ -248,7 +257,10 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
     }
 
     private fun openSelectServiceBottomSheet() {
-
+        val createdSuccess = OfferSelectServiceBottomSheet()
+//        createdSuccess.setData(isEdit)
+//        createdSuccess.onClicked = { clickSuccessCreate(it) }
+        createdSuccess.show(this@AddNewOfferFragment.parentFragmentManager, OfferSelectServiceBottomSheet::class.java.name)
     }
 
     private fun openSuccessBottomSheet() {
@@ -301,11 +313,18 @@ class AddNewOfferFragment : AppBaseFragment<FragmentAddNewOffersBinding, OfferVi
         super.onClick(v)
         when (v) {
             binding?.btnOtherInfo -> {
-                startOfferFragmentActivity(requireActivity(), FragmentType.OFFER_ADDITIONAL_INFO, isResult = true)
+                val bundle =Bundle()
+                bundle.putSerializable(IntentConstant.OFFER_DATA.name,offerModel)
+                bundle.putSerializable(IntentConstant.OFFER_SECONDARY_IMAGE.name,secondaryImage)
+
+                startOfferFragmentActivity(requireActivity(), FragmentType.OFFER_ADDITIONAL_INFO,bundle, isResult = true, requestCode = 101)
             }
             binding?.imageAddBtn -> openImagePicker()
             binding?.clearImage -> clearImage()
             binding?.cbAddOffer -> if (isValid()) createUpdateApi()
+            binding?.ctvAdditionalInfo->{
+                openSelectServiceBottomSheet()
+            }
 
         }
     }

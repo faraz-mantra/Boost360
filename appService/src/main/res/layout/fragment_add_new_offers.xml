@@ -152,6 +152,7 @@
                         <androidx.appcompat.widget.LinearLayoutCompat
                             style="@style/match_wrap"
                             android:orientation="horizontal"
+                            android:id="@+id/ll_select_the_service"
                             android:paddingStart="@dimen/size_8"
                             android:paddingTop="@dimen/size_10"
                             android:paddingEnd="@dimen/size_5"
@@ -208,6 +209,7 @@
                                     <com.framework.views.customViews.CustomTextView
                                         style="@style/Offers_Text_Header"
                                         android:layout_gravity="end"
+                                        android:id="@+id/ctv_additional_info"
                                         android:text="@string/change"
                                         android:textAllCaps="true"
                                         android:textColor="@color/yellow_ffb900"

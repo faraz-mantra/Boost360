@@ -12,9 +12,9 @@
         android:background="@color/white">
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView2"
             style="@style/match_match"
             android:background="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -59,7 +59,7 @@
                         android:padding="@dimen/size_12">
 
                         <com.framework.views.customViews.CustomTextView
-                          style="@style/match_wrap"
+                            style="@style/match_wrap"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text="@string/add_secondary_images"
@@ -96,20 +96,12 @@
                         android:layout_marginStart="@dimen/size_2"
                         android:text="@string/tags_help_site_visitors_filter_offers_in_your_website" />
 
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chipsOffers"
-                        style="@style/Widget.MaterialComponents.ChipGroup"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:chipSpacing="8dp"
-                        app:singleSelection="false">
-
-                    </com.google.android.material.chip.ChipGroup>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         style="@style/match_wrap"
-                        android:layout_marginTop="@dimen/size_5"
-                        android:background="@drawable/bg_rect_edit_txt">
+                        android:background="@drawable/bg_rect_edit_txt"
+                        tools:layout_editor_absoluteX="20dp"
+                        tools:layout_editor_absoluteY="341dp">
 
                         <com.framework.views.customViews.CustomTextField
                             android:id="@+id/edt_offer_tag"
@@ -141,33 +133,35 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                    <View
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipsOffers"
+                        style="@style/Widget.MaterialComponents.ChipGroup"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_30" />
+                        android:layout_height="wrap_content"
+                        app:chipSpacing="8dp"
+                        app:singleSelection="false">
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        style="@style/match_wrap"
-                        android:layout_marginBottom="@dimen/size_14"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent">
+                    </com.google.android.material.chip.ChipGroup>
 
-                        <com.framework.views.customViews.CustomButton
-                            android:id="@+id/btn_confirm"
-                            android:layout_gravity="bottom"
-                            style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
-                            android:layout_height="@dimen/size_44"
-                            android:text="@string/confirm" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+
         </androidx.core.widget.NestedScrollView>
 
+        <com.framework.views.customViews.CustomButton
+            android:id="@+id/btn_confirm"
+            style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
+            android:layout_height="@dimen/size_44"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="@dimen/size_20"
+            android:text="@string/confirm"
+            android:layout_marginBottom="@dimen/size_14"
+            app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

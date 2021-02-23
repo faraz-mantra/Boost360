@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data></data>
 
@@ -28,17 +27,18 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.framework.views.customViews.CustomTextView
-                    android:id="@+id/customTextView2"
                     style="@style/Offers_Text_Heading.Bottom_Sheet"
-                    android:text="@string/sort_the_service_list"
+                    android:text="@string/sort_offers_by"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.framework.views.customViews.CustomTextView
                     style="@style/Offers_Text_Title"
                     android:layout_alignParentEnd="true"
+                    android:id="@+id/ctv_reset"
                     android:layout_marginTop="@dimen/size_10"
                     android:text="@string/reset"
+                    android:textAllCaps="true"
                     android:textColor="@color/yellow_ffb900"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -113,8 +113,7 @@
                 <com.framework.views.customViews.CustomButton
                     android:id="@+id/btn_apply"
                     style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
-                    android:layout_width="@dimen/size_110"
-                    android:layout_height="@dimen/size_36"
+                    android:layout_width="wrap_content"
                     android:text="@string/apply"
                     android:textSize="12sp"
                     app:layout_constraintRight_toRightOf="parent"
@@ -122,11 +121,10 @@
 
                 <com.framework.views.customViews.CustomButton
                     style="@style/Offers.ButtonStyle.Rounded.Solid.Normal"
-                    android:layout_width="@dimen/size_110"
-                    android:layout_height="@dimen/size_36"
                     android:layout_marginEnd="@dimen/size_20"
                     android:background="@null"
                     android:text="@string/cancel"
+                    android:layout_width="wrap_content"
                     android:id="@+id/btn_cancel"
                     android:textColor="@color/yellow_ffb900"
                     android:textSize="12sp"

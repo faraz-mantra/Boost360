@@ -35,12 +35,15 @@ class FilterOffersByBottomSheet : BaseBottomSheetDialog<BottomSheetSortOffersLis
     }
 
     override fun onCreateView() {
-        setOnClickListener(binding?.btnCancel, binding?.btnApply, binding?.radioGroupSorting)
-        binding?.radioGroupSorting?.setOnCheckedChangeListener { group, checkedId ->
-            val radioButton: RadioButton = group.findViewById(checkedId)
+        setOnClickListener(binding?.btnCancel, binding?.btnApply, binding?.radioGroupSorting, binding?.ctvReset)
+//        binding?.radioGroupSorting?.setOnCheckedChangeListener { group, checkedId ->
+//            if (checkedId != null) {
+//                val radioButton: RadioButton = group.findViewById(checkedId)
+//
+//            }
 
 
-        }
+//        }
     }
 
     override fun onClick(v: View) {
@@ -52,6 +55,9 @@ class FilterOffersByBottomSheet : BaseBottomSheetDialog<BottomSheetSortOffersLis
             }
             binding?.btnCancel -> {
                 dismiss()
+            }
+            binding?.ctvReset -> {
+                binding?.radioGroupSorting?.clearCheck()
             }
         }
     }

@@ -31,9 +31,6 @@ class OfferViewModel : BaseViewModel() {
         return OfferNowFloatsRepository.addOfferImage(request = request).toLiveData()
     }
 
-    fun addSecondaryImage(request: AddImageOffer?): LiveData<BaseResponse> {
-        return OfferNowFloatsRepository.addOfferImage(request = request).toLiveData()
-    }
     fun deleteOffer(request: DeleteOfferRequest?): LiveData<BaseResponse> {
         return OfferNowFloatsRepository.deleteOffer(request = request).toLiveData()
     }

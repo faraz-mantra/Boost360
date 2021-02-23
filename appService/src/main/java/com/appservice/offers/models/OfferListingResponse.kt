@@ -2,6 +2,7 @@ package com.appservice.offers.models
 
 import com.appservice.constant.RecyclerViewItemType
 import com.appservice.model.KeySpecification
+import com.appservice.model.servicev1.ImageModel
 import com.appservice.recyclerView.AppBaseRecyclerViewItem
 import com.framework.base.BaseResponse
 import com.google.gson.annotations.SerializedName
@@ -17,6 +18,7 @@ data class OfferListingResponse(
 ) : Serializable, BaseResponse()
 
 data class OfferModel(
+		var isApplicableToAll: Boolean? = null,
 		@SerializedName(value = "clientId", alternate = ["ClientId"])
 		var ClientId: String? = null,
 		@field:SerializedName("Description")
@@ -69,10 +71,10 @@ data class OfferModel(
 		var featuredImage: FeaturedImage? = null,
 
 		@field:SerializedName("SecondaryImages")
-		var secondaryImages: List<Any?>? = null,
+		var secondaryImages: List<ImageModel?>? = null,
 
 		@field:SerializedName("Tags")
-		var tags: java.util.ArrayList<String>? = null,
+		var tags: ArrayList<String>? = null,
 ) : Serializable, BaseResponse(), AppBaseRecyclerViewItem {
 	fun isPriceToggleOn(): Boolean {
 		return this.price!! > 0
@@ -87,6 +89,11 @@ data class OfferModel(
 	fun getLoaderItem(): OfferModel {
 		this.recyclerViewItem = RecyclerViewItemType.PAGINATION_LOADER.getLayout()
 		return this
+	}
+
+	fun isServiceApplicableToAll(): Boolean {
+		return false
+
 	}
 }
 

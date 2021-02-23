@@ -3,22 +3,24 @@ package com.appservice.offers.selectservices
 import com.appservice.R
 import com.appservice.constant.IntentConstant
 import com.appservice.databinding.BottomSheetSelectServiceListingBinding
-import com.appservice.offers.models.SelectServiceModel
+import com.appservice.offers.models.SelectServiceModel.DataItemOfferService
 import com.appservice.offers.viewmodel.OfferViewModel
 import com.appservice.recyclerView.AppBaseRecyclerViewAdapter
 import com.appservice.recyclerView.BaseRecyclerViewItem
 import com.appservice.recyclerView.RecyclerItemClickListener
+import com.appservice.staffs.model.DataItemService
 import com.appservice.staffs.model.FilterBy
 import com.appservice.staffs.model.ServiceListRequest
+import com.appservice.staffs.model.ServiceListResponse
 import com.appservice.staffs.ui.UserSession
 import com.framework.base.BaseBottomSheetDialog
 import java.util.*
 
-class OfferSelectServiceFragment : BaseBottomSheetDialog<BottomSheetSelectServiceListingBinding, OfferViewModel>(), RecyclerItemClickListener {
+class OfferSelectServiceBottomSheet : BaseBottomSheetDialog<BottomSheetSelectServiceListingBinding, OfferViewModel>(), RecyclerItemClickListener {
     private var isEdit: Boolean? = null
-    lateinit var data: List<SelectServiceModel.DataItemOfferService?>
-    var adapter: AppBaseRecyclerViewAdapter<SelectServiceModel.DataItemOfferService>? = null
-    private var listServices: ArrayList<SelectServiceModel.DataItemOfferService>? = null
+    lateinit var data: List<DataItemService?>
+    var adapter: AppBaseRecyclerViewAdapter<DataItemOfferService>? = null
+    private var listServices: ArrayList<DataItemOfferService>? = null
     private var serviceIds: ArrayList<String>? = null
     override fun onCreateView() {
         init()
@@ -37,19 +39,20 @@ class OfferSelectServiceFragment : BaseBottomSheetDialog<BottomSheetSelectServic
         viewModel!!.getServiceListing(ServiceListRequest(
                 FilterBy("ALL", 0, 0), "", floatingPointTag = UserSession.fpTag)
         ).observe(viewLifecycleOwner, {
-            data = (it as SelectServiceModel.ServiceOfferListResponse).result!!.data!!
-            this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data as ArrayList<SelectServiceModel.DataItemOfferService>, itemClickListener = this@OfferSelectServiceFragment)
+            data = (it as ServiceListResponse).result!!.data!!
+            this.adapter = AppBaseRecyclerViewAdapter(activity = baseActivity, list = data as ArrayList<DataItemOfferService>, itemClickListener = this@OfferSelectServiceBottomSheet)
             binding?.rvServices?.adapter = adapter
-            when {
-                isEdit!! -> {
-                    data.forEach { datum ->
-                        if (serviceIds?.contains(datum?.id) == true) {
-                            datum?.isChecked = true
-                            listServices?.add(datum!!)
-                        }
-                    }
-                }
-            }
+//            when {
+//                isEdit!! -> {
+//                    data.forEach { datum ->
+//                        if (serviceIds?.contains(datum?.id) == true) {
+//                            datum?.isChecked = true
+//
+//                            listServices?.add(datum!!)
+//                        }
+//                    }
+//                }
+//            }
             adapter?.notifyDataSetChanged()
 
         })
@@ -57,12 +60,12 @@ class OfferSelectServiceFragment : BaseBottomSheetDialog<BottomSheetSelectServic
 
     private fun init() {
         fetchServices()
-        setOnClickListener(binding!!.btnApply)
+        setOnClickListener(binding?.btnApply, binding?.btnCancel)
     }
 
 
     override fun onItemClick(position: Int, item: BaseRecyclerViewItem?, actionType: Int) {
-        val dataItem = item as SelectServiceModel.DataItemOfferService
+        val dataItem = item as DataItemOfferService
         when (dataItem.isChecked) {
             true -> {
                 dataItem.isChecked = false
