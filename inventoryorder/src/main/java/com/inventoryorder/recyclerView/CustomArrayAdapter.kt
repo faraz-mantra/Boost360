@@ -14,10 +14,16 @@ import java.lang.Exception
 import java.lang.reflect.Executable
 
 
-class CustomArrayAdapter(context: Context, resource: Int, val list: ArrayList<ServiceItem>) :
+class CustomArrayAdapter(context: Context, resource: Int, var list: ArrayList<ServiceItem>) :
         ArrayAdapter<ServiceItem>(context, resource, list) {
 
     private var copyList : ArrayList<ServiceItem> = list
+    private var filteredList : ArrayList<ServiceItem> ?= null
+
+
+    override fun getCount(): Int {
+        return list.size
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var v = convertView
@@ -28,7 +34,7 @@ class CustomArrayAdapter(context: Context, resource: Int, val list: ArrayList<Se
         val serviceItem: ServiceItem = list[position]
         if (serviceItem != null) {
             val customerNameLabel = v!!.findViewById<View>(R.id.text_service) as TextView
-            customerNameLabel?.text = Html.fromHtml("<b><color='#2a2a2a'>${serviceItem?.Name}</color></b> <color='#adadad'>(${serviceItem?.Currency}${serviceItem?.DiscountAmount} for ${serviceItem?.Duration}min)</color>")
+            customerNameLabel?.text = Html.fromHtml("<b><color='#2a2a2a'>${serviceItem?.Name}</color></b> <color='#adadad'>(${serviceItem?.Currency}${serviceItem?.DiscountedPrice} for ${serviceItem?.Duration}min)</color>")
         }
         return v!!
     }
@@ -40,13 +46,31 @@ class CustomArrayAdapter(context: Context, resource: Int, val list: ArrayList<Se
     private var nameFilter: Filter = object : Filter() {
         override fun convertResultToString(resultValue: Any): String {
             var item = (resultValue as ServiceItem)
-            var res = Html.fromHtml("<b><color='#2a2a2a'>${item?.Name}</color></b> <color='#adadad'>(${item?.Currency}${item?.DiscountAmount} for ${item?.Duration}min)</color>")
+            var res = Html.fromHtml("<b><color='#2a2a2a'>${item?.Name}</color></b> <color='#adadad'>(${item?.Currency}${item?.DiscountedPrice} for ${item?.Duration}min)</color>")
             return res.toString()
         }
 
         override fun performFiltering(searchString: CharSequence): FilterResults {
 
             var filterResult = FilterResults()
+            filteredList = ArrayList()
+
+            if (searchString != null && searchString.isNotEmpty()) {
+                for (item in list) {
+                    if (item.Name?.toLowerCase()?.startsWith(searchString.toString().toLowerCase()) == true) {
+                        filteredList?.add(item)
+                    }
+                }
+            } else {
+                filteredList?.addAll(copyList)
+            }
+
+            filterResult.values = filteredList
+            filterResult.count = filteredList?.size!!
+            return filterResult
+
+
+/*
             if (searchString != null && searchString.isNotEmpty()) {
                 var suggestions = ArrayList<ServiceItem>()
                 for (item in list) {
@@ -57,25 +81,33 @@ class CustomArrayAdapter(context: Context, resource: Int, val list: ArrayList<Se
 
                 filterResult.values = suggestions
                 filterResult.count = suggestions?.size!!
+                return filterResult
             } else {
-                filterResult.values = copyList
-                filterResult.count = copyList?.size!!
-            }
+                list = copyList
+                return FilterResults()
+            }*/
 
-            return filterResult
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults) {
-            try {
+
+            clear()
+            if (results.values != null) {
+                addAll(results.values as ArrayList<ServiceItem>)
+            } else {
+                addAll(copyList)
+            }
+            notifyDataSetChanged()
+
+          /*  val filteredList =  results?.values as ArrayList<ServiceItem>?
+
+            if (results.count > 0) {
                 clear()
-                if (constraint != null && constraint.isNotEmpty() && results != null && results.count > 0) {
-                    addAll((results.values as ArrayList<ServiceItem?>))
-                    notifyDataSetChanged()
-                } else {
-                    addAll(copyList)
-                    notifyDataSetChanged()
+                for (c: ServiceItem in filteredList ?: listOf<ServiceItem>()) {
+                    add(c)
                 }
-            } catch (e : Exception) {}
+                notifyDataSetChanged()
+            }*/
         }
     }
 }

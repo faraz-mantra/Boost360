@@ -30,6 +30,7 @@ import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.order.sheetOrder.AddDeliveryFeeBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.CreateOrderBottomSheetDialog
 import com.inventoryorder.ui.startFragmentOrderActivity
+import com.inventoryorder.utils.capitalizeUtil
 import com.squareup.picasso.Picasso
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -79,17 +80,17 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     }
 
     private fun setData() {
-        binding?.serviceName?.text = orderInitiateRequest?.items?.get(0)?.productDetails?.name ?: ""
+        binding?.serviceName?.text = orderInitiateRequest?.items?.get(0)?.productDetails?.name?.capitalizeUtil() ?: ""
         binding?.textServiceDuration?.text = "${orderInitiateRequest?.items?.get(0)?.productDetails?.extraProperties?.appointment?.get(0)?.duration ?: 0} minutes"
-        binding?.textStaffName?.text = orderInitiateRequest?.items?.get(0)?.productDetails?.extraProperties?.appointment?.get(0)?.staffName
+        binding?.textStaffName?.text = "by ${orderInitiateRequest?.items?.get(0)?.productDetails?.extraProperties?.appointment?.get(0)?.staffName}"
         binding?.textDateTimeSlot?.text = "${parseDate(orderInitiateRequest?.items?.get(0)?.productDetails?.extraProperties?.appointment?.get(0)?.scheduledDateTime!!)}, ${orderInitiateRequest?.items?.get(0)?.productDetails?.extraProperties?.appointment?.get(0)?.startTime}"
 
-        binding?.tvName?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.fullName
+        binding?.tvName?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.fullName?.capitalizeUtil()
         binding?.tvEmail?.text = orderInitiateRequest?.buyerDetails?.contactDetails?.emailId
         binding?.textAmount?.text = "${selectedService?.Currency} $totalPrice"
         binding?.textActualAmount?.text =  "${selectedService?.Currency} $discountedPrice"
         binding?.textGstAmount?.text = "${selectedService?.Currency} ${calculateGST(discountedPrice)}"
-        binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${(discountedPrice - calculateGST(discountedPrice))}"
+        binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${(discountedPrice + calculateGST(discountedPrice))}"
 
         orderInitiateRequest?.gstCharges = calculateGST(discountedPrice)
         var paymentDetails = PaymentDetails(method = PaymentDetailsN.METHOD.COD.type, status = paymentStatus)
@@ -152,10 +153,17 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
     }
 
     private fun onServiceFeeAdded(fee : Double) {
-        orderInitiateRequest?.transactionCharges = fee
-        binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice - calculateGST(discountedPrice) + fee}"
-        binding?.textAdd?.text = "${selectedService?.Currency} $fee"
-        binding?.textEdit?.visibility = View.VISIBLE
+        serviceFee = fee
+
+        if (fee > 0.0) {
+            orderInitiateRequest?.transactionCharges = fee
+            binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + calculateGST(discountedPrice) + fee}"
+            binding?.textAdd?.text = "${selectedService?.Currency} $fee"
+            binding?.textEdit?.visibility = View.VISIBLE
+        } else {
+            binding?.textAdd?.text = getString(R.string.add)
+            binding?.textEdit?.visibility = View.INVISIBLE
+        }
     }
 
     private fun createAppointment() {
