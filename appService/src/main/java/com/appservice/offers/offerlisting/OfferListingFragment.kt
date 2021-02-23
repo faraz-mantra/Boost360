@@ -24,6 +24,7 @@ import com.appservice.constant.FragmentType
 import com.appservice.constant.IntentConstant
 import com.appservice.constant.RecyclerViewActionType
 import com.appservice.databinding.FragmentOfferListingBinding
+import com.appservice.offers.FilterOffersByBottomSheet
 import com.appservice.offers.models.OfferListingRequest
 import com.appservice.offers.models.OfferListingResponse
 import com.appservice.offers.models.OfferModel
@@ -86,13 +87,12 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
         setOnClickListener(binding?.fbAddOffer, binding?.offerListingEmptyView?.cbCreateOffers, binding?.offerListingEmptyView?.cbWatchVideo)
     }
 
-    //    private fun openSuccessBottomSheet() {
-//        hideProgress()
-//        val createdSuccess = FilterOffersByBottomSheet()
+        private fun opeFilterByBottomSheet() {
+        val createdSuccess = FilterOffersByBottomSheet()
 //        createdSuccess.setData(isEdit)
 //        createdSuccess.onClicked = { clickSuccessCreate(it) }
-//        createdSuccess.show(this@AddNewOfferFragment.parentFragmentManager, CreateServiceSuccessBottomSheet::class.java.name)
-//    }
+        createdSuccess.show(this@OfferListingFragment.parentFragmentManager, FilterOffersByBottomSheet::class.java.name)
+    }
     private fun scrollPagingListener(layoutManager: LinearLayoutManager) {
         binding?.rvListing?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
             override fun loadMoreItems() {
@@ -329,6 +329,7 @@ class OfferListingFragment : AppBaseFragment<FragmentOfferListingBinding, OfferV
             //todo not mentioned in ui
             R.id.action_more -> true
             R.id.action_sort_by -> {
+                opeFilterByBottomSheet()
                 true
             }
             else -> false

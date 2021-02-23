@@ -3,6 +3,8 @@ package com.appservice.offers.viewmodel
 import androidx.lifecycle.LiveData
 import com.appservice.offers.models.*
 import com.appservice.rest.repository.OfferNowFloatsRepository
+import com.appservice.rest.repository.StaffNowFloatsRepository
+import com.appservice.staffs.model.ServiceListRequest
 import com.framework.base.BaseResponse
 import com.framework.models.BaseViewModel
 import com.framework.models.toLiveData
@@ -35,6 +37,10 @@ class OfferViewModel : BaseViewModel() {
     fun deleteOffer(request: DeleteOfferRequest?): LiveData<BaseResponse> {
         return OfferNowFloatsRepository.deleteOffer(request = request).toLiveData()
     }
+    fun getServiceListing(@Body request: ServiceListRequest?): LiveData<BaseResponse> {
+        return StaffNowFloatsRepository.getServicesListing(request = request).toLiveData()
+    }
+
 
 
 }
