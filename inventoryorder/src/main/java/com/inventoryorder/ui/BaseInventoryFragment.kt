@@ -34,6 +34,7 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
     get() {
       return preferenceData?.clientId
     }
+
   protected val auth: String
     get() {
       return preferenceData?.authorization ?: ""
@@ -80,7 +81,7 @@ open class BaseInventoryFragment<binding : ViewDataBinding> : AppBaseFragment<bi
       is OrdersFragment -> inflater.inflate(R.menu.menu_search_icon, menu)
       is OrderDetailFragment -> inflater.inflate(R.menu.menu_invoice, menu)
       is AppointmentsFragment -> inflater.inflate(R.menu.menu_search_filter_icon, menu)
-      is AppointmentDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
+     // is AppointmentDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
       is VideoConsultFragment -> inflater.inflate(R.menu.menu_search_filter_icon, menu)
       is VideoConsultDetailsFragment -> inflater.inflate(R.menu.menu_share_button, menu)
       is NewBookingFragmentOne -> inflater.inflate(R.menu.menu_toolbar, menu)

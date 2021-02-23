@@ -28,8 +28,12 @@ data class ExtraPropertiesN(
     val patientName: String? = null,
     val referenceId: String? = null,
     val scheduledDateTime: String? = null,
-    val startTime: String? = null
+    val startTime: String? = null,
     //TODO ExtraItemProductConsultation model value
+
+    //additional items for SPA
+    val staffId : String ?= null,
+    val staffName : String ?= null
 
 ) : Serializable {
 

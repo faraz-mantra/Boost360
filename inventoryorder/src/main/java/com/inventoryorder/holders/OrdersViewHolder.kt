@@ -74,7 +74,7 @@ class OrdersViewHolder(binding: ItemOrderBinding) : AppBaseRecyclerViewHolder<It
       binding.itemMore.text = "${sizeItem - 3} other items"
       View.VISIBLE
     } ?: View.GONE
-    var colorCode = "#4a4a4a"
+    var colorCode = "#9B9B9B"
     val btnStatusMenu = order.orderBtnStatus()
     binding.lytStatusBtn.visible()
     if (btnStatusMenu.isNullOrEmpty().not()) {

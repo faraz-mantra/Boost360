@@ -155,8 +155,8 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
       FragmentType.ALL_ORDER_VIEW -> resources.getString(R.string.orders)
       FragmentType.ALL_APPOINTMENT_VIEW -> resources.getString(R.string.appointments)
       FragmentType.ALL_VIDEO_CONSULT_VIEW -> resources.getString(R.string.video_consultation)
+      FragmentType.APPOINTMENT_DETAIL_VIEW -> getString(R.string.appointment_details)
       FragmentType.ORDER_DETAIL_VIEW,
-      FragmentType.APPOINTMENT_DETAIL_VIEW,
       FragmentType.VIDEO_CONSULT_DETAIL_VIEW,
       -> "# XXXXXXX"
       FragmentType.CREATE_NEW_BOOKING -> resources.getString(R.string.new_booking)
