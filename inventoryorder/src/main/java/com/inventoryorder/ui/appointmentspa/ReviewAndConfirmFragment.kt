@@ -3,36 +3,26 @@ package com.inventoryorder.ui.appointmentspa
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.framework.exceptions.NoNetworkException
 import com.framework.extensions.observeOnce
-import com.framework.models.firestore.FirestoreManager.convert
 import com.framework.utils.DateUtils
 import com.inventoryorder.R
 import com.inventoryorder.constant.AppConstant
-import com.inventoryorder.constant.FragmentType
 import com.inventoryorder.constant.IntentConstant
 import com.inventoryorder.databinding.FragmentReviewAndConfirmBinding
-import com.inventoryorder.databinding.FragmentSpaAppointmentBinding
-import com.inventoryorder.model.OrderInitiateResponse
 import com.inventoryorder.model.order.orderbottomsheet.BottomSheetOptionsItem
 import com.inventoryorder.model.order.orderbottomsheet.OrderBottomSheet
 import com.inventoryorder.model.orderRequest.OrderInitiateRequest
 import com.inventoryorder.model.orderRequest.PaymentDetails
-import com.inventoryorder.model.ordersdetails.OrderItem
 import com.inventoryorder.model.ordersdetails.PaymentDetailsN
 import com.inventoryorder.model.spaAppointment.ServiceItem
 import com.inventoryorder.ui.BaseInventoryFragment
 import com.inventoryorder.ui.FragmentContainerOrderActivity
 import com.inventoryorder.ui.order.sheetOrder.AddDeliveryFeeBottomSheetDialog
 import com.inventoryorder.ui.order.sheetOrder.CreateOrderBottomSheetDialog
-import com.inventoryorder.ui.startFragmentOrderActivity
 import com.inventoryorder.utils.capitalizeUtil
 import com.squareup.picasso.Picasso
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -162,6 +152,7 @@ class ReviewAndConfirmFragment : BaseInventoryFragment<FragmentReviewAndConfirmB
             binding?.textEdit?.visibility = View.VISIBLE
         } else {
             binding?.textAdd?.text = getString(R.string.add)
+            binding?.textTotalPayableValue?.text = "${selectedService?.Currency} ${discountedPrice + calculateGST(discountedPrice) + fee}"
             binding?.textEdit?.visibility = View.INVISIBLE
         }
     }
