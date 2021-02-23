@@ -145,8 +145,7 @@ open class FragmentContainerOrderActivity : AppBaseActivity<ActivityFragmentCont
     return when (type) {
       FragmentType.CREATE_NEW_ORDER,
       FragmentType.BOOKING_SUCCESSFUL,
-      FragmentType.ORDER_PLACED
-      -> true
+      FragmentType.ORDER_PLACED -> true
       else -> super.isHideToolbar()
     }
   }
