@@ -32,6 +32,7 @@ import java.util.*
 
 class SelectDateTimeBottomSheetDialog(private var bookingSlotResponse: BookingSlotResponse,
                                       private var selectedService : ServiceItem,
+                                      private var dateCounter : Int,
                                       private var dateChange : DateChangedListener) :
         BaseBottomSheetDialog<BottomSheetSelectDateTimeBinding, BaseViewModel>(),
         RecyclerItemClickListener{
@@ -39,12 +40,11 @@ class SelectDateTimeBottomSheetDialog(private var bookingSlotResponse: BookingSl
   private var staffAdapter : AppBaseRecyclerViewAdapter<Staff>? = null
   private var timeSlotsAdapter : AppBaseRecyclerViewAdapter<Slots>? = null
   private var selectedStaffPosition = 0
-  private var calender : Calendar ?= null
-  private var dateCounter = 1
   private var dateChangedListener : DateChangedListener ?= null
   private var selectedTimeSlot : Slots ?= null
 
-  var onClicked: (appiointmentRequestModel: AppointmentRequestModel) -> Unit = { appiointmentRequestModel: AppointmentRequestModel -> }
+  var onClicked: (appiointmentRequestModel: AppointmentRequestModel, dateCounter : Int) -> Unit =
+          { appiointmentRequestModel: AppointmentRequestModel, dateCounter : Int -> }
 
   override fun getLayout(): Int {
     return R.layout.bottom_sheet_select_date_time
@@ -62,7 +62,6 @@ class SelectDateTimeBottomSheetDialog(private var bookingSlotResponse: BookingSl
     binding?.textSelectedDate?.text = getDisplayDate(getDateTime())
     dateChangedListener = dateChange
 
-    calender = Calendar.getInstance()
     setStaffAdapter()
   }
 
@@ -114,7 +113,7 @@ class SelectDateTimeBottomSheetDialog(private var bookingSlotResponse: BookingSl
 
     appointmentRequestModel?.staffName = bookingSlotResponse?.Result?.get(0)?.Staff?.get(selectedStaffPosition)?.Name
 
-    onClicked(appointmentRequestModel)
+    onClicked(appointmentRequestModel, dateCounter)
   }
 
   private fun getSlotsAndStaff() : BookingSlotsRequest {
@@ -163,6 +162,12 @@ class SelectDateTimeBottomSheetDialog(private var bookingSlotResponse: BookingSl
       binding?.recyclerStaff?.adapter = staffAdapter
       binding?.recyclerStaff?.let { staffAdapter?.runLayoutAnimation(it) }
 
+      /*for ((index, value) in bookingSlotResponse?.Result?.get(0)?.Staff?.withIndex()!!) {
+        value.isSelected = selectedStaffPosition == index
+      }*/
+
+      staffAdapter?.notifyDataSetChanged()
+
       for ((index, value) in bookingSlotResponse?.Result?.get(0)?.Staff!!.withIndex()) {
         if (value.isSelected) {
           isPopulated = true
@@ -189,6 +194,10 @@ class SelectDateTimeBottomSheetDialog(private var bookingSlotResponse: BookingSl
       binding?.recyclerTimeSlots?.layoutManager = GridLayoutManager(baseActivity, 4)
       binding?.recyclerTimeSlots?.adapter = timeSlotsAdapter
       binding?.recyclerTimeSlots?.let { staffAdapter?.runLayoutAnimation(it) }
+
+      for(item in bookingSlotResponse?.Result?.get(0)?.Staff?.get(position)?.AppointmentSlots?.get(0)?.Slots!!) {
+        if (item.isSelected) selectedTimeSlot = item
+      }
     } else {
       binding?.textNoSlotsAvailable?.visibility = View.VISIBLE
       binding?.recyclerTimeSlots?.visibility = View.GONE

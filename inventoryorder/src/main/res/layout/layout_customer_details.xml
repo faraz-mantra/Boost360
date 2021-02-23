@@ -21,6 +21,9 @@
             style="@style/EditTextStyle"
             android:layout_marginTop="@dimen/size_6"
             android:layout_marginBottom="@dimen/size_10"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords"
             android:gravity="center_vertical"
             android:hint="@string/type_customer_name"
             app:layout_constraintStart_toStartOf="parent"
@@ -76,6 +79,8 @@
             android:layout_marginBottom="@dimen/size_10"
             android:gravity="center_vertical"
             android:maxLength="10"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
             android:hint="@string/phone_hint"
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +100,10 @@
             style="@style/EditTextStyle"
             android:layout_marginTop="@dimen/size_6"
             android:layout_marginBottom="@dimen/size_10"
+            android:inputType="textEmailAddress"
             android:gravity="center_vertical"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
             android:hint="@string/enter_customer_s_email_id"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_service_name" />
@@ -150,6 +158,8 @@
 
             <com.framework.views.customViews.CustomEditText
                 android:id="@+id/edit_gstin"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 style="@style/EditTextStyle"
                 android:layout_marginTop="@dimen/size_6"
                 android:layout_marginBottom="@dimen/size_10"

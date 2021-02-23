@@ -86,6 +86,7 @@
                                 android:id="@+id/service_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:maxLines="1"
                                 android:text="@string/simple_dry_massage"
                                 android:textColor="@color/black_2A2A2A"
                                 app:fontFamily="@font/bold"
@@ -103,7 +104,7 @@
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/size_8">
+                        android:layout_marginTop="@dimen/size_10">
 
                         <ImageView
                             android:layout_width="@dimen/size_15"
@@ -120,14 +121,28 @@
                             app:layout_constraintStart_toStartOf="@id/linear_service"
                             app:layout_constraintTop_toBottomOf="@id/linear_service" />
 
-                        <com.framework.views.customViews.CustomTextView
-                            android:id="@+id/text_amount"
-                            style="@style/EditTextLabelStyle"
-                            android:text="@string/inr_1200"
-                            android:textColor="@color/gray_light_1"
-                            android:textSize="16sp"
-                            app:layout_constraintStart_toStartOf="@id/linear_service"
-                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:background="@color/gray_light_1"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <com.framework.views.customViews.CustomTextView
+                                android:id="@+id/text_amount"
+                                style="@style/EditTextLabelStyle"
+                                android:text="@string/inr_1200"
+                                android:textColor="@color/gray_light_1"
+                                android:textSize="16sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -139,26 +154,26 @@
                             android:layout_width="@dimen/size_15"
                             android:layout_height="@dimen/size_15"
                             android:layout_gravity="center_vertical"
-                            app:srcCompat="@drawable/ic_calender" />
+                            app:srcCompat="@drawable/ic_staff_icon" />
 
                         <com.framework.views.customViews.CustomTextView
                             android:id="@+id/text_staff_name"
                             style="@style/EditTextLabelStyle"
                             android:layout_weight="1"
                             android:paddingStart="@dimen/size_5"
-                            tools:text="@string/_30_minutes"
                             app:layout_constraintStart_toStartOf="@id/linear_service"
-                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+                            app:layout_constraintTop_toBottomOf="@id/linear_service"
+                            tools:text="@string/_30_minutes" />
 
                         <com.framework.views.customViews.CustomTextView
                             android:id="@+id/text_actual_amount"
                             style="@style/EditTextLabelStyle"
                             android:fontFamily="@font/semi_bold"
-                            tools:text="@string/inr_1200"
                             android:textColor="@color/black_4a4a4a"
                             android:textSize="16sp"
                             app:layout_constraintStart_toStartOf="@id/linear_service"
-                            app:layout_constraintTop_toBottomOf="@id/linear_service" />
+                            app:layout_constraintTop_toBottomOf="@id/linear_service"
+                            tools:text="@string/inr_1200" />
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -346,6 +361,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/size_5"
+                            android:maxLines="1"
                             android:text="@string/dummy_name"
                             android:textColor="@color/black_4a4a4a"
                             app:fontFamily="@font/regular"
